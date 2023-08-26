@@ -18,7 +18,7 @@ mod abi_encode_packed_tests {
 
     #[derive(Default, Debug)]
     struct AbiEncodePackedCollisionCollector {
-        locations: Vec<String>,
+        nodes: Vec<MemberAccess>,
     }
 
     impl ASTConstVisitor for AbiEncodePackedCollisionCollector {
@@ -31,7 +31,7 @@ mod abi_encode_packed_tests {
                 // is static.
                 for arg in node.argument_types.as_ref().unwrap() {
                     if arg.type_string.as_ref().unwrap().contains("string") || arg.type_string.as_ref().unwrap().contains("bytes") {
-                        self.locations.push(node.src.clone());
+                        self.nodes.push(node.clone());
                         break;
                     }
                 }
@@ -45,7 +45,7 @@ mod abi_encode_packed_tests {
         let source_unit = read_abi_encode_packed()?;
         let mut abi_encode_packed_collision_collector = AbiEncodePackedCollisionCollector::default();
         source_unit.accept(&mut abi_encode_packed_collision_collector)?;
-        println!("{:?}", abi_encode_packed_collision_collector.locations);
+        println!("{:?}", abi_encode_packed_collision_collector.nodes[0]);
         Ok(())
     }
 }
