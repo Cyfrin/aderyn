@@ -1,24 +1,22 @@
-Rust-based Solidity AST analyzer.
+Rust-based Solidity AST analyzer and context builder.
 
 Note: These goals/priorities will change over time.
 
 ### Short-term goals:
-* Replicate Slither detectors
-* Replicate 4nalyzer detectors
-* Replicate Solhint rules
+* Traverse the AST and create a public "Context" symbol table
+* Publish as a reusable library
 
 ### Medium-term goals:
-* Gas optimization support
-* Vyper support
-* Custom subscribable detectors
+* Support Multiple Abstract Syntax Trees representing multiple Solidity files
+* Support Foundry/Hardhat/Truffle/Solc output formats for ingesting AST
+* Support Vyper
 
 ### Long-term goals:
+Create tools that utilize this context library to:
+* Provide automated gas optimizations
+* Custom subscribable detectors
 * Control/data flow analyses
 * Symbolic execution lite, with invariant analysis
-
-### In progress:
-* [ABI encodePacked Collision](https://github.com/crytic/slither/wiki/Detector-Documentation#abi-encodePacked-collision) visitor
-
 
 ## Attribution
 * AST Visitor code from [solc-ast-rs](https://github.com/hrkrshnn/solc-ast-rs).
