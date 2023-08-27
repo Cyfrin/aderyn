@@ -10,6 +10,7 @@ dependencies = [
  "serde",
  "serde_json",
  "serde_repr",
+ "solc-ast",
 ]
 
 [[package]]
@@ -104,6 +105,16 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn",
+]
+
+[[package]]
+name = "solc-ast"
+version = "0.1.0"
+dependencies = [
+ "eyre",
+ "serde",
+ "serde_json",
+ "serde_repr",
 ]
 
 [[package]]
