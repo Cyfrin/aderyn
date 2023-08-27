@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod abi_encode_packed_tests {
     use eyre::Result;
-    use aderyn::{ast::*, visitor::ast_visitor::*};
+    use solc_ast::{ast::*, visitor::ast_visitor::*};
 
     fn read_abi_encode_packed() -> Result<SourceUnit> {
         Ok(serde_json::from_reader(std::io::BufReader::new(
@@ -53,7 +53,7 @@ mod abi_encode_packed_tests {
 #[cfg(test)]
 mod counter_tests {
     use eyre::Result;
-    use aderyn::{ast::*, visitor::ast_visitor::*};
+    use solc_ast::{ast::*, visitor::ast_visitor::*};
 
     fn read_counter() -> Result<SourceUnit> {
         Ok(serde_json::from_reader(std::io::BufReader::new(
