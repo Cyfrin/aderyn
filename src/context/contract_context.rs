@@ -21,10 +21,13 @@ pub struct ContractContext {
     pub ids: HashMap<i64, EntryType>,
     pub source_units: HashMap<i64, SourceUnit>,
     pub contracts: HashMap<i64, ContractDefinition>,
+    // state, constant and immtable variables
     pub state_variables: HashMap<i64, VariableDeclaration>,
     pub constant_variables: HashMap<i64, VariableDeclaration>,
     pub immutable_variables: HashMap<i64, VariableDeclaration>,
+    // functions
     pub functions: HashMap<i64, FunctionDefinition>,
+    // modifiers
     pub modifiers: HashMap<i64, ModifierDefinition>,
 } 
 
@@ -43,47 +46,20 @@ impl ASTConstVisitor for ContractContext {
         // TODO Go through state vars here, because at the moment the variable declaration visitor
         // picks up state variables and local variables
         for child in &node.nodes {
-            match child {
-                // if child is a ContractDefinitionNode::VariableDeclaration, add it to the state variables
-                ContractDefinitionNode::VariableDeclaration(variable_declaration) => {
-                    let v = variable_declaration.clone();
-                    if v.constant == false && v.mutability == Some(Mutability::Mutable) {
-                        self.ids.insert(v.id, EntryType::StateVariable);
-                        self.state_variables.insert(v.id, v);
-                    }
-                    else if v.mutability == Some(Mutability::Immutable) {
-                        self.ids.insert(v.id, EntryType::ImmutableVariable);
-                        self.immutable_variables.insert(v.id, v);
-                    }
-                    else if v.constant == true {
-                        self.ids.insert(v.id, EntryType::ConstantVariable);
-                        self.constant_variables.insert(v.id, v);
-                    }
+            if let ContractDefinitionNode::VariableDeclaration(variable_declaration) = child {
+                let v = variable_declaration.clone();
+                if v.constant == false && v.mutability == Some(Mutability::Mutable) {
+                    self.ids.insert(v.id, EntryType::StateVariable);
+                    self.state_variables.insert(v.id, v);
                 }
-                ContractDefinitionNode::UsingForDirective(_) => {
-                    // TODO
-                },
-                ContractDefinitionNode::StructDefinition(_) => {
-                    // TODO
-                },
-                ContractDefinitionNode::EnumDefinition(_) => {
-                    // TODO
-                },
-                ContractDefinitionNode::EventDefinition(_) => {
-                    // TODO
-                },
-                ContractDefinitionNode::FunctionDefinition(_) => {
-                    // TODO
-                },
-                ContractDefinitionNode::ModifierDefinition(_) => {
-                    // TODO
-                },
-                ContractDefinitionNode::ErrorDefinition(_) => {
-                    // TODO
-                },
-                ContractDefinitionNode::UserDefinedValueTypeDefinition(_) => {
-                    // TODO
-                },
+                else if v.mutability == Some(Mutability::Immutable) {
+                    self.ids.insert(v.id, EntryType::ImmutableVariable);
+                    self.immutable_variables.insert(v.id, v);
+                }
+                else if v.constant == true {
+                    self.ids.insert(v.id, EntryType::ConstantVariable);
+                    self.constant_variables.insert(v.id, v);
+                }
             }
         }
 
@@ -117,7 +93,8 @@ mod contract_context_tests {
 
     fn read_abi_encode_packed() -> Result<SourceUnit> {
         Ok(serde_json::from_reader(std::io::BufReader::new(
-            std::fs::File::open("tests/ast-json/StateVariables.ast.json")?,
+            // std::fs::File::open("tests/ast-json/StateVariables.ast.json")?,
+            std::fs::File::open("tests/ast-json/AbiEncodePacked.json")?,
         ))?)
     }
 
