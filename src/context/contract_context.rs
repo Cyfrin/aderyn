@@ -43,9 +43,12 @@ impl ASTConstVisitor for ContractContext {
         self.contracts.insert(node.id, node.clone());
         self.ids.insert(node.id, EntryType::Contract);
 
-        // TODO Go through state vars here, because at the moment the variable declaration visitor
-        // picks up state variables and local variables
+        // Iterate through every node in the contract definition
         for child in &node.nodes {
+            // If the node is a variable declaration, then add to to either:
+            // - state_variables
+            // - constant_variables
+            // - immutable_variables
             if let ContractDefinitionNode::VariableDeclaration(variable_declaration) = child {
                 let v = variable_declaration.clone();
                 if v.constant == false && v.mutability == Some(Mutability::Mutable) {
@@ -93,8 +96,8 @@ mod contract_context_tests {
 
     fn read_abi_encode_packed() -> Result<SourceUnit> {
         Ok(serde_json::from_reader(std::io::BufReader::new(
-            // std::fs::File::open("tests/ast-json/StateVariables.ast.json")?,
-            std::fs::File::open("tests/ast-json/AbiEncodePacked.json")?,
+            std::fs::File::open("tests/ast-json/StateVariables.ast.json")?,
+            // std::fs::File::open("tests/ast-json/AbiEncodePacked.json")?,
         ))?)
     }
 
