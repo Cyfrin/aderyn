@@ -11,8 +11,11 @@ pub enum EntryType {
     StateVariable,
     ConstantVariable,
     ImmutableVariable,
+    NonStateVariable,
     Function,
     Modifier,
+    FunctionCall,
+    MemberAccess
 }
 
 #[derive(Default, Debug)]
@@ -27,13 +30,20 @@ pub struct ContractContext {
     pub immutable_variables: HashMap<i64, VariableDeclaration>,
     // functions
     pub functions: HashMap<i64, FunctionDefinition>,
+    // non-state variables (like function parameters and local variables)
+    pub non_state_variables: HashMap<i64, VariableDeclaration>,
     // modifiers
     pub modifiers: HashMap<i64, ModifierDefinition>,
+    // function calls
+    pub function_calls: HashMap<i64, FunctionCall>,
+    // member accesses
+    pub member_accesses: HashMap<i64, MemberAccess>,
 } 
 
 impl ASTConstVisitor for ContractContext {
 
     fn visit_source_unit(&mut self, node: &SourceUnit) -> Result<bool> {
+        println!("FIRST PASS");
         self.source_units.insert(node.id, node.clone());
         self.ids.insert(node.id, EntryType::SourceUnit);
         Ok(true)
@@ -70,8 +80,8 @@ impl ASTConstVisitor for ContractContext {
     }
 
     fn end_visit_variable_declaration(&mut self, node: &VariableDeclaration) -> Result<()> {
-        self.state_variables.insert(node.id, node.clone());
-        self.ids.insert(node.id, EntryType::StateVariable);
+        self.non_state_variables.insert(node.id, node.clone());
+        self.ids.insert(node.id, EntryType::NonStateVariable);
         Ok(())
     }
 
@@ -86,6 +96,18 @@ impl ASTConstVisitor for ContractContext {
         self.ids.insert(node.id, EntryType::Modifier);
         Ok(())
     }
+
+    fn end_visit_function_call(&mut self, node: &FunctionCall) -> Result<()> {
+        self.function_calls.insert(node.id, node.clone());
+        self.ids.insert(node.id, EntryType::FunctionCall);
+        Ok(())
+    }
+
+    fn end_visit_member_access(&mut self, node: &MemberAccess) -> Result<()> {
+        self.member_accesses.insert(node.id, node.clone());
+        self.ids.insert(node.id, EntryType::MemberAccess);
+        Ok(())
+    }
 }
 
 #[cfg(test)]
@@ -96,8 +118,8 @@ mod contract_context_tests {
 
     fn read_abi_encode_packed() -> Result<SourceUnit> {
         Ok(serde_json::from_reader(std::io::BufReader::new(
-            std::fs::File::open("tests/ast-json/StateVariables.ast.json")?,
-            // std::fs::File::open("tests/ast-json/AbiEncodePacked.json")?,
+            // std::fs::File::open("tests/ast-json/StateVariables.ast.json")?,
+            std::fs::File::open("tests/ast-json/AbiEncodePacked.json")?,
         ))?)
     }
 
