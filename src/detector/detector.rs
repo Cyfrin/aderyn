@@ -32,6 +32,7 @@ impl ASTConstVisitor for Detectors {
             if member_access.member_name == "encodePacked" {
                 for arg in &node.arguments {
                     if let Expression::Identifier(identifier) = arg {
+                        println!("{:?}", identifier);
                         // TODO: Have a counter for the number of variable length parameters
                         // and if it's greater than 1, then add the function call to the list of encodePacked Collisions.
                         // Variable length parameters in this case are:
