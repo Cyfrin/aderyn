@@ -4,17 +4,56 @@ use eyre::Result;
 
 use solc_ast::{ast::*, visitor::ast_visitor::*};
 
-use crate::context::contract_context::ContractContext;
+use crate::context::contract_context::{ContractContext, ASTNode};
 
 pub struct Detectors {
     pub context: ContractContext,
+    pub encode_packed_collisions: Vec<FunctionCall>,
 }
 
 impl Detectors {
     pub fn new(context: ContractContext) -> Self {
         Self {
             context: context,
+            encode_packed_collisions: Vec::new(),
         }
+    }
+
+    pub fn is_variable_length(&self, id: i64) -> bool {
+        // Get the node from the context
+        // If it's a StateVariable or NonStateVariable
+        // Check if its of type string, bytes or array. If it is, return true.
+        // Otherwise, return false.
+        if let Some(node) = self.context.get(id) {
+            match node {
+                ASTNode::StateVariable(variable_declaration) => {
+                    if let Some(type_name) = &variable_declaration.type_name {
+                        if let TypeName::ElementaryTypeName(elementary_type_name) = type_name {
+                            if elementary_type_name.name == "string" || elementary_type_name.name == "bytes" {
+                                return true;
+                            }
+                        }
+                        if let TypeName::ArrayTypeName(_array_type_name) = type_name {
+                            return true;
+                        }
+                    }
+                },
+                ASTNode::NonStateVariable(variable_declaration) => {
+                    if let Some(type_name) = &variable_declaration.type_name {
+                        if let TypeName::ElementaryTypeName(elementary_type_name) = type_name {
+                            if elementary_type_name.name == "string" || elementary_type_name.name == "bytes" {
+                                return true;
+                            }
+                        }
+                        if let TypeName::ArrayTypeName(_array_type_name) = type_name {
+                            return true;
+                        }
+                    }
+                },
+                _ => {},
+            }
+        }
+        false
     }
 }
 
@@ -30,15 +69,19 @@ impl ASTConstVisitor for Detectors {
         // one variable length array
         if let Expression::MemberAccess(member_access) = node.expression.as_ref().clone() {
             if member_access.member_name == "encodePacked" {
+                let mut variable_length_parameters = 0;
                 for arg in &node.arguments {
                     if let Expression::Identifier(identifier) = arg {
-                        println!("{:?}", identifier);
-                        // TODO: Have a counter for the number of variable length parameters
-                        // and if it's greater than 1, then add the function call to the list of encodePacked Collisions.
-                        // Variable length parameters in this case are:
-                        // - any Variable Declaration,
-                        // - of type string, bytes or array,
-                        // - and not in constant_variables or immutable_variables.
+                        if self.is_variable_length(identifier.referenced_declaration) {
+                            variable_length_parameters += 1;
+                        }
+                        else {
+                            variable_length_parameters = 0;
+                        }
+                    }
+                    if variable_length_parameters == 2 {
+                        self.encode_packed_collisions.push(node.clone());
+                        break;
                     }
                 }
 
@@ -69,6 +112,9 @@ mod detector_tests {
         source_unit.accept(&mut context)?;
         let mut detectors = Detectors::new(context);
         source_unit.accept(&mut detectors)?;
+        detectors.encode_packed_collisions.iter().for_each(|node| {
+            println!("Node ID: {}, Position: {}", node.id, node.src);
+        });
         Ok(())
     }
 }
