@@ -18,6 +18,19 @@ pub enum EntryType {
     MemberAccess
 }
 
+pub enum EntryNodeType {
+    SourceUnitType(SourceUnit),
+    ContractType(ContractDefinition),
+    StateVarType(VariableDeclaration),
+    ConstantVarType(VariableDeclaration),
+    ImmutableVarType(VariableDeclaration),
+    FunctionType(FunctionDefinition),
+    NonStateVarType(VariableDeclaration),
+    ModifierType(ModifierDefinition),
+    FunctionCallType(FunctionCall),
+    MemberAccessType(MemberAccess),
+}
+
 #[derive(Default, Debug)]
 pub struct ContractContext {
     // ids is a mapping from node id to entry type, so we can look up the type of a node by id
@@ -38,7 +51,28 @@ pub struct ContractContext {
     pub function_calls: HashMap<i64, FunctionCall>,
     // member accesses
     pub member_accesses: HashMap<i64, MemberAccess>,
-} 
+}
+
+impl ContractContext {
+    pub fn get(&self, id: i64) -> Option<EntryNodeType> {
+        if let Some(entry) = self.ids.get(&id) {
+            match entry {
+                EntryType::SourceUnit => self.source_units.get(&id).cloned().map(EntryNodeType::SourceUnitType),
+                EntryType::Contract => self.contracts.get(&id).cloned().map(EntryNodeType::ContractType),
+                EntryType::StateVariable => self.state_variables.get(&id).cloned().map(EntryNodeType::StateVarType),
+                EntryType::ConstantVariable => self.constant_variables.get(&id).cloned().map(EntryNodeType::ConstantVarType),
+                EntryType::ImmutableVariable => self.immutable_variables.get(&id).cloned().map(EntryNodeType::ImmutableVarType),
+                EntryType::Function => self.functions.get(&id).cloned().map(EntryNodeType::FunctionType),
+                EntryType::NonStateVariable => self.non_state_variables.get(&id).cloned().map(EntryNodeType::NonStateVarType),
+                EntryType::Modifier => self.modifiers.get(&id).cloned().map(EntryNodeType::ModifierType),
+                EntryType::FunctionCall => self.function_calls.get(&id).cloned().map(EntryNodeType::FunctionCallType),
+                EntryType::MemberAccess => self.member_accesses.get(&id).cloned().map(EntryNodeType::MemberAccessType),
+            }
+        } else {
+            None
+        }
+    }
+}
 
 impl ASTConstVisitor for ContractContext {
 
