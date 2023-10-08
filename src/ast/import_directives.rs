@@ -3,7 +3,7 @@ use crate::visitor::ast_visitor::*;
 use eyre::Result;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct SymbolAlias {
     pub foreign: Expression,
@@ -11,7 +11,7 @@ pub struct SymbolAlias {
     pub name_location: Option<String>,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct ImportDirective {
     pub file: String,

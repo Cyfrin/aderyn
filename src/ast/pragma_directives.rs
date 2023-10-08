@@ -3,7 +3,7 @@ use crate::visitor::ast_visitor::*;
 use eyre::Result;
 use serde::{Deserialize, Serialize};
 
-#[derive(Default, Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Default, Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct PragmaDirective {
     pub literals: Vec<String>,

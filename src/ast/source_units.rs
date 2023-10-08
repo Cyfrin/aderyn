@@ -5,7 +5,7 @@ use eyre::Result;
 use serde::{Deserialize, Serialize};
 use std::{collections::HashMap, io};
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(untagged)]
 pub enum SourceUnitNode {
     PragmaDirective(PragmaDirective),
@@ -41,7 +41,7 @@ impl Node for SourceUnitNode {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
 #[serde(rename_all = "camelCase")]
 pub struct SourceUnit {
     pub license: Option<String>,
