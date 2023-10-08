@@ -18,7 +18,7 @@ impl Display for ContractKind {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(untagged)]
 pub enum ContractDefinitionNode {
     UsingForDirective(UsingForDirective),
@@ -92,7 +92,7 @@ impl Display for ContractDefinitionNode {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct InheritanceSpecifier {
     pub base_name: IdentifierPath,
@@ -138,7 +138,7 @@ impl Display for InheritanceSpecifier {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct ContractDefinition {
     pub name: String,
