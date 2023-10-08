@@ -453,6 +453,20 @@ mod loader_tests {
         ))?)
     }
 
+    #[derive(Default, Debug)]
+    pub struct DelegateCallInLoopDetector {
+        pub found_delegate_call_in_loop: Vec<MemberAccess>,
+    }
+
+    impl ASTConstVisitor for DelegateCallInLoopDetector {
+        fn visit_member_access(&mut self, node: &MemberAccess) -> Result<bool> {
+            if node.member_name == "delegatecall" {
+                self.found_delegate_call_in_loop.push(node.clone());
+            }
+            Ok(true)
+        }
+    }
+
     #[test]
     fn test_delegate_call_in_loops() -> Result<()> {
         let mut loader = ContractLoader::default();
@@ -464,9 +478,12 @@ mod loader_tests {
         i_contract_inheritance.ast.accept(&mut loader)?;
 
         // Get all for statements, and check if there is a delegate call in the body of each for statement
+        let mut delegate_call_in_loop_detector = DelegateCallInLoopDetector::default();
         let for_statements = loader.get_for_statements();
-        // TODO - figure out a way to check if there is a delegate call in the body of each for statement
-        // Maybe reuse the visitor pattern in some way?
+        for for_statement in for_statements {
+            for_statement.accept(&mut delegate_call_in_loop_detector)?;
+        }
+        println!("Found delegate call in loop: {:?}", delegate_call_in_loop_detector.found_delegate_call_in_loop);
 
         Ok(())
     }
