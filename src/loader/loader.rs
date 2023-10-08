@@ -465,38 +465,8 @@ mod loader_tests {
 
         // Get all for statements, and check if there is a delegate call in the body of each for statement
         let for_statements = loader.get_for_statements();
-        for for_statement in for_statements {
-            let block_or_statement = for_statement.body;
-            match block_or_statement {
-                BlockOrStatement::Block(block) => {
-                    let statements = block.statements;
-                    for statement in statements {
-                        match statement {
-                            Statement::ExpressionStatement(expression_statement) => {
-                                let expression = expression_statement.expression;
-                                match expression {
-                                    Expression::FunctionCall(function_call) => {
-                                        let expression = function_call.expression;
-                                        match expression {
-                                            Expression::MemberAccess(member_access) => {
-                                                let member_name = member_access.member_name;
-                                                if member_name == "delegatecall" {
-                                                    return Ok(());
-                                                }
-                                            }
-                                            _ => {}
-                                        }
-                                    }
-                                    _ => {}
-                                }
-                            }
-                            _ => {}
-                        }
-                    }
-                }
-                _ => {}
-            }
-        }
+        // TODO - figure out a way to check if there is a delegate call in the body of each for statement
+        // Maybe reuse the visitor pattern in some way?
 
         Ok(())
     }
