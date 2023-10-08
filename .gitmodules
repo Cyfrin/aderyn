@@ -1,6 +1,3 @@
-[submodule "lib/solc-ast-rs"]
-	path = lib/solc-ast-rs
-	url = git@github.com:hrkrshnn/solc-ast-rs.git
 [submodule "tests/contract-playground/lib/forge-std"]
 	path = tests/contract-playground/lib/forge-std
 	url = https://github.com/foundry-rs/forge-std
