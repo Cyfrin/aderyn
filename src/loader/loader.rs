@@ -433,22 +433,26 @@ impl ASTConstVisitor for ContractLoader {
 #[cfg(test)]
 mod loader_tests {
     use crate::ast::*;
+    use crate::compiler::compiler::FoundryOutput;
     use crate::visitor::ast_visitor::*;
     use eyre::Result;
     use crate::loader::loader::ContractLoader;
 
-    fn read_abi_encode_packed() -> Result<SourceUnit> {
+    fn read_compiler_output(filepath: &str) -> Result<FoundryOutput> {
         Ok(serde_json::from_reader(std::io::BufReader::new(
-            // std::fs::File::open("tests/ast-json/StateVariables.ast.json")?,
-            std::fs::File::open("tests/ast-json/AbiEncodePacked.json")?,
+            std::fs::File::open(filepath)?,
         ))?)
     }
 
     #[test]
     fn test_contract_loader() -> Result<()> {
-        let source_unit = read_abi_encode_packed()?;
         let mut loader = ContractLoader::default();
-        source_unit.accept(&mut loader)?;
+        let extended_inheritance = read_compiler_output("tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json")?;
+        let inheritance_base = read_compiler_output("tests/contract-playground/out/InheritanceBase.sol/InheritanceBase.json")?;
+        let i_contract_inheritance = read_compiler_output("tests/contract-playground/out/IContractInheritance.sol/IContractInheritance.json")?;
+        extended_inheritance.ast.accept(&mut loader)?;
+        inheritance_base.ast.accept(&mut loader)?;
+        i_contract_inheritance.ast.accept(&mut loader)?;
         loader.nodes.into_iter().for_each(|(id, entry_type)| {
             println!("{}: ", id);
         });

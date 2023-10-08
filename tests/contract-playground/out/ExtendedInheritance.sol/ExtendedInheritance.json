@@ -1,0 +1,414 @@
+{
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "something",
+          "type": "uint256"
+        }
+      ],
+      "name": "Do",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "somethingElse",
+          "type": "uint256"
+        }
+      ],
+      "name": "DoSomethingElse",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "somethingElse",
+          "type": "uint256"
+        }
+      ],
+      "name": "doSomething",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": {
+    "object": "0x608060405234801561001057600080fd5b5060c28061001f6000396000f3fe6080604052348015600f57600080fd5b506004361060285760003560e01c8063a6b206bf14602d575b600080fd5b603c60383660046074565b603e565b005b6040518181527f33782d62d9804c35aa012275d93a348a1ce28d2558032fbf95b540356f7c900a9060200160405180910390a150565b600060208284031215608557600080fd5b503591905056fea26469706673582212200093343251f0228ada11421fb8dd0312516d869306b23ec898973c49c6f8289e64736f6c63430008120033",
+    "sourceMap": "90:221:21:-:0;;;;;;;;;;;;;;;;;;;",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x6080604052348015600f57600080fd5b506004361060285760003560e01c8063a6b206bf14602d575b600080fd5b603c60383660046074565b603e565b005b6040518181527f33782d62d9804c35aa012275d93a348a1ce28d2558032fbf95b540356f7c900a9060200160405180910390a150565b600060208284031215608557600080fd5b503591905056fea26469706673582212200093343251f0228ada11421fb8dd0312516d869306b23ec898973c49c6f8289e64736f6c63430008120033",
+    "sourceMap": "90:221:21:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;195:114;;;;;;:::i;:::-;;:::i;:::-;;;272:30;;345:25:26;;;272:30:21;;333:2:26;318:18;272:30:21;;;;;;;195:114;:::o;14:180:26:-;73:6;126:2;114:9;105:7;101:23;97:32;94:52;;;142:1;139;132:12;94:52;-1:-1:-1;165:23:26;;14:180;-1:-1:-1;14:180:26:o",
+    "linkReferences": {}
+  },
+  "methodIdentifiers": {
+    "doSomething(uint256)": "a6b206bf"
+  },
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.18+commit.87f61d96\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"something\",\"type\":\"uint256\"}],\"name\":\"Do\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"somethingElse\",\"type\":\"uint256\"}],\"name\":\"DoSomethingElse\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"somethingElse\",\"type\":\"uint256\"}],\"name\":\"doSomething\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/ExtendedInheritance.sol\":\"ExtendedInheritance\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":forge-std/=lib/forge-std/src/\"]},\"sources\":{\"src/ExtendedInheritance.sol\":{\"keccak256\":\"0x91d164ae459471ab7d883a5be388ed2143245c086038de41fc439d88da4b7a50\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://d93163edc6298d22da2cae215ab58f767f643794b234d91344129463894c0474\",\"dweb:/ipfs/QmVF4vGDwzvwZ4FJkJpaw6cTyzwVCgNpg47KCgx7UG3a8h\"]},\"src/IContractInheritance.sol\":{\"keccak256\":\"0xcfebd5e15893363447d840b90f4c1bef21e8fc1f803e961c6a3c1d998010078f\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://11dd6dfeefcf438eb9c87213184ffa29fc193da85478365e6271bbbf0cb037bb\",\"dweb:/ipfs/QmWjkffzfW1Rvj6NMAA11nt3YnLWPqpjA7cBMXxTmFXw9P\"]},\"src/InheritanceBase.sol\":{\"keccak256\":\"0x9806210b0cca3987d12d513f856417d2c124bbd6eb01da7af09910cad83878e4\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://68ce758b9681b2a3eca28e79d4daa7a4ed9ccbd802b0c67e69c7ae1c8e0945a4\",\"dweb:/ipfs/QmZsRG7Trwia4eSz7jKcZ2mp3tJYg6rpw5Vzh3DiSCyjS8\"]}},\"version\":1}",
+  "metadata": {
+    "compiler": {
+      "version": "0.8.18+commit.87f61d96"
+    },
+    "language": "Solidity",
+    "output": {
+      "abi": [
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "something",
+              "type": "uint256",
+              "indexed": false
+            }
+          ],
+          "type": "event",
+          "name": "Do",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "somethingElse",
+              "type": "uint256",
+              "indexed": false
+            }
+          ],
+          "type": "event",
+          "name": "DoSomethingElse",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "somethingElse",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "doSomething"
+        }
+      ],
+      "devdoc": {
+        "kind": "dev",
+        "methods": {},
+        "version": 1
+      },
+      "userdoc": {
+        "kind": "user",
+        "methods": {},
+        "version": 1
+      }
+    },
+    "settings": {
+      "remappings": [
+        "ds-test/=lib/forge-std/lib/ds-test/src/",
+        "forge-std/=lib/forge-std/src/"
+      ],
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "metadata": {
+        "bytecodeHash": "ipfs"
+      },
+      "compilationTarget": {
+        "src/ExtendedInheritance.sol": "ExtendedInheritance"
+      },
+      "libraries": {}
+    },
+    "sources": {
+      "src/ExtendedInheritance.sol": {
+        "keccak256": "0x91d164ae459471ab7d883a5be388ed2143245c086038de41fc439d88da4b7a50",
+        "urls": [
+          "bzz-raw://d93163edc6298d22da2cae215ab58f767f643794b234d91344129463894c0474",
+          "dweb:/ipfs/QmVF4vGDwzvwZ4FJkJpaw6cTyzwVCgNpg47KCgx7UG3a8h"
+        ],
+        "license": "MIT"
+      },
+      "src/IContractInheritance.sol": {
+        "keccak256": "0xcfebd5e15893363447d840b90f4c1bef21e8fc1f803e961c6a3c1d998010078f",
+        "urls": [
+          "bzz-raw://11dd6dfeefcf438eb9c87213184ffa29fc193da85478365e6271bbbf0cb037bb",
+          "dweb:/ipfs/QmWjkffzfW1Rvj6NMAA11nt3YnLWPqpjA7cBMXxTmFXw9P"
+        ],
+        "license": "MIT"
+      },
+      "src/InheritanceBase.sol": {
+        "keccak256": "0x9806210b0cca3987d12d513f856417d2c124bbd6eb01da7af09910cad83878e4",
+        "urls": [
+          "bzz-raw://68ce758b9681b2a3eca28e79d4daa7a4ed9ccbd802b0c67e69c7ae1c8e0945a4",
+          "dweb:/ipfs/QmZsRG7Trwia4eSz7jKcZ2mp3tJYg6rpw5Vzh3DiSCyjS8"
+        ],
+        "license": "MIT"
+      }
+    },
+    "version": 1
+  },
+  "ast": {
+    "absolutePath": "src/ExtendedInheritance.sol",
+    "id": 42956,
+    "exportedSymbols": {
+      "ExtendedInheritance": [
+        42955
+      ],
+      "IContractInheritance": [
+        42963
+      ],
+      "InheritanceBase": [
+        42983
+      ]
+    },
+    "nodeType": "SourceUnit",
+    "src": "32:279:21",
+    "nodes": [
+      {
+        "id": 42936,
+        "nodeType": "PragmaDirective",
+        "src": "32:23:21",
+        "nodes": [],
+        "literals": [
+          "solidity",
+          "0.8",
+          ".18"
+        ]
+      },
+      {
+        "id": 42937,
+        "nodeType": "ImportDirective",
+        "src": "57:31:21",
+        "nodes": [],
+        "absolutePath": "src/InheritanceBase.sol",
+        "file": "./InheritanceBase.sol",
+        "nameLocation": "-1:-1:-1",
+        "scope": 42956,
+        "sourceUnit": 42984,
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "id": 42955,
+        "nodeType": "ContractDefinition",
+        "src": "90:221:21",
+        "nodes": [
+          {
+            "id": 42943,
+            "nodeType": "EventDefinition",
+            "src": "144:45:21",
+            "nodes": [],
+            "anonymous": false,
+            "eventSelector": "33782d62d9804c35aa012275d93a348a1ce28d2558032fbf95b540356f7c900a",
+            "name": "DoSomethingElse",
+            "nameLocation": "150:15:21",
+            "parameters": {
+              "id": 42942,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 42941,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "somethingElse",
+                  "nameLocation": "174:13:21",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 42943,
+                  "src": "166:21:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 42940,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "166:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "165:23:21"
+            }
+          },
+          {
+            "id": 42954,
+            "nodeType": "FunctionDefinition",
+            "src": "195:114:21",
+            "nodes": [],
+            "body": {
+              "id": 42953,
+              "nodeType": "Block",
+              "src": "257:52:21",
+              "nodes": [],
+              "statements": [
+                {
+                  "eventCall": {
+                    "arguments": [
+                      {
+                        "id": 42950,
+                        "name": "somethingElse",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 42945,
+                        "src": "288:13:21",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      ],
+                      "id": 42949,
+                      "name": "DoSomethingElse",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 42943,
+                      "src": "272:15:21",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_uint256_$returns$__$",
+                        "typeString": "function (uint256)"
+                      }
+                    },
+                    "id": 42951,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "nameLocations": [],
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "272:30:21",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 42952,
+                  "nodeType": "EmitStatement",
+                  "src": "267:35:21"
+                }
+              ]
+            },
+            "baseFunctions": [
+              42982
+            ],
+            "functionSelector": "a6b206bf",
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "doSomething",
+            "nameLocation": "204:11:21",
+            "overrides": {
+              "id": 42947,
+              "nodeType": "OverrideSpecifier",
+              "overrides": [],
+              "src": "248:8:21"
+            },
+            "parameters": {
+              "id": 42946,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 42945,
+                  "mutability": "mutable",
+                  "name": "somethingElse",
+                  "nameLocation": "224:13:21",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 42954,
+                  "src": "216:21:21",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 42944,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "216:7:21",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "215:23:21"
+            },
+            "returnParameters": {
+              "id": 42948,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "257:0:21"
+            },
+            "scope": 42955,
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "abstract": false,
+        "baseContracts": [
+          {
+            "baseName": {
+              "id": 42938,
+              "name": "InheritanceBase",
+              "nameLocations": [
+                "122:15:21"
+              ],
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 42983,
+              "src": "122:15:21"
+            },
+            "id": 42939,
+            "nodeType": "InheritanceSpecifier",
+            "src": "122:15:21"
+          }
+        ],
+        "canonicalName": "ExtendedInheritance",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "linearizedBaseContracts": [
+          42955,
+          42983,
+          42963
+        ],
+        "name": "ExtendedInheritance",
+        "nameLocation": "99:19:21",
+        "scope": 42956,
+        "usedErrors": []
+      }
+    ],
+    "license": "MIT"
+  },
+  "id": 21
+}
