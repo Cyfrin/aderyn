@@ -28,7 +28,8 @@ impl Detector for DelegateCallInLoopDetector {
         for while_statement in loader.get_while_statements() {
             while_statement.accept(self)?;
         }
-        println!("Found delegatecall in loop: {:?}", self.found_delegate_call_in_loop);
+        // println!("yup");
+        // println!("Found delegatecall in loop: {:?}", self.found_delegate_call_in_loop);
         Ok(())
     }
 }
