@@ -15,17 +15,26 @@ use crate::report::report::{Report, Issue};
 use crate::visitor::ast_visitor::Node;
 
 pub struct Config {
+    pub foundry_root: String,
     pub contract_names: Vec<String>,
 }
 
 impl Config {
     pub fn build(mut args: impl Iterator<Item = String>) -> Result<Config, &'static str> {
         args.next(); // skip the program name
+
+        // get foundry_root
+        let foundry_root = match args.next() {
+            Some(arg) => arg,
+            None => return Err("Didn't get a foundry root directory"),
+        };
+
+        // get contract_names
         let contract_names: Vec<String> = args.collect();
         if contract_names.len() < 1 {
             return Err("not enough arguments");
         }
-        Ok(Config { contract_names })
+        Ok(Config { foundry_root, contract_names })
     }
 }
 
