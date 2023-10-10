@@ -1,17 +1,24 @@
-use crate::loader::loader::ContractLoader;
+use crate::loader::loader::{ContractLoader, ASTNode};
 use std::error::Error;
+
+pub fn get_all_detectors() -> Vec<Box<dyn Detector>> {
+    vec![
+        Box::new(crate::detector::high::delegate_call_in_loop::DelegateCallInLoopDetector::default()),
+    ]
+}
 
 pub enum IssueSeverity {
     Gas,
+    NC,
     Low,
     Medium,
     High,
     Critical,
 }
 
-pub trait Detector<T> {
-    fn detect(&mut self, _loader: &ContractLoader) -> Result<(), Box<dyn Error>>{
-        Ok(())
+pub trait Detector {
+    fn detect(&mut self, _loader: &ContractLoader) -> Result<bool, Box<dyn Error>>{
+        Ok(true)
     }
 
     fn severity(&self) -> IssueSeverity {
@@ -26,7 +33,7 @@ pub trait Detector<T> {
         String::from("Description")
     }
 
-    fn get_instances(&self) -> Vec<T> {
+    fn instances(&self) -> Vec<Option<ASTNode>> {
         Vec::new()
     }
 }

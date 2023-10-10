@@ -8,9 +8,8 @@ use std::env;
 use std::error::Error;
 
 use crate::compiler::compiler::FoundryOutput;
-use crate::detector::detector::Detector;
-use crate::detector::high::delegate_call_in_loop::DelegateCallInLoopDetector;
-use crate::loader::loader::ContractLoader;
+use crate::detector::detector::{get_all_detectors, IssueSeverity};
+use crate::loader::loader::{ContractLoader, ASTNode};
 use crate::visitor::ast_visitor::Node;
 
 pub struct Config {
@@ -26,6 +25,23 @@ impl Config {
         }
         Ok(Config { contract_names })
     }
+}
+
+#[derive(Default)]
+pub struct Report {
+    pub criticals: Vec<Issue>,
+    pub highs: Vec<Issue>,
+    pub mediums: Vec<Issue>,
+    pub lows: Vec<Issue>,
+    pub ncs: Vec<Issue>,
+    pub gas: Vec<Issue>,
+}
+
+#[derive(Default)]
+pub struct Issue {
+    pub title: String,
+    pub description: String,
+    pub instances: Vec<Option<ASTNode>>,
 }
 
 pub fn run() -> Result<(), Box<dyn Error>> {
@@ -49,16 +65,46 @@ pub fn run() -> Result<(), Box<dyn Error>> {
 
     println!("Contracts loaded, number of Node IDs found: {:?}", contract_loader.nodes.len());
 
-    println!("Running 100 detectors");
+    println!("Get Detectors");
 
-    let mut i = 0;
-    while i < 100 {
-        let mut first_detector = DelegateCallInLoopDetector::default();
-        first_detector.detect(&contract_loader)?;
-        i = i + 1;
+    let detectors = get_all_detectors();
+
+    println!("Running {} detectors", detectors.len());
+
+    let mut report: Report = Report::default();
+    for mut detector in detectors {
+        if let Ok(found) = detector.detect(&contract_loader) {
+            if found {
+                let issue: Issue = Issue {
+                    title: detector.title(),
+                    description: detector.description(),
+                    instances: detector.instances()
+                };
+                match detector.severity() {
+                    IssueSeverity::Critical => {
+                        report.criticals.push(issue);
+                    },
+                    IssueSeverity::High => {
+                        report.highs.push(issue);
+                    },
+                    IssueSeverity::Medium => {
+                        report.mediums.push(issue);
+                    },
+                    IssueSeverity::Low => {
+                        report.lows.push(issue);
+                    },
+                    IssueSeverity::NC => {
+                        report.ncs.push(issue);
+                    },
+                    IssueSeverity::Gas => {
+                        report.gas.push(issue);
+                    },
+                }
+            }
+        }        
     }
 
-    println!("Done running 100 detectors");
+    println!("Done.");
 
     Ok(())
 }
