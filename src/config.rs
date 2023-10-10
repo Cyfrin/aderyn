@@ -4,10 +4,12 @@ use std::io;
 use std::io::BufReader;
 use std::path::{Path, PathBuf};
 use eyre::Result;
-use std::{env};
+use std::env;
 use std::error::Error;
 
 use crate::compiler::compiler::FoundryOutput;
+use crate::detector::delegate_call_in_loop::DelegateCallInLoopDetector;
+use crate::detector::detector::Detector;
 use crate::loader::loader::ContractLoader;
 use crate::visitor::ast_visitor::Node;
 
@@ -45,7 +47,8 @@ pub fn run() -> Result<(), Box<dyn Error>> {
         foundry_output.ast.accept(&mut contract_loader)?;
     }
 
-    println!("Contract loader: {:?}", contract_loader);
+    let mut first_detector = DelegateCallInLoopDetector::default();
+    first_detector.detect(&contract_loader)?;
 
     Ok(())
 }
