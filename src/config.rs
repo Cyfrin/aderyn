@@ -9,7 +9,9 @@ use std::error::Error;
 
 use crate::compiler::compiler::FoundryOutput;
 use crate::detector::detector::{get_all_detectors, IssueSeverity};
-use crate::loader::loader::{ContractLoader, ASTNode};
+use crate::loader::loader::ContractLoader;
+use crate::report::printer::{MarkdownReportPrinter, ReportPrinter};
+use crate::report::report::{Report, Issue};
 use crate::visitor::ast_visitor::Node;
 
 pub struct Config {
@@ -25,23 +27,6 @@ impl Config {
         }
         Ok(Config { contract_names })
     }
-}
-
-#[derive(Default)]
-pub struct Report {
-    pub criticals: Vec<Issue>,
-    pub highs: Vec<Issue>,
-    pub mediums: Vec<Issue>,
-    pub lows: Vec<Issue>,
-    pub ncs: Vec<Issue>,
-    pub gas: Vec<Issue>,
-}
-
-#[derive(Default)]
-pub struct Issue {
-    pub title: String,
-    pub description: String,
-    pub instances: Vec<Option<ASTNode>>,
 }
 
 pub fn run() -> Result<(), Box<dyn Error>> {
@@ -104,7 +89,10 @@ pub fn run() -> Result<(), Box<dyn Error>> {
         }        
     }
 
-    println!("Done.");
+    println!("Detectors run, printing report");
+
+    let printer = MarkdownReportPrinter;
+    printer.print_report(std::io::stdout(), &report)?;
 
     Ok(())
 }

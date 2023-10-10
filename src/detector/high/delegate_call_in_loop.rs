@@ -47,5 +47,5 @@ impl Detector for DelegateCallInLoopDetector {
 
     fn instances(&self) -> Vec<Option<ASTNode>> {
         self.found_delegate_call_in_loop.clone()
-    }  
+    }
 }
