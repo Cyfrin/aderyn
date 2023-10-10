@@ -47,8 +47,18 @@ pub fn run() -> Result<(), Box<dyn Error>> {
         foundry_output.ast.accept(&mut contract_loader)?;
     }
 
-    let mut first_detector = DelegateCallInLoopDetector::default();
-    first_detector.detect(&contract_loader)?;
+    println!("Contracts loaded, number of Node IDs found: {:?}", contract_loader.nodes.len());
+
+    println!("Running 100 detectors");
+
+    let mut i = 0;
+    while i < 100 {
+        let mut first_detector = DelegateCallInLoopDetector::default();
+        first_detector.detect(&contract_loader)?;
+        i = i + 1;
+    }
+
+    println!("Done running 100 detectors");
 
     Ok(())
 }
