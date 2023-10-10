@@ -1,9 +1,9 @@
 use std::error::Error;
 
-use crate::{ast::MemberAccess, visitor::ast_visitor::ASTConstVisitor, loader::loader::ContractLoader};
+use crate::{ast::MemberAccess, visitor::ast_visitor::ASTConstVisitor, loader::loader::ContractLoader, detector::detector::{Detector, IssueSeverity}};
 use eyre::Result;
 use crate::visitor::ast_visitor::Node;
-use super::detector::Detector;
+
 
 #[derive(Default)]
 pub struct DelegateCallInLoopDetector {
@@ -20,7 +20,7 @@ impl ASTConstVisitor for DelegateCallInLoopDetector {
 }
 
 
-impl Detector for DelegateCallInLoopDetector {
+impl Detector<MemberAccess> for DelegateCallInLoopDetector {
     fn detect(&mut self, loader: &ContractLoader) -> Result<(), Box<dyn Error>> {
         for for_statement in loader.get_for_statements() {
             for_statement.accept(self)?;
@@ -28,8 +28,23 @@ impl Detector for DelegateCallInLoopDetector {
         for while_statement in loader.get_while_statements() {
             while_statement.accept(self)?;
         }
-        // println!("yup");
-        // println!("Found delegatecall in loop: {:?}", self.found_delegate_call_in_loop);
+
         Ok(())
+    }
+
+    fn get_instances(&self) -> Vec<MemberAccess> {
+        self.found_delegate_call_in_loop.clone()
+    }
+
+    fn severity(&self) -> IssueSeverity {
+        IssueSeverity::High
+    }
+
+    fn title(&self) -> String {
+        String::from("Using `delegatecall` in loop")
+    }
+
+    fn description(&self) -> String {
+        String::from("When calling `delegatecall` the same `msg.value` amount will be accredited multiple times.")
     }
 }

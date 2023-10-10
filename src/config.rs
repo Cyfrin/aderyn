@@ -8,8 +8,8 @@ use std::env;
 use std::error::Error;
 
 use crate::compiler::compiler::FoundryOutput;
-use crate::detector::delegate_call_in_loop::DelegateCallInLoopDetector;
 use crate::detector::detector::Detector;
+use crate::detector::high::delegate_call_in_loop::DelegateCallInLoopDetector;
 use crate::loader::loader::ContractLoader;
 use crate::visitor::ast_visitor::Node;
 
