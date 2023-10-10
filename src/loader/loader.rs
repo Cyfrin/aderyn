@@ -58,6 +58,64 @@ pub enum ASTNode {
     WhileStatement(WhileStatement)
 }
 
+impl ASTNode {
+    pub fn src(&self) -> Option<&str> {
+        match self {
+            ASTNode::ArrayTypeName(_) => None,
+            ASTNode::Assignment(node) => Some(&node.src),
+            ASTNode::BinaryOperation(node) => Some(&node.src),
+            ASTNode::Block(node) => Some(&node.src),
+            ASTNode::Conditional(node) => Some(&node.src),
+            ASTNode::ContractDefinition(node) => Some(&node.src),
+            ASTNode::ElementaryTypeName(_) => None,
+            ASTNode::ElementaryTypeNameExpression(node) => Some(&node.src),
+            ASTNode::EmitStatement(_) => None,
+            ASTNode::EnumDefinition(node) => Some(&node.src),
+            ASTNode::EnumValue(node) => Some(&node.src),
+            ASTNode::EventDefinition(node) => Some(&node.src),
+            ASTNode::ErrorDefinition(node) => Some(&node.src),
+            ASTNode::ExpressionStatement(_) => None,
+            ASTNode::FunctionCall(node) => Some(&node.src),
+            ASTNode::FunctionCallOptions(node) => Some(&node.src),
+            ASTNode::FunctionDefinition(node) => Some(&node.src),
+            ASTNode::FunctionTypeName(_) => None,
+            ASTNode::ForStatement(node) => Some(&node.src),
+            ASTNode::Identifier(node) => Some(&node.src),
+            ASTNode::IdentifierPath(node) => Some(&node.src),
+            ASTNode::IfStatement(node) => Some(&node.src),
+            ASTNode::ImportDirective(node) => Some(&node.src),
+            ASTNode::IndexAccess(node) => Some(&node.src),
+            ASTNode::IndexRangeAccess(node) => Some(&node.src),
+            ASTNode::InheritanceSpecifier(node) => Some(&node.src),
+            ASTNode::InlineAssembly(node) => Some(&node.src),
+            ASTNode::Literal(node) => Some(&node.src),
+            ASTNode::MemberAccess(node) => Some(&node.src),
+            ASTNode::NewExpression(node) => Some(&node.src),
+            ASTNode::Mapping(_) => None,
+            ASTNode::ModifierDefinition(node) => Some(&node.src),
+            ASTNode::ModifierInvocation(node) => Some(&node.src),
+            ASTNode::OverrideSpecifier(node) => Some(&node.src),
+            ASTNode::ParameterList(node) => Some(&node.src),
+            ASTNode::PragmaDirective(node) => Some(&node.src),
+            ASTNode::Return(node) => Some(&node.src),
+            ASTNode::RevertStatement(_) => None,
+            ASTNode::SourceUnit(_) => None,
+            ASTNode::StructDefinition(node) => Some(&node.src),
+            ASTNode::StructuredDocumentation(node) => Some(&node.src),
+            ASTNode::TryStatement(_) =>  None,
+            ASTNode::TryCatchClause(_) => None,
+            ASTNode::TupleExpression(node) => Some(&node.src),
+            ASTNode::UnaryOperation(node) => Some(&node.src),
+            ASTNode::UserDefinedTypeName(_) => None,
+            ASTNode::UserDefinedValueTypeDefinition(node) => Some(&node.src),
+            ASTNode::UsingForDirective(node) => Some(&node.src),
+            ASTNode::VariableDeclaration(node) => Some(&node.src),
+            ASTNode::VariableDeclarationStatement(node) => Some(&node.src),
+            ASTNode::WhileStatement(node) => Some(&node.src),
+        }
+    }
+}
+
 #[derive(Default, Debug)]
 pub struct ContractLoader {
     pub nodes: HashMap<i64, ASTNode>,
