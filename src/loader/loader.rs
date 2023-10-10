@@ -3,8 +3,7 @@ use eyre::Result;
 use crate::ast::*;
 use crate::visitor::ast_visitor::*;
 
-#[derive(Debug)]
-
+#[derive(Debug, Clone)]
 pub enum ASTNode {
     ArrayTypeName(ArrayTypeName),
     Assignment(Assignment),

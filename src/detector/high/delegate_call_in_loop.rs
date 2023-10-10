@@ -1,27 +1,27 @@
 use std::error::Error;
 
-use crate::{ast::MemberAccess, visitor::ast_visitor::ASTConstVisitor, loader::loader::ContractLoader, detector::detector::{Detector, IssueSeverity}};
+use crate::{ast::MemberAccess, visitor::ast_visitor::ASTConstVisitor, loader::loader::{ContractLoader, ASTNode}, detector::detector::{Detector, IssueSeverity}};
 use eyre::Result;
 use crate::visitor::ast_visitor::Node;
 
 
 #[derive(Default)]
 pub struct DelegateCallInLoopDetector {
-    pub found_delegate_call_in_loop: Vec<MemberAccess>,
+    pub found_delegate_call_in_loop: Vec<Option<ASTNode>>,
 }
 
 impl ASTConstVisitor for DelegateCallInLoopDetector {
     fn visit_member_access(&mut self, node: &MemberAccess) -> Result<bool> {
         if node.member_name == "delegatecall" {
-            self.found_delegate_call_in_loop.push(node.clone());
+            self.found_delegate_call_in_loop.push(Some(ASTNode::MemberAccess(node.clone())));
         }
         Ok(true)
     }
 }
 
 
-impl Detector<MemberAccess> for DelegateCallInLoopDetector {
-    fn detect(&mut self, loader: &ContractLoader) -> Result<(), Box<dyn Error>> {
+impl Detector for DelegateCallInLoopDetector {
+    fn detect(&mut self, loader: &ContractLoader) -> Result<bool, Box<dyn Error>> {
         for for_statement in loader.get_for_statements() {
             for_statement.accept(self)?;
         }
@@ -29,11 +29,8 @@ impl Detector<MemberAccess> for DelegateCallInLoopDetector {
             while_statement.accept(self)?;
         }
 
-        Ok(())
-    }
-
-    fn get_instances(&self) -> Vec<MemberAccess> {
-        self.found_delegate_call_in_loop.clone()
+        println!("Found {} delegatecalls in loops", self.found_delegate_call_in_loop.len());
+        Ok(self.found_delegate_call_in_loop.len() > 0)
     }
 
     fn severity(&self) -> IssueSeverity {
@@ -47,4 +44,8 @@ impl Detector<MemberAccess> for DelegateCallInLoopDetector {
     fn description(&self) -> String {
         String::from("When calling `delegatecall` the same `msg.value` amount will be accredited multiple times.")
     }
+
+    fn instances(&self) -> Vec<Option<ASTNode>> {
+        self.found_delegate_call_in_loop.clone()
+    }  
 }
