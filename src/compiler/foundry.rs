@@ -5,6 +5,7 @@ use std::fs::{File, read_to_string};
 use std::io::{Read, BufReader};
 use std::path::Path;
 
+// Foundry compiler output file
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
 #[serde(rename_all = "camelCase")]
 pub struct FoundryOutput {
