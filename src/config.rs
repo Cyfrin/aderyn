@@ -7,7 +7,7 @@ use eyre::Result;
 use std::env;
 use std::error::Error;
 
-use crate::compiler::compiler::FoundryOutput;
+use crate::compiler::foundry::{FoundryOutput, FoundryConfig, read_config};
 use crate::detector::detector::{get_all_detectors, IssueSeverity};
 use crate::loader::loader::ContractLoader;
 use crate::report::printer::{MarkdownReportPrinter, ReportPrinter};
@@ -39,13 +39,21 @@ impl Config {
 }
 
 pub fn run() -> Result<(), Box<dyn Error>> {
-    let path = Path::new("tests/contract-playground/out");
-    let subdirs = get_subdirectories(&path)?;
-
+    
     let config = Config::build(env::args()).unwrap_or_else(|_err| {
         // Exit with a non-zero exit code
         std::process::exit(1);
     });
+
+    let foundry_config_filepath = format!("{}foundry.toml", config.foundry_root);
+    let foundry_config = read_config(foundry_config_filepath).unwrap_or_else(|_err| {
+        // Exit with a non-zero exit code
+        std::process::exit(1);
+    });
+
+    let foundry_out_path = format!("{}{}", config.foundry_root, foundry_config.profile.default.out);
+    let path = Path::new(&foundry_out_path);
+    let subdirs = get_subdirectories(&path)?;
 
     let matching_filepaths = get_matching_filepaths(&subdirs, &config.contract_names);
     println!("Loading foundry output files: {:?}", matching_filepaths);

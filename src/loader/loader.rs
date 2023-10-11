@@ -501,7 +501,7 @@ impl ASTConstVisitor for ContractLoader {
 #[cfg(test)]
 mod loader_tests {
     use crate::ast::*;
-    use crate::compiler::compiler::FoundryOutput;
+    use crate::compiler::foundry::FoundryOutput;
     use crate::visitor::ast_visitor::*;
     use eyre::Result;
     use crate::loader::loader::ContractLoader;
