@@ -52,20 +52,20 @@
     }
   ],
   "bytecode": {
-    "object": "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220140817cb60ac1dfb3daa5364a515fe96f006bb70f6196c9372913be81e9a446464736f6c63430008120033",
+    "object": "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220ba91a330819ace2c7279fb042e37019354a749f1a39b984a55bae7167c5897c064736f6c63430008140033",
     "sourceMap": "368:6969:10:-:0;;;;;;;;;;;;;;;-1:-1:-1;;;368:6969:10;;;;;;;;;;;;;;;;;",
     "linkReferences": {}
   },
   "deployedBytecode": {
-    "object": "0x73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220140817cb60ac1dfb3daa5364a515fe96f006bb70f6196c9372913be81e9a446464736f6c63430008120033",
+    "object": "0x73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220ba91a330819ace2c7279fb042e37019354a749f1a39b984a55bae7167c5897c064736f6c63430008140033",
     "sourceMap": "368:6969:10:-:0;;;;;;;;",
     "linkReferences": {}
   },
   "methodIdentifiers": {},
-  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.18+commit.87f61d96\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"who\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bytes4\",\"name\":\"fsig\",\"type\":\"bytes4\"},{\"indexed\":false,\"internalType\":\"bytes32\",\"name\":\"keysHash\",\"type\":\"bytes32\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"slot\",\"type\":\"uint256\"}],\"name\":\"SlotFound\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"who\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"slot\",\"type\":\"uint256\"}],\"name\":\"WARNING_UninitedSlot\",\"type\":\"event\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"lib/forge-std/src/StdStorage.sol\":\"stdStorageSafe\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":forge-std/=lib/forge-std/src/\"]},\"sources\":{\"lib/forge-std/src/StdStorage.sol\":{\"keccak256\":\"0x391a28a2e54aea51a6fb03a3a48035304ca4d24bc669ddf3d4c152c7162e514d\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://475fd0d87ccb0fdc4418dea2babffb4adb4aafb817e61f7ef31c2303f10c6c26\",\"dweb:/ipfs/QmQgcgtZxpkW6DRmbJszN1F8mU6zhaTZGdWWsj77yCuWN9\"]},\"lib/forge-std/src/Vm.sol\":{\"keccak256\":\"0xb569d0b4398fad95f508fb854e832143edf69a897af4250f5f60fe195a2066c5\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://84b722ada97ea7bb841cdc0fa556aa36a02ff2d380fa24f6dc0717a71c6d9c7c\",\"dweb:/ipfs/QmfCH9Q4tvJhPM286GFsE4UCP4YncLpRu4Nwa2ZkHdRfbw\"]}},\"version\":1}",
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.20+commit.a1b79de6\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"who\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bytes4\",\"name\":\"fsig\",\"type\":\"bytes4\"},{\"indexed\":false,\"internalType\":\"bytes32\",\"name\":\"keysHash\",\"type\":\"bytes32\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"slot\",\"type\":\"uint256\"}],\"name\":\"SlotFound\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"who\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"slot\",\"type\":\"uint256\"}],\"name\":\"WARNING_UninitedSlot\",\"type\":\"event\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"lib/forge-std/src/StdStorage.sol\":\"stdStorageSafe\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/\",\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/\",\":forge-std/=lib/forge-std/src/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/\"]},\"sources\":{\"lib/forge-std/src/StdStorage.sol\":{\"keccak256\":\"0x391a28a2e54aea51a6fb03a3a48035304ca4d24bc669ddf3d4c152c7162e514d\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://475fd0d87ccb0fdc4418dea2babffb4adb4aafb817e61f7ef31c2303f10c6c26\",\"dweb:/ipfs/QmQgcgtZxpkW6DRmbJszN1F8mU6zhaTZGdWWsj77yCuWN9\"]},\"lib/forge-std/src/Vm.sol\":{\"keccak256\":\"0xb569d0b4398fad95f508fb854e832143edf69a897af4250f5f60fe195a2066c5\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://84b722ada97ea7bb841cdc0fa556aa36a02ff2d380fa24f6dc0717a71c6d9c7c\",\"dweb:/ipfs/QmfCH9Q4tvJhPM286GFsE4UCP4YncLpRu4Nwa2ZkHdRfbw\"]}},\"version\":1}",
   "metadata": {
     "compiler": {
-      "version": "0.8.18+commit.87f61d96"
+      "version": "0.8.20+commit.a1b79de6"
     },
     "language": "Solidity",
     "output": {
@@ -134,8 +134,11 @@
     },
     "settings": {
       "remappings": [
+        "@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/",
         "ds-test/=lib/forge-std/lib/ds-test/src/",
-        "forge-std/=lib/forge-std/src/"
+        "erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/",
+        "forge-std/=lib/forge-std/src/",
+        "openzeppelin-contracts/=lib/openzeppelin-contracts/"
       ],
       "optimizer": {
         "enabled": true,
@@ -12237,7 +12240,11 @@
         "name": "stdStorageSafe",
         "nameLocation": "376:14:10",
         "scope": 9828,
-        "usedErrors": []
+        "usedErrors": [],
+        "usedEvents": [
+          8384,
+          8390
+        ]
       },
       {
         "id": 9827,
@@ -19600,7 +19607,8 @@
         "name": "stdStorage",
         "nameLocation": "7347:10:10",
         "scope": 9828,
-        "usedErrors": []
+        "usedErrors": [],
+        "usedEvents": []
       }
     ],
     "license": "MIT"

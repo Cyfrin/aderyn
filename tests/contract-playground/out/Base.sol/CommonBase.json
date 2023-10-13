@@ -11,10 +11,10 @@
     "linkReferences": {}
   },
   "methodIdentifiers": {},
-  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.18+commit.87f61d96\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"lib/forge-std/src/Base.sol\":\"CommonBase\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":forge-std/=lib/forge-std/src/\"]},\"sources\":{\"lib/forge-std/src/Base.sol\":{\"keccak256\":\"0x4ff1a785311017d1eedb1b4737956fa383067ad34eb439abfec1d989754dde1c\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://f553622969b9fdb930246704a4c10dfaee6b1a4468c142fa7eb9dc292a438224\",\"dweb:/ipfs/QmcxqHnqdQsMVtgsfH9VNLmZ3g7GhgNagfq7yvNCDcCHFK\"]},\"lib/forge-std/src/StdStorage.sol\":{\"keccak256\":\"0x391a28a2e54aea51a6fb03a3a48035304ca4d24bc669ddf3d4c152c7162e514d\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://475fd0d87ccb0fdc4418dea2babffb4adb4aafb817e61f7ef31c2303f10c6c26\",\"dweb:/ipfs/QmQgcgtZxpkW6DRmbJszN1F8mU6zhaTZGdWWsj77yCuWN9\"]},\"lib/forge-std/src/Vm.sol\":{\"keccak256\":\"0xb569d0b4398fad95f508fb854e832143edf69a897af4250f5f60fe195a2066c5\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://84b722ada97ea7bb841cdc0fa556aa36a02ff2d380fa24f6dc0717a71c6d9c7c\",\"dweb:/ipfs/QmfCH9Q4tvJhPM286GFsE4UCP4YncLpRu4Nwa2ZkHdRfbw\"]}},\"version\":1}",
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.20+commit.a1b79de6\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"lib/forge-std/src/Base.sol\":\"CommonBase\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/\",\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/\",\":forge-std/=lib/forge-std/src/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/\"]},\"sources\":{\"lib/forge-std/src/Base.sol\":{\"keccak256\":\"0x4ff1a785311017d1eedb1b4737956fa383067ad34eb439abfec1d989754dde1c\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://f553622969b9fdb930246704a4c10dfaee6b1a4468c142fa7eb9dc292a438224\",\"dweb:/ipfs/QmcxqHnqdQsMVtgsfH9VNLmZ3g7GhgNagfq7yvNCDcCHFK\"]},\"lib/forge-std/src/StdStorage.sol\":{\"keccak256\":\"0x391a28a2e54aea51a6fb03a3a48035304ca4d24bc669ddf3d4c152c7162e514d\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://475fd0d87ccb0fdc4418dea2babffb4adb4aafb817e61f7ef31c2303f10c6c26\",\"dweb:/ipfs/QmQgcgtZxpkW6DRmbJszN1F8mU6zhaTZGdWWsj77yCuWN9\"]},\"lib/forge-std/src/Vm.sol\":{\"keccak256\":\"0xb569d0b4398fad95f508fb854e832143edf69a897af4250f5f60fe195a2066c5\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://84b722ada97ea7bb841cdc0fa556aa36a02ff2d380fa24f6dc0717a71c6d9c7c\",\"dweb:/ipfs/QmfCH9Q4tvJhPM286GFsE4UCP4YncLpRu4Nwa2ZkHdRfbw\"]}},\"version\":1}",
   "metadata": {
     "compiler": {
-      "version": "0.8.18+commit.87f61d96"
+      "version": "0.8.20+commit.a1b79de6"
     },
     "language": "Solidity",
     "output": {
@@ -32,8 +32,11 @@
     },
     "settings": {
       "remappings": [
+        "@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/",
         "ds-test/=lib/forge-std/lib/ds-test/src/",
-        "forge-std/=lib/forge-std/src/"
+        "erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/",
+        "forge-std/=lib/forge-std/src/",
+        "openzeppelin-contracts/=lib/openzeppelin-contracts/"
       ],
       "optimizer": {
         "enabled": true,
@@ -1025,7 +1028,8 @@
         "name": "CommonBase",
         "nameLocation": "166:10:1",
         "scope": 2367,
-        "usedErrors": []
+        "usedErrors": [],
+        "usedEvents": []
       },
       {
         "id": 2357,
@@ -1061,7 +1065,8 @@
         "name": "TestBase",
         "nameLocation": "1661:8:1",
         "scope": 2367,
-        "usedErrors": []
+        "usedErrors": [],
+        "usedEvents": []
       },
       {
         "id": 2366,
@@ -1185,7 +1190,8 @@
         "name": "ScriptBase",
         "nameLocation": "1706:10:1",
         "scope": 2367,
-        "usedErrors": []
+        "usedErrors": [],
+        "usedEvents": []
       }
     ],
     "license": "MIT"

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.18;
+pragma solidity 0.8.20;
 
 contract StateVariables {
     // uint256 empty, static, private, internal, public
