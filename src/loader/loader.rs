@@ -184,6 +184,14 @@ impl ContractLoader {
         &self.source_units
     }
 
+    pub fn get_import_directives(&self) -> Vec<&ImportDirective> {
+        self.import_directives.keys().collect()
+    }
+
+    pub fn get_member_accesses(&self) -> Vec<&MemberAccess> {
+        self.member_accesses.keys().collect()
+    }
+
     pub fn get_for_statements(&self) -> Vec<&ForStatement> {
         self.for_statements.keys().collect()
     }
