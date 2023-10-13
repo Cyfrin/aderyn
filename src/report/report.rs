@@ -1,6 +1,6 @@
 use crate::loader::loader::ASTNode;
 
-#[derive(Default)]
+#[derive(Default, PartialEq)]
 pub struct Report {
     pub criticals: Vec<Issue>,
     pub highs: Vec<Issue>,
@@ -10,7 +10,7 @@ pub struct Report {
     pub gas: Vec<Issue>,
 }
 
-#[derive(Default)]
+#[derive(Default, PartialEq)]
 pub struct Issue {
     pub title: String,
     pub description: String,

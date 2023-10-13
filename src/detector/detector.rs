@@ -7,6 +7,7 @@ pub fn get_all_detectors() -> Vec<Box<dyn Detector>> {
     )]
 }
 
+#[derive(Debug, PartialEq)]
 pub enum IssueSeverity {
     Gas,
     NC,
@@ -35,5 +36,19 @@ pub trait Detector {
 
     fn instances(&self) -> Vec<Option<ASTNode>> {
         Vec::new()
+    }
+}
+
+pub mod detector_test_helpers {
+    use crate::{
+        loader::loader::ContractLoader, read_foundry_output_file, visitor::ast_visitor::Node,
+    };
+
+    pub fn load_contract(filepath: &str) -> ContractLoader {
+        let filepath = std::path::PathBuf::from(filepath);
+        let mut contract_loader = ContractLoader::default();
+        let foundry_output = read_foundry_output_file(filepath.to_str().unwrap()).unwrap();
+        let _ = foundry_output.ast.accept(&mut contract_loader);
+        contract_loader
     }
 }

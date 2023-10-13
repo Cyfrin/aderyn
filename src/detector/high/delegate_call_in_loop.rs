@@ -33,10 +33,6 @@ impl Detector for DelegateCallInLoopDetector {
             while_statement.accept(self)?;
         }
 
-        println!(
-            "Found {} delegatecalls in loops",
-            self.found_delegate_call_in_loop.len()
-        );
         Ok(self.found_delegate_call_in_loop.len() > 0)
     }
 
@@ -54,5 +50,42 @@ impl Detector for DelegateCallInLoopDetector {
 
     fn instances(&self) -> Vec<Option<ASTNode>> {
         self.found_delegate_call_in_loop.clone()
+    }
+}
+
+#[cfg(test)]
+mod delegate_call_in_loop_detector_tests {
+    use crate::detector::detector::{detector_test_helpers::load_contract, Detector};
+
+    use super::DelegateCallInLoopDetector;
+
+    #[test]
+    fn test_delegate_call_in_loop_detector() {
+        let contract_loader = load_contract(
+            "./tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",
+        );
+        let mut detector = DelegateCallInLoopDetector::default();
+        let found = detector.detect(&contract_loader).unwrap();
+        // assert that the detector found a delegate call in a loop
+        assert!(found);
+        // assert that the detector found the correct number of instances (1)
+        assert_eq!(detector.instances().len(), 1);
+        // assert the severity is high
+        assert_eq!(
+            detector.severity(),
+            crate::detector::detector::IssueSeverity::High
+        );
+        // assert the title
+        assert_eq!(
+            detector.title(),
+            String::from("Using `delegatecall` in loop")
+        );
+        // assert the description
+        assert_eq!(
+            detector.description(),
+            String::from(
+                "When calling `delegatecall` the same `msg.value` amount will be accredited multiple times."
+            )
+        );
     }
 }

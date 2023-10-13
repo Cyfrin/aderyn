@@ -3,7 +3,7 @@ use crate::visitor::ast_visitor::*;
 use eyre::Result;
 use std::collections::HashMap;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub enum ASTNode {
     ArrayTypeName(ArrayTypeName),
     Assignment(Assignment),
