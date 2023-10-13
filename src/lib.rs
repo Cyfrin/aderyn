@@ -72,7 +72,7 @@ pub fn run(filepaths: Vec<PathBuf>) -> Result<(), Box<dyn Error>> {
     println!("Detectors run, printing report");
 
     let printer = MarkdownReportPrinter;
-    printer.print_report(std::io::stdout(), &report)?;
+    printer.print_report(std::io::stdout(), &report, &contract_loader)?;
 
     Ok(())
 }
