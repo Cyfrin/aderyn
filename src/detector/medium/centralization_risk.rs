@@ -83,3 +83,39 @@ impl Detector for CentralizationRiskDetector {
         self.found_centralization_risks.clone()
     }
 }
+
+#[cfg(test)]
+mod centralization_risk_detector_tests {
+    use crate::detector::detector::{detector_test_helpers::load_contract, Detector};
+
+    use super::CentralizationRiskDetector;
+
+    #[test]
+    fn test_centralization_risk_detector() {
+        let contract_loader =
+            load_contract("./tests/contract-playground/out/AdminContract.sol/AdminContract.json");
+        let mut detector = CentralizationRiskDetector::default();
+        let found = detector.detect(&contract_loader).unwrap();
+        // assert that the detector found a centralization risk
+        assert!(found);
+        // assert that the number of instances found is 2
+        assert_eq!(detector.instances().len(), 2);
+        // assert that the severity is medium
+        assert_eq!(
+            detector.severity(),
+            crate::detector::detector::IssueSeverity::Medium
+        );
+        // assert that the title is correct
+        assert_eq!(
+            detector.title(),
+            String::from("Centralization Risk for trusted owners")
+        );
+        // assert that the description is correct
+        assert_eq!(
+            detector.description(),
+            String::from(
+                "Contracts have owners with privileged rights to perform admin tasks and need to be trusted to not perform malicious updates or drain funds."
+            )
+        );
+    }
+}
