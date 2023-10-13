@@ -1,9 +1,7 @@
 use crate::ast::*;
 use serde::{Deserialize, Serialize};
 use std::error::Error;
-use std::fs::{File, read_to_string};
-use std::io::{Read, BufReader};
-use std::path::Path;
+use std::fs::read_to_string;
 
 // Foundry compiler output file
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]

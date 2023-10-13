@@ -1,7 +1,10 @@
-use std::{path::{PathBuf, Path}, fs::read_dir};
-use std::io::Result;
 use aderyn::{compiler::foundry::read_config, run};
 use clap::Parser;
+use std::io::Result;
+use std::{
+    fs::read_dir,
+    path::{Path, PathBuf},
+};
 
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
@@ -16,7 +19,6 @@ struct Args {
 }
 
 fn main() {
-
     let args = Args::parse();
     print!("Running Foundry with args: {:?}", args);
 

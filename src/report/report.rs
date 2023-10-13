@@ -16,4 +16,3 @@ pub struct Issue {
     pub description: String,
     pub instances: Vec<Option<ASTNode>>,
 }
-

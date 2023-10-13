@@ -1,9 +1,13 @@
 use std::error::Error;
 
-use crate::{ast::MemberAccess, visitor::ast_visitor::ASTConstVisitor, loader::loader::{ContractLoader, ASTNode}, detector::detector::{Detector, IssueSeverity}};
-use eyre::Result;
 use crate::visitor::ast_visitor::Node;
-
+use crate::{
+    ast::MemberAccess,
+    detector::detector::{Detector, IssueSeverity},
+    loader::loader::{ASTNode, ContractLoader},
+    visitor::ast_visitor::ASTConstVisitor,
+};
+use eyre::Result;
 
 #[derive(Default)]
 pub struct DelegateCallInLoopDetector {
@@ -13,12 +17,12 @@ pub struct DelegateCallInLoopDetector {
 impl ASTConstVisitor for DelegateCallInLoopDetector {
     fn visit_member_access(&mut self, node: &MemberAccess) -> Result<bool> {
         if node.member_name == "delegatecall" {
-            self.found_delegate_call_in_loop.push(Some(ASTNode::MemberAccess(node.clone())));
+            self.found_delegate_call_in_loop
+                .push(Some(ASTNode::MemberAccess(node.clone())));
         }
         Ok(true)
     }
 }
-
 
 impl Detector for DelegateCallInLoopDetector {
     fn detect(&mut self, loader: &ContractLoader) -> Result<bool, Box<dyn Error>> {
@@ -29,7 +33,10 @@ impl Detector for DelegateCallInLoopDetector {
             while_statement.accept(self)?;
         }
 
-        println!("Found {} delegatecalls in loops", self.found_delegate_call_in_loop.len());
+        println!(
+            "Found {} delegatecalls in loops",
+            self.found_delegate_call_in_loop.len()
+        );
         Ok(self.found_delegate_call_in_loop.len() > 0)
     }
 
