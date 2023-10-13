@@ -59,6 +59,7 @@ pub enum ASTNode {
 }
 
 impl ASTNode {
+
     pub fn src(&self) -> Option<&str> {
         match self {
             ASTNode::ArrayTypeName(_) => None,
@@ -186,6 +187,69 @@ impl ContractLoader {
 
     pub fn get_while_statements(&self) -> Vec<&WhileStatement> {
         self.while_statements.keys().collect()
+    }
+
+    pub fn get_source_unit_contract_path_from(&self, node: &ASTNode) -> Option<&String> {
+        let source_unit_id = match node {
+            ASTNode::ArrayTypeName(node) => self.array_type_names.get(&node),
+            ASTNode::Assignment(node) => self.assignments.get(&node),
+            ASTNode::BinaryOperation(node) => self.binary_operations.get(&node),
+            ASTNode::Block(node) => self.blocks.get(&node),
+            ASTNode::Conditional(node) => self.conditionals.get(&node),
+            ASTNode::ContractDefinition(node) => self.contract_definitions.get(&node),
+            ASTNode::ElementaryTypeName(node) => self.elementary_type_names.get(&node),
+            ASTNode::ElementaryTypeNameExpression(node) => self.elementary_type_name_expressions.get(&node),
+            ASTNode::EmitStatement(node) => self.emit_statements.get(&node),
+            ASTNode::EnumDefinition(node) => self.enum_definitions.get(&node),
+            ASTNode::EnumValue(node) => self.enum_values.get(&node),
+            ASTNode::EventDefinition(node) => self.event_definitions.get(&node),
+            ASTNode::ErrorDefinition(node) => self.error_definitions.get(&node),
+            ASTNode::ExpressionStatement(node) => self.expression_statements.get(&node),
+            ASTNode::FunctionCall(node) => self.function_calls.get(&node),
+            ASTNode::FunctionCallOptions(node) => self.function_call_options.get(&node),
+            ASTNode::FunctionDefinition(node) => self.function_definitions.get(&node),
+            ASTNode::FunctionTypeName(node) => self.function_type_names.get(&node),
+            ASTNode::ForStatement(node) => self.for_statements.get(&node),
+            ASTNode::Identifier(node) => self.identifiers.get(&node),
+            ASTNode::IdentifierPath(node) => self.identifier_paths.get(&node),
+            ASTNode::IfStatement(node) => self.if_statements.get(&node),
+            ASTNode::ImportDirective(node) => self.import_directives.get(&node),
+            ASTNode::IndexAccess(node) => self.index_accesses.get(&node),
+            ASTNode::IndexRangeAccess(node) => self.index_range_accesses.get(&node),
+            ASTNode::InheritanceSpecifier(node) => self.inheritance_specifiers.get(&node),
+            ASTNode::InlineAssembly(node) => self.inline_assemblies.get(&node),
+            ASTNode::Literal(node) => self.literals.get(&node),
+            ASTNode::MemberAccess(node) => self.member_accesses.get(&node),
+            ASTNode::NewExpression(node) => self.new_expressions.get(&node),
+            ASTNode::Mapping(node) => self.mappings.get(&node),
+            ASTNode::ModifierDefinition(node) => self.modifier_definitions.get(&node),
+            ASTNode::ModifierInvocation(node) => self.modifier_invocations.get(&node),
+            ASTNode::OverrideSpecifier(node) => self.override_specifiers.get(&node),
+            ASTNode::ParameterList(node) => self.parameter_lists.get(&node),
+            ASTNode::PragmaDirective(node) => self.pragma_directives.get(&node),
+            ASTNode::Return(node) => self.returns.get(&node),
+            ASTNode::RevertStatement(node) => self.revert_statements.get(&node),
+            ASTNode::SourceUnit(node) => Some(&node.id),
+            ASTNode::StructDefinition(node) => self.struct_definitions.get(&node),
+            ASTNode::StructuredDocumentation(node) => self.structured_documentations.get(&node),
+            ASTNode::TryStatement(node) => self.try_statements.get(&node),
+            ASTNode::TryCatchClause(node) => self.try_catch_clauses.get(&node),
+            ASTNode::TupleExpression(node) => self.tuple_expressions.get(&node),
+            ASTNode::UnaryOperation(node) => self.unary_operations.get(&node),
+            ASTNode::UserDefinedTypeName(node) => self.user_defined_type_names.get(&node),
+            ASTNode::UserDefinedValueTypeDefinition(node) => self.user_defined_value_type_definitions.get(&node),
+            ASTNode::UsingForDirective(node) => self.using_for_directives.get(&node),
+            ASTNode::VariableDeclaration(node) => self.variable_declarations.get(&node),
+            ASTNode::VariableDeclarationStatement(node) => self.variable_declaration_statements.get(&node),
+            ASTNode::WhileStatement(node) => self.while_statements.get(&node),
+        };
+
+        // iterate through self.source_units until the source unit with the id matching `source_unit_id` is found, then return its `absolute_path`
+        let source_unit = source_unit_id.and_then(|&id| {
+            self.source_units.iter().find(|source_unit| source_unit.id == id)
+        });
+        source_unit.and_then(|source_unit| source_unit.absolute_path.as_ref())
+        
     }
 }
 
