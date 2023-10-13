@@ -1,18 +1,33 @@
-use std::io::{Write, Result};
+use std::io::{Result, Write};
 
 use crate::loader::loader::ContractLoader;
 
-use super::report::{Report, Issue};
+use super::report::{Issue, Report};
 
 pub trait ReportPrinter {
-    fn print_report<W: Write>(&self, writer: W, report: &Report, loader: &ContractLoader) -> Result<()>;
-    fn print_issue<W: Write>(&self, writer: W, issue: &Issue, loader: &ContractLoader) -> Result<()>;
+    fn print_report<W: Write>(
+        &self,
+        writer: W,
+        report: &Report,
+        loader: &ContractLoader,
+    ) -> Result<()>;
+    fn print_issue<W: Write>(
+        &self,
+        writer: W,
+        issue: &Issue,
+        loader: &ContractLoader,
+    ) -> Result<()>;
 }
 
 pub struct MarkdownReportPrinter;
 
 impl ReportPrinter for MarkdownReportPrinter {
-    fn print_report<W: Write>(&self, mut writer: W, report: &Report, loader: &ContractLoader) -> Result<()> {
+    fn print_report<W: Write>(
+        &self,
+        mut writer: W,
+        report: &Report,
+        loader: &ContractLoader,
+    ) -> Result<()> {
         writeln!(writer, "# Critical Issues")?;
         for issue in &report.criticals {
             self.print_issue(&mut writer, issue, loader)?;
@@ -40,12 +55,19 @@ impl ReportPrinter for MarkdownReportPrinter {
         Ok(())
     }
 
-    fn print_issue<W: Write>(&self, mut writer: W, issue: &Issue, loader: &ContractLoader) -> Result<()> {
+    fn print_issue<W: Write>(
+        &self,
+        mut writer: W,
+        issue: &Issue,
+        loader: &ContractLoader,
+    ) -> Result<()> {
         writeln!(writer, "## {}\n{}", issue.title, issue.description)?;
         for instance in &issue.instances {
             if let Some(node) = instance {
                 let mut contract_path = "unknown";
-                if let Some(source_unit_contract_path) = loader.get_source_unit_contract_path_from(node){
+                if let Some(source_unit_contract_path) =
+                    loader.get_source_unit_contract_path_from(node)
+                {
                     contract_path = source_unit_contract_path;
                 }
                 let mut source_location = "unknown";

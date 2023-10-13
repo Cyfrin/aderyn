@@ -1,10 +1,10 @@
-use crate::loader::loader::{ContractLoader, ASTNode};
+use crate::loader::loader::{ASTNode, ContractLoader};
 use std::error::Error;
 
 pub fn get_all_detectors() -> Vec<Box<dyn Detector>> {
-    vec![
-        Box::new(crate::detector::high::delegate_call_in_loop::DelegateCallInLoopDetector::default()),
-    ]
+    vec![Box::new(
+        crate::detector::high::delegate_call_in_loop::DelegateCallInLoopDetector::default(),
+    )]
 }
 
 pub enum IssueSeverity {
@@ -17,7 +17,7 @@ pub enum IssueSeverity {
 }
 
 pub trait Detector {
-    fn detect(&mut self, _loader: &ContractLoader) -> Result<bool, Box<dyn Error>>{
+    fn detect(&mut self, _loader: &ContractLoader) -> Result<bool, Box<dyn Error>> {
         Ok(true)
     }
 
