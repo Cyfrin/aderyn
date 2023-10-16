@@ -4,8 +4,8 @@ Note: These goals/priorities will change over time.
 
 ### Short-term goals - Working Examples:
 * [x] Traverse the AST and create a public "Context" symbol table
-* Create a detector registration architecture
-* Recreate some basic Slither detectors (Abi encodePacked collision detector)
+* [x] Create a detector architecture
+* Recreate 4nalyzer detectors
 
 ### Medium-term goals - Auditor Aid:
 * [x] Support Multiple Abstract Syntax Trees representing multiple Solidity files
@@ -18,10 +18,9 @@ Note: These goals/priorities will change over time.
     * nSLOC
     * Percentage YUL code 👀
   * Slither
-  * 4nalyzer
 
 ### Long-term goals - Product:
-Create tools that utilize this context library to:
+Create tools that utilize the context library to:
 * Provide automated gas optimizations
 * Custom subscribable detectors
 * Control/data flow analyses
