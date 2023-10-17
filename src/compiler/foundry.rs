@@ -2,6 +2,7 @@ use crate::ast::*;
 use serde::{Deserialize, Serialize};
 use std::error::Error;
 use std::fs::read_to_string;
+use std::path::PathBuf;
 
 // Foundry compiler output file
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
@@ -29,7 +30,7 @@ pub struct DefaultProfile {
     pub libs: Vec<String>,
 }
 
-pub fn read_config(path: String) -> Result<FoundryConfig, Box<dyn Error>> {
+pub fn read_config(path: &PathBuf) -> Result<FoundryConfig, Box<dyn Error>> {
     println!("Foundry config path: {:?}", path);
     let contents = read_to_string(path).unwrap();
     println!("Foundry config contents: {:?}", contents);

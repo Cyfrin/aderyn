@@ -79,6 +79,7 @@ pub fn run(filepaths: Vec<PathBuf>) -> Result<(), Box<dyn Error>> {
 }
 
 fn read_foundry_output_file(filepath: &str) -> Result<FoundryOutput> {
+    println!("Foundry output path: {:?}", filepath);
     Ok(serde_json::from_reader(BufReader::new(File::open(
         filepath,
     )?))?)
