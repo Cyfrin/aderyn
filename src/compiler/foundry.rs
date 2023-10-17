@@ -27,9 +27,18 @@ struct ProfileSection {
 
 #[derive(Debug, Deserialize)]
 struct DefaultProfile {
+    #[serde(default = "default_src")]
     src: String,
+    #[serde(default = "default_out")]
     out: String,
-    libs: Vec<String>,
+}
+
+fn default_src() -> String {
+    "src".to_string()
+}
+
+fn default_out() -> String {
+    "out".to_string()
 }
 
 // Load foundry and return a Vector of PathBufs to the AST JSON files
@@ -81,7 +90,17 @@ fn read_config(path: &PathBuf) -> Result<FoundryConfig, Box<dyn Error>> {
     println!("Foundry config path: {:?}", path);
     let contents = read_to_string(path).unwrap();
     println!("Foundry config contents: {:?}", contents);
-    let foundry_config: FoundryConfig = toml::from_str(&contents).unwrap();
+    let foundry_config_toml = toml::from_str(&contents);
+    let foundry_config = match foundry_config_toml {
+        Ok(config) => {
+            println!("Foundry config: {:?}", config);
+            config
+        }
+        Err(e) => {
+            eprintln!("Error parsing TOML: {:?}", e);
+            std::process::exit(1);
+        }
+    };
     println!("Foundry config: {:?}", foundry_config);
     Ok(foundry_config)
 }
@@ -146,7 +165,7 @@ fn get_matching_filepaths(subdirs: &[PathBuf], contract_files: &[String]) -> Vec
         for contract_name in contract_files {
             // Check if subdir string representation contains the contract name with ".sol"
             if let Some(subdir_str) = subdir.to_str() {
-                if subdir_str.contains(&format!("{}", contract_name)) {
+                if subdir_str.contains(&format!("/{}", contract_name)) {
                     // Construct the JSON file path and add it to matching_filepaths
                     let contract_name_path = PathBuf::from(contract_name);
                     if let Some(name_without_extension) = contract_name_path.file_stem() {

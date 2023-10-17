@@ -46,7 +46,8 @@ impl Node for Statement {
             }
             Statement::InlineAssembly(inline_assembly) => inline_assembly.accept(visitor),
             Statement::UnhandledStatement { .. } => {
-                panic!()
+                println!("Unhandled statement: {:?}", self);
+                Ok(())
             }
         }
     }
