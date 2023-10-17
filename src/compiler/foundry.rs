@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 use std::error::Error;
 use std::fs::{canonicalize, read_dir, read_to_string};
 use std::path::PathBuf;
+use std::process::Stdio;
 
 // Foundry compiler output file
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
@@ -40,6 +41,16 @@ pub fn load_foundry(foundry_root: PathBuf) -> Result<Vec<PathBuf>, Box<dyn Error
         eprintln!("{:?}", err);
         std::process::exit(1);
     });
+
+    // Run `forge build` in the root
+    let output = std::process::Command::new("forge")
+        .arg("build")
+        .current_dir(&foundry_root_absolute)
+        .stdout(Stdio::inherit()) // This will stream the stdout
+        .stderr(Stdio::inherit())
+        .status();
+    println!("forge build output: {:?}", output);
+
     let foundry_config_filepath = foundry_root_absolute.join("foundry.toml");
     let foundry_config = read_config(&foundry_config_filepath).unwrap_or_else(|_err| {
         // Exit with a non-zero exit code
@@ -47,7 +58,7 @@ pub fn load_foundry(foundry_root: PathBuf) -> Result<Vec<PathBuf>, Box<dyn Error
         std::process::exit(1);
     });
 
-    // 1. Get the file names of all contracts in the Foundry src directory
+    // Get the file names of all contracts in the Foundry src directory
     let foundry_src_path = foundry_root_absolute.join(&foundry_config.profile.default.src);
     let contract_files = collect_sol_files(&foundry_src_path).unwrap_or_else(|_err| {
         // Exit with a non-zero exit code
@@ -57,7 +68,7 @@ pub fn load_foundry(foundry_root: PathBuf) -> Result<Vec<PathBuf>, Box<dyn Error
     // print the found files
     println!("Foundry src files: {:?}", contract_files);
 
-    // 2. For each contract in the Foundry output directory, check if it is in the list of contracts in the Foundry src directory
+    // For each contract in the Foundry output directory, check if it is in the list of contracts in the Foundry src directory
     // (This is because some contracts may be imported but not deployed, or there may be old contracts in the output directory)
     let foundry_out_path = foundry_root_absolute.join(&foundry_config.profile.default.out);
     let file_paths = get_filepaths(foundry_out_path, &contract_files);
