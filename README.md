@@ -29,4 +29,4 @@ Create tools that utilize the context library to:
 
 ## Attribution
 * AST Visitor code from [solc-ast-rs](https://github.com/hrkrshnn/solc-ast-rs).
-* Current adapter clones based on [Slither](https://github.com/crytic/slither) detectors.
+* Current detectors based on [4nalyzer](https://github.com/Picodes/4naly3er) detectors.
