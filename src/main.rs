@@ -1,4 +1,4 @@
-use aderyn::{compiler::foundry::load_foundry, run};
+use aderyn::{framework::foundry::load_foundry, run};
 use clap::Parser;
 use std::path::PathBuf;
 

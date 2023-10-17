@@ -3,8 +3,8 @@ use std::error::Error;
 use crate::visitor::ast_visitor::Node;
 use crate::{
     ast::MemberAccess,
+    context::loader::{ASTNode, ContextLoader},
     detector::detector::{Detector, IssueSeverity},
-    loader::loader::{ASTNode, ContractLoader},
     visitor::ast_visitor::ASTConstVisitor,
 };
 use eyre::Result;
@@ -25,7 +25,7 @@ impl ASTConstVisitor for DelegateCallInLoopDetector {
 }
 
 impl Detector for DelegateCallInLoopDetector {
-    fn detect(&mut self, loader: &ContractLoader) -> Result<bool, Box<dyn Error>> {
+    fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
         for for_statement in loader.get_for_statements() {
             for_statement.accept(self)?;
         }
@@ -61,11 +61,11 @@ mod delegate_call_in_loop_detector_tests {
 
     #[test]
     fn test_delegate_call_in_loop_detector() {
-        let contract_loader = load_contract(
+        let context_loader = load_contract(
             "./tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",
         );
         let mut detector = DelegateCallInLoopDetector::default();
-        let found = detector.detect(&contract_loader).unwrap();
+        let found = detector.detect(&context_loader).unwrap();
         // assert that the detector found a delegate call in a loop
         assert!(found);
         // assert that the detector found the correct number of instances (1)

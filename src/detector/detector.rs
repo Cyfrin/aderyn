@@ -1,4 +1,5 @@
 use crate::{
+    context::loader::{ASTNode, ContextLoader},
     detector::{
         high::delegate_call_in_loop::DelegateCallInLoopDetector,
         medium::{
@@ -6,7 +7,6 @@ use crate::{
             solmate_safe_transfer_lib::SolmateSafeTransferLibDetector,
         },
     },
-    loader::loader::{ASTNode, ContractLoader},
 };
 use std::error::Error;
 
@@ -29,7 +29,7 @@ pub enum IssueSeverity {
 }
 
 pub trait Detector {
-    fn detect(&mut self, _loader: &ContractLoader) -> Result<bool, Box<dyn Error>> {
+    fn detect(&mut self, _loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
         Ok(true)
     }
 
@@ -52,14 +52,14 @@ pub trait Detector {
 
 pub mod detector_test_helpers {
     use crate::{
-        loader::loader::ContractLoader, read_foundry_output_file, visitor::ast_visitor::Node,
+        context::loader::ContextLoader, read_foundry_output_file, visitor::ast_visitor::Node,
     };
 
-    pub fn load_contract(filepath: &str) -> ContractLoader {
+    pub fn load_contract(filepath: &str) -> ContextLoader {
         let filepath = std::path::PathBuf::from(filepath);
-        let mut contract_loader = ContractLoader::default();
+        let mut context_loader = ContextLoader::default();
         let foundry_output = read_foundry_output_file(filepath.to_str().unwrap()).unwrap();
-        let _ = foundry_output.ast.accept(&mut contract_loader);
-        contract_loader
+        let _ = foundry_output.ast.accept(&mut context_loader);
+        context_loader
     }
 }
