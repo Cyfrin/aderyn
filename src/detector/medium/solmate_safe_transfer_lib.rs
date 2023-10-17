@@ -4,8 +4,8 @@ use crate::ast::ImportDirective;
 use crate::visitor::ast_visitor::Node;
 use crate::{
     ast::MemberAccess,
+    context::loader::{ASTNode, ContextLoader},
     detector::detector::{Detector, IssueSeverity},
-    loader::loader::{ASTNode, ContractLoader},
     visitor::ast_visitor::ASTConstVisitor,
 };
 use eyre::Result;
@@ -49,7 +49,7 @@ impl ASTConstVisitor for SolmateSafeTransferLibDetector {
 }
 
 impl Detector for SolmateSafeTransferLibDetector {
-    fn detect(&mut self, loader: &ContractLoader) -> Result<bool, Box<dyn Error>> {
+    fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
         for import_directive in loader.get_import_directives() {
             import_directive.accept(self)?;
         }
@@ -91,10 +91,10 @@ mod solmate_safe_transfer_lib_tests {
 
     #[test]
     fn test_solmate_safe_transfer_lib() {
-        let contract_loader =
+        let context_loader =
             load_contract("./tests/contract-playground/out/T11sTranferer.sol/T11sTranferer.json");
         let mut detector = SolmateSafeTransferLibDetector::default();
-        let found = detector.detect(&contract_loader).unwrap();
+        let found = detector.detect(&context_loader).unwrap();
         // assert that the detector found a delegate call in a loop
         assert!(found);
         // assert that the detector found the correct number of instances (1)

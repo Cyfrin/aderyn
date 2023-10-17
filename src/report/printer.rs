@@ -1,6 +1,6 @@
 use std::io::{Result, Write};
 
-use crate::loader::loader::ContractLoader;
+use crate::context::loader::ContextLoader;
 
 use super::report::{Issue, Report};
 
@@ -9,14 +9,10 @@ pub trait ReportPrinter {
         &self,
         writer: W,
         report: &Report,
-        loader: &ContractLoader,
+        loader: &ContextLoader,
     ) -> Result<()>;
-    fn print_issue<W: Write>(
-        &self,
-        writer: W,
-        issue: &Issue,
-        loader: &ContractLoader,
-    ) -> Result<()>;
+    fn print_issue<W: Write>(&self, writer: W, issue: &Issue, loader: &ContextLoader)
+        -> Result<()>;
 }
 
 pub struct MarkdownReportPrinter;
@@ -26,7 +22,7 @@ impl ReportPrinter for MarkdownReportPrinter {
         &self,
         mut writer: W,
         report: &Report,
-        loader: &ContractLoader,
+        loader: &ContextLoader,
     ) -> Result<()> {
         writeln!(writer, "# Critical Issues")?;
         for issue in &report.criticals {
@@ -59,7 +55,7 @@ impl ReportPrinter for MarkdownReportPrinter {
         &self,
         mut writer: W,
         issue: &Issue,
-        loader: &ContractLoader,
+        loader: &ContextLoader,
     ) -> Result<()> {
         writeln!(writer, "## {}\n{}", issue.title, issue.description)?;
         for instance in &issue.instances {

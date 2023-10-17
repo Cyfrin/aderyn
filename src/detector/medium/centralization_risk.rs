@@ -2,8 +2,8 @@ use std::error::Error;
 
 use crate::{
     ast::{ModifierInvocation, SourceUnit},
+    context::loader::{ASTNode, ContextLoader},
     detector::detector::{Detector, IssueSeverity},
-    loader::loader::{ASTNode, ContractLoader},
     visitor::ast_visitor::{ASTConstVisitor, Node},
 };
 use eyre::Result;
@@ -59,7 +59,7 @@ impl ASTConstVisitor for CentralizationRiskDetector {
 }
 
 impl Detector for CentralizationRiskDetector {
-    fn detect(&mut self, loader: &ContractLoader) -> Result<bool, Box<dyn Error>> {
+    fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
         for source_unit in loader.get_source_units() {
             source_unit.accept(self)?;
         }
@@ -92,10 +92,10 @@ mod centralization_risk_detector_tests {
 
     #[test]
     fn test_centralization_risk_detector() {
-        let contract_loader =
+        let context_loader =
             load_contract("./tests/contract-playground/out/AdminContract.sol/AdminContract.json");
         let mut detector = CentralizationRiskDetector::default();
-        let found = detector.detect(&contract_loader).unwrap();
+        let found = detector.detect(&context_loader).unwrap();
         // assert that the detector found a centralization risk
         assert!(found);
         // assert that the number of instances found is 2

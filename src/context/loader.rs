@@ -117,7 +117,7 @@ impl ASTNode {
 }
 
 #[derive(Default, Debug)]
-pub struct ContractLoader {
+pub struct ContextLoader {
     pub nodes: HashMap<i64, ASTNode>,
     last_source_unit_id: i64,
 
@@ -175,7 +175,7 @@ pub struct ContractLoader {
     while_statements: HashMap<WhileStatement, i64>,
 }
 
-impl ContractLoader {
+impl ContextLoader {
     pub fn get_node(&self, id: i64) -> Option<&ASTNode> {
         self.nodes.get(&id)
     }
@@ -271,7 +271,7 @@ impl ContractLoader {
     }
 }
 
-impl ASTConstVisitor for ContractLoader {
+impl ASTConstVisitor for ContextLoader {
     fn visit_array_type_name(&mut self, node: &ArrayTypeName) -> Result<bool> {
         self.array_type_names
             .insert(node.clone(), self.last_source_unit_id);
@@ -667,8 +667,8 @@ impl ASTConstVisitor for ContractLoader {
 #[cfg(test)]
 mod loader_tests {
     use crate::ast::*;
-    use crate::compiler::foundry::FoundryOutput;
-    use crate::loader::loader::ContractLoader;
+    use crate::context::loader::ContextLoader;
+    use crate::framework::foundry::FoundryOutput;
     use crate::visitor::ast_visitor::*;
     use eyre::Result;
 
@@ -694,7 +694,7 @@ mod loader_tests {
 
     #[test]
     fn test_delegate_call_in_loops() -> Result<()> {
-        let mut loader = ContractLoader::default();
+        let mut loader = ContextLoader::default();
         let extended_inheritance = read_compiler_output(
             "tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",
         )?;
