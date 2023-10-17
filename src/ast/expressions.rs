@@ -52,7 +52,13 @@ impl Node for Expression {
             }
             Expression::TupleExpression(tuple_expression) => tuple_expression.accept(visitor),
             Expression::NewExpression(new_expression) => new_expression.accept(visitor),
-            Expression::UnhandledExpression { .. } => panic!(),
+            Expression::UnhandledExpression { .. } => {
+                // TODO: this may cause reference errors later.
+                // Known unhandled expressions:
+                // - Foreign identifiers
+                eprintln!("UnhandledExpression: {:?}", self);
+                Ok(())
+            }
         }
     }
 }

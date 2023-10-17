@@ -22,8 +22,15 @@ pub fn run(filepaths: Vec<PathBuf>) -> Result<(), Box<dyn Error>> {
     let mut contract_loader = ContractLoader::default();
 
     for filepath in filepaths {
-        let foundry_output = read_foundry_output_file(filepath.to_str().unwrap())?;
-        foundry_output.ast.accept(&mut contract_loader)?;
+        // read_foundry_output_file and print an error message if it fails
+        if let Ok(foundry_output) = read_foundry_output_file(filepath.to_str().unwrap()) {
+            foundry_output.ast.accept(&mut contract_loader)?;
+        } else {
+            eprintln!(
+                "Error reading Foundry output file: {}",
+                filepath.to_str().unwrap()
+            );
+        }
     }
 
     println!(
