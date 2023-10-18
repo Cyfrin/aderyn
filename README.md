@@ -11,11 +11,11 @@ Note: These goals/priorities will change over time.
   * [x] [Medium: solmate SafeTransferLib does not check existence](https://github.com/Picodes/4naly3er/blob/main/src/issues/M/solmateSafeTransferLib.ts)
   * [x] [Low: Avoid encodePacked](https://github.com/Picodes/4naly3er/blob/main/src/issues/L/avoidEncodePacked.ts)
   * [ ] [Low: Deprecated functions](https://github.com/Picodes/4naly3er/blob/main/src/issues/L/deprecatedFunctions.ts)
-  * [ ] [Low: Empty function body](https://github.com/Picodes/4naly3er/blob/main/src/issues/L/emptyBody.ts)
-  * [ ] [Low: Front-runnable initializer](https://github.com/Picodes/4naly3er/blob/main/src/issues/L/frontRunnableInitializer.ts)
+  * [ ] ~[Low: Empty function body](https://github.com/Picodes/4naly3er/blob/main/src/issues/L/emptyBody.ts)~
+  * [ ] ~[Low: Front-runnable initializer](https://github.com/Picodes/4naly3er/blob/main/src/issues/L/frontRunnableInitializer.ts)~
   * [ ] [Low: Unsafe ERC20 Operations](https://github.com/Picodes/4naly3er/blob/main/src/issues/L/unsafeERC20Operations.ts)
   * [ ] [Low: Unspecific Pragma](https://github.com/Picodes/4naly3er/blob/main/src/issues/L/unspecifiedPragma.ts)
-  * [ ] [Low: Use of ecrecover](https://github.com/Picodes/4naly3er/blob/main/src/issues/L/useOfEcrecover.ts)
+  * [x] [Low: Use of ecrecover](https://github.com/Picodes/4naly3er/blob/main/src/issues/L/useOfEcrecover.ts)
   * [ ] [NC: Address(0) check](https://github.com/Picodes/4naly3er/blob/main/src/issues/NC/address0Check.ts)
   * [ ] [NC: Non-reentrant before modifiers](https://github.com/Picodes/4naly3er/blob/main/src/issues/NC/nonReentrantBeforeModifiers.ts)
   * [ ] [NC: Require with string](https://github.com/Picodes/4naly3er/blob/main/src/issues/NC/requireWithString.ts)
