@@ -2,19 +2,24 @@ use crate::{
     context::loader::{ASTNode, ContextLoader},
     detector::{
         high::delegate_call_in_loop::DelegateCallInLoopDetector,
+        low::{
+            avoid_abi_encode_packed::AvoidAbiEncodePackedDetector, ecrecover::EcrecoverDetector,
+        },
         medium::{
             centralization_risk::CentralizationRiskDetector,
             solmate_safe_transfer_lib::SolmateSafeTransferLibDetector,
         },
     },
 };
-use std::error::Error;
+use std::{error::Error, f32::consts::E};
 
 pub fn get_all_detectors() -> Vec<Box<dyn Detector>> {
     vec![
         Box::new(DelegateCallInLoopDetector::default()),
         Box::new(CentralizationRiskDetector::default()),
         Box::new(SolmateSafeTransferLibDetector::default()),
+        Box::new(AvoidAbiEncodePackedDetector::default()),
+        Box::new(EcrecoverDetector::default()),
     ]
 }
 
