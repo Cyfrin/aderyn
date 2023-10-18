@@ -188,6 +188,10 @@ impl ContextLoader {
         self.import_directives.keys().collect()
     }
 
+    pub fn get_function_definitions(&self) -> Vec<&FunctionDefinition> {
+        self.function_definitions.keys().collect()
+    }
+
     pub fn get_member_accesses(&self) -> Vec<&MemberAccess> {
         self.member_accesses.keys().collect()
     }
