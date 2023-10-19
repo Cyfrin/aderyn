@@ -5,7 +5,7 @@ import {Ownable} from "../lib/openzeppelin-contracts/contracts/access/Ownable.so
 
 contract AdminContract is Ownable {
 
-    constructor() Ownable(msg.sender) {}
+    constructor() Ownable() {}
 
     function setOwner(address _owner) external onlyOwner {
         _transferOwnership(_owner);
