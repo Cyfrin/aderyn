@@ -7,19 +7,34 @@ import {IERC20, SafeERC20} from "../lib/openzeppelin-contracts/contracts/token/E
 contract DeprecatedOZFunctions is AccessControl {
     using SafeERC20 for IERC20;
 
-    function grantRoleSuccess(bytes32 role, address account) external {
+    // Good
+    function grantRole0(bytes32 role, address account) external {
         grantRole(role, account);
     }
 
-    function setupRoleFailure(bytes32 role, address account) external {
+    // Good
+    function safeTransferFrom(IERC20 token, address from, address to, uint256 value) external {
+        token.safeTransferFrom(from, to, value);
+    }
+
+    // Bad (deprecated_oz_functions)
+    function setupRole(bytes32 role, address account) external {
         _setupRole(role, account);
     }
 
-    function approveSuccess(IERC20 token, address spender, uint256 value) external {
+    // Bad (deprecated_oz_functions)
+    function safeApprove(IERC20 token, address spender, uint256 value) external {
+        token.safeApprove(spender, value);
+    }
+
+    // Bad (unsafe_erc20_functions)
+    function approve(IERC20 token, address spender, uint256 value) external {
         token.approve(spender, value);
     }
 
-    function safeApproveFailure(IERC20 token, address spender, uint256 value) external {
-        token.safeApprove(spender, value);
+    // Bad (unsafe_erc20_functions)
+    function transferFrom(IERC20 token, address from, address to, uint256 value) external {
+        token.transferFrom(from, to, value);
     }
+
 }
