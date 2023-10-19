@@ -3,7 +3,8 @@ use crate::{
     detector::{
         high::delegate_call_in_loop::DelegateCallInLoopDetector,
         low::{
-            avoid_abi_encode_packed::AvoidAbiEncodePackedDetector, ecrecover::EcrecoverDetector,
+            avoid_abi_encode_packed::AvoidAbiEncodePackedDetector,
+            deprecated_oz_functions::DeprecatedOZFunctionsDetector, ecrecover::EcrecoverDetector,
         },
         medium::{
             centralization_risk::CentralizationRiskDetector,
@@ -11,7 +12,7 @@ use crate::{
         },
     },
 };
-use std::{error::Error, f32::consts::E};
+use std::error::Error;
 
 pub fn get_all_detectors() -> Vec<Box<dyn Detector>> {
     vec![
@@ -20,6 +21,7 @@ pub fn get_all_detectors() -> Vec<Box<dyn Detector>> {
         Box::new(SolmateSafeTransferLibDetector::default()),
         Box::new(AvoidAbiEncodePackedDetector::default()),
         Box::new(EcrecoverDetector::default()),
+        Box::new(DeprecatedOZFunctionsDetector::default()),
     ]
 }
 
