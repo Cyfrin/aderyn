@@ -10,7 +10,7 @@ Note: These goals/priorities will change over time.
   * [x] [Medium: centralization risk](https://github.com/Picodes/4naly3er/blob/main/src/issues/M/centralizationRisk.ts)
   * [x] [Medium: solmate SafeTransferLib does not check existence](https://github.com/Picodes/4naly3er/blob/main/src/issues/M/solmateSafeTransferLib.ts)
   * [x] [Low: Avoid encodePacked](https://github.com/Picodes/4naly3er/blob/main/src/issues/L/avoidEncodePacked.ts)
-  * [ ] [Low: Deprecated functions](https://github.com/Picodes/4naly3er/blob/main/src/issues/L/deprecatedFunctions.ts)
+  * [x] [Low: Deprecated functions](https://github.com/Picodes/4naly3er/blob/main/src/issues/L/deprecatedFunctions.ts)
   * [ ] ~[Low: Empty function body](https://github.com/Picodes/4naly3er/blob/main/src/issues/L/emptyBody.ts)~
   * [ ] ~[Low: Front-runnable initializer](https://github.com/Picodes/4naly3er/blob/main/src/issues/L/frontRunnableInitializer.ts)~
   * [ ] [Low: Unsafe ERC20 Operations](https://github.com/Picodes/4naly3er/blob/main/src/issues/L/unsafeERC20Operations.ts)
