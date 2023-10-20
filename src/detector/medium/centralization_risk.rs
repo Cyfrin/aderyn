@@ -10,7 +10,7 @@ use eyre::Result;
 
 #[derive(Default)]
 pub struct CentralizationRiskDetector {
-    pub found_centralization_risks: Vec<Option<ASTNode>>,
+    found_centralization_risks: Vec<Option<ASTNode>>,
 }
 
 impl ASTConstVisitor for CentralizationRiskDetector {

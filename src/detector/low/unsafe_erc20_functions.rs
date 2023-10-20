@@ -10,7 +10,7 @@ use eyre::Result;
 
 #[derive(Default)]
 pub struct UnsafeERC20FunctionsDetector {
-    pub found_unsafe_erc20_functions: Vec<Option<ASTNode>>,
+    found_unsafe_erc20_functions: Vec<Option<ASTNode>>,
 }
 
 impl ASTConstVisitor for UnsafeERC20FunctionsDetector {

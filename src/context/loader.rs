@@ -196,6 +196,36 @@ impl ContextLoader {
         self.identifiers.keys().collect()
     }
 
+    pub fn get_variable_declarations(&self) -> Vec<&VariableDeclaration> {
+        self.variable_declarations.keys().collect()
+    }
+
+    // TODO: This could be too domain specific for this module
+    // Consider replacing this with something more generic, and moving it to a different module
+    pub fn get_address_state_variables_by_id(&self) -> HashMap<i64, VariableDeclaration> {
+        self.variable_declarations
+            .iter()
+            .filter(|(key, _)| {
+                key.constant == false
+                    && matches!(key.mutability, Some(Mutability::Mutable))
+                    && key.state_variable
+                    && (key
+                        .type_descriptions
+                        .type_string
+                        .as_deref()
+                        .unwrap()
+                        .contains("address")
+                        || key
+                            .type_descriptions
+                            .type_string
+                            .as_deref()
+                            .unwrap()
+                            .contains("contract"))
+            })
+            .map(|(key, _)| (key.id, key.clone())) // Note the clone here
+            .collect()
+    }
+
     pub fn get_function_definitions(&self) -> Vec<&FunctionDefinition> {
         self.function_definitions.keys().collect()
     }

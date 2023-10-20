@@ -10,7 +10,7 @@ use eyre::Result;
 
 #[derive(Default)]
 pub struct EcrecoverDetector {
-    pub found_ecrecover: Vec<Option<ASTNode>>,
+    found_ecrecover: Vec<Option<ASTNode>>,
 }
 
 impl ASTConstVisitor for EcrecoverDetector {

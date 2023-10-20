@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.20;
 
+import {Counter} from "./Counter.sol";
+
 contract StateVariables {
     // uint256 empty, static, private, internal, public
     uint256 private staticPrivateNumber;
@@ -32,10 +34,28 @@ contract StateVariables {
     uint256 internal immutable internalImmutableNumber;
     uint256 public immutable publicImmutableNumber;
 
+    address public addr;
+
     constructor(uint256 _privateImmutableNumber, uint256 _internalImmutableNumber, uint256 _publicImmutableNumber) {
         privateImmutableNumber = _privateImmutableNumber;
         internalImmutableNumber = _internalImmutableNumber;
         publicImmutableNumber = _publicImmutableNumber;
+    }
+
+    error ZeroAddressError();
+
+    function setAddrNoZeroError(address newAddr) public {
+        if (newAddr == address(0)) revert ZeroAddressError();
+        addr = newAddr;
+    }
+
+    function setAddrNoZeroRequire(address newAddr) public {
+        require(newAddr != address(0), "Address cannot be zero");
+        addr = newAddr;
+    }
+
+    function setAddrNoCheck(address newAddr) public {
+        addr = newAddr;
     }
 
     function setEmptyAlteredNumbers(uint256 _emptyAlteredPrivateNumber, uint256 _emptyAlteredInternalNumber, uint256 _emptyAlteredPublicNumber) public {
