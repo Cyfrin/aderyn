@@ -14,16 +14,16 @@ There is a subtle difference between the implementation of solmate's SafeTransfe
 https://github.com/transmissions11/solmate/blob/main/src/utils/SafeTransferLib.sol#L9 
 `@dev Note that none of the functions in this library check that a token has code at all! That responsibility is delegated to the caller`
 
+- Found in src/DeprecatedOZFunctions.sol: 898:17:37
 - Found in src/DeprecatedOZFunctions.sol: 579:22:37
 - Found in src/T11sTranferer.sol: 294:18:43
-- Found in src/DeprecatedOZFunctions.sol: 898:17:37
 # Low Issues
 ## `abi.encodePacked()` should not be used with dynamic types when passing the result to a hash function such as `keccak256()`
 Use `abi.encode()` instead which will pad items to 32 bytes, which will [prevent hash collisions](https://docs.soliditylang.org/en/v0.8.13/abi-spec.html#non-standard-packed-mode) (e.g. `abi.encodePacked(0x123,0x456)` => `0x123456` => `abi.encodePacked(0x1,0x23456)`, but `abi.encode(0x123,0x456)` => `0x0...1230...456`). Unless there is a compelling reason, `abi.encode` should be preferred. If there is only one argument to `abi.encodePacked()` it can often be cast to `bytes()` or `bytes32()` [instead](https://ethereum.stackexchange.com/questions/30912/how-to-compare-strings-in-solidity#answer-82739).
 If all arguments are strings and or bytes, `bytes.concat()` should be used instead.
 - Found in src/KeccakContract.sol: 584:16:41
-- Found in src/KeccakContract.sol: 731:16:41
 - Found in src/KeccakContract.sol: 878:16:41
+- Found in src/KeccakContract.sol: 731:16:41
 ## `ecrecover` is susceptible to signature malleability
 The `ecrecover` function is susceptible to signature malleability. This means that the same message can be signed in multiple ways, allowing an attacker to change the message signature without invalidating it. This can lead to unexpected behavior in smart contracts, such as the loss of funds or the ability to bypass access control. Consider using OpenZeppelin's ECDSA library instead of the built-in function.
 - Found in src/ExtendedInheritance.sol: 638:9:0
@@ -38,7 +38,6 @@ ERC20 functions may not behave as expected. For example: return values are not a
 ## Solidity pragma should be specific, not wide
 Consider using a specific version of Solidity in your contracts instead of a wide version. For example, instead of `pragma solidity ^0.8.0;`, use `pragma solidity 0.8.0;`
 - Found in src/IContractInheritance.sol: 32:24:39
-- Found in src/InheritanceBase.sol: 32:23:2
 - Found in src/Counter.sol: 39:24:36
+- Found in src/InheritanceBase.sol: 32:23:2
 # NC Issues
-# Gas Issues

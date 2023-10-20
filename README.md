@@ -24,7 +24,7 @@ Note: These goals/priorities will change over time.
   * [ ] [NC: Unindexed events](https://github.com/Picodes/4naly3er/blob/main/src/issues/NC/unindexedEvent.ts)
   * [ ] [NC: Use constants](https://github.com/Picodes/4naly3er/blob/main/src/issues/NC/useConstants.ts)
   * [ ] [NC: Useless public function](https://github.com/Picodes/4naly3er/blob/main/src/issues/NC/uselessPublic.ts)
-  * [ ] [GAS: All](https://github.com/Picodes/4naly3er/tree/main/src/issues/GAS)
+  * [ ] ~[GAS: All](https://github.com/Picodes/4naly3er/tree/main/src/issues/GAS)~
 
 ### Medium-term goals - Auditor Aid:
 * [x] Support Multiple Abstract Syntax Trees representing multiple Solidity files
