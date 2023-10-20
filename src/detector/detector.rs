@@ -6,6 +6,7 @@ use crate::{
             avoid_abi_encode_packed::AvoidAbiEncodePackedDetector,
             deprecated_oz_functions::DeprecatedOZFunctionsDetector, ecrecover::EcrecoverDetector,
             unsafe_erc20_functions::UnsafeERC20FunctionsDetector,
+            unspecific_solidity_pragma::UnspecificSolidityPragmaDetector,
         },
         medium::{
             centralization_risk::CentralizationRiskDetector,
@@ -24,6 +25,7 @@ pub fn get_all_detectors() -> Vec<Box<dyn Detector>> {
         Box::new(EcrecoverDetector::default()),
         Box::new(DeprecatedOZFunctionsDetector::default()),
         Box::new(UnsafeERC20FunctionsDetector::default()),
+        Box::new(UnspecificSolidityPragmaDetector::default()),
     ]
 }
 
