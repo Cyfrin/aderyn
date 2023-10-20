@@ -69,9 +69,6 @@ pub fn run(filepaths: Vec<PathBuf>) -> Result<(), Box<dyn Error>> {
                     IssueSeverity::NC => {
                         report.ncs.push(issue);
                     }
-                    IssueSeverity::Gas => {
-                        report.gas.push(issue);
-                    }
                 }
             }
         }

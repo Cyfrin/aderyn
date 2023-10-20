@@ -44,10 +44,6 @@ impl ReportPrinter for MarkdownReportPrinter {
         for issue in &report.ncs {
             self.print_issue(&mut writer, issue, loader)?;
         }
-        writeln!(writer, "# Gas Issues")?;
-        for issue in &report.gas {
-            self.print_issue(&mut writer, issue, loader)?;
-        }
         Ok(())
     }
 

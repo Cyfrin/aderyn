@@ -31,7 +31,6 @@ pub fn get_all_detectors() -> Vec<Box<dyn Detector>> {
 
 #[derive(Debug, PartialEq)]
 pub enum IssueSeverity {
-    Gas,
     NC,
     Low,
     Medium,
