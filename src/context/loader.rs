@@ -184,6 +184,10 @@ impl ContextLoader {
         &self.source_units
     }
 
+    pub fn get_pragma_directives(&self) -> Vec<&PragmaDirective> {
+        self.pragma_directives.keys().collect()
+    }
+
     pub fn get_import_directives(&self) -> Vec<&ImportDirective> {
         self.import_directives.keys().collect()
     }
