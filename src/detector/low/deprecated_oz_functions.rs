@@ -10,7 +10,7 @@ use eyre::Result;
 
 #[derive(Default)]
 pub struct DeprecatedOZFunctionsDetector {
-    pub found_deprecated_oz_functions: Vec<Option<ASTNode>>,
+    found_deprecated_oz_functions: Vec<Option<ASTNode>>,
 }
 
 impl ASTConstVisitor for DeprecatedOZFunctionsDetector {

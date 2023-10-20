@@ -11,7 +11,7 @@ use eyre::Result;
 
 #[derive(Default)]
 pub struct DelegateCallInLoopDetector {
-    pub found_delegate_call_in_loop: Vec<Option<ASTNode>>,
+    found_delegate_call_in_loop: Vec<Option<ASTNode>>,
 }
 
 impl ASTConstVisitor for DelegateCallInLoopDetector {

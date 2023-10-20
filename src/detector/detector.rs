@@ -12,6 +12,7 @@ use crate::{
             centralization_risk::CentralizationRiskDetector,
             solmate_safe_transfer_lib::SolmateSafeTransferLibDetector,
         },
+        nc::zero_address_check::ZeroAddressCheckDetector,
     },
 };
 use std::error::Error;
@@ -26,6 +27,7 @@ pub fn get_all_detectors() -> Vec<Box<dyn Detector>> {
         Box::new(DeprecatedOZFunctionsDetector::default()),
         Box::new(UnsafeERC20FunctionsDetector::default()),
         Box::new(UnspecificSolidityPragmaDetector::default()),
+        Box::new(ZeroAddressCheckDetector::default()),
     ]
 }
 

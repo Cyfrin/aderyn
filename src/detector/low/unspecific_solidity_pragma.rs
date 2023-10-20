@@ -10,7 +10,7 @@ use eyre::Result;
 
 #[derive(Default)]
 pub struct UnspecificSolidityPragmaDetector {
-    pub found_unspecific_solidity_pragma: Vec<Option<ASTNode>>,
+    found_unspecific_solidity_pragma: Vec<Option<ASTNode>>,
 }
 
 impl ASTConstVisitor for UnspecificSolidityPragmaDetector {

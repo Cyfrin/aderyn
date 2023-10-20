@@ -10,7 +10,7 @@ use eyre::Result;
 
 #[derive(Default)]
 pub struct AvoidAbiEncodePackedDetector {
-    pub found_abi_encode_packed: Vec<Option<ASTNode>>,
+    found_abi_encode_packed: Vec<Option<ASTNode>>,
 }
 
 impl ASTConstVisitor for AvoidAbiEncodePackedDetector {

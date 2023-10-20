@@ -12,8 +12,8 @@ use eyre::Result;
 
 #[derive(Default)]
 pub struct SolmateSafeTransferLibDetector {
-    pub found_solmate_import: bool,
-    pub found_transfer_usage: Vec<Option<ASTNode>>,
+    found_solmate_import: bool,
+    found_transfer_usage: Vec<Option<ASTNode>>,
 }
 
 impl ASTConstVisitor for SolmateSafeTransferLibDetector {
