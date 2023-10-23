@@ -196,6 +196,10 @@ impl ContextLoader {
         self.identifiers.keys().collect()
     }
 
+    pub fn get_event_definitions(&self) -> Vec<&EventDefinition> {
+        self.event_definitions.keys().collect()
+    }
+
     pub fn get_variable_declarations(&self) -> Vec<&VariableDeclaration> {
         self.variable_declarations.keys().collect()
     }
