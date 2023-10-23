@@ -15,7 +15,7 @@ pub struct ConstantsInsteadOfLiteralsDetector {
 
 impl ASTConstVisitor for ConstantsInsteadOfLiteralsDetector {
     fn visit_literal(&mut self, node: &Literal) -> Result<bool> {
-        if node.kind == LiteralKind::Number
+        if (node.kind == LiteralKind::Number && node.value != Some(String::from("0")))
             || node.kind == LiteralKind::HexString
             || node.kind == LiteralKind::Address
         {
