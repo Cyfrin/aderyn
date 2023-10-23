@@ -11,4 +11,8 @@ contract Counter {
     function increment() public {
         number++;
     }
+
+    function callIncrement() external {
+        increment();
+    }
 }
