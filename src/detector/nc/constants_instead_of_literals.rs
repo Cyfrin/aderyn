@@ -71,6 +71,17 @@ mod constants_instead_of_literals_tests {
         assert!(found);
         // assert that the detector finds the correct number of instances
         assert_eq!(detector.instances().len(), 1);
-        //
+        // assert that the detector returns the correct severity
+        assert_eq!(
+            detector.severity(),
+            crate::detector::detector::IssueSeverity::NC
+        );
+        // assert that the detector returns the correct title
+        assert_eq!(
+            detector.title(),
+            String::from("Constants should be defined and used instead of literals")
+        );
+        // assert that the detector returns the correct description
+        assert_eq!(detector.description(), String::from(""));
     }
 }

@@ -21,7 +21,7 @@ Note: These goals/priorities will change over time.
   * [ ] [NC: Require with string](https://github.com/Picodes/4naly3er/blob/main/src/issues/NC/requireWithString.ts)
   * [ ] [NC: Return value from approve](https://github.com/Picodes/4naly3er/blob/main/src/issues/NC/returnValueOfApprove.ts)
   * [ ] [NC: Todo in code](https://github.com/Picodes/4naly3er/blob/main/src/issues/NC/todoLeftInTheCode.ts)
-  * [ ] [NC: Unindexed events](https://github.com/Picodes/4naly3er/blob/main/src/issues/NC/unindexedEvent.ts)
+  * [x] [NC: Unindexed events](https://github.com/Picodes/4naly3er/blob/main/src/issues/NC/unindexedEvent.ts)
   * [x] [NC: Use constants](https://github.com/Picodes/4naly3er/blob/main/src/issues/NC/useConstants.ts)
   * [x] [NC: Useless public function](https://github.com/Picodes/4naly3er/blob/main/src/issues/NC/uselessPublic.ts)
   * [ ] ~[GAS: All](https://github.com/Picodes/4naly3er/tree/main/src/issues/GAS)~

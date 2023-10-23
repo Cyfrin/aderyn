@@ -14,6 +14,7 @@ use crate::{
         },
         nc::{
             constants_instead_of_literals::ConstantsInsteadOfLiteralsDetector,
+            unindexed_events::UnindexedEventsDetector,
             useless_public_function::UselessPublicFunctionDetector,
             zero_address_check::ZeroAddressCheckDetector,
         },
@@ -34,6 +35,7 @@ pub fn get_all_detectors() -> Vec<Box<dyn Detector>> {
         Box::new(ZeroAddressCheckDetector::default()),
         Box::new(UselessPublicFunctionDetector::default()),
         Box::new(ConstantsInsteadOfLiteralsDetector::default()),
+        Box::new(UnindexedEventsDetector::default()),
     ]
 }
 

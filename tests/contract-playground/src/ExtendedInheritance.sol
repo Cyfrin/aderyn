@@ -5,6 +5,7 @@ import "./InheritanceBase.sol";
 
 contract ExtendedInheritance is InheritanceBase {
     event DoSomethingElse(uint256 somethingElse);
+    event DoSomethingElseWithIndex(uint256 indexed somethingElse);
 
     function doSomething(uint256 somethingElse) external override {
         emit DoSomethingElse(somethingElse);
