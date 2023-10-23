@@ -14,6 +14,7 @@ use crate::{
         },
         nc::{
             constants_instead_of_literals::ConstantsInsteadOfLiteralsDetector,
+            non_reentrant_before_others::NonReentrantBeforeOthersDetector,
             require_with_string::RequireWithStringDetector,
             unindexed_events::UnindexedEventsDetector,
             useless_public_function::UselessPublicFunctionDetector,
@@ -38,6 +39,7 @@ pub fn get_all_detectors() -> Vec<Box<dyn Detector>> {
         Box::new(ConstantsInsteadOfLiteralsDetector::default()),
         Box::new(UnindexedEventsDetector::default()),
         Box::new(RequireWithStringDetector::default()),
+        Box::new(NonReentrantBeforeOthersDetector::default()),
     ]
 }
 

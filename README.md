@@ -17,7 +17,7 @@ Note: These goals/priorities will change over time.
   * [x] [Low: Unspecific Pragma](https://github.com/Picodes/4naly3er/blob/main/src/issues/L/unspecifiedPragma.ts)
   * [x] [Low: Use of ecrecover](https://github.com/Picodes/4naly3er/blob/main/src/issues/L/useOfEcrecover.ts)
   * [x] [NC: Address(0) check](https://github.com/Picodes/4naly3er/blob/main/src/issues/NC/address0Check.ts)
-  * [ ] [NC: Non-reentrant before modifiers](https://github.com/Picodes/4naly3er/blob/main/src/issues/NC/nonReentrantBeforeModifiers.ts)
+  * [x] [NC: Non-reentrant before modifiers](https://github.com/Picodes/4naly3er/blob/main/src/issues/NC/nonReentrantBeforeModifiers.ts)
   * [x] [NC: Require with string](https://github.com/Picodes/4naly3er/blob/main/src/issues/NC/requireWithString.ts)
   * [ ] [NC: Return value from approve](https://github.com/Picodes/4naly3er/blob/main/src/issues/NC/returnValueOfApprove.ts)
   * [ ] ~[NC: Todo in code](https://github.com/Picodes/4naly3er/blob/main/src/issues/NC/todoLeftInTheCode.ts)~ -> Need Regex detector support unless the TODO statements are in StructuredDocumentation blocks
