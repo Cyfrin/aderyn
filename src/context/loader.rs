@@ -204,6 +204,10 @@ impl ContextLoader {
         self.variable_declarations.keys().collect()
     }
 
+    pub fn get_modifier_invocations(&self) -> Vec<&ModifierInvocation> {
+        self.modifier_invocations.keys().collect()
+    }
+
     // TODO: This could be too domain specific for this module
     // Consider replacing this with something more generic, and moving it to a different module
     pub fn get_address_state_variables_by_id(&self) -> HashMap<i64, VariableDeclaration> {
