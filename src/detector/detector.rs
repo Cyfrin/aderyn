@@ -13,6 +13,7 @@ use crate::{
             solmate_safe_transfer_lib::SolmateSafeTransferLibDetector,
         },
         nc::{
+            constants_instead_of_literals::ConstantsInsteadOfLiteralsDetector,
             useless_public_function::UselessPublicFunctionDetector,
             zero_address_check::ZeroAddressCheckDetector,
         },
@@ -32,6 +33,7 @@ pub fn get_all_detectors() -> Vec<Box<dyn Detector>> {
         Box::new(UnspecificSolidityPragmaDetector::default()),
         Box::new(ZeroAddressCheckDetector::default()),
         Box::new(UselessPublicFunctionDetector::default()),
+        Box::new(ConstantsInsteadOfLiteralsDetector::default()),
     ]
 }
 
