@@ -11,4 +11,8 @@ contract AdminContract is Ownable, ReentrancyGuard {
     function setOwner(address _owner) external onlyOwner nonReentrant {
         _transferOwnership(_owner);
     }
+
+    function someOtherImportantThing() external nonReentrant onlyOwner {
+        // do something important
+    }
 }

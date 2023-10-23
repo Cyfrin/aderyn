@@ -99,7 +99,7 @@ mod centralization_risk_detector_tests {
         // assert that the detector found a centralization risk
         assert!(found);
         // assert that the number of instances found is 2
-        assert_eq!(detector.instances().len(), 2);
+        assert_eq!(detector.instances().len(), 3);
         // assert that the severity is medium
         assert_eq!(
             detector.severity(),
