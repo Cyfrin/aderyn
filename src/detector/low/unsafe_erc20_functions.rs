@@ -68,7 +68,7 @@ mod unsafe_erc20_functions_tests {
         assert!(found);
         // assert that the detector found the correct abi encode packed
         // failure0, failure1 and failure3
-        assert_eq!(detector.instances().len(), 2);
+        assert_eq!(detector.instances().len(), 5);
         // assert that the severity is low
         assert_eq!(
             detector.severity(),

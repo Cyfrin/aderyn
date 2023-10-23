@@ -12,11 +12,14 @@ contract Counter {
         number++;
     }
 
+    // TODO
     function callIncrement() external {
         increment();
     }
 
+    /// TODO
     function incrementByTwoMagic() external {
+        // TODO
         number += 2;
     }
 
