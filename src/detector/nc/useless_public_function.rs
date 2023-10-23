@@ -1,10 +1,9 @@
-use std::error::Error;
+use std::{collections::HashSet, error::Error};
 
 use crate::{
-    ast::{Identifier, Visibility},
+    ast::Visibility,
     context::loader::{ASTNode, ContextLoader},
     detector::detector::{Detector, IssueSeverity},
-    visitor::ast_visitor::{ASTConstVisitor, Node},
 };
 use eyre::Result;
 
@@ -13,39 +12,27 @@ pub struct UselessPublicFunctionDetector {
     found_useless_public_function: Vec<Option<ASTNode>>,
 }
 
-impl ASTConstVisitor for UselessPublicFunctionDetector {
-    fn visit_identifier(&mut self, node: &Identifier) -> Result<bool> {
-        // If there are any items in the found_useless_public_function vector that have an ID
-        // equal to node.referenced_declaration, remove that item from the vector
-        self.found_useless_public_function.retain(|f| {
-            match f {
-                Some(ASTNode::FunctionDefinition(func_def)) => {
-                    func_def.id != node.referenced_declaration
-                }
-                _ => true, // retain the item if it's not a FunctionDefinition
-            }
-        });
-        Ok(true)
-    }
-}
-
 impl Detector for UselessPublicFunctionDetector {
     fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
-        // Get all FunctionDefinitions that are `public`, and store them in a vector
-        let binding = loader.get_function_definitions();
-        let new_nodes = binding
+        // Collect the ids of all functions referenced by identifiers.
+        let referenced_functions: HashSet<_> = loader
+            .get_identifiers()
             .iter()
-            .filter(|f| f.visibility == Visibility::Public)
-            .map(|f| Some(ASTNode::FunctionDefinition((**f).clone())));
+            .map(|i| i.referenced_declaration)
+            .collect();
 
-        self.found_useless_public_function.extend(new_nodes);
+        let function_definitions = loader.get_function_definitions();
 
-        // Visit all Identifiers and check if the function_call.expression.referenced_declaration is
-        loader.get_identifiers().iter().for_each(|i| {
-            i.accept(self).unwrap();
-        });
+        // Collect all public FunctionDefinitions which are not in the referenced set.
+        let unreferenced_public_functions = function_definitions
+            .iter()
+            .filter(|f| f.visibility == Visibility::Public && !referenced_functions.contains(&f.id))
+            .map(|f| Some(ASTNode::FunctionDefinition((*f).clone())));
 
-        Ok(self.found_useless_public_function.len() > 0)
+        self.found_useless_public_function
+            .extend(unreferenced_public_functions);
+
+        Ok(!self.found_useless_public_function.is_empty())
     }
 
     fn title(&self) -> String {
