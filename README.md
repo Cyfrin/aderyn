@@ -30,7 +30,7 @@ Note: These goals/priorities will change over time.
 * [x] Support Multiple Abstract Syntax Trees representing multiple Solidity files
 * Support Foundry/Hardhat/Truffle/Solc output formats for ingesting AST
   * [x] Foundry
-  * [ ] Hardhat
+  * [x] Hardhat
 * Support functionality from:
   * Consensys Solidity Analyzer
     * Complexity
