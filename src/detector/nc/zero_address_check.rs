@@ -120,7 +120,7 @@ impl Detector for ZeroAddressCheckDetector {
             }
         }
 
-        Ok(self.found_no_zero_address_check.len() > 0)
+        Ok(!self.found_no_zero_address_check.is_empty())
     }
 
     fn title(&self) -> String {

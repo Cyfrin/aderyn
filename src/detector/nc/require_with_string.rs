@@ -23,7 +23,7 @@ impl Detector for RequireWithStringDetector {
             .collect();
 
         for id in requires_and_reverts {
-            if id.name == "revert" && id.argument_types.as_ref().unwrap().len() == 0 {
+            if id.name == "revert" && id.argument_types.as_ref().unwrap().is_empty() {
                 self.found_require_without_string
                     .push(Some(ASTNode::Identifier(id.clone())));
             } else if id.name == "require" && id.argument_types.as_ref().unwrap().len() == 1 {

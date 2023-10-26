@@ -16,7 +16,7 @@ pub struct UnspecificSolidityPragmaDetector {
 impl ASTConstVisitor for UnspecificSolidityPragmaDetector {
     fn visit_pragma_directive(&mut self, node: &PragmaDirective) -> Result<bool> {
         for literal in &node.literals {
-            if literal.contains("^") || literal.contains(">") {
+            if literal.contains('^') || literal.contains('>') {
                 self.found_unspecific_solidity_pragma
                     .push(Some(ASTNode::PragmaDirective(node.clone())));
                 break;
@@ -31,7 +31,7 @@ impl Detector for UnspecificSolidityPragmaDetector {
         for pragma_directive in loader.get_pragma_directives() {
             pragma_directive.accept(self)?;
         }
-        Ok(self.found_unspecific_solidity_pragma.len() > 0)
+        Ok(!self.found_unspecific_solidity_pragma.is_empty())
     }
 
     fn title(&self) -> String {

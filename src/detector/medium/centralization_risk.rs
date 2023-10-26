@@ -64,7 +64,7 @@ impl Detector for CentralizationRiskDetector {
             source_unit.accept(self)?;
         }
 
-        Ok(self.found_centralization_risks.len() > 0)
+        Ok(!self.found_centralization_risks.is_empty())
     }
 
     fn severity(&self) -> IssueSeverity {

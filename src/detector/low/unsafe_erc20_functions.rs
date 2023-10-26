@@ -31,7 +31,7 @@ impl Detector for UnsafeERC20FunctionsDetector {
         for member_access in loader.get_member_accesses() {
             member_access.accept(self)?;
         }
-        Ok(self.found_unsafe_erc20_functions.len() > 0)
+        Ok(!self.found_unsafe_erc20_functions.is_empty())
     }
 
     fn title(&self) -> String {
