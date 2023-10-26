@@ -64,9 +64,9 @@ https://github.com/transmissions11/solmate/blob/main/src/utils/SafeTransferLib.s
 Use `abi.encode()` instead which will pad items to 32 bytes, which will [prevent hash collisions](https://docs.soliditylang.org/en/v0.8.13/abi-spec.html#non-standard-packed-mode) (e.g. `abi.encodePacked(0x123,0x456)` => `0x123456` => `abi.encodePacked(0x1,0x23456)`, but `abi.encode(0x123,0x456)` => `0x0...1230...456`). Unless there is a compelling reason, `abi.encode` should be preferred. If there is only one argument to `abi.encodePacked()` it can often be cast to `bytes()` or `bytes32()` [instead](https://ethereum.stackexchange.com/questions/30912/how-to-compare-strings-in-solidity#answer-82739).
 If all arguments are strings and or bytes, `bytes.concat()` should be used instead.
 
-- Found in src/KeccakContract.sol: 584:16:42
-- Found in src/KeccakContract.sol: 731:16:42
 - Found in src/KeccakContract.sol: 878:16:42
+- Found in src/KeccakContract.sol: 731:16:42
+- Found in src/KeccakContract.sol: 584:16:42
 
 
 <a name="L-2"></a>
@@ -92,10 +92,10 @@ Openzeppelin has deprecated several functions and replaced with newer versions. 
 ERC20 functions may not behave as expected. For example: return values are not always meaningful. It is recommended to use OpenZeppelin's SafeERC20 library.
 
 - Found in src/DeprecatedOZFunctions.sol: 1062:13:38
-- Found in src/DeprecatedOZFunctions.sol: 1598:18:38
 - Found in src/DeprecatedOZFunctions.sol: 1322:13:38
-- Found in src/DeprecatedOZFunctions.sol: 1424:13:38
 - Found in src/DeprecatedOZFunctions.sol: 1272:13:38
+- Found in src/DeprecatedOZFunctions.sol: 1598:18:38
+- Found in src/DeprecatedOZFunctions.sol: 1424:13:38
 
 
 <a name="L-5"></a>
@@ -104,8 +104,8 @@ ERC20 functions may not behave as expected. For example: return values are not a
 Consider using a specific version of Solidity in your contracts instead of a wide version. For example, instead of `pragma solidity ^0.8.0;`, use `pragma solidity 0.8.0;`
 
 - Found in src/InheritanceBase.sol: 32:23:41
-- Found in src/Counter.sol: 39:24:37
 - Found in src/IContractInheritance.sol: 32:24:40
+- Found in src/Counter.sol: 39:24:37
 
 
 # NC Issues
@@ -123,14 +123,14 @@ Assigning values to address state variables without checking for `address(0)`.
 
 
 
-- Found in src/StateVariables.sol: 2063:79:43
-- Found in src/StateVariables.sol: 2148:346:43
-- Found in src/StateVariables.sol: 1426:292:43
-- Found in src/StateVariables.sol: 2500:376:43
 - Found in src/Counter.sol: 120:80:37
+- Found in src/StateVariables.sol: 2063:79:43
+- Found in src/StateVariables.sol: 2500:376:43
 - Found in src/AdminContract.sol: 302:26:36
 - Found in src/StateVariables.sol: 1906:151:43
+- Found in src/StateVariables.sol: 2148:346:43
 - Found in src/StateVariables.sol: 1755:145:43
+- Found in src/StateVariables.sol: 1426:292:43
 
 
 <a name="NC-3"></a>
