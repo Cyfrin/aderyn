@@ -56,7 +56,6 @@ impl Node for Expression {
                 // TODO: this may cause reference errors later.
                 // Known unhandled expressions:
                 // - Foreign identifiers
-                // eprintln!("UnhandledExpression: {:?}", self);
                 Ok(())
             }
         }
