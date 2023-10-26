@@ -2,7 +2,8 @@ use crate::ast::*;
 use eyre::Result;
 use serde::{Deserialize, Serialize};
 use std::error::Error;
-use std::fs::{canonicalize, read_dir, read_to_string};
+use std::fs::{canonicalize, read_dir, read_to_string, File};
+use std::io::BufReader;
 use std::path::PathBuf;
 use std::process::Stdio;
 
@@ -39,6 +40,13 @@ fn default_src() -> String {
 
 fn default_out() -> String {
     "out".to_string()
+}
+
+pub fn read_foundry_output_file(filepath: &str) -> Result<FoundryOutput> {
+    println!("Foundry output path: {:?}", filepath);
+    Ok(serde_json::from_reader(BufReader::new(File::open(
+        filepath,
+    )?))?)
 }
 
 // Load foundry and return a Vector of PathBufs to the AST JSON files

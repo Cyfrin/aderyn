@@ -561,25 +561,25 @@
         43207
       ],
       "Context": [
-        44235
+        44300
       ],
       "ERC165": [
-        44488
+        44553
       ],
       "IAccessControl": [
         43280
       ],
       "IERC165": [
-        44500
+        44565
       ],
       "Math": [
-        45366
+        45431
       ],
       "SignedMath": [
-        45471
+        45536
       ],
       "Strings": [
-        44464
+        44529
       ]
     },
     "nodeType": "SourceUnit",
@@ -619,7 +619,7 @@
         "file": "../utils/Context.sol",
         "nameLocation": "-1:-1:-1",
         "scope": 43208,
-        "sourceUnit": 44236,
+        "sourceUnit": 44301,
         "symbolAliases": [],
         "unitAlias": ""
       },
@@ -632,7 +632,7 @@
         "file": "../utils/Strings.sol",
         "nameLocation": "-1:-1:-1",
         "scope": 43208,
-        "sourceUnit": 44465,
+        "sourceUnit": 44530,
         "symbolAliases": [],
         "unitAlias": ""
       },
@@ -645,7 +645,7 @@
         "file": "../utils/introspection/ERC165.sol",
         "nameLocation": "-1:-1:-1",
         "scope": 43208,
-        "sourceUnit": 44489,
+        "sourceUnit": 44554,
         "symbolAliases": [],
         "unitAlias": ""
       },
@@ -1130,7 +1130,7 @@
                         "memberLocation": "2897:17:19",
                         "memberName": "supportsInterface",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 44487,
+                        "referencedDeclaration": 44552,
                         "src": "2891:23:19",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_internal_view$_t_bytes4_$returns$_t_bool_$",
@@ -1167,7 +1167,7 @@
               ]
             },
             "baseFunctions": [
-              44487
+              44552
             ],
             "documentation": {
               "id": 42931,
@@ -1513,7 +1513,7 @@
                           "name": "_msgSender",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 44225,
+                          "referencedDeclaration": 44290,
                           "src": "3543:10:19",
                           "typeDescriptions": {
                             "typeIdentifier": "t_function_internal_view$__$returns$_t_address_$",
@@ -1790,10 +1790,10 @@
                                           "name": "Strings",
                                           "nodeType": "Identifier",
                                           "overloadedDeclarations": [],
-                                          "referencedDeclaration": 44464,
+                                          "referencedDeclaration": 44529,
                                           "src": "4115:7:19",
                                           "typeDescriptions": {
-                                            "typeIdentifier": "t_type$_t_contract$_Strings_$44464_$",
+                                            "typeIdentifier": "t_type$_t_contract$_Strings_$44529_$",
                                             "typeString": "type(library Strings)"
                                           }
                                         },
@@ -1805,7 +1805,7 @@
                                         "memberLocation": "4123:11:19",
                                         "memberName": "toHexString",
                                         "nodeType": "MemberAccess",
-                                        "referencedDeclaration": 44438,
+                                        "referencedDeclaration": 44503,
                                         "src": "4115:19:19",
                                         "typeDescriptions": {
                                           "typeIdentifier": "t_function_internal_pure$_t_address_$returns$_t_string_memory_ptr_$",
@@ -1936,10 +1936,10 @@
                                           "name": "Strings",
                                           "nodeType": "Identifier",
                                           "overloadedDeclarations": [],
-                                          "referencedDeclaration": 44464,
+                                          "referencedDeclaration": 44529,
                                           "src": "4214:7:19",
                                           "typeDescriptions": {
-                                            "typeIdentifier": "t_type$_t_contract$_Strings_$44464_$",
+                                            "typeIdentifier": "t_type$_t_contract$_Strings_$44529_$",
                                             "typeString": "type(library Strings)"
                                           }
                                         },
@@ -1951,7 +1951,7 @@
                                         "memberLocation": "4222:11:19",
                                         "memberName": "toHexString",
                                         "nodeType": "MemberAccess",
-                                        "referencedDeclaration": 44418,
+                                        "referencedDeclaration": 44483,
                                         "src": "4214:19:19",
                                         "typeDescriptions": {
                                           "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_string_memory_ptr_$",
@@ -2912,7 +2912,7 @@
                             "name": "_msgSender",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 44225,
+                            "referencedDeclaration": 44290,
                             "src": "6144:10:19",
                             "typeDescriptions": {
                               "typeIdentifier": "t_function_internal_view$__$returns$_t_address_$",
@@ -3936,7 +3936,7 @@
                                 "name": "_msgSender",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 44225,
+                                "referencedDeclaration": 44290,
                                 "src": "7790:10:19",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_function_internal_view$__$returns$_t_address_$",
@@ -4328,7 +4328,7 @@
                                 "name": "_msgSender",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 44225,
+                                "referencedDeclaration": 44290,
                                 "src": "8195:10:19",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_function_internal_view$__$returns$_t_address_$",
@@ -4498,7 +4498,7 @@
                 "1967:7:19"
               ],
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 44235,
+              "referencedDeclaration": 44300,
               "src": "1967:7:19"
             },
             "id": 42900,
@@ -4528,7 +4528,7 @@
                 "1992:6:19"
               ],
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 44488,
+              "referencedDeclaration": 44553,
               "src": "1992:6:19"
             },
             "id": 42904,
@@ -4548,10 +4548,10 @@
         "fullyImplemented": true,
         "linearizedBaseContracts": [
           43207,
-          44488,
-          44500,
+          44553,
+          44565,
           43280,
-          44235
+          44300
         ],
         "name": "AccessControl",
         "nameLocation": "1950:13:19",
