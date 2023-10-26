@@ -1,5 +1,36 @@
 Rust-based Solidity AST analyzer and context builder.
 
+# Installation Instructions
+
+## Install Using Package Manager
+
+1. [Install Rust](https://www.rust-lang.org/tools/install)
+2. In the command line, run:
+   ```sh
+   cargo install aderyn
+   ```
+
+# Usage Instructions
+
+## Quick Start with a Foundry Repo
+
+```
+aderyn --foundry --root /path/to/your/foundry/project/root/directory/
+```
+
+That's it! `report.md` will be output in the directory in which you ran the command.
+
+## Options
+
+1. You must provide either:
+- `--foundry`, or
+- `--hardhat`
+
+2. Separately, you must provide the root directory of the repo you want to analyze:
+`--root /path/to/repo/root/`
+
+# TODO List
+
 Note: These goals/priorities will change over time.
 
 ### Short-term goals - Working Examples:
