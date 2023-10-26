@@ -18,7 +18,7 @@ pub struct SolmateSafeTransferLibDetector {
 
 impl ASTConstVisitor for SolmateSafeTransferLibDetector {
     fn visit_import_directive(&mut self, node: &ImportDirective) -> Result<bool> {
-        if self.found_solmate_import == false {
+        if !self.found_solmate_import {
             // If the import directive absolute_path contains the strings "solmate" and "SafeTransferLib", flip the found_solmate_import flag to true
             if node.absolute_path.as_ref().unwrap().contains("solmate")
                 && node
@@ -58,7 +58,7 @@ impl Detector for SolmateSafeTransferLibDetector {
             member_access.accept(self)?;
         }
 
-        if self.found_solmate_import && self.found_transfer_usage.len() > 0 {
+        if self.found_solmate_import && !self.found_transfer_usage.is_empty() {
             return Ok(true);
         }
 

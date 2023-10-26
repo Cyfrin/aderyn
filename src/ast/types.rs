@@ -3,6 +3,7 @@ use crate::visitor::ast_visitor::*;
 use eyre::Result;
 use serde::{Deserialize, Serialize};
 use std::fmt::Display;
+use std::hash::{Hash, Hasher};
 
 #[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
@@ -55,7 +56,7 @@ impl Display for TypeName {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, Hash)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ElementaryTypeName {
     pub state_mutability: Option<StateMutability>,
@@ -77,6 +78,14 @@ impl PartialEq for ElementaryTypeName {
     }
 }
 
+impl Hash for ElementaryTypeName {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.state_mutability.hash(state);
+        self.name.hash(state);
+        self.type_descriptions.hash(state);
+    }
+}
+
 impl Display for ElementaryTypeName {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.write_str(self.name.as_str())?;
@@ -91,7 +100,7 @@ impl Display for ElementaryTypeName {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, Hash)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct UserDefinedTypeName {
     pub path_node: Option<IdentifierPath>,
@@ -113,6 +122,15 @@ impl PartialEq for UserDefinedTypeName {
     fn eq(&self, other: &Self) -> bool {
         self.referenced_declaration
             .eq(&other.referenced_declaration)
+    }
+}
+
+impl Hash for UserDefinedTypeName {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.path_node.hash(state);
+        self.referenced_declaration.hash(state);
+        self.name.hash(state);
+        self.type_descriptions.hash(state);
     }
 }
 

@@ -18,11 +18,9 @@ impl Detector for NonReentrantBeforeOthersDetector {
             if definition.modifiers.len() > 1 {
                 let mut index = 0;
                 for modifier in definition.modifiers.iter() {
-                    if modifier.modifier_name.name == "nonReentrant" {
-                        if index != 0 {
-                            self.found_non_reentrant_after_others
-                                .push(Some(ASTNode::FunctionDefinition(definition.clone())));
-                        }
+                    if modifier.modifier_name.name == "nonReentrant" && index != 0 {
+                        self.found_non_reentrant_after_others
+                            .push(Some(ASTNode::FunctionDefinition(definition.clone())));
                     }
                     index += 1;
                 }
