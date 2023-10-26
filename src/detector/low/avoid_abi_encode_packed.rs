@@ -51,7 +51,7 @@ impl Detector for AvoidAbiEncodePackedDetector {
         for member_access in loader.get_member_accesses() {
             member_access.accept(self)?;
         }
-        Ok(self.found_abi_encode_packed.len() > 0)
+        Ok(!self.found_abi_encode_packed.is_empty())
     }
 
     fn title(&self) -> String {

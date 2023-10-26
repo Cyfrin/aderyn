@@ -39,7 +39,7 @@ impl Detector for DeprecatedOZFunctionsDetector {
         for member_access in loader.get_member_accesses() {
             member_access.accept(self)?;
         }
-        Ok(self.found_deprecated_oz_functions.len() > 0)
+        Ok(!self.found_deprecated_oz_functions.is_empty())
     }
 
     fn title(&self) -> String {

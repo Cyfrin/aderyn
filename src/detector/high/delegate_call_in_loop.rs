@@ -33,7 +33,7 @@ impl Detector for DelegateCallInLoopDetector {
             while_statement.accept(self)?;
         }
 
-        Ok(self.found_delegate_call_in_loop.len() > 0)
+        Ok(!self.found_delegate_call_in_loop.is_empty())
     }
 
     fn severity(&self) -> IssueSeverity {

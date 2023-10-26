@@ -28,7 +28,7 @@ impl Detector for EcrecoverDetector {
         for identifier in loader.get_identifiers() {
             identifier.accept(self)?;
         }
-        Ok(self.found_ecrecover.len() > 0)
+        Ok(!self.found_ecrecover.is_empty())
     }
 
     fn title(&self) -> String {

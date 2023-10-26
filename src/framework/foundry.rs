@@ -141,9 +141,9 @@ fn get_filepaths(foundry_out_path: PathBuf, contract_files: &Vec<String>) -> Vec
         std::process::exit(1);
     });
 
-    let matching_filepaths = get_matching_filepaths(&subdirs, &contract_files);
+    
 
-    matching_filepaths
+    get_matching_filepaths(&subdirs, contract_files)
 }
 
 fn get_subdirectories(path: &PathBuf) -> Result<Vec<PathBuf>> {
