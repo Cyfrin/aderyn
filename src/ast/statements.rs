@@ -49,7 +49,7 @@ impl Node for Statement {
                 // TODO: This may cause referencing issues later
                 // Known unhandled statements:
                 // - break
-                println!("Unhandled statement: {:?}", self);
+                // println!("Unhandled statement: {:?}", self);
                 Ok(())
             }
         }
