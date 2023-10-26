@@ -43,7 +43,7 @@ fn default_out() -> String {
 }
 
 pub fn read_foundry_output_file(filepath: &str) -> Result<FoundryOutput> {
-    println!("Foundry output path: {:?}", filepath);
+    // println!("Foundry output path: {:?}", filepath);
     Ok(serde_json::from_reader(BufReader::new(File::open(
         filepath,
     )?))?)
@@ -89,21 +89,14 @@ pub fn load_foundry(foundry_root: PathBuf) -> Result<Vec<PathBuf>, Box<dyn Error
     // (This is because some contracts may be imported but not deployed, or there may be old contracts in the output directory)
     let foundry_out_path = foundry_root_absolute.join(&foundry_config.profile.default.out);
     let file_paths = get_filepaths(foundry_out_path, &contract_files);
-    // print the found files
-    println!("Foundry output files: {:?}", file_paths);
     Ok(file_paths)
 }
 
 fn read_config(path: &PathBuf) -> Result<FoundryConfig, Box<dyn Error>> {
-    println!("Foundry config path: {:?}", path);
     let contents = read_to_string(path).unwrap();
-    println!("Foundry config contents: {:?}", contents);
     let foundry_config_toml = toml::from_str(&contents);
     let foundry_config = match foundry_config_toml {
-        Ok(config) => {
-            println!("Foundry config: {:?}", config);
-            config
-        }
+        Ok(config) => config,
         Err(e) => {
             eprintln!("Error parsing TOML: {:?}", e);
             std::process::exit(1);
@@ -150,7 +143,6 @@ fn get_filepaths(foundry_out_path: PathBuf, contract_files: &Vec<String>) -> Vec
     });
 
     let matching_filepaths = get_matching_filepaths(&subdirs, &contract_files);
-    println!("Loading foundry output files: {:?}", matching_filepaths);
 
     matching_filepaths
 }

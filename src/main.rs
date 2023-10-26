@@ -28,7 +28,6 @@ struct Args {
 
 fn main() {
     let args = Args::parse();
-    print!("Running Foundry with args: {:?}", args);
 
     if !&args.foundry && !&args.hardhat {
         eprintln!("Error: Must specify either --foundry or --hardhat");

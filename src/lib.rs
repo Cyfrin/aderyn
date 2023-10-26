@@ -17,11 +17,6 @@ use crate::report::printer::{MarkdownReportPrinter, ReportPrinter};
 use crate::report::report::{Issue, Report};
 
 pub fn run(context_loader: ContextLoader) -> Result<(), Box<dyn Error>> {
-    println!(
-        "Contracts loaded, number of Node IDs found: {:?}",
-        context_loader.nodes.len()
-    );
-
     println!("Get Detectors");
 
     let detectors = get_all_detectors();
