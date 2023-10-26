@@ -26,20 +26,20 @@ use std::error::Error;
 
 pub fn get_all_detectors() -> Vec<Box<dyn Detector>> {
     vec![
-        Box::new(DelegateCallInLoopDetector::default()),
-        Box::new(CentralizationRiskDetector::default()),
-        Box::new(SolmateSafeTransferLibDetector::default()),
-        Box::new(AvoidAbiEncodePackedDetector::default()),
-        Box::new(EcrecoverDetector::default()),
-        Box::new(DeprecatedOZFunctionsDetector::default()),
-        Box::new(UnsafeERC20FunctionsDetector::default()),
-        Box::new(UnspecificSolidityPragmaDetector::default()),
-        Box::new(ZeroAddressCheckDetector::default()),
-        Box::new(UselessPublicFunctionDetector::default()),
-        Box::new(ConstantsInsteadOfLiteralsDetector::default()),
-        Box::new(UnindexedEventsDetector::default()),
-        Box::new(RequireWithStringDetector::default()),
-        Box::new(NonReentrantBeforeOthersDetector::default()),
+        Box::<DelegateCallInLoopDetector>::default(),
+        Box::<CentralizationRiskDetector>::default(),
+        Box::<SolmateSafeTransferLibDetector>::default(),
+        Box::<AvoidAbiEncodePackedDetector>::default(),
+        Box::<EcrecoverDetector>::default(),
+        Box::<DeprecatedOZFunctionsDetector>::default(),
+        Box::<UnsafeERC20FunctionsDetector>::default(),
+        Box::<UnspecificSolidityPragmaDetector>::default(),
+        Box::<ZeroAddressCheckDetector>::default(),
+        Box::<UselessPublicFunctionDetector>::default(),
+        Box::<ConstantsInsteadOfLiteralsDetector>::default(),
+        Box::<UnindexedEventsDetector>::default(),
+        Box::<RequireWithStringDetector>::default(),
+        Box::<NonReentrantBeforeOthersDetector>::default(),
     ]
 }
 

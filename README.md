@@ -12,21 +12,19 @@ Rust-based Solidity AST analyzer and context builder.
 
 # Usage Instructions
 
-## Quick Start with a Foundry Repo
+## Quick Start
+
+The project you're running aderyn on should be either a Foundry or compiled Hardhat project.
 
 ```
-aderyn --foundry --root /path/to/your/foundry/project/root/directory/
+aderyn --root /path/to/your/foundry/project/root/directory/
 ```
 
 That's it! `report.md` will be output in the directory in which you ran the command.
 
 ## Options
 
-1. You must provide either:
-- `--foundry`, or
-- `--hardhat`
-
-2. Separately, you must provide the root directory of the repo you want to analyze:
+1. You must provide the root directory of the repo you want to analyze:
 `--root /path/to/repo/root/`
 
 # TODO List
