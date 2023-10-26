@@ -8,31 +8,15 @@ pub mod visitor;
 use eyre::Result;
 use std::error::Error;
 use std::fs::{remove_file, File};
-use std::io::{self, BufReader};
-use std::path::{Path, PathBuf};
+use std::io;
+use std::path::Path;
 
 use crate::context::loader::ContextLoader;
 use crate::detector::detector::{get_all_detectors, IssueSeverity};
-use crate::framework::foundry::FoundryOutput;
 use crate::report::printer::{MarkdownReportPrinter, ReportPrinter};
 use crate::report::report::{Issue, Report};
-use crate::visitor::ast_visitor::Node;
 
-pub fn run(filepaths: Vec<PathBuf>) -> Result<(), Box<dyn Error>> {
-    let mut context_loader = ContextLoader::default();
-
-    for filepath in filepaths {
-        // read_foundry_output_file and print an error message if it fails
-        if let Ok(foundry_output) = read_foundry_output_file(filepath.to_str().unwrap()) {
-            foundry_output.ast.accept(&mut context_loader)?;
-        } else {
-            eprintln!(
-                "Error reading Foundry output file: {}",
-                filepath.to_str().unwrap()
-            );
-        }
-    }
-
+pub fn run(context_loader: ContextLoader) -> Result<(), Box<dyn Error>> {
     println!(
         "Contracts loaded, number of Node IDs found: {:?}",
         context_loader.nodes.len()
@@ -87,11 +71,4 @@ fn get_markdown_writer(filename: &str) -> io::Result<File> {
         remove_file(filename)?; // If file exists, delete it
     }
     File::create(filename)
-}
-
-fn read_foundry_output_file(filepath: &str) -> Result<FoundryOutput> {
-    println!("Foundry output path: {:?}", filepath);
-    Ok(serde_json::from_reader(BufReader::new(File::open(
-        filepath,
-    )?))?)
 }

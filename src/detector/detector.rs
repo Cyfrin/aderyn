@@ -76,7 +76,8 @@ pub trait Detector {
 
 pub mod detector_test_helpers {
     use crate::{
-        context::loader::ContextLoader, read_foundry_output_file, visitor::ast_visitor::Node,
+        context::loader::ContextLoader, framework::foundry::read_foundry_output_file,
+        visitor::ast_visitor::Node,
     };
 
     pub fn load_contract(filepath: &str) -> ContextLoader {
