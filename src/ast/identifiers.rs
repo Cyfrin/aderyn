@@ -3,8 +3,9 @@ use crate::visitor::ast_visitor::*;
 use eyre::Result;
 use serde::{Deserialize, Serialize};
 use std::fmt::Display;
+use std::hash::{Hash, Hasher};
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, Hash)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Identifier {
     pub argument_types: Option<Vec<TypeDescriptions>>,
@@ -37,13 +38,25 @@ impl PartialEq for Identifier {
     }
 }
 
+impl Hash for Identifier {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.argument_types.hash(state);
+        self.name.hash(state);
+        self.overloaded_declarations.hash(state);
+        self.referenced_declaration.hash(state);
+        self.type_descriptions.hash(state);
+        self.src.hash(state);
+        self.id.hash(state);
+    }
+}
+
 impl Display for Identifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.write_str(self.name.as_str())
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, Hash)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct IdentifierPath {
     pub name: String,
@@ -65,6 +78,15 @@ impl PartialEq for IdentifierPath {
             && self
                 .referenced_declaration
                 .eq(&other.referenced_declaration)
+    }
+}
+
+impl Hash for IdentifierPath {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.name.hash(state);
+        self.referenced_declaration.hash(state);
+        self.src.hash(state);
+        self.id.hash(state);
     }
 }
 
