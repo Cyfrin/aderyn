@@ -63,6 +63,7 @@ pub fn run(context_loader: ContextLoader) -> Result<(), Box<dyn Error>> {
     let printer = MarkdownReportPrinter;
     printer.print_report(get_markdown_writer("report.md")?, &report, &context_loader)?;
 
+    println!("Report printed to ./report.md");
     Ok(())
 }
 
