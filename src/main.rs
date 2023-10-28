@@ -76,16 +76,18 @@ fn main() {
                 eprintln!("{:?}", err);
                 std::process::exit(1);
             });
-            for contract_source in hardhat_output.output.sources.values() {
-                contract_source
-                    .ast
-                    .accept(&mut context_loader)
-                    .unwrap_or_else(|err| {
-                        // Exit with a non-zero exit code
-                        eprintln!("Error loading Hardhat AST into ContextLoader");
-                        eprintln!("{:?}", err);
-                        std::process::exit(1);
-                    })
+            for (key, contract_source) in hardhat_output.output.sources.iter() {
+                if key.starts_with("contracts/") {
+                    contract_source
+                        .ast
+                        .accept(&mut context_loader)
+                        .unwrap_or_else(|err| {
+                            // Exit with a non-zero exit code
+                            eprintln!("Error loading Hardhat AST into ContextLoader");
+                            eprintln!("{:?}", err);
+                            std::process::exit(1);
+                        })
+                }
             }
         }
     }
