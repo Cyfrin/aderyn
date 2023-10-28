@@ -4,7 +4,7 @@ use crate::visitor::ast_visitor::Node;
 use crate::{
     ast::MemberAccess,
     context::loader::{ASTNode, ContextLoader},
-    detector::detector::{Detector, IssueSeverity},
+    detect::detector::{Detector, IssueSeverity},
     visitor::ast_visitor::ASTConstVisitor,
 };
 use eyre::Result;
@@ -55,7 +55,7 @@ impl Detector for DelegateCallInLoopDetector {
 
 #[cfg(test)]
 mod delegate_call_in_loop_detector_tests {
-    use crate::detector::detector::{detector_test_helpers::load_contract, Detector};
+    use crate::detect::detector::{detector_test_helpers::load_contract, Detector};
 
     use super::DelegateCallInLoopDetector;
 
@@ -73,7 +73,7 @@ mod delegate_call_in_loop_detector_tests {
         // assert the severity is high
         assert_eq!(
             detector.severity(),
-            crate::detector::detector::IssueSeverity::High
+            crate::detect::detector::IssueSeverity::High
         );
         // assert the title is correct
         assert_eq!(

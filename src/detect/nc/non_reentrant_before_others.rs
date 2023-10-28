@@ -2,7 +2,7 @@ use std::error::Error;
 
 use crate::{
     context::loader::{ASTNode, ContextLoader},
-    detector::detector::{Detector, IssueSeverity},
+    detect::detector::{Detector, IssueSeverity},
 };
 use eyre::Result;
 
@@ -16,13 +16,11 @@ impl Detector for NonReentrantBeforeOthersDetector {
         let function_definitions = loader.get_function_definitions();
         for definition in function_definitions {
             if definition.modifiers.len() > 1 {
-                let mut index = 0;
-                for modifier in definition.modifiers.iter() {
+                for (index, modifier) in definition.modifiers.iter().enumerate() {
                     if modifier.modifier_name.name == "nonReentrant" && index != 0 {
                         self.found_non_reentrant_after_others
                             .push(Some(ASTNode::FunctionDefinition(definition.clone())));
                     }
-                    index += 1;
                 }
             }
         }
@@ -48,7 +46,7 @@ impl Detector for NonReentrantBeforeOthersDetector {
 
 #[cfg(test)]
 mod non_reentrant_before_others_tests {
-    use crate::detector::{
+    use crate::detect::{
         detector::{detector_test_helpers::load_contract, Detector},
         nc::non_reentrant_before_others::NonReentrantBeforeOthersDetector,
     };
@@ -66,7 +64,7 @@ mod non_reentrant_before_others_tests {
         // assert that the detector returns the correct severity
         assert_eq!(
             detector.severity(),
-            crate::detector::detector::IssueSeverity::NC
+            crate::detect::detector::IssueSeverity::NC
         );
         // assert that the detector returns the correct title
         assert_eq!(

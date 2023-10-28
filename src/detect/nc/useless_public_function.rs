@@ -3,7 +3,7 @@ use std::{collections::HashSet, error::Error};
 use crate::{
     ast::Visibility,
     context::loader::{ASTNode, ContextLoader},
-    detector::detector::{Detector, IssueSeverity},
+    detect::detector::{Detector, IssueSeverity},
 };
 use eyre::Result;
 
@@ -54,7 +54,7 @@ impl Detector for UselessPublicFunctionDetector {
 
 #[cfg(test)]
 mod useless_public_function_tests {
-    use crate::detector::detector::{detector_test_helpers::load_contract, Detector};
+    use crate::detect::detector::{detector_test_helpers::load_contract, Detector};
 
     use super::UselessPublicFunctionDetector;
 
@@ -71,7 +71,7 @@ mod useless_public_function_tests {
         // assert that the detector returns the correct severity
         assert_eq!(
             detector.severity(),
-            crate::detector::detector::IssueSeverity::NC
+            crate::detect::detector::IssueSeverity::NC
         );
         // assert that the detector returns the correct title
         assert_eq!(

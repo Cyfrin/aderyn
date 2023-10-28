@@ -3,7 +3,7 @@ use std::error::Error;
 use crate::{
     ast::MemberAccess,
     context::loader::{ASTNode, ContextLoader},
-    detector::detector::{Detector, IssueSeverity},
+    detect::detector::{Detector, IssueSeverity},
     visitor::ast_visitor::{ASTConstVisitor, Node},
 };
 use eyre::Result;
@@ -75,7 +75,7 @@ impl Detector for AvoidAbiEncodePackedDetector {
 
 #[cfg(test)]
 mod avoid_abi_encode_packed_tests {
-    use crate::detector::detector::{detector_test_helpers::load_contract, Detector};
+    use crate::detect::detector::{detector_test_helpers::load_contract, Detector};
 
     use super::AvoidAbiEncodePackedDetector;
 
@@ -93,7 +93,7 @@ mod avoid_abi_encode_packed_tests {
         // assert that the severity is low
         assert_eq!(
             detector.severity(),
-            crate::detector::detector::IssueSeverity::Low
+            crate::detect::detector::IssueSeverity::Low
         );
         // assert that the title is correct
         assert_eq!(

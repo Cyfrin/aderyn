@@ -3,7 +3,7 @@ use std::error::Error;
 use crate::{
     ast::{ModifierInvocation, SourceUnit},
     context::loader::{ASTNode, ContextLoader},
-    detector::detector::{Detector, IssueSeverity},
+    detect::detector::{Detector, IssueSeverity},
     visitor::ast_visitor::{ASTConstVisitor, Node},
 };
 use eyre::Result;
@@ -86,7 +86,7 @@ impl Detector for CentralizationRiskDetector {
 
 #[cfg(test)]
 mod centralization_risk_detector_tests {
-    use crate::detector::detector::{detector_test_helpers::load_contract, Detector};
+    use crate::detect::detector::{detector_test_helpers::load_contract, Detector};
 
     use super::CentralizationRiskDetector;
 
@@ -103,7 +103,7 @@ mod centralization_risk_detector_tests {
         // assert that the severity is medium
         assert_eq!(
             detector.severity(),
-            crate::detector::detector::IssueSeverity::Medium
+            crate::detect::detector::IssueSeverity::Medium
         );
         // assert that the title is correct
         assert_eq!(
