@@ -112,16 +112,14 @@ fn detect_framework(path: PathBuf) -> Option<Framework> {
     // Read the contents of the directory
     let entries = read_dir(&canonical_path).expect("Failed to read directory");
 
-    for entry in entries {
-        if let Ok(entry) = entry {
-            let filename = entry.file_name();
-            match filename.to_str() {
-                Some("foundry.toml") => return Some(Framework::Foundry),
-                Some("hardhat.config.js") | Some("hardhat.config.ts") => {
-                    return Some(Framework::Hardhat)
-                }
-                _ => {}
+    for entry in entries.flatten() {
+        let filename = entry.file_name();
+        match filename.to_str() {
+            Some("foundry.toml") => return Some(Framework::Foundry),
+            Some("hardhat.config.js") | Some("hardhat.config.ts") => {
+                return Some(Framework::Hardhat)
             }
+            _ => {}
         }
     }
 

@@ -5,7 +5,7 @@ use crate::visitor::ast_visitor::Node;
 use crate::{
     ast::MemberAccess,
     context::loader::{ASTNode, ContextLoader},
-    detector::detector::{Detector, IssueSeverity},
+    detect::detector::{Detector, IssueSeverity},
     visitor::ast_visitor::ASTConstVisitor,
 };
 use eyre::Result;
@@ -84,7 +84,7 @@ impl Detector for SolmateSafeTransferLibDetector {
 
 #[cfg(test)]
 mod solmate_safe_transfer_lib_tests {
-    use crate::detector::{
+    use crate::detect::{
         detector::{detector_test_helpers::load_contract, Detector},
         medium::solmate_safe_transfer_lib::SolmateSafeTransferLibDetector,
     };
@@ -102,7 +102,7 @@ mod solmate_safe_transfer_lib_tests {
         // assert the severity is medium
         assert_eq!(
             detector.severity(),
-            crate::detector::detector::IssueSeverity::Medium
+            crate::detect::detector::IssueSeverity::Medium
         );
         // assert the title is correct
         assert_eq!(
