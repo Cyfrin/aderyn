@@ -12,6 +12,7 @@ pub trait ReportPrinter {
         loader: &ContextLoader,
     ) -> Result<()>;
     fn print_table_of_contents<W: Write>(&self, writer: W, report: &Report) -> Result<()>;
+    fn print_contract_summary<W: Write>(&self, writer: W, loader: &ContextLoader) -> Result<()>;
     fn print_issue<W: Write>(
         &self,
         writer: W,
@@ -32,6 +33,7 @@ impl ReportPrinter for MarkdownReportPrinter {
         loader: &ContextLoader,
     ) -> Result<()> {
         self.print_table_of_contents(&mut writer, report)?;
+        self.print_contract_summary(&mut writer, loader)?;
         let mut counter = 0;
         if !report.criticals.is_empty() {
             writeln!(writer, "# Critical Issues\n")?;
@@ -75,8 +77,27 @@ impl ReportPrinter for MarkdownReportPrinter {
         Ok(())
     }
 
+    fn print_contract_summary<W: Write>(
+        &self,
+        mut writer: W,
+        loader: &ContextLoader,
+    ) -> Result<()> {
+        writeln!(writer, "# Contract Summary\n")?;
+        writeln!(writer, "Contracts analyzed:\n")?;
+        for source_unit in loader.get_source_units() {
+            writeln!(
+                writer,
+                "- {:?}",
+                source_unit.absolute_path.as_ref().unwrap()
+            )?;
+        }
+        writeln!(writer, "\n")?; // Add an extra newline for spacing
+        Ok(())
+    }
+
     fn print_table_of_contents<W: Write>(&self, mut writer: W, report: &Report) -> Result<()> {
         writeln!(writer, "# Table of Contents\n")?;
+        writeln!(writer, "- [Contract Summary](#contract-summary)")?;
         if !report.criticals.is_empty() {
             writeln!(writer, "- [Critical Issues](#critical-issues)")?;
             for (index, issue) in report.criticals.iter().enumerate() {
