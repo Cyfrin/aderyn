@@ -10,7 +10,7 @@ Use Aderyn when developing or auditing Solidity smart contracts to quickly ident
 
 ## Features
 
-* Hardhat and Foundry support
+* [Hardhat](https://hardhat.org/) and [Foundry](https://book.getfoundry.sh/) support
 * Modular [detectors](./src/detect/)
 * AST Traversal
 * Markdown reports
@@ -32,18 +32,30 @@ cargo install aderyn
 
 ## Quick Start
 
-The project you're running aderyn on should be either a Foundry or compiled Hardhat project.
+The project you're running Aderyn on should be either a Foundry or compiled Hardhat project.
 
 ```sh
 aderyn --root /path/to/your/foundry/project/root/directory/
 ```
 
-That's it! `report.md` will be output in the directory in which you ran the command.
+That's it! Aderyn identifies whether the project root is a Foundry or Hardhat repo, then uses the compiled AST files to hunt for vulnerabilities. `report.md` will be output in the directory in which you ran the command.
 
-## Options
+## Params
 
 1. You must provide the root directory of the repo you want to analyze:
 `--root /path/to/repo/root/`
+
+## Supported Development Frameworks
+
+Aderyn automatically detects the development framework so long as it's Foundry or Hardhat. 
+
+### Foundry
+
+If Foundry is detected in the project root, Aderyn will first run `forge build` to ensure that the contract compiles correctly and the latest artifacts are available.
+
+### Hardhat
+
+If Hardhat is detected, Aderyn does not auto-compile. Make sure to run `hardhat compile` BEFORE running Aderyn. 
 
 # Roadmap
 
@@ -74,4 +86,4 @@ This repo is published under the [MIT License](./LICENSE).
 
 # Attribution
 * AST Visitor code from [solc-ast-rs](https://github.com/hrkrshnn/solc-ast-rs).
-* Current detectors based on [4nalyzer](https://github.com/Picodes/4naly3er) detectors.
+* Original detectors based on [4nalyzer](https://github.com/Picodes/4naly3er) detectors.
