@@ -184,6 +184,12 @@ impl ContextLoader {
         &self.source_units
     }
 
+    pub fn set_source_unit_source_content(&mut self, id: i64, source: String) {
+        if let Some(source_unit) = self.source_units.iter_mut().find(|unit| unit.id == id) {
+            source_unit.source = Some(source);
+        }
+    }
+
     pub fn get_pragma_directives(&self) -> Vec<&PragmaDirective> {
         self.pragma_directives.keys().collect()
     }
@@ -250,7 +256,7 @@ impl ContextLoader {
         self.while_statements.keys().collect()
     }
 
-    pub fn get_source_unit_contract_path_from(&self, node: &ASTNode) -> Option<&String> {
+    pub fn get_source_unit_from_child_node(&self, node: &ASTNode) -> Option<&SourceUnit> {
         let source_unit_id = match node {
             ASTNode::ArrayTypeName(node) => self.array_type_names.get(node),
             ASTNode::Assignment(node) => self.assignments.get(node),
@@ -317,6 +323,11 @@ impl ContextLoader {
                 .iter()
                 .find(|source_unit| source_unit.id == id)
         });
+        source_unit
+    }
+
+    pub fn get_source_unit_contract_path_from(&self, node: &ASTNode) -> Option<&String> {
+        let source_unit = self.get_source_unit_from_child_node(node);
         source_unit.and_then(|source_unit| source_unit.absolute_path.as_ref())
     }
 }
