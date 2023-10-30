@@ -2,7 +2,7 @@ use std::io::{Result, Write};
 
 use crate::context::loader::ContextLoader;
 
-use super::report::{Issue, Report};
+use super::reporter::{Issue, Report};
 
 pub trait ReportPrinter {
     fn print_report<W: Write>(
@@ -154,20 +154,17 @@ impl ReportPrinter for MarkdownReportPrinter {
             "<a name=\"{}-{}\"></a>\n## {}-{}: {}\n\n{}\n", // <a name> is the anchor for the issue title
             severity, number, severity, number, issue.title, issue.description
         )?;
-        for instance in &issue.instances {
-            if let Some(node) = instance {
-                let mut contract_path = "unknown";
-                if let Some(source_unit_contract_path) =
-                    loader.get_source_unit_contract_path_from(node)
-                {
-                    contract_path = source_unit_contract_path;
-                }
-                let mut source_location = "unknown";
-                if let Some(src) = node.src() {
-                    source_location = src;
-                }
-                writeln!(writer, "- Found in {}: {}", contract_path, source_location)?;
+        for node in issue.instances.iter().flatten() {
+            let mut contract_path = "unknown";
+            if let Some(source_unit_contract_path) = loader.get_source_unit_contract_path_from(node)
+            {
+                contract_path = source_unit_contract_path;
             }
+            let mut source_location = "unknown";
+            if let Some(src) = node.src() {
+                source_location = src;
+            }
+            writeln!(writer, "- Found in {}: {}", contract_path, source_location)?;
         }
         writeln!(writer, "\n")?; // Add an extra newline for spacing
         Ok(())

@@ -1,6 +1,6 @@
 pub mod ast;
 pub mod context;
-pub mod detector;
+pub mod detect;
 pub mod framework;
 pub mod report;
 pub mod visitor;
@@ -12,9 +12,9 @@ use std::io;
 use std::path::Path;
 
 use crate::context::loader::ContextLoader;
-use crate::detector::detector::{get_all_detectors, IssueSeverity};
+use crate::detect::detector::{get_all_detectors, IssueSeverity};
 use crate::report::printer::{MarkdownReportPrinter, ReportPrinter};
-use crate::report::report::{Issue, Report};
+use crate::report::reporter::{Issue, Report};
 
 pub fn run(context_loader: ContextLoader) -> Result<(), Box<dyn Error>> {
     println!("Get Detectors");

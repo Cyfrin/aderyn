@@ -1,6 +1,6 @@
 use crate::{
     context::loader::{ASTNode, ContextLoader},
-    detector::{
+    detect::{
         high::delegate_call_in_loop::DelegateCallInLoopDetector,
         low::{
             avoid_abi_encode_packed::AvoidAbiEncodePackedDetector,

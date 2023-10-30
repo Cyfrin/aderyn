@@ -3,7 +3,7 @@ use std::{collections::HashMap, error::Error};
 use crate::{
     ast::{Assignment, BinaryOperation, Expression, VariableDeclaration},
     context::loader::{ASTNode, ContextLoader},
-    detector::detector::{Detector, IssueSeverity},
+    detect::detector::{Detector, IssueSeverity},
     visitor::ast_visitor::{ASTConstVisitor, Node},
 };
 use eyre::Result;
@@ -40,32 +40,20 @@ impl ZeroAddressCheckDetector {
 impl ASTConstVisitor for ZeroAddressCheckDetector {
     // if the left hand side referenced_declaration is in the mutable_address_state_variables return true
     fn visit_assignment(&mut self, node: &Assignment) -> Result<bool> {
-        match node.left_hand_side.as_ref() {
-            left_hand_side => {
-                match left_hand_side {
-                    Expression::Identifier(left_identifier) => {
-                        if self
-                            .mutable_address_state_variables
-                            .contains_key(&left_identifier.referenced_declaration)
-                        {
-                            // add the right hand side referenced_declaration to the assignments_to_mutable_address_state_variables
-                            match node.right_hand_side.as_ref() {
-                                right_hand_side => match right_hand_side {
-                                    Expression::Identifier(right_identifier) => {
-                                        self.assignments_to_mutable_address_state_variables.insert(
-                                            right_identifier.referenced_declaration,
-                                            node.clone(),
-                                        );
-                                    }
-                                    _ => (),
-                                },
-                            }
-                        }
-                    }
-                    _ => (),
+        let left_hand_side = node.left_hand_side.as_ref();
+        if let Expression::Identifier(left_identifier) = left_hand_side {
+            if self
+                .mutable_address_state_variables
+                .contains_key(&left_identifier.referenced_declaration)
+            {
+                // add the right hand side referenced_declaration to the assignments_to_mutable_address_state_variables
+                let right_hand_side = node.right_hand_side.as_ref();
+                if let Expression::Identifier(right_identifier) = right_hand_side {
+                    self.assignments_to_mutable_address_state_variables
+                        .insert(right_identifier.referenced_declaration, node.clone());
                 }
             }
-        }
+        };
         Ok(true)
     }
 
@@ -76,23 +64,16 @@ impl ASTConstVisitor for ZeroAddressCheckDetector {
             // if the left hand side is an identifier add its referenced_declaration to the binary_checks_against_zero_address
             // OR
             // if the right hand side is an identifier add its referenced_declaration to the binary_checks_against_zero_address
-            match node.left_expression.as_ref() {
-                left_expression => match left_expression {
-                    Expression::Identifier(left_identifier) => {
-                        self.binary_checks_against_zero_address
-                            .insert(left_identifier.referenced_declaration, true);
-                    }
-                    _ => (),
-                },
-            }
-            match node.right_expression.as_ref() {
-                right_expression => match right_expression {
-                    Expression::Identifier(right_identifier) => {
-                        self.binary_checks_against_zero_address
-                            .insert(right_identifier.referenced_declaration, true);
-                    }
-                    _ => (),
-                },
+            let left_expression = node.left_expression.as_ref();
+            if let Expression::Identifier(left_identifier) = left_expression {
+                self.binary_checks_against_zero_address
+                    .insert(left_identifier.referenced_declaration, true);
+            };
+
+            let right_expression = node.right_expression.as_ref();
+            if let Expression::Identifier(right_identifier) = right_expression {
+                self.binary_checks_against_zero_address
+                    .insert(right_identifier.referenced_declaration, true);
             }
         }
         Ok(true)
@@ -146,7 +127,7 @@ impl Detector for ZeroAddressCheckDetector {
 
 #[cfg(test)]
 mod zero_address_check_tests {
-    use crate::detector::{
+    use crate::detect::{
         detector::{detector_test_helpers::load_contract, Detector},
         nc::zero_address_check::ZeroAddressCheckDetector,
     };
@@ -164,7 +145,7 @@ mod zero_address_check_tests {
         // assert that the severity is NC
         assert_eq!(
             detector.severity(),
-            crate::detector::detector::IssueSeverity::NC
+            crate::detect::detector::IssueSeverity::NC
         );
         // assert that the title is correct
         assert_eq!(

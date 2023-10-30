@@ -76,16 +76,18 @@ fn main() {
                 eprintln!("{:?}", err);
                 std::process::exit(1);
             });
-            for contract_source in hardhat_output.output.sources.values() {
-                contract_source
-                    .ast
-                    .accept(&mut context_loader)
-                    .unwrap_or_else(|err| {
-                        // Exit with a non-zero exit code
-                        eprintln!("Error loading Hardhat AST into ContextLoader");
-                        eprintln!("{:?}", err);
-                        std::process::exit(1);
-                    })
+            for (key, contract_source) in hardhat_output.output.sources.iter() {
+                if key.starts_with("contracts/") {
+                    contract_source
+                        .ast
+                        .accept(&mut context_loader)
+                        .unwrap_or_else(|err| {
+                            // Exit with a non-zero exit code
+                            eprintln!("Error loading Hardhat AST into ContextLoader");
+                            eprintln!("{:?}", err);
+                            std::process::exit(1);
+                        })
+                }
             }
         }
     }
@@ -110,16 +112,14 @@ fn detect_framework(path: PathBuf) -> Option<Framework> {
     // Read the contents of the directory
     let entries = read_dir(&canonical_path).expect("Failed to read directory");
 
-    for entry in entries {
-        if let Ok(entry) = entry {
-            let filename = entry.file_name();
-            match filename.to_str() {
-                Some("foundry.toml") => return Some(Framework::Foundry),
-                Some("hardhat.config.js") | Some("hardhat.config.ts") => {
-                    return Some(Framework::Hardhat)
-                }
-                _ => {}
+    for entry in entries.flatten() {
+        let filename = entry.file_name();
+        match filename.to_str() {
+            Some("foundry.toml") => return Some(Framework::Foundry),
+            Some("hardhat.config.js") | Some("hardhat.config.ts") => {
+                return Some(Framework::Hardhat)
             }
+            _ => {}
         }
     }
 
