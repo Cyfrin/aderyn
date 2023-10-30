@@ -28,8 +28,6 @@ In the command line, run:
 cargo install aderyn
 ```
 
-# Usage Instructions
-
 ## Quick Start
 
 The project you're running Aderyn on should be either a Foundry or compiled Hardhat project.
@@ -40,7 +38,7 @@ aderyn --root /path/to/your/foundry/project/root/directory/
 
 That's it! Aderyn identifies whether the project root is a Foundry or Hardhat repo, then uses the compiled AST files to hunt for vulnerabilities. `report.md` will be output in the directory in which you ran the command.
 
-## Params
+### Params
 
 1. You must provide the root directory of the repo you want to analyze:
 `--root /path/to/repo/root/`
