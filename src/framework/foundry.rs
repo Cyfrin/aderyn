@@ -134,14 +134,12 @@ fn collect_sol_files(path: &PathBuf) -> Result<Vec<String>, std::io::Error> {
     Ok(results)
 }
 
-fn get_filepaths(foundry_out_path: PathBuf, contract_files: &Vec<String>) -> Vec<PathBuf> {
+fn get_filepaths(foundry_out_path: PathBuf, contract_files: &[String]) -> Vec<PathBuf> {
     let subdirs = get_subdirectories(&foundry_out_path).unwrap_or_else(|_err| {
         // Exit with a non-zero exit code
         eprintln!("Error getting subdirectories of Foundry output directory");
         std::process::exit(1);
     });
-
-    
 
     get_matching_filepaths(&subdirs, contract_files)
 }

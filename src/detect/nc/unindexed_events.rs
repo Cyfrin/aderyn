@@ -2,7 +2,7 @@ use std::error::Error;
 
 use crate::{
     context::loader::{ASTNode, ContextLoader},
-    detector::detector::{Detector, IssueSeverity},
+    detect::detector::{Detector, IssueSeverity},
 };
 use eyre::Result;
 
@@ -56,7 +56,7 @@ impl Detector for UnindexedEventsDetector {
 
 #[cfg(test)]
 mod unindexed_event_tests {
-    use crate::detector::detector::{detector_test_helpers::load_contract, Detector};
+    use crate::detect::detector::{detector_test_helpers::load_contract, Detector};
 
     use super::UnindexedEventsDetector;
 
@@ -74,7 +74,7 @@ mod unindexed_event_tests {
         // assert that the detector returns the correct severity
         assert_eq!(
             detector.severity(),
-            crate::detector::detector::IssueSeverity::NC
+            crate::detect::detector::IssueSeverity::NC
         );
         // assert that the detector returns the correct title
         assert_eq!(detector.title(), "Event is missing `indexed` fields");
