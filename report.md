@@ -1,5 +1,6 @@
 # Table of Contents
 
+- [Contract Summary](#contract-summary)
 - [High Issues](#high-issues)
   - [H-1: Using `delegatecall` in loop](#H-1)
 - [Medium Issues](#medium-issues)
@@ -18,6 +19,21 @@
   - [NC-4: Event is missing `indexed` fields](#NC-4)
   - [NC-5: `require()` / `revert()` statements should have descriptive reason strings or custom errors](#NC-5)
   - [NC-6: The `nonReentrant` `modifier` should occur before all other modifiers](#NC-6)
+
+
+# Contract Summary
+
+Contracts analyzed:
+
+- "src/ExtendedInheritance.sol"
+- "src/T11sTranferer.sol"
+- "src/StateVariables.sol"
+- "src/Counter.sol"
+- "src/AdminContract.sol"
+- "src/DeprecatedOZFunctions.sol"
+- "src/InheritanceBase.sol"
+- "src/IContractInheritance.sol"
+- "src/KeccakContract.sol"
 
 
 # High Issues
@@ -51,9 +67,9 @@ https://github.com/transmissions11/solmate/blob/main/src/utils/SafeTransferLib.s
 `@dev Note that none of the functions in this library check that a token has code at all! That responsibility is delegated to the caller`
 
 
+- Found in src/T11sTranferer.sol: 294:18:44
 - Found in src/DeprecatedOZFunctions.sol: 579:22:38
 - Found in src/DeprecatedOZFunctions.sol: 898:17:38
-- Found in src/T11sTranferer.sol: 294:18:44
 
 
 # Low Issues
@@ -65,8 +81,8 @@ Use `abi.encode()` instead which will pad items to 32 bytes, which will [prevent
 If all arguments are strings and or bytes, `bytes.concat()` should be used instead.
 
 - Found in src/KeccakContract.sol: 731:16:42
-- Found in src/KeccakContract.sol: 878:16:42
 - Found in src/KeccakContract.sol: 584:16:42
+- Found in src/KeccakContract.sol: 878:16:42
 
 
 <a name="L-2"></a>
@@ -91,11 +107,11 @@ Openzeppelin has deprecated several functions and replaced with newer versions. 
 
 ERC20 functions may not behave as expected. For example: return values are not always meaningful. It is recommended to use OpenZeppelin's SafeERC20 library.
 
-- Found in src/DeprecatedOZFunctions.sol: 1062:13:38
+- Found in src/DeprecatedOZFunctions.sol: 1598:18:38
 - Found in src/DeprecatedOZFunctions.sol: 1322:13:38
 - Found in src/DeprecatedOZFunctions.sol: 1424:13:38
-- Found in src/DeprecatedOZFunctions.sol: 1598:18:38
 - Found in src/DeprecatedOZFunctions.sol: 1272:13:38
+- Found in src/DeprecatedOZFunctions.sol: 1062:13:38
 
 
 <a name="L-5"></a>
@@ -103,9 +119,9 @@ ERC20 functions may not behave as expected. For example: return values are not a
 
 Consider using a specific version of Solidity in your contracts instead of a wide version. For example, instead of `pragma solidity ^0.8.0;`, use `pragma solidity 0.8.0;`
 
-- Found in src/IContractInheritance.sol: 32:24:40
 - Found in src/Counter.sol: 39:24:37
 - Found in src/InheritanceBase.sol: 32:23:41
+- Found in src/IContractInheritance.sol: 32:24:40
 
 
 # NC Issues
@@ -123,14 +139,14 @@ Assigning values to address state variables without checking for `address(0)`.
 
 
 
-- Found in src/AdminContract.sol: 302:26:36
-- Found in src/StateVariables.sol: 2500:376:43
-- Found in src/StateVariables.sol: 1755:145:43
-- Found in src/Counter.sol: 120:80:37
 - Found in src/StateVariables.sol: 1426:292:43
+- Found in src/StateVariables.sol: 2500:376:43
 - Found in src/StateVariables.sol: 2148:346:43
+- Found in src/Counter.sol: 120:80:37
 - Found in src/StateVariables.sol: 2063:79:43
 - Found in src/StateVariables.sol: 1906:151:43
+- Found in src/AdminContract.sol: 302:26:36
+- Found in src/StateVariables.sol: 1755:145:43
 
 
 <a name="NC-3"></a>
@@ -138,8 +154,8 @@ Assigning values to address state variables without checking for `address(0)`.
 
 
 
-- Found in src/Counter.sol: 434:1:37
 - Found in src/ExtendedInheritance.sol: 466:1:39
+- Found in src/Counter.sol: 434:1:37
 
 
 <a name="NC-4"></a>
