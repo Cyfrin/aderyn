@@ -182,15 +182,13 @@ impl ReportPrinter for MarkdownReportPrinter {
                 contract_path = path;
             }
             let mut line_number = 0;
-            let mut source_location = "unknown";
             if let Some(src) = node.src() {
-                source_location = src;
                 line_number = source_unit.source_line(src).unwrap();
             }
             writeln!(
                 writer,
-                "- Found in {}: {}. Line: {}",
-                contract_path, source_location, line_number
+                "- Found in {}: Line: {}",
+                contract_path, line_number
             )?;
         }
         writeln!(writer, "\n")?; // Add an extra newline for spacing
