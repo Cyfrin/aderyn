@@ -109,7 +109,7 @@ fn main() {
         Framework::Hardhat => {
             println!("Framework detected. Hardhat mode engaged.");
             println!("Hardhat root path: {:?}", root_path);
-            let hardhat_output = load_hardhat(root_path).unwrap_or_else(|err| {
+            let hardhat_output = load_hardhat(&root_path).unwrap_or_else(|err| {
                 // Exit with a non-zero exit code
                 eprintln!("Error loading Hardhat build info");
                 eprintln!("{:?}", err);
@@ -125,7 +125,28 @@ fn main() {
                             eprintln!("Error loading Hardhat AST into ContextLoader");
                             eprintln!("{:?}", err);
                             std::process::exit(1);
-                        })
+                        });
+                    let source_path = root_path.join(key);
+                    match read_file_to_string(&source_path) {
+                        Ok(content) => {
+                            for unit in context_loader.get_source_units() {
+                                if let Some(ref abs_path) = unit.absolute_path {
+                                    if abs_path == key {
+                                        context_loader
+                                            .set_source_unit_source_content(unit.id, content);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        Err(err) => {
+                            eprintln!(
+                                "Error reading Solidity source file: {}",
+                                source_path.to_str().unwrap()
+                            );
+                            eprintln!("{:?}", err);
+                        }
+                    }
                 }
             }
         }
