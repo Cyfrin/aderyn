@@ -68,8 +68,8 @@ https://github.com/transmissions11/solmate/blob/main/src/utils/SafeTransferLib.s
 
 
 - Found in src/T11sTranferer.sol: 294:18:44. Line: 10
-- Found in src/DeprecatedOZFunctions.sol: 898:17:38. Line: 27
 - Found in src/DeprecatedOZFunctions.sol: 579:22:38. Line: 17
+- Found in src/DeprecatedOZFunctions.sol: 898:17:38. Line: 27
 
 
 # Low Issues
@@ -107,11 +107,11 @@ Openzeppelin has deprecated several functions and replaced with newer versions. 
 
 ERC20 functions may not behave as expected. For example: return values are not always meaningful. It is recommended to use OpenZeppelin's SafeERC20 library.
 
-- Found in src/DeprecatedOZFunctions.sol: 1598:18:38. Line: 47
 - Found in src/DeprecatedOZFunctions.sol: 1322:13:38. Line: 38
-- Found in src/DeprecatedOZFunctions.sol: 1062:13:38. Line: 32
 - Found in src/DeprecatedOZFunctions.sol: 1424:13:38. Line: 42
+- Found in src/DeprecatedOZFunctions.sol: 1598:18:38. Line: 47
 - Found in src/DeprecatedOZFunctions.sol: 1272:13:38. Line: 37
+- Found in src/DeprecatedOZFunctions.sol: 1062:13:38. Line: 32
 
 
 <a name="L-5"></a>
@@ -120,8 +120,8 @@ ERC20 functions may not behave as expected. For example: return values are not a
 Consider using a specific version of Solidity in your contracts instead of a wide version. For example, instead of `pragma solidity ^0.8.0;`, use `pragma solidity 0.8.0;`
 
 - Found in src/Counter.sol: 39:24:37. Line: 2
-- Found in src/inheritance/InheritanceBase.sol: 32:23:2. Line: 2
 - Found in src/inheritance/IContractInheritance.sol: 32:24:1. Line: 2
+- Found in src/inheritance/InheritanceBase.sol: 32:23:2. Line: 2
 
 
 # NC Issues
@@ -139,14 +139,14 @@ Assigning values to address state variables without checking for `address(0)`.
 
 
 
-- Found in src/StateVariables.sol: 2500:376:43. Line: 67
-- Found in src/StateVariables.sol: 1755:145:43. Line: 47
-- Found in src/StateVariables.sol: 2063:79:43. Line: 57
-- Found in src/StateVariables.sol: 1906:151:43. Line: 52
-- Found in src/AdminContract.sol: 302:26:36. Line: 9
 - Found in src/StateVariables.sol: 2148:346:43. Line: 61
 - Found in src/Counter.sol: 120:80:37. Line: 7
+- Found in src/StateVariables.sol: 2063:79:43. Line: 57
+- Found in src/StateVariables.sol: 1755:145:43. Line: 47
+- Found in src/AdminContract.sol: 302:26:36. Line: 9
+- Found in src/StateVariables.sol: 2500:376:43. Line: 67
 - Found in src/StateVariables.sol: 1426:292:43. Line: 39
+- Found in src/StateVariables.sol: 1906:151:43. Line: 52
 
 
 <a name="NC-3"></a>
