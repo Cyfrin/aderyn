@@ -318,12 +318,12 @@ impl ContextLoader {
         };
 
         // iterate through self.source_units until the source unit with the id matching `source_unit_id` is found, then return its `absolute_path`
-        let source_unit = source_unit_id.and_then(|&id| {
+        
+        source_unit_id.and_then(|&id| {
             self.source_units
                 .iter()
                 .find(|source_unit| source_unit.id == id)
-        });
-        source_unit
+        })
     }
 
     pub fn get_source_unit_contract_path_from(&self, node: &ASTNode) -> Option<&String> {

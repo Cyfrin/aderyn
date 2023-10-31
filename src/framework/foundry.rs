@@ -97,7 +97,7 @@ pub fn load_foundry(foundry_root: PathBuf) -> Result<LoadedFoundry, Box<dyn Erro
 
     Ok(LoadedFoundry {
         src_filepaths: contract_filepaths,
-        output_filepaths: output_filepaths,
+        output_filepaths,
     })
 }
 
