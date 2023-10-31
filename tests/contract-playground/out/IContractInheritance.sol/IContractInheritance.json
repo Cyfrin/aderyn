@@ -94,19 +94,19 @@
   },
   "ast": {
     "absolutePath": "src/inheritance/IContractInheritance.sol",
-    "id": 82,
+    "id": 46665,
     "exportedSymbols": {
       "IContractInheritance": [
-        81
+        46664
       ]
     },
     "nodeType": "SourceUnit",
-    "src": "32:114:1",
+    "src": "32:114:43",
     "nodes": [
       {
-        "id": 75,
+        "id": 46658,
         "nodeType": "PragmaDirective",
-        "src": "32:24:1",
+        "src": "32:24:43",
         "nodes": [],
         "literals": [
           "solidity",
@@ -116,34 +116,34 @@
         ]
       },
       {
-        "id": 81,
+        "id": 46664,
         "nodeType": "ContractDefinition",
-        "src": "58:88:1",
+        "src": "58:88:43",
         "nodes": [
           {
-            "id": 80,
+            "id": 46663,
             "nodeType": "FunctionDefinition",
-            "src": "95:49:1",
+            "src": "95:49:43",
             "nodes": [],
             "functionSelector": "a6b206bf",
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "doSomething",
-            "nameLocation": "104:11:1",
+            "nameLocation": "104:11:43",
             "parameters": {
-              "id": 78,
+              "id": 46661,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 77,
+                  "id": 46660,
                   "mutability": "mutable",
                   "name": "something",
-                  "nameLocation": "124:9:1",
+                  "nameLocation": "124:9:43",
                   "nodeType": "VariableDeclaration",
-                  "scope": 80,
-                  "src": "116:17:1",
+                  "scope": 46663,
+                  "src": "116:17:43",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -151,10 +151,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 76,
+                    "id": 46659,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "116:7:1",
+                    "src": "116:7:43",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -163,15 +163,15 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "115:19:1"
+              "src": "115:19:43"
             },
             "returnParameters": {
-              "id": 79,
+              "id": 46662,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "143:0:1"
+              "src": "143:0:43"
             },
-            "scope": 81,
+            "scope": 46664,
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
@@ -184,16 +184,16 @@
         "contractKind": "interface",
         "fullyImplemented": false,
         "linearizedBaseContracts": [
-          81
+          46664
         ],
         "name": "IContractInheritance",
-        "nameLocation": "68:20:1",
-        "scope": 82,
+        "nameLocation": "68:20:43",
+        "scope": 46665,
         "usedErrors": [],
         "usedEvents": []
       }
     ],
     "license": "MIT"
   },
-  "id": 1
+  "id": 43
 }
