@@ -1,6 +1,6 @@
 use std::io::{Result, Write};
 
-use crate::context::loader::ContextLoader;
+use crate::{ast::SourceUnit, context::loader::ContextLoader};
 
 use super::reporter::{Issue, Report};
 
@@ -12,6 +12,7 @@ pub trait ReportPrinter {
         loader: &ContextLoader,
     ) -> Result<()>;
     fn print_table_of_contents<W: Write>(&self, writer: W, report: &Report) -> Result<()>;
+    fn print_contract_summary<W: Write>(&self, writer: W, loader: &ContextLoader) -> Result<()>;
     fn print_issue<W: Write>(
         &self,
         writer: W,
@@ -32,6 +33,7 @@ impl ReportPrinter for MarkdownReportPrinter {
         loader: &ContextLoader,
     ) -> Result<()> {
         self.print_table_of_contents(&mut writer, report)?;
+        self.print_contract_summary(&mut writer, loader)?;
         let mut counter = 0;
         if !report.criticals.is_empty() {
             writeln!(writer, "# Critical Issues\n")?;
@@ -75,8 +77,27 @@ impl ReportPrinter for MarkdownReportPrinter {
         Ok(())
     }
 
+    fn print_contract_summary<W: Write>(
+        &self,
+        mut writer: W,
+        loader: &ContextLoader,
+    ) -> Result<()> {
+        writeln!(writer, "# Contract Summary\n")?;
+        writeln!(writer, "Contracts analyzed:\n")?;
+        for source_unit in loader.get_source_units() {
+            writeln!(
+                writer,
+                "- {:?}",
+                source_unit.absolute_path.as_ref().unwrap()
+            )?;
+        }
+        writeln!(writer, "\n")?; // Add an extra newline for spacing
+        Ok(())
+    }
+
     fn print_table_of_contents<W: Write>(&self, mut writer: W, report: &Report) -> Result<()> {
         writeln!(writer, "# Table of Contents\n")?;
+        writeln!(writer, "- [Contract Summary](#contract-summary)")?;
         if !report.criticals.is_empty() {
             writeln!(writer, "- [Critical Issues](#critical-issues)")?;
             for (index, issue) in report.criticals.iter().enumerate() {
@@ -156,15 +177,19 @@ impl ReportPrinter for MarkdownReportPrinter {
         )?;
         for node in issue.instances.iter().flatten() {
             let mut contract_path = "unknown";
-            if let Some(source_unit_contract_path) = loader.get_source_unit_contract_path_from(node)
-            {
-                contract_path = source_unit_contract_path;
+            let source_unit: &SourceUnit = loader.get_source_unit_from_child_node(node).unwrap();
+            if let Some(path) = source_unit.absolute_path.as_ref() {
+                contract_path = path;
             }
-            let mut source_location = "unknown";
+            let mut line_number = 0;
             if let Some(src) = node.src() {
-                source_location = src;
+                line_number = source_unit.source_line(src).unwrap();
             }
-            writeln!(writer, "- Found in {}: {}", contract_path, source_location)?;
+            writeln!(
+                writer,
+                "- Found in {}: Line: {}",
+                contract_path, line_number
+            )?;
         }
         writeln!(writer, "\n")?; // Add an extra newline for spacing
         Ok(())
