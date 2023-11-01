@@ -64,13 +64,12 @@ pub fn load_foundry(foundry_root: PathBuf) -> Result<LoadedFoundry, Box<dyn Erro
     });
 
     // Run `forge build` in the root
-    let output = std::process::Command::new("forge")
+    let _output = std::process::Command::new("forge")
         .arg("build")
         .current_dir(&foundry_root_absolute)
         .stdout(Stdio::inherit()) // This will stream the stdout
         .stderr(Stdio::inherit())
         .status();
-    println!("forge build output: {:?}", output);
 
     let foundry_config_filepath = foundry_root_absolute.join("foundry.toml");
     let foundry_config = read_config(&foundry_config_filepath).unwrap_or_else(|_err| {
@@ -86,14 +85,11 @@ pub fn load_foundry(foundry_root: PathBuf) -> Result<LoadedFoundry, Box<dyn Erro
         eprintln!("Error collecting Solidity files from Foundry src directory");
         std::process::exit(1);
     });
-    // print the found files
-    println!("Foundry src files: {:?}", contract_filepaths);
 
     // For each contract in the Foundry output directory, check if it is in the list of contracts in the Foundry src directory
     // (This is because some contracts may be imported but not deployed, or there may be old contracts in the output directory)
     let foundry_out_path = foundry_root_absolute.join(&foundry_config.profile.default.out);
-    let output_filepaths = get_filepaths(foundry_out_path, &contract_filepaths);
-    println!("Foundry output files: {:?}", output_filepaths);
+    let output_filepaths: Vec<PathBuf> = get_filepaths(foundry_out_path, &contract_filepaths);
 
     Ok(LoadedFoundry {
         src_filepaths: contract_filepaths,
@@ -111,7 +107,6 @@ fn read_config(path: &PathBuf) -> Result<FoundryConfig, Box<dyn Error>> {
             std::process::exit(1);
         }
     };
-    println!("Foundry config: {:?}", foundry_config);
     Ok(foundry_config)
 }
 

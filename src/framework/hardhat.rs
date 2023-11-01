@@ -2,7 +2,7 @@ use eyre::Result;
 use serde::Deserialize;
 use std::collections::HashMap;
 use std::error::Error;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 use crate::ast::SourceUnit;
 
@@ -21,7 +21,7 @@ pub struct ContractSource {
     pub ast: SourceUnit,
 }
 
-pub fn load_hardhat(hardhat_root: &PathBuf) -> Result<HardhatOutput, Box<dyn Error>> {
+pub fn load_hardhat(hardhat_root: &Path) -> Result<HardhatOutput, Box<dyn Error>> {
     let config_path = hardhat_root.join("artifacts/build-info");
     let json_build_files = collect_json_files(config_path).unwrap_or_else(|err| {
         // Exit with a non-zero exit code
@@ -31,7 +31,10 @@ pub fn load_hardhat(hardhat_root: &PathBuf) -> Result<HardhatOutput, Box<dyn Err
         std::process::exit(1);
     });
     // print the found files
-    println!("Found Hardhat build-info files: {:?}", json_build_files);
+    println!(
+        "Loading Hardhat build-info file: {:?}",
+        json_build_files.get(0).unwrap()
+    );
 
     Ok(
         read_hardhat_build_info_file(json_build_files.get(0).unwrap()).unwrap_or_else(|err| {
