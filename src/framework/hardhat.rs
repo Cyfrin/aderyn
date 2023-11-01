@@ -21,7 +21,7 @@ pub struct ContractSource {
     pub ast: SourceUnit,
 }
 
-pub fn load_hardhat(hardhat_root: PathBuf) -> Result<HardhatOutput, Box<dyn Error>> {
+pub fn load_hardhat(hardhat_root: &PathBuf) -> Result<HardhatOutput, Box<dyn Error>> {
     let config_path = hardhat_root.join("artifacts/build-info");
     let json_build_files = collect_json_files(config_path).unwrap_or_else(|err| {
         // Exit with a non-zero exit code
