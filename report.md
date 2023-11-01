@@ -67,9 +67,9 @@ https://github.com/transmissions11/solmate/blob/main/src/utils/SafeTransferLib.s
 `@dev Note that none of the functions in this library check that a token has code at all! That responsibility is delegated to the caller`
 
 
+- Found in src/DeprecatedOZFunctions.sol: Line: 27
 - Found in src/DeprecatedOZFunctions.sol: Line: 17
 - Found in src/T11sTranferer.sol: Line: 10
-- Found in src/DeprecatedOZFunctions.sol: Line: 27
 
 
 # Low Issues
@@ -81,8 +81,8 @@ Use `abi.encode()` instead which will pad items to 32 bytes, which will [prevent
 If all arguments are strings and or bytes, `bytes.concat()` should be used instead.
 
 - Found in src/KeccakContract.sol: Line: 22
-- Found in src/KeccakContract.sol: Line: 18
 - Found in src/KeccakContract.sol: Line: 26
+- Found in src/KeccakContract.sol: Line: 18
 
 
 <a name="L-2"></a>
@@ -108,10 +108,10 @@ Openzeppelin has deprecated several functions and replaced with newer versions. 
 ERC20 functions may not behave as expected. For example: return values are not always meaningful. It is recommended to use OpenZeppelin's SafeERC20 library.
 
 - Found in src/DeprecatedOZFunctions.sol: Line: 47
-- Found in src/DeprecatedOZFunctions.sol: Line: 37
 - Found in src/DeprecatedOZFunctions.sol: Line: 42
 - Found in src/DeprecatedOZFunctions.sol: Line: 32
 - Found in src/DeprecatedOZFunctions.sol: Line: 38
+- Found in src/DeprecatedOZFunctions.sol: Line: 37
 
 
 <a name="L-5"></a>
@@ -139,13 +139,13 @@ Assigning values to address state variables without checking for `address(0)`.
 
 
 
-- Found in src/Counter.sol: Line: 7
-- Found in src/StateVariables.sol: Line: 47
-- Found in src/StateVariables.sol: Line: 57
 - Found in src/StateVariables.sol: Line: 52
+- Found in src/Counter.sol: Line: 7
 - Found in src/StateVariables.sol: Line: 61
+- Found in src/StateVariables.sol: Line: 47
 - Found in src/StateVariables.sol: Line: 39
 - Found in src/StateVariables.sol: Line: 67
+- Found in src/StateVariables.sol: Line: 57
 - Found in src/AdminContract.sol: Line: 9
 
 
