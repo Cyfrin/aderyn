@@ -48,8 +48,13 @@ pub fn read_foundry_output_file(filepath: &str) -> Result<FoundryOutput> {
     )?))?)
 }
 
+pub struct LoadedFoundry {
+    pub src_filepaths: Vec<PathBuf>,
+    pub output_filepaths: Vec<PathBuf>,
+}
+
 // Load foundry and return a Vector of PathBufs to the AST JSON files
-pub fn load_foundry(foundry_root: PathBuf) -> Result<Vec<PathBuf>, Box<dyn Error>> {
+pub fn load_foundry(foundry_root: PathBuf) -> Result<LoadedFoundry, Box<dyn Error>> {
     let foundry_root_absolute = canonicalize(foundry_root).unwrap_or_else(|err| {
         // Exit with a non-zero exit code
         eprintln!("Error getting absolute path of Foundry root directory");
@@ -59,13 +64,12 @@ pub fn load_foundry(foundry_root: PathBuf) -> Result<Vec<PathBuf>, Box<dyn Error
     });
 
     // Run `forge build` in the root
-    let output = std::process::Command::new("forge")
+    let _output = std::process::Command::new("forge")
         .arg("build")
         .current_dir(&foundry_root_absolute)
         .stdout(Stdio::inherit()) // This will stream the stdout
         .stderr(Stdio::inherit())
         .status();
-    println!("forge build output: {:?}", output);
 
     let foundry_config_filepath = foundry_root_absolute.join("foundry.toml");
     let foundry_config = read_config(&foundry_config_filepath).unwrap_or_else(|_err| {
@@ -76,19 +80,21 @@ pub fn load_foundry(foundry_root: PathBuf) -> Result<Vec<PathBuf>, Box<dyn Error
 
     // Get the file names of all contracts in the Foundry src directory
     let foundry_src_path = foundry_root_absolute.join(&foundry_config.profile.default.src);
-    let contract_files = collect_sol_files(&foundry_src_path).unwrap_or_else(|_err| {
+    let contract_filepaths = collect_sol_files(&foundry_src_path).unwrap_or_else(|_err| {
         // Exit with a non-zero exit code
         eprintln!("Error collecting Solidity files from Foundry src directory");
         std::process::exit(1);
     });
-    // print the found files
-    println!("Foundry src files: {:?}", contract_files);
 
     // For each contract in the Foundry output directory, check if it is in the list of contracts in the Foundry src directory
     // (This is because some contracts may be imported but not deployed, or there may be old contracts in the output directory)
     let foundry_out_path = foundry_root_absolute.join(&foundry_config.profile.default.out);
-    let file_paths = get_filepaths(foundry_out_path, &contract_files);
-    Ok(file_paths)
+    let output_filepaths: Vec<PathBuf> = get_filepaths(foundry_out_path, &contract_filepaths);
+
+    Ok(LoadedFoundry {
+        src_filepaths: contract_filepaths,
+        output_filepaths,
+    })
 }
 
 fn read_config(path: &PathBuf) -> Result<FoundryConfig, Box<dyn Error>> {
@@ -101,11 +107,10 @@ fn read_config(path: &PathBuf) -> Result<FoundryConfig, Box<dyn Error>> {
             std::process::exit(1);
         }
     };
-    println!("Foundry config: {:?}", foundry_config);
     Ok(foundry_config)
 }
 
-fn collect_sol_files(path: &PathBuf) -> Result<Vec<String>, std::io::Error> {
+fn collect_sol_files(path: &PathBuf) -> Result<Vec<PathBuf>, std::io::Error> {
     let mut results = Vec::new();
 
     if path.is_dir() {
@@ -116,32 +121,24 @@ fn collect_sol_files(path: &PathBuf) -> Result<Vec<String>, std::io::Error> {
             if entry_path.is_dir() {
                 results.extend(collect_sol_files(&entry_path)?);
             } else if entry_path.extension().map_or(false, |ext| ext == "sol") {
-                if let Some(filename) = entry_path.file_name() {
-                    if let Some(filename_str) = filename.to_str() {
-                        results.push(filename_str.to_string());
-                    }
-                }
+                results.push(entry_path);
             }
         }
     } else if path.extension().map_or(false, |ext| ext == "sol") {
-        if let Some(filename) = path.file_name() {
-            if let Some(filename_str) = filename.to_str() {
-                results.push(filename_str.to_string());
-            }
-        }
+        results.push(path.clone());
     }
 
     Ok(results)
 }
 
-fn get_filepaths(foundry_out_path: PathBuf, contract_files: &[String]) -> Vec<PathBuf> {
+fn get_filepaths(foundry_out_path: PathBuf, contract_filepaths: &Vec<PathBuf>) -> Vec<PathBuf> {
     let subdirs = get_subdirectories(&foundry_out_path).unwrap_or_else(|_err| {
         // Exit with a non-zero exit code
         eprintln!("Error getting subdirectories of Foundry output directory");
         std::process::exit(1);
     });
 
-    get_matching_filepaths(&subdirs, contract_files)
+    get_matching_filepaths(&subdirs, contract_filepaths)
 }
 
 fn get_subdirectories(path: &PathBuf) -> Result<Vec<PathBuf>> {
@@ -155,13 +152,14 @@ fn get_subdirectories(path: &PathBuf) -> Result<Vec<PathBuf>> {
     Ok(dirs)
 }
 
-fn get_matching_filepaths(subdirs: &[PathBuf], contract_files: &[String]) -> Vec<PathBuf> {
+fn get_matching_filepaths(subdirs: &[PathBuf], contract_filepaths: &Vec<PathBuf>) -> Vec<PathBuf> {
     let mut matching_filepaths = Vec::new();
 
     for subdir in subdirs {
-        for contract_name in contract_files {
+        for contract_filepath in contract_filepaths {
             // Check if subdir string representation contains the contract name with ".sol"
             if let Some(subdir_str) = subdir.to_str() {
+                let contract_name = contract_filepath.file_name().unwrap().to_str().unwrap();
                 if subdir_str.contains(&format!("/{}", contract_name)) {
                     // Construct the JSON file path and add it to matching_filepaths
                     let contract_name_path = PathBuf::from(contract_name);

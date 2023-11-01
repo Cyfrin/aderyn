@@ -1,7 +1,7 @@
 use std::error::Error;
 
 use crate::{
-    ast::{ModifierInvocation, SourceUnit},
+    ast::ModifierInvocation,
     context::loader::{ASTNode, ContextLoader},
     detect::detector::{Detector, IssueSeverity},
     visitor::ast_visitor::{ASTConstVisitor, Node},
@@ -14,30 +14,27 @@ pub struct CentralizationRiskDetector {
 }
 
 impl ASTConstVisitor for CentralizationRiskDetector {
-    fn visit_source_unit(&mut self, node: &SourceUnit) -> Result<bool> {
-        // if the node's exported_symbols HashMap contains a key with any of the following values, add the node
+    fn visit_contract_definition(&mut self, node: &crate::ast::ContractDefinition) -> Result<bool> {
+        // if the node's base_contracts.base_name.name contains any of the following values, add the node
         // to the found_centralization_risks vector:
         // [
-        //   "Owned", "Ownable", "Ownable2Step", "AccessControl", "AccessControlCrossChain", "AccessControlEnumerable",
-        //   "Auth", "RolesAuthority", "MultiRolesAuthority"
+        //  "Owned", "Ownable", "Ownable2Step", "AccessControl", "AccessControlCrossChain", "AccessControlEnumerable",
+        //  "Auth", "RolesAuthority", "MultiRolesAuthority"
         // ]
-        if node.exported_symbols.is_some() {
-            let exported_symbols = node.exported_symbols.as_ref().unwrap();
-            let keys = exported_symbols.keys();
-            for key in keys {
-                if key == "Owned"
-                    || key == "Ownable"
-                    || key == "Ownable2Step"
-                    || key == "AccessControl"
-                    || key == "AccessControlCrossChain"
-                    || key == "AccessControlEnumerable"
-                    || key == "Auth"
-                    || key == "RolesAuthority"
-                    || key == "MultiRolesAuthority"
-                {
-                    self.found_centralization_risks
-                        .push(Some(ASTNode::SourceUnit(node.clone())));
-                }
+
+        for base_contract in node.base_contracts.iter() {
+            if base_contract.base_name.name == "Owned"
+                || base_contract.base_name.name == "Ownable"
+                || base_contract.base_name.name == "Ownable2Step"
+                || base_contract.base_name.name == "AccessControl"
+                || base_contract.base_name.name == "AccessControlCrossChain"
+                || base_contract.base_name.name == "AccessControlEnumerable"
+                || base_contract.base_name.name == "Auth"
+                || base_contract.base_name.name == "RolesAuthority"
+                || base_contract.base_name.name == "MultiRolesAuthority"
+            {
+                self.found_centralization_risks
+                    .push(Some(ASTNode::ContractDefinition(node.clone())));
             }
         }
 
