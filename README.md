@@ -33,15 +33,16 @@ cargo install aderyn
 The project you're running Aderyn on should be either a Foundry or compiled Hardhat project.
 
 ```sh
-aderyn --root /path/to/your/foundry/project/root/directory/
+aderyn /path/to/your/foundry/project/root/directory/
 ```
 
 That's it! Aderyn identifies whether the project root is a Foundry or Hardhat repo, then uses the compiled AST files to hunt for vulnerabilities. `report.md` will be output in the directory in which you ran the command.
 
-### Params
+### Arguments
 
-1. You must provide the root directory of the repo you want to analyze:
-`--root /path/to/repo/root/`
+1. You must provide the root directory of the repo you want to analyze. Examples:
+  - `aderyn /path/to/repo/root/`
+  - `aderyn .`
 
 ## Supported Development Frameworks
 
@@ -54,6 +55,10 @@ If Foundry is detected in the project root, Aderyn will first run `forge build` 
 ### Hardhat
 
 If Hardhat is detected, Aderyn does not auto-compile. Make sure to run `hardhat compile` BEFORE running Aderyn. 
+
+# Development
+
+If you'd like to build locally (perhaps to contribute), [install Rust](https://www.rust-lang.org/tools/install), clone this repo, and use [`cargo`](https://doc.rust-lang.org/cargo/getting-started/first-steps.html) commands to build, test and run locally
 
 # Roadmap
 

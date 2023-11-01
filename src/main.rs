@@ -18,7 +18,6 @@ use std::{
 #[command(author, version, about, long_about = None)]
 struct Args {
     /// Foundry project root directory
-    #[arg(short, long)]
     root: String,
 }
 
