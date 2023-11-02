@@ -9,6 +9,7 @@ use crate::{
             unspecific_solidity_pragma::UnspecificSolidityPragmaDetector,
         },
         medium::{
+            block_timestamp_deadline::BlockTimestampDeadlineDetector,
             centralization_risk::CentralizationRiskDetector,
             solmate_safe_transfer_lib::SolmateSafeTransferLibDetector,
         },
@@ -40,6 +41,7 @@ pub fn get_all_detectors() -> Vec<Box<dyn Detector>> {
         Box::<UnindexedEventsDetector>::default(),
         Box::<RequireWithStringDetector>::default(),
         Box::<NonReentrantBeforeOthersDetector>::default(),
+        Box::<BlockTimestampDeadlineDetector>::default(),
     ]
 }
 

@@ -6,6 +6,7 @@
 - [Medium Issues](#medium-issues)
   - [M-1: Centralization Risk for trusted owners](#M-1)
   - [M-2: Solmate's SafeTransferLib does not check for token contract's existence](#M-2)
+  - [M-3: Using `block.timestamp` for swap deadline offers no protection](#M-3)
 - [Low Issues](#low-issues)
   - [L-1: `abi.encodePacked()` should not be used with dynamic types when passing the result to a hash function such as `keccak256()`](#L-1)
   - [L-2: `ecrecover` is susceptible to signature malleability](#L-2)
@@ -32,6 +33,7 @@ Contracts analyzed:
 - "src/AdminContract.sol"
 - "src/DeprecatedOZFunctions.sol"
 - "src/inheritance/InheritanceBase.sol"
+- "src/UniswapV2Swapper.sol"
 - "src/inheritance/IContractInheritance.sol"
 - "src/KeccakContract.sol"
 
@@ -72,6 +74,22 @@ https://github.com/transmissions11/solmate/blob/main/src/utils/SafeTransferLib.s
 - Found in src/DeprecatedOZFunctions.sol: Line: 27
 
 
+<a name="M-3"></a>
+## M-3: Using `block.timestamp` for swap deadline offers no protection
+
+In the PoS model, proposers know well in advance if they will propose one or consecutive blocks ahead of time. In such a scenario, a malicious validator can hold back the transaction and execute it at a more favourable block number.Consider allowing function caller to specify swap deadline input parameter.
+
+- Found in src/UniswapV2Swapper.sol: Line: 25
+- Found in src/UniswapV2Swapper.sol: Line: 32
+- Found in src/UniswapV2Swapper.sol: Line: 26
+- Found in src/UniswapV2Swapper.sol: Line: 24
+- Found in src/UniswapV2Swapper.sol: Line: 33
+- Found in src/UniswapV2Swapper.sol: Line: 28
+- Found in src/UniswapV2Swapper.sol: Line: 27
+- Found in src/UniswapV2Swapper.sol: Line: 34
+- Found in src/UniswapV2Swapper.sol: Line: 29
+
+
 # Low Issues
 
 <a name="L-1"></a>
@@ -107,10 +125,10 @@ Openzeppelin has deprecated several functions and replaced with newer versions. 
 
 ERC20 functions may not behave as expected. For example: return values are not always meaningful. It is recommended to use OpenZeppelin's SafeERC20 library.
 
-- Found in src/DeprecatedOZFunctions.sol: Line: 47
 - Found in src/DeprecatedOZFunctions.sol: Line: 42
-- Found in src/DeprecatedOZFunctions.sol: Line: 38
 - Found in src/DeprecatedOZFunctions.sol: Line: 37
+- Found in src/DeprecatedOZFunctions.sol: Line: 47
+- Found in src/DeprecatedOZFunctions.sol: Line: 38
 - Found in src/DeprecatedOZFunctions.sol: Line: 32
 
 
@@ -119,8 +137,8 @@ ERC20 functions may not behave as expected. For example: return values are not a
 
 Consider using a specific version of Solidity in your contracts instead of a wide version. For example, instead of `pragma solidity ^0.8.0;`, use `pragma solidity 0.8.0;`
 
-- Found in src/inheritance/IContractInheritance.sol: Line: 2
 - Found in src/inheritance/InheritanceBase.sol: Line: 2
+- Found in src/inheritance/IContractInheritance.sol: Line: 2
 - Found in src/Counter.sol: Line: 2
 
 
@@ -131,6 +149,7 @@ Consider using a specific version of Solidity in your contracts instead of a wid
 
 Assigning values to address state variables without checking for `address(0)`.
 
+- Found in src/UniswapV2Swapper.sol: Line: 12
 - Found in src/StateVariables.sol: Line: 58
 
 
@@ -139,14 +158,17 @@ Assigning values to address state variables without checking for `address(0)`.
 
 
 
-- Found in src/Counter.sol: Line: 7
-- Found in src/StateVariables.sol: Line: 57
-- Found in src/StateVariables.sol: Line: 39
+- Found in src/UniswapV2Swapper.sol: Line: 15
+- Found in src/UniswapV2Swapper.sol: Line: 37
+- Found in src/UniswapV2Swapper.sol: Line: 11
 - Found in src/AdminContract.sol: Line: 9
 - Found in src/StateVariables.sol: Line: 52
-- Found in src/StateVariables.sol: Line: 67
-- Found in src/StateVariables.sol: Line: 47
+- Found in src/StateVariables.sol: Line: 57
+- Found in src/StateVariables.sol: Line: 39
 - Found in src/StateVariables.sol: Line: 61
+- Found in src/StateVariables.sol: Line: 47
+- Found in src/StateVariables.sol: Line: 67
+- Found in src/Counter.sol: Line: 7
 
 
 <a name="NC-3"></a>
@@ -154,8 +176,8 @@ Assigning values to address state variables without checking for `address(0)`.
 
 
 
-- Found in src/Counter.sol: Line: 23
 - Found in src/inheritance/ExtendedInheritance.sol: Line: 15
+- Found in src/Counter.sol: Line: 23
 
 
 <a name="NC-4"></a>
