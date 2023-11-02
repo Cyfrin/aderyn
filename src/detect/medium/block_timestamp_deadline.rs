@@ -95,7 +95,7 @@ mod block_timestamp_deadline_detector_tests {
         let found = detector.detect(&context_loader).unwrap();
         // assert that the detector found
         assert!(found);
-        // assert that the number of instances found is 2
+        // assert that the number of instances found is correct
         assert_eq!(detector.instances().len(), 9);
         // assert that the severity is medium
         assert_eq!(
