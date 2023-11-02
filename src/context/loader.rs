@@ -244,6 +244,10 @@ impl ContextLoader {
         self.function_definitions.keys().collect()
     }
 
+    pub fn get_function_calls(&self) -> Vec<&FunctionCall> {
+        self.function_calls.keys().collect()
+    }
+
     pub fn get_member_accesses(&self) -> Vec<&MemberAccess> {
         self.member_accesses.keys().collect()
     }
@@ -318,7 +322,7 @@ impl ContextLoader {
         };
 
         // iterate through self.source_units until the source unit with the id matching `source_unit_id` is found, then return its `absolute_path`
-        
+
         source_unit_id.and_then(|&id| {
             self.source_units
                 .iter()

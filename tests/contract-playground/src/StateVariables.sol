@@ -58,13 +58,21 @@ contract StateVariables {
         addr = newAddr;
     }
 
-    function setEmptyAlteredNumbers(uint256 _emptyAlteredPrivateNumber, uint256 _emptyAlteredInternalNumber, uint256 _emptyAlteredPublicNumber) public {
+    function setEmptyAlteredNumbers(
+        uint256 _emptyAlteredPrivateNumber,
+        uint256 _emptyAlteredInternalNumber,
+        uint256 _emptyAlteredPublicNumber
+    ) public {
         emptyAlteredPrivateNumber = _emptyAlteredPrivateNumber;
         emptyAlteredInternalNumber = _emptyAlteredInternalNumber;
         emptyAlteredPublicNumber = _emptyAlteredPublicNumber;
     }
 
-    function setNonEmptyAlteredNumbers(uint256 _nonEmptyAlteredPrivateNumber, uint256 _nonEmptyAlteredInternalNumber, uint256 _nonEmptyAlteredPublicNumber) public {
+    function setNonEmptyAlteredNumbers(
+        uint256 _nonEmptyAlteredPrivateNumber,
+        uint256 _nonEmptyAlteredInternalNumber,
+        uint256 _nonEmptyAlteredPublicNumber
+    ) public {
         nonEmptyAlteredPrivateNumber = _nonEmptyAlteredPrivateNumber;
         nonEmptyAlteredInternalNumber = _nonEmptyAlteredInternalNumber;
         nonEmptyAlteredPublicNumber = _nonEmptyAlteredPublicNumber;

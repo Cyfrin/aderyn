@@ -70,3 +70,4 @@ jobs:
         continue-on-error: true  # WARNING: only for this example, remove it!
         with:
           command: clippy
+          args: -- -D warnings
