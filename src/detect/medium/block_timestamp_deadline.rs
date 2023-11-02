@@ -1,7 +1,7 @@
 use std::error::Error;
 
 use crate::{
-    ast::Expression,
+    ast::{Expression, FunctionCallKind},
     context::loader::{ASTNode, ContextLoader},
     detect::detector::{Detector, IssueSeverity},
 };
@@ -14,17 +14,17 @@ pub struct BlockTimestampDeadlineDetector {
 
 impl Detector for BlockTimestampDeadlineDetector {
     fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
-        // Uniswap V2 - Function Calls
-        // For each FunctionCall, if the Expression is a MemberAccess that is named any of the following:
-        // [
-        //  swapExactTokensForTokens, swapTokensForExactTokens, swapExactETHForTokens, swapTokensForExactETH,
-        //  swapExactTokensForETH, swapETHForExactTokens, swapExactTokensForTokensSupportingFeeOnTransferTokens,
-        //  swapExactETHForTokensSupportingFeeOnTransferTokens, swapExactTokensForETHSupportingFeeOnTransferTokens
-        // ]
-        // If the last FunctionCall argument is a MemberAccess identifier with member_name "timestamp",
-        // and the MemberAccess expression.name is "block", add the node to the found_block_timestamp_deadlines vector.
         let function_calls = loader.get_function_calls();
         for call in function_calls {
+            // Uniswap V2 - Function Calls
+            // For each FunctionCall, if the Expression is a MemberAccess that is named any of the following:
+            // [
+            //  swapExactTokensForTokens, swapTokensForExactTokens, swapExactETHForTokens, swapTokensForExactETH,
+            //  swapExactTokensForETH, swapETHForExactTokens, swapExactTokensForTokensSupportingFeeOnTransferTokens,
+            //  swapExactETHForTokensSupportingFeeOnTransferTokens, swapExactTokensForETHSupportingFeeOnTransferTokens
+            // ]
+            // If the last FunctionCall argument is a MemberAccess identifier with member_name "timestamp",
+            // and the MemberAccess expression.name is "block", add the node to the found_block_timestamp_deadlines vector.
             if let Expression::MemberAccess(ref member_access) = *call.expression {
                 if member_access.member_name == "swapExactTokensForTokens"
                     || member_access.member_name == "swapTokensForExactTokens"
@@ -49,6 +49,37 @@ impl Detector for BlockTimestampDeadlineDetector {
                                 if identifier.name == "block" {
                                     self.found_block_timestamp_deadlines
                                         .push(Some(ASTNode::FunctionCall(call.clone())));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            // Uniswap V3 - Function Calls
+            // For each FunctionCall, if it is of kind StructConstructorCall, where the call's Expression has a name of any of the following:
+            // [
+            //  ExactInputSingleParams, ExactInputParams, ExactOutputSingleParams, ExactOutputParams
+            // ]
+            // If any of the call's arguments is a MemberAccess identifier with member_name "timestamp",
+            // and the MemberAccess expression.name is "block", add the node to the found_block_timestamp_deadlines vector.
+            if call.kind == FunctionCallKind::StructConstructorCall {
+                if let Expression::Identifier(ref identifier) = *call.expression {
+                    if identifier.name == "ExactInputSingleParams"
+                        || identifier.name == "ExactInputParams"
+                        || identifier.name == "ExactOutputSingleParams"
+                        || identifier.name == "ExactOutputParams"
+                    {
+                        for argument in call.arguments.iter() {
+                            if let Expression::MemberAccess(ref member_access) = *argument {
+                                if member_access.member_name == "timestamp" {
+                                    if let Expression::Identifier(ref identifier) =
+                                        *member_access.expression
+                                    {
+                                        if identifier.name == "block" {
+                                            self.found_block_timestamp_deadlines
+                                                .push(Some(ASTNode::FunctionCall(call.clone())));
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -87,7 +118,7 @@ mod block_timestamp_deadline_detector_tests {
     };
 
     #[test]
-    fn test_block_timestamp_deadline_detector() {
+    fn test_block_timestamp_deadline_uniswap_v2_detector() {
         let context_loader = load_contract(
             "./tests/contract-playground/out/UniswapV2Swapper.sol/UniswapV2Swapper.json",
         );
@@ -97,6 +128,37 @@ mod block_timestamp_deadline_detector_tests {
         assert!(found);
         // assert that the number of instances found is correct
         assert_eq!(detector.instances().len(), 9);
+        // assert that the severity is medium
+        assert_eq!(
+            detector.severity(),
+            crate::detect::detector::IssueSeverity::Medium
+        );
+        // assert that the title is correct
+        assert_eq!(
+            detector.title(),
+            String::from("Using `block.timestamp` for swap deadline offers no protection")
+        );
+        // assert that the description is correct
+        assert_eq!(
+            detector.description(),
+            String::from(
+                "In the PoS model, proposers know well in advance if they will propose one or consecutive blocks ahead of time. In such a scenario, a malicious validator can hold back the transaction and execute it at a more favourable block number.\
+        Consider allowing function caller to specify swap deadline input parameter."
+            )
+        );
+    }
+
+    #[test]
+    fn test_block_timestamp_deadline_uniswap_v3_detector() {
+        let context_loader = load_contract(
+            "./tests/contract-playground/out/UniswapV3Swapper.sol/UniswapV3Swapper.json",
+        );
+        let mut detector = BlockTimestampDeadlineDetector::default();
+        let found = detector.detect(&context_loader).unwrap();
+        // assert that the detector found
+        assert!(found);
+        // assert that the number of instances found is correct
+        assert_eq!(detector.instances().len(), 8);
         // assert that the severity is medium
         assert_eq!(
             detector.severity(),

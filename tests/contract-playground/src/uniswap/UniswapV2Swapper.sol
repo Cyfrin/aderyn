@@ -1,11 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.20;
 
-import {IUniswapV2Router01} from "../lib/v2-periphery/contracts/interfaces/IUniswapV2Router01.sol";
-import {IUniswapV2Router02} from "../lib/v2-periphery/contracts/interfaces/IUniswapV2Router02.sol";
+import {IUniswapV2Router01} from "../../lib/v2-periphery/contracts/interfaces/IUniswapV2Router01.sol";
+import {IUniswapV2Router02} from "../../lib/v2-periphery/contracts/interfaces/IUniswapV2Router02.sol";
 
 contract UniswapV2Swapper {
-
     address private s_router;
 
     constructor(address router) {
@@ -13,13 +12,13 @@ contract UniswapV2Swapper {
     }
 
     function badSwaps(
-        uint amountIn,
-        uint amountOutMin,
+        uint256 amountIn,
+        uint256 amountOutMin,
         address[] calldata path,
         address to,
-        uint amountOut,
-        uint amountInMax
-    ) public {
+        uint256 amountOut,
+        uint256 amountInMax
+    ) external {
         IUniswapV2Router01 router1 = IUniswapV2Router01(s_router);
         router1.swapExactTokensForTokens(amountIn, amountOutMin, path, to, block.timestamp);
         router1.swapTokensForExactTokens(amountOut, amountInMax, path, to, block.timestamp);
@@ -35,14 +34,14 @@ contract UniswapV2Swapper {
     }
 
     function goodSwaps(
-        uint amountIn,
-        uint amountOutMin,
+        uint256 amountIn,
+        uint256 amountOutMin,
         address[] calldata path,
         address to,
-        uint amountOut,
-        uint amountInMax,
-        uint deadline
-    ) public {
+        uint256 amountOut,
+        uint256 amountInMax,
+        uint256 deadline
+    ) external {
         IUniswapV2Router01 router1 = IUniswapV2Router01(s_router);
         router1.swapExactTokensForTokens(amountIn, amountOutMin, path, to, deadline);
         router1.swapTokensForExactTokens(amountOut, amountInMax, path, to, deadline);

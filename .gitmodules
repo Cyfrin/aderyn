@@ -10,6 +10,3 @@
 [submodule "tests/contract-playground/lib/v2-periphery"]
 	path = tests/contract-playground/lib/v2-periphery
 	url = https://github.com/Uniswap/v2-periphery
-[submodule "tests/contract-playground/lib/v3-periphery"]
-	path = tests/contract-playground/lib/v3-periphery
-	url = https://github.com/Uniswap/v3-periphery
