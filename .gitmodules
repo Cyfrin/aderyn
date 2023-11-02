@@ -7,3 +7,6 @@
 [submodule "tests/contract-playground/lib/solmate"]
 	path = tests/contract-playground/lib/solmate
 	url = https://github.com/transmissions11/solmate
+[submodule "tests/contract-playground/lib/v2-periphery"]
+	path = tests/contract-playground/lib/v2-periphery
+	url = https://github.com/Uniswap/v2-periphery
