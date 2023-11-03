@@ -176,6 +176,16 @@ pub struct ContextLoader {
 }
 
 impl ContextLoader {
+    // SETTERS
+
+    pub fn set_source_unit_source_content(&mut self, id: i64, source: String) {
+        if let Some(source_unit) = self.source_units.iter_mut().find(|unit| unit.id == id) {
+            source_unit.source = Some(source);
+        }
+    }
+
+    // GETTERS
+
     pub fn get_node(&self, id: i64) -> Option<&ASTNode> {
         self.nodes.get(&id)
     }
@@ -382,12 +392,6 @@ impl ContextLoader {
 
     pub fn get_source_units(&self) -> Vec<&SourceUnit> {
         self.source_units.iter().collect()
-    }
-
-    pub fn set_source_unit_source_content(&mut self, id: i64, source: String) {
-        if let Some(source_unit) = self.source_units.iter_mut().find(|unit| unit.id == id) {
-            source_unit.source = Some(source);
-        }
     }
 
     pub fn get_source_unit_from_child_node(&self, node: &ASTNode) -> Option<&SourceUnit> {

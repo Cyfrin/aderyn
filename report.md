@@ -70,9 +70,9 @@ https://github.com/transmissions11/solmate/blob/main/src/utils/SafeTransferLib.s
 `@dev Note that none of the functions in this library check that a token has code at all! That responsibility is delegated to the caller`
 
 
+- Found in src/DeprecatedOZFunctions.sol: Line: 27
 - Found in src/T11sTranferer.sol: Line: 10
 - Found in src/DeprecatedOZFunctions.sol: Line: 17
-- Found in src/DeprecatedOZFunctions.sol: Line: 27
 
 
 <a name="M-3"></a>
@@ -80,23 +80,23 @@ https://github.com/transmissions11/solmate/blob/main/src/utils/SafeTransferLib.s
 
 In the PoS model, proposers know well in advance if they will propose one or consecutive blocks ahead of time. In such a scenario, a malicious validator can hold back the transaction and execute it at a more favourable block number.Consider allowing function caller to specify swap deadline input parameter.
 
-- Found in src/uniswap/UniswapV2Swapper.sol: Line: 32
-- Found in src/uniswap/UniswapV2Swapper.sol: Line: 27
-- Found in src/uniswap/UniswapV3Swapper.sol: Line: 52
-- Found in src/uniswap/UniswapV2Swapper.sol: Line: 28
 - Found in src/uniswap/UniswapV2Swapper.sol: Line: 26
+- Found in src/uniswap/UniswapV2Swapper.sol: Line: 23
+- Found in src/uniswap/UniswapV2Swapper.sol: Line: 33
 - Found in src/uniswap/UniswapV3Swapper.sol: Line: 77
-- Found in src/uniswap/UniswapV3Swapper.sol: Line: 55
+- Found in src/uniswap/UniswapV3Swapper.sol: Line: 91
+- Found in src/uniswap/UniswapV2Swapper.sol: Line: 32
+- Found in src/uniswap/UniswapV2Swapper.sol: Line: 28
+- Found in src/uniswap/UniswapV2Swapper.sol: Line: 24
+- Found in src/uniswap/UniswapV3Swapper.sol: Line: 52
 - Found in src/uniswap/UniswapV3Swapper.sol: Line: 80
 - Found in src/uniswap/UniswapV3Swapper.sol: Line: 69
-- Found in src/uniswap/UniswapV3Swapper.sol: Line: 66
-- Found in src/uniswap/UniswapV2Swapper.sol: Line: 31
-- Found in src/uniswap/UniswapV2Swapper.sol: Line: 23
-- Found in src/uniswap/UniswapV2Swapper.sol: Line: 25
-- Found in src/uniswap/UniswapV2Swapper.sol: Line: 24
-- Found in src/uniswap/UniswapV2Swapper.sol: Line: 33
 - Found in src/uniswap/UniswapV3Swapper.sol: Line: 94
-- Found in src/uniswap/UniswapV3Swapper.sol: Line: 91
+- Found in src/uniswap/UniswapV2Swapper.sol: Line: 25
+- Found in src/uniswap/UniswapV2Swapper.sol: Line: 31
+- Found in src/uniswap/UniswapV3Swapper.sol: Line: 66
+- Found in src/uniswap/UniswapV2Swapper.sol: Line: 27
+- Found in src/uniswap/UniswapV3Swapper.sol: Line: 55
 
 
 # Low Issues
@@ -107,9 +107,9 @@ In the PoS model, proposers know well in advance if they will propose one or con
 Use `abi.encode()` instead which will pad items to 32 bytes, which will [prevent hash collisions](https://docs.soliditylang.org/en/v0.8.13/abi-spec.html#non-standard-packed-mode) (e.g. `abi.encodePacked(0x123,0x456)` => `0x123456` => `abi.encodePacked(0x1,0x23456)`, but `abi.encode(0x123,0x456)` => `0x0...1230...456`). Unless there is a compelling reason, `abi.encode` should be preferred. If there is only one argument to `abi.encodePacked()` it can often be cast to `bytes()` or `bytes32()` [instead](https://ethereum.stackexchange.com/questions/30912/how-to-compare-strings-in-solidity#answer-82739).
 If all arguments are strings and or bytes, `bytes.concat()` should be used instead.
 
-- Found in src/KeccakContract.sol: Line: 26
 - Found in src/KeccakContract.sol: Line: 18
 - Found in src/KeccakContract.sol: Line: 22
+- Found in src/KeccakContract.sol: Line: 26
 
 
 <a name="L-2"></a>
@@ -134,11 +134,11 @@ Openzeppelin has deprecated several functions and replaced with newer versions. 
 
 ERC20 functions may not behave as expected. For example: return values are not always meaningful. It is recommended to use OpenZeppelin's SafeERC20 library.
 
-- Found in src/DeprecatedOZFunctions.sol: Line: 38
 - Found in src/DeprecatedOZFunctions.sol: Line: 37
-- Found in src/DeprecatedOZFunctions.sol: Line: 47
+- Found in src/DeprecatedOZFunctions.sol: Line: 38
 - Found in src/DeprecatedOZFunctions.sol: Line: 32
 - Found in src/DeprecatedOZFunctions.sol: Line: 42
+- Found in src/DeprecatedOZFunctions.sol: Line: 47
 
 
 <a name="L-5"></a>
@@ -158,8 +158,8 @@ Consider using a specific version of Solidity in your contracts instead of a wid
 
 Assigning values to address state variables without checking for `address(0)`.
 
-- Found in src/uniswap/UniswapV2Swapper.sol: Line: 11
 - Found in src/StateVariables.sol: Line: 58
+- Found in src/uniswap/UniswapV2Swapper.sol: Line: 11
 
 
 <a name="NC-2"></a>
@@ -167,15 +167,15 @@ Assigning values to address state variables without checking for `address(0)`.
 
 
 
+- Found in src/StateVariables.sol: Line: 57
+- Found in src/StateVariables.sol: Line: 52
+- Found in src/StateVariables.sol: Line: 61
 - Found in src/StateVariables.sol: Line: 71
 - Found in src/uniswap/UniswapV2Swapper.sol: Line: 10
-- Found in src/Counter.sol: Line: 7
-- Found in src/StateVariables.sol: Line: 47
 - Found in src/StateVariables.sol: Line: 39
-- Found in src/StateVariables.sol: Line: 61
-- Found in src/StateVariables.sol: Line: 57
+- Found in src/Counter.sol: Line: 7
 - Found in src/AdminContract.sol: Line: 8
-- Found in src/StateVariables.sol: Line: 52
+- Found in src/StateVariables.sol: Line: 47
 
 
 <a name="NC-3"></a>
@@ -183,8 +183,8 @@ Assigning values to address state variables without checking for `address(0)`.
 
 
 
-- Found in src/Counter.sol: Line: 23
 - Found in src/inheritance/ExtendedInheritance.sol: Line: 15
+- Found in src/Counter.sol: Line: 23
 
 
 <a name="NC-4"></a>
@@ -192,8 +192,8 @@ Assigning values to address state variables without checking for `address(0)`.
 
 Index event fields make the field more quickly accessible to off-chain tools that parse events. However, note that each index field costs extra gas during emission, so it's not necessarily best to index the maximum allowed per event (three fields). Each event should use three indexed fields if there are three or more fields, and gas usage is not particularly of concern for the events in question. If there are fewer than three fields, all of the fields should be indexed.
 
-- Found in src/inheritance/ExtendedInheritance.sol: Line: 7
 - Found in src/inheritance/InheritanceBase.sol: Line: 7
+- Found in src/inheritance/ExtendedInheritance.sol: Line: 7
 
 
 <a name="NC-5"></a>

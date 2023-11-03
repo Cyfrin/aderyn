@@ -11,8 +11,9 @@ use clap::Parser;
 use std::{
     fs::{read_dir, File},
     io::{Read, Result},
-    path::PathBuf,
+    path::{Path, PathBuf},
 };
+use tokei::{Config, LanguageType};
 
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
@@ -38,18 +39,26 @@ fn main() {
         std::process::exit(1);
     });
 
+    let mut src_path: String;
     let mut context_loader = ContextLoader::default();
+
+    // This whole block loads the solidity files and ASTs into the context loader
     // TODO: move much of this gutsy stuff into the foundry / hardhat modules.
     match framework {
         Framework::Foundry => {
             println!("Framework detected: Foundry mode engaged.");
             println!("Foundry root path: {:?}", root_path);
-            let loaded_foundry = load_foundry(root_path).unwrap_or_else(|err| {
+            let loaded_foundry = load_foundry(&root_path).unwrap_or_else(|err| {
                 // Exit with a non-zero exit code
                 eprintln!("Error loading Foundry Root");
                 eprintln!("{:?}", err);
                 std::process::exit(1);
             });
+            src_path = root_path
+                .join(loaded_foundry.src_path)
+                .to_str()
+                .unwrap()
+                .to_string();
             // Load the foundry output files into the context loader using the ASTs
             for output_filepath in loaded_foundry.output_filepaths {
                 // read_foundry_output_file and print an error message if it fails
@@ -108,6 +117,7 @@ fn main() {
         Framework::Hardhat => {
             println!("Framework detected. Hardhat mode engaged.");
             println!("Hardhat root path: {:?}", root_path);
+            src_path = root_path.join("contracts").to_str().unwrap().to_string();
             let hardhat_output = load_hardhat(&root_path).unwrap_or_else(|err| {
                 // Exit with a non-zero exit code
                 eprintln!("Error loading Hardhat build info");
@@ -125,8 +135,8 @@ fn main() {
                             eprintln!("{:?}", err);
                             std::process::exit(1);
                         });
-                    let source_path = root_path.join(key);
-                    match read_file_to_string(&source_path) {
+                    let source_file_path = root_path.join(key);
+                    match read_file_to_string(&source_file_path) {
                         Ok(content) => {
                             for unit in context_loader.get_source_units() {
                                 if let Some(ref abs_path) = unit.absolute_path {
@@ -141,7 +151,7 @@ fn main() {
                         Err(err) => {
                             eprintln!(
                                 "Error reading Solidity source file: {}",
-                                source_path.to_str().unwrap()
+                                source_file_path.to_str().unwrap()
                             );
                             eprintln!("{:?}", err);
                         }
@@ -151,6 +161,20 @@ fn main() {
         }
     }
 
+    // Using the source path, get the sloc from tokei
+    let mut languages = tokei::Languages::new();
+    let tokei_config = Config::default();
+    println!("src_path: {}", src_path);
+    languages.get_statistics(&[src_path], &[], &tokei_config);
+    let solidity_stats = &languages[&LanguageType::Solidity];
+    println!("nSLOC: {}", solidity_stats.code);
+    // Print details about the solidity files
+    let reports = &solidity_stats.reports;
+    for (report) in reports {
+        println!("{:?}: {}", report.name, report.stats.code);
+    }
+
+    // Load the context loader into the run function, which runs the detectors
     run(context_loader).unwrap_or_else(|err| {
         // Exit with a non-zero exit code
         eprintln!("Error running aderyn");
