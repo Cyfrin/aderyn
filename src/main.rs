@@ -11,7 +11,7 @@ use clap::Parser;
 use std::{
     fs::{read_dir, File},
     io::{Read, Result},
-    path::{Path, PathBuf},
+    path::{PathBuf},
 };
 use tokei::{Config, LanguageType};
 
@@ -39,7 +39,7 @@ fn main() {
         std::process::exit(1);
     });
 
-    let mut src_path: String;
+    let src_path: String;
     let mut context_loader = ContextLoader::default();
 
     // This whole block loads the solidity files and ASTs into the context loader
