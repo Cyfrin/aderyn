@@ -84,13 +84,25 @@ impl ReportPrinter for MarkdownReportPrinter {
     ) -> Result<()> {
         writeln!(writer, "# Contract Summary\n")?;
         writeln!(writer, "Contracts analyzed:\n")?;
+
+        // Start the markdown table with the header
+        writeln!(writer, "| Filepath | nSLOC |")?;
+        writeln!(writer, "| --- | --- |")?;
+
+        let sloc_stats = loader.get_sloc_stats();
+
+        // Iterate over source units and add each as a row in the markdown table
         for source_unit in loader.get_source_units() {
-            writeln!(
-                writer,
-                "- {:?}",
-                source_unit.absolute_path.as_ref().unwrap()
-            )?;
+            let filepath = source_unit.absolute_path.as_ref().unwrap();
+            let report: &tokei::Report = sloc_stats
+                .reports
+                .iter()
+                .find(|r| r.name.to_str().map_or(false, |s| s.contains(filepath)))
+                .unwrap();
+            writeln!(writer, "| {} | {} |", filepath, report.stats.code)?;
         }
+        writeln!(writer, "| **Total** | **{}** |", sloc_stats.code)?;
+
         writeln!(writer, "\n")?; // Add an extra newline for spacing
         Ok(())
     }
