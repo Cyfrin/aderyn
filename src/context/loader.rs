@@ -2,6 +2,7 @@ use crate::ast::*;
 use crate::visitor::ast_visitor::*;
 use eyre::Result;
 use std::collections::HashMap;
+use tokei::Language;
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum ASTNode {
@@ -118,6 +119,7 @@ impl ASTNode {
 
 #[derive(Default, Debug)]
 pub struct ContextLoader {
+    sloc_stats: Language,
     pub nodes: HashMap<i64, ASTNode>,
     last_source_unit_id: i64,
 
@@ -178,6 +180,10 @@ pub struct ContextLoader {
 impl ContextLoader {
     // SETTERS
 
+    pub fn set_sloc_stats(&mut self, sloc_stats: Language) {
+        self.sloc_stats = sloc_stats;
+    }
+
     pub fn set_source_unit_source_content(&mut self, id: i64, source: String) {
         if let Some(source_unit) = self.source_units.iter_mut().find(|unit| unit.id == id) {
             source_unit.source = Some(source);
@@ -185,6 +191,10 @@ impl ContextLoader {
     }
 
     // GETTERS
+
+    pub fn get_sloc_stats(&self) -> &Language {
+        &self.sloc_stats
+    }
 
     pub fn get_node(&self, id: i64) -> Option<&ASTNode> {
         self.nodes.get(&id)

@@ -164,15 +164,8 @@ fn main() {
     // Using the source path, get the sloc from tokei
     let mut languages = tokei::Languages::new();
     let tokei_config = Config::default();
-    println!("src_path: {}", src_path);
     languages.get_statistics(&[src_path], &[], &tokei_config);
-    let solidity_stats = &languages[&LanguageType::Solidity];
-    println!("nSLOC: {}", solidity_stats.code);
-    // Print details about the solidity files
-    let reports = &solidity_stats.reports;
-    for (report) in reports {
-        println!("{:?}: {}", report.name, report.stats.code);
-    }
+    context_loader.set_sloc_stats(languages[&LanguageType::Solidity].clone());
 
     // Load the context loader into the run function, which runs the detectors
     run(context_loader).unwrap_or_else(|err| {
