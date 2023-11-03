@@ -1,7 +1,7 @@
 use std::{collections::HashMap, error::Error};
 
 use crate::{
-    ast::{Assignment, BinaryOperation, Expression, VariableDeclaration},
+    ast::{Assignment, BinaryOperation, Expression, Mutability, VariableDeclaration},
     context::loader::{ASTNode, ContextLoader},
     detect::detector::{Detector, IssueSeverity},
     visitor::ast_visitor::{ASTConstVisitor, Node},
@@ -83,7 +83,32 @@ impl ASTConstVisitor for ZeroAddressCheckDetector {
 impl Detector for ZeroAddressCheckDetector {
     fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
         // Get all address state variables
-        self.mutable_address_state_variables = loader.get_address_state_variables_by_id().clone();
+        self.mutable_address_state_variables = loader
+            .get_variable_declarations()
+            .into_iter() // We can consume the Vec since it's just references.
+            .filter_map(|var_decl| {
+                if !var_decl.constant
+                    && matches!(var_decl.mutability, Some(Mutability::Mutable))
+                    && var_decl.state_variable
+                    && (var_decl
+                        .type_descriptions
+                        .type_string
+                        .as_deref()
+                        .unwrap_or("")
+                        .contains("address")
+                        || var_decl
+                            .type_descriptions
+                            .type_string
+                            .as_deref()
+                            .unwrap_or("")
+                            .contains("contract"))
+                {
+                    Some((var_decl.id, (*var_decl).clone())) // Deref and clone the VariableDeclaration.
+                } else {
+                    None
+                }
+            })
+            .collect();
 
         // Get all function definitions
         for function_definition in loader.get_function_definitions() {
