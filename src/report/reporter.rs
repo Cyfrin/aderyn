@@ -7,7 +7,6 @@ pub struct Report {
     pub mediums: Vec<Issue>,
     pub lows: Vec<Issue>,
     pub ncs: Vec<Issue>,
-    pub gas: Vec<Issue>,
 }
 
 #[derive(Default, PartialEq)]
