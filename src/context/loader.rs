@@ -2,6 +2,7 @@ use crate::ast::*;
 use crate::visitor::ast_visitor::*;
 use eyre::Result;
 use std::collections::HashMap;
+use tokei::Language;
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum ASTNode {
@@ -118,6 +119,7 @@ impl ASTNode {
 
 #[derive(Default, Debug)]
 pub struct ContextLoader {
+    sloc_stats: Language,
     pub nodes: HashMap<i64, ASTNode>,
     last_source_unit_id: i64,
 
@@ -176,12 +178,10 @@ pub struct ContextLoader {
 }
 
 impl ContextLoader {
-    pub fn get_node(&self, id: i64) -> Option<&ASTNode> {
-        self.nodes.get(&id)
-    }
+    // SETTERS
 
-    pub fn get_source_units(&self) -> &Vec<SourceUnit> {
-        &self.source_units
+    pub fn set_sloc_stats(&mut self, sloc_stats: Language) {
+        self.sloc_stats = sloc_stats;
     }
 
     pub fn set_source_unit_source_content(&mut self, id: i64, source: String) {
@@ -190,74 +190,218 @@ impl ContextLoader {
         }
     }
 
-    pub fn get_pragma_directives(&self) -> Vec<&PragmaDirective> {
-        self.pragma_directives.keys().collect()
+    // GETTERS
+
+    pub fn get_sloc_stats(&self) -> &Language {
+        &self.sloc_stats
     }
 
-    pub fn get_import_directives(&self) -> Vec<&ImportDirective> {
-        self.import_directives.keys().collect()
+    pub fn get_node(&self, id: i64) -> Option<&ASTNode> {
+        self.nodes.get(&id)
     }
 
-    pub fn get_identifiers(&self) -> Vec<&Identifier> {
-        self.identifiers.keys().collect()
+    pub fn get_array_type_names(&self) -> Vec<&ArrayTypeName> {
+        self.array_type_names.keys().collect()
+    }
+
+    pub fn get_assignments(&self) -> Vec<&Assignment> {
+        self.assignments.keys().collect()
+    }
+
+    pub fn get_binary_operations(&self) -> Vec<&BinaryOperation> {
+        self.binary_operations.keys().collect()
+    }
+
+    pub fn get_blocks(&self) -> Vec<&Block> {
+        self.blocks.keys().collect()
+    }
+
+    pub fn get_conditionals(&self) -> Vec<&Conditional> {
+        self.conditionals.keys().collect()
+    }
+
+    pub fn get_contract_definitions(&self) -> Vec<&ContractDefinition> {
+        self.contract_definitions.keys().collect()
+    }
+
+    pub fn get_elementary_type_names(&self) -> Vec<&ElementaryTypeName> {
+        self.elementary_type_names.keys().collect()
+    }
+
+    pub fn get_elementary_type_name_expressions(&self) -> Vec<&ElementaryTypeNameExpression> {
+        self.elementary_type_name_expressions.keys().collect()
+    }
+
+    pub fn get_emit_statements(&self) -> Vec<&EmitStatement> {
+        self.emit_statements.keys().collect()
+    }
+
+    pub fn get_enum_definitions(&self) -> Vec<&EnumDefinition> {
+        self.enum_definitions.keys().collect()
+    }
+
+    pub fn get_enum_values(&self) -> Vec<&EnumValue> {
+        self.enum_values.keys().collect()
     }
 
     pub fn get_event_definitions(&self) -> Vec<&EventDefinition> {
         self.event_definitions.keys().collect()
     }
 
-    pub fn get_variable_declarations(&self) -> Vec<&VariableDeclaration> {
-        self.variable_declarations.keys().collect()
+    pub fn get_error_definitions(&self) -> Vec<&ErrorDefinition> {
+        self.error_definitions.keys().collect()
     }
 
-    pub fn get_modifier_invocations(&self) -> Vec<&ModifierInvocation> {
-        self.modifier_invocations.keys().collect()
-    }
-
-    // TODO: This could be too domain specific for this module
-    // Consider replacing this with something more generic, and moving it to a different module
-    pub fn get_address_state_variables_by_id(&self) -> HashMap<i64, VariableDeclaration> {
-        self.variable_declarations
-            .iter()
-            .filter(|(key, _)| {
-                !key.constant
-                    && matches!(key.mutability, Some(Mutability::Mutable))
-                    && key.state_variable
-                    && (key
-                        .type_descriptions
-                        .type_string
-                        .as_deref()
-                        .unwrap()
-                        .contains("address")
-                        || key
-                            .type_descriptions
-                            .type_string
-                            .as_deref()
-                            .unwrap()
-                            .contains("contract"))
-            })
-            .map(|(key, _)| (key.id, key.clone())) // Note the clone here
-            .collect()
-    }
-
-    pub fn get_function_definitions(&self) -> Vec<&FunctionDefinition> {
-        self.function_definitions.keys().collect()
+    pub fn get_expression_statements(&self) -> Vec<&ExpressionStatement> {
+        self.expression_statements.keys().collect()
     }
 
     pub fn get_function_calls(&self) -> Vec<&FunctionCall> {
         self.function_calls.keys().collect()
     }
 
-    pub fn get_member_accesses(&self) -> Vec<&MemberAccess> {
-        self.member_accesses.keys().collect()
+    pub fn get_function_call_options(&self) -> Vec<&FunctionCallOptions> {
+        self.function_call_options.keys().collect()
+    }
+
+    pub fn get_function_definitions(&self) -> Vec<&FunctionDefinition> {
+        self.function_definitions.keys().collect()
+    }
+
+    pub fn get_function_type_names(&self) -> Vec<&FunctionTypeName> {
+        self.function_type_names.keys().collect()
     }
 
     pub fn get_for_statements(&self) -> Vec<&ForStatement> {
         self.for_statements.keys().collect()
     }
 
+    pub fn get_identifiers(&self) -> Vec<&Identifier> {
+        self.identifiers.keys().collect()
+    }
+
+    pub fn get_identifier_paths(&self) -> Vec<&IdentifierPath> {
+        self.identifier_paths.keys().collect()
+    }
+
+    pub fn get_if_statements(&self) -> Vec<&IfStatement> {
+        self.if_statements.keys().collect()
+    }
+
+    pub fn get_import_directives(&self) -> Vec<&ImportDirective> {
+        self.import_directives.keys().collect()
+    }
+
+    pub fn get_index_accesses(&self) -> Vec<&IndexAccess> {
+        self.index_accesses.keys().collect()
+    }
+
+    pub fn get_index_range_accesses(&self) -> Vec<&IndexRangeAccess> {
+        self.index_range_accesses.keys().collect()
+    }
+
+    pub fn get_inheritance_specifiers(&self) -> Vec<&InheritanceSpecifier> {
+        self.inheritance_specifiers.keys().collect()
+    }
+
+    pub fn get_inline_assemblies(&self) -> Vec<&InlineAssembly> {
+        self.inline_assemblies.keys().collect()
+    }
+
+    pub fn get_literals(&self) -> Vec<&Literal> {
+        self.literals.keys().collect()
+    }
+
+    pub fn get_member_accesses(&self) -> Vec<&MemberAccess> {
+        self.member_accesses.keys().collect()
+    }
+
+    pub fn get_new_expressions(&self) -> Vec<&NewExpression> {
+        self.new_expressions.keys().collect()
+    }
+
+    pub fn get_mappings(&self) -> Vec<&Mapping> {
+        self.mappings.keys().collect()
+    }
+
+    pub fn get_modifier_definitions(&self) -> Vec<&ModifierDefinition> {
+        self.modifier_definitions.keys().collect()
+    }
+
+    pub fn get_modifier_invocations(&self) -> Vec<&ModifierInvocation> {
+        self.modifier_invocations.keys().collect()
+    }
+
+    pub fn get_override_specifiers(&self) -> Vec<&OverrideSpecifier> {
+        self.override_specifiers.keys().collect()
+    }
+
+    pub fn get_parameter_lists(&self) -> Vec<&ParameterList> {
+        self.parameter_lists.keys().collect()
+    }
+
+    pub fn get_pragma_directives(&self) -> Vec<&PragmaDirective> {
+        self.pragma_directives.keys().collect()
+    }
+
+    pub fn get_returns(&self) -> Vec<&Return> {
+        self.returns.keys().collect()
+    }
+
+    pub fn get_revert_statements(&self) -> Vec<&RevertStatement> {
+        self.revert_statements.keys().collect()
+    }
+
+    pub fn get_struct_definitions(&self) -> Vec<&StructDefinition> {
+        self.struct_definitions.keys().collect()
+    }
+
+    pub fn get_structured_documentations(&self) -> Vec<&StructuredDocumentation> {
+        self.structured_documentations.keys().collect()
+    }
+
+    pub fn get_try_statements(&self) -> Vec<&TryStatement> {
+        self.try_statements.keys().collect()
+    }
+
+    pub fn get_try_catch_clauses(&self) -> Vec<&TryCatchClause> {
+        self.try_catch_clauses.keys().collect()
+    }
+
+    pub fn get_tuple_expressions(&self) -> Vec<&TupleExpression> {
+        self.tuple_expressions.keys().collect()
+    }
+
+    pub fn get_unary_operations(&self) -> Vec<&UnaryOperation> {
+        self.unary_operations.keys().collect()
+    }
+
+    pub fn get_user_defined_type_names(&self) -> Vec<&UserDefinedTypeName> {
+        self.user_defined_type_names.keys().collect()
+    }
+
+    pub fn get_user_defined_value_type_definitions(&self) -> Vec<&UserDefinedValueTypeDefinition> {
+        self.user_defined_value_type_definitions.keys().collect()
+    }
+
+    pub fn get_using_for_directives(&self) -> Vec<&UsingForDirective> {
+        self.using_for_directives.keys().collect()
+    }
+
+    pub fn get_variable_declarations(&self) -> Vec<&VariableDeclaration> {
+        self.variable_declarations.keys().collect()
+    }
+
+    pub fn get_variable_declaration_statements(&self) -> Vec<&VariableDeclarationStatement> {
+        self.variable_declaration_statements.keys().collect()
+    }
+
     pub fn get_while_statements(&self) -> Vec<&WhileStatement> {
         self.while_statements.keys().collect()
+    }
+
+    pub fn get_source_units(&self) -> Vec<&SourceUnit> {
+        self.source_units.iter().collect()
     }
 
     pub fn get_source_unit_from_child_node(&self, node: &ASTNode) -> Option<&SourceUnit> {
