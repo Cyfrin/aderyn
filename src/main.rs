@@ -11,14 +11,14 @@ use clap::Parser;
 use std::{
     fs::{read_dir, File},
     io::{Read, Result},
-    path::{PathBuf},
+    path::PathBuf,
 };
 use tokei::{Config, LanguageType};
 
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 struct Args {
-    /// Foundry project root directory
+    /// Foundry or Hardhat project root directory
     root: String,
 }
 
