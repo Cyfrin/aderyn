@@ -1,7 +1,7 @@
 use std::{collections::HashSet, error::Error};
 
 use crate::{
-    ast::Visibility,
+    ast::{FunctionKind, Visibility},
     context::loader::{ASTNode, ContextLoader},
     detect::detector::{Detector, IssueSeverity},
 };
@@ -26,7 +26,11 @@ impl Detector for UselessPublicFunctionDetector {
         // Collect all public FunctionDefinitions which are not in the referenced set.
         let unreferenced_public_functions = function_definitions
             .iter()
-            .filter(|f| f.visibility == Visibility::Public && !referenced_functions.contains(&f.id))
+            .filter(|f| {
+                f.visibility == Visibility::Public
+                    && f.kind != FunctionKind::Constructor
+                    && !referenced_functions.contains(&f.id)
+            })
             .map(|f| Some(ASTNode::FunctionDefinition((*f).clone())));
 
         self.found_useless_public_function
