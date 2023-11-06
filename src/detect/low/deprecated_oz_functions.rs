@@ -34,10 +34,43 @@ impl ASTConstVisitor for DeprecatedOZFunctionsDetector {
 impl Detector for DeprecatedOZFunctionsDetector {
     fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
         for identifier in loader.get_identifiers() {
-            identifier.accept(self)?;
+            // if source_unit has any ImportDirectives with absolute_path containing "openzeppelin"
+            // call identifier.accept(self)
+            let source_unit = loader
+                .get_source_unit_from_child_node(&ASTNode::Identifier(identifier.clone()))
+                .unwrap();
+
+            let import_directives = source_unit.import_directives();
+            for directive in import_directives {
+                if directive
+                    .absolute_path
+                    .as_ref()
+                    .unwrap()
+                    .contains("openzeppelin")
+                {
+                    identifier.accept(self)?;
+                }
+                break;
+            }
         }
         for member_access in loader.get_member_accesses() {
-            member_access.accept(self)?;
+            // if source_unit has any ImportDirectives with absolute_path containing "openzeppelin"
+            // call member_access.accept(self)
+            let source_unit = loader
+                .get_source_unit_from_child_node(&ASTNode::MemberAccess(member_access.clone()))
+                .unwrap();
+            let import_directives = source_unit.import_directives();
+            for directive in import_directives {
+                if directive
+                    .absolute_path
+                    .as_ref()
+                    .unwrap()
+                    .contains("openzeppelin")
+                {
+                    member_access.accept(self)?;
+                }
+                break;
+            }
         }
         Ok(!self.found_deprecated_oz_functions.is_empty())
     }
