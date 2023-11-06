@@ -26,11 +26,9 @@ impl Detector for UnsafeERC721MintDetector {
                     .absolute_path
                     .as_ref()
                     .map_or(false, |path| path.contains("openzeppelin"))
-            }) {
-                if identifier.name == "_mint" {
-                    self.found_unsafe_erc721_mint
-                        .push(Some(ASTNode::Identifier(identifier.clone())));
-                }
+            }) && identifier.name == "_mint" {
+                self.found_unsafe_erc721_mint
+                    .push(Some(ASTNode::Identifier(identifier.clone())));
             }
         }
         Ok(!self.found_unsafe_erc721_mint.is_empty())
