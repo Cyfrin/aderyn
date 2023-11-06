@@ -41,16 +41,13 @@ impl Detector for DeprecatedOZFunctionsDetector {
                 .unwrap();
 
             let import_directives = source_unit.import_directives();
-            for directive in import_directives {
-                if directive
+            if import_directives.iter().any(|directive| {
+                directive
                     .absolute_path
                     .as_ref()
-                    .unwrap()
-                    .contains("openzeppelin")
-                {
-                    identifier.accept(self)?;
-                }
-                break;
+                    .map_or(false, |path| path.contains("openzeppelin"))
+            }) {
+                identifier.accept(self)?;
             }
         }
         for member_access in loader.get_member_accesses() {
@@ -60,16 +57,13 @@ impl Detector for DeprecatedOZFunctionsDetector {
                 .get_source_unit_from_child_node(&ASTNode::MemberAccess(member_access.clone()))
                 .unwrap();
             let import_directives = source_unit.import_directives();
-            for directive in import_directives {
-                if directive
+            if import_directives.iter().any(|directive| {
+                directive
                     .absolute_path
                     .as_ref()
-                    .unwrap()
-                    .contains("openzeppelin")
-                {
-                    member_access.accept(self)?;
-                }
-                break;
+                    .map_or(false, |path| path.contains("openzeppelin"))
+            }) {
+                member_access.accept(self)?;
             }
         }
         Ok(!self.found_deprecated_oz_functions.is_empty())
