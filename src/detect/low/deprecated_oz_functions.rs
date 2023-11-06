@@ -101,8 +101,7 @@ mod deprecated_oz_functions_tests {
         let found = detector.detect(&context_loader).unwrap();
         // assert that the detector found an abi encode packed
         assert!(found);
-        // assert that the detector found the correct abi encode packed
-        // failure0, failure1 and failure3
+        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
         // assert that the severity is low
         assert_eq!(
