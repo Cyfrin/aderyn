@@ -1,5 +1,5 @@
 
-
+</center>
 <p align="center">
     <br />
     <a href="https://createweb3dapp.alchemy.com">
@@ -11,6 +11,7 @@
 <p align="center">Powered by Cyfrin.</p>
 
 </center>
+
 <center>
 <a href="https://twitter.com/cyfrinaudits">Twitter</a>
 <a href="https://cyfrin.io">Website</a>
@@ -136,8 +137,6 @@ Help us build Aderyn 🦜 Please see our [contribution guidelines](./CONTRIBUTIN
 Aderyn is an open source software licensed under the [MIT License](./LICENSE).
 
 To build Aderyn locally, [install Rust](https://www.rust-lang.org/tools/install), clone this repo, and use [`cargo`](https://doc.rust-lang.org/cargo/getting-started/first-steps.html) commands to build, test and run locally
-
-Refer to the official [`cargo`](https://doc.rust-lang.org/cargo/getting-started/first-steps.html) documentation to learn more on how to build, test, and run Rust projects locally.
 
 ## Credits
 
