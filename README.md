@@ -117,19 +117,19 @@ If Hardhat is detected, Aderyn does not auto-compile. Make sure to run `hardhat 
 * [x] Support Foundry/Hardhat/Truffle/Solc output formats for ingesting AST
   * [x] Foundry
   * [x] Hardhat
-* Complexity score (with Percentage YUL code & nsloc)
-* More complex static analysis detectors
-* auto-fixes
-* installer that doesn't require Rust (aderynup)
+* [] Complexity score (with Percentage YUL code & nsloc)
+* [] More complex static analysis detectors
+* [] auto-fixes
+* [] installer that doesn't require Rust (aderynup)
 
 **Long-term goals - Product**
 
-* Provide automated gas optimizations
-* Custom subscribable detectors
-* Control/data flow analyses
-* Symbolic execution
-* Invariant handler generation
-* Vyper support
+* [] Provide automated gas optimizations
+* [] Custom subscribable detectors
+* [] Control/data flow analyses
+* [] Symbolic execution
+* [] Invariant handler generation
+* [] Vyper support
 
 ## Contributing & License
 
