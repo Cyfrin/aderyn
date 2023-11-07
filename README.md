@@ -1,5 +1,5 @@
 
-</center>
+
 <p align="center">
     <br />
     <a href="https://createweb3dapp.alchemy.com">
@@ -10,24 +10,24 @@
 </strong></p>
 <p align="center">Powered by Cyfrin.</p>
 
-</center>
 
-<center>
+
+<p align="center">
 <a href="https://twitter.com/cyfrinaudits">Twitter</a>
 <a href="https://cyfrin.io">Website</a>
 <a href="https://discord.gg/cyfrin">Discord</a>
-</center>
+<p>
 
 ---
 
-<center>
+<div align="center">
 
 [![Stargazers][stars-shield]][stars-url] [![Forks][forks-shield]][forks-url]
 [![Contributors][contributors-shield]][contributors-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 
-</center>
+</div>
 
 
 
