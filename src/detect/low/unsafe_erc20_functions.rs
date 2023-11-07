@@ -1,10 +1,8 @@
 use std::error::Error;
 
 use crate::{
-    ast::MemberAccess,
     context::loader::{ASTNode, ContextLoader},
     detect::detector::{Detector, IssueSeverity},
-    visitor::ast_visitor::{ASTConstVisitor, Node},
 };
 use eyre::Result;
 
@@ -13,23 +11,16 @@ pub struct UnsafeERC20FunctionsDetector {
     found_unsafe_erc20_functions: Vec<Option<ASTNode>>,
 }
 
-impl ASTConstVisitor for UnsafeERC20FunctionsDetector {
-    fn visit_member_access(&mut self, node: &MemberAccess) -> Result<bool> {
-        if node.member_name == "transferFrom"
-            || node.member_name == "approve"
-            || node.member_name == "transfer"
-        {
-            self.found_unsafe_erc20_functions
-                .push(Some(ASTNode::MemberAccess(node.clone())));
-        }
-        Ok(true)
-    }
-}
-
 impl Detector for UnsafeERC20FunctionsDetector {
     fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
         for member_access in loader.get_member_accesses() {
-            member_access.accept(self)?;
+            if member_access.member_name == "transferFrom"
+                || member_access.member_name == "approve"
+                || member_access.member_name == "transfer"
+            {
+                self.found_unsafe_erc20_functions
+                    .push(Some(ASTNode::MemberAccess(member_access.clone())));
+            }
         }
         Ok(!self.found_unsafe_erc20_functions.is_empty())
     }

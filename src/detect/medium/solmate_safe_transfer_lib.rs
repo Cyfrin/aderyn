@@ -1,12 +1,8 @@
 use std::error::Error;
 
-use crate::ast::ImportDirective;
-use crate::visitor::ast_visitor::Node;
 use crate::{
-    ast::MemberAccess,
     context::loader::{ASTNode, ContextLoader},
     detect::detector::{Detector, IssueSeverity},
-    visitor::ast_visitor::ASTConstVisitor,
 };
 use eyre::Result;
 
@@ -16,46 +12,37 @@ pub struct SolmateSafeTransferLibDetector {
     found_transfer_usage: Vec<Option<ASTNode>>,
 }
 
-impl ASTConstVisitor for SolmateSafeTransferLibDetector {
-    fn visit_import_directive(&mut self, node: &ImportDirective) -> Result<bool> {
-        if !self.found_solmate_import {
-            // If the import directive absolute_path contains the strings "solmate" and "SafeTransferLib", flip the found_solmate_import flag to true
-            if node.absolute_path.as_ref().unwrap().contains("solmate")
-                && node
-                    .absolute_path
-                    .as_ref()
-                    .unwrap()
-                    .contains("SafeTransferLib")
-            {
-                self.found_solmate_import = true;
-            }
-        }
-        Ok(true)
-    }
-
-    fn visit_member_access(&mut self, node: &MemberAccess) -> Result<bool> {
-        // If the member access member_name is any of the following names, add it to the list of found
-        // found_transfer_usage vector: ["safeTransfer", "safeTransferFrom", "safeApprove"]
-        if node.member_name == "safeTransfer"
-            || node.member_name == "safeTransferFrom"
-            || node.member_name == "safeApprove"
-        {
-            self.found_transfer_usage
-                .push(Some(ASTNode::MemberAccess(node.clone())));
-        }
-
-        Ok(true)
-    }
-}
-
 impl Detector for SolmateSafeTransferLibDetector {
     fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
         for import_directive in loader.get_import_directives() {
-            import_directive.accept(self)?;
+            if !self.found_solmate_import {
+                // If the import directive absolute_path contains the strings "solmate" and "SafeTransferLib", flip the found_solmate_import flag to true
+                if import_directive
+                    .absolute_path
+                    .as_ref()
+                    .unwrap()
+                    .contains("solmate")
+                    && import_directive
+                        .absolute_path
+                        .as_ref()
+                        .unwrap()
+                        .contains("SafeTransferLib")
+                {
+                    self.found_solmate_import = true;
+                }
+            }
         }
 
         for member_access in loader.get_member_accesses() {
-            member_access.accept(self)?;
+            // If the member access member_name is any of the following names, add it to the list of found
+            // found_transfer_usage vector: ["safeTransfer", "safeTransferFrom", "safeApprove"]
+            if member_access.member_name == "safeTransfer"
+                || member_access.member_name == "safeTransferFrom"
+                || member_access.member_name == "safeApprove"
+            {
+                self.found_transfer_usage
+                    .push(Some(ASTNode::MemberAccess(member_access.clone())));
+            }
         }
 
         if self.found_solmate_import && !self.found_transfer_usage.is_empty() {

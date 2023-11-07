@@ -10,7 +10,7 @@ contract KeccakContract {
         return keccak256(abi.encodePacked(a));
     }
 
-    function success2(uint[] memory a) external pure returns (bytes32) {
+    function success2(uint256[] memory a) external pure returns (bytes32) {
         return keccak256(abi.encodePacked(a));
     }
 
@@ -22,8 +22,7 @@ contract KeccakContract {
         return keccak256(abi.encodePacked(a, b));
     }
 
-    function failure2(uint[] memory a, uint[] memory b) external pure returns (bytes32) {
+    function failure2(uint256[] memory a, uint256[] memory b) external pure returns (bytes32) {
         return keccak256(abi.encodePacked(a, b));
     }
-
 }

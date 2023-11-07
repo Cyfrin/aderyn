@@ -49,12 +49,13 @@ pub fn read_foundry_output_file(filepath: &str) -> Result<FoundryOutput> {
 }
 
 pub struct LoadedFoundry {
+    pub src_path: String,
     pub src_filepaths: Vec<PathBuf>,
     pub output_filepaths: Vec<PathBuf>,
 }
 
 // Load foundry and return a Vector of PathBufs to the AST JSON files
-pub fn load_foundry(foundry_root: PathBuf) -> Result<LoadedFoundry, Box<dyn Error>> {
+pub fn load_foundry(foundry_root: &PathBuf) -> Result<LoadedFoundry, Box<dyn Error>> {
     let foundry_root_absolute = canonicalize(foundry_root).unwrap_or_else(|err| {
         // Exit with a non-zero exit code
         eprintln!("Error getting absolute path of Foundry root directory");
@@ -92,6 +93,7 @@ pub fn load_foundry(foundry_root: PathBuf) -> Result<LoadedFoundry, Box<dyn Erro
     let output_filepaths: Vec<PathBuf> = get_filepaths(foundry_out_path, &contract_filepaths);
 
     Ok(LoadedFoundry {
+        src_path: foundry_config.profile.default.src,
         src_filepaths: contract_filepaths,
         output_filepaths,
     })

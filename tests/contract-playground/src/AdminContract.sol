@@ -5,7 +5,6 @@ import {Ownable} from "../lib/openzeppelin-contracts/contracts/access/Ownable.so
 import {ReentrancyGuard} from "../lib/openzeppelin-contracts/contracts/security/ReentrancyGuard.sol";
 
 contract AdminContract is Ownable, ReentrancyGuard {
-
     constructor() Ownable() {}
 
     function setOwner(address _owner) external onlyOwner nonReentrant {
