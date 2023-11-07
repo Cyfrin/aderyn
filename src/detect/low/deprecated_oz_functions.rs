@@ -1,34 +1,14 @@
 use std::error::Error;
 
 use crate::{
-    ast::{Identifier, MemberAccess},
     context::loader::{ASTNode, ContextLoader},
     detect::detector::{Detector, IssueSeverity},
-    visitor::ast_visitor::{ASTConstVisitor, Node},
 };
 use eyre::Result;
 
 #[derive(Default)]
 pub struct DeprecatedOZFunctionsDetector {
     found_deprecated_oz_functions: Vec<Option<ASTNode>>,
-}
-
-impl ASTConstVisitor for DeprecatedOZFunctionsDetector {
-    fn visit_identifier(&mut self, node: &Identifier) -> Result<bool> {
-        if node.name == "_setupRole" {
-            self.found_deprecated_oz_functions
-                .push(Some(ASTNode::Identifier(node.clone())));
-        }
-        Ok(true)
-    }
-
-    fn visit_member_access(&mut self, node: &MemberAccess) -> Result<bool> {
-        if node.member_name == "safeApprove" {
-            self.found_deprecated_oz_functions
-                .push(Some(ASTNode::MemberAccess(node.clone())));
-        }
-        Ok(true)
-    }
 }
 
 impl Detector for DeprecatedOZFunctionsDetector {
@@ -47,7 +27,10 @@ impl Detector for DeprecatedOZFunctionsDetector {
                     .as_ref()
                     .map_or(false, |path| path.contains("openzeppelin"))
             }) {
-                identifier.accept(self)?;
+                if identifier.name == "_setupRole" {
+                    self.found_deprecated_oz_functions
+                        .push(Some(ASTNode::Identifier(identifier.clone())));
+                }
             }
         }
         for member_access in loader.get_member_accesses() {
@@ -63,7 +46,10 @@ impl Detector for DeprecatedOZFunctionsDetector {
                     .as_ref()
                     .map_or(false, |path| path.contains("openzeppelin"))
             }) {
-                member_access.accept(self)?;
+                if member_access.member_name == "safeApprove" {
+                    self.found_deprecated_oz_functions
+                        .push(Some(ASTNode::MemberAccess(member_access.clone())));
+                }
             }
         }
         Ok(!self.found_deprecated_oz_functions.is_empty())
