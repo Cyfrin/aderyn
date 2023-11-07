@@ -1,10 +1,8 @@
 use std::error::Error;
 
 use crate::{
-    ast::MemberAccess,
     context::loader::{ASTNode, ContextLoader},
     detect::detector::{Detector, IssueSeverity},
-    visitor::ast_visitor::{ASTConstVisitor, Node},
 };
 use eyre::Result;
 
@@ -13,43 +11,36 @@ pub struct AvoidAbiEncodePackedDetector {
     found_abi_encode_packed: Vec<Option<ASTNode>>,
 }
 
-impl ASTConstVisitor for AvoidAbiEncodePackedDetector {
-    fn visit_member_access(&mut self, node: &MemberAccess) -> Result<bool> {
-        // If the node's member_name = "encodePacked", loop through the argument_types and count how many of them contain any of the following in type_strings:
-        // ["bytes ", "[]", "string"]
-        // If the count is greater than 1, add the node to the found_abi_encode_packed vector
-        if node.member_name == "encodePacked" {
-            let mut count = 0;
-            let argument_types = node.argument_types.as_ref().unwrap();
-            for argument_type in argument_types {
-                if argument_type
-                    .type_string
-                    .as_ref()
-                    .unwrap()
-                    .contains("bytes ")
-                    || argument_type.type_string.as_ref().unwrap().contains("[]")
-                    || argument_type
-                        .type_string
-                        .as_ref()
-                        .unwrap()
-                        .contains("string")
-                {
-                    count += 1;
-                }
-            }
-            if count > 1 {
-                self.found_abi_encode_packed
-                    .push(Some(ASTNode::MemberAccess(node.clone())));
-            }
-        }
-        Ok(true)
-    }
-}
-
 impl Detector for AvoidAbiEncodePackedDetector {
     fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
         for member_access in loader.get_member_accesses() {
-            member_access.accept(self)?;
+            // If the member_access's member_name = "encodePacked", loop through the argument_types and count how many of them contain any of the following in type_strings:
+            // ["bytes ", "[]", "string"]
+            // If the count is greater than 1, add the member_access to the found_abi_encode_packed vector
+            if member_access.member_name == "encodePacked" {
+                let mut count = 0;
+                let argument_types = member_access.argument_types.as_ref().unwrap();
+                for argument_type in argument_types {
+                    if argument_type
+                        .type_string
+                        .as_ref()
+                        .unwrap()
+                        .contains("bytes ")
+                        || argument_type.type_string.as_ref().unwrap().contains("[]")
+                        || argument_type
+                            .type_string
+                            .as_ref()
+                            .unwrap()
+                            .contains("string")
+                    {
+                        count += 1;
+                    }
+                }
+                if count > 1 {
+                    self.found_abi_encode_packed
+                        .push(Some(ASTNode::MemberAccess(member_access.clone())));
+                }
+            }
         }
         Ok(!self.found_abi_encode_packed.is_empty())
     }

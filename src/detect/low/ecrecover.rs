@@ -1,10 +1,8 @@
 use std::error::Error;
 
 use crate::{
-    ast::Identifier,
     context::loader::{ASTNode, ContextLoader},
     detect::detector::{Detector, IssueSeverity},
-    visitor::ast_visitor::{ASTConstVisitor, Node},
 };
 use eyre::Result;
 
@@ -13,20 +11,13 @@ pub struct EcrecoverDetector {
     found_ecrecover: Vec<Option<ASTNode>>,
 }
 
-impl ASTConstVisitor for EcrecoverDetector {
-    fn visit_identifier(&mut self, node: &Identifier) -> Result<bool> {
-        if node.name == "ecrecover" {
-            self.found_ecrecover
-                .push(Some(ASTNode::Identifier(node.clone())));
-        }
-        Ok(true)
-    }
-}
-
 impl Detector for EcrecoverDetector {
     fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
         for identifier in loader.get_identifiers() {
-            identifier.accept(self)?;
+            if identifier.name == "ecrecover" {
+                self.found_ecrecover
+                    .push(Some(ASTNode::Identifier(identifier.clone())));
+            }
         }
         Ok(!self.found_ecrecover.is_empty())
     }
