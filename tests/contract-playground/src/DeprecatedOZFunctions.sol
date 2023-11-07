@@ -46,5 +46,4 @@ contract DeprecatedOZFunctions is AccessControl {
     function transferFrom(IERC20 token, address from, address to, uint256 value) external {
         token.transferFrom(from, to, value);
     }
-
 }

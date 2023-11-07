@@ -1,10 +1,8 @@
 use std::error::Error;
 
 use crate::{
-    ast::{Identifier, MemberAccess},
     context::loader::{ASTNode, ContextLoader},
     detect::detector::{Detector, IssueSeverity},
-    visitor::ast_visitor::{ASTConstVisitor, Node},
 };
 use eyre::Result;
 
@@ -13,31 +11,42 @@ pub struct DeprecatedOZFunctionsDetector {
     found_deprecated_oz_functions: Vec<Option<ASTNode>>,
 }
 
-impl ASTConstVisitor for DeprecatedOZFunctionsDetector {
-    fn visit_identifier(&mut self, node: &Identifier) -> Result<bool> {
-        if node.name == "_setupRole" {
-            self.found_deprecated_oz_functions
-                .push(Some(ASTNode::Identifier(node.clone())));
-        }
-        Ok(true)
-    }
-
-    fn visit_member_access(&mut self, node: &MemberAccess) -> Result<bool> {
-        if node.member_name == "safeApprove" {
-            self.found_deprecated_oz_functions
-                .push(Some(ASTNode::MemberAccess(node.clone())));
-        }
-        Ok(true)
-    }
-}
-
 impl Detector for DeprecatedOZFunctionsDetector {
     fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
         for identifier in loader.get_identifiers() {
-            identifier.accept(self)?;
+            // if source_unit has any ImportDirectives with absolute_path containing "openzeppelin"
+            // call identifier.accept(self)
+            let source_unit = loader
+                .get_source_unit_from_child_node(&ASTNode::Identifier(identifier.clone()))
+                .unwrap();
+
+            let import_directives = source_unit.import_directives();
+            if import_directives.iter().any(|directive| {
+                directive
+                    .absolute_path
+                    .as_ref()
+                    .map_or(false, |path| path.contains("openzeppelin"))
+            }) && identifier.name == "_setupRole" {
+                self.found_deprecated_oz_functions
+                    .push(Some(ASTNode::Identifier(identifier.clone())));
+            }
         }
         for member_access in loader.get_member_accesses() {
-            member_access.accept(self)?;
+            // if source_unit has any ImportDirectives with absolute_path containing "openzeppelin"
+            // call member_access.accept(self)
+            let source_unit = loader
+                .get_source_unit_from_child_node(&ASTNode::MemberAccess(member_access.clone()))
+                .unwrap();
+            let import_directives = source_unit.import_directives();
+            if import_directives.iter().any(|directive| {
+                directive
+                    .absolute_path
+                    .as_ref()
+                    .map_or(false, |path| path.contains("openzeppelin"))
+            }) && member_access.member_name == "safeApprove" {
+                self.found_deprecated_oz_functions
+                    .push(Some(ASTNode::MemberAccess(member_access.clone())));
+            }
         }
         Ok(!self.found_deprecated_oz_functions.is_empty())
     }
@@ -74,8 +83,7 @@ mod deprecated_oz_functions_tests {
         let found = detector.detect(&context_loader).unwrap();
         // assert that the detector found an abi encode packed
         assert!(found);
-        // assert that the detector found the correct abi encode packed
-        // failure0, failure1 and failure3
+        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
         // assert that the severity is low
         assert_eq!(
