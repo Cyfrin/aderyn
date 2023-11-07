@@ -1,10 +1,8 @@
 use std::error::Error;
 
 use crate::{
-    ast::PragmaDirective,
     context::loader::{ASTNode, ContextLoader},
     detect::detector::{Detector, IssueSeverity},
-    visitor::ast_visitor::{ASTConstVisitor, Node},
 };
 use eyre::Result;
 
@@ -13,23 +11,16 @@ pub struct UnspecificSolidityPragmaDetector {
     found_unspecific_solidity_pragma: Vec<Option<ASTNode>>,
 }
 
-impl ASTConstVisitor for UnspecificSolidityPragmaDetector {
-    fn visit_pragma_directive(&mut self, node: &PragmaDirective) -> Result<bool> {
-        for literal in &node.literals {
-            if literal.contains('^') || literal.contains('>') {
-                self.found_unspecific_solidity_pragma
-                    .push(Some(ASTNode::PragmaDirective(node.clone())));
-                break;
-            }
-        }
-        Ok(true)
-    }
-}
-
 impl Detector for UnspecificSolidityPragmaDetector {
     fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
         for pragma_directive in loader.get_pragma_directives() {
-            pragma_directive.accept(self)?;
+            for literal in &pragma_directive.literals {
+                if literal.contains('^') || literal.contains('>') {
+                    self.found_unspecific_solidity_pragma
+                        .push(Some(ASTNode::PragmaDirective(pragma_directive.clone())));
+                    break;
+                }
+            }
         }
         Ok(!self.found_unspecific_solidity_pragma.is_empty())
     }
