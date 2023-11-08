@@ -23,16 +23,19 @@ impl ComplexityLoader {
 impl ASTConstVisitor for ComplexityLoader {
     fn visit_if_statement(&mut self, _node: &IfStatement) -> Result<bool> {
         self.complexity += 1;
+        println!("After IfStatement: {}", self.complexity);
         Ok(true)
     }
 
     fn visit_modifier_invocation(&mut self, _node: &ModifierInvocation) -> Result<bool> {
         self.complexity += 1;
+        println!("After ModifierInvocation: {}", self.complexity);
         Ok(true)
     }
 
     fn visit_function_call(&mut self, _node: &FunctionCall) -> Result<bool> {
         self.complexity += 1;
+        println!("After FunctionCall: {}", self.complexity);
         Ok(true)
     }
 
@@ -46,31 +49,37 @@ impl ASTConstVisitor for ComplexityLoader {
             comp += 1;
         }
         self.complexity += comp;
+        println!("After FunctionDefinition: {}", self.complexity);
         Ok(true)
     }
 
     fn visit_new_expression(&mut self, _node: &NewExpression) -> Result<bool> {
         self.complexity += 10;
+        println!("After NewExpression: {}", self.complexity);
         Ok(true)
     }
 
     fn visit_for_statement(&mut self, _node: &ForStatement) -> Result<bool> {
         self.complexity += 5;
+        println!("After ForStatement: {}", self.complexity);
         Ok(true)
     }
 
     fn visit_while_statement(&mut self, _node: &WhileStatement) -> Result<bool> {
         self.complexity += 1;
+        println!("After WhileStatement: {}", self.complexity);
         Ok(true)
     }
 
     fn visit_inline_assembly(&mut self, _node: &InlineAssembly) -> Result<bool> {
         self.complexity += 2;
+        println!("After InlineAssembly: {}", self.complexity);
         Ok(true)
     }
 
     fn visit_conditional(&mut self, _node: &Conditional) -> Result<bool> {
         self.complexity += 1;
+        println!("After Conditional: {}", self.complexity);
         Ok(true)
     }
 
@@ -80,6 +89,16 @@ impl ASTConstVisitor for ComplexityLoader {
             comp += 2;
         }
         self.complexity += comp;
+        println!("After ContractDefinition: {}", self.complexity);
+        Ok(true)
+    }
+
+    fn visit_variable_declaration(&mut self, node: &VariableDeclaration) -> Result<bool> {
+        if node.state_variable {
+            self.complexity += 1;
+        }
+
+        println!("After VariableDeclaration: {}", self.complexity);
         Ok(true)
     }
 }
