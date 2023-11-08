@@ -2,7 +2,7 @@ use std::{collections::HashSet, error::Error};
 
 use crate::{
     ast::{FunctionKind, Visibility},
-    context::loader::{ASTNode, ContextLoader},
+    context::{ast_node::ASTNode, loader::ContextLoader},
     detect::detector::{Detector, IssueSeverity},
 };
 use eyre::Result;

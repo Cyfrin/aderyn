@@ -1,9 +1,10 @@
 use std::error::Error;
 
+use crate::context::ast_node::ASTNode;
 use crate::visitor::ast_visitor::Node;
 use crate::{
     ast::MemberAccess,
-    context::loader::{ASTNode, ContextLoader},
+    context::loader::ContextLoader,
     detect::detector::{Detector, IssueSeverity},
     visitor::ast_visitor::ASTConstVisitor,
 };

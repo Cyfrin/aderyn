@@ -1,4 +1,4 @@
-use crate::context::loader::ASTNode;
+use crate::context::ast_node::ASTNode;
 
 #[derive(Default, PartialEq)]
 pub struct Report {

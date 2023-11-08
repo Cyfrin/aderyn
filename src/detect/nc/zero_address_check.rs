@@ -2,7 +2,7 @@ use std::{collections::HashMap, error::Error};
 
 use crate::{
     ast::{Assignment, BinaryOperation, Expression, Mutability, VariableDeclaration},
-    context::loader::{ASTNode, ContextLoader},
+    context::{ast_node::ASTNode, loader::ContextLoader},
     detect::detector::{Detector, IssueSeverity},
     visitor::ast_visitor::{ASTConstVisitor, Node},
 };

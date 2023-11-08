@@ -2,7 +2,7 @@ use std::error::Error;
 
 use crate::{
     ast::{Literal, LiteralKind},
-    context::loader::{ASTNode, ContextLoader},
+    context::{ast_node::ASTNode, loader::ContextLoader},
     detect::detector::{Detector, IssueSeverity},
     visitor::ast_visitor::{ASTConstVisitor, Node},
 };

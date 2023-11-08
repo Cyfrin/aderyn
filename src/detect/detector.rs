@@ -1,5 +1,5 @@
 use crate::{
-    context::loader::{ASTNode, ContextLoader},
+    context::{ast_node::ASTNode, loader::ContextLoader},
     detect::{
         high::delegate_call_in_loop::DelegateCallInLoopDetector,
         low::{

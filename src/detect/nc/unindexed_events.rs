@@ -1,7 +1,7 @@
 use std::error::Error;
 
 use crate::{
-    context::loader::{ASTNode, ContextLoader},
+    context::{ast_node::ASTNode, loader::ContextLoader},
     detect::detector::{Detector, IssueSeverity},
 };
 use eyre::Result;

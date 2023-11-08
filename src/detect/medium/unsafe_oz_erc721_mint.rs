@@ -1,7 +1,7 @@
 use std::error::Error;
 
 use crate::{
-    context::loader::{ASTNode, ContextLoader},
+    context::{ast_node::ASTNode, loader::ContextLoader},
     detect::detector::{Detector, IssueSeverity},
 };
 use eyre::Result;
@@ -26,7 +26,8 @@ impl Detector for UnsafeERC721MintDetector {
                     .absolute_path
                     .as_ref()
                     .map_or(false, |path| path.contains("openzeppelin"))
-            }) && identifier.name == "_mint" {
+            }) && identifier.name == "_mint"
+            {
                 self.found_unsafe_erc721_mint
                     .push(Some(ASTNode::Identifier(identifier.clone())));
             }
