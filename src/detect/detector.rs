@@ -80,14 +80,19 @@ pub trait Detector {
 
 pub mod detector_test_helpers {
     use crate::{
-        context::loader::ContextLoader, framework::foundry::read_foundry_output_file,
+        context::loader::ContextLoader,
+        framework::foundry::{read_foundry_output_file, FoundryOutput},
         visitor::ast_visitor::Node,
     };
 
-    pub fn load_contract(filepath: &str) -> ContextLoader {
+    pub fn load_foundry_output(filepath: &str) -> FoundryOutput {
         let filepath = std::path::PathBuf::from(filepath);
+        read_foundry_output_file(filepath.to_str().unwrap()).unwrap()
+    }
+
+    pub fn load_contract(filepath: &str) -> ContextLoader {
         let mut context_loader = ContextLoader::default();
-        let foundry_output = read_foundry_output_file(filepath.to_str().unwrap()).unwrap();
+        let foundry_output = load_foundry_output(filepath);
         let _ = foundry_output.ast.accept(&mut context_loader);
         context_loader
     }
