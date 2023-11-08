@@ -76,7 +76,7 @@ impl ASTConstVisitor for ComplexityLoader {
 
     fn visit_contract_definition(&mut self, node: &ContractDefinition) -> Result<bool> {
         let mut comp = 1;
-        while let Some(_base_contract) = Some(&node.base_contracts) {
+        for _base_contract in &node.base_contracts {
             comp += 2;
         }
         self.complexity += comp;
@@ -91,12 +91,23 @@ mod complexity_tests {
     use super::ComplexityLoader;
 
     #[test]
-    fn test_complexity() {
+    fn test_complexity_counter() {
         let foundry_output =
             load_foundry_output("./tests/contract-playground/out/Counter.sol/Counter.json");
         let mut complexity_loader = ComplexityLoader::default();
         let complexity = complexity_loader.visit(&foundry_output.ast).unwrap();
-        assert_eq!(complexity, 14);
         println!("Complexity: {}", complexity);
+        assert_eq!(complexity, 14);
+    }
+
+    #[test]
+    fn test_complexity_extended_inheritance() {
+        let foundry_output = load_foundry_output(
+            "./tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",
+        );
+        let mut complexity_loader = ComplexityLoader::default();
+        let complexity = complexity_loader.visit(&foundry_output.ast).unwrap();
+        println!("Complexity: {}", complexity);
+        assert_eq!(complexity, 18);
     }
 }
