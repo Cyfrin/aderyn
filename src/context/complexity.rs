@@ -129,4 +129,15 @@ mod complexity_tests {
         println!("Complexity: {}", complexity);
         assert_eq!(complexity, 18);
     }
+
+    #[test]
+    fn test_complexity_uniswap_v3_swapper() {
+        let foundry_output = load_foundry_output(
+            "./tests/contract-playground/out/UniswapV3Swapper.sol/UniswapV3Swapper.json",
+        );
+        let mut complexity_loader = ComplexityLoader::default();
+        let complexity = complexity_loader.visit(&foundry_output.ast).unwrap();
+        println!("Complexity: {}", complexity);
+        assert_eq!(complexity, 29);
+    }
 }
