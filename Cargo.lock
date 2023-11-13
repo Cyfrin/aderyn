@@ -4,7 +4,7 @@ version = 3
 
 [[package]]
 name = "aderyn"
-version = "0.0.5"
+version = "0.0.6"
 dependencies = [
  "clap 4.4.6",
  "eyre",
