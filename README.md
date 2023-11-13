@@ -148,7 +148,7 @@ This project exists thanks to all the people who [contribute](/contributing.md).
 
 ## Attribution
 * AST Visitor code from [solc-ast-rs](https://github.com/hrkrshnn/solc-ast-rs).
-* Original detectors based on [4nalyzer](https://github.com/Picodes/4naly3er) detectors.
+* Original detectors based on [4naly3er](https://github.com/Picodes/4naly3er) detectors.
 
 
 [contributors-shield]: https://img.shields.io/github/contributors/cyfrin/aderyn
