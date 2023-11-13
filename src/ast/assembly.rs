@@ -42,12 +42,12 @@ impl Node for YulStatement {
         match self {
             YulStatement::YulAssignment(yul_assignment) => yul_assignment.accept(visitor),
             YulStatement::YulBlock(yul_block) => yul_block.accept(visitor),
-            YulStatement::YulBreak(yul_break) => Ok(()),
-            YulStatement::YulContinue(yul_continue) => Ok(()),
+            YulStatement::YulBreak(_yul_break) => Ok(()),
+            YulStatement::YulContinue(_yul_continue) => Ok(()),
             YulStatement::YulExpressionStatement(yul_expression_statement) => {
                 yul_expression_statement.accept(visitor)
             }
-            YulStatement::YulLeave(yul_leave) => Ok(()),
+            YulStatement::YulLeave(_yul_leave) => Ok(()),
             YulStatement::YulForLoop(yul_for_loop) => yul_for_loop.accept(visitor),
             YulStatement::YulFunctionDefinition(yul_function_definition) => {
                 yul_function_definition.accept(visitor)
@@ -165,8 +165,8 @@ impl Node for YulExpression {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         match self {
             YulExpression::YulFunctionCall(yul_function_call) => yul_function_call.accept(visitor),
-            YulExpression::YulIdentifier(yul_identifier) => Ok(()),
-            YulExpression::YulLiteral(yul_literal) => Ok(()),
+            YulExpression::YulIdentifier(_yul_identifier) => Ok(()),
+            YulExpression::YulLiteral(_yul_literal) => Ok(()),
         }
     }
 }
