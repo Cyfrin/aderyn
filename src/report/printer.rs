@@ -161,60 +161,90 @@ impl ReportPrinter for MarkdownReportPrinter {
         if !report.criticals.is_empty() {
             writeln!(writer, "- [Critical Issues](#critical-issues)")?;
             for (index, issue) in report.criticals.iter().enumerate() {
+                let issue_title_slug = issue
+                    .title
+                    .to_lowercase()
+                    .replace(' ', "-")
+                    .replace(|c: char| !c.is_ascii_alphanumeric() && c != '-', "");
                 writeln!(
                     writer,
-                    "  - [C-{}: {}](#C-{})",
+                    "  - [C-{}: {}](#C-{}-{})",
                     index + 1,
                     issue.title,
-                    index + 1
+                    index + 1,
+                    issue_title_slug
                 )?;
             }
         }
         if !report.highs.is_empty() {
             writeln!(writer, "- [High Issues](#high-issues)")?;
             for (index, issue) in report.highs.iter().enumerate() {
+                let issue_title_slug = issue
+                    .title
+                    .to_lowercase()
+                    .replace(' ', "-")
+                    .replace(|c: char| !c.is_ascii_alphanumeric() && c != '-', "");
                 writeln!(
                     writer,
-                    "  - [H-{}: {}](#H-{})",
+                    "  - [H-{}: {}](#H-{}-{})",
                     index + 1,
                     issue.title,
-                    index + 1
+                    index + 1,
+                    issue_title_slug
                 )?;
             }
         }
         if !report.mediums.is_empty() {
             writeln!(writer, "- [Medium Issues](#medium-issues)")?;
             for (index, issue) in report.mediums.iter().enumerate() {
+                let issue_title_slug = issue
+                    .title
+                    .to_lowercase()
+                    .replace(' ', "-")
+                    .replace(|c: char| !c.is_ascii_alphanumeric() && c != '-', "");
                 writeln!(
                     writer,
-                    "  - [M-{}: {}](#M-{})",
+                    "  - [M-{}: {}](#M-{}-{})",
                     index + 1,
                     issue.title,
-                    index + 1
+                    index + 1,
+                    issue_title_slug
                 )?;
             }
         }
         if !report.lows.is_empty() {
             writeln!(writer, "- [Low Issues](#low-issues)")?;
             for (index, issue) in report.lows.iter().enumerate() {
+                let issue_title_slug = issue
+                    .title
+                    .to_lowercase()
+                    .replace(' ', "-")
+                    .replace(|c: char| !c.is_ascii_alphanumeric() && c != '-', "");
                 writeln!(
                     writer,
-                    "  - [L-{}: {}](#L-{})",
+                    "  - [L-{}: {}](#L-{}-{})",
                     index + 1,
                     issue.title,
-                    index + 1
+                    index + 1,
+                    issue_title_slug
                 )?;
             }
         }
         if !report.ncs.is_empty() {
             writeln!(writer, "- [NC Issues](#nc-issues)")?;
             for (index, issue) in report.ncs.iter().enumerate() {
+                let issue_title_slug = issue
+                    .title
+                    .to_lowercase()
+                    .replace(' ', "-")
+                    .replace(|c: char| !c.is_ascii_alphanumeric() && c != '-', "");
                 writeln!(
                     writer,
-                    "  - [NC-{}: {}](#NC-{})",
+                    "  - [NC-{}: {}](#NC-{}-{})",
                     index + 1,
                     issue.title,
-                    index + 1
+                    index + 1,
+                    issue_title_slug
                 )?;
             }
         }
@@ -232,8 +262,8 @@ impl ReportPrinter for MarkdownReportPrinter {
     ) -> Result<()> {
         writeln!(
             writer,
-            "<a name=\"{}-{}\"></a>\n## {}-{}: {}\n\n{}\n", // <a name> is the anchor for the issue title
-            severity, number, severity, number, issue.title, issue.description
+            "## {}-{}: {}\n\n{}\n", // <a name> is the anchor for the issue title
+            severity, number, issue.title, issue.description
         )?;
         for node in issue.instances.iter().flatten() {
             let mut contract_path = "unknown";
