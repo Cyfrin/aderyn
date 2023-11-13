@@ -140,4 +140,14 @@ mod complexity_tests {
         println!("Complexity: {}", complexity);
         assert_eq!(complexity, 29);
     }
+
+    #[test]
+    fn test_complexity_erc_721() {
+        let foundry_output =
+            load_foundry_output("./tests/contract-playground/out/ERC721.sol/ERC721.json");
+        let mut complexity_loader = ComplexityLoader::default();
+        let complexity = complexity_loader.visit(&foundry_output.ast).unwrap();
+        println!("Complexity: {}", complexity);
+        assert_eq!(complexity, 142);
+    }
 }

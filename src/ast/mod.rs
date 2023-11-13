@@ -1,3 +1,4 @@
+mod assembly;
 mod blocks;
 mod contracts;
 mod documentation;
@@ -22,7 +23,7 @@ mod using_for_directives;
 mod variables;
 
 pub use self::{
-    blocks::*, contracts::*, documentation::*, enumerations::*, errors::*, events::*,
+    assembly::*, blocks::*, contracts::*, documentation::*, enumerations::*, errors::*, events::*,
     expressions::*, functions::*, identifiers::*, import_directives::*, literals::*, magic::*,
     modifiers::*, node::*, pragma_directives::*, source_units::*, statements::*, structures::*,
     types::*, user_defined_value_types::*, using_for_directives::*, variables::*,

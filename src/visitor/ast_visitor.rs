@@ -378,6 +378,77 @@ pub trait ASTConstVisitor {
         self.end_visit_node(node)
     }
 
+    // Various Yul Visit Functions
+    fn visit_yul_assignment(&mut self, node: &YulAssignment) -> Result<bool> {
+        self.visit_node(node)
+    }
+    fn end_visit_yul_assignment(&mut self, node: &YulAssignment) -> Result<()> {
+        self.end_visit_node(node)
+    }
+
+    fn visit_yul_block(&mut self, node: &YulBlock) -> Result<bool> {
+        self.visit_node(node)
+    }
+    fn end_visit_yul_block(&mut self, node: &YulBlock) -> Result<()> {
+        self.end_visit_node(node)
+    }
+
+    fn visit_yul_expression_statement(&mut self, node: &YulExpressionStatement) -> Result<bool> {
+        self.visit_node(node)
+    }
+    fn end_visit_yul_expression_statement(&mut self, node: &YulExpressionStatement) -> Result<()> {
+        self.end_visit_node(node)
+    }
+
+    fn visit_yul_function_definition(&mut self, node: &YulFunctionDefinition) -> Result<bool> {
+        self.visit_node(node)
+    }
+    fn end_visit_yul_function_definition(&mut self, node: &YulFunctionDefinition) -> Result<()> {
+        self.end_visit_node(node)
+    }
+
+    fn visit_yul_function_call(&mut self, node: &YulFunctionCall) -> Result<bool> {
+        self.visit_node(node)
+    }
+    fn end_visit_yul_function_call(&mut self, node: &YulFunctionCall) -> Result<()> {
+        self.end_visit_node(node)
+    }
+
+    fn visit_yul_case(&mut self, node: &YulCase) -> Result<bool> {
+        self.visit_node(node)
+    }
+    fn end_visit_yul_case(&mut self, node: &YulCase) -> Result<()> {
+        self.end_visit_node(node)
+    }
+
+    fn visit_yul_if(&mut self, node: &YulIf) -> Result<bool> {
+        self.visit_node(node)
+    }
+    fn end_visit_yul_if(&mut self, node: &YulIf) -> Result<()> {
+        self.end_visit_node(node)
+    }
+
+    fn visit_yul_for_loop(&mut self, node: &YulForLoop) -> Result<bool> {
+        self.visit_node(node)
+    }
+    fn end_visit_yul_for_loop(&mut self, node: &YulForLoop) -> Result<()> {
+        self.end_visit_node(node)
+    }
+
+    fn visit_yul_switch(&mut self, node: &YulSwitch) -> Result<bool> {
+        self.visit_node(node)
+    }
+    fn end_visit_yul_switch(&mut self, node: &YulSwitch) -> Result<()> {
+        self.end_visit_node(node)
+    }
+
+    fn visit_yul_variable_declaration(&mut self, node: &YulVariableDeclaration) -> Result<bool> {
+        self.visit_node(node)
+    }
+    fn end_visit_yul_variable_declaration(&mut self, node: &YulVariableDeclaration) -> Result<()> {
+        self.end_visit_node(node)
+    }
+
     fn visit_node(&mut self, _node: &impl Node) -> Result<bool> {
         Ok(true)
     }
