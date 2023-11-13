@@ -164,7 +164,7 @@ impl ReportPrinter for MarkdownReportPrinter {
                 let issue_title_slug = issue
                     .title
                     .to_lowercase()
-                    .replace(" ", "-")
+                    .replace(' ', "-")
                     .replace(|c: char| !c.is_ascii_alphanumeric() && c != '-', "");
                 writeln!(
                     writer,
@@ -182,7 +182,7 @@ impl ReportPrinter for MarkdownReportPrinter {
                 let issue_title_slug = issue
                     .title
                     .to_lowercase()
-                    .replace(" ", "-")
+                    .replace(' ', "-")
                     .replace(|c: char| !c.is_ascii_alphanumeric() && c != '-', "");
                 writeln!(
                     writer,
@@ -200,7 +200,7 @@ impl ReportPrinter for MarkdownReportPrinter {
                 let issue_title_slug = issue
                     .title
                     .to_lowercase()
-                    .replace(" ", "-")
+                    .replace(' ', "-")
                     .replace(|c: char| !c.is_ascii_alphanumeric() && c != '-', "");
                 writeln!(
                     writer,
@@ -218,7 +218,7 @@ impl ReportPrinter for MarkdownReportPrinter {
                 let issue_title_slug = issue
                     .title
                     .to_lowercase()
-                    .replace(" ", "-")
+                    .replace(' ', "-")
                     .replace(|c: char| !c.is_ascii_alphanumeric() && c != '-', "");
                 writeln!(
                     writer,
@@ -236,7 +236,7 @@ impl ReportPrinter for MarkdownReportPrinter {
                 let issue_title_slug = issue
                     .title
                     .to_lowercase()
-                    .replace(" ", "-")
+                    .replace(' ', "-")
                     .replace(|c: char| !c.is_ascii_alphanumeric() && c != '-', "");
                 writeln!(
                     writer,
