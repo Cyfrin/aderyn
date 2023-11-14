@@ -2,7 +2,7 @@
 
 <p align="center">
     <br />
-    <a href="https://createweb3dapp.alchemy.com">
+    <a href="https://updraft.cyfrin.io/">
         <img src=".github/images/aderyn_logo.png" width="400" alt=""/></a>
     <br />
 </p>
@@ -50,16 +50,18 @@ Use Aderyn when developing or auditing Solidity smart contracts to quickly ident
 
 # Usage
 
-To get started using Aderyn make sure to have Rust installed on your device.
+To get started using Aderyn make sure to have Rust installed on your device. For more information, refer to the [official Rust documentation](https://www.rust-lang.org/tools/install).
+
+## Mac, Linux, Unix
 
 You can install Rust and Cargo by running the following command on your terminal:
   ```sh
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
  ```
 
+## Windows
 
-For more information, refer to the [official Rust documentation](https://www.rust-lang.org/tools/install)
-
+You can install Rust and Cargo by downloading and running [`rustup-init.exe`](https://static.rust-lang.org/rustup/dist/i686-pc-windows-gnu/rustup-init.exe).
 
 ## Installation
 
