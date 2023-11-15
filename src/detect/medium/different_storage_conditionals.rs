@@ -62,6 +62,7 @@ impl Detector for DifferentStorageConditionalDetector {
                 };
 
                 // Check if all operations are consistent with the first one
+                let mut first_added = false;
                 for op in operations {
                     // Determine the side and operator of the current operation
                     let current_op_side = if matches!(&*op.left_expression, Expression::Identifier(expr) if expr.referenced_declaration == var_id)
@@ -89,6 +90,11 @@ impl Detector for DifferentStorageConditionalDetector {
                     if !is_consistent_or_mirror {
                         self.found_different_storage_conditionals
                             .push(Some(ASTNode::BinaryOperation((*op).clone())));
+                        if !first_added {
+                            self.found_different_storage_conditionals
+                                .push(Some(ASTNode::BinaryOperation((*first_op).clone())));
+                            first_added = true;
+                        }
                     }
                 }
             }
@@ -144,6 +150,6 @@ mod different_storage_conditionals {
         There are instances found where the same storage variable is checked multiple times, but the conditionals are not consistent.")
         );
         // assert instances
-        assert_eq!(detector.instances().len(), 2);
+        assert_eq!(detector.instances().len(), 3);
     }
 }

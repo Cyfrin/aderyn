@@ -140,6 +140,7 @@ When writing `require` or `if` conditionals that check storage values, it is imp
 
 - Found in src/StorageConditionals.sol: Line: 60
 - Found in src/StorageConditionals.sol: Line: 65
+- Found in src/StorageConditionals.sol: Line: 71
 
 
 # Low Issues
