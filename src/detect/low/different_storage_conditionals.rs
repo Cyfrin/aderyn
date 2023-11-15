@@ -110,7 +110,7 @@ impl Detector for DifferentStorageConditionalDetector {
         There are instances found where the same storage variable is checked multiple times, but the conditionals are not consistent.")
     }
     fn severity(&self) -> IssueSeverity {
-        IssueSeverity::Medium
+        IssueSeverity::Low
     }
     fn instances(&self) -> Vec<Option<ASTNode>> {
         self.found_different_storage_conditionals.clone()
@@ -136,7 +136,7 @@ mod different_storage_conditionals_tests {
         // assert severity
         assert_eq!(
             detector.severity(),
-            crate::detect::detector::IssueSeverity::Medium
+            crate::detect::detector::IssueSeverity::Low
         );
         // assert title
         assert_eq!(
