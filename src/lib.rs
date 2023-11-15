@@ -56,6 +56,7 @@ pub fn run(context_loader: ContextLoader) -> Result<(), Box<dyn Error>> {
     println!("Detectors run, printing report");
 
     let printer = MarkdownReportPrinter;
+    report.post_process(&context_loader);
     printer.print_report(get_markdown_writer("report.md")?, &report, &context_loader)?;
 
     println!("Report printed to ./report.md");
