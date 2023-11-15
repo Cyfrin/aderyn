@@ -24,6 +24,7 @@ impl Node for ModifierDefinition {
         if visitor.visit_modifier_definition(self)? {
             // TODO: should we implement a string based visitor?
             // self.name.accept(visitor)?;
+            self.body.accept(visitor)?;
             self.parameters.accept(visitor)?;
         }
         visitor.end_visit_modifier_definition(self)

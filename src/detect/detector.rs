@@ -4,8 +4,9 @@ use crate::{
         high::delegate_call_in_loop::DelegateCallInLoopDetector,
         low::{
             avoid_abi_encode_packed::AvoidAbiEncodePackedDetector,
-            deprecated_oz_functions::DeprecatedOZFunctionsDetector, ecrecover::EcrecoverDetector,
-            unsafe_erc20_functions::UnsafeERC20FunctionsDetector,
+            deprecated_oz_functions::DeprecatedOZFunctionsDetector,
+            different_storage_conditionals::DifferentStorageConditionalDetector,
+            ecrecover::EcrecoverDetector, unsafe_erc20_functions::UnsafeERC20FunctionsDetector,
             unspecific_solidity_pragma::UnspecificSolidityPragmaDetector,
         },
         medium::{
@@ -44,6 +45,7 @@ pub fn get_all_detectors() -> Vec<Box<dyn Detector>> {
         Box::<NonReentrantBeforeOthersDetector>::default(),
         Box::<BlockTimestampDeadlineDetector>::default(),
         Box::<UnsafeERC721MintDetector>::default(),
+        Box::<DifferentStorageConditionalDetector>::default(),
     ]
 }
 
