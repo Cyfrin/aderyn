@@ -1,22 +1,30 @@
 use eyre::Result;
 use serde::{Deserialize, Serialize};
 
-use crate::visitor::ast_visitor::{ASTConstVisitor, Node};
+use crate::visitor::ast_visitor::{list_accept, ASTConstVisitor, Node};
+
+use super::{NodeID, NodeType};
 
 #[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct YulBlock {
     pub src: String,
-    pub statements: Vec<YulStatement>,
+    pub statements: Vec<Unhandled>,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(rename_all = "camelCase")]
+pub struct Unhandled {
+    node_type: NodeType,
+    src: Option<String>,
+    id: Option<NodeID>,
+    expression: Option<Box<Unhandled>>,
+    arguments: Option<Vec<Unhandled>>,
 }
 
 impl Node for YulBlock {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        if visitor.visit_yul_block(self)? {
-            for statement in &self.statements {
-                statement.accept(visitor)?;
-            }
-        }
+        if visitor.visit_yul_block(self)? {}
         visitor.end_visit_yul_block(self)
     }
 }
@@ -25,39 +33,41 @@ impl Node for YulBlock {
 #[serde(rename_all = "camelCase")]
 pub enum YulStatement {
     YulAssignment(YulAssignment),
-    YulBlock(YulBlock),
-    YulBreak(YulBreak),
-    YulContinue(YulContinue),
-    YulExpressionStatement(YulExpressionStatement),
-    YulLeave(YulLeave),
-    YulForLoop(YulForLoop),
-    YulFunctionDefinition(YulFunctionDefinition),
-    YulIf(YulIf),
-    YulSwitch(YulSwitch),
-    YulVariableDeclaration(YulVariableDeclaration),
+    // YulBlock(YulBlock),
+    // YulBreak(YulBreak),
+    // YulContinue(YulContinue),
+    // YulExpressionStatement(YulExpressionStatement),
+    // YulLeave(YulLeave),
+    // YulForLoop(YulForLoop),
+    // YulFunctionDefinition(YulFunctionDefinition),
+    // YulIf(YulIf),
+    // YulSwitch(YulSwitch),
+    // YulVariableDeclaration(YulVariableDeclaration),
 }
 
 impl Node for YulStatement {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        match self {
-            YulStatement::YulAssignment(yul_assignment) => yul_assignment.accept(visitor),
-            YulStatement::YulBlock(yul_block) => yul_block.accept(visitor),
-            YulStatement::YulBreak(_yul_break) => Ok(()),
-            YulStatement::YulContinue(_yul_continue) => Ok(()),
-            YulStatement::YulExpressionStatement(yul_expression_statement) => {
-                yul_expression_statement.accept(visitor)
-            }
-            YulStatement::YulLeave(_yul_leave) => Ok(()),
-            YulStatement::YulForLoop(yul_for_loop) => yul_for_loop.accept(visitor),
-            YulStatement::YulFunctionDefinition(yul_function_definition) => {
-                yul_function_definition.accept(visitor)
-            }
-            YulStatement::YulIf(yul_if) => yul_if.accept(visitor),
-            YulStatement::YulSwitch(yul_switch) => yul_switch.accept(visitor),
-            YulStatement::YulVariableDeclaration(yul_variable_declaration) => {
-                yul_variable_declaration.accept(visitor)
-            }
-        }
+        println!("YulStatement: {:?}", self);
+        // match self {
+        //     YulStatement::YulAssignment(yul_assignment) => yul_assignment.accept(visitor),
+        //     YulStatement::YulBlock(yul_block) => yul_block.accept(visitor),
+        //     YulStatement::YulBreak(_yul_break) => Ok(()),
+        //     YulStatement::YulContinue(_yul_continue) => Ok(()),
+        //     YulStatement::YulExpressionStatement(yul_expression_statement) => {
+        //         yul_expression_statement.accept(visitor)
+        //     }
+        //     YulStatement::YulLeave(_yul_leave) => Ok(()),
+        //     YulStatement::YulForLoop(yul_for_loop) => yul_for_loop.accept(visitor),
+        //     YulStatement::YulFunctionDefinition(yul_function_definition) => {
+        //         yul_function_definition.accept(visitor)
+        //     }
+        //     YulStatement::YulIf(yul_if) => yul_if.accept(visitor),
+        //     YulStatement::YulSwitch(yul_switch) => yul_switch.accept(visitor),
+        //     YulStatement::YulVariableDeclaration(yul_variable_declaration) => {
+        //         yul_variable_declaration.accept(visitor)
+        //     }
+        // }
+        Ok(())
     }
 }
 
@@ -66,13 +76,13 @@ impl Node for YulStatement {
 pub struct YulAssignment {
     pub src: String,
     pub name: String,
-    pub value: YulExpression,
+    // pub value: YulExpression,
 }
 
 impl Node for YulAssignment {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         if visitor.visit_yul_assignment(self)? {
-            self.value.accept(visitor)?;
+            // self.value.accept(visitor)?;
         }
         visitor.end_visit_yul_assignment(self)
     }

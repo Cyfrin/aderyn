@@ -352,6 +352,7 @@ impl ContextLoader {
                 self.variable_declaration_statements.get(node)
             }
             ASTNode::WhileStatement(node) => self.while_statements.get(node),
+            _ => None,
         };
 
         // iterate through self.source_units until the source unit with the id matching `source_unit_id` is found, then return its `absolute_path`

@@ -93,6 +93,12 @@ impl ASTConstVisitor for ComplexityLoader {
         Ok(true)
     }
 
+    fn visit_yul_function_call(&mut self, _node: &YulFunctionCall) -> Result<bool> {
+        self.complexity += 3;
+        println!("After YulFunctionCall: {}", self.complexity);
+        Ok(true)
+    }
+
     fn visit_variable_declaration(&mut self, node: &VariableDeclaration) -> Result<bool> {
         if node.state_variable {
             self.complexity += 1;
@@ -145,6 +151,16 @@ mod complexity_tests {
     fn test_complexity_erc_721() {
         let foundry_output =
             load_foundry_output("./tests/contract-playground/out/ERC721.sol/ERC721.json");
+        let mut complexity_loader = ComplexityLoader::default();
+        let complexity = complexity_loader.visit(&foundry_output.ast).unwrap();
+        println!("Complexity: {}", complexity);
+        assert_eq!(complexity, 142);
+    }
+
+    #[test]
+    fn test_complexity_erc_20_votes() {
+        let foundry_output =
+            load_foundry_output("./tests/contract-playground/out/ERC20Votes.sol/ERC20Votes.json");
         let mut complexity_loader = ComplexityLoader::default();
         let complexity = complexity_loader.visit(&foundry_output.ast).unwrap();
         println!("Complexity: {}", complexity);

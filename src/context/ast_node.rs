@@ -53,6 +53,18 @@ pub enum ASTNode {
     VariableDeclaration(VariableDeclaration),
     VariableDeclarationStatement(VariableDeclarationStatement),
     WhileStatement(WhileStatement),
+    // Yul AST
+    YulBlock(YulBlock),
+    YulFunctionDefinition(YulFunctionDefinition),
+    YulIf(YulIf),
+    YulSwitch(YulSwitch),
+    YulAssignment(YulAssignment),
+    YulBreak(YulBreak),
+    YulContinue(YulContinue),
+    YulExpressionStatement(YulExpressionStatement),
+    YulLeave(YulLeave),
+    YulForLoop(YulForLoop),
+    YulVariableDeclaration(YulVariableDeclaration),
 }
 
 impl ASTNode {
@@ -109,6 +121,18 @@ impl ASTNode {
             ASTNode::VariableDeclaration(node) => Some(&node.src),
             ASTNode::VariableDeclarationStatement(node) => Some(&node.src),
             ASTNode::WhileStatement(node) => Some(&node.src),
+            // Yul AST
+            ASTNode::YulBlock(node) => Some(&node.src),
+            ASTNode::YulFunctionDefinition(node) => Some(&node.src),
+            ASTNode::YulIf(node) => Some(&node.src),
+            ASTNode::YulSwitch(node) => Some(&node.src),
+            ASTNode::YulAssignment(node) => Some(&node.src),
+            ASTNode::YulBreak(node) => Some(&node.src),
+            ASTNode::YulContinue(node) => Some(&node.src),
+            ASTNode::YulExpressionStatement(node) => Some(&node.src),
+            ASTNode::YulLeave(node) => Some(&node.src),
+            ASTNode::YulForLoop(node) => Some(&node.src),
+            ASTNode::YulVariableDeclaration(node) => Some(&node.src),
         }
     }
 }
