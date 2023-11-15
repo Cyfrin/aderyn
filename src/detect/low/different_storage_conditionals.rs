@@ -35,7 +35,7 @@ impl Detector for DifferentStorageConditionalDetector {
                 if state_variable_ids.contains(&left_expr.referenced_declaration) {
                     binary_operations_by_referenced_state_variable
                         .entry(left_expr.referenced_declaration)
-                        .or_insert_with(Vec::new)
+                        .or_default()
                         .push(binary_operation);
                 }
             }
@@ -44,7 +44,7 @@ impl Detector for DifferentStorageConditionalDetector {
                 if state_variable_ids.contains(&right_expr.referenced_declaration) {
                     binary_operations_by_referenced_state_variable
                         .entry(right_expr.referenced_declaration)
-                        .or_insert_with(Vec::new)
+                        .or_default()
                         .push(binary_operation);
                 }
             }
