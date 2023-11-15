@@ -29,12 +29,12 @@
   ],
   "bytecode": {
     "object": "0x608060405234801561001057600080fd5b5060c28061001f6000396000f3fe6080604052348015600f57600080fd5b506004361060285760003560e01c8063a6b206bf14602d575b600080fd5b603c60383660046074565b603e565b005b6040518181527f2ad1127294a42a5200f9832aacf01f051e55151abd09c0d2a055e56b214ebd4c9060200160405180910390a150565b600060208284031215608557600080fd5b503591905056fea264697066735822122092672b7673c83a905ee29a5708af0d9927dd84aec6e0b161992e7c449af4cfba64736f6c63430008140033",
-    "sourceMap": "95:183:44:-:0;;;;;;;;;;;;;;;;;;;",
+    "sourceMap": "95:183:51:-:0;;;;;;;;;;;;;;;;;;;",
     "linkReferences": {}
   },
   "deployedBytecode": {
     "object": "0x6080604052348015600f57600080fd5b506004361060285760003560e01c8063a6b206bf14602d575b600080fd5b603c60383660046074565b603e565b005b6040518181527f2ad1127294a42a5200f9832aacf01f051e55151abd09c0d2a055e56b214ebd4c9060200160405180910390a150565b600060208284031215608557600080fd5b503591905056fea264697066735822122092672b7673c83a905ee29a5708af0d9927dd84aec6e0b161992e7c449af4cfba64736f6c63430008140033",
-    "sourceMap": "95:183:44:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;184:92;;;;;;:::i;:::-;;:::i;:::-;;;256:13;;345:25:48;;;256:13:44;;333:2:48;318:18;256:13:44;;;;;;;184:92;:::o;14:180:48:-;73:6;126:2;114:9;105:7;101:23;97:32;94:52;;;142:1;139;132:12;94:52;-1:-1:-1;165:23:48;;14:180;-1:-1:-1;14:180:48:o",
+    "sourceMap": "95:183:51:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;184:92;;;;;;:::i;:::-;;:::i;:::-;;;256:13;;345:25:55;;;256:13:51;;333:2:55;318:18;256:13:51;;;;;;;184:92;:::o;14:180:55:-;73:6;126:2;114:9;105:7;101:23;97:32;94:52;;;142:1;139;132:12;94:52;-1:-1:-1;165:23:55;;14:180;-1:-1:-1;14:180:55:o",
     "linkReferences": {}
   },
   "methodIdentifiers": {
@@ -129,22 +129,22 @@
   },
   "ast": {
     "absolutePath": "src/inheritance/InheritanceBase.sol",
-    "id": 47021,
+    "id": 48210,
     "exportedSymbols": {
       "IContractInheritance": [
-        47000
+        48189
       ],
       "InheritanceBase": [
-        47020
+        48209
       ]
     },
     "nodeType": "SourceUnit",
-    "src": "32:247:44",
+    "src": "32:247:51",
     "nodes": [
       {
-        "id": 47002,
+        "id": 48191,
         "nodeType": "PragmaDirective",
-        "src": "32:23:44",
+        "src": "32:23:51",
         "nodes": [],
         "literals": [
           "solidity",
@@ -154,46 +154,46 @@
         ]
       },
       {
-        "id": 47003,
+        "id": 48192,
         "nodeType": "ImportDirective",
-        "src": "57:36:44",
+        "src": "57:36:51",
         "nodes": [],
         "absolutePath": "src/inheritance/IContractInheritance.sol",
         "file": "./IContractInheritance.sol",
         "nameLocation": "-1:-1:-1",
-        "scope": 47021,
-        "sourceUnit": 47001,
+        "scope": 48210,
+        "sourceUnit": 48190,
         "symbolAliases": [],
         "unitAlias": ""
       },
       {
-        "id": 47020,
+        "id": 48209,
         "nodeType": "ContractDefinition",
-        "src": "95:183:44",
+        "src": "95:183:51",
         "nodes": [
           {
-            "id": 47009,
+            "id": 48198,
             "nodeType": "EventDefinition",
-            "src": "150:28:44",
+            "src": "150:28:51",
             "nodes": [],
             "anonymous": false,
             "eventSelector": "2ad1127294a42a5200f9832aacf01f051e55151abd09c0d2a055e56b214ebd4c",
             "name": "Do",
-            "nameLocation": "156:2:44",
+            "nameLocation": "156:2:51",
             "parameters": {
-              "id": 47008,
+              "id": 48197,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 47007,
+                  "id": 48196,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "something",
-                  "nameLocation": "167:9:44",
+                  "nameLocation": "167:9:51",
                   "nodeType": "VariableDeclaration",
-                  "scope": 47009,
-                  "src": "159:17:44",
+                  "scope": 48198,
+                  "src": "159:17:51",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -201,10 +201,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 47006,
+                    "id": 48195,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "159:7:44",
+                    "src": "159:7:51",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -213,30 +213,30 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "158:19:44"
+              "src": "158:19:51"
             }
           },
           {
-            "id": 47019,
+            "id": 48208,
             "nodeType": "FunctionDefinition",
-            "src": "184:92:44",
+            "src": "184:92:51",
             "nodes": [],
             "body": {
-              "id": 47018,
+              "id": 48207,
               "nodeType": "Block",
-              "src": "241:35:44",
+              "src": "241:35:51",
               "nodes": [],
               "statements": [
                 {
                   "eventCall": {
                     "arguments": [
                       {
-                        "id": 47015,
+                        "id": 48204,
                         "name": "something",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 47011,
-                        "src": "259:9:44",
+                        "referencedDeclaration": 48200,
+                        "src": "259:9:51",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
@@ -250,18 +250,18 @@
                           "typeString": "uint256"
                         }
                       ],
-                      "id": 47014,
+                      "id": 48203,
                       "name": "Do",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 47009,
-                      "src": "256:2:44",
+                      "referencedDeclaration": 48198,
+                      "src": "256:2:51",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_event_nonpayable$_t_uint256_$returns$__$",
                         "typeString": "function (uint256)"
                       }
                     },
-                    "id": 47016,
+                    "id": 48205,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -270,41 +270,41 @@
                     "nameLocations": [],
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "256:13:44",
+                    "src": "256:13:51",
                     "tryCall": false,
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 47017,
+                  "id": 48206,
                   "nodeType": "EmitStatement",
-                  "src": "251:18:44"
+                  "src": "251:18:51"
                 }
               ]
             },
             "baseFunctions": [
-              46999
+              48188
             ],
             "functionSelector": "a6b206bf",
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "doSomething",
-            "nameLocation": "193:11:44",
+            "nameLocation": "193:11:51",
             "parameters": {
-              "id": 47012,
+              "id": 48201,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 47011,
+                  "id": 48200,
                   "mutability": "mutable",
                   "name": "something",
-                  "nameLocation": "213:9:44",
+                  "nameLocation": "213:9:51",
                   "nodeType": "VariableDeclaration",
-                  "scope": 47019,
-                  "src": "205:17:44",
+                  "scope": 48208,
+                  "src": "205:17:51",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -312,10 +312,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 47010,
+                    "id": 48199,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "205:7:44",
+                    "src": "205:7:51",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -324,15 +324,15 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "204:19:44"
+              "src": "204:19:51"
             },
             "returnParameters": {
-              "id": 47013,
+              "id": 48202,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "241:0:44"
+              "src": "241:0:51"
             },
-            "scope": 47020,
+            "scope": 48209,
             "stateMutability": "nonpayable",
             "virtual": true,
             "visibility": "external"
@@ -342,18 +342,18 @@
         "baseContracts": [
           {
             "baseName": {
-              "id": 47004,
+              "id": 48193,
               "name": "IContractInheritance",
               "nameLocations": [
-                "123:20:44"
+                "123:20:51"
               ],
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 47000,
-              "src": "123:20:44"
+              "referencedDeclaration": 48189,
+              "src": "123:20:51"
             },
-            "id": 47005,
+            "id": 48194,
             "nodeType": "InheritanceSpecifier",
-            "src": "123:20:44"
+            "src": "123:20:51"
           }
         ],
         "canonicalName": "InheritanceBase",
@@ -361,19 +361,19 @@
         "contractKind": "contract",
         "fullyImplemented": true,
         "linearizedBaseContracts": [
-          47020,
-          47000
+          48209,
+          48189
         ],
         "name": "InheritanceBase",
-        "nameLocation": "104:15:44",
-        "scope": 47021,
+        "nameLocation": "104:15:51",
+        "scope": 48210,
         "usedErrors": [],
         "usedEvents": [
-          47009
+          48198
         ]
       }
     ],
     "license": "MIT"
   },
-  "id": 44
+  "id": 51
 }
