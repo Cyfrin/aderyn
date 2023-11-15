@@ -118,7 +118,7 @@ impl Detector for DifferentStorageConditionalDetector {
 }
 
 #[cfg(test)]
-mod different_storage_conditionals {
+mod different_storage_conditionals_tests {
     use crate::detect::detector::{detector_test_helpers::load_contract, Detector};
 
     use super::DifferentStorageConditionalDetector;
