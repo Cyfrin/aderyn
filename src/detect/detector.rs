@@ -11,6 +11,7 @@ use crate::{
         medium::{
             block_timestamp_deadline::BlockTimestampDeadlineDetector,
             centralization_risk::CentralizationRiskDetector,
+            different_storage_conditionals::DifferentStorageConditionalDetector,
             solmate_safe_transfer_lib::SolmateSafeTransferLibDetector,
             unsafe_oz_erc721_mint::UnsafeERC721MintDetector,
         },
@@ -44,6 +45,7 @@ pub fn get_all_detectors() -> Vec<Box<dyn Detector>> {
         Box::<NonReentrantBeforeOthersDetector>::default(),
         Box::<BlockTimestampDeadlineDetector>::default(),
         Box::<UnsafeERC721MintDetector>::default(),
+        Box::<DifferentStorageConditionalDetector>::default(),
     ]
 }
 
