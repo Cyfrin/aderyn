@@ -127,9 +127,7 @@ impl ReportPrinter for MarkdownReportPrinter {
         let mut source_units = loader.get_source_units();
         source_units.sort_by_key(
             |su| {
-                su.absolute_path
-                    .as_ref() // Convert Option<String> to Option<&String>
-                    .map(|s| s.as_str()) // Convert Option<&String> to Option<&str>
+                su.absolute_path.as_deref() // Convert Option<&String> to Option<&str>
                     .unwrap_or("")
             }, // Provide a default empty string if None
         );
