@@ -17,15 +17,8 @@ impl Report {
         sort_issue_instances(&mut self.lows, loader);
         sort_issue_instances(&mut self.ncs, loader);
     }
-
-    // fn sort_issue_instances(&self, issues: &mut Vec<Issue>, loader: &ContextLoader) {
-    //     for issue in issues {
-    //         issue.sort_instances(loader);
-    //     }
-    // }
 }
 
-// This function is now standalone and not a method of Report
 fn sort_issue_instances(issues: &mut Vec<Issue>, loader: &ContextLoader) {
     for issue in issues {
         issue.sort_instances(loader);
