@@ -26,7 +26,8 @@ impl Detector for DeprecatedOZFunctionsDetector {
                     .absolute_path
                     .as_ref()
                     .map_or(false, |path| path.contains("openzeppelin"))
-            }) && identifier.name == "_setupRole" {
+            }) && identifier.name == "_setupRole"
+            {
                 self.found_deprecated_oz_functions
                     .push(Some(ASTNode::Identifier(identifier.clone())));
             }
@@ -43,7 +44,8 @@ impl Detector for DeprecatedOZFunctionsDetector {
                     .absolute_path
                     .as_ref()
                     .map_or(false, |path| path.contains("openzeppelin"))
-            }) && member_access.member_name == "safeApprove" {
+            }) && member_access.member_name == "safeApprove"
+            {
                 self.found_deprecated_oz_functions
                     .push(Some(ASTNode::MemberAccess(member_access.clone())));
             }
