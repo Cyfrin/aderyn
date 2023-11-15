@@ -124,8 +124,11 @@ impl ReportPrinter for MarkdownReportPrinter {
 
         let sloc_stats = loader.get_sloc_stats();
 
+        let mut source_units = loader.get_source_units();
+        source_units.sort_by_key(|su| su.absolute_path.as_deref().unwrap_or(""));
+
         // Iterate over source units and add each as a row in the markdown table
-        for source_unit in loader.get_source_units() {
+        for source_unit in source_units {
             let filepath = source_unit.absolute_path.as_ref().unwrap();
             let report: &tokei::Report = sloc_stats
                 .reports

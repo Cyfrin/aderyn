@@ -478,6 +478,13 @@ impl ContextLoader {
         let source_unit = self.get_source_unit_from_child_node(node);
         source_unit.and_then(|source_unit| source_unit.absolute_path.as_ref())
     }
+
+    pub fn get_node_sort_key(&self, node: &ASTNode) -> (String, usize) {
+        let source_unit = self.get_source_unit_from_child_node(node).unwrap();
+        let absolute_path = source_unit.absolute_path.as_ref().unwrap().clone();
+        let source_line = source_unit.source_line(node.src().unwrap()).unwrap();
+        (absolute_path, source_line)
+    }
 }
 
 impl ASTConstVisitor for ContextLoader {
