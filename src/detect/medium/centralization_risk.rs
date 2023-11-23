@@ -63,28 +63,34 @@ impl Detector for CentralizationRiskDetector {
         for source_unit in loader.get_source_units() {
             source_unit.accept(self)?;
         }
-        for modifier_invocation in self.found_centralization_risks.clone() {
-            if let Some(node) = modifier_invocation {
-                if let ASTNode::ModifierInvocation(modifier_invocation) = node {
-                    self.found_instances.insert(
-                        loader.get_node_sort_key(&ASTNode::ModifierInvocation(
-                            modifier_invocation.clone(),
-                        )),
-                        modifier_invocation.src.clone(),
-                    );
-                }
+        for modifier_invocation in self
+            .found_centralization_risks
+            .clone()
+            .into_iter()
+            .flatten()
+        {
+            if let ASTNode::ModifierInvocation(modifier_invocation) = modifier_invocation {
+                self.found_instances.insert(
+                    loader.get_node_sort_key(&ASTNode::ModifierInvocation(
+                        modifier_invocation.clone(),
+                    )),
+                    modifier_invocation.src.clone(),
+                );
             }
         }
-        for contract_definition in self.found_centralization_risks.clone() {
-            if let Some(node) = contract_definition {
-                if let ASTNode::ContractDefinition(contract_definition) = node {
-                    self.found_instances.insert(
-                        loader.get_node_sort_key(&ASTNode::ContractDefinition(
-                            contract_definition.clone(),
-                        )),
-                        contract_definition.src.clone(),
-                    );
-                }
+        for contract_definition in self
+            .found_centralization_risks
+            .clone()
+            .into_iter()
+            .flatten()
+        {
+            if let ASTNode::ContractDefinition(contract_definition) = contract_definition {
+                self.found_instances.insert(
+                    loader.get_node_sort_key(&ASTNode::ContractDefinition(
+                        contract_definition.clone(),
+                    )),
+                    contract_definition.src.clone(),
+                );
             }
         }
 

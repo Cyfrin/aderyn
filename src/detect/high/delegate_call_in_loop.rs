@@ -36,14 +36,12 @@ impl Detector for DelegateCallInLoopDetector {
         for while_statement in loader.get_while_statements() {
             while_statement.accept(self)?;
         }
-        for member_access in self.found_member_access.clone() {
-            if let Some(node) = member_access {
-                if let ASTNode::MemberAccess(member_access) = node {
-                    self.found_instances.insert(
-                        loader.get_node_sort_key(&ASTNode::MemberAccess(member_access.clone())),
-                        member_access.src.clone(),
-                    );
-                }
+        for member_access in self.found_member_access.clone().into_iter().flatten() {
+            if let ASTNode::MemberAccess(member_access) = member_access {
+                self.found_instances.insert(
+                    loader.get_node_sort_key(&ASTNode::MemberAccess(member_access.clone())),
+                    member_access.src.clone(),
+                );
             }
         }
 

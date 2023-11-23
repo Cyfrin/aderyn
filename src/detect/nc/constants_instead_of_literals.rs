@@ -37,14 +37,12 @@ impl Detector for ConstantsInsteadOfLiteralsDetector {
         for function_definition in loader.get_function_definitions() {
             function_definition.accept(self)?;
         }
-        for literal in self.found_literals.clone() {
-            if let Some(node) = literal {
-                if let ASTNode::Literal(literal) = node {
-                    self.found_instances.insert(
-                        loader.get_node_sort_key(&ASTNode::Literal(literal.clone())),
-                        literal.src.clone(),
-                    );
-                }
+        for literal in self.found_literals.clone().into_iter().flatten() {
+            if let ASTNode::Literal(literal) = literal {
+                self.found_instances.insert(
+                    loader.get_node_sort_key(&ASTNode::Literal(literal.clone())),
+                    literal.src.clone(),
+                );
             }
         }
 
