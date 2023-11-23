@@ -1,6 +1,6 @@
 use std::io::{Result, Write};
 
-use crate::{ast::SourceUnit, context::loader::ContextLoader};
+use crate::{context::loader::ContextLoader};
 
 use super::reporter::{Issue, Report};
 
@@ -259,7 +259,7 @@ impl ReportPrinter for MarkdownReportPrinter {
         &self,
         mut writer: W,
         issue: &Issue,
-        loader: &ContextLoader,
+        _loader: &ContextLoader,
         severity: &str,
         number: i32,
     ) -> Result<()> {
