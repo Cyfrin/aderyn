@@ -1,5 +1,5 @@
 use crate::{
-    context::loader::{ContextLoader},
+    context::loader::ContextLoader,
     detect::{
         high::delegate_call_in_loop::DelegateCallInLoopDetector,
         low::{
