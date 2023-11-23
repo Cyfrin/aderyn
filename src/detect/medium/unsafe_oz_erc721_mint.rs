@@ -1,4 +1,4 @@
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::{
     context::loader::{ASTNode, ContextLoader},
@@ -8,7 +8,8 @@ use eyre::Result;
 
 #[derive(Default)]
 pub struct UnsafeERC721MintDetector {
-    found_unsafe_erc721_mint: Vec<Option<ASTNode>>,
+    // Keys are source file name and line number
+    found_instances: BTreeMap<(String, usize), String>,
 }
 
 impl Detector for UnsafeERC721MintDetector {
@@ -28,25 +29,31 @@ impl Detector for UnsafeERC721MintDetector {
                     .map_or(false, |path| path.contains("openzeppelin"))
             }) && identifier.name == "_mint"
             {
-                self.found_unsafe_erc721_mint
-                    .push(Some(ASTNode::Identifier(identifier.clone())));
+                self.found_instances.insert(
+                    loader.get_node_sort_key(&ASTNode::Identifier(identifier.clone())),
+                    identifier.src.clone(),
+                );
             }
         }
-        Ok(!self.found_unsafe_erc721_mint.is_empty())
+        Ok(!self.found_instances.is_empty())
     }
+
     fn title(&self) -> String {
         String::from("Using `ERC721::_mint()` can be dangerous")
     }
+
     fn description(&self) -> String {
         String::from(
             "Using `ERC721::_mint()` can mint ERC721 tokens to addresses which don't support ERC721 tokens. Use `_safeMint()` instead of `_mint()` for ERC721.",
         )
     }
+
     fn severity(&self) -> IssueSeverity {
         IssueSeverity::Medium
     }
-    fn instances(&self) -> Vec<Option<ASTNode>> {
-        self.found_unsafe_erc721_mint.clone()
+
+    fn instances(&self) -> BTreeMap<(String, usize), String> {
+        self.found_instances.clone()
     }
 }
 

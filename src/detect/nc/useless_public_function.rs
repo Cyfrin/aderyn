@@ -1,4 +1,7 @@
-use std::{collections::HashSet, error::Error};
+use std::{
+    collections::{BTreeMap, HashSet},
+    error::Error,
+};
 
 use crate::{
     ast::{FunctionKind, Visibility},
@@ -9,7 +12,8 @@ use eyre::Result;
 
 #[derive(Default)]
 pub struct UselessPublicFunctionDetector {
-    found_useless_public_function: Vec<Option<ASTNode>>,
+    // Keys are source file name and line number
+    found_instances: BTreeMap<(String, usize), String>,
 }
 
 impl Detector for UselessPublicFunctionDetector {
@@ -33,10 +37,24 @@ impl Detector for UselessPublicFunctionDetector {
             })
             .map(|f| Some(ASTNode::FunctionDefinition((*f).clone())));
 
-        self.found_useless_public_function
-            .extend(unreferenced_public_functions);
+        self.found_instances.extend(
+            unreferenced_public_functions
+                .map(|node| {
+                    (
+                        loader.get_node_sort_key(&node.clone().unwrap()),
+                        // match node as FunctionDefinition
+                        match node.unwrap() {
+                            ASTNode::FunctionDefinition(function_definition) => {
+                                function_definition.src.clone()
+                            }
+                            _ => unreachable!(),
+                        },
+                    )
+                })
+                .collect::<BTreeMap<_, _>>(),
+        );
 
-        Ok(!self.found_useless_public_function.is_empty())
+        Ok(!self.found_instances.is_empty())
     }
 
     fn title(&self) -> String {
@@ -51,8 +69,8 @@ impl Detector for UselessPublicFunctionDetector {
         IssueSeverity::NC
     }
 
-    fn instances(&self) -> Vec<Option<ASTNode>> {
-        self.found_useless_public_function.clone()
+    fn instances(&self) -> BTreeMap<(String, usize), String> {
+        self.found_instances.clone()
     }
 }
 

@@ -1,4 +1,4 @@
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::{
     ast::{Literal, LiteralKind},
@@ -11,6 +11,9 @@ use eyre::Result;
 #[derive(Default)]
 pub struct ConstantsInsteadOfLiteralsDetector {
     found_literals: Vec<Option<ASTNode>>,
+
+    // Keys are source file name and line number
+    found_instances: BTreeMap<(String, usize), String>,
 }
 
 impl ASTConstVisitor for ConstantsInsteadOfLiteralsDetector {
@@ -34,8 +37,16 @@ impl Detector for ConstantsInsteadOfLiteralsDetector {
         for function_definition in loader.get_function_definitions() {
             function_definition.accept(self)?;
         }
+        for literal in self.found_literals.clone().into_iter().flatten() {
+            if let ASTNode::Literal(literal) = literal {
+                self.found_instances.insert(
+                    loader.get_node_sort_key(&ASTNode::Literal(literal.clone())),
+                    literal.src.clone(),
+                );
+            }
+        }
 
-        Ok(!self.found_literals.is_empty())
+        Ok(!self.found_instances.is_empty())
     }
 
     fn title(&self) -> String {
@@ -50,8 +61,8 @@ impl Detector for ConstantsInsteadOfLiteralsDetector {
         IssueSeverity::NC
     }
 
-    fn instances(&self) -> Vec<Option<ASTNode>> {
-        self.found_literals.clone()
+    fn instances(&self) -> BTreeMap<(String, usize), String> {
+        self.found_instances.clone()
     }
 }
 

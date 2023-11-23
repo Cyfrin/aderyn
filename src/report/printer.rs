@@ -1,6 +1,6 @@
 use std::io::{Result, Write};
 
-use crate::{ast::SourceUnit, context::loader::ContextLoader};
+use crate::context::loader::ContextLoader;
 
 use super::reporter::{Issue, Report};
 
@@ -259,7 +259,7 @@ impl ReportPrinter for MarkdownReportPrinter {
         &self,
         mut writer: W,
         issue: &Issue,
-        loader: &ContextLoader,
+        _loader: &ContextLoader,
         severity: &str,
         number: i32,
     ) -> Result<()> {
@@ -268,16 +268,7 @@ impl ReportPrinter for MarkdownReportPrinter {
             "## {}-{}: {}\n\n{}\n", // <a name> is the anchor for the issue title
             severity, number, issue.title, issue.description
         )?;
-        for node in issue.instances.iter().flatten() {
-            let mut contract_path = "unknown";
-            let source_unit: &SourceUnit = loader.get_source_unit_from_child_node(node).unwrap();
-            if let Some(path) = source_unit.absolute_path.as_ref() {
-                contract_path = path;
-            }
-            let mut line_number = 0;
-            if let Some(src) = node.src() {
-                line_number = source_unit.source_line(src).unwrap();
-            }
+        for (contract_path, line_number) in issue.instances.keys() {
             writeln!(
                 writer,
                 "- Found in {}: Line: {}",

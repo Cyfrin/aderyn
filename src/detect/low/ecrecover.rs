@@ -1,4 +1,4 @@
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::{
     context::loader::{ASTNode, ContextLoader},
@@ -8,18 +8,21 @@ use eyre::Result;
 
 #[derive(Default)]
 pub struct EcrecoverDetector {
-    found_ecrecover: Vec<Option<ASTNode>>,
+    // Keys are source file name and line number
+    found_instances: BTreeMap<(String, usize), String>,
 }
 
 impl Detector for EcrecoverDetector {
     fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
         for identifier in loader.get_identifiers() {
             if identifier.name == "ecrecover" {
-                self.found_ecrecover
-                    .push(Some(ASTNode::Identifier(identifier.clone())));
+                self.found_instances.insert(
+                    loader.get_node_sort_key(&ASTNode::Identifier(identifier.clone())),
+                    identifier.src.clone(),
+                );
             }
         }
-        Ok(!self.found_ecrecover.is_empty())
+        Ok(!self.found_instances.is_empty())
     }
 
     fn title(&self) -> String {
@@ -41,8 +44,8 @@ impl Detector for EcrecoverDetector {
         IssueSeverity::Low
     }
 
-    fn instances(&self) -> Vec<Option<ASTNode>> {
-        self.found_ecrecover.clone()
+    fn instances(&self) -> BTreeMap<(String, usize), String> {
+        self.found_instances.clone()
     }
 }
 

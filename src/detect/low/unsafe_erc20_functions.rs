@@ -1,4 +1,4 @@
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::{
     context::loader::{ASTNode, ContextLoader},
@@ -8,7 +8,8 @@ use eyre::Result;
 
 #[derive(Default)]
 pub struct UnsafeERC20FunctionsDetector {
-    found_unsafe_erc20_functions: Vec<Option<ASTNode>>,
+    // Keys are source file name and line number
+    found_instances: BTreeMap<(String, usize), String>,
 }
 
 impl Detector for UnsafeERC20FunctionsDetector {
@@ -18,11 +19,13 @@ impl Detector for UnsafeERC20FunctionsDetector {
                 || member_access.member_name == "approve"
                 || member_access.member_name == "transfer"
             {
-                self.found_unsafe_erc20_functions
-                    .push(Some(ASTNode::MemberAccess(member_access.clone())));
+                self.found_instances.insert(
+                    loader.get_node_sort_key(&ASTNode::MemberAccess(member_access.clone())),
+                    member_access.src.clone(),
+                );
             }
         }
-        Ok(!self.found_unsafe_erc20_functions.is_empty())
+        Ok(!self.found_instances.is_empty())
     }
 
     fn title(&self) -> String {
@@ -37,8 +40,8 @@ impl Detector for UnsafeERC20FunctionsDetector {
         IssueSeverity::Low
     }
 
-    fn instances(&self) -> Vec<Option<ASTNode>> {
-        self.found_unsafe_erc20_functions.clone()
+    fn instances(&self) -> BTreeMap<(String, usize), String> {
+        self.found_instances.clone()
     }
 }
 

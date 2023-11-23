@@ -1,4 +1,4 @@
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::{
     context::loader::{ASTNode, ContextLoader},
@@ -8,7 +8,8 @@ use eyre::Result;
 
 #[derive(Default)]
 pub struct AvoidAbiEncodePackedDetector {
-    found_abi_encode_packed: Vec<Option<ASTNode>>,
+    // Keys are source file name and line number
+    found_instances: BTreeMap<(String, usize), String>,
 }
 
 impl Detector for AvoidAbiEncodePackedDetector {
@@ -37,12 +38,14 @@ impl Detector for AvoidAbiEncodePackedDetector {
                     }
                 }
                 if count > 1 {
-                    self.found_abi_encode_packed
-                        .push(Some(ASTNode::MemberAccess(member_access.clone())));
+                    self.found_instances.insert(
+                        loader.get_node_sort_key(&ASTNode::MemberAccess(member_access.clone())),
+                        member_access.src.clone(),
+                    );
                 }
             }
         }
-        Ok(!self.found_abi_encode_packed.is_empty())
+        Ok(!self.found_instances.is_empty())
     }
 
     fn title(&self) -> String {
@@ -59,8 +62,8 @@ impl Detector for AvoidAbiEncodePackedDetector {
         IssueSeverity::Low
     }
 
-    fn instances(&self) -> Vec<Option<ASTNode>> {
-        self.found_abi_encode_packed.clone()
+    fn instances(&self) -> BTreeMap<(String, usize), String> {
+        self.found_instances.clone()
     }
 }
 

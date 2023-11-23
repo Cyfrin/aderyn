@@ -1,4 +1,4 @@
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::{
     context::loader::{ASTNode, ContextLoader},
@@ -8,7 +8,8 @@ use eyre::Result;
 
 #[derive(Default)]
 pub struct UnspecificSolidityPragmaDetector {
-    found_unspecific_solidity_pragma: Vec<Option<ASTNode>>,
+    // Keys are source file name and line number
+    found_instances: BTreeMap<(String, usize), String>,
 }
 
 impl Detector for UnspecificSolidityPragmaDetector {
@@ -16,13 +17,16 @@ impl Detector for UnspecificSolidityPragmaDetector {
         for pragma_directive in loader.get_pragma_directives() {
             for literal in &pragma_directive.literals {
                 if literal.contains('^') || literal.contains('>') {
-                    self.found_unspecific_solidity_pragma
-                        .push(Some(ASTNode::PragmaDirective(pragma_directive.clone())));
+                    self.found_instances.insert(
+                        loader
+                            .get_node_sort_key(&ASTNode::PragmaDirective(pragma_directive.clone())),
+                        pragma_directive.src.clone(),
+                    );
                     break;
                 }
             }
         }
-        Ok(!self.found_unspecific_solidity_pragma.is_empty())
+        Ok(!self.found_instances.is_empty())
     }
 
     fn title(&self) -> String {
@@ -37,8 +41,8 @@ impl Detector for UnspecificSolidityPragmaDetector {
         IssueSeverity::Low
     }
 
-    fn instances(&self) -> Vec<Option<ASTNode>> {
-        self.found_unspecific_solidity_pragma.clone()
+    fn instances(&self) -> BTreeMap<(String, usize), String> {
+        self.found_instances.clone()
     }
 }
 

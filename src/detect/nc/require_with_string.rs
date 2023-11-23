@@ -1,4 +1,4 @@
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::{
     ast::Identifier,
@@ -9,7 +9,8 @@ use eyre::Result;
 
 #[derive(Default)]
 pub struct RequireWithStringDetector {
-    found_require_without_string: Vec<Option<ASTNode>>,
+    // Keys are source file name and line number
+    found_instances: BTreeMap<(String, usize), String>,
 }
 
 impl Detector for RequireWithStringDetector {
@@ -26,12 +27,14 @@ impl Detector for RequireWithStringDetector {
             if (id.name == "revert" && id.argument_types.as_ref().unwrap().is_empty())
                 || (id.name == "require" && id.argument_types.as_ref().unwrap().len() == 1)
             {
-                self.found_require_without_string
-                    .push(Some(ASTNode::Identifier(id.clone())));
+                self.found_instances.insert(
+                    loader.get_node_sort_key(&ASTNode::Identifier(id.clone())),
+                    id.src.clone(),
+                );
             }
         }
 
-        Ok(!self.found_require_without_string.is_empty())
+        Ok(!self.found_instances.is_empty())
     }
 
     fn title(&self) -> String {
@@ -46,8 +49,8 @@ impl Detector for RequireWithStringDetector {
         IssueSeverity::NC
     }
 
-    fn instances(&self) -> Vec<Option<ASTNode>> {
-        self.found_require_without_string.clone()
+    fn instances(&self) -> BTreeMap<(String, usize), String> {
+        self.found_instances.clone()
     }
 }
 

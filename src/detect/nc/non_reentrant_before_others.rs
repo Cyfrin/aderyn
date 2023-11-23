@@ -1,4 +1,4 @@
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::{
     context::loader::{ASTNode, ContextLoader},
@@ -8,7 +8,8 @@ use eyre::Result;
 
 #[derive(Default)]
 pub struct NonReentrantBeforeOthersDetector {
-    found_non_reentrant_after_others: Vec<Option<ASTNode>>,
+    // Keys are source file name and line number
+    found_instances: BTreeMap<(String, usize), String>,
 }
 
 impl Detector for NonReentrantBeforeOthersDetector {
@@ -18,13 +19,16 @@ impl Detector for NonReentrantBeforeOthersDetector {
             if definition.modifiers.len() > 1 {
                 for (index, modifier) in definition.modifiers.iter().enumerate() {
                     if modifier.modifier_name.name == "nonReentrant" && index != 0 {
-                        self.found_non_reentrant_after_others
-                            .push(Some(ASTNode::FunctionDefinition(definition.clone())));
+                        self.found_instances.insert(
+                            loader
+                                .get_node_sort_key(&ASTNode::ModifierInvocation(modifier.clone())),
+                            modifier.src.clone(),
+                        );
                     }
                 }
             }
         }
-        Ok(!self.found_non_reentrant_after_others.is_empty())
+        Ok(!self.found_instances.is_empty())
     }
 
     fn title(&self) -> String {
@@ -39,8 +43,8 @@ impl Detector for NonReentrantBeforeOthersDetector {
         IssueSeverity::NC
     }
 
-    fn instances(&self) -> Vec<Option<ASTNode>> {
-        self.found_non_reentrant_after_others.clone()
+    fn instances(&self) -> BTreeMap<(String, usize), String> {
+        self.found_instances.clone()
     }
 }
 
