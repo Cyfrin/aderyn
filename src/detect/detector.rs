@@ -25,7 +25,7 @@ use crate::{
         },
     },
 };
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 pub fn get_all_detectors() -> Vec<Box<dyn Detector>> {
     vec![
@@ -75,8 +75,10 @@ pub trait Detector {
         String::from("Description")
     }
 
-    fn instances(&self) -> Vec<Option<ASTNode>> {
-        Vec::new()
+    // Keys are source file name and line number
+    // Value is ASTNode.src
+    fn instances(&self) -> BTreeMap<(String, usize), String> {
+        BTreeMap::new()
     }
 }
 

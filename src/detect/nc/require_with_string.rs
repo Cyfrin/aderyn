@@ -9,15 +9,8 @@ use eyre::Result;
 
 #[derive(Default)]
 pub struct RequireWithStringDetector {
-    found_require_without_string: Vec<Option<ASTNode>>,
     // Keys are source file name and line number
     found_instances: BTreeMap<(String, usize), String>,
-}
-
-impl RequireWithStringDetector {
-    pub fn return_found_instances(&self) -> &BTreeMap<(String, usize), String> {
-        &self.found_instances
-    }
 }
 
 impl Detector for RequireWithStringDetector {
@@ -34,8 +27,6 @@ impl Detector for RequireWithStringDetector {
             if (id.name == "revert" && id.argument_types.as_ref().unwrap().is_empty())
                 || (id.name == "require" && id.argument_types.as_ref().unwrap().len() == 1)
             {
-                self.found_require_without_string
-                    .push(Some(ASTNode::Identifier(id.clone())));
                 self.found_instances.insert(
                     loader.get_node_sort_key(&ASTNode::Identifier(id.clone())),
                     id.src.clone(),
@@ -43,7 +34,7 @@ impl Detector for RequireWithStringDetector {
             }
         }
 
-        Ok(!self.found_require_without_string.is_empty())
+        Ok(!self.found_instances.is_empty())
     }
 
     fn title(&self) -> String {
@@ -58,8 +49,8 @@ impl Detector for RequireWithStringDetector {
         IssueSeverity::NC
     }
 
-    fn instances(&self) -> Vec<Option<ASTNode>> {
-        self.found_require_without_string.clone()
+    fn instances(&self) -> BTreeMap<(String, usize), String> {
+        self.found_instances.clone()
     }
 }
 
@@ -68,19 +59,6 @@ mod require_with_string_tests {
     use crate::detect::detector::{detector_test_helpers::load_contract, Detector};
 
     use super::RequireWithStringDetector;
-
-    #[test]
-    fn test_return_found_instances() {
-        let context_loader = load_contract(
-            "./tests/contract-playground/out/DeprecatedOZFunctions.sol/DeprecatedOZFunctions.json",
-        );
-        let mut detector = RequireWithStringDetector::default();
-        // assert that the detector finds something
-        let found = detector.detect(&context_loader).unwrap();
-        assert!(found);
-        let found_instances = detector.return_found_instances();
-        println!("{:?}", found_instances);
-    }
 
     #[test]
     fn test_require_with_string() {

@@ -1,4 +1,4 @@
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::{
     context::loader::{ASTNode, ContextLoader},
@@ -8,7 +8,8 @@ use eyre::Result;
 
 #[derive(Default)]
 pub struct DeprecatedOZFunctionsDetector {
-    found_deprecated_oz_functions: Vec<Option<ASTNode>>,
+    // Keys are source file name and line number
+    found_instances: BTreeMap<(String, usize), String>,
 }
 
 impl Detector for DeprecatedOZFunctionsDetector {
@@ -28,8 +29,10 @@ impl Detector for DeprecatedOZFunctionsDetector {
                     .map_or(false, |path| path.contains("openzeppelin"))
             }) && identifier.name == "_setupRole"
             {
-                self.found_deprecated_oz_functions
-                    .push(Some(ASTNode::Identifier(identifier.clone())));
+                self.found_instances.insert(
+                    loader.get_node_sort_key(&ASTNode::Identifier(identifier.clone())),
+                    identifier.src.clone(),
+                );
             }
         }
         for member_access in loader.get_member_accesses() {
@@ -46,11 +49,13 @@ impl Detector for DeprecatedOZFunctionsDetector {
                     .map_or(false, |path| path.contains("openzeppelin"))
             }) && member_access.member_name == "safeApprove"
             {
-                self.found_deprecated_oz_functions
-                    .push(Some(ASTNode::MemberAccess(member_access.clone())));
+                self.found_instances.insert(
+                    loader.get_node_sort_key(&ASTNode::MemberAccess(member_access.clone())),
+                    member_access.src.clone(),
+                );
             }
         }
-        Ok(!self.found_deprecated_oz_functions.is_empty())
+        Ok(!self.found_instances.is_empty())
     }
 
     fn title(&self) -> String {
@@ -65,8 +70,8 @@ impl Detector for DeprecatedOZFunctionsDetector {
         IssueSeverity::Low
     }
 
-    fn instances(&self) -> Vec<Option<ASTNode>> {
-        self.found_deprecated_oz_functions.clone()
+    fn instances(&self) -> BTreeMap<(String, usize), String> {
+        self.found_instances.clone()
     }
 }
 

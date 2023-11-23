@@ -1,4 +1,4 @@
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::{
     context::loader::{ASTNode, ContextLoader},
@@ -8,7 +8,8 @@ use eyre::Result;
 
 #[derive(Default)]
 pub struct UnindexedEventsDetector {
-    found_unindexed_events: Vec<Option<ASTNode>>,
+    // Keys are source file name and line number
+    found_instances: BTreeMap<(String, usize), String>,
 }
 
 impl Detector for UnindexedEventsDetector {
@@ -28,11 +29,14 @@ impl Detector for UnindexedEventsDetector {
             }
 
             if non_indexed && indexed_count < 3 {
-                self.found_unindexed_events
-                    .push(Some(ASTNode::EventDefinition((*event_definition).clone())));
+                self.found_instances.insert(
+                    loader
+                        .get_node_sort_key(&ASTNode::EventDefinition((*event_definition).clone())),
+                    event_definition.src.clone(),
+                );
             }
         }
-        Ok(!self.found_unindexed_events.is_empty())
+        Ok(!self.found_instances.is_empty())
     }
 
     fn title(&self) -> String {
@@ -49,8 +53,8 @@ impl Detector for UnindexedEventsDetector {
         IssueSeverity::NC
     }
 
-    fn instances(&self) -> Vec<Option<ASTNode>> {
-        self.found_unindexed_events.clone()
+    fn instances(&self) -> BTreeMap<(String, usize), String> {
+        self.found_instances.clone()
     }
 }
 
@@ -70,7 +74,7 @@ mod unindexed_event_tests {
         let found = detector.detect(&context_loader).unwrap();
         assert!(found);
         // assert that the detector finds the correct number of unindexed events
-        assert_eq!(detector.found_unindexed_events.len(), 1);
+        assert_eq!(detector.instances().len(), 1);
         // assert that the detector returns the correct severity
         assert_eq!(
             detector.severity(),

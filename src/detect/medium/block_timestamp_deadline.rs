@@ -1,4 +1,4 @@
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::{
     ast::{Expression, FunctionCallKind},
@@ -9,7 +9,8 @@ use eyre::Result;
 
 #[derive(Default)]
 pub struct BlockTimestampDeadlineDetector {
-    found_block_timestamp_deadlines: Vec<Option<ASTNode>>,
+    // Keys are source file name and line number
+    found_instances: BTreeMap<(String, usize), String>,
 }
 
 impl Detector for BlockTimestampDeadlineDetector {
@@ -47,8 +48,12 @@ impl Detector for BlockTimestampDeadlineDetector {
                                 *member_access.expression
                             {
                                 if identifier.name == "block" {
-                                    self.found_block_timestamp_deadlines
-                                        .push(Some(ASTNode::FunctionCall(call.clone())));
+                                    self.found_instances.insert(
+                                        loader.get_node_sort_key(&ASTNode::FunctionCall(
+                                            call.clone(),
+                                        )),
+                                        call.src.clone(),
+                                    );
                                 }
                             }
                         }
@@ -76,8 +81,12 @@ impl Detector for BlockTimestampDeadlineDetector {
                                         *member_access.expression
                                     {
                                         if identifier.name == "block" {
-                                            self.found_block_timestamp_deadlines
-                                                .push(Some(ASTNode::FunctionCall(call.clone())));
+                                            self.found_instances.insert(
+                                                loader.get_node_sort_key(&ASTNode::FunctionCall(
+                                                    call.clone(),
+                                                )),
+                                                call.src.clone(),
+                                            );
                                         }
                                     }
                                 }
@@ -89,7 +98,7 @@ impl Detector for BlockTimestampDeadlineDetector {
         }
 
         // TODO: Uniswap V3 - Struct definitions
-        Ok(!self.found_block_timestamp_deadlines.is_empty())
+        Ok(!self.found_instances.is_empty())
     }
 
     fn severity(&self) -> IssueSeverity {
@@ -105,8 +114,8 @@ impl Detector for BlockTimestampDeadlineDetector {
         Consider allowing function caller to specify swap deadline input parameter.".to_string()
     }
 
-    fn instances(&self) -> Vec<Option<ASTNode>> {
-        self.found_block_timestamp_deadlines.clone()
+    fn instances(&self) -> BTreeMap<(String, usize), String> {
+        self.found_instances.clone()
     }
 }
 

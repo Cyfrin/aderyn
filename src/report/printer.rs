@@ -268,16 +268,7 @@ impl ReportPrinter for MarkdownReportPrinter {
             "## {}-{}: {}\n\n{}\n", // <a name> is the anchor for the issue title
             severity, number, issue.title, issue.description
         )?;
-        for node in issue.instances.iter().flatten() {
-            let mut contract_path = "unknown";
-            let source_unit: &SourceUnit = loader.get_source_unit_from_child_node(node).unwrap();
-            if let Some(path) = source_unit.absolute_path.as_ref() {
-                contract_path = path;
-            }
-            let mut line_number = 0;
-            if let Some(src) = node.src() {
-                line_number = source_unit.source_line(src).unwrap();
-            }
+        for ((contract_path, line_number), _) in &issue.instances {
             writeln!(
                 writer,
                 "- Found in {}: Line: {}",

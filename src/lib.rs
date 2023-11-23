@@ -56,7 +56,6 @@ pub fn run(context_loader: ContextLoader) -> Result<(), Box<dyn Error>> {
     println!("Detectors run, processing found issues");
 
     let printer = MarkdownReportPrinter;
-    report.post_process(&context_loader);
     println!("Found issues processed. Printing report");
     printer.print_report(get_markdown_writer("report.md")?, &report, &context_loader)?;
 

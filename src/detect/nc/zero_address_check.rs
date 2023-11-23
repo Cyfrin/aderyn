@@ -1,4 +1,7 @@
-use std::{collections::HashMap, error::Error};
+use std::{
+    collections::{BTreeMap, HashMap},
+    error::Error,
+};
 
 use crate::{
     ast::{Assignment, BinaryOperation, Expression, Mutability, VariableDeclaration},
@@ -26,8 +29,8 @@ pub struct ZeroAddressCheckDetector {
     // where the left hand side is a mutable address state variable
     assignments_to_mutable_address_state_variables: HashMap<i64, Assignment>,
 
-    // List of all the assignments without zero address checks found
-    found_no_zero_address_check: Vec<Option<ASTNode>>,
+    // Keys are source file name and line number
+    found_instances: BTreeMap<(String, usize), String>,
 }
 
 impl ZeroAddressCheckDetector {
@@ -120,13 +123,15 @@ impl Detector for ZeroAddressCheckDetector {
             // in the binary_checks_against_zero_address, add the assignment to the found_no_zero_address_check
             for (key, value) in &self.assignments_to_mutable_address_state_variables {
                 if !self.binary_checks_against_zero_address.contains_key(key) {
-                    self.found_no_zero_address_check
-                        .push(Some(ASTNode::Assignment(value.clone())));
+                    self.found_instances.insert(
+                        loader.get_node_sort_key(&ASTNode::Assignment(value.clone())),
+                        value.src.clone(),
+                    );
                 }
             }
         }
 
-        Ok(!self.found_no_zero_address_check.is_empty())
+        Ok(!self.found_instances.is_empty())
     }
 
     fn title(&self) -> String {
@@ -145,8 +150,8 @@ impl Detector for ZeroAddressCheckDetector {
         IssueSeverity::NC
     }
 
-    fn instances(&self) -> Vec<Option<ASTNode>> {
-        self.found_no_zero_address_check.clone()
+    fn instances(&self) -> BTreeMap<(String, usize), String> {
+        self.found_instances.clone()
     }
 }
 
@@ -166,7 +171,7 @@ mod zero_address_check_tests {
         // assert that the detector found the issue
         assert!(found);
         // assert that the detector found the correct number of issues
-        assert_eq!(detector.found_no_zero_address_check.len(), 1);
+        assert_eq!(detector.instances().len(), 1);
         // assert that the severity is NC
         assert_eq!(
             detector.severity(),

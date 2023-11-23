@@ -1,4 +1,7 @@
-use std::{collections::HashMap, error::Error};
+use std::{
+    collections::{BTreeMap, HashMap},
+    error::Error,
+};
 
 use crate::{
     ast::{BinaryOperation, Expression, VariableDeclaration},
@@ -9,7 +12,8 @@ use eyre::Result;
 
 #[derive(Default)]
 pub struct DifferentStorageConditionalDetector {
-    found_different_storage_conditionals: Vec<Option<ASTNode>>,
+    // Keys are source file name and line number
+    found_instances: BTreeMap<(String, usize), String>,
 }
 
 impl Detector for DifferentStorageConditionalDetector {
@@ -88,11 +92,17 @@ impl Detector for DifferentStorageConditionalDetector {
                             && current_op_operator == mirror_operator);
 
                     if !is_consistent_or_mirror {
-                        self.found_different_storage_conditionals
-                            .push(Some(ASTNode::BinaryOperation((*op).clone())));
+                        self.found_instances.insert(
+                            loader.get_node_sort_key(&ASTNode::BinaryOperation((*op).clone())),
+                            op.src.clone(),
+                        );
                         if !first_added {
-                            self.found_different_storage_conditionals
-                                .push(Some(ASTNode::BinaryOperation((*first_op).clone())));
+                            self.found_instances.insert(
+                                loader.get_node_sort_key(&ASTNode::BinaryOperation(
+                                    (*first_op).clone(),
+                                )),
+                                first_op.src.clone(),
+                            );
                             first_added = true;
                         }
                     }
@@ -100,20 +110,24 @@ impl Detector for DifferentStorageConditionalDetector {
             }
         }
 
-        Ok(!self.found_different_storage_conditionals.is_empty())
+        Ok(!self.found_instances.is_empty())
     }
+
     fn title(&self) -> String {
         String::from("Conditional storage checks are not consistent")
     }
+
     fn description(&self) -> String {
         String::from("When writing `require` or `if` conditionals that check storage values, it is important to be consistent to prevent off-by-one errors. \
         There are instances found where the same storage variable is checked multiple times, but the conditionals are not consistent.")
     }
+
     fn severity(&self) -> IssueSeverity {
         IssueSeverity::Low
     }
-    fn instances(&self) -> Vec<Option<ASTNode>> {
-        self.found_different_storage_conditionals.clone()
+
+    fn instances(&self) -> BTreeMap<(String, usize), String> {
+        self.found_instances.clone()
     }
 }
 

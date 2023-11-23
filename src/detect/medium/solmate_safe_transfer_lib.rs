@@ -1,4 +1,4 @@
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::{
     context::loader::{ASTNode, ContextLoader},
@@ -9,7 +9,8 @@ use eyre::Result;
 #[derive(Default)]
 pub struct SolmateSafeTransferLibDetector {
     found_solmate_import: bool,
-    found_transfer_usage: Vec<Option<ASTNode>>,
+    // Keys are source file name and line number
+    found_instances: BTreeMap<(String, usize), String>,
 }
 
 impl Detector for SolmateSafeTransferLibDetector {
@@ -40,12 +41,14 @@ impl Detector for SolmateSafeTransferLibDetector {
                 || member_access.member_name == "safeTransferFrom"
                 || member_access.member_name == "safeApprove"
             {
-                self.found_transfer_usage
-                    .push(Some(ASTNode::MemberAccess(member_access.clone())));
+                self.found_instances.insert(
+                    loader.get_node_sort_key(&ASTNode::MemberAccess(member_access.clone())),
+                    member_access.src.clone(),
+                );
             }
         }
 
-        if self.found_solmate_import && !self.found_transfer_usage.is_empty() {
+        if self.found_solmate_import && !self.found_instances.is_empty() {
             return Ok(true);
         }
 
@@ -64,8 +67,8 @@ impl Detector for SolmateSafeTransferLibDetector {
         String::from("There is a subtle difference between the implementation of solmate's SafeTransferLib and OZ's SafeERC20: OZ's SafeERC20 checks if the token is a contract or not, solmate's SafeTransferLib does not.\nhttps://github.com/transmissions11/solmate/blob/main/src/utils/SafeTransferLib.sol#L9 \n`@dev Note that none of the functions in this library check that a token has code at all! That responsibility is delegated to the caller`\n")
     }
 
-    fn instances(&self) -> Vec<Option<ASTNode>> {
-        self.found_transfer_usage.clone()
+    fn instances(&self) -> BTreeMap<(String, usize), String> {
+        self.found_instances.clone()
     }
 }
 

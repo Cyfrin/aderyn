@@ -1,4 +1,4 @@
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::{
     ast::ModifierInvocation,
@@ -11,6 +11,9 @@ use eyre::Result;
 #[derive(Default)]
 pub struct CentralizationRiskDetector {
     found_centralization_risks: Vec<Option<ASTNode>>,
+
+    // Keys are source file name and line number
+    found_instances: BTreeMap<(String, usize), String>,
 }
 
 impl ASTConstVisitor for CentralizationRiskDetector {
@@ -60,8 +63,32 @@ impl Detector for CentralizationRiskDetector {
         for source_unit in loader.get_source_units() {
             source_unit.accept(self)?;
         }
+        for modifier_invocation in self.found_centralization_risks.clone() {
+            if let Some(node) = modifier_invocation {
+                if let ASTNode::ModifierInvocation(modifier_invocation) = node {
+                    self.found_instances.insert(
+                        loader.get_node_sort_key(&ASTNode::ModifierInvocation(
+                            modifier_invocation.clone(),
+                        )),
+                        modifier_invocation.src.clone(),
+                    );
+                }
+            }
+        }
+        for contract_definition in self.found_centralization_risks.clone() {
+            if let Some(node) = contract_definition {
+                if let ASTNode::ContractDefinition(contract_definition) = node {
+                    self.found_instances.insert(
+                        loader.get_node_sort_key(&ASTNode::ContractDefinition(
+                            contract_definition.clone(),
+                        )),
+                        contract_definition.src.clone(),
+                    );
+                }
+            }
+        }
 
-        Ok(!self.found_centralization_risks.is_empty())
+        Ok(!self.found_instances.is_empty())
     }
 
     fn severity(&self) -> IssueSeverity {
@@ -76,8 +103,8 @@ impl Detector for CentralizationRiskDetector {
         String::from("Contracts have owners with privileged rights to perform admin tasks and need to be trusted to not perform malicious updates or drain funds.")
     }
 
-    fn instances(&self) -> Vec<Option<ASTNode>> {
-        self.found_centralization_risks.clone()
+    fn instances(&self) -> BTreeMap<(String, usize), String> {
+        self.found_instances.clone()
     }
 }
 
