@@ -8,8 +8,8 @@ pub mod visitor;
 use eyre::Result;
 use std::error::Error;
 use std::fs::{remove_file, File};
-use std::io;
-use std::path::Path;
+use std::io::{self, Read};
+use std::path::{Path, PathBuf};
 
 use crate::context::loader::ContextLoader;
 use crate::detect::detector::{get_all_detectors, IssueSeverity};
@@ -69,4 +69,11 @@ fn get_markdown_writer(filename: &str) -> io::Result<File> {
         remove_file(filename)?; // If file exists, delete it
     }
     File::create(filename)
+}
+
+pub fn read_file_to_string(path: &PathBuf) -> Result<String> {
+    let mut file = File::open(path)?;
+    let mut content = String::new();
+    file.read_to_string(&mut content)?;
+    Ok(content)
 }

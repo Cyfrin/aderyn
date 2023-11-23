@@ -4,15 +4,11 @@ use aderyn::{
         foundry::{load_foundry, read_foundry_output_file},
         hardhat::load_hardhat,
     },
-    run,
+    read_file_to_string, run,
     visitor::ast_visitor::Node,
 };
 use clap::Parser;
-use std::{
-    fs::{read_dir, File},
-    io::{Read, Result},
-    path::PathBuf,
-};
+use std::{fs::read_dir, path::PathBuf};
 use tokei::{Config, LanguageType};
 
 #[derive(Parser, Debug)]
@@ -174,13 +170,6 @@ fn main() {
         eprintln!("{:?}", err);
         std::process::exit(1);
     });
-}
-
-fn read_file_to_string(path: &PathBuf) -> Result<String> {
-    let mut file = File::open(path)?;
-    let mut content = String::new();
-    file.read_to_string(&mut content)?;
-    Ok(content)
 }
 
 fn detect_framework(path: PathBuf) -> Option<Framework> {
