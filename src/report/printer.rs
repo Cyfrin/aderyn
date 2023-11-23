@@ -1,6 +1,6 @@
 use std::io::{Result, Write};
 
-use crate::{context::loader::ContextLoader};
+use crate::context::loader::ContextLoader;
 
 use super::reporter::{Issue, Report};
 
@@ -268,7 +268,7 @@ impl ReportPrinter for MarkdownReportPrinter {
             "## {}-{}: {}\n\n{}\n", // <a name> is the anchor for the issue title
             severity, number, issue.title, issue.description
         )?;
-        for ((contract_path, line_number), _) in &issue.instances {
+        for (contract_path, line_number) in issue.instances.keys() {
             writeln!(
                 writer,
                 "- Found in {}: Line: {}",
