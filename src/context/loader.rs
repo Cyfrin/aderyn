@@ -482,7 +482,11 @@ impl ContextLoader {
     pub fn get_node_sort_key(&self, node: &ASTNode) -> (String, usize) {
         let source_unit = self.get_source_unit_from_child_node(node).unwrap();
         let absolute_path = source_unit.absolute_path.as_ref().unwrap().clone();
-        let source_line = source_unit.source_line(node.src().unwrap()).unwrap();
+        let source_line = node
+            .src()
+            .map(|src| source_unit.source_line(src).unwrap_or(0)) // If `src` is `Some`, get the line number, else return 0
+            .unwrap_or(0); // If `src` is `None`, default to 0
+
         (absolute_path, source_line)
     }
 }
