@@ -183,6 +183,7 @@ impl Display for FunctionDefinition {
     }
 }
 
+#[derive(Debug, PartialEq)]
 pub struct FunctionDefinitionContext<'a> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,

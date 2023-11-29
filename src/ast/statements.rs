@@ -114,6 +114,7 @@ impl Display for Statement {
     }
 }
 
+#[derive(Debug, PartialEq)]
 pub struct StatementContext<'a, 'b> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,
@@ -177,6 +178,7 @@ impl Display for VariableDeclarationStatement {
     }
 }
 
+#[derive(Debug, PartialEq)]
 pub struct VariableDeclarationStatementContext<'a, 'b> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,
@@ -235,6 +237,7 @@ impl Display for BlockOrStatement {
     }
 }
 
+#[derive(Debug, PartialEq)]
 pub struct BlockOrStatementContext<'a, 'b> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,
@@ -266,6 +269,7 @@ impl Display for IfStatement {
     }
 }
 
+#[derive(Debug, PartialEq)]
 pub struct IfStatementContext<'a, 'b> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,
@@ -310,6 +314,7 @@ impl Display for ForStatement {
     }
 }
 
+#[derive(Debug, PartialEq)]
 pub struct ForStatementContext<'a, 'b> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,
@@ -334,6 +339,7 @@ impl Display for WhileStatement {
     }
 }
 
+#[derive(Debug, PartialEq)]
 pub struct WhileStatementContext<'a, 'b> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,
@@ -358,6 +364,7 @@ impl Display for DoWhileStatement {
     }
 }
 
+#[derive(Debug, PartialEq)]
 pub struct DoWhileStatementContext<'a, 'b> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,
@@ -379,6 +386,7 @@ impl Display for EmitStatement {
     }
 }
 
+#[derive(Debug, PartialEq)]
 pub struct EmitStatementContext<'a, 'b> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,
@@ -401,6 +409,7 @@ impl Display for TryStatement {
     }
 }
 
+#[derive(Debug, PartialEq)]
 pub struct TryStatementContext<'a, 'b> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,
@@ -422,6 +431,7 @@ impl Display for RevertStatement {
     }
 }
 
+#[derive(Debug, PartialEq)]
 pub struct RevertStatementContext<'a, 'b> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,
@@ -466,6 +476,7 @@ impl Display for Return {
     }
 }
 
+#[derive(Debug, PartialEq)]
 pub struct ReturnContext<'a, 'b> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,
@@ -488,6 +499,7 @@ pub struct InlineAssembly {
     pub id: NodeID,
 }
 
+#[derive(Debug, PartialEq)]
 pub struct InlineAssemblyContext<'a, 'b> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,

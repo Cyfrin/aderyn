@@ -28,6 +28,7 @@ impl Display for StructDefinition {
     }
 }
 
+#[derive(Debug, PartialEq)]
 pub struct StructDefinitionContext<'a> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,

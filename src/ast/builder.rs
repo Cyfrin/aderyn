@@ -143,10 +143,10 @@ impl AstBuilder {
         match input {
             solang_parser::pt::Import::Plain(file, loc) => {
                 ImportDirective {
-                    file: file.string.clone(),
+                    file: file.to_string(),
                     source_unit: -1, // TODO: use imported `source_unit.id`
                     scope,
-                    absolute_path: Some(file.string.clone()),
+                    absolute_path: Some(file.to_string()),
                     unit_alias: String::new(),
                     name_location: Some("-1:-1:-1".to_string()), // TODO
                     symbol_aliases: vec![],

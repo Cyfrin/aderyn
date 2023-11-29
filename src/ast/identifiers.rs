@@ -34,7 +34,7 @@ impl Display for Identifier {
         f.write_str(self.name.as_str())
     }
 }
-
+#[derive(Debug, PartialEq)]
 pub struct IdentifierContext<'a, 'b> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,

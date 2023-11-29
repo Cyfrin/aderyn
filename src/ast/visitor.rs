@@ -1,7 +1,7 @@
 use super::*;
 use std::{collections::HashSet, io};
 use yul::*;
-
+#[derive(Debug, PartialEq)]
 pub struct YulBlockContext<'a, 'b, 'c> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,
@@ -13,7 +13,7 @@ pub struct YulBlockContext<'a, 'b, 'c> {
     pub yul_blocks: &'c mut Vec<&'a YulBlock>,
     pub yul_block: &'a YulBlock,
 }
-
+#[derive(Debug, PartialEq)]
 pub struct YulStatementContext<'a, 'b, 'c> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,
@@ -25,7 +25,7 @@ pub struct YulStatementContext<'a, 'b, 'c> {
     pub yul_blocks: &'c mut Vec<&'a YulBlock>,
     pub yul_statement: &'a YulStatement,
 }
-
+#[derive(Debug, PartialEq)]
 pub struct YulIfContext<'a, 'b, 'c> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,
@@ -38,7 +38,7 @@ pub struct YulIfContext<'a, 'b, 'c> {
     pub yul_statement: &'a YulStatement,
     pub yul_if: &'a YulIf,
 }
-
+#[derive(Debug, PartialEq)]
 pub struct YulSwitchContext<'a, 'b, 'c> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,
@@ -51,7 +51,7 @@ pub struct YulSwitchContext<'a, 'b, 'c> {
     pub yul_statement: &'a YulStatement,
     pub yul_switch: &'a YulSwitch,
 }
-
+#[derive(Debug, PartialEq)]
 pub struct YulForLoopContext<'a, 'b, 'c> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,
@@ -64,7 +64,7 @@ pub struct YulForLoopContext<'a, 'b, 'c> {
     pub yul_statement: &'a YulStatement,
     pub yul_for_loop: &'a YulForLoop,
 }
-
+#[derive(Debug, PartialEq)]
 pub struct YulCaseContext<'a, 'b, 'c> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,
@@ -78,7 +78,7 @@ pub struct YulCaseContext<'a, 'b, 'c> {
     pub yul_switch: &'a YulSwitch,
     pub yul_case: &'a YulCase,
 }
-
+#[derive(Debug, PartialEq)]
 pub struct YulAssignmentContext<'a, 'b, 'c> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,
@@ -91,7 +91,7 @@ pub struct YulAssignmentContext<'a, 'b, 'c> {
     pub yul_statement: &'a YulStatement,
     pub yul_assignment: &'a YulAssignment,
 }
-
+#[derive(Debug, PartialEq)]
 pub struct YulVariableDeclarationContext<'a, 'b, 'c> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,
@@ -104,7 +104,7 @@ pub struct YulVariableDeclarationContext<'a, 'b, 'c> {
     pub yul_statement: &'a YulStatement,
     pub yul_variable_declaration: &'a YulVariableDeclaration,
 }
-
+#[derive(Debug, PartialEq)]
 pub struct YulExpressionStatementContext<'a, 'b, 'c> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,
@@ -117,7 +117,7 @@ pub struct YulExpressionStatementContext<'a, 'b, 'c> {
     pub yul_statement: &'a YulStatement,
     pub yul_expression_statement: &'a YulExpressionStatement,
 }
-
+#[derive(Debug, PartialEq)]
 pub struct YulFunctionDefinitionContext<'a, 'b, 'c> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,
@@ -130,7 +130,7 @@ pub struct YulFunctionDefinitionContext<'a, 'b, 'c> {
     pub yul_statement: &'a YulStatement,
     pub yul_function_definition: &'a YulFunctionDefinition,
 }
-
+#[derive(Debug, PartialEq)]
 pub struct YulTypedNameContext<'a, 'b, 'c> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,
@@ -143,7 +143,7 @@ pub struct YulTypedNameContext<'a, 'b, 'c> {
     pub yul_statement: Option<&'a YulStatement>,
     pub yul_typed_name: &'a YulTypedName,
 }
-
+#[derive(Debug, PartialEq)]
 pub struct YulExpressionContext<'a, 'b, 'c> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,
@@ -156,7 +156,7 @@ pub struct YulExpressionContext<'a, 'b, 'c> {
     pub yul_statement: Option<&'a YulStatement>,
     pub yul_expression: &'a YulExpression,
 }
-
+#[derive(Debug, PartialEq)]
 pub struct YulLiteralContext<'a, 'b, 'c> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,
@@ -170,7 +170,7 @@ pub struct YulLiteralContext<'a, 'b, 'c> {
     pub yul_expression: &'a YulExpression,
     pub yul_literal: &'a YulLiteral,
 }
-
+#[derive(Debug, PartialEq)]
 pub struct YulIdentifierContext<'a, 'b, 'c> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,
@@ -184,7 +184,7 @@ pub struct YulIdentifierContext<'a, 'b, 'c> {
     pub yul_expression: Option<&'a YulExpression>,
     pub yul_identifier: &'a YulIdentifier,
 }
-
+#[derive(Debug, PartialEq)]
 pub struct YulFunctionCallContext<'a, 'b, 'c> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,

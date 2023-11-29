@@ -51,7 +51,7 @@ impl<'de> Deserialize<'de> for SourceUnitNode {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct SourceUnit {
     pub license: Option<String>,
@@ -278,6 +278,7 @@ impl SourceUnit {
     }
 }
 
+#[derive(Debug, PartialEq)]
 pub struct SourceUnitContext<'a> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,

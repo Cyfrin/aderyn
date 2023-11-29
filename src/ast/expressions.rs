@@ -257,6 +257,7 @@ impl Display for Expression {
     }
 }
 
+#[derive(Debug, PartialEq)]
 pub struct ExpressionContext<'a, 'b> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,
@@ -298,7 +299,7 @@ impl Display for UnaryOperation {
         ))
     }
 }
-
+#[derive(Debug, PartialEq)]
 pub struct UnaryOperationContext<'a, 'b> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,
@@ -342,7 +343,7 @@ impl Display for BinaryOperation {
         ))
     }
 }
-
+#[derive(Debug, PartialEq)]
 pub struct BinaryOperationContext<'a, 'b> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,
@@ -385,7 +386,7 @@ impl Display for Conditional {
         ))
     }
 }
-
+#[derive(Debug, PartialEq)]
 pub struct ConditionalContext<'a, 'b> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,
@@ -426,7 +427,7 @@ impl Display for Assignment {
         ))
     }
 }
-
+#[derive(Debug, PartialEq)]
 pub struct AssignmentContext<'a, 'b> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,
@@ -491,7 +492,7 @@ impl Display for FunctionCall {
         f.write_str(")")
     }
 }
-
+#[derive(Debug, PartialEq)]
 pub struct FunctionCallContext<'a, 'b> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,
@@ -576,7 +577,7 @@ impl Display for FunctionCallOptions {
         Ok(())
     }
 }
-
+#[derive(Debug, PartialEq)]
 pub struct FunctionCallOptionsContext<'a, 'b> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,
@@ -624,7 +625,7 @@ impl Display for IndexAccess {
         )
     }
 }
-
+#[derive(Debug, PartialEq)]
 pub struct IndexAccessContext<'a, 'b> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,
@@ -681,7 +682,7 @@ impl Display for IndexRangeAccess {
         f.write_str("]")
     }
 }
-
+#[derive(Debug, PartialEq)]
 pub struct IndexRangeAccessContext<'a, 'b> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,
@@ -719,7 +720,7 @@ impl Display for MemberAccess {
         f.write_fmt(format_args!("{}.{}", self.expression, self.member_name))
     }
 }
-
+#[derive(Debug, PartialEq)]
 pub struct MemberAccessContext<'a, 'b> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,
@@ -749,7 +750,7 @@ impl Display for ElementaryTypeNameExpression {
         f.write_fmt(format_args!("{}", self.type_name))
     }
 }
-
+#[derive(Debug, PartialEq)]
 pub struct ElementaryTypeNameExpressionContext<'a, 'b> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,
@@ -808,7 +809,7 @@ impl Display for TupleExpression {
         f.write_str(")")
     }
 }
-
+#[derive(Debug, PartialEq)]
 pub struct TupleExpressionContext<'a, 'b> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,
@@ -838,7 +839,7 @@ impl Display for NewExpression {
         f.write_fmt(format_args!("new {}", self.type_name))
     }
 }
-
+#[derive(Debug, PartialEq)]
 pub struct NewExpressionContext<'a, 'b> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,

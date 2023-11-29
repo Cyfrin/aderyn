@@ -87,7 +87,7 @@ pub mod detector_test_helpers {
 
     use crate::{
         context::loader::ContextLoader, framework::foundry::read_foundry_output_file,
-        read_file_to_string, visitor::ast_visitor::Node,
+        read_file_to_string,
     };
 
     pub fn load_contract(filepath: &str) -> ContextLoader {

@@ -24,6 +24,7 @@ pub struct ImportDirective {
     pub id: NodeID,
 }
 
+#[derive(Debug, PartialEq)]
 pub struct ImportDirectiveContext<'a> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,

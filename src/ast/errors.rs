@@ -20,6 +20,7 @@ impl Display for ErrorDefinition {
     }
 }
 
+#[derive(Debug, PartialEq)]
 pub struct ErrorDefinitionContext<'a> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,

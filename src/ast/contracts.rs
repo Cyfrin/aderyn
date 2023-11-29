@@ -489,6 +489,7 @@ impl Display for ContractDefinition {
     }
 }
 
+#[derive(Debug, PartialEq)]
 pub struct ContractDefinitionContext<'a> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,

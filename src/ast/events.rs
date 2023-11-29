@@ -21,6 +21,7 @@ impl Display for EventDefinition {
     }
 }
 
+#[derive(Debug, PartialEq)]
 pub struct EventDefinitionContext<'a> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,

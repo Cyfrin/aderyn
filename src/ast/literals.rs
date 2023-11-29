@@ -53,7 +53,7 @@ impl Display for Literal {
         Ok(())
     }
 }
-
+#[derive(Debug, PartialEq)]
 pub struct LiteralContext<'a, 'b> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,

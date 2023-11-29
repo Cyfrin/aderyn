@@ -3,7 +3,6 @@ pub mod context;
 pub mod detect;
 pub mod framework;
 pub mod report;
-pub mod visitor;
 
 use eyre::Result;
 use std::error::Error;

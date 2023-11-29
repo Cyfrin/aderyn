@@ -22,6 +22,7 @@ impl Display for Block {
     }
 }
 
+#[derive(Debug, PartialEq)]
 pub struct BlockContext<'a, 'b> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,

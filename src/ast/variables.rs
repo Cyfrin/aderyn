@@ -119,6 +119,7 @@ impl Display for VariableDeclaration {
     }
 }
 
+#[derive(Debug, PartialEq)]
 pub struct VariableDeclarationContext<'a, 'b> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,

@@ -41,6 +41,7 @@ impl Display for EnumDefinition {
     }
 }
 
+#[derive(Debug, PartialEq)]
 pub struct EnumDefinitionContext<'a> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,

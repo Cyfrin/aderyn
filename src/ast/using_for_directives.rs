@@ -25,6 +25,7 @@ impl Display for UsingForDirective {
     }
 }
 
+#[derive(Debug, PartialEq)]
 pub struct UsingForDirectiveContext<'a> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,

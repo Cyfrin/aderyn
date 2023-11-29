@@ -45,6 +45,7 @@ impl Display for ModifierDefinition {
     }
 }
 
+#[derive(Debug, PartialEq)]
 pub struct ModifierDefinitionContext<'a> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,
@@ -109,6 +110,7 @@ impl Display for ModifierInvocation {
     }
 }
 
+#[derive(Debug, PartialEq)]
 pub struct ModifierInvocationContext<'a> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,

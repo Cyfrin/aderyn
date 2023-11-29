@@ -23,6 +23,7 @@ impl Display for UserDefinedValueTypeDefinition {
     }
 }
 
+#[derive(Debug, PartialEq)]
 pub struct UserDefinedValueTypeDefinitionContext<'a> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,

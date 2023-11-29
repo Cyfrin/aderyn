@@ -10,6 +10,7 @@ pub struct PragmaDirective {
     pub id: NodeID,
 }
 
+#[derive(Debug, PartialEq)]
 pub struct PragmaDirectiveContext<'a> {
     pub source_units: &'a [SourceUnit],
     pub current_source_unit: &'a SourceUnit,
