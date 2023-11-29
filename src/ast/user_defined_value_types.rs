@@ -1,11 +1,9 @@
 use super::*;
-use crate::visitor::ast_visitor::ASTConstVisitor;
-use crate::visitor::ast_visitor::Node;
-use eyre::Result;
+use super::{node::*, *};
 use serde::{Deserialize, Serialize};
 use std::fmt::Display;
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct UserDefinedValueTypeDefinition {
     pub underlying_type: TypeName,
@@ -25,12 +23,9 @@ impl Display for UserDefinedValueTypeDefinition {
     }
 }
 
-impl Node for UserDefinedValueTypeDefinition {
-    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        if visitor.visit_user_defined_value_type_definition(self)? {
-            self.underlying_type.accept(visitor)?;
-        }
-        visitor.end_visit_user_defined_value_type_definition(self)?;
-        Ok(())
-    }
+pub struct UserDefinedValueTypeDefinitionContext<'a> {
+    pub source_units: &'a [SourceUnit],
+    pub current_source_unit: &'a SourceUnit,
+    pub contract_definition: Option<&'a ContractDefinition>,
+    pub user_defined_value_type_definition: &'a UserDefinedValueTypeDefinition,
 }

@@ -1,9 +1,8 @@
 use super::*;
-use crate::visitor::ast_visitor::*;
-use eyre::Result;
+use super::{node::*, *};
 use serde::{Deserialize, Serialize};
 
-#[derive(Default, Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct PragmaDirective {
     pub literals: Vec<String>,
@@ -11,9 +10,8 @@ pub struct PragmaDirective {
     pub id: NodeID,
 }
 
-impl Node for PragmaDirective {
-    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_pragma_directive(self)?;
-        visitor.end_visit_pragma_directive(self)
-    }
+pub struct PragmaDirectiveContext<'a> {
+    pub source_units: &'a [SourceUnit],
+    pub current_source_unit: &'a SourceUnit,
+    pub pragma_directive: &'a PragmaDirective,
 }

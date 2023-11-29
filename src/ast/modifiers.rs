@@ -1,10 +1,9 @@
 use super::*;
-use crate::visitor::ast_visitor::*;
-use eyre::Result;
+use super::{node::*, *};
 use serde::{Deserialize, Serialize};
 use std::fmt::Display;
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ModifierDefinition {
     pub body: Block,
@@ -13,22 +12,11 @@ pub struct ModifierDefinition {
     pub name: String,
     pub name_location: Option<String>,
     pub parameters: ParameterList,
-    pub r#virtual: Option<bool>,
+    #[serde(rename = "virtual")]
+    pub is_virtual: Option<bool>,
     pub visibility: Visibility,
     pub src: String,
     pub id: NodeID,
-}
-
-impl Node for ModifierDefinition {
-    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        if visitor.visit_modifier_definition(self)? {
-            // TODO: should we implement a string based visitor?
-            // self.name.accept(visitor)?;
-            self.body.accept(visitor)?;
-            self.parameters.accept(visitor)?;
-        }
-        visitor.end_visit_modifier_definition(self)
-    }
 }
 
 impl Display for ModifierDefinition {
@@ -45,15 +33,40 @@ impl Display for ModifierDefinition {
             f.write_fmt(format_args!("{} {}", self.parameters, self.visibility))?;
         }
 
-        if let Some(true) = self.r#virtual {
+        if let Some(true) = self.is_virtual {
             f.write_fmt(format_args!(" virtual"))?;
         }
 
         if let Some(overrides) = self.overrides.as_ref() {
-            f.write_fmt(format_args!(" {overrides}"))?;
+            f.write_fmt(format_args!(" {}", overrides))?;
         }
 
         f.write_fmt(format_args!(" {}", self.body))
+    }
+}
+
+pub struct ModifierDefinitionContext<'a> {
+    pub source_units: &'a [SourceUnit],
+    pub current_source_unit: &'a SourceUnit,
+    pub contract_definition: &'a ContractDefinition,
+    pub definition_node: &'a ContractDefinitionNode,
+    pub modifier_definition: &'a ModifierDefinition,
+}
+
+impl<'a> ModifierDefinitionContext<'a> {
+    pub fn create_block_context<'b>(
+        &self,
+        block: &'a Block,
+        blocks: &'b mut Vec<&'a Block>,
+    ) -> BlockContext<'a, 'b> {
+        BlockContext {
+            source_units: self.source_units,
+            current_source_unit: self.current_source_unit,
+            contract_definition: self.contract_definition,
+            definition_node: self.definition_node,
+            blocks,
+            block,
+        }
     }
 }
 
@@ -64,7 +77,7 @@ pub enum ModifierInvocationKind {
     BaseConstructorSpecifier,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ModifierInvocation {
     pub arguments: Option<Vec<Expression>>,
@@ -72,18 +85,6 @@ pub struct ModifierInvocation {
     pub src: String,
     pub id: NodeID,
     pub kind: Option<ModifierInvocationKind>,
-}
-
-impl Node for ModifierInvocation {
-    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        if visitor.visit_modifier_invocation(self)? {
-            self.modifier_name.accept(visitor)?;
-            if self.arguments.is_some() {
-                list_accept(self.arguments.as_ref().unwrap(), visitor)?;
-            }
-        }
-        visitor.end_visit_modifier_invocation(self)
-    }
 }
 
 impl Display for ModifierInvocation {
@@ -98,7 +99,7 @@ impl Display for ModifierInvocation {
                     f.write_str(", ")?;
                 }
 
-                f.write_fmt(format_args!("{argument}"))?;
+                f.write_fmt(format_args!("{}", argument))?;
             }
 
             f.write_str(")")?;
@@ -106,4 +107,12 @@ impl Display for ModifierInvocation {
 
         Ok(())
     }
+}
+
+pub struct ModifierInvocationContext<'a> {
+    pub source_units: &'a [SourceUnit],
+    pub current_source_unit: &'a SourceUnit,
+    pub contract_definition: &'a ContractDefinition,
+    pub definition_node: &'a ContractDefinitionNode,
+    pub modifier_invocation: &'a ModifierInvocation,
 }

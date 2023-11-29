@@ -1,56 +1,84 @@
+use super::yul::*;
 use super::*;
-use crate::visitor::ast_visitor::*;
-use eyre::Result;
+use super::{node::*, *};
 use serde::{Deserialize, Serialize};
 use std::fmt::Display;
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[derive(Clone, Debug, Eq, Serialize, PartialEq)]
 #[serde(untagged)]
 pub enum Statement {
     VariableDeclarationStatement(VariableDeclarationStatement),
     IfStatement(IfStatement),
     ForStatement(ForStatement),
     WhileStatement(WhileStatement),
+    DoWhileStatement(DoWhileStatement),
     EmitStatement(EmitStatement),
     TryStatement(TryStatement),
     UncheckedBlock(Block),
     Return(Return),
     RevertStatement(RevertStatement),
     ExpressionStatement(ExpressionStatement),
+    Block(Block),
     InlineAssembly(InlineAssembly),
-
-    #[serde(rename_all = "camelCase")]
-    UnhandledStatement {
-        node_type: NodeType,
-        src: Option<String>,
-        id: Option<NodeID>,
-    },
+    Continue { src: String, id: NodeID },
+    Break { src: String, id: NodeID },
+    PlaceholderStatement { src: String, id: NodeID },
 }
 
-impl Node for Statement {
-    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        match self {
-            Statement::VariableDeclarationStatement(variable_declaration_statement) => {
-                variable_declaration_statement.accept(visitor)
-            }
-            Statement::IfStatement(if_statement) => if_statement.accept(visitor),
-            Statement::ForStatement(for_statement) => for_statement.accept(visitor),
-            Statement::WhileStatement(while_statement) => while_statement.accept(visitor),
-            Statement::EmitStatement(emit_statement) => emit_statement.accept(visitor),
-            Statement::TryStatement(try_statement) => try_statement.accept(visitor),
-            Statement::UncheckedBlock(unchecked_statement) => unchecked_statement.accept(visitor),
-            Statement::Return(return_statement) => return_statement.accept(visitor),
-            Statement::RevertStatement(revert_statement) => revert_statement.accept(visitor),
-            Statement::ExpressionStatement(expression_statement) => {
-                expression_statement.accept(visitor)
-            }
-            Statement::InlineAssembly(inline_assembly) => inline_assembly.accept(visitor),
-            Statement::UnhandledStatement { .. } => {
-                // TODO: This may cause referencing issues later
-                // Known unhandled statements:
-                // - break
-                Ok(())
-            }
+impl<'de> Deserialize<'de> for Statement {
+    fn deserialize<D: serde::Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+        let json = serde_json::Value::deserialize(deserializer)?;
+        let node_type = json.get("nodeType").unwrap().as_str().unwrap();
+
+        match node_type {
+            "VariableDeclarationStatement" => Ok(Statement::VariableDeclarationStatement(
+                serde_json::from_value(json).unwrap(),
+            )),
+            "IfStatement" => Ok(Statement::IfStatement(
+                serde_json::from_value(json).unwrap(),
+            )),
+            "ForStatement" => Ok(Statement::ForStatement(
+                serde_json::from_value(json).unwrap(),
+            )),
+            "WhileStatement" => Ok(Statement::WhileStatement(
+                serde_json::from_value(json).unwrap(),
+            )),
+            "DoWhileStatement" => Ok(Statement::DoWhileStatement(
+                serde_json::from_value(json).unwrap(),
+            )),
+            "EmitStatement" => Ok(Statement::EmitStatement(
+                serde_json::from_value(json).unwrap(),
+            )),
+            "TryStatement" => Ok(Statement::TryStatement(
+                serde_json::from_value(json).unwrap(),
+            )),
+            "UncheckedBlock" => Ok(Statement::UncheckedBlock(
+                serde_json::from_value(json).unwrap(),
+            )),
+            "Return" => Ok(Statement::Return(serde_json::from_value(json).unwrap())),
+            "RevertStatement" => Ok(Statement::RevertStatement(
+                serde_json::from_value(json).unwrap(),
+            )),
+            "ExpressionStatement" => Ok(Statement::ExpressionStatement(
+                serde_json::from_value(json).unwrap(),
+            )),
+            "Block" => Ok(Statement::Block(serde_json::from_value(json).unwrap())),
+            "InlineAssembly" => Ok(Statement::InlineAssembly(
+                serde_json::from_value(json).unwrap(),
+            )),
+            "Continue" => Ok(Statement::Continue {
+                src: json.get("src").unwrap().as_str().unwrap().to_string(),
+                id: json.get("id").unwrap().as_i64().unwrap(),
+            }),
+            "Break" => Ok(Statement::Continue {
+                src: json.get("src").unwrap().as_str().unwrap().to_string(),
+                id: json.get("id").unwrap().as_i64().unwrap(),
+            }),
+            "PlaceholderStatement" => Ok(Statement::Continue {
+                src: json.get("src").unwrap().as_str().unwrap().to_string(),
+                id: json.get("id").unwrap().as_i64().unwrap(),
+            }),
+            _ => panic!("Invalid statement node type: {node_type:?}"),
         }
     }
 }
@@ -68,38 +96,37 @@ impl Display for Statement {
             Statement::IfStatement(stmt) => stmt.fmt(f),
             Statement::ForStatement(stmt) => stmt.fmt(f),
             Statement::WhileStatement(stmt) => stmt.fmt(f),
+            Statement::DoWhileStatement(stmt) => stmt.fmt(f),
             Statement::EmitStatement(stmt) => stmt.fmt(f),
             Statement::TryStatement(stmt) => stmt.fmt(f),
             Statement::RevertStatement(stmt) => stmt.fmt(f),
             Statement::UncheckedBlock(stmt) => stmt.fmt(f),
             Statement::Return(stmt) => stmt.fmt(f),
             Statement::ExpressionStatement(stmt) => stmt.fmt(f),
+            Statement::Block(stmt) => stmt.fmt(f),
             Statement::InlineAssembly(_) => {
-                f.write_str("assembly { /* WARNING: not implemented */ }")
+                write!(f, "assembly {{ /* WARNING: not implemented */ }}")
             }
-            Statement::UnhandledStatement { node_type, .. } => match node_type {
-                NodeType::PlaceholderStatement => f.write_str("_"),
-                NodeType::Break => f.write_str("break"),
-                NodeType::Continue => f.write_str("continue"),
-                _ => unimplemented!("{:?}", node_type),
-            },
+            Statement::Continue { .. } => write!(f, "continue"),
+            Statement::Break { .. } => write!(f, "break"),
+            Statement::PlaceholderStatement { .. } => write!(f, "_"),
         }
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+pub struct StatementContext<'a, 'b> {
+    pub source_units: &'a [SourceUnit],
+    pub current_source_unit: &'a SourceUnit,
+    pub contract_definition: &'a ContractDefinition,
+    pub definition_node: &'a ContractDefinitionNode,
+    pub blocks: &'b mut Vec<&'a Block>,
+    pub statement: &'a Statement,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ExpressionStatement {
     pub expression: Expression,
-}
-
-impl Node for ExpressionStatement {
-    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        if visitor.visit_expression_statement(self)? {
-            self.expression.accept(visitor)?;
-        }
-        visitor.end_visit_expression_statement(self)
-    }
 }
 
 impl Display for ExpressionStatement {
@@ -108,7 +135,7 @@ impl Display for ExpressionStatement {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct VariableDeclarationStatement {
     pub assignments: Vec<Option<NodeID>>,
@@ -118,27 +145,11 @@ pub struct VariableDeclarationStatement {
     pub id: NodeID,
 }
 
-impl Node for VariableDeclarationStatement {
-    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        if visitor.visit_variable_declaration_statement(self)? {
-            for declaration in &self.declarations {
-                if declaration.is_some() {
-                    declaration.as_ref().unwrap().accept(visitor)?;
-                }
-            }
-            if self.initial_value.is_some() {
-                self.initial_value.as_ref().unwrap().accept(visitor)?;
-            }
-        }
-        visitor.end_visit_variable_declaration_statement(self)
-    }
-}
-
 impl Display for VariableDeclarationStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         if self.declarations.len() == 1 {
             if let Some(declaration) = self.declarations[0].as_ref() {
-                f.write_fmt(format_args!("{declaration}"))?;
+                f.write_fmt(format_args!("{}", declaration))?;
             } else {
                 f.write_str("()")?;
             }
@@ -151,7 +162,7 @@ impl Display for VariableDeclarationStatement {
                 }
 
                 if let Some(declaration) = declaration {
-                    f.write_fmt(format_args!("{declaration}"))?;
+                    f.write_fmt(format_args!("{}", declaration))?;
                 }
             }
 
@@ -159,27 +170,27 @@ impl Display for VariableDeclarationStatement {
         }
 
         if let Some(initial_value) = self.initial_value.as_ref() {
-            f.write_fmt(format_args!(" = {initial_value}"))?;
+            f.write_fmt(format_args!(" = {}", initial_value))?;
         }
 
         Ok(())
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+pub struct VariableDeclarationStatementContext<'a, 'b> {
+    pub source_units: &'a [SourceUnit],
+    pub current_source_unit: &'a SourceUnit,
+    pub contract_definition: &'a ContractDefinition,
+    pub definition_node: &'a ContractDefinitionNode,
+    pub blocks: &'b mut Vec<&'a Block>,
+    pub variable_declaration_statement: &'a VariableDeclarationStatement,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
 #[serde(untagged)]
 pub enum BlockOrStatement {
     Block(Box<Block>),
     Statement(Box<Statement>),
-}
-
-impl Node for BlockOrStatement {
-    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        match self {
-            BlockOrStatement::Block(block) => block.accept(visitor),
-            BlockOrStatement::Statement(statement) => statement.accept(visitor),
-        }
-    }
 }
 
 impl BlockOrStatement {
@@ -224,7 +235,16 @@ impl Display for BlockOrStatement {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+pub struct BlockOrStatementContext<'a, 'b> {
+    pub source_units: &'a [SourceUnit],
+    pub current_source_unit: &'a SourceUnit,
+    pub contract_definition: &'a ContractDefinition,
+    pub definition_node: &'a ContractDefinitionNode,
+    pub blocks: &'b mut Vec<&'a Block>,
+    pub block_or_statement: &'a BlockOrStatement,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct IfStatement {
     pub condition: Expression,
@@ -234,32 +254,28 @@ pub struct IfStatement {
     pub id: NodeID,
 }
 
-impl Node for IfStatement {
-    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        if visitor.visit_if_statement(self)? {
-            self.condition.accept(visitor)?;
-            self.true_body.accept(visitor)?;
-            if self.false_body.is_some() {
-                self.false_body.as_ref().unwrap().accept(visitor)?;
-            }
-        }
-        visitor.end_visit_if_statement(self)
-    }
-}
-
 impl Display for IfStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.write_fmt(format_args!("if ({}) {}", self.condition, self.true_body))?;
 
         if let Some(false_body) = self.false_body.as_ref() {
-            f.write_fmt(format_args!("\nelse {false_body}"))?;
+            f.write_fmt(format_args!("\nelse {}", false_body))?;
         }
 
         Ok(())
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+pub struct IfStatementContext<'a, 'b> {
+    pub source_units: &'a [SourceUnit],
+    pub current_source_unit: &'a SourceUnit,
+    pub contract_definition: &'a ContractDefinition,
+    pub definition_node: &'a ContractDefinitionNode,
+    pub blocks: &'b mut Vec<&'a Block>,
+    pub if_statement: &'a IfStatement,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ForStatement {
     pub initialization_expression: Option<Box<Statement>>,
@@ -270,52 +286,40 @@ pub struct ForStatement {
     pub id: NodeID,
 }
 
-impl Node for ForStatement {
-    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        if visitor.visit_for_statement(self)? {
-            if self.initialization_expression.is_some() {
-                self.initialization_expression
-                    .as_ref()
-                    .unwrap()
-                    .accept(visitor)?;
-            }
-            if self.condition.is_some() {
-                self.condition.as_ref().unwrap().accept(visitor)?;
-            }
-            if self.loop_expression.is_some() {
-                self.loop_expression.as_ref().unwrap().accept(visitor)?;
-            }
-            self.body.accept(visitor)?;
-        }
-        visitor.end_visit_for_statement(self)
-    }
-}
-
 impl Display for ForStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.write_str("for (")?;
 
         if let Some(initialization_expression) = self.initialization_expression.as_ref() {
-            f.write_fmt(format_args!("{initialization_expression}"))?;
+            f.write_fmt(format_args!("{}", initialization_expression))?;
         }
 
         f.write_str("; ")?;
 
         if let Some(condition) = self.condition.as_ref() {
-            f.write_fmt(format_args!("{condition}"))?;
+            f.write_fmt(format_args!("{}", condition))?;
         }
 
         f.write_str("; ")?;
 
         if let Some(loop_expression) = self.loop_expression.as_ref() {
-            f.write_fmt(format_args!("{loop_expression}"))?;
+            f.write_fmt(format_args!("{}", loop_expression))?;
         }
 
         f.write_fmt(format_args!(") {}", self.body))
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+pub struct ForStatementContext<'a, 'b> {
+    pub source_units: &'a [SourceUnit],
+    pub current_source_unit: &'a SourceUnit,
+    pub contract_definition: &'a ContractDefinition,
+    pub definition_node: &'a ContractDefinitionNode,
+    pub blocks: &'b mut Vec<&'a Block>,
+    pub for_statement: &'a ForStatement,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct WhileStatement {
     pub condition: Expression,
@@ -324,35 +328,49 @@ pub struct WhileStatement {
     pub id: NodeID,
 }
 
-impl Node for WhileStatement {
-    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        if visitor.visit_while_statement(self)? {
-            self.condition.accept(visitor)?;
-            self.body.accept(visitor)?;
-        }
-        visitor.end_visit_while_statement(self)
-    }
-}
-
 impl Display for WhileStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.write_fmt(format_args!("while ({}) {}", self.condition, self.body))
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+pub struct WhileStatementContext<'a, 'b> {
+    pub source_units: &'a [SourceUnit],
+    pub current_source_unit: &'a SourceUnit,
+    pub contract_definition: &'a ContractDefinition,
+    pub definition_node: &'a ContractDefinitionNode,
+    pub blocks: &'b mut Vec<&'a Block>,
+    pub while_statement: &'a WhileStatement,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct DoWhileStatement {
+    pub body: BlockOrStatement,
+    pub condition: Expression,
+    pub src: String,
+    pub id: NodeID,
+}
+
+impl Display for DoWhileStatement {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.write_fmt(format_args!("do {} while ({})", self.body, self.condition))
+    }
+}
+
+pub struct DoWhileStatementContext<'a, 'b> {
+    pub source_units: &'a [SourceUnit],
+    pub current_source_unit: &'a SourceUnit,
+    pub contract_definition: &'a ContractDefinition,
+    pub definition_node: &'a ContractDefinitionNode,
+    pub blocks: &'b mut Vec<&'a Block>,
+    pub do_while_statement: &'a DoWhileStatement,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct EmitStatement {
     pub event_call: Expression,
-}
-
-impl Node for EmitStatement {
-    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        if visitor.visit_emit_statement(self)? {
-            self.event_call.accept(visitor)?;
-        }
-        visitor.end_visit_emit_statement(self)
-    }
 }
 
 impl Display for EmitStatement {
@@ -361,21 +379,20 @@ impl Display for EmitStatement {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+pub struct EmitStatementContext<'a, 'b> {
+    pub source_units: &'a [SourceUnit],
+    pub current_source_unit: &'a SourceUnit,
+    pub contract_definition: &'a ContractDefinition,
+    pub definition_node: &'a ContractDefinitionNode,
+    pub blocks: &'b mut Vec<&'a Block>,
+    pub emit_statement: &'a EmitStatement,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct TryStatement {
     pub clauses: Vec<TryCatchClause>,
     pub external_call: FunctionCall,
-}
-
-impl Node for TryStatement {
-    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        if visitor.visit_try_statement(self)? {
-            self.external_call.accept(visitor)?;
-            list_accept(&self.clauses, visitor)?;
-        }
-        visitor.end_visit_try_statement(self)
-    }
 }
 
 impl Display for TryStatement {
@@ -384,19 +401,19 @@ impl Display for TryStatement {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+pub struct TryStatementContext<'a, 'b> {
+    pub source_units: &'a [SourceUnit],
+    pub current_source_unit: &'a SourceUnit,
+    pub contract_definition: &'a ContractDefinition,
+    pub definition_node: &'a ContractDefinitionNode,
+    pub blocks: &'b mut Vec<&'a Block>,
+    pub try_statement: &'a TryStatement,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct RevertStatement {
     pub error_call: FunctionCall,
-}
-
-impl Node for RevertStatement {
-    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        if visitor.visit_revert_statement(self)? {
-            self.error_call.accept(visitor)?;
-        }
-        visitor.end_visit_revert_statement(self)
-    }
 }
 
 impl Display for RevertStatement {
@@ -405,24 +422,21 @@ impl Display for RevertStatement {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+pub struct RevertStatementContext<'a, 'b> {
+    pub source_units: &'a [SourceUnit],
+    pub current_source_unit: &'a SourceUnit,
+    pub contract_definition: &'a ContractDefinition,
+    pub definition_node: &'a ContractDefinitionNode,
+    pub blocks: &'b mut Vec<&'a Block>,
+    pub revert_statement: &'a RevertStatement,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct TryCatchClause {
     pub block: Block,
     pub error_name: Option<String>,
     pub parameters: Option<ParameterList>,
-}
-
-impl Node for TryCatchClause {
-    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        if visitor.visit_try_catch_clause(self)? {
-            if self.parameters.is_some() {
-                self.parameters.as_ref().unwrap().accept(visitor)?;
-            }
-            self.block.accept(visitor)?;
-        }
-        visitor.end_visit_try_catch_clause(self)
-    }
 }
 
 impl Display for TryCatchClause {
@@ -431,7 +445,7 @@ impl Display for TryCatchClause {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Return {
     pub function_return_parameters: NodeID,
@@ -440,44 +454,46 @@ pub struct Return {
     pub id: NodeID,
 }
 
-impl Node for Return {
-    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        if visitor.visit_return(self)? && self.expression.is_some() {
-            self.expression.as_ref().unwrap().accept(visitor)?;
-        }
-        visitor.end_visit_return(self)
-    }
-}
-
 impl Display for Return {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.write_str("return")?;
 
         if let Some(expression) = self.expression.as_ref() {
-            f.write_fmt(format_args!(" {expression}"))?;
+            f.write_fmt(format_args!(" {}", expression))?;
         }
 
         Ok(())
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+pub struct ReturnContext<'a, 'b> {
+    pub source_units: &'a [SourceUnit],
+    pub current_source_unit: &'a SourceUnit,
+    pub contract_definition: &'a ContractDefinition,
+    pub definition_node: &'a ContractDefinitionNode,
+    pub blocks: &'b mut Vec<&'a Block>,
+    pub statement: Option<&'a Statement>,
+    pub return_statement: &'a Return,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct InlineAssembly {
-    // FIXME
     #[serde(rename = "AST")]
-    pub ast: Option<()>,
+    pub ast: Option<YulBlock>,
     pub evm_version: Option<String>,
-    // FIXME
-    pub external_references: Vec<()>,
+    pub external_references: Vec<ExternalReference>,
     pub operations: Option<String>,
     pub src: String,
     pub id: NodeID,
 }
 
-impl Node for InlineAssembly {
-    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_inline_assembly(self)?;
-        visitor.end_visit_inline_assembly(self)
-    }
+pub struct InlineAssemblyContext<'a, 'b> {
+    pub source_units: &'a [SourceUnit],
+    pub current_source_unit: &'a SourceUnit,
+    pub contract_definition: &'a ContractDefinition,
+    pub definition_node: &'a ContractDefinitionNode,
+    pub blocks: &'b mut Vec<&'a Block>,
+    pub statement: &'a Statement,
+    pub inline_assembly: &'a InlineAssembly,
 }

@@ -1,11 +1,9 @@
 use super::*;
-use crate::visitor::ast_visitor::*;
-use eyre::eyre;
-use eyre::Result;
+use super::{node::*, *};
 use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Write};
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[derive(Clone, Debug, Eq, Serialize, PartialEq)]
 #[serde(untagged)]
 pub enum Expression {
     Literal(Literal),
@@ -22,42 +20,55 @@ pub enum Expression {
     ElementaryTypeNameExpression(ElementaryTypeNameExpression),
     TupleExpression(TupleExpression),
     NewExpression(NewExpression),
-
-    #[serde(rename_all = "camelCase")]
-    UnhandledExpression {
-        node_type: NodeType,
-        src: Option<String>,
-        id: Option<NodeID>,
-    },
 }
 
-impl Node for Expression {
-    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        match self {
-            Expression::Literal(literal) => literal.accept(visitor),
-            Expression::Identifier(identifier) => identifier.accept(visitor),
-            Expression::UnaryOperation(unary_operation) => unary_operation.accept(visitor),
-            Expression::BinaryOperation(binary_operation) => binary_operation.accept(visitor),
-            Expression::Conditional(conditional) => conditional.accept(visitor),
-            Expression::Assignment(assignment) => assignment.accept(visitor),
-            Expression::FunctionCall(function_call) => function_call.accept(visitor),
-            Expression::FunctionCallOptions(function_call_options) => {
-                function_call_options.accept(visitor)
-            }
-            Expression::IndexAccess(index_access) => index_access.accept(visitor),
-            Expression::IndexRangeAccess(index_range_access) => index_range_access.accept(visitor),
-            Expression::MemberAccess(member_access) => member_access.accept(visitor),
-            Expression::ElementaryTypeNameExpression(elementary_type_name_expression) => {
-                elementary_type_name_expression.accept(visitor)
-            }
-            Expression::TupleExpression(tuple_expression) => tuple_expression.accept(visitor),
-            Expression::NewExpression(new_expression) => new_expression.accept(visitor),
-            Expression::UnhandledExpression { .. } => {
-                // TODO: this may cause reference errors later.
-                // Known unhandled expressions:
-                // - Foreign identifiers
-                Ok(())
-            }
+impl<'de> Deserialize<'de> for Expression {
+    fn deserialize<D: serde::Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+        let json = serde_json::Value::deserialize(deserializer)?;
+        let node_type = json.get("nodeType").unwrap().as_str().unwrap();
+
+        match node_type {
+            "Literal" => Ok(Expression::Literal(serde_json::from_value(json).unwrap())),
+            "Identifier" => Ok(Expression::Identifier(
+                serde_json::from_value(json).unwrap(),
+            )),
+            "UnaryOperation" => Ok(Expression::UnaryOperation(
+                serde_json::from_value(json).unwrap(),
+            )),
+            "BinaryOperation" => Ok(Expression::BinaryOperation(
+                serde_json::from_value(json).unwrap(),
+            )),
+            "Conditional" => Ok(Expression::Conditional(
+                serde_json::from_value(json).unwrap(),
+            )),
+            "Assignment" => Ok(Expression::Assignment(
+                serde_json::from_value(json).unwrap(),
+            )),
+            "FunctionCall" => Ok(Expression::FunctionCall(
+                serde_json::from_value(json).unwrap(),
+            )),
+            "FunctionCallOptions" => Ok(Expression::FunctionCallOptions(
+                serde_json::from_value(json).unwrap(),
+            )),
+            "IndexAccess" => Ok(Expression::IndexAccess(
+                serde_json::from_value(json).unwrap(),
+            )),
+            "IndexRangeAccess" => Ok(Expression::IndexRangeAccess(
+                serde_json::from_value(json).unwrap(),
+            )),
+            "MemberAccess" => Ok(Expression::MemberAccess(
+                serde_json::from_value(json).unwrap(),
+            )),
+            "ElementaryTypeNameExpression" => Ok(Expression::ElementaryTypeNameExpression(
+                serde_json::from_value(json).unwrap(),
+            )),
+            "TupleExpression" => Ok(Expression::TupleExpression(
+                serde_json::from_value(json).unwrap(),
+            )),
+            "NewExpression" => Ok(Expression::NewExpression(
+                serde_json::from_value(json).unwrap(),
+            )),
+            _ => panic!("Invalid expression node type: {node_type:?}"),
         }
     }
 }
@@ -197,11 +208,10 @@ impl Expression {
             Expression::NewExpression(NewExpression {
                 type_descriptions, ..
             }) => Some(type_descriptions),
-            Expression::UnhandledExpression { .. } => None,
         }
     }
 
-    pub fn source_line(&self, source_unit: &SourceUnit) -> Result<usize> {
+    pub fn source_line(&self, source_unit: &SourceUnit) -> std::io::Result<usize> {
         source_unit.source_line(match self {
             Expression::Literal(Literal { src, .. }) => src.as_str(),
             Expression::Identifier(Identifier { src, .. }) => src.as_str(),
@@ -219,8 +229,6 @@ impl Expression {
             }) => src.as_str(),
             Expression::TupleExpression(TupleExpression { src, .. }) => src.as_str(),
             Expression::NewExpression(NewExpression { src, .. }) => src.as_str(),
-            Expression::UnhandledExpression { src: Some(src), .. } => src.as_str(),
-            _ => return Err(eyre!("not found")),
         })
     }
 }
@@ -249,7 +257,17 @@ impl Display for Expression {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+pub struct ExpressionContext<'a, 'b> {
+    pub source_units: &'a [SourceUnit],
+    pub current_source_unit: &'a SourceUnit,
+    pub contract_definition: &'a ContractDefinition,
+    pub definition_node: &'a ContractDefinitionNode,
+    pub blocks: &'b mut Vec<&'a Block>,
+    pub statement: Option<&'a Statement>,
+    pub expression: &'a Expression,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct UnaryOperation {
     pub prefix: bool,
@@ -263,15 +281,6 @@ pub struct UnaryOperation {
     pub type_descriptions: TypeDescriptions,
     pub src: String,
     pub id: NodeID,
-}
-
-impl Node for UnaryOperation {
-    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        if visitor.visit_unary_operation(self)? {
-            self.sub_expression.accept(visitor)?
-        }
-        visitor.end_visit_unary_operation(self)
-    }
 }
 
 impl UnaryOperation {
@@ -290,7 +299,17 @@ impl Display for UnaryOperation {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+pub struct UnaryOperationContext<'a, 'b> {
+    pub source_units: &'a [SourceUnit],
+    pub current_source_unit: &'a SourceUnit,
+    pub contract_definition: &'a ContractDefinition,
+    pub definition_node: &'a ContractDefinitionNode,
+    pub blocks: &'b mut Vec<&'a Block>,
+    pub statement: Option<&'a Statement>,
+    pub unary_operation: &'a UnaryOperation,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct BinaryOperation {
     pub common_type: TypeDescriptions,
@@ -305,16 +324,6 @@ pub struct BinaryOperation {
     pub type_descriptions: TypeDescriptions,
     pub src: String,
     pub id: NodeID,
-}
-
-impl Node for BinaryOperation {
-    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        if visitor.visit_binary_operation(self)? {
-            self.left_expression.accept(visitor)?;
-            self.right_expression.accept(visitor)?;
-        }
-        visitor.end_visit_binary_operation(self)
-    }
 }
 
 impl BinaryOperation {
@@ -334,7 +343,17 @@ impl Display for BinaryOperation {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+pub struct BinaryOperationContext<'a, 'b> {
+    pub source_units: &'a [SourceUnit],
+    pub current_source_unit: &'a SourceUnit,
+    pub contract_definition: &'a ContractDefinition,
+    pub definition_node: &'a ContractDefinitionNode,
+    pub blocks: &'b mut Vec<&'a Block>,
+    pub statement: Option<&'a Statement>,
+    pub binary_operation: &'a BinaryOperation,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Conditional {
     pub condition: Box<Expression>,
@@ -348,17 +367,6 @@ pub struct Conditional {
     pub type_descriptions: TypeDescriptions,
     pub src: String,
     pub id: NodeID,
-}
-
-impl Node for Conditional {
-    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        if visitor.visit_conditional(self)? {
-            self.condition.accept(visitor)?;
-            self.true_expression.accept(visitor)?;
-            self.false_expression.accept(visitor)?;
-        }
-        visitor.end_visit_conditional(self)
-    }
 }
 
 impl Conditional {
@@ -378,7 +386,17 @@ impl Display for Conditional {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+pub struct ConditionalContext<'a, 'b> {
+    pub source_units: &'a [SourceUnit],
+    pub current_source_unit: &'a SourceUnit,
+    pub contract_definition: &'a ContractDefinition,
+    pub definition_node: &'a ContractDefinitionNode,
+    pub blocks: &'b mut Vec<&'a Block>,
+    pub statement: Option<&'a Statement>,
+    pub conditional: &'a Conditional,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Assignment {
     pub left_hand_side: Box<Expression>,
@@ -392,16 +410,6 @@ pub struct Assignment {
     pub type_descriptions: TypeDescriptions,
     pub src: String,
     pub id: NodeID,
-}
-
-impl Node for Assignment {
-    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        if visitor.visit_assignment(self)? {
-            self.left_hand_side.accept(visitor)?;
-            self.right_hand_side.accept(visitor)?;
-        }
-        visitor.end_visit_assignment(self)
-    }
 }
 
 impl Assignment {
@@ -419,6 +427,16 @@ impl Display for Assignment {
     }
 }
 
+pub struct AssignmentContext<'a, 'b> {
+    pub source_units: &'a [SourceUnit],
+    pub current_source_unit: &'a SourceUnit,
+    pub contract_definition: &'a ContractDefinition,
+    pub definition_node: &'a ContractDefinitionNode,
+    pub blocks: &'b mut Vec<&'a Block>,
+    pub statement: Option<&'a Statement>,
+    pub assignment: &'a Assignment,
+}
+
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq, PartialOrd, Eq, Ord, Hash)]
 #[serde(rename_all = "camelCase")]
 pub enum FunctionCallKind {
@@ -427,7 +445,7 @@ pub enum FunctionCallKind {
     StructConstructorCall,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct FunctionCall {
     pub kind: FunctionCallKind,
@@ -443,16 +461,6 @@ pub struct FunctionCall {
     pub type_descriptions: TypeDescriptions,
     pub src: String,
     pub id: NodeID,
-}
-
-impl Node for FunctionCall {
-    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        if visitor.visit_function_call(self)? {
-            self.expression.accept(visitor)?;
-            list_accept(&self.arguments, visitor)?;
-        }
-        visitor.end_visit_function_call(self)
-    }
 }
 
 impl FunctionCall {
@@ -477,14 +485,24 @@ impl Display for FunctionCall {
                 f.write_str(", ")?;
             }
 
-            f.write_fmt(format_args!("{argument}"))?;
+            f.write_fmt(format_args!("{}", argument))?;
         }
 
         f.write_str(")")
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+pub struct FunctionCallContext<'a, 'b> {
+    pub source_units: &'a [SourceUnit],
+    pub current_source_unit: &'a SourceUnit,
+    pub contract_definition: &'a ContractDefinition,
+    pub definition_node: &'a ContractDefinitionNode,
+    pub blocks: &'b mut Vec<&'a Block>,
+    pub statement: Option<&'a Statement>,
+    pub function_call: &'a FunctionCall,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct FunctionCallOptions {
     pub names: Vec<String>,
@@ -499,18 +517,6 @@ pub struct FunctionCallOptions {
     pub type_descriptions: TypeDescriptions,
     pub src: String,
     pub id: NodeID,
-}
-
-impl Node for FunctionCallOptions {
-    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        if visitor.visit_function_call_options(self)? {
-            self.expression.accept(visitor)?;
-            if self.arguments.is_some() {
-                list_accept(self.arguments.as_ref().unwrap(), visitor)?;
-            }
-        }
-        visitor.end_visit_function_call_options(self)
-    }
 }
 
 impl FunctionCallOptions {
@@ -561,7 +567,7 @@ impl Display for FunctionCallOptions {
                     f.write_str(", ")?;
                 }
 
-                f.write_fmt(format_args!("{argument}"))?;
+                f.write_fmt(format_args!("{}", argument))?;
             }
 
             f.write_char(')')?;
@@ -571,11 +577,21 @@ impl Display for FunctionCallOptions {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+pub struct FunctionCallOptionsContext<'a, 'b> {
+    pub source_units: &'a [SourceUnit],
+    pub current_source_unit: &'a SourceUnit,
+    pub contract_definition: &'a ContractDefinition,
+    pub definition_node: &'a ContractDefinitionNode,
+    pub blocks: &'b mut Vec<&'a Block>,
+    pub statement: Option<&'a Statement>,
+    pub function_call_options: &'a FunctionCallOptions,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct IndexAccess {
     pub base_expression: Box<Expression>,
-    pub index_expression: Box<Expression>,
+    pub index_expression: Option<Box<Expression>>,
     pub argument_types: Option<Vec<TypeDescriptions>>,
     pub is_constant: bool,
     pub is_l_value: bool,
@@ -586,32 +602,40 @@ pub struct IndexAccess {
     pub id: NodeID,
 }
 
-impl Node for IndexAccess {
-    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        if visitor.visit_index_access(self)? {
-            self.base_expression.accept(visitor)?;
-            self.index_expression.accept(visitor)?;
-        }
-        visitor.end_visit_index_access(self)
-    }
-}
-
 impl IndexAccess {
     pub fn contains_operation(&self, operator: &str) -> bool {
-        self.index_expression.contains_operation(operator)
+        self.index_expression
+            .as_ref()
+            .map(|x| x.contains_operation(operator))
+            .unwrap_or(false)
     }
 }
 
 impl Display for IndexAccess {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_fmt(format_args!(
+        write!(
+            f,
             "{}[{}]",
-            self.base_expression, self.index_expression
-        ))
+            self.base_expression,
+            match self.index_expression.as_ref() {
+                Some(x) => format!("{x}"),
+                None => String::new(),
+            }
+        )
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+pub struct IndexAccessContext<'a, 'b> {
+    pub source_units: &'a [SourceUnit],
+    pub current_source_unit: &'a SourceUnit,
+    pub contract_definition: &'a ContractDefinition,
+    pub definition_node: &'a ContractDefinitionNode,
+    pub blocks: &'b mut Vec<&'a Block>,
+    pub statement: Option<&'a Statement>,
+    pub index_access: &'a IndexAccess,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct IndexRangeAccess {
     pub base_expression: Box<Expression>,
@@ -624,21 +648,6 @@ pub struct IndexRangeAccess {
     pub type_descriptions: TypeDescriptions,
     pub src: String,
     pub id: NodeID,
-}
-
-impl Node for IndexRangeAccess {
-    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        if visitor.visit_index_range_access(self)? {
-            self.base_expression.accept(visitor)?;
-            if self.start_expression.is_some() {
-                self.start_expression.as_ref().unwrap().accept(visitor)?;
-            }
-            if self.end_expression.is_some() {
-                self.end_expression.as_ref().unwrap().accept(visitor)?;
-            }
-        }
-        visitor.end_visit_index_range_access(self)
-    }
 }
 
 impl IndexRangeAccess {
@@ -660,20 +669,30 @@ impl Display for IndexRangeAccess {
         f.write_fmt(format_args!("{}[", self.base_expression))?;
 
         if let Some(start_expression) = self.start_expression.as_ref() {
-            f.write_fmt(format_args!("{start_expression}"))?;
+            f.write_fmt(format_args!("{}", start_expression))?;
         }
 
         f.write_str(":")?;
 
         if let Some(end_expression) = self.end_expression.as_ref() {
-            f.write_fmt(format_args!("{end_expression}"))?;
+            f.write_fmt(format_args!("{}", end_expression))?;
         }
 
         f.write_str("]")
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+pub struct IndexRangeAccessContext<'a, 'b> {
+    pub source_units: &'a [SourceUnit],
+    pub current_source_unit: &'a SourceUnit,
+    pub contract_definition: &'a ContractDefinition,
+    pub definition_node: &'a ContractDefinitionNode,
+    pub blocks: &'b mut Vec<&'a Block>,
+    pub statement: Option<&'a Statement>,
+    pub index_range_access: &'a IndexRangeAccess,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct MemberAccess {
     pub member_name: String,
@@ -689,15 +708,6 @@ pub struct MemberAccess {
     pub id: NodeID,
 }
 
-impl Node for MemberAccess {
-    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        if visitor.visit_member_access(self)? {
-            self.expression.accept(visitor)?;
-        }
-        visitor.end_visit_member_access(self)
-    }
-}
-
 impl MemberAccess {
     pub fn contains_operation(&self, operator: &str) -> bool {
         self.expression.contains_operation(operator)
@@ -710,7 +720,17 @@ impl Display for MemberAccess {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+pub struct MemberAccessContext<'a, 'b> {
+    pub source_units: &'a [SourceUnit],
+    pub current_source_unit: &'a SourceUnit,
+    pub contract_definition: &'a ContractDefinition,
+    pub definition_node: &'a ContractDefinitionNode,
+    pub blocks: &'b mut Vec<&'a Block>,
+    pub statement: Option<&'a Statement>,
+    pub member_access: &'a MemberAccess,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ElementaryTypeNameExpression {
     pub type_name: TypeName,
@@ -724,20 +744,23 @@ pub struct ElementaryTypeNameExpression {
     pub id: NodeID,
 }
 
-impl Node for ElementaryTypeNameExpression {
-    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_elementary_type_name_expression(self)?;
-        visitor.end_visit_elementary_type_name_expression(self)
-    }
-}
-
 impl Display for ElementaryTypeNameExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.write_fmt(format_args!("{}", self.type_name))
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+pub struct ElementaryTypeNameExpressionContext<'a, 'b> {
+    pub source_units: &'a [SourceUnit],
+    pub current_source_unit: &'a SourceUnit,
+    pub contract_definition: &'a ContractDefinition,
+    pub definition_node: &'a ContractDefinitionNode,
+    pub blocks: &'b mut Vec<&'a Block>,
+    pub statement: Option<&'a Statement>,
+    pub elementary_type_name_expression: &'a ElementaryTypeNameExpression,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct TupleExpression {
     pub components: Vec<Option<Expression>>,
@@ -750,19 +773,6 @@ pub struct TupleExpression {
     pub type_descriptions: TypeDescriptions,
     pub src: String,
     pub id: NodeID,
-}
-
-impl Node for TupleExpression {
-    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        if visitor.visit_tuple_expression(self)? {
-            for elem in &self.components {
-                if elem.is_some() {
-                    elem.as_ref().unwrap().accept(visitor)?;
-                }
-            }
-        }
-        visitor.end_visit_tuple_expression(self)
-    }
 }
 
 impl TupleExpression {
@@ -791,7 +801,7 @@ impl Display for TupleExpression {
             }
 
             if let Some(component) = component {
-                f.write_fmt(format_args!("{component}"))?;
+                f.write_fmt(format_args!("{}", component))?;
             }
         }
 
@@ -799,7 +809,17 @@ impl Display for TupleExpression {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+pub struct TupleExpressionContext<'a, 'b> {
+    pub source_units: &'a [SourceUnit],
+    pub current_source_unit: &'a SourceUnit,
+    pub contract_definition: &'a ContractDefinition,
+    pub definition_node: &'a ContractDefinitionNode,
+    pub blocks: &'b mut Vec<&'a Block>,
+    pub statement: Option<&'a Statement>,
+    pub tuple_expression: &'a TupleExpression,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct NewExpression {
     pub argument_types: Option<Vec<TypeDescriptions>>,
@@ -813,17 +833,18 @@ pub struct NewExpression {
     pub id: NodeID,
 }
 
-impl Node for NewExpression {
-    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        if visitor.visit_new_expression(self)? {
-            self.type_name.accept(visitor)?;
-        }
-        visitor.end_visit_new_expression(self)
-    }
-}
-
 impl Display for NewExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.write_fmt(format_args!("new {}", self.type_name))
     }
+}
+
+pub struct NewExpressionContext<'a, 'b> {
+    pub source_units: &'a [SourceUnit],
+    pub current_source_unit: &'a SourceUnit,
+    pub contract_definition: &'a ContractDefinition,
+    pub definition_node: &'a ContractDefinitionNode,
+    pub blocks: &'b mut Vec<&'a Block>,
+    pub statement: Option<&'a Statement>,
+    pub new_expression: &'a NewExpression,
 }

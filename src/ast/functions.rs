@@ -1,6 +1,5 @@
 use super::*;
-use crate::visitor::ast_visitor::*;
-use eyre::Result;
+use super::{node::*, *};
 use serde::{Deserialize, Serialize};
 use std::fmt::Display;
 
@@ -15,25 +14,16 @@ pub enum FunctionKind {
 
 impl Display for FunctionKind {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_fmt(format_args!("{}", format!("{self:?}").to_lowercase()))
+        f.write_fmt(format_args!("{}", format!("{:?}", self).to_lowercase()))
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ParameterList {
     pub parameters: Vec<VariableDeclaration>,
     pub src: String,
     pub id: NodeID,
-}
-
-impl Node for ParameterList {
-    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        if visitor.visit_parameter_list(self)? {
-            list_accept(&self.parameters, visitor)?;
-        }
-        visitor.end_visit_parameter_list(self)
-    }
 }
 
 impl Display for ParameterList {
@@ -45,28 +35,19 @@ impl Display for ParameterList {
                 f.write_str(", ")?;
             }
 
-            f.write_fmt(format_args!("{parameter}"))?;
+            f.write_fmt(format_args!("{}", parameter))?;
         }
 
         f.write_str(")")
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct OverrideSpecifier {
     pub overrides: Vec<IdentifierPath>,
     pub src: String,
     pub id: NodeID,
-}
-
-impl Node for OverrideSpecifier {
-    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        if visitor.visit_override_specifier(self)? {
-            list_accept(&self.overrides, visitor)?;
-        }
-        visitor.end_visit_override_specifier(self)
-    }
 }
 
 impl Display for OverrideSpecifier {
@@ -81,7 +62,7 @@ impl Display for OverrideSpecifier {
                     f.write_str(", ")?;
                 }
 
-                f.write_fmt(format_args!("{identifier_path}"))?;
+                f.write_fmt(format_args!("{}", identifier_path))?;
             }
 
             f.write_str(")")?;
@@ -91,7 +72,7 @@ impl Display for OverrideSpecifier {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct FunctionDefinition {
     pub base_functions: Option<Vec<NodeID>>,
@@ -109,30 +90,11 @@ pub struct FunctionDefinition {
     pub scope: NodeID,
     pub state_mutability: StateMutability,
     pub super_function: Option<NodeID>,
-    pub r#virtual: Option<bool>,
+    #[serde(rename = "virtual")]
+    pub is_virtual: Option<bool>,
     pub visibility: Visibility,
     pub src: String,
     pub id: NodeID,
-}
-
-impl Node for FunctionDefinition {
-    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        if visitor.visit_function_definition(self)? {
-            if self.documentation.is_some() {
-                self.documentation.as_ref().unwrap().accept(visitor)?;
-            }
-            if self.overrides.is_some() {
-                self.overrides.as_ref().unwrap().accept(visitor)?;
-            }
-            self.parameters.accept(visitor)?;
-            self.return_parameters.accept(visitor)?;
-            list_accept(&self.modifiers, visitor)?;
-            if self.body.is_some() {
-                self.body.as_ref().unwrap().accept(visitor)?;
-            }
-        }
-        visitor.end_visit_function_definition(self)
-    }
 }
 
 impl FunctionDefinition {
@@ -198,16 +160,16 @@ impl Display for FunctionDefinition {
             f.write_fmt(format_args!(" {}", self.state_mutability))?;
         }
 
-        if let Some(true) = self.r#virtual {
+        if let Some(true) = self.is_virtual {
             f.write_str(" virtual")?;
         }
 
         if let Some(overrides) = self.overrides.as_ref() {
-            f.write_fmt(format_args!(" {overrides}"))?;
+            f.write_fmt(format_args!(" {}", overrides))?;
         }
 
         for modifier in self.modifiers.iter() {
-            f.write_fmt(format_args!(" {modifier}"))?;
+            f.write_fmt(format_args!(" {}", modifier))?;
         }
 
         if !self.return_parameters.parameters.is_empty() {
@@ -215,8 +177,16 @@ impl Display for FunctionDefinition {
         }
 
         match self.body.as_ref() {
-            Some(body) => f.write_fmt(format_args!(" {body}")),
+            Some(body) => f.write_fmt(format_args!(" {}", body)),
             None => f.write_str(";"),
         }
     }
+}
+
+pub struct FunctionDefinitionContext<'a> {
+    pub source_units: &'a [SourceUnit],
+    pub current_source_unit: &'a SourceUnit,
+    pub contract_definition: &'a ContractDefinition,
+    pub definition_node: &'a ContractDefinitionNode,
+    pub function_definition: &'a FunctionDefinition,
 }

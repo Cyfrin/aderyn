@@ -1,8 +1,7 @@
 use super::*;
-use crate::visitor::ast_visitor::*;
-use eyre::Result;
+use super::{node::*, *};
 use serde::{Deserialize, Serialize};
-use std::fmt::Display;
+use std::{collections::HashMap, fmt::Display};
 
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq, PartialOrd, Eq, Ord, Hash)]
 #[serde(rename_all = "lowercase")]
@@ -14,11 +13,11 @@ pub enum ContractKind {
 
 impl Display for ContractKind {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_fmt(format_args!("{}", format!("{self:?}").to_lowercase()))
+        f.write_fmt(format_args!("{}", format!("{:?}", self).to_lowercase()))
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[derive(Clone, Debug, Eq, Serialize, PartialEq)]
 #[serde(untagged)]
 pub enum ContractDefinitionNode {
     UsingForDirective(UsingForDirective),
@@ -32,36 +31,42 @@ pub enum ContractDefinitionNode {
     UserDefinedValueTypeDefinition(UserDefinedValueTypeDefinition),
 }
 
-impl Node for ContractDefinitionNode {
-    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        match self {
-            ContractDefinitionNode::UsingForDirective(using_for_directive) => {
-                using_for_directive.accept(visitor)
+impl<'de> Deserialize<'de> for ContractDefinitionNode {
+    fn deserialize<D: serde::Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+        let json = serde_json::Value::deserialize(deserializer)?;
+        let node_type = json.get("nodeType").unwrap().as_str().unwrap();
+
+        match node_type {
+            "UsingForDirective" => Ok(ContractDefinitionNode::UsingForDirective(
+                serde_json::from_value(json).unwrap(),
+            )),
+            "StructDefinition" => Ok(ContractDefinitionNode::StructDefinition(
+                serde_json::from_value(json).unwrap(),
+            )),
+            "EnumDefinition" => Ok(ContractDefinitionNode::EnumDefinition(
+                serde_json::from_value(json).unwrap(),
+            )),
+            "VariableDeclaration" => Ok(ContractDefinitionNode::VariableDeclaration(
+                serde_json::from_value(json).unwrap(),
+            )),
+            "EventDefinition" => Ok(ContractDefinitionNode::EventDefinition(
+                serde_json::from_value(json).unwrap(),
+            )),
+            "FunctionDefinition" => Ok(ContractDefinitionNode::FunctionDefinition(
+                serde_json::from_value(json).unwrap(),
+            )),
+            "ModifierDefinition" => Ok(ContractDefinitionNode::ModifierDefinition(
+                serde_json::from_value(json).unwrap(),
+            )),
+            "ErrorDefinition" => Ok(ContractDefinitionNode::ErrorDefinition(
+                serde_json::from_value(json).unwrap(),
+            )),
+            "UserDefinedValueTypeDefinition" => {
+                Ok(ContractDefinitionNode::UserDefinedValueTypeDefinition(
+                    serde_json::from_value(json).unwrap(),
+                ))
             }
-            ContractDefinitionNode::StructDefinition(struct_definition) => {
-                struct_definition.accept(visitor)
-            }
-            ContractDefinitionNode::EnumDefinition(enum_definition) => {
-                enum_definition.accept(visitor)
-            }
-            ContractDefinitionNode::VariableDeclaration(variable_declaration) => {
-                variable_declaration.accept(visitor)
-            }
-            ContractDefinitionNode::EventDefinition(event_definition) => {
-                event_definition.accept(visitor)
-            }
-            ContractDefinitionNode::FunctionDefinition(function_definition) => {
-                function_definition.accept(visitor)
-            }
-            ContractDefinitionNode::ModifierDefinition(modifier_definition) => {
-                modifier_definition.accept(visitor)
-            }
-            ContractDefinitionNode::ErrorDefinition(error_definition) => {
-                error_definition.accept(visitor)
-            }
-            ContractDefinitionNode::UserDefinedValueTypeDefinition(
-                user_defined_value_type_definition,
-            ) => user_defined_value_type_definition.accept(visitor),
+            _ => panic!("Invalid contract definition node type: {node_type}"),
         }
     }
 }
@@ -92,25 +97,13 @@ impl Display for ContractDefinitionNode {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct InheritanceSpecifier {
     pub base_name: IdentifierPath,
     pub arguments: Option<Vec<Expression>>,
     pub src: String,
     pub id: NodeID,
-}
-
-impl Node for InheritanceSpecifier {
-    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        if visitor.visit_inheritance_specifier(self)? {
-            self.base_name.accept(visitor)?;
-            if self.arguments.is_some() {
-                list_accept(self.arguments.as_ref().unwrap(), visitor)?;
-            }
-        }
-        visitor.end_visit_inheritance_specifier(self)
-    }
 }
 
 impl Display for InheritanceSpecifier {
@@ -138,7 +131,7 @@ impl Display for InheritanceSpecifier {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ContractDefinition {
     pub name: String,
@@ -150,26 +143,16 @@ pub struct ContractDefinition {
     pub is_abstract: Option<bool>,
     pub base_contracts: Vec<InheritanceSpecifier>,
     pub contract_dependencies: Vec<NodeID>,
+    pub used_events: Option<Vec<NodeID>>,
     pub used_errors: Option<Vec<NodeID>>,
     pub nodes: Vec<ContractDefinitionNode>,
     pub scope: NodeID,
     pub fully_implemented: Option<bool>,
     pub linearized_base_contracts: Option<Vec<NodeID>>,
+    #[serde(rename = "internalFunctionIDs")]
+    pub internal_function_ids: Option<HashMap<String, NodeID>>,
     pub src: String,
     pub id: NodeID,
-}
-
-impl Node for ContractDefinition {
-    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        if visitor.visit_contract_definition(self)? {
-            if self.documentation.is_some() {
-                self.documentation.as_ref().unwrap().accept(visitor)?;
-            }
-            list_accept(&self.base_contracts, visitor)?;
-            list_accept(&self.nodes, visitor)?;
-        }
-        visitor.end_visit_contract_definition(self)
-    }
 }
 
 impl ContractDefinition {
@@ -427,14 +410,9 @@ impl ContractDefinition {
         ids
     }
 
-    pub fn definition_node_location(
-        &self,
-        source_line: usize,
-        definition_node: &ContractDefinitionNode,
-    ) -> String {
+    pub fn definition_node_location(&self, definition_node: &ContractDefinitionNode) -> String {
         format!(
-            "L{}: The {}",
-            source_line,
+            "The {}",
             match definition_node {
                 ContractDefinitionNode::FunctionDefinition(function_definition) => format!(
                     "{} {} in the `{}` {}",
@@ -508,5 +486,131 @@ impl Display for ContractDefinition {
         f.write_str("}")?;
 
         Ok(())
+    }
+}
+
+pub struct ContractDefinitionContext<'a> {
+    pub source_units: &'a [SourceUnit],
+    pub current_source_unit: &'a SourceUnit,
+    pub contract_definition: &'a ContractDefinition,
+}
+
+impl<'a> ContractDefinitionContext<'a> {
+    pub fn create_using_for_directive_context(
+        &self,
+        definition_node: &'a ContractDefinitionNode,
+        using_for_directive: &'a UsingForDirective,
+    ) -> UsingForDirectiveContext<'a> {
+        UsingForDirectiveContext {
+            source_units: self.source_units,
+            current_source_unit: self.current_source_unit,
+            contract_definition: self.contract_definition,
+            definition_node,
+            using_for_directive,
+        }
+    }
+
+    pub fn create_struct_definition_context(
+        &self,
+        struct_definition: &'a StructDefinition,
+    ) -> StructDefinitionContext<'a> {
+        StructDefinitionContext {
+            source_units: self.source_units,
+            current_source_unit: self.current_source_unit,
+            contract_definition: Some(self.contract_definition),
+            struct_definition,
+        }
+    }
+
+    pub fn create_enum_definition_context(
+        &self,
+        enum_definition: &'a EnumDefinition,
+    ) -> EnumDefinitionContext<'a> {
+        EnumDefinitionContext {
+            source_units: self.source_units,
+            current_source_unit: self.current_source_unit,
+            contract_definition: Some(self.contract_definition),
+            enum_definition,
+        }
+    }
+
+    pub fn create_variable_declaration_context<'b>(
+        &self,
+        definition_node: &'a ContractDefinitionNode,
+        blocks: &'b mut Vec<&'a Block>,
+        variable_declaration: &'a VariableDeclaration,
+    ) -> VariableDeclarationContext<'a, 'b> {
+        VariableDeclarationContext {
+            source_units: self.source_units,
+            current_source_unit: self.current_source_unit,
+            contract_definition: Some(self.contract_definition),
+            definition_node: Some(definition_node),
+            blocks: Some(blocks),
+            variable_declaration,
+        }
+    }
+
+    pub fn create_event_definition_context(
+        &self,
+        event_definition: &'a EventDefinition,
+    ) -> EventDefinitionContext<'a> {
+        EventDefinitionContext {
+            source_units: self.source_units,
+            current_source_unit: self.current_source_unit,
+            contract_definition: self.contract_definition,
+            event_definition,
+        }
+    }
+
+    pub fn create_function_definition_context(
+        &self,
+        definition_node: &'a ContractDefinitionNode,
+        function_definition: &'a FunctionDefinition,
+    ) -> FunctionDefinitionContext<'a> {
+        FunctionDefinitionContext {
+            source_units: self.source_units,
+            current_source_unit: self.current_source_unit,
+            contract_definition: self.contract_definition,
+            definition_node,
+            function_definition,
+        }
+    }
+
+    pub fn create_modifier_definition_context(
+        &self,
+        definition_node: &'a ContractDefinitionNode,
+        modifier_definition: &'a ModifierDefinition,
+    ) -> ModifierDefinitionContext<'a> {
+        ModifierDefinitionContext {
+            source_units: self.source_units,
+            current_source_unit: self.current_source_unit,
+            contract_definition: self.contract_definition,
+            definition_node,
+            modifier_definition,
+        }
+    }
+
+    pub fn create_error_definition_context(
+        &self,
+        error_definition: &'a ErrorDefinition,
+    ) -> ErrorDefinitionContext<'a> {
+        ErrorDefinitionContext {
+            source_units: self.source_units,
+            current_source_unit: self.current_source_unit,
+            contract_definition: Some(self.contract_definition),
+            error_definition,
+        }
+    }
+
+    pub fn create_user_defined_value_type_definition_context(
+        &self,
+        user_defined_value_type_definition: &'a UserDefinedValueTypeDefinition,
+    ) -> UserDefinedValueTypeDefinitionContext<'a> {
+        UserDefinedValueTypeDefinitionContext {
+            source_units: self.source_units,
+            current_source_unit: self.current_source_unit,
+            contract_definition: Some(self.contract_definition),
+            user_defined_value_type_definition,
+        }
     }
 }

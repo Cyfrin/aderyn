@@ -10,3 +10,6 @@
 [submodule "tests/contract-playground/lib/v2-periphery"]
 	path = tests/contract-playground/lib/v2-periphery
 	url = https://github.com/Uniswap/v2-periphery
+[submodule "solidity-rs"]
+	path = solidity-rs
+	url = git@github.com:camden-smallwood/solidity-rs.git

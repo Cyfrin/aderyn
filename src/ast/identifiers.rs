@@ -1,9 +1,7 @@
 use super::*;
-use crate::visitor::ast_visitor::*;
-use eyre::Result;
+use super::{node::*, *};
 use serde::{Deserialize, Serialize};
 use std::fmt::Display;
-use std::hash::{Hash, Hasher};
 
 #[derive(Clone, Debug, Deserialize, Eq, Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -15,13 +13,6 @@ pub struct Identifier {
     pub type_descriptions: TypeDescriptions,
     pub src: String,
     pub id: NodeID,
-}
-
-impl Node for Identifier {
-    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_identifier(self)?;
-        visitor.end_visit_identifier(self)
-    }
 }
 
 impl PartialEq for Identifier {
@@ -38,22 +29,20 @@ impl PartialEq for Identifier {
     }
 }
 
-impl Hash for Identifier {
-    fn hash<H: Hasher>(&self, state: &mut H) {
-        self.argument_types.hash(state);
-        self.name.hash(state);
-        self.overloaded_declarations.hash(state);
-        self.referenced_declaration.hash(state);
-        self.type_descriptions.hash(state);
-        self.src.hash(state);
-        self.id.hash(state);
-    }
-}
-
 impl Display for Identifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.write_str(self.name.as_str())
     }
+}
+
+pub struct IdentifierContext<'a, 'b> {
+    pub source_units: &'a [SourceUnit],
+    pub current_source_unit: &'a SourceUnit,
+    pub contract_definition: &'a ContractDefinition,
+    pub definition_node: &'a ContractDefinitionNode,
+    pub blocks: &'b mut Vec<&'a Block>,
+    pub statement: Option<&'a Statement>,
+    pub identifier: &'a Identifier,
 }
 
 #[derive(Clone, Debug, Deserialize, Eq, Serialize)]
@@ -65,28 +54,12 @@ pub struct IdentifierPath {
     pub id: NodeID,
 }
 
-impl Node for IdentifierPath {
-    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_identifier_path(self)?;
-        visitor.end_visit_identifier_path(self)
-    }
-}
-
 impl PartialEq for IdentifierPath {
     fn eq(&self, other: &Self) -> bool {
         self.name.eq(&other.name)
             && self
                 .referenced_declaration
                 .eq(&other.referenced_declaration)
-    }
-}
-
-impl Hash for IdentifierPath {
-    fn hash<H: Hasher>(&self, state: &mut H) {
-        self.name.hash(state);
-        self.referenced_declaration.hash(state);
-        self.src.hash(state);
-        self.id.hash(state);
     }
 }
 

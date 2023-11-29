@@ -1,9 +1,8 @@
 use super::*;
-use crate::visitor::ast_visitor::*;
-use eyre::Result;
+use super::{node::*, *};
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct SymbolAlias {
     pub foreign: Expression,
@@ -11,7 +10,7 @@ pub struct SymbolAlias {
     pub name_location: Option<String>,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ImportDirective {
     pub file: String,
@@ -25,14 +24,8 @@ pub struct ImportDirective {
     pub id: NodeID,
 }
 
-impl Node for ImportDirective {
-    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        if visitor.visit_import_directive(self)? {
-            // TODO deviation from solc's structs
-            for symbol_alias in &self.symbol_aliases {
-                symbol_alias.foreign.accept(visitor)?;
-            }
-        }
-        visitor.end_visit_import_directive(self)
-    }
+pub struct ImportDirectiveContext<'a> {
+    pub source_units: &'a [SourceUnit],
+    pub current_source_unit: &'a SourceUnit,
+    pub import_directive: &'a ImportDirective,
 }
