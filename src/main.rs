@@ -84,7 +84,7 @@ fn main() {
 
                         // Find the index where "src/" starts
                         let src_component = src_path_buf.file_name().unwrap().to_str().unwrap();
-                        if let Some(start_index) = full_path_str.find(&src_component) {
+                        if let Some(start_index) = full_path_str.find(src_component) {
                             let target_path = &full_path_str[start_index..];
 
                             // Search for a match and modify
