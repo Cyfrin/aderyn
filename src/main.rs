@@ -50,11 +50,9 @@ fn main() {
                 eprintln!("{:?}", err);
                 std::process::exit(1);
             });
-            src_path = root_path
-                .join(loaded_foundry.src_path)
-                .to_str()
-                .unwrap()
-                .to_string();
+            let src_path_buf = root_path.join(&loaded_foundry.src_path);
+            src_path = src_path_buf.to_str().unwrap().to_string();
+            println!("Foundry src path: {:?}", src_path);
             // Load the foundry output files into the context loader using the ASTs
             for output_filepath in loaded_foundry.output_filepaths {
                 // read_foundry_output_file and print an error message if it fails
@@ -85,7 +83,8 @@ fn main() {
                         let full_path_str = source_filepath.to_str().unwrap_or("");
 
                         // Find the index where "src/" starts
-                        if let Some(start_index) = full_path_str.find("src/") {
+                        let src_component = src_path_buf.file_name().unwrap().to_str().unwrap();
+                        if let Some(start_index) = full_path_str.find(&src_component) {
                             let target_path = &full_path_str[start_index..];
 
                             // Search for a match and modify
