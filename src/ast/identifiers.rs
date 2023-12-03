@@ -3,6 +3,7 @@ use super::{node::*, *};
 use eyre::Result;
 use serde::{Deserialize, Serialize};
 use std::fmt::Display;
+use std::hash::{Hash, Hasher};
 
 #[derive(Clone, Debug, Deserialize, Eq, Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -14,6 +15,18 @@ pub struct Identifier {
     pub type_descriptions: TypeDescriptions,
     pub src: String,
     pub id: NodeID,
+}
+
+impl Hash for Identifier {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.argument_types.hash(state);
+        self.name.hash(state);
+        self.overloaded_declarations.hash(state);
+        self.referenced_declaration.hash(state);
+        self.type_descriptions.hash(state);
+        self.src.hash(state);
+        self.id.hash(state);
+    }
 }
 
 impl BaseNode for Identifier {
@@ -60,6 +73,15 @@ pub struct IdentifierPath {
     pub referenced_declaration: Option<NodeID>,
     pub src: String,
     pub id: NodeID,
+}
+
+impl Hash for IdentifierPath {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.name.hash(state);
+        self.referenced_declaration.hash(state);
+        self.src.hash(state);
+        self.id.hash(state);
+    }
 }
 
 impl BaseNode for IdentifierPath {

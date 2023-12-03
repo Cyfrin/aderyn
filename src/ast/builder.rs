@@ -262,7 +262,7 @@ impl AstBuilder {
             scope,
             fully_implemented: None,         // TODO
             linearized_base_contracts: None, // TODO
-            internal_function_ids: None,     // TODO
+            // internal_function_ids: None,     // TODO
             src: self.loc_to_src(&input.loc),
             id: self.next_node_id(),
         }

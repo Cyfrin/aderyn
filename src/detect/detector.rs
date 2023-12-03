@@ -86,8 +86,8 @@ pub mod detector_test_helpers {
     use std::path::PathBuf;
 
     use crate::{
-        context::loader::ContextLoader, framework::foundry::read_foundry_output_file,
-        read_file_to_string,
+        ast::BaseNode, context::loader::ContextLoader,
+        framework::foundry::read_foundry_output_file, read_file_to_string,
     };
 
     pub fn load_contract(filepath: &str) -> ContextLoader {
@@ -118,7 +118,7 @@ pub mod detector_test_helpers {
                     let target_path = &full_path_str[start_index..];
 
                     // Search for a match and modify
-                    for unit in context_loader.get_source_units() {
+                    for unit in context_loader.source_units.iter() {
                         if let Some(ref abs_path) = unit.absolute_path {
                             if abs_path == target_path {
                                 context_loader.set_source_unit_source_content(unit.id, content);

@@ -5,7 +5,7 @@ use eyre::Result;
 use serde::{Deserialize, Serialize};
 use std::fmt::Display;
 
-#[derive(Clone, Debug, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Eq, Serialize, PartialEq, Hash)]
 #[serde(untagged)]
 pub enum Statement {
     VariableDeclarationStatement(VariableDeclarationStatement),
@@ -152,7 +152,7 @@ pub struct StatementContext<'a, 'b> {
     pub statement: &'a Statement,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct ExpressionStatement {
     pub expression: Expression,
@@ -173,7 +173,7 @@ impl Display for ExpressionStatement {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct VariableDeclarationStatement {
     pub assignments: Vec<Option<NodeID>>,
@@ -241,7 +241,7 @@ pub struct VariableDeclarationStatementContext<'a, 'b> {
     pub variable_declaration_statement: &'a VariableDeclarationStatement,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(untagged)]
 pub enum BlockOrStatement {
     Block(Box<Block>),
@@ -309,7 +309,7 @@ pub struct BlockOrStatementContext<'a, 'b> {
     pub block_or_statement: &'a BlockOrStatement,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct IfStatement {
     pub condition: Expression,
@@ -354,7 +354,7 @@ pub struct IfStatementContext<'a, 'b> {
     pub if_statement: &'a IfStatement,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct ForStatement {
     pub initialization_expression: Option<Box<Statement>>,
@@ -420,7 +420,7 @@ pub struct ForStatementContext<'a, 'b> {
     pub for_statement: &'a ForStatement,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct WhileStatement {
     pub condition: Expression,
@@ -455,7 +455,7 @@ pub struct WhileStatementContext<'a, 'b> {
     pub while_statement: &'a WhileStatement,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct DoWhileStatement {
     pub body: BlockOrStatement,
@@ -480,7 +480,7 @@ pub struct DoWhileStatementContext<'a, 'b> {
     pub do_while_statement: &'a DoWhileStatement,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct EmitStatement {
     pub event_call: Expression,
@@ -511,7 +511,7 @@ pub struct EmitStatementContext<'a, 'b> {
     pub emit_statement: &'a EmitStatement,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct TryStatement {
     pub clauses: Vec<TryCatchClause>,
@@ -544,7 +544,7 @@ pub struct TryStatementContext<'a, 'b> {
     pub try_statement: &'a TryStatement,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct RevertStatement {
     pub error_call: FunctionCall,
@@ -575,7 +575,7 @@ pub struct RevertStatementContext<'a, 'b> {
     pub revert_statement: &'a RevertStatement,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct TryCatchClause {
     pub block: Block,
@@ -601,7 +601,7 @@ impl Display for TryCatchClause {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct Return {
     pub function_return_parameters: NodeID,
@@ -642,7 +642,7 @@ pub struct ReturnContext<'a, 'b> {
     pub return_statement: &'a Return,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct InlineAssembly {
     #[serde(rename = "AST")]

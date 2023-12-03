@@ -19,7 +19,7 @@ impl Display for FunctionKind {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct ParameterList {
     pub parameters: Vec<VariableDeclaration>,
@@ -52,7 +52,7 @@ impl Display for ParameterList {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct OverrideSpecifier {
     pub overrides: Vec<IdentifierPath>,
@@ -91,7 +91,7 @@ impl Display for OverrideSpecifier {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct FunctionDefinition {
     pub base_functions: Option<Vec<NodeID>>,

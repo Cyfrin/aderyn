@@ -63,7 +63,7 @@ impl Display for StorageLocation {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct VariableDeclaration {
     pub base_functions: Option<Vec<NodeID>>,

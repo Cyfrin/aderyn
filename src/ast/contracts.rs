@@ -18,7 +18,7 @@ impl Display for ContractKind {
     }
 }
 
-#[derive(Clone, Debug, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Eq, Serialize, PartialEq, Hash)]
 #[serde(untagged)]
 pub enum ContractDefinitionNode {
     UsingForDirective(UsingForDirective),
@@ -132,7 +132,7 @@ impl Display for ContractDefinitionNode {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct InheritanceSpecifier {
     pub base_name: IdentifierPath,
@@ -178,7 +178,7 @@ impl Display for InheritanceSpecifier {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct ContractDefinition {
     pub name: String,
@@ -196,8 +196,8 @@ pub struct ContractDefinition {
     pub scope: NodeID,
     pub fully_implemented: Option<bool>,
     pub linearized_base_contracts: Option<Vec<NodeID>>,
-    #[serde(rename = "internalFunctionIDs")]
-    pub internal_function_ids: Option<HashMap<String, NodeID>>,
+    // #[serde(rename = "internalFunctionIDs")]
+    // pub internal_function_ids: Option<HashMap<String, NodeID>>,
     pub src: String,
     pub id: NodeID,
 }

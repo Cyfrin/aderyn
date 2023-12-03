@@ -1,5 +1,5 @@
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
+use std::{collections::HashMap, hash::Hash, hash::Hasher};
 
 use super::*;
 
@@ -10,7 +10,33 @@ pub enum ExternalReference {
     Tagged(HashMap<String, ExternalReferenceData>),
 }
 
-#[derive(Clone, Debug, Eq, Deserialize, Serialize, PartialEq)]
+impl Hash for ExternalReference {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        match self {
+            ExternalReference::Untagged(data) => {
+                0.hash(state); // A unique value to denote the Untagged variant
+                data.hash(state);
+            }
+            ExternalReference::Tagged(map) => {
+                1.hash(state); // A unique value to denote the Tagged variant
+
+                // Create a vector of references to the map's key-value pairs
+                let mut pairs: Vec<_> = map.iter().collect();
+
+                // Sort the vector by keys
+                pairs.sort_by(|a, b| a.0.cmp(b.0));
+
+                // Hash each pair in the sorted order
+                for (key, value) in pairs {
+                    key.hash(state);
+                    value.hash(state);
+                }
+            }
+        }
+    }
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct ExternalReferenceData {
     declaration: NodeID,
@@ -20,7 +46,7 @@ pub struct ExternalReferenceData {
     value_size: NodeID,
 }
 
-#[derive(Clone, Debug, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Eq, Serialize, PartialEq, Hash)]
 #[serde(untagged)]
 pub enum YulExpression {
     YulLiteral(YulLiteral),
@@ -48,7 +74,7 @@ impl<'de> Deserialize<'de> for YulExpression {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct YulLiteral {
     pub kind: YulLiteralKind,
@@ -56,7 +82,7 @@ pub struct YulLiteral {
     pub hex_value: Option<String>,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub enum YulLiteralKind {
     Bool,
@@ -66,20 +92,20 @@ pub enum YulLiteralKind {
     Address,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct YulIdentifier {
     pub name: String,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct YulFunctionCall {
     pub function_name: YulIdentifier,
     pub arguments: Vec<YulExpression>,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct YulBlock {
     pub statements: Vec<YulStatement>,
@@ -90,7 +116,7 @@ pub struct YulBlockContext<'a, 'b> {
     pub yul_block: &'a YulBlock,
 }
 
-#[derive(Clone, Debug, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Eq, Serialize, PartialEq, Hash)]
 #[serde(untagged)]
 pub enum YulStatement {
     YulIf(YulIf),
@@ -142,21 +168,21 @@ impl<'de> Deserialize<'de> for YulStatement {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct YulIf {
     pub condition: YulExpression,
     pub body: YulBlock,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct YulSwitch {
     pub cases: Vec<YulCase>,
     pub expression: YulExpression,
 }
 
-#[derive(Clone, Debug, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct YulCase {
     pub body: YulBlock,
@@ -180,7 +206,7 @@ impl<'de> Deserialize<'de> for YulCase {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct YulForLoop {
     pub pre: YulBlock,
@@ -189,34 +215,34 @@ pub struct YulForLoop {
     pub body: YulBlock,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct YulAssignment {
     pub value: YulExpression,
     pub variable_names: Vec<YulIdentifier>,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct YulVariableDeclaration {
     pub value: Option<YulExpression>,
     pub variables: Vec<YulTypedName>,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct YulTypedName {
     pub r#type: String,
     pub name: String,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct YulExpressionStatement {
     pub expression: YulExpression,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct YulFunctionDefinition {
     pub name: String,

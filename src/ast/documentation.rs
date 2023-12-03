@@ -2,7 +2,7 @@ use super::{node::*, *};
 use eyre::Result;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(untagged)]
 pub enum Documentation {
     String(Option<String>),
@@ -29,7 +29,7 @@ impl BaseNode for Documentation {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct StructuredDocumentation {
     pub text: String,

@@ -4,7 +4,7 @@ use eyre::Result;
 use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Write};
 
-#[derive(Clone, Debug, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Eq, Serialize, PartialEq, Hash)]
 #[serde(untagged)]
 pub enum Expression {
     Literal(Literal),
@@ -294,7 +294,7 @@ pub struct ExpressionContext<'a, 'b> {
     pub expression: &'a Expression,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct UnaryOperation {
     pub prefix: bool,
@@ -345,7 +345,7 @@ pub struct UnaryOperationContext<'a, 'b> {
     pub unary_operation: &'a UnaryOperation,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct BinaryOperation {
     pub common_type: TypeDescriptions,
@@ -399,7 +399,7 @@ pub struct BinaryOperationContext<'a, 'b> {
     pub binary_operation: &'a BinaryOperation,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct Conditional {
     pub condition: Box<Expression>,
@@ -453,7 +453,7 @@ pub struct ConditionalContext<'a, 'b> {
     pub conditional: &'a Conditional,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct Assignment {
     pub left_hand_side: Box<Expression>,
@@ -512,7 +512,7 @@ pub enum FunctionCallKind {
     StructConstructorCall,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct FunctionCall {
     pub kind: FunctionCallKind,
@@ -579,7 +579,7 @@ pub struct FunctionCallContext<'a, 'b> {
     pub function_call: &'a FunctionCall,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct FunctionCallOptions {
     pub names: Vec<String>,
@@ -676,7 +676,7 @@ pub struct FunctionCallOptionsContext<'a, 'b> {
     pub function_call_options: &'a FunctionCallOptions,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct IndexAccess {
     pub base_expression: Box<Expression>,
@@ -736,7 +736,7 @@ pub struct IndexAccessContext<'a, 'b> {
     pub index_access: &'a IndexAccess,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct IndexRangeAccess {
     pub base_expression: Box<Expression>,
@@ -808,7 +808,7 @@ pub struct IndexRangeAccessContext<'a, 'b> {
     pub index_range_access: &'a IndexRangeAccess,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct MemberAccess {
     pub member_name: String,
@@ -855,7 +855,7 @@ pub struct MemberAccessContext<'a, 'b> {
     pub member_access: &'a MemberAccess,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct ElementaryTypeNameExpression {
     pub type_name: TypeName,
@@ -892,7 +892,7 @@ pub struct ElementaryTypeNameExpressionContext<'a, 'b> {
     pub elementary_type_name_expression: &'a ElementaryTypeNameExpression,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct TupleExpression {
     pub components: Vec<Option<Expression>>,
@@ -964,7 +964,7 @@ pub struct TupleExpressionContext<'a, 'b> {
     pub tuple_expression: &'a TupleExpression,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct NewExpression {
     pub argument_types: Option<Vec<TypeDescriptions>>,
