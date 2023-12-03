@@ -1,5 +1,6 @@
 use super::*;
 use super::{node::*, *};
+use eyre::Result;
 use serde::{Deserialize, Serialize};
 use std::fmt::Display;
 
@@ -19,6 +20,26 @@ pub enum TypeName {
     UserDefinedTypeName(UserDefinedTypeName),
     ElementaryTypeName(ElementaryTypeName),
     String(String),
+}
+
+impl BaseNode for TypeName {
+    fn accept(&self, visitor: &mut impl AstBaseVisitor) -> Result<()> {
+        match self {
+            TypeName::FunctionTypeName(function_type_name) => function_type_name.accept(visitor),
+            TypeName::ArrayTypeName(array_type_name) => array_type_name.accept(visitor),
+            TypeName::Mapping(mapping) => mapping.accept(visitor),
+            TypeName::UserDefinedTypeName(user_defined_type_name) => {
+                user_defined_type_name.accept(visitor)
+            }
+            TypeName::ElementaryTypeName(elementary_type_name) => {
+                elementary_type_name.accept(visitor)
+            }
+            TypeName::String(_) => {
+                // TODO This does not exist.
+                panic!()
+            }
+        }
+    }
 }
 
 impl Display for TypeName {
@@ -45,6 +66,13 @@ pub struct ElementaryTypeName {
     pub state_mutability: Option<StateMutability>,
     pub name: String,
     pub type_descriptions: TypeDescriptions,
+}
+
+impl BaseNode for ElementaryTypeName {
+    fn accept(&self, visitor: &mut impl AstBaseVisitor) -> Result<()> {
+        visitor.visit_elementary_type_name(self)?;
+        visitor.end_visit_elementary_type_name(self)
+    }
 }
 
 impl PartialEq for ElementaryTypeName {
@@ -77,6 +105,15 @@ pub struct UserDefinedTypeName {
     pub type_descriptions: TypeDescriptions,
 }
 
+impl BaseNode for UserDefinedTypeName {
+    fn accept(&self, visitor: &mut impl AstBaseVisitor) -> Result<()> {
+        if visitor.visit_user_defined_type_name(self)? && self.path_node.is_some() {
+            self.path_node.as_ref().unwrap().accept(visitor)?;
+        }
+        visitor.end_visit_user_defined_type_name(self)
+    }
+}
+
 impl PartialEq for UserDefinedTypeName {
     fn eq(&self, other: &Self) -> bool {
         self.referenced_declaration
@@ -104,12 +141,34 @@ pub struct FunctionTypeName {
     pub type_descriptions: TypeDescriptions,
 }
 
+impl BaseNode for FunctionTypeName {
+    fn accept(&self, visitor: &mut impl AstBaseVisitor) -> Result<()> {
+        if visitor.visit_function_type_name(self)? {
+            self.parameter_types.accept(visitor)?;
+            self.return_parameter_types.accept(visitor)?;
+        }
+        visitor.end_visit_function_type_name(self)
+    }
+}
+
 #[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ArrayTypeName {
     pub base_type: Box<TypeName>,
     pub length: Option<Literal>,
     pub type_descriptions: TypeDescriptions,
+}
+
+impl BaseNode for ArrayTypeName {
+    fn accept(&self, visitor: &mut impl AstBaseVisitor) -> Result<()> {
+        if visitor.visit_array_type_name(self)? {
+            self.base_type.accept(visitor)?;
+            if self.length.is_some() {
+                self.length.as_ref().unwrap().accept(visitor)?;
+            }
+        }
+        visitor.end_visit_array_type_name(self)
+    }
 }
 
 impl Display for ArrayTypeName {
@@ -131,6 +190,16 @@ pub struct Mapping {
     pub key_type: Box<TypeName>,
     pub value_type: Box<TypeName>,
     pub type_descriptions: TypeDescriptions,
+}
+
+impl BaseNode for Mapping {
+    fn accept(&self, visitor: &mut impl AstBaseVisitor) -> Result<()> {
+        if visitor.visit_mapping(self)? {
+            self.key_type.accept(visitor)?;
+            self.value_type.accept(visitor)?;
+        }
+        visitor.end_visit_mapping(self)
+    }
 }
 
 impl Display for Mapping {

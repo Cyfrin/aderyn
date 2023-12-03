@@ -11,7 +11,7 @@ use std::io::{self, Read};
 use std::path::{Path, PathBuf};
 
 use crate::context::loader::ContextLoader;
-use crate::detect::detector::{get_all_detectors, IssueSeverity};
+use crate::detect::detector::*;
 use crate::report::printer::{MarkdownReportPrinter, ReportPrinter};
 use crate::report::reporter::{Issue, Report};
 

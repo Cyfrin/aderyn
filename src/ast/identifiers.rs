@@ -1,5 +1,6 @@
 use super::*;
 use super::{node::*, *};
+use eyre::Result;
 use serde::{Deserialize, Serialize};
 use std::fmt::Display;
 
@@ -13,6 +14,13 @@ pub struct Identifier {
     pub type_descriptions: TypeDescriptions,
     pub src: String,
     pub id: NodeID,
+}
+
+impl BaseNode for Identifier {
+    fn accept(&self, visitor: &mut impl AstBaseVisitor) -> Result<()> {
+        visitor.visit_identifier(self)?;
+        visitor.end_visit_identifier(self)
+    }
 }
 
 impl PartialEq for Identifier {
@@ -52,6 +60,13 @@ pub struct IdentifierPath {
     pub referenced_declaration: Option<NodeID>,
     pub src: String,
     pub id: NodeID,
+}
+
+impl BaseNode for IdentifierPath {
+    fn accept(&self, visitor: &mut impl AstBaseVisitor) -> Result<()> {
+        visitor.visit_identifier_path(self)?;
+        visitor.end_visit_identifier_path(self)
+    }
 }
 
 impl PartialEq for IdentifierPath {

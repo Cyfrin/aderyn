@@ -1,5 +1,6 @@
 use super::*;
 use super::{node::*, *};
+use eyre::Result;
 use serde::{Deserialize, Serialize};
 use std::fmt::Display;
 
@@ -14,6 +15,15 @@ pub struct StructDefinition {
     pub canonical_name: Option<String>,
     pub src: String,
     pub id: NodeID,
+}
+
+impl BaseNode for StructDefinition {
+    fn accept(&self, visitor: &mut impl AstBaseVisitor) -> Result<()> {
+        if visitor.visit_struct_definition(self)? {
+            list_accept(&self.members, visitor)?;
+        }
+        visitor.end_visit_struct_definition(self)
+    }
 }
 
 impl Display for StructDefinition {

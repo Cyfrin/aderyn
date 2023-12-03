@@ -1,10 +1,9 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
-    ast::ModifierInvocation,
+    ast::*,
     context::loader::{ASTNode, ContextLoader},
     detect::detector::{Detector, IssueSeverity},
-    visitor::ast_visitor::{ASTConstVisitor, Node},
 };
 use eyre::Result;
 
@@ -16,8 +15,8 @@ pub struct CentralizationRiskDetector {
     found_instances: BTreeMap<(String, usize), String>,
 }
 
-impl ASTConstVisitor for CentralizationRiskDetector {
-    fn visit_contract_definition(&mut self, node: &crate::ast::ContractDefinition) -> Result<bool> {
+impl AstBaseVisitor for CentralizationRiskDetector {
+    fn visit_contract_definition(&mut self, node: &ContractDefinition) -> Result<bool> {
         // if the node's base_contracts.base_name.name contains any of the following values, add the node
         // to the found_centralization_risks vector:
         // [
@@ -60,7 +59,7 @@ impl ASTConstVisitor for CentralizationRiskDetector {
 
 impl Detector for CentralizationRiskDetector {
     fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
-        for source_unit in loader.get_source_units() {
+        for source_unit in loader.source_units.iter() {
             source_unit.accept(self)?;
         }
         for modifier_invocation in self

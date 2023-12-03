@@ -1,5 +1,6 @@
 use super::*;
 use super::{node::*, *};
+use eyre::Result;
 use serde::{Deserialize, Serialize};
 use std::fmt::Display;
 
@@ -28,6 +29,13 @@ pub struct Literal {
     pub type_descriptions: TypeDescriptions,
     pub src: String,
     pub id: NodeID,
+}
+
+impl BaseNode for Literal {
+    fn accept(&self, visitor: &mut impl AstBaseVisitor) -> Result<()> {
+        visitor.visit_literal(self)?;
+        visitor.end_visit_literal(self)
+    }
 }
 
 impl Display for Literal {

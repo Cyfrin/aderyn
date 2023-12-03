@@ -1,5 +1,6 @@
 use super::*;
 use super::{node::*, *};
+use eyre::Result;
 use serde::{Deserialize, Serialize};
 use std::{collections::HashMap, fmt::Display};
 
@@ -29,6 +30,40 @@ pub enum ContractDefinitionNode {
     ModifierDefinition(ModifierDefinition),
     ErrorDefinition(ErrorDefinition),
     UserDefinedValueTypeDefinition(UserDefinedValueTypeDefinition),
+}
+
+impl BaseNode for ContractDefinitionNode {
+    fn accept(&self, visitor: &mut impl AstBaseVisitor) -> Result<()> {
+        match self {
+            ContractDefinitionNode::UsingForDirective(using_for_directive) => {
+                using_for_directive.accept(visitor)
+            }
+            ContractDefinitionNode::StructDefinition(struct_definition) => {
+                struct_definition.accept(visitor)
+            }
+            ContractDefinitionNode::EnumDefinition(enum_definition) => {
+                enum_definition.accept(visitor)
+            }
+            ContractDefinitionNode::VariableDeclaration(variable_declaration) => {
+                variable_declaration.accept(visitor)
+            }
+            ContractDefinitionNode::EventDefinition(event_definition) => {
+                event_definition.accept(visitor)
+            }
+            ContractDefinitionNode::FunctionDefinition(function_definition) => {
+                function_definition.accept(visitor)
+            }
+            ContractDefinitionNode::ModifierDefinition(modifier_definition) => {
+                modifier_definition.accept(visitor)
+            }
+            ContractDefinitionNode::ErrorDefinition(error_definition) => {
+                error_definition.accept(visitor)
+            }
+            ContractDefinitionNode::UserDefinedValueTypeDefinition(
+                user_defined_value_type_definition,
+            ) => user_defined_value_type_definition.accept(visitor),
+        }
+    }
 }
 
 impl<'de> Deserialize<'de> for ContractDefinitionNode {
@@ -106,6 +141,18 @@ pub struct InheritanceSpecifier {
     pub id: NodeID,
 }
 
+impl BaseNode for InheritanceSpecifier {
+    fn accept(&self, visitor: &mut impl AstBaseVisitor) -> Result<()> {
+        if visitor.visit_inheritance_specifier(self)? {
+            self.base_name.accept(visitor)?;
+            if self.arguments.is_some() {
+                list_accept(self.arguments.as_ref().unwrap(), visitor)?;
+            }
+        }
+        visitor.end_visit_inheritance_specifier(self)
+    }
+}
+
 impl Display for InheritanceSpecifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.write_fmt(format_args!("{}", self.base_name))?;
@@ -153,6 +200,19 @@ pub struct ContractDefinition {
     pub internal_function_ids: Option<HashMap<String, NodeID>>,
     pub src: String,
     pub id: NodeID,
+}
+
+impl BaseNode for ContractDefinition {
+    fn accept(&self, visitor: &mut impl AstBaseVisitor) -> Result<()> {
+        if visitor.visit_contract_definition(self)? {
+            if self.documentation.is_some() {
+                self.documentation.as_ref().unwrap().accept(visitor)?;
+            }
+            list_accept(&self.base_contracts, visitor)?;
+            list_accept(&self.nodes, visitor)?;
+        }
+        visitor.end_visit_contract_definition(self)
+    }
 }
 
 impl ContractDefinition {

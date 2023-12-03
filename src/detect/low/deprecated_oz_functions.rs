@@ -14,7 +14,7 @@ pub struct DeprecatedOZFunctionsDetector {
 
 impl Detector for DeprecatedOZFunctionsDetector {
     fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
-        for identifier in loader.get_identifiers() {
+        for identifier in loader.identifiers.iter() {
             // if source_unit has any ImportDirectives with absolute_path containing "openzeppelin"
             // call identifier.accept(self)
             let source_unit = loader
@@ -35,7 +35,7 @@ impl Detector for DeprecatedOZFunctionsDetector {
                 );
             }
         }
-        for member_access in loader.get_member_accesses() {
+        for member_access in loader.member_accesses.iter() {
             // if source_unit has any ImportDirectives with absolute_path containing "openzeppelin"
             // call member_access.accept(self)
             let source_unit = loader

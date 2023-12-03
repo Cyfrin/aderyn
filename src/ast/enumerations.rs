@@ -1,5 +1,6 @@
 use super::*;
 use super::{node::*, *};
+use eyre::Result;
 use serde::{Deserialize, Serialize};
 use std::fmt::Display;
 
@@ -10,6 +11,13 @@ pub struct EnumValue {
     pub name_location: Option<String>,
     pub src: String,
     pub id: NodeID,
+}
+
+impl BaseNode for EnumValue {
+    fn accept(&self, visitor: &mut impl AstBaseVisitor) -> Result<()> {
+        visitor.visit_enum_value(self)?;
+        visitor.end_visit_enum_value(self)
+    }
 }
 
 impl Display for EnumValue {
@@ -27,6 +35,15 @@ pub struct EnumDefinition {
     pub canonical_name: Option<String>,
     pub src: String,
     pub id: NodeID,
+}
+
+impl BaseNode for EnumDefinition {
+    fn accept(&self, visitor: &mut impl AstBaseVisitor) -> Result<()> {
+        if visitor.visit_enum_definition(self)? {
+            list_accept(&self.members, visitor)?;
+        }
+        visitor.end_visit_enum_definition(self)
+    }
 }
 
 impl Display for EnumDefinition {

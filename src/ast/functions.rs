@@ -1,5 +1,6 @@
 use super::*;
 use super::{node::*, *};
+use eyre::Result;
 use serde::{Deserialize, Serialize};
 use std::fmt::Display;
 
@@ -26,6 +27,15 @@ pub struct ParameterList {
     pub id: NodeID,
 }
 
+impl BaseNode for ParameterList {
+    fn accept(&self, visitor: &mut impl AstBaseVisitor) -> Result<()> {
+        if visitor.visit_parameter_list(self)? {
+            list_accept(&self.parameters, visitor)?;
+        }
+        visitor.end_visit_parameter_list(self)
+    }
+}
+
 impl Display for ParameterList {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.write_str("(")?;
@@ -48,6 +58,15 @@ pub struct OverrideSpecifier {
     pub overrides: Vec<IdentifierPath>,
     pub src: String,
     pub id: NodeID,
+}
+
+impl BaseNode for OverrideSpecifier {
+    fn accept(&self, visitor: &mut impl AstBaseVisitor) -> Result<()> {
+        if visitor.visit_override_specifier(self)? {
+            list_accept(&self.overrides, visitor)?;
+        }
+        visitor.end_visit_override_specifier(self)
+    }
 }
 
 impl Display for OverrideSpecifier {
@@ -95,6 +114,26 @@ pub struct FunctionDefinition {
     pub visibility: Visibility,
     pub src: String,
     pub id: NodeID,
+}
+
+impl BaseNode for FunctionDefinition {
+    fn accept(&self, visitor: &mut impl AstBaseVisitor) -> Result<()> {
+        if visitor.visit_function_definition(self)? {
+            if self.documentation.is_some() {
+                self.documentation.as_ref().unwrap().accept(visitor)?;
+            }
+            if self.overrides.is_some() {
+                self.overrides.as_ref().unwrap().accept(visitor)?;
+            }
+            self.parameters.accept(visitor)?;
+            self.return_parameters.accept(visitor)?;
+            list_accept(&self.modifiers, visitor)?;
+            if self.body.is_some() {
+                self.body.as_ref().unwrap().accept(visitor)?;
+            }
+        }
+        visitor.end_visit_function_definition(self)
+    }
 }
 
 impl FunctionDefinition {

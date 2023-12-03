@@ -1,6 +1,7 @@
 use super::yul::*;
 use super::*;
 use super::{node::*, *};
+use eyre::Result;
 use serde::{Deserialize, Serialize};
 use std::fmt::Display;
 
@@ -23,6 +24,33 @@ pub enum Statement {
     Continue { src: String, id: NodeID },
     Break { src: String, id: NodeID },
     PlaceholderStatement { src: String, id: NodeID },
+}
+
+impl BaseNode for Statement {
+    fn accept(&self, visitor: &mut impl AstBaseVisitor) -> Result<()> {
+        match self {
+            Statement::VariableDeclarationStatement(variable_declaration_statement) => {
+                variable_declaration_statement.accept(visitor)
+            }
+            Statement::IfStatement(if_statement) => if_statement.accept(visitor),
+            Statement::ForStatement(for_statement) => for_statement.accept(visitor),
+            Statement::WhileStatement(while_statement) => while_statement.accept(visitor),
+            Statement::EmitStatement(emit_statement) => emit_statement.accept(visitor),
+            Statement::TryStatement(try_statement) => try_statement.accept(visitor),
+            Statement::UncheckedBlock(unchecked_statement) => unchecked_statement.accept(visitor),
+            Statement::Return(return_statement) => return_statement.accept(visitor),
+            Statement::RevertStatement(revert_statement) => revert_statement.accept(visitor),
+            Statement::ExpressionStatement(expression_statement) => {
+                expression_statement.accept(visitor)
+            }
+            Statement::InlineAssembly(inline_assembly) => inline_assembly.accept(visitor),
+            Statement::DoWhileStatement(do_while_statement) => Ok(()),
+            Statement::Block(block) => block.accept(visitor),
+            Statement::Continue { src, id } => Ok(()),
+            Statement::Break { src, id } => Ok(()),
+            Statement::PlaceholderStatement { src, id } => Ok(()),
+        }
+    }
 }
 
 impl<'de> Deserialize<'de> for Statement {
@@ -130,6 +158,15 @@ pub struct ExpressionStatement {
     pub expression: Expression,
 }
 
+impl BaseNode for ExpressionStatement {
+    fn accept(&self, visitor: &mut impl AstBaseVisitor) -> Result<()> {
+        if visitor.visit_expression_statement(self)? {
+            self.expression.accept(visitor)?;
+        }
+        visitor.end_visit_expression_statement(self)
+    }
+}
+
 impl Display for ExpressionStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.write_fmt(format_args!("{}", self.expression))
@@ -144,6 +181,22 @@ pub struct VariableDeclarationStatement {
     pub initial_value: Option<Expression>,
     pub src: String,
     pub id: NodeID,
+}
+
+impl BaseNode for VariableDeclarationStatement {
+    fn accept(&self, visitor: &mut impl AstBaseVisitor) -> Result<()> {
+        if visitor.visit_variable_declaration_statement(self)? {
+            for declaration in &self.declarations {
+                if declaration.is_some() {
+                    declaration.as_ref().unwrap().accept(visitor)?;
+                }
+            }
+            if self.initial_value.is_some() {
+                self.initial_value.as_ref().unwrap().accept(visitor)?;
+            }
+        }
+        visitor.end_visit_variable_declaration_statement(self)
+    }
 }
 
 impl Display for VariableDeclarationStatement {
@@ -193,6 +246,15 @@ pub struct VariableDeclarationStatementContext<'a, 'b> {
 pub enum BlockOrStatement {
     Block(Box<Block>),
     Statement(Box<Statement>),
+}
+
+impl BaseNode for BlockOrStatement {
+    fn accept(&self, visitor: &mut impl AstBaseVisitor) -> Result<()> {
+        match self {
+            BlockOrStatement::Block(block) => block.accept(visitor),
+            BlockOrStatement::Statement(statement) => statement.accept(visitor),
+        }
+    }
 }
 
 impl BlockOrStatement {
@@ -257,6 +319,19 @@ pub struct IfStatement {
     pub id: NodeID,
 }
 
+impl BaseNode for IfStatement {
+    fn accept(&self, visitor: &mut impl AstBaseVisitor) -> Result<()> {
+        if visitor.visit_if_statement(self)? {
+            self.condition.accept(visitor)?;
+            self.true_body.accept(visitor)?;
+            if self.false_body.is_some() {
+                self.false_body.as_ref().unwrap().accept(visitor)?;
+            }
+        }
+        visitor.end_visit_if_statement(self)
+    }
+}
+
 impl Display for IfStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.write_fmt(format_args!("if ({}) {}", self.condition, self.true_body))?;
@@ -288,6 +363,27 @@ pub struct ForStatement {
     pub body: BlockOrStatement,
     pub src: String,
     pub id: NodeID,
+}
+
+impl BaseNode for ForStatement {
+    fn accept(&self, visitor: &mut impl AstBaseVisitor) -> Result<()> {
+        if visitor.visit_for_statement(self)? {
+            if self.initialization_expression.is_some() {
+                self.initialization_expression
+                    .as_ref()
+                    .unwrap()
+                    .accept(visitor)?;
+            }
+            if self.condition.is_some() {
+                self.condition.as_ref().unwrap().accept(visitor)?;
+            }
+            if self.loop_expression.is_some() {
+                self.loop_expression.as_ref().unwrap().accept(visitor)?;
+            }
+            self.body.accept(visitor)?;
+        }
+        visitor.end_visit_for_statement(self)
+    }
 }
 
 impl Display for ForStatement {
@@ -331,6 +427,16 @@ pub struct WhileStatement {
     pub body: BlockOrStatement,
     pub src: String,
     pub id: NodeID,
+}
+
+impl BaseNode for WhileStatement {
+    fn accept(&self, visitor: &mut impl AstBaseVisitor) -> Result<()> {
+        if visitor.visit_while_statement(self)? {
+            self.condition.accept(visitor)?;
+            self.body.accept(visitor)?;
+        }
+        visitor.end_visit_while_statement(self)
+    }
 }
 
 impl Display for WhileStatement {
@@ -380,6 +486,15 @@ pub struct EmitStatement {
     pub event_call: Expression,
 }
 
+impl BaseNode for EmitStatement {
+    fn accept(&self, visitor: &mut impl AstBaseVisitor) -> Result<()> {
+        if visitor.visit_emit_statement(self)? {
+            self.event_call.accept(visitor)?;
+        }
+        visitor.end_visit_emit_statement(self)
+    }
+}
+
 impl Display for EmitStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.write_fmt(format_args!("emit {}", self.event_call))
@@ -403,6 +518,16 @@ pub struct TryStatement {
     pub external_call: FunctionCall,
 }
 
+impl BaseNode for TryStatement {
+    fn accept(&self, visitor: &mut impl AstBaseVisitor) -> Result<()> {
+        if visitor.visit_try_statement(self)? {
+            self.external_call.accept(visitor)?;
+            list_accept(&self.clauses, visitor)?;
+        }
+        visitor.end_visit_try_statement(self)
+    }
+}
+
 impl Display for TryStatement {
     fn fmt(&self, _: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         unimplemented!()
@@ -423,6 +548,15 @@ pub struct TryStatementContext<'a, 'b> {
 #[serde(rename_all = "camelCase")]
 pub struct RevertStatement {
     pub error_call: FunctionCall,
+}
+
+impl BaseNode for RevertStatement {
+    fn accept(&self, visitor: &mut impl AstBaseVisitor) -> Result<()> {
+        if visitor.visit_revert_statement(self)? {
+            self.error_call.accept(visitor)?;
+        }
+        visitor.end_visit_revert_statement(self)
+    }
 }
 
 impl Display for RevertStatement {
@@ -449,6 +583,18 @@ pub struct TryCatchClause {
     pub parameters: Option<ParameterList>,
 }
 
+impl BaseNode for TryCatchClause {
+    fn accept(&self, visitor: &mut impl AstBaseVisitor) -> Result<()> {
+        if visitor.visit_try_catch_clause(self)? {
+            if self.parameters.is_some() {
+                self.parameters.as_ref().unwrap().accept(visitor)?;
+            }
+            self.block.accept(visitor)?;
+        }
+        visitor.end_visit_try_catch_clause(self)
+    }
+}
+
 impl Display for TryCatchClause {
     fn fmt(&self, _: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         unimplemented!()
@@ -462,6 +608,15 @@ pub struct Return {
     pub expression: Option<Expression>,
     pub src: String,
     pub id: NodeID,
+}
+
+impl BaseNode for Return {
+    fn accept(&self, visitor: &mut impl AstBaseVisitor) -> Result<()> {
+        if visitor.visit_return(self)? && self.expression.is_some() {
+            self.expression.as_ref().unwrap().accept(visitor)?;
+        }
+        visitor.end_visit_return(self)
+    }
 }
 
 impl Display for Return {
@@ -497,6 +652,13 @@ pub struct InlineAssembly {
     pub operations: Option<String>,
     pub src: String,
     pub id: NodeID,
+}
+
+impl BaseNode for InlineAssembly {
+    fn accept(&self, visitor: &mut impl AstBaseVisitor) -> Result<()> {
+        visitor.visit_inline_assembly(self)?;
+        visitor.end_visit_inline_assembly(self)
+    }
 }
 
 #[derive(Debug, PartialEq)]

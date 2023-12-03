@@ -15,7 +15,7 @@ pub struct BlockTimestampDeadlineDetector {
 
 impl Detector for BlockTimestampDeadlineDetector {
     fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
-        let function_calls = loader.get_function_calls();
+        let function_calls = loader.function_calls.iter();
         for call in function_calls {
             // Uniswap V2 - Function Calls
             // For each FunctionCall, if the Expression is a MemberAccess that is named any of the following:

@@ -16,7 +16,7 @@ impl Detector for UnindexedEventsDetector {
     fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
         // for each event definition, check if it has any indexed parameters
         // if it does not, then add it to the list of found unindexed events
-        for event_definition in loader.get_event_definitions().iter() {
+        for event_definition in loader.event_definitions.iter() {
             let mut indexed_count = 0;
             let mut non_indexed = false;
 

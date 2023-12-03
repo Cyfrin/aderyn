@@ -4,10 +4,9 @@ use std::{
 };
 
 use crate::{
-    ast::{Assignment, BinaryOperation, Expression, Mutability, VariableDeclaration},
+    ast::*,
     context::loader::{ASTNode, ContextLoader},
     detect::detector::{Detector, IssueSeverity},
-    visitor::ast_visitor::{ASTConstVisitor, Node},
 };
 use eyre::Result;
 
@@ -40,9 +39,9 @@ impl ZeroAddressCheckDetector {
     }
 }
 
-impl ASTConstVisitor for ZeroAddressCheckDetector {
-    // if the left hand side referenced_declaration is in the mutable_address_state_variables return true
+impl AstBaseVisitor for ZeroAddressCheckDetector {
     fn visit_assignment(&mut self, node: &Assignment) -> Result<bool> {
+        // if the left hand side referenced_declaration is in the mutable_address_state_variables return true
         let left_hand_side = node.left_hand_side.as_ref();
         if let Expression::Identifier(left_identifier) = left_hand_side {
             if self
@@ -60,7 +59,6 @@ impl ASTConstVisitor for ZeroAddressCheckDetector {
         Ok(true)
     }
 
-    // If the binary
     fn visit_binary_operation(&mut self, node: &BinaryOperation) -> Result<bool> {
         // if the binaryoperation operator is "==" or "!="
         if node.operator == "==" || node.operator == "!=" {
@@ -87,8 +85,8 @@ impl Detector for ZeroAddressCheckDetector {
     fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
         // Get all address state variables
         self.mutable_address_state_variables = loader
-            .get_variable_declarations()
-            .into_iter() // We can consume the Vec since it's just references.
+            .variable_declarations
+            .iter() // We can consume the Vec since it's just references.
             .filter_map(|var_decl| {
                 if !var_decl.constant
                     && matches!(var_decl.mutability, Some(Mutability::Mutable))
@@ -114,7 +112,7 @@ impl Detector for ZeroAddressCheckDetector {
             .collect();
 
         // Get all function definitions
-        for function_definition in loader.get_function_definitions() {
+        for function_definition in loader.function_definitions.iter() {
             // Reset transient variables
             self.reset_transient_variables();
             // Visit the function definition using the BinaryOperator and Assignment visitors

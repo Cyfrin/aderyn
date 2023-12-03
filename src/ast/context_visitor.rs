@@ -200,7 +200,7 @@ pub struct YulFunctionCallContext<'a, 'b, 'c> {
 }
 
 #[allow(unused_variables)]
-pub trait AstVisitor {
+pub trait AstContextVisitor {
     fn visit_source_unit<'a>(&mut self, context: &mut SourceUnitContext<'a>) -> io::Result<()> {
         Ok(())
     }
@@ -997,12 +997,12 @@ pub trait AstVisitor {
     }
 }
 
-pub struct AstVisitorData<'a> {
+pub struct AstContextVisitorData<'a> {
     pub analyzed_paths: HashSet<String>,
-    pub visitors: Vec<Box<dyn AstVisitor + 'a>>,
+    pub visitors: Vec<Box<dyn AstContextVisitor + 'a>>,
 }
 
-impl AstVisitor for AstVisitorData<'_> {
+impl AstContextVisitor for AstContextVisitorData<'_> {
     fn visit_source_unit<'a>(&mut self, context: &mut SourceUnitContext<'a>) -> io::Result<()> {
         for visitor in self.visitors.iter_mut() {
             visitor.visit_source_unit(context)?;

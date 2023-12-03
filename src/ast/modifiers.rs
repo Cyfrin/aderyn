@@ -1,5 +1,6 @@
 use super::*;
 use super::{node::*, *};
+use eyre::Result;
 use serde::{Deserialize, Serialize};
 use std::fmt::Display;
 
@@ -17,6 +18,18 @@ pub struct ModifierDefinition {
     pub visibility: Visibility,
     pub src: String,
     pub id: NodeID,
+}
+
+impl BaseNode for ModifierDefinition {
+    fn accept(&self, visitor: &mut impl AstBaseVisitor) -> Result<()> {
+        if visitor.visit_modifier_definition(self)? {
+            // TODO: should we implement a string based visitor?
+            // self.name.accept(visitor)?;
+            self.body.accept(visitor)?;
+            self.parameters.accept(visitor)?;
+        }
+        visitor.end_visit_modifier_definition(self)
+    }
 }
 
 impl Display for ModifierDefinition {
@@ -86,6 +99,18 @@ pub struct ModifierInvocation {
     pub src: String,
     pub id: NodeID,
     pub kind: Option<ModifierInvocationKind>,
+}
+
+impl BaseNode for ModifierInvocation {
+    fn accept(&self, visitor: &mut impl AstBaseVisitor) -> Result<()> {
+        if visitor.visit_modifier_invocation(self)? {
+            self.modifier_name.accept(visitor)?;
+            if self.arguments.is_some() {
+                list_accept(self.arguments.as_ref().unwrap(), visitor)?;
+            }
+        }
+        visitor.end_visit_modifier_invocation(self)
+    }
 }
 
 impl Display for ModifierInvocation {

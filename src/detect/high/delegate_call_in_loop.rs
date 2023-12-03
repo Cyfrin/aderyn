@@ -1,12 +1,10 @@
 use std::collections::BTreeMap;
 use std::error::Error;
 
-use crate::visitor::ast_visitor::Node;
+use crate::ast::*;
 use crate::{
-    ast::MemberAccess,
     context::loader::{ASTNode, ContextLoader},
     detect::detector::{Detector, IssueSeverity},
-    visitor::ast_visitor::ASTConstVisitor,
 };
 use eyre::Result;
 
@@ -18,7 +16,7 @@ pub struct DelegateCallInLoopDetector {
     found_instances: BTreeMap<(String, usize), String>,
 }
 
-impl ASTConstVisitor for DelegateCallInLoopDetector {
+impl AstBaseVisitor for DelegateCallInLoopDetector {
     fn visit_member_access(&mut self, node: &MemberAccess) -> Result<bool> {
         if node.member_name == "delegatecall" {
             self.found_member_access
@@ -30,10 +28,10 @@ impl ASTConstVisitor for DelegateCallInLoopDetector {
 
 impl Detector for DelegateCallInLoopDetector {
     fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
-        for for_statement in loader.get_for_statements() {
+        for for_statement in loader.for_statements.iter() {
             for_statement.accept(self)?;
         }
-        for while_statement in loader.get_while_statements() {
+        for while_statement in loader.while_statements.iter() {
             while_statement.accept(self)?;
         }
         for member_access in self.found_member_access.clone().into_iter().flatten() {

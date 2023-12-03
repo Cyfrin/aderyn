@@ -1,10 +1,9 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
-    ast::{Literal, LiteralKind},
+    ast::*,
     context::loader::{ASTNode, ContextLoader},
     detect::detector::{Detector, IssueSeverity},
-    visitor::ast_visitor::{ASTConstVisitor, Node},
 };
 use eyre::Result;
 
@@ -16,7 +15,7 @@ pub struct ConstantsInsteadOfLiteralsDetector {
     found_instances: BTreeMap<(String, usize), String>,
 }
 
-impl ASTConstVisitor for ConstantsInsteadOfLiteralsDetector {
+impl AstBaseVisitor for ConstantsInsteadOfLiteralsDetector {
     fn visit_literal(&mut self, node: &Literal) -> Result<bool> {
         if (node.kind == LiteralKind::Number && node.value != Some(String::from("0")))
             || node.kind == LiteralKind::HexString
@@ -34,7 +33,7 @@ impl Detector for ConstantsInsteadOfLiteralsDetector {
         // get all function definitions.
         // for each function definition, find all Literal types
         // if the literal type is either a Number, HexString or Address, then add it to the list of found literals
-        for function_definition in loader.get_function_definitions() {
+        for function_definition in loader.function_definitions.iter() {
             function_definition.accept(self)?;
         }
         for literal in self.found_literals.clone().into_iter().flatten() {

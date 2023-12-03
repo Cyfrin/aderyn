@@ -1,5 +1,6 @@
 use super::*;
 use super::{node::*, *};
+use eyre::Result;
 use serde::{Deserialize, Serialize};
 use std::fmt::Display;
 
@@ -12,6 +13,16 @@ pub struct UserDefinedValueTypeDefinition {
     pub canonical_name: Option<String>,
     pub src: String,
     pub id: NodeID,
+}
+
+impl BaseNode for UserDefinedValueTypeDefinition {
+    fn accept(&self, visitor: &mut impl AstBaseVisitor) -> Result<()> {
+        if visitor.visit_user_defined_value_type_definition(self)? {
+            self.underlying_type.accept(visitor)?;
+        }
+        visitor.end_visit_user_defined_value_type_definition(self)?;
+        Ok(())
+    }
 }
 
 impl Display for UserDefinedValueTypeDefinition {

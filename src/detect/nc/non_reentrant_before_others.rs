@@ -14,7 +14,7 @@ pub struct NonReentrantBeforeOthersDetector {
 
 impl Detector for NonReentrantBeforeOthersDetector {
     fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
-        let function_definitions = loader.get_function_definitions();
+        let function_definitions = loader.function_definitions.iter();
         for definition in function_definitions {
             if definition.modifiers.len() > 1 {
                 for (index, modifier) in definition.modifiers.iter().enumerate() {

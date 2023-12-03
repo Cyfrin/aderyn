@@ -1,5 +1,6 @@
 use super::*;
 use super::{node::*, *};
+use eyre::Result;
 use serde::{Deserialize, Serialize};
 use std::fmt::Display;
 
@@ -10,6 +11,19 @@ pub struct UsingForDirective {
     pub type_name: Option<TypeName>,
     pub src: String,
     pub id: NodeID,
+}
+
+impl BaseNode for UsingForDirective {
+    fn accept(&self, visitor: &mut impl AstBaseVisitor) -> Result<()> {
+        if visitor.visit_using_for_directive(self)? {
+            // TODO there is a deviation. Missing FuntionsOrLibrary
+            self.library_name.accept(visitor)?;
+            if self.type_name.is_some() {
+                self.type_name.as_ref().unwrap().accept(visitor)?;
+            }
+        }
+        visitor.end_visit_using_for_directive(self)
+    }
 }
 
 impl Display for UsingForDirective {

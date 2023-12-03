@@ -1,5 +1,6 @@
 use super::*;
 use super::{node::*, *};
+use eyre::Result;
 use serde::{Deserialize, Serialize};
 use std::{collections::HashMap, io};
 
@@ -14,6 +15,29 @@ pub enum SourceUnitNode {
     ErrorDefinition(ErrorDefinition),
     VariableDeclaration(VariableDeclaration),
     UserDefinedValueTypeDefinition(UserDefinedValueTypeDefinition),
+}
+
+impl BaseNode for SourceUnitNode {
+    fn accept(&self, visitor: &mut impl AstBaseVisitor) -> Result<()> {
+        match self {
+            SourceUnitNode::PragmaDirective(pragma_directive) => pragma_directive.accept(visitor),
+            SourceUnitNode::ImportDirective(import_directive) => import_directive.accept(visitor),
+            SourceUnitNode::ContractDefinition(contract_definition) => {
+                contract_definition.accept(visitor)
+            }
+            SourceUnitNode::StructDefinition(struct_definition) => {
+                struct_definition.accept(visitor)
+            }
+            SourceUnitNode::EnumDefinition(enum_definition) => enum_definition.accept(visitor),
+            SourceUnitNode::ErrorDefinition(error_definition) => error_definition.accept(visitor),
+            SourceUnitNode::VariableDeclaration(variable_declaration) => {
+                variable_declaration.accept(visitor)
+            }
+            SourceUnitNode::UserDefinedValueTypeDefinition(user_defined_value_type_definition) => {
+                user_defined_value_type_definition.accept(visitor)
+            }
+        }
+    }
 }
 
 impl<'de> Deserialize<'de> for SourceUnitNode {
@@ -63,6 +87,15 @@ pub struct SourceUnit {
 
     #[serde(skip_serializing)]
     pub source: Option<String>,
+}
+
+impl BaseNode for SourceUnit {
+    fn accept(&self, visitor: &mut impl AstBaseVisitor) -> Result<()> {
+        if visitor.visit_source_unit(self)? {
+            list_accept(&self.nodes, visitor)?;
+        }
+        visitor.end_visit_source_unit(self)
+    }
 }
 
 impl SourceUnit {

@@ -1,4 +1,5 @@
 use super::{node::*, *};
+use eyre::Result;
 use serde::{Deserialize, Serialize};
 use std::fmt::Display;
 
@@ -19,6 +20,15 @@ impl Display for Block {
         }
 
         f.write_str("}")
+    }
+}
+
+impl BaseNode for Block {
+    fn accept(&self, visitor: &mut impl AstBaseVisitor) -> Result<()> {
+        if visitor.visit_block(self)? {
+            list_accept(&self.statements, visitor)?;
+        }
+        visitor.end_visit_block(self)
     }
 }
 
