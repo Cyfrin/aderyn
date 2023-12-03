@@ -67,14 +67,14 @@ impl Detector for ConstantsInsteadOfLiteralsDetector {
 
 #[cfg(test)]
 mod constants_instead_of_literals_tests {
-    use crate::detect::detector::{detector_test_helpers::load_contract, Detector};
+    use crate::detect::detector::{detector_test_helpers::load_contract_from_json, Detector};
 
     use super::ConstantsInsteadOfLiteralsDetector;
 
     #[test]
     fn test_constants_instead_of_literals() {
         let context_loader =
-            load_contract("./tests/contract-playground/out/Counter.sol/Counter.json");
+            load_contract_from_json("./tests/contract-playground/out/Counter.sol/Counter.json");
         let mut detector = ConstantsInsteadOfLiteralsDetector::default();
         // assert that the detector finds the public function
         let found = detector.detect(&context_loader).unwrap();

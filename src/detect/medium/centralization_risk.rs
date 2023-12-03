@@ -115,14 +115,15 @@ impl Detector for CentralizationRiskDetector {
 
 #[cfg(test)]
 mod centralization_risk_detector_tests {
-    use crate::detect::detector::{detector_test_helpers::load_contract, Detector};
+    use crate::detect::detector::{detector_test_helpers::load_contract_from_json, Detector};
 
     use super::CentralizationRiskDetector;
 
     #[test]
     fn test_centralization_risk_detector() {
-        let context_loader =
-            load_contract("./tests/contract-playground/out/AdminContract.sol/AdminContract.json");
+        let context_loader = load_contract_from_json(
+            "./tests/contract-playground/out/AdminContract.sol/AdminContract.json",
+        );
         let mut detector = CentralizationRiskDetector::default();
         let found = detector.detect(&context_loader).unwrap();
         // assert that the detector found a centralization risk

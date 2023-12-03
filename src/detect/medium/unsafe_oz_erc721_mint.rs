@@ -60,13 +60,13 @@ impl Detector for UnsafeERC721MintDetector {
 #[cfg(test)]
 mod unsafe_erc721_mint_tests {
     use crate::detect::{
-        detector::{detector_test_helpers::load_contract, Detector},
+        detector::{detector_test_helpers::load_contract_from_json, Detector},
         medium::unsafe_oz_erc721_mint::UnsafeERC721MintDetector,
     };
 
     #[test]
     fn test_unsafe_erc721_mint_detector() {
-        let context_loader = load_contract(
+        let context_loader = load_contract_from_json(
             "./tests/contract-playground/out/UnsafeERC721Mint.sol/UnsafeERC721Mint.json",
         );
         let mut detector = UnsafeERC721MintDetector::default();

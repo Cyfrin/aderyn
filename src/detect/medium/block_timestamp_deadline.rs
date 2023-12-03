@@ -122,13 +122,13 @@ impl Detector for BlockTimestampDeadlineDetector {
 #[cfg(test)]
 mod block_timestamp_deadline_detector_tests {
     use crate::detect::{
-        detector::{detector_test_helpers::load_contract, Detector},
+        detector::{detector_test_helpers::load_contract_from_json, Detector},
         medium::block_timestamp_deadline::BlockTimestampDeadlineDetector,
     };
 
     #[test]
     fn test_block_timestamp_deadline_uniswap_v2_detector() {
-        let context_loader = load_contract(
+        let context_loader = load_contract_from_json(
             "./tests/contract-playground/out/UniswapV2Swapper.sol/UniswapV2Swapper.json",
         );
         let mut detector = BlockTimestampDeadlineDetector::default();
@@ -159,7 +159,7 @@ mod block_timestamp_deadline_detector_tests {
 
     #[test]
     fn test_block_timestamp_deadline_uniswap_v3_detector() {
-        let context_loader = load_contract(
+        let context_loader = load_contract_from_json(
             "./tests/contract-playground/out/UniswapV3Swapper.sol/UniswapV3Swapper.json",
         );
         let mut detector = BlockTimestampDeadlineDetector::default();

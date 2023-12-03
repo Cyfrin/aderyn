@@ -65,21 +65,28 @@ impl Detector for DelegateCallInLoopDetector {
 
 #[cfg(test)]
 mod delegate_call_in_loop_detector_tests {
-    use crate::detect::detector::{detector_test_helpers::load_contract, Detector};
+    use std::path::PathBuf;
+
+    use crate::detect::detector::{detector_test_helpers::load_contract_from_source, Detector};
 
     use super::DelegateCallInLoopDetector;
 
     #[test]
     fn test_delegate_call_in_loop_detector() {
-        let context_loader = load_contract(
-            "./tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",
-        );
+        // let context_loader = load_contract_from_json(
+        //     "./tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",
+        // );
+
+        let context_loader = load_contract_from_source(&PathBuf::from(
+            "./tests/contract-playground/src/inheritance/ExtendedInheritance.sol",
+        ));
         let mut detector = DelegateCallInLoopDetector::default();
         let found = detector.detect(&context_loader).unwrap();
         // assert that the detector found a delegate call in a loop
         assert!(found);
         // assert that the detector found the correct number of instances (1)
         assert_eq!(detector.instances().len(), 1);
+        println!("{:#?}", detector.instances());
         // assert the severity is high
         assert_eq!(
             detector.severity(),

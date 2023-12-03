@@ -122,10 +122,11 @@ impl ReportPrinter for MarkdownReportPrinter {
         writeln!(writer, "| Filepath | nSLOC |")?;
         writeln!(writer, "| --- | --- |")?;
 
-        let sloc_stats = loader.sloc_stats;
+        let sloc_stats = &loader.sloc_stats;
 
-        let mut source_units = loader.source_units;
-        source_units.sort_by_key(|su| su.absolute_path.as_deref().unwrap_or(""));
+        let mut source_units = &loader.source_units;
+        // TODO - uncomment
+        // source_units.sort_by_key(|su| su.absolute_path.as_deref().unwrap_or(""));
 
         // Iterate over source units and add each as a row in the markdown table
         for source_unit in source_units {

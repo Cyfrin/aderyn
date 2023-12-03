@@ -133,13 +133,13 @@ impl Detector for DifferentStorageConditionalDetector {
 
 #[cfg(test)]
 mod different_storage_conditionals_tests {
-    use crate::detect::detector::{detector_test_helpers::load_contract, Detector};
+    use crate::detect::detector::{detector_test_helpers::load_contract_from_json, Detector};
 
     use super::DifferentStorageConditionalDetector;
 
     #[test]
     fn test_different_storage_conditionals() {
-        let context_loader = load_contract(
+        let context_loader = load_contract_from_json(
             "./tests/contract-playground/out/StorageConditionals.sol/StorageConditionals.json",
         );
         let mut detector = DifferentStorageConditionalDetector::default();

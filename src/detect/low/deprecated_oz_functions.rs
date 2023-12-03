@@ -77,13 +77,13 @@ impl Detector for DeprecatedOZFunctionsDetector {
 
 #[cfg(test)]
 mod deprecated_oz_functions_tests {
-    use crate::detect::detector::{detector_test_helpers::load_contract, Detector};
+    use crate::detect::detector::{detector_test_helpers::load_contract_from_json, Detector};
 
     use super::DeprecatedOZFunctionsDetector;
 
     #[test]
     fn test_deprecated_oz_functions_detector() {
-        let context_loader = load_contract(
+        let context_loader = load_contract_from_json(
             "./tests/contract-playground/out/DeprecatedOZFunctions.sol/DeprecatedOZFunctions.json",
         );
         let mut detector = DeprecatedOZFunctionsDetector::default();

@@ -76,14 +76,14 @@ impl Detector for UselessPublicFunctionDetector {
 
 #[cfg(test)]
 mod useless_public_function_tests {
-    use crate::detect::detector::{detector_test_helpers::load_contract, Detector};
+    use crate::detect::detector::{detector_test_helpers::load_contract_from_json, Detector};
 
     use super::UselessPublicFunctionDetector;
 
     #[test]
     fn test_useless_public_functions() {
         let context_loader =
-            load_contract("./tests/contract-playground/out/Counter.sol/Counter.json");
+            load_contract_from_json("./tests/contract-playground/out/Counter.sol/Counter.json");
         let mut detector = UselessPublicFunctionDetector::default();
         // assert that the detector finds the public function
         let found = detector.detect(&context_loader).unwrap();

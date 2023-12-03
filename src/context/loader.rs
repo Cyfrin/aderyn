@@ -944,7 +944,7 @@ impl AstContextVisitor for ContextLoader {
 
 //         // Get all for statements, and check if there is a delegate call in the body of each for statement
 //         let mut delegate_call_in_loop_detector = DelegateCallInLoopDetector::default();
-//         let for_statements = loader.get_for_statements();
+//         let for_statements = loader.for_statements.iter();
 //         for for_statement in for_statements {
 //             for_statement.accept(&mut delegate_call_in_loop_detector)?;
 //         }

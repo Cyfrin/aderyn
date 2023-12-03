@@ -49,13 +49,13 @@ impl Detector for UnspecificSolidityPragmaDetector {
 #[cfg(test)]
 mod unspecific_solidity_pragma_tests {
     use crate::detect::{
-        detector::{detector_test_helpers::load_contract, Detector},
+        detector::{detector_test_helpers::load_contract_from_json, Detector},
         low::unspecific_solidity_pragma::UnspecificSolidityPragmaDetector,
     };
 
     #[test]
     fn test_deprecated_oz_functions_detector() {
-        let context_loader = load_contract(
+        let context_loader = load_contract_from_json(
             "./tests/contract-playground/out/IContractInheritance.sol/IContractInheritance.json",
         );
         let mut detector = UnspecificSolidityPragmaDetector::default();

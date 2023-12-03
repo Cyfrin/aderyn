@@ -60,13 +60,13 @@ impl Detector for UnindexedEventsDetector {
 
 #[cfg(test)]
 mod unindexed_event_tests {
-    use crate::detect::detector::{detector_test_helpers::load_contract, Detector};
+    use crate::detect::detector::{detector_test_helpers::load_contract_from_json, Detector};
 
     use super::UnindexedEventsDetector;
 
     #[test]
     fn test_unindexed_events() {
-        let context_loader = load_contract(
+        let context_loader = load_contract_from_json(
             "./tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",
         );
         let mut detector = UnindexedEventsDetector::default();

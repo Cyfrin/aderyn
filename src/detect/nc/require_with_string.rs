@@ -55,13 +55,13 @@ impl Detector for RequireWithStringDetector {
 
 #[cfg(test)]
 mod require_with_string_tests {
-    use crate::detect::detector::{detector_test_helpers::load_contract, Detector};
+    use crate::detect::detector::{detector_test_helpers::load_contract_from_json, Detector};
 
     use super::RequireWithStringDetector;
 
     #[test]
     fn test_require_with_string() {
-        let context_loader = load_contract(
+        let context_loader = load_contract_from_json(
             "./tests/contract-playground/out/DeprecatedOZFunctions.sol/DeprecatedOZFunctions.json",
         );
         let mut detector = RequireWithStringDetector::default();

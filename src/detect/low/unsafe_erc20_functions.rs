@@ -47,13 +47,13 @@ impl Detector for UnsafeERC20FunctionsDetector {
 
 #[cfg(test)]
 mod unsafe_erc20_functions_tests {
-    use crate::detect::detector::{detector_test_helpers::load_contract, Detector};
+    use crate::detect::detector::{detector_test_helpers::load_contract_from_json, Detector};
 
     use super::UnsafeERC20FunctionsDetector;
 
     #[test]
     fn test_unsafe_erc20_functions() {
-        let context_loader = load_contract(
+        let context_loader = load_contract_from_json(
             "./tests/contract-playground/out/DeprecatedOZFunctions.sol/DeprecatedOZFunctions.json",
         );
         let mut detector = UnsafeERC20FunctionsDetector::default();

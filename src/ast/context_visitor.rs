@@ -1,3 +1,5 @@
+use crate::context::loader::ContextLoader;
+
 use super::*;
 use std::{collections::HashSet, io};
 use yul::*;
@@ -999,14 +1001,12 @@ pub trait AstContextVisitor {
 
 pub struct AstContextVisitorData<'a> {
     pub analyzed_paths: HashSet<String>,
-    pub visitors: Vec<Box<dyn AstContextVisitor + 'a>>,
+    pub context_loader: &'a mut ContextLoader,
 }
 
 impl AstContextVisitor for AstContextVisitorData<'_> {
     fn visit_source_unit<'a>(&mut self, context: &mut SourceUnitContext<'a>) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_source_unit(context)?;
-        }
+        self.context_loader.visit_source_unit(context)?;
 
         for node in context.current_source_unit.nodes.iter() {
             match node {
@@ -1070,9 +1070,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
     }
 
     fn leave_source_unit<'a>(&mut self, context: &mut SourceUnitContext<'a>) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_source_unit(context)?;
-        }
+        self.context_loader.leave_source_unit(context)?;
 
         Ok(())
     }
@@ -1081,9 +1079,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut PragmaDirectiveContext<'a>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_pragma_directive(context)?;
-        }
+        self.context_loader.visit_pragma_directive(context)?;
 
         Ok(())
     }
@@ -1092,9 +1088,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut PragmaDirectiveContext<'a>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_pragma_directive(context)?;
-        }
+        self.context_loader.leave_pragma_directive(context)?;
 
         Ok(())
     }
@@ -1103,9 +1097,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut ImportDirectiveContext<'a>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_import_directive(context)?;
-        }
+        self.context_loader.visit_import_directive(context)?;
 
         Ok(())
     }
@@ -1114,9 +1106,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut ImportDirectiveContext<'a>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_import_directive(context)?;
-        }
+        self.context_loader.leave_import_directive(context)?;
 
         Ok(())
     }
@@ -1125,9 +1115,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut StructDefinitionContext<'a>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_struct_definition(context)?;
-        }
+        self.context_loader.visit_struct_definition(context)?;
 
         Ok(())
     }
@@ -1136,9 +1124,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut StructDefinitionContext<'a>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_struct_definition(context)?;
-        }
+        self.context_loader.leave_struct_definition(context)?;
 
         Ok(())
     }
@@ -1147,9 +1133,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut EnumDefinitionContext<'a>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_enum_definition(context)?;
-        }
+        self.context_loader.visit_enum_definition(context)?;
 
         Ok(())
     }
@@ -1158,9 +1142,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut EnumDefinitionContext<'a>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_enum_definition(context)?;
-        }
+        self.context_loader.leave_enum_definition(context)?;
 
         Ok(())
     }
@@ -1169,9 +1151,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut ContractDefinitionContext<'a>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_contract_definition(context)?;
-        }
+        self.context_loader.visit_contract_definition(context)?;
 
         for definition_node in context.contract_definition.nodes.iter() {
             match definition_node {
@@ -1252,9 +1232,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut ContractDefinitionContext<'a>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_contract_definition(context)?;
-        }
+        self.context_loader.leave_contract_definition(context)?;
 
         Ok(())
     }
@@ -1263,9 +1241,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut UsingForDirectiveContext<'a>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_using_for_directive(context)?;
-        }
+        self.context_loader.visit_using_for_directive(context)?;
 
         Ok(())
     }
@@ -1274,9 +1250,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut UsingForDirectiveContext<'a>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_using_for_directive(context)?;
-        }
+        self.context_loader.leave_using_for_directive(context)?;
 
         Ok(())
     }
@@ -1285,9 +1259,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut VariableDeclarationContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_variable_declaration(context)?;
-        }
+        self.context_loader.visit_variable_declaration(context)?;
 
         Ok(())
     }
@@ -1296,9 +1268,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut VariableDeclarationContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_variable_declaration(context)?;
-        }
+        self.context_loader.leave_variable_declaration(context)?;
 
         Ok(())
     }
@@ -1307,9 +1277,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut EventDefinitionContext<'a>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_event_definition(context)?;
-        }
+        self.context_loader.visit_event_definition(context)?;
 
         Ok(())
     }
@@ -1318,9 +1286,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut EventDefinitionContext<'a>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_event_definition(context)?;
-        }
+        self.context_loader.leave_event_definition(context)?;
 
         Ok(())
     }
@@ -1329,9 +1295,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut ErrorDefinitionContext<'a>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_error_definition(context)?;
-        }
+        self.context_loader.visit_error_definition(context)?;
 
         Ok(())
     }
@@ -1340,9 +1304,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut ErrorDefinitionContext<'a>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_error_definition(context)?;
-        }
+        self.context_loader.leave_error_definition(context)?;
 
         Ok(())
     }
@@ -1351,9 +1313,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut ModifierDefinitionContext<'a>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_modifier_definition(context)?;
-        }
+        self.context_loader.visit_modifier_definition(context)?;
 
         let mut blocks = vec![];
         let mut context =
@@ -1369,9 +1329,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut ModifierDefinitionContext<'a>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_modifier_definition(context)?;
-        }
+        self.context_loader.leave_modifier_definition(context)?;
 
         Ok(())
     }
@@ -1380,9 +1338,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut FunctionDefinitionContext<'a>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_function_definition(context)?;
-        }
+        self.context_loader.visit_function_definition(context)?;
 
         for variable_declaration in context.function_definition.parameters.parameters.iter() {
             let mut context = VariableDeclarationContext {
@@ -1434,9 +1390,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut FunctionDefinitionContext<'a>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_function_definition(context)?;
-        }
+        self.context_loader.leave_function_definition(context)?;
 
         Ok(())
     }
@@ -1445,9 +1399,8 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut UserDefinedValueTypeDefinitionContext<'a>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_user_defined_value_type_definition(context)?;
-        }
+        self.context_loader
+            .visit_user_defined_value_type_definition(context)?;
 
         Ok(())
     }
@@ -1456,9 +1409,8 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut UserDefinedValueTypeDefinitionContext<'a>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_user_defined_value_type_definition(context)?;
-        }
+        self.context_loader
+            .leave_user_defined_value_type_definition(context)?;
 
         Ok(())
     }
@@ -1467,9 +1419,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut ModifierInvocationContext<'a>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_modifier_invocation(context)?;
-        }
+        self.context_loader.visit_modifier_invocation(context)?;
 
         if let Some(arguments) = context.modifier_invocation.arguments.as_ref() {
             for expression in arguments.iter() {
@@ -1495,17 +1445,13 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut ModifierInvocationContext<'a>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_modifier_invocation(context)?;
-        }
+        self.context_loader.leave_modifier_invocation(context)?;
 
         Ok(())
     }
 
     fn visit_block<'a, 'b>(&mut self, context: &mut BlockContext<'a, 'b>) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_block(context)?;
-        }
+        self.context_loader.visit_block(context)?;
 
         context.blocks.push(context.block);
 
@@ -1529,9 +1475,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
     fn leave_block<'a, 'b>(&mut self, context: &mut BlockContext<'a, 'b>) -> io::Result<()> {
         context.blocks.pop();
 
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_block(context)?;
-        }
+        self.context_loader.leave_block(context)?;
 
         Ok(())
     }
@@ -1540,9 +1484,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut StatementContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_statement(context)?;
-        }
+        self.context_loader.visit_statement(context)?;
 
         match context.statement {
             Statement::VariableDeclarationStatement(variable_declaration_statement) => {
@@ -1753,9 +1695,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut StatementContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_statement(context)?;
-        }
+        self.context_loader.leave_statement(context)?;
 
         Ok(())
     }
@@ -1764,9 +1704,8 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut VariableDeclarationStatementContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_variable_declaration_statement(context)?;
-        }
+        self.context_loader
+            .visit_variable_declaration_statement(context)?;
 
         for variable_declaration in context
             .variable_declaration_statement
@@ -1813,9 +1752,8 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut VariableDeclarationStatementContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_variable_declaration_statement(context)?;
-        }
+        self.context_loader
+            .leave_variable_declaration_statement(context)?;
 
         Ok(())
     }
@@ -1824,9 +1762,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut IfStatementContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_if_statement(context)?;
-        }
+        self.context_loader.visit_if_statement(context)?;
 
         let mut true_body_context = BlockOrStatementContext {
             source_units: context.source_units,
@@ -1861,9 +1797,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut IfStatementContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_if_statement(context)?;
-        }
+        self.context_loader.leave_if_statement(context)?;
 
         Ok(())
     }
@@ -1872,9 +1806,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut ForStatementContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_for_statement(context)?;
-        }
+        self.context_loader.visit_for_statement(context)?;
 
         if let Some(statement) = context.for_statement.initialization_expression.as_ref() {
             let mut context = StatementContext {
@@ -1938,9 +1870,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut ForStatementContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_for_statement(context)?;
-        }
+        self.context_loader.leave_for_statement(context)?;
 
         Ok(())
     }
@@ -1949,9 +1879,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut WhileStatementContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_while_statement(context)?;
-        }
+        self.context_loader.visit_while_statement(context)?;
 
         let mut condition_context = ExpressionContext {
             source_units: context.source_units,
@@ -1985,9 +1913,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut WhileStatementContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_while_statement(context)?;
-        }
+        self.context_loader.leave_while_statement(context)?;
 
         Ok(())
     }
@@ -1996,9 +1922,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut DoWhileStatementContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_do_while_statement(context)?;
-        }
+        self.context_loader.visit_do_while_statement(context)?;
 
         let mut body_context = BlockOrStatementContext {
             source_units: context.source_units,
@@ -2032,9 +1956,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut DoWhileStatementContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_do_while_statement(context)?;
-        }
+        self.context_loader.leave_do_while_statement(context)?;
 
         Ok(())
     }
@@ -2043,9 +1965,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut EmitStatementContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_emit_statement(context)?;
-        }
+        self.context_loader.visit_emit_statement(context)?;
 
         Ok(())
     }
@@ -2054,9 +1974,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut EmitStatementContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_emit_statement(context)?;
-        }
+        self.context_loader.leave_emit_statement(context)?;
 
         Ok(())
     }
@@ -2065,9 +1983,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut TryStatementContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_try_statement(context)?;
-        }
+        self.context_loader.visit_try_statement(context)?;
 
         for clause in context.try_statement.clauses.iter() {
             let mut context = BlockContext {
@@ -2090,9 +2006,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut TryStatementContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_try_statement(context)?;
-        }
+        self.context_loader.leave_try_statement(context)?;
 
         Ok(())
     }
@@ -2101,9 +2015,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut RevertStatementContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_revert_statement(context)?;
-        }
+        self.context_loader.visit_revert_statement(context)?;
 
         Ok(())
     }
@@ -2112,9 +2024,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut RevertStatementContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_revert_statement(context)?;
-        }
+        self.context_loader.leave_revert_statement(context)?;
 
         Ok(())
     }
@@ -2123,9 +2033,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut StatementContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_continue_statement(context)?;
-        }
+        self.context_loader.visit_continue_statement(context)?;
 
         Ok(())
     }
@@ -2134,9 +2042,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut StatementContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_continue_statement(context)?;
-        }
+        self.context_loader.leave_continue_statement(context)?;
 
         Ok(())
     }
@@ -2145,9 +2051,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut StatementContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_break_statement(context)?;
-        }
+        self.context_loader.visit_break_statement(context)?;
 
         Ok(())
     }
@@ -2156,9 +2060,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut StatementContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_break_statement(context)?;
-        }
+        self.context_loader.leave_break_statement(context)?;
 
         Ok(())
     }
@@ -2167,9 +2069,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut StatementContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_placeholder_statement(context)?;
-        }
+        self.context_loader.visit_placeholder_statement(context)?;
 
         Ok(())
     }
@@ -2178,9 +2078,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut StatementContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_placeholder_statement(context)?;
-        }
+        self.context_loader.leave_placeholder_statement(context)?;
 
         Ok(())
     }
@@ -2189,9 +2087,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut BlockOrStatementContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_block_or_statement(context)?;
-        }
+        self.context_loader.visit_block_or_statement(context)?;
 
         match context.block_or_statement {
             BlockOrStatement::Block(block) => {
@@ -2230,17 +2126,13 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut BlockOrStatementContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_block_or_statement(context)?;
-        }
+        self.context_loader.leave_block_or_statement(context)?;
 
         Ok(())
     }
 
     fn visit_return<'a, 'b>(&mut self, context: &mut ReturnContext<'a, 'b>) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_return(context)?;
-        }
+        self.context_loader.visit_return(context)?;
 
         if let Some(expression) = context.return_statement.expression.as_ref() {
             let mut condition_context = ExpressionContext {
@@ -2264,9 +2156,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut ExpressionContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_expression(context)?;
-        }
+        self.context_loader.visit_expression(context)?;
 
         match context.expression {
             Expression::Literal(literal) => {
@@ -2484,17 +2374,13 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
     }
 
     fn visit_literal<'a, 'b>(&mut self, context: &mut LiteralContext<'a, 'b>) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_literal(context)?;
-        }
+        self.context_loader.visit_literal(context)?;
 
         Ok(())
     }
 
     fn leave_literal<'a, 'b>(&mut self, context: &mut LiteralContext<'a, 'b>) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_literal(context)?;
-        }
+        self.context_loader.leave_literal(context)?;
 
         Ok(())
     }
@@ -2503,9 +2389,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut IdentifierContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_identifier(context)?;
-        }
+        self.context_loader.visit_identifier(context)?;
 
         Ok(())
     }
@@ -2514,9 +2398,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut IdentifierContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_identifier(context)?;
-        }
+        self.context_loader.leave_identifier(context)?;
 
         Ok(())
     }
@@ -2525,9 +2407,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut UnaryOperationContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_unary_operation(context)?;
-        }
+        self.context_loader.visit_unary_operation(context)?;
 
         let mut sub_context = ExpressionContext {
             source_units: context.source_units,
@@ -2549,9 +2429,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut UnaryOperationContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_unary_operation(context)?;
-        }
+        self.context_loader.leave_unary_operation(context)?;
 
         Ok(())
     }
@@ -2560,9 +2438,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut BinaryOperationContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_binary_operation(context)?;
-        }
+        self.context_loader.visit_binary_operation(context)?;
 
         let mut left_context = ExpressionContext {
             source_units: context.source_units,
@@ -2597,9 +2473,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut BinaryOperationContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_binary_operation(context)?;
-        }
+        self.context_loader.leave_binary_operation(context)?;
 
         Ok(())
     }
@@ -2608,9 +2482,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut ConditionalContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_conditional(context)?;
-        }
+        self.context_loader.visit_conditional(context)?;
 
         let mut condition_context = ExpressionContext {
             source_units: context.source_units,
@@ -2658,9 +2530,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut ConditionalContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_conditional(context)?;
-        }
+        self.context_loader.leave_conditional(context)?;
 
         Ok(())
     }
@@ -2669,9 +2539,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut AssignmentContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_assignment(context)?;
-        }
+        self.context_loader.visit_assignment(context)?;
 
         let mut left_context = ExpressionContext {
             source_units: context.source_units,
@@ -2706,9 +2574,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut AssignmentContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_assignment(context)?;
-        }
+        self.context_loader.leave_assignment(context)?;
 
         Ok(())
     }
@@ -2717,9 +2583,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut FunctionCallContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_function_call(context)?;
-        }
+        self.context_loader.visit_function_call(context)?;
 
         let mut expression_context = ExpressionContext {
             source_units: context.source_units,
@@ -2756,9 +2620,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut FunctionCallContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_function_call(context)?;
-        }
+        self.context_loader.leave_function_call(context)?;
 
         Ok(())
     }
@@ -2767,9 +2629,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut FunctionCallOptionsContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_function_call_options(context)?;
-        }
+        self.context_loader.visit_function_call_options(context)?;
 
         let mut expression_context = ExpressionContext {
             source_units: context.source_units,
@@ -2806,9 +2666,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut FunctionCallOptionsContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_function_call_options(context)?;
-        }
+        self.context_loader.leave_function_call_options(context)?;
 
         Ok(())
     }
@@ -2817,9 +2675,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut IndexAccessContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_index_access(context)?;
-        }
+        self.context_loader.visit_index_access(context)?;
 
         let mut base_context = ExpressionContext {
             source_units: context.source_units,
@@ -2856,9 +2712,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut IndexAccessContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_index_access(context)?;
-        }
+        self.context_loader.leave_index_access(context)?;
 
         Ok(())
     }
@@ -2867,9 +2721,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut IndexRangeAccessContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_index_range_access(context)?;
-        }
+        self.context_loader.visit_index_range_access(context)?;
 
         let mut base_context = ExpressionContext {
             source_units: context.source_units,
@@ -2921,9 +2773,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut IndexRangeAccessContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_index_range_access(context)?;
-        }
+        self.context_loader.leave_index_range_access(context)?;
 
         Ok(())
     }
@@ -2932,9 +2782,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut MemberAccessContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_member_access(context)?;
-        }
+        self.context_loader.visit_member_access(context)?;
 
         let mut expression_context = ExpressionContext {
             source_units: context.source_units,
@@ -2956,9 +2804,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut MemberAccessContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_member_access(context)?;
-        }
+        self.context_loader.leave_member_access(context)?;
 
         Ok(())
     }
@@ -2967,9 +2813,8 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut ElementaryTypeNameExpressionContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_elementary_type_name_expression(context)?;
-        }
+        self.context_loader
+            .visit_elementary_type_name_expression(context)?;
 
         Ok(())
     }
@@ -2978,9 +2823,8 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut ElementaryTypeNameExpressionContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_elementary_type_name_expression(context)?;
-        }
+        self.context_loader
+            .leave_elementary_type_name_expression(context)?;
 
         Ok(())
     }
@@ -2989,9 +2833,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut TupleExpressionContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_tuple_expression(context)?;
-        }
+        self.context_loader.visit_tuple_expression(context)?;
 
         for component in context.tuple_expression.components.iter().flatten() {
             let mut component_context = ExpressionContext {
@@ -3015,9 +2857,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut TupleExpressionContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_tuple_expression(context)?;
-        }
+        self.context_loader.leave_tuple_expression(context)?;
 
         Ok(())
     }
@@ -3026,9 +2866,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut NewExpressionContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_new_expression(context)?;
-        }
+        self.context_loader.visit_new_expression(context)?;
 
         Ok(())
     }
@@ -3037,9 +2875,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut NewExpressionContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_new_expression(context)?;
-        }
+        self.context_loader.leave_new_expression(context)?;
 
         Ok(())
     }
@@ -3048,9 +2884,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut InlineAssemblyContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_inline_assembly(context)?;
-        }
+        self.context_loader.visit_inline_assembly(context)?;
 
         if let Some(yul_block) = context.inline_assembly.ast.as_ref() {
             let mut yul_blocks = vec![];
@@ -3078,9 +2912,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut InlineAssemblyContext<'a, 'b>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_inline_assembly(context)?;
-        }
+        self.context_loader.leave_inline_assembly(context)?;
 
         Ok(())
     }
@@ -3089,9 +2921,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut YulBlockContext<'a, 'b, 'c>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_yul_block(context)?;
-        }
+        self.context_loader.visit_yul_block(context)?;
 
         context.yul_blocks.push(context.yul_block);
 
@@ -3121,9 +2951,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
     ) -> io::Result<()> {
         context.yul_blocks.pop();
 
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_yul_block(context)?;
-        }
+        self.context_loader.leave_yul_block(context)?;
 
         Ok(())
     }
@@ -3132,9 +2960,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut YulStatementContext<'a, 'b, 'c>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_yul_statement(context)?;
-        }
+        self.context_loader.visit_yul_statement(context)?;
 
         match context.yul_statement {
             YulStatement::YulIf(yul_if) => {
@@ -3303,9 +3129,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut YulStatementContext<'a, 'b, 'c>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_yul_statement(context)?;
-        }
+        self.context_loader.leave_yul_statement(context)?;
 
         Ok(())
     }
@@ -3314,9 +3138,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut YulIfContext<'a, 'b, 'c>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_yul_if(context)?;
-        }
+        self.context_loader.visit_yul_if(context)?;
 
         let mut condition_context = YulExpressionContext {
             source_units: context.source_units,
@@ -3356,9 +3178,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut YulIfContext<'a, 'b, 'c>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_yul_if(context)?;
-        }
+        self.context_loader.leave_yul_if(context)?;
 
         Ok(())
     }
@@ -3367,9 +3187,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut YulSwitchContext<'a, 'b, 'c>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_yul_switch(context)?;
-        }
+        self.context_loader.visit_yul_switch(context)?;
 
         let mut expression_context = YulExpressionContext {
             source_units: context.source_units,
@@ -3413,9 +3231,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut YulSwitchContext<'a, 'b, 'c>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_yul_switch(context)?;
-        }
+        self.context_loader.leave_yul_switch(context)?;
 
         Ok(())
     }
@@ -3424,9 +3240,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut YulForLoopContext<'a, 'b, 'c>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_yul_for_loop(context)?;
-        }
+        self.context_loader.visit_yul_for_loop(context)?;
 
         let mut pre_context = YulBlockContext {
             source_units: context.source_units,
@@ -3496,9 +3310,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut YulForLoopContext<'a, 'b, 'c>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_yul_for_loop(context)?;
-        }
+        self.context_loader.leave_yul_for_loop(context)?;
 
         Ok(())
     }
@@ -3507,9 +3319,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut YulCaseContext<'a, 'b, 'c>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_yul_case(context)?;
-        }
+        self.context_loader.visit_yul_case(context)?;
 
         if let Some(value) = context.yul_case.value.as_ref() {
             let mut value_context = YulExpressionContext {
@@ -3551,9 +3361,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut YulCaseContext<'a, 'b, 'c>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_yul_case(context)?;
-        }
+        self.context_loader.leave_yul_case(context)?;
 
         Ok(())
     }
@@ -3562,9 +3370,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut YulAssignmentContext<'a, 'b, 'c>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_yul_assignment(context)?;
-        }
+        self.context_loader.visit_yul_assignment(context)?;
 
         for yul_identifier in context.yul_assignment.variable_names.iter() {
             let mut context = YulIdentifierContext {
@@ -3608,9 +3414,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut YulAssignmentContext<'a, 'b, 'c>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_yul_assignment(context)?;
-        }
+        self.context_loader.leave_yul_assignment(context)?;
 
         Ok(())
     }
@@ -3619,10 +3423,8 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut YulVariableDeclarationContext<'a, 'b, 'c>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_yul_variable_declaration(context)?;
-        }
-
+        self.context_loader
+            .visit_yul_variable_declaration(context)?;
         if let Some(value) = context.yul_variable_declaration.value.as_ref() {
             let mut value_context = YulExpressionContext {
                 source_units: context.source_units,
@@ -3648,9 +3450,8 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut YulVariableDeclarationContext<'a, 'b, 'c>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_yul_variable_declaration(context)?;
-        }
+        self.context_loader
+            .leave_yul_variable_declaration(context)?;
 
         Ok(())
     }
@@ -3659,9 +3460,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut YulTypedNameContext<'a, 'b, 'c>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_yul_typed_name(context)?;
-        }
+        self.context_loader.visit_yul_typed_name(context)?;
 
         Ok(())
     }
@@ -3670,9 +3469,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut YulTypedNameContext<'a, 'b, 'c>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_yul_typed_name(context)?;
-        }
+        self.context_loader.leave_yul_typed_name(context)?;
 
         Ok(())
     }
@@ -3681,9 +3478,8 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut YulExpressionStatementContext<'a, 'b, 'c>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_yul_expression_statement(context)?;
-        }
+        self.context_loader
+            .visit_yul_expression_statement(context)?;
 
         let mut expression_context = YulExpressionContext {
             source_units: context.source_units,
@@ -3708,9 +3504,8 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut YulExpressionStatementContext<'a, 'b, 'c>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_yul_expression_statement(context)?;
-        }
+        self.context_loader
+            .leave_yul_expression_statement(context)?;
 
         Ok(())
     }
@@ -3719,9 +3514,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut YulFunctionDefinitionContext<'a, 'b, 'c>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_yul_function_definition(context)?;
-        }
+        self.context_loader.visit_yul_function_definition(context)?;
 
         if let Some(parameters) = context.yul_function_definition.parameters.as_ref() {
             for parameter in parameters.iter() {
@@ -3786,9 +3579,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut YulFunctionDefinitionContext<'a, 'b, 'c>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_yul_function_definition(context)?;
-        }
+        self.context_loader.leave_yul_function_definition(context)?;
 
         Ok(())
     }
@@ -3797,9 +3588,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut YulStatementContext<'a, 'b, 'c>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_yul_leave(context)?;
-        }
+        self.context_loader.visit_yul_leave(context)?;
 
         Ok(())
     }
@@ -3808,9 +3597,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut YulStatementContext<'a, 'b, 'c>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_yul_leave(context)?;
-        }
+        self.context_loader.leave_yul_leave(context)?;
 
         Ok(())
     }
@@ -3819,9 +3606,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut YulStatementContext<'a, 'b, 'c>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_yul_break(context)?;
-        }
+        self.context_loader.visit_yul_break(context)?;
 
         Ok(())
     }
@@ -3830,9 +3615,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut YulStatementContext<'a, 'b, 'c>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_yul_break(context)?;
-        }
+        self.context_loader.leave_yul_break(context)?;
 
         Ok(())
     }
@@ -3841,9 +3624,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut YulStatementContext<'a, 'b, 'c>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_yul_continue(context)?;
-        }
+        self.context_loader.visit_yul_continue(context)?;
 
         Ok(())
     }
@@ -3852,9 +3633,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut YulStatementContext<'a, 'b, 'c>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_yul_continue(context)?;
-        }
+        self.context_loader.leave_yul_continue(context)?;
 
         Ok(())
     }
@@ -3863,9 +3642,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut YulExpressionContext<'a, 'b, 'c>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_yul_expression(context)?;
-        }
+        self.context_loader.visit_yul_expression(context)?;
 
         match context.yul_expression {
             YulExpression::YulLiteral(yul_literal) => {
@@ -3933,9 +3710,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut YulExpressionContext<'a, 'b, 'c>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_yul_expression(context)?;
-        }
+        self.context_loader.leave_yul_expression(context)?;
 
         Ok(())
     }
@@ -3944,9 +3719,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut YulLiteralContext<'a, 'b, 'c>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_yul_literal(context)?;
-        }
+        self.context_loader.visit_yul_literal(context)?;
 
         Ok(())
     }
@@ -3955,9 +3728,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut YulLiteralContext<'a, 'b, 'c>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_yul_literal(context)?;
-        }
+        self.context_loader.leave_yul_literal(context)?;
 
         Ok(())
     }
@@ -3966,9 +3737,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut YulIdentifierContext<'a, 'b, 'c>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_yul_identifier(context)?;
-        }
+        self.context_loader.visit_yul_identifier(context)?;
 
         Ok(())
     }
@@ -3977,9 +3746,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut YulIdentifierContext<'a, 'b, 'c>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_yul_identifier(context)?;
-        }
+        self.context_loader.leave_yul_identifier(context)?;
 
         Ok(())
     }
@@ -3988,9 +3755,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut YulFunctionCallContext<'a, 'b, 'c>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.visit_yul_function_call(context)?;
-        }
+        self.context_loader.visit_yul_function_call(context)?;
 
         let mut identifier_context = YulIdentifierContext {
             source_units: context.source_units,
@@ -4034,9 +3799,7 @@ impl AstContextVisitor for AstContextVisitorData<'_> {
         &mut self,
         context: &mut YulFunctionCallContext<'a, 'b, 'c>,
     ) -> io::Result<()> {
-        for visitor in self.visitors.iter_mut() {
-            visitor.leave_yul_function_call(context)?;
-        }
+        self.context_loader.leave_yul_function_call(context)?;
 
         Ok(())
     }

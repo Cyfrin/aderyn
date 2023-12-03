@@ -69,14 +69,15 @@ impl Detector for AvoidAbiEncodePackedDetector {
 
 #[cfg(test)]
 mod avoid_abi_encode_packed_tests {
-    use crate::detect::detector::{detector_test_helpers::load_contract, Detector};
+    use crate::detect::detector::{detector_test_helpers::load_contract_from_json, Detector};
 
     use super::AvoidAbiEncodePackedDetector;
 
     #[test]
     fn test_avoid_abi_encode_packed_detector() {
-        let context_loader =
-            load_contract("./tests/contract-playground/out/KeccakContract.sol/KeccakContract.json");
+        let context_loader = load_contract_from_json(
+            "./tests/contract-playground/out/KeccakContract.sol/KeccakContract.json",
+        );
         let mut detector = AvoidAbiEncodePackedDetector::default();
         let found = detector.detect(&context_loader).unwrap();
         // assert that the detector found an abi encode packed
