@@ -1,3 +1,5 @@
+use solang_parser::pt::Import;
+
 use super::{yul::*, *};
 
 #[derive(Default)]
@@ -92,7 +94,7 @@ impl AstBuilder {
 
                 solang_parser::pt::SourceUnitPart::VariableDefinition(input) => {
                     result.nodes.push(SourceUnitNode::VariableDeclaration(
-                        self.build_variable_declaration(source_unit_scope, input),
+                        self.build_variable_declaration(source_unit_scope, input, true),
                     ));
                 }
 
@@ -156,7 +158,20 @@ impl AstBuilder {
             }
 
             solang_parser::pt::Import::GlobalSymbol(_, _, _) => todo!(),
-            solang_parser::pt::Import::Rename(_, _, _) => todo!(),
+            solang_parser::pt::Import::Rename(file, list, loc) => {
+                // TODO: this is placeholder. list of identifiers should be handled?
+                ImportDirective {
+                    file: file.to_string(),
+                    source_unit: -1, // TODO: use imported `source_unit.id`
+                    scope,
+                    absolute_path: Some(file.to_string()),
+                    unit_alias: String::new(),
+                    name_location: Some("-1:-1:-1".to_string()), // TODO
+                    symbol_aliases: vec![],
+                    src: self.loc_to_src(loc),
+                    id: self.next_node_id(),
+                }
+            }
         }
     }
 
@@ -225,7 +240,7 @@ impl AstBuilder {
 
                     solang_parser::pt::ContractPart::VariableDefinition(x) => {
                         Some(ContractDefinitionNode::VariableDeclaration(
-                            self.build_variable_declaration(contract_scope, x),
+                            self.build_variable_declaration(contract_scope, x, true),
                         ))
                     }
 
@@ -813,6 +828,7 @@ impl AstBuilder {
         &mut self,
         scope: i64,
         input: &solang_parser::pt::VariableDefinition,
+        is_state: bool,
     ) -> VariableDeclaration {
         let mut visibility = Visibility::Public;
         let mut mutability = None;
@@ -859,7 +875,7 @@ impl AstBuilder {
             name_location: input.name.as_ref().map(|x| self.loc_to_src(&x.loc)),
             overrides,
             scope,
-            state_variable: false, // TODO: is this in the type expression?
+            state_variable: is_state, // TODO: is this in the type expression?
             storage_location: StorageLocation::Default, // TODO: is this in the type expression?
             type_descriptions: TypeDescriptions {
                 type_identifier: None, // TODO

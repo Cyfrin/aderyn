@@ -77,15 +77,17 @@ impl Detector for DeprecatedOZFunctionsDetector {
 
 #[cfg(test)]
 mod deprecated_oz_functions_tests {
-    use crate::detect::detector::{detector_test_helpers::load_contract_from_json, Detector};
+    use std::path::PathBuf;
+
+    use crate::detect::detector::{detector_test_helpers::load_contract_from_source, Detector};
 
     use super::DeprecatedOZFunctionsDetector;
 
     #[test]
     fn test_deprecated_oz_functions_detector() {
-        let context_loader = load_contract_from_json(
-            "./tests/contract-playground/out/DeprecatedOZFunctions.sol/DeprecatedOZFunctions.json",
-        );
+        let context_loader = load_contract_from_source(&PathBuf::from(
+            "./tests/contract-playground/src/DeprecatedOZFunctions.sol",
+        ));
         let mut detector = DeprecatedOZFunctionsDetector::default();
         let found = detector.detect(&context_loader).unwrap();
         // assert that the detector found an abi encode packed

@@ -47,15 +47,17 @@ impl Detector for UnsafeERC20FunctionsDetector {
 
 #[cfg(test)]
 mod unsafe_erc20_functions_tests {
-    use crate::detect::detector::{detector_test_helpers::load_contract_from_json, Detector};
+    use std::path::PathBuf;
+
+    use crate::detect::detector::{detector_test_helpers::load_contract_from_source, Detector};
 
     use super::UnsafeERC20FunctionsDetector;
 
     #[test]
     fn test_unsafe_erc20_functions() {
-        let context_loader = load_contract_from_json(
-            "./tests/contract-playground/out/DeprecatedOZFunctions.sol/DeprecatedOZFunctions.json",
-        );
+        let context_loader = load_contract_from_source(&PathBuf::from(
+            "./tests/contract-playground/src/DeprecatedOZFunctions.sol",
+        ));
         let mut detector = UnsafeERC20FunctionsDetector::default();
         let found = detector.detect(&context_loader).unwrap();
         // assert that the detector found an abi encode packed

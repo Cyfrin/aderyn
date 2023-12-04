@@ -73,10 +73,6 @@ mod delegate_call_in_loop_detector_tests {
 
     #[test]
     fn test_delegate_call_in_loop_detector() {
-        // let context_loader = load_contract_from_json(
-        //     "./tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",
-        // );
-
         let context_loader = load_contract_from_source(&PathBuf::from(
             "./tests/contract-playground/src/inheritance/ExtendedInheritance.sol",
         ));

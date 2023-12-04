@@ -52,15 +52,17 @@ impl Detector for EcrecoverDetector {
 #[cfg(test)]
 mod ecrecover_tests {
 
-    use crate::detect::detector::{detector_test_helpers::load_contract_from_json, Detector};
+    use std::path::{Path, PathBuf};
+
+    use crate::detect::detector::{detector_test_helpers::load_contract_from_source, Detector};
 
     use super::EcrecoverDetector;
 
     #[test]
     fn test_ecrecover_detector() {
-        let context_loader = load_contract_from_json(
-            "./tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",
-        );
+        let context_loader = load_contract_from_source(&PathBuf::from(
+            "./tests/contract-playground/src/inheritance/ExtendedInheritance.sol",
+        ));
         let mut detector = EcrecoverDetector::default();
         let found = detector.detect(&context_loader).unwrap();
         // assert that the detector found an ecrecover

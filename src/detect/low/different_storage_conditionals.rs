@@ -18,12 +18,16 @@ pub struct DifferentStorageConditionalDetector {
 
 impl Detector for DifferentStorageConditionalDetector {
     fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
+        // let sv = &loader.variable_declarations;
+        // println!("sv: {:?}", sv);
+
         // Step 1: Get all state variable declarations
         let state_variables: Vec<&VariableDeclaration> = loader
             .variable_declarations
             .iter()
             .filter(|&var_decl| var_decl.state_variable)
             .collect();
+        println!("state_variables: {:?}", state_variables);
 
         // Get all state variable IDs
         let state_variable_ids: Vec<i64> = state_variables.iter().map(|var| var.id).collect();
@@ -133,15 +137,17 @@ impl Detector for DifferentStorageConditionalDetector {
 
 #[cfg(test)]
 mod different_storage_conditionals_tests {
-    use crate::detect::detector::{detector_test_helpers::load_contract_from_json, Detector};
+    use std::path::PathBuf;
+
+    use crate::detect::detector::{detector_test_helpers::load_contract_from_source, Detector};
 
     use super::DifferentStorageConditionalDetector;
 
     #[test]
     fn test_different_storage_conditionals() {
-        let context_loader = load_contract_from_json(
-            "./tests/contract-playground/out/StorageConditionals.sol/StorageConditionals.json",
-        );
+        let context_loader = load_contract_from_source(&PathBuf::from(
+            "./tests/contract-playground/src/StorageConditionals.sol",
+        ));
         let mut detector = DifferentStorageConditionalDetector::default();
         let found = detector.detect(&context_loader).unwrap();
 

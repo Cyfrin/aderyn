@@ -48,16 +48,18 @@ impl Detector for UnspecificSolidityPragmaDetector {
 
 #[cfg(test)]
 mod unspecific_solidity_pragma_tests {
+    use std::path::PathBuf;
+
     use crate::detect::{
-        detector::{detector_test_helpers::load_contract_from_json, Detector},
+        detector::{detector_test_helpers::load_contract_from_source, Detector},
         low::unspecific_solidity_pragma::UnspecificSolidityPragmaDetector,
     };
 
     #[test]
     fn test_deprecated_oz_functions_detector() {
-        let context_loader = load_contract_from_json(
-            "./tests/contract-playground/out/IContractInheritance.sol/IContractInheritance.json",
-        );
+        let context_loader = load_contract_from_source(&PathBuf::from(
+            "./tests/contract-playground/src/inheritance/IContractInheritance.sol",
+        ));
         let mut detector = UnspecificSolidityPragmaDetector::default();
         let found = detector.detect(&context_loader).unwrap();
         // assert that the detector found an abi encode packed
