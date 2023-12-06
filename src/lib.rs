@@ -8,7 +8,7 @@ pub mod visitor;
 use eyre::Result;
 use std::error::Error;
 use std::fs::{remove_file, File};
-use std::io::{self, Read};
+use std::io::{self};
 use std::path::{Path, PathBuf};
 
 use crate::context::loader::ContextLoader;
@@ -71,8 +71,5 @@ fn get_markdown_writer(filename: &str) -> io::Result<File> {
 }
 
 pub fn read_file_to_string(path: &PathBuf) -> Result<String> {
-    let mut file = File::open(path)?;
-    let mut content = String::new();
-    file.read_to_string(&mut content)?;
-    Ok(content)
+    Ok(std::fs::read_to_string(path)?)
 }
