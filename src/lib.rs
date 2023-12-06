@@ -16,7 +16,7 @@ use crate::detect::detector::{get_all_detectors, IssueSeverity};
 use crate::report::printer::{MarkdownReportPrinter, ReportPrinter};
 use crate::report::reporter::{Issue, Report};
 
-pub fn run(context_loader: ContextLoader) -> Result<(), Box<dyn Error>> {
+pub fn run(context_loader: ContextLoader, output_file_path: String) -> Result<(), Box<dyn Error>> {
     println!("Get Detectors");
 
     let detectors = get_all_detectors();
@@ -57,13 +57,21 @@ pub fn run(context_loader: ContextLoader) -> Result<(), Box<dyn Error>> {
 
     let printer = MarkdownReportPrinter;
     println!("Found issues processed. Printing report");
-    printer.print_report(get_markdown_writer("report.md")?, &report, &context_loader)?;
+    printer.print_report(
+        get_markdown_writer(&output_file_path)?,
+        &report,
+        &context_loader,
+    )?;
 
-    println!("Report printed to ./report.md");
+    println!("Report printed to {}", output_file_path);
     Ok(())
 }
 
 fn get_markdown_writer(filename: &str) -> io::Result<File> {
+    let file_path = Path::new(filename);
+    if let Some(parent_dir) = file_path.parent() {
+        std::fs::create_dir_all(parent_dir)?;
+    }
     if Path::new(filename).exists() {
         remove_file(filename)?; // If file exists, delete it
     }

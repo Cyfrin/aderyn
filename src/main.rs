@@ -16,6 +16,10 @@ use tokei::{Config, LanguageType};
 struct Args {
     /// Foundry or Hardhat project root directory
     root: String,
+
+    /// Desired file path for the final report (will overwrite existing one)
+    #[arg(short, long, default_value = "report.md")]
+    output: String,
 }
 
 enum Framework {
@@ -25,6 +29,10 @@ enum Framework {
 
 fn main() {
     let args = Args::parse();
+
+    if !args.output.ends_with(".md") {
+        eprintln!("Warning: output file lacks the \".md\" extension in its filename.");
+    }
 
     // Detect the framework
     println!("Detecting framework...");
@@ -163,7 +171,7 @@ fn main() {
     context_loader.set_sloc_stats(languages[&LanguageType::Solidity].clone());
 
     // Load the context loader into the run function, which runs the detectors
-    run(context_loader).unwrap_or_else(|err| {
+    run(context_loader, args.output).unwrap_or_else(|err| {
         // Exit with a non-zero exit code
         eprintln!("Error running aderyn");
         eprintln!("{:?}", err);
