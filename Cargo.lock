@@ -4,10 +4,11 @@ version = 3
 
 [[package]]
 name = "aderyn"
-version = "0.0.7"
+version = "0.0.8"
 dependencies = [
  "clap 4.4.6",
  "eyre",
+ "rayon",
  "serde",
  "serde_json",
  "serde_repr",
