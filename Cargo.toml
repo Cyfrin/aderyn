@@ -1,19 +1,7 @@
-[package]
-name = "aderyn"
-version = "0.0.7"
-edition = "2021"
-authors = ["Alex Roan <alex@cyfrin.io>"]
-description = "Rust based Solidity AST analyzer"
-license = "MIT"
+[workspace]
+members = [
+    "aderyn",
+    "aderyn_core"
+]
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-[dependencies]
-clap = { version = "4.4.6", features = ["derive"] }
-eyre = "0.6.8"
-rayon = "1.8.0"
-serde = { version = "1.0.160", features = ["derive"] }
-serde_json = "1.0.96"
-serde_repr = "0.1.12"
-tokei = "12.1.2"
-toml = "0.8.2"
+resolver="1"

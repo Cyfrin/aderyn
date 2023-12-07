@@ -54,7 +54,7 @@ mod unsafe_erc20_functions_tests {
     #[test]
     fn test_unsafe_erc20_functions() {
         let context_loader = load_contract(
-            "./tests/contract-playground/out/DeprecatedOZFunctions.sol/DeprecatedOZFunctions.json",
+            "../tests/contract-playground/out/DeprecatedOZFunctions.sol/DeprecatedOZFunctions.json",
         );
         let mut detector = UnsafeERC20FunctionsDetector::default();
         let found = detector.detect(&context_loader).unwrap();

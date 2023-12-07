@@ -123,7 +123,7 @@ mod centralization_risk_detector_tests {
     #[test]
     fn test_centralization_risk_detector() {
         let context_loader =
-            load_contract("./tests/contract-playground/out/AdminContract.sol/AdminContract.json");
+            load_contract("../tests/contract-playground/out/AdminContract.sol/AdminContract.json");
         let mut detector = CentralizationRiskDetector::default();
         let found = detector.detect(&context_loader).unwrap();
         // assert that the detector found a centralization risk

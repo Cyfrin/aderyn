@@ -164,8 +164,9 @@ mod zero_address_check_tests {
 
     #[test]
     fn test_deprecated_oz_functions_detector() {
-        let context_loader =
-            load_contract("./tests/contract-playground/out/StateVariables.sol/StateVariables.json");
+        let context_loader = load_contract(
+            "../tests/contract-playground/out/StateVariables.sol/StateVariables.json",
+        );
         let mut detector = ZeroAddressCheckDetector::default();
         let found = detector.detect(&context_loader).unwrap();
         // assert that the detector found the issue

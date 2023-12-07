@@ -140,7 +140,7 @@ mod different_storage_conditionals_tests {
     #[test]
     fn test_different_storage_conditionals() {
         let context_loader = load_contract(
-            "./tests/contract-playground/out/StorageConditionals.sol/StorageConditionals.json",
+            "../tests/contract-playground/out/StorageConditionals.sol/StorageConditionals.json",
         );
         let mut detector = DifferentStorageConditionalDetector::default();
         let found = detector.detect(&context_loader).unwrap();
