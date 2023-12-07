@@ -30,7 +30,7 @@ pub fn with_project_root_at(root_path: &PathBuf) -> (String, ContextLoader) {
             let source_file_path = root_path.join(key);
             match read_file_to_string(&source_file_path) {
                 Ok(content) => {
-                    for unit in context_loader.get_source_units() {
+                    for unit in &context_loader.source_units {
                         if let Some(ref abs_path) = unit.absolute_path {
                             if abs_path == key {
                                 context_loader.set_source_unit_source_content(unit.id, content);
