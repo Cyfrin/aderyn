@@ -71,28 +71,26 @@ fn main() {
                     if let Ok(foundry_output) =
                         read_foundry_output_file(output_filepath.to_str().unwrap())
                     {
-                        return Some(foundry_output.ast);
+                        Some(foundry_output.ast)
                     } else {
                         eprintln!(
                             "Error reading Foundry output file: {}",
                             output_filepath.to_str().unwrap()
                         );
-                        return None;
+                        None
                     }
                 })
                 .collect::<Vec<_>>();
 
             // read_foundry_output_file and print an error message if it fails
-            for source_unit in foundry_intermediates {
-                if let Some(ast) = source_unit {
-                    ast.accept(&mut context_loader).unwrap_or_else(|err| {
-                        // Exit with a non-zero exit code
-                        eprintln!("Error loading Foundry AST into ContextLoader");
-                        eprintln!("{:?}", err);
-                        std::process::exit(1);
-                    })
-                }
-            }
+            foundry_intermediates.into_iter().flatten().for_each(|ast| {
+                ast.accept(&mut context_loader).unwrap_or_else(|err| {
+                    // Exit with a non-zero exit code
+                    eprintln!("Error loading Foundry AST into ContextLoader");
+                    eprintln!("{:?}", err);
+                    std::process::exit(1);
+                })
+            });
 
             // Load the solidity source files into memory, and assign the content to the source_unit.source
             for source_filepath in loaded_foundry.src_filepaths {
