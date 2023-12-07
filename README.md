@@ -164,7 +164,3 @@ This project exists thanks to all the people who [contribute](/contributing.md).
 [license-shield]: https://img.shields.io/github/license/cyfrin/aderyn?logoColor=%23fff&color=blue
 [license-url]: https://github.com/cyfrin/aderyn/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-
-## Changelog
-
-* 0.0.8 - Parallel processing foundry output files to slow down time
