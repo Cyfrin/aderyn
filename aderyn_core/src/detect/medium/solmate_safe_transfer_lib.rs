@@ -15,7 +15,7 @@ pub struct SolmateSafeTransferLibDetector {
 
 impl Detector for SolmateSafeTransferLibDetector {
     fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
-        for import_directive in loader.get_import_directives() {
+        for import_directive in loader.import_directives.keys() {
             if !self.found_solmate_import {
                 // If the import directive absolute_path contains the strings "solmate" and "SafeTransferLib", flip the found_solmate_import flag to true
                 if import_directive
@@ -34,7 +34,7 @@ impl Detector for SolmateSafeTransferLibDetector {
             }
         }
 
-        for member_access in loader.get_member_accesses() {
+        for member_access in loader.member_accesses.keys() {
             // If the member access member_name is any of the following names, add it to the list of found
             // found_transfer_usage vector: ["safeTransfer", "safeTransferFrom", "safeApprove"]
             if member_access.member_name == "safeTransfer"

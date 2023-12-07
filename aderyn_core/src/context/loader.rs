@@ -119,62 +119,62 @@ impl ASTNode {
 
 #[derive(Default, Debug)]
 pub struct ContextLoader {
-    sloc_stats: Language,
+    pub sloc_stats: Language,
     pub nodes: HashMap<i64, ASTNode>,
     last_source_unit_id: i64,
 
     // Hashmaps of all nodes => source_unit_id
-    array_type_names: HashMap<ArrayTypeName, i64>,
-    assignments: HashMap<Assignment, i64>,
-    binary_operations: HashMap<BinaryOperation, i64>,
-    blocks: HashMap<Block, i64>,
-    conditionals: HashMap<Conditional, i64>,
-    contract_definitions: HashMap<ContractDefinition, i64>,
-    elementary_type_names: HashMap<ElementaryTypeName, i64>,
-    elementary_type_name_expressions: HashMap<ElementaryTypeNameExpression, i64>,
-    emit_statements: HashMap<EmitStatement, i64>,
-    enum_definitions: HashMap<EnumDefinition, i64>,
-    enum_values: HashMap<EnumValue, i64>,
-    event_definitions: HashMap<EventDefinition, i64>,
-    error_definitions: HashMap<ErrorDefinition, i64>,
-    expression_statements: HashMap<ExpressionStatement, i64>,
-    function_calls: HashMap<FunctionCall, i64>,
-    function_call_options: HashMap<FunctionCallOptions, i64>,
-    function_definitions: HashMap<FunctionDefinition, i64>,
-    function_type_names: HashMap<FunctionTypeName, i64>,
-    for_statements: HashMap<ForStatement, i64>,
-    identifiers: HashMap<Identifier, i64>,
-    identifier_paths: HashMap<IdentifierPath, i64>,
-    if_statements: HashMap<IfStatement, i64>,
-    import_directives: HashMap<ImportDirective, i64>,
-    index_accesses: HashMap<IndexAccess, i64>,
-    index_range_accesses: HashMap<IndexRangeAccess, i64>,
-    inheritance_specifiers: HashMap<InheritanceSpecifier, i64>,
-    inline_assemblies: HashMap<InlineAssembly, i64>,
-    literals: HashMap<Literal, i64>,
-    member_accesses: HashMap<MemberAccess, i64>,
-    new_expressions: HashMap<NewExpression, i64>,
-    mappings: HashMap<Mapping, i64>,
-    modifier_definitions: HashMap<ModifierDefinition, i64>,
-    modifier_invocations: HashMap<ModifierInvocation, i64>,
-    override_specifiers: HashMap<OverrideSpecifier, i64>,
-    parameter_lists: HashMap<ParameterList, i64>,
-    pragma_directives: HashMap<PragmaDirective, i64>,
-    returns: HashMap<Return, i64>,
-    revert_statements: HashMap<RevertStatement, i64>,
-    source_units: Vec<SourceUnit>,
-    struct_definitions: HashMap<StructDefinition, i64>,
-    structured_documentations: HashMap<StructuredDocumentation, i64>,
-    try_statements: HashMap<TryStatement, i64>,
-    try_catch_clauses: HashMap<TryCatchClause, i64>,
-    tuple_expressions: HashMap<TupleExpression, i64>,
-    unary_operations: HashMap<UnaryOperation, i64>,
-    user_defined_type_names: HashMap<UserDefinedTypeName, i64>,
-    user_defined_value_type_definitions: HashMap<UserDefinedValueTypeDefinition, i64>,
-    using_for_directives: HashMap<UsingForDirective, i64>,
-    variable_declarations: HashMap<VariableDeclaration, i64>,
-    variable_declaration_statements: HashMap<VariableDeclarationStatement, i64>,
-    while_statements: HashMap<WhileStatement, i64>,
+    pub array_type_names: HashMap<ArrayTypeName, i64>,
+    pub assignments: HashMap<Assignment, i64>,
+    pub binary_operations: HashMap<BinaryOperation, i64>,
+    pub blocks: HashMap<Block, i64>,
+    pub conditionals: HashMap<Conditional, i64>,
+    pub contract_definitions: HashMap<ContractDefinition, i64>,
+    pub elementary_type_names: HashMap<ElementaryTypeName, i64>,
+    pub elementary_type_name_expressions: HashMap<ElementaryTypeNameExpression, i64>,
+    pub emit_statements: HashMap<EmitStatement, i64>,
+    pub enum_definitions: HashMap<EnumDefinition, i64>,
+    pub enum_values: HashMap<EnumValue, i64>,
+    pub event_definitions: HashMap<EventDefinition, i64>,
+    pub error_definitions: HashMap<ErrorDefinition, i64>,
+    pub expression_statements: HashMap<ExpressionStatement, i64>,
+    pub function_calls: HashMap<FunctionCall, i64>,
+    pub function_call_options: HashMap<FunctionCallOptions, i64>,
+    pub function_definitions: HashMap<FunctionDefinition, i64>,
+    pub function_type_names: HashMap<FunctionTypeName, i64>,
+    pub for_statements: HashMap<ForStatement, i64>,
+    pub identifiers: HashMap<Identifier, i64>,
+    pub identifier_paths: HashMap<IdentifierPath, i64>,
+    pub if_statements: HashMap<IfStatement, i64>,
+    pub import_directives: HashMap<ImportDirective, i64>,
+    pub index_accesses: HashMap<IndexAccess, i64>,
+    pub index_range_accesses: HashMap<IndexRangeAccess, i64>,
+    pub inheritance_specifiers: HashMap<InheritanceSpecifier, i64>,
+    pub inline_assemblies: HashMap<InlineAssembly, i64>,
+    pub literals: HashMap<Literal, i64>,
+    pub member_accesses: HashMap<MemberAccess, i64>,
+    pub new_expressions: HashMap<NewExpression, i64>,
+    pub mappings: HashMap<Mapping, i64>,
+    pub modifier_definitions: HashMap<ModifierDefinition, i64>,
+    pub modifier_invocations: HashMap<ModifierInvocation, i64>,
+    pub override_specifiers: HashMap<OverrideSpecifier, i64>,
+    pub parameter_lists: HashMap<ParameterList, i64>,
+    pub pragma_directives: HashMap<PragmaDirective, i64>,
+    pub returns: HashMap<Return, i64>,
+    pub revert_statements: HashMap<RevertStatement, i64>,
+    pub source_units: Vec<SourceUnit>,
+    pub struct_definitions: HashMap<StructDefinition, i64>,
+    pub structured_documentations: HashMap<StructuredDocumentation, i64>,
+    pub try_statements: HashMap<TryStatement, i64>,
+    pub try_catch_clauses: HashMap<TryCatchClause, i64>,
+    pub tuple_expressions: HashMap<TupleExpression, i64>,
+    pub unary_operations: HashMap<UnaryOperation, i64>,
+    pub user_defined_type_names: HashMap<UserDefinedTypeName, i64>,
+    pub user_defined_value_type_definitions: HashMap<UserDefinedValueTypeDefinition, i64>,
+    pub using_for_directives: HashMap<UsingForDirective, i64>,
+    pub variable_declarations: HashMap<VariableDeclaration, i64>,
+    pub variable_declaration_statements: HashMap<VariableDeclarationStatement, i64>,
+    pub while_statements: HashMap<WhileStatement, i64>,
 }
 
 impl ContextLoader {
@@ -188,220 +188,6 @@ impl ContextLoader {
         if let Some(source_unit) = self.source_units.iter_mut().find(|unit| unit.id == id) {
             source_unit.source = Some(source);
         }
-    }
-
-    // GETTERS
-
-    pub fn get_sloc_stats(&self) -> &Language {
-        &self.sloc_stats
-    }
-
-    pub fn get_node(&self, id: i64) -> Option<&ASTNode> {
-        self.nodes.get(&id)
-    }
-
-    pub fn get_array_type_names(&self) -> Vec<&ArrayTypeName> {
-        self.array_type_names.keys().collect()
-    }
-
-    pub fn get_assignments(&self) -> Vec<&Assignment> {
-        self.assignments.keys().collect()
-    }
-
-    pub fn get_binary_operations(&self) -> Vec<&BinaryOperation> {
-        self.binary_operations.keys().collect()
-    }
-
-    pub fn get_blocks(&self) -> Vec<&Block> {
-        self.blocks.keys().collect()
-    }
-
-    pub fn get_conditionals(&self) -> Vec<&Conditional> {
-        self.conditionals.keys().collect()
-    }
-
-    pub fn get_contract_definitions(&self) -> Vec<&ContractDefinition> {
-        self.contract_definitions.keys().collect()
-    }
-
-    pub fn get_elementary_type_names(&self) -> Vec<&ElementaryTypeName> {
-        self.elementary_type_names.keys().collect()
-    }
-
-    pub fn get_elementary_type_name_expressions(&self) -> Vec<&ElementaryTypeNameExpression> {
-        self.elementary_type_name_expressions.keys().collect()
-    }
-
-    pub fn get_emit_statements(&self) -> Vec<&EmitStatement> {
-        self.emit_statements.keys().collect()
-    }
-
-    pub fn get_enum_definitions(&self) -> Vec<&EnumDefinition> {
-        self.enum_definitions.keys().collect()
-    }
-
-    pub fn get_enum_values(&self) -> Vec<&EnumValue> {
-        self.enum_values.keys().collect()
-    }
-
-    pub fn get_event_definitions(&self) -> Vec<&EventDefinition> {
-        self.event_definitions.keys().collect()
-    }
-
-    pub fn get_error_definitions(&self) -> Vec<&ErrorDefinition> {
-        self.error_definitions.keys().collect()
-    }
-
-    pub fn get_expression_statements(&self) -> Vec<&ExpressionStatement> {
-        self.expression_statements.keys().collect()
-    }
-
-    pub fn get_function_calls(&self) -> Vec<&FunctionCall> {
-        self.function_calls.keys().collect()
-    }
-
-    pub fn get_function_call_options(&self) -> Vec<&FunctionCallOptions> {
-        self.function_call_options.keys().collect()
-    }
-
-    pub fn get_function_definitions(&self) -> Vec<&FunctionDefinition> {
-        self.function_definitions.keys().collect()
-    }
-
-    pub fn get_function_type_names(&self) -> Vec<&FunctionTypeName> {
-        self.function_type_names.keys().collect()
-    }
-
-    pub fn get_for_statements(&self) -> Vec<&ForStatement> {
-        self.for_statements.keys().collect()
-    }
-
-    pub fn get_identifiers(&self) -> Vec<&Identifier> {
-        self.identifiers.keys().collect()
-    }
-
-    pub fn get_identifier_paths(&self) -> Vec<&IdentifierPath> {
-        self.identifier_paths.keys().collect()
-    }
-
-    pub fn get_if_statements(&self) -> Vec<&IfStatement> {
-        self.if_statements.keys().collect()
-    }
-
-    pub fn get_import_directives(&self) -> Vec<&ImportDirective> {
-        self.import_directives.keys().collect()
-    }
-
-    pub fn get_index_accesses(&self) -> Vec<&IndexAccess> {
-        self.index_accesses.keys().collect()
-    }
-
-    pub fn get_index_range_accesses(&self) -> Vec<&IndexRangeAccess> {
-        self.index_range_accesses.keys().collect()
-    }
-
-    pub fn get_inheritance_specifiers(&self) -> Vec<&InheritanceSpecifier> {
-        self.inheritance_specifiers.keys().collect()
-    }
-
-    pub fn get_inline_assemblies(&self) -> Vec<&InlineAssembly> {
-        self.inline_assemblies.keys().collect()
-    }
-
-    pub fn get_literals(&self) -> Vec<&Literal> {
-        self.literals.keys().collect()
-    }
-
-    pub fn get_member_accesses(&self) -> Vec<&MemberAccess> {
-        self.member_accesses.keys().collect()
-    }
-
-    pub fn get_new_expressions(&self) -> Vec<&NewExpression> {
-        self.new_expressions.keys().collect()
-    }
-
-    pub fn get_mappings(&self) -> Vec<&Mapping> {
-        self.mappings.keys().collect()
-    }
-
-    pub fn get_modifier_definitions(&self) -> Vec<&ModifierDefinition> {
-        self.modifier_definitions.keys().collect()
-    }
-
-    pub fn get_modifier_invocations(&self) -> Vec<&ModifierInvocation> {
-        self.modifier_invocations.keys().collect()
-    }
-
-    pub fn get_override_specifiers(&self) -> Vec<&OverrideSpecifier> {
-        self.override_specifiers.keys().collect()
-    }
-
-    pub fn get_parameter_lists(&self) -> Vec<&ParameterList> {
-        self.parameter_lists.keys().collect()
-    }
-
-    pub fn get_pragma_directives(&self) -> Vec<&PragmaDirective> {
-        self.pragma_directives.keys().collect()
-    }
-
-    pub fn get_returns(&self) -> Vec<&Return> {
-        self.returns.keys().collect()
-    }
-
-    pub fn get_revert_statements(&self) -> Vec<&RevertStatement> {
-        self.revert_statements.keys().collect()
-    }
-
-    pub fn get_struct_definitions(&self) -> Vec<&StructDefinition> {
-        self.struct_definitions.keys().collect()
-    }
-
-    pub fn get_structured_documentations(&self) -> Vec<&StructuredDocumentation> {
-        self.structured_documentations.keys().collect()
-    }
-
-    pub fn get_try_statements(&self) -> Vec<&TryStatement> {
-        self.try_statements.keys().collect()
-    }
-
-    pub fn get_try_catch_clauses(&self) -> Vec<&TryCatchClause> {
-        self.try_catch_clauses.keys().collect()
-    }
-
-    pub fn get_tuple_expressions(&self) -> Vec<&TupleExpression> {
-        self.tuple_expressions.keys().collect()
-    }
-
-    pub fn get_unary_operations(&self) -> Vec<&UnaryOperation> {
-        self.unary_operations.keys().collect()
-    }
-
-    pub fn get_user_defined_type_names(&self) -> Vec<&UserDefinedTypeName> {
-        self.user_defined_type_names.keys().collect()
-    }
-
-    pub fn get_user_defined_value_type_definitions(&self) -> Vec<&UserDefinedValueTypeDefinition> {
-        self.user_defined_value_type_definitions.keys().collect()
-    }
-
-    pub fn get_using_for_directives(&self) -> Vec<&UsingForDirective> {
-        self.using_for_directives.keys().collect()
-    }
-
-    pub fn get_variable_declarations(&self) -> Vec<&VariableDeclaration> {
-        self.variable_declarations.keys().collect()
-    }
-
-    pub fn get_variable_declaration_statements(&self) -> Vec<&VariableDeclarationStatement> {
-        self.variable_declaration_statements.keys().collect()
-    }
-
-    pub fn get_while_statements(&self) -> Vec<&WhileStatement> {
-        self.while_statements.keys().collect()
-    }
-
-    pub fn get_source_units(&self) -> Vec<&SourceUnit> {
-        self.source_units.iter().collect()
     }
 
     pub fn get_source_unit_from_child_node(&self, node: &ASTNode) -> Option<&SourceUnit> {
@@ -930,7 +716,7 @@ mod loader_tests {
 
         // Get all for statements, and check if there is a delegate call in the body of each for statement
         let mut delegate_call_in_loop_detector = DelegateCallInLoopDetector::default();
-        let for_statements = loader.get_for_statements();
+        let for_statements = loader.for_statements.keys();
         for for_statement in for_statements {
             for_statement.accept(&mut delegate_call_in_loop_detector)?;
         }

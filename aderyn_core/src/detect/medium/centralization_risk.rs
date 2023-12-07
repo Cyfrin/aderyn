@@ -60,7 +60,7 @@ impl ASTConstVisitor for CentralizationRiskDetector {
 
 impl Detector for CentralizationRiskDetector {
     fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
-        for source_unit in loader.get_source_units() {
+        for source_unit in loader.source_units.iter() {
             source_unit.accept(self)?;
         }
         for modifier_invocation in self

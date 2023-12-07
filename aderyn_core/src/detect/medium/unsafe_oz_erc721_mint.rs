@@ -14,7 +14,7 @@ pub struct UnsafeERC721MintDetector {
 
 impl Detector for UnsafeERC721MintDetector {
     fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
-        for identifier in loader.get_identifiers() {
+        for identifier in loader.identifiers.keys() {
             // if source_unit has any ImportDirectives with absolute_path containing "openzeppelin"
             // call identifier.accept(self)
             let source_unit = loader

@@ -104,8 +104,8 @@ impl ReportPrinter for MarkdownReportPrinter {
 
         // Files Summary
         writeln!(writer, "## Files Summary\n")?;
-        let total_source_units = loader.get_source_units().len();
-        let total_sloc = loader.get_sloc_stats().code;
+        let total_source_units = loader.source_units.len();
+        let total_sloc = loader.sloc_stats.code;
 
         // Start the markdown table
         writeln!(writer, "| Key | Value |")?;
@@ -122,10 +122,12 @@ impl ReportPrinter for MarkdownReportPrinter {
         writeln!(writer, "| Filepath | nSLOC |")?;
         writeln!(writer, "| --- | --- |")?;
 
-        let sloc_stats = loader.get_sloc_stats();
+        let sloc_stats = &loader.sloc_stats;
 
-        let mut source_units = loader.get_source_units();
-        source_units.sort_by_key(|su| su.absolute_path.as_deref().unwrap_or(""));
+        let mut source_units = loader.source_units.clone();
+        source_units.sort_by_key(|su: &crate::ast::SourceUnit| {
+            su.absolute_path.as_deref().unwrap_or("").to_string()
+        });
 
         // Iterate over source units and add each as a row in the markdown table
         for source_unit in source_units {
