@@ -1,21 +1,13 @@
-use aderyn_core::{
-    context::loader::ContextLoader,
-    framework::{
-        foundry::{load_foundry, read_foundry_output_file},
-        hardhat::load_hardhat,
-    },
-    read_file_to_string, run,
-    visitor::ast_visitor::Node,
-};
+use aderyn::{process_foundry, process_hardhat, virtual_foundry};
+use aderyn_core::{context::loader::ContextLoader, run};
 use clap::Parser;
-use rayon::prelude::*;
 use std::{fs::read_dir, path::PathBuf};
 use tokei::{Config, LanguageType};
 
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 struct Args {
-    /// Foundry or Hardhat project root directory
+    /// Foundry or Hardhat project root directory (or path to single solidity file)
     root: String,
 
     /// Desired file path for the final report (will overwrite existing one)
@@ -35,140 +27,33 @@ fn main() {
         eprintln!("Warning: output file lacks the \".md\" extension in its filename.");
     }
 
-    // Detect the framework
-    println!("Detecting framework...");
-    let root_path = PathBuf::from(&args.root);
-    let framework = detect_framework(root_path.clone()).unwrap_or_else(|| {
-        // Exit with a non-zero exit code
-        eprintln!("Error detecting framework");
-        std::process::exit(1);
-    });
-
     let src_path: String;
-    let mut context_loader = ContextLoader::default();
+    let mut context_loader: ContextLoader;
 
-    // This whole block loads the solidity files and ASTs into the context loader
-    // TODO: move much of this gutsy stuff into the foundry / hardhat modules.
-    match framework {
-        Framework::Foundry => {
-            println!("Framework detected: Foundry mode engaged.");
-            println!("Foundry root path: {:?}", root_path);
-            let loaded_foundry = load_foundry(&root_path).unwrap_or_else(|err| {
-                // Exit with a non-zero exit code
-                eprintln!("Error loading Foundry Root");
-                eprintln!("{:?}", err);
-                std::process::exit(1);
-            });
-            let src_path_buf = root_path.join(&loaded_foundry.src_path);
-            src_path = src_path_buf.to_str().unwrap().to_string();
-            println!("Foundry src path: {:?}", src_path);
+    let is_single_file = args.root.ends_with(".sol") && PathBuf::from(&args.root).is_file();
+    let mut safe_space = PathBuf::new();
 
-            // Load the foundry output files into the context loader using the ASTs
-            let foundry_intermediates = loaded_foundry
-                .output_filepaths
-                .par_iter()
-                .map(|output_filepath| {
-                    if let Ok(foundry_output) =
-                        read_foundry_output_file(output_filepath.to_str().unwrap())
-                    {
-                        Some(foundry_output.ast)
-                    } else {
-                        eprintln!(
-                            "Error reading Foundry output file: {}",
-                            output_filepath.to_str().unwrap()
-                        );
-                        None
-                    }
-                })
-                .collect::<Vec<_>>();
+    if is_single_file {
+        safe_space = virtual_foundry::build_isolated_workspace_for_file(&args.root);
+        (src_path, context_loader) = process_foundry::with_project_root_at(&safe_space);
+    } else {
+        // Detect the framework
+        println!("Detecting framework...");
+        let root_path = PathBuf::from(&args.root);
+        let framework = detect_framework(root_path.clone()).unwrap_or_else(|| {
+            // Exit with a non-zero exit code
+            eprintln!("Error detecting framework");
+            std::process::exit(1);
+        });
 
-            // read_foundry_output_file and print an error message if it fails
-            foundry_intermediates.into_iter().flatten().for_each(|ast| {
-                ast.accept(&mut context_loader).unwrap_or_else(|err| {
-                    // Exit with a non-zero exit code
-                    eprintln!("Error loading Foundry AST into ContextLoader");
-                    eprintln!("{:?}", err);
-                    std::process::exit(1);
-                })
-            });
-
-            // Load the solidity source files into memory, and assign the content to the source_unit.source
-            for source_filepath in loaded_foundry.src_filepaths {
-                match read_file_to_string(&source_filepath) {
-                    Ok(content) => {
-                        // Convert the full_path to a string
-                        let full_path_str = source_filepath.to_str().unwrap_or("");
-
-                        // Find the index where "src/" starts
-                        let src_component = src_path_buf.file_name().unwrap().to_str().unwrap();
-                        if let Some(start_index) = full_path_str.find(src_component) {
-                            let target_path = &full_path_str[start_index..];
-
-                            // Search for a match and modify
-                            for unit in context_loader.get_source_units() {
-                                if let Some(ref abs_path) = unit.absolute_path {
-                                    if abs_path == target_path {
-                                        context_loader
-                                            .set_source_unit_source_content(unit.id, content);
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    Err(err) => {
-                        eprintln!(
-                            "Error reading Solidity source file: {}",
-                            source_filepath.to_str().unwrap()
-                        );
-                        eprintln!("{:?}", err);
-                    }
-                }
+        // This whole block loads the solidity files and ASTs into the context loader
+        // TODO: move much of this gutsy stuff into the foundry / hardhat modules.
+        match framework {
+            Framework::Foundry => {
+                (src_path, context_loader) = process_foundry::with_project_root_at(&root_path);
             }
-        }
-        Framework::Hardhat => {
-            println!("Framework detected. Hardhat mode engaged.");
-            println!("Hardhat root path: {:?}", root_path);
-            src_path = root_path.join("contracts").to_str().unwrap().to_string();
-            let hardhat_output = load_hardhat(&root_path).unwrap_or_else(|err| {
-                // Exit with a non-zero exit code
-                eprintln!("Error loading Hardhat build info");
-                eprintln!("{:?}", err);
-                std::process::exit(1);
-            });
-            for (key, contract_source) in hardhat_output.output.sources.iter() {
-                if key.starts_with("contracts/") {
-                    contract_source
-                        .ast
-                        .accept(&mut context_loader)
-                        .unwrap_or_else(|err| {
-                            // Exit with a non-zero exit code
-                            eprintln!("Error loading Hardhat AST into ContextLoader");
-                            eprintln!("{:?}", err);
-                            std::process::exit(1);
-                        });
-                    let source_file_path = root_path.join(key);
-                    match read_file_to_string(&source_file_path) {
-                        Ok(content) => {
-                            for unit in context_loader.get_source_units() {
-                                if let Some(ref abs_path) = unit.absolute_path {
-                                    if abs_path == key {
-                                        context_loader
-                                            .set_source_unit_source_content(unit.id, content);
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                        Err(err) => {
-                            eprintln!(
-                                "Error reading Solidity source file: {}",
-                                source_file_path.to_str().unwrap()
-                            );
-                            eprintln!("{:?}", err);
-                        }
-                    }
-                }
+            Framework::Hardhat => {
+                (src_path, context_loader) = process_hardhat::with_project_root_at(&root_path);
             }
         }
     }
@@ -186,6 +71,10 @@ fn main() {
         eprintln!("{:?}", err);
         std::process::exit(1);
     });
+
+    if is_single_file {
+        virtual_foundry::delete_safe_space(&safe_space);
+    }
 }
 
 fn detect_framework(path: PathBuf) -> Option<Framework> {
