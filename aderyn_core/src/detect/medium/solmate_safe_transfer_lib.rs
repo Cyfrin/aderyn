@@ -82,7 +82,7 @@ mod solmate_safe_transfer_lib_tests {
     #[test]
     fn test_solmate_safe_transfer_lib() {
         let context_loader =
-            load_contract("./tests/contract-playground/out/T11sTranferer.sol/T11sTranferer.json");
+            load_contract("../tests/contract-playground/out/T11sTranferer.sol/T11sTranferer.json");
         let mut detector = SolmateSafeTransferLibDetector::default();
         let found = detector.detect(&context_loader).unwrap();
         // assert that the detector found a delegate call in a loop

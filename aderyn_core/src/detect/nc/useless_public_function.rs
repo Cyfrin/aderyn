@@ -83,7 +83,7 @@ mod useless_public_function_tests {
     #[test]
     fn test_useless_public_functions() {
         let context_loader =
-            load_contract("./tests/contract-playground/out/Counter.sol/Counter.json");
+            load_contract("../tests/contract-playground/out/Counter.sol/Counter.json");
         let mut detector = UselessPublicFunctionDetector::default();
         // assert that the detector finds the public function
         let found = detector.detect(&context_loader).unwrap();

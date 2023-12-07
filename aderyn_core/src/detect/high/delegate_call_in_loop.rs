@@ -74,7 +74,7 @@ mod delegate_call_in_loop_detector_tests {
     #[test]
     fn test_delegate_call_in_loop_detector() {
         let context_loader = load_contract(
-            "./tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",
+            "../tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",
         );
         let mut detector = DelegateCallInLoopDetector::default();
         let found = detector.detect(&context_loader).unwrap();

@@ -67,7 +67,7 @@ mod unsafe_erc721_mint_tests {
     #[test]
     fn test_unsafe_erc721_mint_detector() {
         let context_loader = load_contract(
-            "./tests/contract-playground/out/UnsafeERC721Mint.sol/UnsafeERC721Mint.json",
+            "../tests/contract-playground/out/UnsafeERC721Mint.sol/UnsafeERC721Mint.json",
         );
         let mut detector = UnsafeERC721MintDetector::default();
         let found = detector.detect(&context_loader).unwrap();

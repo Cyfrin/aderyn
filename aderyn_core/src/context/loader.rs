@@ -916,13 +916,13 @@ mod loader_tests {
     fn test_delegate_call_in_loops() -> Result<()> {
         let mut loader = ContextLoader::default();
         let extended_inheritance = read_compiler_output(
-            "tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",
+            "../tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",
         )?;
         let inheritance_base = read_compiler_output(
-            "tests/contract-playground/out/InheritanceBase.sol/InheritanceBase.json",
+            "../tests/contract-playground/out/InheritanceBase.sol/InheritanceBase.json",
         )?;
         let i_contract_inheritance = read_compiler_output(
-            "tests/contract-playground/out/IContractInheritance.sol/IContractInheritance.json",
+            "../tests/contract-playground/out/IContractInheritance.sol/IContractInheritance.json",
         )?;
         extended_inheritance.ast.accept(&mut loader)?;
         inheritance_base.ast.accept(&mut loader)?;
