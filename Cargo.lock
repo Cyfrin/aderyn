@@ -8,6 +8,7 @@ version = "0.0.7"
 dependencies = [
  "clap 4.4.6",
  "eyre",
+ "rayon",
  "serde",
  "serde_json",
  "serde_repr",

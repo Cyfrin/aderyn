@@ -8,6 +8,7 @@ use aderyn::{
     visitor::ast_visitor::Node,
 };
 use clap::Parser;
+use rayon::prelude::*;
 use std::{fs::read_dir, path::PathBuf};
 use tokei::{Config, LanguageType};
 
@@ -61,28 +62,36 @@ fn main() {
             let src_path_buf = root_path.join(&loaded_foundry.src_path);
             src_path = src_path_buf.to_str().unwrap().to_string();
             println!("Foundry src path: {:?}", src_path);
+
             // Load the foundry output files into the context loader using the ASTs
-            for output_filepath in loaded_foundry.output_filepaths {
-                // read_foundry_output_file and print an error message if it fails
-                if let Ok(foundry_output) =
-                    read_foundry_output_file(output_filepath.to_str().unwrap())
-                {
-                    foundry_output
-                        .ast
-                        .accept(&mut context_loader)
-                        .unwrap_or_else(|err| {
-                            // Exit with a non-zero exit code
-                            eprintln!("Error loading Foundry AST into ContextLoader");
-                            eprintln!("{:?}", err);
-                            std::process::exit(1);
-                        })
-                } else {
-                    eprintln!(
-                        "Error reading Foundry output file: {}",
-                        output_filepath.to_str().unwrap()
-                    );
-                }
-            }
+            let foundry_intermediates = loaded_foundry
+                .output_filepaths
+                .par_iter()
+                .map(|output_filepath| {
+                    if let Ok(foundry_output) =
+                        read_foundry_output_file(output_filepath.to_str().unwrap())
+                    {
+                        Some(foundry_output.ast)
+                    } else {
+                        eprintln!(
+                            "Error reading Foundry output file: {}",
+                            output_filepath.to_str().unwrap()
+                        );
+                        None
+                    }
+                })
+                .collect::<Vec<_>>();
+
+            // read_foundry_output_file and print an error message if it fails
+            foundry_intermediates.into_iter().flatten().for_each(|ast| {
+                ast.accept(&mut context_loader).unwrap_or_else(|err| {
+                    // Exit with a non-zero exit code
+                    eprintln!("Error loading Foundry AST into ContextLoader");
+                    eprintln!("{:?}", err);
+                    std::process::exit(1);
+                })
+            });
+
             // Load the solidity source files into memory, and assign the content to the source_unit.source
             for source_filepath in loaded_foundry.src_filepaths {
                 match read_file_to_string(&source_filepath) {
