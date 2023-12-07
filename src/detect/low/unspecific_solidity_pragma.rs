@@ -14,7 +14,7 @@ pub struct UnspecificSolidityPragmaDetector {
 
 impl Detector for UnspecificSolidityPragmaDetector {
     fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
-        for pragma_directive in loader.get_pragma_directives() {
+        for pragma_directive in loader.pragma_directives.keys() {
             for literal in &pragma_directive.literals {
                 if literal.contains('^') || literal.contains('>') {
                     self.found_instances.insert(

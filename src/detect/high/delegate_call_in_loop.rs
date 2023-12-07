@@ -30,10 +30,10 @@ impl ASTConstVisitor for DelegateCallInLoopDetector {
 
 impl Detector for DelegateCallInLoopDetector {
     fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
-        for for_statement in loader.get_for_statements() {
+        for for_statement in loader.for_statements.keys() {
             for_statement.accept(self)?;
         }
-        for while_statement in loader.get_while_statements() {
+        for while_statement in loader.for_statements.keys() {
             while_statement.accept(self)?;
         }
         for member_access in self.found_member_access.clone().into_iter().flatten() {

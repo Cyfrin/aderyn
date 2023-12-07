@@ -87,8 +87,8 @@ impl Detector for ZeroAddressCheckDetector {
     fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
         // Get all address state variables
         self.mutable_address_state_variables = loader
-            .get_variable_declarations()
-            .into_iter() // We can consume the Vec since it's just references.
+            .variable_declarations
+            .keys()
             .filter_map(|var_decl| {
                 if !var_decl.constant
                     && matches!(var_decl.mutability, Some(Mutability::Mutable))
@@ -114,7 +114,7 @@ impl Detector for ZeroAddressCheckDetector {
             .collect();
 
         // Get all function definitions
-        for function_definition in loader.get_function_definitions() {
+        for function_definition in loader.function_definitions.keys() {
             // Reset transient variables
             self.reset_transient_variables();
             // Visit the function definition using the BinaryOperator and Assignment visitors
