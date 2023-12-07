@@ -20,8 +20,8 @@ impl Detector for DifferentStorageConditionalDetector {
     fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
         // Step 1: Get all state variable declarations
         let state_variables: Vec<&VariableDeclaration> = loader
-            .get_variable_declarations()
-            .into_iter()
+            .variable_declarations
+            .keys()
             .filter(|&var_decl| var_decl.state_variable)
             .collect();
 
@@ -34,7 +34,7 @@ impl Detector for DifferentStorageConditionalDetector {
             Vec<&BinaryOperation>,
         > = HashMap::new();
 
-        for binary_operation in loader.get_binary_operations() {
+        for binary_operation in loader.binary_operations.keys() {
             if let Expression::Identifier(left_expr) = &*binary_operation.left_expression {
                 if state_variable_ids.contains(&left_expr.referenced_declaration) {
                     binary_operations_by_referenced_state_variable

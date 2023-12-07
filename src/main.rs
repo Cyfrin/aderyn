@@ -105,7 +105,7 @@ fn main() {
                             let target_path = &full_path_str[start_index..];
 
                             // Search for a match and modify
-                            for unit in context_loader.get_source_units() {
+                            for unit in context_loader.source_units.iter() {
                                 if let Some(ref abs_path) = unit.absolute_path {
                                     if abs_path == target_path {
                                         context_loader
@@ -150,7 +150,7 @@ fn main() {
                     let source_file_path = root_path.join(key);
                     match read_file_to_string(&source_file_path) {
                         Ok(content) => {
-                            for unit in context_loader.get_source_units() {
+                            for unit in context_loader.source_units.iter() {
                                 if let Some(ref abs_path) = unit.absolute_path {
                                     if abs_path == key {
                                         context_loader

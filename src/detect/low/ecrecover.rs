@@ -14,7 +14,7 @@ pub struct EcrecoverDetector {
 
 impl Detector for EcrecoverDetector {
     fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
-        for identifier in loader.get_identifiers() {
+        for identifier in loader.identifiers.keys() {
             if identifier.name == "ecrecover" {
                 self.found_instances.insert(
                     loader.get_node_sort_key(&ASTNode::Identifier(identifier.clone())),

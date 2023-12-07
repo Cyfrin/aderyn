@@ -16,12 +16,10 @@ pub struct RequireWithStringDetector {
 impl Detector for RequireWithStringDetector {
     fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
         // Collect all require statements without a string literal.
-        let requires_and_reverts: Vec<&Identifier> = loader
-            .get_identifiers()
-            .iter()
-            .filter(|id| id.name == "revert" || id.name == "require")
-            .cloned()
-            .collect();
+        let requires_and_reverts = loader
+            .identifiers
+            .keys()
+            .filter(|id| id.name == "revert" || id.name == "require");
 
         for id in requires_and_reverts {
             if (id.name == "revert" && id.argument_types.as_ref().unwrap().is_empty())

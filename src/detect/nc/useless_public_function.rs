@@ -20,16 +20,15 @@ impl Detector for UselessPublicFunctionDetector {
     fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
         // Collect the ids of all functions referenced by identifiers.
         let referenced_functions: HashSet<_> = loader
-            .get_identifiers()
-            .iter()
+            .identifiers
+            .keys()
             .map(|i| i.referenced_declaration)
             .collect();
 
-        let function_definitions = loader.get_function_definitions();
+        let function_definitions = loader.function_definitions.keys();
 
         // Collect all public FunctionDefinitions which are not in the referenced set.
         let unreferenced_public_functions = function_definitions
-            .iter()
             .filter(|f| {
                 f.visibility == Visibility::Public
                     && f.kind != FunctionKind::Constructor
