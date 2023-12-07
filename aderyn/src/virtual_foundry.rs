@@ -14,7 +14,7 @@ pub fn build_isolated_workspace_for_file(solidity_file: &str) -> PathBuf {
 
     std::fs::copy(solidity_file, new_name).unwrap_or_else(|x| {
         eprint!("Unable to copy your file to safespace! {}", x);
-        2
+        std::process::exit(1);
     });
 
     safe_space
