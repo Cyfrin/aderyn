@@ -1,7 +1,6 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
-    ast::Identifier,
     context::loader::{ASTNode, ContextLoader},
     detect::detector::{Detector, IssueSeverity},
 };
