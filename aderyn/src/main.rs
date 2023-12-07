@@ -1,5 +1,5 @@
 use aderyn::{process_foundry, process_hardhat, virtual_foundry};
-use aderyn_core::{context::loader::ContextLoader, run};
+use aderyn_core::run;
 use clap::Parser;
 use std::{fs::read_dir, path::PathBuf};
 use tokei::{Config, LanguageType};
@@ -27,36 +27,30 @@ fn main() {
         eprintln!("Warning: output file lacks the \".md\" extension in its filename.");
     }
 
-    let src_path: String;
-    let mut context_loader: ContextLoader;
-
     let is_single_file = args.root.ends_with(".sol") && PathBuf::from(&args.root).is_file();
     let mut safe_space = PathBuf::new();
 
-    if is_single_file {
-        safe_space = virtual_foundry::build_isolated_workspace_for_file(&args.root);
-        (src_path, context_loader) = process_foundry::with_project_root_at(&safe_space);
-    } else {
-        // Detect the framework
-        println!("Detecting framework...");
-        let root_path = PathBuf::from(&args.root);
-        let framework = detect_framework(root_path.clone()).unwrap_or_else(|| {
-            // Exit with a non-zero exit code
-            eprintln!("Error detecting framework");
-            std::process::exit(1);
-        });
+    let (src_path, mut context_loader) = {
+        if is_single_file {
+            safe_space = virtual_foundry::build_isolated_workspace_for_file(&args.root);
+            process_foundry::with_project_root_at(&safe_space)
+        } else {
+            println!("Detecting framework...");
+            let root_path = PathBuf::from(&args.root);
+            let framework = detect_framework(root_path.clone()).unwrap_or_else(|| {
+                // Exit with a non-zero exit code
+                eprintln!("Error detecting framework");
+                std::process::exit(1);
+            });
 
-        // This whole block loads the solidity files and ASTs into the context loader
-        // TODO: move much of this gutsy stuff into the foundry / hardhat modules.
-        match framework {
-            Framework::Foundry => {
-                (src_path, context_loader) = process_foundry::with_project_root_at(&root_path);
-            }
-            Framework::Hardhat => {
-                (src_path, context_loader) = process_hardhat::with_project_root_at(&root_path);
+            // This whole block loads the solidity files and ASTs into the context loader
+            // TODO: move much of this gutsy stuff into the foundry / hardhat modules.
+            match framework {
+                Framework::Foundry => process_foundry::with_project_root_at(&root_path),
+                Framework::Hardhat => process_hardhat::with_project_root_at(&root_path),
             }
         }
-    }
+    };
 
     // Using the source path, get the sloc from tokei
     let mut languages = tokei::Languages::new();
