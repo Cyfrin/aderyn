@@ -178,17 +178,13 @@ pub struct ContextLoader {
 }
 
 impl ContextLoader {
-    // SETTERS
+    // Setters
 
     pub fn set_sloc_stats(&mut self, sloc_stats: Language) {
         self.sloc_stats = sloc_stats;
     }
 
-    pub fn set_source_unit_source_content(&mut self, id: i64, source: String) {
-        if let Some(source_unit) = self.source_units.iter_mut().find(|unit| unit.id == id) {
-            source_unit.source = Some(source);
-        }
-    }
+    // Getters
 
     pub fn get_source_unit_from_child_node(&self, node: &ASTNode) -> Option<&SourceUnit> {
         let source_unit_id = match node {

@@ -45,7 +45,7 @@ pub fn with_project_root_at(root_path: &PathBuf) -> (String, ContextLoader) {
         .into_iter()
         .flatten()
         .for_each(|mut ast| {
-            let absolute_path_clone = ast.absolute_path.clone(); // Clone the path
+            let absolute_path_clone = ast.absolute_path.clone();
 
             match read_file_to_string(
                 &root_path.join(Path::new(&ast.absolute_path.as_ref().unwrap())),
@@ -56,7 +56,7 @@ pub fn with_project_root_at(root_path: &PathBuf) -> (String, ContextLoader) {
                 Err(err) => {
                     eprintln!(
                         "Error reading Solidity source file: {:?}",
-                        absolute_path_clone.unwrap() // Use the cloned path here
+                        absolute_path_clone.unwrap()
                     );
                     eprintln!("{:?}", err);
                 }
@@ -66,7 +66,6 @@ pub fn with_project_root_at(root_path: &PathBuf) -> (String, ContextLoader) {
                 // Exit with a non-zero exit code
                 eprintln!("Error loading Foundry AST into ContextLoader");
                 eprintln!("{:?}", err);
-                std::process::exit(1);
             });
         });
 

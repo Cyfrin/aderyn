@@ -2,7 +2,7 @@ use aderyn_core::{
     context::loader::ContextLoader, framework::hardhat::load_hardhat, read_file_to_string,
     visitor::ast_visitor::Node,
 };
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 pub fn with_project_root_at(root_path: &PathBuf) -> (String, ContextLoader) {
     let mut context_loader = ContextLoader::default();
@@ -18,35 +18,28 @@ pub fn with_project_root_at(root_path: &PathBuf) -> (String, ContextLoader) {
     });
     for (key, contract_source) in hardhat_output.output.sources.iter() {
         if key.starts_with("contracts/") {
-            contract_source
-                .ast
-                .accept(&mut context_loader)
-                .unwrap_or_else(|err| {
-                    // Exit with a non-zero exit code
-                    eprintln!("Error loading Hardhat AST into ContextLoader");
-                    eprintln!("{:?}", err);
-                    std::process::exit(1);
-                });
-            let source_file_path = root_path.join(key);
-            match read_file_to_string(&source_file_path) {
+            let absolute_path_clone = contract_source.ast.absolute_path.clone();
+            let mut ast = contract_source.ast.clone();
+            match read_file_to_string(&root_path.join(Path::new(
+                &contract_source.ast.absolute_path.as_ref().unwrap(),
+            ))) {
                 Ok(content) => {
-                    for unit in &context_loader.source_units {
-                        if let Some(ref abs_path) = unit.absolute_path {
-                            if abs_path == key {
-                                context_loader.set_source_unit_source_content(unit.id, content);
-                                break;
-                            }
-                        }
-                    }
+                    ast.source = Some(content);
                 }
                 Err(err) => {
                     eprintln!(
-                        "Error reading Solidity source file: {}",
-                        source_file_path.to_str().unwrap()
+                        "Error reading Solidity source file: {:?}",
+                        absolute_path_clone.unwrap()
                     );
                     eprintln!("{:?}", err);
                 }
             }
+
+            ast.accept(&mut context_loader).unwrap_or_else(|err| {
+                // Exit with a non-zero exit code
+                eprintln!("Error loading Hardhat AST into ContextLoader");
+                eprintln!("{:?}", err);
+            });
         }
     }
 
