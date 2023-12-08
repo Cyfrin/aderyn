@@ -5,7 +5,7 @@ use aderyn_core::{
     visitor::ast_visitor::Node,
 };
 use rayon::prelude::*;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 pub fn with_project_root_at(root_path: &PathBuf) -> (String, ContextLoader) {
     let mut context_loader = ContextLoader::default();
@@ -41,47 +41,34 @@ pub fn with_project_root_at(root_path: &PathBuf) -> (String, ContextLoader) {
         .collect::<Vec<_>>();
 
     // read_foundry_output_file and print an error message if it fails
-    foundry_intermediates.into_iter().flatten().for_each(|ast| {
-        ast.accept(&mut context_loader).unwrap_or_else(|err| {
-            // Exit with a non-zero exit code
-            eprintln!("Error loading Foundry AST into ContextLoader");
-            eprintln!("{:?}", err);
-            std::process::exit(1);
-        })
-    });
+    foundry_intermediates
+        .into_iter()
+        .flatten()
+        .for_each(|mut ast| {
+            let absolute_path_clone = ast.absolute_path.clone(); // Clone the path
 
-    // Load the solidity source files into memory, and assign the content to the source_unit.source
-    for source_filepath in loaded_foundry.src_filepaths {
-        match read_file_to_string(&source_filepath) {
-            Ok(content) => {
-                // Convert the full_path to a string
-                let full_path_str = source_filepath.to_str().unwrap_or("");
-
-                // Find the index where "src/" starts
-                let src_component = src_path_buf.file_name().unwrap().to_str().unwrap();
-                if let Some(start_index) = full_path_str.find(src_component) {
-                    let target_path = &full_path_str[start_index..];
-
-                    // Search for a match and modify
-                    for unit in &context_loader.source_units {
-                        if let Some(ref abs_path) = unit.absolute_path {
-                            if abs_path == target_path {
-                                context_loader.set_source_unit_source_content(unit.id, content);
-                                break;
-                            }
-                        }
-                    }
+            match read_file_to_string(
+                &root_path.join(Path::new(&ast.absolute_path.as_ref().unwrap())),
+            ) {
+                Ok(content) => {
+                    ast.source = Some(content);
+                }
+                Err(err) => {
+                    eprintln!(
+                        "Error reading Solidity source file: {:?}",
+                        absolute_path_clone.unwrap() // Use the cloned path here
+                    );
+                    eprintln!("{:?}", err);
                 }
             }
-            Err(err) => {
-                eprintln!(
-                    "Error reading Solidity source file: {}",
-                    source_filepath.to_str().unwrap()
-                );
+
+            ast.accept(&mut context_loader).unwrap_or_else(|err| {
+                // Exit with a non-zero exit code
+                eprintln!("Error loading Foundry AST into ContextLoader");
                 eprintln!("{:?}", err);
-            }
-        }
-    }
+                std::process::exit(1);
+            });
+        });
 
     (src_path, context_loader)
 }
