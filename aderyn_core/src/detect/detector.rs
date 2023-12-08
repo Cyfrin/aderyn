@@ -121,7 +121,7 @@ pub mod detector_test_helpers {
                 eprintln!("{:?}", err);
             }
         }
-        let _ = ast.accept(&mut context_loader).unwrap_or_else(|err| {
+        ast.accept(&mut context_loader).unwrap_or_else(|err| {
             // Exit with a non-zero exit code
             eprintln!("Error loading Hardhat AST into ContextLoader");
             eprintln!("{:?}", err);
