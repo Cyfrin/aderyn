@@ -5,6 +5,7 @@ pub mod framework;
 pub mod report;
 pub mod visitor;
 
+use detect::detector::Detector;
 use eyre::Result;
 use std::error::Error;
 use std::fs::{remove_file, File};
@@ -16,13 +17,11 @@ use crate::detect::detector::{get_all_detectors, IssueSeverity};
 use crate::report::printer::{MarkdownReportPrinter, ReportPrinter};
 use crate::report::reporter::{Issue, Report};
 
-pub fn run(context_loader: ContextLoader, output_file_path: String) -> Result<(), Box<dyn Error>> {
-    println!("Get Detectors");
-
-    let detectors = get_all_detectors();
-
-    println!("Running {} detectors", detectors.len());
-
+pub fn run_with_detectors(
+    context_loader: ContextLoader,
+    output_file_path: String,
+    detectors: Vec<Box<dyn Detector>>,
+) -> Result<(), Box<dyn Error>> {
     let mut report: Report = Report::default();
     for mut detector in detectors {
         if let Ok(found) = detector.detect(&context_loader) {
@@ -65,6 +64,16 @@ pub fn run(context_loader: ContextLoader, output_file_path: String) -> Result<()
 
     println!("Report printed to {}", output_file_path);
     Ok(())
+}
+
+pub fn run(context_loader: ContextLoader, output_file_path: String) -> Result<(), Box<dyn Error>> {
+    println!("Get Detectors");
+
+    let detectors = get_all_detectors();
+
+    println!("Running {} detectors", detectors.len());
+
+    run_with_detectors(context_loader, output_file_path, detectors)
 }
 
 fn get_markdown_writer(filename: &str) -> io::Result<File> {
