@@ -13,6 +13,6 @@ pub trait ReportPrinter<T> {
         writer: W,
         report: &Report,
         loader: &ContextLoader,
-        root_abs_path: PathBuf,
+        root_rel_path: PathBuf,
     ) -> Result<T>;
 }
