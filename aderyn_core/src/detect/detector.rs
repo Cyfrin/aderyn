@@ -94,7 +94,7 @@ pub mod detector_test_helpers {
         let path_buf_filepath = std::path::PathBuf::from(filepath);
         let mut context_loader = ContextLoader::default();
         let foundry_output = read_foundry_output_file(path_buf_filepath.to_str().unwrap()).unwrap();
-        let _ = foundry_output.ast.accept(&mut context_loader);
+        let mut ast = foundry_output.ast.clone();
         // Get the path of the source file
         let mut new_path = PathBuf::new();
         for component in path_buf_filepath.components() {
@@ -103,30 +103,15 @@ pub mod detector_test_helpers {
             }
             new_path.push(component);
         }
-        new_path.push(foundry_output.ast.absolute_path.unwrap());
+        new_path.push(ast.absolute_path.as_ref().unwrap());
         match read_file_to_string(&new_path) {
             Ok(content) => {
                 println!(
                     "Loaded Solidity source file: {}",
                     new_path.to_str().unwrap()
                 );
-                // Convert the full_path to a string
-                let full_path_str = new_path.to_str().unwrap_or("");
 
-                // Find the index where "src/" starts
-                if let Some(start_index) = full_path_str.find("src/") {
-                    let target_path = &full_path_str[start_index..];
-
-                    // Search for a match and modify
-                    for unit in context_loader.source_units.iter() {
-                        if let Some(ref abs_path) = unit.absolute_path {
-                            if abs_path == target_path {
-                                context_loader.set_source_unit_source_content(unit.id, content);
-                                break;
-                            }
-                        }
-                    }
-                }
+                ast.source = Some(content);
             }
             Err(err) => {
                 eprintln!(
@@ -136,6 +121,11 @@ pub mod detector_test_helpers {
                 eprintln!("{:?}", err);
             }
         }
+        ast.accept(&mut context_loader).unwrap_or_else(|err| {
+            // Exit with a non-zero exit code
+            eprintln!("Error loading Hardhat AST into ContextLoader");
+            eprintln!("{:?}", err);
+        });
         context_loader
     }
 }
