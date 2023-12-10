@@ -257,23 +257,29 @@ impl MarkdownReportPrinter {
             severity, number, issue.title, issue.description
         )?;
         for (contract_path, line_number) in issue.instances.keys() {
-            if is_file {
-                writeln!(
-                    writer,
-                    "- Found in {} Line: {}\n\nfile://{}\n\n\n",
-                    contract_path,
-                    line_number,
-                    root_path.to_str().unwrap(),
-                )?;
-            } else {
-                writeln!(
-                    writer,
-                    "- Found in {} Line: {}\n\nfile://{}\n\n\n",
-                    contract_path,
-                    line_number,
-                    root_path.join(contract_path).as_path().to_str().unwrap(),
-                )?;
-            }
+            let path = {
+                if is_file {
+                    String::from(root_path.to_str().unwrap())
+                } else {
+                    String::from(root_path.join(contract_path).as_path().to_str().unwrap())
+                }
+            };
+
+            let line = std::fs::read_to_string(&path).unwrap();
+
+            let line_preview = line
+                .split("\n")
+                .into_iter()
+                .skip(line_number - 1)
+                .take(1)
+                .next()
+                .unwrap();
+
+            writeln!(
+                writer,
+                "- Found in {} Line: {}\n\n\t>{}\n\nfile://{}\n\n\n",
+                contract_path, line_number, line_preview, &path,
+            )?;
         }
         writeln!(writer, "\n")?; // Add an extra newline for spacing
         Ok(())
