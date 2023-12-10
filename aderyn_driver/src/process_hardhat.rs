@@ -16,31 +16,29 @@ pub fn with_project_root_at(root_path: &PathBuf) -> (String, ContextLoader) {
         eprintln!("{:?}", err);
         std::process::exit(1);
     });
-    for (key, contract_source) in hardhat_output.output.sources.iter() {
-        if key.starts_with("contracts/") {
-            let absolute_path_clone = contract_source.ast.absolute_path.clone();
-            let mut ast = contract_source.ast.clone();
-            match read_file_to_string(&root_path.join(Path::new(
-                &contract_source.ast.absolute_path.as_ref().unwrap(),
-            ))) {
-                Ok(content) => {
-                    ast.source = Some(content);
-                }
-                Err(err) => {
-                    eprintln!(
-                        "Error reading Solidity source file: {:?}",
-                        absolute_path_clone.unwrap()
-                    );
-                    eprintln!("{:?}", err);
-                }
+    for (_, contract_source) in hardhat_output.output.iter() {
+        let absolute_path_clone = contract_source.ast.absolute_path.clone();
+        let mut ast = contract_source.ast.clone();
+        match read_file_to_string(&root_path.join(Path::new(
+            &contract_source.ast.absolute_path.as_ref().unwrap(),
+        ))) {
+            Ok(content) => {
+                ast.source = Some(content);
             }
-
-            ast.accept(&mut context_loader).unwrap_or_else(|err| {
-                // Exit with a non-zero exit code
-                eprintln!("Error loading Hardhat AST into ContextLoader");
+            Err(err) => {
+                eprintln!(
+                    "Error reading Solidity source file: {:?}",
+                    absolute_path_clone.unwrap()
+                );
                 eprintln!("{:?}", err);
-            });
+            }
         }
+
+        ast.accept(&mut context_loader).unwrap_or_else(|err| {
+            // Exit with a non-zero exit code
+            eprintln!("Error loading Hardhat AST into ContextLoader");
+            eprintln!("{:?}", err);
+        });
     }
 
     (src_path, context_loader)
