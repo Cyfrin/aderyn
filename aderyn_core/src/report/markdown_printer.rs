@@ -1,7 +1,7 @@
 use crate::context::loader::ContextLoader;
 use std::{
     io::{Result, Write},
-    path::PathBuf,
+    path::{Path, PathBuf},
 };
 
 use super::{
@@ -247,7 +247,7 @@ impl MarkdownReportPrinter {
         _loader: &ContextLoader,
         severity: &str,
         number: i32,
-        root_path: &PathBuf,
+        root_path: &Path,
     ) -> Result<()> {
         let is_file = root_path.is_file();
 
@@ -260,21 +260,18 @@ impl MarkdownReportPrinter {
             if is_file {
                 writeln!(
                     writer,
-                    "- Found in {} Line: {}\n\n{}\n\n\n",
+                    "- Found in {} Line: {}\n\nfile://{}\n\n\n",
                     contract_path,
                     line_number,
-                    format!("file://{}", root_path.as_path().to_str().unwrap())
+                    root_path.to_str().unwrap(),
                 )?;
             } else {
                 writeln!(
                     writer,
-                    "- Found in {} Line: {}\n\n{}\n\n\n",
+                    "- Found in {} Line: {}\n\nfile://{}\n\n\n",
                     contract_path,
                     line_number,
-                    format!(
-                        "file://{}",
-                        root_path.join(contract_path).as_path().to_str().unwrap()
-                    )
+                    root_path.join(contract_path).as_path().to_str().unwrap(),
                 )?;
             }
         }
