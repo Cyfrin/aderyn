@@ -1,4 +1,7 @@
-use std::io::{Result, Write};
+use std::{
+    io::{Result, Write},
+    path::PathBuf,
+};
 
 use crate::context::loader::ContextLoader;
 use serde::Serialize;
@@ -22,7 +25,13 @@ pub struct IssueCount {
 pub struct JsonPrinter;
 
 impl ReportPrinter<()> for JsonPrinter {
-    fn print_report<W: Write>(&self, writer: W, report: &Report, _: &ContextLoader) -> Result<()> {
+    fn print_report<W: Write>(
+        &self,
+        writer: W,
+        report: &Report,
+        _: &ContextLoader,
+        _: PathBuf,
+    ) -> Result<()> {
         let content = JsonContent {
             issue_count: IssueCount {
                 critical: report.criticals.len(),

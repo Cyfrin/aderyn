@@ -1,5 +1,8 @@
 use crate::context::loader::ContextLoader;
-use std::io::{Result, Write};
+use std::{
+    io::{Result, Write},
+    path::PathBuf,
+};
 
 use super::{
     printer::ReportPrinter,
@@ -14,6 +17,7 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
         mut writer: W,
         report: &Report,
         loader: &ContextLoader,
+        root_path: PathBuf,
     ) -> Result<()> {
         self.print_title_and_disclaimer(&mut writer)?;
         self.print_table_of_contents(&mut writer, report)?;
@@ -23,7 +27,7 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
             writeln!(writer, "# Critical Issues\n")?;
             for issue in &report.criticals {
                 counter += 1;
-                self.print_issue(&mut writer, issue, loader, "C", counter)?;
+                self.print_issue(&mut writer, issue, loader, "C", counter, &root_path)?;
             }
         }
         if !report.highs.is_empty() {
@@ -31,7 +35,7 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
             counter = 0;
             for issue in &report.highs {
                 counter += 1;
-                self.print_issue(&mut writer, issue, loader, "H", counter)?;
+                self.print_issue(&mut writer, issue, loader, "H", counter, &root_path)?;
             }
         }
         if !report.mediums.is_empty() {
@@ -39,7 +43,7 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
             counter = 0;
             for issue in &report.mediums {
                 counter += 1;
-                self.print_issue(&mut writer, issue, loader, "M", counter)?;
+                self.print_issue(&mut writer, issue, loader, "M", counter, &root_path)?;
             }
         }
         if !report.lows.is_empty() {
@@ -47,7 +51,7 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
             counter = 0;
             for issue in &report.lows {
                 counter += 1;
-                self.print_issue(&mut writer, issue, loader, "L", counter)?;
+                self.print_issue(&mut writer, issue, loader, "L", counter, &root_path)?;
             }
         }
         if !report.ncs.is_empty() {
@@ -55,7 +59,7 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
             counter = 0;
             for issue in &report.ncs {
                 counter += 1;
-                self.print_issue(&mut writer, issue, loader, "NC", counter)?;
+                self.print_issue(&mut writer, issue, loader, "NC", counter, &root_path)?;
             }
         }
         Ok(())
@@ -243,18 +247,36 @@ impl MarkdownReportPrinter {
         _loader: &ContextLoader,
         severity: &str,
         number: i32,
+        root_path: &PathBuf,
     ) -> Result<()> {
+        let is_file = root_path.is_file();
+
         writeln!(
             writer,
             "## {}-{}: {}\n\n{}\n", // <a name> is the anchor for the issue title
             severity, number, issue.title, issue.description
         )?;
         for (contract_path, line_number) in issue.instances.keys() {
-            writeln!(
-                writer,
-                "- Found in {}: Line: {}",
-                contract_path, line_number
-            )?;
+            if is_file {
+                writeln!(
+                    writer,
+                    "- Found in {} Line: {}\n\n{}\n\n\n",
+                    contract_path,
+                    line_number,
+                    format!("file://{}", root_path.as_path().to_str().unwrap())
+                )?;
+            } else {
+                writeln!(
+                    writer,
+                    "- Found in {} Line: {}\n\n{}\n\n\n",
+                    contract_path,
+                    line_number,
+                    format!(
+                        "file://{}",
+                        root_path.join(contract_path).as_path().to_str().unwrap()
+                    )
+                )?;
+            }
         }
         writeln!(writer, "\n")?; // Add an extra newline for spacing
         Ok(())

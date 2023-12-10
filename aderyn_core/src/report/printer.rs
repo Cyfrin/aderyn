@@ -1,4 +1,7 @@
-use std::io::{Result, Write};
+use std::{
+    io::{Result, Write},
+    path::PathBuf,
+};
 
 use crate::context::loader::ContextLoader;
 
@@ -10,5 +13,6 @@ pub trait ReportPrinter<T> {
         writer: W,
         report: &Report,
         loader: &ContextLoader,
+        root_abs_path: PathBuf,
     ) -> Result<T>;
 }
