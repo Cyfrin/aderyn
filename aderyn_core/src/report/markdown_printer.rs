@@ -268,8 +268,7 @@ impl MarkdownReportPrinter {
             let line = std::fs::read_to_string(&path).unwrap();
 
             let line_preview = line
-                .split("\n")
-                .into_iter()
+                .split('\n')
                 .skip(line_number - 1)
                 .take(1)
                 .next()
