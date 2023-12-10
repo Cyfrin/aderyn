@@ -4,7 +4,7 @@ version = 3
 
 [[package]]
 name = "aderyn"
-version = "0.0.7"
+version = "0.0.8"
 dependencies = [
  "aderyn_driver",
  "clap 4.4.6",
@@ -12,7 +12,7 @@ dependencies = [
 
 [[package]]
 name = "aderyn_core"
-version = "0.0.7"
+version = "0.0.8"
 dependencies = [
  "eyre",
  "rayon",
@@ -25,7 +25,7 @@ dependencies = [
 
 [[package]]
 name = "aderyn_driver"
-version = "0.1.0"
+version = "0.0.8"
 dependencies = [
  "aderyn_core",
  "rayon",
@@ -34,7 +34,7 @@ dependencies = [
 
 [[package]]
 name = "aderyn_py"
-version = "0.1.0"
+version = "0.0.8"
 dependencies = [
  "aderyn_driver",
  "pyo3",
