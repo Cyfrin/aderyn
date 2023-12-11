@@ -1,10 +1,7 @@
 use crate::context::loader::ContextLoader;
 use std::io::{Result, Write};
 
-use super::{
-    printer::ReportPrinter,
-    reporter::{Issue, Report},
-};
+use super::{printer::ReportPrinter, reporter::Report, Issue};
 
 pub struct MarkdownReportPrinter;
 
