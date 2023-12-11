@@ -108,13 +108,7 @@ impl ReportPrinter<()> for JsonPrinter {
         let content = JsonContent {
             files_summary: loader.files_summary(),
             files_details: loader.files_details(),
-            issue_count: IssueCount {
-                critical: report.criticals.len(),
-                high: report.highs.len(),
-                medium: report.mediums.len(),
-                low: report.lows.len(),
-                nc: report.ncs.len(),
-            },
+            issue_count: report.issue_count(),
             critical_issues: report.critical_issues(),
             high_issues: report.high_issues(),
             medium_issue: report.medium_issues(),
@@ -186,6 +180,16 @@ fn extract_issue_bodies(issues: &[Issue]) -> Vec<IssueBody> {
 }
 
 impl Report {
+    fn issue_count(&self) -> IssueCount {
+        IssueCount {
+            critical: self.criticals.len(),
+            high: self.highs.len(),
+            medium: self.mediums.len(),
+            low: self.lows.len(),
+            nc: self.ncs.len(),
+        }
+    }
+
     fn critical_issues(&self) -> CriticalIssues {
         CriticalIssues {
             issues: extract_issue_bodies(&self.criticals),
