@@ -11,6 +11,7 @@ license = "MIT"
 [dependencies]
 eyre = "0.6.8"
 rayon = "1.8.0"
+semver = "1.0.20"
 serde = { version = "1.0.160", features = ["derive"] }
 serde_json = "1.0.96"
 serde_repr = "0.1.12"
