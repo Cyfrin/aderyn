@@ -28,9 +28,9 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
             (report.nc_issues().issues, "# NC Issues\n", "NC"),
         ];
 
-        let mut counter = 0;
-
         for (issues, heading, severity) in all_issues {
+            let mut counter = 0;
+
             if !issues.is_empty() {
                 writeln!(writer, "{}", heading).unwrap();
                 for issue_body in &issues {
@@ -120,7 +120,7 @@ impl MarkdownReportPrinter {
     }
 
     fn print_table_of_contents<W: Write>(&self, mut writer: W, report: &Report) -> Result<()> {
-        fn print_table_of_content<T>(issues: &[Issue], mut w: T)
+        fn print_table_of_content<T>(issues: &[Issue], mut w: T, severity: &str)
         where
             T: Write,
         {
@@ -132,7 +132,8 @@ impl MarkdownReportPrinter {
                     .replace(|c: char| !c.is_ascii_alphanumeric() && c != '-', "");
                 writeln!(
                     w,
-                    "  - [C-{}: {}](#C-{}-{})",
+                    "  - [{}-{}: {}](#C-{}-{})",
+                    severity,
                     index + 1,
                     issue.title,
                     index + 1,
@@ -142,10 +143,10 @@ impl MarkdownReportPrinter {
             }
         }
 
-        fn display<T: Write>(title: &str, issues: &[Issue], mut writer: T) {
+        fn display<T: Write>(title: &str, issues: &[Issue], mut writer: T, severity: &str) {
             if !issues.is_empty() {
                 writeln!(writer, "{}", title).unwrap();
-                print_table_of_content(issues, &mut writer);
+                print_table_of_content(issues, &mut writer, severity);
             }
         }
 
@@ -156,15 +157,19 @@ impl MarkdownReportPrinter {
         writeln!(writer, "  - [Issue Summary](#issue-summary)")?;
 
         let issues = [
-            (&report.criticals, "- [Critical Issues](#critical-issues)"),
-            (&report.highs, "- [High Issues](#high-issues)"),
-            (&report.mediums, "- [Medium Issues](#medium-issues)"),
-            (&report.lows, "- [Low Issues](#low-issues)"),
-            (&report.ncs, "- [NC Issues](#nc-issues)"),
+            (
+                &report.criticals,
+                "- [Critical Issues](#critical-issues)",
+                "C",
+            ),
+            (&report.highs, "- [High Issues](#high-issues)", "H"),
+            (&report.mediums, "- [Medium Issues](#medium-issues)", "M"),
+            (&report.lows, "- [Low Issues](#low-issues)", "L"),
+            (&report.ncs, "- [NC Issues](#nc-issues)", "NC"),
         ];
 
         issues.iter().for_each(|rec| {
-            display(rec.1, rec.0, &mut writer);
+            display(rec.1, rec.0, &mut writer, rec.2);
         });
 
         writeln!(writer, "\n")?; // Add an extra newline for spacing
@@ -212,8 +217,11 @@ impl MarkdownReportPrinter {
 
             writeln!(
                 writer,
-                "- Found in {} Line: {}\n\n\t>{}\n\nfile://{}\n\n\n",
-                instance.contract_path, instance.line_no, line_preview, &path,
+                "- Found in {} Line: {}\n\n\t```solidity\n\t{}\n\t```\nfile://{}\n\n\n\n",
+                instance.contract_path,
+                instance.line_no,
+                line_preview,
+                std::fs::canonicalize(&path).unwrap().to_str().unwrap(),
             )?;
         }
         writeln!(writer, "\n")?; // Add an extra newline for spacing
