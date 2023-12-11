@@ -15,20 +15,16 @@ pub struct PushZeroOpcodeDetector {
 impl Detector for PushZeroOpcodeDetector {
     fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
         for pragma_directive in loader.pragma_directives.keys() {
-            let mut eight_found = false;
-            for literal in &pragma_directive.literals {
-                if !eight_found && literal.contains('8') {
-                    eight_found = true;
-                } else if eight_found && literal.contains("20") {
-                    self.found_instances.insert(
-                        loader
-                            .get_node_sort_key(&ASTNode::PragmaDirective(pragma_directive.clone())),
-                        pragma_directive.src.clone(),
-                    );
-                    break;
-                } else if eight_found {
-                    eight_found = false;
-                }
+            let mut literals_iter = pragma_directive.literals.iter();
+            let eight_first = literals_iter.clone().any(|literal| literal.contains('8'));
+            let twenty_after_eight =
+                eight_first && literals_iter.any(|literal| literal.contains("20"));
+
+            if twenty_after_eight {
+                self.found_instances.insert(
+                    loader.get_node_sort_key(&ASTNode::PragmaDirective(pragma_directive.clone())),
+                    pragma_directive.src.clone(),
+                );
             }
         }
         Ok(!self.found_instances.is_empty())
