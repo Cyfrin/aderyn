@@ -1,4 +1,7 @@
-use std::io::{Result, Write};
+use std::{
+    io::{Result, Write},
+    path::PathBuf,
+};
 
 use crate::context::loader::ContextLoader;
 use serde::Serialize;
@@ -40,6 +43,7 @@ impl ReportPrinter<()> for JsonPrinter {
         writer: W,
         report: &Report,
         loader: &ContextLoader,
+        _: PathBuf,
     ) -> Result<()> {
         let content = JsonContent {
             files_summary: loader.files_summary(),
