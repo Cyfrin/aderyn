@@ -32,7 +32,7 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
 
         for (issues, heading, severity) in all_issues {
             if !issues.is_empty() {
-                _ = writeln!(writer, "{}", heading).unwrap();
+                let _ = writeln!(writer, "{}", heading).unwrap();
                 for issue_body in &issues {
                     counter += 1;
                     self.print_issue(&mut writer, issue_body, severity, counter, &root_path)?;
@@ -92,7 +92,7 @@ impl MarkdownReportPrinter {
             let files_details = loader.files_details();
 
             files_details.files_details.iter().for_each(|detail| {
-                _ = writeln!(writer, "| {} | {} |", detail.file_path, detail.n_sloc).unwrap();
+                let _ = writeln!(writer, "| {} | {} |", detail.file_path, detail.n_sloc).unwrap();
             });
 
             let sloc_stats = &loader.sloc_stats;
@@ -130,7 +130,7 @@ impl MarkdownReportPrinter {
                     .to_lowercase()
                     .replace(' ', "-")
                     .replace(|c: char| !c.is_ascii_alphanumeric() && c != '-', "");
-                _ = writeln!(
+                let _ = writeln!(
                     w,
                     "  - [C-{}: {}](#C-{}-{})",
                     index + 1,
@@ -144,7 +144,7 @@ impl MarkdownReportPrinter {
 
         fn display<T: Write>(title: &str, issues: &[Issue], mut writer: T) {
             if !issues.is_empty() {
-                _ = writeln!(writer, "{}", title).unwrap();
+                let _ = writeln!(writer, "{}", title).unwrap();
                 print_table_of_content(issues, &mut writer);
             }
         }
@@ -155,7 +155,7 @@ impl MarkdownReportPrinter {
         writeln!(writer, "  - [Files Details](#files-details)")?;
         writeln!(writer, "  - [Issue Summary](#issue-summary)")?;
 
-        let issues = vec![
+        let issues = [
             (&report.criticals, "- [Critical Issues](#critical-issues)"),
             (&report.highs, "- [High Issues](#high-issues)"),
             (&report.mediums, "- [Medium Issues](#medium-issues)"),
