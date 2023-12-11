@@ -132,10 +132,11 @@ impl MarkdownReportPrinter {
                     .replace(|c: char| !c.is_ascii_alphanumeric() && c != '-', "");
                 writeln!(
                     w,
-                    "  - [{}-{}: {}](#C-{}-{})",
+                    "  - [{}-{}: {}](#{}-{}-{})",
                     severity,
                     index + 1,
                     issue.title,
+                    severity.to_ascii_lowercase(),
                     index + 1,
                     issue_title_slug
                 )
