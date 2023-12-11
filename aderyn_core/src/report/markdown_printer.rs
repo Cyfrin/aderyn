@@ -4,7 +4,7 @@ use std::{
     path::{Path, PathBuf},
 };
 
-use super::{printer::ReportPrinter, reporter::Report, Issue};
+use super::{printer::ReportPrinter, reporter::Report, Issue, IssueBody};
 
 pub struct MarkdownReportPrinter;
 
@@ -19,46 +19,27 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
         self.print_title_and_disclaimer(&mut writer)?;
         self.print_table_of_contents(&mut writer, report)?;
         self.print_contract_summary(&mut writer, report, loader)?;
+
+        let all_issues = vec![
+            (report.critical_issues().issues, "# Critical Issues\n", "C"),
+            (report.high_issues().issues, "# High Issues\n", "H"),
+            (report.medium_issues().issues, "# Medium Issues\n", "M"),
+            (report.low_issues().issues, "# Low Issues\n", "L"),
+            (report.nc_issues().issues, "# NC Issues\n", "NC"),
+        ];
+
         let mut counter = 0;
-        if !report.criticals.is_empty() {
-            writeln!(writer, "# Critical Issues\n")?;
-            for issue in &report.criticals {
-                counter += 1;
-                self.print_issue(&mut writer, issue, loader, "C", counter, &root_path)?;
+
+        for (issues, heading, severity) in all_issues {
+            if !issues.is_empty() {
+                _ = writeln!(writer, "{}", heading).unwrap();
+                for issue_body in &issues {
+                    counter += 1;
+                    self.print_issue(&mut writer, issue_body, severity, counter, &root_path)?;
+                }
             }
         }
-        if !report.highs.is_empty() {
-            writeln!(writer, "# High Issues\n")?;
-            counter = 0;
-            for issue in &report.highs {
-                counter += 1;
-                self.print_issue(&mut writer, issue, loader, "H", counter, &root_path)?;
-            }
-        }
-        if !report.mediums.is_empty() {
-            writeln!(writer, "# Medium Issues\n")?;
-            counter = 0;
-            for issue in &report.mediums {
-                counter += 1;
-                self.print_issue(&mut writer, issue, loader, "M", counter, &root_path)?;
-            }
-        }
-        if !report.lows.is_empty() {
-            writeln!(writer, "# Low Issues\n")?;
-            counter = 0;
-            for issue in &report.lows {
-                counter += 1;
-                self.print_issue(&mut writer, issue, loader, "L", counter, &root_path)?;
-            }
-        }
-        if !report.ncs.is_empty() {
-            writeln!(writer, "# NC Issues\n")?;
-            counter = 0;
-            for issue in &report.ncs {
-                counter += 1;
-                self.print_issue(&mut writer, issue, loader, "NC", counter, &root_path)?;
-            }
-        }
+
         Ok(())
     }
 }
@@ -83,156 +64,109 @@ impl MarkdownReportPrinter {
         writeln!(writer, "# Summary\n")?;
 
         // Files Summary
-        writeln!(writer, "## Files Summary\n")?;
-        let total_source_units = loader.source_units.len();
-        let total_sloc = loader.sloc_stats.code;
+        {
+            writeln!(writer, "## Files Summary\n")?;
+            let files_summary = loader.files_summary();
 
-        // Start the markdown table
-        writeln!(writer, "| Key | Value |")?;
-        writeln!(writer, "| --- | --- |")?;
-        writeln!(writer, "| .sol Files | {} |", total_source_units)?;
-        writeln!(writer, "| Total nSLOC | {} |", total_sloc)?;
+            // Start the markdown table
+            writeln!(writer, "| Key | Value |")?;
+            writeln!(writer, "| --- | --- |")?;
+            writeln!(
+                writer,
+                "| .sol Files | {} |",
+                files_summary.total_source_units
+            )?;
+            writeln!(writer, "| Total nSLOC | {} |", files_summary.total_sloc)?;
 
-        writeln!(writer, "\n")?; // Add an extra newline for spacing
+            writeln!(writer, "\n")?; // Add an extra newline for spacing
+        }
 
         // Files Details
-        writeln!(writer, "## Files Details\n")?;
+        {
+            writeln!(writer, "## Files Details\n")?;
 
-        // Start the markdown table with the header
-        writeln!(writer, "| Filepath | nSLOC |")?;
-        writeln!(writer, "| --- | --- |")?;
+            // Start the markdown table with the header
+            writeln!(writer, "| Filepath | nSLOC |")?;
+            writeln!(writer, "| --- | --- |")?;
 
-        let sloc_stats = &loader.sloc_stats;
+            let files_details = loader.files_details();
 
-        let mut source_units = loader.source_units.clone();
-        source_units.sort_by_key(|su: &crate::ast::SourceUnit| {
-            su.absolute_path.as_deref().unwrap_or("").to_string()
-        });
+            files_details.files_details.iter().for_each(|detail| {
+                _ = writeln!(writer, "| {} | {} |", detail.file_path, detail.n_sloc).unwrap();
+            });
 
-        // Iterate over source units and add each as a row in the markdown table
-        for source_unit in source_units {
-            let filepath = source_unit.absolute_path.as_ref().unwrap();
-            let report: &tokei::Report = sloc_stats
-                .reports
-                .iter()
-                .find(|r| r.name.to_str().map_or(false, |s| s.contains(filepath)))
-                .unwrap();
-            writeln!(writer, "| {} | {} |", filepath, report.stats.code)?;
+            let sloc_stats = &loader.sloc_stats;
+            writeln!(writer, "| **Total** | **{}** |", sloc_stats.code)?;
+            writeln!(writer, "\n")?; // Add an extra newline for spacing
         }
-        writeln!(writer, "| **Total** | **{}** |", sloc_stats.code)?;
-        writeln!(writer, "\n")?; // Add an extra newline for spacing
 
         // Analysis Sumarry
-        writeln!(writer, "## Issue Summary\n")?;
-        // Start the markdown table
-        writeln!(writer, "| Category | No. of Issues |")?;
-        writeln!(writer, "| --- | --- |")?;
-        writeln!(writer, "| Critical | {} |", report.criticals.len())?;
-        writeln!(writer, "| High | {} |", report.highs.len())?;
-        writeln!(writer, "| Medium | {} |", report.mediums.len())?;
-        writeln!(writer, "| Low | {} |", report.lows.len())?;
-        writeln!(writer, "| NC | {} |", report.ncs.len())?;
-        writeln!(writer, "\n")?; // Add an extra newline for spacing
+        {
+            let issue_count = report.issue_count();
+            writeln!(writer, "## Issue Summary\n")?;
+
+            // Start the markdown table
+            writeln!(writer, "| Category | No. of Issues |")?;
+            writeln!(writer, "| --- | --- |")?;
+            writeln!(writer, "| Critical | {} |", issue_count.critical)?;
+            writeln!(writer, "| High | {} |", issue_count.high)?;
+            writeln!(writer, "| Medium | {} |", issue_count.medium)?;
+            writeln!(writer, "| Low | {} |", issue_count.low)?;
+            writeln!(writer, "| NC | {} |", issue_count.nc)?;
+            writeln!(writer, "\n")?; // Add an extra newline for spacing
+        }
 
         Ok(())
     }
 
     fn print_table_of_contents<W: Write>(&self, mut writer: W, report: &Report) -> Result<()> {
-        writeln!(writer, "# Table of Contents\n")?;
-        writeln!(writer, "- [Summary](#summary)")?;
-        writeln!(writer, "  - [Files Summary](#files-summary)")?;
-        writeln!(writer, "  - [Files Details](#files-details)")?;
-        writeln!(writer, "  - [Issue Summary](#issue-summary)")?;
-        if !report.criticals.is_empty() {
-            writeln!(writer, "- [Critical Issues](#critical-issues)")?;
-            for (index, issue) in report.criticals.iter().enumerate() {
+        fn print_table_of_content<T>(issues: &[Issue], mut w: T)
+        where
+            T: Write,
+        {
+            for (index, issue) in issues.iter().enumerate() {
                 let issue_title_slug = issue
                     .title
                     .to_lowercase()
                     .replace(' ', "-")
                     .replace(|c: char| !c.is_ascii_alphanumeric() && c != '-', "");
-                writeln!(
-                    writer,
+                _ = writeln!(
+                    w,
                     "  - [C-{}: {}](#C-{}-{})",
                     index + 1,
                     issue.title,
                     index + 1,
                     issue_title_slug
-                )?;
+                )
+                .unwrap();
             }
         }
-        if !report.highs.is_empty() {
-            writeln!(writer, "- [High Issues](#high-issues)")?;
-            for (index, issue) in report.highs.iter().enumerate() {
-                let issue_title_slug = issue
-                    .title
-                    .to_lowercase()
-                    .replace(' ', "-")
-                    .replace(|c: char| !c.is_ascii_alphanumeric() && c != '-', "");
-                writeln!(
-                    writer,
-                    "  - [H-{}: {}](#H-{}-{})",
-                    index + 1,
-                    issue.title,
-                    index + 1,
-                    issue_title_slug
-                )?;
+
+        fn display<T: Write>(title: &str, issues: &[Issue], mut writer: T) {
+            if !issues.is_empty() {
+                _ = writeln!(writer, "{}", title).unwrap();
+                print_table_of_content(issues, &mut writer);
             }
         }
-        if !report.mediums.is_empty() {
-            writeln!(writer, "- [Medium Issues](#medium-issues)")?;
-            for (index, issue) in report.mediums.iter().enumerate() {
-                let issue_title_slug = issue
-                    .title
-                    .to_lowercase()
-                    .replace(' ', "-")
-                    .replace(|c: char| !c.is_ascii_alphanumeric() && c != '-', "");
-                writeln!(
-                    writer,
-                    "  - [M-{}: {}](#M-{}-{})",
-                    index + 1,
-                    issue.title,
-                    index + 1,
-                    issue_title_slug
-                )?;
-            }
-        }
-        if !report.lows.is_empty() {
-            writeln!(writer, "- [Low Issues](#low-issues)")?;
-            for (index, issue) in report.lows.iter().enumerate() {
-                let issue_title_slug = issue
-                    .title
-                    .to_lowercase()
-                    .replace(' ', "-")
-                    .replace(|c: char| !c.is_ascii_alphanumeric() && c != '-', "");
-                writeln!(
-                    writer,
-                    "  - [L-{}: {}](#L-{}-{})",
-                    index + 1,
-                    issue.title,
-                    index + 1,
-                    issue_title_slug
-                )?;
-            }
-        }
-        if !report.ncs.is_empty() {
-            writeln!(writer, "- [NC Issues](#nc-issues)")?;
-            for (index, issue) in report.ncs.iter().enumerate() {
-                let issue_title_slug = issue
-                    .title
-                    .to_lowercase()
-                    .replace(' ', "-")
-                    .replace(|c: char| !c.is_ascii_alphanumeric() && c != '-', "");
-                writeln!(
-                    writer,
-                    "  - [NC-{}: {}](#NC-{}-{})",
-                    index + 1,
-                    issue.title,
-                    index + 1,
-                    issue_title_slug
-                )?;
-            }
-        }
+
+        writeln!(writer, "# Table of Contents\n")?;
+        writeln!(writer, "- [Summary](#summary)")?;
+        writeln!(writer, "  - [Files Summary](#files-summary)")?;
+        writeln!(writer, "  - [Files Details](#files-details)")?;
+        writeln!(writer, "  - [Issue Summary](#issue-summary)")?;
+
+        let issues = vec![
+            (&report.criticals, "- [Critical Issues](#critical-issues)"),
+            (&report.highs, "- [High Issues](#high-issues)"),
+            (&report.mediums, "- [Medium Issues](#medium-issues)"),
+            (&report.lows, "- [Low Issues](#low-issues)"),
+            (&report.ncs, "- [NC Issues](#nc-issues)"),
+        ];
+
+        issues.iter().for_each(|rec| {
+            display(rec.1, rec.0, &mut writer);
+        });
+
         writeln!(writer, "\n")?; // Add an extra newline for spacing
         Ok(())
     }
@@ -240,8 +174,7 @@ impl MarkdownReportPrinter {
     fn print_issue<W: Write>(
         &self,
         mut writer: W,
-        issue: &Issue,
-        _loader: &ContextLoader,
+        issue_body: &IssueBody,
         severity: &str,
         number: i32,
         root_path: &Path,
@@ -251,14 +184,20 @@ impl MarkdownReportPrinter {
         writeln!(
             writer,
             "## {}-{}: {}\n\n{}\n", // <a name> is the anchor for the issue title
-            severity, number, issue.title, issue.description
+            severity, number, issue_body.title, issue_body.description
         )?;
-        for (contract_path, line_number) in issue.instances.keys() {
+        for instance in &issue_body.instances {
             let path = {
                 if is_file {
                     String::from(root_path.to_str().unwrap())
                 } else {
-                    String::from(root_path.join(contract_path).as_path().to_str().unwrap())
+                    String::from(
+                        root_path
+                            .join(instance.contract_path.clone())
+                            .as_path()
+                            .to_str()
+                            .unwrap(),
+                    )
                 }
             };
 
@@ -266,7 +205,7 @@ impl MarkdownReportPrinter {
 
             let line_preview = line
                 .split('\n')
-                .skip(line_number - 1)
+                .skip(instance.line_no - 1)
                 .take(1)
                 .next()
                 .unwrap();
@@ -274,7 +213,7 @@ impl MarkdownReportPrinter {
             writeln!(
                 writer,
                 "- Found in {} Line: {}\n\n\t>{}\n\nfile://{}\n\n\n",
-                contract_path, line_number, line_preview, &path,
+                instance.contract_path, instance.line_no, line_preview, &path,
             )?;
         }
         writeln!(writer, "\n")?; // Add an extra newline for spacing
