@@ -2,7 +2,7 @@
 
 <p align="center">
     <br />
-    <a href="https://updraft.cyfrin.io/">
+    <a href="https://cyfrin.io/">
         <img src=".github/images/aderyn_logo.png" width="400" alt=""/></a>
     <br />
 </p>
