@@ -41,6 +41,29 @@ jobs:
         with:
           command: test
 
+  reports:
+    name: Check Reports
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+
+      - name: Generate report2.md
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+          args: -- -o report2.md ./tests/contract-playground/
+
+      - name: Check report.md vs report2.md
+        run: diff report.md report2.md
+
   lints:
     name: Lints
     runs-on: ubuntu-latest
