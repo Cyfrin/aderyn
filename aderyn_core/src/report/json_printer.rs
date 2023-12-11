@@ -164,7 +164,7 @@ impl ContextLoader {
 }
 
 impl ContextLoader {
-    fn extract_issue_bodies(issues: &Vec<Issue>) -> Vec<IssueBody> {
+    fn extract_issue_bodies(issues: &[Issue]) -> Vec<IssueBody> {
         issues
             .iter()
             .map(|cr| {
