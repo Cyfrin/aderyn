@@ -115,11 +115,11 @@ impl ReportPrinter<()> for JsonPrinter {
                 low: report.lows.len(),
                 nc: report.ncs.len(),
             },
-            critical_issues: ContextLoader::critical_issues(report),
-            high_issues: ContextLoader::high_issues(report),
-            medium_issue: ContextLoader::medium_issues(report),
-            low_issues: ContextLoader::low_issues(report),
-            nc_issues: ContextLoader::nc_issues(report),
+            critical_issues: report.critical_issues(),
+            high_issues: report.high_issues(),
+            medium_issue: report.medium_issues(),
+            low_issues: report.low_issues(),
+            nc_issues: report.nc_issues(),
         };
         let value = serde_json::to_value(content).unwrap();
         _ = serde_json::to_writer_pretty(writer, &value);
@@ -163,53 +163,53 @@ impl ContextLoader {
     }
 }
 
-impl ContextLoader {
-    fn extract_issue_bodies(issues: &[Issue]) -> Vec<IssueBody> {
-        issues
-            .iter()
-            .map(|cr| {
-                let instances = cr
-                    .instances
-                    .keys()
-                    .map(|(contract_path, line_no)| IssueInstance {
-                        contract_path: contract_path.clone(),
-                        line_no: *line_no,
-                    })
-                    .collect();
+fn extract_issue_bodies(issues: &[Issue]) -> Vec<IssueBody> {
+    issues
+        .iter()
+        .map(|cr| {
+            let instances = cr
+                .instances
+                .keys()
+                .map(|(contract_path, line_no)| IssueInstance {
+                    contract_path: contract_path.clone(),
+                    line_no: *line_no,
+                })
+                .collect();
 
-                IssueBody {
-                    title: cr.title.clone(),
-                    description: cr.description.clone(),
-                    instances,
-                }
-            })
-            .collect()
-    }
+            IssueBody {
+                title: cr.title.clone(),
+                description: cr.description.clone(),
+                instances,
+            }
+        })
+        .collect()
+}
 
-    fn critical_issues(report: &Report) -> CriticalIssues {
+impl Report {
+    fn critical_issues(&self) -> CriticalIssues {
         CriticalIssues {
-            issues: ContextLoader::extract_issue_bodies(&report.criticals),
+            issues: extract_issue_bodies(&self.criticals),
         }
     }
 
-    fn high_issues(report: &Report) -> HighIssues {
+    fn high_issues(&self) -> HighIssues {
         HighIssues {
-            issues: ContextLoader::extract_issue_bodies(&report.highs),
+            issues: extract_issue_bodies(&self.highs),
         }
     }
-    fn medium_issues(report: &Report) -> MediumIssues {
+    fn medium_issues(&self) -> MediumIssues {
         MediumIssues {
-            issues: ContextLoader::extract_issue_bodies(&report.mediums),
+            issues: extract_issue_bodies(&self.mediums),
         }
     }
-    fn low_issues(report: &Report) -> LowIssues {
+    fn low_issues(&self) -> LowIssues {
         LowIssues {
-            issues: ContextLoader::extract_issue_bodies(&report.lows),
+            issues: extract_issue_bodies(&self.lows),
         }
     }
-    fn nc_issues(report: &Report) -> NcIssues {
+    fn nc_issues(&self) -> NcIssues {
         NcIssues {
-            issues: ContextLoader::extract_issue_bodies(&report.ncs),
+            issues: extract_issue_bodies(&self.ncs),
         }
     }
 }
