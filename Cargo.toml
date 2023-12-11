@@ -3,7 +3,8 @@ members = [
     "aderyn",
     "aderyn_core",
     "aderyn_driver",
-    "aderyn_py"
+    "aderyn_py",
+    "aderyn_nodejs"
 ]
 
 resolver="1"
