@@ -1,4 +1,7 @@
-use std::collections::BTreeMap;
+use super::{
+    extract_issue_bodies, CriticalIssues, HighIssues, Issue, IssueCount, LowIssues, MediumIssues,
+    NcIssues,
+};
 
 #[derive(Default, PartialEq)]
 pub struct Report {
@@ -9,11 +12,41 @@ pub struct Report {
     pub ncs: Vec<Issue>,
 }
 
-#[derive(Default, PartialEq, Clone, Debug)]
-pub struct Issue {
-    pub title: String,
-    pub description: String,
-    // Keys are source file name and line number
-    // Value is ASTNode.src
-    pub instances: BTreeMap<(String, usize), String>,
+impl Report {
+    pub fn issue_count(&self) -> IssueCount {
+        IssueCount {
+            critical: self.criticals.len(),
+            high: self.highs.len(),
+            medium: self.mediums.len(),
+            low: self.lows.len(),
+            nc: self.ncs.len(),
+        }
+    }
+
+    pub fn critical_issues(&self) -> CriticalIssues {
+        CriticalIssues {
+            issues: extract_issue_bodies(&self.criticals),
+        }
+    }
+
+    pub fn high_issues(&self) -> HighIssues {
+        HighIssues {
+            issues: extract_issue_bodies(&self.highs),
+        }
+    }
+    pub fn medium_issues(&self) -> MediumIssues {
+        MediumIssues {
+            issues: extract_issue_bodies(&self.mediums),
+        }
+    }
+    pub fn low_issues(&self) -> LowIssues {
+        LowIssues {
+            issues: extract_issue_bodies(&self.lows),
+        }
+    }
+    pub fn nc_issues(&self) -> NcIssues {
+        NcIssues {
+            issues: extract_issue_bodies(&self.ncs),
+        }
+    }
 }

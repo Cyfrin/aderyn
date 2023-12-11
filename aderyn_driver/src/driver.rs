@@ -1,5 +1,8 @@
 use crate::{process_foundry, process_hardhat, virtual_foundry};
-use aderyn_core::run;
+use aderyn_core::{
+    report::{json_printer::JsonPrinter, markdown_printer::MarkdownReportPrinter},
+    run_with_printer,
+};
 use std::{fs::read_dir, path::PathBuf};
 use tokei::{Config, LanguageType};
 
@@ -14,8 +17,8 @@ enum Framework {
 }
 
 pub fn drive(args: Args) {
-    if !args.output.ends_with(".md") {
-        eprintln!("Warning: output file lacks the \".md\" extension in its filename.");
+    if !args.output.ends_with(".json") && !args.output.ends_with(".md") {
+        eprintln!("Warning: output file lacks the \".md\" or \".json\" extension in its filename.");
     }
 
     let is_single_file = args.root.ends_with(".sol") && PathBuf::from(&args.root).is_file();
@@ -49,13 +52,25 @@ pub fn drive(args: Args) {
     languages.get_statistics(&[src_path], &[], &tokei_config);
     context_loader.set_sloc_stats(languages[&LanguageType::Solidity].clone());
 
-    // Load the context loader into the run function, which runs the detectors
-    run(context_loader, args.output).unwrap_or_else(|err| {
-        // Exit with a non-zero exit code
-        eprintln!("Error running aderyn");
-        eprintln!("{:?}", err);
-        std::process::exit(1);
-    });
+    if args.output.ends_with(".json") {
+        // Load the context loader into the run function, which runs the detectors
+        run_with_printer(context_loader, args.output, JsonPrinter).unwrap_or_else(|err| {
+            // Exit with a non-zero exit code
+            eprintln!("Error running aderyn");
+            eprintln!("{:?}", err);
+            std::process::exit(1);
+        });
+    } else {
+        // Load the context loader into the run function, which runs the detectors
+        run_with_printer(context_loader, args.output, MarkdownReportPrinter).unwrap_or_else(
+            |err| {
+                // Exit with a non-zero exit code
+                eprintln!("Error running aderyn");
+                eprintln!("{:?}", err);
+                std::process::exit(1);
+            },
+        );
+    }
 
     if is_single_file {
         virtual_foundry::delete_safe_space(&safe_space);
