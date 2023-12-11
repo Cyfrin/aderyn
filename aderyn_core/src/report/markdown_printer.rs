@@ -4,10 +4,7 @@ use std::{
     path::{Path, PathBuf},
 };
 
-use super::{
-    printer::ReportPrinter,
-    reporter::{Issue, Report},
-};
+use super::{printer::ReportPrinter, reporter::Report, Issue};
 
 pub struct MarkdownReportPrinter;
 

@@ -14,7 +14,8 @@ use std::path::{Path, PathBuf};
 use crate::context::loader::ContextLoader;
 use crate::detect::detector::{get_all_detectors, IssueSeverity};
 use crate::report::printer::ReportPrinter;
-use crate::report::reporter::{Issue, Report};
+use crate::report::reporter::Report;
+use crate::report::Issue;
 
 pub fn run_with_printer<T>(
     context_loader: ContextLoader,
