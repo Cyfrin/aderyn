@@ -29,20 +29,13 @@ pub fn carve_shortest_path(from_file: PathBuf, to_file: PathBuf) -> PathBuf {
     let mut buffer = PathBuf::new();
 
     // Hold the max length common starting path in the buffer
-    loop {
-        match (curr_tfc, curr_ffc) {
-            (Some(tfc), Some(ffc)) => {
-                if tfc != ffc {
-                    break;
-                }
-                buffer.push(ffc);
-                curr_tfc = to_file_comps.next();
-                curr_ffc = from_file_comps.next();
-            }
-            (_, _) => {
-                break;
-            }
+    while let (Some(tfc), Some(ffc)) = (curr_tfc, curr_ffc) {
+        if tfc != ffc {
+            break;
         }
+        buffer.push(ffc);
+        curr_tfc = to_file_comps.next();
+        curr_ffc = from_file_comps.next();
     }
 
     // Now, we are at the common place
@@ -59,25 +52,15 @@ pub fn carve_shortest_path(from_file: PathBuf, to_file: PathBuf) -> PathBuf {
     let mut count_back = 0;
 
     // Keep looking foreward until you reach the to_file
-    loop {
-        match curr_ffc {
-            Some(ffc) => {
-                buffer.push(ffc);
-                match ffc {
-                    Component::Normal(_) => {
-                        if buffer.is_file() {
-                            break;
-                        }
-                    }
-                    _ => (),
-                }
-                count_back += 1;
-                curr_ffc = from_file_comps.next();
-            }
-            None => {
+    while let Some(ffc) = curr_ffc {
+        buffer.push(ffc);
+        if let Component::Normal(_) = ffc {
+            if buffer.is_file() {
                 break;
             }
         }
+        count_back += 1;
+        curr_ffc = from_file_comps.next();
     }
 
     let mut backward_comps = (0..count_back)
