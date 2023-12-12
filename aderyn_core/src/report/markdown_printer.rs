@@ -4,7 +4,9 @@ use std::{
     path::{Path, PathBuf},
 };
 
-use super::{printer::ReportPrinter, reporter::Report, Issue, IssueBody};
+use super::{
+    printer::ReportPrinter, reporter::Report, util::carve_shortest_path, Issue, IssueBody,
+};
 
 pub struct MarkdownReportPrinter;
 
@@ -15,6 +17,7 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
         report: &Report,
         loader: &ContextLoader,
         root_path: PathBuf,
+        output_rel_path: Option<String>,
     ) -> Result<()> {
         self.print_title_and_disclaimer(&mut writer)?;
         self.print_table_of_contents(&mut writer, report)?;
@@ -35,7 +38,14 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
                 writeln!(writer, "{}", heading).unwrap();
                 for issue_body in &issues {
                     counter += 1;
-                    self.print_issue(&mut writer, issue_body, severity, counter, &root_path)?;
+                    self.print_issue(
+                        &mut writer,
+                        issue_body,
+                        severity,
+                        counter,
+                        &root_path,
+                        output_rel_path.clone().unwrap(),
+                    )?;
                 }
             }
         }
@@ -184,6 +194,7 @@ impl MarkdownReportPrinter {
         severity: &str,
         number: i32,
         root_path: &Path,
+        output_rel_path: String,
     ) -> Result<()> {
         let is_file = root_path.is_file();
 
@@ -218,11 +229,17 @@ impl MarkdownReportPrinter {
 
             writeln!(
                 writer,
-                "- Found in {} Line: {}\n\n\t```solidity\n\t{}\n\t```\nfile://{}\n\n\n\n",
+                "- Found in {} [Line: {}]({}#L{})\n\n\t```solidity\n\t{}\n\t```\n",
                 instance.contract_path,
                 instance.line_no,
+                carve_shortest_path(
+                    std::fs::canonicalize(PathBuf::from(output_rel_path.clone())).unwrap(),
+                    std::fs::canonicalize(&path).unwrap()
+                )
+                .to_str()
+                .unwrap(),
+                instance.line_no,
                 line_preview,
-                std::fs::canonicalize(&path).unwrap().to_str().unwrap(),
             )?;
         }
         writeln!(writer, "\n")?; // Add an extra newline for spacing

@@ -70,6 +70,7 @@ where
         &report,
         &context_loader,
         root_rel_path,
+        Some(output_file_path.clone()),
     )?;
 
     println!("Report printed to {}", output_file_path);

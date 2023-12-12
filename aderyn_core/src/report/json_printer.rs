@@ -44,6 +44,7 @@ impl ReportPrinter<()> for JsonPrinter {
         report: &Report,
         loader: &ContextLoader,
         _: PathBuf,
+        _: Option<String>,
     ) -> Result<()> {
         let content = JsonContent {
             files_summary: loader.files_summary(),
