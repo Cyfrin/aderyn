@@ -1,0 +1,203 @@
+{
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "something",
+          "type": "uint256"
+        }
+      ],
+      "name": "doSomething",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": {
+    "object": "0x",
+    "sourceMap": "",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x",
+    "sourceMap": "",
+    "linkReferences": {}
+  },
+  "methodIdentifiers": {
+    "doSomething(uint256)": "a6b206bf"
+  },
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.20+commit.a1b79de6\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"something\",\"type\":\"uint256\"}],\"name\":\"doSomething\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/CrazyPragma.sol\":\"CrazyPragma\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/\",\":forge-std/=lib/forge-std/src/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/\",\":openzeppelin/=lib/openzeppelin-contracts/contracts/\",\":solmate/=lib/solmate/src/\",\":v2-periphery/=lib/v2-periphery/contracts/\"]},\"sources\":{\"src/CrazyPragma.sol\":{\"keccak256\":\"0x04e9a3d5c24693db8a53e242d399492874a4225950bc159a5498a17f53bcc4e8\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://3707edb83a2304119c96a606642f49259175e7582bcb4f93ff1f5235258db91b\",\"dweb:/ipfs/QmUomqXq9FAXwLAgPjzToDen3yQnYV8TiHFTjxjX3HNMKv\"]}},\"version\":1}",
+  "metadata": {
+    "compiler": {
+      "version": "0.8.20+commit.a1b79de6"
+    },
+    "language": "Solidity",
+    "output": {
+      "abi": [
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "something",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "doSomething"
+        }
+      ],
+      "devdoc": {
+        "kind": "dev",
+        "methods": {},
+        "version": 1
+      },
+      "userdoc": {
+        "kind": "user",
+        "methods": {},
+        "version": 1
+      }
+    },
+    "settings": {
+      "remappings": [
+        "ds-test/=lib/forge-std/lib/ds-test/src/",
+        "erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/",
+        "forge-std/=lib/forge-std/src/",
+        "openzeppelin-contracts/=lib/openzeppelin-contracts/",
+        "openzeppelin/=lib/openzeppelin-contracts/contracts/",
+        "solmate/=lib/solmate/src/",
+        "v2-periphery/=lib/v2-periphery/contracts/"
+      ],
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "metadata": {
+        "bytecodeHash": "ipfs"
+      },
+      "compilationTarget": {
+        "src/CrazyPragma.sol": "CrazyPragma"
+      },
+      "libraries": {}
+    },
+    "sources": {
+      "src/CrazyPragma.sol": {
+        "keccak256": "0x04e9a3d5c24693db8a53e242d399492874a4225950bc159a5498a17f53bcc4e8",
+        "urls": [
+          "bzz-raw://3707edb83a2304119c96a606642f49259175e7582bcb4f93ff1f5235258db91b",
+          "dweb:/ipfs/QmUomqXq9FAXwLAgPjzToDen3yQnYV8TiHFTjxjX3HNMKv"
+        ],
+        "license": "MIT"
+      }
+    },
+    "version": 1
+  },
+  "ast": {
+    "absolutePath": "src/CrazyPragma.sol",
+    "id": 8,
+    "exportedSymbols": {
+      "CrazyPragma": [
+        7
+      ]
+    },
+    "nodeType": "SourceUnit",
+    "src": "32:113:0",
+    "nodes": [
+      {
+        "id": 1,
+        "nodeType": "PragmaDirective",
+        "src": "32:32:0",
+        "nodes": [],
+        "literals": [
+          "solidity",
+          ">=",
+          "0.8",
+          ".19",
+          "<",
+          "0.9",
+          ".1"
+        ]
+      },
+      {
+        "id": 7,
+        "nodeType": "ContractDefinition",
+        "src": "66:79:0",
+        "nodes": [
+          {
+            "id": 6,
+            "nodeType": "FunctionDefinition",
+            "src": "94:49:0",
+            "nodes": [],
+            "functionSelector": "a6b206bf",
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "doSomething",
+            "nameLocation": "103:11:0",
+            "parameters": {
+              "id": 4,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3,
+                  "mutability": "mutable",
+                  "name": "something",
+                  "nameLocation": "123:9:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 6,
+                  "src": "115:17:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 2,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "115:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "114:19:0"
+            },
+            "returnParameters": {
+              "id": 5,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "142:0:0"
+            },
+            "scope": 7,
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "CrazyPragma",
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "linearizedBaseContracts": [
+          7
+        ],
+        "name": "CrazyPragma",
+        "nameLocation": "76:11:0",
+        "scope": 8,
+        "usedErrors": [],
+        "usedEvents": []
+      }
+    ],
+    "license": "MIT"
+  },
+  "id": 0
+}
