@@ -21,6 +21,7 @@ pub fn run_with_printer<T>(
     context_loader: ContextLoader,
     output_file_path: String,
     reporter: T,
+    root_rel_path: PathBuf,
 ) -> Result<(), Box<dyn Error>>
 where
     T: ReportPrinter<()>,
@@ -68,6 +69,8 @@ where
         get_markdown_writer(&output_file_path)?,
         &report,
         &context_loader,
+        root_rel_path,
+        Some(output_file_path.clone()),
     )?;
 
     println!("Report printed to {}", output_file_path);

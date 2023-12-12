@@ -8,6 +8,7 @@ pub mod json_printer;
 pub mod markdown_printer;
 pub mod printer;
 pub mod reporter;
+pub mod util;
 
 #[derive(Default, PartialEq, Clone, Debug)]
 pub struct Issue {

@@ -21,6 +21,7 @@ pub fn drive(args: Args) {
         eprintln!("Warning: output file lacks the \".md\" or \".json\" extension in its filename.");
     }
 
+    let root_rel_path = PathBuf::from(&args.root);
     let is_single_file = args.root.ends_with(".sol") && PathBuf::from(&args.root).is_file();
     let mut safe_space = PathBuf::new();
 
@@ -54,15 +55,7 @@ pub fn drive(args: Args) {
 
     if args.output.ends_with(".json") {
         // Load the context loader into the run function, which runs the detectors
-        run_with_printer(context_loader, args.output, JsonPrinter).unwrap_or_else(|err| {
-            // Exit with a non-zero exit code
-            eprintln!("Error running aderyn");
-            eprintln!("{:?}", err);
-            std::process::exit(1);
-        });
-    } else {
-        // Load the context loader into the run function, which runs the detectors
-        run_with_printer(context_loader, args.output, MarkdownReportPrinter).unwrap_or_else(
+        run_with_printer(context_loader, args.output, JsonPrinter, root_rel_path).unwrap_or_else(
             |err| {
                 // Exit with a non-zero exit code
                 eprintln!("Error running aderyn");
@@ -70,6 +63,20 @@ pub fn drive(args: Args) {
                 std::process::exit(1);
             },
         );
+    } else {
+        // Load the context loader into the run function, which runs the detectors
+        run_with_printer(
+            context_loader,
+            args.output,
+            MarkdownReportPrinter,
+            root_rel_path,
+        )
+        .unwrap_or_else(|err| {
+            // Exit with a non-zero exit code
+            eprintln!("Error running aderyn");
+            eprintln!("{:?}", err);
+            std::process::exit(1);
+        });
     }
 
     if is_single_file {
