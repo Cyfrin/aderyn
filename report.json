@@ -1,0 +1,422 @@
+{
+  "critical_issues": {
+    "issues": []
+  },
+  "files_details": {
+    "files_details": [
+      {
+        "file_path": "src/AdminContract.sol",
+        "n_sloc": 11
+      },
+      {
+        "file_path": "src/Counter.sol",
+        "n_sloc": 20
+      },
+      {
+        "file_path": "src/DeprecatedOZFunctions.sol",
+        "n_sloc": 32
+      },
+      {
+        "file_path": "src/KeccakContract.sol",
+        "n_sloc": 21
+      },
+      {
+        "file_path": "src/StateVariables.sol",
+        "n_sloc": 58
+      },
+      {
+        "file_path": "src/StorageConditionals.sol",
+        "n_sloc": 59
+      },
+      {
+        "file_path": "src/T11sTranferer.sol",
+        "n_sloc": 8
+      },
+      {
+        "file_path": "src/UnsafeERC721Mint.sol",
+        "n_sloc": 11
+      },
+      {
+        "file_path": "src/inheritance/ExtendedInheritance.sol",
+        "n_sloc": 17
+      },
+      {
+        "file_path": "src/inheritance/IContractInheritance.sol",
+        "n_sloc": 4
+      },
+      {
+        "file_path": "src/inheritance/InheritanceBase.sol",
+        "n_sloc": 8
+      },
+      {
+        "file_path": "src/uniswap/UniswapV2Swapper.sol",
+        "n_sloc": 50
+      },
+      {
+        "file_path": "src/uniswap/UniswapV3Swapper.sol",
+        "n_sloc": 150
+      }
+    ]
+  },
+  "files_summary": {
+    "total_sloc": 449,
+    "total_source_units": 13
+  },
+  "high_issues": {
+    "issues": [
+      {
+        "description": "When calling `delegatecall` the same `msg.value` amount will be accredited multiple times.",
+        "instances": [
+          {
+            "contract_path": "src/inheritance/ExtendedInheritance.sol",
+            "line_no": 16
+          }
+        ],
+        "title": "Using `delegatecall` in loop"
+      }
+    ]
+  },
+  "issue_count": {
+    "critical": 0,
+    "high": 1,
+    "low": 6,
+    "medium": 4,
+    "nc": 6
+  },
+  "low_issues": {
+    "issues": [
+      {
+        "description": "Use `abi.encode()` instead which will pad items to 32 bytes, which will [prevent hash collisions](https://docs.soliditylang.org/en/v0.8.13/abi-spec.html#non-standard-packed-mode) (e.g. `abi.encodePacked(0x123,0x456)` => `0x123456` => `abi.encodePacked(0x1,0x23456)`, but `abi.encode(0x123,0x456)` => `0x0...1230...456`). Unless there is a compelling reason, `abi.encode` should be preferred. If there is only one argument to `abi.encodePacked()` it can often be cast to `bytes()` or `bytes32()` [instead](https://ethereum.stackexchange.com/questions/30912/how-to-compare-strings-in-solidity#answer-82739).\nIf all arguments are strings and or bytes, `bytes.concat()` should be used instead.",
+        "instances": [
+          {
+            "contract_path": "src/KeccakContract.sol",
+            "line_no": 18
+          },
+          {
+            "contract_path": "src/KeccakContract.sol",
+            "line_no": 22
+          },
+          {
+            "contract_path": "src/KeccakContract.sol",
+            "line_no": 26
+          }
+        ],
+        "title": "`abi.encodePacked()` should not be used with dynamic types when passing the result to a hash function such as `keccak256()`"
+      },
+      {
+        "description": "The `ecrecover` function is susceptible to signature malleability. This means that the same message can be signed in multiple ways, allowing an attacker to change the message signature without invalidating it. This can lead to unexpected behavior in smart contracts, such as the loss of funds or the ability to bypass access control. Consider using OpenZeppelin's ECDSA library instead of the built-in function.",
+        "instances": [
+          {
+            "contract_path": "src/inheritance/ExtendedInheritance.sol",
+            "line_no": 21
+          }
+        ],
+        "title": "`ecrecover` is susceptible to signature malleability"
+      },
+      {
+        "description": "Openzeppelin has deprecated several functions and replaced with newer versions. Please consult https://docs.openzeppelin.com/",
+        "instances": [
+          {
+            "contract_path": "src/DeprecatedOZFunctions.sol",
+            "line_no": 22
+          },
+          {
+            "contract_path": "src/DeprecatedOZFunctions.sol",
+            "line_no": 27
+          }
+        ],
+        "title": "Deprecated OpenZeppelin functions should not be used"
+      },
+      {
+        "description": "ERC20 functions may not behave as expected. For example: return values are not always meaningful. It is recommended to use OpenZeppelin's SafeERC20 library.",
+        "instances": [
+          {
+            "contract_path": "src/DeprecatedOZFunctions.sol",
+            "line_no": 32
+          },
+          {
+            "contract_path": "src/DeprecatedOZFunctions.sol",
+            "line_no": 37
+          },
+          {
+            "contract_path": "src/DeprecatedOZFunctions.sol",
+            "line_no": 38
+          },
+          {
+            "contract_path": "src/DeprecatedOZFunctions.sol",
+            "line_no": 42
+          },
+          {
+            "contract_path": "src/DeprecatedOZFunctions.sol",
+            "line_no": 47
+          }
+        ],
+        "title": "Unsafe ERC20 Operations should not be used"
+      },
+      {
+        "description": "Consider using a specific version of Solidity in your contracts instead of a wide version. For example, instead of `pragma solidity ^0.8.0;`, use `pragma solidity 0.8.0;`",
+        "instances": [
+          {
+            "contract_path": "src/Counter.sol",
+            "line_no": 2
+          },
+          {
+            "contract_path": "src/inheritance/IContractInheritance.sol",
+            "line_no": 2
+          },
+          {
+            "contract_path": "src/inheritance/InheritanceBase.sol",
+            "line_no": 2
+          }
+        ],
+        "title": "Solidity pragma should be specific, not wide"
+      },
+      {
+        "description": "When writing `require` or `if` conditionals that check storage values, it is important to be consistent to prevent off-by-one errors. There are instances found where the same storage variable is checked multiple times, but the conditionals are not consistent.",
+        "instances": [
+          {
+            "contract_path": "src/StorageConditionals.sol",
+            "line_no": 60
+          },
+          {
+            "contract_path": "src/StorageConditionals.sol",
+            "line_no": 65
+          },
+          {
+            "contract_path": "src/StorageConditionals.sol",
+            "line_no": 71
+          }
+        ],
+        "title": "Conditional storage checks are not consistent"
+      }
+    ]
+  },
+  "medium_issue": {
+    "issues": [
+      {
+        "description": "Contracts have owners with privileged rights to perform admin tasks and need to be trusted to not perform malicious updates or drain funds.",
+        "instances": [
+          {
+            "contract_path": "src/AdminContract.sol",
+            "line_no": 7
+          },
+          {
+            "contract_path": "src/AdminContract.sol",
+            "line_no": 10
+          },
+          {
+            "contract_path": "src/AdminContract.sol",
+            "line_no": 14
+          },
+          {
+            "contract_path": "src/DeprecatedOZFunctions.sol",
+            "line_no": 7
+          }
+        ],
+        "title": "Centralization Risk for trusted owners"
+      },
+      {
+        "description": "There is a subtle difference between the implementation of solmate's SafeTransferLib and OZ's SafeERC20: OZ's SafeERC20 checks if the token is a contract or not, solmate's SafeTransferLib does not.\nhttps://github.com/transmissions11/solmate/blob/main/src/utils/SafeTransferLib.sol#L9 \n`@dev Note that none of the functions in this library check that a token has code at all! That responsibility is delegated to the caller`\n",
+        "instances": [
+          {
+            "contract_path": "src/DeprecatedOZFunctions.sol",
+            "line_no": 17
+          },
+          {
+            "contract_path": "src/DeprecatedOZFunctions.sol",
+            "line_no": 27
+          },
+          {
+            "contract_path": "src/T11sTranferer.sol",
+            "line_no": 10
+          }
+        ],
+        "title": "Solmate's SafeTransferLib does not check for token contract's existence"
+      },
+      {
+        "description": "In the PoS model, proposers know well in advance if they will propose one or consecutive blocks ahead of time. In such a scenario, a malicious validator can hold back the transaction and execute it at a more favourable block number.Consider allowing function caller to specify swap deadline input parameter.",
+        "instances": [
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 23
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 24
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 25
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 26
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 27
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 28
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 31
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 32
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 33
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 52
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 55
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 66
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 69
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 77
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 80
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 91
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 94
+          }
+        ],
+        "title": "Using `block.timestamp` for swap deadline offers no protection"
+      },
+      {
+        "description": "Using `ERC721::_mint()` can mint ERC721 tokens to addresses which don't support ERC721 tokens. Use `_safeMint()` instead of `_mint()` for ERC721.",
+        "instances": [
+          {
+            "contract_path": "src/UnsafeERC721Mint.sol",
+            "line_no": 10
+          }
+        ],
+        "title": "Using `ERC721::_mint()` can be dangerous"
+      }
+    ]
+  },
+  "nc_issues": {
+    "issues": [
+      {
+        "description": "Assigning values to address state variables without checking for `address(0)`.",
+        "instances": [
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 58
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 11
+          }
+        ],
+        "title": "Missing checks for `address(0)` when assigning values to address state variables"
+      },
+      {
+        "description": "",
+        "instances": [
+          {
+            "contract_path": "src/Counter.sol",
+            "line_no": 7
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 47
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 52
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 57
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 61
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 71
+          }
+        ],
+        "title": "Functions not used internally could be marked external"
+      },
+      {
+        "description": "",
+        "instances": [
+          {
+            "contract_path": "src/Counter.sol",
+            "line_no": 23
+          },
+          {
+            "contract_path": "src/inheritance/ExtendedInheritance.sol",
+            "line_no": 15
+          }
+        ],
+        "title": "Constants should be defined and used instead of literals"
+      },
+      {
+        "description": "Index event fields make the field more quickly accessible to off-chain tools that parse events. However, note that each index field costs extra gas during emission, so it's not necessarily best to index the maximum allowed per event (three fields). Each event should use three indexed fields if there are three or more fields, and gas usage is not particularly of concern for the events in question. If there are fewer than three fields, all of the fields should be indexed.",
+        "instances": [
+          {
+            "contract_path": "src/inheritance/ExtendedInheritance.sol",
+            "line_no": 7
+          },
+          {
+            "contract_path": "src/inheritance/InheritanceBase.sol",
+            "line_no": 7
+          }
+        ],
+        "title": "Event is missing `indexed` fields"
+      },
+      {
+        "description": "",
+        "instances": [
+          {
+            "contract_path": "src/DeprecatedOZFunctions.sol",
+            "line_no": 37
+          },
+          {
+            "contract_path": "src/DeprecatedOZFunctions.sol",
+            "line_no": 40
+          }
+        ],
+        "title": "`require()` / `revert()` statements should have descriptive reason strings or custom errors"
+      },
+      {
+        "description": "This is a best-practice to protect against reentrancy in other modifiers",
+        "instances": [
+          {
+            "contract_path": "src/AdminContract.sol",
+            "line_no": 10
+          }
+        ],
+        "title": "The `nonReentrant` `modifier` should occur before all other modifiers"
+      }
+    ]
+  }
+}
