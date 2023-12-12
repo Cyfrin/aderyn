@@ -2,14 +2,18 @@
 
 <p align="center">
     <br />
-    <a href="https://updraft.cyfrin.io/">
+    <a href="https://cyfrin.io/">
         <img src=".github/images/aderyn_logo.png" width="400" alt=""/></a>
     <br />
 </p>
 <p align="center"><strong>A powerful Solidity static analyzer that takes a bird's eye view over your smart contracts.
 </strong></p>
-<p align="center">Powered by Cyfrin.</p>
-
+<p align="center">
+    <br />
+    <a href="https://cyfrin.io/">
+        <img src=".github/images/poweredbycyfrinblue.png" width="145" alt=""/></a>
+    <br />
+</p>
 
 
 <p align="center">
