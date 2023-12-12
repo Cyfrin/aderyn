@@ -27,10 +27,10 @@
   "methodIdentifiers": {
     "doSomething(uint256)": "a6b206bf"
   },
-  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.20+commit.a1b79de6\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"something\",\"type\":\"uint256\"}],\"name\":\"doSomething\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/inheritance/IContractInheritance.sol\":\"IContractInheritance\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/\",\":forge-std/=lib/forge-std/src/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/\",\":openzeppelin/=lib/openzeppelin-contracts/contracts/\",\":solmate/=lib/solmate/src/\",\":v2-periphery/=lib/v2-periphery/contracts/\"]},\"sources\":{\"src/inheritance/IContractInheritance.sol\":{\"keccak256\":\"0xbd27987ea91720a99d5b036494ede0df8e75a3d0d1343823086f5d430e76997e\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://9e0af9216a0379033ce1ac8f2a5cd51178abb7b1231e5ed78accc4040c106448\",\"dweb:/ipfs/QmeP1QLzKgwczAUGuSS4ufEorf6WwhPoRJYhmKPbt73sS1\"]}},\"version\":1}",
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.21+commit.d9974bed\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"something\",\"type\":\"uint256\"}],\"name\":\"doSomething\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/inheritance/IContractInheritance.sol\":\"IContractInheritance\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/\",\":forge-std/=lib/forge-std/src/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/\",\":openzeppelin/=lib/openzeppelin-contracts/contracts/\",\":solmate/=lib/solmate/src/\",\":v2-periphery/=lib/v2-periphery/contracts/\"]},\"sources\":{\"src/inheritance/IContractInheritance.sol\":{\"keccak256\":\"0xbd27987ea91720a99d5b036494ede0df8e75a3d0d1343823086f5d430e76997e\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://9e0af9216a0379033ce1ac8f2a5cd51178abb7b1231e5ed78accc4040c106448\",\"dweb:/ipfs/QmeP1QLzKgwczAUGuSS4ufEorf6WwhPoRJYhmKPbt73sS1\"]}},\"version\":1}",
   "metadata": {
     "compiler": {
-      "version": "0.8.20+commit.a1b79de6"
+      "version": "0.8.21+commit.d9974bed"
     },
     "language": "Solidity",
     "output": {
@@ -95,19 +95,19 @@
   },
   "ast": {
     "absolutePath": "src/inheritance/IContractInheritance.sol",
-    "id": 48190,
+    "id": 42979,
     "exportedSymbols": {
       "IContractInheritance": [
-        48189
+        42978
       ]
     },
     "nodeType": "SourceUnit",
-    "src": "32:115:50",
+    "src": "32:115:22",
     "nodes": [
       {
-        "id": 48183,
+        "id": 42972,
         "nodeType": "PragmaDirective",
-        "src": "32:24:50",
+        "src": "32:24:22",
         "nodes": [],
         "literals": [
           "solidity",
@@ -117,34 +117,34 @@
         ]
       },
       {
-        "id": 48189,
+        "id": 42978,
         "nodeType": "ContractDefinition",
-        "src": "58:88:50",
+        "src": "58:88:22",
         "nodes": [
           {
-            "id": 48188,
+            "id": 42977,
             "nodeType": "FunctionDefinition",
-            "src": "95:49:50",
+            "src": "95:49:22",
             "nodes": [],
             "functionSelector": "a6b206bf",
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "doSomething",
-            "nameLocation": "104:11:50",
+            "nameLocation": "104:11:22",
             "parameters": {
-              "id": 48186,
+              "id": 42975,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 48185,
+                  "id": 42974,
                   "mutability": "mutable",
                   "name": "something",
-                  "nameLocation": "124:9:50",
+                  "nameLocation": "124:9:22",
                   "nodeType": "VariableDeclaration",
-                  "scope": 48188,
-                  "src": "116:17:50",
+                  "scope": 42977,
+                  "src": "116:17:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -152,10 +152,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 48184,
+                    "id": 42973,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "116:7:50",
+                    "src": "116:7:22",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -164,15 +164,15 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "115:19:50"
+              "src": "115:19:22"
             },
             "returnParameters": {
-              "id": 48187,
+              "id": 42976,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "143:0:50"
+              "src": "143:0:22"
             },
-            "scope": 48189,
+            "scope": 42978,
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
@@ -185,16 +185,16 @@
         "contractKind": "interface",
         "fullyImplemented": false,
         "linearizedBaseContracts": [
-          48189
+          42978
         ],
         "name": "IContractInheritance",
-        "nameLocation": "68:20:50",
-        "scope": 48190,
+        "nameLocation": "68:20:22",
+        "scope": 42979,
         "usedErrors": [],
         "usedEvents": []
       }
     ],
     "license": "MIT"
   },
-  "id": 50
+  "id": 22
 }
