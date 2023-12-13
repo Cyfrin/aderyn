@@ -6,7 +6,6 @@ use crate::ast::{Expression, FunctionCall, TypeName};
 use crate::{
     context::loader::{ASTNode, ContextLoader},
     detect::detector::{Detector, IssueSeverity},
-    visitor::ast_visitor::ASTConstVisitor,
 };
 use eyre::Result;
 
