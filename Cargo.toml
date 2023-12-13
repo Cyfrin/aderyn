@@ -1,7 +1,9 @@
 [workspace]
 members = [
     "aderyn",
-    "aderyn_core"
+    "aderyn_core",
+    "aderyn_driver",
+    "aderyn_py"
 ]
 
 resolver="1"
