@@ -170,58 +170,10 @@ https://github.com/transmissions11/solmate/blob/main/src/utils/SafeTransferLib.s
 `@dev Note that none of the functions in this library check that a token has code at all! That responsibility is delegated to the caller`
 
 
-- Found in src/ArbitraryTransferFrom.sol [Line: 20](tests/contract-playground/src/ArbitraryTransferFrom.sol#L20)
+- Found in src/T11sTranferer.sol [Line: 4](tests/contract-playground/src/T11sTranferer.sol#L4)
 
 	```solidity
-	        s_token.safeTransferFrom(from, to, amount);
-	```
-
-- Found in src/ArbitraryTransferFrom.sol [Line: 24](tests/contract-playground/src/ArbitraryTransferFrom.sol#L24)
-
-	```solidity
-	        SafeERC20.safeTransferFrom(s_token, from, to, amount);
-	```
-
-- Found in src/ArbitraryTransferFrom.sol [Line: 34](tests/contract-playground/src/ArbitraryTransferFrom.sol#L34)
-
-	```solidity
-	        s_token.safeTransferFrom(msg.sender, to, amount);
-	```
-
-- Found in src/ArbitraryTransferFrom.sol [Line: 38](tests/contract-playground/src/ArbitraryTransferFrom.sol#L38)
-
-	```solidity
-	        SafeERC20.safeTransferFrom(s_token, msg.sender, to, amount);
-	```
-
-- Found in src/ArbitraryTransferFrom.sol [Line: 42](tests/contract-playground/src/ArbitraryTransferFrom.sol#L42)
-
-	```solidity
-	        SafeERC20.safeTransferFrom(s_token, address(this), to, amount);
-	```
-
-- Found in src/ArbitraryTransferFrom.sol [Line: 46](tests/contract-playground/src/ArbitraryTransferFrom.sol#L46)
-
-	```solidity
-	        s_token.safeTransferFrom(address(this), to, amount);
-	```
-
-- Found in src/DeprecatedOZFunctions.sol [Line: 17](tests/contract-playground/src/DeprecatedOZFunctions.sol#L17)
-
-	```solidity
-	        token.safeTransferFrom(from, to, value);
-	```
-
-- Found in src/DeprecatedOZFunctions.sol [Line: 27](tests/contract-playground/src/DeprecatedOZFunctions.sol#L27)
-
-	```solidity
-	        token.safeApprove(spender, value);
-	```
-
-- Found in src/T11sTranferer.sol [Line: 10](tests/contract-playground/src/T11sTranferer.sol#L10)
-
-	```solidity
-	        token.safeTransfer(to, amount);
+	import {ERC20, SafeTransferLib} from "../lib/solmate/src/utils/SafeTransferLib.sol";
 	```
 
 

@@ -81,12 +81,42 @@
           }
         ],
         "title": "Using `delegatecall` in loop"
+      },
+      {
+        "description": "Passing an arbitrary `from` address to `transferFrom` (or `safeTransferFrom`) can lead to loss of funds, because anyone can transfer tokens from the `from` address if an approval is made.  ",
+        "instances": [
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 16
+          },
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 20
+          },
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 24
+          },
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 30
+          },
+          {
+            "contract_path": "src/DeprecatedOZFunctions.sol",
+            "line_no": 17
+          },
+          {
+            "contract_path": "src/DeprecatedOZFunctions.sol",
+            "line_no": 47
+          }
+        ],
+        "title": "Arbitrary `from` passed to `transferFrom` (or `safeTransferFrom`)"
       }
     ]
   },
   "issue_count": {
     "critical": 0,
-    "high": 1,
+    "high": 2,
     "low": 7,
     "medium": 4,
     "nc": 6
@@ -309,40 +339,8 @@
         "description": "There is a subtle difference between the implementation of solmate's SafeTransferLib and OZ's SafeERC20: OZ's SafeERC20 checks if the token is a contract or not, solmate's SafeTransferLib does not.\nhttps://github.com/transmissions11/solmate/blob/main/src/utils/SafeTransferLib.sol#L9 \n`@dev Note that none of the functions in this library check that a token has code at all! That responsibility is delegated to the caller`\n",
         "instances": [
           {
-            "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 20
-          },
-          {
-            "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 24
-          },
-          {
-            "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 34
-          },
-          {
-            "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 38
-          },
-          {
-            "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 42
-          },
-          {
-            "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 46
-          },
-          {
-            "contract_path": "src/DeprecatedOZFunctions.sol",
-            "line_no": 17
-          },
-          {
-            "contract_path": "src/DeprecatedOZFunctions.sol",
-            "line_no": 27
-          },
-          {
             "contract_path": "src/T11sTranferer.sol",
-            "line_no": 10
+            "line_no": 4
           }
         ],
         "title": "Solmate's SafeTransferLib does not check for token contract's existence"
