@@ -251,10 +251,6 @@
             "line_no": 2
           },
           {
-            "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 2
-          },
-          {
             "contract_path": "src/Counter.sol",
             "line_no": 2
           },
