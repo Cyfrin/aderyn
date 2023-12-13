@@ -1,7 +1,4 @@
-use std::{
-    collections::{BTreeMap},
-    error::Error,
-};
+use std::{collections::BTreeMap, error::Error};
 
 use crate::{
     context::loader::{ASTNode, ContextLoader},
