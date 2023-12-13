@@ -13,10 +13,19 @@ use std::path::{Path, PathBuf};
 
 use crate::context::loader::ContextLoader;
 use crate::detect::detector::{get_all_detectors, IssueSeverity};
-use crate::report::printer::{MarkdownReportPrinter, ReportPrinter};
-use crate::report::reporter::{Issue, Report};
+use crate::report::printer::ReportPrinter;
+use crate::report::reporter::Report;
+use crate::report::Issue;
 
-pub fn run(context_loader: ContextLoader, output_file_path: String) -> Result<(), Box<dyn Error>> {
+pub fn run_with_printer<T>(
+    context_loader: ContextLoader,
+    output_file_path: String,
+    reporter: T,
+    root_rel_path: PathBuf,
+) -> Result<(), Box<dyn Error>>
+where
+    T: ReportPrinter<()>,
+{
     println!("Get Detectors");
 
     let detectors = get_all_detectors();
@@ -55,12 +64,13 @@ pub fn run(context_loader: ContextLoader, output_file_path: String) -> Result<()
 
     println!("Detectors run, processing found issues");
 
-    let printer = MarkdownReportPrinter;
     println!("Found issues processed. Printing report");
-    printer.print_report(
+    reporter.print_report(
         get_markdown_writer(&output_file_path)?,
         &report,
         &context_loader,
+        root_rel_path,
+        Some(output_file_path.clone()),
     )?;
 
     println!("Report printed to {}", output_file_path);
