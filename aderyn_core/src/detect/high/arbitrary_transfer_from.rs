@@ -1,16 +1,15 @@
-use std::collections::{BTreeMap, HashMap};
+use std::collections::{BTreeMap};
 use std::error::Error;
 
-use crate::ast::{ElementaryTypeName, Expression, FunctionCall, FunctionDefinition, TypeName};
-use crate::visitor::ast_visitor::Node;
+use crate::ast::{Expression, TypeName};
+
 use crate::{
-    ast::MemberAccess,
     context::loader::{ASTNode, ContextLoader},
     detect::detector::{Detector, IssueSeverity},
     visitor::ast_visitor::ASTConstVisitor,
 };
 use eyre::Result;
-use rayon::iter;
+
 
 #[derive(Default)]
 pub struct ArbitraryTransferFromDetector {
@@ -112,7 +111,7 @@ impl Detector for ArbitraryTransferFromDetector {
                     }
                 }
             }
-            return false;
+            false
         });
 
         for item in transfer_from_function_calls.collect::<Vec<_>>() {
