@@ -473,6 +473,12 @@ Solc compiler version 0.8.20 switches the default target EVM version to Shanghai
 	pragma solidity 0.8.20;
 	```
 
+- Found in src/Counter.sol [Line: 2](tests/contract-playground/src/Counter.sol#L2)
+
+	```solidity
+	pragma solidity ^0.8.13;
+	```
+
 - Found in src/CrazyPragma.sol [Line: 2](tests/contract-playground/src/CrazyPragma.sol#L2)
 
 	```solidity
@@ -519,6 +525,18 @@ Solc compiler version 0.8.20 switches the default target EVM version to Shanghai
 
 	```solidity
 	pragma solidity 0.8.20;
+	```
+
+- Found in src/inheritance/IContractInheritance.sol [Line: 2](tests/contract-playground/src/inheritance/IContractInheritance.sol#L2)
+
+	```solidity
+	pragma solidity >=0.8.0;
+	```
+
+- Found in src/inheritance/InheritanceBase.sol [Line: 2](tests/contract-playground/src/inheritance/InheritanceBase.sol#L2)
+
+	```solidity
+	pragma solidity ^0.8.0;
 	```
 
 - Found in src/uniswap/UniswapV2Swapper.sol [Line: 2](tests/contract-playground/src/uniswap/UniswapV2Swapper.sol#L2)

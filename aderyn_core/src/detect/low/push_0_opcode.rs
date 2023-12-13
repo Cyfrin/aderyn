@@ -19,21 +19,13 @@ fn version_req_allows_above_0_8_19(version_req: &VersionReq) -> bool {
     if version_req.comparators.len() == 1 {
         let comparator = &version_req.comparators[0];
         match comparator.op {
-            Op::Greater | Op::GreaterEq => {
-                if comparator.major > 0
-                    || comparator.minor > Some(8)
-                    || (comparator.minor == Some(8) && comparator.patch > Some(19))
-                {
+            Op::Tilde | Op::Caret => {
+                if comparator.major > 0 || comparator.minor >= Some(8) {
                     return true;
                 }
             }
-            Op::Tilde | Op::Caret => {
-                if comparator.major == 0
-                    && comparator.minor == Some(8)
-                    && comparator.patch >= Some(20)
-                {
-                    return true;
-                }
+            Op::Greater | Op::GreaterEq => {
+                return true;
             }
             Op::Exact => {
                 if comparator.major == 0
@@ -178,5 +170,30 @@ mod unspecific_solidity_pragma_tests {
         assert!(!found);
         // assert that the number of instances is correct
         assert_eq!(detector.instances().len(), 0);
+    }
+
+    #[test]
+    fn test_push_0_opcode_detector_on_caret_0_8_13() {
+        let context_loader =
+            load_contract("../tests/contract-playground/out/Counter.sol/Counter.json");
+        let mut detector = super::PushZeroOpcodeDetector::default();
+        let found = detector.detect(&context_loader).unwrap();
+        // assert that it found something
+        assert!(found);
+        // assert that the number of instances is correct
+        assert_eq!(detector.instances().len(), 1);
+    }
+
+    #[test]
+    fn test_push_0_opcode_detector_on_greter_equal_0_8_0() {
+        let context_loader = load_contract(
+            "../tests/contract-playground/out/IContractInheritance.sol/IContractInheritance.json",
+        );
+        let mut detector = super::PushZeroOpcodeDetector::default();
+        let found = detector.detect(&context_loader).unwrap();
+        // assert that it found something
+        assert!(found);
+        // assert that the number of instances is correct
+        assert_eq!(detector.instances().len(), 1);
     }
 }

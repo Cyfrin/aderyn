@@ -251,6 +251,10 @@
             "line_no": 2
           },
           {
+            "contract_path": "src/Counter.sol",
+            "line_no": 2
+          },
+          {
             "contract_path": "src/CrazyPragma.sol",
             "line_no": 2
           },
@@ -280,6 +284,14 @@
           },
           {
             "contract_path": "src/inheritance/ExtendedInheritance.sol",
+            "line_no": 2
+          },
+          {
+            "contract_path": "src/inheritance/IContractInheritance.sol",
+            "line_no": 2
+          },
+          {
+            "contract_path": "src/inheritance/InheritanceBase.sol",
             "line_no": 2
           },
           {
