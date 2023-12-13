@@ -9,6 +9,6 @@ license = "MIT"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-aderyn_core = "0.0.8"
+aderyn_core = { path  = "../aderyn_core" }
 rayon = "1.8.0"
 tokei = "12.1.2"

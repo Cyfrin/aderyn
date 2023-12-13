@@ -6,7 +6,7 @@ version = 3
 name = "aderyn"
 version = "0.0.8"
 dependencies = [
- "aderyn_driver 0.0.8 (registry+https://github.com/rust-lang/crates.io-index)",
+ "aderyn_driver",
  "clap 4.4.6",
 ]
 
@@ -25,37 +25,10 @@ dependencies = [
 ]
 
 [[package]]
-name = "aderyn_core"
-version = "0.0.8"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "521624e373ea3efe38a0f57c2dcbdb1942db7c22d3372ef69335bacd5996e51b"
-dependencies = [
- "eyre",
- "rayon",
- "semver",
- "serde",
- "serde_json",
- "serde_repr",
- "tokei",
- "toml 0.8.2",
-]
-
-[[package]]
 name = "aderyn_driver"
 version = "0.0.8"
 dependencies = [
- "aderyn_core 0.0.8 (registry+https://github.com/rust-lang/crates.io-index)",
- "rayon",
- "tokei",
-]
-
-[[package]]
-name = "aderyn_driver"
-version = "0.0.8"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "360ff0b0315f92ee03a2e6264bec02cc412453ccd1567defeecbf7148f5f1dcc"
-dependencies = [
- "aderyn_core 0.0.8 (registry+https://github.com/rust-lang/crates.io-index)",
+ "aderyn_core",
  "rayon",
  "tokei",
 ]
@@ -64,7 +37,7 @@ dependencies = [
 name = "aderyn_py"
 version = "0.0.8"
 dependencies = [
- "aderyn_driver 0.0.8",
+ "aderyn_driver",
  "pyo3",
 ]
 
