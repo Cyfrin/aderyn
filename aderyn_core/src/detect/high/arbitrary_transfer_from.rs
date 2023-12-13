@@ -1,7 +1,7 @@
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, HashMap};
 use std::error::Error;
 
-use crate::ast::Expression;
+use crate::ast::{ElementaryTypeName, Expression, FunctionCall, FunctionDefinition, TypeName};
 use crate::visitor::ast_visitor::Node;
 use crate::{
     ast::MemberAccess,
@@ -10,6 +10,7 @@ use crate::{
     visitor::ast_visitor::ASTConstVisitor,
 };
 use eyre::Result;
+use rayon::iter;
 
 #[derive(Default)]
 pub struct ArbitraryTransferFromDetector {
@@ -17,53 +18,116 @@ pub struct ArbitraryTransferFromDetector {
     found_instances: BTreeMap<(String, usize), String>,
 }
 
+impl ASTConstVisitor for ArbitraryTransferFromDetector {}
+
 impl Detector for ArbitraryTransferFromDetector {
     fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
         // Get all FunctionCalls where the expression is a MemberAccess with the member name "transferFrom",
-        let function_calls = loader.function_calls.keys().filter(|function_call| {
+        // Add them to a list of FunctionCalls to check
+        let transfer_from_function_calls = loader.function_calls.keys().filter(|function_call| {
             if let Expression::MemberAccess(member_access) = &*function_call.expression {
-                if member_access.member_name == "transferFrom" {
-                    return true;
-                }
-            }
-            return false;
-        });
-        println!("function_calls: {:?}", function_calls.count());
-
-        // For each function_call, If the first argument is not a MemberAccess with the member name "sender",
-        // with an Identifier as the expression, with the name "msg", add the FunctionCall to the list of found instances.
-        for function_call in loader.function_calls.keys() {
-            if let Expression::MemberAccess(member_access) = &*function_call.expression {
-                if member_access.member_name == "transferFrom" {
-                    match &function_call.arguments[0] {
-                        Expression::MemberAccess(member_access) => {
-                            if member_access.member_name != "sender" {
-                                if let Expression::Identifier(identifier) =
-                                    &*member_access.expression
-                                {
-                                    if identifier.name != "msg" {
-                                        self.found_instances.insert(
-                                            loader.get_node_sort_key(&ASTNode::FunctionCall(
-                                                function_call.clone(),
-                                            )),
-                                            function_call.src.clone(),
-                                        );
+                if member_access.member_name == "transferFrom"
+                    || member_access.member_name == "safeTransferFrom"
+                {
+                    if function_call.arguments.len() == 3 {
+                        // if the first argument is NOT a MemberAccess with member name "sender"
+                        // and an Identifier with the name "msg",
+                        // return true
+                        match &function_call.arguments[0] {
+                            Expression::MemberAccess(arg_member_access) => {
+                                if arg_member_access.member_name == "sender" {
+                                    if let Expression::Identifier(arg_member_access_expression) =
+                                        &*arg_member_access.expression
+                                    {
+                                        if arg_member_access_expression.name == "msg" {
+                                            return false;
+                                        }
                                     }
                                 }
                             }
+                            Expression::FunctionCall(arg_function_call) => {
+                                if let Expression::ElementaryTypeNameExpression(
+                                    arg_el_type_name_exp,
+                                ) = &*arg_function_call.expression
+                                {
+                                    if let TypeName::ElementaryTypeName(type_name) =
+                                        &arg_el_type_name_exp.type_name
+                                    {
+                                        if type_name.name == "address" {
+                                            if let Expression::Identifier(arg_identifier) =
+                                                &arg_function_call.arguments[0]
+                                            {
+                                                if arg_identifier.name == "this" {
+                                                    return false;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            _ => {
+                                return true;
+                            }
                         }
-                        _ => {
-                            self.found_instances.insert(
-                                loader.get_node_sort_key(&ASTNode::FunctionCall(
-                                    function_call.clone(),
-                                )),
-                                function_call.src.clone(),
-                            );
+                    } else if function_call.arguments.len() == 4 {
+                        // if the second argument is NOT a MemberAccess with member name "sender"
+                        // and an Identifier with the name "msg",
+                        // return true
+                        match &function_call.arguments[1] {
+                            Expression::MemberAccess(arg_member_access) => {
+                                if arg_member_access.member_name == "sender" {
+                                    if let Expression::Identifier(arg_member_access_expression) =
+                                        &*arg_member_access.expression
+                                    {
+                                        if arg_member_access_expression.name == "msg" {
+                                            return false;
+                                        }
+                                    }
+                                }
+                            }
+                            Expression::FunctionCall(arg_function_call) => {
+                                if let Expression::ElementaryTypeNameExpression(
+                                    arg_el_type_name_exp,
+                                ) = &*arg_function_call.expression
+                                {
+                                    if let TypeName::ElementaryTypeName(type_name) =
+                                        &arg_el_type_name_exp.type_name
+                                    {
+                                        if type_name.name == "address" {
+                                            if let Expression::Identifier(arg_identifier) =
+                                                &arg_function_call.arguments[0]
+                                            {
+                                                if arg_identifier.name == "this" {
+                                                    return false;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            _ => {
+                                return true;
+                            }
                         }
                     }
                 }
             }
+            return false;
+        });
+
+        for item in transfer_from_function_calls.collect::<Vec<_>>() {
+            self.found_instances.insert(
+                loader.get_node_sort_key(&ASTNode::FunctionCall(item.clone())),
+                item.src.clone(),
+            );
         }
+
+        // let sources = &transfer_from_function_calls
+        //     .into_iter()
+        //     .map(|call| &call.src)
+        //     .collect::<Vec<&String>>();
+        // let json = serde_json::to_string(sources).unwrap();
+        // println!("transfer_from_function_calls: {}", &json);
 
         Ok(!self.found_instances.is_empty())
     }
@@ -102,7 +166,7 @@ mod arbitrary_transfer_from_tests {
         // assert that the detector found an issue
         assert!(found);
         // assert that the detector found the correct number of instances
-        assert_eq!(detector.instances().len(), 1);
+        assert_eq!(detector.instances().len(), 4);
         // assert the severity is high
         assert_eq!(
             detector.severity(),

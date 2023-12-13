@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 pragma solidity 0.8.19;
 
 import "../lib/openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol";
@@ -23,6 +24,7 @@ contract ArbitraryTransferFrom {
         SafeERC20.safeTransferFrom(s_token, from, to, amount);
     }
 
+    // False positive here
     function good1(address to, uint256 am) public {
         address from_msgsender = msg.sender;
         s_token.transferFrom(from_msgsender, to, am);
@@ -42,6 +44,10 @@ contract ArbitraryTransferFrom {
 
     function good5(address from, address to, uint256 amount) external {
         s_token.safeTransferFrom(address(this), to, amount);
+    }
+
+    function good6(address to, uint256 amount) external {
+        s_token.transferFrom(msg.sender, to, amount);
     }
 
 }
