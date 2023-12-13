@@ -24,7 +24,7 @@ contract ArbitraryTransferFrom {
         SafeERC20.safeTransferFrom(s_token, from, to, amount);
     }
 
-    // False positive here
+    // ArbitraryTransferFromDetector has a false positive here
     function good1(address to, uint256 am) public {
         address from_msgsender = msg.sender;
         s_token.transferFrom(from_msgsender, to, am);

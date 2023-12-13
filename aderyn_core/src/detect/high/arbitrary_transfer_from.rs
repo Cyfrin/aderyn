@@ -1,7 +1,7 @@
-use std::collections::{BTreeMap};
+use std::collections::BTreeMap;
 use std::error::Error;
 
-use crate::ast::{Expression, TypeName};
+use crate::ast::{Expression, FunctionCall, TypeName};
 
 use crate::{
     context::loader::{ASTNode, ContextLoader},
@@ -10,123 +10,53 @@ use crate::{
 };
 use eyre::Result;
 
-
 #[derive(Default)]
 pub struct ArbitraryTransferFromDetector {
     // Keys are source file name and line number
     found_instances: BTreeMap<(String, usize), String>,
 }
 
-impl ASTConstVisitor for ArbitraryTransferFromDetector {}
+fn check_argument_validity(function_call: &FunctionCall) -> bool {
+    let arg_index = if function_call.arguments.len() == 3 {
+        0
+    } else if function_call.arguments.len() == 4 {
+        1
+    } else {
+        return false;
+    };
+
+    match &function_call.arguments[arg_index] {
+        Expression::MemberAccess(arg_member_access) => {
+            !(arg_member_access.member_name == "sender"
+                && matches!(&*arg_member_access.expression, Expression::Identifier(identifier) if identifier.name == "msg"))
+        }
+        Expression::FunctionCall(arg_function_call) => {
+            !(matches!(&*arg_function_call.expression, Expression::ElementaryTypeNameExpression(arg_el_type_name_exp) if matches!(&arg_el_type_name_exp.type_name, TypeName::ElementaryTypeName(type_name) if type_name.name == "address"))
+                && matches!(arg_function_call.arguments.get(0), Some(Expression::Identifier(arg_identifier)) if arg_identifier.name == "this"))
+        }
+        _ => true,
+    }
+}
 
 impl Detector for ArbitraryTransferFromDetector {
     fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
-        // Get all FunctionCalls where the expression is a MemberAccess with the member name "transferFrom",
-        // Add them to a list of FunctionCalls to check
         let transfer_from_function_calls = loader.function_calls.keys().filter(|function_call| {
             if let Expression::MemberAccess(member_access) = &*function_call.expression {
                 if member_access.member_name == "transferFrom"
                     || member_access.member_name == "safeTransferFrom"
                 {
-                    if function_call.arguments.len() == 3 {
-                        // if the first argument is NOT a MemberAccess with member name "sender"
-                        // and an Identifier with the name "msg",
-                        // return true
-                        match &function_call.arguments[0] {
-                            Expression::MemberAccess(arg_member_access) => {
-                                if arg_member_access.member_name == "sender" {
-                                    if let Expression::Identifier(arg_member_access_expression) =
-                                        &*arg_member_access.expression
-                                    {
-                                        if arg_member_access_expression.name == "msg" {
-                                            return false;
-                                        }
-                                    }
-                                }
-                            }
-                            Expression::FunctionCall(arg_function_call) => {
-                                if let Expression::ElementaryTypeNameExpression(
-                                    arg_el_type_name_exp,
-                                ) = &*arg_function_call.expression
-                                {
-                                    if let TypeName::ElementaryTypeName(type_name) =
-                                        &arg_el_type_name_exp.type_name
-                                    {
-                                        if type_name.name == "address" {
-                                            if let Expression::Identifier(arg_identifier) =
-                                                &arg_function_call.arguments[0]
-                                            {
-                                                if arg_identifier.name == "this" {
-                                                    return false;
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            _ => {
-                                return true;
-                            }
-                        }
-                    } else if function_call.arguments.len() == 4 {
-                        // if the second argument is NOT a MemberAccess with member name "sender"
-                        // and an Identifier with the name "msg",
-                        // return true
-                        match &function_call.arguments[1] {
-                            Expression::MemberAccess(arg_member_access) => {
-                                if arg_member_access.member_name == "sender" {
-                                    if let Expression::Identifier(arg_member_access_expression) =
-                                        &*arg_member_access.expression
-                                    {
-                                        if arg_member_access_expression.name == "msg" {
-                                            return false;
-                                        }
-                                    }
-                                }
-                            }
-                            Expression::FunctionCall(arg_function_call) => {
-                                if let Expression::ElementaryTypeNameExpression(
-                                    arg_el_type_name_exp,
-                                ) = &*arg_function_call.expression
-                                {
-                                    if let TypeName::ElementaryTypeName(type_name) =
-                                        &arg_el_type_name_exp.type_name
-                                    {
-                                        if type_name.name == "address" {
-                                            if let Expression::Identifier(arg_identifier) =
-                                                &arg_function_call.arguments[0]
-                                            {
-                                                if arg_identifier.name == "this" {
-                                                    return false;
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            _ => {
-                                return true;
-                            }
-                        }
-                    }
+                    return check_argument_validity(function_call);
                 }
             }
             false
         });
 
-        for item in transfer_from_function_calls.collect::<Vec<_>>() {
+        for item in transfer_from_function_calls {
             self.found_instances.insert(
                 loader.get_node_sort_key(&ASTNode::FunctionCall(item.clone())),
                 item.src.clone(),
             );
         }
-
-        // let sources = &transfer_from_function_calls
-        //     .into_iter()
-        //     .map(|call| &call.src)
-        //     .collect::<Vec<&String>>();
-        // let json = serde_json::to_string(sources).unwrap();
-        // println!("transfer_from_function_calls: {}", &json);
 
         Ok(!self.found_instances.is_empty())
     }
