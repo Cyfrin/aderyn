@@ -25,10 +25,26 @@ dependencies = [
 ]
 
 [[package]]
+name = "aderyn_core"
+version = "0.0.8"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "521624e373ea3efe38a0f57c2dcbdb1942db7c22d3372ef69335bacd5996e51b"
+dependencies = [
+ "eyre",
+ "rayon",
+ "semver",
+ "serde",
+ "serde_json",
+ "serde_repr",
+ "tokei",
+ "toml 0.8.2",
+]
+
+[[package]]
 name = "aderyn_driver"
 version = "0.0.8"
 dependencies = [
- "aderyn_core",
+ "aderyn_core 0.0.8 (registry+https://github.com/rust-lang/crates.io-index)",
  "rayon",
  "tokei",
 ]
