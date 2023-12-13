@@ -1,16 +1,10 @@
 use eyre::Result;
-use rayon::iter::*;
 use serde::Deserialize;
 use std::collections::HashMap;
 use std::error::Error;
 use std::path::{Path, PathBuf};
-use std::sync::Mutex;
 
 use crate::ast::SourceUnit;
-
-pub struct CumulativeHardhatOutput {
-    pub output: HashMap<String, ContractSource>,
-}
 
 #[derive(Debug, Deserialize)]
 pub struct HardhatOutput {
@@ -22,12 +16,12 @@ pub struct Output {
     pub sources: HashMap<String, ContractSource>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Deserialize)]
 pub struct ContractSource {
     pub ast: SourceUnit,
 }
 
-pub fn load_hardhat(hardhat_root: &Path) -> Result<CumulativeHardhatOutput, Box<dyn Error>> {
+pub fn load_hardhat(hardhat_root: &Path) -> Result<HardhatOutput, Box<dyn Error>> {
     let config_path = hardhat_root.join("artifacts/build-info");
     let json_build_files = collect_json_files(config_path).unwrap_or_else(|err| {
         // Exit with a non-zero exit code
@@ -36,33 +30,21 @@ pub fn load_hardhat(hardhat_root: &Path) -> Result<CumulativeHardhatOutput, Box<
         eprintln!("{:?}", err);
         std::process::exit(1);
     });
+    // print the found files
+    println!(
+        "Loading Hardhat build-info file: {:?}",
+        json_build_files.get(0).unwrap()
+    );
 
-    let mut cumulative_output = CumulativeHardhatOutput {
-        output: HashMap::new(),
-    };
-    let cumulative_output_mutex = Mutex::new(cumulative_output);
-
-    json_build_files.par_iter().for_each(|json_build_file| {
-        let hardhat_output = read_hardhat_build_info_file(json_build_file).unwrap_or_else(|err| {
+    Ok(
+        read_hardhat_build_info_file(json_build_files.get(0).unwrap()).unwrap_or_else(|err| {
             // Exit with a non-zero exit code
             eprintln!("Error reading Hardhat build-info file");
             // print err
             eprintln!("{:?}", err);
             std::process::exit(1);
-        });
-        let mut cumulative_output = cumulative_output_mutex.lock().unwrap();
-        for (key, contract_source) in hardhat_output.output.sources.iter() {
-            if key.starts_with("contracts/") {
-                cumulative_output
-                    .output
-                    .insert(key.to_string(), contract_source.clone());
-            }
-        }
-    });
-    // Retrieve the cumulative_output after the parallel processing
-    cumulative_output = cumulative_output_mutex.into_inner().unwrap();
-
-    Ok(cumulative_output)
+        }),
+    )
 }
 
 fn collect_json_files(dir: PathBuf) -> Result<Vec<PathBuf>, Box<dyn Error>> {

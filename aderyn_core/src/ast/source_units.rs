@@ -70,30 +70,28 @@ impl SourceUnit {
             _ => return Err(eyre!("not found")),
         };
 
-        let values: Vec<Option<usize>> = src
-            .split(':')
-            .map(|token| {
-                if token.is_empty() {
-                    None
-                } else {
+        let mut values: Vec<Option<usize>> = vec![];
+
+        for token in src.split(':') {
+            values.push(if token.is_empty() {
+                None
+            } else {
+                Some(
                     token
                         .parse()
-                        .map_err(|error| io::Error::new(io::ErrorKind::InvalidData, error))
-                        .ok()
-                }
-            })
-            .collect();
-
-        let index = values
-            .first()
-            .and_then(|&value| value)
-            .ok_or_else(|| eyre!("not found"))?;
-
-        if index > source.len() {
-            return Err(eyre!("index out of bounds"));
+                        .map_err(|error| io::Error::new(io::ErrorKind::InvalidData, error))?,
+                )
+            });
         }
 
-        Ok(source[..index].chars().filter(|&c| c == '\n').count() + 1)
+        Ok(source[..match values.first() {
+            Some(&Some(value)) => value,
+            _ => return Err(eyre!("not found")),
+        }]
+            .chars()
+            .filter(|&c| c == '\n')
+            .count()
+            + 1)
     }
 
     pub fn pragma_directives(&self) -> Vec<&PragmaDirective> {
