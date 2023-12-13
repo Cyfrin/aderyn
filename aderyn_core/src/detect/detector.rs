@@ -1,7 +1,10 @@
 use crate::{
     context::loader::ContextLoader,
     detect::{
-        high::delegate_call_in_loop::DelegateCallInLoopDetector,
+        high::{
+            arbitrary_transfer_from::ArbitraryTransferFromDetector,
+            delegate_call_in_loop::DelegateCallInLoopDetector,
+        },
         low::{
             avoid_abi_encode_packed::AvoidAbiEncodePackedDetector,
             deprecated_oz_functions::DeprecatedOZFunctionsDetector,
@@ -48,6 +51,7 @@ pub fn get_all_detectors() -> Vec<Box<dyn Detector>> {
         Box::<UnsafeERC721MintDetector>::default(),
         Box::<DifferentStorageConditionalDetector>::default(),
         Box::<PushZeroOpcodeDetector>::default(),
+        Box::<ArbitraryTransferFromDetector>::default(),
     ]
 }
 

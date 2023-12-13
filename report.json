@@ -9,6 +9,10 @@
         "n_sloc": 11
       },
       {
+        "file_path": "src/ArbitraryTransferFrom.sol",
+        "n_sloc": 37
+      },
+      {
         "file_path": "src/Counter.sol",
         "n_sloc": 20
       },
@@ -63,8 +67,8 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 453,
-    "total_source_units": 14
+    "total_sloc": 490,
+    "total_source_units": 15
   },
   "high_issues": {
     "issues": [
@@ -135,6 +139,18 @@
         "description": "ERC20 functions may not behave as expected. For example: return values are not always meaningful. It is recommended to use OpenZeppelin's SafeERC20 library.",
         "instances": [
           {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 16
+          },
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 30
+          },
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 50
+          },
+          {
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 32
           },
@@ -202,6 +218,10 @@
         "instances": [
           {
             "contract_path": "src/AdminContract.sol",
+            "line_no": 2
+          },
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
             "line_no": 2
           },
           {
@@ -288,6 +308,30 @@
       {
         "description": "There is a subtle difference between the implementation of solmate's SafeTransferLib and OZ's SafeERC20: OZ's SafeERC20 checks if the token is a contract or not, solmate's SafeTransferLib does not.\nhttps://github.com/transmissions11/solmate/blob/main/src/utils/SafeTransferLib.sol#L9 \n`@dev Note that none of the functions in this library check that a token has code at all! That responsibility is delegated to the caller`\n",
         "instances": [
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 20
+          },
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 24
+          },
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 34
+          },
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 38
+          },
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 42
+          },
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 46
+          },
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 17
@@ -395,6 +439,10 @@
         "description": "Assigning values to address state variables without checking for `address(0)`.",
         "instances": [
           {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 12
+          },
+          {
             "contract_path": "src/StateVariables.sol",
             "line_no": 58
           },
@@ -408,6 +456,10 @@
       {
         "description": "",
         "instances": [
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 28
+          },
           {
             "contract_path": "src/Counter.sol",
             "line_no": 7
