@@ -1,4 +1,6 @@
 // Original source: https://github.com/camden-smallwood/solidity-rs
+use crate::visitor::ast_visitor::{list_accept, ASTConstVisitor, Node};
+use eyre::Result;
 use serde::{Deserialize, Serialize};
 use std::{collections::HashMap, hash::Hash, hash::Hasher};
 
@@ -55,6 +57,16 @@ pub enum YulExpression {
     YulFunctionCall(YulFunctionCall),
 }
 
+impl Node for YulExpression {
+    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        match self {
+            YulExpression::YulLiteral(node) => node.accept(visitor),
+            YulExpression::YulIdentifier(node) => node.accept(visitor),
+            YulExpression::YulFunctionCall(node) => node.accept(visitor),
+        }
+    }
+}
+
 impl<'de> Deserialize<'de> for YulExpression {
     fn deserialize<D: serde::Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
         let json = serde_json::Value::deserialize(deserializer)?;
@@ -83,6 +95,13 @@ pub struct YulLiteral {
     pub hex_value: Option<String>,
 }
 
+impl Node for YulLiteral {
+    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_yul_literal(self)?;
+        visitor.end_visit_yul_literal(self)
+    }
+}
+
 #[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub enum YulLiteralKind {
@@ -99,6 +118,13 @@ pub struct YulIdentifier {
     pub name: String,
 }
 
+impl Node for YulIdentifier {
+    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_yul_identifier(self)?;
+        visitor.end_visit_yul_identifier(self)
+    }
+}
+
 #[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct YulFunctionCall {
@@ -106,10 +132,29 @@ pub struct YulFunctionCall {
     pub arguments: Vec<YulExpression>,
 }
 
+impl Node for YulFunctionCall {
+    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        if visitor.visit_yul_function_call(self)? {
+            self.function_name.accept(visitor)?;
+            list_accept(&self.arguments, visitor)?;
+        }
+        visitor.end_visit_yul_function_call(self)
+    }
+}
+
 #[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct YulBlock {
     pub statements: Vec<YulStatement>,
+}
+
+impl Node for YulBlock {
+    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        if visitor.visit_yul_block(self)? {
+            list_accept(&self.statements, visitor)?;
+        }
+        visitor.end_visit_yul_block(self)
+    }
 }
 
 #[derive(Clone, Debug, Eq, Serialize, PartialEq, Hash)]
@@ -126,6 +171,24 @@ pub enum YulStatement {
     YulLeave,
     YulBreak,
     YulContinue,
+}
+
+impl Node for YulStatement {
+    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        match self {
+            YulStatement::YulIf(node) => node.accept(visitor),
+            YulStatement::YulSwitch(node) => node.accept(visitor),
+            YulStatement::YulForLoop(node) => node.accept(visitor),
+            YulStatement::YulAssignment(node) => node.accept(visitor),
+            YulStatement::YulVariableDeclaration(node) => node.accept(visitor),
+            YulStatement::YulExpressionStatement(node) => node.accept(visitor),
+            YulStatement::YulFunctionDefinition(node) => node.accept(visitor),
+            YulStatement::YulBlock(node) => node.accept(visitor),
+            YulStatement::YulLeave => Ok(()),
+            YulStatement::YulBreak => Ok(()),
+            YulStatement::YulContinue => Ok(()),
+        }
+    }
 }
 
 impl<'de> Deserialize<'de> for YulStatement {
@@ -171,6 +234,16 @@ pub struct YulIf {
     pub body: YulBlock,
 }
 
+impl Node for YulIf {
+    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        if visitor.visit_yul_if(self)? {
+            self.condition.accept(visitor)?;
+            self.body.accept(visitor)?;
+        }
+        visitor.end_visit_yul_if(self)
+    }
+}
+
 #[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct YulSwitch {
@@ -178,11 +251,33 @@ pub struct YulSwitch {
     pub expression: YulExpression,
 }
 
+impl Node for YulSwitch {
+    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        if visitor.visit_yul_switch(self)? {
+            self.expression.accept(visitor)?;
+            list_accept(&self.cases, visitor)?;
+        }
+        visitor.end_visit_yul_switch(self)
+    }
+}
+
 #[derive(Clone, Debug, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct YulCase {
     pub body: YulBlock,
     pub value: Option<YulExpression>,
+}
+
+impl Node for YulCase {
+    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        if visitor.visit_yul_case(self)? {
+            self.body.accept(visitor)?;
+            if let Some(value) = &self.value {
+                value.accept(visitor)?;
+            }
+        }
+        visitor.end_visit_yul_case(self)
+    }
 }
 
 impl<'de> Deserialize<'de> for YulCase {
@@ -211,11 +306,33 @@ pub struct YulForLoop {
     pub body: YulBlock,
 }
 
+impl Node for YulForLoop {
+    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        if visitor.visit_yul_for_loop(self)? {
+            self.pre.accept(visitor)?;
+            self.condition.accept(visitor)?;
+            self.post.accept(visitor)?;
+            self.body.accept(visitor)?;
+        }
+        visitor.end_visit_yul_for_loop(self)
+    }
+}
+
 #[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct YulAssignment {
     pub value: YulExpression,
     pub variable_names: Vec<YulIdentifier>,
+}
+
+impl Node for YulAssignment {
+    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        if visitor.visit_yul_assignment(self)? {
+            self.value.accept(visitor)?;
+            list_accept(&self.variable_names, visitor)?;
+        }
+        visitor.end_visit_yul_assignment(self)
+    }
 }
 
 #[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
@@ -225,6 +342,18 @@ pub struct YulVariableDeclaration {
     pub variables: Vec<YulTypedName>,
 }
 
+impl Node for YulVariableDeclaration {
+    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        if visitor.visit_yul_variable_declaration(self)? {
+            if let Some(value) = &self.value {
+                value.accept(visitor)?;
+            }
+            list_accept(&self.variables, visitor)?;
+        }
+        visitor.end_visit_yul_variable_declaration(self)
+    }
+}
+
 #[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct YulTypedName {
@@ -232,10 +361,26 @@ pub struct YulTypedName {
     pub name: String,
 }
 
+impl Node for YulTypedName {
+    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_yul_typed_name(self)?;
+        visitor.end_visit_yul_typed_name(self)
+    }
+}
+
 #[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct YulExpressionStatement {
     pub expression: YulExpression,
+}
+
+impl Node for YulExpressionStatement {
+    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        if visitor.visit_yul_expression_statement(self)? {
+            self.expression.accept(visitor)?;
+        }
+        visitor.end_visit_yul_expression_statement(self)
+    }
 }
 
 #[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
@@ -245,4 +390,19 @@ pub struct YulFunctionDefinition {
     pub parameters: Option<Vec<YulTypedName>>,
     pub return_parameters: Option<Vec<YulTypedName>>,
     pub body: YulBlock,
+}
+
+impl Node for YulFunctionDefinition {
+    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        if visitor.visit_yul_function_definition(self)? {
+            if let Some(parameters) = &self.parameters {
+                list_accept(parameters, visitor)?;
+            }
+            if let Some(return_parameters) = &self.return_parameters {
+                list_accept(return_parameters, visitor)?;
+            }
+            self.body.accept(visitor)?;
+        }
+        visitor.end_visit_yul_function_definition(self)
+    }
 }
