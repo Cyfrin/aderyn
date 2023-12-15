@@ -74,7 +74,7 @@ impl Display for Statement {
             Statement::UncheckedBlock(stmt) => stmt.fmt(f),
             Statement::Return(stmt) => stmt.fmt(f),
             Statement::ExpressionStatement(stmt) => stmt.fmt(f),
-            Statement::InlineAssembly(_) => {
+            Statement::InlineAssembly(..) => {
                 f.write_str("assembly { /* WARNING: not implemented */ }")
             }
             Statement::UnhandledStatement { node_type, .. } => match node_type {
@@ -464,12 +464,10 @@ impl Display for Return {
 #[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct InlineAssembly {
-    // FIXME
     #[serde(rename = "AST")]
-    pub ast: Option<()>,
+    pub ast: Option<YulBlock>,
     pub evm_version: Option<String>,
-    // FIXME
-    pub external_references: Vec<()>,
+    pub external_references: Vec<ExternalReference>,
     pub operations: Option<String>,
     pub src: String,
     pub id: NodeID,

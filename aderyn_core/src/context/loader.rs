@@ -473,6 +473,7 @@ impl ASTConstVisitor for ContextLoader {
     }
 
     fn visit_inline_assembly(&mut self, node: &InlineAssembly) -> Result<bool> {
+        println!("Inline assembly: {:?}", node);
         self.nodes
             .insert(node.id, ASTNode::InlineAssembly(node.clone()));
         self.inline_assemblies

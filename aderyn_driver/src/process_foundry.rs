@@ -26,18 +26,19 @@ pub fn with_project_root_at(root_path: &PathBuf) -> (String, ContextLoader) {
     let foundry_intermediates = loaded_foundry
         .output_filepaths
         .par_iter()
-        .map(|output_filepath| {
-            if let Ok(foundry_output) = read_foundry_output_file(output_filepath.to_str().unwrap())
-            {
-                Some(foundry_output.ast)
-            } else {
-                eprintln!(
-                    "Error reading Foundry output file: {}",
-                    output_filepath.to_str().unwrap()
-                );
-                None
-            }
-        })
+        .map(
+            |output_filepath| match read_foundry_output_file(output_filepath.to_str().unwrap()) {
+                Ok(foundry_output) => Some(foundry_output.ast),
+                Err(err) => {
+                    eprintln!(
+                        "Error reading Foundry output file: {}: {}",
+                        output_filepath.to_str().unwrap(),
+                        err
+                    );
+                    None
+                }
+            },
+        )
         .collect::<Vec<_>>();
 
     // read_foundry_output_file and print an error message if it fails
