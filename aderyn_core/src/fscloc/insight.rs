@@ -27,8 +27,8 @@ impl From<&TokenDescriptor> for TokenInsight {
             start_line: value.start_line,
             end_line: value.end_line,
             token_type: value.token_type.clone(),
-            starts_with_newline: value.content.starts_with("\n"),
-            ends_with_newline: value.content.ends_with("\n"),
+            starts_with_newline: value.content.starts_with('\n'),
+            ends_with_newline: value.content.ends_with('\n'),
         };
 
         if value.token_type != TokenType::MultilineComment
@@ -60,7 +60,8 @@ impl TokenType {
                 let mut non_blank_lines = 0;
                 let mut actual_first_line = -1;
                 let mut count = 0;
-                for curr in content.to_string().split("\n") {
+                #[allow(clippy::explicit_counter_loop)]
+                for curr in content.to_string().split('\n') {
                     if curr.trim() != "" {
                         non_blank_lines += 1;
                         if actual_first_line == -1 {

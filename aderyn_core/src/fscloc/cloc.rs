@@ -120,6 +120,7 @@ pub fn get_stats(r_content: &str) -> Stats {
     let mut prev = &groups[0];
     code_lines += prev.total_contribution();
 
+    #[allow(clippy::needless_range_loop)]
     for i in 1..len {
         let curr = &groups[i];
         let grp_contrib = curr.total_contribution();

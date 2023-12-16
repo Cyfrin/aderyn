@@ -28,6 +28,7 @@ pub fn tokenize(content: &str) -> Vec<TokenDescriptor> {
 
     let mut token_descriptors = vec![];
 
+    #[allow(clippy::while_let_on_iterator)]
     while let Some(token) = iter.next() {
         // Track on which line no the token ends.
         // (Start by assuming it ends on the same line until we finally hit the end)
@@ -107,7 +108,7 @@ pub fn tokenize(content: &str) -> Vec<TokenDescriptor> {
             }
         }
 
-        if multiline_comment_bytes.len() > 0 {
+        if !multiline_comment_bytes.is_empty() {
             token_descriptors.push(TokenDescriptor {
                 token_type: TokenType::MultilineComment,
                 start_line: token.line_no,
@@ -116,7 +117,7 @@ pub fn tokenize(content: &str) -> Vec<TokenDescriptor> {
             });
         }
 
-        if singleline_comment_bytes.len() > 0 {
+        if !singleline_comment_bytes.is_empty() {
             token_descriptors.push(TokenDescriptor {
                 token_type: TokenType::SinglelineComment,
                 start_line: token.line_no,
@@ -125,7 +126,7 @@ pub fn tokenize(content: &str) -> Vec<TokenDescriptor> {
             });
         }
 
-        if code_bytes_inside_double_quotes.len() > 0 {
+        if !code_bytes_inside_double_quotes.is_empty() {
             token_descriptors.push(TokenDescriptor {
                 token_type: TokenType::CodeDoubleQuotes,
                 start_line: token.line_no,
@@ -134,7 +135,7 @@ pub fn tokenize(content: &str) -> Vec<TokenDescriptor> {
             });
         }
 
-        if code_bytes_inside_single_quotes.len() > 0 {
+        if !code_bytes_inside_single_quotes.is_empty() {
             token_descriptors.push(TokenDescriptor {
                 token_type: TokenType::CodeSingleQuotes,
                 start_line: token.line_no,
@@ -143,7 +144,7 @@ pub fn tokenize(content: &str) -> Vec<TokenDescriptor> {
             });
         }
 
-        if code_bytes_outside_quotes.len() > 0 {
+        if !code_bytes_outside_quotes.is_empty() {
             token_descriptors.push(TokenDescriptor {
                 token_type: TokenType::CodeOutsideQuotes,
                 start_line: token.line_no,
