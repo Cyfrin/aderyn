@@ -109,7 +109,7 @@ impl ContextLoader {
     pub fn files_summary(&self) -> FilesSummary {
         FilesSummary {
             total_source_units: self.source_units.len(),
-            total_sloc: self.sloc_stats.code,
+            total_sloc: self.sloc_stats.iter().fold(0, |acc, x| acc + *x.1),
         }
     }
 
@@ -125,14 +125,10 @@ impl ContextLoader {
             .iter()
             .map(|source_unit| {
                 let filepath = source_unit.absolute_path.as_ref().unwrap();
-                let report: &tokei::Report = sloc_stats
-                    .reports
-                    .iter()
-                    .find(|r| r.name.to_str().map_or(false, |s| s.contains(filepath)))
-                    .unwrap();
+                let report = sloc_stats.iter().find(|r| r.0.contains(filepath)).unwrap();
                 FilesDetail {
                     file_path: filepath.to_owned(),
-                    n_sloc: report.stats.code,
+                    n_sloc: *report.1,
                 }
             })
             .collect::<Vec<_>>();

@@ -1,10 +1,11 @@
 use crate::{process_foundry, process_hardhat, virtual_foundry};
 use aderyn_core::{
+    fscloc,
     report::{json_printer::JsonPrinter, markdown_printer::MarkdownReportPrinter},
     run_with_printer,
 };
 use std::{fs::read_dir, path::PathBuf};
-use tokei::{Config, LanguageType};
+// use tokei::{Config, LanguageType};
 
 pub struct Args {
     pub root: String,
@@ -48,10 +49,9 @@ pub fn drive(args: Args) {
     };
 
     // Using the source path, get the sloc from tokei
-    let mut languages = tokei::Languages::new();
-    let tokei_config = Config::default();
-    languages.get_statistics(&[src_path], &[], &tokei_config);
-    context_loader.set_sloc_stats(languages[&LanguageType::Solidity].clone());
+    let stats = fscloc::engine::count_lines_of_code(&PathBuf::from(src_path));
+    let stats = stats.lock().unwrap().to_owned();
+    context_loader.set_sloc_stats(stats);
 
     if args.output.ends_with(".json") {
         // Load the context loader into the run function, which runs the detectors
