@@ -128,14 +128,13 @@ pub fn get_stats(r_content: &str) -> Stats {
         // what line does the first contributing token start ?
         if curr.start_line == prev.end_line
             && (curr.token_insights[0].code_lines.actual_first_line == 0)
+            && grp_contrib >= 1
         {
-            if grp_contrib >= 1 {
-                // println!("deducting {} {}", curr.start_line, prev.end_line);
-                code_lines -= 1;
-            }
+            // println!("deducting {} {}", curr.start_line, prev.end_line);
+            code_lines -= 1;
         }
         prev = curr;
     }
 
-    return Stats { code: code_lines };
+    Stats { code: code_lines }
 }

@@ -7,12 +7,10 @@ pub mod report;
 pub mod visitor;
 
 use eyre::Result;
-use std::collections::HashMap;
 use std::error::Error;
 use std::fs::{remove_file, File};
 use std::io::{self};
 use std::path::{Path, PathBuf};
-use std::sync::MutexGuard;
 
 use crate::context::loader::ContextLoader;
 use crate::detect::detector::{get_all_detectors, IssueSeverity};

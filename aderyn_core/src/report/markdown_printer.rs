@@ -1,9 +1,7 @@
 use crate::context::loader::ContextLoader;
 use std::{
-    collections::HashMap,
     io::{Result, Write},
     path::{Path, PathBuf},
-    sync::MutexGuard,
 };
 
 use super::{
