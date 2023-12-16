@@ -15,6 +15,7 @@ pub struct TokenInsight {
 }
 
 impl From<&TokenDescriptor> for TokenInsight {
+    #[allow(clippy::let_and_return)]
     fn from(value: &TokenDescriptor) -> Self {
         let insight = TokenInsight {
             code_lines: match value.token_type.clone() {
