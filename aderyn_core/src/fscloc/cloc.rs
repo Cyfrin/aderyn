@@ -80,29 +80,29 @@ pub fn get_stats(r_content: &str) -> Stats {
     assert!(content == r_content);
 
     // debug
-    for group in &token_insight_groups {
-        if group.token_type == HighLevelType::Code {
-            // println!(
-            //     "{}-{} Size:{} Contrib:{}",
-            //     group.start_line,
-            //     group.end_line,
-            //     group.token_insights.len(),
-            //     group.total_contribution(),
-            // );
-            // if group.token_insights.len() == 7 {
-            //     for i in &group.token_insights {
-            //         println!(
-            //             "{:?} - {:?} - {} - {} - {}",
-            //             i.token_type,
-            //             i.code_lines.info_lines,
-            //             i.starts_with_newline,
-            //             i.start_line,
-            //             i.end_line
-            //         );
-            //     }
-            // }
-        }
-    }
+    // for group in &token_insight_groups {
+    //     if group.token_type == HighLevelType::Code {
+    // println!(
+    //     "{}-{} Size:{} Contrib:{}",
+    //     group.start_line,
+    //     group.end_line,
+    //     group.token_insights.len(),
+    //     group.total_contribution(),
+    // );
+    // if group.token_insights.len() == 7 {
+    //     for i in &group.token_insights {
+    //         println!(
+    //             "{:?} - {:?} - {} - {} - {}",
+    //             i.token_type,
+    //             i.code_lines.info_lines,
+    //             i.starts_with_newline,
+    //             i.start_line,
+    //             i.end_line
+    //         );
+    //     }
+    // }
+    //     }
+    // }
 
     let mut code_lines = 0;
 

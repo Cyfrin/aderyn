@@ -31,23 +31,23 @@ impl From<&TokenDescriptor> for TokenInsight {
             ends_with_newline: value.content.ends_with('\n'),
         };
 
-        if value.token_type != TokenType::MultilineComment
-            && value.token_type != TokenType::SinglelineComment
+        // if value.token_type != TokenType::MultilineComment
+        //     && value.token_type != TokenType::SinglelineComment
         // && insight.code_lines.actual_first_line != -1
-        {
-            // print!(
-            //     "{:?}, {}-{}\n",
-            //     value.token_type.clone(),
-            //     value.start_line,
-            //     value.end_line
-            // );
-            // println!("{}", value.content.clone());
+        //{
+        // print!(
+        //     "{:?}, {}-{}\n",
+        //     value.token_type.clone(),
+        //     value.start_line,
+        //     value.end_line
+        // );
+        // println!("{}", value.content.clone());
 
-            // println!(
-            //     "Lines {}/{}\n----------------------",
-            //     insight.code_lines.info_lines, insight.code_lines.actual_first_line
-            // );
-        }
+        // println!(
+        //     "Lines {}/{}\n----------------------",
+        //     insight.code_lines.info_lines, insight.code_lines.actual_first_line
+        // );
+        //}
 
         insight
     }
