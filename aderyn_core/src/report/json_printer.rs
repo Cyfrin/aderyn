@@ -21,6 +21,7 @@ pub struct JsonContent {
     medium_issue: MediumIssues,
     low_issues: LowIssues,
     nc_issues: NcIssues,
+    root_path: String,
 }
 
 pub struct JsonPrinter;
@@ -43,7 +44,7 @@ impl ReportPrinter<()> for JsonPrinter {
         writer: W,
         report: &Report,
         loader: &ContextLoader,
-        _: PathBuf,
+        root_path: PathBuf,
         _: Option<String>,
     ) -> Result<()> {
         let content = JsonContent {
@@ -55,6 +56,7 @@ impl ReportPrinter<()> for JsonPrinter {
             medium_issue: report.medium_issues(),
             low_issues: report.low_issues(),
             nc_issues: report.nc_issues(),
+            root_path: String::from(root_path.as_path().to_str().unwrap_or_default()), // since it's not a very critical piece of info
         };
         let value = serde_json::to_value(content).unwrap();
         _ = serde_json::to_writer_pretty(writer, &value);
