@@ -2,6 +2,7 @@ use crate::ast::*;
 use crate::visitor::ast_visitor::*;
 use eyre::Result;
 use std::collections::HashMap;
+
 use tokei::Language;
 
 #[derive(Debug, Clone, PartialEq)]
@@ -119,6 +120,8 @@ impl ASTNode {
 
 #[derive(Default, Debug)]
 pub struct ContextLoader {
+    // relative source filepaths
+    pub src_filepaths: Vec<String>,
     pub sloc_stats: Language,
     pub nodes: HashMap<i64, ASTNode>,
     last_source_unit_id: i64,
@@ -701,10 +704,10 @@ mod loader_tests {
             "../tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",
         )?;
         let inheritance_base = read_compiler_output(
-            "../tests/contract-playground/out/InheritanceBase.sol/InheritanceBase.json",
+            "../tests/contract-playground/out/InheritanceBase.sol/InheritanceBase.0.8.21.json",
         )?;
         let i_contract_inheritance = read_compiler_output(
-            "../tests/contract-playground/out/IContractInheritance.sol/IContractInheritance.json",
+            "../tests/contract-playground/out/IContractInheritance.sol/IContractInheritance.0.8.21.json",
         )?;
         extended_inheritance.ast.accept(&mut loader)?;
         inheritance_base.ast.accept(&mut loader)?;

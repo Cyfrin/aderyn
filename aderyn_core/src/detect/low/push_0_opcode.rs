@@ -175,7 +175,7 @@ mod unspecific_solidity_pragma_tests {
     #[test]
     fn test_push_0_opcode_detector_on_caret_0_8_13() {
         let context_loader =
-            load_contract("../tests/contract-playground/out/Counter.sol/Counter.json");
+            load_contract("../tests/contract-playground/out/Counter.sol/Counter.0.8.21.json");
         let mut detector = super::PushZeroOpcodeDetector::default();
         let found = detector.detect(&context_loader).unwrap();
         // assert that it found something
@@ -187,7 +187,7 @@ mod unspecific_solidity_pragma_tests {
     #[test]
     fn test_push_0_opcode_detector_on_greter_equal_0_8_0() {
         let context_loader = load_contract(
-            "../tests/contract-playground/out/IContractInheritance.sol/IContractInheritance.json",
+            "../tests/contract-playground/out/IContractInheritance.sol/IContractInheritance.0.8.21.json",
         );
         let mut detector = super::PushZeroOpcodeDetector::default();
         let found = detector.detect(&context_loader).unwrap();
