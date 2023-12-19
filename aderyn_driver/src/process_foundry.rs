@@ -70,7 +70,11 @@ pub fn with_project_root_at(root_path: &PathBuf) -> (String, ContextLoader) {
             });
         });
 
-    let root_path_str = root_path.to_string_lossy().into_owned();
+    let root_path_str = root_path
+        .to_string_lossy()
+        .into_owned()
+        .trim_start_matches("./")
+        .to_string();
     println!("root_path_str: {:?}", root_path_str);
     println!(
         "loaded_foundry.src_filepaths: {:?}",
