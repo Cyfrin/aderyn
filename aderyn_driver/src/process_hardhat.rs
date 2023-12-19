@@ -44,6 +44,6 @@ pub fn with_project_root_at(root_path: &PathBuf) -> (String, ContextLoader) {
         "hardhat sources: {:?}",
         hardhat_output.output.keys().collect::<Vec<_>>()
     );
-    context_loader.src_filepaths = hardhat_output.output.keys().map(|s| s.clone()).collect();
+    context_loader.src_filepaths = hardhat_output.output.keys().cloned().collect();
     (src_path, context_loader)
 }

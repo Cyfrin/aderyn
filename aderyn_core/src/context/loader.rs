@@ -2,7 +2,7 @@ use crate::ast::*;
 use crate::visitor::ast_visitor::*;
 use eyre::Result;
 use std::collections::HashMap;
-use std::path::PathBuf;
+
 use tokei::Language;
 
 #[derive(Debug, Clone, PartialEq)]
