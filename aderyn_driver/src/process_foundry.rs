@@ -70,5 +70,15 @@ pub fn with_project_root_at(root_path: &PathBuf) -> (String, ContextLoader) {
             });
         });
 
+    let root_path_str = root_path.to_string_lossy().into_owned();
+    context_loader.src_filepaths = loaded_foundry
+        .src_filepaths
+        .iter()
+        .filter_map(|path| {
+            let path_str = path.to_string_lossy();
+            path_str.split(&root_path_str).nth(1).map(|s| s.to_string())
+        })
+        .collect::<Vec<_>>();
+
     (src_path, context_loader)
 }

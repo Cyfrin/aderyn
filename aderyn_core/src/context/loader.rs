@@ -2,6 +2,7 @@ use crate::ast::*;
 use crate::visitor::ast_visitor::*;
 use eyre::Result;
 use std::collections::HashMap;
+use std::path::PathBuf;
 use tokei::Language;
 
 #[derive(Debug, Clone, PartialEq)]
@@ -119,6 +120,8 @@ impl ASTNode {
 
 #[derive(Default, Debug)]
 pub struct ContextLoader {
+    // relative source filepaths
+    pub src_filepaths: Vec<String>,
     pub sloc_stats: Language,
     pub nodes: HashMap<i64, ASTNode>,
     last_source_unit_id: i64,
