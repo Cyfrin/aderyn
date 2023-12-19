@@ -54,9 +54,9 @@ mod unspecific_solidity_pragma_tests {
     };
 
     #[test]
-    fn test_deprecated_oz_functions_detector() {
+    fn test_unspecific_solidity_pragma_detector() {
         let context_loader = load_contract(
-            "../tests/contract-playground/out/IContractInheritance.sol/IContractInheritance.json",
+            "../tests/contract-playground/out/IContractInheritance.sol/IContractInheritance.0.8.21.json",
         );
         let mut detector = UnspecificSolidityPragmaDetector::default();
         let found = detector.detect(&context_loader).unwrap();
