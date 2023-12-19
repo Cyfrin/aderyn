@@ -62,7 +62,9 @@ jobs:
           args: -- -o report2.md ./tests/contract-playground/
 
       - name: Check report.md vs report2.md
-        run: diff report.md report2.md
+        run: |
+          cat report2.md
+          diff report.md report2.md
 
       - name: Generate report2.json
         uses: actions-rs/cargo@v1
@@ -71,7 +73,9 @@ jobs:
           args: -- -o report2.json ./tests/contract-playground/
 
       - name: Check report.json vs report2.json
-        run: diff report.json report2.json
+        run: |
+          cat report2.json
+          diff report.json report2.json
 
   lints:
     name: Lints
