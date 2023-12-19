@@ -75,11 +75,6 @@ pub fn with_project_root_at(root_path: &PathBuf) -> (String, ContextLoader) {
         .into_owned()
         .trim_start_matches("./")
         .to_string();
-    println!("root_path_str: {:?}", root_path_str);
-    println!(
-        "loaded_foundry.src_filepaths: {:?}",
-        loaded_foundry.src_filepaths
-    );
     context_loader.src_filepaths = loaded_foundry
         .src_filepaths
         .iter()
@@ -89,9 +84,5 @@ pub fn with_project_root_at(root_path: &PathBuf) -> (String, ContextLoader) {
         })
         .collect::<Vec<_>>();
 
-    println!(
-        "context_loader.src_filepaths: {:?}",
-        context_loader.src_filepaths
-    );
     (src_path, context_loader)
 }
