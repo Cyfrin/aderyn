@@ -475,10 +475,8 @@ pub struct InlineAssembly {
 
 impl Node for InlineAssembly {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        if visitor.visit_inline_assembly(self)? {
-            if self.ast.is_some() {
-                self.ast.as_ref().unwrap().accept(visitor)?;
-            }
+        if visitor.visit_inline_assembly(self)? && self.ast.is_some() {
+            self.ast.as_ref().unwrap().accept(visitor)?;
         }
         visitor.end_visit_inline_assembly(self)
     }
