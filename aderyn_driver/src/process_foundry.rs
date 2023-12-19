@@ -71,6 +71,10 @@ pub fn with_project_root_at(root_path: &PathBuf) -> (String, ContextLoader) {
         });
 
     let root_path_str = root_path.to_string_lossy().into_owned();
+    println!(
+        "loaded_foundry.src_filepaths: {:?}",
+        loaded_foundry.src_filepaths
+    );
     context_loader.src_filepaths = loaded_foundry
         .src_filepaths
         .iter()
@@ -80,5 +84,9 @@ pub fn with_project_root_at(root_path: &PathBuf) -> (String, ContextLoader) {
         })
         .collect::<Vec<_>>();
 
+    println!(
+        "context_loader.src_filepaths: {:?}",
+        context_loader.src_filepaths
+    );
     (src_path, context_loader)
 }
