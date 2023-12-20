@@ -18,13 +18,24 @@ mod tests {
 
     #[test]
     fn test_print_loc() {
-        let sol = engine::count_lines_of_code(PathBuf::from("../tests/solfiles").as_path());
+        let sol = engine::count_lines_of_code(
+            PathBuf::from("../tests/contract-playground/src/cloc").as_path(),
+        );
         let result = sol.lock().unwrap();
         result
             .iter()
             .for_each(|element| println!("{} - {}", element.0, element.1));
-        assert_eq!(*result.get("../tests/solfiles/program.sol").unwrap(), 21);
-        assert_eq!(*result.get("../tests/solfiles/program2.sol").unwrap(), 32);
-        assert_eq!(*result.get("../tests/solfiles/program3.sol").unwrap(), 6);
+        assert_eq!(
+            *result
+                .get("../tests/contract-playground/src/cloc/HeavilyCommentedContract.sol")
+                .unwrap(),
+            21
+        );
+        assert_eq!(
+            *result
+                .get("../tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol")
+                .unwrap(),
+            32
+        );
     }
 }
