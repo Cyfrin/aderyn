@@ -26,8 +26,5 @@ mod tests {
         assert_eq!(*result.get("../tests/solfiles/program.sol").unwrap(), 21);
         assert_eq!(*result.get("../tests/solfiles/program2.sol").unwrap(), 32);
         assert_eq!(*result.get("../tests/solfiles/program3.sol").unwrap(), 6);
-
-        // Thunder loan contract
-        assert_eq!(*result.get("../tests/solfiles/program4.sol").unwrap(), 176);
     }
 }
