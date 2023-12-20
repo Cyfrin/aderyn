@@ -163,12 +163,11 @@ fn get_matching_filepaths(subdirs: &[PathBuf], contract_filepaths: &Vec<PathBuf>
             if let Some(subdir_str) = subdir.to_str() {
                 let contract_name = contract_filepath.file_name().unwrap().to_str().unwrap();
                 if subdir_str.contains(&format!("/{}", contract_name)) {
-                    // Construct the JSON file path and add it to matching_filepaths
-                    let contract_name_path = PathBuf::from(contract_name);
-                    if let Some(name_without_extension) = contract_name_path.file_stem() {
-                        let json_path = subdir
-                            .join(format!("{}.json", name_without_extension.to_str().unwrap()));
-                        matching_filepaths.push(json_path);
+                    // Read all files in the subdir, add them to matching_filepaths
+                    for entry in read_dir(subdir).unwrap() {
+                        let entry = entry.unwrap();
+                        let entry_path = entry.path();
+                        matching_filepaths.push(entry_path);
                     }
                 }
             }
