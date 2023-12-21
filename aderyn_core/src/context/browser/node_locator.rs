@@ -15,7 +15,7 @@ impl<'a> ContextBrowser<'a> {
 
         let src = node.src().unwrap();
         let ch_pos: usize = src
-            .split(":")
+            .split(':')
             .take(1)
             .map(|x| x.parse())
             .next()
@@ -23,7 +23,7 @@ impl<'a> ContextBrowser<'a> {
             .unwrap();
 
         let line = self.get_source_line(insight, ch_pos);
-        return (absolute_path, line);
+        (absolute_path, line)
     }
 
     fn get_source_line(&self, insight: &SourceUnitInsight, ch_pos: usize) -> usize {

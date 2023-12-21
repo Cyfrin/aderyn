@@ -37,7 +37,7 @@ where
 
     let mut report: Report = Report::default();
     for mut detector in detectors {
-        if let Ok(found) = detector.detect(&context_loader, &mut context_browser) {
+        if let Ok(found) = detector.detect(context_loader, &mut context_browser) {
             if found {
                 let issue: Issue = Issue {
                     title: detector.title(),
@@ -71,7 +71,7 @@ where
     reporter.print_report(
         get_markdown_writer(&output_file_path)?,
         &report,
-        &context_loader,
+        context_loader,
         root_rel_path,
         Some(output_file_path.clone()),
     )?;

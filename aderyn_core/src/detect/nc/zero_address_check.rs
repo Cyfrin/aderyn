@@ -88,17 +88,17 @@ impl Detector for ZeroAddressCheckDetector {
             let assignments = assigments
                 .assignments
                 .iter()
-                .filter_map(|x| {
+                .filter(|x| {
                     let left_hand_side = x.left_hand_side.as_ref();
                     if let Expression::Identifier(left_identifier) = left_hand_side {
                         if self
                             .mutable_address_state_variables
                             .contains_key(&left_identifier.referenced_declaration)
                         {
-                            return Some(x);
+                            return true;
                         }
                     }
-                    None
+                    false
                 })
                 .filter_map(|x| {
                     let right_hand_side = x.right_hand_side.as_ref();
@@ -121,7 +121,7 @@ impl Detector for ZeroAddressCheckDetector {
             // if there are assignments to mutable address state variables that are not present
             // in the binary_checks_against_zero_address, add the assignment to the found_no_zero_address_check
             for (key, value) in &assignments_to_mutable_address_state_variables {
-                if !binary_checks_against_zero_address.contains(&key) {
+                if !binary_checks_against_zero_address.contains(key) {
                     self.found_instances.insert(
                         browser.get_node_sort_key(&ASTNode::Assignment(value.clone())),
                         value.src.clone(),
