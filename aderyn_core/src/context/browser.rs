@@ -101,8 +101,8 @@ impl<'a> ContextBrowser<'a> {
             .newline_char_indices
             .partition_point(|x| x < &ch_pos);
 
-        // idx + 1 is the number of newlines before ch_pos
+        // idx is the number of newlines before ch_pos
         // Adding one to it gives the line number of the current position
-        idx + 2
+        idx + 1
     }
 }
