@@ -57,7 +57,7 @@ impl Detector for PushZeroOpcodeDetector {
     fn detect(
         &mut self,
         loader: &ContextLoader,
-        _browser: &mut ContextBrowser,
+        browser: &mut ContextBrowser,
     ) -> Result<bool, Box<dyn Error>> {
         for pragma_directive in loader.pragma_directives.keys() {
             let mut version_string = String::new();
@@ -77,7 +77,7 @@ impl Detector for PushZeroOpcodeDetector {
             let req = VersionReq::parse(&version_string)?;
             if version_req_allows_above_0_8_19(&req) {
                 self.found_instances.insert(
-                    loader.get_node_sort_key(&ASTNode::PragmaDirective(pragma_directive.clone())),
+                    browser.get_node_sort_key(&ASTNode::PragmaDirective(pragma_directive.clone())),
                     pragma_directive.src.clone(),
                 );
             }

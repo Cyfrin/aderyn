@@ -23,7 +23,7 @@ impl Detector for UselessPublicFunctionDetector {
     fn detect(
         &mut self,
         loader: &ContextLoader,
-        _browser: &mut ContextBrowser,
+        browser: &mut ContextBrowser,
     ) -> Result<bool, Box<dyn Error>> {
         // Collect the ids of all functions referenced by identifiers.
         let referenced_functions: HashSet<_> = loader
@@ -47,7 +47,7 @@ impl Detector for UselessPublicFunctionDetector {
             unreferenced_public_functions
                 .map(|node| {
                     (
-                        loader.get_node_sort_key(&node.clone().unwrap()),
+                        browser.get_node_sort_key(&node.clone().unwrap()),
                         // match node as FunctionDefinition
                         match node.unwrap() {
                             ASTNode::FunctionDefinition(function_definition) => {

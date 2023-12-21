@@ -33,7 +33,7 @@ impl Detector for DelegateCallInLoopDetector {
     fn detect(
         &mut self,
         loader: &ContextLoader,
-        _browser: &mut ContextBrowser,
+        browser: &mut ContextBrowser,
     ) -> Result<bool, Box<dyn Error>> {
         for for_statement in loader.for_statements.keys() {
             for_statement.accept(self)?;
@@ -44,7 +44,7 @@ impl Detector for DelegateCallInLoopDetector {
         for member_access in self.found_member_access.clone().into_iter().flatten() {
             if let ASTNode::MemberAccess(member_access) = member_access {
                 self.found_instances.insert(
-                    loader.get_node_sort_key(&ASTNode::MemberAccess(member_access.clone())),
+                    browser.get_node_sort_key(&ASTNode::MemberAccess(member_access.clone())),
                     member_access.src.clone(),
                 );
             }

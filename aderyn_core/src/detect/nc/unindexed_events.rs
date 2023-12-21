@@ -19,7 +19,7 @@ impl Detector for UnindexedEventsDetector {
     fn detect(
         &mut self,
         loader: &ContextLoader,
-        _browser: &mut ContextBrowser,
+        browser: &mut ContextBrowser,
     ) -> Result<bool, Box<dyn Error>> {
         // for each event definition, check if it has any indexed parameters
         // if it does not, then add it to the list of found unindexed events
@@ -37,7 +37,7 @@ impl Detector for UnindexedEventsDetector {
 
             if non_indexed && indexed_count < 3 {
                 self.found_instances.insert(
-                    loader
+                    browser
                         .get_node_sort_key(&ASTNode::EventDefinition((*event_definition).clone())),
                     event_definition.src.clone(),
                 );

@@ -79,8 +79,6 @@ impl<'a> ContextBrowser<'a> {
             .unwrap()
             .unwrap();
 
-        assert!(ch_pos < src.len());
-
         let line = self.get_source_line(insight, ch_pos);
         return (absolute_path, line);
     }

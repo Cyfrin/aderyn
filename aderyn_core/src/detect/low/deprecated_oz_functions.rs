@@ -19,7 +19,7 @@ impl Detector for DeprecatedOZFunctionsDetector {
     fn detect(
         &mut self,
         loader: &ContextLoader,
-        _browser: &mut ContextBrowser,
+        browser: &mut ContextBrowser,
     ) -> Result<bool, Box<dyn Error>> {
         for identifier in loader.identifiers.keys() {
             // if source_unit has any ImportDirectives with absolute_path containing "openzeppelin"
@@ -37,7 +37,7 @@ impl Detector for DeprecatedOZFunctionsDetector {
             }) && identifier.name == "_setupRole"
             {
                 self.found_instances.insert(
-                    loader.get_node_sort_key(&ASTNode::Identifier(identifier.clone())),
+                    browser.get_node_sort_key(&ASTNode::Identifier(identifier.clone())),
                     identifier.src.clone(),
                 );
             }
@@ -57,7 +57,7 @@ impl Detector for DeprecatedOZFunctionsDetector {
             }) && member_access.member_name == "safeApprove"
             {
                 self.found_instances.insert(
-                    loader.get_node_sort_key(&ASTNode::MemberAccess(member_access.clone())),
+                    browser.get_node_sort_key(&ASTNode::MemberAccess(member_access.clone())),
                     member_access.src.clone(),
                 );
             }

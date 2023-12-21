@@ -23,7 +23,7 @@ impl Detector for DifferentStorageConditionalDetector {
     fn detect(
         &mut self,
         loader: &ContextLoader,
-        _browser: &mut ContextBrowser,
+        browser: &mut ContextBrowser,
     ) -> Result<bool, Box<dyn Error>> {
         // Step 1: Get all state variable declarations
         let state_variables: Vec<&VariableDeclaration> = loader
@@ -100,12 +100,12 @@ impl Detector for DifferentStorageConditionalDetector {
 
                     if !is_consistent_or_mirror {
                         self.found_instances.insert(
-                            loader.get_node_sort_key(&ASTNode::BinaryOperation((*op).clone())),
+                            browser.get_node_sort_key(&ASTNode::BinaryOperation((*op).clone())),
                             op.src.clone(),
                         );
                         if !first_added {
                             self.found_instances.insert(
-                                loader.get_node_sort_key(&ASTNode::BinaryOperation(
+                                browser.get_node_sort_key(&ASTNode::BinaryOperation(
                                     (*first_op).clone(),
                                 )),
                                 first_op.src.clone(),

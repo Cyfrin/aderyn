@@ -19,7 +19,7 @@ impl Detector for NonReentrantBeforeOthersDetector {
     fn detect(
         &mut self,
         loader: &ContextLoader,
-        _browser: &mut ContextBrowser,
+        browser: &mut ContextBrowser,
     ) -> Result<bool, Box<dyn Error>> {
         let function_definitions = loader.function_definitions.keys();
         for definition in function_definitions {
@@ -27,7 +27,7 @@ impl Detector for NonReentrantBeforeOthersDetector {
                 for (index, modifier) in definition.modifiers.iter().enumerate() {
                     if modifier.modifier_name.name == "nonReentrant" && index != 0 {
                         self.found_instances.insert(
-                            loader
+                            browser
                                 .get_node_sort_key(&ASTNode::ModifierInvocation(modifier.clone())),
                             modifier.src.clone(),
                         );

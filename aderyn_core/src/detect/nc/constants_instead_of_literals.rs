@@ -36,7 +36,7 @@ impl Detector for ConstantsInsteadOfLiteralsDetector {
     fn detect(
         &mut self,
         loader: &ContextLoader,
-        _browser: &mut ContextBrowser,
+        browser: &mut ContextBrowser,
     ) -> Result<bool, Box<dyn Error>> {
         // get all function definitions.
         // for each function definition, find all Literal types
@@ -47,7 +47,7 @@ impl Detector for ConstantsInsteadOfLiteralsDetector {
         for literal in self.found_literals.clone().into_iter().flatten() {
             if let ASTNode::Literal(literal) = literal {
                 self.found_instances.insert(
-                    loader.get_node_sort_key(&ASTNode::Literal(literal.clone())),
+                    browser.get_node_sort_key(&ASTNode::Literal(literal.clone())),
                     literal.src.clone(),
                 );
             }

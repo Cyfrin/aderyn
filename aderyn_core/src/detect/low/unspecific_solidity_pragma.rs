@@ -19,13 +19,13 @@ impl Detector for UnspecificSolidityPragmaDetector {
     fn detect(
         &mut self,
         loader: &ContextLoader,
-        _browser: &mut ContextBrowser,
+        browser: &mut ContextBrowser,
     ) -> Result<bool, Box<dyn Error>> {
         for pragma_directive in loader.pragma_directives.keys() {
             for literal in &pragma_directive.literals {
                 if literal.contains('^') || literal.contains('>') {
                     self.found_instances.insert(
-                        loader
+                        browser
                             .get_node_sort_key(&ASTNode::PragmaDirective(pragma_directive.clone())),
                         pragma_directive.src.clone(),
                     );

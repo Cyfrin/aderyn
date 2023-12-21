@@ -19,7 +19,7 @@ impl Detector for RequireWithStringDetector {
     fn detect(
         &mut self,
         loader: &ContextLoader,
-        _browser: &mut ContextBrowser,
+        browser: &mut ContextBrowser,
     ) -> Result<bool, Box<dyn Error>> {
         // Collect all require statements without a string literal.
         let requires_and_reverts = loader
@@ -32,7 +32,7 @@ impl Detector for RequireWithStringDetector {
                 || (id.name == "require" && id.argument_types.as_ref().unwrap().len() == 1)
             {
                 self.found_instances.insert(
-                    loader.get_node_sort_key(&ASTNode::Identifier(id.clone())),
+                    browser.get_node_sort_key(&ASTNode::Identifier(id.clone())),
                     id.src.clone(),
                 );
             }

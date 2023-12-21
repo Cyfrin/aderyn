@@ -65,7 +65,7 @@ impl Detector for CentralizationRiskDetector {
     fn detect(
         &mut self,
         loader: &ContextLoader,
-        _browser: &mut ContextBrowser,
+        browser: &mut ContextBrowser,
     ) -> Result<bool, Box<dyn Error>> {
         for source_unit in loader.source_units.iter() {
             source_unit.accept(self)?;
@@ -78,7 +78,7 @@ impl Detector for CentralizationRiskDetector {
         {
             if let ASTNode::ModifierInvocation(modifier_invocation) = modifier_invocation {
                 self.found_instances.insert(
-                    loader.get_node_sort_key(&ASTNode::ModifierInvocation(
+                    browser.get_node_sort_key(&ASTNode::ModifierInvocation(
                         modifier_invocation.clone(),
                     )),
                     modifier_invocation.src.clone(),
@@ -93,7 +93,7 @@ impl Detector for CentralizationRiskDetector {
         {
             if let ASTNode::ContractDefinition(contract_definition) = contract_definition {
                 self.found_instances.insert(
-                    loader.get_node_sort_key(&ASTNode::ContractDefinition(
+                    browser.get_node_sort_key(&ASTNode::ContractDefinition(
                         contract_definition.clone(),
                     )),
                     contract_definition.src.clone(),

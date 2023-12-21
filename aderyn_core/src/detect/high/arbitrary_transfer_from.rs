@@ -42,7 +42,7 @@ impl Detector for ArbitraryTransferFromDetector {
     fn detect(
         &mut self,
         loader: &ContextLoader,
-        _browser: &mut ContextBrowser,
+        browser: &mut ContextBrowser,
     ) -> Result<bool, Box<dyn Error>> {
         let transfer_from_function_calls = loader.function_calls.keys().filter(|function_call| {
             if let Expression::MemberAccess(member_access) = &*function_call.expression {
@@ -57,7 +57,7 @@ impl Detector for ArbitraryTransferFromDetector {
 
         for item in transfer_from_function_calls {
             self.found_instances.insert(
-                loader.get_node_sort_key(&ASTNode::FunctionCall(item.clone())),
+                browser.get_node_sort_key(&ASTNode::FunctionCall(item.clone())),
                 item.src.clone(),
             );
         }

@@ -19,12 +19,12 @@ impl Detector for EcrecoverDetector {
     fn detect(
         &mut self,
         loader: &ContextLoader,
-        _browser: &mut ContextBrowser,
+        browser: &mut ContextBrowser,
     ) -> Result<bool, Box<dyn Error>> {
         for identifier in loader.identifiers.keys() {
             if identifier.name == "ecrecover" {
                 self.found_instances.insert(
-                    loader.get_node_sort_key(&ASTNode::Identifier(identifier.clone())),
+                    browser.get_node_sort_key(&ASTNode::Identifier(identifier.clone())),
                     identifier.src.clone(),
                 );
             }

@@ -20,7 +20,7 @@ impl Detector for BlockTimestampDeadlineDetector {
     fn detect(
         &mut self,
         loader: &ContextLoader,
-        _browser: &mut ContextBrowser,
+        browser: &mut ContextBrowser,
     ) -> Result<bool, Box<dyn Error>> {
         for call in loader.function_calls.keys() {
             // Uniswap V2 - Function Calls
@@ -55,7 +55,7 @@ impl Detector for BlockTimestampDeadlineDetector {
                             {
                                 if identifier.name == "block" {
                                     self.found_instances.insert(
-                                        loader.get_node_sort_key(&ASTNode::FunctionCall(
+                                        browser.get_node_sort_key(&ASTNode::FunctionCall(
                                             call.clone(),
                                         )),
                                         call.src.clone(),
@@ -88,7 +88,7 @@ impl Detector for BlockTimestampDeadlineDetector {
                                     {
                                         if identifier.name == "block" {
                                             self.found_instances.insert(
-                                                loader.get_node_sort_key(&ASTNode::FunctionCall(
+                                                browser.get_node_sort_key(&ASTNode::FunctionCall(
                                                     call.clone(),
                                                 )),
                                                 call.src.clone(),

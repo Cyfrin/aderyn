@@ -19,7 +19,7 @@ impl Detector for UnsafeERC20FunctionsDetector {
     fn detect(
         &mut self,
         loader: &ContextLoader,
-        _browser: &mut ContextBrowser,
+        browser: &mut ContextBrowser,
     ) -> Result<bool, Box<dyn Error>> {
         for member_access in loader.member_accesses.keys() {
             if member_access.member_name == "transferFrom"
@@ -27,7 +27,7 @@ impl Detector for UnsafeERC20FunctionsDetector {
                 || member_access.member_name == "transfer"
             {
                 self.found_instances.insert(
-                    loader.get_node_sort_key(&ASTNode::MemberAccess(member_access.clone())),
+                    browser.get_node_sort_key(&ASTNode::MemberAccess(member_access.clone())),
                     member_access.src.clone(),
                 );
             }

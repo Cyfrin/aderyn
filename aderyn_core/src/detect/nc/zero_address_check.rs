@@ -90,7 +90,7 @@ impl Detector for ZeroAddressCheckDetector {
     fn detect(
         &mut self,
         loader: &ContextLoader,
-        _browser: &mut ContextBrowser,
+        browser: &mut ContextBrowser,
     ) -> Result<bool, Box<dyn Error>> {
         // Get all address state variables
         self.mutable_address_state_variables = loader
@@ -131,7 +131,7 @@ impl Detector for ZeroAddressCheckDetector {
             for (key, value) in &self.assignments_to_mutable_address_state_variables {
                 if !self.binary_checks_against_zero_address.contains_key(key) {
                     self.found_instances.insert(
-                        loader.get_node_sort_key(&ASTNode::Assignment(value.clone())),
+                        browser.get_node_sort_key(&ASTNode::Assignment(value.clone())),
                         value.src.clone(),
                     );
                 }

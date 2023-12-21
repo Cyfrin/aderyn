@@ -19,7 +19,7 @@ impl Detector for AvoidAbiEncodePackedDetector {
     fn detect(
         &mut self,
         loader: &ContextLoader,
-        _browser: &mut ContextBrowser,
+        browser: &mut ContextBrowser,
     ) -> Result<bool, Box<dyn Error>> {
         for member_access in loader.member_accesses.keys() {
             // If the member_access's member_name = "encodePacked", loop through the argument_types and count how many of them contain any of the following in type_strings:
@@ -46,7 +46,7 @@ impl Detector for AvoidAbiEncodePackedDetector {
                 }
                 if count > 1 {
                     self.found_instances.insert(
-                        loader.get_node_sort_key(&ASTNode::MemberAccess(member_access.clone())),
+                        browser.get_node_sort_key(&ASTNode::MemberAccess(member_access.clone())),
                         member_access.src.clone(),
                     );
                 }
