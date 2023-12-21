@@ -3,6 +3,7 @@ use std::error::Error;
 
 use crate::ast::{Expression, FunctionCall, TypeName};
 
+use crate::context::browser::ContextBrowser;
 use crate::{
     context::loader::{ASTNode, ContextLoader},
     detect::detector::{Detector, IssueSeverity},
@@ -38,7 +39,11 @@ fn check_argument_validity(function_call: &FunctionCall) -> bool {
 }
 
 impl Detector for ArbitraryTransferFromDetector {
-    fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
+    fn detect(
+        &mut self,
+        loader: &ContextLoader,
+        _browser: &mut ContextBrowser,
+    ) -> Result<bool, Box<dyn Error>> {
         let transfer_from_function_calls = loader.function_calls.keys().filter(|function_call| {
             if let Expression::MemberAccess(member_access) = &*function_call.expression {
                 if member_access.member_name == "transferFrom"
@@ -79,9 +84,12 @@ impl Detector for ArbitraryTransferFromDetector {
 
 #[cfg(test)]
 mod arbitrary_transfer_from_tests {
-    use crate::detect::{
-        detector::{detector_test_helpers::load_contract, Detector},
-        high::arbitrary_transfer_from::ArbitraryTransferFromDetector,
+    use crate::{
+        context::browser::ContextBrowser,
+        detect::{
+            detector::{detector_test_helpers::load_contract, Detector},
+            high::arbitrary_transfer_from::ArbitraryTransferFromDetector,
+        },
     };
 
     #[test]
@@ -89,8 +97,14 @@ mod arbitrary_transfer_from_tests {
         let context_loader = load_contract(
             "../tests/contract-playground/out/ArbitraryTransferFrom.sol/ArbitraryTransferFrom.json",
         );
+
+        let mut context_browser = ContextBrowser::default_from(&context_loader);
+        context_browser.build_parallel();
+
         let mut detector = ArbitraryTransferFromDetector::default();
-        let found = detector.detect(&context_loader).unwrap();
+        let found = detector
+            .detect(&context_loader, &mut context_browser)
+            .unwrap();
         // assert that the detector found an issue
         assert!(found);
         // assert that the detector found the correct number of instances

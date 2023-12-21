@@ -1,7 +1,10 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
-    context::loader::{ASTNode, ContextLoader},
+    context::{
+        browser::ContextBrowser,
+        loader::{ASTNode, ContextLoader},
+    },
     detect::detector::{Detector, IssueSeverity},
 };
 use eyre::Result;
@@ -13,7 +16,11 @@ pub struct UnsafeERC20FunctionsDetector {
 }
 
 impl Detector for UnsafeERC20FunctionsDetector {
-    fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
+    fn detect(
+        &mut self,
+        loader: &ContextLoader,
+        _browser: &mut ContextBrowser,
+    ) -> Result<bool, Box<dyn Error>> {
         for member_access in loader.member_accesses.keys() {
             if member_access.member_name == "transferFrom"
                 || member_access.member_name == "approve"
@@ -47,7 +54,10 @@ impl Detector for UnsafeERC20FunctionsDetector {
 
 #[cfg(test)]
 mod unsafe_erc20_functions_tests {
-    use crate::detect::detector::{detector_test_helpers::load_contract, Detector};
+    use crate::{
+        context::browser::ContextBrowser,
+        detect::detector::{detector_test_helpers::load_contract, Detector},
+    };
 
     use super::UnsafeERC20FunctionsDetector;
 
@@ -56,8 +66,12 @@ mod unsafe_erc20_functions_tests {
         let context_loader = load_contract(
             "../tests/contract-playground/out/DeprecatedOZFunctions.sol/DeprecatedOZFunctions.json",
         );
+        let mut context_browser = ContextBrowser::default_from(&context_loader);
+        context_browser.build_parallel();
         let mut detector = UnsafeERC20FunctionsDetector::default();
-        let found = detector.detect(&context_loader).unwrap();
+        let found = detector
+            .detect(&context_loader, &mut context_browser)
+            .unwrap();
         // assert that the detector found an abi encode packed
         assert!(found);
         // assert that the detector found the correct abi encode packed

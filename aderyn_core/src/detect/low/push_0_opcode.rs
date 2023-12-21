@@ -1,7 +1,10 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
-    context::loader::{ASTNode, ContextLoader},
+    context::{
+        browser::ContextBrowser,
+        loader::{ASTNode, ContextLoader},
+    },
     detect::detector::{Detector, IssueSeverity},
 };
 use eyre::Result;
@@ -51,7 +54,11 @@ fn version_req_allows_above_0_8_19(version_req: &VersionReq) -> bool {
 }
 
 impl Detector for PushZeroOpcodeDetector {
-    fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
+    fn detect(
+        &mut self,
+        loader: &ContextLoader,
+        _browser: &mut ContextBrowser,
+    ) -> Result<bool, Box<dyn Error>> {
         for pragma_directive in loader.pragma_directives.keys() {
             let mut version_string = String::new();
 
@@ -98,15 +105,22 @@ impl Detector for PushZeroOpcodeDetector {
 
 #[cfg(test)]
 mod unspecific_solidity_pragma_tests {
-    use crate::detect::detector::{detector_test_helpers::load_contract, Detector};
+    use crate::{
+        context::browser::ContextBrowser,
+        detect::detector::{detector_test_helpers::load_contract, Detector},
+    };
 
     #[test]
     fn test_push_0_opcode_detector_on_0_8_20() {
         let context_loader = load_contract(
             "../tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",
         );
+        let mut context_browser = ContextBrowser::default_from(&context_loader);
+        context_browser.build_parallel();
         let mut detector = super::PushZeroOpcodeDetector::default();
-        let found = detector.detect(&context_loader).unwrap();
+        let found = detector
+            .detect(&context_loader, &mut context_browser)
+            .unwrap();
         // assert that it found something
         assert!(found);
         // assert that the number of instances is correct
@@ -134,8 +148,13 @@ mod unspecific_solidity_pragma_tests {
     fn test_push_0_opcode_detector_on_range() {
         let context_loader =
             load_contract("../tests/contract-playground/out/CrazyPragma.sol/CrazyPragma.json");
+        let mut context_browser = ContextBrowser::default_from(&context_loader);
+        context_browser.build_parallel();
+
         let mut detector = super::PushZeroOpcodeDetector::default();
-        let found = detector.detect(&context_loader).unwrap();
+        let found = detector
+            .detect(&context_loader, &mut context_browser)
+            .unwrap();
         // assert that it found something
         assert!(found);
         // assert that the number of instances is correct
@@ -164,8 +183,13 @@ mod unspecific_solidity_pragma_tests {
         let context_loader = load_contract(
             "../tests/contract-playground/out/ArbitraryTransferFrom.sol/ArbitraryTransferFrom.json",
         );
+        let mut context_browser = ContextBrowser::default_from(&context_loader);
+        context_browser.build_parallel();
+
         let mut detector = super::PushZeroOpcodeDetector::default();
-        let found = detector.detect(&context_loader).unwrap();
+        let found = detector
+            .detect(&context_loader, &mut context_browser)
+            .unwrap();
         // assert that it found something
         assert!(!found);
         // assert that the number of instances is correct
@@ -176,8 +200,14 @@ mod unspecific_solidity_pragma_tests {
     fn test_push_0_opcode_detector_on_caret_0_8_13() {
         let context_loader =
             load_contract("../tests/contract-playground/out/Counter.sol/Counter.0.8.21.json");
+
+        let mut context_browser = ContextBrowser::default_from(&context_loader);
+        context_browser.build_parallel();
+
         let mut detector = super::PushZeroOpcodeDetector::default();
-        let found = detector.detect(&context_loader).unwrap();
+        let found = detector
+            .detect(&context_loader, &mut context_browser)
+            .unwrap();
         // assert that it found something
         assert!(found);
         // assert that the number of instances is correct
@@ -189,8 +219,12 @@ mod unspecific_solidity_pragma_tests {
         let context_loader = load_contract(
             "../tests/contract-playground/out/IContractInheritance.sol/IContractInheritance.0.8.21.json",
         );
+        let mut context_browser = ContextBrowser::default_from(&context_loader);
+        context_browser.build_parallel();
         let mut detector = super::PushZeroOpcodeDetector::default();
-        let found = detector.detect(&context_loader).unwrap();
+        let found = detector
+            .detect(&context_loader, &mut context_browser)
+            .unwrap();
         // assert that it found something
         assert!(found);
         // assert that the number of instances is correct
