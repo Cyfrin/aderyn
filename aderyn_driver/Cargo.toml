@@ -11,4 +11,3 @@ license = "MIT"
 [dependencies]
 aderyn_core = { path  = "../aderyn_core", version = "0.0.9" }
 rayon = "1.8.0"
-tokei = "12.1.2"

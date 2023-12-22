@@ -146,12 +146,15 @@ If it is a Solidity file path, then Aderyn will create a temporary Foundry proje
 * [x] Support Foundry/Hardhat/Truffle/Solc output formats for ingesting AST
   * [x] Foundry
   * [x] Hardhat
-* [ ] Complexity score (with Percentage YUL code & nsloc)
+* [x] Markdown and JSON output
+* [x] Yul Support
+* [ ] Complexity metrics
 * [ ] More complex static analysis detectors
 * [ ] auto-fixes
 * [ ] installer that doesn't require Rust (aderynup)
-* [ ] VSCode Extension
 * [ ] Python bindings
+* [ ] JS/TS bindings
+* [ ] VSCode Extension
 
 **Long-term goals - Product**
 
