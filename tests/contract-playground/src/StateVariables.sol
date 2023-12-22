@@ -87,7 +87,7 @@ contract StateVariables {
     }
 
     function initializeAndUseStateVariable() public payable {
-        setAddrNoZeroRequire(msg.sender);
+        addr = msg.sender;
         payable(addr).transfer(msg.value);
     }
 }
