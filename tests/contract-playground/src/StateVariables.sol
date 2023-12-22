@@ -35,6 +35,7 @@ contract StateVariables {
     uint256 public immutable publicImmutableNumber;
 
     address public addr;
+    address public addr2;
 
     constructor(uint256 _privateImmutableNumber, uint256 _internalImmutableNumber, uint256 _publicImmutableNumber) {
         privateImmutableNumber = _privateImmutableNumber;
@@ -80,10 +81,12 @@ contract StateVariables {
 
     function useUninitializedAddressForTransfer() public payable {
         payable(addr).transfer(msg.value);
+        payable(addr2).transfer(msg.value);
     }
 
     function useUninitializedAddressForCall() public payable {
         addr.call{value: msg.value}("");
+        addr2.call{value: msg.value}("");
     }
 
     function initializeAndUseStateVariable() public payable {

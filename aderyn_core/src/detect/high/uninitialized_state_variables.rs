@@ -1,8 +1,9 @@
 use std::collections::{BTreeMap, HashSet};
 use std::error::Error;
 
+use crate::ast::Mutability;
 use crate::{
-    ast::{Expression, FunctionDefinition, Statement},
+    ast::{Expression, VariableDeclaration},
     context::loader::{ASTNode, ContextLoader},
     detect::detector::{Detector, IssueSeverity},
 };
@@ -29,88 +30,52 @@ impl UninitializedStateVariablesDetector {
                     None
                 }
             }
+            // TODO: handle tuple expression
             _ => None,
         }
-    }
-
-    fn function_uses_variable_without_initialization(
-        &mut self,
-        function_node: &FunctionDefinition,
-        variable_name: &str,
-    ) -> bool {
-        // Implement logic to check if the function uses the given variable name without it being initialized
-        // This would typically involve parsing the function body and looking for usage of the variable
-        // Return true if the variable is used without being initialized, false otherwise
-        let mut print_mode = false;
-        if variable_name == "addr"
-            && (function_node.name == "initializeAndUseStateVariable"
-                || function_node.name == "useUninitializedAddressForCall"
-                || function_node.name == "useUninitializedAddressForTransfer")
-        {
-            print_mode = true;
-        }
-
-        let function_body = function_node.body.as_ref();
-        for statement in &function_body.unwrap().statements {
-            match statement {
-                Statement::ExpressionStatement(expression_statement) => {
-                    let expression = expression_statement.expression.to_owned();
-                    match expression {
-                        Expression::MemberAccess(member_access) => {
-                            if member_access.member_name == variable_name {
-                                return true;
-                            }
-                        }
-                        _ => {
-                            // TODO: the issue here is that we need to traverse an arbitrary number
-                            // of levels of statements before we get to the expression we want
-                        }
-                    }
-                }
-                _ => {}
-            }
-        }
-
-        // If no uninitialized usage is found, return false.
-        false
     }
 }
 
 impl Detector for UninitializedStateVariablesDetector {
     fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
-        let mut initialized_variables: HashSet<String> = HashSet::new();
+        let mut found_state_variables: HashSet<VariableDeclaration> = HashSet::new();
+        let mut found_state_variables_names: HashSet<String> = HashSet::new();
+        let mut found_assignments: HashSet<String> = HashSet::new();
 
-        // Track assignments to state variables
-        // TODO: commented because the addr variable is not being detected since assignment in one function
-        // means it's considered initialized in another
-        // for (assignment, _) in &loader.assignments {
-        //     if let Some(variable_name) = self.is_state_variable(&assignment.left_hand_side) {
-        //         initialized_variables.insert(variable_name);
-        //     }
-        // }
-
-        // for state variable declaration statements in loader state variable declaration statements keys
-        for variable_declaration in loader.variable_declarations.keys() {
-            if variable_declaration.state_variable
-                && !initialized_variables.contains(&variable_declaration.name)
-            {
-                // Iterate over all function nodes and check if this variable is used without initialization
-                for function_definition in loader.function_definitions.keys() {
-                    if self.function_uses_variable_without_initialization(
-                        function_definition,
-                        &variable_declaration.name,
-                    ) {
-                        // Insert the state variable declaration into the found instances
-                        self.found_instances.insert(
-                            loader.get_node_sort_key(&ASTNode::VariableDeclaration(
-                                variable_declaration.clone(),
-                            )),
-                            variable_declaration.src.clone(),
-                        );
-                    }
-                }
+        for assignment in loader.assignments.keys() {
+            if let Some(variable_name) = self.is_state_variable(&assignment.left_hand_side) {
+                found_assignments.insert(variable_name);
             }
         }
+
+        println!("found_assignments: {:?}", found_assignments);
+
+        for variable_declaration in loader.variable_declarations.keys() {
+            if variable_declaration.state_variable
+                && variable_declaration.mutability == Some(Mutability::Mutable)
+                && variable_declaration.value.is_none()
+                && !found_assignments.contains(&variable_declaration.name)
+            {
+                found_state_variables.insert(variable_declaration.clone());
+                found_state_variables_names.insert(variable_declaration.name.clone());
+            }
+        }
+
+        println!(
+            "found_state_variables_names: {:?}",
+            found_state_variables_names
+        );
+
+        // insert the instances remaining in found_state_variables into self.found_instances
+        found_state_variables
+            .into_iter()
+            .for_each(|state_variable| {
+                // TODO: detector should be modified to insert the instances where the uninitialized state variable is used, since the count will be off
+                self.found_instances.insert(
+                    loader.get_node_sort_key(&ASTNode::VariableDeclaration(state_variable.clone())),
+                    state_variable.src.clone(),
+                );
+            });
 
         Ok(!self.found_instances.is_empty())
     }
@@ -148,7 +113,7 @@ mod uninitialized_state_variables_detector_tests {
         // assert that the detector found an uninitialized state variable that is being used
         assert!(found);
         // assert that the detector found the correct number of instances (1)
-        assert_eq!(detector.instances().len(), 1);
+        assert_eq!(detector.instances().len(), 2);
         // assert the severity is high
         assert_eq!(
             detector.severity(),
