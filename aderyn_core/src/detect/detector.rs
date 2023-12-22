@@ -4,6 +4,7 @@ use crate::{
         high::{
             arbitrary_transfer_from::ArbitraryTransferFromDetector,
             delegate_call_in_loop::DelegateCallInLoopDetector,
+            uninitialized_state_variables::UninitializedStateVariablesDetector,
         },
         low::{
             avoid_abi_encode_packed::AvoidAbiEncodePackedDetector,
@@ -34,6 +35,7 @@ use std::{collections::BTreeMap, error::Error};
 pub fn get_all_detectors() -> Vec<Box<dyn Detector>> {
     vec![
         Box::<DelegateCallInLoopDetector>::default(),
+        Box::<UninitializedStateVariablesDetector>::default(),
         Box::<CentralizationRiskDetector>::default(),
         Box::<SolmateSafeTransferLibDetector>::default(),
         Box::<AvoidAbiEncodePackedDetector>::default(),

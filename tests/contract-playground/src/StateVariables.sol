@@ -77,4 +77,17 @@ contract StateVariables {
         nonEmptyAlteredInternalNumber = _nonEmptyAlteredInternalNumber;
         nonEmptyAlteredPublicNumber = _nonEmptyAlteredPublicNumber;
     }
+
+    function useUninitializedAddressForTransfer() public payable {
+        payable(addr).transfer(msg.value);
+    }
+
+    function useUninitializedAddressForCall() public payable {
+        addr.call{value: msg.value}("");
+    }
+
+    function initializeAndUseStateVariable() public payable {
+        setAddrNoZeroRequire(msg.sender);
+        payable(addr).transfer(msg.value);
+    }
 }
