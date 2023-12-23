@@ -41,12 +41,14 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
                     counter += 1;
                     self.print_issue(
                         &mut writer,
-                        issue_body,
-                        severity,
-                        counter,
-                        &root_path,
-                        output_rel_path.clone().unwrap(),
-                        no_snippets,
+                        PrintIssueParams {
+                            issue_body,
+                            severity,
+                            number: counter,
+                            root_path: &root_path,
+                            output_rel_path: output_rel_path.clone().unwrap(),
+                            no_snippets,
+                        },
                     )?;
                 }
             }
@@ -54,6 +56,15 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
 
         Ok(())
     }
+}
+
+struct PrintIssueParams<'a> {
+    issue_body: &'a IssueBody,
+    severity: &'a str,
+    number: i32,
+    root_path: &'a Path,
+    output_rel_path: String,
+    no_snippets: bool,
 }
 
 impl MarkdownReportPrinter {
@@ -192,30 +203,22 @@ impl MarkdownReportPrinter {
         Ok(())
     }
 
-    fn print_issue<W: Write>(
-        &self,
-        mut writer: W,
-        issue_body: &IssueBody,
-        severity: &str,
-        number: i32,
-        root_path: &Path,
-        output_rel_path: String,
-        no_snippets: bool,
-    ) -> Result<()> {
-        let is_file = root_path.is_file();
+    fn print_issue<W: Write>(&self, mut writer: W, params: PrintIssueParams) -> Result<()> {
+        let is_file = params.root_path.is_file();
 
         writeln!(
             writer,
             "## {}-{}: {}\n\n{}\n", // <a name> is the anchor for the issue title
-            severity, number, issue_body.title, issue_body.description
+            params.severity, params.number, params.issue_body.title, params.issue_body.description
         )?;
-        for instance in &issue_body.instances {
+        for instance in &params.issue_body.instances {
             let path = {
                 if is_file {
-                    String::from(root_path.to_str().unwrap())
+                    String::from(params.root_path.to_str().unwrap())
                 } else {
                     String::from(
-                        root_path
+                        params
+                            .root_path
                             .join(instance.contract_path.clone())
                             .as_path()
                             .to_str()
@@ -224,14 +227,15 @@ impl MarkdownReportPrinter {
                 }
             };
 
-            if no_snippets {
+            if params.no_snippets {
                 writeln!(
                     writer,
                     "- Found in {} [Line: {}]({}#L{})",
                     instance.contract_path,
                     instance.line_no,
                     carve_shortest_path(
-                        std::fs::canonicalize(PathBuf::from(output_rel_path.clone())).unwrap(),
+                        std::fs::canonicalize(PathBuf::from(params.output_rel_path.clone()))
+                            .unwrap(),
                         std::fs::canonicalize(&path).unwrap()
                     )
                     .to_str()
@@ -256,7 +260,7 @@ impl MarkdownReportPrinter {
                 instance.contract_path,
                 instance.line_no,
                 carve_shortest_path(
-                    std::fs::canonicalize(PathBuf::from(output_rel_path.clone())).unwrap(),
+                    std::fs::canonicalize(PathBuf::from(params.output_rel_path.clone())).unwrap(),
                     std::fs::canonicalize(&path).unwrap()
                 )
                 .to_str()
