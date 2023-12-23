@@ -11,8 +11,9 @@ pub struct CommandLineArgs {
     #[arg(short, long, default_value = "report.md")]
     output: String,
 
-    /// List of path strings to exclude. Any solidit file path containing these strings will be ignored
-    #[clap(long, use_value_delimiter = true)]
+    /// List of path strings to exclude, delimited by comma (no spaces).
+    /// Any solidity file path containing these strings will be ignored
+    #[clap(short, long, use_value_delimiter = true)]
     exclude: Option<Vec<String>>,
 
     /// Do not include code snippets in the report (reduces report size in large repos)
