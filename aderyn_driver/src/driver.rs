@@ -1,10 +1,11 @@
 use crate::{process_foundry, process_hardhat, virtual_foundry};
 use aderyn_core::{
+    context::browser::ContextBrowser,
+    fscloc,
     report::{json_printer::JsonPrinter, markdown_printer::MarkdownReportPrinter},
     run_with_printer,
 };
 use std::{fs::read_dir, path::PathBuf};
-use tokei::{Config, LanguageType};
 
 pub struct Args {
     pub root: String,
@@ -47,29 +48,37 @@ pub fn drive(args: Args) {
         }
     };
 
-    // Using the source path, get the sloc from tokei
-    let mut languages = tokei::Languages::new();
-    let tokei_config = Config::default();
-    languages.get_statistics(&[src_path], &[], &tokei_config);
-    context_loader.set_sloc_stats(languages[&LanguageType::Solidity].clone());
+    // Using the source path, calculate the sloc
+    let stats = fscloc::engine::count_lines_of_code(&PathBuf::from(src_path));
+    let stats = stats.lock().unwrap().to_owned();
+    context_loader.set_sloc_stats(stats);
+
+    let mut context_browser = ContextBrowser::default_from(&context_loader);
+    context_browser.build_parallel();
 
     if args.output.ends_with(".json") {
         // Load the context loader into the run function, which runs the detectors
-        run_with_printer(context_loader, args.output, JsonPrinter, root_rel_path).unwrap_or_else(
-            |err| {
-                // Exit with a non-zero exit code
-                eprintln!("Error running aderyn");
-                eprintln!("{:?}", err);
-                std::process::exit(1);
-            },
-        );
+        run_with_printer(
+            &context_loader,
+            args.output,
+            JsonPrinter,
+            root_rel_path,
+            context_browser,
+        )
+        .unwrap_or_else(|err| {
+            // Exit with a non-zero exit code
+            eprintln!("Error running aderyn");
+            eprintln!("{:?}", err);
+            std::process::exit(1);
+        });
     } else {
         // Load the context loader into the run function, which runs the detectors
         run_with_printer(
-            context_loader,
+            &context_loader,
             args.output,
             MarkdownReportPrinter,
             root_rel_path,
+            context_browser,
         )
         .unwrap_or_else(|err| {
             // Exit with a non-zero exit code

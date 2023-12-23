@@ -20,10 +20,11 @@ mod types;
 mod user_defined_value_types;
 mod using_for_directives;
 mod variables;
+mod yul;
 
 pub use self::{
     blocks::*, contracts::*, documentation::*, enumerations::*, errors::*, events::*,
     expressions::*, functions::*, identifiers::*, import_directives::*, literals::*, magic::*,
     modifiers::*, node::*, pragma_directives::*, source_units::*, statements::*, structures::*,
-    types::*, user_defined_value_types::*, using_for_directives::*, variables::*,
+    types::*, user_defined_value_types::*, using_for_directives::*, variables::*, yul::*,
 };

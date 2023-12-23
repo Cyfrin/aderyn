@@ -1,6 +1,7 @@
 use std::collections::BTreeMap;
 use std::error::Error;
 
+use crate::context::browser::ContextBrowser;
 use crate::visitor::ast_visitor::Node;
 use crate::{
     ast::MemberAccess,
@@ -29,7 +30,11 @@ impl ASTConstVisitor for DelegateCallInLoopDetector {
 }
 
 impl Detector for DelegateCallInLoopDetector {
-    fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
+    fn detect(
+        &mut self,
+        loader: &ContextLoader,
+        browser: &mut ContextBrowser,
+    ) -> Result<bool, Box<dyn Error>> {
         for for_statement in loader.for_statements.keys() {
             for_statement.accept(self)?;
         }
@@ -39,7 +44,7 @@ impl Detector for DelegateCallInLoopDetector {
         for member_access in self.found_member_access.clone().into_iter().flatten() {
             if let ASTNode::MemberAccess(member_access) = member_access {
                 self.found_instances.insert(
-                    loader.get_node_sort_key(&ASTNode::MemberAccess(member_access.clone())),
+                    browser.get_node_sort_key(&ASTNode::MemberAccess(member_access.clone())),
                     member_access.src.clone(),
                 );
             }
@@ -67,7 +72,10 @@ impl Detector for DelegateCallInLoopDetector {
 
 #[cfg(test)]
 mod delegate_call_in_loop_detector_tests {
-    use crate::detect::detector::{detector_test_helpers::load_contract, Detector};
+    use crate::{
+        context::browser::ContextBrowser,
+        detect::detector::{detector_test_helpers::load_contract, Detector},
+    };
 
     use super::DelegateCallInLoopDetector;
 
@@ -76,8 +84,12 @@ mod delegate_call_in_loop_detector_tests {
         let context_loader = load_contract(
             "../tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",
         );
+        let mut context_browser = ContextBrowser::default_from(&context_loader);
+        context_browser.build_parallel();
         let mut detector = DelegateCallInLoopDetector::default();
-        let found = detector.detect(&context_loader).unwrap();
+        let found = detector
+            .detect(&context_loader, &mut context_browser)
+            .unwrap();
         // assert that the detector found a delegate call in a loop
         assert!(found);
         // assert that the detector found the correct number of instances (1)

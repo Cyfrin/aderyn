@@ -40,6 +40,6 @@ pub fn with_project_root_at(root_path: &PathBuf) -> (String, ContextLoader) {
             eprintln!("{:?}", err);
         });
     }
-
+    context_loader.src_filepaths = hardhat_output.output.keys().cloned().collect();
     (src_path, context_loader)
 }

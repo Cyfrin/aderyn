@@ -1,90 +1,33 @@
 use std::{
-    collections::{BTreeMap, HashMap},
+    collections::{BTreeMap, HashMap, HashSet},
     error::Error,
 };
 
 use crate::{
-    ast::{Assignment, BinaryOperation, Expression, Mutability, VariableDeclaration},
-    context::loader::{ASTNode, ContextLoader},
+    ast::{Expression, Mutability, VariableDeclaration},
+    context::{
+        browser::{Assignments, BinaryChecks, ContextBrowser},
+        loader::{ASTNode, ContextLoader},
+    },
     detect::detector::{Detector, IssueSeverity},
-    visitor::ast_visitor::{ASTConstVisitor, Node},
 };
 use eyre::Result;
-
-// TODO, this is actually a crazy compilcated detector for a fairly simple issue.
-// During the first context load of the contracts, the context should enable easy
-// retrieval of certain types inside of another type. For example, get all the Assignments
-// inside of a FunctionDefinition. This would make this detector much simpler.
 
 #[derive(Default)]
 pub struct ZeroAddressCheckDetector {
     // All the state variables, set at the beginning of the detect function
     mutable_address_state_variables: HashMap<i64, VariableDeclaration>,
 
-    // TRANSIENT VARIABLES
-    // HashMap where the key is the referenced_declaration in a binary operation that
-    // is checked against a zero address. The key will be a VariableDeclaration key
-    binary_checks_against_zero_address: HashMap<i64, bool>,
-    // HashMap where the key is the referenced_declaration of the right hand side of an assignment
-    // where the left hand side is a mutable address state variable
-    assignments_to_mutable_address_state_variables: HashMap<i64, Assignment>,
-
     // Keys are source file name and line number
     found_instances: BTreeMap<(String, usize), String>,
 }
 
-impl ZeroAddressCheckDetector {
-    fn reset_transient_variables(&mut self) {
-        self.binary_checks_against_zero_address = HashMap::new();
-        self.assignments_to_mutable_address_state_variables = HashMap::new();
-    }
-}
-
-impl ASTConstVisitor for ZeroAddressCheckDetector {
-    // if the left hand side referenced_declaration is in the mutable_address_state_variables return true
-    fn visit_assignment(&mut self, node: &Assignment) -> Result<bool> {
-        let left_hand_side = node.left_hand_side.as_ref();
-        if let Expression::Identifier(left_identifier) = left_hand_side {
-            if self
-                .mutable_address_state_variables
-                .contains_key(&left_identifier.referenced_declaration)
-            {
-                // add the right hand side referenced_declaration to the assignments_to_mutable_address_state_variables
-                let right_hand_side = node.right_hand_side.as_ref();
-                if let Expression::Identifier(right_identifier) = right_hand_side {
-                    self.assignments_to_mutable_address_state_variables
-                        .insert(right_identifier.referenced_declaration, node.clone());
-                }
-            }
-        };
-        Ok(true)
-    }
-
-    // If the binary
-    fn visit_binary_operation(&mut self, node: &BinaryOperation) -> Result<bool> {
-        // if the binaryoperation operator is "==" or "!="
-        if node.operator == "==" || node.operator == "!=" {
-            // if the left hand side is an identifier add its referenced_declaration to the binary_checks_against_zero_address
-            // OR
-            // if the right hand side is an identifier add its referenced_declaration to the binary_checks_against_zero_address
-            let left_expression = node.left_expression.as_ref();
-            if let Expression::Identifier(left_identifier) = left_expression {
-                self.binary_checks_against_zero_address
-                    .insert(left_identifier.referenced_declaration, true);
-            };
-
-            let right_expression = node.right_expression.as_ref();
-            if let Expression::Identifier(right_identifier) = right_expression {
-                self.binary_checks_against_zero_address
-                    .insert(right_identifier.referenced_declaration, true);
-            }
-        }
-        Ok(true)
-    }
-}
-
 impl Detector for ZeroAddressCheckDetector {
-    fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
+    fn detect(
+        &mut self,
+        loader: &ContextLoader,
+        browser: &mut ContextBrowser,
+    ) -> Result<bool, Box<dyn Error>> {
         // Get all address state variables
         self.mutable_address_state_variables = loader
             .variable_declarations
@@ -115,16 +58,72 @@ impl Detector for ZeroAddressCheckDetector {
 
         // Get all function definitions
         for function_definition in loader.function_definitions.keys() {
-            // Reset transient variables
-            self.reset_transient_variables();
-            // Visit the function definition using the BinaryOperator and Assignment visitors
-            function_definition.accept(self)?;
+            // Get all the binary checks inside the function
+            let binary_checks: BinaryChecks = function_definition.into();
+
+            // Filter the binary checks and extract all node ids into a vector
+            let mut binary_checks_against_zero_address = HashSet::new();
+
+            // HashSet where the key is the referenced_declaration in a binary operation that
+            // is checked against a zero address
+
+            let binary_checks = binary_checks
+                .checks
+                .iter()
+                .filter(|x| x.operator == "==" || x.operator == "!=");
+
+            for x in binary_checks {
+                if let Some(l_node_id) = x.l_node_id {
+                    binary_checks_against_zero_address.insert(l_node_id);
+                }
+                if let Some(r_node_ids) = x.r_node_id {
+                    binary_checks_against_zero_address.insert(r_node_ids);
+                }
+            }
+
+            // Get all the assignments in the function
+            let assigments: Assignments = function_definition.into();
+
+            // Filter out the ones of interest
+            let assignments = assigments
+                .assignments
+                .iter()
+                .filter(|x| {
+                    let left_hand_side = x.left_hand_side.as_ref();
+                    if let Expression::Identifier(left_identifier) = left_hand_side {
+                        if self
+                            .mutable_address_state_variables
+                            .contains_key(&left_identifier.referenced_declaration)
+                        {
+                            return true;
+                        }
+                    }
+                    false
+                })
+                .filter_map(|x| {
+                    let right_hand_side = x.right_hand_side.as_ref();
+                    if let Expression::Identifier(right_identifier) = right_hand_side {
+                        return Some((right_identifier.referenced_declaration, x.clone()));
+                    }
+                    None
+                })
+                .collect::<Vec<_>>();
+
+            // HashMap where the key is the referenced_declaration of the right hand side of an assignment
+            // where the left hand side is a mutable address state variable
+
+            let mut assignments_to_mutable_address_state_variables = HashMap::new();
+
+            for tuple in &assignments {
+                assignments_to_mutable_address_state_variables.insert(tuple.0, tuple.1.clone());
+            }
+
             // if there are assignments to mutable address state variables that are not present
             // in the binary_checks_against_zero_address, add the assignment to the found_no_zero_address_check
-            for (key, value) in &self.assignments_to_mutable_address_state_variables {
-                if !self.binary_checks_against_zero_address.contains_key(key) {
+            for (key, value) in &assignments_to_mutable_address_state_variables {
+                if !binary_checks_against_zero_address.contains(key) {
                     self.found_instances.insert(
-                        loader.get_node_sort_key(&ASTNode::Assignment(value.clone())),
+                        browser.get_node_sort_key(&ASTNode::Assignment(value.clone())),
                         value.src.clone(),
                     );
                 }
@@ -157,9 +156,12 @@ impl Detector for ZeroAddressCheckDetector {
 
 #[cfg(test)]
 mod zero_address_check_tests {
-    use crate::detect::{
-        detector::{detector_test_helpers::load_contract, Detector},
-        nc::zero_address_check::ZeroAddressCheckDetector,
+    use crate::{
+        context::browser::ContextBrowser,
+        detect::{
+            detector::{detector_test_helpers::load_contract, Detector},
+            nc::zero_address_check::ZeroAddressCheckDetector,
+        },
     };
 
     #[test]
@@ -167,8 +169,12 @@ mod zero_address_check_tests {
         let context_loader = load_contract(
             "../tests/contract-playground/out/StateVariables.sol/StateVariables.json",
         );
+        let mut context_browser = ContextBrowser::default_from(&context_loader);
+        context_browser.build_parallel();
         let mut detector = ZeroAddressCheckDetector::default();
-        let found = detector.detect(&context_loader).unwrap();
+        let found = detector
+            .detect(&context_loader, &mut context_browser)
+            .unwrap();
         // assert that the detector found the issue
         assert!(found);
         // assert that the detector found the correct number of issues

@@ -26,18 +26,19 @@ pub fn with_project_root_at(root_path: &PathBuf) -> (String, ContextLoader) {
     let foundry_intermediates = loaded_foundry
         .output_filepaths
         .par_iter()
-        .map(|output_filepath| {
-            if let Ok(foundry_output) = read_foundry_output_file(output_filepath.to_str().unwrap())
-            {
-                Some(foundry_output.ast)
-            } else {
-                eprintln!(
-                    "Error reading Foundry output file: {}",
-                    output_filepath.to_str().unwrap()
-                );
-                None
-            }
-        })
+        .map(
+            |output_filepath| match read_foundry_output_file(output_filepath.to_str().unwrap()) {
+                Ok(foundry_output) => Some(foundry_output.ast),
+                Err(err) => {
+                    eprintln!(
+                        "Error reading Foundry output file: {}: {}",
+                        output_filepath.to_str().unwrap(),
+                        err
+                    );
+                    None
+                }
+            },
+        )
         .collect::<Vec<_>>();
 
     // read_foundry_output_file and print an error message if it fails
@@ -68,6 +69,20 @@ pub fn with_project_root_at(root_path: &PathBuf) -> (String, ContextLoader) {
                 eprintln!("{:?}", err);
             });
         });
+
+    let root_path_str = root_path
+        .to_string_lossy()
+        .into_owned()
+        .trim_start_matches("./")
+        .to_string();
+    context_loader.src_filepaths = loaded_foundry
+        .src_filepaths
+        .iter()
+        .filter_map(|path| {
+            let path_str = path.to_string_lossy();
+            path_str.split(&root_path_str).nth(1).map(|s| s.to_string())
+        })
+        .collect::<Vec<_>>();
 
     (src_path, context_loader)
 }
