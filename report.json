@@ -13,6 +13,10 @@
         "n_sloc": 37
       },
       {
+        "file_path": "src/AssemblyExample.sol",
+        "n_sloc": 9
+      },
+      {
         "file_path": "src/Counter.sol",
         "n_sloc": 20
       },
@@ -45,6 +49,14 @@
         "n_sloc": 11
       },
       {
+        "file_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
+        "n_sloc": 32
+      },
+      {
+        "file_path": "src/cloc/HeavilyCommentedContract.sol",
+        "n_sloc": 21
+      },
+      {
         "file_path": "src/inheritance/ExtendedInheritance.sol",
         "n_sloc": 17
       },
@@ -67,8 +79,8 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 490,
-    "total_source_units": 15
+    "total_sloc": 552,
+    "total_source_units": 18
   },
   "high_issues": {
     "issues": [
@@ -215,6 +227,14 @@
             "line_no": 2
           },
           {
+            "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
+            "line_no": 6
+          },
+          {
+            "contract_path": "src/cloc/HeavilyCommentedContract.sol",
+            "line_no": 6
+          },
+          {
             "contract_path": "src/inheritance/IContractInheritance.sol",
             "line_no": 2
           },
@@ -281,6 +301,10 @@
           {
             "contract_path": "src/UnsafeERC721Mint.sol",
             "line_no": 2
+          },
+          {
+            "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
+            "line_no": 6
           },
           {
             "contract_path": "src/inheritance/ExtendedInheritance.sol",
@@ -455,6 +479,10 @@
             "line_no": 28
           },
           {
+            "contract_path": "src/AssemblyExample.sol",
+            "line_no": 6
+          },
+          {
             "contract_path": "src/Counter.sol",
             "line_no": 7
           },
@@ -477,6 +505,26 @@
           {
             "contract_path": "src/StateVariables.sol",
             "line_no": 71
+          },
+          {
+            "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
+            "line_no": 31
+          },
+          {
+            "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
+            "line_no": 38
+          },
+          {
+            "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
+            "line_no": 42
+          },
+          {
+            "contract_path": "src/cloc/HeavilyCommentedContract.sol",
+            "line_no": 31
+          },
+          {
+            "contract_path": "src/cloc/HeavilyCommentedContract.sol",
+            "line_no": 38
           }
         ],
         "title": "Functions not used internally could be marked external"
@@ -487,6 +535,10 @@
           {
             "contract_path": "src/Counter.sol",
             "line_no": 23
+          },
+          {
+            "contract_path": "src/cloc/HeavilyCommentedContract.sol",
+            "line_no": 40
           },
           {
             "contract_path": "src/inheritance/ExtendedInheritance.sol",
@@ -519,6 +571,22 @@
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 40
+          },
+          {
+            "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
+            "line_no": 35
+          },
+          {
+            "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
+            "line_no": 56
+          },
+          {
+            "contract_path": "src/cloc/HeavilyCommentedContract.sol",
+            "line_no": 35
+          },
+          {
+            "contract_path": "src/cloc/HeavilyCommentedContract.sol",
+            "line_no": 53
           }
         ],
         "title": "`require()` / `revert()` statements should have descriptive reason strings or custom errors"

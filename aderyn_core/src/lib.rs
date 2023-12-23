@@ -2,9 +2,11 @@ pub mod ast;
 pub mod context;
 pub mod detect;
 pub mod framework;
+pub mod fscloc;
 pub mod report;
 pub mod visitor;
 
+use context::browser::ContextBrowser;
 use eyre::Result;
 use std::error::Error;
 use std::fs::{remove_file, File};
@@ -18,10 +20,11 @@ use crate::report::reporter::Report;
 use crate::report::Issue;
 
 pub fn run_with_printer<T>(
-    context_loader: ContextLoader,
+    context_loader: &ContextLoader,
     output_file_path: String,
     reporter: T,
     root_rel_path: PathBuf,
+    mut context_browser: ContextBrowser,
 ) -> Result<(), Box<dyn Error>>
 where
     T: ReportPrinter<()>,
@@ -34,7 +37,7 @@ where
 
     let mut report: Report = Report::default();
     for mut detector in detectors {
-        if let Ok(found) = detector.detect(&context_loader) {
+        if let Ok(found) = detector.detect(context_loader, &mut context_browser) {
             if found {
                 let issue: Issue = Issue {
                     title: detector.title(),
@@ -68,7 +71,7 @@ where
     reporter.print_report(
         get_markdown_writer(&output_file_path)?,
         &report,
-        &context_loader,
+        context_loader,
         root_rel_path,
         Some(output_file_path.clone()),
     )?;

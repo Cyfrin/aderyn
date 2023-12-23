@@ -105,8 +105,11 @@ impl MarkdownReportPrinter {
                 writeln!(writer, "| {} | {} |", detail.file_path, detail.n_sloc).unwrap();
             });
 
-            let sloc_stats = &loader.sloc_stats;
-            writeln!(writer, "| **Total** | **{}** |", sloc_stats.code)?;
+            writeln!(
+                writer,
+                "| **Total** | **{}** |",
+                loader.files_summary().total_sloc
+            )?;
             writeln!(writer, "\n")?; // Add an extra newline for spacing
         }
 
