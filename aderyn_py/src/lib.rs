@@ -7,7 +7,11 @@ fn main() {
 
     #[pyfunction]
     fn generate_report(root: String, output: String) {
-        let args = driver::Args { root, output };
+        let args = driver::Args {
+            root,
+            output,
+            no_snippets: false,
+        };
         driver::drive(args);
     }
 

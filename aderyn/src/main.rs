@@ -10,6 +10,10 @@ pub struct CommandLineArgs {
     /// Desired file path for the final report (will overwrite existing one)
     #[arg(short, long, default_value = "report.md")]
     output: String,
+
+    /// Do not include code snippets in the report (reduces report size in large repos)
+    #[arg(short, long)]
+    no_snippets: bool,
 }
 
 fn main() {
@@ -18,6 +22,7 @@ fn main() {
     let args: Args = Args {
         root: cmd_args.root,
         output: cmd_args.output,
+        no_snippets: cmd_args.no_snippets,
     };
 
     driver::drive(args);
