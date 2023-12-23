@@ -11,6 +11,7 @@ fn main() {
             root,
             output,
             no_snippets: false,
+            exclude: None,
         };
         driver::drive(args);
     }

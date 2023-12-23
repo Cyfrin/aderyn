@@ -11,6 +11,10 @@ pub struct CommandLineArgs {
     #[arg(short, long, default_value = "report.md")]
     output: String,
 
+    /// List of path strings to exclude. Any solidit file path containing these strings will be ignored
+    #[clap(long, use_value_delimiter = true)]
+    exclude: Option<Vec<String>>,
+
     /// Do not include code snippets in the report (reduces report size in large repos)
     #[arg(short, long)]
     no_snippets: bool,
@@ -22,6 +26,7 @@ fn main() {
     let args: Args = Args {
         root: cmd_args.root,
         output: cmd_args.output,
+        exclude: cmd_args.exclude,
         no_snippets: cmd_args.no_snippets,
     };
 
