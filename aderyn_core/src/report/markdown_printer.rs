@@ -18,6 +18,7 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
         loader: &ContextLoader,
         root_path: PathBuf,
         output_rel_path: Option<String>,
+        no_snippets: bool,
     ) -> Result<()> {
         self.print_title_and_disclaimer(&mut writer)?;
         self.print_table_of_contents(&mut writer, report)?;
@@ -45,6 +46,7 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
                         counter,
                         &root_path,
                         output_rel_path.clone().unwrap(),
+                        no_snippets,
                     )?;
                 }
             }
@@ -198,6 +200,7 @@ impl MarkdownReportPrinter {
         number: i32,
         root_path: &Path,
         output_rel_path: String,
+        no_snippets: bool,
     ) -> Result<()> {
         let is_file = root_path.is_file();
 
@@ -220,6 +223,23 @@ impl MarkdownReportPrinter {
                     )
                 }
             };
+
+            if no_snippets {
+                writeln!(
+                    writer,
+                    "- Found in {} [Line: {}]({}#L{})",
+                    instance.contract_path,
+                    instance.line_no,
+                    carve_shortest_path(
+                        std::fs::canonicalize(PathBuf::from(output_rel_path.clone())).unwrap(),
+                        std::fs::canonicalize(&path).unwrap()
+                    )
+                    .to_str()
+                    .unwrap(),
+                    instance.line_no,
+                )?;
+                continue;
+            }
 
             let line = std::fs::read_to_string(&path).unwrap();
 
