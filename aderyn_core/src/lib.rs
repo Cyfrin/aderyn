@@ -25,6 +25,7 @@ pub fn run_with_printer<T>(
     reporter: T,
     root_rel_path: PathBuf,
     mut context_browser: ContextBrowser,
+    no_snippets: bool,
 ) -> Result<(), Box<dyn Error>>
 where
     T: ReportPrinter<()>,
@@ -74,6 +75,7 @@ where
         context_loader,
         root_rel_path,
         Some(output_file_path.clone()),
+        no_snippets,
     )?;
 
     println!("Report printed to {}", output_file_path);

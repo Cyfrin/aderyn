@@ -10,6 +10,7 @@ use std::{fs::read_dir, path::PathBuf};
 pub struct Args {
     pub root: String,
     pub output: String,
+    pub no_snippets: bool,
 }
 
 enum Framework {
@@ -64,6 +65,7 @@ pub fn drive(args: Args) {
             JsonPrinter,
             root_rel_path,
             context_browser,
+            args.no_snippets,
         )
         .unwrap_or_else(|err| {
             // Exit with a non-zero exit code
@@ -79,6 +81,7 @@ pub fn drive(args: Args) {
             MarkdownReportPrinter,
             root_rel_path,
             context_browser,
+            args.no_snippets,
         )
         .unwrap_or_else(|err| {
             // Exit with a non-zero exit code
