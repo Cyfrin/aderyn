@@ -77,7 +77,7 @@ impl Detector for PushZeroOpcodeDetector {
             let req = VersionReq::parse(&version_string)?;
             if version_req_allows_above_0_8_19(&req) {
                 self.found_instances.insert(
-                    browser.get_node_sort_key(&ASTNode::PragmaDirective(pragma_directive.clone())),
+                    loader.get_node_sort_key(&ASTNode::PragmaDirective(pragma_directive.clone())),
                     pragma_directive.src.clone(),
                 );
             }

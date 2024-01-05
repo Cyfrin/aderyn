@@ -57,7 +57,7 @@ impl Detector for ArbitraryTransferFromDetector {
 
         for item in transfer_from_function_calls {
             self.found_instances.insert(
-                browser.get_node_sort_key(&ASTNode::FunctionCall(item.clone())),
+                loader.get_node_sort_key(&ASTNode::FunctionCall(item.clone())),
                 item.src.clone(),
             );
         }

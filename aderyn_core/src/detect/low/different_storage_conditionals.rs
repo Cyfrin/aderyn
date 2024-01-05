@@ -100,12 +100,12 @@ impl Detector for DifferentStorageConditionalDetector {
 
                     if !is_consistent_or_mirror {
                         self.found_instances.insert(
-                            browser.get_node_sort_key(&ASTNode::BinaryOperation((*op).clone())),
+                            loader.get_node_sort_key(&ASTNode::BinaryOperation((*op).clone())),
                             op.src.clone(),
                         );
                         if !first_added {
                             self.found_instances.insert(
-                                browser.get_node_sort_key(&ASTNode::BinaryOperation(
+                                loader.get_node_sort_key(&ASTNode::BinaryOperation(
                                     (*first_op).clone(),
                                 )),
                                 first_op.src.clone(),

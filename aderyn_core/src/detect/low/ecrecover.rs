@@ -24,7 +24,7 @@ impl Detector for EcrecoverDetector {
         for identifier in loader.identifiers.keys() {
             if identifier.name == "ecrecover" {
                 self.found_instances.insert(
-                    browser.get_node_sort_key(&ASTNode::Identifier(identifier.clone())),
+                    loader.get_node_sort_key(&ASTNode::Identifier(identifier.clone())),
                     identifier.src.clone(),
                 );
             }

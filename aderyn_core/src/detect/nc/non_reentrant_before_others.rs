@@ -27,7 +27,7 @@ impl Detector for NonReentrantBeforeOthersDetector {
                 for (index, modifier) in definition.modifiers.iter().enumerate() {
                     if modifier.modifier_name.name == "nonReentrant" && index != 0 {
                         self.found_instances.insert(
-                            browser
+                            loader
                                 .get_node_sort_key(&ASTNode::ModifierInvocation(modifier.clone())),
                             modifier.src.clone(),
                         );

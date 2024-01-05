@@ -32,7 +32,7 @@ impl Detector for RequireWithStringDetector {
                 || (id.name == "require" && id.argument_types.as_ref().unwrap().len() == 1)
             {
                 self.found_instances.insert(
-                    browser.get_node_sort_key(&ASTNode::Identifier(id.clone())),
+                    loader.get_node_sort_key(&ASTNode::Identifier(id.clone())),
                     id.src.clone(),
                 );
             }

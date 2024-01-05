@@ -27,7 +27,7 @@ impl Detector for UnsafeERC20FunctionsDetector {
                 || member_access.member_name == "transfer"
             {
                 self.found_instances.insert(
-                    browser.get_node_sort_key(&ASTNode::MemberAccess(member_access.clone())),
+                    loader.get_node_sort_key(&ASTNode::MemberAccess(member_access.clone())),
                     member_access.src.clone(),
                 );
             }

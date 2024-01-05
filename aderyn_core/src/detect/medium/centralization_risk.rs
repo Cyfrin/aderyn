@@ -78,7 +78,7 @@ impl Detector for CentralizationRiskDetector {
         {
             if let ASTNode::ModifierInvocation(modifier_invocation) = modifier_invocation {
                 self.found_instances.insert(
-                    browser.get_node_sort_key(&ASTNode::ModifierInvocation(
+                    loader.get_node_sort_key(&ASTNode::ModifierInvocation(
                         modifier_invocation.clone(),
                     )),
                     modifier_invocation.src.clone(),
@@ -93,7 +93,7 @@ impl Detector for CentralizationRiskDetector {
         {
             if let ASTNode::ContractDefinition(contract_definition) = contract_definition {
                 self.found_instances.insert(
-                    browser.get_node_sort_key(&ASTNode::ContractDefinition(
+                    loader.get_node_sort_key(&ASTNode::ContractDefinition(
                         contract_definition.clone(),
                     )),
                     contract_definition.src.clone(),

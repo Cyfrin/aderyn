@@ -44,7 +44,7 @@ impl Detector for DelegateCallInLoopDetector {
         for member_access in self.found_member_access.clone().into_iter().flatten() {
             if let ASTNode::MemberAccess(member_access) = member_access {
                 self.found_instances.insert(
-                    browser.get_node_sort_key(&ASTNode::MemberAccess(member_access.clone())),
+                    loader.get_node_sort_key(&ASTNode::MemberAccess(member_access.clone())),
                     member_access.src.clone(),
                 );
             }

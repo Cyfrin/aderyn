@@ -35,7 +35,7 @@ impl Detector for SolmateSafeTransferLibDetector {
                     .contains("SafeTransferLib")
             {
                 self.found_instances.insert(
-                    browser.get_node_sort_key(&ASTNode::ImportDirective(import_directive.clone())),
+                    loader.get_node_sort_key(&ASTNode::ImportDirective(import_directive.clone())),
                     import_directive.src.clone(),
                 );
             }

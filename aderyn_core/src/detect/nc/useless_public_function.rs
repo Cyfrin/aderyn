@@ -47,7 +47,7 @@ impl Detector for UselessPublicFunctionDetector {
             unreferenced_public_functions
                 .map(|node| {
                     (
-                        browser.get_node_sort_key(&node.clone().unwrap()),
+                        loader.get_node_sort_key(&node.clone().unwrap()),
                         // match node as FunctionDefinition
                         match node.unwrap() {
                             ASTNode::FunctionDefinition(function_definition) => {

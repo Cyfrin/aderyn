@@ -25,7 +25,7 @@ impl Detector for UnspecificSolidityPragmaDetector {
             for literal in &pragma_directive.literals {
                 if literal.contains('^') || literal.contains('>') {
                     self.found_instances.insert(
-                        browser
+                        loader
                             .get_node_sort_key(&ASTNode::PragmaDirective(pragma_directive.clone())),
                         pragma_directive.src.clone(),
                     );

@@ -123,7 +123,7 @@ impl Detector for ZeroAddressCheckDetector {
             for (key, value) in &assignments_to_mutable_address_state_variables {
                 if !binary_checks_against_zero_address.contains(key) {
                     self.found_instances.insert(
-                        browser.get_node_sort_key(&ASTNode::Assignment(value.clone())),
+                        loader.get_node_sort_key(&ASTNode::Assignment(value.clone())),
                         value.src.clone(),
                     );
                 }

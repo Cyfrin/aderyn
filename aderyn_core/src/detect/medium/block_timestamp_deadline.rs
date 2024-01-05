@@ -55,7 +55,7 @@ impl Detector for BlockTimestampDeadlineDetector {
                             {
                                 if identifier.name == "block" {
                                     self.found_instances.insert(
-                                        browser.get_node_sort_key(&ASTNode::FunctionCall(
+                                        loader.get_node_sort_key(&ASTNode::FunctionCall(
                                             call.clone(),
                                         )),
                                         call.src.clone(),
@@ -88,7 +88,7 @@ impl Detector for BlockTimestampDeadlineDetector {
                                     {
                                         if identifier.name == "block" {
                                             self.found_instances.insert(
-                                                browser.get_node_sort_key(&ASTNode::FunctionCall(
+                                                loader.get_node_sort_key(&ASTNode::FunctionCall(
                                                     call.clone(),
                                                 )),
                                                 call.src.clone(),

@@ -46,7 +46,7 @@ impl Detector for AvoidAbiEncodePackedDetector {
                 }
                 if count > 1 {
                     self.found_instances.insert(
-                        browser.get_node_sort_key(&ASTNode::MemberAccess(member_access.clone())),
+                        loader.get_node_sort_key(&ASTNode::MemberAccess(member_access.clone())),
                         member_access.src.clone(),
                     );
                 }

@@ -37,7 +37,7 @@ impl Detector for UnindexedEventsDetector {
 
             if non_indexed && indexed_count < 3 {
                 self.found_instances.insert(
-                    browser
+                    loader
                         .get_node_sort_key(&ASTNode::EventDefinition((*event_definition).clone())),
                     event_definition.src.clone(),
                 );

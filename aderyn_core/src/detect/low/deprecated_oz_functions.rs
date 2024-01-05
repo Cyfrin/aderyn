@@ -37,7 +37,7 @@ impl Detector for DeprecatedOZFunctionsDetector {
             }) && identifier.name == "_setupRole"
             {
                 self.found_instances.insert(
-                    browser.get_node_sort_key(&ASTNode::Identifier(identifier.clone())),
+                    loader.get_node_sort_key(&ASTNode::Identifier(identifier.clone())),
                     identifier.src.clone(),
                 );
             }
@@ -57,7 +57,7 @@ impl Detector for DeprecatedOZFunctionsDetector {
             }) && member_access.member_name == "safeApprove"
             {
                 self.found_instances.insert(
-                    browser.get_node_sort_key(&ASTNode::MemberAccess(member_access.clone())),
+                    loader.get_node_sort_key(&ASTNode::MemberAccess(member_access.clone())),
                     member_access.src.clone(),
                 );
             }
