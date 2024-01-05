@@ -9,7 +9,6 @@ pub fn count_lines_of_code(
 ) -> Mutex<HashMap<String, usize>> {
     let walker = WalkBuilder::new(src);
     let (tx, rx) = crossbeam_channel::unbounded();
-    println!("src_filepaths: {:?}", src_filepaths);
     walker.build_parallel().run(|| {
         let tx = tx.clone();
         Box::new(move |res| {

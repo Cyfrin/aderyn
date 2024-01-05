@@ -72,7 +72,6 @@ pub fn with_project_root_at(
         .flatten()
         .for_each(|mut ast| {
             let absolute_path_clone = ast.absolute_path.clone();
-            println!("Processing: {:?}", &absolute_path_clone);
 
             match read_file_to_string(
                 &root_path.join(Path::new(&ast.absolute_path.as_ref().unwrap())),
