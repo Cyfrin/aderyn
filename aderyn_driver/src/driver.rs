@@ -55,7 +55,10 @@ pub fn drive(args: Args) {
     };
 
     // Using the source path, calculate the sloc
-    let stats = fscloc::engine::count_lines_of_code(&PathBuf::from(src_path));
+    let stats = fscloc::engine::count_lines_of_code(
+        &PathBuf::from(src_path),
+        &context_loader.src_filepaths,
+    );
     let stats = stats.lock().unwrap().to_owned();
     context_loader.set_sloc_stats(stats);
 

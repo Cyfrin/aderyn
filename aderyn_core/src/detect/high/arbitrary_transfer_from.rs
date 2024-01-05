@@ -32,7 +32,7 @@ fn check_argument_validity(function_call: &FunctionCall) -> bool {
         }
         Expression::FunctionCall(arg_function_call) => {
             !(matches!(&*arg_function_call.expression, Expression::ElementaryTypeNameExpression(arg_el_type_name_exp) if matches!(&arg_el_type_name_exp.type_name, TypeName::ElementaryTypeName(type_name) if type_name.name == "address"))
-                && matches!(arg_function_call.arguments.get(0), Some(Expression::Identifier(arg_identifier)) if arg_identifier.name == "this"))
+                && matches!(arg_function_call.arguments.first(), Some(Expression::Identifier(arg_identifier)) if arg_identifier.name == "this"))
         }
         _ => true,
     }
