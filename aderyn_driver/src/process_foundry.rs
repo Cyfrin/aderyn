@@ -5,7 +5,10 @@ use aderyn_core::{
     visitor::ast_visitor::Node,
 };
 use rayon::prelude::*;
-use std::path::{Path, PathBuf};
+use std::{
+    collections::HashSet,
+    path::{Path, PathBuf},
+};
 
 pub fn with_project_root_at(
     root_path: &PathBuf,
@@ -57,12 +60,18 @@ pub fn with_project_root_at(
         )
         .collect::<Vec<_>>();
 
+    let intermediate_paths: HashSet<String> = foundry_intermediates
+        .iter()
+        .filter_map(|ast_option| ast_option.as_ref()?.absolute_path.clone())
+        .collect();
+
     // read_foundry_output_file and print an error message if it fails
     foundry_intermediates
         .into_iter()
         .flatten()
         .for_each(|mut ast| {
             let absolute_path_clone = ast.absolute_path.clone();
+            println!("Processing: {:?}", &absolute_path_clone);
 
             match read_file_to_string(
                 &root_path.join(Path::new(&ast.absolute_path.as_ref().unwrap())),
@@ -86,19 +95,7 @@ pub fn with_project_root_at(
             });
         });
 
-    let root_path_str = root_path
-        .to_string_lossy()
-        .into_owned()
-        .trim_start_matches("./")
-        .to_string();
-    context_loader.src_filepaths = loaded_foundry
-        .src_filepaths
-        .iter()
-        .filter_map(|path| {
-            let path_str = path.to_string_lossy();
-            path_str.split(&root_path_str).nth(1).map(|s| s.to_string())
-        })
-        .collect::<Vec<_>>();
-
+    println!("intermediate_paths: {:?}", intermediate_paths);
+    context_loader.src_filepaths = intermediate_paths.into_iter().collect();
     (src_path, context_loader)
 }
