@@ -168,7 +168,7 @@ impl Node for FunctionTypeName {
 #[serde(rename_all = "camelCase")]
 pub struct ArrayTypeName {
     pub base_type: Box<TypeName>,
-    pub length: Option<Literal>,
+    pub length: Box<Option<Expression>>,
     pub type_descriptions: TypeDescriptions,
 }
 
@@ -176,8 +176,8 @@ impl Node for ArrayTypeName {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         if visitor.visit_array_type_name(self)? {
             self.base_type.accept(visitor)?;
-            if self.length.is_some() {
-                self.length.as_ref().unwrap().accept(visitor)?;
+            if let Some(length) = self.length.as_ref() {
+                length.accept(visitor)?;
             }
         }
         visitor.end_visit_array_type_name(self)
