@@ -676,70 +676,142 @@ Assigning values to address state variables without checking for `address(0)`.
 	        string memory simple2 = "/* this is not \" /*a comment */";/* this is a comment */ uint256 m_6 = 0; /* this is another comment*/ uint256 m_990909 = 89; string memory dd = "sdsgaf\
 	```
 
+- Found in src/eth2/DepositContract.sol [Line: 70](tests/contract-playground/src/eth2/DepositContract.sol#L70)
+
+	```solidity
+	        for (uint height = 0; height < DEPOSIT_CONTRACT_TREE_DEPTH - 1; height++)
+	```
+
+- Found in src/eth2/DepositContract.sol [Line: 71](tests/contract-playground/src/eth2/DepositContract.sol#L71)
+
+	```solidity
+	            zero_hashes[height + 1] = sha256(abi.encodePacked(zero_hashes[height], zero_hashes[height]));
+	```
+
+- Found in src/eth2/DepositContract.sol [Line: 78](tests/contract-playground/src/eth2/DepositContract.sol#L78)
+
+	```solidity
+	            if ((size & 1) == 1) node = sha256(abi.encodePacked(branch[height], node));
+	```
+
+- Found in src/eth2/DepositContract.sol [Line: 80](tests/contract-playground/src/eth2/DepositContract.sol#L80)
+
+	```solidity
+	            size /= 2;
+	```
+
+- Found in src/eth2/DepositContract.sol [Line: 96](tests/contract-playground/src/eth2/DepositContract.sol#L96)
+
+	```solidity
+	        require(pubkey.length == 48, "DepositContract: invalid pubkey length");
+	```
+
+- Found in src/eth2/DepositContract.sol [Line: 97](tests/contract-playground/src/eth2/DepositContract.sol#L97)
+
+	```solidity
+	        require(withdrawal_credentials.length == 32, "DepositContract: invalid withdrawal_credentials length");
+	```
+
+- Found in src/eth2/DepositContract.sol [Line: 98](tests/contract-playground/src/eth2/DepositContract.sol#L98)
+
+	```solidity
+	        require(signature.length == 96, "DepositContract: invalid signature length");
+	```
+
+- Found in src/eth2/DepositContract.sol [Line: 101](tests/contract-playground/src/eth2/DepositContract.sol#L101)
+
+	```solidity
+	        require(msg.value >= 1 ether, "DepositContract: deposit value too low");
+	```
+
 - Found in src/eth2/DepositContract.sol [Line: 102](tests/contract-playground/src/eth2/DepositContract.sol#L102)
 
 	```solidity
 	        require(msg.value % 1 gwei == 0, "DepositContract: deposit value not multiple of gwei");
 	```
 
-- Found in src/eth2/DepositContract.sol [Line: 108](tests/contract-playground/src/eth2/DepositContract.sol#L108)
+- Found in src/eth2/DepositContract.sol [Line: 103](tests/contract-playground/src/eth2/DepositContract.sol#L103)
 
 	```solidity
-	        emit DepositEvent(pubkey, withdrawal_credentials, amount, signature, to_little_endian_64(uint64(deposit_count)));
+	        uint deposit_amount = msg.value / 1 gwei;
 	```
 
-- Found in src/eth2/DepositContract.sol [Line: 111](tests/contract-playground/src/eth2/DepositContract.sol#L111)
+- Found in src/eth2/DepositContract.sol [Line: 113](tests/contract-playground/src/eth2/DepositContract.sol#L113)
 
 	```solidity
-	        bytes32 pubkey_root = sha256(abi.encodePacked(pubkey, bytes16(0)));
+	            abi.encodePacked(sha256(abi.encodePacked(signature[:64])), sha256(abi.encodePacked(signature[64:], bytes32(0))))
 	```
 
-- Found in src/eth2/DepositContract.sol [Line: 124](tests/contract-playground/src/eth2/DepositContract.sol#L124)
+- Found in src/eth2/DepositContract.sol [Line: 132](tests/contract-playground/src/eth2/DepositContract.sol#L132)
 
 	```solidity
-	            node == deposit_data_root,
+	        deposit_count += 1;
 	```
 
-- Found in src/eth2/DepositContract.sol [Line: 125](tests/contract-playground/src/eth2/DepositContract.sol#L125)
+- Found in src/eth2/DepositContract.sol [Line: 135](tests/contract-playground/src/eth2/DepositContract.sol#L135)
 
 	```solidity
-	            "DepositContract: reconstructed DepositData does not match supplied deposit_data_root"
+	            if ((size & 1) == 1) {
 	```
 
-- Found in src/eth2/DepositContract.sol [Line: 128](tests/contract-playground/src/eth2/DepositContract.sol#L128)
+- Found in src/eth2/DepositContract.sol [Line: 140](tests/contract-playground/src/eth2/DepositContract.sol#L140)
 
 	```solidity
-	        // Avoid overflowing the Merkle tree (and prevent edge case in computing `branch`)
+	            size /= 2;
 	```
 
-- Found in src/eth2/DepositContract.sol [Line: 129](tests/contract-playground/src/eth2/DepositContract.sol#L129)
+- Found in src/eth2/DepositContract.sol [Line: 152](tests/contract-playground/src/eth2/DepositContract.sol#L152)
 
 	```solidity
-	        require(deposit_count < MAX_DEPOSIT_COUNT, "DepositContract: merkle tree full");
+	        ret = new bytes(8);
 	```
 
-- Found in src/eth2/DepositContract.sol [Line: 131](tests/contract-playground/src/eth2/DepositContract.sol#L131)
+- Found in src/eth2/DepositContract.sol [Line: 155](tests/contract-playground/src/eth2/DepositContract.sol#L155)
 
 	```solidity
-	        // Add deposit data root to Merkle tree (update a single `branch` node)
+	        ret[0] = bytesValue[7];
 	```
 
-- Found in src/eth2/DepositContract.sol [Line: 134](tests/contract-playground/src/eth2/DepositContract.sol#L134)
+- Found in src/eth2/DepositContract.sol [Line: 156](tests/contract-playground/src/eth2/DepositContract.sol#L156)
 
 	```solidity
-	        for (uint height = 0; height < DEPOSIT_CONTRACT_TREE_DEPTH; height++) {
+	        ret[1] = bytesValue[6];
 	```
 
-- Found in src/eth2/DepositContract.sol [Line: 148](tests/contract-playground/src/eth2/DepositContract.sol#L148)
+- Found in src/eth2/DepositContract.sol [Line: 157](tests/contract-playground/src/eth2/DepositContract.sol#L157)
 
 	```solidity
-	        return interfaceId == type(ERC165).interfaceId || interfaceId == type(IDepositContract).interfaceId;
+	        ret[2] = bytesValue[5];
 	```
 
-- Found in src/eth2/DepositContract.sol [Line: 165](tests/contract-playground/src/eth2/DepositContract.sol#L165)
+- Found in src/eth2/DepositContract.sol [Line: 158](tests/contract-playground/src/eth2/DepositContract.sol#L158)
 
 	```solidity
-	
+	        ret[3] = bytesValue[4];
+	```
+
+- Found in src/eth2/DepositContract.sol [Line: 159](tests/contract-playground/src/eth2/DepositContract.sol#L159)
+
+	```solidity
+	        ret[4] = bytesValue[3];
+	```
+
+- Found in src/eth2/DepositContract.sol [Line: 160](tests/contract-playground/src/eth2/DepositContract.sol#L160)
+
+	```solidity
+	        ret[5] = bytesValue[2];
+	```
+
+- Found in src/eth2/DepositContract.sol [Line: 161](tests/contract-playground/src/eth2/DepositContract.sol#L161)
+
+	```solidity
+	        ret[6] = bytesValue[1];
+	```
+
+- Found in src/eth2/DepositContract.sol [Line: 162](tests/contract-playground/src/eth2/DepositContract.sol#L162)
+
+	```solidity
+	        ret[7] = bytesValue[0];
 	```
 
 - Found in src/inheritance/ExtendedInheritance.sol [Line: 15](tests/contract-playground/src/inheritance/ExtendedInheritance.sol#L15)
@@ -754,10 +826,10 @@ Assigning values to address state variables without checking for `address(0)`.
 
 Index event fields make the field more quickly accessible to off-chain tools that parse events. However, note that each index field costs extra gas during emission, so it's not necessarily best to index the maximum allowed per event (three fields). Each event should use three indexed fields if there are three or more fields, and gas usage is not particularly of concern for the events in question. If there are fewer than three fields, all of the fields should be indexed.
 
-- Found in src/eth2/DepositContract.sol [Line: 50](tests/contract-playground/src/eth2/DepositContract.sol#L50)
+- Found in src/eth2/DepositContract.sol [Line: 19](tests/contract-playground/src/eth2/DepositContract.sol#L19)
 
 	```solidity
-	    ///  `interfaceId` is not 0xffffffff, `false` otherwise
+	    event DepositEvent(bytes pubkey, bytes withdrawal_credentials, bytes amount, bytes signature, bytes index);
 	```
 
 - Found in src/inheritance/ExtendedInheritance.sol [Line: 7](tests/contract-playground/src/inheritance/ExtendedInheritance.sol#L7)
