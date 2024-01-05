@@ -42,7 +42,7 @@ impl Detector for ArbitraryTransferFromDetector {
     fn detect(
         &mut self,
         loader: &ContextLoader,
-        browser: &mut ContextBrowser,
+        _browser: &mut ContextBrowser,
     ) -> Result<bool, Box<dyn Error>> {
         let transfer_from_function_calls = loader.function_calls.keys().filter(|function_call| {
             if let Expression::MemberAccess(member_access) = &*function_call.expression {

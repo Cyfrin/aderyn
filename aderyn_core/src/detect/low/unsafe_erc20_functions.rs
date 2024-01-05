@@ -19,7 +19,7 @@ impl Detector for UnsafeERC20FunctionsDetector {
     fn detect(
         &mut self,
         loader: &ContextLoader,
-        browser: &mut ContextBrowser,
+        _browser: &mut ContextBrowser,
     ) -> Result<bool, Box<dyn Error>> {
         for member_access in loader.member_accesses.keys() {
             if member_access.member_name == "transferFrom"

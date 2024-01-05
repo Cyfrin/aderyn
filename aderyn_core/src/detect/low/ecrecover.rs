@@ -19,7 +19,7 @@ impl Detector for EcrecoverDetector {
     fn detect(
         &mut self,
         loader: &ContextLoader,
-        browser: &mut ContextBrowser,
+        _browser: &mut ContextBrowser,
     ) -> Result<bool, Box<dyn Error>> {
         for identifier in loader.identifiers.keys() {
             if identifier.name == "ecrecover" {

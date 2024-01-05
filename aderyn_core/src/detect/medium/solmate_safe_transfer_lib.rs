@@ -19,7 +19,7 @@ impl Detector for SolmateSafeTransferLibDetector {
     fn detect(
         &mut self,
         loader: &ContextLoader,
-        browser: &mut ContextBrowser,
+        _browser: &mut ContextBrowser,
     ) -> Result<bool, Box<dyn Error>> {
         for import_directive in loader.import_directives.keys() {
             // If the import directive absolute_path contains the strings "solmate" and "SafeTransferLib", flip the found_solmate_import flag to true

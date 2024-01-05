@@ -65,7 +65,7 @@ impl Detector for CentralizationRiskDetector {
     fn detect(
         &mut self,
         loader: &ContextLoader,
-        browser: &mut ContextBrowser,
+        _browser: &mut ContextBrowser,
     ) -> Result<bool, Box<dyn Error>> {
         for source_unit in loader.source_units.iter() {
             source_unit.accept(self)?;

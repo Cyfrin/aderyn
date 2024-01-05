@@ -20,7 +20,7 @@ impl Detector for BlockTimestampDeadlineDetector {
     fn detect(
         &mut self,
         loader: &ContextLoader,
-        browser: &mut ContextBrowser,
+        _browser: &mut ContextBrowser,
     ) -> Result<bool, Box<dyn Error>> {
         for call in loader.function_calls.keys() {
             // Uniswap V2 - Function Calls

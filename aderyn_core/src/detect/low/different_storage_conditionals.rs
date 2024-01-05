@@ -23,7 +23,7 @@ impl Detector for DifferentStorageConditionalDetector {
     fn detect(
         &mut self,
         loader: &ContextLoader,
-        browser: &mut ContextBrowser,
+        _browser: &mut ContextBrowser,
     ) -> Result<bool, Box<dyn Error>> {
         // Step 1: Get all state variable declarations
         let state_variables: Vec<&VariableDeclaration> = loader

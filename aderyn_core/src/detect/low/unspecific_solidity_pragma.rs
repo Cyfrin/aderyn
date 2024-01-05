@@ -19,7 +19,7 @@ impl Detector for UnspecificSolidityPragmaDetector {
     fn detect(
         &mut self,
         loader: &ContextLoader,
-        browser: &mut ContextBrowser,
+        _browser: &mut ContextBrowser,
     ) -> Result<bool, Box<dyn Error>> {
         for pragma_directive in loader.pragma_directives.keys() {
             for literal in &pragma_directive.literals {

@@ -33,7 +33,7 @@ impl Detector for DelegateCallInLoopDetector {
     fn detect(
         &mut self,
         loader: &ContextLoader,
-        browser: &mut ContextBrowser,
+        _browser: &mut ContextBrowser,
     ) -> Result<bool, Box<dyn Error>> {
         for for_statement in loader.for_statements.keys() {
             for_statement.accept(self)?;

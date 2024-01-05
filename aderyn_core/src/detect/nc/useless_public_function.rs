@@ -23,7 +23,7 @@ impl Detector for UselessPublicFunctionDetector {
     fn detect(
         &mut self,
         loader: &ContextLoader,
-        browser: &mut ContextBrowser,
+        _browser: &mut ContextBrowser,
     ) -> Result<bool, Box<dyn Error>> {
         // Collect the ids of all functions referenced by identifiers.
         let referenced_functions: HashSet<_> = loader

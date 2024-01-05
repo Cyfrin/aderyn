@@ -19,7 +19,7 @@ impl Detector for NonReentrantBeforeOthersDetector {
     fn detect(
         &mut self,
         loader: &ContextLoader,
-        browser: &mut ContextBrowser,
+        _browser: &mut ContextBrowser,
     ) -> Result<bool, Box<dyn Error>> {
         let function_definitions = loader.function_definitions.keys();
         for definition in function_definitions {
