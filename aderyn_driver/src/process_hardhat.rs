@@ -68,3 +68,21 @@ pub fn with_project_root_at(
     context_loader.src_filepaths = filtered_output.keys().cloned().collect();
     (src_path, context_loader)
 }
+
+#[cfg(test)]
+mod tests {
+    use std::path::PathBuf;
+
+    #[test]
+    fn test_process_hardhat_exclude() {
+        let root_path = PathBuf::from("../tests/hardhat-js-playground");
+        let exclude: Option<Vec<String>> = Some(vec!["Counter.sol".to_string()]);
+
+        let (_, context_loader) = super::with_project_root_at(&root_path, &exclude);
+        let contains_string = context_loader
+            .src_filepaths
+            .iter()
+            .any(|fp| fp.contains("Counter.sol"));
+        assert!(!contains_string);
+    }
+}

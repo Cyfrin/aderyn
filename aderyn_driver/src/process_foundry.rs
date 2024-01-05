@@ -60,6 +60,7 @@ pub fn with_project_root_at(
         )
         .collect::<Vec<_>>();
 
+    // Get deduplicated list of paths that have already been filtered
     let intermediate_paths: HashSet<String> = foundry_intermediates
         .iter()
         .filter_map(|ast_option| ast_option.as_ref()?.absolute_path.clone())
@@ -95,7 +96,25 @@ pub fn with_project_root_at(
             });
         });
 
-    println!("intermediate_paths: {:?}", intermediate_paths);
     context_loader.src_filepaths = intermediate_paths.into_iter().collect();
     (src_path, context_loader)
+}
+
+#[cfg(test)]
+mod tests {
+    use std::path::PathBuf;
+
+    #[test]
+    fn test_process_foundry_exclude() {
+        let root_path = PathBuf::from("../tests/contract-playground");
+        let exclude: Option<Vec<String>> =
+            Some(vec!["AnotherHeavilyCommentedContract.sol".to_string()]);
+
+        let (_, context_loader) = super::with_project_root_at(&root_path, &exclude);
+        let contains_string = context_loader
+            .src_filepaths
+            .iter()
+            .any(|fp| fp.contains("AnotherHeavilyCommentedContract.sol"));
+        assert!(!contains_string);
+    }
 }
