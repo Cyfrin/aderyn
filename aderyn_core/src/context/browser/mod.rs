@@ -1,8 +1,3 @@
-
-
-
-
-
 mod assignments;
 mod binary_checks;
 
