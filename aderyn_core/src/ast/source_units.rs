@@ -16,12 +16,6 @@ pub enum SourceUnitNode {
     ErrorDefinition(ErrorDefinition),
     VariableDeclaration(VariableDeclaration),
     UserDefinedValueTypeDefinition(UserDefinedValueTypeDefinition),
-    #[serde(rename_all = "camelCase")]
-    UnhandledSourceUnitNode {
-        node_type: NodeType,
-        src: Option<String>,
-        id: Option<NodeID>,
-    },
 }
 
 impl Node for SourceUnitNode {
@@ -42,12 +36,6 @@ impl Node for SourceUnitNode {
             }
             SourceUnitNode::UserDefinedValueTypeDefinition(user_defined_value_type_definition) => {
                 user_defined_value_type_definition.accept(visitor)
-            }
-            SourceUnitNode::UnhandledSourceUnitNode { node_type, src, id } => {
-                println!("UnhandledSourceUnitNode: {:?}", node_type);
-                println!("src: {:?}", src);
-                println!("id: {:?}", id);
-                Ok(())
             }
         }
     }
