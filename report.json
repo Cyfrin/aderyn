@@ -528,47 +528,95 @@
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 70
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 71
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 78
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 80
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 96
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 97
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 98
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 101
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 102
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 108
+            "line_no": 103
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 111
+            "line_no": 113
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 124
+            "line_no": 132
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 125
+            "line_no": 135
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 128
+            "line_no": 140
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 129
+            "line_no": 152
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 131
+            "line_no": 155
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 134
+            "line_no": 156
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 148
+            "line_no": 157
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 165
+            "line_no": 158
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 159
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 160
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 161
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 162
           },
           {
             "contract_path": "src/inheritance/ExtendedInheritance.sol",
@@ -582,7 +630,7 @@
         "instances": [
           {
             "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 50
+            "line_no": 19
           },
           {
             "contract_path": "src/inheritance/ExtendedInheritance.sol",
