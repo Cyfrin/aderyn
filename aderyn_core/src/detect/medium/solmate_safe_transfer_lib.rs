@@ -1,10 +1,7 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
-    context::{
-        browser::ContextBrowser,
-        loader::{ASTNode, ContextLoader},
-    },
+    context::loader::{ASTNode, ContextLoader},
     detect::detector::{Detector, IssueSeverity},
 };
 use eyre::Result;
@@ -16,11 +13,7 @@ pub struct SolmateSafeTransferLibDetector {
 }
 
 impl Detector for SolmateSafeTransferLibDetector {
-    fn detect(
-        &mut self,
-        loader: &ContextLoader,
-        _browser: &mut ContextBrowser,
-    ) -> Result<bool, Box<dyn Error>> {
+    fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
         for import_directive in loader.import_directives.keys() {
             // If the import directive absolute_path contains the strings "solmate" and "SafeTransferLib", flip the found_solmate_import flag to true
             if import_directive
@@ -63,12 +56,9 @@ impl Detector for SolmateSafeTransferLibDetector {
 
 #[cfg(test)]
 mod solmate_safe_transfer_lib_tests {
-    use crate::{
-        context::browser::ContextBrowser,
-        detect::{
-            detector::{detector_test_helpers::load_contract, Detector},
-            medium::solmate_safe_transfer_lib::SolmateSafeTransferLibDetector,
-        },
+    use crate::detect::{
+        detector::{detector_test_helpers::load_contract, Detector},
+        medium::solmate_safe_transfer_lib::SolmateSafeTransferLibDetector,
     };
 
     #[test]
@@ -76,12 +66,8 @@ mod solmate_safe_transfer_lib_tests {
         let context_loader =
             load_contract("../tests/contract-playground/out/T11sTranferer.sol/T11sTranferer.json");
 
-        let mut context_browser = ContextBrowser::default_from(&context_loader);
-        context_browser.build_parallel();
         let mut detector = SolmateSafeTransferLibDetector::default();
-        let found = detector
-            .detect(&context_loader, &mut context_browser)
-            .unwrap();
+        let found = detector.detect(&context_loader).unwrap();
         // assert that the detector found
         assert!(found);
         // assert that the detector found the correct number of instances (1)
@@ -112,12 +98,9 @@ mod solmate_safe_transfer_lib_tests {
         let context_loader = load_contract(
             "../tests/contract-playground/out/ArbitraryTransferFrom.sol/ArbitraryTransferFrom.json",
         );
-        let mut context_browser = ContextBrowser::default_from(&context_loader);
-        context_browser.build_parallel();
+
         let mut detector = SolmateSafeTransferLibDetector::default();
-        let found = detector
-            .detect(&context_loader, &mut context_browser)
-            .unwrap();
+        let found = detector.detect(&context_loader).unwrap();
         // assert that the detector found
         assert!(!found);
         // assert that the detector found the correct number of instances

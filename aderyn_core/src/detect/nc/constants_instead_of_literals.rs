@@ -2,10 +2,7 @@ use std::{collections::BTreeMap, error::Error};
 
 use crate::{
     ast::{Literal, LiteralKind},
-    context::{
-        browser::ContextBrowser,
-        loader::{ASTNode, ContextLoader},
-    },
+    context::loader::{ASTNode, ContextLoader},
     detect::detector::{Detector, IssueSeverity},
     visitor::ast_visitor::{ASTConstVisitor, Node},
 };
@@ -33,11 +30,7 @@ impl ASTConstVisitor for ConstantsInsteadOfLiteralsDetector {
 }
 
 impl Detector for ConstantsInsteadOfLiteralsDetector {
-    fn detect(
-        &mut self,
-        loader: &ContextLoader,
-        _browser: &mut ContextBrowser,
-    ) -> Result<bool, Box<dyn Error>> {
+    fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
         // get all function definitions.
         // for each function definition, find all Literal types
         // if the literal type is either a Number, HexString or Address, then add it to the list of found literals
@@ -75,10 +68,7 @@ impl Detector for ConstantsInsteadOfLiteralsDetector {
 
 #[cfg(test)]
 mod constants_instead_of_literals_tests {
-    use crate::{
-        context::browser::ContextBrowser,
-        detect::detector::{detector_test_helpers::load_contract, Detector},
-    };
+    use crate::detect::detector::{detector_test_helpers::load_contract, Detector};
 
     use super::ConstantsInsteadOfLiteralsDetector;
 
@@ -86,14 +76,10 @@ mod constants_instead_of_literals_tests {
     fn test_constants_instead_of_literals() {
         let context_loader =
             load_contract("../tests/contract-playground/out/Counter.sol/Counter.0.8.21.json");
-        let mut context_browser = ContextBrowser::default_from(&context_loader);
-        context_browser.build_parallel();
 
         let mut detector = ConstantsInsteadOfLiteralsDetector::default();
         // assert that the detector finds the public function
-        let found = detector
-            .detect(&context_loader, &mut context_browser)
-            .unwrap();
+        let found = detector.detect(&context_loader).unwrap();
         assert!(found);
         // assert that the detector finds the correct number of instances
         assert_eq!(detector.instances().len(), 1);

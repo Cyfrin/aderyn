@@ -1,10 +1,7 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
-    context::{
-        browser::ContextBrowser,
-        loader::{ASTNode, ContextLoader},
-    },
+    context::loader::{ASTNode, ContextLoader},
     detect::detector::{Detector, IssueSeverity},
 };
 use eyre::Result;
@@ -16,11 +13,7 @@ pub struct AvoidAbiEncodePackedDetector {
 }
 
 impl Detector for AvoidAbiEncodePackedDetector {
-    fn detect(
-        &mut self,
-        loader: &ContextLoader,
-        _browser: &mut ContextBrowser,
-    ) -> Result<bool, Box<dyn Error>> {
+    fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
         for member_access in loader.member_accesses.keys() {
             // If the member_access's member_name = "encodePacked", loop through the argument_types and count how many of them contain any of the following in type_strings:
             // ["bytes ", "[]", "string"]
@@ -76,10 +69,7 @@ impl Detector for AvoidAbiEncodePackedDetector {
 
 #[cfg(test)]
 mod avoid_abi_encode_packed_tests {
-    use crate::{
-        context::browser::ContextBrowser,
-        detect::detector::{detector_test_helpers::load_contract, Detector},
-    };
+    use crate::detect::detector::{detector_test_helpers::load_contract, Detector};
 
     use super::AvoidAbiEncodePackedDetector;
 
@@ -88,12 +78,9 @@ mod avoid_abi_encode_packed_tests {
         let context_loader = load_contract(
             "../tests/contract-playground/out/KeccakContract.sol/KeccakContract.json",
         );
-        let mut context_browser = ContextBrowser::default_from(&context_loader);
-        context_browser.build_parallel();
+
         let mut detector = AvoidAbiEncodePackedDetector::default();
-        let found = detector
-            .detect(&context_loader, &mut context_browser)
-            .unwrap();
+        let found = detector.detect(&context_loader).unwrap();
         // assert that the detector found an abi encode packed
         assert!(found);
         // assert that the detector found the correct abi encode packed

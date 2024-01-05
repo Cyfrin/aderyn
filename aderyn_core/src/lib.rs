@@ -6,7 +6,6 @@ pub mod fscloc;
 pub mod report;
 pub mod visitor;
 
-use context::browser::ContextBrowser;
 use eyre::Result;
 use std::error::Error;
 use std::fs::{remove_file, File};
@@ -24,7 +23,6 @@ pub fn run_with_printer<T>(
     output_file_path: String,
     reporter: T,
     root_rel_path: PathBuf,
-    mut context_browser: ContextBrowser,
     no_snippets: bool,
 ) -> Result<(), Box<dyn Error>>
 where
@@ -38,7 +36,7 @@ where
 
     let mut report: Report = Report::default();
     for mut detector in detectors {
-        if let Ok(found) = detector.detect(context_loader, &mut context_browser) {
+        if let Ok(found) = detector.detect(context_loader) {
             if found {
                 let issue: Issue = Issue {
                     title: detector.title(),

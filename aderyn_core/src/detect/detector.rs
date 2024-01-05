@@ -1,5 +1,5 @@
 use crate::{
-    context::{browser::ContextBrowser, loader::ContextLoader},
+    context::loader::ContextLoader,
     detect::{
         high::{
             arbitrary_transfer_from::ArbitraryTransferFromDetector,
@@ -66,11 +66,7 @@ pub enum IssueSeverity {
 }
 
 pub trait Detector {
-    fn detect(
-        &mut self,
-        _loader: &ContextLoader,
-        __browser: &mut ContextBrowser,
-    ) -> Result<bool, Box<dyn Error>> {
+    fn detect(&mut self, _loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
         Ok(true)
     }
 

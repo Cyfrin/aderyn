@@ -1,10 +1,7 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
-    context::{
-        browser::ContextBrowser,
-        loader::{ASTNode, ContextLoader},
-    },
+    context::loader::{ASTNode, ContextLoader},
     detect::detector::{Detector, IssueSeverity},
 };
 use eyre::Result;
@@ -16,11 +13,7 @@ pub struct DeprecatedOZFunctionsDetector {
 }
 
 impl Detector for DeprecatedOZFunctionsDetector {
-    fn detect(
-        &mut self,
-        loader: &ContextLoader,
-        _browser: &mut ContextBrowser,
-    ) -> Result<bool, Box<dyn Error>> {
+    fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
         for identifier in loader.identifiers.keys() {
             // if source_unit has any ImportDirectives with absolute_path containing "openzeppelin"
             // call identifier.accept(self)
@@ -84,10 +77,7 @@ impl Detector for DeprecatedOZFunctionsDetector {
 
 #[cfg(test)]
 mod deprecated_oz_functions_tests {
-    use crate::{
-        context::browser::ContextBrowser,
-        detect::detector::{detector_test_helpers::load_contract, Detector},
-    };
+    use crate::detect::detector::{detector_test_helpers::load_contract, Detector};
 
     use super::DeprecatedOZFunctionsDetector;
 
@@ -97,13 +87,8 @@ mod deprecated_oz_functions_tests {
             "../tests/contract-playground/out/DeprecatedOZFunctions.sol/DeprecatedOZFunctions.json",
         );
 
-        let mut context_browser = ContextBrowser::default_from(&context_loader);
-        context_browser.build_parallel();
-
         let mut detector = DeprecatedOZFunctionsDetector::default();
-        let found = detector
-            .detect(&context_loader, &mut context_browser)
-            .unwrap();
+        let found = detector.detect(&context_loader).unwrap();
         // assert that the detector found an abi encode packed
         assert!(found);
         // assert that the detector found the correct number of instances

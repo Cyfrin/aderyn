@@ -1,10 +1,7 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
-    context::{
-        browser::ContextBrowser,
-        loader::{ASTNode, ContextLoader},
-    },
+    context::loader::{ASTNode, ContextLoader},
     detect::detector::{Detector, IssueSeverity},
 };
 use eyre::Result;
@@ -16,11 +13,7 @@ pub struct RequireWithStringDetector {
 }
 
 impl Detector for RequireWithStringDetector {
-    fn detect(
-        &mut self,
-        loader: &ContextLoader,
-        _browser: &mut ContextBrowser,
-    ) -> Result<bool, Box<dyn Error>> {
+    fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
         // Collect all require statements without a string literal.
         let requires_and_reverts = loader
             .identifiers
@@ -60,10 +53,7 @@ impl Detector for RequireWithStringDetector {
 
 #[cfg(test)]
 mod require_with_string_tests {
-    use crate::{
-        context::browser::ContextBrowser,
-        detect::detector::{detector_test_helpers::load_contract, Detector},
-    };
+    use crate::detect::detector::{detector_test_helpers::load_contract, Detector};
 
     use super::RequireWithStringDetector;
 
@@ -72,13 +62,10 @@ mod require_with_string_tests {
         let context_loader = load_contract(
             "../tests/contract-playground/out/DeprecatedOZFunctions.sol/DeprecatedOZFunctions.json",
         );
-        let mut context_browser = ContextBrowser::default_from(&context_loader);
-        context_browser.build_parallel();
+
         let mut detector = RequireWithStringDetector::default();
         // assert that the detector finds something
-        let found = detector
-            .detect(&context_loader, &mut context_browser)
-            .unwrap();
+        let found = detector.detect(&context_loader).unwrap();
         assert!(found);
         // assert that the detector returns the correct number of instances
         assert_eq!(detector.instances().len(), 2);
