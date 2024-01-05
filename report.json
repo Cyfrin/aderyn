@@ -57,6 +57,10 @@
         "n_sloc": 21
       },
       {
+        "file_path": "src/eth2/DepositContract.sol",
+        "n_sloc": 95
+      },
+      {
         "file_path": "src/inheritance/ExtendedInheritance.sol",
         "n_sloc": 17
       },
@@ -79,8 +83,8 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 552,
-    "total_source_units": 18
+    "total_sloc": 647,
+    "total_source_units": 19
   },
   "high_issues": {
     "issues": [
@@ -259,6 +263,18 @@
           {
             "contract_path": "src/StorageConditionals.sol",
             "line_no": 71
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 97
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 102
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 165
           }
         ],
         "title": "Conditional storage checks are not consistent"
@@ -541,6 +557,50 @@
             "line_no": 40
           },
           {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 102
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 108
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 111
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 124
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 125
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 128
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 129
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 131
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 134
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 148
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 165
+          },
+          {
             "contract_path": "src/inheritance/ExtendedInheritance.sol",
             "line_no": 15
           }
@@ -550,6 +610,10 @@
       {
         "description": "Index event fields make the field more quickly accessible to off-chain tools that parse events. However, note that each index field costs extra gas during emission, so it's not necessarily best to index the maximum allowed per event (three fields). Each event should use three indexed fields if there are three or more fields, and gas usage is not particularly of concern for the events in question. If there are fewer than three fields, all of the fields should be indexed.",
         "instances": [
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 50
+          },
           {
             "contract_path": "src/inheritance/ExtendedInheritance.sol",
             "line_no": 7
