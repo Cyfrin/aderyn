@@ -1,10 +1,12 @@
 use std::collections::BTreeMap;
 use std::error::Error;
 
-use crate::context::browser::MemberAccesses;
 use crate::{
     ast::MemberAccess,
-    context::loader::{ASTNode, ContextLoader},
+    context::{
+        browser::MemberAccessExtractor,
+        loader::{ASTNode, ContextLoader},
+    },
     detect::detector::{Detector, IssueSeverity},
 };
 use eyre::Result;
@@ -19,23 +21,28 @@ impl Detector for DelegateCallInLoopDetector {
     fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
         let mut member_accesses: Vec<MemberAccess> = vec![];
 
+        // Get all delegatecall member accesses inside for statements
         member_accesses.extend(loader.for_statements.keys().flat_map(|statement| {
-            let accesses: MemberAccesses = statement.into();
-            accesses.member_accesses
+            MemberAccessExtractor::from_node(statement)
+                .extracted
+                .into_iter()
+                .filter(|ma| ma.member_name == "delegatecall")
         }));
 
+        // Get all delegatecall member accsesses inside while statements
         member_accesses.extend(loader.while_statements.keys().flat_map(|statement| {
-            let accesses: MemberAccesses = statement.into();
-            accesses.member_accesses
+            MemberAccessExtractor::from_node(statement)
+                .extracted
+                .into_iter()
+                .filter(|ma| ma.member_name == "delegatecall")
         }));
 
+        // For each member access found, add them to found_instances
         for member_access in member_accesses {
-            if member_access.member_name == "delegatecall" {
-                self.found_instances.insert(
-                    loader.get_node_sort_key(&ASTNode::MemberAccess(member_access.clone())),
-                    member_access.src.clone(),
-                );
-            }
+            self.found_instances.insert(
+                loader.get_node_sort_key(&ASTNode::MemberAccess(member_access.clone())),
+                member_access.src.clone(),
+            );
         }
 
         Ok(!self.found_instances.is_empty())

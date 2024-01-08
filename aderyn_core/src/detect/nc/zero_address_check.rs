@@ -4,9 +4,9 @@ use std::{
 };
 
 use crate::{
-    ast::{Expression, Mutability, VariableDeclaration},
+    ast::{BinaryOperation, Expression, Mutability, VariableDeclaration},
     context::{
-        browser::{Assignments, BinaryChecks},
+        browser::BinaryOperationExtractor,
         loader::{ASTNode, ContextLoader},
     },
     detect::detector::{Detector, IssueSeverity},
@@ -55,20 +55,17 @@ impl Detector for ZeroAddressCheckDetector {
         // Get all function definitions
         for function_definition in loader.function_definitions.keys() {
             // Get all the binary checks inside the function
-            let binary_checks: BinaryChecks = function_definition.into();
+            let binary_operations: Vec<BinaryOperation> =
+                BinaryOperationExtractor::from_node(function_definition)
+                    .extracted
+                    .into_iter()
+                    .filter(|x| x.operator == "==" || x.operator == "!=")
+                    .collect();
 
             // Filter the binary checks and extract all node ids into a vector
             let mut binary_checks_against_zero_address = HashSet::new();
 
-            // HashSet where the key is the referenced_declaration in a binary operation that
-            // is checked against a zero address
-
-            let binary_checks = binary_checks
-                .checks
-                .iter()
-                .filter(|x| x.operator == "==" || x.operator == "!=");
-
-            for x in binary_checks {
+            for x in binary_operations {
                 if let Some(l_node_id) = x.l_node_id {
                     binary_checks_against_zero_address.insert(l_node_id);
                 }
