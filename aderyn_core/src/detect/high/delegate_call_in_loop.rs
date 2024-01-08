@@ -1,48 +1,48 @@
 use std::collections::BTreeMap;
 use std::error::Error;
 
-use crate::visitor::ast_visitor::Node;
 use crate::{
     ast::MemberAccess,
-    context::loader::{ASTNode, ContextLoader},
+    context::{
+        browser::MemberAccessExtractor,
+        loader::{ASTNode, ContextLoader},
+    },
     detect::detector::{Detector, IssueSeverity},
-    visitor::ast_visitor::ASTConstVisitor,
 };
 use eyre::Result;
 
 #[derive(Default)]
 pub struct DelegateCallInLoopDetector {
-    found_member_access: Vec<Option<ASTNode>>,
-
     // Keys are source file name and line number
     found_instances: BTreeMap<(String, usize), String>,
 }
 
-impl ASTConstVisitor for DelegateCallInLoopDetector {
-    fn visit_member_access(&mut self, node: &MemberAccess) -> Result<bool> {
-        if node.member_name == "delegatecall" {
-            self.found_member_access
-                .push(Some(ASTNode::MemberAccess(node.clone())));
-        }
-        Ok(true)
-    }
-}
-
 impl Detector for DelegateCallInLoopDetector {
     fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
-        for for_statement in loader.for_statements.keys() {
-            for_statement.accept(self)?;
-        }
-        for while_statement in loader.for_statements.keys() {
-            while_statement.accept(self)?;
-        }
-        for member_access in self.found_member_access.clone().into_iter().flatten() {
-            if let ASTNode::MemberAccess(member_access) = member_access {
-                self.found_instances.insert(
-                    loader.get_node_sort_key(&ASTNode::MemberAccess(member_access.clone())),
-                    member_access.src.clone(),
-                );
-            }
+        let mut member_accesses: Vec<MemberAccess> = vec![];
+
+        // Get all delegatecall member accesses inside for statements
+        member_accesses.extend(loader.for_statements.keys().flat_map(|statement| {
+            MemberAccessExtractor::from_node(statement)
+                .extracted
+                .into_iter()
+                .filter(|ma| ma.member_name == "delegatecall")
+        }));
+
+        // Get all delegatecall member accsesses inside while statements
+        member_accesses.extend(loader.while_statements.keys().flat_map(|statement| {
+            MemberAccessExtractor::from_node(statement)
+                .extracted
+                .into_iter()
+                .filter(|ma| ma.member_name == "delegatecall")
+        }));
+
+        // For each member access found, add them to found_instances
+        for member_access in member_accesses {
+            self.found_instances.insert(
+                loader.get_node_sort_key(&ASTNode::MemberAccess(member_access.clone())),
+                member_access.src.clone(),
+            );
         }
 
         Ok(!self.found_instances.is_empty())

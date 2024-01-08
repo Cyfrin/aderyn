@@ -1,32 +1,19 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
-    ast::{Literal, LiteralKind},
-    context::loader::{ASTNode, ContextLoader},
+    ast::LiteralKind,
+    context::{
+        browser::LiteralExtractor,
+        loader::{ASTNode, ContextLoader},
+    },
     detect::detector::{Detector, IssueSeverity},
-    visitor::ast_visitor::{ASTConstVisitor, Node},
 };
 use eyre::Result;
 
 #[derive(Default)]
 pub struct ConstantsInsteadOfLiteralsDetector {
-    found_literals: Vec<Option<ASTNode>>,
-
     // Keys are source file name and line number
     found_instances: BTreeMap<(String, usize), String>,
-}
-
-impl ASTConstVisitor for ConstantsInsteadOfLiteralsDetector {
-    fn visit_literal(&mut self, node: &Literal) -> Result<bool> {
-        if (node.kind == LiteralKind::Number && node.value != Some(String::from("0")))
-            || node.kind == LiteralKind::HexString
-            || node.kind == LiteralKind::Address
-        {
-            self.found_literals
-                .push(Some(ASTNode::Literal(node.clone())));
-        }
-        Ok(true)
-    }
 }
 
 impl Detector for ConstantsInsteadOfLiteralsDetector {
@@ -35,15 +22,21 @@ impl Detector for ConstantsInsteadOfLiteralsDetector {
         // for each function definition, find all Literal types
         // if the literal type is either a Number, HexString or Address, then add it to the list of found literals
         for function_definition in loader.function_definitions.keys() {
-            function_definition.accept(self)?;
-        }
-        for literal in self.found_literals.clone().into_iter().flatten() {
-            if let ASTNode::Literal(literal) = literal {
-                self.found_instances.insert(
-                    loader.get_node_sort_key(&ASTNode::Literal(literal.clone())),
-                    literal.src.clone(),
-                );
-            }
+            LiteralExtractor::from_node(function_definition)
+                .extracted
+                .iter()
+                .for_each(|literal| {
+                    if (literal.kind == LiteralKind::Number
+                        && literal.value != Some(String::from("0")))
+                        || literal.kind == LiteralKind::HexString
+                        || literal.kind == LiteralKind::Address
+                    {
+                        self.found_instances.insert(
+                            loader.get_node_sort_key(&ASTNode::Literal(literal.clone())),
+                            literal.src.clone(),
+                        );
+                    }
+                });
         }
 
         Ok(!self.found_instances.is_empty())
