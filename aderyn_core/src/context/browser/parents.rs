@@ -1,15 +1,24 @@
 use crate::{ast::*, context::loader::ContextLoader};
 
-pub trait SeekParent {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit>;
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition>;
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition>;
-    fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition>;
+pub trait GetParent {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit>;
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition>;
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition>;
+    fn modifier_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ModifierDefinition>;
 }
 
-// ArrayTypeName SeekParent allows us to finction an ArrayTypeName's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for ArrayTypeName {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// ArrayTypeName GetParent allows us to finction an ArrayTypeName's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for ArrayTypeName {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.array_type_names.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -18,7 +27,10 @@ impl SeekParent for ArrayTypeName {
         })
     }
 
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.array_type_names.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -30,7 +42,10 @@ impl SeekParent for ArrayTypeName {
         })
     }
 
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader.array_type_names.get(self).and_then(move |x| {
             x.function_definition_id?;
             loader
@@ -42,7 +57,10 @@ impl SeekParent for ArrayTypeName {
         })
     }
 
-    fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
+    fn modifier_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ModifierDefinition> {
         loader.array_type_names.get(self).and_then(move |x| {
             x.modifier_definition_id?;
             loader
@@ -55,9 +73,9 @@ impl SeekParent for ArrayTypeName {
     }
 }
 
-// Assignment SeekParent allows us to finction an Assignment's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for Assignment {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// Assignment GetParent allows us to finction an Assignment's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for Assignment {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.assignments.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -66,7 +84,10 @@ impl SeekParent for Assignment {
         })
     }
 
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.assignments.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -78,7 +99,10 @@ impl SeekParent for Assignment {
         })
     }
 
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader.assignments.get(self).and_then(move |x| {
             x.function_definition_id?;
             loader
@@ -90,7 +114,10 @@ impl SeekParent for Assignment {
         })
     }
 
-    fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
+    fn modifier_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ModifierDefinition> {
         loader.assignments.get(self).and_then(move |x| {
             x.modifier_definition_id?;
             loader
@@ -103,9 +130,9 @@ impl SeekParent for Assignment {
     }
 }
 
-// BinaryOperation SeekParent allows us to finction an BinaryOperation's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for BinaryOperation {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// BinaryOperation GetParent allows us to finction an BinaryOperation's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for BinaryOperation {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.binary_operations.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -114,7 +141,10 @@ impl SeekParent for BinaryOperation {
         })
     }
 
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.binary_operations.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -126,7 +156,10 @@ impl SeekParent for BinaryOperation {
         })
     }
 
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader.binary_operations.get(self).and_then(move |x| {
             x.function_definition_id?;
             loader
@@ -138,7 +171,10 @@ impl SeekParent for BinaryOperation {
         })
     }
 
-    fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
+    fn modifier_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ModifierDefinition> {
         loader.binary_operations.get(self).and_then(move |x| {
             x.modifier_definition_id?;
             loader
@@ -151,9 +187,9 @@ impl SeekParent for BinaryOperation {
     }
 }
 
-// Block SeekParent allows us to finction an Block's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for Block {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// Block GetParent allows us to finction an Block's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for Block {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.blocks.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -162,7 +198,10 @@ impl SeekParent for Block {
         })
     }
 
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.blocks.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -174,7 +213,10 @@ impl SeekParent for Block {
         })
     }
 
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader.blocks.get(self).and_then(move |x| {
             x.function_definition_id?;
             loader
@@ -186,7 +228,10 @@ impl SeekParent for Block {
         })
     }
 
-    fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
+    fn modifier_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ModifierDefinition> {
         loader.blocks.get(self).and_then(move |x| {
             x.modifier_definition_id?;
             loader
@@ -199,9 +244,9 @@ impl SeekParent for Block {
     }
 }
 
-// Conditional SeekParent allows us to finction an Conditional's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for Conditional {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// Conditional GetParent allows us to finction an Conditional's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for Conditional {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.conditionals.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -210,7 +255,10 @@ impl SeekParent for Conditional {
         })
     }
 
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.conditionals.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -222,7 +270,10 @@ impl SeekParent for Conditional {
         })
     }
 
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader.conditionals.get(self).and_then(move |x| {
             x.function_definition_id?;
             loader
@@ -234,7 +285,10 @@ impl SeekParent for Conditional {
         })
     }
 
-    fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
+    fn modifier_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ModifierDefinition> {
         loader.conditionals.get(self).and_then(move |x| {
             x.modifier_definition_id?;
             loader
@@ -247,9 +301,9 @@ impl SeekParent for Conditional {
     }
 }
 
-// ContractDefinition SeekParent allows us to finction an ContractDefinition's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for ContractDefinition {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// ContractDefinition GetParent allows us to finction an ContractDefinition's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for ContractDefinition {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.contract_definitions.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -258,21 +312,21 @@ impl SeekParent for ContractDefinition {
         })
     }
 
-    fn contract_definition<'a>(
+    fn contract_definition_of<'a>(
         &self,
         _loader: &'a ContextLoader,
     ) -> Option<&'a ContractDefinition> {
         None
     }
 
-    fn function_definition<'a>(
+    fn function_definition_of<'a>(
         &self,
         _loader: &'a ContextLoader,
     ) -> Option<&'a FunctionDefinition> {
         None
     }
 
-    fn modifier_definition<'a>(
+    fn modifier_definition_of<'a>(
         &self,
         _loader: &'a ContextLoader,
     ) -> Option<&'a ModifierDefinition> {
@@ -280,9 +334,9 @@ impl SeekParent for ContractDefinition {
     }
 }
 
-// ElementaryTypeName SeekParent allows us to finction an ElementaryTypeName's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for ElementaryTypeName {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// ElementaryTypeName GetParent allows us to finction an ElementaryTypeName's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for ElementaryTypeName {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.elementary_type_names.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -291,7 +345,10 @@ impl SeekParent for ElementaryTypeName {
         })
     }
 
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.elementary_type_names.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -303,7 +360,10 @@ impl SeekParent for ElementaryTypeName {
         })
     }
 
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader.elementary_type_names.get(self).and_then(move |x| {
             x.function_definition_id?;
             loader
@@ -315,7 +375,10 @@ impl SeekParent for ElementaryTypeName {
         })
     }
 
-    fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
+    fn modifier_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ModifierDefinition> {
         loader.elementary_type_names.get(self).and_then(move |x| {
             x.modifier_definition_id?;
             loader
@@ -328,9 +391,9 @@ impl SeekParent for ElementaryTypeName {
     }
 }
 
-// ElementaryTypeNameExpression SeekParent allows us to finction an ElementaryTypeNameExpression's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for ElementaryTypeNameExpression {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// ElementaryTypeNameExpression GetParent allows us to finction an ElementaryTypeNameExpression's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for ElementaryTypeNameExpression {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader
             .elementary_type_name_expressions
             .get(self)
@@ -342,7 +405,10 @@ impl SeekParent for ElementaryTypeNameExpression {
             })
     }
 
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader
             .elementary_type_name_expressions
             .get(self)
@@ -357,7 +423,10 @@ impl SeekParent for ElementaryTypeNameExpression {
             })
     }
 
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader
             .elementary_type_name_expressions
             .get(self)
@@ -372,7 +441,10 @@ impl SeekParent for ElementaryTypeNameExpression {
             })
     }
 
-    fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
+    fn modifier_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ModifierDefinition> {
         loader
             .elementary_type_name_expressions
             .get(self)
@@ -388,9 +460,9 @@ impl SeekParent for ElementaryTypeNameExpression {
     }
 }
 
-// EmitStatement SeekParent allows us to finction an EmitStatement's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for EmitStatement {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// EmitStatement GetParent allows us to finction an EmitStatement's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for EmitStatement {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.emit_statements.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -399,7 +471,10 @@ impl SeekParent for EmitStatement {
         })
     }
 
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.emit_statements.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -411,7 +486,10 @@ impl SeekParent for EmitStatement {
         })
     }
 
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader.emit_statements.get(self).and_then(move |x| {
             x.function_definition_id?;
             loader
@@ -423,7 +501,10 @@ impl SeekParent for EmitStatement {
         })
     }
 
-    fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
+    fn modifier_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ModifierDefinition> {
         loader.emit_statements.get(self).and_then(move |x| {
             x.modifier_definition_id?;
             loader
@@ -436,9 +517,9 @@ impl SeekParent for EmitStatement {
     }
 }
 
-// EnumDefinition SeekParent allows us to finction an EnumDefinition's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for EnumDefinition {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// EnumDefinition GetParent allows us to finction an EnumDefinition's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for EnumDefinition {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.enum_definitions.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -447,7 +528,10 @@ impl SeekParent for EnumDefinition {
         })
     }
 
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.enum_definitions.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -459,14 +543,14 @@ impl SeekParent for EnumDefinition {
         })
     }
 
-    fn function_definition<'a>(
+    fn function_definition_of<'a>(
         &self,
         _loader: &'a ContextLoader,
     ) -> Option<&'a FunctionDefinition> {
         None
     }
 
-    fn modifier_definition<'a>(
+    fn modifier_definition_of<'a>(
         &self,
         _loader: &'a ContextLoader,
     ) -> Option<&'a ModifierDefinition> {
@@ -474,9 +558,9 @@ impl SeekParent for EnumDefinition {
     }
 }
 
-// EnumValue SeekParent allows us to finction an EnumValue's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for EnumValue {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// EnumValue GetParent allows us to finction an EnumValue's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for EnumValue {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.enum_values.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -485,7 +569,10 @@ impl SeekParent for EnumValue {
         })
     }
 
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.enum_values.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -497,14 +584,14 @@ impl SeekParent for EnumValue {
         })
     }
 
-    fn function_definition<'a>(
+    fn function_definition_of<'a>(
         &self,
         _loader: &'a ContextLoader,
     ) -> Option<&'a FunctionDefinition> {
         None
     }
 
-    fn modifier_definition<'a>(
+    fn modifier_definition_of<'a>(
         &self,
         _loader: &'a ContextLoader,
     ) -> Option<&'a ModifierDefinition> {
@@ -512,9 +599,9 @@ impl SeekParent for EnumValue {
     }
 }
 
-// EventDefinition SeekParent allows us to finction an EventDefinition's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for EventDefinition {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// EventDefinition GetParent allows us to finction an EventDefinition's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for EventDefinition {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.event_definitions.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -523,7 +610,10 @@ impl SeekParent for EventDefinition {
         })
     }
 
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.event_definitions.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -535,14 +625,14 @@ impl SeekParent for EventDefinition {
         })
     }
 
-    fn function_definition<'a>(
+    fn function_definition_of<'a>(
         &self,
         _loader: &'a ContextLoader,
     ) -> Option<&'a FunctionDefinition> {
         None
     }
 
-    fn modifier_definition<'a>(
+    fn modifier_definition_of<'a>(
         &self,
         _loader: &'a ContextLoader,
     ) -> Option<&'a ModifierDefinition> {
@@ -550,9 +640,9 @@ impl SeekParent for EventDefinition {
     }
 }
 
-// ErrorDefinition SeekParent allows us to finction an ErrorDefinition's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for ErrorDefinition {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// ErrorDefinition GetParent allows us to finction an ErrorDefinition's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for ErrorDefinition {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.error_definitions.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -561,7 +651,10 @@ impl SeekParent for ErrorDefinition {
         })
     }
 
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.error_definitions.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -573,14 +666,14 @@ impl SeekParent for ErrorDefinition {
         })
     }
 
-    fn function_definition<'a>(
+    fn function_definition_of<'a>(
         &self,
         _loader: &'a ContextLoader,
     ) -> Option<&'a FunctionDefinition> {
         None
     }
 
-    fn modifier_definition<'a>(
+    fn modifier_definition_of<'a>(
         &self,
         _loader: &'a ContextLoader,
     ) -> Option<&'a ModifierDefinition> {
@@ -588,9 +681,9 @@ impl SeekParent for ErrorDefinition {
     }
 }
 
-// ExpressionStatement SeekParent allows us to finction an ExpressionStatement's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for ExpressionStatement {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// ExpressionStatement GetParent allows us to finction an ExpressionStatement's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for ExpressionStatement {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.expression_statements.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -599,7 +692,10 @@ impl SeekParent for ExpressionStatement {
         })
     }
 
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.expression_statements.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -611,7 +707,10 @@ impl SeekParent for ExpressionStatement {
         })
     }
 
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader.expression_statements.get(self).and_then(move |x| {
             x.function_definition_id?;
             loader
@@ -623,7 +722,10 @@ impl SeekParent for ExpressionStatement {
         })
     }
 
-    fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
+    fn modifier_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ModifierDefinition> {
         loader.expression_statements.get(self).and_then(move |x| {
             x.modifier_definition_id?;
             loader
@@ -636,9 +738,9 @@ impl SeekParent for ExpressionStatement {
     }
 }
 
-// FunctionCall SeekParent allows us to finction an FunctionCall's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for FunctionCall {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// FunctionCall GetParent allows us to finction an FunctionCall's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for FunctionCall {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.function_calls.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -647,7 +749,10 @@ impl SeekParent for FunctionCall {
         })
     }
 
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.function_calls.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -659,7 +764,10 @@ impl SeekParent for FunctionCall {
         })
     }
 
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader.function_calls.get(self).and_then(move |x| {
             x.function_definition_id?;
             loader
@@ -671,7 +779,10 @@ impl SeekParent for FunctionCall {
         })
     }
 
-    fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
+    fn modifier_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ModifierDefinition> {
         loader.function_calls.get(self).and_then(move |x| {
             x.modifier_definition_id?;
             loader
@@ -684,9 +795,9 @@ impl SeekParent for FunctionCall {
     }
 }
 
-// FunctionCallOptions SeekParent allows us to finction an FunctionCallOptions' parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for FunctionCallOptions {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// FunctionCallOptions GetParent allows us to finction an FunctionCallOptions' parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for FunctionCallOptions {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.function_call_options.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -695,7 +806,10 @@ impl SeekParent for FunctionCallOptions {
         })
     }
 
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.function_call_options.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -707,7 +821,10 @@ impl SeekParent for FunctionCallOptions {
         })
     }
 
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader.function_call_options.get(self).and_then(move |x| {
             x.function_definition_id?;
             loader
@@ -719,7 +836,10 @@ impl SeekParent for FunctionCallOptions {
         })
     }
 
-    fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
+    fn modifier_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ModifierDefinition> {
         loader.function_call_options.get(self).and_then(move |x| {
             x.modifier_definition_id?;
             loader
@@ -732,9 +852,9 @@ impl SeekParent for FunctionCallOptions {
     }
 }
 
-// FunctionDefinition SeekParent allows us to finction an FunctionDefinition's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for FunctionDefinition {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// FunctionDefinition GetParent allows us to finction an FunctionDefinition's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for FunctionDefinition {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.function_definitions.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -742,7 +862,10 @@ impl SeekParent for FunctionDefinition {
                 .find(|source_unit| source_unit.id == x.source_unit_id)
         })
     }
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.function_definitions.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -753,13 +876,13 @@ impl SeekParent for FunctionDefinition {
                 })
         })
     }
-    fn function_definition<'a>(
+    fn function_definition_of<'a>(
         &self,
         _loader: &'a ContextLoader,
     ) -> Option<&'a FunctionDefinition> {
         None
     }
-    fn modifier_definition<'a>(
+    fn modifier_definition_of<'a>(
         &self,
         _loader: &'a ContextLoader,
     ) -> Option<&'a ModifierDefinition> {
@@ -767,9 +890,9 @@ impl SeekParent for FunctionDefinition {
     }
 }
 
-// FunctionTypeName SeekParent allows us to finction an FunctionTypeName's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for FunctionTypeName {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// FunctionTypeName GetParent allows us to finction an FunctionTypeName's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for FunctionTypeName {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.function_type_names.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -777,7 +900,10 @@ impl SeekParent for FunctionTypeName {
                 .find(|source_unit| source_unit.id == x.source_unit_id)
         })
     }
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.function_type_names.get(self).and_then(move |x| {
             loader
                 .contract_definitions
@@ -788,7 +914,10 @@ impl SeekParent for FunctionTypeName {
         })
     }
 
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader.function_type_names.get(self).and_then(move |x| {
             x.function_definition_id?;
             loader
@@ -800,7 +929,10 @@ impl SeekParent for FunctionTypeName {
         })
     }
 
-    fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
+    fn modifier_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ModifierDefinition> {
         loader.function_type_names.get(self).and_then(move |x| {
             x.modifier_definition_id?;
             loader
@@ -813,9 +945,9 @@ impl SeekParent for FunctionTypeName {
     }
 }
 
-// ForStatement SeekParent allows us to finction an ForStatement's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for ForStatement {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// ForStatement GetParent allows us to finction an ForStatement's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for ForStatement {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.for_statements.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -823,7 +955,10 @@ impl SeekParent for ForStatement {
                 .find(|source_unit| source_unit.id == x.source_unit_id)
         })
     }
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.for_statements.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -834,7 +969,10 @@ impl SeekParent for ForStatement {
                 })
         })
     }
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader.for_statements.get(self).and_then(move |x| {
             x.function_definition_id?;
             loader
@@ -845,7 +983,10 @@ impl SeekParent for ForStatement {
                 })
         })
     }
-    fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
+    fn modifier_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ModifierDefinition> {
         loader.for_statements.get(self).and_then(move |x| {
             x.modifier_definition_id?;
             loader
@@ -858,9 +999,9 @@ impl SeekParent for ForStatement {
     }
 }
 
-// Identifier SeekParent allows us to finction an Identifier's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for Identifier {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// Identifier GetParent allows us to finction an Identifier's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for Identifier {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.identifiers.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -868,7 +1009,10 @@ impl SeekParent for Identifier {
                 .find(|source_unit| source_unit.id == x.source_unit_id)
         })
     }
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.identifiers.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -879,7 +1023,10 @@ impl SeekParent for Identifier {
                 })
         })
     }
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader.identifiers.get(self).and_then(move |x| {
             x.function_definition_id?;
             loader
@@ -890,7 +1037,10 @@ impl SeekParent for Identifier {
                 })
         })
     }
-    fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
+    fn modifier_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ModifierDefinition> {
         loader.identifiers.get(self).and_then(move |x| {
             x.modifier_definition_id?;
             loader
@@ -903,9 +1053,9 @@ impl SeekParent for Identifier {
     }
 }
 
-// IdentifierPath SeekParent allows us to finction an IdentifierPath's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for IdentifierPath {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// IdentifierPath GetParent allows us to finction an IdentifierPath's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for IdentifierPath {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.identifier_paths.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -914,7 +1064,10 @@ impl SeekParent for IdentifierPath {
         })
     }
 
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.identifier_paths.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -926,7 +1079,10 @@ impl SeekParent for IdentifierPath {
         })
     }
 
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader.identifier_paths.get(self).and_then(move |x| {
             x.function_definition_id?;
             loader
@@ -938,7 +1094,10 @@ impl SeekParent for IdentifierPath {
         })
     }
 
-    fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
+    fn modifier_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ModifierDefinition> {
         loader.identifier_paths.get(self).and_then(move |x| {
             x.modifier_definition_id?;
             loader
@@ -951,9 +1110,9 @@ impl SeekParent for IdentifierPath {
     }
 }
 
-// IfStatement SeekParent allows us to finction an IfStatement's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for IfStatement {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// IfStatement GetParent allows us to finction an IfStatement's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for IfStatement {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.if_statements.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -961,7 +1120,10 @@ impl SeekParent for IfStatement {
                 .find(|source_unit| source_unit.id == x.source_unit_id)
         })
     }
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.if_statements.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -972,7 +1134,10 @@ impl SeekParent for IfStatement {
                 })
         })
     }
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader.if_statements.get(self).and_then(move |x| {
             x.function_definition_id?;
             loader
@@ -983,7 +1148,10 @@ impl SeekParent for IfStatement {
                 })
         })
     }
-    fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
+    fn modifier_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ModifierDefinition> {
         loader.if_statements.get(self).and_then(move |x| {
             x.modifier_definition_id?;
             loader
@@ -996,9 +1164,9 @@ impl SeekParent for IfStatement {
     }
 }
 
-// ImportDirective SeekParent allows us to finction an ImportDirective's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for ImportDirective {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// ImportDirective GetParent allows us to finction an ImportDirective's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for ImportDirective {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.import_directives.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -1006,7 +1174,10 @@ impl SeekParent for ImportDirective {
                 .find(|source_unit| source_unit.id == x.source_unit_id)
         })
     }
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.import_directives.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -1017,7 +1188,10 @@ impl SeekParent for ImportDirective {
                 })
         })
     }
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader.import_directives.get(self).and_then(move |x| {
             x.function_definition_id?;
             loader
@@ -1028,7 +1202,10 @@ impl SeekParent for ImportDirective {
                 })
         })
     }
-    fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
+    fn modifier_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ModifierDefinition> {
         loader.import_directives.get(self).and_then(move |x| {
             x.modifier_definition_id?;
             loader
@@ -1041,9 +1218,9 @@ impl SeekParent for ImportDirective {
     }
 }
 
-// IndexAccess SeekParent allows us to finction an IndexAccess's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for IndexAccess {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// IndexAccess GetParent allows us to finction an IndexAccess's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for IndexAccess {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.index_accesses.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -1051,7 +1228,10 @@ impl SeekParent for IndexAccess {
                 .find(|source_unit| source_unit.id == x.source_unit_id)
         })
     }
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.index_accesses.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -1062,7 +1242,10 @@ impl SeekParent for IndexAccess {
                 })
         })
     }
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader.index_accesses.get(self).and_then(move |x| {
             x.function_definition_id?;
             loader
@@ -1073,7 +1256,10 @@ impl SeekParent for IndexAccess {
                 })
         })
     }
-    fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
+    fn modifier_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ModifierDefinition> {
         loader.index_accesses.get(self).and_then(move |x| {
             x.modifier_definition_id?;
             loader
@@ -1086,9 +1272,9 @@ impl SeekParent for IndexAccess {
     }
 }
 
-// IndexRangeAccess SeekParent allows us to finction an IndexRangeAccess's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for IndexRangeAccess {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// IndexRangeAccess GetParent allows us to finction an IndexRangeAccess's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for IndexRangeAccess {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.index_range_accesses.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -1096,7 +1282,10 @@ impl SeekParent for IndexRangeAccess {
                 .find(|source_unit| source_unit.id == x.source_unit_id)
         })
     }
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.index_range_accesses.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -1107,7 +1296,10 @@ impl SeekParent for IndexRangeAccess {
                 })
         })
     }
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader.index_range_accesses.get(self).and_then(move |x| {
             x.function_definition_id?;
             loader
@@ -1118,7 +1310,10 @@ impl SeekParent for IndexRangeAccess {
                 })
         })
     }
-    fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
+    fn modifier_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ModifierDefinition> {
         loader.index_range_accesses.get(self).and_then(move |x| {
             x.modifier_definition_id?;
             loader
@@ -1131,9 +1326,9 @@ impl SeekParent for IndexRangeAccess {
     }
 }
 
-// InheritanceSpecifier SeekParent allows us to finction an InheritanceSpecifier's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for InheritanceSpecifier {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// InheritanceSpecifier GetParent allows us to finction an InheritanceSpecifier's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for InheritanceSpecifier {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.inheritance_specifiers.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -1141,7 +1336,10 @@ impl SeekParent for InheritanceSpecifier {
                 .find(|source_unit| source_unit.id == x.source_unit_id)
         })
     }
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.inheritance_specifiers.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -1152,13 +1350,13 @@ impl SeekParent for InheritanceSpecifier {
                 })
         })
     }
-    fn function_definition<'a>(
+    fn function_definition_of<'a>(
         &self,
         _loader: &'a ContextLoader,
     ) -> Option<&'a FunctionDefinition> {
         None
     }
-    fn modifier_definition<'a>(
+    fn modifier_definition_of<'a>(
         &self,
         _loader: &'a ContextLoader,
     ) -> Option<&'a ModifierDefinition> {
@@ -1166,9 +1364,9 @@ impl SeekParent for InheritanceSpecifier {
     }
 }
 
-// InlineAssembly SeekParent allows us to finction an InlineAssembly's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for InlineAssembly {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// InlineAssembly GetParent allows us to finction an InlineAssembly's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for InlineAssembly {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.inline_assemblies.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -1177,7 +1375,10 @@ impl SeekParent for InlineAssembly {
         })
     }
 
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.inline_assemblies.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -1189,7 +1390,10 @@ impl SeekParent for InlineAssembly {
         })
     }
 
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader.inline_assemblies.get(self).and_then(move |x| {
             x.function_definition_id?;
             loader
@@ -1201,7 +1405,10 @@ impl SeekParent for InlineAssembly {
         })
     }
 
-    fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
+    fn modifier_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ModifierDefinition> {
         loader.inline_assemblies.get(self).and_then(move |x| {
             x.modifier_definition_id?;
             loader
@@ -1214,9 +1421,9 @@ impl SeekParent for InlineAssembly {
     }
 }
 
-// Literal SeekParent allows us to finction an Literal's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for Literal {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// Literal GetParent allows us to finction an Literal's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for Literal {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.literals.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -1224,7 +1431,10 @@ impl SeekParent for Literal {
                 .find(|source_unit| source_unit.id == x.source_unit_id)
         })
     }
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.literals.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -1235,7 +1445,10 @@ impl SeekParent for Literal {
                 })
         })
     }
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader.literals.get(self).and_then(move |x| {
             x.function_definition_id?;
             loader
@@ -1246,7 +1459,10 @@ impl SeekParent for Literal {
                 })
         })
     }
-    fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
+    fn modifier_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ModifierDefinition> {
         loader.literals.get(self).and_then(move |x| {
             x.modifier_definition_id?;
             loader
@@ -1259,9 +1475,9 @@ impl SeekParent for Literal {
     }
 }
 
-// MemberAccess SeekParent allows us to finction an MemberAccess's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for MemberAccess {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// MemberAccess GetParent allows us to finction an MemberAccess's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for MemberAccess {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.member_accesses.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -1269,7 +1485,10 @@ impl SeekParent for MemberAccess {
                 .find(|source_unit| source_unit.id == x.source_unit_id)
         })
     }
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.member_accesses.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -1280,7 +1499,10 @@ impl SeekParent for MemberAccess {
                 })
         })
     }
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader.member_accesses.get(self).and_then(move |x| {
             x.function_definition_id?;
             loader
@@ -1291,7 +1513,10 @@ impl SeekParent for MemberAccess {
                 })
         })
     }
-    fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
+    fn modifier_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ModifierDefinition> {
         loader.member_accesses.get(self).and_then(move |x| {
             x.modifier_definition_id?;
             loader
@@ -1304,9 +1529,9 @@ impl SeekParent for MemberAccess {
     }
 }
 
-// NewExpression SeekParent allows us to finction an NewExpression's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for NewExpression {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// NewExpression GetParent allows us to finction an NewExpression's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for NewExpression {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.new_expressions.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -1314,7 +1539,10 @@ impl SeekParent for NewExpression {
                 .find(|source_unit| source_unit.id == x.source_unit_id)
         })
     }
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.new_expressions.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -1325,7 +1553,10 @@ impl SeekParent for NewExpression {
                 })
         })
     }
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader.new_expressions.get(self).and_then(move |x| {
             x.function_definition_id?;
             loader
@@ -1336,7 +1567,10 @@ impl SeekParent for NewExpression {
                 })
         })
     }
-    fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
+    fn modifier_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ModifierDefinition> {
         loader.new_expressions.get(self).and_then(move |x| {
             x.modifier_definition_id?;
             loader
@@ -1349,9 +1583,9 @@ impl SeekParent for NewExpression {
     }
 }
 
-// Mapping SeekParent allows us to finction an Mapping's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for Mapping {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// Mapping GetParent allows us to finction an Mapping's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for Mapping {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.mappings.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -1359,7 +1593,10 @@ impl SeekParent for Mapping {
                 .find(|source_unit| source_unit.id == x.source_unit_id)
         })
     }
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.mappings.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -1370,7 +1607,10 @@ impl SeekParent for Mapping {
                 })
         })
     }
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader.mappings.get(self).and_then(move |x| {
             x.function_definition_id?;
             loader
@@ -1381,7 +1621,10 @@ impl SeekParent for Mapping {
                 })
         })
     }
-    fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
+    fn modifier_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ModifierDefinition> {
         loader.mappings.get(self).and_then(move |x| {
             x.modifier_definition_id?;
             loader
@@ -1394,9 +1637,9 @@ impl SeekParent for Mapping {
     }
 }
 
-// ModifierDefinition SeekParent allows us to finction an ModifierDefinition's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for ModifierDefinition {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// ModifierDefinition GetParent allows us to finction an ModifierDefinition's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for ModifierDefinition {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.modifier_definitions.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -1404,7 +1647,10 @@ impl SeekParent for ModifierDefinition {
                 .find(|source_unit| source_unit.id == x.source_unit_id)
         })
     }
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.modifier_definitions.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -1415,7 +1661,10 @@ impl SeekParent for ModifierDefinition {
                 })
         })
     }
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader.modifier_definitions.get(self).and_then(move |x| {
             x.function_definition_id?;
             loader
@@ -1426,7 +1675,7 @@ impl SeekParent for ModifierDefinition {
                 })
         })
     }
-    fn modifier_definition<'a>(
+    fn modifier_definition_of<'a>(
         &self,
         _loader: &'a ContextLoader,
     ) -> Option<&'a ModifierDefinition> {
@@ -1434,9 +1683,9 @@ impl SeekParent for ModifierDefinition {
     }
 }
 
-// ModifierInvocation SeekParent allows us to finction an ModifierInvocation's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for ModifierInvocation {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// ModifierInvocation GetParent allows us to finction an ModifierInvocation's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for ModifierInvocation {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.modifier_invocations.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -1444,7 +1693,10 @@ impl SeekParent for ModifierInvocation {
                 .find(|source_unit| source_unit.id == x.source_unit_id)
         })
     }
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.modifier_invocations.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -1455,7 +1707,10 @@ impl SeekParent for ModifierInvocation {
                 })
         })
     }
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader.modifier_invocations.get(self).and_then(move |x| {
             x.function_definition_id?;
             loader
@@ -1466,7 +1721,7 @@ impl SeekParent for ModifierInvocation {
                 })
         })
     }
-    fn modifier_definition<'a>(
+    fn modifier_definition_of<'a>(
         &self,
         _loader: &'a ContextLoader,
     ) -> Option<&'a ModifierDefinition> {
@@ -1474,9 +1729,9 @@ impl SeekParent for ModifierInvocation {
     }
 }
 
-// OverrideSpecifier SeekParent allows us to finction an OverrideSpecifier's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for OverrideSpecifier {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// OverrideSpecifier GetParent allows us to finction an OverrideSpecifier's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for OverrideSpecifier {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.override_specifiers.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -1484,7 +1739,10 @@ impl SeekParent for OverrideSpecifier {
                 .find(|source_unit| source_unit.id == x.source_unit_id)
         })
     }
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.override_specifiers.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -1495,7 +1753,10 @@ impl SeekParent for OverrideSpecifier {
                 })
         })
     }
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader.override_specifiers.get(self).and_then(move |x| {
             x.function_definition_id?;
             loader
@@ -1506,7 +1767,10 @@ impl SeekParent for OverrideSpecifier {
                 })
         })
     }
-    fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
+    fn modifier_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ModifierDefinition> {
         loader.override_specifiers.get(self).and_then(move |x| {
             x.modifier_definition_id?;
             loader
@@ -1519,9 +1783,9 @@ impl SeekParent for OverrideSpecifier {
     }
 }
 
-// ParameterList SeekParent allows us to finction an ParameterList's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for ParameterList {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// ParameterList GetParent allows us to finction an ParameterList's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for ParameterList {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.parameter_lists.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -1529,7 +1793,10 @@ impl SeekParent for ParameterList {
                 .find(|source_unit| source_unit.id == x.source_unit_id)
         })
     }
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.parameter_lists.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -1540,7 +1807,10 @@ impl SeekParent for ParameterList {
                 })
         })
     }
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader.parameter_lists.get(self).and_then(move |x| {
             x.function_definition_id?;
             loader
@@ -1551,7 +1821,10 @@ impl SeekParent for ParameterList {
                 })
         })
     }
-    fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
+    fn modifier_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ModifierDefinition> {
         loader.parameter_lists.get(self).and_then(move |x| {
             x.modifier_definition_id?;
             loader
@@ -1564,9 +1837,9 @@ impl SeekParent for ParameterList {
     }
 }
 
-// PragmaDirective SeekParent allows us to finction an PragmaDirective's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for PragmaDirective {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// PragmaDirective GetParent allows us to finction an PragmaDirective's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for PragmaDirective {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.pragma_directives.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -1574,19 +1847,19 @@ impl SeekParent for PragmaDirective {
                 .find(|source_unit| source_unit.id == x.source_unit_id)
         })
     }
-    fn contract_definition<'a>(
+    fn contract_definition_of<'a>(
         &self,
         _loader: &'a ContextLoader,
     ) -> Option<&'a ContractDefinition> {
         None
     }
-    fn function_definition<'a>(
+    fn function_definition_of<'a>(
         &self,
         _loader: &'a ContextLoader,
     ) -> Option<&'a FunctionDefinition> {
         None
     }
-    fn modifier_definition<'a>(
+    fn modifier_definition_of<'a>(
         &self,
         _loader: &'a ContextLoader,
     ) -> Option<&'a ModifierDefinition> {
@@ -1594,9 +1867,9 @@ impl SeekParent for PragmaDirective {
     }
 }
 
-// Return SeekParent allows us to finction an Return's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for Return {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// Return GetParent allows us to finction an Return's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for Return {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.returns.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -1604,7 +1877,10 @@ impl SeekParent for Return {
                 .find(|source_unit| source_unit.id == x.source_unit_id)
         })
     }
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.returns.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -1615,7 +1891,10 @@ impl SeekParent for Return {
                 })
         })
     }
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader.returns.get(self).and_then(move |x| {
             x.function_definition_id?;
             loader
@@ -1626,7 +1905,10 @@ impl SeekParent for Return {
                 })
         })
     }
-    fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
+    fn modifier_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ModifierDefinition> {
         loader.returns.get(self).and_then(move |x| {
             x.modifier_definition_id?;
             loader
@@ -1639,9 +1921,9 @@ impl SeekParent for Return {
     }
 }
 
-// RevertStatement SeekParent allows us to finction an RevertStatement's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for RevertStatement {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// RevertStatement GetParent allows us to finction an RevertStatement's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for RevertStatement {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.revert_statements.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -1649,7 +1931,10 @@ impl SeekParent for RevertStatement {
                 .find(|source_unit| source_unit.id == x.source_unit_id)
         })
     }
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.revert_statements.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -1660,7 +1945,10 @@ impl SeekParent for RevertStatement {
                 })
         })
     }
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader.revert_statements.get(self).and_then(move |x| {
             x.function_definition_id?;
             loader
@@ -1671,7 +1959,10 @@ impl SeekParent for RevertStatement {
                 })
         })
     }
-    fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
+    fn modifier_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ModifierDefinition> {
         loader.revert_statements.get(self).and_then(move |x| {
             x.modifier_definition_id?;
             loader
@@ -1684,9 +1975,9 @@ impl SeekParent for RevertStatement {
     }
 }
 
-// StructDefinition SeekParent allows us to finction an StructDefinition's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for StructDefinition {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// StructDefinition GetParent allows us to finction an StructDefinition's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for StructDefinition {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.struct_definitions.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -1694,7 +1985,10 @@ impl SeekParent for StructDefinition {
                 .find(|source_unit| source_unit.id == x.source_unit_id)
         })
     }
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.struct_definitions.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -1705,7 +1999,10 @@ impl SeekParent for StructDefinition {
                 })
         })
     }
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader.struct_definitions.get(self).and_then(move |x| {
             x.function_definition_id?;
             loader
@@ -1716,7 +2013,10 @@ impl SeekParent for StructDefinition {
                 })
         })
     }
-    fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
+    fn modifier_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ModifierDefinition> {
         loader.struct_definitions.get(self).and_then(move |x| {
             x.modifier_definition_id?;
             loader
@@ -1729,9 +2029,9 @@ impl SeekParent for StructDefinition {
     }
 }
 
-// StructuredDocumentation SeekParent allows us to finction an StructuredDocumentation's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for StructuredDocumentation {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// StructuredDocumentation GetParent allows us to finction an StructuredDocumentation's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for StructuredDocumentation {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader
             .structured_documentations
             .get(self)
@@ -1742,7 +2042,10 @@ impl SeekParent for StructuredDocumentation {
                     .find(|source_unit| source_unit.id == x.source_unit_id)
             })
     }
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader
             .structured_documentations
             .get(self)
@@ -1756,7 +2059,10 @@ impl SeekParent for StructuredDocumentation {
                     })
             })
     }
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader
             .structured_documentations
             .get(self)
@@ -1770,7 +2076,10 @@ impl SeekParent for StructuredDocumentation {
                     })
             })
     }
-    fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
+    fn modifier_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ModifierDefinition> {
         loader
             .structured_documentations
             .get(self)
@@ -1786,9 +2095,9 @@ impl SeekParent for StructuredDocumentation {
     }
 }
 
-// TryStatement SeekParent allows us to finction an TryStatement's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for TryStatement {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// TryStatement GetParent allows us to finction an TryStatement's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for TryStatement {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.try_statements.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -1797,7 +2106,10 @@ impl SeekParent for TryStatement {
         })
     }
 
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.try_statements.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -1809,7 +2121,10 @@ impl SeekParent for TryStatement {
         })
     }
 
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader.try_statements.get(self).and_then(move |x| {
             x.function_definition_id?;
             loader
@@ -1821,7 +2136,10 @@ impl SeekParent for TryStatement {
         })
     }
 
-    fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
+    fn modifier_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ModifierDefinition> {
         loader.try_statements.get(self).and_then(move |x| {
             x.modifier_definition_id?;
             loader
@@ -1834,9 +2152,9 @@ impl SeekParent for TryStatement {
     }
 }
 
-// TryCatchClause SeekParent allows us to finction an TryCatchClause's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for TryCatchClause {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// TryCatchClause GetParent allows us to finction an TryCatchClause's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for TryCatchClause {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.try_catch_clauses.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -1845,7 +2163,10 @@ impl SeekParent for TryCatchClause {
         })
     }
 
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.try_catch_clauses.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -1857,7 +2178,10 @@ impl SeekParent for TryCatchClause {
         })
     }
 
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader.try_catch_clauses.get(self).and_then(move |x| {
             x.function_definition_id?;
             loader
@@ -1869,7 +2193,10 @@ impl SeekParent for TryCatchClause {
         })
     }
 
-    fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
+    fn modifier_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ModifierDefinition> {
         loader.try_catch_clauses.get(self).and_then(move |x| {
             x.modifier_definition_id?;
             loader
@@ -1882,9 +2209,9 @@ impl SeekParent for TryCatchClause {
     }
 }
 
-// TupleExpression SeekParent allows us to finction an TupleExpression's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for TupleExpression {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// TupleExpression GetParent allows us to finction an TupleExpression's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for TupleExpression {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.tuple_expressions.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -1893,7 +2220,10 @@ impl SeekParent for TupleExpression {
         })
     }
 
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.tuple_expressions.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -1905,7 +2235,10 @@ impl SeekParent for TupleExpression {
         })
     }
 
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader.tuple_expressions.get(self).and_then(move |x| {
             x.function_definition_id?;
             loader
@@ -1917,7 +2250,10 @@ impl SeekParent for TupleExpression {
         })
     }
 
-    fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
+    fn modifier_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ModifierDefinition> {
         loader.tuple_expressions.get(self).and_then(move |x| {
             x.modifier_definition_id?;
             loader
@@ -1930,9 +2266,9 @@ impl SeekParent for TupleExpression {
     }
 }
 
-// UnaryOperation SeekParent allows us to finction an UnaryOperation's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for UnaryOperation {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// UnaryOperation GetParent allows us to finction an UnaryOperation's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for UnaryOperation {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.unary_operations.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -1941,7 +2277,10 @@ impl SeekParent for UnaryOperation {
         })
     }
 
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.unary_operations.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -1953,7 +2292,10 @@ impl SeekParent for UnaryOperation {
         })
     }
 
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader.unary_operations.get(self).and_then(move |x| {
             x.function_definition_id?;
             loader
@@ -1965,7 +2307,10 @@ impl SeekParent for UnaryOperation {
         })
     }
 
-    fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
+    fn modifier_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ModifierDefinition> {
         loader.unary_operations.get(self).and_then(move |x| {
             x.modifier_definition_id?;
             loader
@@ -1978,9 +2323,9 @@ impl SeekParent for UnaryOperation {
     }
 }
 
-// UserDefinedTypeName SeekParent allows us to finction an UserDefinedTypeName's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for UserDefinedTypeName {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// UserDefinedTypeName GetParent allows us to finction an UserDefinedTypeName's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for UserDefinedTypeName {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.user_defined_type_names.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -1989,7 +2334,10 @@ impl SeekParent for UserDefinedTypeName {
         })
     }
 
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.user_defined_type_names.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -2001,7 +2349,10 @@ impl SeekParent for UserDefinedTypeName {
         })
     }
 
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader.user_defined_type_names.get(self).and_then(move |x| {
             x.function_definition_id?;
             loader
@@ -2013,7 +2364,10 @@ impl SeekParent for UserDefinedTypeName {
         })
     }
 
-    fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
+    fn modifier_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ModifierDefinition> {
         loader.user_defined_type_names.get(self).and_then(move |x| {
             x.modifier_definition_id?;
             loader
@@ -2026,9 +2380,9 @@ impl SeekParent for UserDefinedTypeName {
     }
 }
 
-// UsingStatement SeekParent allows us to finction an UsingStatement's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for UserDefinedValueTypeDefinition {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// UsingStatement GetParent allows us to finction an UsingStatement's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for UserDefinedValueTypeDefinition {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader
             .user_defined_value_type_definitions
             .get(self)
@@ -2040,7 +2394,10 @@ impl SeekParent for UserDefinedValueTypeDefinition {
             })
     }
 
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader
             .user_defined_value_type_definitions
             .get(self)
@@ -2055,7 +2412,10 @@ impl SeekParent for UserDefinedValueTypeDefinition {
             })
     }
 
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader
             .user_defined_value_type_definitions
             .get(self)
@@ -2070,7 +2430,10 @@ impl SeekParent for UserDefinedValueTypeDefinition {
             })
     }
 
-    fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
+    fn modifier_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ModifierDefinition> {
         loader
             .user_defined_value_type_definitions
             .get(self)
@@ -2086,9 +2449,9 @@ impl SeekParent for UserDefinedValueTypeDefinition {
     }
 }
 
-// UsingForDirective SeekParent allows us to finction an UsingForDirective's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for UsingForDirective {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// UsingForDirective GetParent allows us to finction an UsingForDirective's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for UsingForDirective {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.using_for_directives.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -2097,7 +2460,10 @@ impl SeekParent for UsingForDirective {
         })
     }
 
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.using_for_directives.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -2109,7 +2475,10 @@ impl SeekParent for UsingForDirective {
         })
     }
 
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader.using_for_directives.get(self).and_then(move |x| {
             x.function_definition_id?;
             loader
@@ -2121,7 +2490,10 @@ impl SeekParent for UsingForDirective {
         })
     }
 
-    fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
+    fn modifier_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ModifierDefinition> {
         loader.using_for_directives.get(self).and_then(move |x| {
             x.modifier_definition_id?;
             loader
@@ -2134,9 +2506,9 @@ impl SeekParent for UsingForDirective {
     }
 }
 
-// VariableDeclaration SeekParent allows us to finction an VariableDeclaration's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for VariableDeclaration {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// VariableDeclaration GetParent allows us to finction an VariableDeclaration's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for VariableDeclaration {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.variable_declarations.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -2145,7 +2517,10 @@ impl SeekParent for VariableDeclaration {
         })
     }
 
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.variable_declarations.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -2157,7 +2532,10 @@ impl SeekParent for VariableDeclaration {
         })
     }
 
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader.variable_declarations.get(self).and_then(move |x| {
             x.function_definition_id?;
             loader
@@ -2169,7 +2547,10 @@ impl SeekParent for VariableDeclaration {
         })
     }
 
-    fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
+    fn modifier_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ModifierDefinition> {
         loader.variable_declarations.get(self).and_then(move |x| {
             x.modifier_definition_id?;
             loader
@@ -2182,9 +2563,9 @@ impl SeekParent for VariableDeclaration {
     }
 }
 
-// VariableDeclarationStatement SeekParent allows us to finction an VariableDeclarationStatement's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for VariableDeclarationStatement {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// VariableDeclarationStatement GetParent allows us to finction an VariableDeclarationStatement's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for VariableDeclarationStatement {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader
             .variable_declaration_statements
             .get(self)
@@ -2196,7 +2577,10 @@ impl SeekParent for VariableDeclarationStatement {
             })
     }
 
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader
             .variable_declaration_statements
             .get(self)
@@ -2211,7 +2595,10 @@ impl SeekParent for VariableDeclarationStatement {
             })
     }
 
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader
             .variable_declaration_statements
             .get(self)
@@ -2226,7 +2613,10 @@ impl SeekParent for VariableDeclarationStatement {
             })
     }
 
-    fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
+    fn modifier_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ModifierDefinition> {
         loader
             .variable_declaration_statements
             .get(self)
@@ -2242,9 +2632,9 @@ impl SeekParent for VariableDeclarationStatement {
     }
 }
 
-// WhileStatement SeekParent allows us to finction an WhileStatement's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
-impl SeekParent for WhileStatement {
-    fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
+// WhileStatement GetParent allows us to finction an WhileStatement's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
+impl GetParent for WhileStatement {
+    fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit> {
         loader.while_statements.get(self).and_then(move |x| {
             loader
                 .source_units
@@ -2253,7 +2643,10 @@ impl SeekParent for WhileStatement {
         })
     }
 
-    fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
+    fn contract_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ContractDefinition> {
         loader.while_statements.get(self).and_then(move |x| {
             x.contract_definition_id?;
             loader
@@ -2265,7 +2658,10 @@ impl SeekParent for WhileStatement {
         })
     }
 
-    fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
+    fn function_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a FunctionDefinition> {
         loader.while_statements.get(self).and_then(move |x| {
             x.function_definition_id?;
             loader
@@ -2277,7 +2673,10 @@ impl SeekParent for WhileStatement {
         })
     }
 
-    fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
+    fn modifier_definition_of<'a>(
+        &self,
+        loader: &'a ContextLoader,
+    ) -> Option<&'a ModifierDefinition> {
         loader.while_statements.get(self).and_then(move |x| {
             x.modifier_definition_id?;
             loader
