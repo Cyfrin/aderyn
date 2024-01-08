@@ -56,7 +56,7 @@ impl Detector for ZeroAddressCheckDetector {
         for function_definition in loader.function_definitions.keys() {
             // Get all the binary checks inside the function
             let binary_operations: Vec<BinaryOperation> =
-                BinaryOperationExtractor::from_node(function_definition)
+                BinaryOperationExtractor::extract_from(function_definition)
                     .extracted
                     .into_iter()
                     .filter(|x| x.operator == "==" || x.operator == "!=")
@@ -92,7 +92,7 @@ impl Detector for ZeroAddressCheckDetector {
             }
 
             // Get all the assignments in the function
-            let assignments = AssignmentExtractor::from_node(function_definition)
+            let assignments = AssignmentExtractor::extract_from(function_definition)
                 .extracted
                 .into_iter()
                 .filter(|x| {

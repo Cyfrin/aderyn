@@ -22,7 +22,7 @@ impl Detector for ConstantsInsteadOfLiteralsDetector {
         // for each function definition, find all Literal types
         // if the literal type is either a Number, HexString or Address, then add it to the list of found literals
         for function_definition in loader.function_definitions.keys() {
-            LiteralExtractor::from_node(function_definition)
+            LiteralExtractor::extract_from(function_definition)
                 .extracted
                 .iter()
                 .for_each(|literal| {

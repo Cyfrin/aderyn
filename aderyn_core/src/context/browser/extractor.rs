@@ -11,7 +11,7 @@ pub struct ArrayTypeNameExtractor {
 }
 
 impl ArrayTypeNameExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut browser: ArrayTypeNameExtractor = Self::default();
         node.accept(&mut browser).unwrap_or_default();
         browser
@@ -32,7 +32,7 @@ pub struct AssignmentExtractor {
 }
 
 impl AssignmentExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut browser: AssignmentExtractor = Self::default();
         node.accept(&mut browser).unwrap_or_default();
         browser
@@ -53,7 +53,7 @@ pub struct BinaryOperationExtractor {
 }
 
 impl BinaryOperationExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut browser: BinaryOperationExtractor = Self::default();
         node.accept(&mut browser).unwrap_or_default();
         browser
@@ -74,7 +74,7 @@ pub struct BlockExtractor {
 }
 
 impl BlockExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -95,7 +95,7 @@ pub struct ConditionalExtractor {
 }
 
 impl ConditionalExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -116,7 +116,7 @@ pub struct ContractDefinitionExtractor {
 }
 
 impl ContractDefinitionExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -137,7 +137,7 @@ pub struct ElementaryTypeNameExtractor {
 }
 
 impl ElementaryTypeNameExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -158,7 +158,7 @@ pub struct ElementaryTypeNameExpressionExtractor {
 }
 
 impl ElementaryTypeNameExpressionExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -182,7 +182,7 @@ pub struct EmitStatementExtractor {
 }
 
 impl EmitStatementExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -203,7 +203,7 @@ pub struct EnumDefinitionExtractor {
 }
 
 impl EnumDefinitionExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -224,7 +224,7 @@ pub struct EnumValueExtractor {
 }
 
 impl EnumValueExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -245,7 +245,7 @@ pub struct EventDefinitionExtractor {
 }
 
 impl EventDefinitionExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -266,7 +266,7 @@ pub struct ErrorDefinitionExtractor {
 }
 
 impl ErrorDefinitionExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -287,7 +287,7 @@ pub struct ExpressionStatementExtractor {
 }
 
 impl ExpressionStatementExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -308,7 +308,7 @@ pub struct FunctionCallExtractor {
 }
 
 impl FunctionCallExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -330,7 +330,7 @@ pub struct FunctionDefinitionExtractor {
 }
 
 impl FunctionDefinitionExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -352,7 +352,7 @@ pub struct FunctionTypeNameExtractor {
 }
 
 impl FunctionTypeNameExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -374,7 +374,7 @@ pub struct ForStatementExtractor {
 }
 
 impl ForStatementExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -396,7 +396,7 @@ pub struct IdentifierExtractor {
 }
 
 impl IdentifierExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -418,7 +418,7 @@ pub struct IdentifierPathExtractor {
 }
 
 impl IdentifierPathExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -439,7 +439,7 @@ pub struct IfStatementExtractor {
 }
 
 impl IfStatementExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor: IfStatementExtractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -460,7 +460,7 @@ pub struct ImportDirectiveExtractor {
 }
 
 impl ImportDirectiveExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor: ImportDirectiveExtractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -481,7 +481,7 @@ pub struct IndexAccessExtractor {
 }
 
 impl IndexAccessExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor: IndexAccessExtractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -502,7 +502,7 @@ pub struct IndexRangeAccessExtractor {
 }
 
 impl IndexRangeAccessExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor: IndexRangeAccessExtractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -523,7 +523,7 @@ pub struct InheritanceSpecifierExtractor {
 }
 
 impl InheritanceSpecifierExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor: InheritanceSpecifierExtractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -544,7 +544,7 @@ pub struct InlineAssemblyExtractor {
 }
 
 impl InlineAssemblyExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor: InlineAssemblyExtractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -565,7 +565,7 @@ pub struct LiteralExtractor {
 }
 
 impl LiteralExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor: LiteralExtractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -586,7 +586,7 @@ pub struct MemberAccessExtractor {
 }
 
 impl MemberAccessExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut browser: MemberAccessExtractor = Self::default();
         node.accept(&mut browser).unwrap_or_default();
         browser
@@ -607,7 +607,7 @@ pub struct NewExpressionExtractor {
 }
 
 impl NewExpressionExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor: NewExpressionExtractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -628,7 +628,7 @@ pub struct MappingExtractor {
 }
 
 impl MappingExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor: MappingExtractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -649,7 +649,7 @@ pub struct ModifierDefinitionExtractor {
 }
 
 impl ModifierDefinitionExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor: ModifierDefinitionExtractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -670,7 +670,7 @@ pub struct ModifierInvocationExtractor {
 }
 
 impl ModifierInvocationExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor: ModifierInvocationExtractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -691,7 +691,7 @@ pub struct OverrideSpecifierExtractor {
 }
 
 impl OverrideSpecifierExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor: OverrideSpecifierExtractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -712,7 +712,7 @@ pub struct ParameterListExtractor {
 }
 
 impl ParameterListExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor: ParameterListExtractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -733,7 +733,7 @@ pub struct PragmaDirectiveExtractor {
 }
 
 impl PragmaDirectiveExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor: PragmaDirectiveExtractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -754,7 +754,7 @@ pub struct ReturnExtractor {
 }
 
 impl ReturnExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor: ReturnExtractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -775,7 +775,7 @@ pub struct RevertStatementExtractor {
 }
 
 impl RevertStatementExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor: RevertStatementExtractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -798,7 +798,7 @@ pub struct StructDefinitionExtractor {
 }
 
 impl StructDefinitionExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor: StructDefinitionExtractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -819,7 +819,7 @@ pub struct StructuredDocumentationExtractor {
 }
 
 impl StructuredDocumentationExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor: StructuredDocumentationExtractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -840,7 +840,7 @@ pub struct TryStatementExtractor {
 }
 
 impl TryStatementExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor: TryStatementExtractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -861,7 +861,7 @@ pub struct TryCatchClauseExtractor {
 }
 
 impl TryCatchClauseExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor: TryCatchClauseExtractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -882,7 +882,7 @@ pub struct TupleExpressionExtractor {
 }
 
 impl TupleExpressionExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor: TupleExpressionExtractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -903,7 +903,7 @@ pub struct UnaryOperationExtractor {
 }
 
 impl UnaryOperationExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor: UnaryOperationExtractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -924,7 +924,7 @@ pub struct UserDefinedTypeNameExtractor {
 }
 
 impl UserDefinedTypeNameExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor: UserDefinedTypeNameExtractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -945,7 +945,7 @@ pub struct UserDefinedValueTypeDefinitionExtractor {
 }
 
 impl UserDefinedValueTypeDefinitionExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor: UserDefinedValueTypeDefinitionExtractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -969,7 +969,7 @@ pub struct UsingForDirectiveExtractor {
 }
 
 impl UsingForDirectiveExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor: UsingForDirectiveExtractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -990,7 +990,7 @@ pub struct VariableDeclarationExtractor {
 }
 
 impl VariableDeclarationExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor: VariableDeclarationExtractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -1011,7 +1011,7 @@ pub struct VariableDeclarationStatementExtractor {
 }
 
 impl VariableDeclarationStatementExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor: VariableDeclarationStatementExtractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
@@ -1035,7 +1035,7 @@ pub struct WhileStatementExtractor {
 }
 
 impl WhileStatementExtractor {
-    pub fn from_node<T: Node + ?Sized>(node: &T) -> Self {
+    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor: WhileStatementExtractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
