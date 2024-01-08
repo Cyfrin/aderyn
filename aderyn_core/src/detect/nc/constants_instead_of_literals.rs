@@ -3,7 +3,7 @@ use std::{collections::BTreeMap, error::Error};
 use crate::{
     ast::LiteralKind,
     context::{
-        browser::LiteralExtractor,
+        browser::ExtractLiterals,
         loader::{ASTNode, ContextLoader},
     },
     detect::detector::{Detector, IssueSeverity},
@@ -22,7 +22,7 @@ impl Detector for ConstantsInsteadOfLiteralsDetector {
         // for each function definition, find all Literal types
         // if the literal type is either a Number, HexString or Address, then add it to the list of found literals
         for function_definition in loader.function_definitions.keys() {
-            LiteralExtractor::extract_from(function_definition)
+            ExtractLiterals::from(function_definition)
                 .extracted
                 .iter()
                 .for_each(|literal| {

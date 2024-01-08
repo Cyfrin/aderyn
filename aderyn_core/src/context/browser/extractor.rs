@@ -4,168 +4,168 @@ use crate::{
 };
 use eyre::Result;
 
-// ArrayTypeNameExtractor is a browser that extracts all ArrayTypeName nodes from a node.
+// ExtractArrayTypeNames is an extractor that extracts all ArrayTypeName nodes from a node.
 #[derive(Default)]
-pub struct ArrayTypeNameExtractor {
+pub struct ExtractArrayTypeNames {
     pub extracted: Vec<ArrayTypeName>,
 }
 
-impl ArrayTypeNameExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
-        let mut browser: ArrayTypeNameExtractor = Self::default();
-        node.accept(&mut browser).unwrap_or_default();
-        browser
+impl ExtractArrayTypeNames {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
+        let mut extractor: ExtractArrayTypeNames = Self::default();
+        node.accept(&mut extractor).unwrap_or_default();
+        extractor
     }
 }
 
-impl ASTConstVisitor for ArrayTypeNameExtractor {
+impl ASTConstVisitor for ExtractArrayTypeNames {
     fn visit_array_type_name(&mut self, node: &ArrayTypeName) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// AssignmentExtractor is a browser that extracts all Assignments nodes from a node.
+// ExtractAssignments is an extractor that extracts all Assignments nodes from a node.
 #[derive(Default)]
-pub struct AssignmentExtractor {
+pub struct ExtractAssignments {
     pub extracted: Vec<Assignment>,
 }
 
-impl AssignmentExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
-        let mut browser: AssignmentExtractor = Self::default();
-        node.accept(&mut browser).unwrap_or_default();
-        browser
+impl ExtractAssignments {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
+        let mut extractor: ExtractAssignments = Self::default();
+        node.accept(&mut extractor).unwrap_or_default();
+        extractor
     }
 }
 
-impl ASTConstVisitor for AssignmentExtractor {
+impl ASTConstVisitor for ExtractAssignments {
     fn visit_assignment(&mut self, node: &Assignment) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// BinaryOperationExtractor is a browser that extracts all BinaryOperations nodes from a node.
+// ExtractBinaryOperations is an extractor that extracts all BinaryOperations nodes from a node.
 #[derive(Default)]
-pub struct BinaryOperationExtractor {
+pub struct ExtractBinaryOperations {
     pub extracted: Vec<BinaryOperation>,
 }
 
-impl BinaryOperationExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
-        let mut browser: BinaryOperationExtractor = Self::default();
-        node.accept(&mut browser).unwrap_or_default();
-        browser
+impl ExtractBinaryOperations {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
+        let mut extractor: ExtractBinaryOperations = Self::default();
+        node.accept(&mut extractor).unwrap_or_default();
+        extractor
     }
 }
 
-impl ASTConstVisitor for BinaryOperationExtractor {
+impl ASTConstVisitor for ExtractBinaryOperations {
     fn visit_binary_operation(&mut self, node: &BinaryOperation) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// BlockExtractor extracts all Block nodes from a given node.
+// ExtractBlocks extracts all Block nodes from a given node.
 #[derive(Default)]
-pub struct BlockExtractor {
+pub struct ExtractBlocks {
     pub extracted: Vec<Block>,
 }
 
-impl BlockExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
+impl ExtractBlocks {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for BlockExtractor {
+impl ASTConstVisitor for ExtractBlocks {
     fn visit_block(&mut self, node: &Block) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// ConditionalExtractor extracts all Conditional nodes from a given node.
+// ExtractConditionals extracts all Conditional nodes from a given node.
 #[derive(Default)]
-pub struct ConditionalExtractor {
+pub struct ExtractConditionals {
     pub extracted: Vec<Conditional>,
 }
 
-impl ConditionalExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
+impl ExtractConditionals {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for ConditionalExtractor {
+impl ASTConstVisitor for ExtractConditionals {
     fn visit_conditional(&mut self, node: &Conditional) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// ContractDefinitionExtractor extracts all ContractDefinition nodes from a given node.
+// ExtractContractDefinitions extracts all ContractDefinition nodes from a given node.
 #[derive(Default)]
-pub struct ContractDefinitionExtractor {
+pub struct ExtractContractDefinitions {
     pub extracted: Vec<ContractDefinition>,
 }
 
-impl ContractDefinitionExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
+impl ExtractContractDefinitions {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for ContractDefinitionExtractor {
+impl ASTConstVisitor for ExtractContractDefinitions {
     fn visit_contract_definition(&mut self, node: &ContractDefinition) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// ElementaryTypeNameExtractor extracts all ElementaryTypeName nodes from a given node.
+// ExtractElementaryTypeNames extracts all ElementaryTypeName nodes from a given node.
 #[derive(Default)]
-pub struct ElementaryTypeNameExtractor {
+pub struct ExtractElementaryTypeNames {
     pub extracted: Vec<ElementaryTypeName>,
 }
 
-impl ElementaryTypeNameExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
+impl ExtractElementaryTypeNames {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for ElementaryTypeNameExtractor {
+impl ASTConstVisitor for ExtractElementaryTypeNames {
     fn visit_elementary_type_name(&mut self, node: &ElementaryTypeName) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// ElementaryTypeNameExpressionExtractor extracts all ElementaryTypeNameExpression nodes from a given node.
+// ExtractElementaryTypeNameExpressions extracts all ElementaryTypeNameExpression nodes from a given node.
 #[derive(Default)]
-pub struct ElementaryTypeNameExpressionExtractor {
+pub struct ExtractElementaryTypeNameExpressions {
     pub extracted: Vec<ElementaryTypeNameExpression>,
 }
 
-impl ElementaryTypeNameExpressionExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
+impl ExtractElementaryTypeNameExpressions {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for ElementaryTypeNameExpressionExtractor {
+impl ASTConstVisitor for ExtractElementaryTypeNameExpressions {
     fn visit_elementary_type_name_expression(
         &mut self,
         node: &ElementaryTypeNameExpression,
@@ -175,784 +175,784 @@ impl ASTConstVisitor for ElementaryTypeNameExpressionExtractor {
     }
 }
 
-// EmitStatementExtractor extracts all EmitStatement nodes from a given node.
+// ExtractEmitStatements extracts all EmitStatement nodes from a given node.
 #[derive(Default)]
-pub struct EmitStatementExtractor {
+pub struct ExtractEmitStatements {
     pub extracted: Vec<EmitStatement>,
 }
 
-impl EmitStatementExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
+impl ExtractEmitStatements {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for EmitStatementExtractor {
+impl ASTConstVisitor for ExtractEmitStatements {
     fn visit_emit_statement(&mut self, node: &EmitStatement) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// EnumDefinitionExtractor extracts all EnumDefinition nodes from a given node.
+// ExtractEnumDefinitions extracts all EnumDefinition nodes from a given node.
 #[derive(Default)]
-pub struct EnumDefinitionExtractor {
+pub struct ExtractEnumDefinitions {
     pub extracted: Vec<EnumDefinition>,
 }
 
-impl EnumDefinitionExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
+impl ExtractEnumDefinitions {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for EnumDefinitionExtractor {
+impl ASTConstVisitor for ExtractEnumDefinitions {
     fn visit_enum_definition(&mut self, node: &EnumDefinition) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// EnumValueExtractor extracts all EnumValue nodes from a given node.
+// ExtractEnumValues extracts all EnumValue nodes from a given node.
 #[derive(Default)]
-pub struct EnumValueExtractor {
+pub struct ExtractEnumValues {
     pub extracted: Vec<EnumValue>,
 }
 
-impl EnumValueExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
+impl ExtractEnumValues {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for EnumValueExtractor {
+impl ASTConstVisitor for ExtractEnumValues {
     fn visit_enum_value(&mut self, node: &EnumValue) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// EventDefinitionExtractor extracts all EventDefinition nodes from a given node.
+// ExtractEventDefinitions extracts all EventDefinition nodes from a given node.
 #[derive(Default)]
-pub struct EventDefinitionExtractor {
+pub struct ExtractEventDefinitions {
     pub extracted: Vec<EventDefinition>,
 }
 
-impl EventDefinitionExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
+impl ExtractEventDefinitions {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for EventDefinitionExtractor {
+impl ASTConstVisitor for ExtractEventDefinitions {
     fn visit_event_definition(&mut self, node: &EventDefinition) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// ErrorDefinitionExtractor extracts all ErrorDefinition nodes from a given node.
+// ExtractErrorDefinitions extracts all ErrorDefinition nodes from a given node.
 #[derive(Default)]
-pub struct ErrorDefinitionExtractor {
+pub struct ExtractErrorDefinitions {
     pub extracted: Vec<ErrorDefinition>,
 }
 
-impl ErrorDefinitionExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
+impl ExtractErrorDefinitions {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for ErrorDefinitionExtractor {
+impl ASTConstVisitor for ExtractErrorDefinitions {
     fn visit_error_definition(&mut self, node: &ErrorDefinition) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// ExpressionStatementExtractor extracts all ExpressionStatement nodes from a given node.
+// ExtractExpressionStatements extracts all ExpressionStatement nodes from a given node.
 #[derive(Default)]
-pub struct ExpressionStatementExtractor {
+pub struct ExtractExpressionStatements {
     pub extracted: Vec<ExpressionStatement>,
 }
 
-impl ExpressionStatementExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
+impl ExtractExpressionStatements {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for ExpressionStatementExtractor {
+impl ASTConstVisitor for ExtractExpressionStatements {
     fn visit_expression_statement(&mut self, node: &ExpressionStatement) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// FunctionCallExtractor extracts all FunctionCall nodes from a given node.
+// ExtractFunctionCalls extracts all FunctionCall nodes from a given node.
 #[derive(Default)]
-pub struct FunctionCallExtractor {
+pub struct ExtractFunctionCalls {
     pub extracted: Vec<FunctionCall>,
 }
 
-impl FunctionCallExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
+impl ExtractFunctionCalls {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for FunctionCallExtractor {
+impl ASTConstVisitor for ExtractFunctionCalls {
     fn visit_function_call(&mut self, node: &FunctionCall) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// FunctionDefinitionExtractor extracts all FunctionDefinition nodes from a given node.
+// ExtractFunctionDefinitions extracts all FunctionDefinition nodes from a given node.
 #[derive(Default)]
 
-pub struct FunctionDefinitionExtractor {
+pub struct ExtractFunctionDefinitions {
     pub extracted: Vec<FunctionDefinition>,
 }
 
-impl FunctionDefinitionExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
+impl ExtractFunctionDefinitions {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for FunctionDefinitionExtractor {
+impl ASTConstVisitor for ExtractFunctionDefinitions {
     fn visit_function_definition(&mut self, node: &FunctionDefinition) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// FunctionTypeNameExtractor extracts all FunctionTypeName nodes from a given node.
+// ExtractFunctionTypeNames extracts all FunctionTypeName nodes from a given node.
 #[derive(Default)]
 
-pub struct FunctionTypeNameExtractor {
+pub struct ExtractFunctionTypeNames {
     pub extracted: Vec<FunctionTypeName>,
 }
 
-impl FunctionTypeNameExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
+impl ExtractFunctionTypeNames {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for FunctionTypeNameExtractor {
+impl ASTConstVisitor for ExtractFunctionTypeNames {
     fn visit_function_type_name(&mut self, node: &FunctionTypeName) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// ForStatementExtractor extracts all ForStatement nodes from a given node.
+// ExtractForStatements extracts all ForStatement nodes from a given node.
 #[derive(Default)]
 
-pub struct ForStatementExtractor {
+pub struct ExtractForStatements {
     pub extracted: Vec<ForStatement>,
 }
 
-impl ForStatementExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
+impl ExtractForStatements {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for ForStatementExtractor {
+impl ASTConstVisitor for ExtractForStatements {
     fn visit_for_statement(&mut self, node: &ForStatement) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// IdentifierExtractor extracts all Identifier nodes from a given node.
+// ExtractIdentifiers extracts all Identifier nodes from a given node.
 #[derive(Default)]
 
-pub struct IdentifierExtractor {
+pub struct ExtractIdentifiers {
     pub extracted: Vec<Identifier>,
 }
 
-impl IdentifierExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
+impl ExtractIdentifiers {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for IdentifierExtractor {
+impl ASTConstVisitor for ExtractIdentifiers {
     fn visit_identifier(&mut self, node: &Identifier) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// IdentifierPathExtractor extracts all IdentifierPath nodes from a given node.
+// ExtractIdentifierPaths extracts all IdentifierPath nodes from a given node.
 #[derive(Default)]
 
-pub struct IdentifierPathExtractor {
+pub struct ExtractIdentifierPaths {
     pub extracted: Vec<IdentifierPath>,
 }
 
-impl IdentifierPathExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
+impl ExtractIdentifierPaths {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for IdentifierPathExtractor {
+impl ASTConstVisitor for ExtractIdentifierPaths {
     fn visit_identifier_path(&mut self, node: &IdentifierPath) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// IfStatementExtractor extracts all IfStatement nodes from a given node.
+// ExtractIfStatements extracts all IfStatement nodes from a given node.
 #[derive(Default)]
-pub struct IfStatementExtractor {
+pub struct ExtractIfStatements {
     pub extracted: Vec<IfStatement>,
 }
 
-impl IfStatementExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
-        let mut extractor: IfStatementExtractor = Self::default();
+impl ExtractIfStatements {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
+        let mut extractor: ExtractIfStatements = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for IfStatementExtractor {
+impl ASTConstVisitor for ExtractIfStatements {
     fn visit_if_statement(&mut self, node: &IfStatement) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// ImportDirectiveExtractor extracts all ImportDirective nodes from a given node.
+// ExtractImportDirectives extracts all ImportDirective nodes from a given node.
 #[derive(Default)]
-pub struct ImportDirectiveExtractor {
+pub struct ExtractImportDirectives {
     pub extracted: Vec<ImportDirective>,
 }
 
-impl ImportDirectiveExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
-        let mut extractor: ImportDirectiveExtractor = Self::default();
+impl ExtractImportDirectives {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
+        let mut extractor: ExtractImportDirectives = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for ImportDirectiveExtractor {
+impl ASTConstVisitor for ExtractImportDirectives {
     fn visit_import_directive(&mut self, node: &ImportDirective) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// IndexAccessExtractor extracts all IndexAccess nodes from a given node.
+// ExtractIndexAccesss extracts all IndexAccess nodes from a given node.
 #[derive(Default)]
-pub struct IndexAccessExtractor {
+pub struct ExtractIndexAccesss {
     pub extracted: Vec<IndexAccess>,
 }
 
-impl IndexAccessExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
-        let mut extractor: IndexAccessExtractor = Self::default();
+impl ExtractIndexAccesss {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
+        let mut extractor: ExtractIndexAccesss = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for IndexAccessExtractor {
+impl ASTConstVisitor for ExtractIndexAccesss {
     fn visit_index_access(&mut self, node: &IndexAccess) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// IndexRangeAccessExtractor extracts all IndexRangeAccess nodes from a given node.
+// ExtractIndexRangeAccesss extracts all IndexRangeAccess nodes from a given node.
 #[derive(Default)]
-pub struct IndexRangeAccessExtractor {
+pub struct ExtractIndexRangeAccesss {
     pub extracted: Vec<IndexRangeAccess>,
 }
 
-impl IndexRangeAccessExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
-        let mut extractor: IndexRangeAccessExtractor = Self::default();
+impl ExtractIndexRangeAccesss {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
+        let mut extractor: ExtractIndexRangeAccesss = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for IndexRangeAccessExtractor {
+impl ASTConstVisitor for ExtractIndexRangeAccesss {
     fn visit_index_range_access(&mut self, node: &IndexRangeAccess) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// InheritanceSpecifierExtractor extracts all InheritanceSpecifier nodes from a given node.
+// ExtractInheritanceSpecifiers extracts all InheritanceSpecifier nodes from a given node.
 #[derive(Default)]
-pub struct InheritanceSpecifierExtractor {
+pub struct ExtractInheritanceSpecifiers {
     pub extracted: Vec<InheritanceSpecifier>,
 }
 
-impl InheritanceSpecifierExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
-        let mut extractor: InheritanceSpecifierExtractor = Self::default();
+impl ExtractInheritanceSpecifiers {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
+        let mut extractor: ExtractInheritanceSpecifiers = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for InheritanceSpecifierExtractor {
+impl ASTConstVisitor for ExtractInheritanceSpecifiers {
     fn visit_inheritance_specifier(&mut self, node: &InheritanceSpecifier) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// InlineAssemblyExtractor extracts all InlineAssembly nodes from a given node.
+// ExtractInlineAssemblys extracts all InlineAssembly nodes from a given node.
 #[derive(Default)]
-pub struct InlineAssemblyExtractor {
+pub struct ExtractInlineAssemblys {
     pub extracted: Vec<InlineAssembly>,
 }
 
-impl InlineAssemblyExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
-        let mut extractor: InlineAssemblyExtractor = Self::default();
+impl ExtractInlineAssemblys {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
+        let mut extractor: ExtractInlineAssemblys = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for InlineAssemblyExtractor {
+impl ASTConstVisitor for ExtractInlineAssemblys {
     fn visit_inline_assembly(&mut self, node: &InlineAssembly) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// LiteralExtractor extracts all Literal nodes from a given node.
+// ExtractLiterals extracts all Literal nodes from a given node.
 #[derive(Default)]
-pub struct LiteralExtractor {
+pub struct ExtractLiterals {
     pub extracted: Vec<Literal>,
 }
 
-impl LiteralExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
-        let mut extractor: LiteralExtractor = Self::default();
+impl ExtractLiterals {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
+        let mut extractor: ExtractLiterals = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for LiteralExtractor {
+impl ASTConstVisitor for ExtractLiterals {
     fn visit_literal(&mut self, node: &Literal) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// MemberAccessExtractor is a browser that extracts all MemberAccess nodes from a node.
+// ExtractMemberAccesss is an extractor that extracts all MemberAccess nodes from a node.
 #[derive(Default)]
-pub struct MemberAccessExtractor {
+pub struct ExtractMemberAccesss {
     pub extracted: Vec<MemberAccess>,
 }
 
-impl MemberAccessExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
-        let mut browser: MemberAccessExtractor = Self::default();
-        node.accept(&mut browser).unwrap_or_default();
-        browser
+impl ExtractMemberAccesss {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
+        let mut extractor: ExtractMemberAccesss = Self::default();
+        node.accept(&mut extractor).unwrap_or_default();
+        extractor
     }
 }
 
-impl ASTConstVisitor for MemberAccessExtractor {
+impl ASTConstVisitor for ExtractMemberAccesss {
     fn visit_member_access(&mut self, node: &MemberAccess) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// NewExpressionExtractor extracts all NewExpression nodes from a given node.
+// ExtractNewExpressions extracts all NewExpression nodes from a given node.
 #[derive(Default)]
-pub struct NewExpressionExtractor {
+pub struct ExtractNewExpressions {
     pub extracted: Vec<NewExpression>,
 }
 
-impl NewExpressionExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
-        let mut extractor: NewExpressionExtractor = Self::default();
+impl ExtractNewExpressions {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
+        let mut extractor: ExtractNewExpressions = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for NewExpressionExtractor {
+impl ASTConstVisitor for ExtractNewExpressions {
     fn visit_new_expression(&mut self, node: &NewExpression) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// MappingExtractor extracts all Mapping nodes from a given node.
+// ExtractMappings extracts all Mapping nodes from a given node.
 #[derive(Default)]
-pub struct MappingExtractor {
+pub struct ExtractMappings {
     pub extracted: Vec<Mapping>,
 }
 
-impl MappingExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
-        let mut extractor: MappingExtractor = Self::default();
+impl ExtractMappings {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
+        let mut extractor: ExtractMappings = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for MappingExtractor {
+impl ASTConstVisitor for ExtractMappings {
     fn visit_mapping(&mut self, node: &Mapping) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// ModifierDefinitionExtractor extracts all ModifierDefinition nodes from a given node.
+// ExtractModifierDefinitions extracts all ModifierDefinition nodes from a given node.
 #[derive(Default)]
-pub struct ModifierDefinitionExtractor {
+pub struct ExtractModifierDefinitions {
     pub extracted: Vec<ModifierDefinition>,
 }
 
-impl ModifierDefinitionExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
-        let mut extractor: ModifierDefinitionExtractor = Self::default();
+impl ExtractModifierDefinitions {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
+        let mut extractor: ExtractModifierDefinitions = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for ModifierDefinitionExtractor {
+impl ASTConstVisitor for ExtractModifierDefinitions {
     fn visit_modifier_definition(&mut self, node: &ModifierDefinition) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// ModifierInvocationExtractor extracts all ModifierInvocation nodes from a given node.
+// ExtractModifierInvocations extracts all ModifierInvocation nodes from a given node.
 #[derive(Default)]
-pub struct ModifierInvocationExtractor {
+pub struct ExtractModifierInvocations {
     pub extracted: Vec<ModifierInvocation>,
 }
 
-impl ModifierInvocationExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
-        let mut extractor: ModifierInvocationExtractor = Self::default();
+impl ExtractModifierInvocations {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
+        let mut extractor: ExtractModifierInvocations = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for ModifierInvocationExtractor {
+impl ASTConstVisitor for ExtractModifierInvocations {
     fn visit_modifier_invocation(&mut self, node: &ModifierInvocation) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// OverrideSpecifierExtractor extracts all OverrideSpecifier nodes from a given node.
+// ExtractOverrideSpecifiers extracts all OverrideSpecifier nodes from a given node.
 #[derive(Default)]
-pub struct OverrideSpecifierExtractor {
+pub struct ExtractOverrideSpecifiers {
     pub extracted: Vec<OverrideSpecifier>,
 }
 
-impl OverrideSpecifierExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
-        let mut extractor: OverrideSpecifierExtractor = Self::default();
+impl ExtractOverrideSpecifiers {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
+        let mut extractor: ExtractOverrideSpecifiers = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for OverrideSpecifierExtractor {
+impl ASTConstVisitor for ExtractOverrideSpecifiers {
     fn visit_override_specifier(&mut self, node: &OverrideSpecifier) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// ParameterListExtractor extracts all ParameterList nodes from a given node.
+// ExtractParameterLists extracts all ParameterList nodes from a given node.
 #[derive(Default)]
-pub struct ParameterListExtractor {
+pub struct ExtractParameterLists {
     pub extracted: Vec<ParameterList>,
 }
 
-impl ParameterListExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
-        let mut extractor: ParameterListExtractor = Self::default();
+impl ExtractParameterLists {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
+        let mut extractor: ExtractParameterLists = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for ParameterListExtractor {
+impl ASTConstVisitor for ExtractParameterLists {
     fn visit_parameter_list(&mut self, node: &ParameterList) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// PragmaDirectiveExtractor extracts all PragmaDirective nodes from a given node.
+// ExtractPragmaDirectives extracts all PragmaDirective nodes from a given node.
 #[derive(Default)]
-pub struct PragmaDirectiveExtractor {
+pub struct ExtractPragmaDirectives {
     pub extracted: Vec<PragmaDirective>,
 }
 
-impl PragmaDirectiveExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
-        let mut extractor: PragmaDirectiveExtractor = Self::default();
+impl ExtractPragmaDirectives {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
+        let mut extractor: ExtractPragmaDirectives = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for PragmaDirectiveExtractor {
+impl ASTConstVisitor for ExtractPragmaDirectives {
     fn visit_pragma_directive(&mut self, node: &PragmaDirective) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// ReturnExtractor extracts all Return nodes from a given node.
+// ExtractReturns extracts all Return nodes from a given node.
 #[derive(Default)]
-pub struct ReturnExtractor {
+pub struct ExtractReturns {
     pub extracted: Vec<Return>,
 }
 
-impl ReturnExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
-        let mut extractor: ReturnExtractor = Self::default();
+impl ExtractReturns {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
+        let mut extractor: ExtractReturns = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for ReturnExtractor {
+impl ASTConstVisitor for ExtractReturns {
     fn visit_return(&mut self, node: &Return) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// RevertStatementExtractor extracts all RevertStatement nodes from a given node.
+// ExtractRevertStatements extracts all RevertStatement nodes from a given node.
 #[derive(Default)]
-pub struct RevertStatementExtractor {
+pub struct ExtractRevertStatements {
     pub extracted: Vec<RevertStatement>,
 }
 
-impl RevertStatementExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
-        let mut extractor: RevertStatementExtractor = Self::default();
+impl ExtractRevertStatements {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
+        let mut extractor: ExtractRevertStatements = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for RevertStatementExtractor {
+impl ASTConstVisitor for ExtractRevertStatements {
     fn visit_revert_statement(&mut self, node: &RevertStatement) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// SourceUnitExtractor is not needed
+// ExtractSourceUnits is not needed
 
-// StructDefinitionExtractor extracts all StructDefinition nodes from a given node.
+// ExtractStructDefinitions extracts all StructDefinition nodes from a given node.
 #[derive(Default)]
-pub struct StructDefinitionExtractor {
+pub struct ExtractStructDefinitions {
     pub extracted: Vec<StructDefinition>,
 }
 
-impl StructDefinitionExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
-        let mut extractor: StructDefinitionExtractor = Self::default();
+impl ExtractStructDefinitions {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
+        let mut extractor: ExtractStructDefinitions = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for StructDefinitionExtractor {
+impl ASTConstVisitor for ExtractStructDefinitions {
     fn visit_struct_definition(&mut self, node: &StructDefinition) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// StructuredDocumentationExtractor extracts all StructuredDocumentation nodes from a given node.
+// ExtractStructuredDocumentations extracts all StructuredDocumentation nodes from a given node.
 #[derive(Default)]
-pub struct StructuredDocumentationExtractor {
+pub struct ExtractStructuredDocumentations {
     pub extracted: Vec<StructuredDocumentation>,
 }
 
-impl StructuredDocumentationExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
-        let mut extractor: StructuredDocumentationExtractor = Self::default();
+impl ExtractStructuredDocumentations {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
+        let mut extractor: ExtractStructuredDocumentations = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for StructuredDocumentationExtractor {
+impl ASTConstVisitor for ExtractStructuredDocumentations {
     fn visit_structured_documentation(&mut self, node: &StructuredDocumentation) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// TryStatementExtractor extracts all TryStatement nodes from a given node.
+// ExtractTryStatements extracts all TryStatement nodes from a given node.
 #[derive(Default)]
-pub struct TryStatementExtractor {
+pub struct ExtractTryStatements {
     pub extracted: Vec<TryStatement>,
 }
 
-impl TryStatementExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
-        let mut extractor: TryStatementExtractor = Self::default();
+impl ExtractTryStatements {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
+        let mut extractor: ExtractTryStatements = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for TryStatementExtractor {
+impl ASTConstVisitor for ExtractTryStatements {
     fn visit_try_statement(&mut self, node: &TryStatement) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// TryCatchClauseExtractor extracts all TryCatchClause nodes from a given node.
+// ExtractTryCatchClauses extracts all TryCatchClause nodes from a given node.
 #[derive(Default)]
-pub struct TryCatchClauseExtractor {
+pub struct ExtractTryCatchClauses {
     pub extracted: Vec<TryCatchClause>,
 }
 
-impl TryCatchClauseExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
-        let mut extractor: TryCatchClauseExtractor = Self::default();
+impl ExtractTryCatchClauses {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
+        let mut extractor: ExtractTryCatchClauses = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for TryCatchClauseExtractor {
+impl ASTConstVisitor for ExtractTryCatchClauses {
     fn visit_try_catch_clause(&mut self, node: &TryCatchClause) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// TupleExpressionExtractor extracts all TupleExpression nodes from a given node.
+// ExtractTupleExpressions extracts all TupleExpression nodes from a given node.
 #[derive(Default)]
-pub struct TupleExpressionExtractor {
+pub struct ExtractTupleExpressions {
     pub extracted: Vec<TupleExpression>,
 }
 
-impl TupleExpressionExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
-        let mut extractor: TupleExpressionExtractor = Self::default();
+impl ExtractTupleExpressions {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
+        let mut extractor: ExtractTupleExpressions = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for TupleExpressionExtractor {
+impl ASTConstVisitor for ExtractTupleExpressions {
     fn visit_tuple_expression(&mut self, node: &TupleExpression) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// UnaryOperationExtractor extracts all UnaryOperations nodes from a given node.
+// ExtractUnaryOperations extracts all UnaryOperations nodes from a given node.
 #[derive(Default)]
-pub struct UnaryOperationExtractor {
+pub struct ExtractUnaryOperations {
     pub extracted: Vec<UnaryOperation>,
 }
 
-impl UnaryOperationExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
-        let mut extractor: UnaryOperationExtractor = Self::default();
+impl ExtractUnaryOperations {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
+        let mut extractor: ExtractUnaryOperations = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for UnaryOperationExtractor {
+impl ASTConstVisitor for ExtractUnaryOperations {
     fn visit_unary_operation(&mut self, node: &UnaryOperation) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// UserDefinedTypeNameExtractor extracts all UserDefinedTypeName nodes from a given node.
+// ExtractUserDefinedTypeNames extracts all UserDefinedTypeName nodes from a given node.
 #[derive(Default)]
-pub struct UserDefinedTypeNameExtractor {
+pub struct ExtractUserDefinedTypeNames {
     pub extracted: Vec<UserDefinedTypeName>,
 }
 
-impl UserDefinedTypeNameExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
-        let mut extractor: UserDefinedTypeNameExtractor = Self::default();
+impl ExtractUserDefinedTypeNames {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
+        let mut extractor: ExtractUserDefinedTypeNames = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for UserDefinedTypeNameExtractor {
+impl ASTConstVisitor for ExtractUserDefinedTypeNames {
     fn visit_user_defined_type_name(&mut self, node: &UserDefinedTypeName) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// UserDefinedValueTypeDefinitionExtractor extracts all UserDefinedValueTypes nodes from a given node.
+// ExtractUserDefinedValueTypeDefinitions extracts all UserDefinedValueTypes nodes from a given node.
 #[derive(Default)]
-pub struct UserDefinedValueTypeDefinitionExtractor {
+pub struct ExtractUserDefinedValueTypeDefinitions {
     pub extracted: Vec<UserDefinedValueTypeDefinition>,
 }
 
-impl UserDefinedValueTypeDefinitionExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
-        let mut extractor: UserDefinedValueTypeDefinitionExtractor = Self::default();
+impl ExtractUserDefinedValueTypeDefinitions {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
+        let mut extractor: ExtractUserDefinedValueTypeDefinitions = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for UserDefinedValueTypeDefinitionExtractor {
+impl ASTConstVisitor for ExtractUserDefinedValueTypeDefinitions {
     fn visit_user_defined_value_type_definition(
         &mut self,
         node: &UserDefinedValueTypeDefinition,
@@ -962,63 +962,63 @@ impl ASTConstVisitor for UserDefinedValueTypeDefinitionExtractor {
     }
 }
 
-// UsingForDirectiveExtractor extracts all UsingForDirective nodes from a given node.
+// ExtractUsingForDirectives extracts all UsingForDirective nodes from a given node.
 #[derive(Default)]
-pub struct UsingForDirectiveExtractor {
+pub struct ExtractUsingForDirectives {
     pub extracted: Vec<UsingForDirective>,
 }
 
-impl UsingForDirectiveExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
-        let mut extractor: UsingForDirectiveExtractor = Self::default();
+impl ExtractUsingForDirectives {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
+        let mut extractor: ExtractUsingForDirectives = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for UsingForDirectiveExtractor {
+impl ASTConstVisitor for ExtractUsingForDirectives {
     fn visit_using_for_directive(&mut self, node: &UsingForDirective) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// VariableDeclarationExtractor extracts all VariableDeclaration nodes from a given node.
+// ExtractVariableDeclarations extracts all VariableDeclaration nodes from a given node.
 #[derive(Default)]
-pub struct VariableDeclarationExtractor {
+pub struct ExtractVariableDeclarations {
     pub extracted: Vec<VariableDeclaration>,
 }
 
-impl VariableDeclarationExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
-        let mut extractor: VariableDeclarationExtractor = Self::default();
+impl ExtractVariableDeclarations {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
+        let mut extractor: ExtractVariableDeclarations = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for VariableDeclarationExtractor {
+impl ASTConstVisitor for ExtractVariableDeclarations {
     fn visit_variable_declaration(&mut self, node: &VariableDeclaration) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// VariableDeclarationStatementExtractor extracts all VariableDeclarationStatement nodes from a given node.
+// ExtractVariableDeclarationStatements extracts all VariableDeclarationStatement nodes from a given node.
 #[derive(Default)]
-pub struct VariableDeclarationStatementExtractor {
+pub struct ExtractVariableDeclarationStatements {
     pub extracted: Vec<VariableDeclarationStatement>,
 }
 
-impl VariableDeclarationStatementExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
-        let mut extractor: VariableDeclarationStatementExtractor = Self::default();
+impl ExtractVariableDeclarationStatements {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
+        let mut extractor: ExtractVariableDeclarationStatements = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for VariableDeclarationStatementExtractor {
+impl ASTConstVisitor for ExtractVariableDeclarationStatements {
     fn visit_variable_declaration_statement(
         &mut self,
         node: &VariableDeclarationStatement,
@@ -1028,21 +1028,21 @@ impl ASTConstVisitor for VariableDeclarationStatementExtractor {
     }
 }
 
-// WhileStatementExtractor extracts all WhileStatement nodes from a given node.
+// ExtractWhileStatements extracts all WhileStatement nodes from a given node.
 #[derive(Default)]
-pub struct WhileStatementExtractor {
+pub struct ExtractWhileStatements {
     pub extracted: Vec<WhileStatement>,
 }
 
-impl WhileStatementExtractor {
-    pub fn extract_from<T: Node + ?Sized>(node: &T) -> Self {
-        let mut extractor: WhileStatementExtractor = Self::default();
+impl ExtractWhileStatements {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
+        let mut extractor: ExtractWhileStatements = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for WhileStatementExtractor {
+impl ASTConstVisitor for ExtractWhileStatements {
     fn visit_while_statement(&mut self, node: &WhileStatement) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)

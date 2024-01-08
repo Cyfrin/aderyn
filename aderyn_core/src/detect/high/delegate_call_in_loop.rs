@@ -4,7 +4,7 @@ use std::error::Error;
 use crate::{
     ast::MemberAccess,
     context::{
-        browser::MemberAccessExtractor,
+        browser::ExtractMemberAccesss,
         loader::{ASTNode, ContextLoader},
     },
     detect::detector::{Detector, IssueSeverity},
@@ -23,7 +23,7 @@ impl Detector for DelegateCallInLoopDetector {
 
         // Get all delegatecall member accesses inside for statements
         member_accesses.extend(loader.for_statements.keys().flat_map(|statement| {
-            MemberAccessExtractor::extract_from(statement)
+            ExtractMemberAccesss::from(statement)
                 .extracted
                 .into_iter()
                 .filter(|ma| ma.member_name == "delegatecall")
@@ -31,7 +31,7 @@ impl Detector for DelegateCallInLoopDetector {
 
         // Get all delegatecall member accsesses inside while statements
         member_accesses.extend(loader.while_statements.keys().flat_map(|statement| {
-            MemberAccessExtractor::extract_from(statement)
+            ExtractMemberAccesss::from(statement)
                 .extracted
                 .into_iter()
                 .filter(|ma| ma.member_name == "delegatecall")
