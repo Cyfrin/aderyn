@@ -1,7 +1,4 @@
-use crate::{
-    ast::*,
-    context::loader::{self, ContextLoader},
-};
+use crate::{ast::*, context::loader::ContextLoader};
 
 pub trait SeekParent {
     fn source_unit<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit>;
@@ -1855,7 +1852,7 @@ impl SeekParent for TryCatchClause {
                 .contract_definitions
                 .keys()
                 .find(|contract_definition| {
-                    Some(contract_definition.id) == (x.contract_definition_id)
+                    Some(contract_definition.id) == x.contract_definition_id
                 })
         })
     }
@@ -1867,7 +1864,7 @@ impl SeekParent for TryCatchClause {
                 .function_definitions
                 .keys()
                 .find(|function_definition| {
-                    Some(function_definition.id) == (x.function_definition_id)
+                    Some(function_definition.id) == x.function_definition_id
                 })
         })
     }
@@ -1879,7 +1876,7 @@ impl SeekParent for TryCatchClause {
                 .modifier_definitions
                 .keys()
                 .find(|modifier_definition| {
-                    Some(modifier_definition.id) == (x.modifier_definition_id)
+                    Some(modifier_definition.id) == x.modifier_definition_id
                 })
         })
     }
@@ -1892,7 +1889,7 @@ impl SeekParent for TupleExpression {
             loader
                 .source_units
                 .iter()
-                .find(|source_unit| source_unit.id == (x.source_unit_id))
+                .find(|source_unit| source_unit.id == x.source_unit_id)
         })
     }
 
@@ -1903,7 +1900,7 @@ impl SeekParent for TupleExpression {
                 .contract_definitions
                 .keys()
                 .find(|contract_definition| {
-                    Some(contract_definition.id) == (x.contract_definition_id)
+                    Some(contract_definition.id) == x.contract_definition_id
                 })
         })
     }
@@ -1915,7 +1912,7 @@ impl SeekParent for TupleExpression {
                 .function_definitions
                 .keys()
                 .find(|function_definition| {
-                    Some(function_definition.id) == (x.function_definition_id)
+                    Some(function_definition.id) == x.function_definition_id
                 })
         })
     }
@@ -1927,7 +1924,7 @@ impl SeekParent for TupleExpression {
                 .modifier_definitions
                 .keys()
                 .find(|modifier_definition| {
-                    Some(modifier_definition.id) == (x.modifier_definition_id)
+                    Some(modifier_definition.id) == x.modifier_definition_id
                 })
         })
     }
@@ -1940,7 +1937,7 @@ impl SeekParent for UnaryOperation {
             loader
                 .source_units
                 .iter()
-                .find(|source_unit| source_unit.id == (x.source_unit_id))
+                .find(|source_unit| source_unit.id == x.source_unit_id)
         })
     }
 
@@ -1951,7 +1948,7 @@ impl SeekParent for UnaryOperation {
                 .contract_definitions
                 .keys()
                 .find(|contract_definition| {
-                    Some(contract_definition.id) == (x.contract_definition_id)
+                    Some(contract_definition.id) == x.contract_definition_id
                 })
         })
     }
@@ -1963,7 +1960,7 @@ impl SeekParent for UnaryOperation {
                 .function_definitions
                 .keys()
                 .find(|function_definition| {
-                    Some(function_definition.id) == (x.function_definition_id)
+                    Some(function_definition.id) == x.function_definition_id
                 })
         })
     }
@@ -1975,7 +1972,7 @@ impl SeekParent for UnaryOperation {
                 .modifier_definitions
                 .keys()
                 .find(|modifier_definition| {
-                    Some(modifier_definition.id) == (x.modifier_definition_id)
+                    Some(modifier_definition.id) == x.modifier_definition_id
                 })
         })
     }
@@ -1988,7 +1985,7 @@ impl SeekParent for UserDefinedTypeName {
             loader
                 .source_units
                 .iter()
-                .find(|source_unit| source_unit.id == (x.source_unit_id))
+                .find(|source_unit| source_unit.id == x.source_unit_id)
         })
     }
 
@@ -1999,7 +1996,7 @@ impl SeekParent for UserDefinedTypeName {
                 .contract_definitions
                 .keys()
                 .find(|contract_definition| {
-                    Some(contract_definition.id) == (x.contract_definition_id)
+                    Some(contract_definition.id) == x.contract_definition_id
                 })
         })
     }
@@ -2011,7 +2008,7 @@ impl SeekParent for UserDefinedTypeName {
                 .function_definitions
                 .keys()
                 .find(|function_definition| {
-                    Some(function_definition.id) == (x.function_definition_id)
+                    Some(function_definition.id) == x.function_definition_id
                 })
         })
     }
@@ -2023,7 +2020,7 @@ impl SeekParent for UserDefinedTypeName {
                 .modifier_definitions
                 .keys()
                 .find(|modifier_definition| {
-                    Some(modifier_definition.id) == (x.modifier_definition_id)
+                    Some(modifier_definition.id) == x.modifier_definition_id
                 })
         })
     }
@@ -2039,7 +2036,7 @@ impl SeekParent for UserDefinedValueTypeDefinition {
                 loader
                     .source_units
                     .iter()
-                    .find(|source_unit| source_unit.id == (x.source_unit_id))
+                    .find(|source_unit| source_unit.id == x.source_unit_id)
             })
     }
 
@@ -2053,7 +2050,7 @@ impl SeekParent for UserDefinedValueTypeDefinition {
                     .contract_definitions
                     .keys()
                     .find(|contract_definition| {
-                        Some(contract_definition.id) == (x.contract_definition_id)
+                        Some(contract_definition.id) == x.contract_definition_id
                     })
             })
     }
@@ -2068,7 +2065,7 @@ impl SeekParent for UserDefinedValueTypeDefinition {
                     .function_definitions
                     .keys()
                     .find(|function_definition| {
-                        Some(function_definition.id) == (x.function_definition_id)
+                        Some(function_definition.id) == x.function_definition_id
                     })
             })
     }
@@ -2083,7 +2080,7 @@ impl SeekParent for UserDefinedValueTypeDefinition {
                     .modifier_definitions
                     .keys()
                     .find(|modifier_definition| {
-                        Some(modifier_definition.id) == (x.modifier_definition_id)
+                        Some(modifier_definition.id) == x.modifier_definition_id
                     })
             })
     }
@@ -2096,7 +2093,7 @@ impl SeekParent for UsingForDirective {
             loader
                 .source_units
                 .iter()
-                .find(|source_unit| source_unit.id == (x.source_unit_id))
+                .find(|source_unit| source_unit.id == x.source_unit_id)
         })
     }
 
@@ -2107,7 +2104,7 @@ impl SeekParent for UsingForDirective {
                 .contract_definitions
                 .keys()
                 .find(|contract_definition| {
-                    Some(contract_definition.id) == (x.contract_definition_id)
+                    Some(contract_definition.id) == x.contract_definition_id
                 })
         })
     }
@@ -2119,7 +2116,7 @@ impl SeekParent for UsingForDirective {
                 .function_definitions
                 .keys()
                 .find(|function_definition| {
-                    Some(function_definition.id) == (x.function_definition_id)
+                    Some(function_definition.id) == x.function_definition_id
                 })
         })
     }
@@ -2131,7 +2128,7 @@ impl SeekParent for UsingForDirective {
                 .modifier_definitions
                 .keys()
                 .find(|modifier_definition| {
-                    Some(modifier_definition.id) == (x.modifier_definition_id)
+                    Some(modifier_definition.id) == x.modifier_definition_id
                 })
         })
     }
@@ -2144,7 +2141,7 @@ impl SeekParent for VariableDeclaration {
             loader
                 .source_units
                 .iter()
-                .find(|source_unit| source_unit.id == (x.source_unit_id))
+                .find(|source_unit| source_unit.id == x.source_unit_id)
         })
     }
 
@@ -2155,7 +2152,7 @@ impl SeekParent for VariableDeclaration {
                 .contract_definitions
                 .keys()
                 .find(|contract_definition| {
-                    Some(contract_definition.id) == (x.contract_definition_id)
+                    Some(contract_definition.id) == x.contract_definition_id
                 })
         })
     }
@@ -2167,7 +2164,7 @@ impl SeekParent for VariableDeclaration {
                 .function_definitions
                 .keys()
                 .find(|function_definition| {
-                    Some(function_definition.id) == (x.function_definition_id)
+                    Some(function_definition.id) == x.function_definition_id
                 })
         })
     }
@@ -2179,7 +2176,7 @@ impl SeekParent for VariableDeclaration {
                 .modifier_definitions
                 .keys()
                 .find(|modifier_definition| {
-                    Some(modifier_definition.id) == (x.modifier_definition_id)
+                    Some(modifier_definition.id) == x.modifier_definition_id
                 })
         })
     }
@@ -2195,7 +2192,7 @@ impl SeekParent for VariableDeclarationStatement {
                 loader
                     .source_units
                     .iter()
-                    .find(|source_unit| source_unit.id == (x.source_unit_id))
+                    .find(|source_unit| source_unit.id == x.source_unit_id)
             })
     }
 
@@ -2209,7 +2206,7 @@ impl SeekParent for VariableDeclarationStatement {
                     .contract_definitions
                     .keys()
                     .find(|contract_definition| {
-                        Some(contract_definition.id) == (x.contract_definition_id)
+                        Some(contract_definition.id) == x.contract_definition_id
                     })
             })
     }
@@ -2224,7 +2221,7 @@ impl SeekParent for VariableDeclarationStatement {
                     .function_definitions
                     .keys()
                     .find(|function_definition| {
-                        Some(function_definition.id) == (x.function_definition_id)
+                        Some(function_definition.id) == x.function_definition_id
                     })
             })
     }
@@ -2239,7 +2236,7 @@ impl SeekParent for VariableDeclarationStatement {
                     .modifier_definitions
                     .keys()
                     .find(|modifier_definition| {
-                        Some(modifier_definition.id) == (x.modifier_definition_id)
+                        Some(modifier_definition.id) == x.modifier_definition_id
                     })
             })
     }
@@ -2252,7 +2249,7 @@ impl SeekParent for WhileStatement {
             loader
                 .source_units
                 .iter()
-                .find(|source_unit| source_unit.id == (x.source_unit_id))
+                .find(|source_unit| source_unit.id == x.source_unit_id)
         })
     }
 
@@ -2263,7 +2260,7 @@ impl SeekParent for WhileStatement {
                 .contract_definitions
                 .keys()
                 .find(|contract_definition| {
-                    Some(contract_definition.id) == (x.contract_definition_id)
+                    Some(contract_definition.id) == x.contract_definition_id
                 })
         })
     }
@@ -2275,7 +2272,7 @@ impl SeekParent for WhileStatement {
                 .function_definitions
                 .keys()
                 .find(|function_definition| {
-                    Some(function_definition.id) == (x.function_definition_id)
+                    Some(function_definition.id) == x.function_definition_id
                 })
         })
     }
@@ -2287,7 +2284,7 @@ impl SeekParent for WhileStatement {
                 .modifier_definitions
                 .keys()
                 .find(|modifier_definition| {
-                    Some(modifier_definition.id) == (x.modifier_definition_id)
+                    Some(modifier_definition.id) == x.modifier_definition_id
                 })
         })
     }
