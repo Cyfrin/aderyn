@@ -5,10 +5,7 @@ use std::{
 
 use crate::{
     ast::{FunctionKind, Visibility},
-    context::{
-        browser::ContextBrowser,
-        loader::{ASTNode, ContextLoader},
-    },
+    context::loader::{ASTNode, ContextLoader},
     detect::detector::{Detector, IssueSeverity},
 };
 use eyre::Result;
@@ -20,11 +17,7 @@ pub struct UselessPublicFunctionDetector {
 }
 
 impl Detector for UselessPublicFunctionDetector {
-    fn detect(
-        &mut self,
-        loader: &ContextLoader,
-        browser: &mut ContextBrowser,
-    ) -> Result<bool, Box<dyn Error>> {
+    fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
         // Collect the ids of all functions referenced by identifiers.
         let referenced_functions: HashSet<_> = loader
             .identifiers
@@ -47,7 +40,7 @@ impl Detector for UselessPublicFunctionDetector {
             unreferenced_public_functions
                 .map(|node| {
                     (
-                        browser.get_node_sort_key(&node.clone().unwrap()),
+                        loader.get_node_sort_key(&node.clone().unwrap()),
                         // match node as FunctionDefinition
                         match node.unwrap() {
                             ASTNode::FunctionDefinition(function_definition) => {
@@ -82,10 +75,7 @@ impl Detector for UselessPublicFunctionDetector {
 
 #[cfg(test)]
 mod useless_public_function_tests {
-    use crate::{
-        context::browser::ContextBrowser,
-        detect::detector::{detector_test_helpers::load_contract, Detector},
-    };
+    use crate::detect::detector::{detector_test_helpers::load_contract, Detector};
 
     use super::UselessPublicFunctionDetector;
 
@@ -93,14 +83,10 @@ mod useless_public_function_tests {
     fn test_useless_public_functions() {
         let context_loader =
             load_contract("../tests/contract-playground/out/Counter.sol/Counter.0.8.21.json");
-        let mut context_browser = ContextBrowser::default_from(&context_loader);
-        context_browser.build_parallel();
 
         let mut detector = UselessPublicFunctionDetector::default();
         // assert that the detector finds the public function
-        let found = detector
-            .detect(&context_loader, &mut context_browser)
-            .unwrap();
+        let found = detector.detect(&context_loader).unwrap();
         assert!(found);
         // assert that the detector returns the correct number of instances
         assert_eq!(detector.instances().len(), 1);

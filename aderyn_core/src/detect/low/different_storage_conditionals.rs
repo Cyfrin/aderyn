@@ -5,10 +5,7 @@ use std::{
 
 use crate::{
     ast::{BinaryOperation, Expression, VariableDeclaration},
-    context::{
-        browser::ContextBrowser,
-        loader::{ASTNode, ContextLoader},
-    },
+    context::loader::{ASTNode, ContextLoader},
     detect::detector::{Detector, IssueSeverity},
 };
 use eyre::Result;
@@ -20,11 +17,7 @@ pub struct DifferentStorageConditionalDetector {
 }
 
 impl Detector for DifferentStorageConditionalDetector {
-    fn detect(
-        &mut self,
-        loader: &ContextLoader,
-        browser: &mut ContextBrowser,
-    ) -> Result<bool, Box<dyn Error>> {
+    fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
         // Step 1: Get all state variable declarations
         let state_variables: Vec<&VariableDeclaration> = loader
             .variable_declarations
@@ -100,12 +93,12 @@ impl Detector for DifferentStorageConditionalDetector {
 
                     if !is_consistent_or_mirror {
                         self.found_instances.insert(
-                            browser.get_node_sort_key(&ASTNode::BinaryOperation((*op).clone())),
+                            loader.get_node_sort_key(&ASTNode::BinaryOperation((*op).clone())),
                             op.src.clone(),
                         );
                         if !first_added {
                             self.found_instances.insert(
-                                browser.get_node_sort_key(&ASTNode::BinaryOperation(
+                                loader.get_node_sort_key(&ASTNode::BinaryOperation(
                                     (*first_op).clone(),
                                 )),
                                 first_op.src.clone(),
@@ -140,10 +133,7 @@ impl Detector for DifferentStorageConditionalDetector {
 
 #[cfg(test)]
 mod different_storage_conditionals_tests {
-    use crate::{
-        context::browser::ContextBrowser,
-        detect::detector::{detector_test_helpers::load_contract, Detector},
-    };
+    use crate::detect::detector::{detector_test_helpers::load_contract, Detector};
 
     use super::DifferentStorageConditionalDetector;
 
@@ -153,12 +143,8 @@ mod different_storage_conditionals_tests {
             "../tests/contract-playground/out/StorageConditionals.sol/StorageConditionals.json",
         );
         let mut detector = DifferentStorageConditionalDetector::default();
-        let mut context_browser = ContextBrowser::default_from(&context_loader);
-        context_browser.build_parallel();
 
-        let found = detector
-            .detect(&context_loader, &mut context_browser)
-            .unwrap();
+        let found = detector.detect(&context_loader).unwrap();
 
         // assert found
         assert!(found);

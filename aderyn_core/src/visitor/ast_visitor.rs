@@ -495,7 +495,6 @@ pub trait Node {
     fn accept(&self, _visitor: &mut impl ASTConstVisitor) -> Result<()> {
         Ok(())
     }
-    // fn listAccept(
 }
 
 pub fn list_accept(list: &Vec<impl Node>, visitor: &mut impl ASTConstVisitor) -> Result<()> {

@@ -1,10 +1,7 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
-    context::{
-        browser::ContextBrowser,
-        loader::{ASTNode, ContextLoader},
-    },
+    context::loader::{ASTNode, ContextLoader},
     detect::detector::{Detector, IssueSeverity},
 };
 use eyre::Result;
@@ -16,16 +13,12 @@ pub struct UnspecificSolidityPragmaDetector {
 }
 
 impl Detector for UnspecificSolidityPragmaDetector {
-    fn detect(
-        &mut self,
-        loader: &ContextLoader,
-        browser: &mut ContextBrowser,
-    ) -> Result<bool, Box<dyn Error>> {
+    fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
         for pragma_directive in loader.pragma_directives.keys() {
             for literal in &pragma_directive.literals {
                 if literal.contains('^') || literal.contains('>') {
                     self.found_instances.insert(
-                        browser
+                        loader
                             .get_node_sort_key(&ASTNode::PragmaDirective(pragma_directive.clone())),
                         pragma_directive.src.clone(),
                     );
@@ -55,12 +48,9 @@ impl Detector for UnspecificSolidityPragmaDetector {
 
 #[cfg(test)]
 mod unspecific_solidity_pragma_tests {
-    use crate::{
-        context::browser::ContextBrowser,
-        detect::{
-            detector::{detector_test_helpers::load_contract, Detector},
-            low::unspecific_solidity_pragma::UnspecificSolidityPragmaDetector,
-        },
+    use crate::detect::{
+        detector::{detector_test_helpers::load_contract, Detector},
+        low::unspecific_solidity_pragma::UnspecificSolidityPragmaDetector,
     };
 
     #[test]
@@ -68,12 +58,9 @@ mod unspecific_solidity_pragma_tests {
         let context_loader = load_contract(
             "../tests/contract-playground/out/IContractInheritance.sol/IContractInheritance.0.8.21.json",
         );
-        let mut context_browser = ContextBrowser::default_from(&context_loader);
-        context_browser.build_parallel();
+
         let mut detector = UnspecificSolidityPragmaDetector::default();
-        let found = detector
-            .detect(&context_loader, &mut context_browser)
-            .unwrap();
+        let found = detector.detect(&context_loader).unwrap();
         // assert that the detector found an abi encode packed
         assert!(found);
         // assert that the detector found the correct abi encode packed
