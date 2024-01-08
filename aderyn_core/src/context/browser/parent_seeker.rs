@@ -20,9 +20,7 @@ impl SeekParent for ArrayTypeName {
 
     fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
         loader.array_type_names.get(self).and_then(move |x| {
-            if x.contract_definition_id.is_none() {
-                return None;
-            }
+            x.contract_definition_id?;
             loader
                 .contract_definitions
                 .keys()
@@ -34,9 +32,7 @@ impl SeekParent for ArrayTypeName {
 
     fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
         loader.array_type_names.get(self).and_then(move |x| {
-            if x.function_definition_id.is_none() {
-                return None;
-            }
+            x.function_definition_id?;
             loader
                 .function_definitions
                 .keys()
@@ -48,9 +44,7 @@ impl SeekParent for ArrayTypeName {
 
     fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
         loader.array_type_names.get(self).and_then(move |x| {
-            if x.modifier_definition_id.is_none() {
-                return None;
-            }
+            x.modifier_definition_id?;
             loader
                 .modifier_definitions
                 .keys()
@@ -74,9 +68,7 @@ impl SeekParent for Assignment {
 
     fn contract_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ContractDefinition> {
         loader.assignments.get(self).and_then(move |x| {
-            if x.contract_definition_id.is_none() {
-                return None;
-            }
+            x.contract_definition_id?;
             loader
                 .contract_definitions
                 .keys()
@@ -88,9 +80,7 @@ impl SeekParent for Assignment {
 
     fn function_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a FunctionDefinition> {
         loader.assignments.get(self).and_then(move |x| {
-            if x.function_definition_id.is_none() {
-                return None;
-            }
+            x.function_definition_id?;
             loader
                 .function_definitions
                 .keys()
@@ -102,9 +92,7 @@ impl SeekParent for Assignment {
 
     fn modifier_definition<'a>(&self, loader: &'a ContextLoader) -> Option<&'a ModifierDefinition> {
         loader.assignments.get(self).and_then(move |x| {
-            if x.modifier_definition_id.is_none() {
-                return None;
-            }
+            x.modifier_definition_id?;
             loader
                 .modifier_definitions
                 .keys()

@@ -203,205 +203,155 @@ impl ContextLoader {
         let source_unit_id = match node {
             ASTNode::ArrayTypeName(node) => self
                 .array_type_names
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::Assignment(node) => self
                 .assignments
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::BinaryOperation(node) => self
                 .binary_operations
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::Block(node) => self
                 .blocks
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::Conditional(node) => self
                 .conditionals
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::ContractDefinition(node) => self
                 .contract_definitions
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::ElementaryTypeName(node) => self
                 .elementary_type_names
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::ElementaryTypeNameExpression(node) => self
                 .elementary_type_name_expressions
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::EmitStatement(node) => self
                 .emit_statements
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::EnumDefinition(node) => self
                 .enum_definitions
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::EnumValue(node) => self
                 .enum_values
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::EventDefinition(node) => self
                 .event_definitions
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::ErrorDefinition(node) => self
                 .error_definitions
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::ExpressionStatement(node) => self
                 .expression_statements
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::FunctionCall(node) => self
                 .function_calls
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::FunctionCallOptions(node) => self
                 .function_call_options
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::FunctionDefinition(node) => self
                 .function_definitions
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::FunctionTypeName(node) => self
                 .function_type_names
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::ForStatement(node) => self
                 .for_statements
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::Identifier(node) => self
                 .identifiers
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::IdentifierPath(node) => self
                 .identifier_paths
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::IfStatement(node) => self
                 .if_statements
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::ImportDirective(node) => self
                 .import_directives
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::IndexAccess(node) => self
                 .index_accesses
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::IndexRangeAccess(node) => self
                 .index_range_accesses
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::InheritanceSpecifier(node) => self
                 .inheritance_specifiers
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::InlineAssembly(node) => self
                 .inline_assemblies
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::Literal(node) => self
                 .literals
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::MemberAccess(node) => self
                 .member_accesses
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::NewExpression(node) => self
                 .new_expressions
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::Mapping(node) => self
                 .mappings
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::ModifierDefinition(node) => self
                 .modifier_definitions
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::ModifierInvocation(node) => self
                 .modifier_invocations
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::OverrideSpecifier(node) => self
                 .override_specifiers
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::ParameterList(node) => self
                 .parameter_lists
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::PragmaDirective(node) => self
                 .pragma_directives
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::Return(node) => self
                 .returns
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::RevertStatement(node) => self
                 .revert_statements
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::SourceUnit(node) => Some(node.id),
             ASTNode::StructDefinition(node) => self
                 .struct_definitions
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::StructuredDocumentation(node) => self
                 .structured_documentations
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::TryStatement(node) => self
                 .try_statements
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::TryCatchClause(node) => self
                 .try_catch_clauses
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::TupleExpression(node) => self
                 .tuple_expressions
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::UnaryOperation(node) => self
                 .unary_operations
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::UserDefinedTypeName(node) => self
                 .user_defined_type_names
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::UserDefinedValueTypeDefinition(node) => self
                 .user_defined_value_type_definitions
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::UsingForDirective(node) => self
                 .using_for_directives
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::VariableDeclaration(node) => self
                 .variable_declarations
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::VariableDeclarationStatement(node) => self
                 .variable_declaration_statements
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
             ASTNode::WhileStatement(node) => self
                 .while_statements
-                .get(node)
-                .and_then(|context| Some(context.source_unit_id)),
+                .get(node).map(|context| context.source_unit_id),
         };
 
         // iterate through self.source_units until the source unit with the id matching `source_unit_id` is found, then return its `absolute_path`
