@@ -474,42 +474,42 @@ impl ASTConstVisitor for ExtractImportDirectives {
     }
 }
 
-// ExtractIndexAccesss extracts all IndexAccess nodes from a given node.
+// ExtractIndexAccesses extracts all IndexAccess nodes from a given node.
 #[derive(Default)]
-pub struct ExtractIndexAccesss {
+pub struct ExtractIndexAccesses {
     pub extracted: Vec<IndexAccess>,
 }
 
-impl ExtractIndexAccesss {
+impl ExtractIndexAccesses {
     pub fn from<T: Node + ?Sized>(node: &T) -> Self {
-        let mut extractor: ExtractIndexAccesss = Self::default();
+        let mut extractor: ExtractIndexAccesses = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for ExtractIndexAccesss {
+impl ASTConstVisitor for ExtractIndexAccesses {
     fn visit_index_access(&mut self, node: &IndexAccess) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
     }
 }
 
-// ExtractIndexRangeAccesss extracts all IndexRangeAccess nodes from a given node.
+// ExtractIndexRangeAccesses extracts all IndexRangeAccess nodes from a given node.
 #[derive(Default)]
-pub struct ExtractIndexRangeAccesss {
+pub struct ExtractIndexRangeAccesses {
     pub extracted: Vec<IndexRangeAccess>,
 }
 
-impl ExtractIndexRangeAccesss {
+impl ExtractIndexRangeAccesses {
     pub fn from<T: Node + ?Sized>(node: &T) -> Self {
-        let mut extractor: ExtractIndexRangeAccesss = Self::default();
+        let mut extractor: ExtractIndexRangeAccesses = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for ExtractIndexRangeAccesss {
+impl ASTConstVisitor for ExtractIndexRangeAccesses {
     fn visit_index_range_access(&mut self, node: &IndexRangeAccess) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
@@ -579,21 +579,21 @@ impl ASTConstVisitor for ExtractLiterals {
     }
 }
 
-// ExtractMemberAccesss is an extractor that extracts all MemberAccess nodes from a node.
+// ExtractMemberAccesses is an extractor that extracts all MemberAccess nodes from a node.
 #[derive(Default)]
-pub struct ExtractMemberAccesss {
+pub struct ExtractMemberAccesses {
     pub extracted: Vec<MemberAccess>,
 }
 
-impl ExtractMemberAccesss {
+impl ExtractMemberAccesses {
     pub fn from<T: Node + ?Sized>(node: &T) -> Self {
-        let mut extractor: ExtractMemberAccesss = Self::default();
+        let mut extractor: ExtractMemberAccesses = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for ExtractMemberAccesss {
+impl ASTConstVisitor for ExtractMemberAccesses {
     fn visit_member_access(&mut self, node: &MemberAccess) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
