@@ -4,7 +4,7 @@ use std::{
 };
 
 use crate::{
-    ast::{Assignment, BinaryOperation, Expression, Mutability, NodeID, VariableDeclaration},
+    ast::{BinaryOperation, Expression, Mutability, NodeID, VariableDeclaration},
     context::{
         browser::{AssignmentExtractor, BinaryOperationExtractor},
         loader::{ASTNode, ContextLoader},
@@ -66,8 +66,6 @@ impl Detector for ZeroAddressCheckDetector {
             let mut binary_checks_against_zero_address = HashSet::new();
 
             for x in binary_operations {
-                let operator = x.operator.clone();
-
                 let l_node_id: Option<NodeID> = {
                     let l = x.left_expression.as_ref();
                     if let Expression::Identifier(left_identifier) = l {
