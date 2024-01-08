@@ -6,7 +6,7 @@ use std::{
 use crate::{
     ast::{BinaryOperation, Expression, Mutability, NodeID, VariableDeclaration},
     context::{
-        browser::{AssignmentExtractor, BinaryOperationExtractor},
+        browser::{ExtractAssignments, ExtractBinaryOperations},
         loader::{ASTNode, ContextLoader},
     },
     detect::detector::{Detector, IssueSeverity},
@@ -56,7 +56,7 @@ impl Detector for ZeroAddressCheckDetector {
         for function_definition in loader.function_definitions.keys() {
             // Get all the binary checks inside the function
             let binary_operations: Vec<BinaryOperation> =
-                BinaryOperationExtractor::from_node(function_definition)
+                ExtractBinaryOperations::from(function_definition)
                     .extracted
                     .into_iter()
                     .filter(|x| x.operator == "==" || x.operator == "!=")
@@ -92,7 +92,7 @@ impl Detector for ZeroAddressCheckDetector {
             }
 
             // Get all the assignments in the function
-            let assignments = AssignmentExtractor::from_node(function_definition)
+            let assignments = ExtractAssignments::from(function_definition)
                 .extracted
                 .into_iter()
                 .filter(|x| {
