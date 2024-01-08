@@ -1,15 +1,20 @@
 use crate::{ast::*, context::loader::ContextLoader};
 
+/// GetParent allows us to finction an ASTNode's parent SourceUnit, ContractDefinition, FunctionDefinition or ModifierDefinition
 pub trait GetParent {
+    /// Get the parent SourceUnit of an ASTNode
     fn source_unit_of<'a>(&self, loader: &'a ContextLoader) -> Option<&'a SourceUnit>;
+    /// Get the parent ContractDefinition of an ASTNode
     fn contract_definition_of<'a>(
         &self,
         loader: &'a ContextLoader,
     ) -> Option<&'a ContractDefinition>;
+    /// Get the parent FunctionDefinition of an ASTNode
     fn function_definition_of<'a>(
         &self,
         loader: &'a ContextLoader,
     ) -> Option<&'a FunctionDefinition>;
+    /// Get the parent ModifierDefinition of an ASTNode
     fn modifier_definition_of<'a>(
         &self,
         loader: &'a ContextLoader,
