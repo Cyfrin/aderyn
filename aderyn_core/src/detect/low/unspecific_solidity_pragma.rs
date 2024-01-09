@@ -58,6 +58,7 @@ mod unspecific_solidity_pragma_tests {
         let context_loader = load_contract(
             "../tests/contract-playground/out/IContractInheritance.sol/IContractInheritance.0.8.21.json",
         );
+
         let mut detector = UnspecificSolidityPragmaDetector::default();
         let found = detector.detect(&context_loader).unwrap();
         // assert that the detector found an abi encode packed

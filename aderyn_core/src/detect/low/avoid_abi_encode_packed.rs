@@ -78,6 +78,7 @@ mod avoid_abi_encode_packed_tests {
         let context_loader = load_contract(
             "../tests/contract-playground/out/KeccakContract.sol/KeccakContract.json",
         );
+
         let mut detector = AvoidAbiEncodePackedDetector::default();
         let found = detector.detect(&context_loader).unwrap();
         // assert that the detector found an abi encode packed

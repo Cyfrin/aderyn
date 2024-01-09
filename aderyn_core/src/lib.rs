@@ -19,10 +19,11 @@ use crate::report::reporter::Report;
 use crate::report::Issue;
 
 pub fn run_with_printer<T>(
-    context_loader: ContextLoader,
+    context_loader: &ContextLoader,
     output_file_path: String,
     reporter: T,
     root_rel_path: PathBuf,
+    no_snippets: bool,
 ) -> Result<(), Box<dyn Error>>
 where
     T: ReportPrinter<()>,
@@ -35,7 +36,7 @@ where
 
     let mut report: Report = Report::default();
     for mut detector in detectors {
-        if let Ok(found) = detector.detect(&context_loader) {
+        if let Ok(found) = detector.detect(context_loader) {
             if found {
                 let issue: Issue = Issue {
                     title: detector.title(),
@@ -69,9 +70,10 @@ where
     reporter.print_report(
         get_markdown_writer(&output_file_path)?,
         &report,
-        &context_loader,
+        context_loader,
         root_rel_path,
         Some(output_file_path.clone()),
+        no_snippets,
     )?;
 
     println!("Report printed to {}", output_file_path);

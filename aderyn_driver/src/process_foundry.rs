@@ -5,9 +5,15 @@ use aderyn_core::{
     visitor::ast_visitor::Node,
 };
 use rayon::prelude::*;
-use std::path::{Path, PathBuf};
+use std::{
+    collections::HashSet,
+    path::{Path, PathBuf},
+};
 
-pub fn with_project_root_at(root_path: &PathBuf) -> (String, ContextLoader) {
+pub fn with_project_root_at(
+    root_path: &PathBuf,
+    exclude: &Option<Vec<String>>,
+) -> (String, ContextLoader) {
     let mut context_loader = ContextLoader::default();
 
     println!("Framework detected: Foundry mode engaged.");
@@ -28,7 +34,20 @@ pub fn with_project_root_at(root_path: &PathBuf) -> (String, ContextLoader) {
         .par_iter()
         .map(
             |output_filepath| match read_foundry_output_file(output_filepath.to_str().unwrap()) {
-                Ok(foundry_output) => Some(foundry_output.ast),
+                Ok(foundry_output) => {
+                    if let Some(excludes) = &exclude {
+                        if excludes.iter().any(|ex| {
+                            foundry_output
+                                .ast
+                                .absolute_path
+                                .as_ref()
+                                .map_or(false, |path| path.contains(ex))
+                        }) {
+                            return None; // Skip if the path matches any exclude pattern
+                        }
+                    }
+                    Some(foundry_output.ast)
+                }
                 Err(err) => {
                     eprintln!(
                         "Error reading Foundry output file: {}: {}",
@@ -40,6 +59,12 @@ pub fn with_project_root_at(root_path: &PathBuf) -> (String, ContextLoader) {
             },
         )
         .collect::<Vec<_>>();
+
+    // Get deduplicated list of paths that have already been filtered
+    let intermediate_paths: HashSet<String> = foundry_intermediates
+        .iter()
+        .filter_map(|ast_option| ast_option.as_ref()?.absolute_path.clone())
+        .collect();
 
     // read_foundry_output_file and print an error message if it fails
     foundry_intermediates
@@ -70,19 +95,25 @@ pub fn with_project_root_at(root_path: &PathBuf) -> (String, ContextLoader) {
             });
         });
 
-    let root_path_str = root_path
-        .to_string_lossy()
-        .into_owned()
-        .trim_start_matches("./")
-        .to_string();
-    context_loader.src_filepaths = loaded_foundry
-        .src_filepaths
-        .iter()
-        .filter_map(|path| {
-            let path_str = path.to_string_lossy();
-            path_str.split(&root_path_str).nth(1).map(|s| s.to_string())
-        })
-        .collect::<Vec<_>>();
-
+    context_loader.src_filepaths = intermediate_paths.into_iter().collect();
     (src_path, context_loader)
+}
+
+#[cfg(test)]
+mod tests {
+    use std::path::PathBuf;
+
+    #[test]
+    fn test_process_foundry_exclude() {
+        let root_path = PathBuf::from("../tests/contract-playground");
+        let exclude: Option<Vec<String>> =
+            Some(vec!["AnotherHeavilyCommentedContract.sol".to_string()]);
+
+        let (_, context_loader) = super::with_project_root_at(&root_path, &exclude);
+        let contains_string = context_loader
+            .src_filepaths
+            .iter()
+            .any(|fp| fp.contains("AnotherHeavilyCommentedContract.sol"));
+        assert!(!contains_string);
+    }
 }

@@ -62,6 +62,7 @@ mod require_with_string_tests {
         let context_loader = load_contract(
             "../tests/contract-playground/out/DeprecatedOZFunctions.sol/DeprecatedOZFunctions.json",
         );
+
         let mut detector = RequireWithStringDetector::default();
         // assert that the detector finds something
         let found = detector.detect(&context_loader).unwrap();

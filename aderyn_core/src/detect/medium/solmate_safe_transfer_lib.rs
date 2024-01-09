@@ -65,6 +65,7 @@ mod solmate_safe_transfer_lib_tests {
     fn test_solmate_safe_transfer_lib() {
         let context_loader =
             load_contract("../tests/contract-playground/out/T11sTranferer.sol/T11sTranferer.json");
+
         let mut detector = SolmateSafeTransferLibDetector::default();
         let found = detector.detect(&context_loader).unwrap();
         // assert that the detector found
@@ -97,6 +98,7 @@ mod solmate_safe_transfer_lib_tests {
         let context_loader = load_contract(
             "../tests/contract-playground/out/ArbitraryTransferFrom.sol/ArbitraryTransferFrom.json",
         );
+
         let mut detector = SolmateSafeTransferLibDetector::default();
         let found = detector.detect(&context_loader).unwrap();
         // assert that the detector found

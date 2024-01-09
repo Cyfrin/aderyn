@@ -69,6 +69,7 @@ mod unindexed_event_tests {
         let context_loader = load_contract(
             "../tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",
         );
+
         let mut detector = UnindexedEventsDetector::default();
         // assert that the detector finds the public function
         let found = detector.detect(&context_loader).unwrap();

@@ -1,7 +1,10 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
-    context::loader::{ASTNode, ContextLoader},
+    context::{
+        browser::GetParent,
+        loader::{ASTNode, ContextLoader},
+    },
     detect::detector::{Detector, IssueSeverity},
 };
 use eyre::Result;
@@ -17,9 +20,7 @@ impl Detector for UnsafeERC721MintDetector {
         for identifier in loader.identifiers.keys() {
             // if source_unit has any ImportDirectives with absolute_path containing "openzeppelin"
             // call identifier.accept(self)
-            let source_unit = loader
-                .get_source_unit_from_child_node(&ASTNode::Identifier(identifier.clone()))
-                .unwrap();
+            let source_unit = GetParent::source_unit_of(identifier, loader).unwrap();
 
             let import_directives = source_unit.import_directives();
             if import_directives.iter().any(|directive| {
@@ -69,6 +70,7 @@ mod unsafe_erc721_mint_tests {
         let context_loader = load_contract(
             "../tests/contract-playground/out/UnsafeERC721Mint.sol/UnsafeERC721Mint.json",
         );
+
         let mut detector = UnsafeERC721MintDetector::default();
         let found = detector.detect(&context_loader).unwrap();
         // assert that the detector found an abi encode packed

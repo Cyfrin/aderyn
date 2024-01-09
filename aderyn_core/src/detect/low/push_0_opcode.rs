@@ -105,6 +105,7 @@ mod unspecific_solidity_pragma_tests {
         let context_loader = load_contract(
             "../tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",
         );
+
         let mut detector = super::PushZeroOpcodeDetector::default();
         let found = detector.detect(&context_loader).unwrap();
         // assert that it found something
@@ -134,6 +135,7 @@ mod unspecific_solidity_pragma_tests {
     fn test_push_0_opcode_detector_on_range() {
         let context_loader =
             load_contract("../tests/contract-playground/out/CrazyPragma.sol/CrazyPragma.json");
+
         let mut detector = super::PushZeroOpcodeDetector::default();
         let found = detector.detect(&context_loader).unwrap();
         // assert that it found something
@@ -164,6 +166,7 @@ mod unspecific_solidity_pragma_tests {
         let context_loader = load_contract(
             "../tests/contract-playground/out/ArbitraryTransferFrom.sol/ArbitraryTransferFrom.json",
         );
+
         let mut detector = super::PushZeroOpcodeDetector::default();
         let found = detector.detect(&context_loader).unwrap();
         // assert that it found something
@@ -176,6 +179,7 @@ mod unspecific_solidity_pragma_tests {
     fn test_push_0_opcode_detector_on_caret_0_8_13() {
         let context_loader =
             load_contract("../tests/contract-playground/out/Counter.sol/Counter.0.8.21.json");
+
         let mut detector = super::PushZeroOpcodeDetector::default();
         let found = detector.detect(&context_loader).unwrap();
         // assert that it found something
@@ -189,6 +193,7 @@ mod unspecific_solidity_pragma_tests {
         let context_loader = load_contract(
             "../tests/contract-playground/out/IContractInheritance.sol/IContractInheritance.0.8.21.json",
         );
+
         let mut detector = super::PushZeroOpcodeDetector::default();
         let found = detector.detect(&context_loader).unwrap();
         // assert that it found something

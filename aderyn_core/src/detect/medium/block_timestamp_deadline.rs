@@ -130,6 +130,7 @@ mod block_timestamp_deadline_detector_tests {
         let context_loader = load_contract(
             "../tests/contract-playground/out/UniswapV2Swapper.sol/UniswapV2Swapper.json",
         );
+
         let mut detector = BlockTimestampDeadlineDetector::default();
         let found = detector.detect(&context_loader).unwrap();
         // assert that the detector found
@@ -161,6 +162,7 @@ mod block_timestamp_deadline_detector_tests {
         let context_loader = load_contract(
             "../tests/contract-playground/out/UniswapV3Swapper.sol/UniswapV3Swapper.json",
         );
+
         let mut detector = BlockTimestampDeadlineDetector::default();
         let found = detector.detect(&context_loader).unwrap();
         // assert that the detector found

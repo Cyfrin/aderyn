@@ -43,19 +43,22 @@ pub fn load_hardhat(hardhat_root: &Path) -> Result<CumulativeHardhatOutput, Box<
     let cumulative_output_mutex = Mutex::new(cumulative_output);
 
     json_build_files.par_iter().for_each(|json_build_file| {
-        let hardhat_output = read_hardhat_build_info_file(json_build_file).unwrap_or_else(|err| {
-            // Exit with a non-zero exit code
-            eprintln!("Error reading Hardhat build-info file");
-            // print err
-            eprintln!("{:?}", err);
-            std::process::exit(1);
-        });
-        let mut cumulative_output = cumulative_output_mutex.lock().unwrap();
-        for (key, contract_source) in hardhat_output.output.sources.iter() {
-            if key.starts_with("contracts/") {
-                cumulative_output
-                    .output
-                    .insert(key.to_string(), contract_source.clone());
+        match read_hardhat_build_info_file(json_build_file) {
+            Ok(hardhat_output) => {
+                let mut cumulative_output = cumulative_output_mutex.lock().unwrap();
+                for (key, contract_source) in hardhat_output.output.sources.iter() {
+                    if key.starts_with("contracts/") {
+                        cumulative_output
+                            .output
+                            .insert(key.to_string(), contract_source.clone());
+                    }
+                }
+            }
+            Err(err) => {
+                eprintln!(
+                    "Error reading Hardhat build-info file {:?}: {:?}",
+                    json_build_file, err
+                );
             }
         }
     });

@@ -143,6 +143,7 @@ mod different_storage_conditionals_tests {
             "../tests/contract-playground/out/StorageConditionals.sol/StorageConditionals.json",
         );
         let mut detector = DifferentStorageConditionalDetector::default();
+
         let found = detector.detect(&context_loader).unwrap();
 
         // assert found

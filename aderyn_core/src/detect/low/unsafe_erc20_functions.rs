@@ -56,6 +56,7 @@ mod unsafe_erc20_functions_tests {
         let context_loader = load_contract(
             "../tests/contract-playground/out/DeprecatedOZFunctions.sol/DeprecatedOZFunctions.json",
         );
+
         let mut detector = UnsafeERC20FunctionsDetector::default();
         let found = detector.detect(&context_loader).unwrap();
         // assert that the detector found an abi encode packed

@@ -86,6 +86,7 @@ mod deprecated_oz_functions_tests {
         let context_loader = load_contract(
             "../tests/contract-playground/out/DeprecatedOZFunctions.sol/DeprecatedOZFunctions.json",
         );
+
         let mut detector = DeprecatedOZFunctionsDetector::default();
         let found = detector.detect(&context_loader).unwrap();
         // assert that the detector found an abi encode packed
