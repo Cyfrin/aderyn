@@ -1,7 +1,8 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
-    context::loader::{ASTNode, ContextLoader},
+    capture,
+    context::loader::ContextLoader,
     detect::detector::{Detector, IssueSeverity},
 };
 use eyre::Result;
@@ -19,10 +20,7 @@ impl Detector for UnsafeERC20FunctionsDetector {
                 || member_access.member_name == "approve"
                 || member_access.member_name == "transfer"
             {
-                self.found_instances.insert(
-                    loader.get_node_sort_key(&ASTNode::MemberAccess(member_access.clone())),
-                    member_access.src.clone(),
-                );
+                capture!(self, loader, member_access);
             }
         }
         Ok(!self.found_instances.is_empty())

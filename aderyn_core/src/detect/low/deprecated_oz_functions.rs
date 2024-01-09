@@ -1,7 +1,8 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
-    context::loader::{ASTNode, ContextLoader},
+    capture,
+    context::loader::ContextLoader,
     detect::detector::{Detector, IssueSeverity},
 };
 use eyre::Result;
@@ -18,7 +19,7 @@ impl Detector for DeprecatedOZFunctionsDetector {
             // if source_unit has any ImportDirectives with absolute_path containing "openzeppelin"
             // call identifier.accept(self)
             let source_unit = loader
-                .get_source_unit_from_child_node(&ASTNode::Identifier(identifier.clone()))
+                .get_source_unit_from_child_node(&identifier.into())
                 .unwrap();
 
             let import_directives = source_unit.import_directives();
@@ -29,17 +30,14 @@ impl Detector for DeprecatedOZFunctionsDetector {
                     .map_or(false, |path| path.contains("openzeppelin"))
             }) && identifier.name == "_setupRole"
             {
-                self.found_instances.insert(
-                    loader.get_node_sort_key(&ASTNode::Identifier(identifier.clone())),
-                    identifier.src.clone(),
-                );
+                capture!(self, loader, identifier);
             }
         }
         for member_access in loader.member_accesses.keys() {
             // if source_unit has any ImportDirectives with absolute_path containing "openzeppelin"
             // call member_access.accept(self)
             let source_unit = loader
-                .get_source_unit_from_child_node(&ASTNode::MemberAccess(member_access.clone()))
+                .get_source_unit_from_child_node(&member_access.into())
                 .unwrap();
             let import_directives = source_unit.import_directives();
             if import_directives.iter().any(|directive| {
@@ -49,10 +47,7 @@ impl Detector for DeprecatedOZFunctionsDetector {
                     .map_or(false, |path| path.contains("openzeppelin"))
             }) && member_access.member_name == "safeApprove"
             {
-                self.found_instances.insert(
-                    loader.get_node_sort_key(&ASTNode::MemberAccess(member_access.clone())),
-                    member_access.src.clone(),
-                );
+                capture!(self, loader, member_access);
             }
         }
         Ok(!self.found_instances.is_empty())

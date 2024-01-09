@@ -1,7 +1,8 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
-    context::loader::{ASTNode, ContextLoader},
+    capture,
+    context::loader::ContextLoader,
     detect::detector::{Detector, IssueSeverity},
 };
 use eyre::Result;
@@ -30,10 +31,7 @@ impl Detector for CentralizationRiskDetector {
                 )
             })
         }) {
-            self.found_instances.insert(
-                loader.get_node_sort_key(&ASTNode::ContractDefinition(contract_definition.clone())),
-                contract_definition.src.clone(),
-            );
+            capture!(self, loader, contract_definition);
         }
 
         for modifier_invocation in loader.modifier_invocations.keys().filter(|mi| {
@@ -41,10 +39,7 @@ impl Detector for CentralizationRiskDetector {
                 || mi.modifier_name.name == "requiresAuth"
                 || mi.modifier_name.name.contains("onlyRole")
         }) {
-            self.found_instances.insert(
-                loader.get_node_sort_key(&ASTNode::ModifierInvocation(modifier_invocation.clone())),
-                modifier_invocation.src.clone(),
-            );
+            capture!(self, loader, modifier_invocation);
         }
 
         Ok(!self.found_instances.is_empty())
