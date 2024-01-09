@@ -1,7 +1,8 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
-    context::loader::{ASTNode, ContextLoader},
+    capture,
+    context::loader::ContextLoader,
     detect::detector::{Detector, IssueSeverity},
 };
 use eyre::Result;
@@ -27,10 +28,7 @@ impl Detector for SolmateSafeTransferLibDetector {
                     .unwrap()
                     .contains("SafeTransferLib")
             {
-                self.found_instances.insert(
-                    loader.get_node_sort_key(&ASTNode::ImportDirective(import_directive.clone())),
-                    import_directive.src.clone(),
-                );
+                capture!(self, loader, import_directive);
             }
         }
 

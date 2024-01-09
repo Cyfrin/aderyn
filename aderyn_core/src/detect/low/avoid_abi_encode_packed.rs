@@ -1,7 +1,8 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
-    context::loader::{ASTNode, ContextLoader},
+    capture,
+    context::loader::ContextLoader,
     detect::detector::{Detector, IssueSeverity},
 };
 use eyre::Result;
@@ -38,10 +39,7 @@ impl Detector for AvoidAbiEncodePackedDetector {
                     }
                 }
                 if count > 1 {
-                    self.found_instances.insert(
-                        loader.get_node_sort_key(&ASTNode::MemberAccess(member_access.clone())),
-                        member_access.src.clone(),
-                    );
+                    capture!(self, loader, member_access);
                 }
             }
         }
