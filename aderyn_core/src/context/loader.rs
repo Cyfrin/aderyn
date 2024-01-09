@@ -58,6 +58,312 @@ pub enum ASTNode {
     WhileStatement(WhileStatement),
 }
 
+impl From<ArrayTypeName> for ASTNode {
+    fn from(value: ArrayTypeName) -> Self {
+        ASTNode::ArrayTypeName(value)
+    }
+}
+
+impl From<Assignment> for ASTNode {
+    fn from(value: Assignment) -> Self {
+        ASTNode::Assignment(value)
+    }
+}
+
+impl From<BinaryOperation> for ASTNode {
+    fn from(value: BinaryOperation) -> Self {
+        ASTNode::BinaryOperation(value)
+    }
+}
+
+impl From<Block> for ASTNode {
+    fn from(value: Block) -> Self {
+        ASTNode::Block(value)
+    }
+}
+
+impl From<Conditional> for ASTNode {
+    fn from(value: Conditional) -> Self {
+        ASTNode::Conditional(value)
+    }
+}
+
+impl From<ContractDefinition> for ASTNode {
+    fn from(value: ContractDefinition) -> Self {
+        ASTNode::ContractDefinition(value)
+    }
+}
+
+impl From<ElementaryTypeName> for ASTNode {
+    fn from(value: ElementaryTypeName) -> Self {
+        ASTNode::ElementaryTypeName(value)
+    }
+}
+
+impl From<ElementaryTypeNameExpression> for ASTNode {
+    fn from(value: ElementaryTypeNameExpression) -> Self {
+        ASTNode::ElementaryTypeNameExpression(value)
+    }
+}
+
+impl From<EmitStatement> for ASTNode {
+    fn from(value: EmitStatement) -> Self {
+        ASTNode::EmitStatement(value)
+    }
+}
+
+impl From<EnumDefinition> for ASTNode {
+    fn from(value: EnumDefinition) -> Self {
+        ASTNode::EnumDefinition(value)
+    }
+}
+
+impl From<EnumValue> for ASTNode {
+    fn from(value: EnumValue) -> Self {
+        ASTNode::EnumValue(value)
+    }
+}
+
+impl From<EventDefinition> for ASTNode {
+    fn from(value: EventDefinition) -> Self {
+        ASTNode::EventDefinition(value)
+    }
+}
+
+impl From<ErrorDefinition> for ASTNode {
+    fn from(value: ErrorDefinition) -> Self {
+        ASTNode::ErrorDefinition(value)
+    }
+}
+
+impl From<ExpressionStatement> for ASTNode {
+    fn from(value: ExpressionStatement) -> Self {
+        ASTNode::ExpressionStatement(value)
+    }
+}
+
+impl From<FunctionCall> for ASTNode {
+    fn from(value: FunctionCall) -> Self {
+        ASTNode::FunctionCall(value)
+    }
+}
+
+impl From<FunctionCallOptions> for ASTNode {
+    fn from(value: FunctionCallOptions) -> Self {
+        ASTNode::FunctionCallOptions(value)
+    }
+}
+
+impl From<FunctionDefinition> for ASTNode {
+    fn from(value: FunctionDefinition) -> Self {
+        ASTNode::FunctionDefinition(value)
+    }
+}
+
+impl From<FunctionTypeName> for ASTNode {
+    fn from(value: FunctionTypeName) -> Self {
+        ASTNode::FunctionTypeName(value)
+    }
+}
+
+impl From<ForStatement> for ASTNode {
+    fn from(value: ForStatement) -> Self {
+        ASTNode::ForStatement(value)
+    }
+}
+
+impl From<Identifier> for ASTNode {
+    fn from(value: Identifier) -> Self {
+        ASTNode::Identifier(value)
+    }
+}
+
+impl From<IdentifierPath> for ASTNode {
+    fn from(value: IdentifierPath) -> Self {
+        ASTNode::IdentifierPath(value)
+    }
+}
+
+impl From<IfStatement> for ASTNode {
+    fn from(value: IfStatement) -> Self {
+        ASTNode::IfStatement(value)
+    }
+}
+
+impl From<ImportDirective> for ASTNode {
+    fn from(value: ImportDirective) -> Self {
+        ASTNode::ImportDirective(value)
+    }
+}
+
+impl From<IndexAccess> for ASTNode {
+    fn from(value: IndexAccess) -> Self {
+        ASTNode::IndexAccess(value)
+    }
+}
+
+impl From<IndexRangeAccess> for ASTNode {
+    fn from(value: IndexRangeAccess) -> Self {
+        ASTNode::IndexRangeAccess(value)
+    }
+}
+
+impl From<InheritanceSpecifier> for ASTNode {
+    fn from(value: InheritanceSpecifier) -> Self {
+        ASTNode::InheritanceSpecifier(value)
+    }
+}
+
+impl From<InlineAssembly> for ASTNode {
+    fn from(value: InlineAssembly) -> Self {
+        ASTNode::InlineAssembly(value)
+    }
+}
+
+impl From<Literal> for ASTNode {
+    fn from(value: Literal) -> Self {
+        ASTNode::Literal(value)
+    }
+}
+
+impl From<MemberAccess> for ASTNode {
+    fn from(value: MemberAccess) -> Self {
+        ASTNode::MemberAccess(value)
+    }
+}
+
+impl From<NewExpression> for ASTNode {
+    fn from(value: NewExpression) -> Self {
+        ASTNode::NewExpression(value)
+    }
+}
+
+impl From<Mapping> for ASTNode {
+    fn from(value: Mapping) -> Self {
+        ASTNode::Mapping(value)
+    }
+}
+
+impl From<ModifierDefinition> for ASTNode {
+    fn from(value: ModifierDefinition) -> Self {
+        ASTNode::ModifierDefinition(value)
+    }
+}
+
+impl From<ModifierInvocation> for ASTNode {
+    fn from(value: ModifierInvocation) -> Self {
+        ASTNode::ModifierInvocation(value)
+    }
+}
+
+impl From<OverrideSpecifier> for ASTNode {
+    fn from(value: OverrideSpecifier) -> Self {
+        ASTNode::OverrideSpecifier(value)
+    }
+}
+
+impl From<ParameterList> for ASTNode {
+    fn from(value: ParameterList) -> Self {
+        ASTNode::ParameterList(value)
+    }
+}
+
+impl From<PragmaDirective> for ASTNode {
+    fn from(value: PragmaDirective) -> Self {
+        ASTNode::PragmaDirective(value)
+    }
+}
+
+impl From<Return> for ASTNode {
+    fn from(value: Return) -> Self {
+        ASTNode::Return(value)
+    }
+}
+
+impl From<RevertStatement> for ASTNode {
+    fn from(value: RevertStatement) -> Self {
+        ASTNode::RevertStatement(value)
+    }
+}
+
+impl From<SourceUnit> for ASTNode {
+    fn from(value: SourceUnit) -> Self {
+        ASTNode::SourceUnit(value)
+    }
+}
+
+impl From<StructDefinition> for ASTNode {
+    fn from(value: StructDefinition) -> Self {
+        ASTNode::StructDefinition(value)
+    }
+}
+
+impl From<StructuredDocumentation> for ASTNode {
+    fn from(value: StructuredDocumentation) -> Self {
+        ASTNode::StructuredDocumentation(value)
+    }
+}
+
+impl From<TryStatement> for ASTNode {
+    fn from(value: TryStatement) -> Self {
+        ASTNode::TryStatement(value)
+    }
+}
+
+impl From<TryCatchClause> for ASTNode {
+    fn from(value: TryCatchClause) -> Self {
+        ASTNode::TryCatchClause(value)
+    }
+}
+
+impl From<TupleExpression> for ASTNode {
+    fn from(value: TupleExpression) -> Self {
+        ASTNode::TupleExpression(value)
+    }
+}
+
+impl From<UnaryOperation> for ASTNode {
+    fn from(value: UnaryOperation) -> Self {
+        ASTNode::UnaryOperation(value)
+    }
+}
+
+impl From<UserDefinedTypeName> for ASTNode {
+    fn from(value: UserDefinedTypeName) -> Self {
+        ASTNode::UserDefinedTypeName(value)
+    }
+}
+
+impl From<UserDefinedValueTypeDefinition> for ASTNode {
+    fn from(value: UserDefinedValueTypeDefinition) -> Self {
+        ASTNode::UserDefinedValueTypeDefinition(value)
+    }
+}
+
+impl From<UsingForDirective> for ASTNode {
+    fn from(value: UsingForDirective) -> Self {
+        ASTNode::UsingForDirective(value)
+    }
+}
+
+impl From<VariableDeclaration> for ASTNode {
+    fn from(value: VariableDeclaration) -> Self {
+        ASTNode::VariableDeclaration(value)
+    }
+}
+
+impl From<VariableDeclarationStatement> for ASTNode {
+    fn from(value: VariableDeclarationStatement) -> Self {
+        ASTNode::VariableDeclarationStatement(value)
+    }
+}
+
+impl From<WhileStatement> for ASTNode {
+    fn from(value: WhileStatement) -> Self {
+        ASTNode::WhileStatement(value)
+    }
+}
+
 impl ASTNode {
     pub fn src(&self) -> Option<&str> {
         match self {

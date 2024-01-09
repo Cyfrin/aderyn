@@ -3,6 +3,7 @@ use std::error::Error;
 
 use crate::ast::{Expression, FunctionCall, TypeName};
 
+use crate::capture;
 use crate::{
     context::loader::{ASTNode, ContextLoader},
     detect::detector::{Detector, IssueSeverity},
@@ -57,10 +58,7 @@ impl Detector for ArbitraryTransferFromDetector {
         });
 
         for item in transfer_from_function_calls {
-            self.found_instances.insert(
-                loader.get_node_sort_key(&ASTNode::FunctionCall(item.clone())),
-                item.src.clone(),
-            );
+            capture!(self, loader, item);
         }
 
         Ok(!self.found_instances.is_empty())
