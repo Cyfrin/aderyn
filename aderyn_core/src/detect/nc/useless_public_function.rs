@@ -5,7 +5,8 @@ use std::{
 
 use crate::{
     ast::{FunctionKind, Visibility},
-    context::loader::{ASTNode, ContextLoader},
+    capture,
+    context::loader::ContextLoader,
     detect::detector::{Detector, IssueSeverity},
 };
 use eyre::Result;
@@ -34,24 +35,11 @@ impl Detector for UselessPublicFunctionDetector {
                     && f.kind != FunctionKind::Constructor
                     && !referenced_functions.contains(&f.id)
             })
-            .map(|f| Some(ASTNode::FunctionDefinition((*f).clone())));
+            .collect::<Vec<_>>();
 
-        self.found_instances.extend(
-            unreferenced_public_functions
-                .map(|node| {
-                    (
-                        loader.get_node_sort_key(&node.clone().unwrap()),
-                        // match node as FunctionDefinition
-                        match node.unwrap() {
-                            ASTNode::FunctionDefinition(function_definition) => {
-                                function_definition.src.clone()
-                            }
-                            _ => unreachable!(),
-                        },
-                    )
-                })
-                .collect::<BTreeMap<_, _>>(),
-        );
+        for unreferenced_public_function in unreferenced_public_functions {
+            capture!(self, loader, unreferenced_public_function);
+        }
 
         Ok(!self.found_instances.is_empty())
     }

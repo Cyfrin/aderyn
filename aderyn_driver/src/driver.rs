@@ -1,8 +1,10 @@
 use crate::{process_foundry, process_hardhat, virtual_foundry};
 use aderyn_core::{
+    context::loader::ContextLoader,
+    detect::detector::Detector,
     fscloc,
     report::{json_printer::JsonPrinter, markdown_printer::MarkdownReportPrinter},
-    run_with_printer,
+    run_with_printer, run_with_printer_and_given_detectors,
 };
 use std::{fs::read_dir, path::PathBuf};
 
@@ -19,11 +21,105 @@ enum Framework {
 }
 
 pub fn drive(args: Args) {
+    let output = args.output.clone();
+    let cx_wrapper = make_context_loader(&args);
+    let root_rel_path = PathBuf::from(&args.root);
+    let context_loader = &cx_wrapper.context_loader;
+
+    if args.output.ends_with(".json") {
+        // Load the context loader into the run function, which runs the detectors
+        run_with_printer(
+            context_loader,
+            output,
+            JsonPrinter,
+            root_rel_path,
+            args.no_snippets,
+        )
+        .unwrap_or_else(|err| {
+            // Exit with a non-zero exit code
+            eprintln!("Error running aderyn");
+            eprintln!("{:?}", err);
+            std::process::exit(1);
+        });
+    } else {
+        // Load the context loader into the run function, which runs the detectors
+        run_with_printer(
+            context_loader,
+            output,
+            MarkdownReportPrinter,
+            root_rel_path,
+            args.no_snippets,
+        )
+        .unwrap_or_else(|err| {
+            // Exit with a non-zero exit code
+            eprintln!("Error running aderyn");
+            eprintln!("{:?}", err);
+            std::process::exit(1);
+        });
+    }
+}
+
+pub fn drive_with(args: Args, detectors: Vec<Box<dyn Detector>>) {
+    let output = args.output.clone();
+    let cx_wrapper = make_context_loader(&args);
+    let root_rel_path = PathBuf::from(&args.root);
+    let context_loader = &cx_wrapper.context_loader;
+
+    if args.output.ends_with(".json") {
+        // Load the context loader into the run function, which runs the detectors
+        run_with_printer_and_given_detectors(
+            context_loader,
+            output,
+            JsonPrinter,
+            root_rel_path,
+            args.no_snippets,
+            detectors,
+        )
+        .unwrap_or_else(|err| {
+            // Exit with a non-zero exit code
+            eprintln!("Error running aderyn");
+            eprintln!("{:?}", err);
+            std::process::exit(1);
+        });
+    } else {
+        // Load the context loader into the run function, which runs the detectors
+        run_with_printer_and_given_detectors(
+            context_loader,
+            output,
+            MarkdownReportPrinter,
+            root_rel_path,
+            args.no_snippets,
+            detectors,
+        )
+        .unwrap_or_else(|err| {
+            // Exit with a non-zero exit code
+            eprintln!("Error running aderyn");
+            eprintln!("{:?}", err);
+            std::process::exit(1);
+        });
+    }
+}
+
+pub struct ContextLoaderWrapper {
+    pub context_loader: ContextLoader,
+    is_single_file: bool,
+    safe_space: PathBuf,
+}
+
+// when the variable goes out of scope, workspace will be deleted !
+impl Drop for ContextLoaderWrapper {
+    fn drop(&mut self) {
+        if self.is_single_file {
+            virtual_foundry::delete_safe_space(&self.safe_space);
+        }
+    }
+}
+
+fn make_context_loader(args: &Args) -> ContextLoaderWrapper {
     if !args.output.ends_with(".json") && !args.output.ends_with(".md") {
         eprintln!("Warning: output file lacks the \".md\" or \".json\" extension in its filename.");
     }
 
-    let root_rel_path = PathBuf::from(&args.root);
     let is_single_file = args.root.ends_with(".sol") && PathBuf::from(&args.root).is_file();
     let mut safe_space = PathBuf::new();
 
@@ -61,40 +157,10 @@ pub fn drive(args: Args) {
     let stats = stats.lock().unwrap().to_owned();
     context_loader.set_sloc_stats(stats);
 
-    if args.output.ends_with(".json") {
-        // Load the context loader into the run function, which runs the detectors
-        run_with_printer(
-            &context_loader,
-            args.output,
-            JsonPrinter,
-            root_rel_path,
-            args.no_snippets,
-        )
-        .unwrap_or_else(|err| {
-            // Exit with a non-zero exit code
-            eprintln!("Error running aderyn");
-            eprintln!("{:?}", err);
-            std::process::exit(1);
-        });
-    } else {
-        // Load the context loader into the run function, which runs the detectors
-        run_with_printer(
-            &context_loader,
-            args.output,
-            MarkdownReportPrinter,
-            root_rel_path,
-            args.no_snippets,
-        )
-        .unwrap_or_else(|err| {
-            // Exit with a non-zero exit code
-            eprintln!("Error running aderyn");
-            eprintln!("{:?}", err);
-            std::process::exit(1);
-        });
-    }
-
-    if is_single_file {
-        virtual_foundry::delete_safe_space(&safe_space);
+    ContextLoaderWrapper {
+        context_loader,
+        is_single_file,
+        safe_space,
     }
 }
 

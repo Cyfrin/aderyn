@@ -5,7 +5,8 @@ use std::{
 
 use crate::{
     ast::{BinaryOperation, Expression, VariableDeclaration},
-    context::loader::{ASTNode, ContextLoader},
+    capture,
+    context::loader::ContextLoader,
     detect::detector::{Detector, IssueSeverity},
 };
 use eyre::Result;
@@ -92,17 +93,9 @@ impl Detector for DifferentStorageConditionalDetector {
                             && current_op_operator == mirror_operator);
 
                     if !is_consistent_or_mirror {
-                        self.found_instances.insert(
-                            loader.get_node_sort_key(&ASTNode::BinaryOperation((*op).clone())),
-                            op.src.clone(),
-                        );
+                        capture!(self, loader, *op);
                         if !first_added {
-                            self.found_instances.insert(
-                                loader.get_node_sort_key(&ASTNode::BinaryOperation(
-                                    (*first_op).clone(),
-                                )),
-                                first_op.src.clone(),
-                            );
+                            capture!(self, loader, *first_op);
                             first_added = true;
                         }
                     }

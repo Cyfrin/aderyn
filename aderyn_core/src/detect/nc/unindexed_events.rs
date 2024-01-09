@@ -1,7 +1,8 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
-    context::loader::{ASTNode, ContextLoader},
+    capture,
+    context::loader::ContextLoader,
     detect::detector::{Detector, IssueSeverity},
 };
 use eyre::Result;
@@ -29,11 +30,7 @@ impl Detector for UnindexedEventsDetector {
             }
 
             if non_indexed && indexed_count < 3 {
-                self.found_instances.insert(
-                    loader
-                        .get_node_sort_key(&ASTNode::EventDefinition((*event_definition).clone())),
-                    event_definition.src.clone(),
-                );
+                capture!(self, loader, event_definition);
             }
         }
         Ok(!self.found_instances.is_empty())

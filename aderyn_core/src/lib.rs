@@ -6,6 +6,7 @@ pub mod fscloc;
 pub mod report;
 pub mod visitor;
 
+use detect::detector::Detector;
 use eyre::Result;
 use std::error::Error;
 use std::fs::{remove_file, File};
@@ -28,9 +29,29 @@ pub fn run_with_printer<T>(
 where
     T: ReportPrinter<()>,
 {
-    println!("Get Detectors");
-
     let detectors = get_all_detectors();
+    run_with_printer_and_given_detectors(
+        context_loader,
+        output_file_path,
+        reporter,
+        root_rel_path,
+        no_snippets,
+        detectors,
+    )
+}
+
+pub fn run_with_printer_and_given_detectors<T>(
+    context_loader: &ContextLoader,
+    output_file_path: String,
+    reporter: T,
+    root_rel_path: PathBuf,
+    no_snippets: bool,
+    detectors: Vec<Box<dyn Detector>>,
+) -> Result<(), Box<dyn Error>>
+where
+    T: ReportPrinter<()>,
+{
+    println!("Get Detectors");
 
     println!("Running {} detectors", detectors.len());
 

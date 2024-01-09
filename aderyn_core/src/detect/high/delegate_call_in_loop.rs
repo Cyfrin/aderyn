@@ -3,10 +3,8 @@ use std::error::Error;
 
 use crate::{
     ast::MemberAccess,
-    context::{
-        browser::ExtractMemberAccesses,
-        loader::{ASTNode, ContextLoader},
-    },
+    capture,
+    context::{browser::ExtractMemberAccesses, loader::ContextLoader},
     detect::detector::{Detector, IssueSeverity},
 };
 use eyre::Result;
@@ -39,10 +37,7 @@ impl Detector for DelegateCallInLoopDetector {
 
         // For each member access found, add them to found_instances
         for member_access in member_accesses {
-            self.found_instances.insert(
-                loader.get_node_sort_key(&ASTNode::MemberAccess(member_access.clone())),
-                member_access.src.clone(),
-            );
+            capture!(self, loader, member_access);
         }
 
         Ok(!self.found_instances.is_empty())

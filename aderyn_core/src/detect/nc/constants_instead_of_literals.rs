@@ -2,10 +2,8 @@ use std::{collections::BTreeMap, error::Error};
 
 use crate::{
     ast::LiteralKind,
-    context::{
-        browser::ExtractLiterals,
-        loader::{ASTNode, ContextLoader},
-    },
+    capture,
+    context::{browser::ExtractLiterals, loader::ContextLoader},
     detect::detector::{Detector, IssueSeverity},
 };
 use eyre::Result;
@@ -31,10 +29,7 @@ impl Detector for ConstantsInsteadOfLiteralsDetector {
                         || literal.kind == LiteralKind::HexString
                         || literal.kind == LiteralKind::Address
                     {
-                        self.found_instances.insert(
-                            loader.get_node_sort_key(&ASTNode::Literal(literal.clone())),
-                            literal.src.clone(),
-                        );
+                        capture!(self, loader, literal);
                     }
                 });
         }
