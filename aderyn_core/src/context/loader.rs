@@ -364,6 +364,312 @@ impl From<WhileStatement> for ASTNode {
     }
 }
 
+impl From<&ArrayTypeName> for ASTNode {
+    fn from(value: &ArrayTypeName) -> Self {
+        ASTNode::ArrayTypeName(value.clone())
+    }
+}
+
+impl From<&Assignment> for ASTNode {
+    fn from(value: &Assignment) -> Self {
+        ASTNode::Assignment(value.clone())
+    }
+}
+
+impl From<&BinaryOperation> for ASTNode {
+    fn from(value: &BinaryOperation) -> Self {
+        ASTNode::BinaryOperation(value.clone())
+    }
+}
+
+impl From<&Block> for ASTNode {
+    fn from(value: &Block) -> Self {
+        ASTNode::Block(value.clone())
+    }
+}
+
+impl From<&Conditional> for ASTNode {
+    fn from(value: &Conditional) -> Self {
+        ASTNode::Conditional(value.clone())
+    }
+}
+
+impl From<&ContractDefinition> for ASTNode {
+    fn from(value: &ContractDefinition) -> Self {
+        ASTNode::ContractDefinition(value.clone())
+    }
+}
+
+impl From<&ElementaryTypeName> for ASTNode {
+    fn from(value: &ElementaryTypeName) -> Self {
+        ASTNode::ElementaryTypeName(value.clone())
+    }
+}
+
+impl From<&ElementaryTypeNameExpression> for ASTNode {
+    fn from(value: &ElementaryTypeNameExpression) -> Self {
+        ASTNode::ElementaryTypeNameExpression(value.clone())
+    }
+}
+
+impl From<&EmitStatement> for ASTNode {
+    fn from(value: &EmitStatement) -> Self {
+        ASTNode::EmitStatement(value.clone())
+    }
+}
+
+impl From<&EnumDefinition> for ASTNode {
+    fn from(value: &EnumDefinition) -> Self {
+        ASTNode::EnumDefinition(value.clone())
+    }
+}
+
+impl From<&EnumValue> for ASTNode {
+    fn from(value: &EnumValue) -> Self {
+        ASTNode::EnumValue(value.clone())
+    }
+}
+
+impl From<&EventDefinition> for ASTNode {
+    fn from(value: &EventDefinition) -> Self {
+        ASTNode::EventDefinition(value.clone())
+    }
+}
+
+impl From<&ErrorDefinition> for ASTNode {
+    fn from(value: &ErrorDefinition) -> Self {
+        ASTNode::ErrorDefinition(value.clone())
+    }
+}
+
+impl From<&ExpressionStatement> for ASTNode {
+    fn from(value: &ExpressionStatement) -> Self {
+        ASTNode::ExpressionStatement(value.clone())
+    }
+}
+
+impl From<&FunctionCall> for ASTNode {
+    fn from(value: &FunctionCall) -> Self {
+        ASTNode::FunctionCall(value.clone())
+    }
+}
+
+impl From<&FunctionCallOptions> for ASTNode {
+    fn from(value: &FunctionCallOptions) -> Self {
+        ASTNode::FunctionCallOptions(value.clone())
+    }
+}
+
+impl From<&FunctionDefinition> for ASTNode {
+    fn from(value: &FunctionDefinition) -> Self {
+        ASTNode::FunctionDefinition(value.clone())
+    }
+}
+
+impl From<&FunctionTypeName> for ASTNode {
+    fn from(value: &FunctionTypeName) -> Self {
+        ASTNode::FunctionTypeName(value.clone())
+    }
+}
+
+impl From<&ForStatement> for ASTNode {
+    fn from(value: &ForStatement) -> Self {
+        ASTNode::ForStatement(value.clone())
+    }
+}
+
+impl From<&Identifier> for ASTNode {
+    fn from(value: &Identifier) -> Self {
+        ASTNode::Identifier(value.clone())
+    }
+}
+
+impl From<&IdentifierPath> for ASTNode {
+    fn from(value: &IdentifierPath) -> Self {
+        ASTNode::IdentifierPath(value.clone())
+    }
+}
+
+impl From<&IfStatement> for ASTNode {
+    fn from(value: &IfStatement) -> Self {
+        ASTNode::IfStatement(value.clone())
+    }
+}
+
+impl From<&ImportDirective> for ASTNode {
+    fn from(value: &ImportDirective) -> Self {
+        ASTNode::ImportDirective(value.clone())
+    }
+}
+
+impl From<&IndexAccess> for ASTNode {
+    fn from(value: &IndexAccess) -> Self {
+        ASTNode::IndexAccess(value.clone())
+    }
+}
+
+impl From<&IndexRangeAccess> for ASTNode {
+    fn from(value: &IndexRangeAccess) -> Self {
+        ASTNode::IndexRangeAccess(value.clone())
+    }
+}
+
+impl From<&InheritanceSpecifier> for ASTNode {
+    fn from(value: &InheritanceSpecifier) -> Self {
+        ASTNode::InheritanceSpecifier(value.clone())
+    }
+}
+
+impl From<&InlineAssembly> for ASTNode {
+    fn from(value: &InlineAssembly) -> Self {
+        ASTNode::InlineAssembly(value.clone())
+    }
+}
+
+impl From<&Literal> for ASTNode {
+    fn from(value: &Literal) -> Self {
+        ASTNode::Literal(value.clone())
+    }
+}
+
+impl From<&MemberAccess> for ASTNode {
+    fn from(value: &MemberAccess) -> Self {
+        ASTNode::MemberAccess(value.clone())
+    }
+}
+
+impl From<&NewExpression> for ASTNode {
+    fn from(value: &NewExpression) -> Self {
+        ASTNode::NewExpression(value.clone())
+    }
+}
+
+impl From<&Mapping> for ASTNode {
+    fn from(value: &Mapping) -> Self {
+        ASTNode::Mapping(value.clone())
+    }
+}
+
+impl From<&ModifierDefinition> for ASTNode {
+    fn from(value: &ModifierDefinition) -> Self {
+        ASTNode::ModifierDefinition(value.clone())
+    }
+}
+
+impl From<&ModifierInvocation> for ASTNode {
+    fn from(value: &ModifierInvocation) -> Self {
+        ASTNode::ModifierInvocation(value.clone())
+    }
+}
+
+impl From<&OverrideSpecifier> for ASTNode {
+    fn from(value: &OverrideSpecifier) -> Self {
+        ASTNode::OverrideSpecifier(value.clone())
+    }
+}
+
+impl From<&ParameterList> for ASTNode {
+    fn from(value: &ParameterList) -> Self {
+        ASTNode::ParameterList(value.clone())
+    }
+}
+
+impl From<&PragmaDirective> for ASTNode {
+    fn from(value: &PragmaDirective) -> Self {
+        ASTNode::PragmaDirective(value.clone())
+    }
+}
+
+impl From<&Return> for ASTNode {
+    fn from(value: &Return) -> Self {
+        ASTNode::Return(value.clone())
+    }
+}
+
+impl From<&RevertStatement> for ASTNode {
+    fn from(value: &RevertStatement) -> Self {
+        ASTNode::RevertStatement(value.clone())
+    }
+}
+
+impl From<&SourceUnit> for ASTNode {
+    fn from(value: &SourceUnit) -> Self {
+        ASTNode::SourceUnit(value.clone())
+    }
+}
+
+impl From<&StructDefinition> for ASTNode {
+    fn from(value: &StructDefinition) -> Self {
+        ASTNode::StructDefinition(value.clone())
+    }
+}
+
+impl From<&StructuredDocumentation> for ASTNode {
+    fn from(value: &StructuredDocumentation) -> Self {
+        ASTNode::StructuredDocumentation(value.clone())
+    }
+}
+
+impl From<&TryStatement> for ASTNode {
+    fn from(value: &TryStatement) -> Self {
+        ASTNode::TryStatement(value.clone())
+    }
+}
+
+impl From<&TryCatchClause> for ASTNode {
+    fn from(value: &TryCatchClause) -> Self {
+        ASTNode::TryCatchClause(value.clone())
+    }
+}
+
+impl From<&TupleExpression> for ASTNode {
+    fn from(value: &TupleExpression) -> Self {
+        ASTNode::TupleExpression(value.clone())
+    }
+}
+
+impl From<&UnaryOperation> for ASTNode {
+    fn from(value: &UnaryOperation) -> Self {
+        ASTNode::UnaryOperation(value.clone())
+    }
+}
+
+impl From<&UserDefinedTypeName> for ASTNode {
+    fn from(value: &UserDefinedTypeName) -> Self {
+        ASTNode::UserDefinedTypeName(value.clone())
+    }
+}
+
+impl From<&UserDefinedValueTypeDefinition> for ASTNode {
+    fn from(value: &UserDefinedValueTypeDefinition) -> Self {
+        ASTNode::UserDefinedValueTypeDefinition(value.clone())
+    }
+}
+
+impl From<&UsingForDirective> for ASTNode {
+    fn from(value: &UsingForDirective) -> Self {
+        ASTNode::UsingForDirective(value.clone())
+    }
+}
+
+impl From<&VariableDeclaration> for ASTNode {
+    fn from(value: &VariableDeclaration) -> Self {
+        ASTNode::VariableDeclaration(value.clone())
+    }
+}
+
+impl From<&VariableDeclarationStatement> for ASTNode {
+    fn from(value: &VariableDeclarationStatement) -> Self {
+        ASTNode::VariableDeclarationStatement(value.clone())
+    }
+}
+
+impl From<&WhileStatement> for ASTNode {
+    fn from(value: &WhileStatement) -> Self {
+        ASTNode::WhileStatement(value.clone())
+    }
+}
+
 impl ASTNode {
     pub fn src(&self) -> Option<&str> {
         match self {

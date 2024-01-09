@@ -1,7 +1,8 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
-    context::loader::{ASTNode, ContextLoader},
+    capture,
+    context::loader::ContextLoader,
     detect::detector::{Detector, IssueSeverity},
 };
 use eyre::Result;
@@ -24,10 +25,7 @@ impl Detector for RequireWithStringDetector {
             if (id.name == "revert" && id.argument_types.as_ref().unwrap().is_empty())
                 || (id.name == "require" && id.argument_types.as_ref().unwrap().len() == 1)
             {
-                self.found_instances.insert(
-                    loader.get_node_sort_key(&ASTNode::Identifier(id.clone())),
-                    id.src.clone(),
-                );
+                capture!(self, loader, id);
             }
         }
 

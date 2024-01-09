@@ -1,7 +1,8 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
-    context::loader::{ASTNode, ContextLoader},
+    capture,
+    context::loader::ContextLoader,
     detect::detector::{Detector, IssueSeverity},
 };
 use eyre::Result;
@@ -19,11 +20,7 @@ impl Detector for NonReentrantBeforeOthersDetector {
             if definition.modifiers.len() > 1 {
                 for (index, modifier) in definition.modifiers.iter().enumerate() {
                     if modifier.modifier_name.name == "nonReentrant" && index != 0 {
-                        self.found_instances.insert(
-                            loader
-                                .get_node_sort_key(&ASTNode::ModifierInvocation(modifier.clone())),
-                            modifier.src.clone(),
-                        );
+                        capture!(self, loader, modifier);
                     }
                 }
             }

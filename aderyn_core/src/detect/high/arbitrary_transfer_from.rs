@@ -5,7 +5,7 @@ use crate::ast::{Expression, FunctionCall, TypeName};
 
 use crate::capture;
 use crate::{
-    context::loader::{ASTNode, ContextLoader},
+    context::loader::ContextLoader,
     detect::detector::{Detector, IssueSeverity},
 };
 use eyre::Result;

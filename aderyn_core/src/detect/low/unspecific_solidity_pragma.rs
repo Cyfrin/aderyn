@@ -1,7 +1,8 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
-    context::loader::{ASTNode, ContextLoader},
+    capture,
+    context::loader::ContextLoader,
     detect::detector::{Detector, IssueSeverity},
 };
 use eyre::Result;
@@ -17,11 +18,7 @@ impl Detector for UnspecificSolidityPragmaDetector {
         for pragma_directive in loader.pragma_directives.keys() {
             for literal in &pragma_directive.literals {
                 if literal.contains('^') || literal.contains('>') {
-                    self.found_instances.insert(
-                        loader
-                            .get_node_sort_key(&ASTNode::PragmaDirective(pragma_directive.clone())),
-                        pragma_directive.src.clone(),
-                    );
+                    capture!(self, loader, pragma_directive);
                     break;
                 }
             }
