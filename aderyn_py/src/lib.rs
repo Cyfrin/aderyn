@@ -6,12 +6,17 @@ fn main() {
     use pyo3::prelude::*;
 
     #[pyfunction]
-    fn generate_report(root: String, output: String) {
+    fn generate_report(
+        root: String,
+        output: String,
+        exclude: Option<Vec<String>>,
+        no_snippets: Option<bool>,
+    ) {
         let args = driver::Args {
             root,
             output,
-            no_snippets: false, // TODO support this later
-            exclude: None,      // TODO support this later
+            no_snippets: no_snippets.unwrap_or(false), // by default, you want to see snippets
+            exclude,
         };
         driver::drive(args);
     }
