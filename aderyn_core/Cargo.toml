@@ -1,6 +1,6 @@
 [package]
 name = "aderyn_core"
-version = "0.0.10"
+version = "0.0.11"
 edition = "2021"
 authors = ["Alex Roan <alex@cyfrin.io>"]
 description = "Rust based Solidity AST analyzer backend"
