@@ -67,6 +67,9 @@ impl ASTConstVisitor for ComplexityLoader {
         }
         self.complexity += comp;
         self.function_definition_complexity += comp;
+        if node.name == "to_little_endian_64" {
+            println!("FunctionDefinition: {:#?}", node);
+        }
         println!("After FunctionDefinition: {}", self.complexity);
         Ok(true)
     }
