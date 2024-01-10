@@ -21,8 +21,6 @@ pub enum Expression {
     MemberAccess(MemberAccess),
     ElementaryTypeNameExpression(ElementaryTypeNameExpression),
     TupleExpression(TupleExpression),
-    // This is the same as ElementaryTypeNameExpression
-    // So it will never actually be reached by serde
     NewExpression(NewExpression),
 
     #[serde(rename_all = "camelCase")]

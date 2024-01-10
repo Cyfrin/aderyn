@@ -156,7 +156,7 @@ mod complexity_tests {
     #[test]
     fn test_complexity_counter() {
         let foundry_output =
-            load_contract("../tests/contract-playground/out/Counter.sol/Counter.json");
+            load_contract("../tests/contract-playground/out/Counter.sol/Counter.0.8.21.json");
         let mut complexity_loader = ComplexityLoader::default();
         let complexity = complexity_loader
             .visit(&foundry_output.source_units[0])
