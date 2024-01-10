@@ -88,6 +88,13 @@ mod tests {
     use std::path::PathBuf;
 
     #[test]
+    fn test_process_hardhat() {
+        let root_path = PathBuf::from("../tests/hardhat-js-playground");
+        let (_, context_loader) = super::with_project_root_at(&root_path, &None, &None);
+        assert!(context_loader.src_filepaths.len() > 6);
+    }
+
+    #[test]
     fn test_process_hardhat_scope() {
         let root_path = PathBuf::from("../tests/hardhat-js-playground");
         let scope: Option<Vec<String>> = Some(vec!["Counter.sol".to_string()]);
@@ -118,6 +125,28 @@ mod tests {
     fn test_process_hardhat_scope_and_exclude() {
         let root_path = PathBuf::from("../tests/hardhat-js-playground");
         let scope = Some(vec!["Inheritance".to_string()]);
+        let exclude = Some(vec!["IContractInheritance.sol".to_string()]);
+        let (_, context_loader) = super::with_project_root_at(&root_path, &scope, &exclude);
+        let has_extended_inheritance = context_loader
+            .src_filepaths
+            .iter()
+            .any(|fp| fp.contains("ExtendedInheritance.sol"));
+        let has_inheritance_base = context_loader
+            .src_filepaths
+            .iter()
+            .any(|fp| fp.contains("InheritanceBase.sol"));
+        let has_icontract_inheritance = context_loader
+            .src_filepaths
+            .iter()
+            .any(|fp| fp.contains("IContractInheritance.sol"));
+
+        assert!(has_extended_inheritance && has_inheritance_base && !has_icontract_inheritance);
+    }
+
+    #[test]
+    fn test_process_hardhat_directory_scope_and_exclude() {
+        let root_path = PathBuf::from("../tests/hardhat-js-playground");
+        let scope = Some(vec!["contracts".to_string()]);
         let exclude = Some(vec!["IContractInheritance.sol".to_string()]);
         let (_, context_loader) = super::with_project_root_at(&root_path, &scope, &exclude);
         let has_extended_inheritance = context_loader
