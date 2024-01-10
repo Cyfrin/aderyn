@@ -77,6 +77,18 @@ jobs:
           cat report2.json
           diff report.json report2.json
 
+      - name: Generate bot results
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+          args: --bin bot_example
+
+      - name: Check custom_subscription_analysis_report.md 
+        run: |
+          cat bot_reports/custom_subscription_analysis_report.md
+          diff bot_reports/org_custom_subscription_analysis_report.md bot_reports/custom_subscription_analysis_report.md
+
+
   lints:
     name: Lints
     runs-on: ubuntu-latest
