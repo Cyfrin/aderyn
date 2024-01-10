@@ -5,9 +5,10 @@ use std::{
 
 use crate::{
     ast::{BinaryOperation, Expression, Mutability, NodeID, VariableDeclaration},
+    capture,
     context::{
         browser::{ExtractAssignments, ExtractBinaryOperations},
-        loader::{ASTNode, ContextLoader},
+        loader::ContextLoader,
     },
     detect::detector::{Detector, IssueSeverity},
 };
@@ -128,10 +129,7 @@ impl Detector for ZeroAddressCheckDetector {
             // in the binary_checks_against_zero_address, add the assignment to the found_no_zero_address_check
             for (key, value) in &assignments_to_mutable_address_state_variables {
                 if !binary_checks_against_zero_address.contains(key) {
-                    self.found_instances.insert(
-                        loader.get_node_sort_key(&ASTNode::Assignment(value.clone())),
-                        value.src.clone(),
-                    );
+                    capture!(self, loader, value);
                 }
             }
         }

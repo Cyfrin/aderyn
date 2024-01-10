@@ -1,10 +1,8 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
-    context::{
-        browser::GetParent,
-        loader::{ASTNode, ContextLoader},
-    },
+    capture,
+    context::{browser::GetParent, loader::ContextLoader},
     detect::detector::{Detector, IssueSeverity},
 };
 use eyre::Result;
@@ -30,10 +28,7 @@ impl Detector for UnsafeERC721MintDetector {
                     .map_or(false, |path| path.contains("openzeppelin"))
             }) && identifier.name == "_mint"
             {
-                self.found_instances.insert(
-                    loader.get_node_sort_key(&ASTNode::Identifier(identifier.clone())),
-                    identifier.src.clone(),
-                );
+                capture!(self, loader, identifier);
             }
         }
         Ok(!self.found_instances.is_empty())

@@ -2,7 +2,8 @@ use std::{collections::BTreeMap, error::Error};
 
 use crate::{
     ast::{Expression, FunctionCallKind},
-    context::loader::{ASTNode, ContextLoader},
+    capture,
+    context::loader::ContextLoader,
     detect::detector::{Detector, IssueSeverity},
 };
 use eyre::Result;
@@ -47,12 +48,7 @@ impl Detector for BlockTimestampDeadlineDetector {
                                 *member_access.expression
                             {
                                 if identifier.name == "block" {
-                                    self.found_instances.insert(
-                                        loader.get_node_sort_key(&ASTNode::FunctionCall(
-                                            call.clone(),
-                                        )),
-                                        call.src.clone(),
-                                    );
+                                    capture!(self, loader, call);
                                 }
                             }
                         }
@@ -80,12 +76,7 @@ impl Detector for BlockTimestampDeadlineDetector {
                                         *member_access.expression
                                     {
                                         if identifier.name == "block" {
-                                            self.found_instances.insert(
-                                                loader.get_node_sort_key(&ASTNode::FunctionCall(
-                                                    call.clone(),
-                                                )),
-                                                call.src.clone(),
-                                            );
+                                            capture!(self, loader, call);
                                         }
                                     }
                                 }
