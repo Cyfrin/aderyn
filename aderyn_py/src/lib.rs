@@ -6,22 +6,16 @@ fn main() {
     use pyo3::prelude::*;
 
     #[pyfunction]
-    fn generate_report(
-        root: String,
-        output: String,
-        exclude: Option<Vec<String>>,
-        no_snippets: Option<bool>,
-    ) {
+    fn generate_report(root: String, output: String) {
         let args = driver::Args {
             root,
             output,
-            no_snippets: no_snippets.unwrap_or(false), // by default, you want to see snippets
-            exclude,
+            no_snippets: false, // TODO support this later
+            scope: None,        // TODO support this later
+            exclude: None,      // TODO support this later
         };
         driver::drive(args);
     }
-
-    // TODO: function to return deserialized report json directly without having to specify output file
 
     /// A Python module implemented in Rust. The name of this function must match
     /// the `lib.name` setting in the `Cargo.toml`, else Python will not be able to
