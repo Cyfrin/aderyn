@@ -21,6 +21,8 @@ fn main() {
         driver::drive(args);
     }
 
+    // TODO: function to return deserialized report json directly without having to specify output file
+
     /// A Python module implemented in Rust. The name of this function must match
     /// the `lib.name` setting in the `Cargo.toml`, else Python will not be able to
     /// import the module.
