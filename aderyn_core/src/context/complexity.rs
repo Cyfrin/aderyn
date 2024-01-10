@@ -214,5 +214,6 @@ mod complexity_tests {
             .unwrap();
 
         println!("Complexity Overview: {:#?}", complexity_loader);
+        assert_eq!(complexity_loader.complexity, 114);
     }
 }

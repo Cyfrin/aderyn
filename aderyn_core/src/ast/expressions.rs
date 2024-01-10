@@ -6,7 +6,7 @@ use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Write};
 
 #[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(untagged)]
+#[serde(tag = "nodeType")]
 pub enum Expression {
     Literal(Literal),
     Identifier(Identifier),
@@ -27,7 +27,7 @@ pub enum Expression {
 
     #[serde(rename_all = "camelCase")]
     UnhandledExpression {
-        node_type: NodeType,
+        // node_type: NodeType,
         src: Option<String>,
         id: Option<NodeID>,
     },
