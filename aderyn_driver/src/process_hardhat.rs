@@ -9,6 +9,7 @@ use std::{
 
 pub fn with_project_root_at(
     root_path: &PathBuf,
+    scope: &Option<Vec<String>>,
     exclude: &Option<Vec<String>>,
 ) -> (String, ContextLoader) {
     let mut context_loader = ContextLoader::default();
@@ -26,6 +27,19 @@ pub fn with_project_root_at(
     let filtered_output: HashMap<_, _> = hardhat_output
         .output
         .into_iter()
+        .filter(|(_, contract_source)| {
+            if let Some(scopes) = scope {
+                scopes.iter().any(|sc| {
+                    contract_source
+                        .ast
+                        .absolute_path
+                        .as_ref()
+                        .map_or(false, |path| path.contains(sc))
+                })
+            } else {
+                true // If `scope` is not specified, do not filter out this contract_source.
+            }
+        })
         .filter(|(_, contract_source)| {
             if let Some(excludes) = &exclude {
                 !excludes.iter().any(|ex| {
@@ -74,15 +88,51 @@ mod tests {
     use std::path::PathBuf;
 
     #[test]
+    fn test_process_hardhat_scope() {
+        let root_path = PathBuf::from("../tests/hardhat-js-playground");
+        let scope: Option<Vec<String>> = Some(vec!["Counter.sol".to_string()]);
+
+        let (_, context_loader) = super::with_project_root_at(&root_path, &scope, &None);
+        let contains_string = context_loader
+            .src_filepaths
+            .iter()
+            .any(|fp| fp.contains("Counter.sol"));
+        assert!(context_loader.src_filepaths.len() == 1);
+        assert!(contains_string);
+    }
+
+    #[test]
     fn test_process_hardhat_exclude() {
         let root_path = PathBuf::from("../tests/hardhat-js-playground");
         let exclude: Option<Vec<String>> = Some(vec!["Counter.sol".to_string()]);
 
-        let (_, context_loader) = super::with_project_root_at(&root_path, &exclude);
+        let (_, context_loader) = super::with_project_root_at(&root_path, &None, &exclude);
         let contains_string = context_loader
             .src_filepaths
             .iter()
             .any(|fp| fp.contains("Counter.sol"));
         assert!(!contains_string);
+    }
+
+    #[test]
+    fn test_process_hardhat_scope_and_exclude() {
+        let root_path = PathBuf::from("../tests/hardhat-js-playground");
+        let scope = Some(vec!["Inheritance".to_string()]);
+        let exclude = Some(vec!["IContractInheritance.sol".to_string()]);
+        let (_, context_loader) = super::with_project_root_at(&root_path, &scope, &exclude);
+        let has_extended_inheritance = context_loader
+            .src_filepaths
+            .iter()
+            .any(|fp| fp.contains("ExtendedInheritance.sol"));
+        let has_inheritance_base = context_loader
+            .src_filepaths
+            .iter()
+            .any(|fp| fp.contains("InheritanceBase.sol"));
+        let has_icontract_inheritance = context_loader
+            .src_filepaths
+            .iter()
+            .any(|fp| fp.contains("IContractInheritance.sol"));
+
+        assert!(has_extended_inheritance && has_inheritance_base && !has_icontract_inheritance);
     }
 }

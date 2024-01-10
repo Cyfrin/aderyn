@@ -12,6 +12,7 @@ use std::{
 
 pub fn with_project_root_at(
     root_path: &PathBuf,
+    scope: &Option<Vec<String>>,
     exclude: &Option<Vec<String>>,
 ) -> (String, ContextLoader) {
     let mut context_loader = ContextLoader::default();
@@ -32,6 +33,15 @@ pub fn with_project_root_at(
     let foundry_intermediates = loaded_foundry
         .output_filepaths
         .par_iter()
+        .filter(|output_filepath| {
+            if let Some(scopes) = scope {
+                scopes
+                    .iter()
+                    .any(|sc| output_filepath.to_string_lossy().contains(sc))
+            } else {
+                true // If `scope` is not specified, do not filter out this filepath.
+            }
+        })
         .map(
             |output_filepath| match read_foundry_output_file(output_filepath.to_str().unwrap()) {
                 Ok(foundry_output) => {
@@ -104,16 +114,51 @@ mod tests {
     use std::path::PathBuf;
 
     #[test]
+    fn test_process_foundry_scope() {
+        let root_path = PathBuf::from("../tests/contract-playground");
+        let scope: Option<Vec<String>> = Some(vec![
+            "AnotherHeavilyCommentedContract.sol".to_string(),
+            "Counter.sol".to_string(),
+        ]);
+
+        let (_, context_loader) = super::with_project_root_at(&root_path, &scope, &None);
+        let contains_string = context_loader
+            .src_filepaths
+            .iter()
+            .any(|fp| fp.contains("AnotherHeavilyCommentedContract.sol"));
+        assert!(context_loader.src_filepaths.len() == 2);
+        assert!(contains_string);
+    }
+
+    #[test]
     fn test_process_foundry_exclude() {
         let root_path = PathBuf::from("../tests/contract-playground");
         let exclude: Option<Vec<String>> =
             Some(vec!["AnotherHeavilyCommentedContract.sol".to_string()]);
 
-        let (_, context_loader) = super::with_project_root_at(&root_path, &exclude);
+        let (_, context_loader) = super::with_project_root_at(&root_path, &None, &exclude);
         let contains_string = context_loader
             .src_filepaths
             .iter()
             .any(|fp| fp.contains("AnotherHeavilyCommentedContract.sol"));
         assert!(!contains_string);
+    }
+
+    #[test]
+    fn test_process_foundry_scope_and_exclude() {
+        let root_path = PathBuf::from("../tests/contract-playground");
+        let scope = Some(vec!["Inheritance".to_string()]);
+        let exclude = Some(vec!["IContractInheritance.sol".to_string()]);
+
+        let (_, context_loader) = super::with_project_root_at(&root_path, &scope, &exclude);
+        let contains_scope = context_loader
+            .src_filepaths
+            .iter()
+            .any(|fp| fp.contains("ExtendedInheritance.sol"));
+        let contains_exclude = context_loader
+            .src_filepaths
+            .iter()
+            .any(|fp| fp.contains("IContractInheritance.sol"));
+        assert!(contains_scope && !contains_exclude);
     }
 }
