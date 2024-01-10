@@ -11,6 +11,11 @@ pub struct CommandLineArgs {
     #[arg(short, long, default_value = "report.md")]
     output: String,
 
+    /// List of path strings to include, delimited by comma (no spaces).
+    /// Any solidity file path not containing these strings will be ignored
+    #[clap(short, long, use_value_delimiter = true)]
+    scope: Option<Vec<String>>,
+
     /// List of path strings to exclude, delimited by comma (no spaces).
     /// Any solidity file path containing these strings will be ignored
     #[clap(short, long, use_value_delimiter = true)]
@@ -27,6 +32,7 @@ fn main() {
     let args: Args = Args {
         root: cmd_args.root,
         output: cmd_args.output,
+        scope: cmd_args.scope,
         exclude: cmd_args.exclude,
         no_snippets: cmd_args.no_snippets,
     };

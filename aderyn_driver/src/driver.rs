@@ -9,6 +9,7 @@ use std::{fs::read_dir, path::PathBuf};
 pub struct Args {
     pub root: String,
     pub output: String,
+    pub scope: Option<Vec<String>>,
     pub exclude: Option<Vec<String>>,
     pub no_snippets: bool,
 }
@@ -30,7 +31,7 @@ pub fn drive(args: Args) {
     let (src_path, mut context_loader) = {
         if is_single_file {
             safe_space = virtual_foundry::build_isolated_workspace_for_file(&args.root);
-            process_foundry::with_project_root_at(&safe_space, &args.exclude)
+            process_foundry::with_project_root_at(&safe_space, &args.scope, &args.exclude)
         } else {
             println!("Detecting framework...");
             let root_path = PathBuf::from(&args.root);
@@ -44,10 +45,10 @@ pub fn drive(args: Args) {
             // TODO: move much of this gutsy stuff into the foundry / hardhat modules.
             match framework {
                 Framework::Foundry => {
-                    process_foundry::with_project_root_at(&root_path, &args.exclude)
+                    process_foundry::with_project_root_at(&root_path, &args.scope, &args.exclude)
                 }
                 Framework::Hardhat => {
-                    process_hardhat::with_project_root_at(&root_path, &args.exclude)
+                    process_hardhat::with_project_root_at(&root_path, &args.scope, &args.exclude)
                 }
             }
         }

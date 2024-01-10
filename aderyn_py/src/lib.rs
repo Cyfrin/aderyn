@@ -11,6 +11,7 @@ fn main() {
             root,
             output,
             no_snippets: false, // TODO support this later
+            scope: None,        // TODO support this later
             exclude: None,      // TODO support this later
         };
         driver::drive(args);
