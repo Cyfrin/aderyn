@@ -4,10 +4,11 @@ use std::{
 };
 
 use crate::{
-    ast::{Expression, Mutability, VariableDeclaration},
+    ast::{BinaryOperation, Expression, Mutability, NodeID, VariableDeclaration},
+    capture,
     context::{
-        browser::{Assignments, BinaryChecks, ContextBrowser},
-        loader::{ASTNode, ContextLoader},
+        browser::{ExtractAssignments, ExtractBinaryOperations},
+        loader::ContextLoader,
     },
     detect::detector::{Detector, IssueSeverity},
 };
@@ -23,11 +24,7 @@ pub struct ZeroAddressCheckDetector {
 }
 
 impl Detector for ZeroAddressCheckDetector {
-    fn detect(
-        &mut self,
-        loader: &ContextLoader,
-        browser: &mut ContextBrowser,
-    ) -> Result<bool, Box<dyn Error>> {
+    fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
         // Get all address state variables
         self.mutable_address_state_variables = loader
             .variable_declarations
@@ -59,35 +56,46 @@ impl Detector for ZeroAddressCheckDetector {
         // Get all function definitions
         for function_definition in loader.function_definitions.keys() {
             // Get all the binary checks inside the function
-            let binary_checks: BinaryChecks = function_definition.into();
+            let binary_operations: Vec<BinaryOperation> =
+                ExtractBinaryOperations::from(function_definition)
+                    .extracted
+                    .into_iter()
+                    .filter(|x| x.operator == "==" || x.operator == "!=")
+                    .collect();
 
             // Filter the binary checks and extract all node ids into a vector
             let mut binary_checks_against_zero_address = HashSet::new();
 
-            // HashSet where the key is the referenced_declaration in a binary operation that
-            // is checked against a zero address
-
-            let binary_checks = binary_checks
-                .checks
-                .iter()
-                .filter(|x| x.operator == "==" || x.operator == "!=");
-
-            for x in binary_checks {
-                if let Some(l_node_id) = x.l_node_id {
+            for x in binary_operations {
+                let l_node_id: Option<NodeID> = {
+                    let l = x.left_expression.as_ref();
+                    if let Expression::Identifier(left_identifier) = l {
+                        Some(left_identifier.referenced_declaration)
+                    } else {
+                        None
+                    }
+                };
+                if let Some(l_node_id) = l_node_id {
                     binary_checks_against_zero_address.insert(l_node_id);
                 }
-                if let Some(r_node_ids) = x.r_node_id {
+
+                let r_node_id: Option<NodeID> = {
+                    let r = x.right_expression.as_ref();
+                    if let Expression::Identifier(right_identifier) = r {
+                        Some(right_identifier.referenced_declaration)
+                    } else {
+                        None
+                    }
+                };
+                if let Some(r_node_ids) = r_node_id {
                     binary_checks_against_zero_address.insert(r_node_ids);
                 }
             }
 
             // Get all the assignments in the function
-            let assigments: Assignments = function_definition.into();
-
-            // Filter out the ones of interest
-            let assignments = assigments
-                .assignments
-                .iter()
+            let assignments = ExtractAssignments::from(function_definition)
+                .extracted
+                .into_iter()
                 .filter(|x| {
                     let left_hand_side = x.left_hand_side.as_ref();
                     if let Expression::Identifier(left_identifier) = left_hand_side {
@@ -106,15 +114,14 @@ impl Detector for ZeroAddressCheckDetector {
                         return Some((right_identifier.referenced_declaration, x.clone()));
                     }
                     None
-                })
-                .collect::<Vec<_>>();
+                });
 
             // HashMap where the key is the referenced_declaration of the right hand side of an assignment
             // where the left hand side is a mutable address state variable
 
             let mut assignments_to_mutable_address_state_variables = HashMap::new();
 
-            for tuple in &assignments {
+            for tuple in assignments {
                 assignments_to_mutable_address_state_variables.insert(tuple.0, tuple.1.clone());
             }
 
@@ -122,10 +129,7 @@ impl Detector for ZeroAddressCheckDetector {
             // in the binary_checks_against_zero_address, add the assignment to the found_no_zero_address_check
             for (key, value) in &assignments_to_mutable_address_state_variables {
                 if !binary_checks_against_zero_address.contains(key) {
-                    self.found_instances.insert(
-                        browser.get_node_sort_key(&ASTNode::Assignment(value.clone())),
-                        value.src.clone(),
-                    );
+                    capture!(self, loader, value);
                 }
             }
         }
@@ -156,12 +160,9 @@ impl Detector for ZeroAddressCheckDetector {
 
 #[cfg(test)]
 mod zero_address_check_tests {
-    use crate::{
-        context::browser::ContextBrowser,
-        detect::{
-            detector::{detector_test_helpers::load_contract, Detector},
-            nc::zero_address_check::ZeroAddressCheckDetector,
-        },
+    use crate::detect::{
+        detector::{detector_test_helpers::load_contract, Detector},
+        nc::zero_address_check::ZeroAddressCheckDetector,
     };
 
     #[test]
@@ -169,12 +170,9 @@ mod zero_address_check_tests {
         let context_loader = load_contract(
             "../tests/contract-playground/out/StateVariables.sol/StateVariables.json",
         );
-        let mut context_browser = ContextBrowser::default_from(&context_loader);
-        context_browser.build_parallel();
+
         let mut detector = ZeroAddressCheckDetector::default();
-        let found = detector
-            .detect(&context_loader, &mut context_browser)
-            .unwrap();
+        let found = detector.detect(&context_loader).unwrap();
         // assert that the detector found the issue
         assert!(found);
         // assert that the detector found the correct number of issues

@@ -3,9 +3,9 @@ use std::error::Error;
 
 use crate::ast::{Expression, FunctionCall, TypeName};
 
-use crate::context::browser::ContextBrowser;
+use crate::capture;
 use crate::{
-    context::loader::{ASTNode, ContextLoader},
+    context::loader::ContextLoader,
     detect::detector::{Detector, IssueSeverity},
 };
 use eyre::Result;
@@ -16,6 +16,9 @@ pub struct ArbitraryTransferFromDetector {
     found_instances: BTreeMap<(String, usize), String>,
 }
 
+// Check if the first argument of the function call is valid
+// In function calls with 3 args, the first arg [0] is the `from` address
+// In function calls with 4 args, the second arg [1] is the `from` address
 fn check_argument_validity(function_call: &FunctionCall) -> bool {
     let arg_index = if function_call.arguments.len() == 3 {
         0
@@ -32,19 +35,18 @@ fn check_argument_validity(function_call: &FunctionCall) -> bool {
         }
         Expression::FunctionCall(arg_function_call) => {
             !(matches!(&*arg_function_call.expression, Expression::ElementaryTypeNameExpression(arg_el_type_name_exp) if matches!(&arg_el_type_name_exp.type_name, TypeName::ElementaryTypeName(type_name) if type_name.name == "address"))
-                && matches!(arg_function_call.arguments.get(0), Some(Expression::Identifier(arg_identifier)) if arg_identifier.name == "this"))
+                && matches!(arg_function_call.arguments.first(), Some(Expression::Identifier(arg_identifier)) if arg_identifier.name == "this"))
         }
         _ => true,
     }
 }
 
 impl Detector for ArbitraryTransferFromDetector {
-    fn detect(
-        &mut self,
-        loader: &ContextLoader,
-        browser: &mut ContextBrowser,
-    ) -> Result<bool, Box<dyn Error>> {
+    fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
         let transfer_from_function_calls = loader.function_calls.keys().filter(|function_call| {
+            // For each function call, check if the function call is a member access
+            // and if the member name is "transferFrom" or "safeTransferFrom", then check if the first argument is valid
+            // If the first argument is valid, add the function call to found_instances
             if let Expression::MemberAccess(member_access) = &*function_call.expression {
                 if member_access.member_name == "transferFrom"
                     || member_access.member_name == "safeTransferFrom"
@@ -56,10 +58,7 @@ impl Detector for ArbitraryTransferFromDetector {
         });
 
         for item in transfer_from_function_calls {
-            self.found_instances.insert(
-                browser.get_node_sort_key(&ASTNode::FunctionCall(item.clone())),
-                item.src.clone(),
-            );
+            capture!(self, loader, item);
         }
 
         Ok(!self.found_instances.is_empty())
@@ -84,12 +83,9 @@ impl Detector for ArbitraryTransferFromDetector {
 
 #[cfg(test)]
 mod arbitrary_transfer_from_tests {
-    use crate::{
-        context::browser::ContextBrowser,
-        detect::{
-            detector::{detector_test_helpers::load_contract, Detector},
-            high::arbitrary_transfer_from::ArbitraryTransferFromDetector,
-        },
+    use crate::detect::{
+        detector::{detector_test_helpers::load_contract, Detector},
+        high::arbitrary_transfer_from::ArbitraryTransferFromDetector,
     };
 
     #[test]
@@ -98,13 +94,8 @@ mod arbitrary_transfer_from_tests {
             "../tests/contract-playground/out/ArbitraryTransferFrom.sol/ArbitraryTransferFrom.json",
         );
 
-        let mut context_browser = ContextBrowser::default_from(&context_loader);
-        context_browser.build_parallel();
-
         let mut detector = ArbitraryTransferFromDetector::default();
-        let found = detector
-            .detect(&context_loader, &mut context_browser)
-            .unwrap();
+        let found = detector.detect(&context_loader).unwrap();
         // assert that the detector found an issue
         assert!(found);
         // assert that the detector found the correct number of instances

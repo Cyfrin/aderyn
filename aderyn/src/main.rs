@@ -10,6 +10,20 @@ pub struct CommandLineArgs {
     /// Desired file path for the final report (will overwrite existing one)
     #[arg(short, long, default_value = "report.md")]
     output: String,
+
+    /// List of path strings to include, delimited by comma (no spaces).
+    /// Any solidity file path not containing these strings will be ignored
+    #[clap(short, long, use_value_delimiter = true)]
+    scope: Option<Vec<String>>,
+
+    /// List of path strings to exclude, delimited by comma (no spaces).
+    /// Any solidity file path containing these strings will be ignored
+    #[clap(short, long, use_value_delimiter = true)]
+    exclude: Option<Vec<String>>,
+
+    /// Do not include code snippets in the report (reduces report size in large repos)
+    #[arg(short, long)]
+    no_snippets: bool,
 }
 
 fn main() {
@@ -18,6 +32,9 @@ fn main() {
     let args: Args = Args {
         root: cmd_args.root,
         output: cmd_args.output,
+        scope: cmd_args.scope,
+        exclude: cmd_args.exclude,
+        no_snippets: cmd_args.no_snippets,
     };
 
     driver::drive(args);
