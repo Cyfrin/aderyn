@@ -2,7 +2,7 @@ use std::{collections::BTreeMap, error::Error};
 
 use crate::{
     capture,
-    context::loader::ContextLoader,
+    context::{browser::GetParent, loader::ContextLoader},
     detect::detector::{Detector, IssueSeverity},
 };
 use eyre::Result;
@@ -18,9 +18,7 @@ impl Detector for DeprecatedOZFunctionsDetector {
         for identifier in loader.identifiers.keys() {
             // if source_unit has any ImportDirectives with absolute_path containing "openzeppelin"
             // call identifier.accept(self)
-            let source_unit = loader
-                .get_source_unit_from_child_node(&identifier.into())
-                .unwrap();
+            let source_unit = GetParent::source_unit_of(identifier, loader).unwrap();
 
             let import_directives = source_unit.import_directives();
             if import_directives.iter().any(|directive| {
@@ -36,9 +34,7 @@ impl Detector for DeprecatedOZFunctionsDetector {
         for member_access in loader.member_accesses.keys() {
             // if source_unit has any ImportDirectives with absolute_path containing "openzeppelin"
             // call member_access.accept(self)
-            let source_unit = loader
-                .get_source_unit_from_child_node(&member_access.into())
-                .unwrap();
+            let source_unit = GetParent::source_unit_of(member_access, loader).unwrap();
             let import_directives = source_unit.import_directives();
             if import_directives.iter().any(|directive| {
                 directive

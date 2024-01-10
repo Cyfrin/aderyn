@@ -1019,11 +1019,6 @@ impl ContextLoader {
         })
     }
 
-    pub fn get_source_unit_contract_path_from(&self, node: &ASTNode) -> Option<&String> {
-        let source_unit = self.get_source_unit_from_child_node(node);
-        source_unit.and_then(|source_unit| source_unit.absolute_path.as_ref())
-    }
-
     pub fn get_node_sort_key(&self, node: &ASTNode) -> (String, usize) {
         let source_unit = self.get_source_unit_from_child_node(node).unwrap();
         let absolute_path = source_unit.absolute_path.as_ref().unwrap().clone();
