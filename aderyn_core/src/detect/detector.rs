@@ -7,9 +7,7 @@ use crate::{
         },
         low::{
             avoid_abi_encode_packed::AvoidAbiEncodePackedDetector,
-            deprecated_oz_functions::DeprecatedOZFunctionsDetector,
-            // different_storage_conditionals::DifferentStorageConditionalDetector,
-            ecrecover::EcrecoverDetector,
+            deprecated_oz_functions::DeprecatedOZFunctionsDetector, ecrecover::EcrecoverDetector,
             push_0_opcode::PushZeroOpcodeDetector,
             unsafe_erc20_functions::UnsafeERC20FunctionsDetector,
             unspecific_solidity_pragma::UnspecificSolidityPragmaDetector,
@@ -50,7 +48,6 @@ pub fn get_all_detectors() -> Vec<Box<dyn Detector>> {
         Box::<NonReentrantBeforeOthersDetector>::default(),
         Box::<BlockTimestampDeadlineDetector>::default(),
         Box::<UnsafeERC721MintDetector>::default(),
-        // Box::<DifferentStorageConditionalDetector>::default(),
         Box::<PushZeroOpcodeDetector>::default(),
         Box::<ArbitraryTransferFromDetector>::default(),
     ]
