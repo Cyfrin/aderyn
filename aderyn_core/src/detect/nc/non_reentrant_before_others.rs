@@ -1,10 +1,8 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
-    context::{
-        browser::ContextBrowser,
-        loader::{ASTNode, ContextLoader},
-    },
+    capture,
+    context::loader::ContextLoader,
     detect::detector::{Detector, IssueSeverity},
 };
 use eyre::Result;
@@ -16,21 +14,13 @@ pub struct NonReentrantBeforeOthersDetector {
 }
 
 impl Detector for NonReentrantBeforeOthersDetector {
-    fn detect(
-        &mut self,
-        loader: &ContextLoader,
-        browser: &mut ContextBrowser,
-    ) -> Result<bool, Box<dyn Error>> {
+    fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
         let function_definitions = loader.function_definitions.keys();
         for definition in function_definitions {
             if definition.modifiers.len() > 1 {
                 for (index, modifier) in definition.modifiers.iter().enumerate() {
                     if modifier.modifier_name.name == "nonReentrant" && index != 0 {
-                        self.found_instances.insert(
-                            browser
-                                .get_node_sort_key(&ASTNode::ModifierInvocation(modifier.clone())),
-                            modifier.src.clone(),
-                        );
+                        capture!(self, loader, modifier);
                     }
                 }
             }
@@ -57,25 +47,18 @@ impl Detector for NonReentrantBeforeOthersDetector {
 
 #[cfg(test)]
 mod non_reentrant_before_others_tests {
-    use crate::{
-        context::browser::ContextBrowser,
-        detect::{
-            detector::{detector_test_helpers::load_contract, Detector},
-            nc::non_reentrant_before_others::NonReentrantBeforeOthersDetector,
-        },
+    use crate::detect::{
+        detector::{detector_test_helpers::load_contract, Detector},
+        nc::non_reentrant_before_others::NonReentrantBeforeOthersDetector,
     };
 
     #[test]
     fn test_non_reentrant_before_others() {
         let context_loader =
             load_contract("../tests/contract-playground/out/AdminContract.sol/AdminContract.json");
-        let mut context_browser = ContextBrowser::default_from(&context_loader);
-        context_browser.build_parallel();
 
         let mut detector = NonReentrantBeforeOthersDetector::default();
-        let found = detector
-            .detect(&context_loader, &mut context_browser)
-            .unwrap();
+        let found = detector.detect(&context_loader).unwrap();
         // assert that the detector found something
         assert!(found);
         // assert that the detector found the correct number

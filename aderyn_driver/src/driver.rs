@@ -1,6 +1,5 @@
 use crate::{process_foundry, process_hardhat, virtual_foundry};
 use aderyn_core::{
-    context::browser::ContextBrowser,
     fscloc,
     report::{json_printer::JsonPrinter, markdown_printer::MarkdownReportPrinter},
     run_with_printer,
@@ -10,6 +9,9 @@ use std::{fs::read_dir, path::PathBuf};
 pub struct Args {
     pub root: String,
     pub output: String,
+    pub scope: Option<Vec<String>>,
+    pub exclude: Option<Vec<String>>,
+    pub no_snippets: bool,
 }
 
 enum Framework {
@@ -29,7 +31,7 @@ pub fn drive(args: Args) {
     let (src_path, mut context_loader) = {
         if is_single_file {
             safe_space = virtual_foundry::build_isolated_workspace_for_file(&args.root);
-            process_foundry::with_project_root_at(&safe_space)
+            process_foundry::with_project_root_at(&safe_space, &args.scope, &args.exclude)
         } else {
             println!("Detecting framework...");
             let root_path = PathBuf::from(&args.root);
@@ -42,19 +44,23 @@ pub fn drive(args: Args) {
             // This whole block loads the solidity files and ASTs into the context loader
             // TODO: move much of this gutsy stuff into the foundry / hardhat modules.
             match framework {
-                Framework::Foundry => process_foundry::with_project_root_at(&root_path),
-                Framework::Hardhat => process_hardhat::with_project_root_at(&root_path),
+                Framework::Foundry => {
+                    process_foundry::with_project_root_at(&root_path, &args.scope, &args.exclude)
+                }
+                Framework::Hardhat => {
+                    process_hardhat::with_project_root_at(&root_path, &args.scope, &args.exclude)
+                }
             }
         }
     };
 
     // Using the source path, calculate the sloc
-    let stats = fscloc::engine::count_lines_of_code(&PathBuf::from(src_path));
+    let stats = fscloc::engine::count_lines_of_code(
+        &PathBuf::from(src_path),
+        &context_loader.src_filepaths,
+    );
     let stats = stats.lock().unwrap().to_owned();
     context_loader.set_sloc_stats(stats);
-
-    let mut context_browser = ContextBrowser::default_from(&context_loader);
-    context_browser.build_parallel();
 
     if args.output.ends_with(".json") {
         // Load the context loader into the run function, which runs the detectors
@@ -63,7 +69,7 @@ pub fn drive(args: Args) {
             args.output,
             JsonPrinter,
             root_rel_path,
-            context_browser,
+            args.no_snippets,
         )
         .unwrap_or_else(|err| {
             // Exit with a non-zero exit code
@@ -78,7 +84,7 @@ pub fn drive(args: Args) {
             args.output,
             MarkdownReportPrinter,
             root_rel_path,
-            context_browser,
+            args.no_snippets,
         )
         .unwrap_or_else(|err| {
             // Exit with a non-zero exit code

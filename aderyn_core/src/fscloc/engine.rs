@@ -3,16 +3,21 @@ use ignore::{DirEntry, WalkBuilder, WalkState::Continue};
 use rayon::prelude::*;
 use std::{collections::HashMap, path::Path, sync::Mutex};
 
-pub fn count_lines_of_code(src: &Path) -> Mutex<HashMap<String, usize>> {
+pub fn count_lines_of_code(src: &Path, src_filepaths: &[String]) -> Mutex<HashMap<String, usize>> {
     let walker = WalkBuilder::new(src);
     let (tx, rx) = crossbeam_channel::unbounded();
-
     walker.build_parallel().run(|| {
         let tx = tx.clone();
         Box::new(move |res| {
             if let Ok(target) = res {
-                // safe unwrap because target is not stdin
-                if target.file_type().unwrap().is_file() {
+                if target.file_type().unwrap().is_file()
+                    && src_filepaths.iter().any(|fp| {
+                        target
+                            .path()
+                            .to_str()
+                            .map_or(false, |path| path.contains(fp))
+                    })
+                {
                     let send = target.to_owned();
                     tx.send(send).unwrap();
                 }

@@ -2,10 +2,8 @@ use std::{collections::BTreeMap, error::Error};
 
 use crate::{
     ast::{Expression, FunctionCallKind},
-    context::{
-        browser::ContextBrowser,
-        loader::{ASTNode, ContextLoader},
-    },
+    capture,
+    context::loader::ContextLoader,
     detect::detector::{Detector, IssueSeverity},
 };
 use eyre::Result;
@@ -17,11 +15,7 @@ pub struct BlockTimestampDeadlineDetector {
 }
 
 impl Detector for BlockTimestampDeadlineDetector {
-    fn detect(
-        &mut self,
-        loader: &ContextLoader,
-        browser: &mut ContextBrowser,
-    ) -> Result<bool, Box<dyn Error>> {
+    fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
         for call in loader.function_calls.keys() {
             // Uniswap V2 - Function Calls
             // For each FunctionCall, if the Expression is a MemberAccess that is named any of the following:
@@ -54,12 +48,7 @@ impl Detector for BlockTimestampDeadlineDetector {
                                 *member_access.expression
                             {
                                 if identifier.name == "block" {
-                                    self.found_instances.insert(
-                                        browser.get_node_sort_key(&ASTNode::FunctionCall(
-                                            call.clone(),
-                                        )),
-                                        call.src.clone(),
-                                    );
+                                    capture!(self, loader, call);
                                 }
                             }
                         }
@@ -87,12 +76,7 @@ impl Detector for BlockTimestampDeadlineDetector {
                                         *member_access.expression
                                     {
                                         if identifier.name == "block" {
-                                            self.found_instances.insert(
-                                                browser.get_node_sort_key(&ASTNode::FunctionCall(
-                                                    call.clone(),
-                                                )),
-                                                call.src.clone(),
-                                            );
+                                            capture!(self, loader, call);
                                         }
                                     }
                                 }
@@ -127,12 +111,9 @@ impl Detector for BlockTimestampDeadlineDetector {
 
 #[cfg(test)]
 mod block_timestamp_deadline_detector_tests {
-    use crate::{
-        context::browser::ContextBrowser,
-        detect::{
-            detector::{detector_test_helpers::load_contract, Detector},
-            medium::block_timestamp_deadline::BlockTimestampDeadlineDetector,
-        },
+    use crate::detect::{
+        detector::{detector_test_helpers::load_contract, Detector},
+        medium::block_timestamp_deadline::BlockTimestampDeadlineDetector,
     };
 
     #[test]
@@ -140,12 +121,9 @@ mod block_timestamp_deadline_detector_tests {
         let context_loader = load_contract(
             "../tests/contract-playground/out/UniswapV2Swapper.sol/UniswapV2Swapper.json",
         );
-        let mut context_browser = ContextBrowser::default_from(&context_loader);
-        context_browser.build_parallel();
+
         let mut detector = BlockTimestampDeadlineDetector::default();
-        let found = detector
-            .detect(&context_loader, &mut context_browser)
-            .unwrap();
+        let found = detector.detect(&context_loader).unwrap();
         // assert that the detector found
         assert!(found);
         // assert that the number of instances found is correct
@@ -175,12 +153,9 @@ mod block_timestamp_deadline_detector_tests {
         let context_loader = load_contract(
             "../tests/contract-playground/out/UniswapV3Swapper.sol/UniswapV3Swapper.json",
         );
-        let mut context_browser = ContextBrowser::default_from(&context_loader);
-        context_browser.build_parallel();
+
         let mut detector = BlockTimestampDeadlineDetector::default();
-        let found = detector
-            .detect(&context_loader, &mut context_browser)
-            .unwrap();
+        let found = detector.detect(&context_loader).unwrap();
         // assert that the detector found
         assert!(found);
         // assert that the number of instances found is correct
