@@ -1,4 +1,5 @@
 pub mod browser;
+pub mod complexity;
 pub mod loader;
 
 #[macro_export]
