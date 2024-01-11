@@ -86,7 +86,7 @@ jobs:
       - name: Check custom_subscription_analysis_report.md 
         run: |
           cat bot_reports/custom_subscription_analysis_report.md
-          diff bot_reports/orig_custom_subscription_analysis_report.md custom_subscription_analysis_report.md
+          diff bot_reports/orig_custom_subscription_analysis_report.md bot_reports/custom_subscription_analysis_report.md
 
 
   lints:
