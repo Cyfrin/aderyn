@@ -116,6 +116,7 @@ name = "bot_example"
 version = "0.1.0"
 dependencies = [
  "aderyn_driver",
+ "clap",
 ]
 
 [[package]]

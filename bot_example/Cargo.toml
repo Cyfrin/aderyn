@@ -7,3 +7,5 @@ edition = "2021"
 
 [dependencies]
 aderyn_driver = { path  = "../aderyn_driver" }
+clap = { version = "4.4.6", features = ["derive"] }
+

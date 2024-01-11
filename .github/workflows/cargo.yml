@@ -81,12 +81,12 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: --bin bot_example
+          args: --bin bot_example -- -o custom_subscription_analysis_report.md
 
       - name: Check custom_subscription_analysis_report.md 
         run: |
-          cat bot_reports/custom_subscription_analysis_report.md
-          diff bot_reports/org_custom_subscription_analysis_report.md bot_reports/custom_subscription_analysis_report.md
+          cat custom_subscription_analysis_report.md
+          diff bot_reports/custom_subscription_analysis_report.md custom_subscription_analysis_report.md
 
 
   lints:

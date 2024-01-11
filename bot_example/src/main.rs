@@ -11,14 +11,26 @@ use bot_example::unindexed_events::UnindexedEventsDetector;
 
 use std::path::PathBuf;
 
+use clap::Parser;
+
+#[derive(Parser, Debug)]
+#[command(author, version, about, long_about = None)]
+pub struct CommandLineArgs {
+    /// Desired directory path for outputting the final 3 reports (will overwrite existing one)
+    #[arg(short, long, default_value = "bot_reports")]
+    output: String,
+}
+
 fn main() {
+    let cmd_args = CommandLineArgs::parse();
+
     let root_path = PathBuf::from("tests/contract-playground");
 
     //////////////////////  DEFAULT (EVERYTHING) //////////////////////////////////
 
     driver::drive(Args {
         root: root_path.to_str().unwrap().to_string(),
-        output: "bot_reports/default_analysis_report.md".to_string(),
+        output: format!("{}/default_analysis_report.md", cmd_args.output).to_string(),
         exclude: None,
         no_snippets: false,
         scope: None,
@@ -35,7 +47,7 @@ fn main() {
         // notice this is `drive_with` unlike like above
         Args {
             root: root_path.to_str().unwrap().to_string(),
-            output: "bot_reports/subscription_analysis_report.md".to_string(),
+            output: format!("{}/subscription_analysis_report.md", cmd_args.output).to_string(),
             exclude: None,
             no_snippets: false,
             scope: None,
@@ -57,7 +69,8 @@ fn main() {
         // notice this is `drive_with` unlike like the first ex.
         Args {
             root: root_path.to_str().unwrap().to_string(),
-            output: "bot_reports/custom_subscription_analysis_report.md".to_string(),
+            output: format!("{}/custom_subscription_analysis_report.md", cmd_args.output)
+                .to_string(),
             exclude: None,
             no_snippets: false,
             scope: None,
