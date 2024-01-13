@@ -47,15 +47,15 @@ fn main() {
             let reg = Handlebars::new();
             use std::fs::OpenOptions;
 
-            let base_path = PathBuf::from(&detector_name);
+            let detector_path = PathBuf::from(&detector_name);
 
-            create_dir_all(&base_path).unwrap();
+            create_dir_all(&detector_path).unwrap();
 
             let file = OpenOptions::new()
                 .read(true)
                 .write(true)
                 .create(true)
-                .open(base_path.join("detector.rs"))
+                .open(detector_path.join("detector.rs"))
                 .unwrap();
 
             let mut bw = BufWriter::new(file);
@@ -80,7 +80,7 @@ fn main() {
                 .read(true)
                 .write(true)
                 .create(true)
-                .open(base_path.join("mod.rs"))
+                .open(detector_path.join("mod.rs"))
                 .unwrap();
 
             let mut bw = BufWriter::new(file);
@@ -88,8 +88,6 @@ fn main() {
             write!(bw, "pub(crate) mod detector;").unwrap();
 
             // Step 3: Register it with custom_detectors.rs
-
-            let detector_path = PathBuf::from(&detector_name);
 
             let mut comps = detector_path.components().collect::<Vec<_>>();
 
@@ -137,22 +135,25 @@ fn main() {
             let mut librs: PathBuf = comps.iter().collect();
             librs.push("lib.rs");
 
-            let s = format!(
-                "pub mod {};\n{}",
-                detector_name_camel_case,
-                fs::read_to_string(&librs).unwrap()
-            );
-
             let file = OpenOptions::new()
                 .read(true)
                 .write(true)
                 .create(true)
-                .open(librs)
+                .open(&librs)
                 .unwrap();
 
             let mut bw = BufWriter::new(file);
 
-            write!(bw, "{}", s).unwrap();
+            write!(
+                bw,
+                "{}",
+                format!(
+                    "pub mod {};\n{}",
+                    detector_name_camel_case,
+                    fs::read_to_string(&librs).unwrap()
+                )
+            )
+            .unwrap();
         }
     }
 }
