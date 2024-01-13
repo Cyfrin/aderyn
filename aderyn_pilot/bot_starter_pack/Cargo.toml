@@ -12,3 +12,5 @@ clap = { version = "4.4.6", features = ["derive"] }
 # Extra options
 # aderyn_driver = { path  = "../aderyn/aderyn_driver" }
 aderyn_driver = { git = "https://github.com/TilakMaddy/aderyn",  branch = "feature/spin-out-detectors"  } # [choose this while revireing PR]
+
+[workspace]
