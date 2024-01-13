@@ -81,7 +81,7 @@ fn main() {
 
             let new_aderyn_driver_line = format!(
                 "aderyn_driver = {{ version = \"{}\" }}",
-                aderyn_driver_version.unwrap_or_else(|| get_currently_coded_version()),
+                aderyn_driver_version.unwrap_or_else(get_currently_coded_version),
             );
 
             to_insert_content_lines[hook as usize] = &new_aderyn_driver_line;
@@ -158,8 +158,7 @@ fn main() {
 fn get_currently_coded_version() -> String {
     let content = std::fs::read_to_string("aderyn_driver/Cargo.toml").unwrap();
     for line in content.lines() {
-        if line.starts_with("version = \"") {
-            let version_str = line["version = \"".len()..].to_string();
+        if let Some(version_str) = line.strip_prefix("version = \"") {
             return version_str[..version_str.len() - 1].to_string();
         }
     }
