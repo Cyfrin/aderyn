@@ -58,9 +58,9 @@ fn main() {
             let reg = Handlebars::new();
             use std::fs::OpenOptions;
 
-            let detector_path = std::fs::canonicalize(&detector_name).unwrap();
+            create_dir_all(Path::new(&detector_name)).unwrap();
 
-            create_dir_all(&detector_path).unwrap();
+            let detector_path = std::fs::canonicalize(&detector_name).unwrap();
 
             let file = OpenOptions::new()
                 .read(true)
