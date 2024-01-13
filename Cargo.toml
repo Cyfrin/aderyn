@@ -6,6 +6,8 @@ members = [
     "aderyn_py",
     "bot_example",
     "aderyn_pilot",
+    "bot_starter_pack",
+    "bot_fw_assembler",
 ]
 
 resolver="1"

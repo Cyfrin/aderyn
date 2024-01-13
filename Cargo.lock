@@ -163,6 +163,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "bot_fw_assembler"
+version = "0.1.0"
+dependencies = [
+ "clap",
+]
+
+[[package]]
 name = "bstr"
 version = "1.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -597,6 +604,14 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e7810e0be55b428ada41041c41f32c9f1a42817901b4ccf45fa3d4b6561e74c7"
 dependencies = [
  "adler",
+]
+
+[[package]]
+name = "my_bot"
+version = "0.1.0"
+dependencies = [
+ "aderyn_driver",
+ "clap",
 ]
 
 [[package]]
