@@ -146,12 +146,9 @@ fn main() {
 
             write!(
                 bw,
-                "{}",
-                format!(
-                    "pub mod {};\n{}",
-                    detector_name_camel_case,
-                    fs::read_to_string(&librs).unwrap()
-                )
+                "pub mod {};\n{}",
+                detector_name_camel_case,
+                fs::read_to_string(&librs).unwrap()
             )
             .unwrap();
         }
