@@ -58,7 +58,7 @@ fn main() {
             let reg = Handlebars::new();
             use std::fs::OpenOptions;
 
-            let detector_path = PathBuf::from(&detector_name);
+            let detector_path = std::fs::canonicalize(&detector_name).unwrap();
 
             create_dir_all(&detector_path).unwrap();
 
