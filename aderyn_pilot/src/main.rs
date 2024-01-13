@@ -1,6 +1,7 @@
 use clap::{Parser, Subcommand};
 use handlebars::Handlebars;
 use serde_json::json;
+use std::fs;
 use std::io::Write;
 use std::path::Path;
 use std::{
@@ -39,14 +40,14 @@ fn main() {
             let detector_name_camel_case = filename.to_string_lossy().to_ascii_lowercase();
             let detector_name_title_case = to_title_case(detector_name_camel_case.clone());
 
-            //// create the module //////
+            // Step 1 : Create the detector module by following the template
 
             let template = include_str!("../templates/detector_rs.hbs");
 
             let reg = Handlebars::new();
             use std::fs::OpenOptions;
 
-            let base_path = PathBuf::from(detector_name);
+            let base_path = PathBuf::from(&detector_name);
 
             create_dir_all(&base_path).unwrap();
 
@@ -73,9 +74,7 @@ fn main() {
             )
             .unwrap();
 
-            //////////////////////////////
-
-            // mod.rs
+            // Step 2: Insert mod.rs
 
             let file = OpenOptions::new()
                 .read(true)
@@ -88,10 +87,72 @@ fn main() {
 
             write!(bw, "{}", "pub(crate) mod detector;").unwrap();
 
-            ///////////////////////////////
+            // Step 3: Register it with custom_detectors.rs
 
-            //TODO: custom_detector.rs - add imports at the top, and insert it before
-            //ADERYN-PILOT: 0x04
+            let detector_path = PathBuf::from(&detector_name);
+
+            let mut comps = detector_path.components().collect::<Vec<_>>();
+
+            comps.pop();
+
+            let mut custom_detector_rs_path: PathBuf = comps.iter().collect();
+            custom_detector_rs_path.push("bot_brain");
+            custom_detector_rs_path.push("custom_detectors.rs");
+
+            let s = format!(
+                "use crate::{}::detector::{};\n{}",
+                detector_name_camel_case,
+                detector_name_title_case,
+                fs::read_to_string(&custom_detector_rs_path).unwrap()
+            );
+
+            let mut filelines = s.lines().collect::<Vec<_>>();
+
+            let mut hook_line = -1;
+
+            for (idx, line) in filelines.iter().enumerate() {
+                if line.contains("// ADERYN-PILOT: 0x04 CUSTOM DETECTORS") {
+                    hook_line = idx as isize;
+                    break;
+                }
+            }
+
+            let register = format!("\t\tBox::<{}>::default(),", &detector_name_title_case);
+
+            filelines.insert(hook_line as usize, &register.as_str());
+
+            let file = OpenOptions::new()
+                .read(true)
+                .write(true)
+                .create(true)
+                .open(custom_detector_rs_path)
+                .unwrap();
+
+            let mut bw = BufWriter::new(file);
+
+            write!(bw, "{}", filelines.join("\n")).unwrap();
+
+            // Step 4: Register with lib.rs
+
+            let mut librs: PathBuf = comps.iter().collect();
+            librs.push("lib.rs");
+
+            let s = format!(
+                "pub mod {};\n{}",
+                detector_name_camel_case,
+                fs::read_to_string(&librs).unwrap()
+            );
+
+            let file = OpenOptions::new()
+                .read(true)
+                .write(true)
+                .create(true)
+                .open(librs)
+                .unwrap();
+
+            let mut bw = BufWriter::new(file);
+
+            write!(bw, "{}", s).unwrap();
         }
     }
 }
