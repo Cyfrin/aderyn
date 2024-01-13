@@ -85,7 +85,7 @@ fn main() {
 
             let mut bw = BufWriter::new(file);
 
-            write!(bw, "{}", "pub(crate) mod detector;").unwrap();
+            write!(bw, "pub(crate) mod detector;").unwrap();
 
             // Step 3: Register it with custom_detectors.rs
 
@@ -119,7 +119,7 @@ fn main() {
 
             let register = format!("\t\tBox::<{}>::default(),", &detector_name_title_case);
 
-            filelines.insert(hook_line as usize, &register.as_str());
+            filelines.insert(hook_line as usize, register.as_str());
 
             let file = OpenOptions::new()
                 .read(true)
@@ -161,7 +161,7 @@ fn to_title_case(camel_case: String) -> String {
     // Example
     // unindexed_events -> UnindexedEventsDetector
     // TODO: cleanup
-    let words = camel_case.split("_");
+    let words = camel_case.split('_');
     let mut changed_words = vec![];
     for word in words {
         let mut wc = word.chars();
