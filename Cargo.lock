@@ -4,7 +4,7 @@ version = 3
 
 [[package]]
 name = "aderyn"
-version = "0.0.11"
+version = "0.0.12"
 dependencies = [
  "aderyn_driver",
  "clap",
@@ -12,7 +12,7 @@ dependencies = [
 
 [[package]]
 name = "aderyn_core"
-version = "0.0.11"
+version = "0.0.12"
 dependencies = [
  "crossbeam",
  "crossbeam-channel",
@@ -28,7 +28,7 @@ dependencies = [
 
 [[package]]
 name = "aderyn_driver"
-version = "0.0.11"
+version = "0.0.12"
 dependencies = [
  "aderyn_core",
  "rayon",
@@ -36,7 +36,7 @@ dependencies = [
 
 [[package]]
 name = "aderyn_pilot"
-version = "0.1.0"
+version = "0.0.12"
 dependencies = [
  "clap",
  "handlebars",
@@ -47,7 +47,7 @@ dependencies = [
 
 [[package]]
 name = "aderyn_py"
-version = "0.0.11"
+version = "0.0.12"
 dependencies = [
  "aderyn_driver",
  "pyo3",
@@ -156,7 +156,7 @@ dependencies = [
 
 [[package]]
 name = "bot_example"
-version = "0.1.0"
+version = "0.0.12"
 dependencies = [
  "aderyn_driver",
  "clap",
@@ -164,7 +164,7 @@ dependencies = [
 
 [[package]]
 name = "bot_fw_assembler"
-version = "0.1.0"
+version = "0.0.12"
 dependencies = [
  "clap",
 ]
