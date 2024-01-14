@@ -5,8 +5,8 @@
  * FAQ
  *
  * > How to create custom detectors ?
- *      - Run `aderyn_pilot generate my_detector_name`
- *      - Code it out in the newly created `aderyn_pilot/detector.rs`
+ *      - Run `aderyn_pilot generate bot_starter_pack/src/my_detector_name`
+ *      - Code it out in the newly created `my_detector/detector.rs`
  *      - Write your tests
  *      - Hook up the tests with the desired solidity json out files in `config_tests.rs`
  *      - Run `cargo test`
