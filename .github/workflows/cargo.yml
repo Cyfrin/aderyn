@@ -91,10 +91,10 @@ jobs:
       - name: Move archive.zip
         run: |
           mkdir temp_store
-          mv aderyn_pilot/archive.zip temp_store
+          mv aderyn_pilot/archive.zip temp_store/
 
       - name: Generate archive.zip prod version
-        uses: action-rs/cargo@v1
+        uses: actions-rs/cargo@v1
         with:
           command: run
           args: --bin bot_fw_assembler -- prod
