@@ -118,9 +118,9 @@ jobs:
           
       - name: Build the bot 
         uses: actions-rs/cargo@v1
-        working-directory: ./bot_ci_cd/bot_starter_pack
         with:
           command: build
+          args: --manifest-path ./bot_ci_cd/bot_starter_pack/Cargo.toml
 
       - name: Add a detector to the bot
         uses: actions-rs/cargo@v1
@@ -130,17 +130,15 @@ jobs:
 
       - name: Build the bot again 
         uses: actions-rs/cargo@v1
-        working-directory: ./bot_ci_cd/bot_starter_pack
         with:
-          command: build 
+          command: build
+          args: --manifest-path ./bot_ci_cd/bot_starter_pack/Cargo.toml 
 
       - name: Test the bot 
         uses: actions-rs/cargo@v1
-        working-directory: ./bot_ci_cd/bot_starter_pack
         with:
           command: test
-
-
+          args: --manifest-path ./bot_ci_cd/bot_starter_pack/Cargo.toml
 
 
   lints:
