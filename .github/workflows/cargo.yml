@@ -118,7 +118,7 @@ jobs:
           
       - name: Build the bot 
         uses: actions-rs/cargo@v1
-        working-directory: bot_ci_cd/bot_starter_pack
+        working-directory: ./bot_ci_cd/bot_starter_pack
         with:
           command: build
 
@@ -130,13 +130,13 @@ jobs:
 
       - name: Build the bot again 
         uses: actions-rs/cargo@v1
-        working-directory: bot_ci_cd/bot_starter_pack
+        working-directory: ./bot_ci_cd/bot_starter_pack
         with:
           command: build 
 
       - name: Test the bot 
         uses: actions-rs/cargo@v1
-        working-directory: bot_ci_cd/bot_starter_pack
+        working-directory: ./bot_ci_cd/bot_starter_pack
         with:
           command: test
 
