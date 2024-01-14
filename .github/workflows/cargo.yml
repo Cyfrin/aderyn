@@ -101,6 +101,8 @@ jobs:
 
       - name: Check archive.zip matches prod version of latest bot_starter_pack
         run: |
+          cat temp_store/archive.zip
+          cat aderyn_pilot/archive.zip
           diff temp_store/archive.zip aderyn_pilot/archive.zip
           
 
