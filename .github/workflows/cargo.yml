@@ -88,6 +88,22 @@ jobs:
           cat bot_reports/custom_subscription_analysis_report.md
           diff bot_reports/orig_custom_subscription_analysis_report.md bot_reports/custom_subscription_analysis_report.md
 
+
+  bots:
+  
+    name: Check Bot creation and testing
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+
       - name: Ask assembler make a dev archive.zip
         uses: actions-rs/cargo@v1
         with:
@@ -99,12 +115,32 @@ jobs:
         with:
           command: run
           args: --bin aderyn_pilot -- new bot_ci_cd
-
+          
       - name: Build the bot 
         uses: actions-rs/cargo@v1
         working-directory: bot_ci_cd/bot_starter_pack
         with:
           command: build
+
+      - name: Add a detector to the bot
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+          args: --bin aderyn_pilot -- generate bot_ci_cd/bot_starter_pack/src/no_zero_address_check
+
+      - name: Build the bot again 
+        uses: actions-rs/cargo@v1
+        working-directory: bot_ci_cd/bot_starter_pack
+        with:
+          command: build 
+
+      - name: Test the bot 
+        uses: actions-rs/cargo@v1
+        working-directory: bot_ci_cd/bot_starter_pack
+        with:
+          command: test
+
+
 
 
   lints:
