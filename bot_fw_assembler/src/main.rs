@@ -87,12 +87,14 @@ fn main() {
             to_insert_content_lines[hook as usize] = &new_aderyn_driver_line;
 
             // Replace with temporary content
+            println!("[*] Writing to bot_starter_pack/Cargo.toml");
             write_to_cargo_toml(to_insert_content_lines.join("\n"));
 
             // Make archive from new changes for aderyn_pilot's new command to use
             pack_bytes_and_create_archive();
 
             // Restore the old content in Cargo.toml
+            println!("[*] Restoring bot_starter_pack/Cargo.toml");
             write_to_cargo_toml(old_content);
         }
         BotFrameworkEnvironment::Dev {
@@ -119,12 +121,14 @@ fn main() {
             to_insert_content_lines[hook as usize] = &new_aderyn_driver_line;
 
             // Replace with temporary content
+            println!("[*] Writing to bot_starter_pack/Cargo.toml");
             write_to_cargo_toml(to_insert_content_lines.join("\n"));
 
             // Make archive from new changes for aderyn_pilot's new command to use
             pack_bytes_and_create_archive();
 
             // Restore the old content in Cargo.toml
+            println!("[*] Restoring bot_starter_pack/Cargo.toml");
             write_to_cargo_toml(old_content);
         }
     }
@@ -152,7 +156,6 @@ fn write_to_cargo_toml(content: String) {
     let mut bw = BufWriter::new(file);
 
     write!(bw, "{}", content).unwrap();
-    println!("[*] Restoring Cargo.toml in bot_starter_pack");
 }
 
 fn pack_bytes_and_create_archive() {
@@ -183,5 +186,5 @@ fn pack_bytes_and_create_archive() {
         .stderr(Stdio::inherit())
         .status();
 
-    println!("[*] Created archive.zip in bot_starter_pack");
+    println!("[*] Created aderyn_pilot/archive.zip");
 }
