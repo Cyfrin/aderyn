@@ -35,6 +35,10 @@ enum PilotCommand {
     },
 }
 
+// TODO:
+// Add a "submit" type command that will "cargo run -- refresh-metadata" in the project
+// directory and then do whatever with metadata/custom_bots.json
+
 fn main() {
     let cmd_args = CommandLineArgs::parse();
     match cmd_args.pilot {

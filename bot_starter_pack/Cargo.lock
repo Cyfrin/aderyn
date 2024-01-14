@@ -4,8 +4,7 @@ version = 3
 
 [[package]]
 name = "aderyn_core"
-version = "0.0.11"
-source = "git+https://github.com/TilakMaddy/aderyn?branch=feature/spin-out-detectors#79158bc1c98058e9c28348e88d7b6f640a50690e"
+version = "0.0.12"
 dependencies = [
  "crossbeam",
  "crossbeam-channel",
@@ -21,8 +20,7 @@ dependencies = [
 
 [[package]]
 name = "aderyn_driver"
-version = "0.0.11"
-source = "git+https://github.com/TilakMaddy/aderyn?branch=feature/spin-out-detectors#79158bc1c98058e9c28348e88d7b6f640a50690e"
+version = "0.0.12"
 dependencies = [
  "aderyn_core",
  "rayon",
@@ -300,6 +298,8 @@ version = "0.1.0"
 dependencies = [
  "aderyn_driver",
  "clap",
+ "serde",
+ "serde_json",
 ]
 
 [[package]]
