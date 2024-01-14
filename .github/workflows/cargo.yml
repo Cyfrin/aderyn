@@ -88,6 +88,21 @@ jobs:
           cat bot_reports/custom_subscription_analysis_report.md
           diff bot_reports/orig_custom_subscription_analysis_report.md bot_reports/custom_subscription_analysis_report.md
 
+      - name: Move archive.zip
+        run: |
+          mkdir temp_store
+          mv aderyn_pilot/archive.zip temp_store
+
+      - name: Generate archive.zip prod version
+        uses: action-rs/cargo@v1
+        with:
+          command: run
+          args: --bin bot_fw_assembler -- prod
+
+      - name: Check archive.zip matches prod version of latest bot_starter_pack
+        run: |
+          diff temp_store/archive.zip aderyn_pilot/archive.zip
+          
 
   lints:
     name: Lints
