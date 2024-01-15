@@ -21,6 +21,8 @@ pub struct ComplexityLoader {
     pub contract_definition_complexity: i32,
     pub yul_function_call_complexity: i32,
     pub yul_identifier_complexity: i32,
+    pub yul_if_complexity: i32,
+    pub yul_expression_statement_complexity: i32,
     pub variable_declaration_complexity: i32,
 }
 
@@ -135,6 +137,50 @@ impl ASTConstVisitor for ComplexityLoader {
         Ok(true)
     }
 
+    fn visit_yul_if(&mut self, _node: &YulIf) -> Result<bool> {
+        self.complexity += 2;
+        self.yul_if_complexity += 2;
+        println!("After YulIf: {}", self.complexity);
+        Ok(true)
+    }
+
+    fn visit_yul_expression_statement(&mut self, _node: &YulExpressionStatement) -> Result<bool> {
+        self.complexity += 1;
+        self.yul_expression_statement_complexity += 1;
+        println!("After YulExpressionStatement: {}", self.complexity);
+        Ok(true)
+    }
+
+    fn visit_yul_typed_name(&mut self, _node: &YulTypedName) -> Result<bool> {
+        self.complexity += 1;
+        println!("After YulTypedName: {}", self.complexity);
+        Ok(true)
+    }
+
+    fn visit_yul_variable_declaration(&mut self, _node: &YulVariableDeclaration) -> Result<bool> {
+        self.complexity += 1;
+        println!("After YulVariableDeclaration: {}", self.complexity);
+        Ok(true)
+    }
+
+    fn visit_yul_block(&mut self, node: &YulBlock) -> Result<bool> {
+        self.complexity += 1;
+        println!("After YulBlock: {}", self.complexity);
+        Ok(true)
+    }
+
+    fn visit_yul_assignment(&mut self, node: &YulAssignment) -> Result<bool> {
+        self.complexity += 1;
+        println!("After YulAssignment: {}", self.complexity);
+        Ok(true)
+    }
+
+    fn visit_yul_literal(&mut self, node: &YulLiteral) -> Result<bool> {
+        self.complexity += 1;
+        println!("After YulLiteral: {}", self.complexity);
+        Ok(true)
+    }
+
     fn visit_variable_declaration(&mut self, node: &VariableDeclaration) -> Result<bool> {
         if node.state_variable {
             self.complexity += 1;
@@ -145,6 +191,17 @@ impl ASTConstVisitor for ComplexityLoader {
         Ok(true)
     }
 }
+
+// target: 49
+// YulFunctionCall: 27
+// YulIdentifier: 52
+// Unique YulIdentifier: ?
+// YulAssignment: 3
+// YulBlock: 6
+// YulLiteral: 3
+// YulVariableDeclaration: 3
+// YulExpressionStatement: 2
+// YulTypedName: 3
 
 #[cfg(test)]
 mod complexity_tests {
@@ -215,5 +272,19 @@ mod complexity_tests {
 
         println!("Complexity Overview: {:#?}", complexity_loader);
         assert_eq!(complexity_loader.complexity, 114);
+    }
+
+    #[test]
+    fn test_complexity_seaport_low_level_helpers() {
+        let foundry_output = load_contract(
+            "../tests/contract-playground/out/LowLevelHelpers.sol/LowLevelHelpers.json",
+        );
+        let mut complexity_loader = ComplexityLoader::default();
+        complexity_loader
+            .visit(&foundry_output.source_units[0])
+            .unwrap();
+
+        println!("Complexity Overview: {:#?}", complexity_loader);
+        assert_eq!(complexity_loader.complexity, 111);
     }
 }
