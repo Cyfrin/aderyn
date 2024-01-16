@@ -4,10 +4,7 @@ members = [
     "aderyn_core",
     "aderyn_driver",
     "aderyn_py",
-    "bot_example",
-    "nyth",
-    "bot_fw_assembler",
-    "bot",
+    "bot_example"
 ]
 
 resolver="1"
