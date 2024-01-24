@@ -38,6 +38,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "aderyn_pilot"
+version = "0.0.12"
+dependencies = [
+ "clap",
+ "handlebars",
+ "serde",
+ "serde_json",
+ "zip-extract",
+]
+
+[[package]]
 name = "aderyn_py"
 version = "0.0.13"
 dependencies = [
@@ -136,6 +147,15 @@ name = "bitflags"
 version = "1.3.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bef38d45163c2f1dde094a7dfd33ccf595c92905c8f8f4fdc18d06fb1037718a"
+
+[[package]]
+name = "block-buffer"
+version = "0.10.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3078c7629b62d3f0439517fa394996acacc5cbc91c5a20d8c658e77abd503a71"
+dependencies = [
+ "generic-array",
+]
 
 [[package]]
 name = "bot_example"

@@ -1,0 +1,1 @@
+This folder should not be manually altered in most cases.
