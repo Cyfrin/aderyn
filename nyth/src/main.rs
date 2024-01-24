@@ -4,6 +4,7 @@ use serde_json::json;
 use std::fs;
 use std::io::Write;
 use std::path::Path;
+use std::process::Stdio;
 use std::{
     fs::create_dir_all,
     io::{BufWriter, Cursor},
@@ -50,6 +51,19 @@ fn main() {
             let archive: Vec<u8> = Vec::from(include_bytes!("../archive.zip"));
             let target_dir = PathBuf::from(bot_name);
             zip_extract::extract(Cursor::new(archive), &target_dir, false).unwrap();
+            let _ = std::process::Command::new("git")
+                .arg("init")
+                .current_dir(&target_dir)
+                .stdout(Stdio::inherit()) // This will stream the stdout
+                .stderr(Stdio::inherit())
+                .status();
+            let foundry_workspace_dir = target_dir.join("bot/foundry_workspace");
+            let _ = std::process::Command::new("forge")
+                .arg("build")
+                .current_dir(&foundry_workspace_dir)
+                .stdout(Stdio::inherit()) // This will stream the stdout
+                .stderr(Stdio::inherit())
+                .status();
         }
         PilotCommand::Generate { detector_name } => {
             let filename = Path::new(&detector_name).file_name().to_owned().unwrap();
