@@ -120,25 +120,25 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: build
-          args: --manifest-path ./bot_ci_cd/bot_starter_pack/Cargo.toml
+          args: --manifest-path ./bot_ci_cd/bot_detectors/Cargo.toml
 
       - name: Add a detector to the bot
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: --bin nyth -- generate bot_ci_cd/bot_starter_pack/src/no_zero_address_check
+          args: --bin nyth -- generate bot_ci_cd/bot_detectors/src/no_zero_address_check
 
       - name: Build the bot again 
         uses: actions-rs/cargo@v1
         with:
           command: build
-          args: --manifest-path ./bot_ci_cd/bot_starter_pack/Cargo.toml 
+          args: --manifest-path ./bot_ci_cd/bot_detectors/Cargo.toml 
 
       - name: Test the bot 
         uses: actions-rs/cargo@v1
         with:
           command: test
-          args: --manifest-path ./bot_ci_cd/bot_starter_pack/Cargo.toml
+          args: --manifest-path ./bot_ci_cd/bot_detectors/Cargo.toml
 
 
   lints:

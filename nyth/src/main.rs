@@ -28,7 +28,7 @@ enum PilotCommand {
     },
     /// Argument - Detector name (including path).
     /// For example if the name is "unindexed_events", you run
-    /// "nyth generate path/to/smart_bot/bot_starter_pack/src/unindexed_events".
+    /// "nyth generate path/to/smart_bot/bot_detectors/src/unindexed_events".
     Generate {
         /// Do not append the word "detector" it will be done for you
         detector_name: String,

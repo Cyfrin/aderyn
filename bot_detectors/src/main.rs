@@ -5,7 +5,7 @@
  * FAQ
  *
  * > How to create custom detectors ?
- *      - Run `nyth generate bot_starter_pack/src/my_detector_name`
+ *      - Run `nyth generate bot_detectors/src/my_detector_name`
  *      - Code it out in the newly created `my_detector/detector.rs`
  *      - Write your tests
  *      - Hook up the tests with the desired solidity json out files in `config_tests.rs`

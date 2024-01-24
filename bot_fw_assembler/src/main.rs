@@ -29,10 +29,10 @@ fn main() {
      * Assembler Plan
      * --------------
      *
-     * Goal: Assemble `bot_starter_pack` so that `nyth` can use the locally modified latest
+     * Goal: Assemble `bot_detectors` so that `nyth` can use the locally modified latest
      *       version for the development phase and latest available online crate version for production.
      *
-     * `bot_starter_pack`
+     * `bot_detectors`
      *  - Cargo.toml depends on `aderyn_driver` through local file system routing by default (in the codebase)
      *
      *
@@ -42,13 +42,13 @@ fn main() {
      * Dev setup:
      *
      * When you run `cargo run --bin nyth -- new path/to/project`, the dev project created
-     * by `nyth` which is a replica of `bot_starter_pack` should be able to access `aderyn_driver`
+     * by `nyth` which is a replica of `bot_detectors` should be able to access `aderyn_driver`
      * in its `Cargo.toml` locally.
      *
      * Prod setup:
      *
      * When you run `cargo run --bin nyth -- new path/to/project`, the prod project created
-     * by `nyth` which is a replica of `bot_starter_pack` should be able to access `aderyn_driver`
+     * by `nyth` which is a replica of `bot_detectors` should be able to access `aderyn_driver`
      * in its `Cargo.toml` either fom crates.io or if that's not specified, figure it by looking at the
      * version field in `aderyn_driver/Cargo.toml`
      *
@@ -67,7 +67,7 @@ fn main() {
             aderyn_driver_version,
         } => {
             // Manipulate Cargo.toml
-            let old_content = std::fs::read_to_string("bot_starter_pack/Cargo.toml").unwrap();
+            let old_content = std::fs::read_to_string("bot_detectors/Cargo.toml").unwrap();
 
             let mut hook: isize = -1;
             for (idx, line) in old_content.lines().enumerate() {
@@ -87,21 +87,21 @@ fn main() {
             to_insert_content_lines[hook as usize] = &new_aderyn_driver_line;
 
             // Replace with temporary content
-            println!("[*] Writing to bot_starter_pack/Cargo.toml");
+            println!("[*] Writing to bot_detectors/Cargo.toml");
             write_to_cargo_toml(to_insert_content_lines.join("\n"));
 
             // Make archive from new changes for nyth's new command to use
             pack_bytes_and_create_archive();
 
             // Restore the old content in Cargo.toml
-            println!("[*] Restoring bot_starter_pack/Cargo.toml");
+            println!("[*] Restoring bot_detectors/Cargo.toml");
             write_to_cargo_toml(old_content);
         }
         BotFrameworkEnvironment::Dev {
             relative_path_to_aderyn_driver,
         } => {
             // Manipulate Cargo.toml
-            let old_content = std::fs::read_to_string("bot_starter_pack/Cargo.toml").unwrap();
+            let old_content = std::fs::read_to_string("bot_detectors/Cargo.toml").unwrap();
 
             let mut hook: isize = -1;
             for (idx, line) in old_content.lines().enumerate() {
@@ -121,14 +121,14 @@ fn main() {
             to_insert_content_lines[hook as usize] = &new_aderyn_driver_line;
 
             // Replace with temporary content
-            println!("[*] Writing to bot_starter_pack/Cargo.toml");
+            println!("[*] Writing to bot_detectors/Cargo.toml");
             write_to_cargo_toml(to_insert_content_lines.join("\n"));
 
             // Make archive from new changes for nyth's new command to use
             pack_bytes_and_create_archive();
 
             // Restore the old content in Cargo.toml
-            println!("[*] Restoring bot_starter_pack/Cargo.toml");
+            println!("[*] Restoring bot_detectors/Cargo.toml");
             write_to_cargo_toml(old_content);
         }
     }
@@ -145,12 +145,12 @@ fn get_currently_coded_version() -> String {
 }
 
 fn write_to_cargo_toml(content: String) {
-    std::fs::remove_file(PathBuf::from("bot_starter_pack/Cargo.toml")).unwrap();
+    std::fs::remove_file(PathBuf::from("bot_detectors/Cargo.toml")).unwrap();
 
     let file = OpenOptions::new()
         .write(true)
         .create(true)
-        .open(PathBuf::from("bot_starter_pack/Cargo.toml"))
+        .open(PathBuf::from("bot_detectors/Cargo.toml"))
         .unwrap();
 
     let mut bw = BufWriter::new(file);
@@ -173,14 +173,14 @@ fn pack_bytes_and_create_archive() {
         .stderr(Stdio::inherit())
         .status();
 
-    // Put the new archive which reflects changes made in `bot_starter_pack`
+    // Put the new archive which reflects changes made in `bot_detectors`
     let _output = std::process::Command::new("zip")
         .args([
             "-r9",
             "nyth/archive.zip",
-            "bot_starter_pack",
+            "bot_detectors",
             "-x",
-            "bot_starter_pack/target/*",
+            "bot_detectors/target/*",
         ])
         .stdout(Stdio::inherit()) // This will stream the stdout
         .stderr(Stdio::inherit())
