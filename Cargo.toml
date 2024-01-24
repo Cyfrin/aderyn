@@ -3,7 +3,15 @@ members = [
     "aderyn",
     "aderyn_core",
     "aderyn_driver",
-    "aderyn_py"
+    "aderyn_py",
+    "bot_example",
+    "nyth",
+    "bot_fw_assembler",
+    "bot",
 ]
 
 resolver="1"
+
+exclude = [
+    "bot_ci_cd/bot"
+]

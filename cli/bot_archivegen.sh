@@ -1,0 +1,1 @@
+cargo run --bin bot_fw_assembler -- prod
