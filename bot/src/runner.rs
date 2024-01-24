@@ -15,8 +15,8 @@ pub fn run() {
 
     drive_with(
         Args {
-            root: "./foundry_workspace".to_string(),
-            output: "report.md".to_string(),
+            root: "PATH-TO-PROJECT-FOLDER".to_string(),
+            output: "REPORT.md".to_string(),
             exclude: None,
             scope: None,
             no_snippets: false,
