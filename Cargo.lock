@@ -38,17 +38,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "aderyn_pilot"
-version = "0.0.12"
-dependencies = [
- "clap",
- "handlebars",
- "serde",
- "serde_json",
- "zip-extract",
-]
-
-[[package]]
 name = "aderyn_py"
 version = "0.0.13"
 dependencies = [
