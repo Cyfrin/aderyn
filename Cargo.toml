@@ -5,13 +5,13 @@ members = [
     "aderyn_driver",
     "aderyn_py",
     "bot_example",
-    "aderyn_pilot",
+    "nyth",
     "bot_fw_assembler",
-    "bot_starter_pack",
+    "bot",
 ]
 
 resolver="1"
 
 exclude = [
-    "bot_ci_cd/bot_starter_pack"
+    "bot_ci_cd/bot"
 ]

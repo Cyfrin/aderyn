@@ -5,7 +5,7 @@
  * FAQ
  *
  * > How to create custom detectors ?
- *      - Run `aderyn_pilot generate bot_starter_pack/src/my_detector_name`
+ *      - Run `nyth generate bot/src/my_detector_name`
  *      - Code it out in the newly created `my_detector/detector.rs`
  *      - Write your tests
  *      - Hook up the tests with the desired solidity json out files in `config_tests.rs`
@@ -21,7 +21,7 @@
  *
  * ADERYN-PILOT // DO NOT TOUCH THIS FILE. - Go to `runner.rs`
  *
- * NOTE: These other flags will be used by aderyn_pilot. DO NOT MODIFY any existing
+ * NOTE: These other flags will be used by nyth. DO NOT MODIFY any existing
  * flags. Only if you really know what you are doing feel free to ADD new flags but by
  * any means DO NOT MODIFY / DELETE existing ones.
  *
@@ -32,7 +32,7 @@ use my_bot::{bot_brain, runner};
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 pub struct CommandLineArgs {
-    // These are commands that will be invoked by `aderyn_pilot`.
+    // These are commands that will be invoked by `nyth`.
     #[clap(subcommand, name = "pilot")]
     pilot: Option<PilotCommand>,
 }
