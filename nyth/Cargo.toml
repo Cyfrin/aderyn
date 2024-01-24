@@ -2,6 +2,9 @@
 name = "nyth"
 version = "0.0.12"
 edition = "2021"
+authors = ["Alex Roan <alex@cyfrin.io>"]
+description = "Rust based Solidity AST analyzer - Aderyn development framwork"
+license = "MIT"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
