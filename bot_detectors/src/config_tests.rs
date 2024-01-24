@@ -14,9 +14,9 @@ pub fn tests_configuration() -> TestsConfig {
 
 pub fn tests_configuration() -> TestsConfig {
     vec![
-        TestsTarget::new("../TEST-CONTRACTS/out/xyz.sol/xyz.json")
-            .with(Box::<Example>::default())
-            .with(Box::<AnotherExample>::default())
+        TestsTarget::new("./foundry-workspace/out/Counter.sol/Counter.json")
+            .with(Box::<ExampleDetector>::default())
+            .with(Box::<AnotherExampleDetector>::default())
     ]
     .into()
 }
