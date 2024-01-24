@@ -1,7 +1,10 @@
 [package]
 name = "aderyn_py"
-version = "0.0.11"
+version = "0.0.12"
 edition = "2021"
+authors = ["Alex Roan <alex@cyfrin.io>"]
+description = "Rust based Solidity AST analyzer python bindings"
+license = "MIT"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -11,7 +14,7 @@ name = "aderynpy"
 crate-type = ["cdylib"]
 
 [dependencies]
-aderyn_driver = { path  = "../aderyn_driver", version = "0.0.11" }
+aderyn_driver = { path  = "../aderyn_driver", version = "0.0.12" }
 
 [dependencies.pyo3]
 version = "0.19.0"
