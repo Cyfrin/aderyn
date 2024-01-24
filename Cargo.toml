@@ -7,11 +7,11 @@ members = [
     "bot_example",
     "nyth",
     "bot_fw_assembler",
-    "bot_detectors",
+    "bot",
 ]
 
 resolver="1"
 
 exclude = [
-    "bot_ci_cd/bot_detectors"
+    "bot_ci_cd/bot"
 ]
