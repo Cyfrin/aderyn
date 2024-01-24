@@ -21,14 +21,14 @@ pub struct CommandLineArgs {
 enum PilotCommand {
     /// Argument - Bot name (including path).
     /// For example if the name is `smart_bot`, you run
-    /// "aderyn_pilot new path/to/smart_bot"
+    /// "nyth new path/to/smart_bot"
     New {
         /// Separated by underscores, do not use spaces
         bot_name: String,
     },
     /// Argument - Detector name (including path).
     /// For example if the name is "unindexed_events", you run
-    /// "aderyn_pilot generate path/to/smart_bot/bot_starter_pack/src/unindexed_events".
+    /// "nyth generate path/to/smart_bot/bot_starter_pack/src/unindexed_events".
     Generate {
         /// Do not append the word "detector" it will be done for you
         detector_name: String,

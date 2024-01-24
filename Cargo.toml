@@ -5,7 +5,7 @@ members = [
     "aderyn_driver",
     "aderyn_py",
     "bot_example",
-    "aderyn_pilot",
+    "nyth",
     "bot_fw_assembler",
     "bot_starter_pack",
 ]
