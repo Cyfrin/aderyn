@@ -21,7 +21,7 @@ pub struct CommandLineArgs {
 #[derive(Debug, Subcommand)]
 enum PilotCommand {
     /// Argument - Bot name (including path).
-    /// For example if the name is `smart_bot`, you run
+    /// For example if the name is "smart_bot", you run
     /// "nyth new path/to/smart_bot"
     New {
         /// Separated by underscores, do not use spaces
