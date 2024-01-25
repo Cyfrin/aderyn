@@ -16,10 +16,10 @@
  *
  * > How to analyze a codebase and generate report ?
  *      - Head over to `runner.rs`. Inside `run()`, define your subscriptions
- *      - you could include your own detectors as well as the core ones
- *      - Run `cargo run` - This will call the run() function
+ *      - Subscriptions can include a combination of custom and core detectors as you please
+ *      - Use the command `cargo run` as usual
  *
- * ADERYN-PILOT // DO NOT TOUCH THIS FILE. - Go to `runner.rs`
+ * ADERYN-PILOT // IN MOST CASES DO NOT MODIFY THIS FILE. - Please go to `runner.rs`
  *
  * NOTE: These other flags will be used by nyth. DO NOT MODIFY any existing
  * flags. Only if you really know what you are doing feel free to ADD new flags but by

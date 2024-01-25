@@ -21,7 +21,7 @@ pub struct CommandLineArgs {
 #[derive(Debug, Subcommand)]
 enum PilotCommand {
     /// Argument - Bot name (including path).
-    /// For example if the name is `smart_bot`, you run
+    /// For example if the name is "smart_bot", you run
     /// "nyth new path/to/smart_bot"
     New {
         /// Separated by underscores, do not use spaces
@@ -139,7 +139,7 @@ fn main() {
             let mut hook_line = -1;
 
             for (idx, line) in filelines.iter().enumerate() {
-                if line.contains("// ADERYN-PILOT: 0x04 CUSTOM DETECTORS") {
+                if line.contains("// ADERYN-PILOT: 0x02 CUSTOM DETECTORS") {
                     hook_line = idx as isize;
                     break;
                 }
