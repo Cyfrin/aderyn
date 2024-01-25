@@ -139,7 +139,7 @@ fn main() {
             let mut hook_line = -1;
 
             for (idx, line) in filelines.iter().enumerate() {
-                if line.contains("// ADERYN-PILOT: 0x04 CUSTOM DETECTORS") {
+                if line.contains("// ADERYN-PILOT: 0x02 CUSTOM DETECTORS") {
                     hook_line = idx as isize;
                     break;
                 }
