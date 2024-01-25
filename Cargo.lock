@@ -35,6 +35,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aderyn_evaluator"
+version = "0.1.0"
+
+[[package]]
 name = "aderyn_py"
 version = "0.0.12"
 dependencies = [
