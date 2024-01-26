@@ -1,4 +1,4 @@
-// ADERYN-PILOT: 0X09 - lib imports of custom detectors
+// ADERYN-PILOT: 0x03 - Custom Detectors
 
 // Internals
 pub mod bot_brain;
