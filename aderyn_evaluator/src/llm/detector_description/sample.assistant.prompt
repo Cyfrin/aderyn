@@ -1,0 +1,8 @@
+
+Satisfactory Condition is that it should explain the reason for its recommendation.
+Submission of User A explains that using uint256 can save one SLOAD operation which costs 100 gas therefore it's better to use uint256 than bool.
+Submission of User B simply states the recommendation but there is no reason mentioned to back it up.
+
+Therefore, Submission of User A is more Satisfactory than that of User Booleans
+
+0
