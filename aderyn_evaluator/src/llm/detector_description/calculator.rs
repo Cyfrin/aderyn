@@ -118,9 +118,7 @@ fn make_client() -> Client<OpenAIConfig> {
         .with_max_elapsed_time(Some(std::time::Duration::from_secs(60)))
         .build();
 
-    let client = Client::new().with_backoff(backoff);
-
-    client
+    Client::new().with_backoff(backoff)
 }
 
 fn make_request(
