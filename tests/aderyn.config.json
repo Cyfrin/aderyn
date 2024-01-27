@@ -1,0 +1,3 @@
+{
+    "use_detectors": "push-zero-opcode,useless-public-function"
+}

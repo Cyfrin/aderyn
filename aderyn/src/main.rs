@@ -32,6 +32,10 @@ pub struct CommandLineArgs {
     #[arg(short, long)]
     no_snippets: bool,
 
+    /// Path to aderyn.config.json
+    #[arg(short, long)]
+    config_file: Option<String>,
+
     #[clap(subcommand, name = "registry")]
     registry: Option<RegistryCommand>,
 }
@@ -72,8 +76,14 @@ fn main() {
         no_snippets: cmd_args.no_snippets,
     };
 
-    let mut aderyn_config_path = PathBuf::from(&args.root);
-    aderyn_config_path.push("aderyn.config.json");
+    let aderyn_config_path = match cmd_args.config_file {
+        Some(f) => PathBuf::from(f),
+        None => {
+            let mut project_config_json = PathBuf::from(&args.root);
+            project_config_json.push("aderyn.config.json");
+            project_config_json
+        }
+    };
 
     if aderyn_config_path.exists() && aderyn_config_path.is_file() {
         let config_contents = std::fs::read_to_string(aderyn_config_path).unwrap();
