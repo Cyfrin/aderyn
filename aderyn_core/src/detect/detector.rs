@@ -29,8 +29,9 @@ use crate::{
     },
 };
 use std::{
-    collections::{BTreeMap, HashMap},
+    collections::BTreeMap,
     error::Error,
+    fmt::{self, Display},
 };
 
 pub fn get_all_detectors() -> Vec<Box<dyn Detector>> {
@@ -56,78 +57,52 @@ pub fn get_all_detectors() -> Vec<Box<dyn Detector>> {
     ]
 }
 
-pub fn get_all_detectors_with_ids() -> HashMap<String, Box<dyn Detector>> {
-    let mut detectors: HashMap<String, Box<dyn Detector>> = HashMap::new();
-    detectors.insert(
+pub fn get_all_detectors_ids() -> Vec<String> {
+    vec![
         "delegate-call-in-loop".to_string(),
-        Box::<DelegateCallInLoopDetector>::default(),
-    );
-    detectors.insert(
         "centralization-risk".to_string(),
-        Box::<CentralizationRiskDetector>::default(),
-    );
-    detectors.insert(
         "solmate-safe-transfer-lib".to_string(),
-        Box::<SolmateSafeTransferLibDetector>::default(),
-    );
-    detectors.insert(
         "avoid-abi-encode-packed".to_string(),
-        Box::<AvoidAbiEncodePackedDetector>::default(),
-    );
-    detectors.insert("rcrecover".to_string(), Box::<EcrecoverDetector>::default());
-    detectors.insert(
+        "ercrecover".to_string(),
         "deprecated-oz-functions".to_string(),
-        Box::<DeprecatedOZFunctionsDetector>::default(),
-    );
-    detectors.insert(
         "unsafe-erc20-functions".to_string(),
-        Box::<UnsafeERC20FunctionsDetector>::default(),
-    );
-    detectors.insert(
         "unspecific-solidity-pragma".to_string(),
-        Box::<UnspecificSolidityPragmaDetector>::default(),
-    );
-    detectors.insert(
         "zero-address-check".to_string(),
-        Box::<ZeroAddressCheckDetector>::default(),
-    );
-    detectors.insert(
         "useless-public-function".to_string(),
-        Box::<UselessPublicFunctionDetector>::default(),
-    );
-    detectors.insert(
         "constants-instead-of-literals".to_string(),
-        Box::<ConstantsInsteadOfLiteralsDetector>::default(),
-    );
-    detectors.insert(
         "unindexed-events".to_string(),
-        Box::<UnindexedEventsDetector>::default(),
-    );
-    detectors.insert(
         "require-with-string".to_string(),
-        Box::<RequireWithStringDetector>::default(),
-    );
-    detectors.insert(
         "non-reentrant-before-others".to_string(),
-        Box::<NonReentrantBeforeOthersDetector>::default(),
-    );
-    detectors.insert(
         "block-timestamp-deadline".to_string(),
-        Box::<BlockTimestampDeadlineDetector>::default(),
-    );
-    detectors.insert(
         "unsafe-erc721-mint".to_string(),
-        Box::<UnsafeERC721MintDetector>::default(),
-    );
-    detectors.insert(
         "push-zero-opcode".to_string(),
-        Box::<PushZeroOpcodeDetector>::default(),
-    );
-    detectors.insert(
         "arbitrary-transfer-from".to_string(),
-        Box::<ArbitraryTransferFromDetector>::default(),
-    );
-    detectors
+    ]
+}
+
+pub fn get_detector_by_id(detector_id: &str) -> Box<dyn Detector> {
+    // Expects a valid detector_id
+    match detector_id {
+        "delegate-call-in-loop" => Box::<DelegateCallInLoopDetector>::default(),
+        "centralization-risk" => Box::<CentralizationRiskDetector>::default(),
+        "solmate-safe-transfer-lib" => Box::<SolmateSafeTransferLibDetector>::default(),
+        "avoid-abi-encode-packed" => Box::<AvoidAbiEncodePackedDetector>::default(),
+        "ercrecover" => Box::<EcrecoverDetector>::default(),
+        "deprecated-oz-functions" => Box::<DeprecatedOZFunctionsDetector>::default(),
+        "unsafe-erc20-functions" => Box::<UnsafeERC20FunctionsDetector>::default(),
+        "unspecific-solidity-pragma" => Box::<UnspecificSolidityPragmaDetector>::default(),
+        "zero-address-check" => Box::<ZeroAddressCheckDetector>::default(),
+        "useless-public-function" => Box::<UselessPublicFunctionDetector>::default(),
+        "constants-instead-of-literals" => Box::<ConstantsInsteadOfLiteralsDetector>::default(),
+        "unindexed-events" => Box::<UnindexedEventsDetector>::default(),
+        "require-with-string" => Box::<RequireWithStringDetector>::default(),
+        "non-reentrant-before-others" => Box::<NonReentrantBeforeOthersDetector>::default(),
+        "block-timestamp-deadline" => Box::<BlockTimestampDeadlineDetector>::default(),
+        "unsafe-erc721-mint" => Box::<UnsafeERC20FunctionsDetector>::default(),
+        "push-zero-opcode" => Box::<PushZeroOpcodeDetector>::default(),
+        "arbitrary-transfer-from" => Box::<ArbitraryTransferFromDetector>::default(),
+        _ => panic!("Invalid detector ID!"),
+    }
 }
 
 #[derive(Debug, PartialEq)]
@@ -137,6 +112,20 @@ pub enum IssueSeverity {
     Medium,
     High,
     Critical,
+}
+
+impl Display for IssueSeverity {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let issue_description = match self {
+            IssueSeverity::NC => "NC (Non Critical)",
+            IssueSeverity::Low => "Low",
+            IssueSeverity::Medium => "Medium",
+            IssueSeverity::High => "High",
+            IssueSeverity::Critical => "Critical",
+        };
+        write!(f, "{}", issue_description).unwrap();
+        Ok(())
+    }
 }
 
 pub trait Detector {

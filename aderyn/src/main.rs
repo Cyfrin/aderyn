@@ -1,5 +1,8 @@
+use serde::Deserialize;
+use std::path::PathBuf;
+
 use aderyn_driver::{
-    detector::get_all_detectors_with_ids,
+    detector::{get_all_detectors_ids, get_detector_by_id, Detector},
     driver::{self, Args},
 };
 use clap::{Parser, Subcommand};
@@ -69,35 +72,74 @@ fn main() {
         no_snippets: cmd_args.no_snippets,
     };
 
-    driver::drive(args);
-}
+    let mut aderyn_config_path = PathBuf::from(&args.root);
+    aderyn_config_path.push("aderyn.config.json");
 
-fn print_detail_view(detector_id: &str) {
-    let detectors_with_ids = get_all_detectors_with_ids();
-    let detector = detectors_with_ids.get(detector_id);
-    match detector {
-        Some(detector) => {
-            println!("\nDetector {}", detector_id);
-            println!();
-            println!("Title");
-            println!("{}", detector.title());
-            println!();
-            println!("Description");
-            println!("{}", detector.description());
-            println!();
+    if aderyn_config_path.exists() && aderyn_config_path.is_file() {
+        let config_contents = std::fs::read_to_string(aderyn_config_path).unwrap();
+        let aderyn_config: Result<AderynConfig, _> = serde_json::from_str(&config_contents);
+        match aderyn_config {
+            Ok(config) => {
+                let all_detector_ids = get_all_detectors_ids();
+                let mut subscriptions: Vec<Box<dyn Detector>> = vec![];
+                for detector_id in config.detectors.split(',') {
+                    if !all_detector_ids.contains(&detector_id.to_string()) {
+                        println!(
+                            "Couldn't recognize detector with ID {} in aderyn.config.json",
+                            detector_id
+                        );
+                        return;
+                    }
+                    let det = get_detector_by_id(detector_id);
+                    subscriptions.push(det);
+                }
+                driver::drive_with(args, subscriptions);
+            }
+            Err(_e) => {
+                println!("aderyn.config.json wasn't formatted properly!");
+            }
         }
-        None => {
-            println!("No detector found with ID {}.", detector_id);
-        }
+    } else {
+        driver::drive(args);
     }
 }
 
+#[derive(Deserialize)]
+struct AderynConfig {
+    /// Detector IDs separated by commas
+    #[serde(rename = "use_detectors")]
+    detectors: String,
+}
+
+fn print_detail_view(detector_id: &str) {
+    let all_detector_ids = get_all_detectors_ids();
+    if !all_detector_ids.contains(&detector_id.to_string()) {
+        println!("Couldn't recognize detector with ID {}", detector_id);
+        return;
+    }
+    let detector = get_detector_by_id(detector_id);
+    println!("\nDetector {}", detector_id);
+    println!();
+    println!("Title");
+    println!("{}", detector.title());
+    println!();
+    println!("Severity");
+    println!("{}", detector.severity());
+    println!();
+    println!("Description");
+    println!("{}", detector.description());
+    println!();
+}
+
 fn print_all_detectors_view() {
+    let all_detector_ids = get_all_detectors_ids();
+
     println!("\nDetector Registry");
     println!();
-    println!("{}   {}", right_pad("ID", 30), "Title");
+    println!("{}   Title", right_pad("ID", 30));
     println!();
-    for (id, detector) in get_all_detectors_with_ids() {
+    for id in all_detector_ids {
+        let detector = get_detector_by_id(&id);
         println!("{} - {}", right_pad(&id, 30), detector.title());
     }
     println!();
