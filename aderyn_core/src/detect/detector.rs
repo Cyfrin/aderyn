@@ -28,7 +28,10 @@ use crate::{
         },
     },
 };
-use std::{collections::BTreeMap, error::Error};
+use std::{
+    collections::{BTreeMap, HashMap},
+    error::Error,
+};
 
 pub fn get_all_detectors() -> Vec<Box<dyn Detector>> {
     vec![
@@ -51,6 +54,80 @@ pub fn get_all_detectors() -> Vec<Box<dyn Detector>> {
         Box::<PushZeroOpcodeDetector>::default(),
         Box::<ArbitraryTransferFromDetector>::default(),
     ]
+}
+
+pub fn get_all_detectors_with_ids() -> HashMap<String, Box<dyn Detector>> {
+    let mut detectors: HashMap<String, Box<dyn Detector>> = HashMap::new();
+    detectors.insert(
+        "delegate-call-in-loop".to_string(),
+        Box::<DelegateCallInLoopDetector>::default(),
+    );
+    detectors.insert(
+        "centralization-risk".to_string(),
+        Box::<CentralizationRiskDetector>::default(),
+    );
+    detectors.insert(
+        "solmate-safe-transfer-lib".to_string(),
+        Box::<SolmateSafeTransferLibDetector>::default(),
+    );
+    detectors.insert(
+        "avoid-abi-encode-packed".to_string(),
+        Box::<AvoidAbiEncodePackedDetector>::default(),
+    );
+    detectors.insert("rcrecover".to_string(), Box::<EcrecoverDetector>::default());
+    detectors.insert(
+        "deprecated-oz-functions".to_string(),
+        Box::<DeprecatedOZFunctionsDetector>::default(),
+    );
+    detectors.insert(
+        "unsafe-erc20-functions".to_string(),
+        Box::<UnsafeERC20FunctionsDetector>::default(),
+    );
+    detectors.insert(
+        "unspecific-solidity-pragma".to_string(),
+        Box::<UnspecificSolidityPragmaDetector>::default(),
+    );
+    detectors.insert(
+        "zero-address-check".to_string(),
+        Box::<ZeroAddressCheckDetector>::default(),
+    );
+    detectors.insert(
+        "useless-public-function".to_string(),
+        Box::<UselessPublicFunctionDetector>::default(),
+    );
+    detectors.insert(
+        "constants-instead-of-literals".to_string(),
+        Box::<ConstantsInsteadOfLiteralsDetector>::default(),
+    );
+    detectors.insert(
+        "unindexed-events".to_string(),
+        Box::<UnindexedEventsDetector>::default(),
+    );
+    detectors.insert(
+        "require-with-string".to_string(),
+        Box::<RequireWithStringDetector>::default(),
+    );
+    detectors.insert(
+        "non-reentrant-before-others".to_string(),
+        Box::<NonReentrantBeforeOthersDetector>::default(),
+    );
+    detectors.insert(
+        "block-timestamp-deadline".to_string(),
+        Box::<BlockTimestampDeadlineDetector>::default(),
+    );
+    detectors.insert(
+        "unsafe-erc721-mint".to_string(),
+        Box::<UnsafeERC721MintDetector>::default(),
+    );
+    detectors.insert(
+        "push-zero-opcode".to_string(),
+        Box::<PushZeroOpcodeDetector>::default(),
+    );
+    detectors.insert(
+        "arbitrary-transfer-from".to_string(),
+        Box::<ArbitraryTransferFromDetector>::default(),
+    );
+    detectors
 }
 
 #[derive(Debug, PartialEq)]
