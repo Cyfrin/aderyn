@@ -9,44 +9,8 @@
         "n_sloc": 11
       },
       {
-        "file_path": "src/ArbitraryTransferFrom.sol",
-        "n_sloc": 37
-      },
-      {
-        "file_path": "src/AssemblyExample.sol",
-        "n_sloc": 9
-      },
-      {
-        "file_path": "src/Counter.sol",
-        "n_sloc": 20
-      },
-      {
-        "file_path": "src/CrazyPragma.sol",
-        "n_sloc": 4
-      },
-      {
-        "file_path": "src/DeprecatedOZFunctions.sol",
-        "n_sloc": 32
-      },
-      {
         "file_path": "src/KeccakContract.sol",
         "n_sloc": 21
-      },
-      {
-        "file_path": "src/StateVariables.sol",
-        "n_sloc": 58
-      },
-      {
-        "file_path": "src/StorageConditionals.sol",
-        "n_sloc": 59
-      },
-      {
-        "file_path": "src/T11sTranferer.sol",
-        "n_sloc": 8
-      },
-      {
-        "file_path": "src/UnsafeERC721Mint.sol",
-        "n_sloc": 11
       },
       {
         "file_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
@@ -59,32 +23,12 @@
       {
         "file_path": "src/eth2/DepositContract.sol",
         "n_sloc": 95
-      },
-      {
-        "file_path": "src/inheritance/ExtendedInheritance.sol",
-        "n_sloc": 17
-      },
-      {
-        "file_path": "src/inheritance/IContractInheritance.sol",
-        "n_sloc": 4
-      },
-      {
-        "file_path": "src/inheritance/InheritanceBase.sol",
-        "n_sloc": 8
-      },
-      {
-        "file_path": "src/uniswap/UniswapV2Swapper.sol",
-        "n_sloc": 50
-      },
-      {
-        "file_path": "src/uniswap/UniswapV3Swapper.sol",
-        "n_sloc": 150
       }
     ]
   },
   "files_summary": {
-    "total_sloc": 647,
-    "total_source_units": 19
+    "total_sloc": 180,
+    "total_source_units": 5
   },
   "high_issues": {
     "issues": []
@@ -106,60 +50,12 @@
             "line_no": 2
           },
           {
-            "contract_path": "src/Counter.sol",
-            "line_no": 2
-          },
-          {
-            "contract_path": "src/CrazyPragma.sol",
-            "line_no": 2
-          },
-          {
-            "contract_path": "src/DeprecatedOZFunctions.sol",
-            "line_no": 2
-          },
-          {
             "contract_path": "src/KeccakContract.sol",
-            "line_no": 2
-          },
-          {
-            "contract_path": "src/StateVariables.sol",
-            "line_no": 2
-          },
-          {
-            "contract_path": "src/StorageConditionals.sol",
-            "line_no": 2
-          },
-          {
-            "contract_path": "src/T11sTranferer.sol",
-            "line_no": 2
-          },
-          {
-            "contract_path": "src/UnsafeERC721Mint.sol",
             "line_no": 2
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
             "line_no": 6
-          },
-          {
-            "contract_path": "src/inheritance/ExtendedInheritance.sol",
-            "line_no": 2
-          },
-          {
-            "contract_path": "src/inheritance/IContractInheritance.sol",
-            "line_no": 2
-          },
-          {
-            "contract_path": "src/inheritance/InheritanceBase.sol",
-            "line_no": 2
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 2
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
-            "line_no": 2
           }
         ],
         "title": "PUSH0 is not supported by all chains"
@@ -174,38 +70,6 @@
       {
         "description": "",
         "instances": [
-          {
-            "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 28
-          },
-          {
-            "contract_path": "src/AssemblyExample.sol",
-            "line_no": 6
-          },
-          {
-            "contract_path": "src/Counter.sol",
-            "line_no": 7
-          },
-          {
-            "contract_path": "src/StateVariables.sol",
-            "line_no": 47
-          },
-          {
-            "contract_path": "src/StateVariables.sol",
-            "line_no": 52
-          },
-          {
-            "contract_path": "src/StateVariables.sol",
-            "line_no": 57
-          },
-          {
-            "contract_path": "src/StateVariables.sol",
-            "line_no": 61
-          },
-          {
-            "contract_path": "src/StateVariables.sol",
-            "line_no": 71
-          },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
             "line_no": 31
