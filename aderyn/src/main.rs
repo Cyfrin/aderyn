@@ -112,37 +112,34 @@ fn main() {
                     }
                 }
 
-                match config.scope_file {
-                    Some(scope_file) => {
-                        let mut scope_file_path = aderyn_config_path.clone();
-                        scope_file_path.pop();
-                        scope_file_path.push(PathBuf::from(scope_file));
+                if let Some(scope_file) = config.scope_file {
+                    let mut scope_file_path = aderyn_config_path.clone();
+                    scope_file_path.pop();
+                    scope_file_path.push(PathBuf::from(scope_file));
 
-                        let canonicalized_scope_file_path = std::fs::canonicalize(&scope_file_path);
-                        match canonicalized_scope_file_path {
-                            Ok(ok_scope_file_path) => {
-                                assert!(ok_scope_file_path.exists());
-                                let scope_lines_in_file =
-                                    std::fs::read_to_string(ok_scope_file_path).unwrap();
-                                let mut found_scope_lines = vec![];
-                                for scope_line in scope_lines_in_file.lines() {
-                                    found_scope_lines.push(scope_line.to_string());
-                                }
-                                if scope_lines.is_none() {
-                                    // CLI should override aderyn.config.json if present
-                                    scope_lines = Some(found_scope_lines);
-                                }
+                    let canonicalized_scope_file_path = std::fs::canonicalize(&scope_file_path);
+                    match canonicalized_scope_file_path {
+                        Ok(ok_scope_file_path) => {
+                            assert!(ok_scope_file_path.exists());
+                            let scope_lines_in_file =
+                                std::fs::read_to_string(ok_scope_file_path).unwrap();
+                            let mut found_scope_lines = vec![];
+                            for scope_line in scope_lines_in_file.lines() {
+                                found_scope_lines.push(scope_line.to_string());
                             }
-                            Err(_e) => {
-                                println!(
-                                    "Scope file doesn't exist at {:?}",
-                                    Path::new(&scope_file_path).as_os_str()
-                                );
-                                return;
+                            if scope_lines.is_none() {
+                                // CLI should override aderyn.config.json if present
+                                scope_lines = Some(found_scope_lines);
                             }
                         }
+                        Err(_e) => {
+                            println!(
+                                "Scope file doesn't exist at {:?}",
+                                Path::new(&scope_file_path).as_os_str()
+                            );
+                            return;
+                        }
                     }
-                    None => {}
                 }
 
                 let new_args: Args = Args {
