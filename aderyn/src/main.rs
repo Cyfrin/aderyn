@@ -2,7 +2,7 @@ use serde::Deserialize;
 use std::path::{Path, PathBuf};
 
 use aderyn_driver::{
-    detector::{get_all_detectors, get_all_detectors_ids, get_detector_by_id, Detector},
+    detector::{get_all_detectors, get_all_detectors_names, get_detector_by_name, Detector},
     driver::{self, Args},
 };
 use clap::{Parser, Subcommand};
@@ -44,9 +44,9 @@ pub struct CommandLineArgs {
 enum RegistryCommand {
     /// Browse detector registry
     Registry {
-        /// all - View all available detectors
+        /// all    - View all available detectors
         ///
-        /// <id> - Detail view of a single detector
+        /// <name> - Detail view of a single detector
         #[arg(default_value = "all")]
         detector: String,
     },
@@ -90,20 +90,20 @@ fn main() {
         let aderyn_config: Result<AderynConfig, _> = serde_json::from_str(&config_contents);
         match aderyn_config {
             Ok(config) => {
-                let all_detector_ids = get_all_detectors_ids();
+                let all_detector_names = get_all_detectors_names();
                 let mut subscriptions: Vec<Box<dyn Detector>> = vec![];
                 let mut scope_lines: Option<Vec<String>> = args.scope.clone();
                 match config.detectors {
                     Some(config_detectors) => {
-                        for detector_id in config_detectors.split(',') {
-                            if !all_detector_ids.contains(&detector_id.to_string()) {
+                        for detector_name in config_detectors.split(',') {
+                            if !all_detector_names.contains(&detector_name.to_string()) {
                                 println!(
-                                    "Couldn't recognize detector with ID {} in aderyn.config.json",
-                                    detector_id
+                                    "Couldn't recognize detector with name {} in aderyn.config.json",
+                                    detector_name
                                 );
                                 return;
                             }
-                            let det = get_detector_by_id(detector_id);
+                            let det = get_detector_by_name(detector_name);
                             subscriptions.push(det);
                         }
                     }
@@ -162,7 +162,7 @@ fn main() {
 
 #[derive(Deserialize)]
 struct AderynConfig {
-    /// Detector IDs separated by commas
+    /// Detector names separated by commas
     #[serde(rename = "use_detectors")]
     detectors: Option<String>,
 
@@ -171,14 +171,14 @@ struct AderynConfig {
     scope_file: Option<String>,
 }
 
-fn print_detail_view(detector_id: &str) {
-    let all_detector_ids = get_all_detectors_ids();
-    if !all_detector_ids.contains(&detector_id.to_string()) {
-        println!("Couldn't recognize detector with ID {}", detector_id);
+fn print_detail_view(detector_name: &str) {
+    let all_detector_names = get_all_detectors_names();
+    if !all_detector_names.contains(&detector_name.to_string()) {
+        println!("Couldn't recognize detector with name {}", detector_name);
         return;
     }
-    let detector = get_detector_by_id(detector_id);
-    println!("\nDetector {}", detector_id);
+    let detector = get_detector_by_name(detector_name);
+    println!("\nDetector {}", detector_name);
     println!();
     println!("Title");
     println!("{}", detector.title());
@@ -192,15 +192,15 @@ fn print_detail_view(detector_id: &str) {
 }
 
 fn print_all_detectors_view() {
-    let all_detector_ids = get_all_detectors_ids();
+    let all_detector_names = get_all_detectors_names();
 
     println!("\nDetector Registry");
     println!();
-    println!("{}   Title", right_pad("ID", 30));
+    println!("{}   Title", right_pad("Name", 30));
     println!();
-    for id in all_detector_ids {
-        let detector = get_detector_by_id(&id);
-        println!("{} - {}", right_pad(&id, 30), detector.title());
+    for name in all_detector_names {
+        let detector = get_detector_by_name(&name);
+        println!("{} - {}", right_pad(&name, 30), detector.title());
     }
     println!();
 }

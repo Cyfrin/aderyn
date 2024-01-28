@@ -57,7 +57,7 @@ pub fn get_all_detectors() -> Vec<Box<dyn Detector>> {
     ]
 }
 
-pub fn get_all_detectors_ids() -> Vec<String> {
+pub fn get_all_detectors_names() -> Vec<String> {
     vec![
         "delegate-call-in-loop".to_string(),
         "centralization-risk".to_string(),
@@ -80,9 +80,9 @@ pub fn get_all_detectors_ids() -> Vec<String> {
     ]
 }
 
-pub fn get_detector_by_id(detector_id: &str) -> Box<dyn Detector> {
-    // Expects a valid detector_id
-    match detector_id {
+pub fn get_detector_by_name(detector_name: &str) -> Box<dyn Detector> {
+    // Expects a valid detector_name
+    match detector_name {
         "delegate-call-in-loop" => Box::<DelegateCallInLoopDetector>::default(),
         "centralization-risk" => Box::<CentralizationRiskDetector>::default(),
         "solmate-safe-transfer-lib" => Box::<SolmateSafeTransferLibDetector>::default(),
