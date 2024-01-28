@@ -1,8 +1,8 @@
 use serde::Deserialize;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 use aderyn_driver::{
-    detector::{get_all_detectors_ids, get_detector_by_id, Detector},
+    detector::{get_all_detectors, get_all_detectors_ids, get_detector_by_id, Detector},
     driver::{self, Args},
 };
 use clap::{Parser, Subcommand};
@@ -86,24 +86,73 @@ fn main() {
     };
 
     if aderyn_config_path.exists() && aderyn_config_path.is_file() {
-        let config_contents = std::fs::read_to_string(aderyn_config_path).unwrap();
+        let config_contents = std::fs::read_to_string(&aderyn_config_path).unwrap();
         let aderyn_config: Result<AderynConfig, _> = serde_json::from_str(&config_contents);
         match aderyn_config {
             Ok(config) => {
                 let all_detector_ids = get_all_detectors_ids();
                 let mut subscriptions: Vec<Box<dyn Detector>> = vec![];
-                for detector_id in config.detectors.split(',') {
-                    if !all_detector_ids.contains(&detector_id.to_string()) {
-                        println!(
-                            "Couldn't recognize detector with ID {} in aderyn.config.json",
-                            detector_id
-                        );
-                        return;
+                let mut scope_lines: Option<Vec<String>> = args.scope.clone();
+                match config.detectors {
+                    Some(config_detectors) => {
+                        for detector_id in config_detectors.split(',') {
+                            if !all_detector_ids.contains(&detector_id.to_string()) {
+                                println!(
+                                    "Couldn't recognize detector with ID {} in aderyn.config.json",
+                                    detector_id
+                                );
+                                return;
+                            }
+                            let det = get_detector_by_id(detector_id);
+                            subscriptions.push(det);
+                        }
                     }
-                    let det = get_detector_by_id(detector_id);
-                    subscriptions.push(det);
+                    None => {
+                        subscriptions.extend(get_all_detectors());
+                    }
                 }
-                driver::drive_with(args, subscriptions);
+
+                match config.scope_file {
+                    Some(scope_file) => {
+                        let mut scope_file_path = aderyn_config_path.clone();
+                        scope_file_path.pop();
+                        scope_file_path.push(PathBuf::from(scope_file));
+
+                        let canonicalized_scope_file_path = std::fs::canonicalize(&scope_file_path);
+                        match canonicalized_scope_file_path {
+                            Ok(ok_scope_file_path) => {
+                                assert!(ok_scope_file_path.exists());
+                                let scope_lines_in_file =
+                                    std::fs::read_to_string(ok_scope_file_path).unwrap();
+                                let mut found_scope_lines = vec![];
+                                for scope_line in scope_lines_in_file.lines() {
+                                    found_scope_lines.push(scope_line.to_string());
+                                }
+                                if scope_lines.is_none() {
+                                    // CLI should override aderyn.config.json if present
+                                    scope_lines = Some(found_scope_lines);
+                                }
+                            }
+                            Err(_e) => {
+                                println!(
+                                    "Scope file doesn't exist at {:?}",
+                                    Path::new(&scope_file_path).as_os_str()
+                                );
+                                return;
+                            }
+                        }
+                    }
+                    None => {}
+                }
+
+                let new_args: Args = Args {
+                    root: args.root,
+                    output: args.output,
+                    scope: scope_lines,
+                    exclude: args.exclude,
+                    no_snippets: args.no_snippets,
+                };
+                driver::drive_with(new_args, subscriptions);
             }
             Err(_e) => {
                 println!("aderyn.config.json wasn't formatted properly!");
@@ -118,7 +167,11 @@ fn main() {
 struct AderynConfig {
     /// Detector IDs separated by commas
     #[serde(rename = "use_detectors")]
-    detectors: String,
+    detectors: Option<String>,
+
+    /// Path to scope file relative to config file
+    #[serde(rename = "scope_file")]
+    scope_file: Option<String>,
 }
 
 fn print_detail_view(detector_id: &str) {
