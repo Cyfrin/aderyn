@@ -8,7 +8,7 @@ use crate::{
     capture,
     context::{
         browser::{ExtractAssignments, ExtractBinaryOperations},
-        loader::{ASTNode, ContextLoader},
+        loader::{ContextLoader},
     },
     detect::detector::{Detector, DetectorNamePool, IssueSeverity},
 };

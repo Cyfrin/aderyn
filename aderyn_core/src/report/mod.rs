@@ -2,7 +2,7 @@ use std::collections::{BTreeMap, HashSet};
 
 use serde::Serialize;
 
-use crate::context::loader::{ASTNode, ContextLoader};
+use crate::context::loader::{ContextLoader};
 
 pub mod json_printer;
 pub mod markdown_printer;

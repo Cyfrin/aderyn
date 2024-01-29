@@ -4,7 +4,7 @@ use crate::{
     capture,
     context::{
         browser::GetParent,
-        loader::{ASTNode, ContextLoader},
+        loader::{ContextLoader},
     },
     detect::detector::{Detector, DetectorNamePool, IssueSeverity},
 };

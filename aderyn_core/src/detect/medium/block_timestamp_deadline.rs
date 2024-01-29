@@ -3,7 +3,7 @@ use std::{collections::BTreeMap, error::Error};
 use crate::{
     ast::{Expression, FunctionCallKind},
     capture,
-    context::loader::{ASTNode, ContextLoader},
+    context::loader::{ContextLoader},
     detect::detector::{Detector, DetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
