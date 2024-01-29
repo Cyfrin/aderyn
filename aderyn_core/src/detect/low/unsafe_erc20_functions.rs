@@ -3,7 +3,7 @@ use std::{collections::BTreeMap, error::Error};
 use crate::{
     capture,
     context::loader::ContextLoader,
-    detect::detector::{Detector, IssueSeverity},
+    detect::detector::{Detector, DetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -40,6 +40,10 @@ impl Detector for UnsafeERC20FunctionsDetector {
 
     fn instances(&self) -> BTreeMap<(String, usize), String> {
         self.found_instances.clone()
+    }
+
+    fn name(&self) -> String {
+        format!("{}", DetectorNamePool::UnsafeERC20Functions)
     }
 }
 

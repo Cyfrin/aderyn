@@ -1,3 +1,5 @@
+use strum::{Display, EnumString};
+
 use crate::{
     context::loader::ContextLoader,
     detect::{
@@ -32,6 +34,7 @@ use std::{
     collections::BTreeMap,
     error::Error,
     fmt::{self, Display},
+    str::FromStr,
 };
 
 pub fn get_all_detectors() -> Vec<Box<dyn Detector>> {
@@ -58,50 +61,69 @@ pub fn get_all_detectors() -> Vec<Box<dyn Detector>> {
 }
 
 pub fn get_all_detectors_names() -> Vec<String> {
-    vec![
-        "delegate-call-in-loop".to_string(),
-        "centralization-risk".to_string(),
-        "solmate-safe-transfer-lib".to_string(),
-        "avoid-abi-encode-packed".to_string(),
-        "ercrecover".to_string(),
-        "deprecated-oz-functions".to_string(),
-        "unsafe-erc20-functions".to_string(),
-        "unspecific-solidity-pragma".to_string(),
-        "zero-address-check".to_string(),
-        "useless-public-function".to_string(),
-        "constants-instead-of-literals".to_string(),
-        "unindexed-events".to_string(),
-        "require-with-string".to_string(),
-        "non-reentrant-before-others".to_string(),
-        "block-timestamp-deadline".to_string(),
-        "unsafe-erc721-mint".to_string(),
-        "push-zero-opcode".to_string(),
-        "arbitrary-transfer-from".to_string(),
-    ]
+    get_all_detectors().iter().map(|d| d.name()).collect()
+}
+
+// Note to maintainers: DO NOT CHANGE THE ORDER OF THESE DERIVE ATTRIBUTES
+#[derive(Debug, PartialEq, EnumString, Display)]
+#[strum(serialize_all = "kebab-case")]
+pub(crate) enum DetectorNamePool {
+    DelegateCallInLoop,
+    CentralizationRisk,
+    SolmateSafeTransferLib,
+    AvoidAbiEncodePacked,
+    Ecrecover,
+    DeprecatedOzFunctions,
+    UnsafeERC20Functions,
+    UnspecificSolidityPragma,
+    ZeroAddressCheck,
+    UselessPublicFunction,
+    ConstantsInsteadOfLiterals,
+    UnindexedEvents,
+    RequireWithString,
+    NonReentrantBeforeOthers,
+    BlockTimestampDeadline,
+    UnsafeOzERC721Mint,
+    PushZeroOpcode,
+    ArbitraryTransferFrom,
+    // NOTE: `Undecided` will be the default name (for new bots).
+    // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
+    Undecided,
 }
 
 pub fn get_detector_by_name(detector_name: &str) -> Box<dyn Detector> {
     // Expects a valid detector_name
+    let detector_name = DetectorNamePool::from_str(detector_name).unwrap();
     match detector_name {
-        "delegate-call-in-loop" => Box::<DelegateCallInLoopDetector>::default(),
-        "centralization-risk" => Box::<CentralizationRiskDetector>::default(),
-        "solmate-safe-transfer-lib" => Box::<SolmateSafeTransferLibDetector>::default(),
-        "avoid-abi-encode-packed" => Box::<AvoidAbiEncodePackedDetector>::default(),
-        "ercrecover" => Box::<EcrecoverDetector>::default(),
-        "deprecated-oz-functions" => Box::<DeprecatedOZFunctionsDetector>::default(),
-        "unsafe-erc20-functions" => Box::<UnsafeERC20FunctionsDetector>::default(),
-        "unspecific-solidity-pragma" => Box::<UnspecificSolidityPragmaDetector>::default(),
-        "zero-address-check" => Box::<ZeroAddressCheckDetector>::default(),
-        "useless-public-function" => Box::<UselessPublicFunctionDetector>::default(),
-        "constants-instead-of-literals" => Box::<ConstantsInsteadOfLiteralsDetector>::default(),
-        "unindexed-events" => Box::<UnindexedEventsDetector>::default(),
-        "require-with-string" => Box::<RequireWithStringDetector>::default(),
-        "non-reentrant-before-others" => Box::<NonReentrantBeforeOthersDetector>::default(),
-        "block-timestamp-deadline" => Box::<BlockTimestampDeadlineDetector>::default(),
-        "unsafe-erc721-mint" => Box::<UnsafeERC20FunctionsDetector>::default(),
-        "push-zero-opcode" => Box::<PushZeroOpcodeDetector>::default(),
-        "arbitrary-transfer-from" => Box::<ArbitraryTransferFromDetector>::default(),
-        _ => panic!("Invalid detector ID!"),
+        DetectorNamePool::DelegateCallInLoop => Box::<DelegateCallInLoopDetector>::default(),
+        DetectorNamePool::CentralizationRisk => Box::<CentralizationRiskDetector>::default(),
+        DetectorNamePool::SolmateSafeTransferLib => {
+            Box::<SolmateSafeTransferLibDetector>::default()
+        }
+        DetectorNamePool::AvoidAbiEncodePacked => Box::<AvoidAbiEncodePackedDetector>::default(),
+        DetectorNamePool::Ecrecover => Box::<EcrecoverDetector>::default(),
+        DetectorNamePool::DeprecatedOzFunctions => Box::<DeprecatedOZFunctionsDetector>::default(),
+        DetectorNamePool::UnsafeERC20Functions => Box::<UnsafeERC20FunctionsDetector>::default(),
+        DetectorNamePool::UnspecificSolidityPragma => {
+            Box::<UnspecificSolidityPragmaDetector>::default()
+        }
+        DetectorNamePool::ZeroAddressCheck => Box::<ZeroAddressCheckDetector>::default(),
+        DetectorNamePool::UselessPublicFunction => Box::<UselessPublicFunctionDetector>::default(),
+        DetectorNamePool::ConstantsInsteadOfLiterals => {
+            Box::<ConstantsInsteadOfLiteralsDetector>::default()
+        }
+        DetectorNamePool::UnindexedEvents => Box::<UnindexedEventsDetector>::default(),
+        DetectorNamePool::RequireWithString => Box::<RequireWithStringDetector>::default(),
+        DetectorNamePool::NonReentrantBeforeOthers => {
+            Box::<NonReentrantBeforeOthersDetector>::default()
+        }
+        DetectorNamePool::BlockTimestampDeadline => {
+            Box::<BlockTimestampDeadlineDetector>::default()
+        }
+        DetectorNamePool::UnsafeOzERC721Mint => Box::<UnsafeERC721MintDetector>::default(),
+        DetectorNamePool::PushZeroOpcode => Box::<PushZeroOpcodeDetector>::default(),
+        DetectorNamePool::ArbitraryTransferFrom => Box::<ArbitraryTransferFromDetector>::default(),
+        DetectorNamePool::Undecided => panic!("Undecided bots should't be invoked"),
     }
 }
 
@@ -143,6 +165,10 @@ pub trait Detector {
 
     fn description(&self) -> String {
         String::from("Description")
+    }
+
+    fn name(&self) -> String {
+        format!("{}", DetectorNamePool::Undecided)
     }
 
     // Keys are source file name and line number
