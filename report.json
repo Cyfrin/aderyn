@@ -317,7 +317,7 @@
       }
     ]
   },
-  "medium_issue": {
+  "medium_issues": {
     "issues": [
       {
         "description": "Contracts have owners with privileged rights to perform admin tasks and need to be trusted to not perform malicious updates or drain funds.",

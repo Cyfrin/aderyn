@@ -18,7 +18,7 @@ pub struct JsonContent {
     issue_count: IssueCount,
     critical_issues: CriticalIssues,
     high_issues: HighIssues,
-    medium_issue: MediumIssues,
+    medium_issues: MediumIssues,
     low_issues: LowIssues,
     nc_issues: NcIssues,
 }
@@ -53,7 +53,7 @@ impl ReportPrinter<()> for JsonPrinter {
             issue_count: report.issue_count(),
             critical_issues: report.critical_issues(),
             high_issues: report.high_issues(),
-            medium_issue: report.medium_issues(),
+            medium_issues: report.medium_issues(),
             low_issues: report.low_issues(),
             nc_issues: report.nc_issues(),
         };
