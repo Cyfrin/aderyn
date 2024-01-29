@@ -2,7 +2,7 @@ use std::{collections::BTreeMap, error::Error};
 
 use crate::{
     capture,
-    context::loader::ContextLoader,
+    context::loader::{ASTNode, ContextLoader},
     detect::detector::{Detector, DetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
@@ -10,7 +10,7 @@ use eyre::Result;
 #[derive(Default)]
 pub struct UnindexedEventsDetector {
     // Keys are source file name and line number
-    found_instances: BTreeMap<(String, usize), String>,
+    found_instances: BTreeMap<(String, usize), i64>,
 }
 
 impl Detector for UnindexedEventsDetector {
@@ -50,7 +50,7 @@ impl Detector for UnindexedEventsDetector {
         IssueSeverity::NC
     }
 
-    fn instances(&self) -> BTreeMap<(String, usize), String> {
+    fn instances(&self) -> BTreeMap<(String, usize), i64> {
         self.found_instances.clone()
     }
     fn name(&self) -> String {

@@ -6,7 +6,7 @@ use std::{
 use crate::{
     ast::{FunctionKind, Visibility},
     capture,
-    context::loader::ContextLoader,
+    context::loader::{ASTNode, ContextLoader},
     detect::detector::{Detector, DetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
@@ -14,7 +14,7 @@ use eyre::Result;
 #[derive(Default)]
 pub struct UselessPublicFunctionDetector {
     // Keys are source file name and line number
-    found_instances: BTreeMap<(String, usize), String>,
+    found_instances: BTreeMap<(String, usize), i64>,
 }
 
 impl Detector for UselessPublicFunctionDetector {
@@ -56,7 +56,7 @@ impl Detector for UselessPublicFunctionDetector {
         IssueSeverity::NC
     }
 
-    fn instances(&self) -> BTreeMap<(String, usize), String> {
+    fn instances(&self) -> BTreeMap<(String, usize), i64> {
         self.found_instances.clone()
     }
 

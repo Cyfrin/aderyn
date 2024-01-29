@@ -2,7 +2,7 @@ use std::collections::{BTreeMap, HashSet};
 
 use serde::Serialize;
 
-use crate::context::loader::ContextLoader;
+use crate::context::loader::{ASTNode, ContextLoader};
 
 pub mod json_printer;
 pub mod markdown_printer;
@@ -17,7 +17,7 @@ pub struct Issue {
     pub detector_name: String,
     // Keys are source file name and line number
     // Value is ASTNode.src
-    pub instances: BTreeMap<(String, usize), String>,
+    pub instances: BTreeMap<(String, usize), i64>,
 }
 
 #[derive(Serialize)]

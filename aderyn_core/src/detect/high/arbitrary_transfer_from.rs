@@ -14,7 +14,7 @@ use eyre::Result;
 #[derive(Default)]
 pub struct ArbitraryTransferFromDetector {
     // Keys are source file name and line number
-    found_instances: BTreeMap<(String, usize), String>,
+    found_instances: BTreeMap<(String, usize), i64>,
 }
 
 // Check if the first argument of the function call is valid
@@ -77,7 +77,7 @@ impl Detector for ArbitraryTransferFromDetector {
         String::from("Passing an arbitrary `from` address to `transferFrom` (or `safeTransferFrom`) can lead to loss of funds, because anyone can transfer tokens from the `from` address if an approval is made.  ")
     }
 
-    fn instances(&self) -> BTreeMap<(String, usize), String> {
+    fn instances(&self) -> BTreeMap<(String, usize), i64> {
         self.found_instances.clone()
     }
 

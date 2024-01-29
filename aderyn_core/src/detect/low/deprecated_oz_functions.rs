@@ -2,7 +2,10 @@ use std::{collections::BTreeMap, error::Error};
 
 use crate::{
     capture,
-    context::{browser::GetParent, loader::ContextLoader},
+    context::{
+        browser::GetParent,
+        loader::{ASTNode, ContextLoader},
+    },
     detect::detector::{Detector, DetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
@@ -10,7 +13,7 @@ use eyre::Result;
 #[derive(Default)]
 pub struct DeprecatedOZFunctionsDetector {
     // Keys are source file name and line number
-    found_instances: BTreeMap<(String, usize), String>,
+    found_instances: BTreeMap<(String, usize), i64>,
 }
 
 impl Detector for DeprecatedOZFunctionsDetector {
@@ -61,7 +64,7 @@ impl Detector for DeprecatedOZFunctionsDetector {
         IssueSeverity::Low
     }
 
-    fn instances(&self) -> BTreeMap<(String, usize), String> {
+    fn instances(&self) -> BTreeMap<(String, usize), i64> {
         self.found_instances.clone()
     }
 
