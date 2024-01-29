@@ -1,5 +1,5 @@
 {
     "use_detectors": ["push-zero-opcode","useless-public-function"],
     "scope_file": "scope.txt",
-    "scope": ["Contract.sol"]
+    "scope": ["Counter.sol"]
 }

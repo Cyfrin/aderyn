@@ -9,6 +9,10 @@
         "n_sloc": 11
       },
       {
+        "file_path": "src/Counter.sol",
+        "n_sloc": 20
+      },
+      {
         "file_path": "src/KeccakContract.sol",
         "n_sloc": 21
       },
@@ -27,8 +31,8 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 180,
-    "total_source_units": 5
+    "total_sloc": 200,
+    "total_source_units": 6
   },
   "high_issues": {
     "issues": []
@@ -48,6 +52,10 @@
         "instances": [
           {
             "contract_path": "src/AdminContract.sol",
+            "line_no": 2
+          },
+          {
+            "contract_path": "src/Counter.sol",
             "line_no": 2
           },
           {
@@ -72,6 +80,10 @@
         "description": "",
         "detector_name": "useless-public-function",
         "instances": [
+          {
+            "contract_path": "src/Counter.sol",
+            "line_no": 7
+          },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
             "line_no": 31

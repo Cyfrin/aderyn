@@ -112,16 +112,18 @@ fn main() {
                     }
                 }
 
+                let mut altered_by_scope_in_config = false;
+
                 if let Some(scope_in_config) = config.scope {
                     let mut found_scope_lines = vec![];
                     for scope_line in scope_in_config {
                         found_scope_lines.push(scope_line.to_string());
                     }
-                    println!("{:?}", found_scope_lines);
                     if scope_lines.is_none() {
                         // CLI should override aderyn.config.json if present
                         scope_lines = Some(found_scope_lines);
                     }
+                    altered_by_scope_in_config = true
                 }
 
                 if let Some(scope_file) = config.scope_file {
@@ -139,9 +141,15 @@ fn main() {
                             for scope_line in scope_lines_in_file.lines() {
                                 found_scope_lines.push(scope_line.to_string());
                             }
-                            if scope_lines.is_none() {
+                            if scope_lines.is_none() || altered_by_scope_in_config {
                                 // CLI should override aderyn.config.json if present
-                                scope_lines = Some(found_scope_lines);
+                                if scope_lines.is_none() {
+                                    scope_lines = Some(found_scope_lines);
+                                } else {
+                                    let mut added_to_existing = scope_lines.unwrap();
+                                    added_to_existing.extend(found_scope_lines);
+                                    scope_lines = Some(added_to_existing);
+                                }
                             }
                         }
                         Err(_e) => {
