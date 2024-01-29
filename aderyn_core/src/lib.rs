@@ -62,6 +62,7 @@ where
                 let issue: Issue = Issue {
                     title: detector.title(),
                     description: detector.description(),
+                    detector_name: detector.name(),
                     instances: detector.instances(),
                 };
                 match detector.severity() {

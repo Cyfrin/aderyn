@@ -3,7 +3,7 @@ use std::{collections::BTreeMap, error::Error};
 use crate::{
     capture,
     context::{browser::GetParent, loader::ContextLoader},
-    detect::detector::{Detector, IssueSeverity},
+    detect::detector::{Detector, DetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -50,6 +50,10 @@ impl Detector for UnsafeERC721MintDetector {
 
     fn instances(&self) -> BTreeMap<(String, usize), String> {
         self.found_instances.clone()
+    }
+
+    fn name(&self) -> String {
+        format!("{}", DetectorNamePool::UnsafeOzERC721Mint)
     }
 }
 
