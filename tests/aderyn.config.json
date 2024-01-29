@@ -1,4 +1,4 @@
 {
-    "use_detectors": "push-zero-opcode,useless-public-function",
+    "use_detectors": ["push-zero-opcode","useless-public-function"],
     "scope_file": "../tests/scope.txt"
 }

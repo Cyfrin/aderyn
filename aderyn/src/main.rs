@@ -94,19 +94,34 @@ fn main() {
                 let mut subscriptions: Vec<Box<dyn Detector>> = vec![];
                 let mut scope_lines: Option<Vec<String>> = args.scope.clone();
                 match config.detectors {
-                    Some(config_detectors) => {
-                        for detector_name in config_detectors.split(',') {
-                            if !all_detector_names.contains(&detector_name.to_string()) {
-                                println!(
-                                    "Couldn't recognize detector with name {} in aderyn.config.json",
-                                    detector_name
-                                );
-                                return;
+                    Some(config_detectors) => match config_detectors {
+                        AderynConfigDetectors::Array(array_of_detector_names) => {
+                            for detector_name in &array_of_detector_names {
+                                if !all_detector_names.contains(&detector_name.to_string()) {
+                                    println!(
+                                            "Couldn't recognize detector with name {} in aderyn.config.json",
+                                            detector_name
+                                        );
+                                    return;
+                                }
+                                let det = get_detector_by_name(detector_name);
+                                subscriptions.push(det);
                             }
-                            let det = get_detector_by_name(detector_name);
-                            subscriptions.push(det);
                         }
-                    }
+                        AderynConfigDetectors::CommaSeparated(comma_separated_detectors) => {
+                            for detector_name in comma_separated_detectors.split(',') {
+                                if !all_detector_names.contains(&detector_name.to_string()) {
+                                    println!(
+                                            "Couldn't recognize detector with name {} in aderyn.config.json",
+                                            detector_name
+                                        );
+                                    return;
+                                }
+                                let det = get_detector_by_name(detector_name);
+                                subscriptions.push(det);
+                            }
+                        }
+                    },
                     None => {
                         subscriptions.extend(get_all_detectors());
                     }
@@ -164,11 +179,17 @@ fn main() {
 struct AderynConfig {
     /// Detector names separated by commas
     #[serde(rename = "use_detectors")]
-    detectors: Option<String>,
+    detectors: Option<AderynConfigDetectors>,
 
     /// Path to scope file relative to config file
     #[serde(rename = "scope_file")]
     scope_file: Option<String>,
+}
+
+#[derive(Deserialize)]
+enum AderynConfigDetectors {
+    Array(Vec<String>),
+    CommaSeparated(String),
 }
 
 fn print_detail_view(detector_name: &str) {
