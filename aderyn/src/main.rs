@@ -122,8 +122,8 @@ fn main() {
                     if scope_lines.is_none() {
                         // CLI should override aderyn.config.json if present
                         scope_lines = Some(found_scope_lines);
+                        altered_by_scope_in_config = true
                     }
-                    altered_by_scope_in_config = true
                 }
 
                 if let Some(scope_file) = config.scope_file {
