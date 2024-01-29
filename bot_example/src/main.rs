@@ -2,8 +2,8 @@
 use aderyn_driver::driver::{self, Args};
 
 // These imports are for subscribing to desired core detectors
-use aderyn_driver::detection_modules::high::arbitrary_transfer_from::ArbitraryTransferFromDetector;
-use aderyn_driver::detection_modules::low::push_0_opcode::PushZeroOpcodeDetector;
+use aderyn_driver::detection_modules::high::ArbitraryTransferFromDetector;
+use aderyn_driver::detection_modules::low::PushZeroOpcodeDetector;
 use aderyn_driver::detector::Detector;
 
 // This import is for the custom detector `unindexed_events.rs`

@@ -3,30 +3,19 @@ use strum::{Display, EnumString};
 use crate::{
     context::loader::ContextLoader,
     detect::{
-        high::{
-            arbitrary_transfer_from::ArbitraryTransferFromDetector,
-            delegate_call_in_loop::DelegateCallInLoopDetector,
-        },
+        high::{ArbitraryTransferFromDetector, DelegateCallInLoopDetector},
         low::{
-            avoid_abi_encode_packed::AvoidAbiEncodePackedDetector,
-            deprecated_oz_functions::DeprecatedOZFunctionsDetector, ecrecover::EcrecoverDetector,
-            push_0_opcode::PushZeroOpcodeDetector,
-            unsafe_erc20_functions::UnsafeERC20FunctionsDetector,
-            unspecific_solidity_pragma::UnspecificSolidityPragmaDetector,
+            AvoidAbiEncodePackedDetector, DeprecatedOZFunctionsDetector, EcrecoverDetector,
+            PushZeroOpcodeDetector, UnsafeERC20FunctionsDetector, UnspecificSolidityPragmaDetector,
         },
         medium::{
-            block_timestamp_deadline::BlockTimestampDeadlineDetector,
-            centralization_risk::CentralizationRiskDetector,
-            solmate_safe_transfer_lib::SolmateSafeTransferLibDetector,
-            unsafe_oz_erc721_mint::UnsafeERC721MintDetector,
+            BlockTimestampDeadlineDetector, CentralizationRiskDetector,
+            SolmateSafeTransferLibDetector, UnsafeERC721MintDetector,
         },
         nc::{
-            constants_instead_of_literals::ConstantsInsteadOfLiteralsDetector,
-            non_reentrant_before_others::NonReentrantBeforeOthersDetector,
-            require_with_string::RequireWithStringDetector,
-            unindexed_events::UnindexedEventsDetector,
-            useless_public_function::UselessPublicFunctionDetector,
-            zero_address_check::ZeroAddressCheckDetector,
+            ConstantsInsteadOfLiteralsDetector, NonReentrantBeforeOthersDetector,
+            RequireWithStringDetector, UnindexedEventsDetector, UselessPublicFunctionDetector,
+            ZeroAddressCheckDetector,
         },
     },
 };
