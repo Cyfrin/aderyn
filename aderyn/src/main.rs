@@ -112,6 +112,18 @@ fn main() {
                     }
                 }
 
+                if let Some(scope_in_config) = config.scope {
+                    let mut found_scope_lines = vec![];
+                    for scope_line in scope_in_config {
+                        found_scope_lines.push(scope_line.to_string());
+                    }
+                    println!("{:?}", found_scope_lines);
+                    if scope_lines.is_none() {
+                        // CLI should override aderyn.config.json if present
+                        scope_lines = Some(found_scope_lines);
+                    }
+                }
+
                 if let Some(scope_file) = config.scope_file {
                     let mut scope_file_path = aderyn_config_path.clone();
                     scope_file_path.pop();
@@ -169,6 +181,10 @@ struct AderynConfig {
     /// Path to scope file relative to config file
     #[serde(rename = "scope_file")]
     scope_file: Option<String>,
+
+    /// List scope as array
+    #[serde(rename = "scope")]
+    scope: Option<Vec<String>>,
 }
 
 fn print_detail_view(detector_name: &str) {
