@@ -5,6 +5,7 @@ pub mod framework;
 pub mod fscloc;
 pub mod report;
 pub mod visitor;
+pub mod watchtower;
 
 use detect::detector::Detector;
 use eyre::Result;
