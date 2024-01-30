@@ -4,6 +4,7 @@ use std::error::Error;
 use crate::ast::{Expression, FunctionCall, TypeName};
 
 use crate::capture;
+use crate::detect::detector::DetectorNamePool;
 use crate::{
     context::loader::ContextLoader,
     detect::detector::{Detector, IssueSeverity},
@@ -78,6 +79,10 @@ impl Detector for ArbitraryTransferFromDetector {
 
     fn instances(&self) -> BTreeMap<(String, usize), String> {
         self.found_instances.clone()
+    }
+
+    fn name(&self) -> String {
+        format!("{}", DetectorNamePool::ArbitraryTransferFrom)
     }
 }
 

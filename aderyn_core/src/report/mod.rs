@@ -14,6 +14,7 @@ pub mod util;
 pub struct Issue {
     pub title: String,
     pub description: String,
+    pub detector_name: String,
     // Keys are source file name and line number
     // Value is ASTNode.src
     pub instances: BTreeMap<(String, usize), String>,
@@ -55,6 +56,7 @@ pub struct IssueInstance {
 pub struct IssueBody {
     title: String,
     description: String,
+    detector_name: String,
     instances: Vec<IssueInstance>,
 }
 
@@ -100,6 +102,7 @@ pub fn extract_issue_bodies(issues: &[Issue]) -> Vec<IssueBody> {
                 title: cr.title.clone(),
                 description: cr.description.clone(),
                 instances,
+                detector_name: cr.detector_name.clone(),
             }
         })
         .collect()

@@ -1,34 +1,30 @@
+use strum::{Display, EnumString};
+
 use crate::{
     context::loader::ContextLoader,
     detect::{
-        high::{
-            arbitrary_transfer_from::ArbitraryTransferFromDetector,
-            delegate_call_in_loop::DelegateCallInLoopDetector,
-        },
+        high::{ArbitraryTransferFromDetector, DelegateCallInLoopDetector},
         low::{
-            avoid_abi_encode_packed::AvoidAbiEncodePackedDetector,
-            deprecated_oz_functions::DeprecatedOZFunctionsDetector, ecrecover::EcrecoverDetector,
-            push_0_opcode::PushZeroOpcodeDetector,
-            unsafe_erc20_functions::UnsafeERC20FunctionsDetector,
-            unspecific_solidity_pragma::UnspecificSolidityPragmaDetector,
+            AvoidAbiEncodePackedDetector, DeprecatedOZFunctionsDetector, EcrecoverDetector,
+            PushZeroOpcodeDetector, UnsafeERC20FunctionsDetector, UnspecificSolidityPragmaDetector,
         },
         medium::{
-            block_timestamp_deadline::BlockTimestampDeadlineDetector,
-            centralization_risk::CentralizationRiskDetector,
-            solmate_safe_transfer_lib::SolmateSafeTransferLibDetector,
-            unsafe_oz_erc721_mint::UnsafeERC721MintDetector,
+            BlockTimestampDeadlineDetector, CentralizationRiskDetector,
+            SolmateSafeTransferLibDetector, UnsafeERC721MintDetector,
         },
         nc::{
-            constants_instead_of_literals::ConstantsInsteadOfLiteralsDetector,
-            non_reentrant_before_others::NonReentrantBeforeOthersDetector,
-            require_with_string::RequireWithStringDetector,
-            unindexed_events::UnindexedEventsDetector,
-            useless_public_function::UselessPublicFunctionDetector,
-            zero_address_check::ZeroAddressCheckDetector,
+            ConstantsInsteadOfLiteralsDetector, NonReentrantBeforeOthersDetector,
+            RequireWithStringDetector, UnindexedEventsDetector, UselessPublicFunctionDetector,
+            ZeroAddressCheckDetector,
         },
     },
 };
-use std::{collections::BTreeMap, error::Error};
+use std::{
+    collections::BTreeMap,
+    error::Error,
+    fmt::{self, Display},
+    str::FromStr,
+};
 
 pub fn get_all_detectors() -> Vec<Box<dyn Detector>> {
     vec![
@@ -53,6 +49,73 @@ pub fn get_all_detectors() -> Vec<Box<dyn Detector>> {
     ]
 }
 
+pub fn get_all_detectors_names() -> Vec<String> {
+    get_all_detectors().iter().map(|d| d.name()).collect()
+}
+
+// Note to maintainers: DO NOT CHANGE THE ORDER OF THESE DERIVE ATTRIBUTES
+#[derive(Debug, PartialEq, EnumString, Display)]
+#[strum(serialize_all = "kebab-case")]
+pub(crate) enum DetectorNamePool {
+    DelegateCallInLoop,
+    CentralizationRisk,
+    SolmateSafeTransferLib,
+    AvoidAbiEncodePacked,
+    Ecrecover,
+    DeprecatedOzFunctions,
+    UnsafeERC20Functions,
+    UnspecificSolidityPragma,
+    ZeroAddressCheck,
+    UselessPublicFunction,
+    ConstantsInsteadOfLiterals,
+    UnindexedEvents,
+    RequireWithString,
+    NonReentrantBeforeOthers,
+    BlockTimestampDeadline,
+    UnsafeOzERC721Mint,
+    PushZeroOpcode,
+    ArbitraryTransferFrom,
+    // NOTE: `Undecided` will be the default name (for new bots).
+    // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
+    Undecided,
+}
+
+pub fn get_detector_by_name(detector_name: &str) -> Box<dyn Detector> {
+    // Expects a valid detector_name
+    let detector_name = DetectorNamePool::from_str(detector_name).unwrap();
+    match detector_name {
+        DetectorNamePool::DelegateCallInLoop => Box::<DelegateCallInLoopDetector>::default(),
+        DetectorNamePool::CentralizationRisk => Box::<CentralizationRiskDetector>::default(),
+        DetectorNamePool::SolmateSafeTransferLib => {
+            Box::<SolmateSafeTransferLibDetector>::default()
+        }
+        DetectorNamePool::AvoidAbiEncodePacked => Box::<AvoidAbiEncodePackedDetector>::default(),
+        DetectorNamePool::Ecrecover => Box::<EcrecoverDetector>::default(),
+        DetectorNamePool::DeprecatedOzFunctions => Box::<DeprecatedOZFunctionsDetector>::default(),
+        DetectorNamePool::UnsafeERC20Functions => Box::<UnsafeERC20FunctionsDetector>::default(),
+        DetectorNamePool::UnspecificSolidityPragma => {
+            Box::<UnspecificSolidityPragmaDetector>::default()
+        }
+        DetectorNamePool::ZeroAddressCheck => Box::<ZeroAddressCheckDetector>::default(),
+        DetectorNamePool::UselessPublicFunction => Box::<UselessPublicFunctionDetector>::default(),
+        DetectorNamePool::ConstantsInsteadOfLiterals => {
+            Box::<ConstantsInsteadOfLiteralsDetector>::default()
+        }
+        DetectorNamePool::UnindexedEvents => Box::<UnindexedEventsDetector>::default(),
+        DetectorNamePool::RequireWithString => Box::<RequireWithStringDetector>::default(),
+        DetectorNamePool::NonReentrantBeforeOthers => {
+            Box::<NonReentrantBeforeOthersDetector>::default()
+        }
+        DetectorNamePool::BlockTimestampDeadline => {
+            Box::<BlockTimestampDeadlineDetector>::default()
+        }
+        DetectorNamePool::UnsafeOzERC721Mint => Box::<UnsafeERC721MintDetector>::default(),
+        DetectorNamePool::PushZeroOpcode => Box::<PushZeroOpcodeDetector>::default(),
+        DetectorNamePool::ArbitraryTransferFrom => Box::<ArbitraryTransferFromDetector>::default(),
+        DetectorNamePool::Undecided => panic!("Undecided bots should't be invoked"),
+    }
+}
+
 #[derive(Debug, PartialEq)]
 pub enum IssueSeverity {
     NC,
@@ -60,6 +123,20 @@ pub enum IssueSeverity {
     Medium,
     High,
     Critical,
+}
+
+impl Display for IssueSeverity {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let issue_description = match self {
+            IssueSeverity::NC => "NC (Non Critical)",
+            IssueSeverity::Low => "Low",
+            IssueSeverity::Medium => "Medium",
+            IssueSeverity::High => "High",
+            IssueSeverity::Critical => "Critical",
+        };
+        write!(f, "{}", issue_description).unwrap();
+        Ok(())
+    }
 }
 
 pub trait Detector {
@@ -77,6 +154,10 @@ pub trait Detector {
 
     fn description(&self) -> String {
         String::from("Description")
+    }
+
+    fn name(&self) -> String {
+        format!("{}", DetectorNamePool::Undecided)
     }
 
     // Keys are source file name and line number

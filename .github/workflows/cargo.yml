@@ -77,6 +77,28 @@ jobs:
           cat report2.json
           diff report.json report2.json
 
+      - name: Generate report3.json
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+          args: -- --config-file ./tests/aderyn.config.json -o report3.json ./tests/contract-playground/
+
+      - name: Check report-config.json vs report3.json
+        run: |
+          cat report3.json
+          diff report-config.json report3.json
+
+      - name: Generate report3.md
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+          args: -- --config-file ./tests/aderyn.config.json -o report3.md ./tests/contract-playground/
+
+      - name: Check report-config.md vs report3.md
+        run: |
+          cat report3.md
+          diff report-config.md report3.md
+
       - name: Generate bot results
         uses: actions-rs/cargo@v1
         with:
