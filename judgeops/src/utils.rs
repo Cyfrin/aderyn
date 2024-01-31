@@ -3,13 +3,13 @@ use aderyn_core::{
     watchtower::WatchTower,
 };
 
-pub(crate) fn auto_register_new_core_detectors(watch_tower: &Box<dyn WatchTower>) {
+pub(crate) fn auto_register_new_core_detectors(watchtower: &Box<dyn WatchTower>) {
     // Step 1 - Get the difference
-    let existing_watch_tower_detectors = watch_tower.get_registered_detectors_names();
+    let existing_watchtower_detectors = watchtower.get_registered_detectors_names();
     let current_core_detectors_names = get_all_detectors_names();
     let mut extras = vec![];
     for core_detector in current_core_detectors_names {
-        if !existing_watch_tower_detectors
+        if !existing_watchtower_detectors
             .iter()
             .any(|t| t.clone() == core_detector)
         {
@@ -30,6 +30,6 @@ pub(crate) fn auto_register_new_core_detectors(watch_tower: &Box<dyn WatchTower>
             new_detector,
             detector.severity()
         );
-        watch_tower.register(new_detector, detector.severity());
+        watchtower.register(new_detector, detector.severity());
     }
 }

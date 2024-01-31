@@ -35,14 +35,14 @@ fn main() {
     db.self_delete();
     db.create_if_not_exists();
 
-    let watch_tower: Box<dyn WatchTower> = Box::new(LightChaser { metrics_db: db });
+    let watchtower: Box<dyn WatchTower> = Box::new(LightChaser { metrics_db: db });
 
     if commands.suggested_changes {
-        watch_tower.print_suggested_changes_before_init();
+        watchtower.print_suggested_changes_before_init();
     } else if commands.demanding_changes {
-        watch_tower.print_demanding_changes_before_init();
+        watchtower.print_demanding_changes_before_init();
     } else if commands.auto_register_new_detectors {
-        utils::auto_register_new_core_detectors(&watch_tower);
+        utils::auto_register_new_core_detectors(&watchtower);
     } else {
         println!("Try --help to see more");
     }
