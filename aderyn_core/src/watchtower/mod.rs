@@ -46,6 +46,10 @@ pub trait RegistersNewDetector {
     fn register(&self, detector_name: String, assigned_severity: IssueSeverity);
 }
 
+pub trait GetsRegisteredDetectors {
+    fn get_registered_detectors_names(&self) -> Vec<String>;
+}
+
 // Planned to be used by ReportPrinter and Aderyn Registry
 pub trait GetsCurrentMetricsForDetector: DecidesWhenReadyToServe {
     fn metrics(&self, detector_name: String) -> Metrics;
@@ -86,5 +90,6 @@ pub trait WatchTower:
     + DecidesWhenReadyToServe
     + TakesFeedbackFromJudge
     + CalculatesValueOfDetector
+    + GetsRegisteredDetectors
 {
 }

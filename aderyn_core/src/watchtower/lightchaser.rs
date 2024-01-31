@@ -21,7 +21,8 @@ use crate::detect::detector::{get_all_detectors_names, IssueSeverity};
 use super::utils::MetricsDatabase;
 use super::{
     CalculatesValueOfDetector, DecidesWhenReadyToServe, GetsCurrentMetricsForDetector,
-    InfersMetrics, Metrics, RegistersNewDetector, TakesFeedbackFromJudge, WatchTower,
+    GetsRegisteredDetectors, InfersMetrics, Metrics, RegistersNewDetector, TakesFeedbackFromJudge,
+    WatchTower,
 };
 
 pub struct LightChaser {
@@ -162,6 +163,12 @@ impl CalculatesValueOfDetector for LightChaser {
         let detector_value = trigger_rate * lc_accuracy as f64; // min value = 0, max value = 1 * 5 = 5
         let normalized_value = detector_value / IssueSeverity::COUNT as f64; // make it 0 to 1
         normalized_value
+    }
+}
+
+impl GetsRegisteredDetectors for LightChaser {
+    fn get_registered_detectors_names(&self) -> Vec<String> {
+        self.metrics_db.get_all_detectors_names()
     }
 }
 
