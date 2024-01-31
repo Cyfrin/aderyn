@@ -81,6 +81,7 @@ where
                     IssueSeverity::NC => {
                         report.ncs.push(issue);
                     }
+                    IssueSeverity::Utility => {}
                 }
             }
         }

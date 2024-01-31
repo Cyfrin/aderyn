@@ -3,6 +3,7 @@ pub mod high;
 pub mod low;
 pub mod medium;
 pub mod nc;
+pub mod util;
 
 #[macro_export]
 macro_rules! capture {

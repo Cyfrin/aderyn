@@ -16,7 +16,7 @@ pub struct Issue {
     pub description: String,
     pub detector_name: String,
     // Keys are source file name and line number
-    // Value is ASTNode.src
+    // Value is ASTNode NodeID
     pub instances: BTreeMap<(String, usize), NodeID>,
 }
 

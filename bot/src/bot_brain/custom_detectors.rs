@@ -51,6 +51,7 @@ impl From<Vec<Box<dyn Detector>>> for Metadata {
                     IssueSeverity::Low => "Low",
                     IssueSeverity::Medium => "Medium",
                     IssueSeverity::NC => "NC",
+                    IssueSeverity::Utility => "Utility",
                 }
                 .to_string(),
                 description: detector.description(),

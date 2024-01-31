@@ -119,6 +119,7 @@ pub fn get_detector_by_name(detector_name: &str) -> Box<dyn Detector> {
 
 #[derive(Debug, PartialEq)]
 pub enum IssueSeverity {
+    Utility,
     NC,
     Low,
     Medium,
@@ -129,6 +130,7 @@ pub enum IssueSeverity {
 impl Display for IssueSeverity {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let issue_description = match self {
+            IssueSeverity::Utility => "Utility",
             IssueSeverity::NC => "NC (Non Critical)",
             IssueSeverity::Low => "Low",
             IssueSeverity::Medium => "Medium",
