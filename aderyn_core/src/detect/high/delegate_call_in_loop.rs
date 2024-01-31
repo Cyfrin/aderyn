@@ -16,7 +16,12 @@ pub struct DelegateCallInLoopDetector {
 }
 
 impl Detector for DelegateCallInLoopDetector {
-    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
+    fn detect(
+        &mut self,
+        context: &WorkspaceContext,
+        _: &[NodeID],
+        _: &[NodeID],
+    ) -> Result<bool, Box<dyn Error>> {
         let mut member_accesses: Vec<MemberAccess> = vec![];
 
         // Get all delegatecall member accesses inside for statements
@@ -77,7 +82,7 @@ mod delegate_call_in_loop_detector_tests {
         );
 
         let mut detector = DelegateCallInLoopDetector::default();
-        let found = detector.detect(&context).unwrap();
+        let found = detector.detect(&context, &[], &[]).unwrap();
         // assert that the detector found a delegate call in a loop
         assert!(found);
         // assert that the detector found the correct number of instances (1)

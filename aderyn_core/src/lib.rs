@@ -57,7 +57,7 @@ where
 
     let mut report: Report = Report::default();
     for mut detector in detectors {
-        if let Ok(found) = detector.detect(context) {
+        if let Ok(found) = detector.detect(context, &[], &[]) {
             if found {
                 let issue: Issue = Issue {
                     title: detector.title(),

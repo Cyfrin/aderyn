@@ -53,7 +53,12 @@ fn version_req_allows_above_0_8_19(version_req: &VersionReq) -> bool {
 }
 
 impl Detector for PushZeroOpcodeDetector {
-    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
+    fn detect(
+        &mut self,
+        context: &WorkspaceContext,
+        _: &[NodeID],
+        _: &[NodeID],
+    ) -> Result<bool, Box<dyn Error>> {
         for pragma_directive in context.pragma_directives.keys() {
             let mut version_string = String::new();
 
@@ -110,7 +115,7 @@ mod unspecific_solidity_pragma_tests {
         );
 
         let mut detector = super::PushZeroOpcodeDetector::default();
-        let found = detector.detect(&context).unwrap();
+        let found = detector.detect(&context, &[], &[]).unwrap();
         // assert that it found something
         assert!(found);
         // assert that the number of instances is correct
@@ -140,7 +145,7 @@ mod unspecific_solidity_pragma_tests {
             load_contract("../tests/contract-playground/out/CrazyPragma.sol/CrazyPragma.json");
 
         let mut detector = super::PushZeroOpcodeDetector::default();
-        let found = detector.detect(&context).unwrap();
+        let found = detector.detect(&context, &[], &[]).unwrap();
         // assert that it found something
         assert!(found);
         // assert that the number of instances is correct
@@ -171,7 +176,7 @@ mod unspecific_solidity_pragma_tests {
         );
 
         let mut detector = super::PushZeroOpcodeDetector::default();
-        let found = detector.detect(&context).unwrap();
+        let found = detector.detect(&context, &[], &[]).unwrap();
         // assert that it found something
         assert!(!found);
         // assert that the number of instances is correct
@@ -184,7 +189,7 @@ mod unspecific_solidity_pragma_tests {
             load_contract("../tests/contract-playground/out/Counter.sol/Counter.0.8.21.json");
 
         let mut detector = super::PushZeroOpcodeDetector::default();
-        let found = detector.detect(&context).unwrap();
+        let found = detector.detect(&context, &[], &[]).unwrap();
         // assert that it found something
         assert!(found);
         // assert that the number of instances is correct
@@ -198,7 +203,7 @@ mod unspecific_solidity_pragma_tests {
         );
 
         let mut detector = super::PushZeroOpcodeDetector::default();
-        let found = detector.detect(&context).unwrap();
+        let found = detector.detect(&context, &[], &[]).unwrap();
         // assert that it found something
         assert!(found);
         // assert that the number of instances is correct

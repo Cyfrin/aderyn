@@ -15,7 +15,12 @@ pub struct CentralizationRiskDetector {
 }
 
 impl Detector for CentralizationRiskDetector {
-    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
+    fn detect(
+        &mut self,
+        context: &WorkspaceContext,
+        _: &[NodeID],
+        _: &[NodeID],
+    ) -> Result<bool, Box<dyn Error>> {
         for contract_definition in context.contract_definitions.keys().filter(|cd| {
             cd.base_contracts.iter().any(|bc| {
                 matches!(
@@ -79,7 +84,7 @@ mod centralization_risk_detector_tests {
             load_contract("../tests/contract-playground/out/AdminContract.sol/AdminContract.json");
 
         let mut detector = CentralizationRiskDetector::default();
-        let found = detector.detect(&context).unwrap();
+        let found = detector.detect(&context, &[], &[]).unwrap();
         // assert that the detector found a centralization risk
         assert!(found);
         // assert that the number of instances found is 3

@@ -43,7 +43,12 @@ fn check_argument_validity(function_call: &FunctionCall) -> bool {
 }
 
 impl Detector for ArbitraryTransferFromDetector {
-    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
+    fn detect(
+        &mut self,
+        context: &WorkspaceContext,
+        _: &[NodeID],
+        _: &[NodeID],
+    ) -> Result<bool, Box<dyn Error>> {
         let transfer_from_function_calls = context.function_calls.keys().filter(|function_call| {
             // For each function call, check if the function call is a member access
             // and if the member name is "transferFrom" or "safeTransferFrom", then check if the first argument is valid
@@ -100,7 +105,7 @@ mod arbitrary_transfer_from_tests {
         );
 
         let mut detector = ArbitraryTransferFromDetector::default();
-        let found = detector.detect(&context).unwrap();
+        let found = detector.detect(&context, &[], &[]).unwrap();
         // assert that the detector found an issue
         assert!(found);
         // assert that the detector found the correct number of instances

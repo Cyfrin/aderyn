@@ -15,7 +15,12 @@ pub struct UnsafeERC721MintDetector {
 }
 
 impl Detector for UnsafeERC721MintDetector {
-    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
+    fn detect(
+        &mut self,
+        context: &WorkspaceContext,
+        _: &[NodeID],
+        _: &[NodeID],
+    ) -> Result<bool, Box<dyn Error>> {
         for identifier in context.identifiers.keys() {
             // if source_unit has any ImportDirectives with absolute_path containing "openzeppelin"
             // call identifier.accept(self)
@@ -72,7 +77,7 @@ mod unsafe_erc721_mint_tests {
         );
 
         let mut detector = UnsafeERC721MintDetector::default();
-        let found = detector.detect(&context).unwrap();
+        let found = detector.detect(&context, &[], &[]).unwrap();
         // assert that the detector found an abi encode packed
         assert!(found);
         // assert that the detector found the correct number of instance

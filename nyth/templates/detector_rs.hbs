@@ -12,7 +12,12 @@ pub struct {{detector_name_title_case}} {
 }
 
 impl Detector for {{detector_name_title_case}} {
-    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
+    fn detect(
+        &mut self,
+        context: &WorkspaceContext,
+        _: &[NodeID],
+        _: &[NodeID],
+    ) -> Result<bool, Box<dyn Error>> {
         
         // Use the `context` to find nodes, then capture them as shown below
         // capture!(self, context, ast_node);
@@ -55,7 +60,7 @@ mod {{detector_name_camel_case}}_tests {
         mut detector: impl Detector,
     ) {
         // assert that the detector finds instances
-        let found = detector.detect(&context).unwrap();
+        let found = detector.detect(&context, &[], &[]).unwrap();
         assert!(found);
     }
 

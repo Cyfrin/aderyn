@@ -15,7 +15,12 @@ pub struct RequireWithStringDetector {
 }
 
 impl Detector for RequireWithStringDetector {
-    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
+    fn detect(
+        &mut self,
+        context: &WorkspaceContext,
+        _: &[NodeID],
+        _: &[NodeID],
+    ) -> Result<bool, Box<dyn Error>> {
         // Collect all require statements without a string literal.
         let requires_and_reverts = context
             .identifiers
@@ -68,7 +73,7 @@ mod require_with_string_tests {
 
         let mut detector = RequireWithStringDetector::default();
         // assert that the detector finds something
-        let found = detector.detect(&context).unwrap();
+        let found = detector.detect(&context, &[], &[]).unwrap();
         assert!(found);
         // assert that the detector returns the correct number of instances
         assert_eq!(detector.instances().len(), 2);

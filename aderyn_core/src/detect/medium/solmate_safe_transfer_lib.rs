@@ -15,7 +15,12 @@ pub struct SolmateSafeTransferLibDetector {
 }
 
 impl Detector for SolmateSafeTransferLibDetector {
-    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
+    fn detect(
+        &mut self,
+        context: &WorkspaceContext,
+        _: &[NodeID],
+        _: &[NodeID],
+    ) -> Result<bool, Box<dyn Error>> {
         for import_directive in context.import_directives.keys() {
             // If the import directive absolute_path contains the strings "solmate" and "SafeTransferLib", flip the found_solmate_import flag to true
             if import_directive
@@ -70,7 +75,7 @@ mod solmate_safe_transfer_lib_tests {
             load_contract("../tests/contract-playground/out/T11sTranferer.sol/T11sTranferer.json");
 
         let mut detector = SolmateSafeTransferLibDetector::default();
-        let found = detector.detect(&context).unwrap();
+        let found = detector.detect(&context, &[], &[]).unwrap();
         // assert that the detector found
         assert!(found);
         // assert that the detector found the correct number of instances (1)
@@ -103,7 +108,7 @@ mod solmate_safe_transfer_lib_tests {
         );
 
         let mut detector = SolmateSafeTransferLibDetector::default();
-        let found = detector.detect(&context).unwrap();
+        let found = detector.detect(&context, &[], &[]).unwrap();
         // assert that the detector found
         assert!(!found);
         // assert that the detector found the correct number of instances

@@ -15,7 +15,12 @@ pub struct BlockTimestampDeadlineDetector {
 }
 
 impl Detector for BlockTimestampDeadlineDetector {
-    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
+    fn detect(
+        &mut self,
+        context: &WorkspaceContext,
+        _: &[NodeID],
+        _: &[NodeID],
+    ) -> Result<bool, Box<dyn Error>> {
         for call in context.function_calls.keys() {
             // Uniswap V2 - Function Calls
             // For each FunctionCall, if the Expression is a MemberAccess that is named any of the following:
@@ -127,7 +132,7 @@ mod block_timestamp_deadline_detector_tests {
         );
 
         let mut detector = BlockTimestampDeadlineDetector::default();
-        let found = detector.detect(&context).unwrap();
+        let found = detector.detect(&context, &[], &[]).unwrap();
         // assert that the detector found
         assert!(found);
         // assert that the number of instances found is correct
@@ -159,7 +164,7 @@ mod block_timestamp_deadline_detector_tests {
         );
 
         let mut detector = BlockTimestampDeadlineDetector::default();
-        let found = detector.detect(&context).unwrap();
+        let found = detector.detect(&context, &[], &[]).unwrap();
         // assert that the detector found
         assert!(found);
         // assert that the number of instances found is correct

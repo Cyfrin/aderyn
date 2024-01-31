@@ -15,7 +15,12 @@ pub struct UnsafeERC20FunctionsDetector {
 }
 
 impl Detector for UnsafeERC20FunctionsDetector {
-    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
+    fn detect(
+        &mut self,
+        context: &WorkspaceContext,
+        _: &[NodeID],
+        _: &[NodeID],
+    ) -> Result<bool, Box<dyn Error>> {
         for member_access in context.member_accesses.keys() {
             if member_access.member_name == "transferFrom"
                 || member_access.member_name == "approve"
@@ -61,7 +66,7 @@ mod unsafe_erc20_functions_tests {
         );
 
         let mut detector = UnsafeERC20FunctionsDetector::default();
-        let found = detector.detect(&context).unwrap();
+        let found = detector.detect(&context, &[], &[]).unwrap();
         // assert that the detector found an abi encode packed
         assert!(found);
         // assert that the detector found the correct abi encode packed

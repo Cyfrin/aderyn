@@ -18,7 +18,12 @@ pub struct UselessPublicFunctionDetector {
 }
 
 impl Detector for UselessPublicFunctionDetector {
-    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
+    fn detect(
+        &mut self,
+        context: &WorkspaceContext,
+        _: &[NodeID],
+        _: &[NodeID],
+    ) -> Result<bool, Box<dyn Error>> {
         // Collect the ids of all functions referenced by identifiers.
         let referenced_functions: HashSet<_> = context
             .identifiers
@@ -78,7 +83,7 @@ mod useless_public_function_tests {
 
         let mut detector = UselessPublicFunctionDetector::default();
         // assert that the detector finds the public function
-        let found = detector.detect(&context).unwrap();
+        let found = detector.detect(&context, &[], &[]).unwrap();
         assert!(found);
         // assert that the detector returns the correct number of instances
         assert_eq!(detector.instances().len(), 1);

@@ -15,7 +15,12 @@ pub struct AvoidAbiEncodePackedDetector {
 }
 
 impl Detector for AvoidAbiEncodePackedDetector {
-    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
+    fn detect(
+        &mut self,
+        context: &WorkspaceContext,
+        _: &[NodeID],
+        _: &[NodeID],
+    ) -> Result<bool, Box<dyn Error>> {
         for member_access in context.member_accesses.keys() {
             // If the member_access's member_name = "encodePacked", loop through the argument_types and count how many of them contain any of the following in type_strings:
             // ["bytes ", "[]", "string"]
@@ -83,7 +88,7 @@ mod avoid_abi_encode_packed_tests {
         );
 
         let mut detector = AvoidAbiEncodePackedDetector::default();
-        let found = detector.detect(&context).unwrap();
+        let found = detector.detect(&context, &[], &[]).unwrap();
         // assert that the detector found an abi encode packed
         assert!(found);
         // assert that the detector found the correct abi encode packed

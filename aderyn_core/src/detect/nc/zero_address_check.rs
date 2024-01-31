@@ -24,7 +24,12 @@ pub struct ZeroAddressCheckDetector {
 }
 
 impl Detector for ZeroAddressCheckDetector {
-    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
+    fn detect(
+        &mut self,
+        context: &WorkspaceContext,
+        _: &[NodeID],
+        _: &[NodeID],
+    ) -> Result<bool, Box<dyn Error>> {
         // Get all address state variables
         self.mutable_address_state_variables = context
             .variable_declarations
@@ -176,7 +181,7 @@ mod zero_address_check_tests {
         );
 
         let mut detector = ZeroAddressCheckDetector::default();
-        let found = detector.detect(&context).unwrap();
+        let found = detector.detect(&context, &[], &[]).unwrap();
         // assert that the detector found the issue
         assert!(found);
         // assert that the detector found the correct number of issues

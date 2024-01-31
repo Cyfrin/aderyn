@@ -12,7 +12,12 @@ pub struct UnindexedEventsDetector {
 }
 
 impl Detector for UnindexedEventsDetector {
-    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
+    fn detect(
+        &mut self,
+        context: &WorkspaceContext,
+        _: &[NodeID],
+        _: &[NodeID],
+    ) -> Result<bool, Box<dyn Error>> {
         // for each event definition, check if it has any indexed parameters
         // if it does not, then add it to the list of found unindexed events
         for event_definition in context.event_definitions.keys() {
@@ -68,7 +73,7 @@ mod unindexed_event_tests {
 
         let mut detector = UnindexedEventsDetector::default();
         // assert that the detector finds the public function
-        let found = detector.detect(&context).unwrap();
+        let found = detector.detect(&context, &[], &[]).unwrap();
         assert!(found);
         // assert that the detector finds the correct number of unindexed events
         assert_eq!(detector.instances().len(), 1);

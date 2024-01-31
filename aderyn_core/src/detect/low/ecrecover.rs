@@ -15,7 +15,12 @@ pub struct EcrecoverDetector {
 }
 
 impl Detector for EcrecoverDetector {
-    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
+    fn detect(
+        &mut self,
+        context: &WorkspaceContext,
+        _: &[NodeID],
+        _: &[NodeID],
+    ) -> Result<bool, Box<dyn Error>> {
         for identifier in context.identifiers.keys() {
             if identifier.name == "ecrecover" {
                 capture!(self, context, identifier);
@@ -66,7 +71,7 @@ mod ecrecover_tests {
         );
 
         let mut detector = EcrecoverDetector::default();
-        let found = detector.detect(&context).unwrap();
+        let found = detector.detect(&context, &[], &[]).unwrap();
         // assert that the detector found an ecrecover
         assert!(found);
         // assert that the detector found the correct ecrecover

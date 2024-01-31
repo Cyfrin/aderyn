@@ -15,7 +15,12 @@ pub struct ConstantsInsteadOfLiteralsDetector {
 }
 
 impl Detector for ConstantsInsteadOfLiteralsDetector {
-    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
+    fn detect(
+        &mut self,
+        context: &WorkspaceContext,
+        _: &[NodeID],
+        _: &[NodeID],
+    ) -> Result<bool, Box<dyn Error>> {
         // get all function definitions.
         // for each function definition, find all Literal types
         // if the literal type is either a Number, HexString or Address, then add it to the list of found literals
@@ -71,7 +76,7 @@ mod constants_instead_of_literals_tests {
 
         let mut detector = ConstantsInsteadOfLiteralsDetector::default();
         // assert that the detector finds the public function
-        let found = detector.detect(&context).unwrap();
+        let found = detector.detect(&context, &[], &[]).unwrap();
         assert!(found);
         // assert that the detector finds the correct number of instances
         assert_eq!(detector.instances().len(), 1);

@@ -141,7 +141,12 @@ impl Display for IssueSeverity {
 }
 
 pub trait Detector {
-    fn detect(&mut self, _context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
+    fn detect(
+        &mut self,
+        _context: &WorkspaceContext,
+        _within: &[NodeID],
+        _using: &[NodeID],
+    ) -> Result<bool, Box<dyn Error>> {
         Ok(true)
     }
 

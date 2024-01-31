@@ -15,7 +15,12 @@ pub struct NonReentrantBeforeOthersDetector {
 }
 
 impl Detector for NonReentrantBeforeOthersDetector {
-    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
+    fn detect(
+        &mut self,
+        context: &WorkspaceContext,
+        _: &[NodeID],
+        _: &[NodeID],
+    ) -> Result<bool, Box<dyn Error>> {
         let function_definitions = context.function_definitions.keys();
         for definition in function_definitions {
             if definition.modifiers.len() > 1 {
@@ -63,7 +68,7 @@ mod non_reentrant_before_others_tests {
             load_contract("../tests/contract-playground/out/AdminContract.sol/AdminContract.json");
 
         let mut detector = NonReentrantBeforeOthersDetector::default();
-        let found = detector.detect(&context).unwrap();
+        let found = detector.detect(&context, &[], &[]).unwrap();
         // assert that the detector found something
         assert!(found);
         // assert that the detector found the correct number
