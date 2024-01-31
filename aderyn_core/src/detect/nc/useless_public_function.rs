@@ -6,7 +6,7 @@ use std::{
 use crate::{
     ast::{FunctionKind, Visibility},
     capture,
-    context::loader::{ContextLoader},
+    context::loader::ContextLoader,
     detect::detector::{Detector, DetectorNamePool, IssueSeverity},
 };
 use eyre::Result;

@@ -3,10 +3,7 @@ use std::{collections::BTreeMap, error::Error};
 use crate::{
     ast::LiteralKind,
     capture,
-    context::{
-        browser::ExtractLiterals,
-        loader::{ContextLoader},
-    },
+    context::{browser::ExtractLiterals, loader::ContextLoader},
     detect::detector::{Detector, DetectorNamePool, IssueSeverity},
 };
 use eyre::Result;

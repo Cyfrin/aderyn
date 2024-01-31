@@ -1,7 +1,7 @@
 use strum::{Display, EnumString};
 
 use crate::{
-    context::loader::{ContextLoader},
+    context::loader::ContextLoader,
     detect::{
         high::{ArbitraryTransferFromDetector, DelegateCallInLoopDetector},
         low::{

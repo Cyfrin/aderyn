@@ -2,10 +2,7 @@ use std::{collections::BTreeMap, error::Error};
 
 use crate::{
     capture,
-    context::{
-        browser::GetParent,
-        loader::{ContextLoader},
-    },
+    context::{browser::GetParent, loader::ContextLoader},
     detect::detector::{Detector, DetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
