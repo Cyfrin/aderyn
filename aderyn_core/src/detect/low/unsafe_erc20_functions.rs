@@ -3,7 +3,7 @@ use std::{collections::BTreeMap, error::Error};
 use crate::{
     ast::NodeID,
     capture,
-    context::loader::ContextLoader,
+    context::workspace_context::WorkspaceContext,
     detect::detector::{Detector, DetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
@@ -15,13 +15,13 @@ pub struct UnsafeERC20FunctionsDetector {
 }
 
 impl Detector for UnsafeERC20FunctionsDetector {
-    fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
-        for member_access in loader.member_accesses.keys() {
+    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
+        for member_access in context.member_accesses.keys() {
             if member_access.member_name == "transferFrom"
                 || member_access.member_name == "approve"
                 || member_access.member_name == "transfer"
             {
-                capture!(self, loader, member_access);
+                capture!(self, context, member_access);
             }
         }
         Ok(!self.found_instances.is_empty())
@@ -56,12 +56,12 @@ mod unsafe_erc20_functions_tests {
 
     #[test]
     fn test_unsafe_erc20_functions() {
-        let context_loader = load_contract(
+        let context = load_contract(
             "../tests/contract-playground/out/DeprecatedOZFunctions.sol/DeprecatedOZFunctions.json",
         );
 
         let mut detector = UnsafeERC20FunctionsDetector::default();
-        let found = detector.detect(&context_loader).unwrap();
+        let found = detector.detect(&context).unwrap();
         // assert that the detector found an abi encode packed
         assert!(found);
         // assert that the detector found the correct abi encode packed

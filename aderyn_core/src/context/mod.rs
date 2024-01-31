@@ -1,2 +1,2 @@
 pub mod browser;
-pub mod loader;
+pub mod workspace_context;

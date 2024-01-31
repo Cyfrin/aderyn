@@ -3,7 +3,7 @@ use std::{collections::BTreeMap, error::Error};
 use crate::{
     ast::NodeID,
     capture,
-    context::{browser::GetParent, loader::ContextLoader},
+    context::{browser::GetParent, workspace_context::WorkspaceContext},
     detect::detector::{Detector, DetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
@@ -15,11 +15,11 @@ pub struct DeprecatedOZFunctionsDetector {
 }
 
 impl Detector for DeprecatedOZFunctionsDetector {
-    fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
-        for identifier in loader.identifiers.keys() {
+    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
+        for identifier in context.identifiers.keys() {
             // if source_unit has any ImportDirectives with absolute_path containing "openzeppelin"
             // call identifier.accept(self)
-            let source_unit = GetParent::source_unit_of(identifier, loader).unwrap();
+            let source_unit = GetParent::source_unit_of(identifier, context).unwrap();
 
             let import_directives = source_unit.import_directives();
             if import_directives.iter().any(|directive| {
@@ -29,13 +29,13 @@ impl Detector for DeprecatedOZFunctionsDetector {
                     .map_or(false, |path| path.contains("openzeppelin"))
             }) && identifier.name == "_setupRole"
             {
-                capture!(self, loader, identifier);
+                capture!(self, context, identifier);
             }
         }
-        for member_access in loader.member_accesses.keys() {
+        for member_access in context.member_accesses.keys() {
             // if source_unit has any ImportDirectives with absolute_path containing "openzeppelin"
             // call member_access.accept(self)
-            let source_unit = GetParent::source_unit_of(member_access, loader).unwrap();
+            let source_unit = GetParent::source_unit_of(member_access, context).unwrap();
             let import_directives = source_unit.import_directives();
             if import_directives.iter().any(|directive| {
                 directive
@@ -44,7 +44,7 @@ impl Detector for DeprecatedOZFunctionsDetector {
                     .map_or(false, |path| path.contains("openzeppelin"))
             }) && member_access.member_name == "safeApprove"
             {
-                capture!(self, loader, member_access);
+                capture!(self, context, member_access);
             }
         }
         Ok(!self.found_instances.is_empty())
@@ -79,12 +79,12 @@ mod deprecated_oz_functions_tests {
 
     #[test]
     fn test_deprecated_oz_functions_detector() {
-        let context_loader = load_contract(
+        let context = load_contract(
             "../tests/contract-playground/out/DeprecatedOZFunctions.sol/DeprecatedOZFunctions.json",
         );
 
         let mut detector = DeprecatedOZFunctionsDetector::default();
-        let found = detector.detect(&context_loader).unwrap();
+        let found = detector.detect(&context).unwrap();
         // assert that the detector found an abi encode packed
         assert!(found);
         // assert that the detector found the correct number of instances

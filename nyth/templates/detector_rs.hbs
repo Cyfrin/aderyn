@@ -1,6 +1,6 @@
 use std::{collections::BTreeMap, error::Error};
 
-use aderyn_driver::context::loader::ContextLoader;
+use aderyn_driver::context::context::WorkspaceContext;
 use aderyn_driver::detection_modules::capture;
 use aderyn_driver::detector::{Detector, IssueSeverity};
 
@@ -11,10 +11,10 @@ pub struct {{detector_name_title_case}} {
 }
 
 impl Detector for {{detector_name_title_case}} {
-    fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
+    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         
-        // Use the `loader` to find nodes, then capture them as shown below
-        // capture!(self, loader, ast_node);
+        // Use the `context` to find nodes, then capture them as shown below
+        // capture!(self, context, ast_node);
         
         Ok(!self.found_instances.is_empty())
     }
@@ -44,17 +44,17 @@ mod {{detector_name_camel_case}}_tests {
 
     use super::{{detector_name_title_case}};
 
-    use aderyn_driver::context::loader::ContextLoader;
+    use aderyn_driver::context::context::WorkspaceContext;
     use aderyn_driver::detector::detector_test_helpers::load_contract;
     use aderyn_driver::detector::Detector;
 
     fn test_{{detector_name_camel_case}}_for(
         _contract_file: String,
-        loader: ContextLoader,
+        context: WorkspaceContext,
         mut detector: impl Detector,
     ) {
         // assert that the detector finds instances
-        let found = detector.detect(&loader).unwrap();
+        let found = detector.detect(&context).unwrap();
         assert!(found);
     }
 
@@ -65,8 +65,8 @@ mod {{detector_name_camel_case}}_tests {
 
         for contract_file in contracts {
             let detector = {{detector_name_title_case}}::default();
-            let loader = load_contract(&contract_file);
-            test_{{detector_name_camel_case}}_for(contract_file, loader, detector);
+            let context = load_contract(&contract_file);
+            test_{{detector_name_camel_case}}_for(contract_file, context, detector);
         }
     }
 }

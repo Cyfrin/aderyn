@@ -3,7 +3,7 @@ use std::{collections::BTreeMap, error::Error};
 use crate::{
     ast::{Expression, FunctionCallKind, NodeID},
     capture,
-    context::loader::ContextLoader,
+    context::workspace_context::WorkspaceContext,
     detect::detector::{Detector, DetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
@@ -15,8 +15,8 @@ pub struct BlockTimestampDeadlineDetector {
 }
 
 impl Detector for BlockTimestampDeadlineDetector {
-    fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
-        for call in loader.function_calls.keys() {
+    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
+        for call in context.function_calls.keys() {
             // Uniswap V2 - Function Calls
             // For each FunctionCall, if the Expression is a MemberAccess that is named any of the following:
             // [
@@ -48,7 +48,7 @@ impl Detector for BlockTimestampDeadlineDetector {
                                 *member_access.expression
                             {
                                 if identifier.name == "block" {
-                                    capture!(self, loader, call);
+                                    capture!(self, context, call);
                                 }
                             }
                         }
@@ -76,7 +76,7 @@ impl Detector for BlockTimestampDeadlineDetector {
                                         *member_access.expression
                                     {
                                         if identifier.name == "block" {
-                                            capture!(self, loader, call);
+                                            capture!(self, context, call);
                                         }
                                     }
                                 }
@@ -122,12 +122,12 @@ mod block_timestamp_deadline_detector_tests {
 
     #[test]
     fn test_block_timestamp_deadline_uniswap_v2_detector() {
-        let context_loader = load_contract(
+        let context = load_contract(
             "../tests/contract-playground/out/UniswapV2Swapper.sol/UniswapV2Swapper.json",
         );
 
         let mut detector = BlockTimestampDeadlineDetector::default();
-        let found = detector.detect(&context_loader).unwrap();
+        let found = detector.detect(&context).unwrap();
         // assert that the detector found
         assert!(found);
         // assert that the number of instances found is correct
@@ -154,12 +154,12 @@ mod block_timestamp_deadline_detector_tests {
 
     #[test]
     fn test_block_timestamp_deadline_uniswap_v3_detector() {
-        let context_loader = load_contract(
+        let context = load_contract(
             "../tests/contract-playground/out/UniswapV3Swapper.sol/UniswapV3Swapper.json",
         );
 
         let mut detector = BlockTimestampDeadlineDetector::default();
-        let found = detector.detect(&context_loader).unwrap();
+        let found = detector.detect(&context).unwrap();
         // assert that the detector found
         assert!(found);
         // assert that the number of instances found is correct

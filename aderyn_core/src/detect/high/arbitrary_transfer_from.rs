@@ -6,7 +6,7 @@ use crate::ast::{Expression, FunctionCall, NodeID, TypeName};
 use crate::capture;
 use crate::detect::detector::DetectorNamePool;
 use crate::{
-    context::loader::ContextLoader,
+    context::workspace_context::WorkspaceContext,
     detect::detector::{Detector, IssueSeverity},
 };
 use eyre::Result;
@@ -43,8 +43,8 @@ fn check_argument_validity(function_call: &FunctionCall) -> bool {
 }
 
 impl Detector for ArbitraryTransferFromDetector {
-    fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
-        let transfer_from_function_calls = loader.function_calls.keys().filter(|function_call| {
+    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
+        let transfer_from_function_calls = context.function_calls.keys().filter(|function_call| {
             // For each function call, check if the function call is a member access
             // and if the member name is "transferFrom" or "safeTransferFrom", then check if the first argument is valid
             // If the first argument is valid, add the function call to found_instances
@@ -59,7 +59,7 @@ impl Detector for ArbitraryTransferFromDetector {
         });
 
         for item in transfer_from_function_calls {
-            capture!(self, loader, item);
+            capture!(self, context, item);
         }
 
         Ok(!self.found_instances.is_empty())
@@ -95,12 +95,12 @@ mod arbitrary_transfer_from_tests {
 
     #[test]
     fn test_arbitrary_transfer_from_detector() {
-        let context_loader = load_contract(
+        let context = load_contract(
             "../tests/contract-playground/out/ArbitraryTransferFrom.sol/ArbitraryTransferFrom.json",
         );
 
         let mut detector = ArbitraryTransferFromDetector::default();
-        let found = detector.detect(&context_loader).unwrap();
+        let found = detector.detect(&context).unwrap();
         // assert that the detector found an issue
         assert!(found);
         // assert that the detector found the correct number of instances

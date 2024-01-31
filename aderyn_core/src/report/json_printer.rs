@@ -3,7 +3,7 @@ use std::{
     path::PathBuf,
 };
 
-use crate::context::loader::ContextLoader;
+use crate::context::workspace_context::WorkspaceContext;
 use serde::Serialize;
 
 use super::{
@@ -42,14 +42,14 @@ impl ReportPrinter<()> for JsonPrinter {
         &self,
         writer: W,
         report: &Report,
-        loader: &ContextLoader,
+        context: &WorkspaceContext,
         _: PathBuf,
         _: Option<String>,
         _: bool,
     ) -> Result<()> {
         let content = JsonContent {
-            files_summary: loader.files_summary(),
-            files_details: loader.files_details(),
+            files_summary: context.files_summary(),
+            files_details: context.files_details(),
             issue_count: report.issue_count(),
             critical_issues: report.critical_issues(),
             high_issues: report.high_issues(),

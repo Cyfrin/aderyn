@@ -3,7 +3,7 @@ use std::{collections::BTreeMap, error::Error};
 use crate::{
     ast::NodeID,
     capture,
-    context::loader::ContextLoader,
+    context::workspace_context::WorkspaceContext,
     detect::detector::{Detector, DetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
@@ -15,10 +15,10 @@ pub struct UnindexedEventsDetector {
 }
 
 impl Detector for UnindexedEventsDetector {
-    fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
+    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // for each event definition, check if it has any indexed parameters
         // if it does not, then add it to the list of found unindexed events
-        for event_definition in loader.event_definitions.keys() {
+        for event_definition in context.event_definitions.keys() {
             let mut indexed_count = 0;
             let mut non_indexed = false;
 
@@ -31,7 +31,7 @@ impl Detector for UnindexedEventsDetector {
             }
 
             if non_indexed && indexed_count < 3 {
-                capture!(self, loader, event_definition);
+                capture!(self, context, event_definition);
             }
         }
         Ok(!self.found_instances.is_empty())
@@ -67,13 +67,13 @@ mod unindexed_event_tests {
 
     #[test]
     fn test_unindexed_events() {
-        let context_loader = load_contract(
+        let context = load_contract(
             "../tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",
         );
 
         let mut detector = UnindexedEventsDetector::default();
         // assert that the detector finds the public function
-        let found = detector.detect(&context_loader).unwrap();
+        let found = detector.detect(&context).unwrap();
         assert!(found);
         // assert that the detector finds the correct number of unindexed events
         assert_eq!(detector.instances().len(), 1);

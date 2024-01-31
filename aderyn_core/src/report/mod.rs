@@ -2,7 +2,7 @@ use std::collections::{BTreeMap, HashSet};
 
 use serde::Serialize;
 
-use crate::{ast::NodeID, context::loader::ContextLoader};
+use crate::{ast::NodeID, context::workspace_context::WorkspaceContext};
 
 pub mod json_printer;
 pub mod markdown_printer;
@@ -108,7 +108,7 @@ pub fn extract_issue_bodies(issues: &[Issue]) -> Vec<IssueBody> {
         .collect()
 }
 
-impl ContextLoader {
+impl WorkspaceContext {
     pub fn files_summary(&self) -> FilesSummary {
         FilesSummary {
             total_source_units: self.src_filepaths.len(),

@@ -3,7 +3,7 @@ use std::{collections::BTreeMap, error::Error};
 use crate::{
     ast::NodeID,
     capture,
-    context::loader::ContextLoader,
+    context::workspace_context::WorkspaceContext,
     detect::detector::{Detector, DetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
@@ -53,8 +53,8 @@ fn version_req_allows_above_0_8_19(version_req: &VersionReq) -> bool {
 }
 
 impl Detector for PushZeroOpcodeDetector {
-    fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
-        for pragma_directive in loader.pragma_directives.keys() {
+    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
+        for pragma_directive in context.pragma_directives.keys() {
             let mut version_string = String::new();
 
             for literal in &pragma_directive.literals {
@@ -71,7 +71,7 @@ impl Detector for PushZeroOpcodeDetector {
             }
             let req = VersionReq::parse(&version_string)?;
             if version_req_allows_above_0_8_19(&req) {
-                capture!(self, loader, pragma_directive);
+                capture!(self, context, pragma_directive);
             }
         }
 
@@ -105,12 +105,12 @@ mod unspecific_solidity_pragma_tests {
 
     #[test]
     fn test_push_0_opcode_detector_on_0_8_20() {
-        let context_loader = load_contract(
+        let context = load_contract(
             "../tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",
         );
 
         let mut detector = super::PushZeroOpcodeDetector::default();
-        let found = detector.detect(&context_loader).unwrap();
+        let found = detector.detect(&context).unwrap();
         // assert that it found something
         assert!(found);
         // assert that the number of instances is correct
@@ -136,11 +136,11 @@ mod unspecific_solidity_pragma_tests {
 
     #[test]
     fn test_push_0_opcode_detector_on_range() {
-        let context_loader =
+        let context =
             load_contract("../tests/contract-playground/out/CrazyPragma.sol/CrazyPragma.json");
 
         let mut detector = super::PushZeroOpcodeDetector::default();
-        let found = detector.detect(&context_loader).unwrap();
+        let found = detector.detect(&context).unwrap();
         // assert that it found something
         assert!(found);
         // assert that the number of instances is correct
@@ -166,12 +166,12 @@ mod unspecific_solidity_pragma_tests {
 
     #[test]
     fn test_push_0_opcode_detector_on_0_8_19() {
-        let context_loader = load_contract(
+        let context = load_contract(
             "../tests/contract-playground/out/ArbitraryTransferFrom.sol/ArbitraryTransferFrom.json",
         );
 
         let mut detector = super::PushZeroOpcodeDetector::default();
-        let found = detector.detect(&context_loader).unwrap();
+        let found = detector.detect(&context).unwrap();
         // assert that it found something
         assert!(!found);
         // assert that the number of instances is correct
@@ -180,11 +180,11 @@ mod unspecific_solidity_pragma_tests {
 
     #[test]
     fn test_push_0_opcode_detector_on_caret_0_8_13() {
-        let context_loader =
+        let context =
             load_contract("../tests/contract-playground/out/Counter.sol/Counter.0.8.21.json");
 
         let mut detector = super::PushZeroOpcodeDetector::default();
-        let found = detector.detect(&context_loader).unwrap();
+        let found = detector.detect(&context).unwrap();
         // assert that it found something
         assert!(found);
         // assert that the number of instances is correct
@@ -193,12 +193,12 @@ mod unspecific_solidity_pragma_tests {
 
     #[test]
     fn test_push_0_opcode_detector_on_greter_equal_0_8_0() {
-        let context_loader = load_contract(
+        let context = load_contract(
             "../tests/contract-playground/out/IContractInheritance.sol/IContractInheritance.0.8.21.json",
         );
 
         let mut detector = super::PushZeroOpcodeDetector::default();
-        let found = detector.detect(&context_loader).unwrap();
+        let found = detector.detect(&context).unwrap();
         // assert that it found something
         assert!(found);
         // assert that the number of instances is correct
