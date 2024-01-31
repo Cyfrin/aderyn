@@ -2,15 +2,11 @@ use std::collections::BTreeMap;
 use std::error::Error;
 
 use crate::{
-    ast::{MemberAccess, NodeID},
+    ast::NodeID,
     capture,
-    context::{
-        browser::{ExtractIdentifiers, ExtractMemberAccesses},
-        workspace_context::{ASTNode, WorkspaceContext},
-    },
-    detect::detector::{Detector, DetectorNamePool, IssueSeverity},
+    context::workspace_context::{ASTNode, WorkspaceContext},
+    detect::detector::{Detector, IssueSeverity},
 };
-use eyre::Result;
 
 #[derive(Default)]
 pub struct IdentifiersThatReferenceStateVariableDetector {
@@ -66,7 +62,7 @@ impl Detector for IdentifiersThatReferenceStateVariableDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", "IdentifiersThatReferenceStateVariableDetector")
+        "IdentifiersThatReferenceStateVariableDetector".to_string()
     }
 
     fn instances(&self) -> BTreeMap<(String, usize), NodeID> {
@@ -76,11 +72,7 @@ impl Detector for IdentifiersThatReferenceStateVariableDetector {
 
 #[cfg(test)]
 mod identifiers_that_reference_state_variables_detector_tests {
-    use crate::{
-        ast::VariableDeclaration,
-        context::workspace_context::ASTNode,
-        detect::detector::{detector_test_helpers::load_contract, Detector},
-    };
+    use crate::detect::detector::{detector_test_helpers::load_contract, Detector};
 
     use super::IdentifiersThatReferenceStateVariableDetector;
 
@@ -93,8 +85,7 @@ mod identifiers_that_reference_state_variables_detector_tests {
         let variable_declaration = context
             .variable_declarations
             .keys()
-            .filter(|variable_declaration| variable_declaration.name == "s_sameConditionals")
-            .next()
+            .find(|variable_declaration| variable_declaration.name == "s_sameConditionals")
             .unwrap();
 
         let mut detector = IdentifiersThatReferenceStateVariableDetector::default();
