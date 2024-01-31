@@ -79,4 +79,9 @@ impl MetricsDatabase {
         state.metrics.get_mut(&name).unwrap().experience = current_exp + 1;
         self.save_db(state);
     }
+
+    pub fn get_all_detectors_names(&self) -> Vec<String> {
+        let state = self.get_current_db();
+        state.metrics.into_keys().collect()
+    }
 }

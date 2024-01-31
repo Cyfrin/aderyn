@@ -37,23 +37,54 @@ pub struct Feedback {
     // TODO: Assert that there are never common elements among positive_feedbacks and negative_feedbacks in the same `Feedback` object
     pub positive_feedbacks: Vec<String>, // An array of {detector_names} that have performed well
     pub negative_feedbacks: Vec<String>, // An array of {detector_names} that has performed poorly
+    pub all_exposed_detectors: Vec<String>, // An array of {detector_name} that was exposed (regardless of whether or not they were triggered) to the codebase
 }
 
 // Should be called when a new detector is introduced into the codebase
 // TODO: create admin tool (binary crate)
-pub trait RegisterNewDetector {
-    fn accept(&self, detector_name: String, assigned_severity: IssueSeverity);
+pub trait RegistersNewDetector {
+    fn register(&self, detector_name: String, assigned_severity: IssueSeverity);
 }
 
 // Planned to be used by ReportPrinter and Aderyn Registry
-pub trait GetCurrentMetricsForDetector {
+pub trait GetsCurrentMetricsForDetector: DecidesWhenReadyToServe {
     fn metrics(&self, detector_name: String) -> Metrics;
+    fn is_ready_to_get_metrics(&self) -> bool {
+        self.is_ready_to_serve()
+    }
 }
 
-pub trait TakeFeedbackFromJudge {
+pub trait DecidesWhenReadyToServe {
+    fn is_ready_to_serve(&self) -> bool;
+    fn print_demanding_changes_before_init(&self);
+    fn print_suggested_changes_before_init(&self);
+}
+
+pub trait TakesFeedbackFromJudge: DecidesWhenReadyToServe {
+    /// NOTE - Make sure to be ready to take feedback before you take feedback
     fn take_feedback(&self, feedback: Feedback);
+    fn is_ready_to_take_feedback(&self) -> bool {
+        self.is_ready_to_serve()
+    }
 }
 
-pub trait InferMetrics {
+pub trait InfersMetrics {
     fn is_acceptable(&self) -> bool;
+}
+
+pub trait CalculatesValueOfDetector: DecidesWhenReadyToServe {
+    /// All implementations MUST return a value from [0, 1] only
+    fn value(&self, detector_name: String) -> f64;
+    fn is_ready_to_calculate_value(&self) -> bool {
+        self.is_ready_to_serve()
+    }
+}
+
+pub trait WatchTower:
+    RegistersNewDetector
+    + GetsCurrentMetricsForDetector
+    + DecidesWhenReadyToServe
+    + TakesFeedbackFromJudge
+    + CalculatesValueOfDetector
+{
 }

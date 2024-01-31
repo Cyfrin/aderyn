@@ -20,59 +20,72 @@ use crate::detect::detector::{get_all_detectors_names, IssueSeverity};
 
 use super::utils::MetricsDatabase;
 use super::{
-    GetCurrentMetricsForDetector, InferMetrics, Metrics, RegisterNewDetector, TakeFeedbackFromJudge,
+    CalculatesValueOfDetector, DecidesWhenReadyToServe, GetsCurrentMetricsForDetector,
+    InfersMetrics, Metrics, RegistersNewDetector, TakesFeedbackFromJudge, WatchTower,
 };
 
 pub struct LightChaser {
-    metrics_db: MetricsDatabase,
+    pub metrics_db: MetricsDatabase,
 }
 
-impl RegisterNewDetector for LightChaser {
-    fn accept(&self, detector_name: String, assigned_severity: IssueSeverity) {
+impl RegistersNewDetector for LightChaser {
+    fn register(&self, detector_name: String, assigned_severity: IssueSeverity) {
+        // Chapter 001 - "Every detector is given a accuracy score, this score defaults to 5."
+        // Follow up question - Where does 5 come from ?
+        // Answered here - https://x.com/ChaseTheLight99/status/1750111766162358288?s=20
         self.metrics_db
             .register_new_detector(detector_name, assigned_severity);
     }
 }
 
-impl GetCurrentMetricsForDetector for LightChaser {
+impl GetsCurrentMetricsForDetector for LightChaser {
     fn metrics(&self, detector_name: String) -> Metrics {
         self.metrics_db.get_metrics(detector_name)
     }
 }
 
-impl TakeFeedbackFromJudge for LightChaser {
+impl TakesFeedbackFromJudge for LightChaser {
     /// Light Chaser caps the value of TP - FP from 0 to IssueSeverity::COUNT
     /// Refer to Chapter 001 - Link at the top of this page
     fn take_feedback(&self, feedback: super::Feedback) {
-        feedback.negative_feedbacks.iter().for_each(|fdbck| {
-            let current_metrics = self.metrics_db.get_metrics(fdbck.clone());
-            let current_lc_accuracy = current_metrics.lc_accuracy();
+        feedback
+            .negative_feedbacks
+            .iter()
+            .for_each(|detector_name| {
+                let current_metrics = self.metrics_db.get_metrics(detector_name.clone());
+                let current_lc_accuracy = current_metrics.lc_accuracy();
 
-            if current_lc_accuracy >= 1 {
-                self.metrics_db
-                    .increase_false_positive_with_trigger_count(fdbck.clone());
-            } else {
-                self.metrics_db.increase_trigger_count(fdbck.clone());
-                eprintln!("WARNING: detector {}'s lc_accuracy is at 0 !!! Unable to process Negative Feedback", fdbck);
-            }
-        });
+                if current_lc_accuracy >= 1 {
+                    self.metrics_db
+                        .increase_false_positive_with_trigger_count(detector_name.clone());
+                } else {
+                    self.metrics_db.increase_trigger_count(detector_name.clone());
+                    eprintln!("WARNING: detector {}'s lc_accuracy = 0 ! \nUnable to process Negative Feedback", detector_name);
+                }
+            });
 
-        feedback.positive_feedbacks.iter().for_each(|fdbck| {
-            let current_metrics = self.metrics_db.get_metrics(fdbck.clone());
-            let current_lc_accuracy = current_metrics.lc_accuracy();
+        feedback
+            .positive_feedbacks
+            .iter()
+            .for_each(|detector_name| {
+                let current_metrics = self.metrics_db.get_metrics(detector_name.clone());
+                let current_lc_accuracy = current_metrics.lc_accuracy();
 
-            if current_lc_accuracy < (IssueSeverity::COUNT - 1) as u64 {
-                // NOTE: LightChaser follows the "Once imperfect, always imperfect strategy"
-                // Therefore, score can never "rise" to a perfect IssueSeverity::COUNT
-                self.metrics_db
-                    .increase_true_positive_with_trigger_count(fdbck.clone());
-            } else {
-                self.metrics_db.increase_trigger_count(fdbck.clone());
-            }
-        });
+                if current_lc_accuracy != 0
+                    && current_lc_accuracy < (IssueSeverity::COUNT - 1) as u64
+                {
+                    // NOTE: LightChaser follows the "Once imperfect, always imperfect" strategy
+                    // Therefore, an imperfect score can never "rise" to a perfect score of IssueSeverity::COUNT
+                    self.metrics_db
+                        .increase_true_positive_with_trigger_count(detector_name.clone());
+                } else {
+                    self.metrics_db
+                        .increase_trigger_count(detector_name.clone());
+                }
+            });
 
-        let all_detector_names = get_all_detectors_names();
-        all_detector_names
+        feedback
+            .all_exposed_detectors
             .into_iter()
             .for_each(|detector_name| self.metrics_db.increase_experience(detector_name));
     }
@@ -80,13 +93,18 @@ impl TakeFeedbackFromJudge for LightChaser {
 
 // TODO
 // When initialized check if `get_all_detectors` reflects what is serialized in lc-metrics.json
+// When initialized check what detectors need to be downgraded based on their cap
 
-impl InferMetrics for Metrics {
+impl InfersMetrics for Metrics {
     fn is_acceptable(&self) -> bool {
         //"If a detector is triggered, its accuracy score is looked up and the following cap is applied."
         //      - @ChaseTheLight99, 2024
         // Chapter 003 - Dynamic Accuracy https://twitter.com/ChaseTheLight99/status/1750508847947522519
         let lc_accuracy = self.lc_accuracy();
+        if lc_accuracy == 0 {
+            return false;
+        }
+
         match self.current_severity {
             IssueSeverity::Critical => lc_accuracy == IssueSeverity::COUNT as u64,
             IssueSeverity::High => lc_accuracy >= IssueSeverity::COUNT as u64 - 1,
@@ -104,3 +122,47 @@ impl Metrics {
         self.true_positives - self.false_positives
     }
 }
+
+impl DecidesWhenReadyToServe for LightChaser {
+    fn is_ready_to_serve(&self) -> bool {
+        // Make sure all the detectors in aderyn_core are available and registered in light chaser metrics database
+        let mut core_detectors = get_all_detectors_names();
+        let mut registered_detectors = self.metrics_db.get_all_detectors_names();
+        core_detectors.sort();
+        registered_detectors.sort();
+        core_detectors == registered_detectors // Otherwise they are not in sync
+    }
+    fn print_suggested_changes_before_init(&self) {
+        // Suggest removing poorly performing core detectors (lc_accuracy == 0)
+        get_all_detectors_names().iter().for_each(|d| {
+            let d_metrics = self.metrics_db.get_metrics(d.clone());
+            if d_metrics.lc_accuracy() == 0 {
+                println!("Detector {d} should be removed - lc_accuracy = 0 ! ");
+            }
+        });
+    }
+    fn print_demanding_changes_before_init(&self) {
+        if !self.is_ready_to_serve() {
+            println!("Please reister the newly added detectors! ");
+        }
+    }
+}
+
+impl CalculatesValueOfDetector for LightChaser {
+    // "Detector Value = Severity * Accuracy * Trigger rate" - ChaseTheLight99
+    // https://twitter.com/ChaseTheLight99/status/1745840813685223917
+    // Trigger Rate defined here - https://x.com/ChaseTheLight99/status/1750202276017283179?s=20
+    // NOTE - Here, the formula is slightly modified (we're not taking severity into account) because
+    // we would be grouping detectors by IssueSeverity so it doesn't become a factor
+    // Value to assign to severity is upto whoever is using this API
+    fn value(&self, detector_name: String) -> f64 {
+        let metrics = self.metrics_db.get_metrics(detector_name);
+        let trigger_rate = metrics.trigger_count as f64 / metrics.experience as f64;
+        let lc_accuracy = metrics.lc_accuracy();
+        let detector_value = trigger_rate * lc_accuracy as f64; // min value = 0, max value = 1 * 5 = 5
+        let normalized_value = detector_value / IssueSeverity::COUNT as f64; // make it 0 to 1
+        normalized_value
+    }
+}
+
+impl WatchTower for LightChaser {}
