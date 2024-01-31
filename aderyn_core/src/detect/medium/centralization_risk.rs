@@ -10,7 +10,7 @@ use eyre::Result;
 #[derive(Default)]
 pub struct CentralizationRiskDetector {
     // Keys are source file name and line number
-    found_instances: BTreeMap<(String, usize), String>,
+    found_instances: BTreeMap<(String, usize), i64>,
 }
 
 impl Detector for CentralizationRiskDetector {
@@ -57,7 +57,7 @@ impl Detector for CentralizationRiskDetector {
         String::from("Contracts have owners with privileged rights to perform admin tasks and need to be trusted to not perform malicious updates or drain funds.")
     }
 
-    fn instances(&self) -> BTreeMap<(String, usize), String> {
+    fn instances(&self) -> BTreeMap<(String, usize), i64> {
         self.found_instances.clone()
     }
 

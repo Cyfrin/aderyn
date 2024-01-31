@@ -161,8 +161,8 @@ pub trait Detector {
     }
 
     // Keys are source file name and line number
-    // Value is ASTNode.src
-    fn instances(&self) -> BTreeMap<(String, usize), String> {
+    // Value is ASTNode
+    fn instances(&self) -> BTreeMap<(String, usize), i64> {
         BTreeMap::new()
     }
 }

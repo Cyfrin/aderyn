@@ -11,7 +11,7 @@ use eyre::Result;
 #[derive(Default)]
 pub struct ConstantsInsteadOfLiteralsDetector {
     // Keys are source file name and line number
-    found_instances: BTreeMap<(String, usize), String>,
+    found_instances: BTreeMap<(String, usize), i64>,
 }
 
 impl Detector for ConstantsInsteadOfLiteralsDetector {
@@ -49,7 +49,7 @@ impl Detector for ConstantsInsteadOfLiteralsDetector {
         IssueSeverity::NC
     }
 
-    fn instances(&self) -> BTreeMap<(String, usize), String> {
+    fn instances(&self) -> BTreeMap<(String, usize), i64> {
         self.found_instances.clone()
     }
 

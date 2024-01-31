@@ -10,7 +10,7 @@ use eyre::Result;
 #[derive(Default)]
 pub struct EcrecoverDetector {
     // Keys are source file name and line number
-    found_instances: BTreeMap<(String, usize), String>,
+    found_instances: BTreeMap<(String, usize), i64>,
 }
 
 impl Detector for EcrecoverDetector {
@@ -42,7 +42,7 @@ impl Detector for EcrecoverDetector {
         IssueSeverity::Low
     }
 
-    fn instances(&self) -> BTreeMap<(String, usize), String> {
+    fn instances(&self) -> BTreeMap<(String, usize), i64> {
         self.found_instances.clone()
     }
 

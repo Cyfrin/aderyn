@@ -10,7 +10,7 @@ use eyre::Result;
 #[derive(Default)]
 pub struct NonReentrantBeforeOthersDetector {
     // Keys are source file name and line number
-    found_instances: BTreeMap<(String, usize), String>,
+    found_instances: BTreeMap<(String, usize), i64>,
 }
 
 impl Detector for NonReentrantBeforeOthersDetector {
@@ -40,7 +40,7 @@ impl Detector for NonReentrantBeforeOthersDetector {
         IssueSeverity::NC
     }
 
-    fn instances(&self) -> BTreeMap<(String, usize), String> {
+    fn instances(&self) -> BTreeMap<(String, usize), i64> {
         self.found_instances.clone()
     }
 
