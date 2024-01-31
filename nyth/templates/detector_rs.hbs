@@ -1,6 +1,6 @@
 use std::{collections::BTreeMap, error::Error};
 
-use aderyn_driver::context::context::WorkspaceContext;
+use aderyn_driver::context::workspace_context::WorkspaceContext;
 use aderyn_driver::detection_modules::capture;
 use aderyn_driver::detector::{Detector, IssueSeverity};
 
@@ -44,7 +44,7 @@ mod {{detector_name_camel_case}}_tests {
 
     use super::{{detector_name_title_case}};
 
-    use aderyn_driver::context::context::WorkspaceContext;
+    use aderyn_driver::context::workspace_context::WorkspaceContext;
     use aderyn_driver::detector::detector_test_helpers::load_contract;
     use aderyn_driver::detector::Detector;
 
