@@ -134,17 +134,56 @@ impl DecidesWhenReadyToServe for LightChaser {
         core_detectors == registered_detectors // Otherwise they are not in sync
     }
     fn print_suggested_changes_before_init(&self) {
-        // Suggest removing poorly performing core detectors (lc_accuracy == 0)
+        if !self.is_ready_to_serve() {
+            println!("Demanding-changes need to be resolved before calculating suggested-changes");
+            return;
+        }
+        let mut found_suggestion = false;
+
+        // Suggest removing very poorly performing core detectors (lc_accuracy == 0)
         get_all_detectors_names().iter().for_each(|d| {
             let d_metrics = self.metrics_db.get_metrics(d.clone());
             if d_metrics.lc_accuracy() == 0 {
                 println!("Detector {d} should be removed - lc_accuracy = 0 ! ");
+                found_suggestion = true;
             }
         });
+        // Suggest downgrading poorly performing core detectors (lc_accuracy doesn't live up to its severity)
+        get_all_detectors_names().iter().for_each(|d| {
+            let d_metrics = self.metrics_db.get_metrics(d.clone());
+            if !d_metrics.is_acceptable() && d_metrics.lc_accuracy() != 0 {
+                // The case where lc_accuracy = 0 has been taken care above (we completely remove them)
+                println!(
+                    "Detector {d} should be downgraded because lc_accuracy = {}! ",
+                    d_metrics.lc_accuracy()
+                );
+                found_suggestion = true;
+            }
+        });
+
+        if !found_suggestion {
+            println!("No suggestions found. You are good to go!")
+        }
     }
     fn print_demanding_changes_before_init(&self) {
         if !self.is_ready_to_serve() {
-            println!("Please reister the newly added detectors! ");
+            println!("Please register these newly added detectors! ");
+            let core_detectors = get_all_detectors_names();
+            let registered_detectors = self.metrics_db.get_all_detectors_names();
+            let mut extras = vec![];
+
+            for core_detector in core_detectors {
+                if !registered_detectors
+                    .iter()
+                    .any(|d| d.clone() == core_detector)
+                {
+                    extras.push(core_detector);
+                }
+            }
+
+            for extra_detector in extras {
+                println!("{}", extra_detector);
+            }
         }
     }
 }

@@ -555,6 +555,13 @@ dependencies = [
 [[package]]
 name = "judgeops"
 version = "0.1.0"
+dependencies = [
+ "aderyn_core",
+ "clap",
+ "serde",
+ "serde_json",
+ "serde_repr",
+]
 
 [[package]]
 name = "libc"

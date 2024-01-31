@@ -13,15 +13,28 @@ pub struct MetricsDatabase {
 }
 
 impl MetricsDatabase {
+    pub fn self_delete(&self) {
+        println!("Do you want to work on existing database {}? (y/n)\nAnswering no will overwrite existing one / create a new one.", self.db_path);
+        let line = std::io::stdin().lines().next().unwrap().unwrap();
+        if !line.to_lowercase().contains("n") {
+            return;
+        }
+        let db_file = PathBuf::from(self.db_path.clone());
+        if db_file.exists() {
+            std::fs::remove_file(db_file).unwrap();
+        }
+    }
+
     pub fn create_if_not_exists(&self) {
         let db_file = PathBuf::from(self.db_path.clone());
-        let mut file = OpenOptions::new()
+        if let Ok(mut file) = OpenOptions::new()
             .write(true)
             .create_new(true)
             .open(db_file)
-            .unwrap();
-        file.write(serde_json::to_string_pretty(&self).unwrap().as_bytes())
-            .unwrap();
+        {
+            file.write(serde_json::to_string_pretty(&self).unwrap().as_bytes())
+                .unwrap();
+        }
     }
 
     pub fn get_current_db(&self) -> MetricsDatabase {
