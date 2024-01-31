@@ -2,7 +2,7 @@ use std::collections::BTreeMap;
 use std::error::Error;
 
 use crate::{
-    ast::MemberAccess,
+    ast::{MemberAccess, NodeID},
     capture,
     context::{browser::ExtractMemberAccesses, loader::ContextLoader},
     detect::detector::{Detector, DetectorNamePool, IssueSeverity},
@@ -12,7 +12,7 @@ use eyre::Result;
 #[derive(Default)]
 pub struct DelegateCallInLoopDetector {
     // Keys are source file name and line number
-    found_instances: BTreeMap<(String, usize), i64>,
+    found_instances: BTreeMap<(String, usize), NodeID>,
 }
 
 impl Detector for DelegateCallInLoopDetector {
@@ -55,7 +55,7 @@ impl Detector for DelegateCallInLoopDetector {
         String::from("When calling `delegatecall` the same `msg.value` amount will be accredited multiple times.")
     }
 
-    fn instances(&self) -> BTreeMap<(String, usize), i64> {
+    fn instances(&self) -> BTreeMap<(String, usize), NodeID> {
         self.found_instances.clone()
     }
 

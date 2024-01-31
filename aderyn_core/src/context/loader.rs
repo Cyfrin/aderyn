@@ -730,23 +730,23 @@ impl ASTNode {
 
 #[derive(Default, Debug, Clone, PartialEq, Eq, Hash)]
 pub struct NodeContext {
-    pub source_unit_id: i64,
-    pub contract_definition_id: Option<i64>,
-    pub function_definition_id: Option<i64>,
-    pub modifier_definition_id: Option<i64>,
+    pub source_unit_id: NodeID,
+    pub contract_definition_id: Option<NodeID>,
+    pub function_definition_id: Option<NodeID>,
+    pub modifier_definition_id: Option<NodeID>,
 }
 
 #[derive(Default, Debug)]
 pub struct ContextLoader {
-    last_source_unit_id: i64,
-    last_contract_definition_id: Option<i64>,
-    last_function_definition_id: Option<i64>,
-    last_modifier_definition_id: Option<i64>,
+    last_source_unit_id: NodeID,
+    last_contract_definition_id: Option<NodeID>,
+    last_function_definition_id: Option<NodeID>,
+    last_modifier_definition_id: Option<NodeID>,
 
     // relative source filepaths
     pub src_filepaths: Vec<String>,
     pub sloc_stats: HashMap<String, usize>,
-    pub nodes: HashMap<i64, ASTNode>,
+    pub nodes: HashMap<NodeID, ASTNode>,
 
     // Hashmaps of all nodes => source_unit_id
     pub array_type_names: HashMap<ArrayTypeName, NodeContext>,

@@ -1,6 +1,7 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
+    ast::NodeID,
     capture,
     context::loader::ContextLoader,
     detect::detector::{Detector, DetectorNamePool, IssueSeverity},
@@ -10,7 +11,7 @@ use eyre::Result;
 #[derive(Default)]
 pub struct RequireWithStringDetector {
     // Keys are source file name and line number
-    found_instances: BTreeMap<(String, usize), i64>,
+    found_instances: BTreeMap<(String, usize), NodeID>,
 }
 
 impl Detector for RequireWithStringDetector {
@@ -44,7 +45,7 @@ impl Detector for RequireWithStringDetector {
         IssueSeverity::NC
     }
 
-    fn instances(&self) -> BTreeMap<(String, usize), i64> {
+    fn instances(&self) -> BTreeMap<(String, usize), NodeID> {
         self.found_instances.clone()
     }
 

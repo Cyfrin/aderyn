@@ -1,6 +1,7 @@
 use strum::{Display, EnumString};
 
 use crate::{
+    ast::NodeID,
     context::loader::ContextLoader,
     detect::{
         high::{ArbitraryTransferFromDetector, DelegateCallInLoopDetector},
@@ -161,8 +162,8 @@ pub trait Detector {
     }
 
     // Keys are source file name and line number
-    // Value is ASTNode
-    fn instances(&self) -> BTreeMap<(String, usize), i64> {
+    // Value is ASTNode NodeID
+    fn instances(&self) -> BTreeMap<(String, usize), NodeID> {
         BTreeMap::new()
     }
 }

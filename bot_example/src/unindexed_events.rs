@@ -1,13 +1,14 @@
 use std::{collections::BTreeMap, error::Error};
 
 use aderyn_driver::context::loader::ContextLoader;
+use aderyn_driver::core_ast::NodeID;
 use aderyn_driver::detection_modules::capture;
 use aderyn_driver::detector::{Detector, IssueSeverity};
 
 #[derive(Default)]
 pub struct UnindexedEventsDetector {
     // Keys are source file name and line number
-    found_instances: BTreeMap<(String, usize), i64>,
+    found_instances: BTreeMap<(String, usize), NodeID>,
 }
 
 impl Detector for UnindexedEventsDetector {
@@ -47,7 +48,7 @@ impl Detector for UnindexedEventsDetector {
         IssueSeverity::NC
     }
 
-    fn instances(&self) -> BTreeMap<(String, usize), i64> {
+    fn instances(&self) -> BTreeMap<(String, usize), NodeID> {
         self.found_instances.clone()
     }
 }

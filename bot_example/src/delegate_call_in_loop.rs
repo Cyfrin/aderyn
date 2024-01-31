@@ -1,7 +1,7 @@
 use std::collections::BTreeMap;
 use std::error::Error;
 
-use aderyn_driver::core_ast::MemberAccess;
+use aderyn_driver::core_ast::{MemberAccess, NodeID};
 
 use aderyn_driver::context::{browser::ExtractMemberAccesses, loader::ContextLoader};
 use aderyn_driver::detection_modules::capture;
@@ -10,7 +10,7 @@ use aderyn_driver::detector::{Detector, IssueSeverity};
 #[derive(Default)]
 pub struct DelegateCallInLoopDetector {
     // Keys are source file name and line number
-    found_instances: BTreeMap<(String, usize), i64>,
+    found_instances: BTreeMap<(String, usize), NodeID>,
 }
 
 impl Detector for DelegateCallInLoopDetector {
@@ -53,7 +53,7 @@ impl Detector for DelegateCallInLoopDetector {
         String::from("When calling `delegatecall` the same `msg.value` amount will be accredited multiple times.")
     }
 
-    fn instances(&self) -> BTreeMap<(String, usize), i64> {
+    fn instances(&self) -> BTreeMap<(String, usize), NodeID> {
         self.found_instances.clone()
     }
 }

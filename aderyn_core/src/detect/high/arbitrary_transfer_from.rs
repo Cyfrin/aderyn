@@ -1,7 +1,7 @@
 use std::collections::BTreeMap;
 use std::error::Error;
 
-use crate::ast::{Expression, FunctionCall, TypeName};
+use crate::ast::{Expression, FunctionCall, NodeID, TypeName};
 
 use crate::capture;
 use crate::detect::detector::DetectorNamePool;
@@ -14,7 +14,7 @@ use eyre::Result;
 #[derive(Default)]
 pub struct ArbitraryTransferFromDetector {
     // Keys are source file name and line number
-    found_instances: BTreeMap<(String, usize), i64>,
+    found_instances: BTreeMap<(String, usize), NodeID>,
 }
 
 // Check if the first argument of the function call is valid
@@ -77,7 +77,7 @@ impl Detector for ArbitraryTransferFromDetector {
         String::from("Passing an arbitrary `from` address to `transferFrom` (or `safeTransferFrom`) can lead to loss of funds, because anyone can transfer tokens from the `from` address if an approval is made.  ")
     }
 
-    fn instances(&self) -> BTreeMap<(String, usize), i64> {
+    fn instances(&self) -> BTreeMap<(String, usize), NodeID> {
         self.found_instances.clone()
     }
 

@@ -1,7 +1,7 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
-    ast::LiteralKind,
+    ast::{LiteralKind, NodeID},
     capture,
     context::{browser::ExtractLiterals, loader::ContextLoader},
     detect::detector::{Detector, DetectorNamePool, IssueSeverity},
@@ -11,7 +11,7 @@ use eyre::Result;
 #[derive(Default)]
 pub struct ConstantsInsteadOfLiteralsDetector {
     // Keys are source file name and line number
-    found_instances: BTreeMap<(String, usize), i64>,
+    found_instances: BTreeMap<(String, usize), NodeID>,
 }
 
 impl Detector for ConstantsInsteadOfLiteralsDetector {
@@ -49,7 +49,7 @@ impl Detector for ConstantsInsteadOfLiteralsDetector {
         IssueSeverity::NC
     }
 
-    fn instances(&self) -> BTreeMap<(String, usize), i64> {
+    fn instances(&self) -> BTreeMap<(String, usize), NodeID> {
         self.found_instances.clone()
     }
 
