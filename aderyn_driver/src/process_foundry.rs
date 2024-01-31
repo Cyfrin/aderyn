@@ -1,5 +1,5 @@
 use aderyn_core::{
-    context::loader::ContextLoader,
+    context::workspace_context::WorkspaceContext,
     framework::foundry::{load_foundry, read_foundry_output_file},
     read_file_to_string,
     visitor::ast_visitor::Node,
@@ -14,8 +14,8 @@ pub fn with_project_root_at(
     root_path: &PathBuf,
     scope: &Option<Vec<String>>,
     exclude: &Option<Vec<String>>,
-) -> (String, ContextLoader) {
-    let mut context_loader = ContextLoader::default();
+) -> (String, WorkspaceContext) {
+    let mut context = WorkspaceContext::default();
 
     println!("Framework detected: Foundry mode engaged.");
     println!("Foundry root path: {:?}", root_path);
@@ -100,15 +100,15 @@ pub fn with_project_root_at(
             }
         }
 
-        ast.accept(&mut context_loader).unwrap_or_else(|err| {
+        ast.accept(&mut context).unwrap_or_else(|err| {
             // Exit with a non-zero exit code
-            eprintln!("Error loading Foundry AST into ContextLoader");
+            eprintln!("Error loading Foundry AST into WorkspaceContext");
             eprintln!("{:?}", err);
         });
     });
 
-    context_loader.src_filepaths = intermediate_paths.into_iter().collect();
-    (src_path, context_loader)
+    context.src_filepaths = intermediate_paths.into_iter().collect();
+    (src_path, context)
 }
 
 #[cfg(test)]
@@ -118,8 +118,8 @@ mod tests {
     #[test]
     fn test_process_foundry() {
         let root_path = PathBuf::from("../tests/contract-playground");
-        let (_, context_loader) = super::with_project_root_at(&root_path, &None, &None);
-        assert!(context_loader.src_filepaths.len() > 10);
+        let (_, context) = super::with_project_root_at(&root_path, &None, &None);
+        assert!(context.src_filepaths.len() > 10);
     }
 
     #[test]
@@ -130,12 +130,12 @@ mod tests {
             "Counter.sol".to_string(),
         ]);
 
-        let (_, context_loader) = super::with_project_root_at(&root_path, &scope, &None);
-        let contains_string = context_loader
+        let (_, context) = super::with_project_root_at(&root_path, &scope, &None);
+        let contains_string = context
             .src_filepaths
             .iter()
             .any(|fp| fp.contains("AnotherHeavilyCommentedContract.sol"));
-        assert!(context_loader.src_filepaths.len() == 2);
+        assert!(context.src_filepaths.len() == 2);
         assert!(contains_string);
     }
 
@@ -145,8 +145,8 @@ mod tests {
         let exclude: Option<Vec<String>> =
             Some(vec!["AnotherHeavilyCommentedContract.sol".to_string()]);
 
-        let (_, context_loader) = super::with_project_root_at(&root_path, &None, &exclude);
-        let contains_string = context_loader
+        let (_, context) = super::with_project_root_at(&root_path, &None, &exclude);
+        let contains_string = context
             .src_filepaths
             .iter()
             .any(|fp| fp.contains("AnotherHeavilyCommentedContract.sol"));
@@ -159,12 +159,12 @@ mod tests {
         let scope = Some(vec!["Inheritance".to_string()]);
         let exclude = Some(vec!["IContractInheritance.sol".to_string()]);
 
-        let (_, context_loader) = super::with_project_root_at(&root_path, &scope, &exclude);
-        let contains_scope = context_loader
+        let (_, context) = super::with_project_root_at(&root_path, &scope, &exclude);
+        let contains_scope = context
             .src_filepaths
             .iter()
             .any(|fp| fp.contains("ExtendedInheritance.sol"));
-        let contains_exclude = context_loader
+        let contains_exclude = context
             .src_filepaths
             .iter()
             .any(|fp| fp.contains("IContractInheritance.sol"));
@@ -177,12 +177,12 @@ mod tests {
         let scope = Some(vec!["uniswap".to_string()]);
         let exclude = Some(vec!["UniswapV2Swapper.sol".to_string()]);
 
-        let (_, context_loader) = super::with_project_root_at(&root_path, &scope, &exclude);
-        let contains_scope = context_loader
+        let (_, context) = super::with_project_root_at(&root_path, &scope, &exclude);
+        let contains_scope = context
             .src_filepaths
             .iter()
             .any(|fp| fp.contains("UniswapV3Swapper.sol"));
-        let contains_exclude = context_loader
+        let contains_exclude = context
             .src_filepaths
             .iter()
             .any(|fp| fp.contains("UniswapV2Swapper.sol"));

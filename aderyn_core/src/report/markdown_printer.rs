@@ -1,4 +1,4 @@
-use crate::context::loader::ContextLoader;
+use crate::context::workspace_context::WorkspaceContext;
 use std::{
     io::{Result, Write},
     path::{Path, PathBuf},
@@ -15,14 +15,14 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
         &self,
         mut writer: W,
         report: &Report,
-        loader: &ContextLoader,
+        context: &WorkspaceContext,
         root_path: PathBuf,
         output_rel_path: Option<String>,
         no_snippets: bool,
     ) -> Result<()> {
         self.print_title_and_disclaimer(&mut writer)?;
         self.print_table_of_contents(&mut writer, report)?;
-        self.print_contract_summary(&mut writer, report, loader)?;
+        self.print_contract_summary(&mut writer, report, context)?;
 
         let all_issues = vec![
             (report.critical_issues().issues, "# Critical Issues\n", "C"),
@@ -82,14 +82,14 @@ impl MarkdownReportPrinter {
         &self,
         mut writer: W,
         report: &Report,
-        loader: &ContextLoader,
+        context: &WorkspaceContext,
     ) -> Result<()> {
         writeln!(writer, "# Summary\n")?;
 
         // Files Summary
         {
             writeln!(writer, "## Files Summary\n")?;
-            let files_summary = loader.files_summary();
+            let files_summary = context.files_summary();
 
             // Start the markdown table
             writeln!(writer, "| Key | Value |")?;
@@ -112,7 +112,7 @@ impl MarkdownReportPrinter {
             writeln!(writer, "| Filepath | nSLOC |")?;
             writeln!(writer, "| --- | --- |")?;
 
-            let files_details = loader.files_details();
+            let files_details = context.files_details();
 
             files_details.files_details.iter().for_each(|detail| {
                 writeln!(writer, "| {} | {} |", detail.file_path, detail.n_sloc).unwrap();
@@ -121,7 +121,7 @@ impl MarkdownReportPrinter {
             writeln!(
                 writer,
                 "| **Total** | **{}** |",
-                loader.files_summary().total_sloc
+                context.files_summary().total_sloc
             )?;
             writeln!(writer, "\n")?; // Add an extra newline for spacing
         }

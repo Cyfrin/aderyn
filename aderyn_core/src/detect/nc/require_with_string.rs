@@ -1,8 +1,9 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
+    ast::NodeID,
     capture,
-    context::loader::ContextLoader,
+    context::workspace_context::WorkspaceContext,
     detect::detector::{Detector, DetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
@@ -10,13 +11,13 @@ use eyre::Result;
 #[derive(Default)]
 pub struct RequireWithStringDetector {
     // Keys are source file name and line number
-    found_instances: BTreeMap<(String, usize), i64>,
+    found_instances: BTreeMap<(String, usize), NodeID>,
 }
 
 impl Detector for RequireWithStringDetector {
-    fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
+    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // Collect all require statements without a string literal.
-        let requires_and_reverts = loader
+        let requires_and_reverts = context
             .identifiers
             .keys()
             .filter(|id| id.name == "revert" || id.name == "require");
@@ -25,7 +26,7 @@ impl Detector for RequireWithStringDetector {
             if (id.name == "revert" && id.argument_types.as_ref().unwrap().is_empty())
                 || (id.name == "require" && id.argument_types.as_ref().unwrap().len() == 1)
             {
-                capture!(self, loader, id);
+                capture!(self, context, id);
             }
         }
 
@@ -44,7 +45,7 @@ impl Detector for RequireWithStringDetector {
         IssueSeverity::NC
     }
 
-    fn instances(&self) -> BTreeMap<(String, usize), i64> {
+    fn instances(&self) -> BTreeMap<(String, usize), NodeID> {
         self.found_instances.clone()
     }
 
@@ -61,13 +62,13 @@ mod require_with_string_tests {
 
     #[test]
     fn test_require_with_string() {
-        let context_loader = load_contract(
+        let context = load_contract(
             "../tests/contract-playground/out/DeprecatedOZFunctions.sol/DeprecatedOZFunctions.json",
         );
 
         let mut detector = RequireWithStringDetector::default();
         // assert that the detector finds something
-        let found = detector.detect(&context_loader).unwrap();
+        let found = detector.detect(&context).unwrap();
         assert!(found);
         // assert that the detector returns the correct number of instances
         assert_eq!(detector.instances().len(), 2);

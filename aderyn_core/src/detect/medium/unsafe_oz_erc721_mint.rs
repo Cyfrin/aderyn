@@ -1,8 +1,9 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
+    ast::NodeID,
     capture,
-    context::{browser::GetParent, loader::ContextLoader},
+    context::{browser::GetParent, workspace_context::WorkspaceContext},
     detect::detector::{Detector, DetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
@@ -10,15 +11,15 @@ use eyre::Result;
 #[derive(Default)]
 pub struct UnsafeERC721MintDetector {
     // Keys are source file name and line number
-    found_instances: BTreeMap<(String, usize), i64>,
+    found_instances: BTreeMap<(String, usize), NodeID>,
 }
 
 impl Detector for UnsafeERC721MintDetector {
-    fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
-        for identifier in loader.identifiers.keys() {
+    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
+        for identifier in context.identifiers.keys() {
             // if source_unit has any ImportDirectives with absolute_path containing "openzeppelin"
             // call identifier.accept(self)
-            let source_unit = GetParent::source_unit_of(identifier, loader).unwrap();
+            let source_unit = GetParent::source_unit_of(identifier, context).unwrap();
 
             let import_directives = source_unit.import_directives();
             if import_directives.iter().any(|directive| {
@@ -28,7 +29,7 @@ impl Detector for UnsafeERC721MintDetector {
                     .map_or(false, |path| path.contains("openzeppelin"))
             }) && identifier.name == "_mint"
             {
-                capture!(self, loader, identifier);
+                capture!(self, context, identifier);
             }
         }
         Ok(!self.found_instances.is_empty())
@@ -48,7 +49,7 @@ impl Detector for UnsafeERC721MintDetector {
         IssueSeverity::Medium
     }
 
-    fn instances(&self) -> BTreeMap<(String, usize), i64> {
+    fn instances(&self) -> BTreeMap<(String, usize), NodeID> {
         self.found_instances.clone()
     }
 
@@ -66,12 +67,12 @@ mod unsafe_erc721_mint_tests {
 
     #[test]
     fn test_unsafe_erc721_mint_detector() {
-        let context_loader = load_contract(
+        let context = load_contract(
             "../tests/contract-playground/out/UnsafeERC721Mint.sol/UnsafeERC721Mint.json",
         );
 
         let mut detector = UnsafeERC721MintDetector::default();
-        let found = detector.detect(&context_loader).unwrap();
+        let found = detector.detect(&context).unwrap();
         // assert that the detector found an abi encode packed
         assert!(found);
         // assert that the detector found the correct number of instance

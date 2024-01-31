@@ -1,8 +1,9 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
+    ast::NodeID,
     capture,
-    context::loader::ContextLoader,
+    context::workspace_context::WorkspaceContext,
     detect::detector::{Detector, DetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
@@ -10,12 +11,12 @@ use eyre::Result;
 #[derive(Default)]
 pub struct SolmateSafeTransferLibDetector {
     // Keys are source file name and line number
-    found_instances: BTreeMap<(String, usize), i64>,
+    found_instances: BTreeMap<(String, usize), NodeID>,
 }
 
 impl Detector for SolmateSafeTransferLibDetector {
-    fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
-        for import_directive in loader.import_directives.keys() {
+    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
+        for import_directive in context.import_directives.keys() {
             // If the import directive absolute_path contains the strings "solmate" and "SafeTransferLib", flip the found_solmate_import flag to true
             if import_directive
                 .absolute_path
@@ -28,7 +29,7 @@ impl Detector for SolmateSafeTransferLibDetector {
                     .unwrap()
                     .contains("SafeTransferLib")
             {
-                capture!(self, loader, import_directive);
+                capture!(self, context, import_directive);
             }
         }
 
@@ -47,7 +48,7 @@ impl Detector for SolmateSafeTransferLibDetector {
         String::from("There is a subtle difference between the implementation of solmate's SafeTransferLib and OZ's SafeERC20: OZ's SafeERC20 checks if the token is a contract or not, solmate's SafeTransferLib does not.\nhttps://github.com/transmissions11/solmate/blob/main/src/utils/SafeTransferLib.sol#L9 \n`@dev Note that none of the functions in this library check that a token has code at all! That responsibility is delegated to the caller`\n")
     }
 
-    fn instances(&self) -> BTreeMap<(String, usize), i64> {
+    fn instances(&self) -> BTreeMap<(String, usize), NodeID> {
         self.found_instances.clone()
     }
 
@@ -65,11 +66,11 @@ mod solmate_safe_transfer_lib_tests {
 
     #[test]
     fn test_solmate_safe_transfer_lib() {
-        let context_loader =
+        let context =
             load_contract("../tests/contract-playground/out/T11sTranferer.sol/T11sTranferer.json");
 
         let mut detector = SolmateSafeTransferLibDetector::default();
-        let found = detector.detect(&context_loader).unwrap();
+        let found = detector.detect(&context).unwrap();
         // assert that the detector found
         assert!(found);
         // assert that the detector found the correct number of instances (1)
@@ -97,12 +98,12 @@ mod solmate_safe_transfer_lib_tests {
 
     #[test]
     fn test_solmate_safe_transfer_lib_no_issue() {
-        let context_loader = load_contract(
+        let context = load_contract(
             "../tests/contract-playground/out/ArbitraryTransferFrom.sol/ArbitraryTransferFrom.json",
         );
 
         let mut detector = SolmateSafeTransferLibDetector::default();
-        let found = detector.detect(&context_loader).unwrap();
+        let found = detector.detect(&context).unwrap();
         // assert that the detector found
         assert!(!found);
         // assert that the detector found the correct number of instances

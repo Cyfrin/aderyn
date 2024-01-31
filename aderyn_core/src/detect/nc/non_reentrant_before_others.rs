@@ -1,8 +1,9 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
+    ast::NodeID,
     capture,
-    context::loader::ContextLoader,
+    context::workspace_context::WorkspaceContext,
     detect::detector::{Detector, DetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
@@ -10,17 +11,17 @@ use eyre::Result;
 #[derive(Default)]
 pub struct NonReentrantBeforeOthersDetector {
     // Keys are source file name and line number
-    found_instances: BTreeMap<(String, usize), i64>,
+    found_instances: BTreeMap<(String, usize), NodeID>,
 }
 
 impl Detector for NonReentrantBeforeOthersDetector {
-    fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
-        let function_definitions = loader.function_definitions.keys();
+    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
+        let function_definitions = context.function_definitions.keys();
         for definition in function_definitions {
             if definition.modifiers.len() > 1 {
                 for (index, modifier) in definition.modifiers.iter().enumerate() {
                     if modifier.modifier_name.name == "nonReentrant" && index != 0 {
-                        capture!(self, loader, modifier);
+                        capture!(self, context, modifier);
                     }
                 }
             }
@@ -40,7 +41,7 @@ impl Detector for NonReentrantBeforeOthersDetector {
         IssueSeverity::NC
     }
 
-    fn instances(&self) -> BTreeMap<(String, usize), i64> {
+    fn instances(&self) -> BTreeMap<(String, usize), NodeID> {
         self.found_instances.clone()
     }
 
@@ -58,11 +59,11 @@ mod non_reentrant_before_others_tests {
 
     #[test]
     fn test_non_reentrant_before_others() {
-        let context_loader =
+        let context =
             load_contract("../tests/contract-playground/out/AdminContract.sol/AdminContract.json");
 
         let mut detector = NonReentrantBeforeOthersDetector::default();
-        let found = detector.detect(&context_loader).unwrap();
+        let found = detector.detect(&context).unwrap();
         // assert that the detector found something
         assert!(found);
         // assert that the detector found the correct number

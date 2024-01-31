@@ -8,7 +8,7 @@ use crate::{
     capture,
     context::{
         browser::{ExtractAssignments, ExtractBinaryOperations},
-        loader::ContextLoader,
+        workspace_context::WorkspaceContext,
     },
     detect::detector::{Detector, DetectorNamePool, IssueSeverity},
 };
@@ -20,13 +20,13 @@ pub struct ZeroAddressCheckDetector {
     mutable_address_state_variables: HashMap<i64, VariableDeclaration>,
 
     // Keys are source file name and line number
-    found_instances: BTreeMap<(String, usize), i64>,
+    found_instances: BTreeMap<(String, usize), NodeID>,
 }
 
 impl Detector for ZeroAddressCheckDetector {
-    fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
+    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // Get all address state variables
-        self.mutable_address_state_variables = loader
+        self.mutable_address_state_variables = context
             .variable_declarations
             .keys()
             .filter_map(|var_decl| {
@@ -54,7 +54,7 @@ impl Detector for ZeroAddressCheckDetector {
             .collect();
 
         // Get all function definitions
-        for function_definition in loader.function_definitions.keys() {
+        for function_definition in context.function_definitions.keys() {
             // Get all the binary checks inside the function
             let binary_operations: Vec<BinaryOperation> =
                 ExtractBinaryOperations::from(function_definition)
@@ -129,7 +129,7 @@ impl Detector for ZeroAddressCheckDetector {
             // in the binary_checks_against_zero_address, add the assignment to the found_no_zero_address_check
             for (key, value) in &assignments_to_mutable_address_state_variables {
                 if !binary_checks_against_zero_address.contains(key) {
-                    capture!(self, loader, value);
+                    capture!(self, context, value);
                 }
             }
         }
@@ -153,7 +153,7 @@ impl Detector for ZeroAddressCheckDetector {
         IssueSeverity::NC
     }
 
-    fn instances(&self) -> BTreeMap<(String, usize), i64> {
+    fn instances(&self) -> BTreeMap<(String, usize), NodeID> {
         self.found_instances.clone()
     }
 
@@ -171,12 +171,12 @@ mod zero_address_check_tests {
 
     #[test]
     fn test_deprecated_oz_functions_detector() {
-        let context_loader = load_contract(
+        let context = load_contract(
             "../tests/contract-playground/out/StateVariables.sol/StateVariables.json",
         );
 
         let mut detector = ZeroAddressCheckDetector::default();
-        let found = detector.detect(&context_loader).unwrap();
+        let found = detector.detect(&context).unwrap();
         // assert that the detector found the issue
         assert!(found);
         // assert that the detector found the correct number of issues
