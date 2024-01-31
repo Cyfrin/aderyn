@@ -553,6 +553,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "judgeops"
+version = "0.1.0"
+
+[[package]]
 name = "libc"
 version = "0.2.149"
 source = "registry+https://github.com/rust-lang/crates.io-index"

@@ -1,5 +1,5 @@
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
+use std::{collections::HashMap, fs::OpenOptions, io::Write, path::PathBuf};
 use strum::EnumCount;
 
 use crate::detect::detector::IssueSeverity;
@@ -13,12 +13,23 @@ pub struct MetricsDatabase {
 }
 
 impl MetricsDatabase {
-    fn get_current_db(&self) -> MetricsDatabase {
+    pub fn create_if_not_exists(&self) {
+        let db_file = PathBuf::from(self.db_path.clone());
+        let mut file = OpenOptions::new()
+            .write(true)
+            .create_new(true)
+            .open(db_file)
+            .unwrap();
+        file.write(serde_json::to_string_pretty(&self).unwrap().as_bytes())
+            .unwrap();
+    }
+
+    pub fn get_current_db(&self) -> MetricsDatabase {
         let db_content = std::fs::read_to_string(&self.db_path).unwrap();
         serde_json::from_str(&db_content).unwrap()
     }
 
-    fn save_db(&self, metrics_db: MetricsDatabase) {
+    pub fn save_db(&self, metrics_db: MetricsDatabase) {
         let db_content = serde_json::to_string_pretty(&metrics_db).unwrap();
         std::fs::write(&self.db_path, db_content).unwrap();
     }
