@@ -2,7 +2,8 @@ use serde::{Deserialize, Serialize};
 use strum::{Display, EnumCount, EnumString};
 
 use crate::{
-    context::loader::ContextLoader,
+    ast::NodeID,
+    context::workspace_context::WorkspaceContext,
     detect::{
         high::{ArbitraryTransferFromDetector, DelegateCallInLoopDetector},
         low::{
@@ -141,7 +142,7 @@ impl Display for IssueSeverity {
 }
 
 pub trait Detector {
-    fn detect(&mut self, _loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
+    fn detect(&mut self, _context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         Ok(true)
     }
 
@@ -162,8 +163,8 @@ pub trait Detector {
     }
 
     // Keys are source file name and line number
-    // Value is ASTNode.src
-    fn instances(&self) -> BTreeMap<(String, usize), String> {
+    // Value is ASTNode NodeID
+    fn instances(&self) -> BTreeMap<(String, usize), NodeID> {
         BTreeMap::new()
     }
 }
@@ -172,13 +173,13 @@ pub mod detector_test_helpers {
     use std::path::PathBuf;
 
     use crate::{
-        context::loader::ContextLoader, framework::foundry::read_foundry_output_file,
+        context::workspace_context::WorkspaceContext, framework::foundry::read_foundry_output_file,
         read_file_to_string, visitor::ast_visitor::Node,
     };
 
-    pub fn load_contract(filepath: &str) -> ContextLoader {
+    pub fn load_contract(filepath: &str) -> WorkspaceContext {
         let path_buf_filepath = std::path::PathBuf::from(filepath);
-        let mut context_loader = ContextLoader::default();
+        let mut context = WorkspaceContext::default();
         let foundry_output = read_foundry_output_file(path_buf_filepath.to_str().unwrap()).unwrap();
         let mut ast = foundry_output.ast.clone();
         // Get the path of the source file
@@ -207,11 +208,11 @@ pub mod detector_test_helpers {
                 eprintln!("{:?}", err);
             }
         }
-        ast.accept(&mut context_loader).unwrap_or_else(|err| {
+        ast.accept(&mut context).unwrap_or_else(|err| {
             // Exit with a non-zero exit code
-            eprintln!("Error loading Hardhat AST into ContextLoader");
+            eprintln!("Error loading Hardhat AST into WorkspaceContext");
             eprintln!("{:?}", err);
         });
-        context_loader
+        context
     }
 }

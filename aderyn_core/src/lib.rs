@@ -14,14 +14,14 @@ use std::fs::{remove_file, File};
 use std::io::{self};
 use std::path::{Path, PathBuf};
 
-use crate::context::loader::ContextLoader;
+use crate::context::workspace_context::WorkspaceContext;
 use crate::detect::detector::{get_all_detectors, IssueSeverity};
 use crate::report::printer::ReportPrinter;
 use crate::report::reporter::Report;
 use crate::report::Issue;
 
 pub fn run_with_printer<T>(
-    context_loader: &ContextLoader,
+    context: &WorkspaceContext,
     output_file_path: String,
     reporter: T,
     root_rel_path: PathBuf,
@@ -32,7 +32,7 @@ where
 {
     let detectors = get_all_detectors();
     run_with_printer_and_given_detectors(
-        context_loader,
+        context,
         output_file_path,
         reporter,
         root_rel_path,
@@ -42,7 +42,7 @@ where
 }
 
 pub fn run_with_printer_and_given_detectors<T>(
-    context_loader: &ContextLoader,
+    context: &WorkspaceContext,
     output_file_path: String,
     reporter: T,
     root_rel_path: PathBuf,
@@ -58,7 +58,7 @@ where
 
     let mut report: Report = Report::default();
     for mut detector in detectors {
-        if let Ok(found) = detector.detect(context_loader) {
+        if let Ok(found) = detector.detect(context) {
             if found {
                 let issue: Issue = Issue {
                     title: detector.title(),
@@ -93,7 +93,7 @@ where
     reporter.print_report(
         get_markdown_writer(&output_file_path)?,
         &report,
-        context_loader,
+        context,
         root_rel_path,
         Some(output_file_path.clone()),
         no_snippets,

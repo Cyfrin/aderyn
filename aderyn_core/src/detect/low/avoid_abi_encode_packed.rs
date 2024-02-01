@@ -1,8 +1,9 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
+    ast::NodeID,
     capture,
-    context::loader::ContextLoader,
+    context::workspace_context::WorkspaceContext,
     detect::detector::{Detector, DetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
@@ -10,12 +11,12 @@ use eyre::Result;
 #[derive(Default)]
 pub struct AvoidAbiEncodePackedDetector {
     // Keys are source file name and line number
-    found_instances: BTreeMap<(String, usize), String>,
+    found_instances: BTreeMap<(String, usize), NodeID>,
 }
 
 impl Detector for AvoidAbiEncodePackedDetector {
-    fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
-        for member_access in loader.member_accesses.keys() {
+    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
+        for member_access in context.member_accesses.keys() {
             // If the member_access's member_name = "encodePacked", loop through the argument_types and count how many of them contain any of the following in type_strings:
             // ["bytes ", "[]", "string"]
             // If the count is greater than 1, add the member_access to the found_abi_encode_packed vector
@@ -39,7 +40,7 @@ impl Detector for AvoidAbiEncodePackedDetector {
                     }
                 }
                 if count > 1 {
-                    capture!(self, loader, member_access);
+                    capture!(self, context, member_access);
                 }
             }
         }
@@ -60,7 +61,7 @@ impl Detector for AvoidAbiEncodePackedDetector {
         IssueSeverity::Low
     }
 
-    fn instances(&self) -> BTreeMap<(String, usize), String> {
+    fn instances(&self) -> BTreeMap<(String, usize), NodeID> {
         self.found_instances.clone()
     }
 
@@ -77,12 +78,12 @@ mod avoid_abi_encode_packed_tests {
 
     #[test]
     fn test_avoid_abi_encode_packed_detector() {
-        let context_loader = load_contract(
+        let context = load_contract(
             "../tests/contract-playground/out/KeccakContract.sol/KeccakContract.json",
         );
 
         let mut detector = AvoidAbiEncodePackedDetector::default();
-        let found = detector.detect(&context_loader).unwrap();
+        let found = detector.detect(&context).unwrap();
         // assert that the detector found an abi encode packed
         assert!(found);
         // assert that the detector found the correct abi encode packed
