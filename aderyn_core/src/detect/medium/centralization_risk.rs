@@ -1,8 +1,9 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
+    ast::NodeID,
     capture,
-    context::loader::ContextLoader,
+    context::workspace_context::WorkspaceContext,
     detect::detector::{Detector, DetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
@@ -10,12 +11,12 @@ use eyre::Result;
 #[derive(Default)]
 pub struct CentralizationRiskDetector {
     // Keys are source file name and line number
-    found_instances: BTreeMap<(String, usize), String>,
+    found_instances: BTreeMap<(String, usize), NodeID>,
 }
 
 impl Detector for CentralizationRiskDetector {
-    fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
-        for contract_definition in loader.contract_definitions.keys().filter(|cd| {
+    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
+        for contract_definition in context.contract_definitions.keys().filter(|cd| {
             cd.base_contracts.iter().any(|bc| {
                 matches!(
                     bc.base_name.name.as_str(),
@@ -31,15 +32,15 @@ impl Detector for CentralizationRiskDetector {
                 )
             })
         }) {
-            capture!(self, loader, contract_definition);
+            capture!(self, context, contract_definition);
         }
 
-        for modifier_invocation in loader.modifier_invocations.keys().filter(|mi| {
+        for modifier_invocation in context.modifier_invocations.keys().filter(|mi| {
             mi.modifier_name.name == "onlyOwner"
                 || mi.modifier_name.name == "requiresAuth"
                 || mi.modifier_name.name.contains("onlyRole")
         }) {
-            capture!(self, loader, modifier_invocation);
+            capture!(self, context, modifier_invocation);
         }
 
         Ok(!self.found_instances.is_empty())
@@ -57,7 +58,7 @@ impl Detector for CentralizationRiskDetector {
         String::from("Contracts have owners with privileged rights to perform admin tasks and need to be trusted to not perform malicious updates or drain funds.")
     }
 
-    fn instances(&self) -> BTreeMap<(String, usize), String> {
+    fn instances(&self) -> BTreeMap<(String, usize), NodeID> {
         self.found_instances.clone()
     }
 
@@ -74,11 +75,11 @@ mod centralization_risk_detector_tests {
 
     #[test]
     fn test_centralization_risk_detector() {
-        let context_loader =
+        let context =
             load_contract("../tests/contract-playground/out/AdminContract.sol/AdminContract.json");
 
         let mut detector = CentralizationRiskDetector::default();
-        let found = detector.detect(&context_loader).unwrap();
+        let found = detector.detect(&context).unwrap();
         // assert that the detector found a centralization risk
         assert!(found);
         // assert that the number of instances found is 3

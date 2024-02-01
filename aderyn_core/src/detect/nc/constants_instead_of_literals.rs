@@ -1,9 +1,9 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
-    ast::LiteralKind,
+    ast::{LiteralKind, NodeID},
     capture,
-    context::{browser::ExtractLiterals, loader::ContextLoader},
+    context::{browser::ExtractLiterals, workspace_context::WorkspaceContext},
     detect::detector::{Detector, DetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
@@ -11,15 +11,15 @@ use eyre::Result;
 #[derive(Default)]
 pub struct ConstantsInsteadOfLiteralsDetector {
     // Keys are source file name and line number
-    found_instances: BTreeMap<(String, usize), String>,
+    found_instances: BTreeMap<(String, usize), NodeID>,
 }
 
 impl Detector for ConstantsInsteadOfLiteralsDetector {
-    fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
+    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // get all function definitions.
         // for each function definition, find all Literal types
         // if the literal type is either a Number, HexString or Address, then add it to the list of found literals
-        for function_definition in loader.function_definitions.keys() {
+        for function_definition in context.function_definitions.keys() {
             ExtractLiterals::from(function_definition)
                 .extracted
                 .iter()
@@ -29,7 +29,7 @@ impl Detector for ConstantsInsteadOfLiteralsDetector {
                         || literal.kind == LiteralKind::HexString
                         || literal.kind == LiteralKind::Address
                     {
-                        capture!(self, loader, literal);
+                        capture!(self, context, literal);
                     }
                 });
         }
@@ -49,7 +49,7 @@ impl Detector for ConstantsInsteadOfLiteralsDetector {
         IssueSeverity::NC
     }
 
-    fn instances(&self) -> BTreeMap<(String, usize), String> {
+    fn instances(&self) -> BTreeMap<(String, usize), NodeID> {
         self.found_instances.clone()
     }
 
@@ -66,12 +66,12 @@ mod constants_instead_of_literals_tests {
 
     #[test]
     fn test_constants_instead_of_literals() {
-        let context_loader =
+        let context =
             load_contract("../tests/contract-playground/out/Counter.sol/Counter.0.8.21.json");
 
         let mut detector = ConstantsInsteadOfLiteralsDetector::default();
         // assert that the detector finds the public function
-        let found = detector.detect(&context_loader).unwrap();
+        let found = detector.detect(&context).unwrap();
         assert!(found);
         // assert that the detector finds the correct number of instances
         assert_eq!(detector.instances().len(), 1);
