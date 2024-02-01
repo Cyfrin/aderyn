@@ -14,6 +14,8 @@
 //
 // And more...
 
+use std::process::ExitCode;
+
 use strum::EnumCount;
 
 use crate::detect::detector::{get_all_detectors_names, IssueSeverity};
@@ -21,8 +23,8 @@ use crate::detect::detector::{get_all_detectors_names, IssueSeverity};
 use super::utils::MetricsDatabase;
 use super::{
     CalculatesValueOfDetector, DecidesWhenReadyToServe, GetsCurrentMetricsForDetector,
-    GetsRegisteredDetectors, InfersMetrics, Metrics, RegistersNewDetector, TakesFeedbackFromJudge,
-    WatchTower,
+    GetsRegisteredDetectors, InfersMetrics, Metrics, RegistersNewDetector, TagsTheDetector,
+    TakesFeedbackFromJudge, WatchTower,
 };
 
 pub struct LightChaser {
@@ -133,10 +135,10 @@ impl DecidesWhenReadyToServe for LightChaser {
         registered_detectors.sort();
         core_detectors == registered_detectors // Otherwise they are not in sync
     }
-    fn print_suggested_changes_before_init(&self) {
+    fn print_suggested_changes_before_init(&self) -> ExitCode {
         if !self.is_ready_to_serve() {
             println!("Demanding-changes need to be resolved before calculating suggested-changes");
-            return;
+            return ExitCode::FAILURE;
         }
         let mut found_suggestion = false;
 
@@ -162,10 +164,13 @@ impl DecidesWhenReadyToServe for LightChaser {
         });
 
         if !found_suggestion {
-            println!("No suggestions found. You are good to go!")
+            println!("No suggestions found. You are good to go!");
+            ExitCode::SUCCESS
+        } else {
+            ExitCode::FAILURE
         }
     }
-    fn print_demanding_changes_before_init(&self) {
+    fn print_demanding_changes_before_init(&self) -> ExitCode {
         if !self.is_ready_to_serve() {
             println!("Please register these newly added detectors! ");
             let core_detectors = get_all_detectors_names();
@@ -184,7 +189,11 @@ impl DecidesWhenReadyToServe for LightChaser {
             for extra_detector in extras {
                 println!("{}", extra_detector);
             }
+            return ExitCode::FAILURE;
         }
+
+        println!("No demanding changes required. You are good to go!");
+        ExitCode::SUCCESS
     }
 }
 
@@ -208,6 +217,37 @@ impl CalculatesValueOfDetector for LightChaser {
 impl GetsRegisteredDetectors for LightChaser {
     fn get_registered_detectors_names(&self) -> Vec<String> {
         self.metrics_db.get_all_detectors_names()
+    }
+}
+
+impl TagsTheDetector for LightChaser {
+    fn request_tag(&self, detector_name: String) -> Option<super::Tag> {
+        let metrics = self.metrics_db.get_metrics(detector_name.clone());
+        if metrics.is_acceptable() && !self.metrics_db.tags.contains_key(&detector_name) {
+            return None;
+        }
+        let mut tag_messages = vec![];
+        // Implicit tags (when accuracy drops too low for given severity)
+        if !metrics.is_acceptable() {
+            tag_messages.push(format!(
+                "{} is too low of an accuracy for {} detector",
+                metrics.lc_accuracy(),
+                metrics.current_severity
+            ));
+        }
+        // Explicit tags (set at the time of registering the detectors or ad hoc)
+        if self.metrics_db.tags.contains_key(&detector_name) {
+            if let Some(tags) = self.metrics_db.tags.get(&detector_name) {
+                tag_messages.extend(tags.messages.clone());
+            }
+        }
+        Some(super::Tag {
+            messages: tag_messages,
+        })
+    }
+
+    fn explicity_tag(&self, detector_name: String, message: String) -> Option<super::Tag> {
+        // TODO: make the metrics db add message to detector_name
     }
 }
 

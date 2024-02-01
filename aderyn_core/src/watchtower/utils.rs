@@ -4,15 +4,33 @@ use strum::EnumCount;
 
 use crate::detect::detector::IssueSeverity;
 
-use super::Metrics;
+use super::{Metrics, Tag};
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Default)]
 pub struct MetricsDatabase {
     pub metrics: HashMap<String, Metrics>,
+    pub tags: HashMap<String, Tag>,
     pub db_path: String,
 }
 
 impl MetricsDatabase {
+    pub fn from_path(path: String) -> MetricsDatabase {
+        let fpath = PathBuf::from(&path);
+        if fpath.exists() {
+            let db_content = std::fs::read_to_string(path).unwrap();
+            Self::from_str(&db_content)
+        } else {
+            let mut db = MetricsDatabase::default();
+            db.db_path = path;
+            db.create_if_not_exists();
+            db
+        }
+    }
+
+    pub fn from_str(content: &str) -> MetricsDatabase {
+        serde_json::from_str(content).unwrap()
+    }
+
     pub fn self_delete(&self) {
         println!("Do you want to work on existing database {}? (y/n)\nAnswering no will overwrite existing one / create a new one.", self.db_path);
         let line = std::io::stdin().lines().next().unwrap().unwrap();

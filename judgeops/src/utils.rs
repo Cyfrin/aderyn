@@ -1,3 +1,5 @@
+use std::process::ExitCode;
+
 use aderyn_core::{
     detect::detector::{get_all_detectors_names, get_detector_by_name},
     watchtower::WatchTower,
@@ -31,5 +33,19 @@ pub(crate) fn auto_register_new_core_detectors(watchtower: &Box<dyn WatchTower>)
             detector.severity()
         );
         watchtower.register(new_detector, detector.severity());
+    }
+}
+
+pub(crate) fn tag_detector(
+    watchtower: &Box<dyn WatchTower>,
+    detector_name: &str,
+    message: &str,
+) -> ExitCode {
+    let existing_watchtower_detectors = watchtower.get_registered_detectors_names();
+    if !existing_watchtower_detectors
+        .iter()
+        .any(|d| d == detector_name)
+    {
+        ExitCode::FAILURE
     }
 }

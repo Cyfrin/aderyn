@@ -1,6 +1,8 @@
 pub mod lightchaser;
 pub mod utils;
 
+use std::process::ExitCode;
+
 use serde::{Deserialize, Serialize};
 
 use crate::detect::detector::IssueSeverity;
@@ -50,7 +52,7 @@ pub trait GetsRegisteredDetectors {
     fn get_registered_detectors_names(&self) -> Vec<String>;
 }
 
-// Planned to be used by ReportPrinter and Aderyn Registry
+// For debugging / browsing purposes
 pub trait GetsCurrentMetricsForDetector: DecidesWhenReadyToServe {
     fn metrics(&self, detector_name: String) -> Metrics;
     fn is_ready_to_get_metrics(&self) -> bool {
@@ -60,8 +62,8 @@ pub trait GetsCurrentMetricsForDetector: DecidesWhenReadyToServe {
 
 pub trait DecidesWhenReadyToServe {
     fn is_ready_to_serve(&self) -> bool;
-    fn print_demanding_changes_before_init(&self);
-    fn print_suggested_changes_before_init(&self);
+    fn print_demanding_changes_before_init(&self) -> ExitCode;
+    fn print_suggested_changes_before_init(&self) -> ExitCode;
 }
 
 pub trait TakesFeedbackFromJudge: DecidesWhenReadyToServe {
@@ -76,12 +78,25 @@ pub trait InfersMetrics {
     fn is_acceptable(&self) -> bool;
 }
 
+// Used by Aderyn Registry
 pub trait CalculatesValueOfDetector: DecidesWhenReadyToServe {
     /// All implementations MUST return a value from [0, 1] only
     fn value(&self, detector_name: String) -> f64;
     fn is_ready_to_calculate_value(&self) -> bool {
         self.is_ready_to_serve()
     }
+}
+
+#[derive(Deserialize, Serialize, Debug, PartialEq)]
+pub struct Tag {
+    pub messages: Vec<String>,
+}
+
+// Used by Report Printer
+pub trait TagsTheDetector {
+    /// Should return any explicit tag set by judge <or> if it fails `is_acceptable()` test
+    fn request_tag(&self, detector_name: String) -> Option<Tag>;
+    fn explicity_tag(&self, detector_name: String, message: String) -> Option<Tag>;
 }
 
 pub trait WatchTower:
@@ -91,5 +106,6 @@ pub trait WatchTower:
     + TakesFeedbackFromJudge
     + CalculatesValueOfDetector
     + GetsRegisteredDetectors
+    + TagsTheDetector
 {
 }

@@ -1,63 +1,7 @@
 {
   "metrics": {
-    "require-with-string": {
-      "detector_name": "require-with-string",
-      "true_positives": 5,
-      "false_positives": 0,
-      "trigger_count": 5,
-      "experience": 5,
-      "current_severity": "NC"
-    },
-    "non-reentrant-before-others": {
-      "detector_name": "non-reentrant-before-others",
-      "true_positives": 5,
-      "false_positives": 0,
-      "trigger_count": 5,
-      "experience": 5,
-      "current_severity": "NC"
-    },
-    "unspecific-solidity-pragma": {
-      "detector_name": "unspecific-solidity-pragma",
-      "true_positives": 5,
-      "false_positives": 0,
-      "trigger_count": 5,
-      "experience": 5,
-      "current_severity": "Low"
-    },
-    "centralization-risk": {
-      "detector_name": "centralization-risk",
-      "true_positives": 5,
-      "false_positives": 0,
-      "trigger_count": 5,
-      "experience": 5,
-      "current_severity": "Medium"
-    },
-    "unsafe-erc20-functions": {
-      "detector_name": "unsafe-erc20-functions",
-      "true_positives": 5,
-      "false_positives": 0,
-      "trigger_count": 5,
-      "experience": 5,
-      "current_severity": "Low"
-    },
-    "solmate-safe-transfer-lib": {
-      "detector_name": "solmate-safe-transfer-lib",
-      "true_positives": 5,
-      "false_positives": 0,
-      "trigger_count": 5,
-      "experience": 5,
-      "current_severity": "Medium"
-    },
-    "ecrecover": {
-      "detector_name": "ecrecover",
-      "true_positives": 5,
-      "false_positives": 0,
-      "trigger_count": 5,
-      "experience": 5,
-      "current_severity": "Low"
-    },
-    "push-zero-opcode": {
-      "detector_name": "push-zero-opcode",
+    "deprecated-oz-functions": {
+      "detector_name": "deprecated-oz-functions",
       "true_positives": 5,
       "false_positives": 0,
       "trigger_count": 5,
@@ -72,29 +16,13 @@
       "experience": 5,
       "current_severity": "Medium"
     },
-    "constants-instead-of-literals": {
-      "detector_name": "constants-instead-of-literals",
+    "unsafe-oz-erc721-mint": {
+      "detector_name": "unsafe-oz-erc721-mint",
       "true_positives": 5,
       "false_positives": 0,
       "trigger_count": 5,
       "experience": 5,
-      "current_severity": "NC"
-    },
-    "zero-address-check": {
-      "detector_name": "zero-address-check",
-      "true_positives": 5,
-      "false_positives": 0,
-      "trigger_count": 5,
-      "experience": 5,
-      "current_severity": "NC"
-    },
-    "arbitrary-transfer-from": {
-      "detector_name": "arbitrary-transfer-from",
-      "true_positives": 5,
-      "false_positives": 0,
-      "trigger_count": 5,
-      "experience": 5,
-      "current_severity": "High"
+      "current_severity": "Medium"
     },
     "useless-public-function": {
       "detector_name": "useless-public-function",
@@ -104,13 +32,53 @@
       "experience": 5,
       "current_severity": "NC"
     },
-    "deprecated-oz-functions": {
-      "detector_name": "deprecated-oz-functions",
+    "non-reentrant-before-others": {
+      "detector_name": "non-reentrant-before-others",
+      "true_positives": 5,
+      "false_positives": 0,
+      "trigger_count": 5,
+      "experience": 5,
+      "current_severity": "NC"
+    },
+    "ecrecover": {
+      "detector_name": "ecrecover",
       "true_positives": 5,
       "false_positives": 0,
       "trigger_count": 5,
       "experience": 5,
       "current_severity": "Low"
+    },
+    "require-with-string": {
+      "detector_name": "require-with-string",
+      "true_positives": 5,
+      "false_positives": 0,
+      "trigger_count": 5,
+      "experience": 5,
+      "current_severity": "NC"
+    },
+    "unsafe-erc20-functions": {
+      "detector_name": "unsafe-erc20-functions",
+      "true_positives": 5,
+      "false_positives": 0,
+      "trigger_count": 5,
+      "experience": 5,
+      "current_severity": "Low"
+    },
+    "constants-instead-of-literals": {
+      "detector_name": "constants-instead-of-literals",
+      "true_positives": 5,
+      "false_positives": 0,
+      "trigger_count": 5,
+      "experience": 5,
+      "current_severity": "NC"
+    },
+    "solmate-safe-transfer-lib": {
+      "detector_name": "solmate-safe-transfer-lib",
+      "true_positives": 5,
+      "false_positives": 0,
+      "trigger_count": 5,
+      "experience": 5,
+      "current_severity": "Medium"
     },
     "avoid-abi-encode-packed": {
       "detector_name": "avoid-abi-encode-packed",
@@ -120,21 +88,21 @@
       "experience": 5,
       "current_severity": "Low"
     },
-    "unsafe-oz-erc721-mint": {
-      "detector_name": "unsafe-oz-erc721-mint",
+    "push-zero-opcode": {
+      "detector_name": "push-zero-opcode",
+      "true_positives": 5,
+      "false_positives": 0,
+      "trigger_count": 5,
+      "experience": 5,
+      "current_severity": "Low"
+    },
+    "centralization-risk": {
+      "detector_name": "centralization-risk",
       "true_positives": 5,
       "false_positives": 0,
       "trigger_count": 5,
       "experience": 5,
       "current_severity": "Medium"
-    },
-    "unindexed-events": {
-      "detector_name": "unindexed-events",
-      "true_positives": 5,
-      "false_positives": 0,
-      "trigger_count": 5,
-      "experience": 5,
-      "current_severity": "NC"
     },
     "delegate-call-in-loop": {
       "detector_name": "delegate-call-in-loop",
@@ -143,7 +111,40 @@
       "trigger_count": 5,
       "experience": 5,
       "current_severity": "High"
+    },
+    "arbitrary-transfer-from": {
+      "detector_name": "arbitrary-transfer-from",
+      "true_positives": 5,
+      "false_positives": 0,
+      "trigger_count": 5,
+      "experience": 5,
+      "current_severity": "High"
+    },
+    "zero-address-check": {
+      "detector_name": "zero-address-check",
+      "true_positives": 5,
+      "false_positives": 0,
+      "trigger_count": 5,
+      "experience": 5,
+      "current_severity": "NC"
+    },
+    "unspecific-solidity-pragma": {
+      "detector_name": "unspecific-solidity-pragma",
+      "true_positives": 5,
+      "false_positives": 0,
+      "trigger_count": 5,
+      "experience": 5,
+      "current_severity": "Low"
+    },
+    "unindexed-events": {
+      "detector_name": "unindexed-events",
+      "true_positives": 5,
+      "false_positives": 0,
+      "trigger_count": 5,
+      "experience": 5,
+      "current_severity": "NC"
     }
   },
-  "db_path": "lc-metrics.json"
+  "tags": {},
+  "db_path": "watchtower.metrics_db.json"
 }
