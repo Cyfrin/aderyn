@@ -10,8 +10,8 @@ impl ReusableDetector for IdentifiersThatReferenceVariablesDetector {
     fn detect(
         &mut self,
         context: &crate::context::workspace_context::WorkspaceContext,
-        using: &Vec<ASTNode>,
-        _: &Vec<ASTNode>,
+        using: &[ASTNode],
+        _: &[ASTNode],
     ) -> Result<bool, Box<dyn std::error::Error>> {
         if using.is_empty() {
             return Err("Error: using is empty".into());

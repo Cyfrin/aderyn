@@ -172,8 +172,8 @@ pub trait ReusableDetector {
     fn detect(
         &mut self,
         _context: &WorkspaceContext,
-        _using: &Vec<ASTNode>,
-        _within: &Vec<ASTNode>,
+        _using: &[ASTNode],
+        _within: &[ASTNode],
     ) -> Result<bool, Box<dyn Error>> {
         Ok(true)
     }
