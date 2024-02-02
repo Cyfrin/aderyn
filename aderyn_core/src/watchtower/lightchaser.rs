@@ -14,6 +14,7 @@
 //
 // And more...
 
+use std::collections::HashMap;
 use std::process::ExitCode;
 
 use strum::EnumCount;
@@ -44,6 +45,9 @@ impl RegistersNewDetector for LightChaser {
 impl GetsCurrentMetricsForDetector for LightChaser {
     fn metrics(&self, detector_name: String) -> Metrics {
         self.metrics_db.get_metrics(detector_name)
+    }
+    fn all_metrics(&self) -> HashMap<String, Metrics> {
+        self.metrics_db.metrics.clone()
     }
 }
 
@@ -206,6 +210,10 @@ impl CalculatesValueOfDetector for LightChaser {
     // Value to assign to severity is upto whoever is using this API
     fn value(&self, detector_name: String) -> f64 {
         let metrics = self.metrics_db.get_metrics(detector_name);
+        self.value_from_metrics(&metrics)
+    }
+
+    fn value_from_metrics(&self, metrics: &Metrics) -> f64 {
         let trigger_rate = metrics.trigger_count as f64 / metrics.experience as f64;
         let lc_accuracy = metrics.lc_accuracy();
         let detector_value = trigger_rate * lc_accuracy as f64; // min value = 0, max value = 1 * 5 = 5

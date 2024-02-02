@@ -6,7 +6,10 @@ use aderyn_core::watchtower::WatchTower;
 
 use clap::{Parser, Subcommand};
 
+use crate::inference::MetricsChangeSummarizer;
+
 mod extract;
+mod inference;
 mod utils;
 
 #[derive(Parser, Debug)]
@@ -75,7 +78,17 @@ fn main() -> ExitCode {
             MySubcommand::RemoveTags { detector_name } => {
                 utils::remove_tag(&watchtower, &detector_name)
             }
-            MySubcommand::GiveFeedback { file } => utils::give_feedback(&watchtower, &file),
+            MySubcommand::GiveFeedback { file } => {
+                let before_snapshot = watchtower.all_metrics();
+                let exit_code = utils::give_feedback(&watchtower, &file);
+                let after_snapshot = watchtower.all_metrics();
+                let change_summarizer = MetricsChangeSummarizer {
+                    before_metrics: before_snapshot,
+                    after_metrics: after_snapshot,
+                };
+                change_summarizer.print_summary_of_changes(&watchtower);
+                exit_code
+            }
         };
     }
 

@@ -1,7 +1,7 @@
 pub mod lightchaser;
 pub mod utils;
 
-use std::process::ExitCode;
+use std::{collections::HashMap, process::ExitCode};
 
 use serde::{Deserialize, Serialize};
 
@@ -56,6 +56,7 @@ pub trait GetsRegisteredDetectors {
 // For debugging / browsing purposes
 pub trait GetsCurrentMetricsForDetector: DecidesWhenReadyToServe {
     fn metrics(&self, detector_name: String) -> Metrics;
+    fn all_metrics(&self) -> HashMap<String, Metrics>;
     fn is_ready_to_get_metrics(&self) -> bool {
         self.is_ready_to_serve()
     }
@@ -83,6 +84,7 @@ pub trait InfersMetrics {
 pub trait CalculatesValueOfDetector: DecidesWhenReadyToServe {
     /// All implementations MUST return a value from [0, 1] only
     fn value(&self, detector_name: String) -> f64;
+    fn value_from_metrics(&self, metrics: &Metrics) -> f64;
     fn is_ready_to_calculate_value(&self) -> bool {
         self.is_ready_to_serve()
     }
