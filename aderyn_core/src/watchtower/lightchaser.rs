@@ -47,7 +47,7 @@ impl GetsCurrentMetricsForDetector for LightChaser {
         self.metrics_db.get_metrics(detector_name)
     }
     fn all_metrics(&self) -> HashMap<String, Metrics> {
-        self.metrics_db.metrics.clone()
+        self.metrics_db.get_all_metrics()
     }
 }
 

@@ -122,6 +122,11 @@ impl MetricsDatabase {
         state.metrics.get(&detector_name).unwrap().clone()
     }
 
+    pub fn get_all_metrics(&self) -> HashMap<String, Metrics> {
+        let state = self.get_current_db();
+        state.metrics.clone()
+    }
+
     pub fn increase_experience(&self, name: String) {
         let mut state = self.get_current_db();
         let current_exp = state.metrics.get(&name).unwrap().experience;
