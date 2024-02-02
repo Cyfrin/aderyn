@@ -1,0 +1,58 @@
+use std::error::Error;
+
+use aderyn_driver::context::workspace_context::WorkspaceContext;
+use aderyn_driver::detector::ReusableDetector;
+
+#[derive(Default)]
+pub struct {{detector_name_title_case}} {
+    found_instances: Vec<ASTNode>,
+}
+
+impl ReusableDetector for {{detector_name_title_case}} {
+    fn detect(
+        &mut self,
+        context: &crate::context::workspace_context::WorkspaceContext,
+        using: &[ASTNode],
+        _: &[ASTNode],
+    ) -> Result<&[ASTNode], Box<dyn std::error::Error>> {
+        
+        // Use the `context` to find nodes, then capture them as shown below
+        // self.found_instances.push(my_ast_node.into());
+        
+        Ok(&self.found_instances)
+    }
+}
+
+#[cfg(test)]
+mod {{detector_name_camel_case}}_tests {
+
+    use crate::config_tests::tests_configuration;
+
+    use super::{{detector_name_title_case}};
+
+    use aderyn_driver::context::workspace_context::WorkspaceContext;
+    use aderyn_driver::detector::detector_test_helpers::load_contract;
+    use aderyn_driver::detector::ReusableDetector;
+
+    fn test_{{detector_name_camel_case}}_for(
+        _contract_file: String,
+        context: WorkspaceContext,
+        mut detector: impl ReusableDetector,
+    ) {
+        // assert that the detector finds instances
+        let found = detector.detect(&context, &using, &Vec::new()).unwrap();
+        assert!(found);
+    }
+
+    #[test]
+    fn test_{{detector_name_camel_case}}() {
+        let detector = {{detector_name_title_case}}::default();
+        let contracts = tests_configuration().get_contracts_for(detector.title());
+
+        for contract_file in contracts {
+            let detector = {{detector_name_title_case}}::default();
+            let context = load_contract(&contract_file);
+            test_{{detector_name_camel_case}}_for(contract_file, context, detector);
+        }
+    }
+}
