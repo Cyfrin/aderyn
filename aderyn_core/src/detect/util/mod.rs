@@ -1,3 +1,3 @@
-pub(crate) mod identifiers_that_reference_state_variables;
+pub(crate) mod identifiers_that_reference_variables;
 
-pub use identifiers_that_reference_state_variables::IdentifiersThatReferenceStateVariableDetector;
+pub use identifiers_that_reference_variables::IdentifiersThatReferenceVariableDetector;

@@ -9,12 +9,12 @@ use crate::{
 };
 
 #[derive(Default)]
-pub struct IdentifiersThatReferenceStateVariableDetector {
+pub struct IdentifiersThatReferenceVariableDetector {
     // Keys are source file name and line number
     found_instances: BTreeMap<(String, usize), NodeID>,
 }
 
-impl Detector for IdentifiersThatReferenceStateVariableDetector {
+impl Detector for IdentifiersThatReferenceVariableDetector {
     fn detect(
         &mut self,
         context: &WorkspaceContext,
@@ -34,9 +34,6 @@ impl Detector for IdentifiersThatReferenceStateVariableDetector {
         }
         let retrieved = retrieved.unwrap();
         if let ASTNode::VariableDeclaration(variable_declaration) = retrieved {
-            if !variable_declaration.state_variable {
-                return Err("Error: variable_declaration is not a state variable".into());
-            }
             context.identifiers.keys().for_each(|identifier| {
                 if identifier.referenced_declaration == variable_declaration.id {
                     capture!(self, context, identifier);
@@ -54,15 +51,15 @@ impl Detector for IdentifiersThatReferenceStateVariableDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Literals that reference a state variable")
+        String::from("Literals that reference a variable declaration")
     }
 
     fn description(&self) -> String {
-        String::from("Get all literals in the context that reference a state variable")
+        String::from("Get all literals in the context that reference a variable declaration")
     }
 
     fn name(&self) -> String {
-        "IdentifiersThatReferenceStateVariableDetector".to_string()
+        "IdentifiersThatReferenceVariableDetector".to_string()
     }
 
     fn instances(&self) -> BTreeMap<(String, usize), NodeID> {
@@ -71,31 +68,31 @@ impl Detector for IdentifiersThatReferenceStateVariableDetector {
 }
 
 #[cfg(test)]
-mod identifiers_that_reference_state_variables_detector_tests {
+mod identifiers_that_reference_variables_detector_tests {
     use crate::detect::detector::{detector_test_helpers::load_contract, Detector};
 
-    use super::IdentifiersThatReferenceStateVariableDetector;
+    use super::IdentifiersThatReferenceVariableDetector;
 
     #[test]
     fn test_delegate_call_in_loop_detector() {
         let context = load_contract(
-            "../tests/contract-playground/out/StorageConditionals.sol/StorageConditionals.json",
+            "../tests/contract-playground/out/UniswapV2Swapper.sol/UniswapV2Swapper.json",
         );
-        // from context, get the first item from variable_declarations where name is "s_sameConditionals"
+        // from context, get the first item from variable_declarations where name is "amountIn"
         let variable_declaration = context
             .variable_declarations
             .keys()
-            .find(|variable_declaration| variable_declaration.name == "s_sameConditionals")
+            .find(|variable_declaration| variable_declaration.name == "amountIn")
             .unwrap();
 
-        let mut detector = IdentifiersThatReferenceStateVariableDetector::default();
+        let mut detector = IdentifiersThatReferenceVariableDetector::default();
         let found = detector
             .detect(&context, &[], &[variable_declaration.id])
             .unwrap();
         // assert that the detector found
         assert!(found);
         // assert that the detector found the correct number of instances
-        assert_eq!(detector.instances().len(), 7);
+        assert_eq!(detector.instances().len(), 4);
         // assert the severity is high
         assert_eq!(
             detector.severity(),
@@ -104,12 +101,12 @@ mod identifiers_that_reference_state_variables_detector_tests {
         // assert the title is correct
         assert_eq!(
             detector.title(),
-            String::from("Literals that reference a state variable")
+            String::from("Literals that reference a variable declaration")
         );
         // assert the description is correct
         assert_eq!(
             detector.description(),
-            String::from("Get all literals in the context that reference a state variable")
+            String::from("Get all literals in the context that reference a variable declaration")
         );
     }
 }
