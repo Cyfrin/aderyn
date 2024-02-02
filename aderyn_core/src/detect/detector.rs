@@ -174,12 +174,8 @@ pub trait ReusableDetector {
         _context: &WorkspaceContext,
         _using: &[ASTNode],
         _within: &[ASTNode],
-    ) -> Result<bool, Box<dyn Error>> {
-        Ok(true)
-    }
-
-    fn instances(&self) -> Vec<&ASTNode> {
-        Vec::new()
+    ) -> Result<&[ASTNode], Box<dyn Error>> {
+        Ok(&[])
     }
 }
 

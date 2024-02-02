@@ -1,3 +1,3 @@
-pub(crate) mod identifiers_that_reference_variables;
+pub(crate) mod identifiers_that_reference_functions;
 
-pub use identifiers_that_reference_variables::IdentifiersThatReferenceVariablesDetector;
+pub use identifiers_that_reference_functions::IdentifiersThatReferenceFunctionsDetector;
