@@ -20,21 +20,15 @@ pub struct UselessPublicFunctionDetector {
 impl Detector for UselessPublicFunctionDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         let unreferenced_public_functions =
-            context.function_definitions.keys().filter(|function| {
-                let function_definition = *function;
-                if function_definition.visibility == Visibility::Public
+            context.function_definitions.keys().filter(|&function| {
+                matches!(function.visibility, Visibility::Public)
                     && IdentifiersThatReferenceAFunctionDetector::default()
                         .detect(
                             context,
-                            &[ASTNode::FunctionDefinition(function_definition.clone())],
+                            &[ASTNode::FunctionDefinition(function.clone())],
                             &[],
                         )
-                        .unwrap()
-                        .is_empty()
-                {
-                    return true;
-                }
-                false
+                        .map_or(false, |refs| refs.is_empty())
             });
 
         for unreferenced_public_function in unreferenced_public_functions {
