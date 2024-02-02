@@ -110,6 +110,17 @@ jobs:
           cat bot_reports/custom_subscription_analysis_report.md
           diff bot_reports/orig_custom_subscription_analysis_report.md bot_reports/custom_subscription_analysis_report.md
 
+      - name: Generate report2.judge.md
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+          args: -- -o report2.judge.md ./tests/contract-playground/
+
+      - name: Check report.judge.md vs report2.judge.md
+        run: |
+          cat report2.judge.md
+          diff report.judge.md report2.judge.md
+
 
   bots:
   

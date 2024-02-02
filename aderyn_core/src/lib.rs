@@ -18,7 +18,7 @@ use crate::context::workspace_context::WorkspaceContext;
 use crate::detect::detector::{get_all_detectors, IssueSeverity};
 use crate::report::printer::ReportPrinter;
 use crate::report::reporter::Report;
-use crate::report::Issue;
+use crate::report::{get_watchtower, Issue};
 
 pub fn run_with_printer<T>(
     context: &WorkspaceContext,
@@ -56,6 +56,8 @@ where
 
     println!("Running {} detectors", detectors.len());
 
+    let detectors_used = &detectors.iter().map(|d| d.name()).collect::<Vec<_>>();
+    let watchtower = get_watchtower::from_metrics_db();
     let mut report: Report = Report::default();
     for mut detector in detectors {
         if let Ok(found) = detector.detect(context) {
@@ -97,6 +99,8 @@ where
         root_rel_path,
         Some(output_file_path.clone()),
         no_snippets,
+        detectors_used,
+        &watchtower,
     )?;
 
     println!("Report printed to {}", output_file_path);

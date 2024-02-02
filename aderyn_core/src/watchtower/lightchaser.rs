@@ -246,8 +246,13 @@ impl TagsTheDetector for LightChaser {
         })
     }
 
-    fn explicity_tag(&self, detector_name: String, message: String) -> Option<super::Tag> {
-        // TODO: make the metrics db add message to detector_name
+    fn explicity_tag(&self, detector_name: String, message: String) {
+        self.metrics_db
+            .tag_detector_with_message(detector_name, message);
+    }
+
+    fn remove_tag(&self, detector_name: String) {
+        self.metrics_db.remove_tag(detector_name);
     }
 }
 

@@ -16,13 +16,20 @@ pub struct MetricsDatabase {
 impl MetricsDatabase {
     pub fn from_path(path: String) -> MetricsDatabase {
         let fpath = PathBuf::from(&path);
-        if fpath.exists() {
-            let db_content = std::fs::read_to_string(path).unwrap();
-            Self::from_str(&db_content)
+        if fpath.exists() && std::fs::metadata(&path).unwrap().len() > 0 {
+            Self::from_str(&std::fs::read_to_string(&path).unwrap())
         } else {
             let mut db = MetricsDatabase::default();
-            db.db_path = path;
-            db.create_if_not_exists();
+            db.db_path = path.clone();
+            if fpath.exists() {
+                let db_file = PathBuf::from(db.db_path.clone());
+                if let Ok(mut file) = OpenOptions::new().write(true).open(db_file) {
+                    file.write(serde_json::to_string_pretty(&db).unwrap().as_bytes())
+                        .unwrap();
+                }
+            } else {
+                db.create_if_not_exists();
+            }
             db
         }
     }
@@ -125,5 +132,30 @@ impl MetricsDatabase {
     pub fn get_all_detectors_names(&self) -> Vec<String> {
         let state = self.get_current_db();
         state.metrics.into_keys().collect()
+    }
+
+    pub fn tag_detector_with_message(&self, detector_name: String, message: String) {
+        let mut state = self.get_current_db();
+        if state.tags.contains_key(&detector_name) {
+            let tag = state.tags.get_mut(&detector_name).unwrap();
+            tag.messages.push(message)
+        } else {
+            state.tags.insert(
+                detector_name,
+                Tag {
+                    messages: vec![message],
+                },
+            );
+        }
+        self.save_db(state)
+    }
+
+    pub fn remove_tag(&self, detector_name: String) {
+        let mut state = self.get_current_db();
+        state
+            .tags
+            .remove(&detector_name)
+            .expect(&format!("{} is invalid", &detector_name));
+        self.save_db(state)
     }
 }

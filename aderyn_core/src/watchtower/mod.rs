@@ -35,6 +35,7 @@ pub struct Metrics {
     pub current_severity: IssueSeverity,
 }
 
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Feedback {
     // TODO: Assert that there are never common elements among positive_feedbacks and negative_feedbacks in the same `Feedback` object
     pub positive_feedbacks: Vec<String>, // An array of {detector_names} that have performed well
@@ -96,7 +97,8 @@ pub struct Tag {
 pub trait TagsTheDetector {
     /// Should return any explicit tag set by judge <or> if it fails `is_acceptable()` test
     fn request_tag(&self, detector_name: String) -> Option<Tag>;
-    fn explicity_tag(&self, detector_name: String, message: String) -> Option<Tag>;
+    fn explicity_tag(&self, detector_name: String, message: String);
+    fn remove_tag(&self, detector_name: String);
 }
 
 pub trait WatchTower:

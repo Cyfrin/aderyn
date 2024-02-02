@@ -1,9 +1,11 @@
-use std::process::ExitCode;
+use std::{path::PathBuf, process::ExitCode};
 
 use aderyn_core::{
     detect::detector::{get_all_detectors_names, get_detector_by_name},
-    watchtower::WatchTower,
+    watchtower::{Feedback, WatchTower},
 };
+
+use crate::extract::FeedbackExtractor;
 
 pub(crate) fn auto_register_new_core_detectors(watchtower: &Box<dyn WatchTower>) {
     // Step 1 - Get the difference
@@ -46,6 +48,74 @@ pub(crate) fn tag_detector(
         .iter()
         .any(|d| d == detector_name)
     {
-        ExitCode::FAILURE
+        println!("Invalid detector name!");
+        return ExitCode::FAILURE;
     }
+    watchtower.explicity_tag(detector_name.to_string(), message.to_string());
+    ExitCode::SUCCESS
+}
+
+pub(crate) fn remove_tag(watchtower: &Box<dyn WatchTower>, detector_name: &str) -> ExitCode {
+    let existing_watchtower_detectors = watchtower.get_registered_detectors_names();
+    if !existing_watchtower_detectors
+        .iter()
+        .any(|d| d == detector_name)
+    {
+        println!("Invalid detector name!");
+        return ExitCode::FAILURE;
+    }
+    watchtower.remove_tag(detector_name.to_string());
+    ExitCode::SUCCESS
+}
+
+pub(crate) fn give_feedback(watchtower: &Box<dyn WatchTower>, feedback_file: &str) -> ExitCode {
+    // If the bare minimum demands are not met, then don't allow taking feedback.
+    // Here, this can mean maintainer has not registered newly added detectors
+    if !watchtower.is_ready_to_take_feedback() {
+        eprintln!("Internal Watchtower Error: Not ready to take feedback");
+        return ExitCode::FAILURE;
+    }
+
+    let file = PathBuf::from(feedback_file);
+    if !file.is_file()
+        || !file.exists()
+        || (!file.ends_with(".json") && !file.ends_with(".judge.md"))
+    {
+        eprintln!("Invalid feedback file submitted! - must be *.json or *.judge.md");
+        return ExitCode::FAILURE;
+    }
+
+    if file.ends_with(".judge.md") {
+        let extractor = FeedbackExtractor {
+            markdown_content: std::fs::read_to_string(feedback_file).unwrap(),
+        };
+        let used_detectors = extractor.used_detectors_names();
+        let negative_feedbacks = extractor.negative_feedbacks();
+        let positive_feedbacks = extractor.positive_feedbacks();
+        if used_detectors.is_none() || negative_feedbacks.is_none() || positive_feedbacks.is_none()
+        {
+            eprintln!("Error extracing feedback");
+            return ExitCode::FAILURE;
+        }
+
+        let feedback = Feedback {
+            positive_feedbacks: positive_feedbacks.unwrap(),
+            negative_feedbacks: negative_feedbacks.unwrap(),
+            all_exposed_detectors: used_detectors.unwrap(),
+        };
+        watchtower.take_feedback(feedback);
+    } else {
+        let feedback: Result<Feedback, _> =
+            serde_json::from_str(&std::fs::read_to_string(&file).unwrap());
+
+        if let Ok(feedback) = feedback {
+            watchtower.take_feedback(feedback);
+        } else {
+            eprintln!("Invalid feedback JSON schema submitted! ");
+            return ExitCode::FAILURE;
+        }
+    }
+
+    println!("Submitted feedback!");
+    ExitCode::SUCCESS
 }

@@ -6,6 +6,7 @@ use aderyn_core::watchtower::WatchTower;
 
 use clap::{Parser, Subcommand};
 
+mod extract;
 mod utils;
 
 #[derive(Parser, Debug)]
@@ -23,17 +24,21 @@ pub struct CommandLineArgs {
     #[arg(short, long)]
     auto_register_new_detectors: bool,
 
-    /// Optionally, explicitly tag a detector (usually done when introducing a new detector)
-    #[clap(subcommand, name = "tag")]
-    tag: Option<TagCommand>,
+    #[clap(subcommand, name = "my_subcommand")]
+    my_subcommand: Option<MySubcommand>,
 }
 
 #[derive(Debug, Subcommand)]
-enum TagCommand {
-    Tag {
+enum MySubcommand {
+    /// Explicitly tag a detector to be reviewed manually.
+    AddTag {
         detector_name: String,
         message: String,
     },
+    /// Remove all explicitly assigned tags
+    RemoveTags { detector_name: String },
+    /// Give feedback on the tagged report for better tagging next time
+    GiveFeedback { file: String },
 }
 
 fn main() -> ExitCode {
@@ -46,6 +51,11 @@ fn main() -> ExitCode {
 
     let watchtower: Box<dyn WatchTower> = Box::new(LightChaser { metrics_db: db });
 
+    if commands.auto_register_new_detectors {
+        utils::auto_register_new_core_detectors(&watchtower);
+        return ExitCode::SUCCESS;
+    }
+
     if commands.suggested_changes {
         // If changes are present, exit code will be non zero (helps with GH actions)
         return watchtower.print_suggested_changes_before_init();
@@ -56,17 +66,17 @@ fn main() -> ExitCode {
         return watchtower.print_demanding_changes_before_init();
     }
 
-    if commands.auto_register_new_detectors {
-        utils::auto_register_new_core_detectors(&watchtower);
-        return ExitCode::SUCCESS;
-    }
-
-    if let Some(tag) = commands.tag {
-        if let TagCommand::Tag {
-            detector_name,
-            message,
-        } = tag
-        {}
+    if let Some(subcmd) = commands.my_subcommand {
+        return match subcmd {
+            MySubcommand::AddTag {
+                detector_name,
+                message,
+            } => utils::tag_detector(&watchtower, &detector_name, &message),
+            MySubcommand::RemoveTags { detector_name } => {
+                utils::remove_tag(&watchtower, &detector_name)
+            }
+            MySubcommand::GiveFeedback { file } => utils::give_feedback(&watchtower, &file),
+        };
     }
 
     println!("Try --help to see more");
