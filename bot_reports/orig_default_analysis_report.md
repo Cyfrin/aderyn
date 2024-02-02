@@ -868,6 +868,12 @@ Index event fields make the field more quickly accessible to off-chain tools tha
 	        require(bar != address(0));
 	```
 
+- Found in src/cloc/AnotherHeavilyCommentedContract.sol [Line: 56](../tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol#L56)
+
+	```solidity
+	        require(bar != address(0));
+	```
+
 - Found in src/cloc/HeavilyCommentedContract.sol [Line: 35](../tests/contract-playground/src/cloc/HeavilyCommentedContract.sol#L35)
 
 	```solidity
