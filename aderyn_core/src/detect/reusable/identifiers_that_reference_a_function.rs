@@ -24,8 +24,7 @@ impl ReusableDetector for IdentifiersThatReferenceAFunctionDetector {
         if let ASTNode::FunctionDefinition(function_definition) = retrieved {
             context.identifiers.keys().for_each(|identifier| {
                 if identifier.referenced_declaration == function_definition.id {
-                    self.found_instances
-                        .push(ASTNode::Identifier(identifier.clone()));
+                    self.found_instances.push(function_definition.into());
                 }
             });
         } else {
@@ -38,10 +37,7 @@ impl ReusableDetector for IdentifiersThatReferenceAFunctionDetector {
 
 #[cfg(test)]
 mod identifiers_that_reference_functions_detector_tests {
-    use crate::{
-        context::workspace_context::ASTNode,
-        detect::detector::{detector_test_helpers::load_contract, ReusableDetector},
-    };
+    use crate::detect::detector::{detector_test_helpers::load_contract, ReusableDetector};
 
     use super::IdentifiersThatReferenceAFunctionDetector;
 
@@ -59,7 +55,7 @@ mod identifiers_that_reference_functions_detector_tests {
 
         let mut detector = IdentifiersThatReferenceAFunctionDetector::default();
         // create vec with function_definition as item 0
-        let using = vec![ASTNode::FunctionDefinition(function_definition)];
+        let using = vec![function_definition.into()];
         let found = detector.detect(&context, &using, &Vec::new()).unwrap();
         // assert that the detector found
         assert_eq!(found.len(), 1);
