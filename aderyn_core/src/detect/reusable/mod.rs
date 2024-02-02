@@ -1,3 +1,3 @@
-pub(crate) mod identifiers_that_reference_functions;
+pub(crate) mod identifiers_that_reference_a_function;
 
-pub use identifiers_that_reference_functions::IdentifiersThatReferenceFunctionsDetector;
+pub use identifiers_that_reference_a_function::IdentifiersThatReferenceAFunctionDetector;

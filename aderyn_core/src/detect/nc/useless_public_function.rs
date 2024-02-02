@@ -6,8 +6,11 @@ use std::{
 use crate::{
     ast::{FunctionKind, NodeID, Visibility},
     capture,
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{Detector, DetectorNamePool, IssueSeverity},
+    context::workspace_context::{ASTNode, WorkspaceContext},
+    detect::{
+        detector::{Detector, DetectorNamePool, IssueSeverity, ReusableDetector},
+        reusable::IdentifiersThatReferenceAFunctionDetector,
+    },
 };
 use eyre::Result;
 
@@ -19,23 +22,24 @@ pub struct UselessPublicFunctionDetector {
 
 impl Detector for UselessPublicFunctionDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        // Collect the ids of all functions referenced by identifiers.
-        let referenced_functions: HashSet<_> = context
-            .identifiers
-            .keys()
-            .map(|i| i.referenced_declaration)
-            .collect();
-
-        let function_definitions = context.function_definitions.keys();
-
-        // Collect all public FunctionDefinitions which are not in the referenced set.
-        let unreferenced_public_functions = function_definitions
-            .filter(|f| {
-                f.visibility == Visibility::Public
-                    && f.kind != FunctionKind::Constructor
-                    && !referenced_functions.contains(&f.id)
-            })
-            .collect::<Vec<_>>();
+        let unreferenced_public_functions =
+            context.function_definitions.keys().filter(|function| {
+                let function_definition = *function;
+                if function_definition.visibility == Visibility::Public {
+                    if IdentifiersThatReferenceAFunctionDetector::default()
+                        .detect(
+                            context,
+                            &[ASTNode::FunctionDefinition(function_definition.clone())],
+                            &[],
+                        )
+                        .unwrap()
+                        .is_empty()
+                    {
+                        return true;
+                    }
+                }
+                false
+            });
 
         for unreferenced_public_function in unreferenced_public_functions {
             capture!(self, context, unreferenced_public_function);

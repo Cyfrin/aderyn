@@ -1,12 +1,12 @@
 use crate::{context::workspace_context::ASTNode, detect::detector::ReusableDetector};
 
 #[derive(Default)]
-pub struct IdentifiersThatReferenceFunctionsDetector {
+pub struct IdentifiersThatReferenceAFunctionDetector {
     // All the state variables, set at the beginning of the detect function
     found_instances: Vec<ASTNode>,
 }
 
-impl ReusableDetector for IdentifiersThatReferenceFunctionsDetector {
+impl ReusableDetector for IdentifiersThatReferenceAFunctionDetector {
     fn detect(
         &mut self,
         context: &crate::context::workspace_context::WorkspaceContext,
@@ -43,7 +43,7 @@ mod identifiers_that_reference_functions_detector_tests {
         detect::detector::{detector_test_helpers::load_contract, ReusableDetector},
     };
 
-    use super::IdentifiersThatReferenceFunctionsDetector;
+    use super::IdentifiersThatReferenceAFunctionDetector;
 
     #[test]
     fn test_identifiers_that_reference_functions_detector() {
@@ -57,7 +57,7 @@ mod identifiers_that_reference_functions_detector_tests {
             .unwrap()
             .clone();
 
-        let mut detector = IdentifiersThatReferenceFunctionsDetector::default();
+        let mut detector = IdentifiersThatReferenceAFunctionDetector::default();
         // create vec with function_definition as item 0
         let using = vec![ASTNode::FunctionDefinition(function_definition)];
         let found = detector.detect(&context, &using, &Vec::new()).unwrap();
