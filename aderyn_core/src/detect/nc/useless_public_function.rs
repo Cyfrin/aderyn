@@ -1,10 +1,7 @@
-use std::{
-    collections::{BTreeMap, HashSet},
-    error::Error,
-};
+use std::{collections::BTreeMap, error::Error};
 
 use crate::{
-    ast::{FunctionKind, NodeID, Visibility},
+    ast::{NodeID, Visibility},
     capture,
     context::workspace_context::{ASTNode, WorkspaceContext},
     detect::{
@@ -25,8 +22,8 @@ impl Detector for UselessPublicFunctionDetector {
         let unreferenced_public_functions =
             context.function_definitions.keys().filter(|function| {
                 let function_definition = *function;
-                if function_definition.visibility == Visibility::Public {
-                    if IdentifiersThatReferenceAFunctionDetector::default()
+                if function_definition.visibility == Visibility::Public
+                    && IdentifiersThatReferenceAFunctionDetector::default()
                         .detect(
                             context,
                             &[ASTNode::FunctionDefinition(function_definition.clone())],
@@ -34,9 +31,8 @@ impl Detector for UselessPublicFunctionDetector {
                         )
                         .unwrap()
                         .is_empty()
-                    {
-                        return true;
-                    }
+                {
+                    return true;
                 }
                 false
             });
