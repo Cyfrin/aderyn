@@ -46,7 +46,7 @@ fn main() -> ExitCode {
 
     let db = MetricsDatabase::from_path("watchtower.metrics_db.json".to_string());
 
-    db.self_delete();
+    db.self_delete(); // Asks confirmation before deleting
     db.create_if_not_exists();
 
     let watchtower: Box<dyn WatchTower> = Box::new(LightChaser { metrics_db: db });

@@ -77,15 +77,17 @@ pub(crate) fn give_feedback(watchtower: &Box<dyn WatchTower>, feedback_file: &st
     }
 
     let file = PathBuf::from(feedback_file);
-    if !file.is_file()
-        || !file.exists()
-        || (!file.ends_with(".json") && !file.ends_with(".judge.md"))
-    {
-        eprintln!("Invalid feedback file submitted! - must be *.json or *.judge.md");
+    if !file.is_file() || !file.exists() {
+        eprintln!("Invalid feedback file submitted! ");
         return ExitCode::FAILURE;
     }
 
-    if file.ends_with(".judge.md") {
+    if file
+        .file_name()
+        .unwrap()
+        .to_string_lossy()
+        .ends_with(".judge.md")
+    {
         let extractor = FeedbackExtractor {
             markdown_content: std::fs::read_to_string(feedback_file).unwrap(),
         };
@@ -104,7 +106,12 @@ pub(crate) fn give_feedback(watchtower: &Box<dyn WatchTower>, feedback_file: &st
             all_exposed_detectors: used_detectors.unwrap(),
         };
         watchtower.take_feedback(feedback);
-    } else {
+    } else if file
+        .file_name()
+        .unwrap()
+        .to_string_lossy()
+        .ends_with(".json")
+    {
         let feedback: Result<Feedback, _> =
             serde_json::from_str(&std::fs::read_to_string(&file).unwrap());
 
@@ -114,6 +121,9 @@ pub(crate) fn give_feedback(watchtower: &Box<dyn WatchTower>, feedback_file: &st
             eprintln!("Invalid feedback JSON schema submitted! ");
             return ExitCode::FAILURE;
         }
+    } else {
+        eprintln!("Invalid file format!");
+        return ExitCode::FAILURE;
     }
 
     println!("Submitted feedback!");

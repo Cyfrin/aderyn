@@ -239,7 +239,7 @@ impl MarkdownReportPrinter {
                     writeln!(
                         writer,
                         "<span style=\"color:red\"> Tags: {}</span>\n",
-                        tag.messages.join(",")
+                        tag.messages.join(", ")
                     )?;
                 }
             }
