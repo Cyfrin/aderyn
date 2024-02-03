@@ -3,7 +3,7 @@ use strum::{Display, EnumCount, EnumString};
 
 use crate::{
     ast::NodeID,
-    context::workspace_context::WorkspaceContext,
+    context::workspace_context::{ASTNode, WorkspaceContext},
     detect::{
         high::{ArbitraryTransferFromDetector, DelegateCallInLoopDetector},
         low::{
@@ -166,6 +166,17 @@ pub trait Detector {
     // Value is ASTNode NodeID
     fn instances(&self) -> BTreeMap<(String, usize), NodeID> {
         BTreeMap::new()
+    }
+}
+
+pub trait ReusableDetector {
+    fn detect(
+        &mut self,
+        _context: &WorkspaceContext,
+        _using: &[ASTNode],
+        _within: &[ASTNode],
+    ) -> Result<&[ASTNode], Box<dyn Error>> {
+        Ok(&[])
     }
 }
 
