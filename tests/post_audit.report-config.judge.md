@@ -109,6 +109,10 @@ Solc compiler version 0.8.20 switches the default target EVM version to Shanghai
 	    function foo(address bar) public pure {
 	```
 
+<span style="color:red">
+@audit:FP
+</span>
+
 - Found in src/cloc/AnotherHeavilyCommentedContract.sol [Line: 38](tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol#L38)
 
 	```solidity
