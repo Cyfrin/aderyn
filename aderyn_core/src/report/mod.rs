@@ -4,7 +4,6 @@ use serde::Serialize;
 
 use crate::{ast::NodeID, context::workspace_context::WorkspaceContext};
 
-pub(crate) mod get_watchtower;
 pub mod json_printer;
 pub mod markdown_printer;
 pub mod printer;

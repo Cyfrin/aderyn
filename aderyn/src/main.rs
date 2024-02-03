@@ -1,9 +1,13 @@
 use serde::Deserialize;
 use std::path::{Path, PathBuf};
+use strum::IntoEnumIterator;
 
 use aderyn_driver::{
-    detector::{get_all_detectors, get_all_detectors_names, get_detector_by_name, Detector},
+    detector::{
+        get_all_detectors, get_all_detectors_names, get_detector_by_name, Detector, IssueSeverity,
+    },
     driver::{self, Args},
+    get_fully_configured_watchtower, WatchTower,
 };
 use clap::{Parser, Subcommand};
 
@@ -202,6 +206,7 @@ fn print_detail_view(detector_name: &str) {
         return;
     }
     let detector = get_detector_by_name(detector_name);
+    let watchtower = get_fully_configured_watchtower();
     println!("\nDetector {}", detector_name);
     println!();
     println!("Title");
@@ -213,18 +218,50 @@ fn print_detail_view(detector_name: &str) {
     println!("Description");
     println!("{}", detector.description());
     println!();
+    println!("Watchtower Rating (LightChaser version)");
+    println!("{}", watchtower.value(detector_name.to_string()));
 }
 
 fn print_all_detectors_view() {
     let all_detector_names = get_all_detectors_names();
-
+    let watchtower = get_fully_configured_watchtower();
     println!("\nDetector Registry");
     println!();
-    println!("{}   Title", right_pad("Name", 30));
+    println!("{}   Title (Rating)", right_pad("Name", 30));
     println!();
-    for name in all_detector_names {
+    for severity in IssueSeverity::iter() {
+        print_detectors_view_with_severity(&watchtower, severity, &all_detector_names);
+        println!();
+    }
+    println!();
+}
+
+fn print_detectors_view_with_severity(
+    watchtower: &Box<dyn WatchTower>,
+    severity: IssueSeverity,
+    detectors_names: &[String],
+) {
+    let concerned_detectors = detectors_names
+        .iter()
+        .filter(|name| {
+            let detector = get_detector_by_name(&name);
+            detector.severity() == severity
+        })
+        .collect::<Vec<_>>();
+
+    if concerned_detectors.is_empty() {
+        return;
+    }
+
+    println!("{}\n", severity);
+    for name in concerned_detectors {
         let detector = get_detector_by_name(&name);
-        println!("{} - {}", right_pad(&name, 30), detector.title());
+        println!(
+            "{} - {} ({:.2})",
+            right_pad(&name, 30),
+            detector.title(),
+            watchtower.value(name.to_string()),
+        );
     }
     println!();
 }

@@ -1,5 +1,5 @@
 use serde::{Deserialize, Serialize};
-use strum::{Display, EnumCount, EnumString};
+use strum::{Display, EnumCount, EnumIter, EnumString};
 
 use crate::{
     ast::NodeID,
@@ -118,7 +118,7 @@ pub fn get_detector_by_name(detector_name: &str) -> Box<dyn Detector> {
     }
 }
 
-#[derive(Debug, PartialEq, Serialize, Deserialize, EnumCount, Clone)]
+#[derive(Debug, PartialEq, Serialize, Deserialize, EnumCount, Clone, EnumIter)]
 pub enum IssueSeverity {
     NC,
     Low,
