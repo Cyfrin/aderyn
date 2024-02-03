@@ -646,8 +646,6 @@ Assigning values to address state variables without checking for `address(0)`.
 
 ### Responsible : useless-public-function
 
-<span style="color:red"> Tags: 0 is too low of an accuracy for NC (Non Critical) detector, It creates headaches</span>
-
 - Found in src/ArbitraryTransferFrom.sol [Line: 28](tests/contract-playground/src/ArbitraryTransferFrom.sol#L28)
 
 	```solidity
