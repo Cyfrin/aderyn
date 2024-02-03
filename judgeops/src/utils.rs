@@ -130,7 +130,34 @@ pub(crate) fn give_feedback(watchtower: &Box<dyn WatchTower>, feedback_file: &st
     ExitCode::SUCCESS
 }
 
-pub(crate) fn display_metrics(detector_name: &str) -> ExitCode {
-    println!("Hello {:?}", detector_name);
+pub(crate) fn display_metrics(watchtower: &Box<dyn WatchTower>, detector_name: &str) -> ExitCode {
+    // Check to see detector_name is valid
+
+    if !watchtower.is_ready_to_get_metrics() || !watchtower.is_ready_to_calculate_value() {
+        eprintln!(
+            "Internal Watchtower Error: There are some demanding changes you need to satisfy first"
+        );
+        return ExitCode::FAILURE;
+    }
+
+    let detector_metrics = watchtower.metrics(detector_name.to_string());
+    let detector_value = watchtower.value(detector_name.to_string());
+
+    println!("Detector {}\n", detector_name);
+    println!("Rating (0-1)   : {:.2}\n", detector_value);
+    println!("True positives : {}", detector_metrics.true_positives);
+    println!("False positives: {}", detector_metrics.false_positives);
+    println!("Trigger count  : {}", detector_metrics.trigger_count);
+    println!("Experience     : {}", detector_metrics.experience);
+
+    if let Some(tag) = watchtower.request_tag(detector_name.to_string()) {
+        println!("\nTAGS: {}", tag.messages.join(", "));
+    }
+
+    print!("\nNOTE - The above metrics can vary based on the implementation of watchtower. ");
+    print!("Any of the values are not guaranteed to actually reflect what's happening. ");
+    print!("Ex: TP - FP is kept at max 5 for LightChaser impl although trigger count can increase indefinitely. ");
+    print!("The only obligation for a watchtower is to give out a rating form 0 to 1\n");
+
     ExitCode::SUCCESS
 }

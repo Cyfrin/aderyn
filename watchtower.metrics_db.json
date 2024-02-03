@@ -1,12 +1,20 @@
 {
   "metrics": {
-    "unspecific-solidity-pragma": {
-      "detector_name": "unspecific-solidity-pragma",
+    "block-timestamp-deadline": {
+      "detector_name": "block-timestamp-deadline",
       "true_positives": 5,
       "false_positives": 0,
       "trigger_count": 5,
       "experience": 5,
-      "current_severity": "Low"
+      "current_severity": "Medium"
+    },
+    "solmate-safe-transfer-lib": {
+      "detector_name": "solmate-safe-transfer-lib",
+      "true_positives": 5,
+      "false_positives": 0,
+      "trigger_count": 5,
+      "experience": 5,
+      "current_severity": "Medium"
     },
     "push-zero-opcode": {
       "detector_name": "push-zero-opcode",
@@ -16,13 +24,37 @@
       "experience": 15,
       "current_severity": "Low"
     },
-    "solmate-safe-transfer-lib": {
-      "detector_name": "solmate-safe-transfer-lib",
+    "non-reentrant-before-others": {
+      "detector_name": "non-reentrant-before-others",
+      "true_positives": 5,
+      "false_positives": 0,
+      "trigger_count": 5,
+      "experience": 5,
+      "current_severity": "NC"
+    },
+    "unsafe-erc20-functions": {
+      "detector_name": "unsafe-erc20-functions",
+      "true_positives": 5,
+      "false_positives": 0,
+      "trigger_count": 5,
+      "experience": 5,
+      "current_severity": "Low"
+    },
+    "unsafe-oz-erc721-mint": {
+      "detector_name": "unsafe-oz-erc721-mint",
       "true_positives": 5,
       "false_positives": 0,
       "trigger_count": 5,
       "experience": 5,
       "current_severity": "Medium"
+    },
+    "avoid-abi-encode-packed": {
+      "detector_name": "avoid-abi-encode-packed",
+      "true_positives": 5,
+      "false_positives": 0,
+      "trigger_count": 5,
+      "experience": 5,
+      "current_severity": "Low"
     },
     "unindexed-events": {
       "detector_name": "unindexed-events",
@@ -40,14 +72,6 @@
       "experience": 5,
       "current_severity": "High"
     },
-    "deprecated-oz-functions": {
-      "detector_name": "deprecated-oz-functions",
-      "true_positives": 5,
-      "false_positives": 0,
-      "trigger_count": 5,
-      "experience": 5,
-      "current_severity": "Low"
-    },
     "delegate-call-in-loop": {
       "detector_name": "delegate-call-in-loop",
       "true_positives": 5,
@@ -56,64 +80,16 @@
       "experience": 5,
       "current_severity": "High"
     },
-    "ecrecover": {
-      "detector_name": "ecrecover",
+    "constants-instead-of-literals": {
+      "detector_name": "constants-instead-of-literals",
       "true_positives": 5,
       "false_positives": 0,
       "trigger_count": 5,
       "experience": 5,
-      "current_severity": "Low"
-    },
-    "unsafe-oz-erc721-mint": {
-      "detector_name": "unsafe-oz-erc721-mint",
-      "true_positives": 5,
-      "false_positives": 0,
-      "trigger_count": 5,
-      "experience": 5,
-      "current_severity": "Medium"
-    },
-    "centralization-risk": {
-      "detector_name": "centralization-risk",
-      "true_positives": 5,
-      "false_positives": 0,
-      "trigger_count": 5,
-      "experience": 5,
-      "current_severity": "Medium"
-    },
-    "block-timestamp-deadline": {
-      "detector_name": "block-timestamp-deadline",
-      "true_positives": 5,
-      "false_positives": 0,
-      "trigger_count": 5,
-      "experience": 5,
-      "current_severity": "Medium"
+      "current_severity": "NC"
     },
     "require-with-string": {
       "detector_name": "require-with-string",
-      "true_positives": 5,
-      "false_positives": 0,
-      "trigger_count": 5,
-      "experience": 5,
-      "current_severity": "NC"
-    },
-    "non-reentrant-before-others": {
-      "detector_name": "non-reentrant-before-others",
-      "true_positives": 5,
-      "false_positives": 0,
-      "trigger_count": 5,
-      "experience": 5,
-      "current_severity": "NC"
-    },
-    "avoid-abi-encode-packed": {
-      "detector_name": "avoid-abi-encode-packed",
-      "true_positives": 5,
-      "false_positives": 0,
-      "trigger_count": 5,
-      "experience": 5,
-      "current_severity": "Low"
-    },
-    "constants-instead-of-literals": {
-      "detector_name": "constants-instead-of-literals",
       "true_positives": 5,
       "false_positives": 0,
       "trigger_count": 5,
@@ -128,8 +104,8 @@
       "experience": 5,
       "current_severity": "NC"
     },
-    "unsafe-erc20-functions": {
-      "detector_name": "unsafe-erc20-functions",
+    "unspecific-solidity-pragma": {
+      "detector_name": "unspecific-solidity-pragma",
       "true_positives": 5,
       "false_positives": 0,
       "trigger_count": 5,
@@ -143,8 +119,38 @@
       "trigger_count": 15,
       "experience": 15,
       "current_severity": "NC"
+    },
+    "centralization-risk": {
+      "detector_name": "centralization-risk",
+      "true_positives": 5,
+      "false_positives": 0,
+      "trigger_count": 5,
+      "experience": 5,
+      "current_severity": "Medium"
+    },
+    "ecrecover": {
+      "detector_name": "ecrecover",
+      "true_positives": 5,
+      "false_positives": 0,
+      "trigger_count": 5,
+      "experience": 5,
+      "current_severity": "Low"
+    },
+    "deprecated-oz-functions": {
+      "detector_name": "deprecated-oz-functions",
+      "true_positives": 5,
+      "false_positives": 0,
+      "trigger_count": 5,
+      "experience": 5,
+      "current_severity": "Low"
     }
   },
-  "tags": {},
+  "tags": {
+    "useless-public-function": {
+      "messages": [
+        "It creates headaches"
+      ]
+    }
+  },
   "db_path": "watchtower.metrics_db.json"
 }

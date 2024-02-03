@@ -33,7 +33,7 @@ pub struct CommandLineArgs {
 
 #[derive(Debug, Subcommand)]
 enum MySubcommand {
-    /// Print a detector's recorded trigger rate, rating, etc
+    /// Print a detector's metrics and rating.
     DisplayMetrics { detector_name: String },
     /// Give feedback on the aderyn report (affects detectors' ratings and metrics)
     GiveFeedback { file: String },
@@ -92,7 +92,7 @@ fn main() -> ExitCode {
                 exit_code
             }
             MySubcommand::DisplayMetrics { detector_name } => {
-                utils::display_metrics(&detector_name)
+                utils::display_metrics(&watchtower, &detector_name)
             }
         };
     }
