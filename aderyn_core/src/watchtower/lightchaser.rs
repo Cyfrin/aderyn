@@ -37,6 +37,15 @@ impl RegistersNewDetector for LightChaser {
         // Chapter 001 - "Every detector is given a accuracy score, this score defaults to 5."
         // Follow up question - Where does 5 come from ?
         // Answered here - https://x.com/ChaseTheLight99/status/1750111766162358288?s=20
+
+        let all_valid_detector_names = get_all_detectors_names();
+        if !all_valid_detector_names.contains(&detector_name) {
+            let message = format!(
+                "Detector {} to be registered not available in core",
+                detector_name
+            );
+            panic!("{}", message);
+        }
         self.metrics_db
             .register_new_detector(detector_name, assigned_severity);
     }
@@ -262,3 +271,51 @@ impl TagsTheDetector for LightChaser {
 }
 
 impl WatchTower for LightChaser {}
+
+#[cfg(test)]
+mod lightchaser_tests {
+    use strum::EnumCount;
+
+    use crate::{
+        detect::detector::{DetectorNamePool, IssueSeverity},
+        watchtower::{utils::MetricsDatabase, WatchTower},
+    };
+
+    use super::LightChaser;
+
+    #[test]
+    fn lightchaser_can_register_new_detector() {
+        let test_metrics_db =
+            MetricsDatabase::from_path("lightchaser_tests.metrics_db.json".to_string());
+
+        test_metrics_db.self_delete();
+        test_metrics_db.create_if_not_exists();
+
+        let watchtower: Box<dyn WatchTower> = Box::new(LightChaser {
+            metrics_db: test_metrics_db,
+        });
+
+        let prev_metrics = watchtower.all_metrics();
+
+        assert!(!prev_metrics.contains_key(&DetectorNamePool::ArbitraryTransferFrom.to_string()));
+        assert!(prev_metrics.is_empty());
+
+        let expected_severity = IssueSeverity::High;
+
+        watchtower.register(
+            DetectorNamePool::ArbitraryTransferFrom.to_string(),
+            expected_severity.clone(),
+        );
+
+        let after_metrics = watchtower.all_metrics();
+        assert!(after_metrics.contains_key(&DetectorNamePool::ArbitraryTransferFrom.to_string()));
+
+        let after_metrics_arbitrary = after_metrics
+            .get(&DetectorNamePool::ArbitraryTransferFrom.to_string())
+            .unwrap();
+        assert!(after_metrics_arbitrary.current_severity == expected_severity);
+
+        // New detectors should get a perfect accuracy be default.
+        assert!(after_metrics_arbitrary.lc_accuracy() == IssueSeverity::COUNT as u64);
+    }
+}

@@ -198,6 +198,25 @@ jobs:
           args: --manifest-path ./bot_ci_cd/bot/Cargo.toml
 
   metrics:
+
+    name: Check watchtower is in a healthy state
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+
+      - name: Check that there are no demanding changes to make
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+          args: --bin judgeops -- -d
   
     name: Check metrics changes with feedback consistently
     runs-on: ubuntu-latest
