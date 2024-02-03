@@ -74,7 +74,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: -- -o report-config-workflow.md ./tests/contract-playground/
+          args: -- --config-file ./tests/aderyn.config.json -o report-config-workflow.md ./tests/contract-playground/
 
       - name: Check report-config.md vs report-config-workflow.md
         run: |
@@ -100,7 +100,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: -- -o report-config-workflow.judge.md ./tests/contract-playground/
+          args: -- --config-file ./tests/aderyn.config.json -o report-config-workflow.judge.md ./tests/contract-playground/
 
       - name: Check report-config.judge.md vs report-config-workflow.judge.md
         run: |
