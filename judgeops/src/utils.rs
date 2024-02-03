@@ -129,3 +129,8 @@ pub(crate) fn give_feedback(watchtower: &Box<dyn WatchTower>, feedback_file: &st
     println!("Submitted feedback!");
     ExitCode::SUCCESS
 }
+
+pub(crate) fn display_metrics(detector_name: &str) -> ExitCode {
+    println!("Hello {:?}", detector_name);
+    ExitCode::SUCCESS
+}

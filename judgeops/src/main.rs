@@ -33,15 +33,17 @@ pub struct CommandLineArgs {
 
 #[derive(Debug, Subcommand)]
 enum MySubcommand {
-    /// Explicitly tag a detector to be reviewed manually.
+    /// Print a detector's recorded trigger rate, rating, etc
+    DisplayMetrics { detector_name: String },
+    /// Give feedback on the aderyn report (affects detectors' ratings and metrics)
+    GiveFeedback { file: String },
+    /// Explicitly tag a detector to help indicate manual review required in report.
     AddTag {
         detector_name: String,
         message: String,
     },
-    /// Remove all explicitly assigned tags
+    /// Remove all explicitly assigned tags to a detector
     RemoveTags { detector_name: String },
-    /// Give feedback on the tagged report for better tagging next time
-    GiveFeedback { file: String },
 }
 
 fn main() -> ExitCode {
@@ -88,6 +90,9 @@ fn main() -> ExitCode {
                 };
                 change_summarizer.print_summary_of_changes(&watchtower);
                 exit_code
+            }
+            MySubcommand::DisplayMetrics { detector_name } => {
+                utils::display_metrics(&detector_name)
             }
         };
     }

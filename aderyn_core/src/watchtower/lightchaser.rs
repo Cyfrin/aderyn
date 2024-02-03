@@ -98,10 +98,6 @@ impl TakesFeedbackFromJudge for LightChaser {
     }
 }
 
-// TODO
-// When initialized check if `get_all_detectors` reflects what is serialized in lc-metrics.json
-// When initialized check what detectors need to be downgraded based on their cap
-
 impl InfersMetrics for Metrics {
     fn is_acceptable(&self) -> bool {
         //"If a detector is triggered, its accuracy score is looked up and the following cap is applied."

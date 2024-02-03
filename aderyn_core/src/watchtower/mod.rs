@@ -23,7 +23,8 @@ pub struct Metrics {
     /// Total number of reports where at least 1 issue was found as a false positive
     pub false_positives: u64,
 
-    /// Total trigger count. Ideally the invariant should be TP + FP == Trigger Count
+    /// Total trigger count - Number of times this detector has found issues (regardless of whether they are right or wrong)
+    /// Ideally the invariant should be TP + FP == Trigger Count
     /// But we can't always count on that because some watch towers refuse to record TP, FP post some cap
     pub trigger_count: u64,
 
@@ -43,8 +44,6 @@ pub struct Feedback {
     pub all_exposed_detectors: Vec<String>, // An array of {detector_name} that was exposed (regardless of whether or not they were triggered) to the codebase
 }
 
-// Should be called when a new detector is introduced into the codebase
-// TODO: create admin tool (binary crate)
 pub trait RegistersNewDetector {
     fn register(&self, detector_name: String, assigned_severity: IssueSeverity);
 }
@@ -53,7 +52,6 @@ pub trait GetsRegisteredDetectors {
     fn get_registered_detectors_names(&self) -> Vec<String>;
 }
 
-// For debugging / browsing purposes
 pub trait GetsCurrentMetricsForDetector: DecidesWhenReadyToServe {
     fn metrics(&self, detector_name: String) -> Metrics;
     fn all_metrics(&self) -> HashMap<String, Metrics>;
@@ -80,7 +78,6 @@ pub trait InfersMetrics {
     fn is_acceptable(&self) -> bool;
 }
 
-// Used by Aderyn Registry
 pub trait CalculatesValueOfDetector: DecidesWhenReadyToServe {
     /// All implementations MUST return a value from [0, 1] only
     fn value(&self, detector_name: String) -> f64;
@@ -95,9 +92,9 @@ pub struct Tag {
     pub messages: Vec<String>,
 }
 
-// Used by Report Printer
 pub trait TagsTheDetector {
-    /// Should return any explicit tag set by judge <or> if it fails `is_acceptable()` test
+    /// Should return any explicit tag set by judge <or> an implicitly created tag
+    /// which happens when it fails `InferMetrics::is_acceptable()` test
     fn request_tag(&self, detector_name: String) -> Option<Tag>;
     fn explicity_tag(&self, detector_name: String, message: String);
     fn remove_tag(&self, detector_name: String);
