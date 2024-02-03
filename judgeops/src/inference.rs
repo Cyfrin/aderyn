@@ -1,3 +1,4 @@
+#![allow(clippy::borrowed_box)]
 use std::collections::HashMap;
 
 use aderyn_core::watchtower::{InfersMetrics, Metrics, WatchTower};

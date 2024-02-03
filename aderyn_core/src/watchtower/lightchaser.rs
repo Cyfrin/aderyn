@@ -209,6 +209,7 @@ impl CalculatesValueOfDetector for LightChaser {
         self.value_from_metrics(&metrics)
     }
 
+    #[allow(clippy::let_and_return)]
     fn value_from_metrics(&self, metrics: &Metrics) -> f64 {
         let trigger_rate = metrics.trigger_count as f64 / metrics.experience as f64;
         let lc_accuracy = metrics.lc_accuracy();

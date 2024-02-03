@@ -7,7 +7,9 @@ use crate::{context::workspace_context::WorkspaceContext, watchtower::WatchTower
 
 use super::reporter::Report;
 
+#[allow(clippy::borrowed_box)]
 pub trait ReportPrinter<T> {
+    #[allow(clippy::too_many_arguments)]
     fn print_report<W: Write>(
         &self,
         writer: W,

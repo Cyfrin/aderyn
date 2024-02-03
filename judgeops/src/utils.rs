@@ -1,3 +1,4 @@
+#![allow(clippy::borrowed_box)]
 use std::{path::PathBuf, process::ExitCode};
 
 use aderyn_core::{
@@ -21,7 +22,7 @@ pub(crate) fn auto_register_new_core_detectors(watchtower: &Box<dyn WatchTower>)
         }
     }
 
-    if extras.len() == 0 {
+    if extras.is_empty() {
         println!("There are no new detectors to register!");
         return;
     }
@@ -157,7 +158,7 @@ pub(crate) fn display_metrics(watchtower: &Box<dyn WatchTower>, detector_name: &
     print!("\nNOTE - The above metrics can vary based on the implementation of watchtower. ");
     print!("Any of the values are not guaranteed to actually reflect what's happening. ");
     print!("Ex: TP - FP is kept at max 5 for LightChaser impl although trigger count can increase indefinitely. ");
-    print!("The only obligation for a watchtower is to give out a rating form 0 to 1\n");
+    println!("The only obligation for a watchtower is to give out a rating form 0 to 1");
 
     ExitCode::SUCCESS
 }

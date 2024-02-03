@@ -1,3 +1,4 @@
+#![allow(clippy::borrowed_box)]
 pub mod lightchaser;
 pub mod utils;
 

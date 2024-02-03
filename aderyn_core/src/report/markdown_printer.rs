@@ -77,6 +77,7 @@ struct PrintIssueParams<'a> {
     root_path: &'a Path,
     output_rel_path: String,
     no_snippets: bool,
+    #[allow(clippy::borrowed_box)]
     watchtower: &'a Box<dyn WatchTower>,
 }
 

@@ -25,7 +25,7 @@ impl FeedbackExtractor {
         let mut detector_names = vec![];
         for line in interested_portion.lines() {
             let pure_content = line.trim_start();
-            if pure_content.starts_with("#") {
+            if pure_content.starts_with('#') {
                 // When we reach a new heading we know that we are at a different section
                 // so we stop collecting names.
                 break;
@@ -67,7 +67,7 @@ impl FeedbackExtractor {
                 .expect("Corrupted report");
             let start_pos = intermediate_position + look_for.len();
             let end_position = &self.markdown_content[intermediate_position..]
-                .find("\n")
+                .find('\n')
                 .expect("Corrupted report!");
             let detector_name =
                 &self.markdown_content[start_pos..intermediate_position + *end_position];

@@ -1,5 +1,12 @@
+#![allow(clippy::borrowed_box)]
 use serde::{Deserialize, Serialize};
-use std::{collections::HashMap, fs::OpenOptions, io::Write, path::PathBuf};
+use std::{
+    collections::{hash_map, HashMap},
+    fs::OpenOptions,
+    io::Write,
+    path::PathBuf,
+    str::FromStr,
+};
 use strum::EnumCount;
 
 use crate::detect::detector::IssueSeverity;
@@ -13,18 +20,27 @@ pub struct MetricsDatabase {
     pub db_path: String,
 }
 
+impl FromStr for MetricsDatabase {
+    type Err = serde_json::Error;
+    fn from_str(content: &str) -> Result<Self, Self::Err> {
+        serde_json::from_str(content)
+    }
+}
+
 impl MetricsDatabase {
     pub fn from_path(path: String) -> MetricsDatabase {
         let fpath = PathBuf::from(&path);
         if fpath.exists() && std::fs::metadata(&path).unwrap().len() > 0 {
-            Self::from_str(&std::fs::read_to_string(&path).unwrap())
+            std::fs::read_to_string(&path).unwrap().parse().unwrap()
         } else {
-            let mut db = MetricsDatabase::default();
-            db.db_path = path.clone();
+            let db = MetricsDatabase {
+                db_path: path.clone(),
+                ..Default::default()
+            };
             if fpath.exists() {
                 let db_file = PathBuf::from(db.db_path.clone());
                 if let Ok(mut file) = OpenOptions::new().write(true).open(db_file) {
-                    file.write(serde_json::to_string_pretty(&db).unwrap().as_bytes())
+                    file.write_all(serde_json::to_string_pretty(&db).unwrap().as_bytes())
                         .unwrap();
                 }
             } else {
@@ -34,14 +50,10 @@ impl MetricsDatabase {
         }
     }
 
-    pub fn from_str(content: &str) -> MetricsDatabase {
-        serde_json::from_str(content).unwrap()
-    }
-
     pub fn self_delete(&self) {
         println!("Do you want to work on existing database {}? (y/n)\nAnswering no will overwrite existing one / create a new one.", self.db_path);
         let line = std::io::stdin().lines().next().unwrap().unwrap();
-        if !line.to_lowercase().contains("n") {
+        if !line.to_lowercase().contains('n') {
             return;
         }
         let db_file = PathBuf::from(self.db_path.clone());
@@ -57,7 +69,7 @@ impl MetricsDatabase {
             .create_new(true)
             .open(db_file)
         {
-            file.write(serde_json::to_string_pretty(&self).unwrap().as_bytes())
+            file.write_all(serde_json::to_string_pretty(&self).unwrap().as_bytes())
                 .unwrap();
         }
     }
@@ -141,16 +153,13 @@ impl MetricsDatabase {
 
     pub fn tag_detector_with_message(&self, detector_name: String, message: String) {
         let mut state = self.get_current_db();
-        if state.tags.contains_key(&detector_name) {
+        if let hash_map::Entry::Vacant(e) = state.tags.entry(detector_name.clone()) {
+            e.insert(Tag {
+                messages: vec![message],
+            });
+        } else {
             let tag = state.tags.get_mut(&detector_name).unwrap();
             tag.messages.push(message)
-        } else {
-            state.tags.insert(
-                detector_name,
-                Tag {
-                    messages: vec![message],
-                },
-            );
         }
         self.save_db(state)
     }
@@ -160,7 +169,7 @@ impl MetricsDatabase {
         state
             .tags
             .remove(&detector_name)
-            .expect(&format!("{} is invalid", &detector_name));
+            .unwrap_or_else(|| panic!("{} is invalid", &detector_name));
         self.save_db(state)
     }
 }

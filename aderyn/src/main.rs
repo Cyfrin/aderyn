@@ -1,3 +1,5 @@
+#![allow(clippy::borrowed_box)]
+
 use serde::Deserialize;
 use std::path::{Path, PathBuf};
 use strum::IntoEnumIterator;
@@ -244,7 +246,7 @@ fn print_detectors_view_with_severity(
     let concerned_detectors = detectors_names
         .iter()
         .filter(|name| {
-            let detector = get_detector_by_name(&name);
+            let detector = get_detector_by_name(name);
             detector.severity() == severity
         })
         .collect::<Vec<_>>();
@@ -255,10 +257,10 @@ fn print_detectors_view_with_severity(
 
     println!("{}\n", severity);
     for name in concerned_detectors {
-        let detector = get_detector_by_name(&name);
+        let detector = get_detector_by_name(name);
         println!(
             "{} - {} ({:.2})",
-            right_pad(&name, 30),
+            right_pad(name, 30),
             detector.title(),
             watchtower.value(name.to_string()),
         );
