@@ -274,16 +274,18 @@ impl WatchTower for LightChaser {}
 
 #[cfg(test)]
 mod lightchaser_tests {
+    use serial_test::serial;
     use strum::EnumCount;
 
     use crate::{
         detect::detector::{DetectorNamePool, IssueSeverity},
-        watchtower::{utils::MetricsDatabase, WatchTower},
+        watchtower::{utils::MetricsDatabase, Feedback, InfersMetrics, WatchTower},
     };
 
     use super::LightChaser;
 
     #[test]
+    #[serial]
     fn lightchaser_can_register_new_detector() {
         let test_metrics_db =
             MetricsDatabase::from_path("lightchaser_tests.metrics_db.json".to_string());
@@ -314,8 +316,79 @@ mod lightchaser_tests {
             .get(&DetectorNamePool::ArbitraryTransferFrom.to_string())
             .unwrap();
         assert!(after_metrics_arbitrary.current_severity == expected_severity);
+    }
+
+    #[test]
+    #[serial]
+    fn lightchaser_assigns_perfect_score_by_default() {
+        let test_metrics_db =
+            MetricsDatabase::from_path("lightchaser_tests.metrics_db.json".to_string());
+
+        test_metrics_db.self_delete();
+        test_metrics_db.create_if_not_exists();
+
+        let watchtower: Box<dyn WatchTower> = Box::new(LightChaser {
+            metrics_db: test_metrics_db,
+        });
+
+        watchtower.register(
+            DetectorNamePool::ArbitraryTransferFrom.to_string(),
+            IssueSeverity::High,
+        );
+
+        let arbitrary_metrics =
+            watchtower.metrics(DetectorNamePool::ArbitraryTransferFrom.to_string());
 
         // New detectors should get a perfect accuracy be default.
-        assert!(after_metrics_arbitrary.lc_accuracy() == IssueSeverity::COUNT as u64);
+        assert!(arbitrary_metrics.lc_accuracy() == IssueSeverity::COUNT as u64);
+    }
+
+    #[test]
+    #[serial]
+    fn lightchaser_doesnt_accept_medium_detectors_with_lc_accuracy_less_than_3() {
+        let test_metrics_db =
+            MetricsDatabase::from_path("lightchaser_tests.metrics_db.json".to_string());
+
+        test_metrics_db.self_delete();
+        test_metrics_db.create_if_not_exists();
+
+        let watchtower: Box<dyn WatchTower> = Box::new(LightChaser {
+            metrics_db: test_metrics_db,
+        });
+
+        watchtower.register(
+            DetectorNamePool::CentralizationRisk.to_string(),
+            IssueSeverity::Medium,
+        );
+
+        watchtower.take_feedback(Feedback {
+            positive_feedbacks: vec![],
+            negative_feedbacks: vec![DetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: vec![DetectorNamePool::CentralizationRisk.to_string()],
+        });
+
+        let current_metrics = watchtower.metrics(DetectorNamePool::CentralizationRisk.to_string());
+        assert!(current_metrics.lc_accuracy() == 4);
+        assert!(current_metrics.is_acceptable());
+
+        watchtower.take_feedback(Feedback {
+            positive_feedbacks: vec![],
+            negative_feedbacks: vec![DetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: vec![DetectorNamePool::CentralizationRisk.to_string()],
+        });
+
+        let current_metrics = watchtower.metrics(DetectorNamePool::CentralizationRisk.to_string());
+        assert!(current_metrics.lc_accuracy() == 3);
+        assert!(current_metrics.is_acceptable());
+
+        watchtower.take_feedback(Feedback {
+            positive_feedbacks: vec![],
+            negative_feedbacks: vec![DetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: vec![DetectorNamePool::CentralizationRisk.to_string()],
+        });
+
+        let current_metrics = watchtower.metrics(DetectorNamePool::CentralizationRisk.to_string());
+        assert!(current_metrics.lc_accuracy() == 2);
+        assert!(!current_metrics.is_acceptable());
     }
 }
