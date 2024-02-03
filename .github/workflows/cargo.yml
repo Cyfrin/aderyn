@@ -146,7 +146,6 @@ jobs:
           cat bot_reports/custom_subscription_analysis_report.md
           diff bot_reports/orig_custom_subscription_analysis_report.md bot_reports/custom_subscription_analysis_report.md
 
-
   bots:
   
     name: Check Bot creation and testing
@@ -198,6 +197,33 @@ jobs:
           command: test
           args: --manifest-path ./bot_ci_cd/bot/Cargo.toml
 
+  metrics:
+  
+    name: Check metrics changes with feedback consistently
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+
+      - name: Rename sample.metrics_db.json to sample_renamed.metrics_db.json
+        run: |
+          mv sample.metrics_db.json sample_renamed.metrics_db.json
+
+      - name: Generate sample.metrics_db.json
+        run: |
+          cli/metricsdbgen.sh sample.metrics_db.json
+
+      - name: Check sample.metrics_db.json vs sample_renamed.metrics_db.json
+        run: |
+          cat sample.metrics_db.json
+          diff sample_renamed.metrics_db.json sample.metrics_db.json
 
   lints:
     name: Lints

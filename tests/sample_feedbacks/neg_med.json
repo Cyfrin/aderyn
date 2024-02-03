@@ -1,4 +1,5 @@
 {
+    "positive_feedbacks": [],
     "negative_feedbacks": ["solmate-safe-transfer-lib", "centralization-risk"],
     "all_exposed_detectors" : [
         "solmate-safe-transfer-lib", 

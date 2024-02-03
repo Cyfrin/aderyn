@@ -29,5 +29,7 @@ cargo run -- --config-file ./tests/aderyn.config.json -o report-config.json ./te
 # Make sure nyth users can actually interact with driver
 cargo run --bin bot_example -- -p orig_ 
 
-# Assemble the bot into a zip file that will be compiled into nyth 
-cargo run --bin bot_fw_assembler -- prod 
+#### Other scripts #############
+
+cli/bot_archivegen.sh
+cli/metricsdbgen.sh sample.metrics_db.json

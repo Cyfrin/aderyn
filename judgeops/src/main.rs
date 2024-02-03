@@ -27,6 +27,14 @@ pub struct CommandLineArgs {
     #[arg(short, long)]
     auto_register_new_detectors: bool,
 
+    /// Path to database file
+    #[arg(short, long, default_value = "watchtower.metrics_db.json")]
+    metrics_db: String,
+
+    /// Reset the database file before performing any operations
+    #[arg(short, long)]
+    reset: bool,
+
     #[clap(subcommand, name = "my_subcommand")]
     my_subcommand: Option<MySubcommand>,
 }
@@ -49,9 +57,11 @@ enum MySubcommand {
 fn main() -> ExitCode {
     let commands = CommandLineArgs::parse();
 
-    let db = MetricsDatabase::from_path("watchtower.metrics_db.json".to_string());
+    let db = MetricsDatabase::from_path(commands.metrics_db);
 
-    db.self_delete(); // Asks confirmation before deleting
+    if commands.reset {
+        db.self_delete();
+    }
     db.create_if_not_exists();
 
     let watchtower: Box<dyn WatchTower> = Box::new(LightChaser { metrics_db: db });

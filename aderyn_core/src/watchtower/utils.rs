@@ -1,7 +1,7 @@
 #![allow(clippy::borrowed_box)]
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Serialize, Serializer};
 use std::{
-    collections::{hash_map, HashMap},
+    collections::{hash_map, BTreeMap, HashMap},
     fs::OpenOptions,
     io::Write,
     path::PathBuf,
@@ -15,9 +15,26 @@ use super::{Metrics, Tag};
 
 #[derive(Serialize, Deserialize, Debug, Default)]
 pub struct MetricsDatabase {
+    #[serde(serialize_with = "ordered_map")]
     pub metrics: HashMap<String, Metrics>,
+
+    #[serde(serialize_with = "ordered_map")]
     pub tags: HashMap<String, Tag>,
+
     pub db_path: String,
+}
+
+// https://stackoverflow.com/questions/42723065/how-to-sort-hashmap-keys-when-serializing-with-serde
+/// For use with serde's [serialize_with] attribute
+fn ordered_map<S, K: Ord + Serialize, V: Serialize>(
+    value: &HashMap<K, V>,
+    serializer: S,
+) -> Result<S::Ok, S::Error>
+where
+    S: Serializer,
+{
+    let ordered: BTreeMap<_, _> = value.iter().collect();
+    ordered.serialize(serializer)
 }
 
 impl FromStr for MetricsDatabase {
@@ -51,11 +68,6 @@ impl MetricsDatabase {
     }
 
     pub fn self_delete(&self) {
-        println!("Do you want to work on existing database {}? (y/n)\nAnswering no will overwrite existing one / create a new one.", self.db_path);
-        let line = std::io::stdin().lines().next().unwrap().unwrap();
-        if !line.to_lowercase().contains('n') {
-            return;
-        }
         let db_file = PathBuf::from(self.db_path.clone());
         if db_file.exists() {
             std::fs::remove_file(db_file).unwrap();
@@ -69,7 +81,11 @@ impl MetricsDatabase {
             .create_new(true)
             .open(db_file)
         {
-            file.write_all(serde_json::to_string_pretty(&self).unwrap().as_bytes())
+            let db = MetricsDatabase {
+                db_path: self.db_path.clone(),
+                ..Default::default()
+            };
+            file.write_all(serde_json::to_string_pretty(&db).unwrap().as_bytes())
                 .unwrap();
         }
     }

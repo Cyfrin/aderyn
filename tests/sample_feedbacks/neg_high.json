@@ -1,4 +1,5 @@
 {
+    "positive_feedbacks": [],
     "negative_feedbacks": ["delegate-call-in-loop"],
     "all_exposed_detectors" : [
         "push-zero-opcode", 
