@@ -1,5 +1,3 @@
-
-
 use crate::{context::workspace_context::ASTNode, detect::detector::ReusableDetector};
 
 #[derive(Default)]
