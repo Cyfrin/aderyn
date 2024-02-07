@@ -137,10 +137,6 @@ jobs:
         with:
           command: run
           args: --bin nyth -- init bot_ci_cd
-      
-      - name: ls the bot directory
-        run: |
-          ls -la bot_ci_cd
           
       - name: Build the bot 
         uses: actions-rs/cargo@v1
