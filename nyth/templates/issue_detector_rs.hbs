@@ -3,7 +3,7 @@ use std::{collections::BTreeMap, error::Error};
 use aderyn_driver::core_ast::NodeID;
 use aderyn_driver::context::workspace_context::WorkspaceContext;
 use aderyn_driver::detection_modules::capture;
-use aderyn_driver::detector::{Detector, IssueSeverity};
+use aderyn_driver::detector::{IssueDetector, IssueSeverity};
 
 #[derive(Default)]
 pub struct {{detector_name_title_case}} {
@@ -51,12 +51,12 @@ mod {{detector_name_camel_case}}_tests {
 
     use aderyn_driver::context::workspace_context::WorkspaceContext;
     use aderyn_driver::detector::detector_test_helpers::load_contract;
-    use aderyn_driver::detector::Detector;
+    use aderyn_driver::detector::IssueDetector;
 
     fn test_{{detector_name_camel_case}}_for(
         _contract_file: String,
         context: WorkspaceContext,
-        mut detector: impl Detector,
+        mut detector: impl IssueDetector,
     ) {
         // assert that the detector finds instances
         let found = detector.detect(&context).unwrap();
