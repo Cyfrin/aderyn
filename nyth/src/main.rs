@@ -29,7 +29,7 @@ enum PilotCommand {
     },
     /// Creates a new detector with the given name.
     /// For example, to create a detector named "unindexed_events", you run
-    /// "nyth new path/to/smart_bot/bot/src/unindexed_events".
+    /// "nyth new path/to/smart_bot/src/unindexed_events".
     New {
         /// Choose the type of detector to create: issue or detector.
         #[clap(value_enum)]
@@ -59,14 +59,14 @@ fn main() {
             });
             let archive: Vec<u8> = Vec::from(include_bytes!("../archive.zip"));
             let target_dir = PathBuf::from(bot_name);
-            zip_extract::extract(Cursor::new(archive), &target_dir, false).unwrap();
+            zip_extract::extract(Cursor::new(archive), &target_dir, true).unwrap();
             let _ = std::process::Command::new("git")
                 .arg("init")
                 .current_dir(&target_dir)
                 .stdout(Stdio::inherit()) // This will stream the stdout
                 .stderr(Stdio::inherit())
                 .status();
-            let foundry_workspace_dir = target_dir.join("bot/foundry_workspace");
+            let foundry_workspace_dir = target_dir.join("foundry_workspace");
             let _ = std::process::Command::new("forge")
                 .arg("build")
                 .current_dir(&foundry_workspace_dir)
