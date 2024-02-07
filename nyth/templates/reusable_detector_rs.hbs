@@ -2,6 +2,7 @@ use std::error::Error;
 
 use aderyn_driver::context::workspace_context::WorkspaceContext;
 use aderyn_driver::detector::ReusableDetector;
+use aderyn_driver::context::workspace_context::ASTNode;
 
 #[derive(Default)]
 pub struct {{detector_name_title_case}} {
@@ -11,9 +12,9 @@ pub struct {{detector_name_title_case}} {
 impl ReusableDetector for {{detector_name_title_case}} {
     fn detect(
         &mut self,
-        context: &crate::context::workspace_context::WorkspaceContext,
+        context: &WorkspaceContext,
         using: &[ASTNode],
-        _: &[ASTNode],
+        with: &[ASTNode],
     ) -> Result<&[ASTNode], Box<dyn std::error::Error>> {
         
         // Use the `context` to find nodes, then capture them as shown below
@@ -40,8 +41,8 @@ mod {{detector_name_camel_case}}_tests {
         mut detector: impl ReusableDetector,
     ) {
         // assert that the detector finds instances
-        let found = detector.detect(&context, &using, &Vec::new()).unwrap();
-        assert!(found);
+        let results = detector.detect(&context, &Vec::new(), &Vec::new()).unwrap();
+        assert!(!results.is_empty());
     }
 
     #[test]
