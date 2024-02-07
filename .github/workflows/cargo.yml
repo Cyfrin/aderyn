@@ -130,7 +130,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: --bin bot_fw_assembler -- dev ../../aderyn_driver
+          args: --bin bot_fw_assembler -- dev ../aderyn_driver
 
       - name: Create a bot with nyth
         uses: actions-rs/cargo@v1
