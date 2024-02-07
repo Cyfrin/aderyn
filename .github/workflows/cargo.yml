@@ -136,7 +136,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: --bin nyth -- new bot_ci_cd
+          args: --bin nyth -- init bot_ci_cd
           
       - name: Build the bot 
         uses: actions-rs/cargo@v1
@@ -148,7 +148,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: --bin nyth -- generate bot_ci_cd/bot/src/no_zero_address_check
+          args: --bin nyth -- new issue bot_ci_cd/bot/src/no_zero_address_check
 
       - name: Build the bot again 
         uses: actions-rs/cargo@v1
