@@ -100,7 +100,7 @@ fn main() {
 
         create_dir_all(Path::new(&detector_name)).unwrap();
 
-        let detector_path = std::fs::canonicalize(&detector_name).unwrap();
+        let detector_path = std::fs::canonicalize(detector_name).unwrap();
 
         let file = OpenOptions::new()
             .read(true)
@@ -179,7 +179,7 @@ fn main() {
 
         create_dir_all(Path::new(&detector_name)).unwrap();
 
-        let detector_path = std::fs::canonicalize(&detector_name).unwrap();
+        let detector_path = std::fs::canonicalize(detector_name).unwrap();
 
         let file = OpenOptions::new()
             .read(true)
