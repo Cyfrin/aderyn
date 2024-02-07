@@ -145,7 +145,7 @@ jobs:
           args: --manifest-path ./bot_ci_cd/Cargo.toml
       
       - name: CD into the bot directory
-        run: cd bot_ci_cd
+        run: cd bot_ci_cd && ls -la
 
       - name: Add an issue detector to the bot
         uses: actions-rs/cargo@v1
