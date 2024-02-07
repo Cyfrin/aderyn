@@ -4,7 +4,7 @@ use crate::{
     ast::NodeID,
     capture,
     context::workspace_context::WorkspaceContext,
-    detect::detector::{Detector, DetectorNamePool, IssueSeverity},
+    detect::detector::{DetectorNamePool, IssueDetector, IssueSeverity},
 };
 use eyre::Result;
 
@@ -14,7 +14,7 @@ pub struct SolmateSafeTransferLibDetector {
     found_instances: BTreeMap<(String, usize), NodeID>,
 }
 
-impl Detector for SolmateSafeTransferLibDetector {
+impl IssueDetector for SolmateSafeTransferLibDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for import_directive in context.import_directives.keys() {
             // If the import directive absolute_path contains the strings "solmate" and "SafeTransferLib", flip the found_solmate_import flag to true
@@ -60,7 +60,7 @@ impl Detector for SolmateSafeTransferLibDetector {
 #[cfg(test)]
 mod solmate_safe_transfer_lib_tests {
     use crate::detect::{
-        detector::{detector_test_helpers::load_contract, Detector},
+        detector::{detector_test_helpers::load_contract, IssueDetector},
         medium::solmate_safe_transfer_lib::SolmateSafeTransferLibDetector,
     };
 

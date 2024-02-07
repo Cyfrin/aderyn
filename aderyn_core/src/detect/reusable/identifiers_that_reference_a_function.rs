@@ -33,6 +33,10 @@ impl ReusableDetector for IdentifiersThatReferenceAFunctionDetector {
 
         Ok(&self.found_instances)
     }
+
+    fn name(&self) -> String {
+        "IdentifiersThatReferenceAFunctionDetector".to_string()
+    }
 }
 
 #[cfg(test)]

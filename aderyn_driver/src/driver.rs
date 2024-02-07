@@ -1,7 +1,7 @@
 use crate::{process_foundry, process_hardhat, virtual_foundry};
 use aderyn_core::{
     context::workspace_context::WorkspaceContext,
-    detect::detector::Detector,
+    detect::detector::IssueDetector,
     fscloc,
     report::{json_printer::JsonPrinter, markdown_printer::MarkdownReportPrinter},
     run_with_printer, run_with_printer_and_given_detectors,
@@ -60,7 +60,7 @@ pub fn drive(args: Args) {
     }
 }
 
-pub fn drive_with(args: Args, detectors: Vec<Box<dyn Detector>>) {
+pub fn drive_with(args: Args, detectors: Vec<Box<dyn IssueDetector>>) {
     let output = args.output.clone();
     let cx_wrapper = make_context(&args);
     let root_rel_path = PathBuf::from(&args.root);

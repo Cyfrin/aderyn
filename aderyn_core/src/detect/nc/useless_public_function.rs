@@ -5,7 +5,7 @@ use crate::{
     capture,
     context::workspace_context::WorkspaceContext,
     detect::{
-        detector::{Detector, DetectorNamePool, IssueSeverity, ReusableDetector},
+        detector::{DetectorNamePool, IssueDetector, IssueSeverity, ReusableDetector},
         reusable::IdentifiersThatReferenceAFunctionDetector,
     },
 };
@@ -17,7 +17,7 @@ pub struct UselessPublicFunctionDetector {
     found_instances: BTreeMap<(String, usize), NodeID>,
 }
 
-impl Detector for UselessPublicFunctionDetector {
+impl IssueDetector for UselessPublicFunctionDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         let unreferenced_public_functions =
             context.function_definitions.keys().filter(|&function| {
@@ -58,7 +58,7 @@ impl Detector for UselessPublicFunctionDetector {
 
 #[cfg(test)]
 mod useless_public_function_tests {
-    use crate::detect::detector::{detector_test_helpers::load_contract, Detector};
+    use crate::detect::detector::{detector_test_helpers::load_contract, IssueDetector};
 
     use super::UselessPublicFunctionDetector;
 

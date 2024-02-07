@@ -3,7 +3,7 @@ use std::{collections::BTreeMap, error::Error};
 use aderyn_driver::context::workspace_context::WorkspaceContext;
 use aderyn_driver::core_ast::NodeID;
 use aderyn_driver::detection_modules::capture;
-use aderyn_driver::detector::{Detector, IssueSeverity};
+use aderyn_driver::detector::{IssueDetector, IssueSeverity};
 
 #[derive(Default)]
 pub struct UnindexedEventsDetector {
@@ -11,7 +11,7 @@ pub struct UnindexedEventsDetector {
     found_instances: BTreeMap<(String, usize), NodeID>,
 }
 
-impl Detector for UnindexedEventsDetector {
+impl IssueDetector for UnindexedEventsDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // for each event definition, check if it has any indexed parameters
         // if it does not, then add it to the list of found unindexed events
@@ -58,7 +58,7 @@ mod unindexed_event_tests {
 
     use super::UnindexedEventsDetector;
     use aderyn_driver::detector::detector_test_helpers::load_contract;
-    use aderyn_driver::detector::{Detector, IssueSeverity};
+    use aderyn_driver::detector::{IssueDetector, IssueSeverity};
 
     #[test]
     fn test_unindexed_events() {

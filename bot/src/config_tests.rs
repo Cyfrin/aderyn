@@ -15,8 +15,8 @@ pub fn tests_configuration() -> TestsConfig {
 pub fn tests_configuration() -> TestsConfig {
     vec![
         TestsTarget::new("./foundry_workspace/out/Counter.sol/Counter.json")
-            .with(Box::<ExampleDetector>::default())
-            .with(Box::<AnotherExampleDetector>::default())
+            .with_detector(Box::<ExampleDetector>::default())
+            .with_reusable_detector(Box::<ExampleReusableDetector>::default()),
     ]
     .into()
 }

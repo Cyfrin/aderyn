@@ -4,7 +4,7 @@ use crate::{
     ast::{Expression, FunctionCallKind, NodeID},
     capture,
     context::workspace_context::WorkspaceContext,
-    detect::detector::{Detector, DetectorNamePool, IssueSeverity},
+    detect::detector::{DetectorNamePool, IssueDetector, IssueSeverity},
 };
 use eyre::Result;
 
@@ -14,7 +14,7 @@ pub struct BlockTimestampDeadlineDetector {
     found_instances: BTreeMap<(String, usize), NodeID>,
 }
 
-impl Detector for BlockTimestampDeadlineDetector {
+impl IssueDetector for BlockTimestampDeadlineDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for call in context.function_calls.keys() {
             // Uniswap V2 - Function Calls
@@ -116,7 +116,7 @@ impl Detector for BlockTimestampDeadlineDetector {
 #[cfg(test)]
 mod block_timestamp_deadline_detector_tests {
     use crate::detect::{
-        detector::{detector_test_helpers::load_contract, Detector},
+        detector::{detector_test_helpers::load_contract, IssueDetector},
         medium::block_timestamp_deadline::BlockTimestampDeadlineDetector,
     };
 

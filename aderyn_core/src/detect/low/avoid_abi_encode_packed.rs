@@ -4,7 +4,7 @@ use crate::{
     ast::NodeID,
     capture,
     context::workspace_context::WorkspaceContext,
-    detect::detector::{Detector, DetectorNamePool, IssueSeverity},
+    detect::detector::{DetectorNamePool, IssueDetector, IssueSeverity},
 };
 use eyre::Result;
 
@@ -14,7 +14,7 @@ pub struct AvoidAbiEncodePackedDetector {
     found_instances: BTreeMap<(String, usize), NodeID>,
 }
 
-impl Detector for AvoidAbiEncodePackedDetector {
+impl IssueDetector for AvoidAbiEncodePackedDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for member_access in context.member_accesses.keys() {
             // If the member_access's member_name = "encodePacked", loop through the argument_types and count how many of them contain any of the following in type_strings:
@@ -72,7 +72,7 @@ impl Detector for AvoidAbiEncodePackedDetector {
 
 #[cfg(test)]
 mod avoid_abi_encode_packed_tests {
-    use crate::detect::detector::{detector_test_helpers::load_contract, Detector};
+    use crate::detect::detector::{detector_test_helpers::load_contract, IssueDetector};
 
     use super::AvoidAbiEncodePackedDetector;
 
