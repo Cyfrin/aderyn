@@ -4,7 +4,7 @@ use crate::{
     ast::NodeID,
     capture,
     context::workspace_context::WorkspaceContext,
-    detect::detector::{Detector, DetectorNamePool, IssueSeverity},
+    detect::detector::{DetectorNamePool, IssueDetector, IssueSeverity},
 };
 use eyre::Result;
 use semver::{Op, VersionReq};
@@ -52,7 +52,7 @@ fn version_req_allows_above_0_8_19(version_req: &VersionReq) -> bool {
     false
 }
 
-impl Detector for PushZeroOpcodeDetector {
+impl IssueDetector for PushZeroOpcodeDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for pragma_directive in context.pragma_directives.keys() {
             let mut version_string = String::new();
@@ -101,7 +101,7 @@ impl Detector for PushZeroOpcodeDetector {
 
 #[cfg(test)]
 mod unspecific_solidity_pragma_tests {
-    use crate::detect::detector::{detector_test_helpers::load_contract, Detector};
+    use crate::detect::detector::{detector_test_helpers::load_contract, IssueDetector};
 
     #[test]
     fn test_push_0_opcode_detector_on_0_8_20() {

@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use aderyn_driver::detector::{Detector, ReusableDetector};
+use aderyn_driver::detector::{IssueDetector, ReusableDetector};
 
 pub struct Grounded; // Contract has been given but no detectors attached
 pub struct Launchable; // Contract has been given + detectors are attached
@@ -8,7 +8,7 @@ pub struct Launchable; // Contract has been given + detectors are attached
 pub struct TestsTarget<Stage = Grounded> {
     stage: std::marker::PhantomData<Stage>,
     pub filepath: String,
-    pub detectors: Vec<Box<dyn Detector>>,
+    pub detectors: Vec<Box<dyn IssueDetector>>,
     pub reusables_detectors: Vec<Box<dyn ReusableDetector>>,
 }
 
@@ -22,7 +22,7 @@ impl TestsTarget<Grounded> {
         }
     }
 
-    pub fn with_detector(self, detector: Box<dyn Detector>) -> TestsTarget<Launchable> {
+    pub fn with_detector(self, detector: Box<dyn IssueDetector>) -> TestsTarget<Launchable> {
         let mut detectors_so_far = self.detectors;
         detectors_so_far.push(detector);
 
@@ -51,7 +51,7 @@ impl TestsTarget<Grounded> {
 }
 
 impl TestsTarget<Launchable> {
-    pub fn with_detector(self, detector: Box<dyn Detector>) -> TestsTarget<Launchable> {
+    pub fn with_detector(self, detector: Box<dyn IssueDetector>) -> TestsTarget<Launchable> {
         let mut detectors_so_far = self.detectors;
         detectors_so_far.push(detector);
         TestsTarget::<Launchable> {

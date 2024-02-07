@@ -5,7 +5,7 @@ use crate::{
     ast::{MemberAccess, NodeID},
     capture,
     context::{browser::ExtractMemberAccesses, workspace_context::WorkspaceContext},
-    detect::detector::{Detector, DetectorNamePool, IssueSeverity},
+    detect::detector::{DetectorNamePool, IssueDetector, IssueSeverity},
 };
 use eyre::Result;
 
@@ -15,7 +15,7 @@ pub struct DelegateCallInLoopDetector {
     found_instances: BTreeMap<(String, usize), NodeID>,
 }
 
-impl Detector for DelegateCallInLoopDetector {
+impl IssueDetector for DelegateCallInLoopDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         let mut member_accesses: Vec<MemberAccess> = vec![];
 
@@ -66,7 +66,7 @@ impl Detector for DelegateCallInLoopDetector {
 
 #[cfg(test)]
 mod delegate_call_in_loop_detector_tests {
-    use crate::detect::detector::{detector_test_helpers::load_contract, Detector};
+    use crate::detect::detector::{detector_test_helpers::load_contract, IssueDetector};
 
     use super::DelegateCallInLoopDetector;
 

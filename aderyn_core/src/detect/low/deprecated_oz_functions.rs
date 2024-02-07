@@ -4,7 +4,7 @@ use crate::{
     ast::NodeID,
     capture,
     context::{browser::GetParent, workspace_context::WorkspaceContext},
-    detect::detector::{Detector, DetectorNamePool, IssueSeverity},
+    detect::detector::{DetectorNamePool, IssueDetector, IssueSeverity},
 };
 use eyre::Result;
 
@@ -14,7 +14,7 @@ pub struct DeprecatedOZFunctionsDetector {
     found_instances: BTreeMap<(String, usize), NodeID>,
 }
 
-impl Detector for DeprecatedOZFunctionsDetector {
+impl IssueDetector for DeprecatedOZFunctionsDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for identifier in context.identifiers.keys() {
             // if source_unit has any ImportDirectives with absolute_path containing "openzeppelin"
@@ -73,7 +73,7 @@ impl Detector for DeprecatedOZFunctionsDetector {
 
 #[cfg(test)]
 mod deprecated_oz_functions_tests {
-    use crate::detect::detector::{detector_test_helpers::load_contract, Detector};
+    use crate::detect::detector::{detector_test_helpers::load_contract, IssueDetector};
 
     use super::DeprecatedOZFunctionsDetector;
 

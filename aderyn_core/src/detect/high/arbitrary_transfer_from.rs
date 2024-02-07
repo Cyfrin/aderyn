@@ -7,7 +7,7 @@ use crate::capture;
 use crate::detect::detector::DetectorNamePool;
 use crate::{
     context::workspace_context::WorkspaceContext,
-    detect::detector::{Detector, IssueSeverity},
+    detect::detector::{IssueDetector, IssueSeverity},
 };
 use eyre::Result;
 
@@ -42,7 +42,7 @@ fn check_argument_validity(function_call: &FunctionCall) -> bool {
     }
 }
 
-impl Detector for ArbitraryTransferFromDetector {
+impl IssueDetector for ArbitraryTransferFromDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         let transfer_from_function_calls = context.function_calls.keys().filter(|function_call| {
             // For each function call, check if the function call is a member access
@@ -89,7 +89,7 @@ impl Detector for ArbitraryTransferFromDetector {
 #[cfg(test)]
 mod arbitrary_transfer_from_tests {
     use crate::detect::{
-        detector::{detector_test_helpers::load_contract, Detector},
+        detector::{detector_test_helpers::load_contract, IssueDetector},
         high::arbitrary_transfer_from::ArbitraryTransferFromDetector,
     };
 

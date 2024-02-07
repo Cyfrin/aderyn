@@ -4,7 +4,7 @@ use crate::{
     ast::NodeID,
     capture,
     context::workspace_context::WorkspaceContext,
-    detect::detector::{Detector, DetectorNamePool, IssueSeverity},
+    detect::detector::{DetectorNamePool, IssueDetector, IssueSeverity},
 };
 use eyre::Result;
 
@@ -14,7 +14,7 @@ pub struct EcrecoverDetector {
     found_instances: BTreeMap<(String, usize), NodeID>,
 }
 
-impl Detector for EcrecoverDetector {
+impl IssueDetector for EcrecoverDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for identifier in context.identifiers.keys() {
             if identifier.name == "ecrecover" {
@@ -55,7 +55,7 @@ impl Detector for EcrecoverDetector {
 #[cfg(test)]
 mod ecrecover_tests {
 
-    use crate::detect::detector::{detector_test_helpers::load_contract, Detector};
+    use crate::detect::detector::{detector_test_helpers::load_contract, IssueDetector};
 
     use super::EcrecoverDetector;
 

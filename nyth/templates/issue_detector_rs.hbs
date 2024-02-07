@@ -11,7 +11,7 @@ pub struct {{detector_name_title_case}} {
     found_instances: BTreeMap<(String, usize), NodeID>,
 }
 
-impl Detector for {{detector_name_title_case}} {
+impl IssueDetector for {{detector_name_title_case}} {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         
         // Use the `context` to find nodes, then capture them as shown below

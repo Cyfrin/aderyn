@@ -4,7 +4,7 @@ use crate::{
     ast::NodeID,
     capture,
     context::workspace_context::WorkspaceContext,
-    detect::detector::{Detector, DetectorNamePool, IssueSeverity},
+    detect::detector::{DetectorNamePool, IssueDetector, IssueSeverity},
 };
 use eyre::Result;
 
@@ -14,7 +14,7 @@ pub struct RequireWithStringDetector {
     found_instances: BTreeMap<(String, usize), NodeID>,
 }
 
-impl Detector for RequireWithStringDetector {
+impl IssueDetector for RequireWithStringDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // Collect all require statements without a string literal.
         let requires_and_reverts = context
@@ -56,7 +56,7 @@ impl Detector for RequireWithStringDetector {
 
 #[cfg(test)]
 mod require_with_string_tests {
-    use crate::detect::detector::{detector_test_helpers::load_contract, Detector};
+    use crate::detect::detector::{detector_test_helpers::load_contract, IssueDetector};
 
     use super::RequireWithStringDetector;
 

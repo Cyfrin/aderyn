@@ -42,7 +42,7 @@ enum PilotCommand {
 #[derive(Debug, Clone, PartialEq, Eq, ValueEnum)]
 enum DetectorType {
     Issue,
-    Detector,
+    Reusable,
 }
 
 // TODO:
@@ -172,7 +172,7 @@ fn main() {
 
         // Step 1 : Create the detector module by following the template
 
-        let template = include_str!("../templates/detector_rs.hbs");
+        let template = include_str!("../templates/issue_detector_rs.hbs");
 
         let reg = Handlebars::new();
         use std::fs::OpenOptions;

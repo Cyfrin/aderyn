@@ -154,7 +154,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: --bin nyth -- new detector bot_ci_cd/bot/src/my_reusable_thing
+          args: --bin nyth -- new reusable bot_ci_cd/bot/src/my_reusable_thing
 
       - name: Build the bot again 
         uses: actions-rs/cargo@v1

@@ -2,7 +2,9 @@ use serde::Deserialize;
 use std::path::{Path, PathBuf};
 
 use aderyn_driver::{
-    detector::{get_all_detectors, get_all_detectors_names, get_detector_by_name, Detector},
+    detector::{
+        get_all_detectors_names, get_all_issue_detectors, get_issue_detector_by_name, IssueDetector,
+    },
     driver::{self, Args},
 };
 use clap::{Parser, Subcommand};
@@ -91,7 +93,7 @@ fn main() {
         match aderyn_config {
             Ok(config) => {
                 let all_detector_names = get_all_detectors_names();
-                let mut subscriptions: Vec<Box<dyn Detector>> = vec![];
+                let mut subscriptions: Vec<Box<dyn IssueDetector>> = vec![];
                 let mut scope_lines: Option<Vec<String>> = args.scope.clone();
                 match config.detectors {
                     Some(config_detectors) => {
@@ -103,12 +105,12 @@ fn main() {
                                         );
                                 return;
                             }
-                            let det = get_detector_by_name(detector_name);
+                            let det = get_issue_detector_by_name(detector_name);
                             subscriptions.push(det);
                         }
                     }
                     None => {
-                        subscriptions.extend(get_all_detectors());
+                        subscriptions.extend(get_all_issue_detectors());
                     }
                 }
 
@@ -201,7 +203,7 @@ fn print_detail_view(detector_name: &str) {
         println!("Couldn't recognize detector with name {}", detector_name);
         return;
     }
-    let detector = get_detector_by_name(detector_name);
+    let detector = get_issue_detector_by_name(detector_name);
     println!("\nDetector {}", detector_name);
     println!();
     println!("Title");
@@ -223,7 +225,7 @@ fn print_all_detectors_view() {
     println!("{}   Title", right_pad("Name", 30));
     println!();
     for name in all_detector_names {
-        let detector = get_detector_by_name(&name);
+        let detector = get_issue_detector_by_name(&name);
         println!("{} - {}", right_pad(&name, 30), detector.title());
     }
     println!();
