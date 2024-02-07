@@ -125,6 +125,11 @@ jobs:
           profile: minimal
           toolchain: stable
           override: true
+      
+      - name: Cargo build
+        uses: actions-rs/cargo@v1
+        with:
+          command: build
 
       - name: Ask assembler make a dev archive.zip
         uses: actions-rs/cargo@v1
@@ -133,34 +138,20 @@ jobs:
           args: --bin bot_fw_assembler -- dev ../aderyn_driver
 
       - name: Create a bot with nyth
-        uses: actions-rs/cargo@v1
-        with:
-          command: run
-          args: --bin nyth -- init bot_ci_cd
+        run: |
+          ./target/debug/nyth init bot_ci_cd
           
       - name: Build the bot 
         uses: actions-rs/cargo@v1
         with:
           command: build
           args: --manifest-path ./bot_ci_cd/Cargo.toml
-      
-      - name: CD into the bot directory
-        run: cd bot_ci_cd && ls -la
 
-      - name: Add an issue detector to the bot
-        uses: actions-rs/cargo@v1
-        with:
-          command: run
-          args: --bin nyth -- new issue bot_ci_cd/src/no_zero_address_check
-      
-      - name: Add a reusable detector to the bot
-        uses: actions-rs/cargo@v1
-        with:
-          command: run
-          args: --bin nyth -- new reusable bot_ci_cd/src/my_reusable_thing
-
-      - name: CD out of the bot directory
-        run: cd ..
+      - name: Add detectors to the bot
+        run: |
+          cd bot_ci_cd
+          ../target/debug/nyth new issue my_issue_detector_thing
+          ../target/debug/nyth new reusable my_reusable_thing
 
       - name: Build the bot again 
         uses: actions-rs/cargo@v1
