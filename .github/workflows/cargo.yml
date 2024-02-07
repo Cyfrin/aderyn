@@ -144,11 +144,17 @@ jobs:
           command: build
           args: --manifest-path ./bot_ci_cd/bot/Cargo.toml
 
-      - name: Add a detector to the bot
+      - name: Add an issue detector to the bot
         uses: actions-rs/cargo@v1
         with:
           command: run
           args: --bin nyth -- new issue bot_ci_cd/bot/src/no_zero_address_check
+      
+      - name: Add a reusable detector to the bot
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+          args: --bin nyth -- new detector bot_ci_cd/bot/src/my_reusable_thing
 
       - name: Build the bot again 
         uses: actions-rs/cargo@v1
