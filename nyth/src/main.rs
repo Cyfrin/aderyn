@@ -1,10 +1,10 @@
 use clap::{Parser, Subcommand, ValueEnum};
 use handlebars::Handlebars;
 use serde_json::json;
-use std::fs;
 use std::io::Write;
 use std::path::Path;
 use std::process::Stdio;
+use std::{env, fs};
 use std::{
     fs::create_dir_all,
     io::{BufWriter, Cursor},
@@ -29,7 +29,7 @@ enum PilotCommand {
     },
     /// Creates a new detector with the given name.
     /// For example, to create a detector named "unindexed_events", you run
-    /// "nyth new path/to/smart_bot/src/unindexed_events".
+    /// "nyth new unindexed_events".
     New {
         /// Choose the type of detector to create: issue or detector.
         #[clap(value_enum)]
@@ -78,6 +78,12 @@ fn main() {
             detector_type,
             detector_name,
         } => {
+            let mut nyth_dir: PathBuf = env::current_dir().unwrap();
+            nyth_dir.push("nyth.toml");
+            if !nyth_dir.exists() {
+                eprintln!("You are not in a nyth project directory!");
+                std::process::exit(1);
+            }
             if detector_type == DetectorType::Issue {
                 create_issue_detector(&detector_name);
             } else {
@@ -87,7 +93,9 @@ fn main() {
     }
 
     fn create_detector(detector_name: &str) {
-        let filename = Path::new(&detector_name).file_name().to_owned().unwrap();
+        let mut detector_path = PathBuf::from("src");
+        detector_path.push(detector_name);
+        let filename = Path::new(&detector_path).file_name().to_owned().unwrap();
         let detector_name_camel_case = filename.to_string_lossy().to_ascii_lowercase();
         let detector_name_title_case = to_title_case(detector_name_camel_case.clone());
 
@@ -98,9 +106,9 @@ fn main() {
         let reg = Handlebars::new();
         use std::fs::OpenOptions;
 
-        create_dir_all(Path::new(&detector_name)).unwrap();
+        create_dir_all(Path::new(&detector_path)).unwrap();
 
-        let detector_path = std::fs::canonicalize(detector_name).unwrap();
+        let detector_path = std::fs::canonicalize(detector_path).unwrap();
 
         let file = OpenOptions::new()
             .read(true)
@@ -166,7 +174,9 @@ fn main() {
     }
 
     fn create_issue_detector(detector_name: &str) {
-        let filename = Path::new(&detector_name).file_name().to_owned().unwrap();
+        let mut detector_path = PathBuf::from("src");
+        detector_path.push(detector_name);
+        let filename = Path::new(&detector_path).file_name().to_owned().unwrap();
         let detector_name_camel_case = filename.to_string_lossy().to_ascii_lowercase();
         let detector_name_title_case = to_title_case(detector_name_camel_case.clone());
 
@@ -177,9 +187,9 @@ fn main() {
         let reg = Handlebars::new();
         use std::fs::OpenOptions;
 
-        create_dir_all(Path::new(&detector_name)).unwrap();
+        create_dir_all(Path::new(&detector_path)).unwrap();
 
-        let detector_path = std::fs::canonicalize(detector_name).unwrap();
+        let detector_path = std::fs::canonicalize(detector_path).unwrap();
 
         let file = OpenOptions::new()
             .read(true)
