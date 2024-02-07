@@ -67,7 +67,7 @@ fn main() {
             aderyn_driver_version,
         } => {
             // Manipulate Cargo.toml
-            let old_content = std::fs::read_to_string("Cargo.toml").unwrap();
+            let old_content = std::fs::read_to_string("bot/Cargo.toml").unwrap();
 
             let mut hook: isize = -1;
             for (idx, line) in old_content.lines().enumerate() {
@@ -87,21 +87,21 @@ fn main() {
             to_insert_content_lines[hook as usize] = &new_aderyn_driver_line;
 
             // Replace with temporary content
-            println!("[*] Writing to Cargo.toml");
+            println!("[*] Writing to bot/Cargo.toml");
             write_to_cargo_toml(to_insert_content_lines.join("\n"));
 
             // Make archive from new changes for nyth's new command to use
             pack_bytes_and_create_archive();
 
             // Restore the old content in Cargo.toml
-            println!("[*] Restoring Cargo.toml");
+            println!("[*] Restoring bot/Cargo.toml");
             write_to_cargo_toml(old_content);
         }
         BotFrameworkEnvironment::Dev {
             relative_path_to_aderyn_driver,
         } => {
             // Manipulate Cargo.toml
-            let old_content = std::fs::read_to_string("Cargo.toml").unwrap();
+            let old_content = std::fs::read_to_string("bot/Cargo.toml").unwrap();
 
             let mut hook: isize = -1;
             for (idx, line) in old_content.lines().enumerate() {
@@ -121,14 +121,14 @@ fn main() {
             to_insert_content_lines[hook as usize] = &new_aderyn_driver_line;
 
             // Replace with temporary content
-            println!("[*] Writing to Cargo.toml");
+            println!("[*] Writing to bot/Cargo.toml");
             write_to_cargo_toml(to_insert_content_lines.join("\n"));
 
             // Make archive from new changes for nyth's new command to use
             pack_bytes_and_create_archive();
 
             // Restore the old content in Cargo.toml
-            println!("[*] Restoring Cargo.toml");
+            println!("[*] Restoring bot/Cargo.toml");
             write_to_cargo_toml(old_content);
         }
     }
@@ -145,12 +145,12 @@ fn get_currently_coded_version() -> String {
 }
 
 fn write_to_cargo_toml(content: String) {
-    std::fs::remove_file(PathBuf::from("Cargo.toml")).unwrap();
+    std::fs::remove_file(PathBuf::from("bot/Cargo.toml")).unwrap();
 
     let file = OpenOptions::new()
         .write(true)
         .create(true)
-        .open(PathBuf::from("Cargo.toml"))
+        .open(PathBuf::from("bot/Cargo.toml"))
         .unwrap();
 
     let mut bw = BufWriter::new(file);
@@ -175,7 +175,7 @@ fn pack_bytes_and_create_archive() {
 
     // Put the new archive which reflects changes made in `bot`
     let _output = std::process::Command::new("zip")
-        .args(["-r9", "nyth/archive.zip", "bot", "-x", "target/*"])
+        .args(["-r9", "nyth/archive.zip", "bot", "-x", "bot/target/*"])
         .stdout(Stdio::inherit()) // This will stream the stdout
         .stderr(Stdio::inherit())
         .status();
