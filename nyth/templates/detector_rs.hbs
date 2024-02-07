@@ -5,6 +5,8 @@ use aderyn_driver::context::workspace_context::WorkspaceContext;
 use aderyn_driver::detection_modules::capture;
 use aderyn_driver::detector::{Detector, IssueSeverity};
 
+use crate::bot_utils::DetectorIdentifier;
+
 #[derive(Default)]
 pub struct {{detector_name_title_case}} {
     // Keys are source file name and line number
@@ -31,6 +33,10 @@ impl Detector for {{detector_name_title_case}} {
     fn severity(&self) -> IssueSeverity {
         // Choose the appropriate severity
         IssueSeverity::NC
+    }
+
+    fn name(&self) -> String {
+        "{{ detector_name_title_case }}".to_string()
     }
 
     fn instances(&self) -> BTreeMap<(String, usize), NodeID> {
@@ -62,7 +68,7 @@ mod {{detector_name_camel_case}}_tests {
     #[test]
     fn test_{{detector_name_camel_case}}() {
         let detector = {{detector_name_title_case}}::default();
-        let contracts = tests_configuration().get_contracts_for(detector.title());
+        let contracts = tests_configuration().get_contracts_for(detector.name());
 
         for contract_file in contracts {
             let detector = {{detector_name_title_case}}::default();

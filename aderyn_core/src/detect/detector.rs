@@ -177,6 +177,10 @@ pub trait ReusableDetector {
     ) -> Result<&[ASTNode], Box<dyn Error>> {
         Ok(&[])
     }
+
+    fn name(&self) -> String {
+        format!("{}", DetectorNamePool::Undecided)
+    }
 }
 
 pub mod detector_test_helpers {

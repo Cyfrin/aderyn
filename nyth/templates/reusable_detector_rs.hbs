@@ -22,6 +22,10 @@ impl ReusableDetector for {{detector_name_title_case}} {
         
         Ok(&self.found_instances)
     }
+
+    fn name(&self) -> String {
+        "{{ detector_name_title_case }}".to_string()
+    }
 }
 
 #[cfg(test)]
@@ -48,7 +52,7 @@ mod {{detector_name_camel_case}}_tests {
     #[test]
     fn test_{{detector_name_camel_case}}() {
         let detector = {{detector_name_title_case}}::default();
-        let contracts = tests_configuration().get_contracts_for(detector.title());
+        let contracts = tests_configuration().get_contracts_for(detector.name());
 
         for contract_file in contracts {
             let detector = {{detector_name_title_case}}::default();
