@@ -22,7 +22,7 @@ impl TestsTarget<Grounded> {
         }
     }
 
-    pub fn with_detector(self, detector: Box<dyn IssueDetector>) -> TestsTarget<Launchable> {
+    pub fn with_issue_detector(self, detector: Box<dyn IssueDetector>) -> TestsTarget<Launchable> {
         let mut detectors_so_far = self.detectors;
         detectors_so_far.push(detector);
 
@@ -51,7 +51,7 @@ impl TestsTarget<Grounded> {
 }
 
 impl TestsTarget<Launchable> {
-    pub fn with_detector(self, detector: Box<dyn IssueDetector>) -> TestsTarget<Launchable> {
+    pub fn with_issue_detector(self, detector: Box<dyn IssueDetector>) -> TestsTarget<Launchable> {
         let mut detectors_so_far = self.detectors;
         detectors_so_far.push(detector);
         TestsTarget::<Launchable> {
