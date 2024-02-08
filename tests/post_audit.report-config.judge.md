@@ -95,8 +95,6 @@ Solc compiler version 0.8.20 switches the default target EVM version to Shanghai
 
 ### Responsible : useless-public-function
 
-<span style="color:red"> Tags: 0 is too low of an accuracy for NC (Non Critical) detector</span>
-
 - Found in src/Counter.sol [Line: 7](tests/contract-playground/src/Counter.sol#L7)
 
 	```solidity
@@ -112,6 +110,7 @@ Solc compiler version 0.8.20 switches the default target EVM version to Shanghai
 <span style="color:red">
 @audit:FP
 </span>
+
 
 - Found in src/cloc/AnotherHeavilyCommentedContract.sol [Line: 38](tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol#L38)
 
