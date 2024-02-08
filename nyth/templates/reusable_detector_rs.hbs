@@ -14,7 +14,7 @@ impl ReusableDetector for {{detector_name_title_case}} {
         &mut self,
         context: &WorkspaceContext,
         using: &[ASTNode],
-        with: &[ASTNode],
+        within: &[ASTNode],
     ) -> Result<&[ASTNode], Box<dyn std::error::Error>> {
         
         // Use the `context` to find nodes, then capture them as shown below
