@@ -1,22 +1,22 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
-    ast::{Expression, FunctionCallKind},
+    ast::{Expression, FunctionCallKind, NodeID},
     capture,
-    context::loader::ContextLoader,
-    detect::detector::{Detector, IssueSeverity},
+    context::workspace_context::WorkspaceContext,
+    detect::detector::{DetectorNamePool, IssueDetector, IssueSeverity},
 };
 use eyre::Result;
 
 #[derive(Default)]
 pub struct BlockTimestampDeadlineDetector {
     // Keys are source file name and line number
-    found_instances: BTreeMap<(String, usize), String>,
+    found_instances: BTreeMap<(String, usize), NodeID>,
 }
 
-impl Detector for BlockTimestampDeadlineDetector {
-    fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
-        for call in loader.function_calls.keys() {
+impl IssueDetector for BlockTimestampDeadlineDetector {
+    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
+        for call in context.function_calls.keys() {
             // Uniswap V2 - Function Calls
             // For each FunctionCall, if the Expression is a MemberAccess that is named any of the following:
             // [
@@ -48,7 +48,7 @@ impl Detector for BlockTimestampDeadlineDetector {
                                 *member_access.expression
                             {
                                 if identifier.name == "block" {
-                                    capture!(self, loader, call);
+                                    capture!(self, context, call);
                                 }
                             }
                         }
@@ -76,7 +76,7 @@ impl Detector for BlockTimestampDeadlineDetector {
                                         *member_access.expression
                                     {
                                         if identifier.name == "block" {
-                                            capture!(self, loader, call);
+                                            capture!(self, context, call);
                                         }
                                     }
                                 }
@@ -104,26 +104,30 @@ impl Detector for BlockTimestampDeadlineDetector {
         Consider allowing function caller to specify swap deadline input parameter.".to_string()
     }
 
-    fn instances(&self) -> BTreeMap<(String, usize), String> {
+    fn instances(&self) -> BTreeMap<(String, usize), NodeID> {
         self.found_instances.clone()
+    }
+
+    fn name(&self) -> String {
+        format!("{}", DetectorNamePool::BlockTimestampDeadline)
     }
 }
 
 #[cfg(test)]
 mod block_timestamp_deadline_detector_tests {
     use crate::detect::{
-        detector::{detector_test_helpers::load_contract, Detector},
+        detector::{detector_test_helpers::load_contract, IssueDetector},
         medium::block_timestamp_deadline::BlockTimestampDeadlineDetector,
     };
 
     #[test]
     fn test_block_timestamp_deadline_uniswap_v2_detector() {
-        let context_loader = load_contract(
+        let context = load_contract(
             "../tests/contract-playground/out/UniswapV2Swapper.sol/UniswapV2Swapper.json",
         );
 
         let mut detector = BlockTimestampDeadlineDetector::default();
-        let found = detector.detect(&context_loader).unwrap();
+        let found = detector.detect(&context).unwrap();
         // assert that the detector found
         assert!(found);
         // assert that the number of instances found is correct
@@ -150,12 +154,12 @@ mod block_timestamp_deadline_detector_tests {
 
     #[test]
     fn test_block_timestamp_deadline_uniswap_v3_detector() {
-        let context_loader = load_contract(
+        let context = load_contract(
             "../tests/contract-playground/out/UniswapV3Swapper.sol/UniswapV3Swapper.json",
         );
 
         let mut detector = BlockTimestampDeadlineDetector::default();
-        let found = detector.detect(&context_loader).unwrap();
+        let found = detector.detect(&context).unwrap();
         // assert that the detector found
         assert!(found);
         // assert that the number of instances found is correct

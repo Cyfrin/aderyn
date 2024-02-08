@@ -1,6 +1,6 @@
 use aderyn_core::{
-    context::loader::ContextLoader, framework::hardhat::load_hardhat, read_file_to_string,
-    visitor::ast_visitor::Node,
+    context::workspace_context::WorkspaceContext, framework::hardhat::load_hardhat,
+    read_file_to_string, visitor::ast_visitor::Node,
 };
 use std::{
     collections::HashMap,
@@ -11,8 +11,8 @@ pub fn with_project_root_at(
     root_path: &PathBuf,
     scope: &Option<Vec<String>>,
     exclude: &Option<Vec<String>>,
-) -> (String, ContextLoader) {
-    let mut context_loader = ContextLoader::default();
+) -> (String, WorkspaceContext) {
+    let mut context = WorkspaceContext::default();
 
     println!("Framework detected. Hardhat mode engaged.");
     println!("Hardhat root path: {:?}", root_path);
@@ -73,14 +73,14 @@ pub fn with_project_root_at(
             }
         }
 
-        ast.accept(&mut context_loader).unwrap_or_else(|err| {
+        ast.accept(&mut context).unwrap_or_else(|err| {
             // Exit with a non-zero exit code
-            eprintln!("Error loading Hardhat AST into ContextLoader");
+            eprintln!("Error loading Hardhat AST into WorkspaceContext");
             eprintln!("{:?}", err);
         });
     }
-    context_loader.src_filepaths = filtered_output.keys().cloned().collect();
-    (src_path, context_loader)
+    context.src_filepaths = filtered_output.keys().cloned().collect();
+    (src_path, context)
 }
 
 #[cfg(test)]
@@ -90,8 +90,8 @@ mod tests {
     #[test]
     fn test_process_hardhat() {
         let root_path = PathBuf::from("../tests/hardhat-js-playground");
-        let (_, context_loader) = super::with_project_root_at(&root_path, &None, &None);
-        assert!(context_loader.src_filepaths.len() > 6);
+        let (_, context) = super::with_project_root_at(&root_path, &None, &None);
+        assert!(context.src_filepaths.len() > 6);
     }
 
     #[test]
@@ -99,12 +99,12 @@ mod tests {
         let root_path = PathBuf::from("../tests/hardhat-js-playground");
         let scope: Option<Vec<String>> = Some(vec!["Counter.sol".to_string()]);
 
-        let (_, context_loader) = super::with_project_root_at(&root_path, &scope, &None);
-        let contains_string = context_loader
+        let (_, context) = super::with_project_root_at(&root_path, &scope, &None);
+        let contains_string = context
             .src_filepaths
             .iter()
             .any(|fp| fp.contains("Counter.sol"));
-        assert!(context_loader.src_filepaths.len() == 1);
+        assert!(context.src_filepaths.len() == 1);
         assert!(contains_string);
     }
 
@@ -113,8 +113,8 @@ mod tests {
         let root_path = PathBuf::from("../tests/hardhat-js-playground");
         let exclude: Option<Vec<String>> = Some(vec!["Counter.sol".to_string()]);
 
-        let (_, context_loader) = super::with_project_root_at(&root_path, &None, &exclude);
-        let contains_string = context_loader
+        let (_, context) = super::with_project_root_at(&root_path, &None, &exclude);
+        let contains_string = context
             .src_filepaths
             .iter()
             .any(|fp| fp.contains("Counter.sol"));
@@ -126,16 +126,16 @@ mod tests {
         let root_path = PathBuf::from("../tests/hardhat-js-playground");
         let scope = Some(vec!["Inheritance".to_string()]);
         let exclude = Some(vec!["IContractInheritance.sol".to_string()]);
-        let (_, context_loader) = super::with_project_root_at(&root_path, &scope, &exclude);
-        let has_extended_inheritance = context_loader
+        let (_, context) = super::with_project_root_at(&root_path, &scope, &exclude);
+        let has_extended_inheritance = context
             .src_filepaths
             .iter()
             .any(|fp| fp.contains("ExtendedInheritance.sol"));
-        let has_inheritance_base = context_loader
+        let has_inheritance_base = context
             .src_filepaths
             .iter()
             .any(|fp| fp.contains("InheritanceBase.sol"));
-        let has_icontract_inheritance = context_loader
+        let has_icontract_inheritance = context
             .src_filepaths
             .iter()
             .any(|fp| fp.contains("IContractInheritance.sol"));
@@ -148,16 +148,16 @@ mod tests {
         let root_path = PathBuf::from("../tests/hardhat-js-playground");
         let scope = Some(vec!["contracts".to_string()]);
         let exclude = Some(vec!["IContractInheritance.sol".to_string()]);
-        let (_, context_loader) = super::with_project_root_at(&root_path, &scope, &exclude);
-        let has_extended_inheritance = context_loader
+        let (_, context) = super::with_project_root_at(&root_path, &scope, &exclude);
+        let has_extended_inheritance = context
             .src_filepaths
             .iter()
             .any(|fp| fp.contains("ExtendedInheritance.sol"));
-        let has_inheritance_base = context_loader
+        let has_inheritance_base = context
             .src_filepaths
             .iter()
             .any(|fp| fp.contains("InheritanceBase.sol"));
-        let has_icontract_inheritance = context_loader
+        let has_icontract_inheritance = context
             .src_filepaths
             .iter()
             .any(|fp| fp.contains("IContractInheritance.sol"));

@@ -1,23 +1,24 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
+    ast::NodeID,
     capture,
-    context::loader::ContextLoader,
-    detect::detector::{Detector, IssueSeverity},
+    context::workspace_context::WorkspaceContext,
+    detect::detector::{DetectorNamePool, IssueDetector, IssueSeverity},
 };
 use eyre::Result;
 
 #[derive(Default)]
 pub struct UnindexedEventsDetector {
     // Keys are source file name and line number
-    found_instances: BTreeMap<(String, usize), String>,
+    found_instances: BTreeMap<(String, usize), NodeID>,
 }
 
-impl Detector for UnindexedEventsDetector {
-    fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
+impl IssueDetector for UnindexedEventsDetector {
+    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // for each event definition, check if it has any indexed parameters
         // if it does not, then add it to the list of found unindexed events
-        for event_definition in loader.event_definitions.keys() {
+        for event_definition in context.event_definitions.keys() {
             let mut indexed_count = 0;
             let mut non_indexed = false;
 
@@ -30,7 +31,7 @@ impl Detector for UnindexedEventsDetector {
             }
 
             if non_indexed && indexed_count < 3 {
-                capture!(self, loader, event_definition);
+                capture!(self, context, event_definition);
             }
         }
         Ok(!self.found_instances.is_empty())
@@ -50,26 +51,29 @@ impl Detector for UnindexedEventsDetector {
         IssueSeverity::NC
     }
 
-    fn instances(&self) -> BTreeMap<(String, usize), String> {
+    fn instances(&self) -> BTreeMap<(String, usize), NodeID> {
         self.found_instances.clone()
+    }
+    fn name(&self) -> String {
+        format!("{}", DetectorNamePool::UnindexedEvents)
     }
 }
 
 #[cfg(test)]
 mod unindexed_event_tests {
-    use crate::detect::detector::{detector_test_helpers::load_contract, Detector};
+    use crate::detect::detector::{detector_test_helpers::load_contract, IssueDetector};
 
     use super::UnindexedEventsDetector;
 
     #[test]
     fn test_unindexed_events() {
-        let context_loader = load_contract(
+        let context = load_contract(
             "../tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",
         );
 
         let mut detector = UnindexedEventsDetector::default();
         // assert that the detector finds the public function
-        let found = detector.detect(&context_loader).unwrap();
+        let found = detector.detect(&context).unwrap();
         assert!(found);
         // assert that the detector finds the correct number of unindexed events
         assert_eq!(detector.instances().len(), 1);

@@ -1,6 +1,6 @@
 [package]
 name = "aderyn_core"
-version = "0.0.12"
+version = "0.0.13"
 edition = "2021"
 authors = ["Alex Roan <alex@cyfrin.io>"]
 description = "Rust based Solidity AST analyzer backend"
@@ -18,4 +18,5 @@ semver = "1.0.20"
 serde = { version = "1.0.160", features = ["derive"] }
 serde_json = "1.0.96"
 serde_repr = "0.1.12"
+strum = { version = "0.26", features = ["derive"] }
 toml = "0.8.2"

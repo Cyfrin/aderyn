@@ -2,9 +2,9 @@
 use aderyn_driver::driver::{self, Args};
 
 // These imports are for subscribing to desired core detectors
-use aderyn_driver::detection_modules::high::arbitrary_transfer_from::ArbitraryTransferFromDetector;
-use aderyn_driver::detection_modules::low::push_0_opcode::PushZeroOpcodeDetector;
-use aderyn_driver::detector::Detector;
+use aderyn_driver::detection_modules::high::ArbitraryTransferFromDetector;
+use aderyn_driver::detection_modules::low::PushZeroOpcodeDetector;
+use aderyn_driver::detector::IssueDetector;
 
 // This import is for the custom detector `unindexed_events.rs`
 use bot_example::unindexed_events::UnindexedEventsDetector;
@@ -38,7 +38,7 @@ fn main() {
 
     ////////////////////// SUBSCRIBE TO INTERESTED ONES ///////////////////////////
 
-    let subscribe_to: Vec<Box<dyn Detector>> = vec![
+    let subscribe_to: Vec<Box<dyn IssueDetector>> = vec![
         Box::<ArbitraryTransferFromDetector>::default(),
         Box::<PushZeroOpcodeDetector>::default(),
     ];
@@ -64,7 +64,7 @@ fn main() {
     // There is a file called `unindexed_events` - let's pretend it is the custom written
     // detector. Now we want to use that along with   `ArbitraryTransferFromDetector`
 
-    let subscribe_to_hybrid: Vec<Box<dyn Detector>> = vec![
+    let subscribe_to_hybrid: Vec<Box<dyn IssueDetector>> = vec![
         Box::<ArbitraryTransferFromDetector>::default(),
         Box::<UnindexedEventsDetector>::default(),
     ];

@@ -1,14 +1,14 @@
-use aderyn_driver::detector::Detector;
+use aderyn_driver::detector::IssueDetector;
 use aderyn_driver::driver::{drive_with, Args};
 
 // Core detectors
-use aderyn_driver::detection_modules::low::push_0_opcode::PushZeroOpcodeDetector;
+use aderyn_driver::detection_modules::low::PushZeroOpcodeDetector;
 
 // Custom detectors
 
 // `cargo run` will run this function
 pub fn run() {
-    let subscriptions: Vec<Box<dyn Detector>> = vec![
+    let subscriptions: Vec<Box<dyn IssueDetector>> = vec![
         // List of detectors to run in producing report
         Box::<PushZeroOpcodeDetector>::default(),
     ];

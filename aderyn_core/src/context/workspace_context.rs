@@ -730,23 +730,23 @@ impl ASTNode {
 
 #[derive(Default, Debug, Clone, PartialEq, Eq, Hash)]
 pub struct NodeContext {
-    pub source_unit_id: i64,
-    pub contract_definition_id: Option<i64>,
-    pub function_definition_id: Option<i64>,
-    pub modifier_definition_id: Option<i64>,
+    pub source_unit_id: NodeID,
+    pub contract_definition_id: Option<NodeID>,
+    pub function_definition_id: Option<NodeID>,
+    pub modifier_definition_id: Option<NodeID>,
 }
 
 #[derive(Default, Debug)]
-pub struct ContextLoader {
-    last_source_unit_id: i64,
-    last_contract_definition_id: Option<i64>,
-    last_function_definition_id: Option<i64>,
-    last_modifier_definition_id: Option<i64>,
+pub struct WorkspaceContext {
+    last_source_unit_id: NodeID,
+    last_contract_definition_id: Option<NodeID>,
+    last_function_definition_id: Option<NodeID>,
+    last_modifier_definition_id: Option<NodeID>,
 
     // relative source filepaths
     pub src_filepaths: Vec<String>,
     pub sloc_stats: HashMap<String, usize>,
-    pub nodes: HashMap<i64, ASTNode>,
+    pub nodes: HashMap<NodeID, ASTNode>,
 
     // Hashmaps of all nodes => source_unit_id
     pub array_type_names: HashMap<ArrayTypeName, NodeContext>,
@@ -802,7 +802,7 @@ pub struct ContextLoader {
     pub while_statements: HashMap<WhileStatement, NodeContext>,
 }
 
-impl ContextLoader {
+impl WorkspaceContext {
     // Setters
 
     pub fn set_sloc_stats(&mut self, sloc_stats: HashMap<String, usize>) {
@@ -1031,7 +1031,7 @@ impl ContextLoader {
     }
 }
 
-impl ASTConstVisitor for ContextLoader {
+impl ASTConstVisitor for WorkspaceContext {
     fn visit_array_type_name(&mut self, node: &ArrayTypeName) -> Result<bool> {
         self.array_type_names.insert(
             node.clone(),
@@ -1797,9 +1797,9 @@ impl ASTConstVisitor for ContextLoader {
 }
 
 #[cfg(test)]
-mod loader_tests {
+mod context_tests {
     use crate::ast::*;
-    use crate::context::loader::ContextLoader;
+    use crate::context::workspace_context::WorkspaceContext;
     use crate::framework::foundry::FoundryOutput;
     use crate::visitor::ast_visitor::*;
     use eyre::Result;
@@ -1826,7 +1826,7 @@ mod loader_tests {
 
     #[test]
     fn test_delegate_call_in_loops() -> Result<()> {
-        let mut loader = ContextLoader::default();
+        let mut context = WorkspaceContext::default();
         let extended_inheritance = read_compiler_output(
             "../tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",
         )?;
@@ -1836,13 +1836,13 @@ mod loader_tests {
         let i_contract_inheritance = read_compiler_output(
             "../tests/contract-playground/out/IContractInheritance.sol/IContractInheritance.0.8.21.json",
         )?;
-        extended_inheritance.ast.accept(&mut loader)?;
-        inheritance_base.ast.accept(&mut loader)?;
-        i_contract_inheritance.ast.accept(&mut loader)?;
+        extended_inheritance.ast.accept(&mut context)?;
+        inheritance_base.ast.accept(&mut context)?;
+        i_contract_inheritance.ast.accept(&mut context)?;
 
         // Get all for statements, and check if there is a delegate call in the body of each for statement
         let mut delegate_call_in_loop_detector = DelegateCallInLoopDetector::default();
-        let for_statements = loader.for_statements.keys();
+        let for_statements = context.for_statements.keys();
         for for_statement in for_statements {
             for_statement.accept(&mut delegate_call_in_loop_detector)?;
         }

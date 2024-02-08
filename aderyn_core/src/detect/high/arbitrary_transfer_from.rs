@@ -1,19 +1,20 @@
 use std::collections::BTreeMap;
 use std::error::Error;
 
-use crate::ast::{Expression, FunctionCall, TypeName};
+use crate::ast::{Expression, FunctionCall, NodeID, TypeName};
 
 use crate::capture;
+use crate::detect::detector::DetectorNamePool;
 use crate::{
-    context::loader::ContextLoader,
-    detect::detector::{Detector, IssueSeverity},
+    context::workspace_context::WorkspaceContext,
+    detect::detector::{IssueDetector, IssueSeverity},
 };
 use eyre::Result;
 
 #[derive(Default)]
 pub struct ArbitraryTransferFromDetector {
     // Keys are source file name and line number
-    found_instances: BTreeMap<(String, usize), String>,
+    found_instances: BTreeMap<(String, usize), NodeID>,
 }
 
 // Check if the first argument of the function call is valid
@@ -41,9 +42,9 @@ fn check_argument_validity(function_call: &FunctionCall) -> bool {
     }
 }
 
-impl Detector for ArbitraryTransferFromDetector {
-    fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
-        let transfer_from_function_calls = loader.function_calls.keys().filter(|function_call| {
+impl IssueDetector for ArbitraryTransferFromDetector {
+    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
+        let transfer_from_function_calls = context.function_calls.keys().filter(|function_call| {
             // For each function call, check if the function call is a member access
             // and if the member name is "transferFrom" or "safeTransferFrom", then check if the first argument is valid
             // If the first argument is valid, add the function call to found_instances
@@ -58,7 +59,7 @@ impl Detector for ArbitraryTransferFromDetector {
         });
 
         for item in transfer_from_function_calls {
-            capture!(self, loader, item);
+            capture!(self, context, item);
         }
 
         Ok(!self.found_instances.is_empty())
@@ -76,26 +77,30 @@ impl Detector for ArbitraryTransferFromDetector {
         String::from("Passing an arbitrary `from` address to `transferFrom` (or `safeTransferFrom`) can lead to loss of funds, because anyone can transfer tokens from the `from` address if an approval is made.  ")
     }
 
-    fn instances(&self) -> BTreeMap<(String, usize), String> {
+    fn instances(&self) -> BTreeMap<(String, usize), NodeID> {
         self.found_instances.clone()
+    }
+
+    fn name(&self) -> String {
+        format!("{}", DetectorNamePool::ArbitraryTransferFrom)
     }
 }
 
 #[cfg(test)]
 mod arbitrary_transfer_from_tests {
     use crate::detect::{
-        detector::{detector_test_helpers::load_contract, Detector},
+        detector::{detector_test_helpers::load_contract, IssueDetector},
         high::arbitrary_transfer_from::ArbitraryTransferFromDetector,
     };
 
     #[test]
     fn test_arbitrary_transfer_from_detector() {
-        let context_loader = load_contract(
+        let context = load_contract(
             "../tests/contract-playground/out/ArbitraryTransferFrom.sol/ArbitraryTransferFrom.json",
         );
 
         let mut detector = ArbitraryTransferFromDetector::default();
-        let found = detector.detect(&context_loader).unwrap();
+        let found = detector.detect(&context).unwrap();
         // assert that the detector found an issue
         assert!(found);
         // assert that the detector found the correct number of instances

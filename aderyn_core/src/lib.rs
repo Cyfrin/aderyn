@@ -6,21 +6,21 @@ pub mod fscloc;
 pub mod report;
 pub mod visitor;
 
-use detect::detector::Detector;
+use detect::detector::IssueDetector;
 use eyre::Result;
 use std::error::Error;
 use std::fs::{remove_file, File};
 use std::io::{self};
 use std::path::{Path, PathBuf};
 
-use crate::context::loader::ContextLoader;
-use crate::detect::detector::{get_all_detectors, IssueSeverity};
+use crate::context::workspace_context::WorkspaceContext;
+use crate::detect::detector::{get_all_issue_detectors, IssueSeverity};
 use crate::report::printer::ReportPrinter;
 use crate::report::reporter::Report;
 use crate::report::Issue;
 
 pub fn run_with_printer<T>(
-    context_loader: &ContextLoader,
+    context: &WorkspaceContext,
     output_file_path: String,
     reporter: T,
     root_rel_path: PathBuf,
@@ -29,9 +29,9 @@ pub fn run_with_printer<T>(
 where
     T: ReportPrinter<()>,
 {
-    let detectors = get_all_detectors();
+    let detectors = get_all_issue_detectors();
     run_with_printer_and_given_detectors(
-        context_loader,
+        context,
         output_file_path,
         reporter,
         root_rel_path,
@@ -41,12 +41,12 @@ where
 }
 
 pub fn run_with_printer_and_given_detectors<T>(
-    context_loader: &ContextLoader,
+    context: &WorkspaceContext,
     output_file_path: String,
     reporter: T,
     root_rel_path: PathBuf,
     no_snippets: bool,
-    detectors: Vec<Box<dyn Detector>>,
+    detectors: Vec<Box<dyn IssueDetector>>,
 ) -> Result<(), Box<dyn Error>>
 where
     T: ReportPrinter<()>,
@@ -57,11 +57,12 @@ where
 
     let mut report: Report = Report::default();
     for mut detector in detectors {
-        if let Ok(found) = detector.detect(context_loader) {
+        if let Ok(found) = detector.detect(context) {
             if found {
                 let issue: Issue = Issue {
                     title: detector.title(),
                     description: detector.description(),
+                    detector_name: detector.name(),
                     instances: detector.instances(),
                 };
                 match detector.severity() {
@@ -91,7 +92,7 @@ where
     reporter.print_report(
         get_markdown_writer(&output_file_path)?,
         &report,
-        context_loader,
+        context,
         root_rel_path,
         Some(output_file_path.clone()),
         no_snippets,

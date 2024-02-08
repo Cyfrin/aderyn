@@ -1,4 +1,4 @@
-// ADERYN-PILOT: 0X01 (Please feel free to fix above imports if they mess up)
+// ADERYN-PILOT: 0x01 (Please feel free to fix above imports if they mess up)
 
 use std::{fs::OpenOptions, io::BufWriter, path::PathBuf};
 
@@ -13,14 +13,12 @@ use std::{fs::OpenOptions, io::BufWriter, path::PathBuf};
  *  - Do not add any comments of your own, change function definitions, etc
  *  - However, YOU ARE ALLOWED to modify the custom_detectors array so long as you maintain the original structure.
  */
-// ADERYN-PILOT: 0x02 BASIC IMPORTS
-use aderyn_driver::detector::{Detector, IssueSeverity};
+use aderyn_driver::detector::{IssueDetector, IssueSeverity};
 use serde::Serialize;
 
-// ADERYN-PILOT: 0x03 fn custom_detectors
-fn custom_detectors() -> Vec<Box<dyn Detector>> {
+fn custom_detectors() -> Vec<Box<dyn IssueDetector>> {
     vec![
-        // ADERYN-PILOT: 0x04 CUSTOM DETECTORS - Do not remove this comment even if the array is empty
+        // ADERYN-PILOT: 0x02 CUSTOM DETECTORS - Do not remove this comment even if the array is empty
     ]
 }
 
@@ -41,8 +39,8 @@ pub fn refresh_metadata() {
     _ = serde_json::to_writer_pretty(bw, &value);
 }
 
-impl From<Vec<Box<dyn Detector>>> for Metadata {
-    fn from(detectors: Vec<Box<dyn Detector>>) -> Self {
+impl From<Vec<Box<dyn IssueDetector>>> for Metadata {
+    fn from(detectors: Vec<Box<dyn IssueDetector>>) -> Self {
         let mut custom_bots = vec![];
         for detector in detectors {
             let custom_bot = CustomBot {
