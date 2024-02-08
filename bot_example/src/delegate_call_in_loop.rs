@@ -1,13 +1,11 @@
 use std::collections::BTreeMap;
 use std::error::Error;
 
-use crate::{
-    ast::{MemberAccess, NodeID},
-    capture,
-    context::{browser::ExtractMemberAccesses, workspace_context::WorkspaceContext},
-    detect::detector::{DetectorNamePool, IssueDetector, IssueSeverity},
-};
-use eyre::Result;
+use aderyn_driver::core_ast::{MemberAccess, NodeID};
+
+use aderyn_driver::context::{browser::ExtractMemberAccesses, workspace_context::WorkspaceContext};
+use aderyn_driver::detection_modules::capture;
+use aderyn_driver::detector::{IssueDetector, IssueSeverity};
 
 #[derive(Default)]
 pub struct DelegateCallInLoopDetector {
@@ -58,22 +56,19 @@ impl IssueDetector for DelegateCallInLoopDetector {
     fn instances(&self) -> BTreeMap<(String, usize), NodeID> {
         self.found_instances.clone()
     }
-
-    fn name(&self) -> String {
-        format!("{}", DetectorNamePool::DelegateCallInLoop)
-    }
 }
 
 #[cfg(test)]
 mod delegate_call_in_loop_detector_tests {
-    use crate::detect::detector::{detector_test_helpers::load_contract, IssueDetector};
 
     use super::DelegateCallInLoopDetector;
+    use aderyn_driver::detector::detector_test_helpers::load_contract;
+    use aderyn_driver::detector::{IssueDetector, IssueSeverity};
 
     #[test]
     fn test_delegate_call_in_loop_detector() {
         let context = load_contract(
-            "../tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",
+            "../../aderyn/tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",
         );
 
         let mut detector = DelegateCallInLoopDetector::default();
@@ -83,10 +78,7 @@ mod delegate_call_in_loop_detector_tests {
         // assert that the detector found the correct number of instances (1)
         assert_eq!(detector.instances().len(), 1);
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), IssueSeverity::High);
         // assert the title is correct
         assert_eq!(
             detector.title(),

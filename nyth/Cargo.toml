@@ -1,9 +1,9 @@
 [package]
 name = "nyth"
-version = "0.0.12"
+version = "0.0.13"
 edition = "2021"
 authors = ["Alex Roan <alex@cyfrin.io>"]
-description = "Rust based Solidity AST analyzer - Aderyn development framwork"
+description = "Rust based Solidity AST analyzer - Aderyn development framework"
 license = "MIT"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html

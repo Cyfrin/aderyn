@@ -1,44 +1,35 @@
-use std::{
-    collections::{BTreeMap, HashSet},
-    error::Error,
-};
+use std::{collections::BTreeMap, error::Error};
 
 use crate::{
-    ast::{FunctionKind, Visibility},
+    ast::{FunctionKind, NodeID, Visibility},
     capture,
-    context::loader::ContextLoader,
-    detect::detector::{Detector, IssueSeverity},
+    context::workspace_context::WorkspaceContext,
+    detect::{
+        detector::{DetectorNamePool, IssueDetector, IssueSeverity, ReusableDetector},
+        reusable::IdentifiersThatReferenceAFunctionDetector,
+    },
 };
 use eyre::Result;
 
 #[derive(Default)]
 pub struct UselessPublicFunctionDetector {
     // Keys are source file name and line number
-    found_instances: BTreeMap<(String, usize), String>,
+    found_instances: BTreeMap<(String, usize), NodeID>,
 }
 
-impl Detector for UselessPublicFunctionDetector {
-    fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
-        // Collect the ids of all functions referenced by identifiers.
-        let referenced_functions: HashSet<_> = loader
-            .identifiers
-            .keys()
-            .map(|i| i.referenced_declaration)
-            .collect();
-
-        let function_definitions = loader.function_definitions.keys();
-
-        // Collect all public FunctionDefinitions which are not in the referenced set.
-        let unreferenced_public_functions = function_definitions
-            .filter(|f| {
-                f.visibility == Visibility::Public
-                    && f.kind != FunctionKind::Constructor
-                    && !referenced_functions.contains(&f.id)
-            })
-            .collect::<Vec<_>>();
+impl IssueDetector for UselessPublicFunctionDetector {
+    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
+        let unreferenced_public_functions =
+            context.function_definitions.keys().filter(|&function| {
+                matches!(function.visibility, Visibility::Public)
+                    && !matches!(function.kind, FunctionKind::Constructor)
+                    && IdentifiersThatReferenceAFunctionDetector::default()
+                        .detect(context, &[function.into()], &[])
+                        .map_or(false, |refs| refs.is_empty())
+            });
 
         for unreferenced_public_function in unreferenced_public_functions {
-            capture!(self, loader, unreferenced_public_function);
+            capture!(self, context, unreferenced_public_function);
         }
 
         Ok(!self.found_instances.is_empty())
@@ -56,25 +47,29 @@ impl Detector for UselessPublicFunctionDetector {
         IssueSeverity::NC
     }
 
-    fn instances(&self) -> BTreeMap<(String, usize), String> {
+    fn instances(&self) -> BTreeMap<(String, usize), NodeID> {
         self.found_instances.clone()
+    }
+
+    fn name(&self) -> String {
+        format!("{}", DetectorNamePool::UselessPublicFunction)
     }
 }
 
 #[cfg(test)]
 mod useless_public_function_tests {
-    use crate::detect::detector::{detector_test_helpers::load_contract, Detector};
+    use crate::detect::detector::{detector_test_helpers::load_contract, IssueDetector};
 
     use super::UselessPublicFunctionDetector;
 
     #[test]
     fn test_useless_public_functions() {
-        let context_loader =
+        let context =
             load_contract("../tests/contract-playground/out/Counter.sol/Counter.0.8.21.json");
 
         let mut detector = UselessPublicFunctionDetector::default();
         // assert that the detector finds the public function
-        let found = detector.detect(&context_loader).unwrap();
+        let found = detector.detect(&context).unwrap();
         assert!(found);
         // assert that the detector returns the correct number of instances
         assert_eq!(detector.instances().len(), 1);

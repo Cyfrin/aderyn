@@ -77,6 +77,28 @@ jobs:
           cat report2.json
           diff report.json report2.json
 
+      - name: Generate report3.json
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+          args: -- --config-file ./tests/aderyn.config.json -o report3.json ./tests/contract-playground/
+
+      - name: Check report-config.json vs report3.json
+        run: |
+          cat report3.json
+          diff report-config.json report3.json
+
+      - name: Generate report3.md
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+          args: -- --config-file ./tests/aderyn.config.json -o report3.md ./tests/contract-playground/
+
+      - name: Check report-config.md vs report3.md
+        run: |
+          cat report3.md
+          diff report-config.md report3.md
+
       - name: Generate bot results
         uses: actions-rs/cargo@v1
         with:
@@ -108,37 +130,37 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: --bin bot_fw_assembler -- dev ../../aderyn_driver
+          args: --bin bot_fw_assembler -- dev ../aderyn_driver
 
       - name: Create a bot with nyth
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: --bin nyth -- new bot_ci_cd
+          args: --bin nyth -- init bot_ci_cd
           
       - name: Build the bot 
         uses: actions-rs/cargo@v1
         with:
           command: build
-          args: --manifest-path ./bot_ci_cd/bot/Cargo.toml
+          args: --manifest-path ./bot_ci_cd/Cargo.toml
 
-      - name: Add a detector to the bot
-        uses: actions-rs/cargo@v1
-        with:
-          command: run
-          args: --bin nyth -- generate bot_ci_cd/bot/src/no_zero_address_check
+      - name: Add detectors to the bot
+        run: |
+          cd bot_ci_cd
+          ../target/debug/nyth new issue my_issue_detector_thing
+          ../target/debug/nyth new reusable my_reusable_thing
 
       - name: Build the bot again 
         uses: actions-rs/cargo@v1
         with:
           command: build
-          args: --manifest-path ./bot_ci_cd/bot/Cargo.toml 
+          args: --manifest-path ./bot_ci_cd/Cargo.toml 
 
       - name: Test the bot 
         uses: actions-rs/cargo@v1
         with:
           command: test
-          args: --manifest-path ./bot_ci_cd/bot/Cargo.toml
+          args: --manifest-path ./bot_ci_cd/Cargo.toml
 
 
   lints:

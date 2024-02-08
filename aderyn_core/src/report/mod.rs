@@ -2,7 +2,7 @@ use std::collections::{BTreeMap, HashSet};
 
 use serde::Serialize;
 
-use crate::context::loader::ContextLoader;
+use crate::{ast::NodeID, context::workspace_context::WorkspaceContext};
 
 pub mod json_printer;
 pub mod markdown_printer;
@@ -14,9 +14,10 @@ pub mod util;
 pub struct Issue {
     pub title: String,
     pub description: String,
+    pub detector_name: String,
     // Keys are source file name and line number
     // Value is ASTNode.src
-    pub instances: BTreeMap<(String, usize), String>,
+    pub instances: BTreeMap<(String, usize), NodeID>,
 }
 
 #[derive(Serialize)]
@@ -55,6 +56,7 @@ pub struct IssueInstance {
 pub struct IssueBody {
     title: String,
     description: String,
+    detector_name: String,
     instances: Vec<IssueInstance>,
 }
 
@@ -100,12 +102,13 @@ pub fn extract_issue_bodies(issues: &[Issue]) -> Vec<IssueBody> {
                 title: cr.title.clone(),
                 description: cr.description.clone(),
                 instances,
+                detector_name: cr.detector_name.clone(),
             }
         })
         .collect()
 }
 
-impl ContextLoader {
+impl WorkspaceContext {
     pub fn files_summary(&self) -> FilesSummary {
         FilesSummary {
             total_source_units: self.src_filepaths.len(),

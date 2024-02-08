@@ -4,15 +4,17 @@ version = 3
 
 [[package]]
 name = "aderyn"
-version = "0.0.12"
+version = "0.0.13"
 dependencies = [
  "aderyn_driver",
  "clap",
+ "serde",
+ "serde_json",
 ]
 
 [[package]]
 name = "aderyn_core"
-version = "0.0.12"
+version = "0.0.13"
 dependencies = [
  "crossbeam",
  "crossbeam-channel",
@@ -23,12 +25,13 @@ dependencies = [
  "serde",
  "serde_json",
  "serde_repr",
+ "strum",
  "toml",
 ]
 
 [[package]]
 name = "aderyn_driver"
-version = "0.0.12"
+version = "0.0.13"
 dependencies = [
  "aderyn_core",
  "rayon",
@@ -36,7 +39,7 @@ dependencies = [
 
 [[package]]
 name = "aderyn_py"
-version = "0.0.12"
+version = "0.0.13"
 dependencies = [
  "aderyn_driver",
  "pyo3",
@@ -145,7 +148,7 @@ dependencies = [
 
 [[package]]
 name = "bot_example"
-version = "0.0.12"
+version = "0.0.13"
 dependencies = [
  "aderyn_driver",
  "clap",
@@ -153,7 +156,7 @@ dependencies = [
 
 [[package]]
 name = "bot_fw_assembler"
-version = "0.0.12"
+version = "0.0.13"
 dependencies = [
  "clap",
 ]
@@ -607,7 +610,7 @@ dependencies = [
 
 [[package]]
 name = "nyth"
-version = "0.0.12"
+version = "0.0.13"
 dependencies = [
  "clap",
  "handlebars",
@@ -858,6 +861,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c08c74e62047bb2de4ff487b251e4a92e24f48745648451635cec7d591162d9f"
 
 [[package]]
+name = "rustversion"
+version = "1.0.14"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7ffc183a10b4478d04cbbbfc96d0873219d962dd5accaff2ffbd4ceb7df837f4"
+
+[[package]]
 name = "ryu"
 version = "1.0.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -968,6 +977,28 @@ name = "strsim"
 version = "0.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "73473c0e59e6d5812c5dfe2a064a6444949f089e20eec9a2e5506596494e4623"
+
+[[package]]
+name = "strum"
+version = "0.26.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "723b93e8addf9aa965ebe2d11da6d7540fa2283fcea14b3371ff055f7ba13f5f"
+dependencies = [
+ "strum_macros",
+]
+
+[[package]]
+name = "strum_macros"
+version = "0.26.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7a3417fc93d76740d974a01654a09777cb500428cc874ca9f45edfe0c4d4cd18"
+dependencies = [
+ "heck",
+ "proc-macro2",
+ "quote",
+ "rustversion",
+ "syn 2.0.48",
+]
 
 [[package]]
 name = "subtle"

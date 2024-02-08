@@ -5,19 +5,10 @@ use crate::bot_utils::{TestsConfig, TestsTarget};
 
 pub fn tests_configuration() -> TestsConfig {
     vec![
-        // Define your targets here
+        // Define your targets here. Example:
+        // TestsTarget::new("./foundry_workspace/out/Counter.sol/Counter.json")
+        //     .with_issue_detector(Box::<ExampleIssueDetector>::default())
+        //     .with_reusable_detector(Box::<ExampleReusableDetector>::default()),
     ]
     .into()
 }
-
-/*  Example
-
-pub fn tests_configuration() -> TestsConfig {
-    vec![
-        TestsTarget::new("./foundry_workspace/out/Counter.sol/Counter.json")
-            .with(Box::<ExampleDetector>::default())
-            .with(Box::<AnotherExampleDetector>::default())
-    ]
-    .into()
-}
-*/

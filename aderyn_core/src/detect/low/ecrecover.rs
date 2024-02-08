@@ -1,23 +1,24 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
+    ast::NodeID,
     capture,
-    context::loader::ContextLoader,
-    detect::detector::{Detector, IssueSeverity},
+    context::workspace_context::WorkspaceContext,
+    detect::detector::{DetectorNamePool, IssueDetector, IssueSeverity},
 };
 use eyre::Result;
 
 #[derive(Default)]
 pub struct EcrecoverDetector {
     // Keys are source file name and line number
-    found_instances: BTreeMap<(String, usize), String>,
+    found_instances: BTreeMap<(String, usize), NodeID>,
 }
 
-impl Detector for EcrecoverDetector {
-    fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
-        for identifier in loader.identifiers.keys() {
+impl IssueDetector for EcrecoverDetector {
+    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
+        for identifier in context.identifiers.keys() {
             if identifier.name == "ecrecover" {
-                capture!(self, loader, identifier);
+                capture!(self, context, identifier);
             }
         }
         Ok(!self.found_instances.is_empty())
@@ -42,26 +43,30 @@ impl Detector for EcrecoverDetector {
         IssueSeverity::Low
     }
 
-    fn instances(&self) -> BTreeMap<(String, usize), String> {
+    fn instances(&self) -> BTreeMap<(String, usize), NodeID> {
         self.found_instances.clone()
+    }
+
+    fn name(&self) -> String {
+        format!("{}", DetectorNamePool::Ecrecover)
     }
 }
 
 #[cfg(test)]
 mod ecrecover_tests {
 
-    use crate::detect::detector::{detector_test_helpers::load_contract, Detector};
+    use crate::detect::detector::{detector_test_helpers::load_contract, IssueDetector};
 
     use super::EcrecoverDetector;
 
     #[test]
     fn test_ecrecover_detector() {
-        let context_loader = load_contract(
+        let context = load_contract(
             "../tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",
         );
 
         let mut detector = EcrecoverDetector::default();
-        let found = detector.detect(&context_loader).unwrap();
+        let found = detector.detect(&context).unwrap();
         // assert that the detector found an ecrecover
         assert!(found);
         // assert that the detector found the correct ecrecover

@@ -1,24 +1,25 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
+    ast::NodeID,
     capture,
-    context::loader::ContextLoader,
-    detect::detector::{Detector, IssueSeverity},
+    context::workspace_context::WorkspaceContext,
+    detect::detector::{DetectorNamePool, IssueDetector, IssueSeverity},
 };
 use eyre::Result;
 
 #[derive(Default)]
 pub struct UnspecificSolidityPragmaDetector {
     // Keys are source file name and line number
-    found_instances: BTreeMap<(String, usize), String>,
+    found_instances: BTreeMap<(String, usize), NodeID>,
 }
 
-impl Detector for UnspecificSolidityPragmaDetector {
-    fn detect(&mut self, loader: &ContextLoader) -> Result<bool, Box<dyn Error>> {
-        for pragma_directive in loader.pragma_directives.keys() {
+impl IssueDetector for UnspecificSolidityPragmaDetector {
+    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
+        for pragma_directive in context.pragma_directives.keys() {
             for literal in &pragma_directive.literals {
                 if literal.contains('^') || literal.contains('>') {
-                    capture!(self, loader, pragma_directive);
+                    capture!(self, context, pragma_directive);
                     break;
                 }
             }
@@ -38,26 +39,30 @@ impl Detector for UnspecificSolidityPragmaDetector {
         IssueSeverity::Low
     }
 
-    fn instances(&self) -> BTreeMap<(String, usize), String> {
+    fn instances(&self) -> BTreeMap<(String, usize), NodeID> {
         self.found_instances.clone()
+    }
+
+    fn name(&self) -> String {
+        format!("{}", DetectorNamePool::UnspecificSolidityPragma)
     }
 }
 
 #[cfg(test)]
 mod unspecific_solidity_pragma_tests {
     use crate::detect::{
-        detector::{detector_test_helpers::load_contract, Detector},
+        detector::{detector_test_helpers::load_contract, IssueDetector},
         low::unspecific_solidity_pragma::UnspecificSolidityPragmaDetector,
     };
 
     #[test]
     fn test_unspecific_solidity_pragma_detector() {
-        let context_loader = load_contract(
+        let context = load_contract(
             "../tests/contract-playground/out/IContractInheritance.sol/IContractInheritance.0.8.21.json",
         );
 
         let mut detector = UnspecificSolidityPragmaDetector::default();
-        let found = detector.detect(&context_loader).unwrap();
+        let found = detector.detect(&context).unwrap();
         // assert that the detector found an abi encode packed
         assert!(found);
         // assert that the detector found the correct abi encode packed

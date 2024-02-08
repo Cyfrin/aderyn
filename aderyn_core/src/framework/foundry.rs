@@ -162,7 +162,7 @@ fn get_matching_filepaths(subdirs: &[PathBuf], contract_filepaths: &Vec<PathBuf>
             // Check if subdir string representation contains the contract name with ".sol"
             if let Some(subdir_str) = subdir.to_str() {
                 let contract_name = contract_filepath.file_name().unwrap().to_str().unwrap();
-                if subdir_str.contains(&format!("/{}", contract_name)) {
+                if subdir_str.ends_with(contract_name) {
                     // Read all files in the subdir, add them to matching_filepaths
                     for entry in read_dir(subdir).unwrap() {
                         let entry = entry.unwrap();
