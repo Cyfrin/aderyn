@@ -27,6 +27,10 @@ pub struct CommandLineArgs {
     #[arg(short, long)]
     auto_register_new_detectors: bool,
 
+    /// Unregister detector that has failed expectations
+    #[arg(short, long)]
+    unregister_detector: Option<String>,
+
     /// Path to database file
     #[arg(short, long, default_value = "watchtower.metrics_db.json")]
     metrics_db: String,
@@ -79,6 +83,14 @@ fn main() -> ExitCode {
     if commands.demanding_changes {
         // If changes are present, exit code will be non zero (helps with GH actions)
         return watchtower.print_demanding_changes_before_init();
+    }
+
+    if let Some(detector_name) = commands.unregister_detector {
+        // When you are "suggested" by the above command "suggested_changes" to repair a detector,
+        // you will have to use this command to unregister it using this command. Then, either
+        // adjust the severity in the core detector repo or just get rid of it.
+        // After tht run the command to "auto_register_new_detectors" to reflect the latest changes
+        return utils::unregister_detector(&watchtower, &detector_name);
     }
 
     if let Some(subcmd) = commands.my_subcommand {

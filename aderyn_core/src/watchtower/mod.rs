@@ -49,6 +49,10 @@ pub trait RegistersNewDetector {
     fn register(&self, detector_name: String, assigned_severity: IssueSeverity);
 }
 
+pub trait UnregistersDetector {
+    fn unregister_detector(&self, detector_name: String);
+}
+
 pub trait GetsRegisteredDetectors {
     fn get_registered_detectors_names(&self) -> Vec<String>;
 }
@@ -103,6 +107,7 @@ pub trait TagsTheDetector {
 
 pub trait WatchTower:
     RegistersNewDetector
+    + UnregistersDetector
     + GetsCurrentMetricsForDetector
     + DecidesWhenReadyToServe
     + TakesFeedbackFromJudge

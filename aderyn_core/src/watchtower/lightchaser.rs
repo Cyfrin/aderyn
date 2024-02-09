@@ -25,7 +25,7 @@ use super::utils::MetricsDatabase;
 use super::{
     CalculatesValueOfDetector, DecidesWhenReadyToServe, GetsCurrentMetricsForDetector,
     GetsRegisteredDetectors, InfersMetrics, Metrics, RegistersNewDetector, TagsTheDetector,
-    TakesFeedbackFromJudge, WatchTower,
+    TakesFeedbackFromJudge, UnregistersDetector, WatchTower,
 };
 
 pub struct LightChaser {
@@ -48,6 +48,20 @@ impl RegistersNewDetector for LightChaser {
         }
         self.metrics_db
             .register_new_detector(detector_name, assigned_severity);
+    }
+}
+
+impl UnregistersDetector for LightChaser {
+    fn unregister_detector(&self, detector_name: String) {
+        let all_valid_detector_names = get_all_detectors_names();
+        if !all_valid_detector_names.contains(&detector_name) {
+            let message = format!(
+                "Detector {} to be registered not available in core",
+                detector_name
+            );
+            panic!("{}", message);
+        }
+        self.metrics_db.unregister_detector(detector_name);
     }
 }
 

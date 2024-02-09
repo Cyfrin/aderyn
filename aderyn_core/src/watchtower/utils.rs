@@ -120,6 +120,17 @@ impl MetricsDatabase {
         self.save_db(state);
     }
 
+    pub fn unregister_detector(&self, name: String) {
+        let mut state = self.get_current_db();
+
+        if !state.metrics.contains_key(&name) {
+            panic!("Database does not contain specified detector !")
+        }
+
+        state.metrics.remove(&name);
+        self.save_db(state);
+    }
+
     pub fn increase_true_positive_with_trigger_count(&self, name: String) {
         let mut state = self.get_current_db();
         let current_tp = state.metrics.get(&name).unwrap().true_positives;

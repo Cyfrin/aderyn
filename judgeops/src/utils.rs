@@ -39,6 +39,22 @@ pub(crate) fn auto_register_new_core_detectors(watchtower: &Box<dyn WatchTower>)
     }
 }
 
+pub(crate) fn unregister_detector(
+    watchtower: &Box<dyn WatchTower>,
+    detector_name: &str,
+) -> ExitCode {
+    let existing_watchtower_detectors = watchtower.get_registered_detectors_names();
+    if !existing_watchtower_detectors
+        .iter()
+        .any(|d| d == detector_name)
+    {
+        println!("Invalid detector name!");
+        return ExitCode::FAILURE;
+    }
+    watchtower.unregister_detector(detector_name.to_string());
+    ExitCode::SUCCESS
+}
+
 pub(crate) fn tag_detector(
     watchtower: &Box<dyn WatchTower>,
     detector_name: &str,
