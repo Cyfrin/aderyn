@@ -87,7 +87,7 @@ fn main() -> ExitCode {
 
     if let Some(detector_name) = commands.unregister_detector {
         // When you are "suggested" by the above command "suggested_changes" to repair a detector,
-        // you will have to use this command to unregister it using this command. Then, either
+        // you will have to use this command to unregister it. Then, either
         // adjust the severity in the core detector repo or just get rid of it.
         // After tht run the command to "auto_register_new_detectors" to reflect the latest changes
         return utils::unregister_detector(&watchtower, &detector_name);

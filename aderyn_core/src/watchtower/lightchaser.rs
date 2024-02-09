@@ -9,7 +9,7 @@
 // Chapter 002 Quality Assurance
 // https://twitter.com/ChaseTheLight99/status/1749830985884090785
 //
-// Chapter 003 Dynamic Accuracy
+// Chapter 003 Dynamic Severity
 // https://twitter.com/ChaseTheLight99/status/1750508847947522519
 //
 // And more...
@@ -125,7 +125,7 @@ impl InfersMetrics for Metrics {
     fn is_acceptable(&self) -> bool {
         //"If a detector is triggered, its accuracy score is looked up and the following cap is applied."
         //      - @ChaseTheLight99, 2024
-        // Chapter 003 - Dynamic Accuracy https://twitter.com/ChaseTheLight99/status/1750508847947522519
+        // Chapter 003 - Dynamic Severity https://twitter.com/ChaseTheLight99/status/1750508847947522519
         let lc_accuracy = self.lc_accuracy();
         if lc_accuracy == 0 {
             return false;
