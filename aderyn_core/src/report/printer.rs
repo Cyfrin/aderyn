@@ -3,9 +3,8 @@ use std::{
     path::PathBuf,
 };
 
-use crate::{context::workspace_context::WorkspaceContext, watchtower::WatchTower};
-
 use super::reporter::Report;
+use crate::{context::workspace_context::WorkspaceContext, watchtower::WatchTower};
 
 #[allow(clippy::borrowed_box)]
 pub trait ReportPrinter<T> {

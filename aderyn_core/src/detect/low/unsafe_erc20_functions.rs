@@ -4,7 +4,7 @@ use crate::{
     ast::NodeID,
     capture,
     context::workspace_context::WorkspaceContext,
-    detect::detector::{Detector, DetectorNamePool, IssueSeverity},
+    detect::detector::{DetectorNamePool, IssueDetector, IssueSeverity},
 };
 use eyre::Result;
 
@@ -14,7 +14,7 @@ pub struct UnsafeERC20FunctionsDetector {
     found_instances: BTreeMap<(String, usize), NodeID>,
 }
 
-impl Detector for UnsafeERC20FunctionsDetector {
+impl IssueDetector for UnsafeERC20FunctionsDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for member_access in context.member_accesses.keys() {
             if member_access.member_name == "transferFrom"
@@ -50,7 +50,7 @@ impl Detector for UnsafeERC20FunctionsDetector {
 
 #[cfg(test)]
 mod unsafe_erc20_functions_tests {
-    use crate::detect::detector::{detector_test_helpers::load_contract, Detector};
+    use crate::detect::detector::{detector_test_helpers::load_contract, IssueDetector};
 
     use super::UnsafeERC20FunctionsDetector;
 

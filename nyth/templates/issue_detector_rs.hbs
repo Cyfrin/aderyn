@@ -3,7 +3,7 @@ use std::{collections::BTreeMap, error::Error};
 use aderyn_driver::core_ast::NodeID;
 use aderyn_driver::context::workspace_context::WorkspaceContext;
 use aderyn_driver::detection_modules::capture;
-use aderyn_driver::detector::{Detector, IssueSeverity};
+use aderyn_driver::detector::{IssueDetector, IssueSeverity};
 
 #[derive(Default)]
 pub struct {{detector_name_title_case}} {
@@ -11,7 +11,7 @@ pub struct {{detector_name_title_case}} {
     found_instances: BTreeMap<(String, usize), NodeID>,
 }
 
-impl Detector for {{detector_name_title_case}} {
+impl IssueDetector for {{detector_name_title_case}} {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         
         // Use the `context` to find nodes, then capture them as shown below
@@ -33,6 +33,10 @@ impl Detector for {{detector_name_title_case}} {
         IssueSeverity::NC
     }
 
+    fn name(&self) -> String {
+        "{{ detector_name_title_case }}".to_string()
+    }
+
     fn instances(&self) -> BTreeMap<(String, usize), NodeID> {
         self.found_instances.clone()
     }
@@ -47,12 +51,12 @@ mod {{detector_name_camel_case}}_tests {
 
     use aderyn_driver::context::workspace_context::WorkspaceContext;
     use aderyn_driver::detector::detector_test_helpers::load_contract;
-    use aderyn_driver::detector::Detector;
+    use aderyn_driver::detector::IssueDetector;
 
     fn test_{{detector_name_camel_case}}_for(
         _contract_file: String,
         context: WorkspaceContext,
-        mut detector: impl Detector,
+        mut detector: impl IssueDetector,
     ) {
         // assert that the detector finds instances
         let found = detector.detect(&context).unwrap();
@@ -62,7 +66,7 @@ mod {{detector_name_camel_case}}_tests {
     #[test]
     fn test_{{detector_name_camel_case}}() {
         let detector = {{detector_name_title_case}}::default();
-        let contracts = tests_configuration().get_contracts_for(detector.title());
+        let contracts = tests_configuration().get_contracts_for(detector.name());
 
         for contract_file in contracts {
             let detector = {{detector_name_title_case}}::default();

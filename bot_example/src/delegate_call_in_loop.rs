@@ -5,7 +5,7 @@ use aderyn_driver::core_ast::{MemberAccess, NodeID};
 
 use aderyn_driver::context::{browser::ExtractMemberAccesses, workspace_context::WorkspaceContext};
 use aderyn_driver::detection_modules::capture;
-use aderyn_driver::detector::{Detector, IssueSeverity};
+use aderyn_driver::detector::{IssueDetector, IssueSeverity};
 
 #[derive(Default)]
 pub struct DelegateCallInLoopDetector {
@@ -13,7 +13,7 @@ pub struct DelegateCallInLoopDetector {
     found_instances: BTreeMap<(String, usize), NodeID>,
 }
 
-impl Detector for DelegateCallInLoopDetector {
+impl IssueDetector for DelegateCallInLoopDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         let mut member_accesses: Vec<MemberAccess> = vec![];
 
@@ -63,7 +63,7 @@ mod delegate_call_in_loop_detector_tests {
 
     use super::DelegateCallInLoopDetector;
     use aderyn_driver::detector::detector_test_helpers::load_contract;
-    use aderyn_driver::detector::{Detector, IssueSeverity};
+    use aderyn_driver::detector::{IssueDetector, IssueSeverity};
 
     #[test]
     fn test_delegate_call_in_loop_detector() {

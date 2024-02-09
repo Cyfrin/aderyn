@@ -4,7 +4,7 @@ use crate::{
     ast::{LiteralKind, NodeID},
     capture,
     context::{browser::ExtractLiterals, workspace_context::WorkspaceContext},
-    detect::detector::{Detector, DetectorNamePool, IssueSeverity},
+    detect::detector::{DetectorNamePool, IssueDetector, IssueSeverity},
 };
 use eyre::Result;
 
@@ -14,7 +14,7 @@ pub struct ConstantsInsteadOfLiteralsDetector {
     found_instances: BTreeMap<(String, usize), NodeID>,
 }
 
-impl Detector for ConstantsInsteadOfLiteralsDetector {
+impl IssueDetector for ConstantsInsteadOfLiteralsDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // get all function definitions.
         // for each function definition, find all Literal types
@@ -60,7 +60,7 @@ impl Detector for ConstantsInsteadOfLiteralsDetector {
 
 #[cfg(test)]
 mod constants_instead_of_literals_tests {
-    use crate::detect::detector::{detector_test_helpers::load_contract, Detector};
+    use crate::detect::detector::{detector_test_helpers::load_contract, IssueDetector};
 
     use super::ConstantsInsteadOfLiteralsDetector;
 

@@ -4,7 +4,7 @@ use crate::{
     ast::NodeID,
     capture,
     context::workspace_context::WorkspaceContext,
-    detect::detector::{Detector, DetectorNamePool, IssueSeverity},
+    detect::detector::{DetectorNamePool, IssueDetector, IssueSeverity},
 };
 use eyre::Result;
 
@@ -14,7 +14,7 @@ pub struct UnindexedEventsDetector {
     found_instances: BTreeMap<(String, usize), NodeID>,
 }
 
-impl Detector for UnindexedEventsDetector {
+impl IssueDetector for UnindexedEventsDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // for each event definition, check if it has any indexed parameters
         // if it does not, then add it to the list of found unindexed events
@@ -61,7 +61,7 @@ impl Detector for UnindexedEventsDetector {
 
 #[cfg(test)]
 mod unindexed_event_tests {
-    use crate::detect::detector::{detector_test_helpers::load_contract, Detector};
+    use crate::detect::detector::{detector_test_helpers::load_contract, IssueDetector};
 
     use super::UnindexedEventsDetector;
 

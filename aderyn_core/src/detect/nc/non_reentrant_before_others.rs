@@ -4,7 +4,7 @@ use crate::{
     ast::NodeID,
     capture,
     context::workspace_context::WorkspaceContext,
-    detect::detector::{Detector, DetectorNamePool, IssueSeverity},
+    detect::detector::{DetectorNamePool, IssueDetector, IssueSeverity},
 };
 use eyre::Result;
 
@@ -14,7 +14,7 @@ pub struct NonReentrantBeforeOthersDetector {
     found_instances: BTreeMap<(String, usize), NodeID>,
 }
 
-impl Detector for NonReentrantBeforeOthersDetector {
+impl IssueDetector for NonReentrantBeforeOthersDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         let function_definitions = context.function_definitions.keys();
         for definition in function_definitions {
@@ -53,7 +53,7 @@ impl Detector for NonReentrantBeforeOthersDetector {
 #[cfg(test)]
 mod non_reentrant_before_others_tests {
     use crate::detect::{
-        detector::{detector_test_helpers::load_contract, Detector},
+        detector::{detector_test_helpers::load_contract, IssueDetector},
         nc::non_reentrant_before_others::NonReentrantBeforeOthersDetector,
     };
 

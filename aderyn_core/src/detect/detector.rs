@@ -28,7 +28,7 @@ use std::{
     str::FromStr,
 };
 
-pub fn get_all_detectors() -> Vec<Box<dyn Detector>> {
+pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
     vec![
         Box::<DelegateCallInLoopDetector>::default(),
         Box::<CentralizationRiskDetector>::default(),
@@ -52,7 +52,7 @@ pub fn get_all_detectors() -> Vec<Box<dyn Detector>> {
 }
 
 pub fn get_all_detectors_names() -> Vec<String> {
-    get_all_detectors().iter().map(|d| d.name()).collect()
+    get_all_issue_detectors().iter().map(|d| d.name()).collect()
 }
 
 // Note to maintainers: DO NOT CHANGE THE ORDER OF THESE DERIVE ATTRIBUTES
@@ -82,7 +82,7 @@ pub(crate) enum DetectorNamePool {
     Undecided,
 }
 
-pub fn get_detector_by_name(detector_name: &str) -> Box<dyn Detector> {
+pub fn get_issue_detector_by_name(detector_name: &str) -> Box<dyn IssueDetector> {
     // Expects a valid detector_name
     let detector_name = DetectorNamePool::from_str(detector_name).unwrap();
     match detector_name {
@@ -141,7 +141,7 @@ impl Display for IssueSeverity {
     }
 }
 
-pub trait Detector {
+pub trait IssueDetector {
     fn detect(&mut self, _context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         Ok(true)
     }
@@ -177,6 +177,10 @@ pub trait ReusableDetector {
         _within: &[ASTNode],
     ) -> Result<&[ASTNode], Box<dyn Error>> {
         Ok(&[])
+    }
+
+    fn name(&self) -> String {
+        format!("{}", DetectorNamePool::Undecided)
     }
 }
 

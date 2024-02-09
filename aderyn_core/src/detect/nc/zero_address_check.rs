@@ -10,7 +10,7 @@ use crate::{
         browser::{ExtractAssignments, ExtractBinaryOperations},
         workspace_context::WorkspaceContext,
     },
-    detect::detector::{Detector, DetectorNamePool, IssueSeverity},
+    detect::detector::{DetectorNamePool, IssueDetector, IssueSeverity},
 };
 use eyre::Result;
 
@@ -23,7 +23,7 @@ pub struct ZeroAddressCheckDetector {
     found_instances: BTreeMap<(String, usize), NodeID>,
 }
 
-impl Detector for ZeroAddressCheckDetector {
+impl IssueDetector for ZeroAddressCheckDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // Get all address state variables
         self.mutable_address_state_variables = context
@@ -165,7 +165,7 @@ impl Detector for ZeroAddressCheckDetector {
 #[cfg(test)]
 mod zero_address_check_tests {
     use crate::detect::{
-        detector::{detector_test_helpers::load_contract, Detector},
+        detector::{detector_test_helpers::load_contract, IssueDetector},
         nc::zero_address_check::ZeroAddressCheckDetector,
     };
 

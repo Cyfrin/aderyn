@@ -4,7 +4,7 @@ use crate::{
     ast::NodeID,
     capture,
     context::{browser::GetParent, workspace_context::WorkspaceContext},
-    detect::detector::{Detector, DetectorNamePool, IssueSeverity},
+    detect::detector::{DetectorNamePool, IssueDetector, IssueSeverity},
 };
 use eyre::Result;
 
@@ -14,7 +14,7 @@ pub struct UnsafeERC721MintDetector {
     found_instances: BTreeMap<(String, usize), NodeID>,
 }
 
-impl Detector for UnsafeERC721MintDetector {
+impl IssueDetector for UnsafeERC721MintDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for identifier in context.identifiers.keys() {
             // if source_unit has any ImportDirectives with absolute_path containing "openzeppelin"
@@ -61,7 +61,7 @@ impl Detector for UnsafeERC721MintDetector {
 #[cfg(test)]
 mod unsafe_erc721_mint_tests {
     use crate::detect::{
-        detector::{detector_test_helpers::load_contract, Detector},
+        detector::{detector_test_helpers::load_contract, IssueDetector},
         medium::unsafe_oz_erc721_mint::UnsafeERC721MintDetector,
     };
 

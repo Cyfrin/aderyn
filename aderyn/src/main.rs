@@ -6,11 +6,13 @@ use strum::IntoEnumIterator;
 
 use aderyn_driver::{
     detector::{
-        get_all_detectors, get_all_detectors_names, get_detector_by_name, Detector, IssueSeverity,
+        get_all_detectors_names, get_all_issue_detectors, get_issue_detector_by_name, Detector,
+        IssueDetector,
     },
     driver::{self, Args},
     get_fully_configured_watchtower, WatchTower,
 };
+
 use clap::{Parser, Subcommand};
 
 #[derive(Parser, Debug)]
@@ -97,7 +99,8 @@ fn main() {
         match aderyn_config {
             Ok(config) => {
                 let all_detector_names = get_all_detectors_names();
-                let mut subscriptions: Vec<Box<dyn Detector>> = vec![];
+
+                let mut subscriptions: Vec<Box<dyn IssueDetector>> = vec![];
                 let mut scope_lines: Option<Vec<String>> = args.scope.clone();
                 match config.detectors {
                     Some(config_detectors) => {
@@ -109,12 +112,12 @@ fn main() {
                                         );
                                 return;
                             }
-                            let det = get_detector_by_name(detector_name);
+                            let det = get_issue_detector_by_name(detector_name);
                             subscriptions.push(det);
                         }
                     }
                     None => {
-                        subscriptions.extend(get_all_detectors());
+                        subscriptions.extend(get_all_issue_detectors());
                     }
                 }
 
@@ -207,7 +210,7 @@ fn print_detail_view(detector_name: &str) {
         println!("Couldn't recognize detector with name {}", detector_name);
         return;
     }
-    let detector = get_detector_by_name(detector_name);
+    let detector = get_issue_detector_by_name(detector_name);
     let watchtower = get_fully_configured_watchtower();
     println!("\nDetector {}", detector_name);
     println!();
