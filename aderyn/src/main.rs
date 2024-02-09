@@ -6,8 +6,8 @@ use strum::IntoEnumIterator;
 
 use aderyn_driver::{
     detector::{
-        get_all_detectors_names, get_all_issue_detectors, get_issue_detector_by_name, Detector,
-        IssueDetector,
+        get_all_detectors_names, get_all_issue_detectors, get_issue_detector_by_name,
+        IssueDetector, IssueSeverity,
     },
     driver::{self, Args},
     get_fully_configured_watchtower, WatchTower,
@@ -249,7 +249,7 @@ fn print_detectors_view_with_severity(
     let concerned_detectors = detectors_names
         .iter()
         .filter(|name| {
-            let detector = get_detector_by_name(name);
+            let detector = get_issue_detector_by_name(name);
             detector.severity() == severity
         })
         .collect::<Vec<_>>();
@@ -260,7 +260,7 @@ fn print_detectors_view_with_severity(
 
     println!("{}\n", severity);
     for name in concerned_detectors {
-        let detector = get_detector_by_name(name);
+        let detector = get_issue_detector_by_name(name);
         println!(
             "{} - {} ({:.2})",
             right_pad(name, 30),

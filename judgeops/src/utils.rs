@@ -2,7 +2,7 @@
 use std::{path::PathBuf, process::ExitCode};
 
 use aderyn_core::{
-    detect::detector::{get_all_detectors_names, get_detector_by_name},
+    detect::detector::{get_all_detectors_names, get_issue_detector_by_name},
     watchtower::{Feedback, WatchTower},
 };
 
@@ -29,7 +29,7 @@ pub(crate) fn auto_register_new_core_detectors(watchtower: &Box<dyn WatchTower>)
 
     // Step 2 - Register each new detector
     for new_detector in extras {
-        let detector = get_detector_by_name(&new_detector);
+        let detector = get_issue_detector_by_name(&new_detector);
         println!(
             "Registering {} with severity {} ",
             new_detector,
