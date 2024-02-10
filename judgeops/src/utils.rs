@@ -147,7 +147,10 @@ pub(crate) fn give_feedback(watchtower: &Box<dyn WatchTower>, feedback_file: &st
     ExitCode::SUCCESS
 }
 
-pub(crate) fn display_metrics(watchtower: &Box<dyn WatchTower>, detector_name: &str) -> ExitCode {
+pub(crate) fn display_metrics(
+    watchtower: &Box<dyn WatchTower>,
+    detector_name: Option<&str>,
+) -> ExitCode {
     // Check to see detector_name is valid
 
     if !watchtower.is_ready_to_get_metrics() || !watchtower.is_ready_to_calculate_value() {
@@ -157,24 +160,44 @@ pub(crate) fn display_metrics(watchtower: &Box<dyn WatchTower>, detector_name: &
         return ExitCode::FAILURE;
     }
 
-    let detector_metrics = watchtower.metrics(detector_name.to_string());
-    let detector_value = watchtower.value(detector_name.to_string());
+    if let Some(detector_name) = detector_name {
+        let detector_metrics = watchtower.metrics(detector_name.to_string());
+        let detector_value = watchtower.value(detector_name.to_string());
 
-    println!("Detector {}\n", detector_name);
-    println!("Rating (0-1)   : {:.2}\n", detector_value);
-    println!("True positives : {}", detector_metrics.true_positives);
-    println!("False positives: {}", detector_metrics.false_positives);
-    println!("Trigger count  : {}", detector_metrics.trigger_count);
-    println!("Experience     : {}", detector_metrics.experience);
+        println!("Detector {}\n", detector_name);
+        println!("Rating (0-1)   : {:.2}\n", detector_value);
+        println!("True positives : {}", detector_metrics.true_positives);
+        println!("False positives: {}", detector_metrics.false_positives);
+        println!("Trigger count  : {}", detector_metrics.trigger_count);
+        println!("Experience     : {}", detector_metrics.experience);
 
-    if let Some(tag) = watchtower.request_tag(detector_name.to_string()) {
-        println!("\nTAGS: {}", tag.messages.join(", "));
+        if let Some(tag) = watchtower.request_tag(detector_name.to_string()) {
+            println!("\nTAGS: {}", tag.messages.join(", "));
+        }
+
+        print!("\nNOTE - The above metrics can vary based on the implementation of watchtower. ");
+        print!("Any of the values are not guaranteed to actually reflect what's happening. ");
+        print!("Ex: TP - FP is kept at max 5 for LightChaser impl although trigger count can increase indefinitely. ");
+        println!("The only obligation for a watchtower is to give out a rating form 0 to 1");
+    } else {
+        let mut scoreboard = vec![];
+
+        for detector_name in watchtower.get_registered_detectors_names() {
+            let detector_value = watchtower.value(detector_name.clone());
+            scoreboard.push((detector_value, detector_name));
+        }
+
+        if scoreboard.is_empty() {
+            println!("There is nothing to show.");
+            return ExitCode::SUCCESS;
+        }
+
+        scoreboard.sort_by(|a, b| b.0.partial_cmp(&a.0).unwrap());
+
+        println!("{: <30}\tRating\n", "Detector");
+        for row in scoreboard {
+            println!("{: <30}\t{:.2}", row.1, row.0);
+        }
     }
-
-    print!("\nNOTE - The above metrics can vary based on the implementation of watchtower. ");
-    print!("Any of the values are not guaranteed to actually reflect what's happening. ");
-    print!("Ex: TP - FP is kept at max 5 for LightChaser impl although trigger count can increase indefinitely. ");
-    println!("The only obligation for a watchtower is to give out a rating form 0 to 1");
-
     ExitCode::SUCCESS
 }

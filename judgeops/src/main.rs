@@ -46,7 +46,7 @@ pub struct CommandLineArgs {
 #[derive(Debug, Subcommand)]
 enum MySubcommand {
     /// Print a detector's metrics and rating.
-    DisplayMetrics { detector_name: String },
+    DisplayMetrics { detector_name: Option<String> },
     /// Give feedback on the aderyn report (affects detectors' ratings and metrics)
     GiveFeedback { file: String },
     /// Explicitly tag a detector to help indicate manual review required in report.
@@ -114,7 +114,7 @@ fn main() -> ExitCode {
                 exit_code
             }
             MySubcommand::DisplayMetrics { detector_name } => {
-                utils::display_metrics(&watchtower, &detector_name)
+                utils::display_metrics(&watchtower, detector_name.as_deref())
             }
         };
     }

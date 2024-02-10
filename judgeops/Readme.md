@@ -100,11 +100,9 @@ To get the rankings,
 
 For each newly registered detector run this
 
-`cargo run --bin judgeops -- display-metrics <detector-name>`
+`cargo run --bin judgeops -- display-metrics`
 
-It will print the Rating
-
-(This can be tedious - I have an idea around it; will try to file a new PR. Basically display metrics for all the registered detectors in descending order of the Detector rating)
+It will print the scoreboard
 
 That can then serve as the leaderboard for that season. 
 
