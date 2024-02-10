@@ -60,6 +60,8 @@ You will see the affected changes printed to screen as you do this
 
 `cargo run --bin judgeops give-feedback postaudit.abc.judge.md`
 
+Please generate the markdown using only the newly submiited detectors by levaraging `aderyn.config.json`
+
 Repeat Step 5 a good couple of times -  more feedback, the better!!!
 
 --------
@@ -97,8 +99,6 @@ Run Git Commit
 #### STEP 6
 
 To get the rankings,
-
-For each newly registered detector run this
 
 `cargo run --bin judgeops -- display-metrics`
 
