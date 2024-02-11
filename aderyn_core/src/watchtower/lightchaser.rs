@@ -14,7 +14,7 @@
 //
 // And more...
 
-use std::collections::HashMap;
+use std::collections::{hash_map, HashMap};
 use std::process::ExitCode;
 
 use strum::EnumCount;
@@ -169,7 +169,7 @@ impl DecidesWhenReadyToServe for LightChaser {
         get_all_detectors_names().iter().for_each(|d| {
             let d_metrics = self.metrics_db.get_metrics(d.clone());
             if d_metrics.lc_accuracy() == 0 {
-                println!("Detector {d} should be removed - lc_accuracy = 0 ! ");
+                println!("{d} should be removed as it's accuracy has fallen to 0 ! ");
                 found_suggestion = true;
             }
         });
@@ -179,12 +179,51 @@ impl DecidesWhenReadyToServe for LightChaser {
             if !d_metrics.is_acceptable() && d_metrics.lc_accuracy() != 0 {
                 // The case where lc_accuracy = 0 has been taken care above (we completely remove them)
                 println!(
-                    "Detector {d} should be downgraded because lc_accuracy = {}! ",
-                    d_metrics.lc_accuracy()
+                    "{d}'s accuracy of {} is unacceptable for {} severity ! ",
+                    d_metrics.lc_accuracy(),
+                    d_metrics.current_severity,
                 );
                 found_suggestion = true;
             }
         });
+        // Suggest giving more feedbacks for inexperienced detectors
+        let mut experience_map: HashMap<u64, Vec<String>> = HashMap::new();
+
+        for detector_name in get_all_detectors_names() {
+            let d_metrics = self.metrics_db.get_metrics(detector_name.clone());
+            if let hash_map::Entry::Vacant(e) = experience_map.entry(d_metrics.experience) {
+                e.insert(vec![detector_name]);
+            } else {
+                let experienced_detectors = experience_map.get_mut(&d_metrics.experience).unwrap();
+                experienced_detectors.push(detector_name);
+            }
+        }
+
+        let mut experiences = experience_map.keys().collect::<Vec<_>>();
+        experiences.sort_by(|&a, &b| b.cmp(a));
+
+        // If all the detectors are equally experienced, we don't have to warn about anything
+        // Otherwise, we can print the range of experiences and it's upto the admin what they want to
+        // do about it
+        if experiences.len() > 1 {
+            println!(
+                "\nDetectors' experiences range from {} to {}",
+                *experiences.last().unwrap(),
+                experiences.first().unwrap()
+            );
+
+            // TODO define a threshold for the above range
+
+            println!("{: <15}\tNumber of detectors", "Experience");
+            for exp in experiences {
+                println!(
+                    "{: <15}\t{:.2}",
+                    exp,
+                    experience_map.get(exp).unwrap().len()
+                );
+            }
+            println!("Please submit more feedback for detectors with less experience. More equal, fairer it is !")
+        }
 
         if !found_suggestion {
             println!("No suggestions found. You are good to go!");

@@ -261,7 +261,7 @@ jobs:
 
       - name: Generate sample.metrics_db.json
         run: |
-          cli/metricsdbgen.sh sample.metrics_db.json
+          cli/sample_metricsdbgen.sh sample.metrics_db.json
 
       - name: Check sample.metrics_db.json vs sample_renamed.metrics_db.json
         run: |
