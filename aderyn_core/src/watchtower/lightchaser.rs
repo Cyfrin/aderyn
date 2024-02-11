@@ -187,6 +187,7 @@ impl DecidesWhenReadyToServe for LightChaser {
             }
         });
         // Suggest giving more feedbacks for inexperienced detectors
+        // Group detectors by experience
         let mut experience_map: HashMap<u64, Vec<String>> = HashMap::new();
 
         for detector_name in get_all_detectors_names() {
@@ -215,14 +216,47 @@ impl DecidesWhenReadyToServe for LightChaser {
             // TODO define a threshold for the above range
 
             println!("{: <15}\tNumber of detectors", "Experience");
-            for exp in experiences {
+            for exp in &experiences {
+                println!("{: <15}\t{}", exp, experience_map.get(exp).unwrap().len());
+            }
+            println!("Please submit more feedback for detectors with less experience. More equal, fairer it is !\n");
+
+            for exp in &experiences {
                 println!(
-                    "{: <15}\t{:.2}",
+                    "Experience {}\n{}\n",
                     exp,
-                    experience_map.get(exp).unwrap().len()
+                    experience_map.get(exp).unwrap().join(",")
                 );
             }
-            println!("Please submit more feedback for detectors with less experience. More equal, fairer it is !")
+            found_suggestion = true;
+        }
+
+        // Suggest taking a look at not so well performing detectors
+
+        // Group detectors by accuracy
+        let mut lc_accuracy_map: HashMap<u64, Vec<String>> = HashMap::new();
+
+        for detector_name in get_all_detectors_names() {
+            let d_metrics = self.metrics_db.get_metrics(detector_name.clone());
+            if let hash_map::Entry::Vacant(e) = lc_accuracy_map.entry(d_metrics.lc_accuracy()) {
+                e.insert(vec![detector_name]);
+            } else {
+                let detector_group = lc_accuracy_map.get_mut(&d_metrics.lc_accuracy()).unwrap();
+                detector_group.push(detector_name);
+            }
+        }
+
+        println!("{: <15}\tNumber of detectors", "Accuracy");
+        for acc in &lc_accuracy_map.keys().collect::<Vec<_>>() {
+            println!("{: <15}\t{}", acc, lc_accuracy_map.get(acc).unwrap().len());
+        }
+
+        for acc in &lc_accuracy_map.keys().collect::<Vec<_>>() {
+            println!(
+                "Accuracy {}\n{}\n",
+                acc,
+                lc_accuracy_map.get(acc).unwrap().join(",")
+            );
         }
 
         if !found_suggestion {
