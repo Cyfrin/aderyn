@@ -15,4 +15,3 @@ cargo run --bin judgeops -- -m "$@" give-feedback tests/sample_feedbacks/neg_med
 cargo run --bin judgeops -- -m "$@" give-feedback tests/sample_feedbacks/pos_med.json
 cargo run --bin judgeops -- -m "$@" give-feedback tests/sample_feedbacks/pos_med.json
 cargo run --bin judgeops -- -m "$@" give-feedback tests/sample_feedbacks/pos_med.json
-cargo run --bin judgeops -- -m "$@" -s
