@@ -8,6 +8,7 @@ members = [
     "nyth",
     "bot_fw_assembler",
     "bot",
+    "judgeops",
 ]
 
 resolver="1"

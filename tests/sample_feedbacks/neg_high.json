@@ -1,0 +1,13 @@
+{
+    "positive_feedbacks": [],
+    "negative_feedbacks": ["delegate-call-in-loop"],
+    "all_exposed_detectors" : [
+        "push-zero-opcode", 
+        "delegate-call-in-loop", 
+        "useless-public-function", 
+        "deprecated-oz-functions",
+        "ecrecover",
+        "avoid-abi-encode-packed",
+        "non-reentrant-before-others"
+    ]
+}

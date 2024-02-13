@@ -1,0 +1,13 @@
+{
+    "positive_feedbacks": ["solmate-safe-transfer-lib"],
+    "negative_feedbacks": [],
+    "all_exposed_detectors" : [
+        "solmate-safe-transfer-lib", 
+        "centralization-risk", 
+        "useless-public-function", 
+        "deprecated-oz-functions",
+        "ecrecover",
+        "avoid-abi-encode-packed",
+        "non-reentrant-before-others"
+    ]
+}

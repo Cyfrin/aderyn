@@ -1,4 +1,5 @@
-use crate::context::workspace_context::WorkspaceContext;
+use crate::{context::workspace_context::WorkspaceContext, watchtower::WatchTower};
+
 use std::{
     io::{Result, Write},
     path::{Path, PathBuf},
@@ -19,10 +20,21 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
         root_path: PathBuf,
         output_rel_path: Option<String>,
         no_snippets: bool,
+        detectors_used: &[String],
+        watchtower: &Box<dyn WatchTower>,
     ) -> Result<()> {
         self.print_title_and_disclaimer(&mut writer)?;
         self.print_table_of_contents(&mut writer, report)?;
         self.print_contract_summary(&mut writer, report, context)?;
+
+        let output_rel_path = output_rel_path.unwrap();
+        let is_for_judge = output_rel_path.clone().ends_with(".judge.md");
+        if is_for_judge {
+            writeln!(writer, "## Detectors Used\n")?;
+            for detector in detectors_used {
+                writeln!(writer, "{}\n", detector)?;
+            }
+        }
 
         let all_issues = vec![
             (report.critical_issues().issues, "# Critical Issues\n", "C"),
@@ -46,8 +58,9 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
                             severity,
                             number: counter,
                             root_path: &root_path,
-                            output_rel_path: output_rel_path.clone().unwrap(),
+                            output_rel_path: output_rel_path.clone(),
                             no_snippets,
+                            watchtower,
                         },
                     )?;
                 }
@@ -65,6 +78,8 @@ struct PrintIssueParams<'a> {
     root_path: &'a Path,
     output_rel_path: String,
     no_snippets: bool,
+    #[allow(clippy::borrowed_box)]
+    watchtower: &'a Box<dyn WatchTower>,
 }
 
 impl MarkdownReportPrinter {
@@ -211,6 +226,26 @@ impl MarkdownReportPrinter {
             "## {}-{}: {}\n\n{}\n", // <a name> is the anchor for the issue title
             params.severity, params.number, params.issue_body.title, params.issue_body.description
         )?;
+        if params.output_rel_path.ends_with(".judge.md") {
+            writeln!(
+                writer,
+                "### Responsible : {}\n",
+                params.issue_body.detector_name.clone()
+            )?;
+            let tag = params
+                .watchtower
+                .request_tag(params.issue_body.detector_name.clone());
+
+            if let Some(tag) = tag {
+                if !tag.messages.is_empty() {
+                    writeln!(
+                        writer,
+                        "<span style=\"color:red\"> Tags: {}</span>\n",
+                        tag.messages.join(", ")
+                    )?;
+                }
+            }
+        }
         for instance in &params.issue_body.instances {
             let path = {
                 if is_file {

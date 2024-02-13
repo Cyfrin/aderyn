@@ -2,6 +2,10 @@
   "critical_issues": {
     "issues": []
   },
+  "detectors_used": [
+    "push-zero-opcode",
+    "useless-public-function"
+  ],
   "files_details": {
     "files_details": [
       {
