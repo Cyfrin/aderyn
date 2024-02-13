@@ -2,6 +2,26 @@
   "critical_issues": {
     "issues": []
   },
+  "detectors_used": [
+    "delegate-call-in-loop",
+    "centralization-risk",
+    "solmate-safe-transfer-lib",
+    "avoid-abi-encode-packed",
+    "ecrecover",
+    "deprecated-oz-functions",
+    "unsafe-erc20-functions",
+    "unspecific-solidity-pragma",
+    "zero-address-check",
+    "useless-public-function",
+    "constants-instead-of-literals",
+    "unindexed-events",
+    "require-with-string",
+    "non-reentrant-before-others",
+    "block-timestamp-deadline",
+    "unsafe-oz-erc721-mint",
+    "push-zero-opcode",
+    "arbitrary-transfer-from"
+  ],
   "files_details": {
     "files_details": [
       {
