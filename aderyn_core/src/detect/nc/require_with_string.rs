@@ -4,7 +4,7 @@ use crate::{
     ast::NodeID,
     capture,
     context::workspace_context::WorkspaceContext,
-    detect::detector::{DetectorNamePool, IssueDetector, IssueSeverity},
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -50,7 +50,7 @@ impl IssueDetector for RequireWithStringDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", DetectorNamePool::RequireWithString)
+        format!("{}", IssueDetectorNamePool::RequireWithString)
     }
 }
 

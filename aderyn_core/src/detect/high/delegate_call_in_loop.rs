@@ -5,7 +5,7 @@ use crate::{
     ast::{MemberAccess, NodeID},
     capture,
     context::{browser::ExtractMemberAccesses, workspace_context::WorkspaceContext},
-    detect::detector::{DetectorNamePool, IssueDetector, IssueSeverity},
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -60,7 +60,7 @@ impl IssueDetector for DelegateCallInLoopDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", DetectorNamePool::DelegateCallInLoop)
+        format!("{}", IssueDetectorNamePool::DelegateCallInLoop)
     }
 }
 
