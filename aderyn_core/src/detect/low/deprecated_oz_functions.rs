@@ -4,7 +4,7 @@ use crate::{
     ast::NodeID,
     capture,
     context::{browser::GetParent, workspace_context::WorkspaceContext},
-    detect::detector::{DetectorNamePool, IssueDetector, IssueSeverity},
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -67,7 +67,7 @@ impl IssueDetector for DeprecatedOZFunctionsDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", DetectorNamePool::DeprecatedOzFunctions)
+        format!("{}", IssueDetectorNamePool::DeprecatedOzFunctions)
     }
 }
 

@@ -4,7 +4,7 @@ use crate::{
     ast::NodeID,
     capture,
     context::workspace_context::WorkspaceContext,
-    detect::detector::{DetectorNamePool, IssueDetector, IssueSeverity},
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -55,7 +55,7 @@ impl IssueDetector for UnindexedEventsDetector {
         self.found_instances.clone()
     }
     fn name(&self) -> String {
-        format!("{}", DetectorNamePool::UnindexedEvents)
+        format!("{}", IssueDetectorNamePool::UnindexedEvents)
     }
 }
 
