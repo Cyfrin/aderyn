@@ -87,17 +87,18 @@ fn main() {
             if detector_type == DetectorType::Issue {
                 create_issue_detector(&detector_name);
             } else {
-                create_detector(&detector_name);
+                create_reusable_detector(&detector_name);
             }
         }
     }
 
-    fn create_detector(detector_name: &str) {
+    fn create_reusable_detector(detector_name: &str) {
         let mut detector_path = PathBuf::from("src");
         detector_path.push(detector_name);
         let filename = Path::new(&detector_path).file_name().to_owned().unwrap();
-        let detector_name_camel_case = filename.to_string_lossy().to_ascii_lowercase();
-        let detector_name_title_case = to_title_case(detector_name_camel_case.clone());
+        let detector_name_snake_case = filename.to_string_lossy().to_ascii_lowercase();
+        let detector_name_title_case = to_title_case(detector_name_snake_case.clone());
+        let detector_name_kebab_case = to_kebab_case(detector_name_snake_case.clone());
 
         // Step 1 : Create the detector module by following the template
 
@@ -126,7 +127,8 @@ fn main() {
                 template,
                 &json!({
                     "detector_name_title_case": detector_name_title_case,
-                    "detector_name_camel_case": detector_name_camel_case,
+                    "detector_name_snake_case": detector_name_snake_case,
+                    "detector_name_kebab_case": detector_name_kebab_case,
                 })
             )
             .unwrap()
@@ -167,7 +169,7 @@ fn main() {
         write!(
             bw,
             "pub mod {};\n{}",
-            detector_name_camel_case,
+            detector_name_snake_case,
             fs::read_to_string(&librs).unwrap()
         )
         .unwrap();
@@ -177,9 +179,9 @@ fn main() {
         let mut detector_path = PathBuf::from("src");
         detector_path.push(detector_name);
         let filename = Path::new(&detector_path).file_name().to_owned().unwrap();
-        let detector_name_camel_case = filename.to_string_lossy().to_ascii_lowercase();
-        let detector_name_title_case = to_title_case(detector_name_camel_case.clone());
-
+        let detector_name_snake_case = filename.to_string_lossy().to_ascii_lowercase();
+        let detector_name_title_case = to_title_case(detector_name_snake_case.clone());
+        let detector_name_kebab_case = to_kebab_case(detector_name_snake_case.clone());
         // Step 1 : Create the detector module by following the template
 
         let template = include_str!("../templates/issue_detector_rs.hbs");
@@ -207,7 +209,8 @@ fn main() {
                 template,
                 &json!({
                     "detector_name_title_case": detector_name_title_case,
-                    "detector_name_camel_case": detector_name_camel_case,
+                    "detector_name_snake_case": detector_name_snake_case,
+                    "detector_name_kebab_case": detector_name_kebab_case,
                 })
             )
             .unwrap()
@@ -239,7 +242,7 @@ fn main() {
 
         let s = format!(
             "use crate::{}::detector::{};\n{}",
-            detector_name_camel_case,
+            detector_name_snake_case,
             detector_name_title_case,
             fs::read_to_string(&custom_detector_rs_path).unwrap()
         );
@@ -287,18 +290,18 @@ fn main() {
         write!(
             bw,
             "pub mod {};\n{}",
-            detector_name_camel_case,
+            detector_name_snake_case,
             fs::read_to_string(&librs).unwrap()
         )
         .unwrap();
     }
 }
 
-fn to_title_case(camel_case: String) -> String {
+fn to_title_case(snake_case: String) -> String {
     // Example
     // unindexed_events -> UnindexedEventsDetector
     // TODO: cleanup
-    let words = camel_case.split('_');
+    let words = snake_case.split('_');
     let mut changed_words = vec![];
     for word in words {
         let mut wc = word.chars();
@@ -316,4 +319,10 @@ fn to_title_case(camel_case: String) -> String {
     }
     changed_words.push("Detector".to_string());
     changed_words.join("")
+}
+
+fn to_kebab_case(snake_case: String) -> String {
+    // Example
+    // unindexed_events -> unindexed-events
+    snake_case.replace("_", "-")
 }

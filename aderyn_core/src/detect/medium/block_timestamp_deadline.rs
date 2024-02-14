@@ -4,7 +4,7 @@ use crate::{
     ast::{Expression, FunctionCallKind, NodeID},
     capture,
     context::workspace_context::WorkspaceContext,
-    detect::detector::{DetectorNamePool, IssueDetector, IssueSeverity},
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -109,7 +109,7 @@ impl IssueDetector for BlockTimestampDeadlineDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", DetectorNamePool::BlockTimestampDeadline)
+        format!("{}", IssueDetectorNamePool::BlockTimestampDeadline)
     }
 }
 
