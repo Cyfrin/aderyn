@@ -4,7 +4,7 @@ use std::error::Error;
 use crate::ast::{Expression, FunctionCall, NodeID, TypeName};
 
 use crate::capture;
-use crate::detect::detector::DetectorNamePool;
+use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
     context::workspace_context::WorkspaceContext,
     detect::detector::{IssueDetector, IssueSeverity},
@@ -82,7 +82,7 @@ impl IssueDetector for ArbitraryTransferFromDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", DetectorNamePool::ArbitraryTransferFrom)
+        format!("{}", IssueDetectorNamePool::ArbitraryTransferFrom)
     }
 }
 

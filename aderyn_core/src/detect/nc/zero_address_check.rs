@@ -10,7 +10,7 @@ use crate::{
         browser::{ExtractAssignments, ExtractBinaryOperations},
         workspace_context::WorkspaceContext,
     },
-    detect::detector::{DetectorNamePool, IssueDetector, IssueSeverity},
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -158,7 +158,7 @@ impl IssueDetector for ZeroAddressCheckDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", DetectorNamePool::ZeroAddressCheck)
+        format!("{}", IssueDetectorNamePool::ZeroAddressCheck)
     }
 }
 

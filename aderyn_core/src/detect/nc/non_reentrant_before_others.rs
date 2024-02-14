@@ -4,7 +4,7 @@ use crate::{
     ast::NodeID,
     capture,
     context::workspace_context::WorkspaceContext,
-    detect::detector::{DetectorNamePool, IssueDetector, IssueSeverity},
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -46,7 +46,7 @@ impl IssueDetector for NonReentrantBeforeOthersDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", DetectorNamePool::NonReentrantBeforeOthers)
+        format!("{}", IssueDetectorNamePool::NonReentrantBeforeOthers)
     }
 }
 
