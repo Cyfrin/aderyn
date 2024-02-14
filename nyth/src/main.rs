@@ -324,5 +324,5 @@ fn to_title_case(snake_case: String) -> String {
 fn to_kebab_case(snake_case: String) -> String {
     // Example
     // unindexed_events -> unindexed-events
-    snake_case.replace("_", "-")
+    snake_case.replace('_', "-")
 }
