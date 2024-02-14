@@ -13,7 +13,7 @@ use std::{fs::OpenOptions, io::BufWriter, path::PathBuf};
  *  - Do not add any comments of your own, change function definitions, etc
  *  - However, YOU ARE ALLOWED to modify the custom_detectors array so long as you maintain the original structure.
  */
-use aderyn_driver::detector::{IssueDetector, IssueSeverity};
+use aderyn_driver::detector::IssueDetector;
 use serde::Serialize;
 
 fn custom_detectors() -> Vec<Box<dyn IssueDetector>> {
@@ -45,14 +45,7 @@ impl From<Vec<Box<dyn IssueDetector>>> for Metadata {
         for detector in detectors {
             let custom_bot = CustomBot {
                 title: detector.title(),
-                severity: match detector.severity() {
-                    IssueSeverity::Critical => "Critical",
-                    IssueSeverity::High => "High",
-                    IssueSeverity::Low => "Low",
-                    IssueSeverity::Medium => "Medium",
-                    IssueSeverity::NC => "NC",
-                }
-                .to_string(),
+                severity: detector.severity().to_string(),
                 description: detector.description(),
             };
             custom_bots.push(custom_bot);
