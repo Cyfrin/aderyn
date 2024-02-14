@@ -13,7 +13,7 @@
       "true_positives": 5,
       "false_positives": 0,
       "trigger_count": 5,
-      "experience": 20,
+      "experience": 10,
       "current_severity": "Low"
     },
     "block-timestamp-deadline": {
@@ -27,9 +27,9 @@
     "centralization-risk": {
       "detector_name": "centralization-risk",
       "true_positives": 5,
-      "false_positives": 3,
-      "trigger_count": 8,
-      "experience": 17,
+      "false_positives": 1,
+      "trigger_count": 6,
+      "experience": 7,
       "current_severity": "Medium"
     },
     "constants-instead-of-literals": {
@@ -53,7 +53,7 @@
       "true_positives": 5,
       "false_positives": 0,
       "trigger_count": 5,
-      "experience": 20,
+      "experience": 10,
       "current_severity": "Low"
     },
     "ecrecover": {
@@ -61,7 +61,7 @@
       "true_positives": 5,
       "false_positives": 0,
       "trigger_count": 5,
-      "experience": 20,
+      "experience": 10,
       "current_severity": "Low"
     },
     "non-reentrant-before-others": {
@@ -69,7 +69,7 @@
       "true_positives": 5,
       "false_positives": 0,
       "trigger_count": 5,
-      "experience": 20,
+      "experience": 10,
       "current_severity": "NC"
     },
     "push-zero-opcode": {
@@ -90,10 +90,10 @@
     },
     "solmate-safe-transfer-lib": {
       "detector_name": "solmate-safe-transfer-lib",
-      "true_positives": 7,
-      "false_positives": 3,
-      "trigger_count": 17,
-      "experience": 17,
+      "true_positives": 5,
+      "false_positives": 1,
+      "trigger_count": 7,
+      "experience": 7,
       "current_severity": "Medium"
     },
     "unindexed-events": {
@@ -133,7 +133,7 @@
       "true_positives": 5,
       "false_positives": 0,
       "trigger_count": 6,
-      "experience": 20,
+      "experience": 10,
       "current_severity": "NC"
     },
     "zero-address-check": {

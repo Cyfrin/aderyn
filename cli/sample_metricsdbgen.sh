@@ -5,13 +5,3 @@ cargo run --bin judgeops -- -m "$@" give-feedback tests/sample_feedbacks/neg_hig
 cargo run --bin judgeops -- -m "$@" give-feedback tests/sample_feedbacks/neg_high.json
 cargo run --bin judgeops -- -m "$@" give-feedback tests/sample_feedbacks/neg_med.json
 cargo run --bin judgeops -- -m "$@" give-feedback tests/sample_feedbacks/pos_med.json
-cargo run --bin judgeops -- -m "$@" give-feedback tests/sample_feedbacks/pos_med.json
-cargo run --bin judgeops -- -m "$@" give-feedback tests/sample_feedbacks/pos_med.json
-cargo run --bin judgeops -- -m "$@" give-feedback tests/sample_feedbacks/pos_med.json
-cargo run --bin judgeops -- -m "$@" give-feedback tests/sample_feedbacks/pos_med.json
-cargo run --bin judgeops -- -m "$@" give-feedback tests/sample_feedbacks/pos_med.json
-cargo run --bin judgeops -- -m "$@" give-feedback tests/sample_feedbacks/neg_med.json
-cargo run --bin judgeops -- -m "$@" give-feedback tests/sample_feedbacks/neg_med.json
-cargo run --bin judgeops -- -m "$@" give-feedback tests/sample_feedbacks/pos_med.json
-cargo run --bin judgeops -- -m "$@" give-feedback tests/sample_feedbacks/pos_med.json
-cargo run --bin judgeops -- -m "$@" give-feedback tests/sample_feedbacks/pos_med.json
