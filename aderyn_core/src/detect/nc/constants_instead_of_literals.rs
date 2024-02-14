@@ -4,7 +4,7 @@ use crate::{
     ast::{LiteralKind, NodeID},
     capture,
     context::{browser::ExtractLiterals, workspace_context::WorkspaceContext},
-    detect::detector::{DetectorNamePool, IssueDetector, IssueSeverity},
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -54,7 +54,7 @@ impl IssueDetector for ConstantsInsteadOfLiteralsDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", DetectorNamePool::ConstantsInsteadOfLiterals)
+        format!("{}", IssueDetectorNamePool::ConstantsInsteadOfLiterals)
     }
 }
 

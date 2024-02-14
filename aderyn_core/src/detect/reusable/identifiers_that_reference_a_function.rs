@@ -1,4 +1,7 @@
-use crate::{context::workspace_context::ASTNode, detect::detector::ReusableDetector};
+use crate::{
+    context::workspace_context::ASTNode,
+    detect::detector::{ResuableDetectorNamePool, ReusableDetector},
+};
 
 #[derive(Default)]
 pub struct IdentifiersThatReferenceAFunctionDetector {
@@ -35,7 +38,7 @@ impl ReusableDetector for IdentifiersThatReferenceAFunctionDetector {
     }
 
     fn name(&self) -> String {
-        "IdentifiersThatReferenceAFunctionDetector".to_string()
+        ResuableDetectorNamePool::IdentifiersThatReferenceAFunction.to_string()
     }
 }
 

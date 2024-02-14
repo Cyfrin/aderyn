@@ -5,7 +5,7 @@ use crate::{
     capture,
     context::workspace_context::WorkspaceContext,
     detect::{
-        detector::{DetectorNamePool, IssueDetector, IssueSeverity, ReusableDetector},
+        detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity, ReusableDetector},
         reusable::IdentifiersThatReferenceAFunctionDetector,
     },
 };
@@ -52,7 +52,7 @@ impl IssueDetector for UselessPublicFunctionDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", DetectorNamePool::UselessPublicFunction)
+        format!("{}", IssueDetectorNamePool::UselessPublicFunction)
     }
 }
 
