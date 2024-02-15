@@ -650,6 +650,7 @@ version = "0.1.0"
 dependencies = [
  "aderyn_core",
  "clap",
+ "my_bot",
  "serde",
  "serde_json",
  "serde_repr",

@@ -14,7 +14,7 @@ use std::{fs::OpenOptions, io::BufWriter, path::PathBuf};
  *  - However, YOU ARE ALLOWED to modify the custom_detectors array so long as you maintain the original structure.
  */
 use aderyn_driver::detector::IssueDetector;
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 
 fn custom_detectors() -> Vec<Box<dyn IssueDetector>> {
     vec![
@@ -24,7 +24,7 @@ fn custom_detectors() -> Vec<Box<dyn IssueDetector>> {
 
 pub fn refresh_metadata() {
     let metadata: Metadata = custom_detectors().into();
-    let path = PathBuf::from("metadata/custom_bots.json");
+    let path = PathBuf::from("metadata/custom_detectors.json");
     _ = std::fs::remove_file(&path); // OK to fail
 
     let file = OpenOptions::new()
@@ -41,27 +41,29 @@ pub fn refresh_metadata() {
 
 impl From<Vec<Box<dyn IssueDetector>>> for Metadata {
     fn from(detectors: Vec<Box<dyn IssueDetector>>) -> Self {
-        let mut custom_bots = vec![];
+        let mut custom_detectors = vec![];
         for detector in detectors {
-            let custom_bot = CustomBot {
+            let custom_bot = CustomDetector {
+                name: detector.name(),
                 title: detector.title(),
                 severity: detector.severity().to_string(),
                 description: detector.description(),
             };
-            custom_bots.push(custom_bot);
+            custom_detectors.push(custom_bot);
         }
-        Metadata { custom_bots }
+        Metadata { custom_detectors }
     }
 }
 
-#[derive(Serialize)]
-struct Metadata {
-    custom_bots: Vec<CustomBot>,
+#[derive(Serialize, Deserialize)]
+pub struct Metadata {
+    pub custom_detectors: Vec<CustomDetector>,
 }
 
-#[derive(Serialize)]
-struct CustomBot {
-    severity: String,
-    title: String,
-    description: String,
+#[derive(Serialize, Deserialize)]
+pub struct CustomDetector {
+    pub severity: String,
+    pub title: String,
+    pub description: String,
+    pub name: String,
 }

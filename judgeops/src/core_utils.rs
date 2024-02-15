@@ -5,6 +5,10 @@ use aderyn_core::watchtower::{Feedback, WatchTower};
 
 use crate::extract::FeedbackExtractor;
 
+trait Forceful {
+    fn force_register_detectors(&self, watchtower: &Box<dyn WatchTower>);
+}
+
 pub(crate) fn _apply_judgement(watchtower: &Box<dyn WatchTower>, file: &PathBuf) -> ExitCode {
     if !file.is_file() || !file.exists() {
         eprintln!("Invalid feedback file submitted! ");
@@ -43,7 +47,6 @@ pub(crate) fn _apply_judgement(watchtower: &Box<dyn WatchTower>, file: &PathBuf)
     {
         let feedback: Result<Feedback, _> =
             serde_json::from_str(&std::fs::read_to_string(&file).unwrap());
-
         if let Ok(feedback) = feedback {
             watchtower.take_feedback(feedback);
         } else {
