@@ -20,7 +20,7 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
         root_path: PathBuf,
         output_rel_path: Option<String>,
         no_snippets: bool,
-        detectors_used: &[String],
+        detectors_used: &[(String, String)],
     ) -> Result<()> {
         self.print_title_and_disclaimer(&mut writer)?;
         self.print_table_of_contents(&mut writer, report)?;
@@ -31,7 +31,7 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
         if is_for_judge {
             writeln!(writer, "## Detectors Used\n")?;
             for detector in detectors_used {
-                writeln!(writer, "{}\n", detector)?;
+                writeln!(writer, "{}:{}\n", detector.0, detector.1)?;
             }
         }
 

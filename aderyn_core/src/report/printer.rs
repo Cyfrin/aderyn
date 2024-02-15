@@ -17,6 +17,6 @@ pub trait ReportPrinter<T> {
         root_rel_path: PathBuf,
         output_rel_path: Option<String>, // you writer 'W' may or may not be writing a file. Eg: it can simply consume and forget :P
         no_snippets: bool,
-        detectors_used: &[String],
+        detectors_used: &[(String, String)],
     ) -> Result<T>;
 }

@@ -47,9 +47,10 @@ impl ReportPrinter<()> for JsonPrinter {
         _: PathBuf,
         _: Option<String>,
         _: bool,
-        detectors_used: &[String],
+        detectors_used: &[(String, String)],
     ) -> Result<()> {
-        // TODO: Figure out a way to optionally show the tags in the json report as well
+        let detectors_used_names: Vec<_> = detectors_used.iter().map(|x| x.0.clone()).collect();
+
         let content = JsonContent {
             files_summary: context.files_summary(),
             files_details: context.files_details(),
@@ -59,7 +60,7 @@ impl ReportPrinter<()> for JsonPrinter {
             medium_issues: report.medium_issues(),
             low_issues: report.low_issues(),
             nc_issues: report.nc_issues(),
-            detectors_used: Vec::from(detectors_used),
+            detectors_used: detectors_used_names,
         };
         let value = serde_json::to_value(content).unwrap();
         _ = serde_json::to_writer_pretty(writer, &value);

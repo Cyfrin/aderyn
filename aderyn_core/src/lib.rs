@@ -56,7 +56,10 @@ where
 
     println!("Running {} detectors", detectors.len());
 
-    let detectors_used = &detectors.iter().map(|d| d.name()).collect::<Vec<_>>();
+    let detectors_used = &detectors
+        .iter()
+        .map(|d| (d.name(), d.severity().to_string()))
+        .collect::<Vec<_>>();
     let mut report: Report = Report::default();
     for mut detector in detectors {
         if let Ok(found) = detector.detect(context) {
