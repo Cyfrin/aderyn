@@ -38,14 +38,14 @@ impl RegistersNewDetector for LightChaser {
         // Follow up question - Where does 5 come from ?
         // Answered here - https://x.com/ChaseTheLight99/status/1750111766162358288?s=20
 
-        let all_valid_detector_names = get_all_detectors_names();
-        if !all_valid_detector_names.contains(&detector_name) {
-            let message = format!(
-                "Detector {} to be registered not available in core",
-                detector_name
-            );
-            panic!("{}", message);
-        }
+        // let all_valid_detector_names = get_all_detectors_names();
+        // if !all_valid_detector_names.contains(&detector_name) {
+        //     let message = format!(
+        //         "Detector {} to be registered not available in core",
+        //         detector_name
+        //     );
+        //     panic!("{}", message);
+        // }
         self.metrics_db
             .register_new_detector(detector_name, assigned_severity);
     }
@@ -159,38 +159,45 @@ impl DecidesWhenReadyToServe for LightChaser {
         core_detectors == registered_detectors // Otherwise they are not in sync
     }
     fn print_suggested_changes_before_init(&self) -> ExitCode {
-        if !self.is_ready_to_serve() {
-            println!("Demanding-changes need to be resolved before calculating suggested-changes");
-            return ExitCode::FAILURE;
-        }
+        // TODO:
+        // if !self.is_ready_to_serve() {
+        //     println!("Demanding-changes need to be resolved before calculating suggested-changes");
+        //     return ExitCode::FAILURE;
+        // }
         let mut found_suggestion = false;
 
         // Suggest removing very poorly performing core detectors (lc_accuracy == 0)
-        get_all_detectors_names().iter().for_each(|d| {
-            let d_metrics = self.metrics_db.get_metrics(d.clone());
-            if d_metrics.lc_accuracy() == 0 {
-                println!("{d} should be removed as it's accuracy has fallen to 0 ! ");
-                found_suggestion = true;
-            }
-        });
+        self.metrics_db
+            .get_all_detectors_names()
+            .iter()
+            .for_each(|d| {
+                let d_metrics = self.metrics_db.get_metrics(d.clone());
+                if d_metrics.lc_accuracy() == 0 {
+                    println!("{d} should be removed as it's accuracy has fallen to 0 ! ");
+                    found_suggestion = true;
+                }
+            });
         // Suggest downgrading poorly performing core detectors (lc_accuracy doesn't live up to its severity)
-        get_all_detectors_names().iter().for_each(|d| {
-            let d_metrics = self.metrics_db.get_metrics(d.clone());
-            if !d_metrics.is_acceptable() && d_metrics.lc_accuracy() != 0 {
-                // The case where lc_accuracy = 0 has been taken care above (we completely remove them)
-                println!(
-                    "{d}'s accuracy of {} is unacceptable for {} severity ! ",
-                    d_metrics.lc_accuracy(),
-                    d_metrics.current_severity,
-                );
-                found_suggestion = true;
-            }
-        });
+        self.metrics_db
+            .get_all_detectors_names()
+            .iter()
+            .for_each(|d| {
+                let d_metrics = self.metrics_db.get_metrics(d.clone());
+                if !d_metrics.is_acceptable() && d_metrics.lc_accuracy() != 0 {
+                    // The case where lc_accuracy = 0 has been taken care above (we completely remove them)
+                    println!(
+                        "{d}'s accuracy of {} is unacceptable for {} severity ! ",
+                        d_metrics.lc_accuracy(),
+                        d_metrics.current_severity,
+                    );
+                    found_suggestion = true;
+                }
+            });
         // Suggest giving more feedbacks for inexperienced detectors
         // Group detectors by experience
         let mut experience_map: HashMap<u64, Vec<String>> = HashMap::new();
 
-        for detector_name in get_all_detectors_names() {
+        for detector_name in self.metrics_db.get_all_detectors_names() {
             let d_metrics = self.metrics_db.get_metrics(detector_name.clone());
             if let hash_map::Entry::Vacant(e) = experience_map.entry(d_metrics.experience) {
                 e.insert(vec![detector_name]);
@@ -236,7 +243,7 @@ impl DecidesWhenReadyToServe for LightChaser {
         // Group detectors by accuracy
         let mut lc_accuracy_map: HashMap<u64, Vec<String>> = HashMap::new();
 
-        for detector_name in get_all_detectors_names() {
+        for detector_name in self.metrics_db.get_all_detectors_names() {
             let d_metrics = self.metrics_db.get_metrics(detector_name.clone());
             if let hash_map::Entry::Vacant(e) = lc_accuracy_map.entry(d_metrics.lc_accuracy()) {
                 e.insert(vec![detector_name]);

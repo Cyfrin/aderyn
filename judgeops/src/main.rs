@@ -8,6 +8,7 @@ use clap::{Parser, Subcommand, ValueEnum};
 
 use crate::inference::MetricsChangeSummarizer;
 
+mod core_utils;
 mod extract;
 mod inference;
 mod nythutils;
