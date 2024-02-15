@@ -131,7 +131,7 @@ pub(crate) fn register_unseen_detectors(
         if !existing.contains(detector_name) {
             let severity = detectors.get(detector_name).unwrap();
 
-            println!("Newly registering {} {}", detector_name, severity);
+            println!("Registering {} {}", detector_name, severity);
             // let assigned_severity: IssueSeverity = serde_json::from_str(&severity).unwrap();
 
             let assigned_severity = if severity == &IssueSeverity::Critical.to_string() {
@@ -147,7 +147,6 @@ pub(crate) fn register_unseen_detectors(
             } else {
                 panic!("Corrupt!");
             };
-            println!("{} {}", detector_name, assigned_severity);
             watchtower.register(detector_name.to_string(), assigned_severity)
         }
     }

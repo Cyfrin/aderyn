@@ -22,7 +22,7 @@ use strum::EnumCount;
 use super::utils::MetricsDatabase;
 use super::{
     CalculatesValueOfDetector, GetsCurrentMetricsForDetector, GetsRegisteredDetectors,
-    InfersMetrics, Metrics, RegistersNewDetector, SuggestsChanges, TakesFeedbackFromJudge,
+    GiveOverallOpinion, InfersMetrics, Metrics, RegistersNewDetector, TakesFeedbackFromJudge,
     WatchTower,
 };
 
@@ -126,10 +126,10 @@ impl Metrics {
     }
 }
 
-impl SuggestsChanges for LightChaser {
-    fn print_suggested_changes_before_init(&self) -> ExitCode {
+impl GiveOverallOpinion for LightChaser {
+    fn give_overall_opinion(&self) -> ExitCode {
         let mut found_suggestion = false;
-
+        println!();
         // Suggest removing very poorly performing core detectors (lc_accuracy == 0)
         self.metrics_db
             .get_all_detectors_names()
@@ -141,6 +141,7 @@ impl SuggestsChanges for LightChaser {
                     found_suggestion = true;
                 }
             });
+        println!();
         // Suggest downgrading poorly performing core detectors (lc_accuracy doesn't live up to its severity)
         self.metrics_db
             .get_all_detectors_names()
@@ -160,7 +161,7 @@ impl SuggestsChanges for LightChaser {
         // Suggest giving more feedbacks for inexperienced detectors
         // Group detectors by experience
         let mut experience_map: HashMap<u64, Vec<String>> = HashMap::new();
-
+        println!();
         for detector_name in self.metrics_db.get_all_detectors_names() {
             let d_metrics = self.metrics_db.get_metrics(detector_name.clone());
             if let hash_map::Entry::Vacant(e) = experience_map.entry(d_metrics.experience) {

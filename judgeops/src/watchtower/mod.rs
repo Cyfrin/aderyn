@@ -63,8 +63,8 @@ pub trait GetsCurrentMetricsForDetector {
     fn all_metrics(&self) -> HashMap<String, Metrics>;
 }
 
-pub trait SuggestsChanges {
-    fn print_suggested_changes_before_init(&self) -> ExitCode;
+pub trait GiveOverallOpinion {
+    fn give_overall_opinion(&self) -> ExitCode;
 }
 
 pub trait TakesFeedbackFromJudge {
@@ -90,7 +90,7 @@ pub struct Tag {
 pub trait WatchTower:
     RegistersNewDetector
     + GetsCurrentMetricsForDetector
-    + SuggestsChanges
+    + GiveOverallOpinion
     + TakesFeedbackFromJudge
     + CalculatesValueOfDetector
     + GetsRegisteredDetectors

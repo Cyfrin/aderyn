@@ -45,7 +45,7 @@ impl Display for IssueSeverity {
 #[command(author, version, about, long_about = None)]
 pub struct CommandLineArgs {
     /// Path to database file
-    #[arg(short, long, default_value = "watchtower.metrics_db.json")]
+    #[arg(short, long)]
     metrics_db: String,
 
     #[clap(subcommand, name = "my_subcommand")]
@@ -58,6 +58,8 @@ enum MySubcommand {
     DisplayMetrics { detector_name: Option<String> },
     /// Give feedback on the aderyn report (affects detectors' ratings and metrics)
     ApplyJudgement { file: String },
+    /// LightChaser's opinion on the current status of detectors
+    GiveOpinion,
 }
 
 fn main() -> ExitCode {
@@ -89,6 +91,7 @@ fn main() -> ExitCode {
             MySubcommand::DisplayMetrics { detector_name } => {
                 utils::display_metrics(&watchtower, detector_name.as_deref())
             }
+            MySubcommand::GiveOpinion => watchtower.give_overall_opinion(),
         };
     }
 
