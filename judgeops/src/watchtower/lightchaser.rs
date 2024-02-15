@@ -14,6 +14,8 @@
 //
 // And more...
 
+pub mod lightchaser;
+
 use std::collections::{hash_map, HashMap};
 use std::process::ExitCode;
 

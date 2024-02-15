@@ -1,6 +1,4 @@
 #![allow(clippy::borrowed_box)]
-pub mod lightchaser;
-pub mod utils;
 
 use std::{collections::HashMap, process::ExitCode};
 

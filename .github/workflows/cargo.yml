@@ -219,54 +219,34 @@ jobs:
           command: test
           args: --manifest-path ./bot_ci_cd/Cargo.toml
 
-  watchtower:
 
-    name: Check watchtower is in a healthy state
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout sources
-        uses: actions/checkout@v2
-
-      - name: Install stable toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
-
-      - name: Check that there are no demanding changes to make
-        uses: actions-rs/cargo@v1
-        with:
-          command: run
-          args: --bin judgeops -- -d
-
-  judgeops:
+  # judgeops:
   
-    name: Check metrics changes with feedback consistently
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout sources
-        uses: actions/checkout@v2
+  #   name: Check metrics changes with feedback consistently
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout sources
+  #       uses: actions/checkout@v2
 
-      - name: Install stable toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
+  #     - name: Install stable toolchain
+  #       uses: actions-rs/toolchain@v1
+  #       with:
+  #         profile: minimal
+  #         toolchain: stable
+  #         override: true
 
-      - name: Rename sample.metrics_db.json to sample_renamed.metrics_db.json
-        run: |
-          mv sample.metrics_db.json sample_renamed.metrics_db.json
+  #     - name: Rename sample.metrics_db.json to sample_renamed.metrics_db.json
+  #       run: |
+  #         mv sample.metrics_db.json sample_renamed.metrics_db.json
 
-      - name: Generate sample.metrics_db.json
-        run: |
-          cli/sample_metricsdbgen.sh sample.metrics_db.json
+  #     - name: Generate sample.metrics_db.json
+  #       run: |
+  #         cli/sample_metricsdbgen.sh sample.metrics_db.json
 
-      - name: Check sample.metrics_db.json vs sample_renamed.metrics_db.json
-        run: |
-          cat sample.metrics_db.json
-          diff sample_renamed.metrics_db.json sample.metrics_db.json
+  #     - name: Check sample.metrics_db.json vs sample_renamed.metrics_db.json
+  #       run: |
+  #         cat sample.metrics_db.json
+  #         diff sample_renamed.metrics_db.json sample.metrics_db.json
 
   lints:
     name: Lints

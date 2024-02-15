@@ -1,4 +1,4 @@
-use crate::{context::workspace_context::WorkspaceContext, watchtower::WatchTower};
+use crate::context::workspace_context::WorkspaceContext;
 
 use std::{
     io::{Result, Write},
@@ -21,7 +21,6 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
         output_rel_path: Option<String>,
         no_snippets: bool,
         detectors_used: &[String],
-        watchtower: &Box<dyn WatchTower>,
     ) -> Result<()> {
         self.print_title_and_disclaimer(&mut writer)?;
         self.print_table_of_contents(&mut writer, report)?;
@@ -60,7 +59,6 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
                             root_path: &root_path,
                             output_rel_path: output_rel_path.clone(),
                             no_snippets,
-                            watchtower,
                         },
                     )?;
                 }
@@ -78,8 +76,6 @@ struct PrintIssueParams<'a> {
     root_path: &'a Path,
     output_rel_path: String,
     no_snippets: bool,
-    #[allow(clippy::borrowed_box)]
-    watchtower: &'a Box<dyn WatchTower>,
 }
 
 impl MarkdownReportPrinter {
@@ -232,19 +228,6 @@ impl MarkdownReportPrinter {
                 "### Responsible : {}\n",
                 params.issue_body.detector_name.clone()
             )?;
-            let tag = params
-                .watchtower
-                .request_tag(params.issue_body.detector_name.clone());
-
-            if let Some(tag) = tag {
-                if !tag.messages.is_empty() {
-                    writeln!(
-                        writer,
-                        "<span style=\"color:red\"> Tags: {}</span>\n",
-                        tag.messages.join(", ")
-                    )?;
-                }
-            }
         }
         for instance in &params.issue_body.instances {
             let path = {

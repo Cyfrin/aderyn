@@ -8,11 +8,11 @@ members = [
     "nyth",
     "bot_fw_assembler",
     "bot",
-    "judgeops",
 ]
 
 resolver="1"
 
 exclude = [
-    "bot_ci_cd"
+    "bot_ci_cd",
+    "judgeops",
 ]

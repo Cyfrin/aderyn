@@ -3,7 +3,7 @@ use std::{
     path::PathBuf,
 };
 
-use crate::{context::workspace_context::WorkspaceContext, watchtower::WatchTower};
+use crate::context::workspace_context::WorkspaceContext;
 use serde::Serialize;
 
 use super::{
@@ -48,7 +48,6 @@ impl ReportPrinter<()> for JsonPrinter {
         _: Option<String>,
         _: bool,
         detectors_used: &[String],
-        _watchtower: &Box<dyn WatchTower>,
     ) -> Result<()> {
         // TODO: Figure out a way to optionally show the tags in the json report as well
         let content = JsonContent {

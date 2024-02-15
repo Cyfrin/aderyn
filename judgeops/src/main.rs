@@ -1,8 +1,8 @@
 use std::process::ExitCode;
 
-use aderyn_core::watchtower::lightchaser::LightChaser;
-use aderyn_core::watchtower::utils::MetricsDatabase;
-use aderyn_core::watchtower::WatchTower;
+use watchtower::lightchaser::LightChaser;
+use watchtower::utils::MetricsDatabase;
+use watchtower::WatchTower;
 
 use clap::{Parser, Subcommand};
 
@@ -11,6 +11,7 @@ use crate::inference::MetricsChangeSummarizer;
 mod extract;
 mod inference;
 mod utils;
+mod watchtower;
 
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
@@ -49,13 +50,6 @@ enum MySubcommand {
     DisplayMetrics { detector_name: Option<String> },
     /// Give feedback on the aderyn report (affects detectors' ratings and metrics)
     GiveFeedback { file: String },
-    /// Explicitly tag a detector to help indicate manual review required in report.
-    AddTag {
-        detector_name: String,
-        message: String,
-    },
-    /// Remove all explicitly assigned tags to a detector
-    RemoveTags { detector_name: String },
 }
 
 fn main() -> ExitCode {

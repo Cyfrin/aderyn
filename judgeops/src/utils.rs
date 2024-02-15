@@ -1,10 +1,8 @@
 #![allow(clippy::borrowed_box)]
 use std::{path::PathBuf, process::ExitCode};
 
-use aderyn_core::{
-    detect::detector::{get_all_detectors_names, get_issue_detector_by_name},
-    watchtower::{Feedback, WatchTower},
-};
+use crate::watchtower::{Feedback, WatchTower};
+use aderyn_core::detect::detector::{get_all_detectors_names, get_issue_detector_by_name};
 
 use crate::extract::FeedbackExtractor;
 
