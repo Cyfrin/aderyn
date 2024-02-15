@@ -158,8 +158,8 @@ impl DetectorsUsedExtractor {
         for line in interested_portion.lines() {
             if line.is_empty() {
                 continue;
-            } else if line.contains(":") {
-                let parts = line.split_once(":").expect("Corrupted !");
+            } else if line.contains(':') {
+                let parts = line.split_once(':').expect("Corrupted !");
                 detectors.insert(parts.0.to_string(), parts.1.to_string());
             } else {
                 break;
