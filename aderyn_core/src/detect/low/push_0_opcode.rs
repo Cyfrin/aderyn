@@ -4,7 +4,7 @@ use crate::{
     ast::NodeID,
     capture,
     context::workspace_context::WorkspaceContext,
-    detect::detector::{DetectorNamePool, IssueDetector, IssueSeverity},
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 use semver::{Op, VersionReq};
@@ -95,7 +95,7 @@ impl IssueDetector for PushZeroOpcodeDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", DetectorNamePool::PushZeroOpcode)
+        format!("{}", IssueDetectorNamePool::PushZeroOpcode)
     }
 }
 

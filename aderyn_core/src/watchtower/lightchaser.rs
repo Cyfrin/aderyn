@@ -365,7 +365,7 @@ mod lightchaser_tests {
     use strum::EnumCount;
 
     use crate::{
-        detect::detector::{DetectorNamePool, IssueSeverity},
+        detect::detector::{IssueDetectorNamePool, IssueSeverity},
         watchtower::{utils::MetricsDatabase, Feedback, InfersMetrics, WatchTower},
     };
 
@@ -386,21 +386,25 @@ mod lightchaser_tests {
 
         let prev_metrics = watchtower.all_metrics();
 
-        assert!(!prev_metrics.contains_key(&DetectorNamePool::ArbitraryTransferFrom.to_string()));
+        assert!(
+            !prev_metrics.contains_key(&IssueDetectorNamePool::ArbitraryTransferFrom.to_string())
+        );
         assert!(prev_metrics.is_empty());
 
         let expected_severity = IssueSeverity::High;
 
         watchtower.register(
-            DetectorNamePool::ArbitraryTransferFrom.to_string(),
+            IssueDetectorNamePool::ArbitraryTransferFrom.to_string(),
             expected_severity.clone(),
         );
 
         let after_metrics = watchtower.all_metrics();
-        assert!(after_metrics.contains_key(&DetectorNamePool::ArbitraryTransferFrom.to_string()));
+        assert!(
+            after_metrics.contains_key(&IssueDetectorNamePool::ArbitraryTransferFrom.to_string())
+        );
 
         let after_metrics_arbitrary = after_metrics
-            .get(&DetectorNamePool::ArbitraryTransferFrom.to_string())
+            .get(&IssueDetectorNamePool::ArbitraryTransferFrom.to_string())
             .unwrap();
         assert!(after_metrics_arbitrary.current_severity == expected_severity);
     }
@@ -419,12 +423,12 @@ mod lightchaser_tests {
         });
 
         watchtower.register(
-            DetectorNamePool::ArbitraryTransferFrom.to_string(),
+            IssueDetectorNamePool::ArbitraryTransferFrom.to_string(),
             IssueSeverity::High,
         );
 
         let arbitrary_metrics =
-            watchtower.metrics(DetectorNamePool::ArbitraryTransferFrom.to_string());
+            watchtower.metrics(IssueDetectorNamePool::ArbitraryTransferFrom.to_string());
 
         // New detectors should get a perfect accuracy be default.
         assert!(arbitrary_metrics.lc_accuracy() == IssueSeverity::COUNT as u64);
@@ -444,37 +448,40 @@ mod lightchaser_tests {
         });
 
         watchtower.register(
-            DetectorNamePool::CentralizationRisk.to_string(),
+            IssueDetectorNamePool::CentralizationRisk.to_string(),
             IssueSeverity::Medium,
         );
 
         watchtower.take_feedback(Feedback {
             positive_feedbacks: vec![],
-            negative_feedbacks: vec![DetectorNamePool::CentralizationRisk.to_string()],
-            all_exposed_detectors: vec![DetectorNamePool::CentralizationRisk.to_string()],
+            negative_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
         });
 
-        let current_metrics = watchtower.metrics(DetectorNamePool::CentralizationRisk.to_string());
+        let current_metrics =
+            watchtower.metrics(IssueDetectorNamePool::CentralizationRisk.to_string());
         assert!(current_metrics.lc_accuracy() == 4);
         assert!(current_metrics.is_acceptable());
 
         watchtower.take_feedback(Feedback {
             positive_feedbacks: vec![],
-            negative_feedbacks: vec![DetectorNamePool::CentralizationRisk.to_string()],
-            all_exposed_detectors: vec![DetectorNamePool::CentralizationRisk.to_string()],
+            negative_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
         });
 
-        let current_metrics = watchtower.metrics(DetectorNamePool::CentralizationRisk.to_string());
+        let current_metrics =
+            watchtower.metrics(IssueDetectorNamePool::CentralizationRisk.to_string());
         assert!(current_metrics.lc_accuracy() == 3);
         assert!(current_metrics.is_acceptable());
 
         watchtower.take_feedback(Feedback {
             positive_feedbacks: vec![],
-            negative_feedbacks: vec![DetectorNamePool::CentralizationRisk.to_string()],
-            all_exposed_detectors: vec![DetectorNamePool::CentralizationRisk.to_string()],
+            negative_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
         });
 
-        let current_metrics = watchtower.metrics(DetectorNamePool::CentralizationRisk.to_string());
+        let current_metrics =
+            watchtower.metrics(IssueDetectorNamePool::CentralizationRisk.to_string());
         assert!(current_metrics.lc_accuracy() == 2);
         assert!(!current_metrics.is_acceptable());
     }
@@ -493,19 +500,19 @@ mod lightchaser_tests {
         });
 
         watchtower.register(
-            DetectorNamePool::CentralizationRisk.to_string(),
+            IssueDetectorNamePool::CentralizationRisk.to_string(),
             IssueSeverity::Medium,
         );
 
-        let before_value = watchtower.value(DetectorNamePool::CentralizationRisk.to_string());
+        let before_value = watchtower.value(IssueDetectorNamePool::CentralizationRisk.to_string());
 
         watchtower.take_feedback(Feedback {
             positive_feedbacks: vec![],
             negative_feedbacks: vec![],
-            all_exposed_detectors: vec![DetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
         });
 
-        let after_value = watchtower.value(DetectorNamePool::CentralizationRisk.to_string());
+        let after_value = watchtower.value(IssueDetectorNamePool::CentralizationRisk.to_string());
 
         assert!(after_value < before_value);
     }
@@ -524,53 +531,58 @@ mod lightchaser_tests {
         });
 
         watchtower.register(
-            DetectorNamePool::CentralizationRisk.to_string(),
+            IssueDetectorNamePool::CentralizationRisk.to_string(),
             IssueSeverity::Medium,
         );
 
         watchtower.take_feedback(Feedback {
             positive_feedbacks: vec![],
-            negative_feedbacks: vec![DetectorNamePool::CentralizationRisk.to_string()],
-            all_exposed_detectors: vec![DetectorNamePool::CentralizationRisk.to_string()],
+            negative_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
         });
 
-        let current_metrics = watchtower.metrics(DetectorNamePool::CentralizationRisk.to_string());
+        let current_metrics =
+            watchtower.metrics(IssueDetectorNamePool::CentralizationRisk.to_string());
         assert!(current_metrics.lc_accuracy() == 4);
 
         watchtower.take_feedback(Feedback {
             positive_feedbacks: vec![],
-            negative_feedbacks: vec![DetectorNamePool::CentralizationRisk.to_string()],
-            all_exposed_detectors: vec![DetectorNamePool::CentralizationRisk.to_string()],
+            negative_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
         });
 
-        let current_metrics = watchtower.metrics(DetectorNamePool::CentralizationRisk.to_string());
+        let current_metrics =
+            watchtower.metrics(IssueDetectorNamePool::CentralizationRisk.to_string());
         assert!(current_metrics.lc_accuracy() == 3);
 
         watchtower.take_feedback(Feedback {
             positive_feedbacks: vec![],
-            negative_feedbacks: vec![DetectorNamePool::CentralizationRisk.to_string()],
-            all_exposed_detectors: vec![DetectorNamePool::CentralizationRisk.to_string()],
+            negative_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
         });
 
-        let current_metrics = watchtower.metrics(DetectorNamePool::CentralizationRisk.to_string());
+        let current_metrics =
+            watchtower.metrics(IssueDetectorNamePool::CentralizationRisk.to_string());
         assert!(current_metrics.lc_accuracy() == 2);
 
         watchtower.take_feedback(Feedback {
-            positive_feedbacks: vec![DetectorNamePool::CentralizationRisk.to_string()],
+            positive_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
             negative_feedbacks: vec![],
-            all_exposed_detectors: vec![DetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
         });
 
-        let current_metrics = watchtower.metrics(DetectorNamePool::CentralizationRisk.to_string());
+        let current_metrics =
+            watchtower.metrics(IssueDetectorNamePool::CentralizationRisk.to_string());
         assert!(current_metrics.lc_accuracy() == 3);
 
         watchtower.take_feedback(Feedback {
-            positive_feedbacks: vec![DetectorNamePool::CentralizationRisk.to_string()],
+            positive_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
             negative_feedbacks: vec![],
-            all_exposed_detectors: vec![DetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
         });
 
-        let current_metrics = watchtower.metrics(DetectorNamePool::CentralizationRisk.to_string());
+        let current_metrics =
+            watchtower.metrics(IssueDetectorNamePool::CentralizationRisk.to_string());
         assert!(current_metrics.lc_accuracy() == 4);
     }
 
@@ -588,20 +600,22 @@ mod lightchaser_tests {
         });
 
         watchtower.register(
-            DetectorNamePool::CentralizationRisk.to_string(),
+            IssueDetectorNamePool::CentralizationRisk.to_string(),
             IssueSeverity::Medium,
         );
 
-        let current_metrics = watchtower.metrics(DetectorNamePool::CentralizationRisk.to_string());
+        let current_metrics =
+            watchtower.metrics(IssueDetectorNamePool::CentralizationRisk.to_string());
         assert!(current_metrics.lc_accuracy() == 5);
 
         watchtower.take_feedback(Feedback {
-            positive_feedbacks: vec![DetectorNamePool::CentralizationRisk.to_string()],
+            positive_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
             negative_feedbacks: vec![],
-            all_exposed_detectors: vec![DetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
         });
 
-        let current_metrics = watchtower.metrics(DetectorNamePool::CentralizationRisk.to_string());
+        let current_metrics =
+            watchtower.metrics(IssueDetectorNamePool::CentralizationRisk.to_string());
         assert!(current_metrics.lc_accuracy() == 5);
     }
 
@@ -619,29 +633,32 @@ mod lightchaser_tests {
         });
 
         watchtower.register(
-            DetectorNamePool::CentralizationRisk.to_string(),
+            IssueDetectorNamePool::CentralizationRisk.to_string(),
             IssueSeverity::Medium,
         );
 
-        let current_metrics = watchtower.metrics(DetectorNamePool::CentralizationRisk.to_string());
+        let current_metrics =
+            watchtower.metrics(IssueDetectorNamePool::CentralizationRisk.to_string());
         assert!(current_metrics.lc_accuracy() == 5);
 
         watchtower.take_feedback(Feedback {
             positive_feedbacks: vec![],
-            negative_feedbacks: vec![DetectorNamePool::CentralizationRisk.to_string()],
-            all_exposed_detectors: vec![DetectorNamePool::CentralizationRisk.to_string()],
+            negative_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
         });
 
-        let current_metrics = watchtower.metrics(DetectorNamePool::CentralizationRisk.to_string());
+        let current_metrics =
+            watchtower.metrics(IssueDetectorNamePool::CentralizationRisk.to_string());
         assert!(current_metrics.lc_accuracy() == 4);
 
         watchtower.take_feedback(Feedback {
-            positive_feedbacks: vec![DetectorNamePool::CentralizationRisk.to_string()],
+            positive_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
             negative_feedbacks: vec![],
-            all_exposed_detectors: vec![DetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
         });
 
-        let current_metrics = watchtower.metrics(DetectorNamePool::CentralizationRisk.to_string());
+        let current_metrics =
+            watchtower.metrics(IssueDetectorNamePool::CentralizationRisk.to_string());
         assert!(current_metrics.lc_accuracy() == 4);
     }
 
@@ -659,28 +676,30 @@ mod lightchaser_tests {
         });
 
         watchtower.register(
-            DetectorNamePool::CentralizationRisk.to_string(),
+            IssueDetectorNamePool::CentralizationRisk.to_string(),
             IssueSeverity::Medium,
         );
 
-        let current_metrics = watchtower.metrics(DetectorNamePool::CentralizationRisk.to_string());
+        let current_metrics =
+            watchtower.metrics(IssueDetectorNamePool::CentralizationRisk.to_string());
         assert!(current_metrics.lc_accuracy() == 5);
 
         for _ in 1..=5 {
             watchtower.take_feedback(Feedback {
                 positive_feedbacks: vec![],
-                negative_feedbacks: vec![DetectorNamePool::CentralizationRisk.to_string()],
-                all_exposed_detectors: vec![DetectorNamePool::CentralizationRisk.to_string()],
+                negative_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
+                all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
             });
         }
 
-        let current_metrics = watchtower.metrics(DetectorNamePool::CentralizationRisk.to_string());
+        let current_metrics =
+            watchtower.metrics(IssueDetectorNamePool::CentralizationRisk.to_string());
         assert!(current_metrics.lc_accuracy() == 0);
 
         watchtower.take_feedback(Feedback {
-            positive_feedbacks: vec![DetectorNamePool::CentralizationRisk.to_string()],
+            positive_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
             negative_feedbacks: vec![],
-            all_exposed_detectors: vec![DetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
         });
         assert!(current_metrics.lc_accuracy() == 0);
     }

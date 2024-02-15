@@ -34,7 +34,7 @@ impl IssueDetector for {{detector_name_title_case}} {
     }
 
     fn name(&self) -> String {
-        "{{ detector_name_title_case }}".to_string()
+        "{{ detector_name_kebab_case }}".to_string()
     }
 
     fn instances(&self) -> BTreeMap<(String, usize), NodeID> {
@@ -43,7 +43,7 @@ impl IssueDetector for {{detector_name_title_case}} {
 }
 
 #[cfg(test)]
-mod {{detector_name_camel_case}}_tests {
+mod {{detector_name_snake_case}}_tests {
 
     use crate::config_tests::tests_configuration;
 
@@ -53,7 +53,7 @@ mod {{detector_name_camel_case}}_tests {
     use aderyn_driver::detector::detector_test_helpers::load_contract;
     use aderyn_driver::detector::IssueDetector;
 
-    fn test_{{detector_name_camel_case}}_for(
+    fn test_{{detector_name_snake_case}}_for(
         _contract_file: String,
         context: WorkspaceContext,
         mut detector: impl IssueDetector,
@@ -64,14 +64,14 @@ mod {{detector_name_camel_case}}_tests {
     }
 
     #[test]
-    fn test_{{detector_name_camel_case}}() {
+    fn test_{{detector_name_snake_case}}() {
         let detector = {{detector_name_title_case}}::default();
         let contracts = tests_configuration().get_contracts_for(detector.name());
 
         for contract_file in contracts {
             let detector = {{detector_name_title_case}}::default();
             let context = load_contract(&contract_file);
-            test_{{detector_name_camel_case}}_for(contract_file, context, detector);
+            test_{{detector_name_snake_case}}_for(contract_file, context, detector);
         }
     }
 }

@@ -4,7 +4,7 @@ use crate::{
     ast::NodeID,
     capture,
     context::workspace_context::WorkspaceContext,
-    detect::detector::{DetectorNamePool, IssueDetector, IssueSeverity},
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -53,7 +53,7 @@ impl IssueDetector for SolmateSafeTransferLibDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", DetectorNamePool::SolmateSafeTransferLib)
+        format!("{}", IssueDetectorNamePool::SolmateSafeTransferLib)
     }
 }
 
