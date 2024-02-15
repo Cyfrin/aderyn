@@ -147,19 +147,11 @@ pub(crate) fn give_feedback(watchtower: &Box<dyn WatchTower>, feedback_file: &st
     ExitCode::SUCCESS
 }
 
-pub(crate) fn display_metrics(
+pub(crate) fn _display_metrics(
     watchtower: &Box<dyn WatchTower>,
     detector_name: Option<&str>,
 ) -> ExitCode {
     // Check to see detector_name is valid
-
-    if !watchtower.is_ready_to_get_metrics() || !watchtower.is_ready_to_calculate_value() {
-        eprintln!(
-            "Internal Watchtower Error: There are some demanding changes you need to satisfy first"
-        );
-        return ExitCode::FAILURE;
-    }
-
     if let Some(detector_name) = detector_name {
         let detector_metrics = watchtower.metrics(detector_name.to_string());
         let detector_value = watchtower.value(detector_name.to_string());
@@ -200,4 +192,19 @@ pub(crate) fn display_metrics(
         }
     }
     ExitCode::SUCCESS
+}
+
+pub(crate) fn display_metrics(
+    watchtower: &Box<dyn WatchTower>,
+    detector_name: Option<&str>,
+) -> ExitCode {
+    // Check to see detector_name is valid
+
+    if !watchtower.is_ready_to_get_metrics() || !watchtower.is_ready_to_calculate_value() {
+        eprintln!(
+            "Internal Watchtower Error: There are some demanding changes you need to satisfy first"
+        );
+        return ExitCode::FAILURE;
+    }
+    _display_metrics(watchtower, detector_name)
 }

@@ -4,12 +4,13 @@ use aderyn_core::watchtower::lightchaser::LightChaser;
 use aderyn_core::watchtower::utils::MetricsDatabase;
 use aderyn_core::watchtower::WatchTower;
 
-use clap::{Parser, Subcommand};
+use clap::{Parser, Subcommand, ValueEnum};
 
 use crate::inference::MetricsChangeSummarizer;
 
 mod extract;
 mod inference;
+mod nythutils;
 mod utils;
 
 #[derive(Parser, Debug)]
@@ -56,6 +57,22 @@ enum MySubcommand {
     },
     /// Remove all explicitly assigned tags to a detector
     RemoveTags { detector_name: String },
+    /// Force apply judgement from a nyth repo into specified metrics db
+    #[clap(name = "nyth")]
+    Nyth {
+        #[clap(value_enum)]
+        nythops: Nythops,
+        /// When opted for apply-judgement, you must pass the root nyth folder where all the feedbacks are contained
+        path_to_nyth: Option<String>,
+        /// When opted for display-metrics, you can pass detector name as argument to see details
+        detector_name: Option<String>,
+    },
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, ValueEnum)]
+enum Nythops {
+    ApplyJudgement,
+    DisplayMetrics,
 }
 
 fn main() -> ExitCode {
@@ -116,6 +133,25 @@ fn main() -> ExitCode {
             MySubcommand::DisplayMetrics { detector_name } => {
                 utils::display_metrics(&watchtower, detector_name.as_deref())
             }
+            MySubcommand::Nyth {
+                nythops,
+                path_to_nyth,
+                detector_name,
+            } => match nythops {
+                Nythops::ApplyJudgement => {
+                    if path_to_nyth.is_none() {
+                        eprintln!("Please specify the nyth repo");
+                        return ExitCode::FAILURE;
+                    }
+                    nythutils::apply_judgement_from_nyth_with_force_register(
+                        &watchtower,
+                        path_to_nyth.unwrap().as_str(),
+                    )
+                }
+                Nythops::DisplayMetrics => {
+                    nythutils::display_metrics(&watchtower, detector_name.as_deref())
+                }
+            },
         };
     }
 
