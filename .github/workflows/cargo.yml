@@ -221,8 +221,7 @@ jobs:
 
       - name: Generate judge.md for the bot
         run: |
-            cd bot_ci_cd
-            cargo run -- generate-report-for-judge ./foundry_workspace/ the_report.judge.md
+          cargo run -- generate-report-for-judge ./foundry_workspace/ the_report.judge.md
 
   # judgeops:
   
