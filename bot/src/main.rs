@@ -32,14 +32,22 @@ use my_bot::{bot_brain, runner};
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 pub struct CommandLineArgs {
-    // These are commands that will be invoked by `nyth`.
+    // These are commands are intended to be used by judging systems
     #[clap(subcommand, name = "pilot")]
     pilot: Option<PilotCommand>,
 }
 
 #[derive(Debug, Subcommand)]
 enum PilotCommand {
+    /// Update the metadata json file with upto date detectors
     RefreshMetadata,
+    /// Make *.judge.md from custom detectors only on specified root and output
+    GenerateReportForJudge {
+        /// Root folder of competition's project
+        root: String,
+        /// Markdown file for judging path/to/*.judge.md
+        output: String,
+    },
 }
 
 fn main() {
@@ -53,5 +61,8 @@ fn main() {
 
     match cmd_args.pilot.unwrap() {
         PilotCommand::RefreshMetadata => bot_brain::refresh_metadata(),
+        PilotCommand::GenerateReportForJudge { root, output } => {
+            bot_brain::generate_report_for_judge(root.as_str(), output.as_str());
+        }
     }
 }
