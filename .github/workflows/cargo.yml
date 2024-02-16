@@ -219,17 +219,6 @@ jobs:
           command: test
           args: --manifest-path ./bot_ci_cd/Cargo.toml
 
-      - name: Install Foundry
-        uses: foundry-rs/foundry-toolchain@v1
-
-      - name: Generate judge.md for the bot
-        run: |
-          cd bot_ci_cd/foundry_workspace
-          forge build
-          cd ..
-          pwd
-          ls foundry_workspace/
-          cargo run -- generate-report-for-judge ./foundry_workspace/ the_report.judge.md
 
   # judgeops:
   
