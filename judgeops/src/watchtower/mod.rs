@@ -43,7 +43,7 @@ pub struct Feedback {
     // TODO: Assert that there are never common elements among positive_feedbacks and negative_feedbacks in the same `Feedback` object
     pub positive_feedbacks: Vec<String>, // An array of {detector_names} that have performed well
     pub negative_feedbacks: Vec<String>, // An array of {detector_names} that has performed poorly
-    pub all_exposed_detectors: Vec<String>, // An array of {detector_name} that was exposed (regardless of whether or not they were triggered) to the codebase
+    pub all_exposed_detectors: HashMap<String, String>, // An array of {detector_name} that was exposed (regardless of whether or not they were triggered) to the codebase
 }
 
 pub trait RegistersNewDetector {

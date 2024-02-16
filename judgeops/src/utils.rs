@@ -37,11 +37,7 @@ pub(crate) fn apply_judgement(watchtower: &Box<dyn WatchTower>, feedback_file: &
         let feedback = Feedback {
             positive_feedbacks: positive_feedbacks.unwrap(),
             negative_feedbacks: negative_feedbacks.unwrap(),
-            all_exposed_detectors: used_detectors
-                .unwrap()
-                .keys()
-                .map(|x| x.to_string())
-                .collect(),
+            all_exposed_detectors: used_detectors.unwrap(),
         };
         watchtower.take_feedback(feedback);
     } else if file
@@ -120,12 +116,37 @@ pub(crate) fn register_unseen_detectors(
         return ExitCode::FAILURE;
     }
 
-    let extractor = DetectorsUsedExtractor {
-        markdown_content: std::fs::read_to_string(feedback_file).unwrap(),
+    let detectors = if file
+        .file_name()
+        .unwrap()
+        .to_string_lossy()
+        .ends_with(".judge.md")
+    {
+        let extractor = DetectorsUsedExtractor {
+            markdown_content: std::fs::read_to_string(feedback_file).unwrap(),
+        };
+        // Key - name, value - severity
+        extractor.used_detectors().expect("Corrupted judge report")
+    } else if file
+        .file_name()
+        .unwrap()
+        .to_string_lossy()
+        .ends_with(".json")
+    {
+        let feedback: Result<Feedback, _> =
+            serde_json::from_str(&std::fs::read_to_string(&file).unwrap());
+
+        if let Ok(feedback) = feedback {
+            feedback.all_exposed_detectors
+        } else {
+            eprintln!("Invalid feedback JSON schema submitted! ");
+            return ExitCode::FAILURE;
+        }
+    } else {
+        eprintln!("Invalid file format!");
+        return ExitCode::FAILURE;
     };
 
-    // Key - name, value - severity
-    let detectors = extractor.used_detectors().expect("Corrupted judge report");
     let existing = watchtower.get_registered_detectors_names();
     for detector_name in detectors.keys() {
         if !existing.contains(detector_name) {

@@ -94,7 +94,7 @@ impl TakesFeedbackFromJudge for LightChaser {
         feedback
             .all_exposed_detectors
             .into_iter()
-            .for_each(|detector_name| self.metrics_db.increase_experience(detector_name));
+            .for_each(|detector_name| self.metrics_db.increase_experience(detector_name.0));
     }
 }
 
@@ -278,6 +278,8 @@ Unit Tests
 
 #[cfg(test)]
 mod lightchaser_tests {
+    use std::collections::HashMap;
+
     use serial_test::serial;
     use strum::{Display, EnumCount, EnumString};
 
@@ -398,7 +400,10 @@ mod lightchaser_tests {
         watchtower.take_feedback(Feedback {
             positive_feedbacks: vec![],
             negative_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
-            all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: HashMap::from([(
+                IssueDetectorNamePool::CentralizationRisk.to_string(),
+                IssueSeverity::Medium.to_string(),
+            )]),
         });
 
         let current_metrics =
@@ -409,7 +414,10 @@ mod lightchaser_tests {
         watchtower.take_feedback(Feedback {
             positive_feedbacks: vec![],
             negative_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
-            all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: HashMap::from([(
+                IssueDetectorNamePool::CentralizationRisk.to_string(),
+                IssueSeverity::Medium.to_string(),
+            )]),
         });
 
         let current_metrics =
@@ -420,7 +428,10 @@ mod lightchaser_tests {
         watchtower.take_feedback(Feedback {
             positive_feedbacks: vec![],
             negative_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
-            all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: HashMap::from([(
+                IssueDetectorNamePool::CentralizationRisk.to_string(),
+                IssueSeverity::Medium.to_string(),
+            )]),
         });
 
         let current_metrics =
@@ -452,7 +463,10 @@ mod lightchaser_tests {
         watchtower.take_feedback(Feedback {
             positive_feedbacks: vec![],
             negative_feedbacks: vec![],
-            all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: HashMap::from([(
+                IssueDetectorNamePool::CentralizationRisk.to_string(),
+                IssueSeverity::Medium.to_string(),
+            )]),
         });
 
         let after_value = watchtower.value(IssueDetectorNamePool::CentralizationRisk.to_string());
@@ -481,7 +495,10 @@ mod lightchaser_tests {
         watchtower.take_feedback(Feedback {
             positive_feedbacks: vec![],
             negative_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
-            all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: HashMap::from([(
+                IssueDetectorNamePool::CentralizationRisk.to_string(),
+                IssueSeverity::Medium.to_string(),
+            )]),
         });
 
         let current_metrics =
@@ -491,7 +508,10 @@ mod lightchaser_tests {
         watchtower.take_feedback(Feedback {
             positive_feedbacks: vec![],
             negative_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
-            all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: HashMap::from([(
+                IssueDetectorNamePool::CentralizationRisk.to_string(),
+                IssueSeverity::Medium.to_string(),
+            )]),
         });
 
         let current_metrics =
@@ -501,7 +521,10 @@ mod lightchaser_tests {
         watchtower.take_feedback(Feedback {
             positive_feedbacks: vec![],
             negative_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
-            all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: HashMap::from([(
+                IssueDetectorNamePool::CentralizationRisk.to_string(),
+                IssueSeverity::Medium.to_string(),
+            )]),
         });
 
         let current_metrics =
@@ -511,7 +534,10 @@ mod lightchaser_tests {
         watchtower.take_feedback(Feedback {
             positive_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
             negative_feedbacks: vec![],
-            all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: HashMap::from([(
+                IssueDetectorNamePool::CentralizationRisk.to_string(),
+                IssueSeverity::Medium.to_string(),
+            )]),
         });
 
         let current_metrics =
@@ -521,7 +547,10 @@ mod lightchaser_tests {
         watchtower.take_feedback(Feedback {
             positive_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
             negative_feedbacks: vec![],
-            all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: HashMap::from([(
+                IssueDetectorNamePool::CentralizationRisk.to_string(),
+                IssueSeverity::Medium.to_string(),
+            )]),
         });
 
         let current_metrics =
@@ -554,7 +583,10 @@ mod lightchaser_tests {
         watchtower.take_feedback(Feedback {
             positive_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
             negative_feedbacks: vec![],
-            all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: HashMap::from([(
+                IssueDetectorNamePool::CentralizationRisk.to_string(),
+                IssueSeverity::Medium.to_string(),
+            )]),
         });
 
         let current_metrics =
@@ -587,7 +619,10 @@ mod lightchaser_tests {
         watchtower.take_feedback(Feedback {
             positive_feedbacks: vec![],
             negative_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
-            all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: HashMap::from([(
+                IssueDetectorNamePool::CentralizationRisk.to_string(),
+                IssueSeverity::Medium.to_string(),
+            )]),
         });
 
         let current_metrics =
@@ -597,7 +632,10 @@ mod lightchaser_tests {
         watchtower.take_feedback(Feedback {
             positive_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
             negative_feedbacks: vec![],
-            all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: HashMap::from([(
+                IssueDetectorNamePool::CentralizationRisk.to_string(),
+                IssueSeverity::Medium.to_string(),
+            )]),
         });
 
         let current_metrics =
@@ -631,7 +669,10 @@ mod lightchaser_tests {
             watchtower.take_feedback(Feedback {
                 positive_feedbacks: vec![],
                 negative_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
-                all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
+                all_exposed_detectors: HashMap::from([(
+                    IssueDetectorNamePool::CentralizationRisk.to_string(),
+                    IssueSeverity::Medium.to_string(),
+                )]),
             });
         }
 
@@ -642,7 +683,10 @@ mod lightchaser_tests {
         watchtower.take_feedback(Feedback {
             positive_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
             negative_feedbacks: vec![],
-            all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: HashMap::from([(
+                IssueDetectorNamePool::CentralizationRisk.to_string(),
+                IssueSeverity::Medium.to_string(),
+            )]),
         });
         assert!(current_metrics.lc_accuracy() == 0);
     }
