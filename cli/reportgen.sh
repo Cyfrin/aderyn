@@ -32,4 +32,4 @@ cargo run --bin bot_example -- -p orig_
 #### Other scripts #############
 
 cli/bot_archivegen.sh
-# cli/sample_metricsdbgen.sh sample.metrics_db.json
+cli/sample_metricsdbgen.sh sample_db.json
