@@ -219,6 +219,12 @@ jobs:
           command: test
           args: --manifest-path ./bot_ci_cd/Cargo.toml
 
+      - name: Generate judge.md for the bot
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+          args: --manifest-path ./bot_ci_cd/Cargo.toml -- generate-report-for-judge foundry_workspace/ the_report.judge.md
+
 
   # judgeops:
   
