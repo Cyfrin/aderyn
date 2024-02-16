@@ -220,33 +220,33 @@ jobs:
           args: --manifest-path ./bot_ci_cd/Cargo.toml
 
 
-  # judgeops:
+  judgeops:
   
-  #   name: Check metrics changes with feedback consistently
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout sources
-  #       uses: actions/checkout@v2
+    name: Check metrics changes with feedback consistently
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
 
-  #     - name: Install stable toolchain
-  #       uses: actions-rs/toolchain@v1
-  #       with:
-  #         profile: minimal
-  #         toolchain: stable
-  #         override: true
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
 
-  #     - name: Rename sample.metrics_db.json to sample_renamed.metrics_db.json
-  #       run: |
-  #         mv sample.metrics_db.json sample_renamed.metrics_db.json
+      - name: Rename sample_db.json to sample_renamed.metrics_db.json
+        run: |
+          mv sample_db.json sample_renamed.metrics_db.json
 
-  #     - name: Generate sample.metrics_db.json
-  #       run: |
-  #         cli/sample_metricsdbgen.sh sample.metrics_db.json
+      - name: Generate sample_db.json
+        run: |
+          cli/sample_metricsdbgen.sh sample_db.json
 
-  #     - name: Check sample.metrics_db.json vs sample_renamed.metrics_db.json
-  #       run: |
-  #         cat sample.metrics_db.json
-  #         diff sample_renamed.metrics_db.json sample.metrics_db.json
+      - name: Check sample_db.json vs sample_renamed.metrics_db.json
+        run: |
+          cat sample_db.json
+          diff sample_renamed.metrics_db.json sample_db.json
 
   lints:
     name: Lints
