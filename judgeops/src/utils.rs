@@ -126,8 +126,7 @@ pub(crate) fn register_unseen_detectors(
             markdown_content: std::fs::read_to_string(feedback_file).unwrap(),
         };
         // Key - name, value - severity
-        let detectors = extractor.used_detectors().expect("Corrupted judge report");
-        detectors
+        extractor.used_detectors().expect("Corrupted judge report")
     } else if file
         .file_name()
         .unwrap()
