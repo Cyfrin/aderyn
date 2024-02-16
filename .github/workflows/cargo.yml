@@ -219,10 +219,6 @@ jobs:
           command: test
           args: --manifest-path ./bot_ci_cd/Cargo.toml
 
-      - uses: actions/checkout@v3
-        with:
-          submodules: recursive
-
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
 
