@@ -258,7 +258,7 @@ jobs:
 
       - name: Check sample_db.json vs sample_db-workflow.json
         run: |
-          cat sample_db.json
+          cat judgeops/samples/sample_db.json
           diff judgeops/samples/sample_db.json judgeops/samples/sample_db-workflow.json
 
   lints:
