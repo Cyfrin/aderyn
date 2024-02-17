@@ -81,32 +81,6 @@ jobs:
           cat report-config-workflow.md
           diff report-config.md report-config-workflow.md
 
-      # Verify report.judge.md
-
-      - name: Generate report-workflow.judge.md
-        uses: actions-rs/cargo@v1
-        with:
-          command: run
-          args: -- -o report-workflow.judge.md ./tests/contract-playground/
-
-      - name: Check report.judge.md vs report-workflow.judge.md
-        run: |
-          cat report-workflow.judge.md
-          diff report.judge.md report-workflow.judge.md
-
-      # Verify report-config.judge.md
-
-      - name: Generate report-config-workflow.judge.md
-        uses: actions-rs/cargo@v1
-        with:
-          command: run
-          args: -- --config-file ./tests/aderyn.config.json -o report-config-workflow.judge.md ./tests/contract-playground/
-
-      - name: Check report-config.judge.md vs report-config-workflow.judge.md
-        run: |
-          cat report-config-workflow.judge.md
-          diff report-config.judge.md report-config-workflow.judge.md
-
       # Verify report.json 
 
       - name: Generate report-workflow.json
@@ -220,8 +194,47 @@ jobs:
           args: --manifest-path ./bot_ci_cd/Cargo.toml
 
 
-  judgeops:
+  judgeopsreports: 
   
+    name: Check judge.md report creation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+
+      # Verify report.judge.md
+      - name: Generate report-workflow.judge.md
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+          args: -- -o judgeops/current/report-workflow.judge.md ./tests/contract-playground/
+
+      - name: Check report.judge.md vs report-workflow.judge.md
+        run: |
+          cat judgeops/current/report-workflow.judge.md
+          diff judgeops/current/report.judge.md judgeops/current/report-workflow.judge.md
+
+      # Verify report-config.judge.md
+
+      - name: Generate report-config-workflow.judge.md
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+          args: -- --config-file ./tests/aderyn.config.json -o judgeops/current/report-config-workflow.judge.md ./tests/contract-playground/
+
+      - name: Check report-config.judge.md vs report-config-workflow.judge.md
+        run: |
+          cat judgeops/current/report-config-workflow.judge.md
+          diff judgeops/current/report-config.judge.md judgeops/current/report-config-workflow.judge.md
+
+  judgeops:
     name: Check metrics changes with feedback consistently
     runs-on: ubuntu-latest
     steps:
@@ -235,18 +248,18 @@ jobs:
           toolchain: stable
           override: true
 
-      - name: Rename sample_db.json to sample_renamed.metrics_db.json
+      - name: Rename sample_db.json to sample_db-workflow.json
         run: |
-          mv sample_db.json sample_renamed.metrics_db.json
+          mv judgeops/samples/sample_db.json judgeops/samples/sample_db-workflow.json
 
       - name: Generate sample_db.json
         run: |
-          cli/sample_metricsdbgen.sh sample_db.json
+          cli/sample_metricsdbgen.sh judgeops/samples/sample_db.json
 
-      - name: Check sample_db.json vs sample_renamed.metrics_db.json
+      - name: Check sample_db.json vs sample_db-workflow.json
         run: |
-          cat sample_db.json
-          diff sample_renamed.metrics_db.json sample_db.json
+          cat judgeops/samples/sample_db.json
+          diff judgeops/samples/sample_db.json judgeops/samples/sample_db-workflow.json
 
   lints:
     name: Lints

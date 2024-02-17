@@ -42,5 +42,5 @@
     }
   },
   "tags": {},
-  "db_path": "sample_db.json"
+  "db_path": "judgeops/samples/sample_db.json"
 }

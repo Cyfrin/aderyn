@@ -124,7 +124,7 @@ When calling `delegatecall` the same `msg.value` amount will be accredited multi
 
 ### Responsible : delegate-call-in-loop
 
-- Found in src/inheritance/ExtendedInheritance.sol [Line: 16](tests/contract-playground/src/inheritance/ExtendedInheritance.sol#L16)
+- Found in src/inheritance/ExtendedInheritance.sol [Line: 16](../../tests/contract-playground/src/inheritance/ExtendedInheritance.sol#L16)
 
 	```solidity
 	            target.delegatecall(abi.encodeWithSignature("doSomething(uint256)", i));
@@ -138,37 +138,37 @@ Passing an arbitrary `from` address to `transferFrom` (or `safeTransferFrom`) ca
 
 ### Responsible : arbitrary-transfer-from
 
-- Found in src/ArbitraryTransferFrom.sol [Line: 16](tests/contract-playground/src/ArbitraryTransferFrom.sol#L16)
+- Found in src/ArbitraryTransferFrom.sol [Line: 16](../../tests/contract-playground/src/ArbitraryTransferFrom.sol#L16)
 
 	```solidity
 	        s_token.transferFrom(from, to, amount);
 	```
 
-- Found in src/ArbitraryTransferFrom.sol [Line: 20](tests/contract-playground/src/ArbitraryTransferFrom.sol#L20)
+- Found in src/ArbitraryTransferFrom.sol [Line: 20](../../tests/contract-playground/src/ArbitraryTransferFrom.sol#L20)
 
 	```solidity
 	        s_token.safeTransferFrom(from, to, amount);
 	```
 
-- Found in src/ArbitraryTransferFrom.sol [Line: 24](tests/contract-playground/src/ArbitraryTransferFrom.sol#L24)
+- Found in src/ArbitraryTransferFrom.sol [Line: 24](../../tests/contract-playground/src/ArbitraryTransferFrom.sol#L24)
 
 	```solidity
 	        SafeERC20.safeTransferFrom(s_token, from, to, amount);
 	```
 
-- Found in src/ArbitraryTransferFrom.sol [Line: 30](tests/contract-playground/src/ArbitraryTransferFrom.sol#L30)
+- Found in src/ArbitraryTransferFrom.sol [Line: 30](../../tests/contract-playground/src/ArbitraryTransferFrom.sol#L30)
 
 	```solidity
 	        s_token.transferFrom(from_msgsender, to, am);
 	```
 
-- Found in src/DeprecatedOZFunctions.sol [Line: 17](tests/contract-playground/src/DeprecatedOZFunctions.sol#L17)
+- Found in src/DeprecatedOZFunctions.sol [Line: 17](../../tests/contract-playground/src/DeprecatedOZFunctions.sol#L17)
 
 	```solidity
 	        token.safeTransferFrom(from, to, value);
 	```
 
-- Found in src/DeprecatedOZFunctions.sol [Line: 47](tests/contract-playground/src/DeprecatedOZFunctions.sol#L47)
+- Found in src/DeprecatedOZFunctions.sol [Line: 47](../../tests/contract-playground/src/DeprecatedOZFunctions.sol#L47)
 
 	```solidity
 	        token.transferFrom(from, to, value);
@@ -184,25 +184,25 @@ Contracts have owners with privileged rights to perform admin tasks and need to 
 
 ### Responsible : centralization-risk
 
-- Found in src/AdminContract.sol [Line: 7](tests/contract-playground/src/AdminContract.sol#L7)
+- Found in src/AdminContract.sol [Line: 7](../../tests/contract-playground/src/AdminContract.sol#L7)
 
 	```solidity
 	contract AdminContract is Ownable, ReentrancyGuard {
 	```
 
-- Found in src/AdminContract.sol [Line: 10](tests/contract-playground/src/AdminContract.sol#L10)
+- Found in src/AdminContract.sol [Line: 10](../../tests/contract-playground/src/AdminContract.sol#L10)
 
 	```solidity
 	    function setOwner(address _owner) external onlyOwner nonReentrant {
 	```
 
-- Found in src/AdminContract.sol [Line: 14](tests/contract-playground/src/AdminContract.sol#L14)
+- Found in src/AdminContract.sol [Line: 14](../../tests/contract-playground/src/AdminContract.sol#L14)
 
 	```solidity
 	    function someOtherImportantThing() external nonReentrant onlyOwner {
 	```
 
-- Found in src/DeprecatedOZFunctions.sol [Line: 7](tests/contract-playground/src/DeprecatedOZFunctions.sol#L7)
+- Found in src/DeprecatedOZFunctions.sol [Line: 7](../../tests/contract-playground/src/DeprecatedOZFunctions.sol#L7)
 
 	```solidity
 	contract DeprecatedOZFunctions is AccessControl {
@@ -219,7 +219,7 @@ https://github.com/transmissions11/solmate/blob/main/src/utils/SafeTransferLib.s
 
 ### Responsible : solmate-safe-transfer-lib
 
-- Found in src/T11sTranferer.sol [Line: 4](tests/contract-playground/src/T11sTranferer.sol#L4)
+- Found in src/T11sTranferer.sol [Line: 4](../../tests/contract-playground/src/T11sTranferer.sol#L4)
 
 	```solidity
 	import {ERC20, SafeTransferLib} from "../lib/solmate/src/utils/SafeTransferLib.sol";
@@ -233,103 +233,103 @@ In the PoS model, proposers know well in advance if they will propose one or con
 
 ### Responsible : block-timestamp-deadline
 
-- Found in src/uniswap/UniswapV2Swapper.sol [Line: 23](tests/contract-playground/src/uniswap/UniswapV2Swapper.sol#L23)
+- Found in src/uniswap/UniswapV2Swapper.sol [Line: 23](../../tests/contract-playground/src/uniswap/UniswapV2Swapper.sol#L23)
 
 	```solidity
 	        router1.swapExactTokensForTokens(amountIn, amountOutMin, path, to, block.timestamp);
 	```
 
-- Found in src/uniswap/UniswapV2Swapper.sol [Line: 24](tests/contract-playground/src/uniswap/UniswapV2Swapper.sol#L24)
+- Found in src/uniswap/UniswapV2Swapper.sol [Line: 24](../../tests/contract-playground/src/uniswap/UniswapV2Swapper.sol#L24)
 
 	```solidity
 	        router1.swapTokensForExactTokens(amountOut, amountInMax, path, to, block.timestamp);
 	```
 
-- Found in src/uniswap/UniswapV2Swapper.sol [Line: 25](tests/contract-playground/src/uniswap/UniswapV2Swapper.sol#L25)
+- Found in src/uniswap/UniswapV2Swapper.sol [Line: 25](../../tests/contract-playground/src/uniswap/UniswapV2Swapper.sol#L25)
 
 	```solidity
 	        router1.swapExactETHForTokens(amountOutMin, path, to, block.timestamp);
 	```
 
-- Found in src/uniswap/UniswapV2Swapper.sol [Line: 26](tests/contract-playground/src/uniswap/UniswapV2Swapper.sol#L26)
+- Found in src/uniswap/UniswapV2Swapper.sol [Line: 26](../../tests/contract-playground/src/uniswap/UniswapV2Swapper.sol#L26)
 
 	```solidity
 	        router1.swapTokensForExactETH(amountOut, amountInMax, path, to, block.timestamp);
 	```
 
-- Found in src/uniswap/UniswapV2Swapper.sol [Line: 27](tests/contract-playground/src/uniswap/UniswapV2Swapper.sol#L27)
+- Found in src/uniswap/UniswapV2Swapper.sol [Line: 27](../../tests/contract-playground/src/uniswap/UniswapV2Swapper.sol#L27)
 
 	```solidity
 	        router1.swapExactTokensForETH(amountIn, amountOutMin, path, to, block.timestamp);
 	```
 
-- Found in src/uniswap/UniswapV2Swapper.sol [Line: 28](tests/contract-playground/src/uniswap/UniswapV2Swapper.sol#L28)
+- Found in src/uniswap/UniswapV2Swapper.sol [Line: 28](../../tests/contract-playground/src/uniswap/UniswapV2Swapper.sol#L28)
 
 	```solidity
 	        router1.swapETHForExactTokens(amountOut, path, to, block.timestamp);
 	```
 
-- Found in src/uniswap/UniswapV2Swapper.sol [Line: 31](tests/contract-playground/src/uniswap/UniswapV2Swapper.sol#L31)
+- Found in src/uniswap/UniswapV2Swapper.sol [Line: 31](../../tests/contract-playground/src/uniswap/UniswapV2Swapper.sol#L31)
 
 	```solidity
 	        router2.swapExactTokensForTokensSupportingFeeOnTransferTokens(amountIn, amountOutMin, path, to, block.timestamp);
 	```
 
-- Found in src/uniswap/UniswapV2Swapper.sol [Line: 32](tests/contract-playground/src/uniswap/UniswapV2Swapper.sol#L32)
+- Found in src/uniswap/UniswapV2Swapper.sol [Line: 32](../../tests/contract-playground/src/uniswap/UniswapV2Swapper.sol#L32)
 
 	```solidity
 	        router2.swapExactETHForTokensSupportingFeeOnTransferTokens(amountOutMin, path, to, block.timestamp);
 	```
 
-- Found in src/uniswap/UniswapV2Swapper.sol [Line: 33](tests/contract-playground/src/uniswap/UniswapV2Swapper.sol#L33)
+- Found in src/uniswap/UniswapV2Swapper.sol [Line: 33](../../tests/contract-playground/src/uniswap/UniswapV2Swapper.sol#L33)
 
 	```solidity
 	        router2.swapExactTokensForETHSupportingFeeOnTransferTokens(amountIn, amountOutMin, path, to, block.timestamp);
 	```
 
-- Found in src/uniswap/UniswapV3Swapper.sol [Line: 52](tests/contract-playground/src/uniswap/UniswapV3Swapper.sol#L52)
+- Found in src/uniswap/UniswapV3Swapper.sol [Line: 52](../../tests/contract-playground/src/uniswap/UniswapV3Swapper.sol#L52)
 
 	```solidity
 	        ExactInputSingleParams memory exactInputSingleParams = ExactInputSingleParams(
 	```
 
-- Found in src/uniswap/UniswapV3Swapper.sol [Line: 55](tests/contract-playground/src/uniswap/UniswapV3Swapper.sol#L55)
+- Found in src/uniswap/UniswapV3Swapper.sol [Line: 55](../../tests/contract-playground/src/uniswap/UniswapV3Swapper.sol#L55)
 
 	```solidity
 	        exactInputSingleParams = ExactInputSingleParams({
 	```
 
-- Found in src/uniswap/UniswapV3Swapper.sol [Line: 66](tests/contract-playground/src/uniswap/UniswapV3Swapper.sol#L66)
+- Found in src/uniswap/UniswapV3Swapper.sol [Line: 66](../../tests/contract-playground/src/uniswap/UniswapV3Swapper.sol#L66)
 
 	```solidity
 	        ExactInputParams memory exactInputParams = ExactInputParams(
 	```
 
-- Found in src/uniswap/UniswapV3Swapper.sol [Line: 69](tests/contract-playground/src/uniswap/UniswapV3Swapper.sol#L69)
+- Found in src/uniswap/UniswapV3Swapper.sol [Line: 69](../../tests/contract-playground/src/uniswap/UniswapV3Swapper.sol#L69)
 
 	```solidity
 	        exactInputParams = ExactInputParams({
 	```
 
-- Found in src/uniswap/UniswapV3Swapper.sol [Line: 77](tests/contract-playground/src/uniswap/UniswapV3Swapper.sol#L77)
+- Found in src/uniswap/UniswapV3Swapper.sol [Line: 77](../../tests/contract-playground/src/uniswap/UniswapV3Swapper.sol#L77)
 
 	```solidity
 	        ExactOutputSingleParams memory exactOutputSingleParams = ExactOutputSingleParams(
 	```
 
-- Found in src/uniswap/UniswapV3Swapper.sol [Line: 80](tests/contract-playground/src/uniswap/UniswapV3Swapper.sol#L80)
+- Found in src/uniswap/UniswapV3Swapper.sol [Line: 80](../../tests/contract-playground/src/uniswap/UniswapV3Swapper.sol#L80)
 
 	```solidity
 	        exactOutputSingleParams = ExactOutputSingleParams({
 	```
 
-- Found in src/uniswap/UniswapV3Swapper.sol [Line: 91](tests/contract-playground/src/uniswap/UniswapV3Swapper.sol#L91)
+- Found in src/uniswap/UniswapV3Swapper.sol [Line: 91](../../tests/contract-playground/src/uniswap/UniswapV3Swapper.sol#L91)
 
 	```solidity
 	        ExactOutputParams memory exactOutputParams = ExactOutputParams(
 	```
 
-- Found in src/uniswap/UniswapV3Swapper.sol [Line: 94](tests/contract-playground/src/uniswap/UniswapV3Swapper.sol#L94)
+- Found in src/uniswap/UniswapV3Swapper.sol [Line: 94](../../tests/contract-playground/src/uniswap/UniswapV3Swapper.sol#L94)
 
 	```solidity
 	        exactOutputParams = ExactOutputParams({
@@ -343,7 +343,7 @@ Using `ERC721::_mint()` can mint ERC721 tokens to addresses which don't support 
 
 ### Responsible : unsafe-oz-erc721-mint
 
-- Found in src/UnsafeERC721Mint.sol [Line: 10](tests/contract-playground/src/UnsafeERC721Mint.sol#L10)
+- Found in src/UnsafeERC721Mint.sol [Line: 10](../../tests/contract-playground/src/UnsafeERC721Mint.sol#L10)
 
 	```solidity
 	        _mint(to, tokenId);
@@ -360,19 +360,19 @@ If all arguments are strings and or bytes, `bytes.concat()` should be used inste
 
 ### Responsible : avoid-abi-encode-packed
 
-- Found in src/KeccakContract.sol [Line: 18](tests/contract-playground/src/KeccakContract.sol#L18)
+- Found in src/KeccakContract.sol [Line: 18](../../tests/contract-playground/src/KeccakContract.sol#L18)
 
 	```solidity
 	        return keccak256(abi.encodePacked(a, b));
 	```
 
-- Found in src/KeccakContract.sol [Line: 22](tests/contract-playground/src/KeccakContract.sol#L22)
+- Found in src/KeccakContract.sol [Line: 22](../../tests/contract-playground/src/KeccakContract.sol#L22)
 
 	```solidity
 	        return keccak256(abi.encodePacked(a, b));
 	```
 
-- Found in src/KeccakContract.sol [Line: 26](tests/contract-playground/src/KeccakContract.sol#L26)
+- Found in src/KeccakContract.sol [Line: 26](../../tests/contract-playground/src/KeccakContract.sol#L26)
 
 	```solidity
 	        return keccak256(abi.encodePacked(a, b));
@@ -386,7 +386,7 @@ The `ecrecover` function is susceptible to signature malleability. This means th
 
 ### Responsible : ecrecover
 
-- Found in src/inheritance/ExtendedInheritance.sol [Line: 21](tests/contract-playground/src/inheritance/ExtendedInheritance.sol#L21)
+- Found in src/inheritance/ExtendedInheritance.sol [Line: 21](../../tests/contract-playground/src/inheritance/ExtendedInheritance.sol#L21)
 
 	```solidity
 	        return ecrecover(theHash, v, r, s);
@@ -400,13 +400,13 @@ Openzeppelin has deprecated several functions and replaced with newer versions. 
 
 ### Responsible : deprecated-oz-functions
 
-- Found in src/DeprecatedOZFunctions.sol [Line: 22](tests/contract-playground/src/DeprecatedOZFunctions.sol#L22)
+- Found in src/DeprecatedOZFunctions.sol [Line: 22](../../tests/contract-playground/src/DeprecatedOZFunctions.sol#L22)
 
 	```solidity
 	        _setupRole(role, account);
 	```
 
-- Found in src/DeprecatedOZFunctions.sol [Line: 27](tests/contract-playground/src/DeprecatedOZFunctions.sol#L27)
+- Found in src/DeprecatedOZFunctions.sol [Line: 27](../../tests/contract-playground/src/DeprecatedOZFunctions.sol#L27)
 
 	```solidity
 	        token.safeApprove(spender, value);
@@ -420,49 +420,49 @@ ERC20 functions may not behave as expected. For example: return values are not a
 
 ### Responsible : unsafe-erc20-functions
 
-- Found in src/ArbitraryTransferFrom.sol [Line: 16](tests/contract-playground/src/ArbitraryTransferFrom.sol#L16)
+- Found in src/ArbitraryTransferFrom.sol [Line: 16](../../tests/contract-playground/src/ArbitraryTransferFrom.sol#L16)
 
 	```solidity
 	        s_token.transferFrom(from, to, amount);
 	```
 
-- Found in src/ArbitraryTransferFrom.sol [Line: 30](tests/contract-playground/src/ArbitraryTransferFrom.sol#L30)
+- Found in src/ArbitraryTransferFrom.sol [Line: 30](../../tests/contract-playground/src/ArbitraryTransferFrom.sol#L30)
 
 	```solidity
 	        s_token.transferFrom(from_msgsender, to, am);
 	```
 
-- Found in src/ArbitraryTransferFrom.sol [Line: 50](tests/contract-playground/src/ArbitraryTransferFrom.sol#L50)
+- Found in src/ArbitraryTransferFrom.sol [Line: 50](../../tests/contract-playground/src/ArbitraryTransferFrom.sol#L50)
 
 	```solidity
 	        s_token.transferFrom(msg.sender, to, amount);
 	```
 
-- Found in src/DeprecatedOZFunctions.sol [Line: 32](tests/contract-playground/src/DeprecatedOZFunctions.sol#L32)
+- Found in src/DeprecatedOZFunctions.sol [Line: 32](../../tests/contract-playground/src/DeprecatedOZFunctions.sol#L32)
 
 	```solidity
 	        token.approve(spender, value);
 	```
 
-- Found in src/DeprecatedOZFunctions.sol [Line: 37](tests/contract-playground/src/DeprecatedOZFunctions.sol#L37)
+- Found in src/DeprecatedOZFunctions.sol [Line: 37](../../tests/contract-playground/src/DeprecatedOZFunctions.sol#L37)
 
 	```solidity
 	        require(token.approve(spender, value));
 	```
 
-- Found in src/DeprecatedOZFunctions.sol [Line: 38](tests/contract-playground/src/DeprecatedOZFunctions.sol#L38)
+- Found in src/DeprecatedOZFunctions.sol [Line: 38](../../tests/contract-playground/src/DeprecatedOZFunctions.sol#L38)
 
 	```solidity
 	        success = token.approve(spender, value);
 	```
 
-- Found in src/DeprecatedOZFunctions.sol [Line: 42](tests/contract-playground/src/DeprecatedOZFunctions.sol#L42)
+- Found in src/DeprecatedOZFunctions.sol [Line: 42](../../tests/contract-playground/src/DeprecatedOZFunctions.sol#L42)
 
 	```solidity
 	        return token.approve(spender, value);
 	```
 
-- Found in src/DeprecatedOZFunctions.sol [Line: 47](tests/contract-playground/src/DeprecatedOZFunctions.sol#L47)
+- Found in src/DeprecatedOZFunctions.sol [Line: 47](../../tests/contract-playground/src/DeprecatedOZFunctions.sol#L47)
 
 	```solidity
 	        token.transferFrom(from, to, value);
@@ -476,37 +476,37 @@ Consider using a specific version of Solidity in your contracts instead of a wid
 
 ### Responsible : unspecific-solidity-pragma
 
-- Found in src/Counter.sol [Line: 2](tests/contract-playground/src/Counter.sol#L2)
+- Found in src/Counter.sol [Line: 2](../../tests/contract-playground/src/Counter.sol#L2)
 
 	```solidity
 	pragma solidity ^0.8.13;
 	```
 
-- Found in src/CrazyPragma.sol [Line: 2](tests/contract-playground/src/CrazyPragma.sol#L2)
+- Found in src/CrazyPragma.sol [Line: 2](../../tests/contract-playground/src/CrazyPragma.sol#L2)
 
 	```solidity
 	pragma solidity >=0.8.19 <0.9.1;
 	```
 
-- Found in src/cloc/AnotherHeavilyCommentedContract.sol [Line: 6](tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol#L6)
+- Found in src/cloc/AnotherHeavilyCommentedContract.sol [Line: 6](../../tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol#L6)
 
 	```solidity
 	pragma solidity ^0.8.18;
 	```
 
-- Found in src/cloc/HeavilyCommentedContract.sol [Line: 6](tests/contract-playground/src/cloc/HeavilyCommentedContract.sol#L6)
+- Found in src/cloc/HeavilyCommentedContract.sol [Line: 6](../../tests/contract-playground/src/cloc/HeavilyCommentedContract.sol#L6)
 
 	```solidity
 	pragma solidity >=0.4.22 <0.6.0; 
 	```
 
-- Found in src/inheritance/IContractInheritance.sol [Line: 2](tests/contract-playground/src/inheritance/IContractInheritance.sol#L2)
+- Found in src/inheritance/IContractInheritance.sol [Line: 2](../../tests/contract-playground/src/inheritance/IContractInheritance.sol#L2)
 
 	```solidity
 	pragma solidity >=0.8.0;
 	```
 
-- Found in src/inheritance/InheritanceBase.sol [Line: 2](tests/contract-playground/src/inheritance/InheritanceBase.sol#L2)
+- Found in src/inheritance/InheritanceBase.sol [Line: 2](../../tests/contract-playground/src/inheritance/InheritanceBase.sol#L2)
 
 	```solidity
 	pragma solidity ^0.8.0;
@@ -520,91 +520,91 @@ Solc compiler version 0.8.20 switches the default target EVM version to Shanghai
 
 ### Responsible : push-zero-opcode
 
-- Found in src/AdminContract.sol [Line: 2](tests/contract-playground/src/AdminContract.sol#L2)
+- Found in src/AdminContract.sol [Line: 2](../../tests/contract-playground/src/AdminContract.sol#L2)
 
 	```solidity
 	pragma solidity 0.8.20;
 	```
 
-- Found in src/Counter.sol [Line: 2](tests/contract-playground/src/Counter.sol#L2)
+- Found in src/Counter.sol [Line: 2](../../tests/contract-playground/src/Counter.sol#L2)
 
 	```solidity
 	pragma solidity ^0.8.13;
 	```
 
-- Found in src/CrazyPragma.sol [Line: 2](tests/contract-playground/src/CrazyPragma.sol#L2)
+- Found in src/CrazyPragma.sol [Line: 2](../../tests/contract-playground/src/CrazyPragma.sol#L2)
 
 	```solidity
 	pragma solidity >=0.8.19 <0.9.1;
 	```
 
-- Found in src/DeprecatedOZFunctions.sol [Line: 2](tests/contract-playground/src/DeprecatedOZFunctions.sol#L2)
+- Found in src/DeprecatedOZFunctions.sol [Line: 2](../../tests/contract-playground/src/DeprecatedOZFunctions.sol#L2)
 
 	```solidity
 	pragma solidity 0.8.20;
 	```
 
-- Found in src/KeccakContract.sol [Line: 2](tests/contract-playground/src/KeccakContract.sol#L2)
+- Found in src/KeccakContract.sol [Line: 2](../../tests/contract-playground/src/KeccakContract.sol#L2)
 
 	```solidity
 	pragma solidity 0.8.20;
 	```
 
-- Found in src/StateVariables.sol [Line: 2](tests/contract-playground/src/StateVariables.sol#L2)
+- Found in src/StateVariables.sol [Line: 2](../../tests/contract-playground/src/StateVariables.sol#L2)
 
 	```solidity
 	pragma solidity 0.8.20;
 	```
 
-- Found in src/StorageConditionals.sol [Line: 2](tests/contract-playground/src/StorageConditionals.sol#L2)
+- Found in src/StorageConditionals.sol [Line: 2](../../tests/contract-playground/src/StorageConditionals.sol#L2)
 
 	```solidity
 	pragma solidity 0.8.20;
 	```
 
-- Found in src/T11sTranferer.sol [Line: 2](tests/contract-playground/src/T11sTranferer.sol#L2)
+- Found in src/T11sTranferer.sol [Line: 2](../../tests/contract-playground/src/T11sTranferer.sol#L2)
 
 	```solidity
 	pragma solidity 0.8.20;
 	```
 
-- Found in src/UnsafeERC721Mint.sol [Line: 2](tests/contract-playground/src/UnsafeERC721Mint.sol#L2)
+- Found in src/UnsafeERC721Mint.sol [Line: 2](../../tests/contract-playground/src/UnsafeERC721Mint.sol#L2)
 
 	```solidity
 	pragma solidity 0.8.20;
 	```
 
-- Found in src/cloc/AnotherHeavilyCommentedContract.sol [Line: 6](tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol#L6)
+- Found in src/cloc/AnotherHeavilyCommentedContract.sol [Line: 6](../../tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol#L6)
 
 	```solidity
 	pragma solidity ^0.8.18;
 	```
 
-- Found in src/inheritance/ExtendedInheritance.sol [Line: 2](tests/contract-playground/src/inheritance/ExtendedInheritance.sol#L2)
+- Found in src/inheritance/ExtendedInheritance.sol [Line: 2](../../tests/contract-playground/src/inheritance/ExtendedInheritance.sol#L2)
 
 	```solidity
 	pragma solidity 0.8.20;
 	```
 
-- Found in src/inheritance/IContractInheritance.sol [Line: 2](tests/contract-playground/src/inheritance/IContractInheritance.sol#L2)
+- Found in src/inheritance/IContractInheritance.sol [Line: 2](../../tests/contract-playground/src/inheritance/IContractInheritance.sol#L2)
 
 	```solidity
 	pragma solidity >=0.8.0;
 	```
 
-- Found in src/inheritance/InheritanceBase.sol [Line: 2](tests/contract-playground/src/inheritance/InheritanceBase.sol#L2)
+- Found in src/inheritance/InheritanceBase.sol [Line: 2](../../tests/contract-playground/src/inheritance/InheritanceBase.sol#L2)
 
 	```solidity
 	pragma solidity ^0.8.0;
 	```
 
-- Found in src/uniswap/UniswapV2Swapper.sol [Line: 2](tests/contract-playground/src/uniswap/UniswapV2Swapper.sol#L2)
+- Found in src/uniswap/UniswapV2Swapper.sol [Line: 2](../../tests/contract-playground/src/uniswap/UniswapV2Swapper.sol#L2)
 
 	```solidity
 	pragma solidity 0.8.20;
 	```
 
-- Found in src/uniswap/UniswapV3Swapper.sol [Line: 2](tests/contract-playground/src/uniswap/UniswapV3Swapper.sol#L2)
+- Found in src/uniswap/UniswapV3Swapper.sol [Line: 2](../../tests/contract-playground/src/uniswap/UniswapV3Swapper.sol#L2)
 
 	```solidity
 	pragma solidity 0.8.20;
@@ -620,19 +620,19 @@ Assigning values to address state variables without checking for `address(0)`.
 
 ### Responsible : zero-address-check
 
-- Found in src/ArbitraryTransferFrom.sol [Line: 12](tests/contract-playground/src/ArbitraryTransferFrom.sol#L12)
+- Found in src/ArbitraryTransferFrom.sol [Line: 12](../../tests/contract-playground/src/ArbitraryTransferFrom.sol#L12)
 
 	```solidity
 	        s_token = token;
 	```
 
-- Found in src/StateVariables.sol [Line: 58](tests/contract-playground/src/StateVariables.sol#L58)
+- Found in src/StateVariables.sol [Line: 58](../../tests/contract-playground/src/StateVariables.sol#L58)
 
 	```solidity
 	        addr = newAddr;
 	```
 
-- Found in src/uniswap/UniswapV2Swapper.sol [Line: 11](tests/contract-playground/src/uniswap/UniswapV2Swapper.sol#L11)
+- Found in src/uniswap/UniswapV2Swapper.sol [Line: 11](../../tests/contract-playground/src/uniswap/UniswapV2Swapper.sol#L11)
 
 	```solidity
 	        s_router = router;
@@ -646,79 +646,79 @@ Assigning values to address state variables without checking for `address(0)`.
 
 ### Responsible : useless-public-function
 
-- Found in src/ArbitraryTransferFrom.sol [Line: 28](tests/contract-playground/src/ArbitraryTransferFrom.sol#L28)
+- Found in src/ArbitraryTransferFrom.sol [Line: 28](../../tests/contract-playground/src/ArbitraryTransferFrom.sol#L28)
 
 	```solidity
 	    function good1(address to, uint256 am) public {
 	```
 
-- Found in src/AssemblyExample.sol [Line: 6](tests/contract-playground/src/AssemblyExample.sol#L6)
+- Found in src/AssemblyExample.sol [Line: 6](../../tests/contract-playground/src/AssemblyExample.sol#L6)
 
 	```solidity
 	    function f(uint x) public view returns (uint r) {
 	```
 
-- Found in src/Counter.sol [Line: 7](tests/contract-playground/src/Counter.sol#L7)
+- Found in src/Counter.sol [Line: 7](../../tests/contract-playground/src/Counter.sol#L7)
 
 	```solidity
 	    function setNumber(uint256 newNumber) public {
 	```
 
-- Found in src/StateVariables.sol [Line: 47](tests/contract-playground/src/StateVariables.sol#L47)
+- Found in src/StateVariables.sol [Line: 47](../../tests/contract-playground/src/StateVariables.sol#L47)
 
 	```solidity
 	    function setAddrNoZeroError(address newAddr) public {
 	```
 
-- Found in src/StateVariables.sol [Line: 52](tests/contract-playground/src/StateVariables.sol#L52)
+- Found in src/StateVariables.sol [Line: 52](../../tests/contract-playground/src/StateVariables.sol#L52)
 
 	```solidity
 	    function setAddrNoZeroRequire(address newAddr) public {
 	```
 
-- Found in src/StateVariables.sol [Line: 57](tests/contract-playground/src/StateVariables.sol#L57)
+- Found in src/StateVariables.sol [Line: 57](../../tests/contract-playground/src/StateVariables.sol#L57)
 
 	```solidity
 	    function setAddrNoCheck(address newAddr) public {
 	```
 
-- Found in src/StateVariables.sol [Line: 61](tests/contract-playground/src/StateVariables.sol#L61)
+- Found in src/StateVariables.sol [Line: 61](../../tests/contract-playground/src/StateVariables.sol#L61)
 
 	```solidity
 	    function setEmptyAlteredNumbers(
 	```
 
-- Found in src/StateVariables.sol [Line: 71](tests/contract-playground/src/StateVariables.sol#L71)
+- Found in src/StateVariables.sol [Line: 71](../../tests/contract-playground/src/StateVariables.sol#L71)
 
 	```solidity
 	    function setNonEmptyAlteredNumbers(
 	```
 
-- Found in src/cloc/AnotherHeavilyCommentedContract.sol [Line: 31](tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol#L31)
+- Found in src/cloc/AnotherHeavilyCommentedContract.sol [Line: 31](../../tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol#L31)
 
 	```solidity
 	    function foo(address bar) public pure {
 	```
 
-- Found in src/cloc/AnotherHeavilyCommentedContract.sol [Line: 38](tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol#L38)
+- Found in src/cloc/AnotherHeavilyCommentedContract.sol [Line: 38](../../tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol#L38)
 
 	```solidity
 	    function emoji() public pure {
 	```
 
-- Found in src/cloc/AnotherHeavilyCommentedContract.sol [Line: 42](tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol#L42)
+- Found in src/cloc/AnotherHeavilyCommentedContract.sol [Line: 42](../../tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol#L42)
 
 	```solidity
 	    function foo2(address bar) public pure {
 	```
 
-- Found in src/cloc/HeavilyCommentedContract.sol [Line: 31](tests/contract-playground/src/cloc/HeavilyCommentedContract.sol#L31)
+- Found in src/cloc/HeavilyCommentedContract.sol [Line: 31](../../tests/contract-playground/src/cloc/HeavilyCommentedContract.sol#L31)
 
 	```solidity
 	    function foo(address bar) public pure {
 	```
 
-- Found in src/cloc/HeavilyCommentedContract.sol [Line: 38](tests/contract-playground/src/cloc/HeavilyCommentedContract.sol#L38)
+- Found in src/cloc/HeavilyCommentedContract.sol [Line: 38](../../tests/contract-playground/src/cloc/HeavilyCommentedContract.sol#L38)
 
 	```solidity
 	    function foo2(address bar) public pure {
@@ -732,157 +732,157 @@ Assigning values to address state variables without checking for `address(0)`.
 
 ### Responsible : constants-instead-of-literals
 
-- Found in src/Counter.sol [Line: 23](tests/contract-playground/src/Counter.sol#L23)
+- Found in src/Counter.sol [Line: 23](../../tests/contract-playground/src/Counter.sol#L23)
 
 	```solidity
 	        number += 2;
 	```
 
-- Found in src/cloc/HeavilyCommentedContract.sol [Line: 40](tests/contract-playground/src/cloc/HeavilyCommentedContract.sol#L40)
+- Found in src/cloc/HeavilyCommentedContract.sol [Line: 40](../../tests/contract-playground/src/cloc/HeavilyCommentedContract.sol#L40)
 
 	```solidity
 	        string memory simple2 = "/* this is not \" /*a comment */";/* this is a comment */ uint256 m_6 = 0; /* this is another comment*/ uint256 m_990909 = 89; string memory dd = "sdsgaf\
 	```
 
-- Found in src/eth2/DepositContract.sol [Line: 70](tests/contract-playground/src/eth2/DepositContract.sol#L70)
+- Found in src/eth2/DepositContract.sol [Line: 70](../../tests/contract-playground/src/eth2/DepositContract.sol#L70)
 
 	```solidity
 	        for (uint height = 0; height < DEPOSIT_CONTRACT_TREE_DEPTH - 1; height++)
 	```
 
-- Found in src/eth2/DepositContract.sol [Line: 71](tests/contract-playground/src/eth2/DepositContract.sol#L71)
+- Found in src/eth2/DepositContract.sol [Line: 71](../../tests/contract-playground/src/eth2/DepositContract.sol#L71)
 
 	```solidity
 	            zero_hashes[height + 1] = sha256(abi.encodePacked(zero_hashes[height], zero_hashes[height]));
 	```
 
-- Found in src/eth2/DepositContract.sol [Line: 78](tests/contract-playground/src/eth2/DepositContract.sol#L78)
+- Found in src/eth2/DepositContract.sol [Line: 78](../../tests/contract-playground/src/eth2/DepositContract.sol#L78)
 
 	```solidity
 	            if ((size & 1) == 1) node = sha256(abi.encodePacked(branch[height], node));
 	```
 
-- Found in src/eth2/DepositContract.sol [Line: 80](tests/contract-playground/src/eth2/DepositContract.sol#L80)
+- Found in src/eth2/DepositContract.sol [Line: 80](../../tests/contract-playground/src/eth2/DepositContract.sol#L80)
 
 	```solidity
 	            size /= 2;
 	```
 
-- Found in src/eth2/DepositContract.sol [Line: 96](tests/contract-playground/src/eth2/DepositContract.sol#L96)
+- Found in src/eth2/DepositContract.sol [Line: 96](../../tests/contract-playground/src/eth2/DepositContract.sol#L96)
 
 	```solidity
 	        require(pubkey.length == 48, "DepositContract: invalid pubkey length");
 	```
 
-- Found in src/eth2/DepositContract.sol [Line: 97](tests/contract-playground/src/eth2/DepositContract.sol#L97)
+- Found in src/eth2/DepositContract.sol [Line: 97](../../tests/contract-playground/src/eth2/DepositContract.sol#L97)
 
 	```solidity
 	        require(withdrawal_credentials.length == 32, "DepositContract: invalid withdrawal_credentials length");
 	```
 
-- Found in src/eth2/DepositContract.sol [Line: 98](tests/contract-playground/src/eth2/DepositContract.sol#L98)
+- Found in src/eth2/DepositContract.sol [Line: 98](../../tests/contract-playground/src/eth2/DepositContract.sol#L98)
 
 	```solidity
 	        require(signature.length == 96, "DepositContract: invalid signature length");
 	```
 
-- Found in src/eth2/DepositContract.sol [Line: 101](tests/contract-playground/src/eth2/DepositContract.sol#L101)
+- Found in src/eth2/DepositContract.sol [Line: 101](../../tests/contract-playground/src/eth2/DepositContract.sol#L101)
 
 	```solidity
 	        require(msg.value >= 1 ether, "DepositContract: deposit value too low");
 	```
 
-- Found in src/eth2/DepositContract.sol [Line: 102](tests/contract-playground/src/eth2/DepositContract.sol#L102)
+- Found in src/eth2/DepositContract.sol [Line: 102](../../tests/contract-playground/src/eth2/DepositContract.sol#L102)
 
 	```solidity
 	        require(msg.value % 1 gwei == 0, "DepositContract: deposit value not multiple of gwei");
 	```
 
-- Found in src/eth2/DepositContract.sol [Line: 103](tests/contract-playground/src/eth2/DepositContract.sol#L103)
+- Found in src/eth2/DepositContract.sol [Line: 103](../../tests/contract-playground/src/eth2/DepositContract.sol#L103)
 
 	```solidity
 	        uint deposit_amount = msg.value / 1 gwei;
 	```
 
-- Found in src/eth2/DepositContract.sol [Line: 113](tests/contract-playground/src/eth2/DepositContract.sol#L113)
+- Found in src/eth2/DepositContract.sol [Line: 113](../../tests/contract-playground/src/eth2/DepositContract.sol#L113)
 
 	```solidity
 	            abi.encodePacked(sha256(abi.encodePacked(signature[:64])), sha256(abi.encodePacked(signature[64:], bytes32(0))))
 	```
 
-- Found in src/eth2/DepositContract.sol [Line: 132](tests/contract-playground/src/eth2/DepositContract.sol#L132)
+- Found in src/eth2/DepositContract.sol [Line: 132](../../tests/contract-playground/src/eth2/DepositContract.sol#L132)
 
 	```solidity
 	        deposit_count += 1;
 	```
 
-- Found in src/eth2/DepositContract.sol [Line: 135](tests/contract-playground/src/eth2/DepositContract.sol#L135)
+- Found in src/eth2/DepositContract.sol [Line: 135](../../tests/contract-playground/src/eth2/DepositContract.sol#L135)
 
 	```solidity
 	            if ((size & 1) == 1) {
 	```
 
-- Found in src/eth2/DepositContract.sol [Line: 140](tests/contract-playground/src/eth2/DepositContract.sol#L140)
+- Found in src/eth2/DepositContract.sol [Line: 140](../../tests/contract-playground/src/eth2/DepositContract.sol#L140)
 
 	```solidity
 	            size /= 2;
 	```
 
-- Found in src/eth2/DepositContract.sol [Line: 152](tests/contract-playground/src/eth2/DepositContract.sol#L152)
+- Found in src/eth2/DepositContract.sol [Line: 152](../../tests/contract-playground/src/eth2/DepositContract.sol#L152)
 
 	```solidity
 	        ret = new bytes(8);
 	```
 
-- Found in src/eth2/DepositContract.sol [Line: 155](tests/contract-playground/src/eth2/DepositContract.sol#L155)
+- Found in src/eth2/DepositContract.sol [Line: 155](../../tests/contract-playground/src/eth2/DepositContract.sol#L155)
 
 	```solidity
 	        ret[0] = bytesValue[7];
 	```
 
-- Found in src/eth2/DepositContract.sol [Line: 156](tests/contract-playground/src/eth2/DepositContract.sol#L156)
+- Found in src/eth2/DepositContract.sol [Line: 156](../../tests/contract-playground/src/eth2/DepositContract.sol#L156)
 
 	```solidity
 	        ret[1] = bytesValue[6];
 	```
 
-- Found in src/eth2/DepositContract.sol [Line: 157](tests/contract-playground/src/eth2/DepositContract.sol#L157)
+- Found in src/eth2/DepositContract.sol [Line: 157](../../tests/contract-playground/src/eth2/DepositContract.sol#L157)
 
 	```solidity
 	        ret[2] = bytesValue[5];
 	```
 
-- Found in src/eth2/DepositContract.sol [Line: 158](tests/contract-playground/src/eth2/DepositContract.sol#L158)
+- Found in src/eth2/DepositContract.sol [Line: 158](../../tests/contract-playground/src/eth2/DepositContract.sol#L158)
 
 	```solidity
 	        ret[3] = bytesValue[4];
 	```
 
-- Found in src/eth2/DepositContract.sol [Line: 159](tests/contract-playground/src/eth2/DepositContract.sol#L159)
+- Found in src/eth2/DepositContract.sol [Line: 159](../../tests/contract-playground/src/eth2/DepositContract.sol#L159)
 
 	```solidity
 	        ret[4] = bytesValue[3];
 	```
 
-- Found in src/eth2/DepositContract.sol [Line: 160](tests/contract-playground/src/eth2/DepositContract.sol#L160)
+- Found in src/eth2/DepositContract.sol [Line: 160](../../tests/contract-playground/src/eth2/DepositContract.sol#L160)
 
 	```solidity
 	        ret[5] = bytesValue[2];
 	```
 
-- Found in src/eth2/DepositContract.sol [Line: 161](tests/contract-playground/src/eth2/DepositContract.sol#L161)
+- Found in src/eth2/DepositContract.sol [Line: 161](../../tests/contract-playground/src/eth2/DepositContract.sol#L161)
 
 	```solidity
 	        ret[6] = bytesValue[1];
 	```
 
-- Found in src/eth2/DepositContract.sol [Line: 162](tests/contract-playground/src/eth2/DepositContract.sol#L162)
+- Found in src/eth2/DepositContract.sol [Line: 162](../../tests/contract-playground/src/eth2/DepositContract.sol#L162)
 
 	```solidity
 	        ret[7] = bytesValue[0];
 	```
 
-- Found in src/inheritance/ExtendedInheritance.sol [Line: 15](tests/contract-playground/src/inheritance/ExtendedInheritance.sol#L15)
+- Found in src/inheritance/ExtendedInheritance.sol [Line: 15](../../tests/contract-playground/src/inheritance/ExtendedInheritance.sol#L15)
 
 	```solidity
 	        for (uint256 i = 0; i < 3; i++) {
@@ -896,19 +896,19 @@ Index event fields make the field more quickly accessible to off-chain tools tha
 
 ### Responsible : unindexed-events
 
-- Found in src/eth2/DepositContract.sol [Line: 19](tests/contract-playground/src/eth2/DepositContract.sol#L19)
+- Found in src/eth2/DepositContract.sol [Line: 19](../../tests/contract-playground/src/eth2/DepositContract.sol#L19)
 
 	```solidity
 	    event DepositEvent(bytes pubkey, bytes withdrawal_credentials, bytes amount, bytes signature, bytes index);
 	```
 
-- Found in src/inheritance/ExtendedInheritance.sol [Line: 7](tests/contract-playground/src/inheritance/ExtendedInheritance.sol#L7)
+- Found in src/inheritance/ExtendedInheritance.sol [Line: 7](../../tests/contract-playground/src/inheritance/ExtendedInheritance.sol#L7)
 
 	```solidity
 	    event DoSomethingElse(uint256 somethingElse);
 	```
 
-- Found in src/inheritance/InheritanceBase.sol [Line: 7](tests/contract-playground/src/inheritance/InheritanceBase.sol#L7)
+- Found in src/inheritance/InheritanceBase.sol [Line: 7](../../tests/contract-playground/src/inheritance/InheritanceBase.sol#L7)
 
 	```solidity
 	    event Do(uint256 something);
@@ -922,37 +922,37 @@ Index event fields make the field more quickly accessible to off-chain tools tha
 
 ### Responsible : require-with-string
 
-- Found in src/DeprecatedOZFunctions.sol [Line: 37](tests/contract-playground/src/DeprecatedOZFunctions.sol#L37)
+- Found in src/DeprecatedOZFunctions.sol [Line: 37](../../tests/contract-playground/src/DeprecatedOZFunctions.sol#L37)
 
 	```solidity
 	        require(token.approve(spender, value));
 	```
 
-- Found in src/DeprecatedOZFunctions.sol [Line: 40](tests/contract-playground/src/DeprecatedOZFunctions.sol#L40)
+- Found in src/DeprecatedOZFunctions.sol [Line: 40](../../tests/contract-playground/src/DeprecatedOZFunctions.sol#L40)
 
 	```solidity
 	            revert();
 	```
 
-- Found in src/cloc/AnotherHeavilyCommentedContract.sol [Line: 35](tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol#L35)
+- Found in src/cloc/AnotherHeavilyCommentedContract.sol [Line: 35](../../tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol#L35)
 
 	```solidity
 	        require(bar != address(0));
 	```
 
-- Found in src/cloc/AnotherHeavilyCommentedContract.sol [Line: 56](tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol#L56)
+- Found in src/cloc/AnotherHeavilyCommentedContract.sol [Line: 56](../../tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol#L56)
 
 	```solidity
 	        require(bar != address(0));
 	```
 
-- Found in src/cloc/HeavilyCommentedContract.sol [Line: 35](tests/contract-playground/src/cloc/HeavilyCommentedContract.sol#L35)
+- Found in src/cloc/HeavilyCommentedContract.sol [Line: 35](../../tests/contract-playground/src/cloc/HeavilyCommentedContract.sol#L35)
 
 	```solidity
 	        require(bar != address(0));
 	```
 
-- Found in src/cloc/HeavilyCommentedContract.sol [Line: 53](tests/contract-playground/src/cloc/HeavilyCommentedContract.sol#L53)
+- Found in src/cloc/HeavilyCommentedContract.sol [Line: 53](../../tests/contract-playground/src/cloc/HeavilyCommentedContract.sol#L53)
 
 	```solidity
 	        require(bar != address(0));
@@ -966,7 +966,7 @@ This is a best-practice to protect against reentrancy in other modifiers
 
 ### Responsible : non-reentrant-before-others
 
-- Found in src/AdminContract.sol [Line: 10](tests/contract-playground/src/AdminContract.sol#L10)
+- Found in src/AdminContract.sol [Line: 10](../../tests/contract-playground/src/AdminContract.sol#L10)
 
 	```solidity
 	    function setOwner(address _owner) external onlyOwner nonReentrant {

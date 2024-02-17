@@ -89,7 +89,7 @@ mod extract_feedback_tests {
 
     #[test]
     fn judge_can_extract_negative_feedback_detectors_names() {
-        let judged_report = include_str!("../../tests/post_audit.report-config.judge.md");
+        let judged_report = include_str!("../samples/post_audit.report-config.judge.md");
         let extractor = FeedbackExtractor {
             markdown_content: judged_report.to_string(),
         };
@@ -104,7 +104,7 @@ mod extract_feedback_tests {
 
     #[test]
     fn can_extract_triggered_detectors_names() {
-        let judged_report = include_str!("../../tests/post_audit.report-config.judge.md");
+        let judged_report = include_str!("../samples/post_audit.report-config.judge.md");
         let extractor = FeedbackExtractor {
             markdown_content: judged_report.to_string(),
         };
@@ -119,7 +119,7 @@ mod extract_feedback_tests {
 
     #[test]
     fn judge_can_extract_positive_feedback_detectors_names() {
-        let judged_report = include_str!("../../tests/post_audit.report-config.judge.md");
+        let judged_report = include_str!("../samples/post_audit.report-config.judge.md");
         let extractor = FeedbackExtractor {
             markdown_content: judged_report.to_string(),
         };
@@ -176,7 +176,7 @@ mod extract_detectors_used_tests {
 
     #[test]
     fn judge_can_extract_used_detectors_names_and_severities() {
-        let judged_report = include_str!("../../tests/post_audit.report-config.judge.md");
+        let judged_report = include_str!("../samples/post_audit.report-config.judge.md");
         let extractor = DetectorsUsedExtractor {
             markdown_content: judged_report.to_string(),
         };

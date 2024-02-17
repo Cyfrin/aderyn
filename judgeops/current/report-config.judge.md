@@ -61,25 +61,25 @@ Solc compiler version 0.8.20 switches the default target EVM version to Shanghai
 
 ### Responsible : push-zero-opcode
 
-- Found in src/AdminContract.sol [Line: 2](tests/contract-playground/src/AdminContract.sol#L2)
+- Found in src/AdminContract.sol [Line: 2](../../tests/contract-playground/src/AdminContract.sol#L2)
 
 	```solidity
 	pragma solidity 0.8.20;
 	```
 
-- Found in src/Counter.sol [Line: 2](tests/contract-playground/src/Counter.sol#L2)
+- Found in src/Counter.sol [Line: 2](../../tests/contract-playground/src/Counter.sol#L2)
 
 	```solidity
 	pragma solidity ^0.8.13;
 	```
 
-- Found in src/KeccakContract.sol [Line: 2](tests/contract-playground/src/KeccakContract.sol#L2)
+- Found in src/KeccakContract.sol [Line: 2](../../tests/contract-playground/src/KeccakContract.sol#L2)
 
 	```solidity
 	pragma solidity 0.8.20;
 	```
 
-- Found in src/cloc/AnotherHeavilyCommentedContract.sol [Line: 6](tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol#L6)
+- Found in src/cloc/AnotherHeavilyCommentedContract.sol [Line: 6](../../tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol#L6)
 
 	```solidity
 	pragma solidity ^0.8.18;
@@ -95,37 +95,37 @@ Solc compiler version 0.8.20 switches the default target EVM version to Shanghai
 
 ### Responsible : useless-public-function
 
-- Found in src/Counter.sol [Line: 7](tests/contract-playground/src/Counter.sol#L7)
+- Found in src/Counter.sol [Line: 7](../../tests/contract-playground/src/Counter.sol#L7)
 
 	```solidity
 	    function setNumber(uint256 newNumber) public {
 	```
 
-- Found in src/cloc/AnotherHeavilyCommentedContract.sol [Line: 31](tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol#L31)
+- Found in src/cloc/AnotherHeavilyCommentedContract.sol [Line: 31](../../tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol#L31)
 
 	```solidity
 	    function foo(address bar) public pure {
 	```
 
-- Found in src/cloc/AnotherHeavilyCommentedContract.sol [Line: 38](tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol#L38)
+- Found in src/cloc/AnotherHeavilyCommentedContract.sol [Line: 38](../../tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol#L38)
 
 	```solidity
 	    function emoji() public pure {
 	```
 
-- Found in src/cloc/AnotherHeavilyCommentedContract.sol [Line: 42](tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol#L42)
+- Found in src/cloc/AnotherHeavilyCommentedContract.sol [Line: 42](../../tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol#L42)
 
 	```solidity
 	    function foo2(address bar) public pure {
 	```
 
-- Found in src/cloc/HeavilyCommentedContract.sol [Line: 31](tests/contract-playground/src/cloc/HeavilyCommentedContract.sol#L31)
+- Found in src/cloc/HeavilyCommentedContract.sol [Line: 31](../../tests/contract-playground/src/cloc/HeavilyCommentedContract.sol#L31)
 
 	```solidity
 	    function foo(address bar) public pure {
 	```
 
-- Found in src/cloc/HeavilyCommentedContract.sol [Line: 38](tests/contract-playground/src/cloc/HeavilyCommentedContract.sol#L38)
+- Found in src/cloc/HeavilyCommentedContract.sol [Line: 38](../../tests/contract-playground/src/cloc/HeavilyCommentedContract.sol#L38)
 
 	```solidity
 	    function foo2(address bar) public pure {
