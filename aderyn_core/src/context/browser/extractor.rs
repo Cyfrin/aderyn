@@ -1,5 +1,6 @@
 use crate::{
     ast::*,
+    context::workspace_context::ASTNode,
     visitor::ast_visitor::{ASTConstVisitor, Node},
 };
 use eyre::Result;
@@ -1046,5 +1047,121 @@ impl ASTConstVisitor for ExtractWhileStatements {
     fn visit_while_statement(&mut self, node: &WhileStatement) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
+    }
+}
+
+// ExtractEverything extracts all types of nodes from a given node
+#[derive(Default)]
+pub struct ExtractEverything {
+    pub extracted: Vec<ASTNode>,
+}
+
+impl ExtractEverything {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
+        let mut extracted: Vec<ASTNode> = vec![];
+
+        let array_type_names = ExtractArrayTypeNames::from(node).extracted;
+        let assignments = ExtractAssignments::from(node).extracted;
+        let binary_operations = ExtractBinaryOperations::from(node).extracted;
+        let blocks = ExtractBlocks::from(node).extracted;
+        let conditionals = ExtractConditionals::from(node).extracted;
+        let contract_definitions = ExtractContractDefinitions::from(node).extracted;
+        let elementary_type_names = ExtractElementaryTypeNames::from(node).extracted;
+        let elementary_type_name_expressions =
+            ExtractElementaryTypeNameExpressions::from(node).extracted;
+        let emit_statements = ExtractEmitStatements::from(node).extracted;
+        let enum_definitions = ExtractEnumDefinitions::from(node).extracted;
+        let enum_values = ExtractEnumValues::from(node).extracted;
+        let event_definitions = ExtractEventDefinitions::from(node).extracted;
+        let error_definitions = ExtractErrorDefinitions::from(node).extracted;
+        let expression_statements = ExtractExpressionStatements::from(node).extracted;
+        let function_calls = ExtractFunctionCalls::from(node).extracted;
+        let function_definitions = ExtractFunctionDefinitions::from(node).extracted;
+        let function_type_names = ExtractFunctionTypeNames::from(node).extracted;
+        let for_statements = ExtractForStatements::from(node).extracted;
+        let identifiers = ExtractIdentifiers::from(node).extracted;
+        let identifier_paths = ExtractIdentifierPaths::from(node).extracted;
+        let if_statements = ExtractIfStatements::from(node).extracted;
+        let import_directives = ExtractImportDirectives::from(node).extracted;
+        let index_accesses = ExtractIndexAccesses::from(node).extracted;
+        let range_accesses = ExtractIndexRangeAccesses::from(node).extracted;
+        let inheritance_specifiers = ExtractInheritanceSpecifiers::from(node).extracted;
+        let inline_assemblys = ExtractInlineAssemblys::from(node).extracted;
+        let literals = ExtractLiterals::from(node).extracted;
+        let member_accesses = ExtractMemberAccesses::from(node).extracted;
+        let new_expressions = ExtractNewExpressions::from(node).extracted;
+        let mappings = ExtractMappings::from(node).extracted;
+        let modifier_definitions = ExtractModifierDefinitions::from(node).extracted;
+        let modifier_invocations = ExtractModifierInvocations::from(node).extracted;
+        let override_specifiers = ExtractOverrideSpecifiers::from(node).extracted;
+        let parameter_lists = ExtractParameterLists::from(node).extracted;
+        let pragma_directives = ExtractPragmaDirectives::from(node).extracted;
+        let returns = ExtractReturns::from(node).extracted;
+        let revert_statements = ExtractRevertStatements::from(node).extracted;
+        let struct_definitions = ExtractStructDefinitions::from(node).extracted;
+        let struct_documentations = ExtractStructuredDocumentations::from(node).extracted;
+        let try_statements = ExtractTryStatements::from(node).extracted;
+        let try_catch_clauses = ExtractTryCatchClauses::from(node).extracted;
+        let tuple_expressions = ExtractTupleExpressions::from(node).extracted;
+        let unary_operations = ExtractUnaryOperations::from(node).extracted;
+        let user_defined_type_names = ExtractUserDefinedTypeNames::from(node).extracted;
+        let user_defined_value_type_definitions =
+            ExtractUserDefinedValueTypeDefinitions::from(node).extracted;
+        let using_for_directives = ExtractUsingForDirectives::from(node).extracted;
+        let variable_declarations = ExtractVariableDeclarations::from(node).extracted;
+        let variable_declaration_statements =
+            ExtractVariableDeclarationStatements::from(node).extracted;
+        let while_statements = ExtractWhileStatements::from(node).extracted;
+
+        extracted.extend(array_type_names.iter().map(|x| x.into()));
+        extracted.extend(assignments.iter().map(|x| x.into()));
+        extracted.extend(binary_operations.iter().map(|x| x.into()));
+        extracted.extend(blocks.iter().map(|x| x.into()));
+        extracted.extend(conditionals.iter().map(|x| x.into()));
+        extracted.extend(contract_definitions.iter().map(|x| x.into()));
+        extracted.extend(elementary_type_names.iter().map(|x| x.into()));
+        extracted.extend(elementary_type_name_expressions.iter().map(|x| x.into()));
+        extracted.extend(emit_statements.iter().map(|x| x.into()));
+        extracted.extend(enum_definitions.iter().map(|x| x.into()));
+        extracted.extend(enum_values.iter().map(|x| x.into()));
+        extracted.extend(event_definitions.iter().map(|x| x.into()));
+        extracted.extend(error_definitions.iter().map(|x| x.into()));
+        extracted.extend(expression_statements.iter().map(|x| x.into()));
+        extracted.extend(function_calls.iter().map(|x| x.into()));
+        extracted.extend(function_definitions.iter().map(|x| x.into()));
+        extracted.extend(function_type_names.iter().map(|x| x.into()));
+        extracted.extend(for_statements.iter().map(|x| x.into()));
+        extracted.extend(identifiers.iter().map(|x| x.into()));
+        extracted.extend(identifier_paths.iter().map(|x| x.into()));
+        extracted.extend(if_statements.iter().map(|x| x.into()));
+        extracted.extend(import_directives.iter().map(|x| x.into()));
+        extracted.extend(index_accesses.iter().map(|x| x.into()));
+        extracted.extend(range_accesses.iter().map(|x| x.into()));
+        extracted.extend(inheritance_specifiers.iter().map(|x| x.into()));
+        extracted.extend(inline_assemblys.iter().map(|x| x.into()));
+        extracted.extend(literals.iter().map(|x| x.into()));
+        extracted.extend(member_accesses.iter().map(|x| x.into()));
+        extracted.extend(new_expressions.iter().map(|x| x.into()));
+        extracted.extend(mappings.iter().map(|x| x.into()));
+        extracted.extend(modifier_definitions.iter().map(|x| x.into()));
+        extracted.extend(modifier_invocations.iter().map(|x| x.into()));
+        extracted.extend(override_specifiers.iter().map(|x| x.into()));
+        extracted.extend(parameter_lists.iter().map(|x| x.into()));
+        extracted.extend(pragma_directives.iter().map(|x| x.into()));
+        extracted.extend(returns.iter().map(|x| x.into()));
+        extracted.extend(revert_statements.iter().map(|x| x.into()));
+        extracted.extend(struct_definitions.iter().map(|x| x.into()));
+        extracted.extend(struct_documentations.iter().map(|x| x.into()));
+        extracted.extend(try_statements.iter().map(|x| x.into()));
+        extracted.extend(try_catch_clauses.iter().map(|x| x.into()));
+        extracted.extend(tuple_expressions.iter().map(|x| x.into()));
+        extracted.extend(unary_operations.iter().map(|x| x.into()));
+        extracted.extend(user_defined_type_names.iter().map(|x| x.into()));
+        extracted.extend(user_defined_value_type_definitions.iter().map(|x| x.into()));
+        extracted.extend(using_for_directives.iter().map(|x| x.into()));
+        extracted.extend(variable_declarations.iter().map(|x| x.into()));
+        extracted.extend(variable_declaration_statements.iter().map(|x| x.into()));
+        extracted.extend(while_statements.iter().map(|x| x.into()));
+        ExtractEverything { extracted }
     }
 }
