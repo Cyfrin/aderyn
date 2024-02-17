@@ -235,18 +235,14 @@ jobs:
           toolchain: stable
           override: true
 
-      - name: Rename sample_db.json to sample_renamed.metrics_db.json
-        run: |
-          mv sample_db.json sample_renamed.metrics_db.json
-
       - name: Generate sample_db.json
         run: |
           cli/sample_metricsdbgen.sh sample_db.json
 
-      - name: Check sample_db.json vs sample_renamed.metrics_db.json
+      - name: Check sample_db.json vs judgeops/samples/sample_db.json
         run: |
           cat sample_db.json
-          diff sample_renamed.metrics_db.json sample_db.json
+          diff judgeops/samples/sample_db.json sample_db.json
 
   lints:
     name: Lints
