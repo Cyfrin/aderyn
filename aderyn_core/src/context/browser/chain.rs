@@ -1,242 +1,244 @@
+use std::collections::HashMap;
+
 use crate::{
+    ast::*,
     context::workspace_context::{ASTNode, WorkspaceContext},
-    visitor::ast_visitor::Node,
 };
 
-use super::ExtractEverything;
+use super::get_all_children;
 
-pub fn get_count_of_all_children(node: &ASTNode) -> usize {
-    match node {
-        ASTNode::ArrayTypeName(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::Assignment(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::BinaryOperation(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::Block(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::Conditional(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::ContractDefinition(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::ElementaryTypeName(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::ElementaryTypeNameExpression(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::EmitStatement(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::EnumDefinition(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::EnumValue(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::EventDefinition(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::ErrorDefinition(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::ExpressionStatement(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::FunctionCall(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::FunctionCallOptions(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::FunctionDefinition(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::FunctionTypeName(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::ForStatement(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::Identifier(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::IdentifierPath(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::IfStatement(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::ImportDirective(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::IndexAccess(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::IndexRangeAccess(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::InheritanceSpecifier(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::InlineAssembly(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::Literal(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::MemberAccess(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::NewExpression(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::Mapping(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::ModifierDefinition(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::ModifierInvocation(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::OverrideSpecifier(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::ParameterList(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::PragmaDirective(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::Return(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::RevertStatement(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::SourceUnit(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::StructDefinition(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::StructuredDocumentation(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::TryStatement(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::TryCatchClause(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::TupleExpression(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::UnaryOperation(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::UserDefinedTypeName(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::UserDefinedValueTypeDefinition(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::UsingForDirective(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::VariableDeclaration(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::VariableDeclarationStatement(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
-        ASTNode::WhileStatement(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children.len()
-        }
+/// GetParentChain allows us to grab the ancestral hirearchy of a given node in the AST
+/// all the way upto the ContractDefinition
+pub trait GetParentChain {
+    /// Get the parent Chain of an ASTNode
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode>;
+}
+
+impl GetParentChain for Assignment {
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+        get_parent_chain_of_child(self.id, context)
+    }
+}
+impl GetParentChain for BinaryOperation {
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+        get_parent_chain_of_child(self.id, context)
+    }
+}
+impl GetParentChain for Block {
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+        get_parent_chain_of_child(self.id, context)
+    }
+}
+impl GetParentChain for Conditional {
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+        get_parent_chain_of_child(self.id, context)
+    }
+}
+impl GetParentChain for ContractDefinition {
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+        get_parent_chain_of_child(self.id, context)
+    }
+}
+impl GetParentChain for ElementaryTypeNameExpression {
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+        get_parent_chain_of_child(self.id, context)
+    }
+}
+impl GetParentChain for EnumDefinition {
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+        get_parent_chain_of_child(self.id, context)
+    }
+}
+impl GetParentChain for EnumValue {
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+        get_parent_chain_of_child(self.id, context)
+    }
+}
+impl GetParentChain for EventDefinition {
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+        get_parent_chain_of_child(self.id, context)
+    }
+}
+impl GetParentChain for ErrorDefinition {
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+        get_parent_chain_of_child(self.id, context)
+    }
+}
+impl GetParentChain for FunctionCall {
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+        get_parent_chain_of_child(self.id, context)
+    }
+}
+impl GetParentChain for FunctionCallOptions {
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+        get_parent_chain_of_child(self.id, context)
+    }
+}
+impl GetParentChain for FunctionDefinition {
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+        get_parent_chain_of_child(self.id, context)
+    }
+}
+impl GetParentChain for ForStatement {
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+        get_parent_chain_of_child(self.id, context)
+    }
+}
+impl GetParentChain for Identifier {
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+        get_parent_chain_of_child(self.id, context)
+    }
+}
+impl GetParentChain for IdentifierPath {
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+        get_parent_chain_of_child(self.id, context)
+    }
+}
+impl GetParentChain for IfStatement {
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+        get_parent_chain_of_child(self.id, context)
+    }
+}
+impl GetParentChain for ImportDirective {
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+        get_parent_chain_of_child(self.id, context)
+    }
+}
+impl GetParentChain for IndexAccess {
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+        get_parent_chain_of_child(self.id, context)
+    }
+}
+impl GetParentChain for IndexRangeAccess {
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+        get_parent_chain_of_child(self.id, context)
+    }
+}
+impl GetParentChain for InheritanceSpecifier {
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+        get_parent_chain_of_child(self.id, context)
+    }
+}
+impl GetParentChain for InlineAssembly {
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+        get_parent_chain_of_child(self.id, context)
+    }
+}
+impl GetParentChain for Literal {
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+        get_parent_chain_of_child(self.id, context)
+    }
+}
+impl GetParentChain for MemberAccess {
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+        get_parent_chain_of_child(self.id, context)
+    }
+}
+impl GetParentChain for NewExpression {
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+        get_parent_chain_of_child(self.id, context)
+    }
+}
+impl GetParentChain for ModifierDefinition {
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+        get_parent_chain_of_child(self.id, context)
+    }
+}
+impl GetParentChain for ModifierInvocation {
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+        get_parent_chain_of_child(self.id, context)
+    }
+}
+impl GetParentChain for OverrideSpecifier {
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+        get_parent_chain_of_child(self.id, context)
+    }
+}
+impl GetParentChain for ParameterList {
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+        get_parent_chain_of_child(self.id, context)
+    }
+}
+impl GetParentChain for PragmaDirective {
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+        get_parent_chain_of_child(self.id, context)
+    }
+}
+impl GetParentChain for Return {
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+        get_parent_chain_of_child(self.id, context)
+    }
+}
+impl GetParentChain for SourceUnit {
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+        get_parent_chain_of_child(self.id, context)
+    }
+}
+impl GetParentChain for StructDefinition {
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+        get_parent_chain_of_child(self.id, context)
+    }
+}
+impl GetParentChain for StructuredDocumentation {
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+        get_parent_chain_of_child(self.id, context)
+    }
+}
+impl GetParentChain for TupleExpression {
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+        get_parent_chain_of_child(self.id, context)
+    }
+}
+impl GetParentChain for UnaryOperation {
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+        get_parent_chain_of_child(self.id, context)
+    }
+}
+impl GetParentChain for UserDefinedValueTypeDefinition {
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+        get_parent_chain_of_child(self.id, context)
+    }
+}
+impl GetParentChain for UsingForDirective {
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+        get_parent_chain_of_child(self.id, context)
+    }
+}
+impl GetParentChain for VariableDeclaration {
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+        get_parent_chain_of_child(self.id, context)
+    }
+}
+impl GetParentChain for VariableDeclarationStatement {
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+        get_parent_chain_of_child(self.id, context)
+    }
+}
+impl GetParentChain for WhileStatement {
+    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+        get_parent_chain_of_child(self.id, context)
     }
 }
 
-pub fn get_parent_chain_of(node: &ASTNode, context: &WorkspaceContext) -> Option<Vec<ASTNode>> {
-    let all_parents = get_all_parents_in_no_specific_order(node, context)?;
-    let mut children_count = vec![];
-    for (idx, parent) in all_parents.iter().enumerate() {
-        let number_of_children = get_count_of_all_children(&parent);
-        children_count.push((number_of_children, idx));
+pub fn get_parent_chain_of_child(child_id: NodeID, context: &WorkspaceContext) -> Vec<ASTNode> {
+    let all_ast_nodes = get_all_ast_nodes(context);
+    let all_node_ids = get_node_ids_of_ast_nodes_that_have_ids(&all_ast_nodes);
+
+    let mut parents = vec![];
+    // From each of the node_id extract everything and see if you find child_id
+    for (_k, v) in all_node_ids.iter() {
+        let all_children = get_all_children(v);
+        let all_children_count = all_children.len();
+        let all_children_ids = get_node_ids_of_ast_nodes_that_have_ids(&all_children);
+        if all_children_ids.contains_key(&child_id) {
+            parents.push((all_children_count, v.clone()));
+        }
     }
-    children_count.sort();
-    let mut parent_chain = vec![];
-    for (idx, _) in children_count {
-        parent_chain.push(all_parents[idx].clone());
-    }
-    Some(parent_chain)
+    parents.sort_by(|a, b| a.0.cmp(&b.0));
+    parents.iter().map(|(_, y)| y.clone()).collect()
 }
 
-pub fn get_all_parents_in_no_specific_order(
-    node: &ASTNode,
-    context: &WorkspaceContext,
-) -> Option<Vec<ASTNode>> {
-    // Find the id of the target node
-    let target_id = context.get_source_unit_from_child_node(node)?.id;
-
-    // Gather all the parents first (not in any specific ancestral order)
+pub fn get_all_ast_nodes(context: &WorkspaceContext) -> Vec<ASTNode> {
     let mut all_parents: Vec<ASTNode> = vec![];
 
     let array_type_names = context
@@ -589,270 +591,128 @@ pub fn get_all_parents_in_no_specific_order(
         .map(|x| x.clone())
         .collect::<Vec<_>>();
 
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        array_type_names,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        assignments,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        binary_operations,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id, context, blocks,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        conditionals,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        contract_definitions,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        elementary_type_names,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        elementary_type_name_expressions,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        emit_statements,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        enum_definitions,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        enum_values,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        event_definitions,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        error_definitions,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        expression_statements,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        function_calls,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        function_call_options,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        function_definitions,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        function_type_names,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        for_statements,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        identifiers,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        identifier_paths,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        if_statements,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        import_directives,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        index_accesses,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        index_range_accesses,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        inheritance_specifiers,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        inline_assemblies,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id, context, literals,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        member_accesses,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        new_expressions,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id, context, mappings,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        modifier_definitions,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        modifier_invocations,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        override_specifiers,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        parameter_lists,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        pragma_directives,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id, context, returns,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        revert_statements,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        struct_definitions,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        structured_documentations,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        try_statements,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        try_catch_clauses,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        tuple_expressions,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        unary_operations,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        user_defined_type_names,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        user_defined_value_type_definitions,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        using_for_directives,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        variable_declarations,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        variable_declaration_statements,
-    )?);
-    all_parents.extend(get_parents_of_child_with_id_from(
-        target_id,
-        context,
-        while_statements,
-    )?);
-
-    Some(all_parents)
+    all_parents.extend(array_type_names.into_iter().map(|x| x.into()));
+    all_parents.extend(assignments.into_iter().map(|x| x.into()));
+    all_parents.extend(binary_operations.into_iter().map(|x| x.into()));
+    all_parents.extend(blocks.into_iter().map(|x| x.into()));
+    all_parents.extend(conditionals.into_iter().map(|x| x.into()));
+    all_parents.extend(contract_definitions.into_iter().map(|x| x.into()));
+    all_parents.extend(elementary_type_names.into_iter().map(|x| x.into()));
+    all_parents.extend(
+        elementary_type_name_expressions
+            .into_iter()
+            .map(|x| x.into()),
+    );
+    all_parents.extend(emit_statements.into_iter().map(|x| x.into()));
+    all_parents.extend(enum_definitions.into_iter().map(|x| x.into()));
+    all_parents.extend(enum_values.into_iter().map(|x| x.into()));
+    all_parents.extend(event_definitions.into_iter().map(|x| x.into()));
+    all_parents.extend(error_definitions.into_iter().map(|x| x.into()));
+    all_parents.extend(expression_statements.into_iter().map(|x| x.into()));
+    all_parents.extend(function_calls.into_iter().map(|x| x.into()));
+    all_parents.extend(function_call_options.into_iter().map(|x| x.into()));
+    all_parents.extend(function_definitions.into_iter().map(|x| x.into()));
+    all_parents.extend(function_type_names.into_iter().map(|x| x.into()));
+    all_parents.extend(for_statements.into_iter().map(|x| x.into()));
+    all_parents.extend(identifiers.into_iter().map(|x| x.into()));
+    all_parents.extend(identifier_paths.into_iter().map(|x| x.into()));
+    all_parents.extend(if_statements.into_iter().map(|x| x.into()));
+    all_parents.extend(import_directives.into_iter().map(|x| x.into()));
+    all_parents.extend(index_accesses.into_iter().map(|x| x.into()));
+    all_parents.extend(index_range_accesses.into_iter().map(|x| x.into()));
+    all_parents.extend(inheritance_specifiers.into_iter().map(|x| x.into()));
+    all_parents.extend(inline_assemblies.into_iter().map(|x| x.into()));
+    all_parents.extend(literals.into_iter().map(|x| x.into()));
+    all_parents.extend(member_accesses.into_iter().map(|x| x.into()));
+    all_parents.extend(new_expressions.into_iter().map(|x| x.into()));
+    all_parents.extend(mappings.into_iter().map(|x| x.into()));
+    all_parents.extend(modifier_definitions.into_iter().map(|x| x.into()));
+    all_parents.extend(modifier_invocations.into_iter().map(|x| x.into()));
+    all_parents.extend(override_specifiers.into_iter().map(|x| x.into()));
+    all_parents.extend(parameter_lists.into_iter().map(|x| x.into()));
+    all_parents.extend(pragma_directives.into_iter().map(|x| x.into()));
+    all_parents.extend(returns.into_iter().map(|x| x.into()));
+    all_parents.extend(revert_statements.into_iter().map(|x| x.into()));
+    all_parents.extend(struct_definitions.into_iter().map(|x| x.into()));
+    all_parents.extend(structured_documentations.into_iter().map(|x| x.into()));
+    all_parents.extend(try_statements.into_iter().map(|x| x.into()));
+    all_parents.extend(try_catch_clauses.into_iter().map(|x| x.into()));
+    all_parents.extend(tuple_expressions.into_iter().map(|x| x.into()));
+    all_parents.extend(unary_operations.into_iter().map(|x| x.into()));
+    all_parents.extend(user_defined_type_names.into_iter().map(|x| x.into()));
+    all_parents.extend(
+        user_defined_value_type_definitions
+            .into_iter()
+            .map(|x| x.into()),
+    );
+    all_parents.extend(using_for_directives.into_iter().map(|x| x.into()));
+    all_parents.extend(variable_declarations.into_iter().map(|x| x.into()));
+    all_parents.extend(
+        variable_declaration_statements
+            .into_iter()
+            .map(|x| x.into()),
+    );
+    all_parents.extend(while_statements.into_iter().map(|x| x.into()));
+    all_parents
 }
 
-pub fn get_parents_of_child_with_id_from<T: Node>(
-    child_id: i64,
-    context: &WorkspaceContext,
-    nodes: Vec<T>,
-) -> Option<Vec<ASTNode>> {
-    // Gather all the parents first (not in any specific ancestral order)
-    let mut all_parents: Vec<ASTNode> = vec![];
-
-    // Find all the nodes where the extracted children contains target node id
+pub fn get_node_ids_of_ast_nodes_that_have_ids(nodes: &Vec<ASTNode>) -> HashMap<NodeID, ASTNode> {
+    let mut nodes_with_ids: HashMap<NodeID, ASTNode> = HashMap::new();
     for node in nodes {
-        let children = ExtractEverything::from(&node).extracted;
-        for child in &children {
-            let id = context.get_source_unit_from_child_node(child)?.id;
-            if child_id == id {
-                all_parents.push(child.clone());
-            }
-        }
+        match node {
+            // ASTNode::ArrayTypeName(x) => todo: recurse
+            ASTNode::Assignment(n) => nodes_with_ids.insert(n.id, node.clone()),
+            ASTNode::BinaryOperation(n) => nodes_with_ids.insert(n.id, node.clone()),
+            ASTNode::Block(n) => nodes_with_ids.insert(n.id, node.clone()),
+            ASTNode::Conditional(n) => nodes_with_ids.insert(n.id, node.clone()),
+            ASTNode::ContractDefinition(n) => nodes_with_ids.insert(n.id, node.clone()),
+            // ASTNode::ElementaryTypeName(emit) => todo: recurse
+            ASTNode::ElementaryTypeNameExpression(n) => nodes_with_ids.insert(n.id, node.clone()),
+            // ASTNode::EmitStatement(emit) => todo: recurse
+            ASTNode::EnumDefinition(n) => nodes_with_ids.insert(n.id, node.clone()),
+            ASTNode::EnumValue(n) => nodes_with_ids.insert(n.id, node.clone()),
+            ASTNode::EventDefinition(n) => nodes_with_ids.insert(n.id, node.clone()),
+            ASTNode::ErrorDefinition(n) => nodes_with_ids.insert(n.id, node.clone()),
+            // ASTNode::ExpressionStatement(_) => todo!(), todo: recurse
+            ASTNode::FunctionCall(n) => nodes_with_ids.insert(n.id, node.clone()),
+            ASTNode::FunctionCallOptions(n) => nodes_with_ids.insert(n.id, node.clone()),
+            ASTNode::FunctionDefinition(n) => nodes_with_ids.insert(n.id, node.clone()),
+            // ASTNode::FunctionTypeName(n) => nodes_with_ids.insert(n.id, node.clone()), todo: recurse
+            ASTNode::ForStatement(n) => nodes_with_ids.insert(n.id, node.clone()),
+            ASTNode::Identifier(n) => nodes_with_ids.insert(n.id, node.clone()),
+            ASTNode::IdentifierPath(n) => nodes_with_ids.insert(n.id, node.clone()),
+            ASTNode::IfStatement(n) => nodes_with_ids.insert(n.id, node.clone()),
+            ASTNode::ImportDirective(n) => nodes_with_ids.insert(n.id, node.clone()),
+            ASTNode::IndexAccess(n) => nodes_with_ids.insert(n.id, node.clone()),
+            ASTNode::IndexRangeAccess(n) => nodes_with_ids.insert(n.id, node.clone()),
+            ASTNode::InheritanceSpecifier(n) => nodes_with_ids.insert(n.id, node.clone()),
+            ASTNode::InlineAssembly(n) => nodes_with_ids.insert(n.id, node.clone()),
+            ASTNode::Literal(n) => nodes_with_ids.insert(n.id, node.clone()),
+            ASTNode::MemberAccess(n) => nodes_with_ids.insert(n.id, node.clone()),
+            ASTNode::NewExpression(n) => nodes_with_ids.insert(n.id, node.clone()),
+            // ASTNode::Mapping(n) => nodes_with_ids.insert(n.id, node.clone()), todo: recurse
+            ASTNode::ModifierDefinition(n) => nodes_with_ids.insert(n.id, node.clone()),
+            ASTNode::ModifierInvocation(n) => nodes_with_ids.insert(n.id, node.clone()),
+            ASTNode::OverrideSpecifier(n) => nodes_with_ids.insert(n.id, node.clone()),
+            ASTNode::ParameterList(n) => nodes_with_ids.insert(n.id, node.clone()),
+            ASTNode::PragmaDirective(n) => nodes_with_ids.insert(n.id, node.clone()),
+            ASTNode::Return(n) => nodes_with_ids.insert(n.id, node.clone()),
+            // ASTNode::RevertStatement(n) => nodes_with_ids.insert(n.id, node.clone()),
+            ASTNode::SourceUnit(n) => nodes_with_ids.insert(n.id, node.clone()),
+            ASTNode::StructDefinition(n) => nodes_with_ids.insert(n.id, node.clone()),
+            ASTNode::StructuredDocumentation(n) => nodes_with_ids.insert(n.id, node.clone()),
+            // ASTNode::TryStatement(n) => nodes_with_ids.insert(n.id, node.clone()),
+            // ASTNode::TryCatchClause(n) => nodes_with_ids.insert(n.id, node.clone()),
+            ASTNode::TupleExpression(n) => nodes_with_ids.insert(n.id, node.clone()),
+            ASTNode::UnaryOperation(n) => nodes_with_ids.insert(n.id, node.clone()),
+            // ASTNode::UserDefinedTypeName(n) => nodes_with_ids.insert(n.id, node.clone()),
+            ASTNode::UserDefinedValueTypeDefinition(n) => nodes_with_ids.insert(n.id, node.clone()),
+            ASTNode::UsingForDirective(n) => nodes_with_ids.insert(n.id, node.clone()),
+            ASTNode::VariableDeclaration(n) => nodes_with_ids.insert(n.id, node.clone()),
+            ASTNode::VariableDeclarationStatement(n) => nodes_with_ids.insert(n.id, node.clone()),
+            ASTNode::WhileStatement(n) => nodes_with_ids.insert(n.id, node.clone()),
+            _ => None,
+        };
     }
-
-    Some(all_parents)
+    nodes_with_ids
 }

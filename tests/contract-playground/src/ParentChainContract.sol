@@ -9,11 +9,16 @@ contract ParentChainContract is Ownable, ReentrancyGuard {
     uint256 public number = 0;
 
     function setNumber(uint256 newNumber) public {
-        number = newNumber;
+        
     }
 
-    function increment() public {
-        number++;
+    function increment(uint256 newNumber) public {
+        if (number < 5 && number > 1) {
+            for (uint256 j = 9; j != 0; --j) {
+                number = newNumber;
+                number++;
+            }
+        }
     }
 
     constructor() Ownable() {

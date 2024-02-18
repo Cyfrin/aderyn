@@ -1,10 +1,10 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
-    ast::NodeID,
+    ast::{self, NodeID},
     capture,
     context::{
-        browser::{get_all_parents_in_no_specific_order, get_parent_chain_of},
+        browser::get_parent_chain_of_child,
         workspace_context::{ASTNode, WorkspaceContext},
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
@@ -21,17 +21,35 @@ pub struct ParentChainDemonstrator {
 impl IssueDetector for ParentChainDemonstrator {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for assignment in context.assignments.keys() {
-            capture!(self, context, assignment.clone());
-
-            let parent_chain = get_all_parents_in_no_specific_order(&assignment.into(), context);
-            if let Some(chain) = parent_chain {
-                for element in chain {
-                    if let ASTNode::FunctionDefinition(def) = element.clone() {
-                        capture!(self, context, def);
+            let parents = get_parent_chain_of_child(assignment.id, context);
+            {
+                println!("Parent Chain (from closest to farthest)\n---------");
+                for p in &parents {
+                    println!("{}", p)
+                }
+                println!("------------");
+            }
+            for p in &parents {
+                if let ASTNode::ContractDefinition(f) = p {
+                    capture!(self, context, f);
+                }
+                if let ASTNode::Block(b) = p {
+                    for statement in &b.statements {
+                        match statement {
+                            ast::statements::Statement::IfStatement(i) => {
+                                println!("If statement captured !\n{}", i);
+                                capture!(self, context, i);
+                            }
+                            ast::statements::Statement::ForStatement(f) => {
+                                println!("For statement captured !\n{}", f);
+                                capture!(self, context, f);
+                            }
+                            _ => (),
+                        };
                     }
-                    self.found_nodes.push(element);
                 }
             }
+            capture!(self, context, assignment.clone());
         }
 
         Ok(!self.found_instances.is_empty())
@@ -42,11 +60,11 @@ impl IssueDetector for ParentChainDemonstrator {
     }
 
     fn title(&self) -> String {
-        String::from("Centralization Risk for trusted owners")
+        String::from("Parent Chain Demonstration")
     }
 
     fn description(&self) -> String {
-        String::from("Contracts have owners with privileged rights to perform admin tasks and need to be trusted to not perform malicious updates or drain funds.")
+        String::from("Parent Chain Demonstration")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize), NodeID> {
@@ -75,28 +93,6 @@ mod parent_chain_demo_tests {
         let found = detector.detect(&context).unwrap();
         // assert that the detector found a centralization risk
         assert!(found);
-
         println!("{:?}", detector.instances());
-
-        println!("FOUND NODES");
-        println!("{:?}", detector.found_nodes);
-
-        // assert that the severity is medium
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Medium
-        );
-        // assert that the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from("Centralization Risk for trusted owners")
-        );
-        // assert that the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from(
-                "Contracts have owners with privileged rights to perform admin tasks and need to be trusted to not perform malicious updates or drain funds."
-            )
-        );
     }
 }

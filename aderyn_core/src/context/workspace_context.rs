@@ -2,8 +2,9 @@ use crate::ast::*;
 use crate::visitor::ast_visitor::*;
 use eyre::Result;
 use std::collections::HashMap;
+use strum::Display;
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Display, Debug, Clone, PartialEq)]
 pub enum ASTNode {
     ArrayTypeName(ArrayTypeName),
     Assignment(Assignment),
