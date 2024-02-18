@@ -21,6 +21,10 @@
         "n_sloc": 21
       },
       {
+        "file_path": "src/ParentChainContract.sol",
+        "n_sloc": 29
+      },
+      {
         "file_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
         "n_sloc": 32
       },
@@ -35,8 +39,8 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 200,
-    "total_source_units": 6
+    "total_sloc": 229,
+    "total_source_units": 7
   },
   "high_issues": {
     "issues": []
@@ -67,6 +71,10 @@
             "line_no": 2
           },
           {
+            "contract_path": "src/ParentChainContract.sol",
+            "line_no": 2
+          },
+          {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
             "line_no": 6
           }
@@ -87,6 +95,14 @@
           {
             "contract_path": "src/Counter.sol",
             "line_no": 7
+          },
+          {
+            "contract_path": "src/ParentChainContract.sol",
+            "line_no": 11
+          },
+          {
+            "contract_path": "src/ParentChainContract.sol",
+            "line_no": 15
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
