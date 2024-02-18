@@ -4,7 +4,7 @@ use crate::{
     ast::{self, NodeID},
     capture,
     context::{
-        browser::get_parent_chain_of_child,
+        browser::GetParentChain,
         workspace_context::{ASTNode, WorkspaceContext},
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
@@ -15,19 +15,39 @@ use eyre::Result;
 pub struct ParentChainDemonstrator {
     // Keys are source file name and line number
     found_instances: BTreeMap<(String, usize), NodeID>,
-    pub found_nodes: Vec<ASTNode>,
 }
+
+/*
+
+In ParentChainContract.sol, there is only 1 assignment done. The goal is to capture it first.
+Then walk up it's parent tree and capture a) contract definition b) if statement c) for statement
+We omit the function definition for the sake of example
+
+*/
 
 impl IssueDetector for ParentChainDemonstrator {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for assignment in context.assignments.keys() {
-            let parents = get_parent_chain_of_child(assignment.id, context);
+            // Retrieve Parent Chain (from closest to farthest)
+            let parents = GetParentChain::of(assignment, context);
             {
                 println!("Parent Chain (from closest to farthest)\n---------");
                 for p in &parents {
                     println!("{}", p)
                 }
                 println!("------------");
+                /*
+                ---------
+                Assignment
+                Block
+                ForStatement
+                Block
+                IfStatement
+                Block
+                FunctionDefinition
+                ContractDefinition
+                ------------
+                 */
             }
             for p in &parents {
                 if let ASTNode::ContractDefinition(f) = p {
@@ -91,8 +111,16 @@ mod parent_chain_demo_tests {
 
         let mut detector = ParentChainDemonstrator::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found a centralization risk
         assert!(found);
+
+        // Instances
+        /*
+            line 7, contract definition
+                16, if statement
+                17, for statement
+                18, assignment
+        */
         println!("{:?}", detector.instances());
+        assert!(detector.instances().len() == 4);
     }
 }
