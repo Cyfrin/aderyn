@@ -1191,209 +1191,56 @@ impl ExtractEverything {
 
 pub fn get_all_children(node: &ASTNode) -> Vec<ASTNode> {
     match node {
-        ASTNode::ArrayTypeName(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::Assignment(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::BinaryOperation(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::Block(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::Conditional(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::ContractDefinition(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::ElementaryTypeName(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::ElementaryTypeNameExpression(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::EmitStatement(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::EnumDefinition(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::EnumValue(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::EventDefinition(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::ErrorDefinition(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::ExpressionStatement(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::FunctionCall(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::FunctionCallOptions(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::FunctionDefinition(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::FunctionTypeName(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::ForStatement(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::Identifier(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::IdentifierPath(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::IfStatement(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::ImportDirective(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::IndexAccess(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::IndexRangeAccess(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::InheritanceSpecifier(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::InlineAssembly(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::Literal(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::MemberAccess(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::NewExpression(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::Mapping(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::ModifierDefinition(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::ModifierInvocation(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::OverrideSpecifier(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::ParameterList(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::PragmaDirective(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::Return(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::RevertStatement(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::SourceUnit(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::StructDefinition(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::StructuredDocumentation(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::TryStatement(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::TryCatchClause(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::TupleExpression(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::UnaryOperation(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::UserDefinedTypeName(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::UserDefinedValueTypeDefinition(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::UsingForDirective(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::VariableDeclaration(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::VariableDeclarationStatement(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
-        ASTNode::WhileStatement(n) => {
-            let children = ExtractEverything::from(n).extracted;
-            children
-        }
+        ASTNode::ArrayTypeName(n) => ExtractEverything::from(n).extracted,
+        ASTNode::Assignment(n) => ExtractEverything::from(n).extracted,
+        ASTNode::BinaryOperation(n) => ExtractEverything::from(n).extracted,
+        ASTNode::Block(n) => ExtractEverything::from(n).extracted,
+        ASTNode::Conditional(n) => ExtractEverything::from(n).extracted,
+        ASTNode::ContractDefinition(n) => ExtractEverything::from(n).extracted,
+        ASTNode::ElementaryTypeName(n) => ExtractEverything::from(n).extracted,
+        ASTNode::ElementaryTypeNameExpression(n) => ExtractEverything::from(n).extracted,
+        ASTNode::EmitStatement(n) => ExtractEverything::from(n).extracted,
+        ASTNode::EnumDefinition(n) => ExtractEverything::from(n).extracted,
+        ASTNode::EnumValue(n) => ExtractEverything::from(n).extracted,
+        ASTNode::EventDefinition(n) => ExtractEverything::from(n).extracted,
+        ASTNode::ErrorDefinition(n) => ExtractEverything::from(n).extracted,
+        ASTNode::ExpressionStatement(n) => ExtractEverything::from(n).extracted,
+        ASTNode::FunctionCall(n) => ExtractEverything::from(n).extracted,
+        ASTNode::FunctionCallOptions(n) => ExtractEverything::from(n).extracted,
+        ASTNode::FunctionDefinition(n) => ExtractEverything::from(n).extracted,
+        ASTNode::FunctionTypeName(n) => ExtractEverything::from(n).extracted,
+        ASTNode::ForStatement(n) => ExtractEverything::from(n).extracted,
+        ASTNode::Identifier(n) => ExtractEverything::from(n).extracted,
+        ASTNode::IdentifierPath(n) => ExtractEverything::from(n).extracted,
+        ASTNode::IfStatement(n) => ExtractEverything::from(n).extracted,
+        ASTNode::ImportDirective(n) => ExtractEverything::from(n).extracted,
+        ASTNode::IndexAccess(n) => ExtractEverything::from(n).extracted,
+        ASTNode::IndexRangeAccess(n) => ExtractEverything::from(n).extracted,
+        ASTNode::InheritanceSpecifier(n) => ExtractEverything::from(n).extracted,
+        ASTNode::InlineAssembly(n) => ExtractEverything::from(n).extracted,
+        ASTNode::Literal(n) => ExtractEverything::from(n).extracted,
+        ASTNode::MemberAccess(n) => ExtractEverything::from(n).extracted,
+        ASTNode::NewExpression(n) => ExtractEverything::from(n).extracted,
+        ASTNode::Mapping(n) => ExtractEverything::from(n).extracted,
+        ASTNode::ModifierDefinition(n) => ExtractEverything::from(n).extracted,
+        ASTNode::ModifierInvocation(n) => ExtractEverything::from(n).extracted,
+        ASTNode::OverrideSpecifier(n) => ExtractEverything::from(n).extracted,
+        ASTNode::ParameterList(n) => ExtractEverything::from(n).extracted,
+        ASTNode::PragmaDirective(n) => ExtractEverything::from(n).extracted,
+        ASTNode::Return(n) => ExtractEverything::from(n).extracted,
+        ASTNode::RevertStatement(n) => ExtractEverything::from(n).extracted,
+        ASTNode::SourceUnit(n) => ExtractEverything::from(n).extracted,
+        ASTNode::StructDefinition(n) => ExtractEverything::from(n).extracted,
+        ASTNode::StructuredDocumentation(n) => ExtractEverything::from(n).extracted,
+        ASTNode::TryStatement(n) => ExtractEverything::from(n).extracted,
+        ASTNode::TryCatchClause(n) => ExtractEverything::from(n).extracted,
+        ASTNode::TupleExpression(n) => ExtractEverything::from(n).extracted,
+        ASTNode::UnaryOperation(n) => ExtractEverything::from(n).extracted,
+        ASTNode::UserDefinedTypeName(n) => ExtractEverything::from(n).extracted,
+        ASTNode::UserDefinedValueTypeDefinition(n) => ExtractEverything::from(n).extracted,
+        ASTNode::UsingForDirective(n) => ExtractEverything::from(n).extracted,
+        ASTNode::VariableDeclaration(n) => ExtractEverything::from(n).extracted,
+        ASTNode::VariableDeclarationStatement(n) => ExtractEverything::from(n).extracted,
+        ASTNode::WhileStatement(n) => ExtractEverything::from(n).extracted,
     }
 }

@@ -11,211 +11,211 @@ use super::get_all_children;
 /// all the way upto the ContractDefinition
 pub trait GetParentChain {
     /// Get the parent Chain of an ASTNode
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode>;
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode>;
 }
 
 impl GetParentChain for Assignment {
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode> {
         get_parent_chain_of_child(self.id, context)
     }
 }
 impl GetParentChain for BinaryOperation {
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode> {
         get_parent_chain_of_child(self.id, context)
     }
 }
 impl GetParentChain for Block {
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode> {
         get_parent_chain_of_child(self.id, context)
     }
 }
 impl GetParentChain for Conditional {
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode> {
         get_parent_chain_of_child(self.id, context)
     }
 }
 impl GetParentChain for ContractDefinition {
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode> {
         get_parent_chain_of_child(self.id, context)
     }
 }
 impl GetParentChain for ElementaryTypeNameExpression {
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode> {
         get_parent_chain_of_child(self.id, context)
     }
 }
 impl GetParentChain for EnumDefinition {
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode> {
         get_parent_chain_of_child(self.id, context)
     }
 }
 impl GetParentChain for EnumValue {
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode> {
         get_parent_chain_of_child(self.id, context)
     }
 }
 impl GetParentChain for EventDefinition {
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode> {
         get_parent_chain_of_child(self.id, context)
     }
 }
 impl GetParentChain for ErrorDefinition {
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode> {
         get_parent_chain_of_child(self.id, context)
     }
 }
 impl GetParentChain for FunctionCall {
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode> {
         get_parent_chain_of_child(self.id, context)
     }
 }
 impl GetParentChain for FunctionCallOptions {
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode> {
         get_parent_chain_of_child(self.id, context)
     }
 }
 impl GetParentChain for FunctionDefinition {
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode> {
         get_parent_chain_of_child(self.id, context)
     }
 }
 impl GetParentChain for ForStatement {
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode> {
         get_parent_chain_of_child(self.id, context)
     }
 }
 impl GetParentChain for Identifier {
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode> {
         get_parent_chain_of_child(self.id, context)
     }
 }
 impl GetParentChain for IdentifierPath {
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode> {
         get_parent_chain_of_child(self.id, context)
     }
 }
 impl GetParentChain for IfStatement {
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode> {
         get_parent_chain_of_child(self.id, context)
     }
 }
 impl GetParentChain for ImportDirective {
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode> {
         get_parent_chain_of_child(self.id, context)
     }
 }
 impl GetParentChain for IndexAccess {
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode> {
         get_parent_chain_of_child(self.id, context)
     }
 }
 impl GetParentChain for IndexRangeAccess {
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode> {
         get_parent_chain_of_child(self.id, context)
     }
 }
 impl GetParentChain for InheritanceSpecifier {
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode> {
         get_parent_chain_of_child(self.id, context)
     }
 }
 impl GetParentChain for InlineAssembly {
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode> {
         get_parent_chain_of_child(self.id, context)
     }
 }
 impl GetParentChain for Literal {
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode> {
         get_parent_chain_of_child(self.id, context)
     }
 }
 impl GetParentChain for MemberAccess {
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode> {
         get_parent_chain_of_child(self.id, context)
     }
 }
 impl GetParentChain for NewExpression {
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode> {
         get_parent_chain_of_child(self.id, context)
     }
 }
 impl GetParentChain for ModifierDefinition {
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode> {
         get_parent_chain_of_child(self.id, context)
     }
 }
 impl GetParentChain for ModifierInvocation {
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode> {
         get_parent_chain_of_child(self.id, context)
     }
 }
 impl GetParentChain for OverrideSpecifier {
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode> {
         get_parent_chain_of_child(self.id, context)
     }
 }
 impl GetParentChain for ParameterList {
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode> {
         get_parent_chain_of_child(self.id, context)
     }
 }
 impl GetParentChain for PragmaDirective {
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode> {
         get_parent_chain_of_child(self.id, context)
     }
 }
 impl GetParentChain for Return {
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode> {
         get_parent_chain_of_child(self.id, context)
     }
 }
 impl GetParentChain for SourceUnit {
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode> {
         get_parent_chain_of_child(self.id, context)
     }
 }
 impl GetParentChain for StructDefinition {
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode> {
         get_parent_chain_of_child(self.id, context)
     }
 }
 impl GetParentChain for StructuredDocumentation {
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode> {
         get_parent_chain_of_child(self.id, context)
     }
 }
 impl GetParentChain for TupleExpression {
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode> {
         get_parent_chain_of_child(self.id, context)
     }
 }
 impl GetParentChain for UnaryOperation {
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode> {
         get_parent_chain_of_child(self.id, context)
     }
 }
 impl GetParentChain for UserDefinedValueTypeDefinition {
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode> {
         get_parent_chain_of_child(self.id, context)
     }
 }
 impl GetParentChain for UsingForDirective {
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode> {
         get_parent_chain_of_child(self.id, context)
     }
 }
 impl GetParentChain for VariableDeclaration {
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode> {
         get_parent_chain_of_child(self.id, context)
     }
 }
 impl GetParentChain for VariableDeclarationStatement {
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode> {
         get_parent_chain_of_child(self.id, context)
     }
 }
 impl GetParentChain for WhileStatement {
-    fn of<'a>(&self, context: &'a WorkspaceContext) -> Vec<ASTNode> {
+    fn of(&self, context: &WorkspaceContext) -> Vec<ASTNode> {
         get_parent_chain_of_child(self.id, context)
     }
 }
