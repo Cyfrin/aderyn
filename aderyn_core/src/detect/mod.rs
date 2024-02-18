@@ -5,6 +5,8 @@ pub mod medium;
 pub mod nc;
 pub mod reusable;
 
+mod experimental; // This should not be publicly exported/exposed to nyth because of how useless the module really is :P
+
 #[macro_export]
 macro_rules! capture {
     ($self:ident, $context:ident, $item:expr) => {
