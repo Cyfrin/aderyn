@@ -323,6 +323,27 @@ impl ASTConstVisitor for ExtractFunctionCalls {
     }
 }
 
+// ExtractFunctionCallOptions extracts all FunctionCallOptions nodes from a given node.
+#[derive(Default)]
+pub struct ExtractFunctionCallOptions {
+    pub extracted: Vec<FunctionCallOptions>,
+}
+
+impl ExtractFunctionCallOptions {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
+        let mut extractor = Self::default();
+        node.accept(&mut extractor).unwrap_or_default();
+        extractor
+    }
+}
+
+impl ASTConstVisitor for ExtractFunctionCallOptions {
+    fn visit_function_call_options(&mut self, node: &FunctionCallOptions) -> Result<bool> {
+        self.extracted.push(node.clone());
+        Ok(true)
+    }
+}
+
 // ExtractFunctionDefinitions extracts all FunctionDefinition nodes from a given node.
 #[derive(Default)]
 
@@ -1076,6 +1097,7 @@ impl ExtractEverything {
         let error_definitions = ExtractErrorDefinitions::from(node).extracted;
         let expression_statements = ExtractExpressionStatements::from(node).extracted;
         let function_calls = ExtractFunctionCalls::from(node).extracted;
+        let function_call_options = ExtractFunctionCallOptions::from(node).extracted;
         let function_definitions = ExtractFunctionDefinitions::from(node).extracted;
         let function_type_names = ExtractFunctionTypeNames::from(node).extracted;
         let for_statements = ExtractForStatements::from(node).extracted;
@@ -1128,6 +1150,7 @@ impl ExtractEverything {
         extracted.extend(error_definitions.iter().map(|x| x.into()));
         extracted.extend(expression_statements.iter().map(|x| x.into()));
         extracted.extend(function_calls.iter().map(|x| x.into()));
+        extracted.extend(function_call_options.iter().map(|x| x.into()));
         extracted.extend(function_definitions.iter().map(|x| x.into()));
         extracted.extend(function_type_names.iter().map(|x| x.into()));
         extracted.extend(for_statements.iter().map(|x| x.into()));
