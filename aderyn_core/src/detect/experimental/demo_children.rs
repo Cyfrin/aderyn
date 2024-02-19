@@ -1,3 +1,4 @@
+use crate::context::browser::GetImmediateChildren;
 #[allow(unused_imports)]
 use crate::{
     ast::{IfStatement, NodeID},
@@ -34,7 +35,7 @@ impl IssueDetector for ChildrenDemoDetector {
         */
         for cd in context.contract_definitions.keys() {
             if cd.name.contains("AnotherOne") {
-                for child in &get_children_of_node(&cd.into(), context).unwrap() {
+                for child in cd.immediate_children(context).unwrap() {
                     println!("{}", child);
                     match child {
                         ASTNode::VariableDeclaration(v) => {
