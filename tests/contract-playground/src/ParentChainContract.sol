@@ -12,7 +12,7 @@ contract ParentChainContract is Ownable, ReentrancyGuard {
         
     }
 
-    function increment(uint256 newNumber) public {
+    function increment(uint256 newNumber, uint256 anotherNumber) public {
         if (number < 5 && number > 1) {
             for (uint256 j = 9; j != 0; --j) {
                 number = newNumber;
@@ -37,12 +37,21 @@ contract ParentChainContract is Ownable, ReentrancyGuard {
 
 contract AnotherOne {
 
+    uint outerX;
+    uint outerY;
+
     function setOwner(address _owner) external {
+        uint256 inner = 1;
+        uint256 innerinner = 42;
         
     }
 
     function someOtherImportantThing() external {
         // do something important
+        uint256 innerinner = 42;
+        if (innerinner == 34) {
+            uint256 ret = 1;
+        }
     }
 
 }
