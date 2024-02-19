@@ -262,7 +262,7 @@ pub fn get_children_of_node(node: &ASTNode, context: &WorkspaceContext) -> Optio
     for (idx, child) in immediate_children.iter().enumerate() {
         let trace = child.src().unwrap();
         let char_index = trace
-            .split(":")
+            .split(':')
             .collect::<Vec<_>>()
             .first()
             .unwrap()

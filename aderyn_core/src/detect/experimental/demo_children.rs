@@ -37,12 +37,9 @@ impl IssueDetector for ChildrenDemoDetector {
             if cd.name.contains("AnotherOne") {
                 for child in cd.immediate_children(context).unwrap() {
                     println!("{}", child);
-                    match child {
-                        ASTNode::VariableDeclaration(v) => {
-                            capture!(self, context, v);
-                        }
-                        _ => (),
-                    };
+                    if let ASTNode::VariableDeclaration(v) = child {
+                        capture!(self, context, v);
+                    }
                 }
             }
         }
