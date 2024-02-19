@@ -22,7 +22,7 @@
       },
       {
         "file_path": "src/ParentChainContract.sol",
-        "n_sloc": 29
+        "n_sloc": 37
       },
       {
         "file_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
@@ -39,7 +39,7 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 229,
+    "total_sloc": 237,
     "total_source_units": 7
   },
   "high_issues": {
