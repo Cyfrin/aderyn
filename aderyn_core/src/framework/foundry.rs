@@ -137,6 +137,7 @@ fn get_filepaths(foundry_out_path: PathBuf, contract_filepaths: &Vec<PathBuf>) -
     let subdirs = get_subdirectories(&foundry_out_path).unwrap_or_else(|_err| {
         // Exit with a non-zero exit code
         eprintln!("Error getting subdirectories of Foundry output directory");
+        eprintln!("{:?}", foundry_out_path);
         std::process::exit(1);
     });
 

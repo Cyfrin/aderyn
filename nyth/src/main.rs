@@ -67,6 +67,16 @@ fn main() {
                 .stderr(Stdio::inherit())
                 .status();
             let foundry_workspace_dir = target_dir.join("foundry_workspace");
+
+            let _ = fs::remove_dir_all(foundry_workspace_dir.join("lib/forge-std"));
+
+            let _ = std::process::Command::new("forge")
+                .args(["install", "foundry-rs/forge-std", "--no-commit"])
+                .current_dir(&foundry_workspace_dir)
+                .stdout(Stdio::inherit()) // This will stream the stdout
+                .stderr(Stdio::inherit())
+                .status();
+
             let _ = std::process::Command::new("forge")
                 .arg("build")
                 .current_dir(&foundry_workspace_dir)
