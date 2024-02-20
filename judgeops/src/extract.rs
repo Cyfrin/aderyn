@@ -1,53 +1,12 @@
 // This module will be used to extract audit feedback from the tagged report.judge.md
 
-use aderyn_core::detect::detector::get_all_detectors_names;
+use std::collections::HashMap;
 
 pub(crate) struct FeedbackExtractor {
     pub(crate) markdown_content: String,
 }
 
 impl FeedbackExtractor {
-    pub fn used_detectors_names(&self) -> Option<Vec<String>> {
-        // Get a list of all the detectors that have participated in the finding
-        // regardless of whether or not they have a finding.
-        // (This will aid in keeping track of "experience" which can later allow
-        // us to find "trigger rate.")
-        let look_for = "## Detectors Used";
-
-        let pos = self
-            .markdown_content
-            .find(look_for)
-            .expect("Corrupted report, unable to find detectors");
-
-        let start_pos = pos + look_for.len();
-
-        let interested_portion = &self.markdown_content[start_pos..];
-        let mut detector_names = vec![];
-        for line in interested_portion.lines() {
-            let pure_content = line.trim_start();
-            if pure_content.starts_with('#') {
-                // When we reach a new heading we know that we are at a different section
-                // so we stop collecting names.
-                break;
-            }
-            if !pure_content.is_empty() {
-                detector_names.push(pure_content.to_string());
-            }
-        }
-
-        // Now verify that these detectors actually exist
-        let all_detectors_names = get_all_detectors_names();
-        let valid = detector_names
-            .iter()
-            .all(|d| all_detectors_names.contains(d));
-
-        if !valid {
-            return None;
-        }
-
-        Some(detector_names)
-    }
-
     pub fn negative_feedbacks(&self) -> Option<Vec<String>> {
         // Look for "@audit:FP" in the markdown (which stands for False Positives)
         // When you come across one, go up to find out which detector was responsible
@@ -55,7 +14,6 @@ impl FeedbackExtractor {
 
         let look_for = "@audit:FP";
         let fp_positions: Vec<_> = self.markdown_content.match_indices(look_for).collect();
-        let all_available_detectors = get_all_detectors_names();
 
         let mut bad_detectors = vec![]; // Well, "bad" as in a detector that produced at least 1 FP
 
@@ -71,9 +29,6 @@ impl FeedbackExtractor {
                 .expect("Corrupted report!");
             let detector_name =
                 &self.markdown_content[start_pos..intermediate_position + *end_position];
-            if !all_available_detectors.contains(&detector_name.to_string()) {
-                return None;
-            }
             bad_detectors.push(detector_name.to_string());
         }
 
@@ -97,7 +52,6 @@ impl FeedbackExtractor {
             .collect::<Vec<_>>();
 
         let mut all_triggered_detectors = vec![];
-        let all_available_detectors = get_all_detectors_names();
 
         for (pos, _) in places {
             let interested_portion = &self.markdown_content[pos + look_for.len()..];
@@ -107,9 +61,7 @@ impl FeedbackExtractor {
                 .take()
                 .expect("Corrupted report");
             let detector_name = detector_name_line.trim();
-            if !all_available_detectors.contains(&detector_name.to_string()) {
-                return None;
-            }
+
             all_triggered_detectors.push(detector_name.to_string());
         }
 
@@ -136,19 +88,8 @@ mod extract_feedback_tests {
     use super::FeedbackExtractor;
 
     #[test]
-    fn judge_can_extract_used_detectors_names() {
-        let judged_report = include_str!("../../tests/post_audit.report-config.judge.md");
-        let extractor = FeedbackExtractor {
-            markdown_content: judged_report.to_string(),
-        };
-        let extracted = extractor.used_detectors_names();
-        println!("Extracted list of used detectors: {:?}", extracted);
-        assert!(extracted.is_some());
-    }
-
-    #[test]
     fn judge_can_extract_negative_feedback_detectors_names() {
-        let judged_report = include_str!("../../tests/post_audit.report-config.judge.md");
+        let judged_report = include_str!("../samples/post_audit.report-config.judge.md");
         let extractor = FeedbackExtractor {
             markdown_content: judged_report.to_string(),
         };
@@ -163,7 +104,7 @@ mod extract_feedback_tests {
 
     #[test]
     fn can_extract_triggered_detectors_names() {
-        let judged_report = include_str!("../../tests/post_audit.report-config.judge.md");
+        let judged_report = include_str!("../samples/post_audit.report-config.judge.md");
         let extractor = FeedbackExtractor {
             markdown_content: judged_report.to_string(),
         };
@@ -178,7 +119,7 @@ mod extract_feedback_tests {
 
     #[test]
     fn judge_can_extract_positive_feedback_detectors_names() {
-        let judged_report = include_str!("../../tests/post_audit.report-config.judge.md");
+        let judged_report = include_str!("../samples/post_audit.report-config.judge.md");
         let extractor = FeedbackExtractor {
             markdown_content: judged_report.to_string(),
         };
@@ -189,5 +130,58 @@ mod extract_feedback_tests {
         );
         assert!(extracted.is_some());
         assert!(!extracted.unwrap().is_empty());
+    }
+}
+
+// TODO Extract Detector Severities
+// In judge.md output all detectors name:severity
+// These will be used for registration
+pub(crate) struct DetectorsUsedExtractor {
+    pub(crate) markdown_content: String,
+}
+
+impl DetectorsUsedExtractor {
+    pub fn used_detectors(&self) -> Option<HashMap<String, String>> {
+        // Key - Detector Name, Value - Severity
+        let mut detectors: HashMap<String, String> = HashMap::new();
+
+        let look_for = "## Detectors Used";
+
+        let pos = self
+            .markdown_content
+            .find(look_for)
+            .expect("Corrupted report, unable to find detectors");
+
+        let start_pos = pos + look_for.len();
+        let interested_portion = &self.markdown_content[start_pos..];
+
+        for line in interested_portion.lines() {
+            if line.is_empty() {
+                continue;
+            } else if line.contains(':') {
+                let parts = line.split_once(':').expect("Corrupted !");
+                detectors.insert(parts.0.to_string(), parts.1.to_string());
+            } else {
+                break;
+            }
+        }
+
+        Some(detectors)
+    }
+}
+
+#[cfg(test)]
+mod extract_detectors_used_tests {
+    use super::DetectorsUsedExtractor;
+
+    #[test]
+    fn judge_can_extract_used_detectors_names_and_severities() {
+        let judged_report = include_str!("../samples/post_audit.report-config.judge.md");
+        let extractor = DetectorsUsedExtractor {
+            markdown_content: judged_report.to_string(),
+        };
+        let extracted = extractor.used_detectors();
+        assert!(extracted.is_some());
+        println!("Extracted list of used detectors: {:?}", extracted);
     }
 }

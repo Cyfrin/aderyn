@@ -10,7 +10,6 @@ use aderyn_driver::{
         IssueDetector, IssueSeverity,
     },
     driver::{self, Args},
-    get_fully_configured_watchtower, WatchTower,
 };
 
 use clap::{Parser, Subcommand};
@@ -211,7 +210,6 @@ fn print_detail_view(detector_name: &str) {
         return;
     }
     let detector = get_issue_detector_by_name(detector_name);
-    let watchtower = get_fully_configured_watchtower();
     println!("\nDetector {}", detector_name);
     println!();
     println!("Title");
@@ -223,29 +221,22 @@ fn print_detail_view(detector_name: &str) {
     println!("Description");
     println!("{}", detector.description());
     println!();
-    println!("Watchtower Rating (LightChaser version)");
-    println!("{}", watchtower.value(detector_name.to_string()));
 }
 
 fn print_all_detectors_view() {
     let all_detector_names = get_all_detectors_names();
-    let watchtower = get_fully_configured_watchtower();
     println!("\nDetector Registry");
     println!();
     println!("{}   Title (Rating)", right_pad("Name", 30));
     println!();
     for severity in IssueSeverity::iter() {
-        print_detectors_view_with_severity(&watchtower, severity, &all_detector_names);
+        print_detectors_view_with_severity(severity, &all_detector_names);
         println!();
     }
     println!();
 }
 
-fn print_detectors_view_with_severity(
-    watchtower: &Box<dyn WatchTower>,
-    severity: IssueSeverity,
-    detectors_names: &[String],
-) {
+fn print_detectors_view_with_severity(severity: IssueSeverity, detectors_names: &[String]) {
     let concerned_detectors = detectors_names
         .iter()
         .filter(|name| {
@@ -261,12 +252,7 @@ fn print_detectors_view_with_severity(
     println!("{}\n", severity);
     for name in concerned_detectors {
         let detector = get_issue_detector_by_name(name);
-        println!(
-            "{} - {} ({:.2})",
-            right_pad(name, 30),
-            detector.title(),
-            watchtower.value(name.to_string()),
-        );
+        println!("{} - {}", right_pad(name, 30), detector.title(),);
     }
     println!();
 }

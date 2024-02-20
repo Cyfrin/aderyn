@@ -1,7 +1,7 @@
 #![allow(clippy::borrowed_box)]
 use std::collections::HashMap;
 
-use aderyn_core::watchtower::{InfersMetrics, Metrics, WatchTower};
+use crate::watchtower::{InfersMetrics, Metrics, WatchTower};
 
 // This struct contains a snapshot of all the metrics for all the detectors
 // before and after a change. It has the ability to summarize the changes

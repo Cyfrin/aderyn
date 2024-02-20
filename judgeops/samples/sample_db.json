@@ -1,0 +1,46 @@
+{
+  "metrics": {
+    "centralization-risk": {
+      "detector_name": "centralization-risk",
+      "true_positives": 5,
+      "false_positives": 1,
+      "trigger_count": 6,
+      "experience": 7,
+      "current_severity": "Medium"
+    },
+    "delegate-call-in-loop": {
+      "detector_name": "delegate-call-in-loop",
+      "true_positives": 5,
+      "false_positives": 2,
+      "trigger_count": 7,
+      "experience": 7,
+      "current_severity": "High"
+    },
+    "push-zero-opcode": {
+      "detector_name": "push-zero-opcode",
+      "true_positives": 5,
+      "false_positives": 0,
+      "trigger_count": 5,
+      "experience": 7,
+      "current_severity": "Low"
+    },
+    "solmate-safe-transfer-lib": {
+      "detector_name": "solmate-safe-transfer-lib",
+      "true_positives": 5,
+      "false_positives": 1,
+      "trigger_count": 7,
+      "experience": 7,
+      "current_severity": "Medium"
+    },
+    "useless-public-function": {
+      "detector_name": "useless-public-function",
+      "true_positives": 5,
+      "false_positives": 0,
+      "trigger_count": 6,
+      "experience": 9,
+      "current_severity": "NC"
+    }
+  },
+  "tags": {},
+  "db_path": "judgeops/samples/sample_db.json"
+}

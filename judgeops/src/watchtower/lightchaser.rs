@@ -19,14 +19,14 @@ use std::process::ExitCode;
 
 use strum::EnumCount;
 
-use crate::detect::detector::{get_all_detectors_names, IssueSeverity};
-
 use super::utils::MetricsDatabase;
 use super::{
-    CalculatesValueOfDetector, DecidesWhenReadyToServe, GetsCurrentMetricsForDetector,
-    GetsRegisteredDetectors, InfersMetrics, Metrics, RegistersNewDetector, TagsTheDetector,
-    TakesFeedbackFromJudge, UnregistersDetector, WatchTower,
+    CalculatesValueOfDetector, GetsCurrentMetricsForDetector, GetsRegisteredDetectors,
+    GiveOverallOpinion, InfersMetrics, Metrics, RegistersNewDetector, TakesFeedbackFromJudge,
+    WatchTower,
 };
+
+use crate::IssueSeverity;
 
 pub struct LightChaser {
     pub metrics_db: MetricsDatabase,
@@ -37,31 +37,8 @@ impl RegistersNewDetector for LightChaser {
         // Chapter 001 - "Every detector is given a accuracy score, this score defaults to 5."
         // Follow up question - Where does 5 come from ?
         // Answered here - https://x.com/ChaseTheLight99/status/1750111766162358288?s=20
-
-        let all_valid_detector_names = get_all_detectors_names();
-        if !all_valid_detector_names.contains(&detector_name) {
-            let message = format!(
-                "Detector {} to be registered not available in core",
-                detector_name
-            );
-            panic!("{}", message);
-        }
         self.metrics_db
             .register_new_detector(detector_name, assigned_severity);
-    }
-}
-
-impl UnregistersDetector for LightChaser {
-    fn unregister_detector(&self, detector_name: String) {
-        let all_valid_detector_names = get_all_detectors_names();
-        if !all_valid_detector_names.contains(&detector_name) {
-            let message = format!(
-                "Detector {} to be registered not available in core",
-                detector_name
-            );
-            panic!("{}", message);
-        }
-        self.metrics_db.unregister_detector(detector_name);
     }
 }
 
@@ -117,7 +94,7 @@ impl TakesFeedbackFromJudge for LightChaser {
         feedback
             .all_exposed_detectors
             .into_iter()
-            .for_each(|detector_name| self.metrics_db.increase_experience(detector_name));
+            .for_each(|detector_name| self.metrics_db.increase_experience(detector_name.0));
     }
 }
 
@@ -149,48 +126,43 @@ impl Metrics {
     }
 }
 
-impl DecidesWhenReadyToServe for LightChaser {
-    fn is_ready_to_serve(&self) -> bool {
-        // Make sure all the detectors in aderyn_core are available and registered in light chaser metrics database
-        let mut core_detectors = get_all_detectors_names();
-        let mut registered_detectors = self.metrics_db.get_all_detectors_names();
-        core_detectors.sort();
-        registered_detectors.sort();
-        core_detectors == registered_detectors // Otherwise they are not in sync
-    }
-    fn print_suggested_changes_before_init(&self) -> ExitCode {
-        if !self.is_ready_to_serve() {
-            println!("Demanding-changes need to be resolved before calculating suggested-changes");
-            return ExitCode::FAILURE;
-        }
+impl GiveOverallOpinion for LightChaser {
+    fn give_overall_opinion(&self) -> ExitCode {
         let mut found_suggestion = false;
-
+        println!();
         // Suggest removing very poorly performing core detectors (lc_accuracy == 0)
-        get_all_detectors_names().iter().for_each(|d| {
-            let d_metrics = self.metrics_db.get_metrics(d.clone());
-            if d_metrics.lc_accuracy() == 0 {
-                println!("{d} should be removed as it's accuracy has fallen to 0 ! ");
-                found_suggestion = true;
-            }
-        });
+        self.metrics_db
+            .get_all_detectors_names()
+            .iter()
+            .for_each(|d| {
+                let d_metrics = self.metrics_db.get_metrics(d.clone());
+                if d_metrics.lc_accuracy() == 0 {
+                    println!("{d} should be removed as it's accuracy has fallen to 0 ! ");
+                    found_suggestion = true;
+                }
+            });
+        println!();
         // Suggest downgrading poorly performing core detectors (lc_accuracy doesn't live up to its severity)
-        get_all_detectors_names().iter().for_each(|d| {
-            let d_metrics = self.metrics_db.get_metrics(d.clone());
-            if !d_metrics.is_acceptable() && d_metrics.lc_accuracy() != 0 {
-                // The case where lc_accuracy = 0 has been taken care above (we completely remove them)
-                println!(
-                    "{d}'s accuracy of {} is unacceptable for {} severity ! ",
-                    d_metrics.lc_accuracy(),
-                    d_metrics.current_severity,
-                );
-                found_suggestion = true;
-            }
-        });
+        self.metrics_db
+            .get_all_detectors_names()
+            .iter()
+            .for_each(|d| {
+                let d_metrics = self.metrics_db.get_metrics(d.clone());
+                if !d_metrics.is_acceptable() && d_metrics.lc_accuracy() != 0 {
+                    // The case where lc_accuracy = 0 has been taken care above (we completely remove them)
+                    println!(
+                        "{d}'s accuracy of {} is unacceptable for {} severity ! ",
+                        d_metrics.lc_accuracy(),
+                        d_metrics.current_severity,
+                    );
+                    found_suggestion = true;
+                }
+            });
         // Suggest giving more feedbacks for inexperienced detectors
         // Group detectors by experience
         let mut experience_map: HashMap<u64, Vec<String>> = HashMap::new();
-
-        for detector_name in get_all_detectors_names() {
+        println!();
+        for detector_name in self.metrics_db.get_all_detectors_names() {
             let d_metrics = self.metrics_db.get_metrics(detector_name.clone());
             if let hash_map::Entry::Vacant(e) = experience_map.entry(d_metrics.experience) {
                 e.insert(vec![detector_name]);
@@ -236,7 +208,7 @@ impl DecidesWhenReadyToServe for LightChaser {
         // Group detectors by accuracy
         let mut lc_accuracy_map: HashMap<u64, Vec<String>> = HashMap::new();
 
-        for detector_name in get_all_detectors_names() {
+        for detector_name in self.metrics_db.get_all_detectors_names() {
             let d_metrics = self.metrics_db.get_metrics(detector_name.clone());
             if let hash_map::Entry::Vacant(e) = lc_accuracy_map.entry(d_metrics.lc_accuracy()) {
                 e.insert(vec![detector_name]);
@@ -265,31 +237,6 @@ impl DecidesWhenReadyToServe for LightChaser {
         } else {
             ExitCode::FAILURE
         }
-    }
-    fn print_demanding_changes_before_init(&self) -> ExitCode {
-        if !self.is_ready_to_serve() {
-            println!("Please register these newly added detectors! ");
-            let core_detectors = get_all_detectors_names();
-            let registered_detectors = self.metrics_db.get_all_detectors_names();
-            let mut extras = vec![];
-
-            for core_detector in core_detectors {
-                if !registered_detectors
-                    .iter()
-                    .any(|d| d.clone() == core_detector)
-                {
-                    extras.push(core_detector);
-                }
-            }
-
-            for extra_detector in extras {
-                println!("{}", extra_detector);
-            }
-            return ExitCode::FAILURE;
-        }
-
-        println!("No demanding changes required. You are good to go!");
-        ExitCode::SUCCESS
     }
 }
 
@@ -321,55 +268,53 @@ impl GetsRegisteredDetectors for LightChaser {
     }
 }
 
-impl TagsTheDetector for LightChaser {
-    fn request_tag(&self, detector_name: String) -> Option<super::Tag> {
-        let metrics = self.metrics_db.get_metrics(detector_name.clone());
-        if metrics.is_acceptable() && !self.metrics_db.tags.contains_key(&detector_name) {
-            return None;
-        }
-        let mut tag_messages = vec![];
-        // Implicit tags (when accuracy drops too low for given severity)
-        if !metrics.is_acceptable() {
-            tag_messages.push(format!(
-                "{} is too low of an accuracy for {} detector",
-                metrics.lc_accuracy(),
-                metrics.current_severity
-            ));
-        }
-        // Explicit tags (set at the time of registering the detectors or ad hoc)
-        if self.metrics_db.tags.contains_key(&detector_name) {
-            if let Some(tags) = self.metrics_db.tags.get(&detector_name) {
-                tag_messages.extend(tags.messages.clone());
-            }
-        }
-        Some(super::Tag {
-            messages: tag_messages,
-        })
-    }
-
-    fn explicity_tag(&self, detector_name: String, message: String) {
-        self.metrics_db
-            .tag_detector_with_message(detector_name, message);
-    }
-
-    fn remove_tag(&self, detector_name: String) {
-        self.metrics_db.remove_tag(detector_name);
-    }
-}
-
 impl WatchTower for LightChaser {}
+
+/*
+
+Unit Tests
+
+*/
 
 #[cfg(test)]
 mod lightchaser_tests {
+    use std::collections::HashMap;
+
     use serial_test::serial;
-    use strum::EnumCount;
+    use strum::{Display, EnumCount, EnumString};
 
     use crate::{
-        detect::detector::{IssueDetectorNamePool, IssueSeverity},
         watchtower::{utils::MetricsDatabase, Feedback, InfersMetrics, WatchTower},
+        IssueSeverity,
     };
 
     use super::LightChaser;
+
+    #[derive(Debug, PartialEq, EnumString, Display)]
+    #[strum(serialize_all = "kebab-case")]
+    pub(crate) enum IssueDetectorNamePool {
+        DelegateCallInLoop,
+        CentralizationRisk,
+        SolmateSafeTransferLib,
+        AvoidAbiEncodePacked,
+        Ecrecover,
+        DeprecatedOzFunctions,
+        UnsafeERC20Functions,
+        UnspecificSolidityPragma,
+        ZeroAddressCheck,
+        UselessPublicFunction,
+        ConstantsInsteadOfLiterals,
+        UnindexedEvents,
+        RequireWithString,
+        NonReentrantBeforeOthers,
+        BlockTimestampDeadline,
+        UnsafeOzERC721Mint,
+        PushZeroOpcode,
+        ArbitraryTransferFrom,
+        // NOTE: `Undecided` will be the default name (for new bots).
+        // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
+        Undecided,
+    }
 
     #[test]
     #[serial]
@@ -455,7 +400,10 @@ mod lightchaser_tests {
         watchtower.take_feedback(Feedback {
             positive_feedbacks: vec![],
             negative_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
-            all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: HashMap::from([(
+                IssueDetectorNamePool::CentralizationRisk.to_string(),
+                IssueSeverity::Medium.to_string(),
+            )]),
         });
 
         let current_metrics =
@@ -466,7 +414,10 @@ mod lightchaser_tests {
         watchtower.take_feedback(Feedback {
             positive_feedbacks: vec![],
             negative_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
-            all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: HashMap::from([(
+                IssueDetectorNamePool::CentralizationRisk.to_string(),
+                IssueSeverity::Medium.to_string(),
+            )]),
         });
 
         let current_metrics =
@@ -477,7 +428,10 @@ mod lightchaser_tests {
         watchtower.take_feedback(Feedback {
             positive_feedbacks: vec![],
             negative_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
-            all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: HashMap::from([(
+                IssueDetectorNamePool::CentralizationRisk.to_string(),
+                IssueSeverity::Medium.to_string(),
+            )]),
         });
 
         let current_metrics =
@@ -509,7 +463,10 @@ mod lightchaser_tests {
         watchtower.take_feedback(Feedback {
             positive_feedbacks: vec![],
             negative_feedbacks: vec![],
-            all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: HashMap::from([(
+                IssueDetectorNamePool::CentralizationRisk.to_string(),
+                IssueSeverity::Medium.to_string(),
+            )]),
         });
 
         let after_value = watchtower.value(IssueDetectorNamePool::CentralizationRisk.to_string());
@@ -538,7 +495,10 @@ mod lightchaser_tests {
         watchtower.take_feedback(Feedback {
             positive_feedbacks: vec![],
             negative_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
-            all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: HashMap::from([(
+                IssueDetectorNamePool::CentralizationRisk.to_string(),
+                IssueSeverity::Medium.to_string(),
+            )]),
         });
 
         let current_metrics =
@@ -548,7 +508,10 @@ mod lightchaser_tests {
         watchtower.take_feedback(Feedback {
             positive_feedbacks: vec![],
             negative_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
-            all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: HashMap::from([(
+                IssueDetectorNamePool::CentralizationRisk.to_string(),
+                IssueSeverity::Medium.to_string(),
+            )]),
         });
 
         let current_metrics =
@@ -558,7 +521,10 @@ mod lightchaser_tests {
         watchtower.take_feedback(Feedback {
             positive_feedbacks: vec![],
             negative_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
-            all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: HashMap::from([(
+                IssueDetectorNamePool::CentralizationRisk.to_string(),
+                IssueSeverity::Medium.to_string(),
+            )]),
         });
 
         let current_metrics =
@@ -568,7 +534,10 @@ mod lightchaser_tests {
         watchtower.take_feedback(Feedback {
             positive_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
             negative_feedbacks: vec![],
-            all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: HashMap::from([(
+                IssueDetectorNamePool::CentralizationRisk.to_string(),
+                IssueSeverity::Medium.to_string(),
+            )]),
         });
 
         let current_metrics =
@@ -578,7 +547,10 @@ mod lightchaser_tests {
         watchtower.take_feedback(Feedback {
             positive_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
             negative_feedbacks: vec![],
-            all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: HashMap::from([(
+                IssueDetectorNamePool::CentralizationRisk.to_string(),
+                IssueSeverity::Medium.to_string(),
+            )]),
         });
 
         let current_metrics =
@@ -611,7 +583,10 @@ mod lightchaser_tests {
         watchtower.take_feedback(Feedback {
             positive_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
             negative_feedbacks: vec![],
-            all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: HashMap::from([(
+                IssueDetectorNamePool::CentralizationRisk.to_string(),
+                IssueSeverity::Medium.to_string(),
+            )]),
         });
 
         let current_metrics =
@@ -644,7 +619,10 @@ mod lightchaser_tests {
         watchtower.take_feedback(Feedback {
             positive_feedbacks: vec![],
             negative_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
-            all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: HashMap::from([(
+                IssueDetectorNamePool::CentralizationRisk.to_string(),
+                IssueSeverity::Medium.to_string(),
+            )]),
         });
 
         let current_metrics =
@@ -654,7 +632,10 @@ mod lightchaser_tests {
         watchtower.take_feedback(Feedback {
             positive_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
             negative_feedbacks: vec![],
-            all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: HashMap::from([(
+                IssueDetectorNamePool::CentralizationRisk.to_string(),
+                IssueSeverity::Medium.to_string(),
+            )]),
         });
 
         let current_metrics =
@@ -688,7 +669,10 @@ mod lightchaser_tests {
             watchtower.take_feedback(Feedback {
                 positive_feedbacks: vec![],
                 negative_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
-                all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
+                all_exposed_detectors: HashMap::from([(
+                    IssueDetectorNamePool::CentralizationRisk.to_string(),
+                    IssueSeverity::Medium.to_string(),
+                )]),
             });
         }
 
@@ -699,7 +683,10 @@ mod lightchaser_tests {
         watchtower.take_feedback(Feedback {
             positive_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
             negative_feedbacks: vec![],
-            all_exposed_detectors: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: HashMap::from([(
+                IssueDetectorNamePool::CentralizationRisk.to_string(),
+                IssueSeverity::Medium.to_string(),
+            )]),
         });
         assert!(current_metrics.lc_accuracy() == 0);
     }
