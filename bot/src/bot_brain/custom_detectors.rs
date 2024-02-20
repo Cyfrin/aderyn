@@ -13,7 +13,10 @@ use std::{fs::OpenOptions, io::BufWriter, path::PathBuf};
  *  - Do not add any comments of your own, change function definitions, etc
  *  - However, YOU ARE ALLOWED to modify the custom_detectors array so long as you maintain the original structure.
  */
-use aderyn_driver::detector::IssueDetector;
+use aderyn_driver::{
+    detector::IssueDetector,
+    driver::{drive_with, Args},
+};
 use serde::Serialize;
 
 fn custom_detectors() -> Vec<Box<dyn IssueDetector>> {
@@ -37,6 +40,19 @@ pub fn refresh_metadata() {
 
     let value = serde_json::to_value(metadata).unwrap();
     _ = serde_json::to_writer_pretty(bw, &value);
+}
+
+pub fn generate_report_for_judge(root: &str, output: &str) {
+    drive_with(
+        Args {
+            root: root.to_string(),
+            output: output.to_string(),
+            exclude: None,
+            scope: None,
+            no_snippets: false,
+        },
+        custom_detectors(),
+    )
 }
 
 impl From<Vec<Box<dyn IssueDetector>>> for Metadata {

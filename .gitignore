@@ -2,4 +2,5 @@
 .DS_Store
 .venv
 bot_ci_cd/*
+bot_ci_cd
 lightchaser_tests.metrics_db.json
