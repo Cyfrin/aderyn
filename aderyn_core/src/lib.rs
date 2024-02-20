@@ -5,7 +5,6 @@ pub mod framework;
 pub mod fscloc;
 pub mod report;
 pub mod visitor;
-pub mod watchtower;
 
 use detect::detector::IssueDetector;
 use eyre::Result;
@@ -20,9 +19,6 @@ use crate::detect::detector::{get_all_issue_detectors, IssueSeverity};
 use crate::report::printer::ReportPrinter;
 use crate::report::reporter::Report;
 use crate::report::Issue;
-use crate::watchtower::lightchaser::LightChaser;
-use crate::watchtower::utils::MetricsDatabase;
-use crate::watchtower::WatchTower;
 
 pub fn run_with_printer<T>(
     context: &WorkspaceContext,
@@ -60,8 +56,10 @@ where
 
     println!("Running {} detectors", detectors.len());
 
-    let detectors_used = &detectors.iter().map(|d| d.name()).collect::<Vec<_>>();
-    let watchtower = get_fully_configured_watchtower();
+    let detectors_used = &detectors
+        .iter()
+        .map(|d| (d.name(), d.severity().to_string()))
+        .collect::<Vec<_>>();
     let mut report: Report = Report::default();
     for mut detector in detectors {
         if let Ok(found) = detector.detect(context) {
@@ -104,7 +102,6 @@ where
         Some(output_file_path.clone()),
         no_snippets,
         detectors_used,
-        &watchtower,
     )?;
 
     println!("Report printed to {}", output_file_path);
@@ -124,15 +121,4 @@ fn get_markdown_writer(filename: &str) -> io::Result<File> {
 
 pub fn read_file_to_string(path: &PathBuf) -> Result<String> {
     Ok(std::fs::read_to_string(path)?)
-}
-
-pub(crate) fn get_metrics_db() -> MetricsDatabase {
-    serde_json::from_str(include_str!("../../watchtower.metrics_db.json"))
-        .expect("database corrupted !")
-}
-
-pub fn get_fully_configured_watchtower() -> Box<dyn WatchTower> {
-    Box::new(LightChaser {
-        metrics_db: get_metrics_db(),
-    })
 }

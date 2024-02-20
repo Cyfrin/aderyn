@@ -4,7 +4,7 @@ use std::{
 };
 
 use super::reporter::Report;
-use crate::{context::workspace_context::WorkspaceContext, watchtower::WatchTower};
+use crate::context::workspace_context::WorkspaceContext;
 
 #[allow(clippy::borrowed_box)]
 pub trait ReportPrinter<T> {
@@ -17,7 +17,6 @@ pub trait ReportPrinter<T> {
         root_rel_path: PathBuf,
         output_rel_path: Option<String>, // you writer 'W' may or may not be writing a file. Eg: it can simply consume and forget :P
         no_snippets: bool,
-        detectors_used: &[String],
-        watchtower: &Box<dyn WatchTower>,
+        detectors_used: &[(String, String)],
     ) -> Result<T>;
 }
