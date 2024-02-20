@@ -1,0 +1,9 @@
+{
+    "positive_feedbacks": [],
+    "negative_feedbacks": ["solmate-safe-transfer-lib", "centralization-risk"],
+    "all_exposed_detectors" : {
+        "useless-public-function": "NC (Non Critical)",
+        "solmate-safe-transfer-lib": "Medium",
+        "centralization-risk": "Medium"
+    }
+}

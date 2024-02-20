@@ -1,4 +1,5 @@
 #![allow(clippy::borrowed_box)]
+
 pub mod lightchaser;
 pub mod utils;
 
@@ -6,7 +7,7 @@ use std::{collections::HashMap, process::ExitCode};
 
 use serde::{Deserialize, Serialize};
 
-use crate::detect::detector::IssueSeverity;
+use crate::IssueSeverity;
 
 // TODO: See how to get in true_negatives and false_negatives.
 // (We can complete the confusion matrix)
@@ -42,7 +43,7 @@ pub struct Feedback {
     // TODO: Assert that there are never common elements among positive_feedbacks and negative_feedbacks in the same `Feedback` object
     pub positive_feedbacks: Vec<String>, // An array of {detector_names} that have performed well
     pub negative_feedbacks: Vec<String>, // An array of {detector_names} that has performed poorly
-    pub all_exposed_detectors: Vec<String>, // An array of {detector_name} that was exposed (regardless of whether or not they were triggered) to the codebase
+    pub all_exposed_detectors: HashMap<String, String>, // An array of {detector_name} that was exposed (regardless of whether or not they were triggered) to the codebase
 }
 
 pub trait RegistersNewDetector {
@@ -57,39 +58,28 @@ pub trait GetsRegisteredDetectors {
     fn get_registered_detectors_names(&self) -> Vec<String>;
 }
 
-pub trait GetsCurrentMetricsForDetector: DecidesWhenReadyToServe {
+pub trait GetsCurrentMetricsForDetector {
     fn metrics(&self, detector_name: String) -> Metrics;
     fn all_metrics(&self) -> HashMap<String, Metrics>;
-    fn is_ready_to_get_metrics(&self) -> bool {
-        self.is_ready_to_serve()
-    }
 }
 
-pub trait DecidesWhenReadyToServe {
-    fn is_ready_to_serve(&self) -> bool;
-    fn print_demanding_changes_before_init(&self) -> ExitCode;
-    fn print_suggested_changes_before_init(&self) -> ExitCode;
+pub trait GiveOverallOpinion {
+    fn give_overall_opinion(&self) -> ExitCode;
 }
 
-pub trait TakesFeedbackFromJudge: DecidesWhenReadyToServe {
+pub trait TakesFeedbackFromJudge {
     /// NOTE - Make sure to be ready to take feedback before you take feedback
     fn take_feedback(&self, feedback: Feedback);
-    fn is_ready_to_take_feedback(&self) -> bool {
-        self.is_ready_to_serve()
-    }
 }
 
 pub trait InfersMetrics {
     fn is_acceptable(&self) -> bool;
 }
 
-pub trait CalculatesValueOfDetector: DecidesWhenReadyToServe {
+pub trait CalculatesValueOfDetector {
     /// All implementations MUST return a value from [0, 1] only
     fn value(&self, detector_name: String) -> f64;
     fn value_from_metrics(&self, metrics: &Metrics) -> f64;
-    fn is_ready_to_calculate_value(&self) -> bool {
-        self.is_ready_to_serve()
-    }
 }
 
 #[derive(Deserialize, Serialize, Debug, PartialEq)]
@@ -97,22 +87,12 @@ pub struct Tag {
     pub messages: Vec<String>,
 }
 
-pub trait TagsTheDetector {
-    /// Should return any explicit tag set by judge <or> an implicitly created tag
-    /// which happens when it fails `InferMetrics::is_acceptable()` test
-    fn request_tag(&self, detector_name: String) -> Option<Tag>;
-    fn explicity_tag(&self, detector_name: String, message: String);
-    fn remove_tag(&self, detector_name: String);
-}
-
 pub trait WatchTower:
     RegistersNewDetector
-    + UnregistersDetector
     + GetsCurrentMetricsForDetector
-    + DecidesWhenReadyToServe
+    + GiveOverallOpinion
     + TakesFeedbackFromJudge
     + CalculatesValueOfDetector
     + GetsRegisteredDetectors
-    + TagsTheDetector
 {
 }

@@ -1,7 +1,7 @@
 #![allow(clippy::borrowed_box)]
 use serde::{Deserialize, Serialize, Serializer};
 use std::{
-    collections::{hash_map, BTreeMap, HashMap},
+    collections::{BTreeMap, HashMap},
     fs::OpenOptions,
     io::Write,
     path::PathBuf,
@@ -9,7 +9,7 @@ use std::{
 };
 use strum::EnumCount;
 
-use crate::detect::detector::IssueSeverity;
+use crate::IssueSeverity;
 
 use super::{Metrics, Tag};
 
@@ -67,6 +67,7 @@ impl MetricsDatabase {
         }
     }
 
+    #[cfg(test)]
     pub fn self_delete(&self) {
         let db_file = PathBuf::from(self.db_path.clone());
         if db_file.exists() {
@@ -120,17 +121,6 @@ impl MetricsDatabase {
         self.save_db(state);
     }
 
-    pub fn unregister_detector(&self, name: String) {
-        let mut state = self.get_current_db();
-
-        if !state.metrics.contains_key(&name) {
-            panic!("Database does not contain specified detector !")
-        }
-
-        state.metrics.remove(&name);
-        self.save_db(state);
-    }
-
     pub fn increase_true_positive_with_trigger_count(&self, name: String) {
         let mut state = self.get_current_db();
         let current_tp = state.metrics.get(&name).unwrap().true_positives;
@@ -176,27 +166,5 @@ impl MetricsDatabase {
     pub fn get_all_detectors_names(&self) -> Vec<String> {
         let state = self.get_current_db();
         state.metrics.into_keys().collect()
-    }
-
-    pub fn tag_detector_with_message(&self, detector_name: String, message: String) {
-        let mut state = self.get_current_db();
-        if let hash_map::Entry::Vacant(e) = state.tags.entry(detector_name.clone()) {
-            e.insert(Tag {
-                messages: vec![message],
-            });
-        } else {
-            let tag = state.tags.get_mut(&detector_name).unwrap();
-            tag.messages.push(message)
-        }
-        self.save_db(state)
-    }
-
-    pub fn remove_tag(&self, detector_name: String) {
-        let mut state = self.get_current_db();
-        state
-            .tags
-            .remove(&detector_name)
-            .unwrap_or_else(|| panic!("{} is invalid", &detector_name));
-        self.save_db(state)
     }
 }

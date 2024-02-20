@@ -14,5 +14,5 @@ members = [
 resolver="1"
 
 exclude = [
-    "bot_ci_cd"
+    "bot_ci_cd",
 ]

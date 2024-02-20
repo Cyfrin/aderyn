@@ -1,0 +1,9 @@
+{
+    "negative_feedbacks": ["delegate-call-in-loop"],
+    "positive_feedbacks": ["useless-public-function"],
+    "all_exposed_detectors" : {
+        "push-zero-opcode": "Low", 
+        "delegate-call-in-loop": "High", 
+        "useless-public-function": "NC (Non Critical)"
+    }
+}
