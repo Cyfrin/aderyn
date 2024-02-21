@@ -16,7 +16,7 @@ pub struct UnspecificSolidityPragmaDetector {
 
 impl IssueDetector for UnspecificSolidityPragmaDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        for pragma_directive in context.pragma_directives.keys() {
+        for pragma_directive in context.pragma_directives() {
             for literal in &pragma_directive.literals {
                 if literal.contains('^') || literal.contains('>') {
                     capture!(self, context, pragma_directive);

@@ -27,9 +27,9 @@ impl IssueDetector for ZeroAddressCheckDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // Get all address state variables
         self.mutable_address_state_variables = context
-            .variable_declarations
-            .keys()
-            .filter_map(|var_decl| {
+            .variable_declarations()
+            .iter()
+            .filter_map(|&var_decl| {
                 if !var_decl.constant
                     && matches!(var_decl.mutability, Some(Mutability::Mutable))
                     && var_decl.state_variable
@@ -54,7 +54,7 @@ impl IssueDetector for ZeroAddressCheckDetector {
             .collect();
 
         // Get all function definitions
-        for function_definition in context.function_definitions.keys() {
+        for function_definition in context.function_definitions() {
             // Get all the binary checks inside the function
             let binary_operations: Vec<BinaryOperation> =
                 ExtractBinaryOperations::from(function_definition)
