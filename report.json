@@ -93,6 +93,14 @@
         "n_sloc": 8
       },
       {
+        "file_path": "src/nested/1/Nested.sol",
+        "n_sloc": 10
+      },
+      {
+        "file_path": "src/nested/2/Nested.sol",
+        "n_sloc": 7
+      },
+      {
         "file_path": "src/uniswap/UniswapV2Swapper.sol",
         "n_sloc": 50
       },
@@ -103,8 +111,8 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 647,
-    "total_source_units": 19
+    "total_sloc": 664,
+    "total_source_units": 21
   },
   "high_issues": {
     "issues": [
@@ -331,6 +339,14 @@
           {
             "contract_path": "src/inheritance/InheritanceBase.sol",
             "line_no": 2
+          },
+          {
+            "contract_path": "src/nested/1/Nested.sol",
+            "line_no": 5
+          },
+          {
+            "contract_path": "src/nested/2/Nested.sol",
+            "line_no": 5
           },
           {
             "contract_path": "src/uniswap/UniswapV2Swapper.sol",
