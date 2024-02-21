@@ -162,7 +162,7 @@ fn get_matching_output_files(
 
 #[cfg(test)]
 mod tests {
-    use rayon::result;
+    
 
     use super::*;
 
