@@ -48,6 +48,7 @@ pub fn read_foundry_output_file(filepath: &str) -> Result<FoundryOutput> {
     )?))?)
 }
 
+#[derive(Debug)]
 pub struct LoadedFoundry {
     pub src_path: String,
     pub src_filepaths: Vec<PathBuf>,
@@ -157,4 +158,31 @@ fn get_matching_output_files(
         })
         .cloned()
         .collect()
+}
+
+#[cfg(test)]
+mod tests {
+    use rayon::result;
+
+    use super::*;
+
+    #[test]
+    fn test_nested_contracts_with_same_name() {
+        let cargo_root = PathBuf::from(std::env::var("CARGO_MANIFEST_DIR").unwrap());
+        let tests_contract_playground_path = cargo_root
+            .join("../tests/contract-playground/")
+            .canonicalize()
+            .unwrap();
+        let result = load_foundry(&tests_contract_playground_path).unwrap();
+        let nested_1_exists = result
+            .output_filepaths
+            .iter()
+            .any(|path| path.to_str().unwrap().contains("1/Nested.sol"));
+        let nested_2_exists = result
+            .output_filepaths
+            .iter()
+            .any(|path| path.to_str().unwrap().contains("2/Nested.sol"));
+        assert!(nested_1_exists);
+        assert!(nested_2_exists);
+    }
 }
