@@ -92,42 +92,19 @@ pub fn load_foundry(foundry_root: &PathBuf) -> Result<LoadedFoundry, Box<dyn Err
     // (This is because some contracts may be imported but not deployed, or there may be old contracts in the output directory)
     let foundry_out_path = foundry_root_absolute.join(&foundry_config.profile.default.out);
 
-    let test_json_filepaths = collect_nested_files(&foundry_out_path.clone(), "json")
+    let json_output_filepaths = collect_nested_files(&foundry_out_path.clone(), "json")
         .unwrap_or_else(|_err| {
             // Exit with a non-zero exit code
             eprintln!("Error collecting JSON output files from Foundry output directory");
             std::process::exit(1);
         });
-    let output_filepaths =
-        test_get_matching_output_files(&test_json_filepaths, &contract_filepaths);
+    let output_filepaths = get_matching_output_files(&json_output_filepaths, &contract_filepaths);
 
     Ok(LoadedFoundry {
         src_path: foundry_config.profile.default.src,
         src_filepaths: contract_filepaths,
         output_filepaths,
     })
-}
-
-fn test_get_matching_output_files(
-    json_output_filepaths: &[PathBuf],
-    src_filepaths: &[PathBuf],
-) -> Vec<PathBuf> {
-    let mut matching_filepaths = Vec::new();
-
-    for output_filepath in json_output_filepaths {
-        for src_filepath in src_filepaths {
-            // Check if output_filepath string representation contains the contract name with ".sol"
-            if let Some(output_filepath_str) = output_filepath.to_str() {
-                let contract_name = src_filepath.file_name().unwrap().to_str().unwrap();
-                if output_filepath_str.contains(contract_name)
-                    && !matching_filepaths.contains(output_filepath)
-                {
-                    matching_filepaths.push(output_filepath.clone());
-                }
-            }
-        }
-    }
-    matching_filepaths
 }
 
 fn read_config(path: &PathBuf) -> Result<FoundryConfig, Box<dyn Error>> {
@@ -162,4 +139,22 @@ fn collect_nested_files(path: &PathBuf, extension: &str) -> Result<Vec<PathBuf>,
     }
 
     Ok(results)
+}
+
+fn get_matching_output_files(
+    json_output_filepaths: &[PathBuf],
+    src_filepaths: &[PathBuf],
+) -> Vec<PathBuf> {
+    json_output_filepaths
+        .iter()
+        .filter(|output_filepath| {
+            src_filepaths.iter().any(|src_filepath| {
+                let contract_name = src_filepath.file_name().unwrap().to_str().unwrap();
+                output_filepath
+                    .to_str()
+                    .map_or(false, |s| s.contains(contract_name))
+            })
+        })
+        .cloned()
+        .collect()
 }
