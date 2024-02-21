@@ -16,7 +16,7 @@ pub struct DeprecatedOZFunctionsDetector {
 
 impl IssueDetector for DeprecatedOZFunctionsDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        for identifier in context.identifiers.keys() {
+        for identifier in context.identifiers() {
             // if source_unit has any ImportDirectives with absolute_path containing "openzeppelin"
             // call identifier.accept(self)
             let source_unit = GetParent::source_unit_of(identifier, context).unwrap();
@@ -32,7 +32,7 @@ impl IssueDetector for DeprecatedOZFunctionsDetector {
                 capture!(self, context, identifier);
             }
         }
-        for member_access in context.member_accesses.keys() {
+        for member_access in context.member_accesses() {
             // if source_unit has any ImportDirectives with absolute_path containing "openzeppelin"
             // call member_access.accept(self)
             let source_unit = GetParent::source_unit_of(member_access, context).unwrap();

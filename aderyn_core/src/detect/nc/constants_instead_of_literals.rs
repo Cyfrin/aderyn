@@ -19,7 +19,7 @@ impl IssueDetector for ConstantsInsteadOfLiteralsDetector {
         // get all function definitions.
         // for each function definition, find all Literal types
         // if the literal type is either a Number, HexString or Address, then add it to the list of found literals
-        for function_definition in context.function_definitions.keys() {
+        for function_definition in context.function_definitions() {
             ExtractLiterals::from(function_definition)
                 .extracted
                 .iter()

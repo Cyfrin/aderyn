@@ -16,7 +16,7 @@ pub struct EcrecoverDetector {
 
 impl IssueDetector for EcrecoverDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        for identifier in context.identifiers.keys() {
+        for identifier in context.identifiers() {
             if identifier.name == "ecrecover" {
                 capture!(self, context, identifier);
             }
