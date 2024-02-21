@@ -44,19 +44,23 @@ fn check_argument_validity(function_call: &FunctionCall) -> bool {
 
 impl IssueDetector for ArbitraryTransferFromDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        let transfer_from_function_calls = context.function_calls.keys().filter(|function_call| {
-            // For each function call, check if the function call is a member access
-            // and if the member name is "transferFrom" or "safeTransferFrom", then check if the first argument is valid
-            // If the first argument is valid, add the function call to found_instances
-            if let Expression::MemberAccess(member_access) = &*function_call.expression {
-                if member_access.member_name == "transferFrom"
-                    || member_access.member_name == "safeTransferFrom"
-                {
-                    return check_argument_validity(function_call);
-                }
-            }
-            false
-        });
+        let transfer_from_function_calls =
+            context
+                .function_calls()
+                .into_iter()
+                .filter(|&function_call| {
+                    // For each function call, check if the function call is a member access
+                    // and if the member name is "transferFrom" or "safeTransferFrom", then check if the first argument is valid
+                    // If the first argument is valid, add the function call to found_instances
+                    if let Expression::MemberAccess(member_access) = &*function_call.expression {
+                        if member_access.member_name == "transferFrom"
+                            || member_access.member_name == "safeTransferFrom"
+                        {
+                            return check_argument_validity(function_call);
+                        }
+                    }
+                    false
+                });
 
         for item in transfer_from_function_calls {
             capture!(self, context, item);

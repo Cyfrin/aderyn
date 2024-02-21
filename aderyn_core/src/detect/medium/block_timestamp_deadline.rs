@@ -16,7 +16,7 @@ pub struct BlockTimestampDeadlineDetector {
 
 impl IssueDetector for BlockTimestampDeadlineDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        for call in context.function_calls.keys() {
+        for call in context.function_calls() {
             // Uniswap V2 - Function Calls
             // For each FunctionCall, if the Expression is a MemberAccess that is named any of the following:
             // [

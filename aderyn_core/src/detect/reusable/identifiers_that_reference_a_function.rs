@@ -25,7 +25,7 @@ impl ReusableDetector for IdentifiersThatReferenceAFunctionDetector {
 
         let retrieved = &using[0];
         if let ASTNode::FunctionDefinition(function_definition) = retrieved {
-            context.identifiers.keys().for_each(|identifier| {
+            context.identifiers().iter().for_each(|&identifier| {
                 if identifier.referenced_declaration == function_definition.id {
                     self.found_instances.push(function_definition.into());
                 }
@@ -50,12 +50,12 @@ mod identifiers_that_reference_functions_detector_tests {
 
     #[test]
     fn test_identifiers_that_reference_functions_detector() {
-        let context =
+        let mut context =
             load_contract("../tests/contract-playground/out/Counter.sol/Counter.0.8.21.json");
         // from context, get the first item from function_definitions where name is "amountIn"
         let function_definition = context
-            .function_definitions
-            .keys()
+            .function_definitions()
+            .iter()
             .find(|function_definition| function_definition.name == "increment")
             .unwrap()
             .clone();

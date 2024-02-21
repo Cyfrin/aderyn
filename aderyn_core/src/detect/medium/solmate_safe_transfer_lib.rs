@@ -16,7 +16,7 @@ pub struct SolmateSafeTransferLibDetector {
 
 impl IssueDetector for SolmateSafeTransferLibDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        for import_directive in context.import_directives.keys() {
+        for import_directive in context.import_directives() {
             // If the import directive absolute_path contains the strings "solmate" and "SafeTransferLib", flip the found_solmate_import flag to true
             if import_directive
                 .absolute_path
