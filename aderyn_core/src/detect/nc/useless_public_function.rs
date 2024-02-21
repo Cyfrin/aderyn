@@ -20,13 +20,16 @@ pub struct UselessPublicFunctionDetector {
 impl IssueDetector for UselessPublicFunctionDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         let unreferenced_public_functions =
-            context.function_definitions.keys().filter(|&function| {
-                matches!(function.visibility, Visibility::Public)
-                    && !matches!(function.kind, FunctionKind::Constructor)
-                    && IdentifiersThatReferenceAFunctionDetector::default()
-                        .detect(context, &[function.into()], &[])
-                        .map_or(false, |refs| refs.is_empty())
-            });
+            context
+                .function_definitions()
+                .into_iter()
+                .filter(|&function| {
+                    matches!(function.visibility, Visibility::Public)
+                        && !matches!(function.kind, FunctionKind::Constructor)
+                        && IdentifiersThatReferenceAFunctionDetector::default()
+                            .detect(context, &[function.into()], &[])
+                            .map_or(false, |refs| refs.is_empty())
+                });
 
         for unreferenced_public_function in unreferenced_public_functions {
             capture!(self, context, unreferenced_public_function);

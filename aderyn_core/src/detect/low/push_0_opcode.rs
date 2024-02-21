@@ -54,7 +54,7 @@ fn version_req_allows_above_0_8_19(version_req: &VersionReq) -> bool {
 
 impl IssueDetector for PushZeroOpcodeDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        for pragma_directive in context.pragma_directives.keys() {
+        for pragma_directive in context.pragma_directives() {
             let mut version_string = String::new();
 
             for literal in &pragma_directive.literals {

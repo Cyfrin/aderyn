@@ -16,7 +16,7 @@ pub struct UnsafeERC20FunctionsDetector {
 
 impl IssueDetector for UnsafeERC20FunctionsDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        for member_access in context.member_accesses.keys() {
+        for member_access in context.member_accesses() {
             if member_access.member_name == "transferFrom"
                 || member_access.member_name == "approve"
                 || member_access.member_name == "transfer"

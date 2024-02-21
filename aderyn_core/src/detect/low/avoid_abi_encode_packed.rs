@@ -16,7 +16,7 @@ pub struct AvoidAbiEncodePackedDetector {
 
 impl IssueDetector for AvoidAbiEncodePackedDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        for member_access in context.member_accesses.keys() {
+        for member_access in context.member_accesses() {
             // If the member_access's member_name = "encodePacked", loop through the argument_types and count how many of them contain any of the following in type_strings:
             // ["bytes ", "[]", "string"]
             // If the count is greater than 1, add the member_access to the found_abi_encode_packed vector
