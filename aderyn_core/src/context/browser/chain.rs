@@ -228,217 +228,289 @@ pub fn get_parent_chain_of_child(child_id: NodeID, context: &WorkspaceContext) -
 pub(crate) fn get_all_ast_nodes(context: &WorkspaceContext) -> Vec<ASTNode> {
     let mut all_parents: Vec<ASTNode> = vec![];
 
-    let array_type_names = context.array_type_names.keys().cloned().collect::<Vec<_>>();
-
-    let assignments = context.assignments.keys().cloned().collect::<Vec<_>>();
-
-    let binary_operations = context
-        .binary_operations
+    let array_type_names = context
+        .array_type_names_context
         .keys()
         .cloned()
         .collect::<Vec<_>>();
 
-    let blocks = context.blocks.keys().cloned().collect::<Vec<_>>();
+    let assignments = context
+        .assignments_context
+        .keys()
+        .cloned()
+        .collect::<Vec<_>>();
 
-    let conditionals = context.conditionals.keys().cloned().collect::<Vec<_>>();
+    let binary_operations = context
+        .binary_operations_context
+        .keys()
+        .cloned()
+        .collect::<Vec<_>>();
+
+    let blocks = context.blocks_context.keys().cloned().collect::<Vec<_>>();
+
+    let conditionals = context
+        .conditionals_context
+        .keys()
+        .cloned()
+        .collect::<Vec<_>>();
 
     let contract_definitions = context
-        .contract_definitions
+        .contract_definitions_context
         .keys()
         .cloned()
         .collect::<Vec<_>>();
 
     let elementary_type_names = context
-        .elementary_type_names
+        .elementary_type_names_context
         .keys()
         .cloned()
         .collect::<Vec<_>>();
 
     let elementary_type_name_expressions = context
-        .elementary_type_name_expressions
+        .elementary_type_name_expressions_context
         .keys()
         .cloned()
         .collect::<Vec<_>>();
 
-    let emit_statements = context.emit_statements.keys().cloned().collect::<Vec<_>>();
+    let emit_statements = context
+        .emit_statements_context
+        .keys()
+        .cloned()
+        .collect::<Vec<_>>();
 
-    let enum_definitions = context.enum_definitions.keys().cloned().collect::<Vec<_>>();
+    let enum_definitions = context
+        .enum_definitions_context
+        .keys()
+        .cloned()
+        .collect::<Vec<_>>();
 
-    let enum_values = context.enum_values.keys().cloned().collect::<Vec<_>>();
+    let enum_values = context
+        .enum_values_context
+        .keys()
+        .cloned()
+        .collect::<Vec<_>>();
 
     let event_definitions = context
-        .event_definitions
+        .event_definitions_context
         .keys()
         .cloned()
         .collect::<Vec<_>>();
 
     let error_definitions = context
-        .error_definitions
+        .error_definitions_context
         .keys()
         .cloned()
         .collect::<Vec<_>>();
 
     let expression_statements = context
-        .expression_statements
+        .expression_statements_context
         .keys()
         .cloned()
         .collect::<Vec<_>>();
 
-    let function_calls = context.function_calls.keys().cloned().collect::<Vec<_>>();
+    let function_calls = context
+        .function_calls_context
+        .keys()
+        .cloned()
+        .collect::<Vec<_>>();
 
     let function_call_options = context
-        .function_call_options
+        .function_call_options_context
         .keys()
         .cloned()
         .collect::<Vec<_>>();
 
     let function_definitions = context
-        .function_definitions
+        .function_definitions_context
         .keys()
         .cloned()
         .collect::<Vec<_>>();
 
     let function_type_names = context
-        .function_type_names
+        .function_type_names_context
         .keys()
         .cloned()
         .collect::<Vec<_>>();
 
-    let for_statements = context.for_statements.keys().cloned().collect::<Vec<_>>();
+    let for_statements = context
+        .for_statements_context
+        .keys()
+        .cloned()
+        .collect::<Vec<_>>();
 
-    let identifiers = context.identifiers.keys().cloned().collect::<Vec<_>>();
+    let identifiers = context
+        .identifiers_context
+        .keys()
+        .cloned()
+        .collect::<Vec<_>>();
 
-    let identifier_paths = context.identifier_paths.keys().cloned().collect::<Vec<_>>();
+    let identifier_paths = context
+        .identifier_paths_context
+        .keys()
+        .cloned()
+        .collect::<Vec<_>>();
 
-    let if_statements = context.if_statements.keys().cloned().collect::<Vec<_>>();
+    let if_statements = context
+        .if_statements_context
+        .keys()
+        .cloned()
+        .collect::<Vec<_>>();
 
     let import_directives = context
-        .import_directives
+        .import_directives_context
         .keys()
         .cloned()
         .collect::<Vec<_>>();
 
-    let index_accesses = context.index_accesses.keys().cloned().collect::<Vec<_>>();
+    let index_accesses = context
+        .index_accesses_context
+        .keys()
+        .cloned()
+        .collect::<Vec<_>>();
 
     let index_range_accesses = context
-        .index_range_accesses
+        .index_range_accesses_context
         .keys()
         .cloned()
         .collect::<Vec<_>>();
 
     let inheritance_specifiers = context
-        .inheritance_specifiers
+        .inheritance_specifiers_context
         .keys()
         .cloned()
         .collect::<Vec<_>>();
 
     let inline_assemblies = context
-        .inline_assemblies
+        .inline_assemblies_context
         .keys()
         .cloned()
         .collect::<Vec<_>>();
 
-    let literals = context.literals.keys().cloned().collect::<Vec<_>>();
+    let literals = context.literals_context.keys().cloned().collect::<Vec<_>>();
 
-    let member_accesses = context.member_accesses.keys().cloned().collect::<Vec<_>>();
+    let member_accesses = context
+        .member_accesses_context
+        .keys()
+        .cloned()
+        .collect::<Vec<_>>();
 
-    let new_expressions = context.new_expressions.keys().cloned().collect::<Vec<_>>();
+    let new_expressions = context
+        .new_expressions_context
+        .keys()
+        .cloned()
+        .collect::<Vec<_>>();
 
-    let mappings = context.mappings.keys().cloned().collect::<Vec<_>>();
+    let mappings = context.mappings_context.keys().cloned().collect::<Vec<_>>();
 
     let modifier_definitions = context
-        .modifier_definitions
+        .modifier_definitions_context
         .keys()
         .cloned()
         .collect::<Vec<_>>();
 
     let modifier_invocations = context
-        .modifier_invocations
+        .modifier_invocations_context
         .keys()
         .cloned()
         .collect::<Vec<_>>();
 
     let override_specifiers = context
-        .override_specifiers
+        .override_specifiers_context
         .keys()
         .cloned()
         .collect::<Vec<_>>();
 
-    let parameter_lists = context.parameter_lists.keys().cloned().collect::<Vec<_>>();
+    let parameter_lists = context
+        .parameter_lists_context
+        .keys()
+        .cloned()
+        .collect::<Vec<_>>();
 
     let pragma_directives = context
-        .pragma_directives
+        .pragma_directives_context
         .keys()
         .cloned()
         .collect::<Vec<_>>();
 
-    let returns = context.returns.keys().cloned().collect::<Vec<_>>();
+    let returns = context.returns_context.keys().cloned().collect::<Vec<_>>();
 
     let revert_statements = context
-        .revert_statements
+        .revert_statements_context
         .keys()
         .cloned()
         .collect::<Vec<_>>();
 
     let struct_definitions = context
-        .struct_definitions
+        .struct_definitions_context
         .keys()
         .cloned()
         .collect::<Vec<_>>();
 
     let structured_documentations = context
-        .structured_documentations
+        .structured_documentations_context
         .keys()
         .cloned()
         .collect::<Vec<_>>();
 
-    let try_statements = context.try_statements.keys().cloned().collect::<Vec<_>>();
+    let try_statements = context
+        .try_statements_context
+        .keys()
+        .cloned()
+        .collect::<Vec<_>>();
 
     let try_catch_clauses = context
-        .try_catch_clauses
+        .try_catch_clauses_context
         .keys()
         .cloned()
         .collect::<Vec<_>>();
 
     let tuple_expressions = context
-        .tuple_expressions
+        .tuple_expressions_context
         .keys()
         .cloned()
         .collect::<Vec<_>>();
 
-    let unary_operations = context.unary_operations.keys().cloned().collect::<Vec<_>>();
+    let unary_operations = context
+        .unary_operations_context
+        .keys()
+        .cloned()
+        .collect::<Vec<_>>();
 
     let user_defined_type_names = context
-        .user_defined_type_names
+        .user_defined_type_names_context
         .keys()
         .cloned()
         .collect::<Vec<_>>();
 
     let user_defined_value_type_definitions = context
-        .user_defined_value_type_definitions
+        .user_defined_value_type_definitions_context
         .keys()
         .cloned()
         .collect::<Vec<_>>();
 
     let using_for_directives = context
-        .using_for_directives
+        .using_for_directives_context
         .keys()
         .cloned()
         .collect::<Vec<_>>();
 
     let variable_declarations = context
-        .variable_declarations
+        .variable_declarations_context
         .keys()
         .cloned()
         .collect::<Vec<_>>();
 
     let variable_declaration_statements = context
-        .variable_declaration_statements
+        .variable_declaration_statements_context
         .keys()
         .cloned()
         .collect::<Vec<_>>();
 
-    let while_statements = context.while_statements.keys().cloned().collect::<Vec<_>>();
+    let while_statements = context
+        .while_statements_context
+        .keys()
+        .cloned()
+        .collect::<Vec<_>>();
 
     all_parents.extend(array_type_names.into_iter().map(|x| x.into()));
     all_parents.extend(assignments.into_iter().map(|x| x.into()));

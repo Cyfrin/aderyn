@@ -27,7 +27,7 @@ We omit the function definition for the sake of example
 
 impl IssueDetector for ParentChainDemonstrator {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        for assignment in context.assignments.keys() {
+        for assignment in context.assignments() {
             // Retrieve Parent Chain (from closest to farthest)
             let parents = GetParentChain::of(assignment, context);
             {
