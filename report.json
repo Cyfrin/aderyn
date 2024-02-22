@@ -53,10 +53,6 @@
         "n_sloc": 21
       },
       {
-        "file_path": "src/ParentChainContract.sol",
-        "n_sloc": 29
-      },
-      {
         "file_path": "src/StateVariables.sol",
         "n_sloc": 58
       },
@@ -97,6 +93,14 @@
         "n_sloc": 8
       },
       {
+        "file_path": "src/nested/1/Nested.sol",
+        "n_sloc": 10
+      },
+      {
+        "file_path": "src/nested/2/Nested.sol",
+        "n_sloc": 7
+      },
+      {
         "file_path": "src/uniswap/UniswapV2Swapper.sol",
         "n_sloc": 50
       },
@@ -107,8 +111,8 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 676,
-    "total_source_units": 20
+    "total_sloc": 664,
+    "total_source_units": 21
   },
   "high_issues": {
     "issues": [
@@ -305,10 +309,6 @@
             "line_no": 2
           },
           {
-            "contract_path": "src/ParentChainContract.sol",
-            "line_no": 2
-          },
-          {
             "contract_path": "src/StateVariables.sol",
             "line_no": 2
           },
@@ -339,6 +339,14 @@
           {
             "contract_path": "src/inheritance/InheritanceBase.sol",
             "line_no": 2
+          },
+          {
+            "contract_path": "src/nested/1/Nested.sol",
+            "line_no": 5
+          },
+          {
+            "contract_path": "src/nested/2/Nested.sol",
+            "line_no": 5
           },
           {
             "contract_path": "src/uniswap/UniswapV2Swapper.sol",
@@ -374,18 +382,6 @@
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 7
-          },
-          {
-            "contract_path": "src/ParentChainContract.sol",
-            "line_no": 7
-          },
-          {
-            "contract_path": "src/ParentChainContract.sol",
-            "line_no": 28
-          },
-          {
-            "contract_path": "src/ParentChainContract.sol",
-            "line_no": 32
           }
         ],
         "title": "Centralization Risk for trusted owners"
@@ -527,14 +523,6 @@
             "line_no": 7
           },
           {
-            "contract_path": "src/ParentChainContract.sol",
-            "line_no": 11
-          },
-          {
-            "contract_path": "src/ParentChainContract.sol",
-            "line_no": 15
-          },
-          {
             "contract_path": "src/StateVariables.sol",
             "line_no": 47
           },
@@ -584,14 +572,6 @@
           {
             "contract_path": "src/Counter.sol",
             "line_no": 23
-          },
-          {
-            "contract_path": "src/ParentChainContract.sol",
-            "line_no": 16
-          },
-          {
-            "contract_path": "src/ParentChainContract.sol",
-            "line_no": 17
           },
           {
             "contract_path": "src/cloc/HeavilyCommentedContract.sol",
@@ -753,10 +733,6 @@
           {
             "contract_path": "src/AdminContract.sol",
             "line_no": 10
-          },
-          {
-            "contract_path": "src/ParentChainContract.sol",
-            "line_no": 28
           }
         ],
         "title": "The `nonReentrant` `modifier` should occur before all other modifiers"
