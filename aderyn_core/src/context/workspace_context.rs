@@ -743,7 +743,7 @@ pub struct NodeContext {
 
 #[derive(Default, Debug)]
 pub struct NodeChildren {
-    /// Count of all the children nodes regardless of whether they have ids or nor
+    /// Count of all the children nodes regardless of whether they have ids or not
     pub count: usize,
 
     /// Mapping (children_key => children_node)
