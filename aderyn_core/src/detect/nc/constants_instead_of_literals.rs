@@ -67,7 +67,7 @@ mod constants_instead_of_literals_tests {
     #[test]
     fn test_constants_instead_of_literals() {
         let context =
-            load_contract("../tests/contract-playground/out/Counter.sol/Counter.0.8.21.json");
+            load_contract("../tests/contract-playground/out/Counter.sol/Counter.0.8.23.json");
 
         let mut detector = ConstantsInsteadOfLiteralsDetector::default();
         // assert that the detector finds the public function
