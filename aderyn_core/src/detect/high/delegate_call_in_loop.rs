@@ -20,7 +20,7 @@ impl IssueDetector for DelegateCallInLoopDetector {
         let mut member_accesses: Vec<MemberAccess> = vec![];
 
         // Get all delegatecall member accesses inside for statements
-        member_accesses.extend(context.for_statements.keys().flat_map(|statement| {
+        member_accesses.extend(context.for_statements().iter().flat_map(|&statement| {
             ExtractMemberAccesses::from(statement)
                 .extracted
                 .into_iter()
@@ -28,7 +28,7 @@ impl IssueDetector for DelegateCallInLoopDetector {
         }));
 
         // Get all delegatecall member accsesses inside while statements
-        member_accesses.extend(context.while_statements.keys().flat_map(|statement| {
+        member_accesses.extend(context.while_statements().iter().flat_map(|&statement| {
             ExtractMemberAccesses::from(statement)
                 .extracted
                 .into_iter()

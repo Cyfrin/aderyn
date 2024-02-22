@@ -119,7 +119,7 @@ impl WorkspaceContext {
     pub fn files_details(&self) -> FilesDetails {
         let sloc_stats = &self.sloc_stats;
 
-        let mut source_units = self.source_units.clone();
+        let mut source_units = self.source_units_context.clone();
         source_units.sort_by_key(|su: &crate::ast::SourceUnit| {
             su.absolute_path.as_deref().unwrap_or("").to_string()
         });

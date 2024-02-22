@@ -16,7 +16,7 @@ pub struct CentralizationRiskDetector {
 
 impl IssueDetector for CentralizationRiskDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        for contract_definition in context.contract_definitions.keys().filter(|cd| {
+        for contract_definition in context.contract_definitions().iter().filter(|&&cd| {
             cd.base_contracts.iter().any(|bc| {
                 matches!(
                     bc.base_name.name.as_str(),
@@ -35,7 +35,7 @@ impl IssueDetector for CentralizationRiskDetector {
             capture!(self, context, contract_definition);
         }
 
-        for modifier_invocation in context.modifier_invocations.keys().filter(|mi| {
+        for modifier_invocation in context.modifier_invocations().iter().filter(|&&mi| {
             mi.modifier_name.name == "onlyOwner"
                 || mi.modifier_name.name == "requiresAuth"
                 || mi.modifier_name.name.contains("onlyRole")

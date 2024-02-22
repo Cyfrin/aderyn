@@ -16,7 +16,7 @@ pub struct NonReentrantBeforeOthersDetector {
 
 impl IssueDetector for NonReentrantBeforeOthersDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        let function_definitions = context.function_definitions.keys();
+        let function_definitions = context.function_definitions();
         for definition in function_definitions {
             if definition.modifiers.len() > 1 {
                 for (index, modifier) in definition.modifiers.iter().enumerate() {

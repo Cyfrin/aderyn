@@ -781,57 +781,59 @@ pub struct WorkspaceContext {
     pub all_ancestors: HashMap<NodeID, NodeAncestors>,
 
     // Hashmaps of all nodes => source_unit_id
-    pub array_type_names: HashMap<ArrayTypeName, NodeContext>,
-    pub assignments: HashMap<Assignment, NodeContext>,
-    pub binary_operations: HashMap<BinaryOperation, NodeContext>,
-    pub blocks: HashMap<Block, NodeContext>,
-    pub conditionals: HashMap<Conditional, NodeContext>,
-    pub contract_definitions: HashMap<ContractDefinition, NodeContext>,
-    pub elementary_type_names: HashMap<ElementaryTypeName, NodeContext>,
-    pub elementary_type_name_expressions: HashMap<ElementaryTypeNameExpression, NodeContext>,
-    pub emit_statements: HashMap<EmitStatement, NodeContext>,
-    pub enum_definitions: HashMap<EnumDefinition, NodeContext>,
-    pub enum_values: HashMap<EnumValue, NodeContext>,
-    pub event_definitions: HashMap<EventDefinition, NodeContext>,
-    pub error_definitions: HashMap<ErrorDefinition, NodeContext>,
-    pub expression_statements: HashMap<ExpressionStatement, NodeContext>,
-    pub function_calls: HashMap<FunctionCall, NodeContext>,
-    pub function_call_options: HashMap<FunctionCallOptions, NodeContext>,
-    pub function_definitions: HashMap<FunctionDefinition, NodeContext>,
-    pub function_type_names: HashMap<FunctionTypeName, NodeContext>,
-    pub for_statements: HashMap<ForStatement, NodeContext>,
-    pub identifiers: HashMap<Identifier, NodeContext>,
-    pub identifier_paths: HashMap<IdentifierPath, NodeContext>,
-    pub if_statements: HashMap<IfStatement, NodeContext>,
-    pub import_directives: HashMap<ImportDirective, NodeContext>,
-    pub index_accesses: HashMap<IndexAccess, NodeContext>,
-    pub index_range_accesses: HashMap<IndexRangeAccess, NodeContext>,
-    pub inheritance_specifiers: HashMap<InheritanceSpecifier, NodeContext>,
-    pub inline_assemblies: HashMap<InlineAssembly, NodeContext>,
-    pub literals: HashMap<Literal, NodeContext>,
-    pub member_accesses: HashMap<MemberAccess, NodeContext>,
-    pub new_expressions: HashMap<NewExpression, NodeContext>,
-    pub mappings: HashMap<Mapping, NodeContext>,
-    pub modifier_definitions: HashMap<ModifierDefinition, NodeContext>,
-    pub modifier_invocations: HashMap<ModifierInvocation, NodeContext>,
-    pub override_specifiers: HashMap<OverrideSpecifier, NodeContext>,
-    pub parameter_lists: HashMap<ParameterList, NodeContext>,
-    pub pragma_directives: HashMap<PragmaDirective, NodeContext>,
-    pub returns: HashMap<Return, NodeContext>,
-    pub revert_statements: HashMap<RevertStatement, NodeContext>,
-    pub source_units: Vec<SourceUnit>,
-    pub struct_definitions: HashMap<StructDefinition, NodeContext>,
-    pub structured_documentations: HashMap<StructuredDocumentation, NodeContext>,
-    pub try_statements: HashMap<TryStatement, NodeContext>,
-    pub try_catch_clauses: HashMap<TryCatchClause, NodeContext>,
-    pub tuple_expressions: HashMap<TupleExpression, NodeContext>,
-    pub unary_operations: HashMap<UnaryOperation, NodeContext>,
-    pub user_defined_type_names: HashMap<UserDefinedTypeName, NodeContext>,
-    pub user_defined_value_type_definitions: HashMap<UserDefinedValueTypeDefinition, NodeContext>,
-    pub using_for_directives: HashMap<UsingForDirective, NodeContext>,
-    pub variable_declarations: HashMap<VariableDeclaration, NodeContext>,
-    pub variable_declaration_statements: HashMap<VariableDeclarationStatement, NodeContext>,
-    pub while_statements: HashMap<WhileStatement, NodeContext>,
+    pub array_type_names_context: HashMap<ArrayTypeName, NodeContext>,
+    pub assignments_context: HashMap<Assignment, NodeContext>,
+    pub binary_operations_context: HashMap<BinaryOperation, NodeContext>,
+    pub blocks_context: HashMap<Block, NodeContext>,
+    pub conditionals_context: HashMap<Conditional, NodeContext>,
+    pub contract_definitions_context: HashMap<ContractDefinition, NodeContext>,
+    pub elementary_type_names_context: HashMap<ElementaryTypeName, NodeContext>,
+    pub elementary_type_name_expressions_context:
+        HashMap<ElementaryTypeNameExpression, NodeContext>,
+    pub emit_statements_context: HashMap<EmitStatement, NodeContext>,
+    pub enum_definitions_context: HashMap<EnumDefinition, NodeContext>,
+    pub enum_values_context: HashMap<EnumValue, NodeContext>,
+    pub event_definitions_context: HashMap<EventDefinition, NodeContext>,
+    pub error_definitions_context: HashMap<ErrorDefinition, NodeContext>,
+    pub expression_statements_context: HashMap<ExpressionStatement, NodeContext>,
+    pub function_calls_context: HashMap<FunctionCall, NodeContext>,
+    pub function_call_options_context: HashMap<FunctionCallOptions, NodeContext>,
+    pub function_definitions_context: HashMap<FunctionDefinition, NodeContext>,
+    pub function_type_names_context: HashMap<FunctionTypeName, NodeContext>,
+    pub for_statements_context: HashMap<ForStatement, NodeContext>,
+    pub identifiers_context: HashMap<Identifier, NodeContext>,
+    pub identifier_paths_context: HashMap<IdentifierPath, NodeContext>,
+    pub if_statements_context: HashMap<IfStatement, NodeContext>,
+    pub import_directives_context: HashMap<ImportDirective, NodeContext>,
+    pub index_accesses_context: HashMap<IndexAccess, NodeContext>,
+    pub index_range_accesses_context: HashMap<IndexRangeAccess, NodeContext>,
+    pub inheritance_specifiers_context: HashMap<InheritanceSpecifier, NodeContext>,
+    pub inline_assemblies_context: HashMap<InlineAssembly, NodeContext>,
+    pub literals_context: HashMap<Literal, NodeContext>,
+    pub member_accesses_context: HashMap<MemberAccess, NodeContext>,
+    pub new_expressions_context: HashMap<NewExpression, NodeContext>,
+    pub mappings_context: HashMap<Mapping, NodeContext>,
+    pub modifier_definitions_context: HashMap<ModifierDefinition, NodeContext>,
+    pub modifier_invocations_context: HashMap<ModifierInvocation, NodeContext>,
+    pub override_specifiers_context: HashMap<OverrideSpecifier, NodeContext>,
+    pub parameter_lists_context: HashMap<ParameterList, NodeContext>,
+    pub pragma_directives_context: HashMap<PragmaDirective, NodeContext>,
+    pub returns_context: HashMap<Return, NodeContext>,
+    pub revert_statements_context: HashMap<RevertStatement, NodeContext>,
+    pub source_units_context: Vec<SourceUnit>,
+    pub struct_definitions_context: HashMap<StructDefinition, NodeContext>,
+    pub structured_documentations_context: HashMap<StructuredDocumentation, NodeContext>,
+    pub try_statements_context: HashMap<TryStatement, NodeContext>,
+    pub try_catch_clauses_context: HashMap<TryCatchClause, NodeContext>,
+    pub tuple_expressions_context: HashMap<TupleExpression, NodeContext>,
+    pub unary_operations_context: HashMap<UnaryOperation, NodeContext>,
+    pub user_defined_type_names_context: HashMap<UserDefinedTypeName, NodeContext>,
+    pub user_defined_value_type_definitions_context:
+        HashMap<UserDefinedValueTypeDefinition, NodeContext>,
+    pub using_for_directives_context: HashMap<UsingForDirective, NodeContext>,
+    pub variable_declarations_context: HashMap<VariableDeclaration, NodeContext>,
+    pub variable_declaration_statements_context: HashMap<VariableDeclarationStatement, NodeContext>,
+    pub while_statements_context: HashMap<WhileStatement, NodeContext>,
 }
 
 impl WorkspaceContext {
@@ -896,201 +898,367 @@ impl WorkspaceContext {
 
     // Getters
 
+    pub fn array_type_names(&self) -> Vec<&ArrayTypeName> {
+        self.array_type_names_context.keys().collect()
+    }
+    pub fn assignments(&self) -> Vec<&Assignment> {
+        self.assignments_context.keys().collect()
+    }
+    pub fn binary_operations(&self) -> Vec<&BinaryOperation> {
+        self.binary_operations_context.keys().collect()
+    }
+    pub fn blocks(&self) -> Vec<&Block> {
+        self.blocks_context.keys().collect()
+    }
+    pub fn conditionals(&self) -> Vec<&Conditional> {
+        self.conditionals_context.keys().collect()
+    }
+    pub fn contract_definitions(&self) -> Vec<&ContractDefinition> {
+        self.contract_definitions_context.keys().collect()
+    }
+    pub fn elementary_type_names(&self) -> Vec<&ElementaryTypeName> {
+        self.elementary_type_names_context.keys().collect()
+    }
+    pub fn elementary_type_name_expressions(&self) -> Vec<&ElementaryTypeNameExpression> {
+        self.elementary_type_name_expressions_context
+            .keys()
+            .collect()
+    }
+    pub fn emit_statements(&self) -> Vec<&EmitStatement> {
+        self.emit_statements_context.keys().collect()
+    }
+    pub fn enum_definitions(&self) -> Vec<&EnumDefinition> {
+        self.enum_definitions_context.keys().collect()
+    }
+    pub fn enum_values(&self) -> Vec<&EnumValue> {
+        self.enum_values_context.keys().collect()
+    }
+    pub fn event_definitions(&self) -> Vec<&EventDefinition> {
+        self.event_definitions_context.keys().collect()
+    }
+    pub fn error_definitions(&self) -> Vec<&ErrorDefinition> {
+        self.error_definitions_context.keys().collect()
+    }
+    pub fn expression_statements(&self) -> Vec<&ExpressionStatement> {
+        self.expression_statements_context.keys().collect()
+    }
+    pub fn function_calls(&self) -> Vec<&FunctionCall> {
+        self.function_calls_context.keys().collect()
+    }
+    pub fn function_call_options(&self) -> Vec<&FunctionCallOptions> {
+        self.function_call_options_context.keys().collect()
+    }
+    pub fn function_definitions(&self) -> Vec<&FunctionDefinition> {
+        self.function_definitions_context.keys().collect()
+    }
+    pub fn function_type_names(&self) -> Vec<&FunctionTypeName> {
+        self.function_type_names_context.keys().collect()
+    }
+    pub fn for_statements(&self) -> Vec<&ForStatement> {
+        self.for_statements_context.keys().collect()
+    }
+    pub fn identifiers(&self) -> Vec<&Identifier> {
+        self.identifiers_context.keys().collect()
+    }
+    pub fn identifier_paths(&self) -> Vec<&IdentifierPath> {
+        self.identifier_paths_context.keys().collect()
+    }
+    pub fn if_statements(&self) -> Vec<&IfStatement> {
+        self.if_statements_context.keys().collect()
+    }
+    pub fn import_directives(&self) -> Vec<&ImportDirective> {
+        self.import_directives_context.keys().collect()
+    }
+    pub fn index_accesses(&self) -> Vec<&IndexAccess> {
+        self.index_accesses_context.keys().collect()
+    }
+    pub fn index_range_accesses(&self) -> Vec<&IndexRangeAccess> {
+        self.index_range_accesses_context.keys().collect()
+    }
+    pub fn inheritance_specifiers(&self) -> Vec<&InheritanceSpecifier> {
+        self.inheritance_specifiers_context.keys().collect()
+    }
+    pub fn inline_assemblies(&self) -> Vec<&InlineAssembly> {
+        self.inline_assemblies_context.keys().collect()
+    }
+    pub fn literals(&self) -> Vec<&Literal> {
+        self.literals_context.keys().collect()
+    }
+    pub fn member_accesses(&self) -> Vec<&MemberAccess> {
+        self.member_accesses_context.keys().collect()
+    }
+    pub fn new_expressions(&self) -> Vec<&NewExpression> {
+        self.new_expressions_context.keys().collect()
+    }
+    pub fn mappings(&self) -> Vec<&Mapping> {
+        self.mappings_context.keys().collect()
+    }
+    pub fn modifier_definitions(&self) -> Vec<&ModifierDefinition> {
+        self.modifier_definitions_context.keys().collect()
+    }
+    pub fn modifier_invocations(&self) -> Vec<&ModifierInvocation> {
+        self.modifier_invocations_context.keys().collect()
+    }
+    pub fn override_specifiers(&self) -> Vec<&OverrideSpecifier> {
+        self.override_specifiers_context.keys().collect()
+    }
+    pub fn parameter_lists(&self) -> Vec<&ParameterList> {
+        self.parameter_lists_context.keys().collect()
+    }
+    pub fn pragma_directives(&self) -> Vec<&PragmaDirective> {
+        self.pragma_directives_context.keys().collect()
+    }
+    pub fn returns(&self) -> Vec<&Return> {
+        self.returns_context.keys().collect()
+    }
+    pub fn revert_statements(&self) -> Vec<&RevertStatement> {
+        self.revert_statements_context.keys().collect()
+    }
+    pub fn source_units(&self) -> Vec<&SourceUnit> {
+        self.source_units_context.iter().collect()
+    }
+    pub fn struct_definitions(&self) -> Vec<&StructDefinition> {
+        self.struct_definitions_context.keys().collect()
+    }
+    pub fn structured_documentations(&self) -> Vec<&StructuredDocumentation> {
+        self.structured_documentations_context.keys().collect()
+    }
+    pub fn try_statements(&self) -> Vec<&TryStatement> {
+        self.try_statements_context.keys().collect()
+    }
+    pub fn try_catch_clauses(&self) -> Vec<&TryCatchClause> {
+        self.try_catch_clauses_context.keys().collect()
+    }
+    pub fn tuple_expressions(&self) -> Vec<&TupleExpression> {
+        self.tuple_expressions_context.keys().collect()
+    }
+    pub fn unary_operations(&self) -> Vec<&UnaryOperation> {
+        self.unary_operations_context.keys().collect()
+    }
+    pub fn user_defined_type_names(&self) -> Vec<&UserDefinedTypeName> {
+        self.user_defined_type_names_context.keys().collect()
+    }
+    pub fn user_defined_value_type_definitions(&self) -> Vec<&UserDefinedValueTypeDefinition> {
+        self.user_defined_value_type_definitions_context
+            .keys()
+            .collect()
+    }
+    pub fn using_for_directives(&self) -> Vec<&UsingForDirective> {
+        self.using_for_directives_context.keys().collect()
+    }
+    pub fn variable_declarations(&self) -> Vec<&VariableDeclaration> {
+        self.variable_declarations_context.keys().collect()
+    }
+    pub fn variable_declaration_statements(&self) -> Vec<&VariableDeclarationStatement> {
+        self.variable_declaration_statements_context
+            .keys()
+            .collect()
+    }
+    pub fn while_statements(&self) -> Vec<&WhileStatement> {
+        self.while_statements_context.keys().collect()
+    }
+
     pub fn get_source_unit_from_child_node(&self, node: &ASTNode) -> Option<&SourceUnit> {
         let source_unit_id = match node {
             ASTNode::ArrayTypeName(node) => self
-                .array_type_names
+                .array_type_names_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::Assignment(node) => self
-                .assignments
+                .assignments_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::BinaryOperation(node) => self
-                .binary_operations
+                .binary_operations_context
                 .get(node)
                 .map(|context| context.source_unit_id),
-            ASTNode::Block(node) => self.blocks.get(node).map(|context| context.source_unit_id),
+            ASTNode::Block(node) => self
+                .blocks_context
+                .get(node)
+                .map(|context| context.source_unit_id),
             ASTNode::Conditional(node) => self
-                .conditionals
+                .conditionals_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::ContractDefinition(node) => self
-                .contract_definitions
+                .contract_definitions_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::ElementaryTypeName(node) => self
-                .elementary_type_names
+                .elementary_type_names_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::ElementaryTypeNameExpression(node) => self
-                .elementary_type_name_expressions
+                .elementary_type_name_expressions_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::EmitStatement(node) => self
-                .emit_statements
+                .emit_statements_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::EnumDefinition(node) => self
-                .enum_definitions
+                .enum_definitions_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::EnumValue(node) => self
-                .enum_values
+                .enum_values_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::EventDefinition(node) => self
-                .event_definitions
+                .event_definitions_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::ErrorDefinition(node) => self
-                .error_definitions
+                .error_definitions_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::ExpressionStatement(node) => self
-                .expression_statements
+                .expression_statements_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::FunctionCall(node) => self
-                .function_calls
+                .function_calls_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::FunctionCallOptions(node) => self
-                .function_call_options
+                .function_call_options_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::FunctionDefinition(node) => self
-                .function_definitions
+                .function_definitions_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::FunctionTypeName(node) => self
-                .function_type_names
+                .function_type_names_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::ForStatement(node) => self
-                .for_statements
+                .for_statements_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::Identifier(node) => self
-                .identifiers
+                .identifiers_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::IdentifierPath(node) => self
-                .identifier_paths
+                .identifier_paths_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::IfStatement(node) => self
-                .if_statements
+                .if_statements_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::ImportDirective(node) => self
-                .import_directives
+                .import_directives_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::IndexAccess(node) => self
-                .index_accesses
+                .index_accesses_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::IndexRangeAccess(node) => self
-                .index_range_accesses
+                .index_range_accesses_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::InheritanceSpecifier(node) => self
-                .inheritance_specifiers
+                .inheritance_specifiers_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::InlineAssembly(node) => self
-                .inline_assemblies
+                .inline_assemblies_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::Literal(node) => self
-                .literals
+                .literals_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::MemberAccess(node) => self
-                .member_accesses
+                .member_accesses_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::NewExpression(node) => self
-                .new_expressions
+                .new_expressions_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::Mapping(node) => self
-                .mappings
+                .mappings_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::ModifierDefinition(node) => self
-                .modifier_definitions
+                .modifier_definitions_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::ModifierInvocation(node) => self
-                .modifier_invocations
+                .modifier_invocations_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::OverrideSpecifier(node) => self
-                .override_specifiers
+                .override_specifiers_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::ParameterList(node) => self
-                .parameter_lists
+                .parameter_lists_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::PragmaDirective(node) => self
-                .pragma_directives
+                .pragma_directives_context
                 .get(node)
                 .map(|context| context.source_unit_id),
-            ASTNode::Return(node) => self.returns.get(node).map(|context| context.source_unit_id),
+            ASTNode::Return(node) => self
+                .returns_context
+                .get(node)
+                .map(|context| context.source_unit_id),
             ASTNode::RevertStatement(node) => self
-                .revert_statements
+                .revert_statements_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::SourceUnit(node) => Some(node.id),
             ASTNode::StructDefinition(node) => self
-                .struct_definitions
+                .struct_definitions_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::StructuredDocumentation(node) => self
-                .structured_documentations
+                .structured_documentations_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::TryStatement(node) => self
-                .try_statements
+                .try_statements_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::TryCatchClause(node) => self
-                .try_catch_clauses
+                .try_catch_clauses_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::TupleExpression(node) => self
-                .tuple_expressions
+                .tuple_expressions_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::UnaryOperation(node) => self
-                .unary_operations
+                .unary_operations_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::UserDefinedTypeName(node) => self
-                .user_defined_type_names
+                .user_defined_type_names_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::UserDefinedValueTypeDefinition(node) => self
-                .user_defined_value_type_definitions
+                .user_defined_value_type_definitions_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::UsingForDirective(node) => self
-                .using_for_directives
+                .using_for_directives_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::VariableDeclaration(node) => self
-                .variable_declarations
+                .variable_declarations_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::VariableDeclarationStatement(node) => self
-                .variable_declaration_statements
+                .variable_declaration_statements_context
                 .get(node)
                 .map(|context| context.source_unit_id),
             ASTNode::WhileStatement(node) => self
-                .while_statements
+                .while_statements_context
                 .get(node)
                 .map(|context| context.source_unit_id),
         };
@@ -1098,7 +1266,7 @@ impl WorkspaceContext {
         // iterate through self.source_units until the source unit with the id matching `source_unit_id` is found, then return its `absolute_path`
 
         source_unit_id.and_then(|id| {
-            self.source_units
+            self.source_units_context
                 .iter()
                 .find(|source_unit| source_unit.id == id)
         })
@@ -1118,7 +1286,7 @@ impl WorkspaceContext {
 
 impl ASTConstVisitor for WorkspaceContext {
     fn visit_array_type_name(&mut self, node: &ArrayTypeName) -> Result<bool> {
-        self.array_type_names.insert(
+        self.array_type_names_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1133,7 +1301,7 @@ impl ASTConstVisitor for WorkspaceContext {
     fn visit_assignment(&mut self, node: &Assignment) -> Result<bool> {
         self.nodes
             .insert(node.id, ASTNode::Assignment(node.clone()));
-        self.assignments.insert(
+        self.assignments_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1148,7 +1316,7 @@ impl ASTConstVisitor for WorkspaceContext {
     fn visit_binary_operation(&mut self, node: &BinaryOperation) -> Result<bool> {
         self.nodes
             .insert(node.id, ASTNode::BinaryOperation(node.clone()));
-        self.binary_operations.insert(
+        self.binary_operations_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1162,7 +1330,7 @@ impl ASTConstVisitor for WorkspaceContext {
 
     fn visit_block(&mut self, node: &Block) -> Result<bool> {
         self.nodes.insert(node.id, ASTNode::Block(node.clone()));
-        self.blocks.insert(
+        self.blocks_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1177,7 +1345,7 @@ impl ASTConstVisitor for WorkspaceContext {
     fn visit_conditional(&mut self, node: &Conditional) -> Result<bool> {
         self.nodes
             .insert(node.id, ASTNode::Conditional(node.clone()));
-        self.conditionals.insert(
+        self.conditionals_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1192,7 +1360,7 @@ impl ASTConstVisitor for WorkspaceContext {
     fn visit_contract_definition(&mut self, node: &ContractDefinition) -> Result<bool> {
         self.nodes
             .insert(node.id, ASTNode::ContractDefinition(node.clone()));
-        self.contract_definitions.insert(
+        self.contract_definitions_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1211,7 +1379,7 @@ impl ASTConstVisitor for WorkspaceContext {
     }
 
     fn visit_elementary_type_name(&mut self, node: &ElementaryTypeName) -> Result<bool> {
-        self.elementary_type_names.insert(
+        self.elementary_type_names_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1229,7 +1397,7 @@ impl ASTConstVisitor for WorkspaceContext {
     ) -> Result<bool> {
         self.nodes
             .insert(node.id, ASTNode::ElementaryTypeNameExpression(node.clone()));
-        self.elementary_type_name_expressions.insert(
+        self.elementary_type_name_expressions_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1242,7 +1410,7 @@ impl ASTConstVisitor for WorkspaceContext {
     }
 
     fn visit_emit_statement(&mut self, node: &EmitStatement) -> Result<bool> {
-        self.emit_statements.insert(
+        self.emit_statements_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1257,7 +1425,7 @@ impl ASTConstVisitor for WorkspaceContext {
     fn visit_enum_definition(&mut self, node: &EnumDefinition) -> Result<bool> {
         self.nodes
             .insert(node.id, ASTNode::EnumDefinition(node.clone()));
-        self.enum_definitions.insert(
+        self.enum_definitions_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1271,7 +1439,7 @@ impl ASTConstVisitor for WorkspaceContext {
 
     fn visit_enum_value(&mut self, node: &EnumValue) -> Result<bool> {
         self.nodes.insert(node.id, ASTNode::EnumValue(node.clone()));
-        self.enum_values.insert(
+        self.enum_values_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1286,7 +1454,7 @@ impl ASTConstVisitor for WorkspaceContext {
     fn visit_event_definition(&mut self, node: &EventDefinition) -> Result<bool> {
         self.nodes
             .insert(node.id, ASTNode::EventDefinition(node.clone()));
-        self.event_definitions.insert(
+        self.event_definitions_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1301,7 +1469,7 @@ impl ASTConstVisitor for WorkspaceContext {
     fn visit_error_definition(&mut self, node: &ErrorDefinition) -> Result<bool> {
         self.nodes
             .insert(node.id, ASTNode::ErrorDefinition(node.clone()));
-        self.error_definitions.insert(
+        self.error_definitions_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1314,7 +1482,7 @@ impl ASTConstVisitor for WorkspaceContext {
     }
 
     fn visit_expression_statement(&mut self, node: &ExpressionStatement) -> Result<bool> {
-        self.expression_statements.insert(
+        self.expression_statements_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1329,7 +1497,7 @@ impl ASTConstVisitor for WorkspaceContext {
     fn visit_function_call(&mut self, node: &FunctionCall) -> Result<bool> {
         self.nodes
             .insert(node.id, ASTNode::FunctionCall(node.clone()));
-        self.function_calls.insert(
+        self.function_calls_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1344,7 +1512,7 @@ impl ASTConstVisitor for WorkspaceContext {
     fn visit_function_call_options(&mut self, node: &FunctionCallOptions) -> Result<bool> {
         self.nodes
             .insert(node.id, ASTNode::FunctionCallOptions(node.clone()));
-        self.function_call_options.insert(
+        self.function_call_options_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1359,7 +1527,7 @@ impl ASTConstVisitor for WorkspaceContext {
     fn visit_function_definition(&mut self, node: &FunctionDefinition) -> Result<bool> {
         self.nodes
             .insert(node.id, ASTNode::FunctionDefinition(node.clone()));
-        self.function_definitions.insert(
+        self.function_definitions_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1378,7 +1546,7 @@ impl ASTConstVisitor for WorkspaceContext {
     }
 
     fn visit_function_type_name(&mut self, node: &FunctionTypeName) -> Result<bool> {
-        self.function_type_names.insert(
+        self.function_type_names_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1393,7 +1561,7 @@ impl ASTConstVisitor for WorkspaceContext {
     fn visit_for_statement(&mut self, node: &ForStatement) -> Result<bool> {
         self.nodes
             .insert(node.id, ASTNode::ForStatement(node.clone()));
-        self.for_statements.insert(
+        self.for_statements_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1408,7 +1576,7 @@ impl ASTConstVisitor for WorkspaceContext {
     fn visit_identifier(&mut self, node: &Identifier) -> Result<bool> {
         self.nodes
             .insert(node.id, ASTNode::Identifier(node.clone()));
-        self.identifiers.insert(
+        self.identifiers_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1423,7 +1591,7 @@ impl ASTConstVisitor for WorkspaceContext {
     fn visit_identifier_path(&mut self, node: &IdentifierPath) -> Result<bool> {
         self.nodes
             .insert(node.id, ASTNode::IdentifierPath(node.clone()));
-        self.identifier_paths.insert(
+        self.identifier_paths_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1438,7 +1606,7 @@ impl ASTConstVisitor for WorkspaceContext {
     fn visit_if_statement(&mut self, node: &IfStatement) -> Result<bool> {
         self.nodes
             .insert(node.id, ASTNode::IfStatement(node.clone()));
-        self.if_statements.insert(
+        self.if_statements_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1453,7 +1621,7 @@ impl ASTConstVisitor for WorkspaceContext {
     fn visit_import_directive(&mut self, node: &ImportDirective) -> Result<bool> {
         self.nodes
             .insert(node.id, ASTNode::ImportDirective(node.clone()));
-        self.import_directives.insert(
+        self.import_directives_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1468,7 +1636,7 @@ impl ASTConstVisitor for WorkspaceContext {
     fn visit_index_access(&mut self, node: &IndexAccess) -> Result<bool> {
         self.nodes
             .insert(node.id, ASTNode::IndexAccess(node.clone()));
-        self.index_accesses.insert(
+        self.index_accesses_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1483,7 +1651,7 @@ impl ASTConstVisitor for WorkspaceContext {
     fn visit_index_range_access(&mut self, node: &IndexRangeAccess) -> Result<bool> {
         self.nodes
             .insert(node.id, ASTNode::IndexRangeAccess(node.clone()));
-        self.index_range_accesses.insert(
+        self.index_range_accesses_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1498,7 +1666,7 @@ impl ASTConstVisitor for WorkspaceContext {
     fn visit_inheritance_specifier(&mut self, node: &InheritanceSpecifier) -> Result<bool> {
         self.nodes
             .insert(node.id, ASTNode::InheritanceSpecifier(node.clone()));
-        self.inheritance_specifiers.insert(
+        self.inheritance_specifiers_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1513,7 +1681,7 @@ impl ASTConstVisitor for WorkspaceContext {
     fn visit_inline_assembly(&mut self, node: &InlineAssembly) -> Result<bool> {
         self.nodes
             .insert(node.id, ASTNode::InlineAssembly(node.clone()));
-        self.inline_assemblies.insert(
+        self.inline_assemblies_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1527,7 +1695,7 @@ impl ASTConstVisitor for WorkspaceContext {
 
     fn visit_literal(&mut self, node: &Literal) -> Result<bool> {
         self.nodes.insert(node.id, ASTNode::Literal(node.clone()));
-        self.literals.insert(
+        self.literals_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1542,7 +1710,7 @@ impl ASTConstVisitor for WorkspaceContext {
     fn visit_member_access(&mut self, node: &MemberAccess) -> Result<bool> {
         self.nodes
             .insert(node.id, ASTNode::MemberAccess(node.clone()));
-        self.member_accesses.insert(
+        self.member_accesses_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1557,7 +1725,7 @@ impl ASTConstVisitor for WorkspaceContext {
     fn visit_new_expression(&mut self, node: &NewExpression) -> Result<bool> {
         self.nodes
             .insert(node.id, ASTNode::NewExpression(node.clone()));
-        self.new_expressions.insert(
+        self.new_expressions_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1570,7 +1738,7 @@ impl ASTConstVisitor for WorkspaceContext {
     }
 
     fn visit_mapping(&mut self, node: &Mapping) -> Result<bool> {
-        self.mappings.insert(
+        self.mappings_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1585,7 +1753,7 @@ impl ASTConstVisitor for WorkspaceContext {
     fn visit_modifier_definition(&mut self, node: &ModifierDefinition) -> Result<bool> {
         self.nodes
             .insert(node.id, ASTNode::ModifierDefinition(node.clone()));
-        self.modifier_definitions.insert(
+        self.modifier_definitions_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1606,7 +1774,7 @@ impl ASTConstVisitor for WorkspaceContext {
     fn visit_modifier_invocation(&mut self, node: &ModifierInvocation) -> Result<bool> {
         self.nodes
             .insert(node.id, ASTNode::ModifierInvocation(node.clone()));
-        self.modifier_invocations.insert(
+        self.modifier_invocations_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1621,7 +1789,7 @@ impl ASTConstVisitor for WorkspaceContext {
     fn visit_override_specifier(&mut self, node: &OverrideSpecifier) -> Result<bool> {
         self.nodes
             .insert(node.id, ASTNode::OverrideSpecifier(node.clone()));
-        self.override_specifiers.insert(
+        self.override_specifiers_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1636,7 +1804,7 @@ impl ASTConstVisitor for WorkspaceContext {
     fn visit_parameter_list(&mut self, node: &ParameterList) -> Result<bool> {
         self.nodes
             .insert(node.id, ASTNode::ParameterList(node.clone()));
-        self.parameter_lists.insert(
+        self.parameter_lists_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1651,7 +1819,7 @@ impl ASTConstVisitor for WorkspaceContext {
     fn visit_pragma_directive(&mut self, node: &PragmaDirective) -> Result<bool> {
         self.nodes
             .insert(node.id, ASTNode::PragmaDirective(node.clone()));
-        self.pragma_directives.insert(
+        self.pragma_directives_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1665,7 +1833,7 @@ impl ASTConstVisitor for WorkspaceContext {
 
     fn visit_return(&mut self, node: &Return) -> Result<bool> {
         self.nodes.insert(node.id, ASTNode::Return(node.clone()));
-        self.returns.insert(
+        self.returns_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1678,7 +1846,7 @@ impl ASTConstVisitor for WorkspaceContext {
     }
 
     fn visit_revert_statement(&mut self, node: &RevertStatement) -> Result<bool> {
-        self.revert_statements.insert(
+        self.revert_statements_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1693,7 +1861,7 @@ impl ASTConstVisitor for WorkspaceContext {
     fn visit_source_unit(&mut self, node: &SourceUnit) -> Result<bool> {
         self.nodes
             .insert(node.id, ASTNode::SourceUnit(node.clone()));
-        self.source_units.push(node.clone());
+        self.source_units_context.push(node.clone());
         self.last_source_unit_id = node.id;
         Ok(true)
     }
@@ -1701,7 +1869,7 @@ impl ASTConstVisitor for WorkspaceContext {
     fn visit_struct_definition(&mut self, node: &StructDefinition) -> Result<bool> {
         self.nodes
             .insert(node.id, ASTNode::StructDefinition(node.clone()));
-        self.struct_definitions.insert(
+        self.struct_definitions_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1716,7 +1884,7 @@ impl ASTConstVisitor for WorkspaceContext {
     fn visit_structured_documentation(&mut self, node: &StructuredDocumentation) -> Result<bool> {
         self.nodes
             .insert(node.id, ASTNode::StructuredDocumentation(node.clone()));
-        self.structured_documentations.insert(
+        self.structured_documentations_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1729,7 +1897,7 @@ impl ASTConstVisitor for WorkspaceContext {
     }
 
     fn visit_try_statement(&mut self, node: &TryStatement) -> Result<bool> {
-        self.try_statements.insert(
+        self.try_statements_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1742,7 +1910,7 @@ impl ASTConstVisitor for WorkspaceContext {
     }
 
     fn visit_try_catch_clause(&mut self, node: &TryCatchClause) -> Result<bool> {
-        self.try_catch_clauses.insert(
+        self.try_catch_clauses_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1757,7 +1925,7 @@ impl ASTConstVisitor for WorkspaceContext {
     fn visit_tuple_expression(&mut self, node: &TupleExpression) -> Result<bool> {
         self.nodes
             .insert(node.id, ASTNode::TupleExpression(node.clone()));
-        self.tuple_expressions.insert(
+        self.tuple_expressions_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1772,7 +1940,7 @@ impl ASTConstVisitor for WorkspaceContext {
     fn visit_unary_operation(&mut self, node: &UnaryOperation) -> Result<bool> {
         self.nodes
             .insert(node.id, ASTNode::UnaryOperation(node.clone()));
-        self.unary_operations.insert(
+        self.unary_operations_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1785,7 +1953,7 @@ impl ASTConstVisitor for WorkspaceContext {
     }
 
     fn visit_user_defined_type_name(&mut self, node: &UserDefinedTypeName) -> Result<bool> {
-        self.user_defined_type_names.insert(
+        self.user_defined_type_names_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1805,7 +1973,7 @@ impl ASTConstVisitor for WorkspaceContext {
             node.id,
             ASTNode::UserDefinedValueTypeDefinition(node.clone()),
         );
-        self.user_defined_value_type_definitions.insert(
+        self.user_defined_value_type_definitions_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1820,7 +1988,7 @@ impl ASTConstVisitor for WorkspaceContext {
     fn visit_using_for_directive(&mut self, node: &UsingForDirective) -> Result<bool> {
         self.nodes
             .insert(node.id, ASTNode::UsingForDirective(node.clone()));
-        self.using_for_directives.insert(
+        self.using_for_directives_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1835,7 +2003,7 @@ impl ASTConstVisitor for WorkspaceContext {
     fn visit_variable_declaration(&mut self, node: &VariableDeclaration) -> Result<bool> {
         self.nodes
             .insert(node.id, ASTNode::VariableDeclaration(node.clone()));
-        self.variable_declarations.insert(
+        self.variable_declarations_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1853,7 +2021,7 @@ impl ASTConstVisitor for WorkspaceContext {
     ) -> Result<bool> {
         self.nodes
             .insert(node.id, ASTNode::VariableDeclarationStatement(node.clone()));
-        self.variable_declaration_statements.insert(
+        self.variable_declaration_statements_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1868,7 +2036,7 @@ impl ASTConstVisitor for WorkspaceContext {
     fn visit_while_statement(&mut self, node: &WhileStatement) -> Result<bool> {
         self.nodes
             .insert(node.id, ASTNode::WhileStatement(node.clone()));
-        self.while_statements.insert(
+        self.while_statements_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
@@ -1927,7 +2095,7 @@ mod context_tests {
 
         // Get all for statements, and check if there is a delegate call in the body of each for statement
         let mut delegate_call_in_loop_detector = DelegateCallInLoopDetector::default();
-        let for_statements = context.for_statements.keys();
+        let for_statements = context.for_statements_context.keys();
         for for_statement in for_statements {
             for_statement.accept(&mut delegate_call_in_loop_detector)?;
         }

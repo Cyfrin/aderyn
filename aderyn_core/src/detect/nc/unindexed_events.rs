@@ -18,7 +18,7 @@ impl IssueDetector for UnindexedEventsDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // for each event definition, check if it has any indexed parameters
         // if it does not, then add it to the list of found unindexed events
-        for event_definition in context.event_definitions.keys() {
+        for event_definition in context.event_definitions() {
             let mut indexed_count = 0;
             let mut non_indexed = false;
 

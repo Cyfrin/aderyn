@@ -18,9 +18,9 @@ impl IssueDetector for RequireWithStringDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // Collect all require statements without a string literal.
         let requires_and_reverts = context
-            .identifiers
-            .keys()
-            .filter(|id| id.name == "revert" || id.name == "require");
+            .identifiers()
+            .into_iter()
+            .filter(|&id| id.name == "revert" || id.name == "require");
 
         for id in requires_and_reverts {
             if (id.name == "revert" && id.argument_types.as_ref().unwrap().is_empty())
