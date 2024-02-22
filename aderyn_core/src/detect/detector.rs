@@ -247,6 +247,7 @@ pub mod detector_test_helpers {
             eprintln!("Error loading Hardhat AST into WorkspaceContext");
             eprintln!("{:?}", err);
         });
+        context.preprocess();
         context
     }
 }

@@ -5,8 +5,6 @@ use crate::{
     context::workspace_context::{ASTNode, WorkspaceContext},
 };
 
-use super::get_all_children;
-
 /// GetParentChain allows us to grab the ancestral hirearchy of a given node in the AST
 /// all the way upto the ContractDefinition
 pub trait GetParentChain {
@@ -221,24 +219,13 @@ impl GetParentChain for WhileStatement {
 }
 
 pub fn get_parent_chain_of_child(child_id: NodeID, context: &WorkspaceContext) -> Vec<ASTNode> {
-    let all_ast_nodes = get_all_ast_nodes(context);
-    let all_node_ids = get_node_ids_of_ast_nodes_that_have_ids(&all_ast_nodes);
-
-    let mut parents = vec![];
-    // From each of the node_id extract everything and see if you find child_id
-    for (_k, v) in all_node_ids.iter() {
-        let all_children = get_all_children(v);
-        let all_children_count = all_children.len();
-        let all_children_ids = get_node_ids_of_ast_nodes_that_have_ids(&all_children);
-        if all_children_ids.contains_key(&child_id) {
-            parents.push((all_children_count, v.clone()));
-        }
-    }
-    parents.sort_by(|a, b| a.0.cmp(&b.0));
-    parents.iter().map(|(_, y)| y.clone()).collect()
+    let node_ancestors = context.all_ancestors.get(&child_id).unwrap();
+    node_ancestors.ancestors.clone()
 }
 
-pub fn get_all_ast_nodes(context: &WorkspaceContext) -> Vec<ASTNode> {
+/// This is called in preprocess and the output is stored in WorkspaceContext
+/// Please do not re-call this function
+pub(crate) fn get_all_ast_nodes(context: &WorkspaceContext) -> Vec<ASTNode> {
     let mut all_parents: Vec<ASTNode> = vec![];
 
     let array_type_names = context.array_type_names.keys().cloned().collect::<Vec<_>>();

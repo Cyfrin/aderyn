@@ -155,6 +155,7 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
         fscloc::engine::count_lines_of_code(&PathBuf::from(src_path), &context.src_filepaths);
     let stats = stats.lock().unwrap().to_owned();
     context.set_sloc_stats(stats);
+    context.preprocess();
 
     WorkspaceContextWrapper {
         context,

@@ -4,6 +4,10 @@ use eyre::Result;
 use std::collections::HashMap;
 use strum::Display;
 
+use super::browser::{
+    get_all_ast_nodes, get_all_children, get_node_ids_of_ast_nodes_that_have_ids,
+};
+
 #[derive(Display, Debug, Clone, PartialEq)]
 pub enum ASTNode {
     ArrayTypeName(ArrayTypeName),
@@ -738,6 +742,21 @@ pub struct NodeContext {
 }
 
 #[derive(Default, Debug)]
+pub struct NodeChildren {
+    /// Count of all the children nodes regardless of whether they have ids or nor
+    pub count: usize,
+
+    /// Mapping (children_key => children_node)
+    pub nodes_with_ids: HashMap<NodeID, ASTNode>,
+}
+
+#[derive(Default, Debug)]
+pub struct NodeAncestors {
+    /// Ancestors in the order from closest to farthest
+    pub ancestors: Vec<ASTNode>,
+}
+
+#[derive(Default, Debug)]
 pub struct WorkspaceContext {
     last_source_unit_id: NodeID,
     last_contract_definition_id: Option<NodeID>,
@@ -748,6 +767,18 @@ pub struct WorkspaceContext {
     pub src_filepaths: Vec<String>,
     pub sloc_stats: HashMap<String, usize>,
     pub nodes: HashMap<NodeID, ASTNode>,
+
+    // Preprocessed variables
+
+    // List of all nodes in the context
+    pub all_ast_nodes: Vec<ASTNode>,
+    pub all_ast_nodes_with_ids: HashMap<NodeID, ASTNode>,
+
+    // Ancestor -> Children Mapping for each node in the context
+    pub all_children: HashMap<NodeID, NodeChildren>,
+
+    // Child -> Ancestors Mapping for each node in the context
+    pub all_ancestors: HashMap<NodeID, NodeAncestors>,
 
     // Hashmaps of all nodes => source_unit_id
     pub array_type_names: HashMap<ArrayTypeName, NodeContext>,
@@ -804,6 +835,59 @@ pub struct WorkspaceContext {
 }
 
 impl WorkspaceContext {
+    // Preprocessors
+
+    pub fn preprocess(&mut self) {
+        self.all_ast_nodes = get_all_ast_nodes(self);
+        self.all_ast_nodes_with_ids = get_node_ids_of_ast_nodes_that_have_ids(&self.all_ast_nodes);
+
+        let mut ancestors: HashMap<NodeID, Vec<(usize, ASTNode)>> = HashMap::default();
+
+        for (k, v) in self.all_ast_nodes_with_ids.iter() {
+            let all_children = get_all_children(v);
+            let all_children_count = all_children.len();
+            let children_nodes_with_ids = get_node_ids_of_ast_nodes_that_have_ids(&all_children);
+            for child in children_nodes_with_ids.keys() {
+                if ancestors.contains_key(child) {
+                    ancestors
+                        .get_mut(child)
+                        .unwrap()
+                        .push((all_children_count, v.clone()));
+                } else {
+                    let value = vec![(all_children_count, v.clone())];
+                    ancestors.insert(*child, value);
+                }
+            }
+            self.all_children.insert(
+                *k,
+                NodeChildren {
+                    count: all_children_count,
+                    nodes_with_ids: children_nodes_with_ids,
+                },
+            );
+        }
+
+        // This will contain ancestors from closest to farthest
+        let mut ordered_ancestors: HashMap<NodeID, NodeAncestors> = HashMap::default();
+
+        for child in ancestors.keys() {
+            let mut concerned_ancestors = ancestors.get(child).unwrap().clone();
+            concerned_ancestors.sort_by(|a, b| a.0.cmp(&b.0));
+            let concerned_ancestors = concerned_ancestors
+                .iter()
+                .map(|(_, y)| y.clone())
+                .collect::<Vec<_>>();
+            ordered_ancestors.insert(
+                *child,
+                NodeAncestors {
+                    ancestors: concerned_ancestors,
+                },
+            );
+        }
+
+        self.all_ancestors = ordered_ancestors;
+    }
+
     // Setters
 
     pub fn set_sloc_stats(&mut self, sloc_stats: HashMap<String, usize>) {
