@@ -3,7 +3,7 @@
 <p align="center">
     <br />
     <a href="https://cyfrin.io/">
-        <img src=".github/images/aderyn_logo.png" width="400" alt=""/></a>
+        <img src="../.github/images/aderyn_logo.png" width="400" alt=""/></a>
     <br />
 </p>
 <p align="center"><strong>A powerful Solidity static analyzer that takes a bird's eye view over your smart contracts.
@@ -11,7 +11,7 @@
 <p align="center">
     <br />
     <a href="https://cyfrin.io/">
-        <img src=".github/images/poweredbycyfrinblue.png" width="145" alt=""/></a>
+        <img src="../.github/images/poweredbycyfrinblue.png" width="145" alt=""/></a>
     <br />
 </p>
 
@@ -44,10 +44,10 @@ Aderyn is a Rust-based static analyzer specifically designed for Web3 smart cont
 ## Features
 
 * [Hardhat](https://hardhat.org/) and [Foundry](https://book.getfoundry.sh/) support
-* Modular [detectors](./aderyn_core/src/detect/)
+* Modular [detectors](../aderyn_core/src/detect/)
 * AST Traversal
 * Markdown reports
-* Bot development framework ([Nyth](./nyth/))
+* Bot development framework ([Nyth](../nyth/))
 
 # Usage
 
@@ -155,8 +155,8 @@ If it is a Solidity file path, then Aderyn will create a temporary Foundry proje
 
 ## Contributing & License
 
-Help us build Aderyn 🦜 Please see our [contribution guidelines](./CONTRIBUTING.md).
-Aderyn is an open source software licensed under the [MIT License](./LICENSE).
+Help us build Aderyn 🦜 Please see our [contribution guidelines](../CONTRIBUTING.md).
+Aderyn is an open source software licensed under the [MIT License](../LICENSE).
 
 To build Aderyn locally, [install Rust](https://www.rust-lang.org/tools/install), clone this repo, and use [`cargo`](https://doc.rust-lang.org/cargo/getting-started/first-steps.html) commands to build, test and run locally
 
