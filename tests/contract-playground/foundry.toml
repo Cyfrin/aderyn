@@ -2,3 +2,4 @@
 src = "src"
 out = "out"
 libs = ["lib"]
+bytecode_hash = "none"
