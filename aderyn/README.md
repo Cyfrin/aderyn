@@ -116,19 +116,19 @@ aderyn
 Output to a different markdown file:
 
 ```sh
-aderyn ./path/to/codebase -o output.md
+aderyn -o output.md ./path/to/repo/
 ```
 
 Refine the scope to a subdirectory called `/uniswap/`:
 
 ```sh
-aderyn ./path/to/codebase --scope uniswap
+aderyn --scope uniswap ./path/to/repo/
 ```
 
 Exclude a contract called `Counter.sol`:
 
 ```sh
-aderyn ./path/to/codebase --exclude Counter.sol
+aderyn --exclude Counter.sol ./path/to/repo/
 ```
 
 Run on a single Solidity file (requires [Foundry](https://book.getfoundry.sh/) to be installed on your machine):
