@@ -1999,10 +1999,10 @@ mod context_tests {
             "../tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",
         )?;
         let inheritance_base = read_compiler_output(
-            "../tests/contract-playground/out/InheritanceBase.sol/InheritanceBase.0.8.21.json",
+            "../tests/contract-playground/out/InheritanceBase.sol/InheritanceBase.0.8.23.json",
         )?;
         let i_contract_inheritance = read_compiler_output(
-            "../tests/contract-playground/out/IContractInheritance.sol/IContractInheritance.0.8.21.json",
+            "../tests/contract-playground/out/IContractInheritance.sol/IContractInheritance.0.8.23.json",
         )?;
         extended_inheritance.ast.accept(&mut context)?;
         inheritance_base.ast.accept(&mut context)?;

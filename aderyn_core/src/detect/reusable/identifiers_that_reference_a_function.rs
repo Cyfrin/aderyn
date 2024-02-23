@@ -50,15 +50,15 @@ mod identifiers_that_reference_functions_detector_tests {
 
     #[test]
     fn test_identifiers_that_reference_functions_detector() {
-        let mut context =
-            load_contract("../tests/contract-playground/out/Counter.sol/Counter.0.8.21.json");
+        let context =
+            load_contract("../tests/contract-playground/out/Counter.sol/Counter.0.8.23.json");
         // from context, get the first item from function_definitions where name is "amountIn"
         let function_definition = context
             .function_definitions()
             .iter()
             .find(|function_definition| function_definition.name == "increment")
             .unwrap()
-            .clone();
+            .to_owned();
 
         let mut detector = IdentifiersThatReferenceAFunctionDetector::default();
         // create vec with function_definition as item 0
