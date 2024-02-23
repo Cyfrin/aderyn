@@ -1,17 +1,13 @@
-## Bot framework creation  (how to steps for development)
+# Nyth
 
-### Assemble the framework
-cli/bot_archivegen.sh
+## What is Nyth?
 
-### NOTE User can create the bot anywhere 
-Cargo.toml should not contain relative paths in the final archive.zip
+Nyth is the framework that facilitates the creation of custom bots and detectors for Aderyn. It abstracts the Aderyn backend so bot developers can focus on what matters most: writing detectors.
 
-### Command to create a bot
-cargo run --bin nyth -- init ../scarybots/spiderbot
-cd ../scarybots/spiderbot
+## Who is it for?
 
-### Command to add an issue detector
-cargo run --bin nyth -- new issue scarey_events
+Nyth is for Solodity Static Analysis Developers and Bot Racers.
 
-### Command to add a reusable detector
-cargo run --bin nyth -- new reusable get_all_events_from_a_cotract
+## Getting Started
+
+TODO: Docs link to appear here
