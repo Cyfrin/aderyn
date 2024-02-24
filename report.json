@@ -712,6 +712,10 @@
             "line_no": 35
           },
           {
+            "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
+            "line_no": 56
+          },
+          {
             "contract_path": "src/cloc/HeavilyCommentedContract.sol",
             "line_no": 35
           },
