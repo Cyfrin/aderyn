@@ -8,6 +8,7 @@ pub mod visitor;
 
 use detect::detector::IssueDetector;
 use eyre::Result;
+use rayon::iter::{IntoParallelRefMutIterator, ParallelIterator};
 use std::error::Error;
 use std::fs::{remove_file, File};
 use std::io::{self};
@@ -47,7 +48,7 @@ pub fn run_with_printer_and_given_detectors<T>(
     reporter: T,
     root_rel_path: PathBuf,
     no_snippets: bool,
-    detectors: Vec<Box<dyn IssueDetector>>,
+    mut detectors: Vec<Box<dyn IssueDetector>>,
 ) -> Result<(), Box<dyn Error>>
 where
     T: ReportPrinter<()>,
@@ -61,32 +62,41 @@ where
         .map(|d| (d.name(), d.severity().to_string()))
         .collect::<Vec<_>>();
     let mut report: Report = Report::default();
-    for mut detector in detectors {
-        if let Ok(found) = detector.detect(context) {
-            if found {
-                let issue: Issue = Issue {
-                    title: detector.title(),
-                    description: detector.description(),
-                    detector_name: detector.name(),
-                    instances: detector.instances(),
-                };
-                match detector.severity() {
-                    IssueSeverity::Critical => {
-                        report.criticals.push(issue);
-                    }
-                    IssueSeverity::High => {
-                        report.highs.push(issue);
-                    }
-                    IssueSeverity::Medium => {
-                        report.mediums.push(issue);
-                    }
-                    IssueSeverity::Low => {
-                        report.lows.push(issue);
-                    }
-                    IssueSeverity::NC => {
-                        report.ncs.push(issue);
-                    }
+
+    let issues: Vec<Option<(Issue, IssueSeverity)>> = detectors
+        .par_iter_mut()
+        .map(|detector| {
+            if let Ok(found) = detector.detect(context) {
+                if found {
+                    let issue: Issue = Issue {
+                        title: detector.title(),
+                        description: detector.description(),
+                        detector_name: detector.name(),
+                        instances: detector.instances(),
+                    };
+                    return Some((issue, detector.severity()));
                 }
+            }
+            None
+        })
+        .collect();
+
+    for (issue, severity) in issues.into_iter().flatten() {
+        match severity {
+            IssueSeverity::Critical => {
+                report.criticals.push(issue);
+            }
+            IssueSeverity::High => {
+                report.highs.push(issue);
+            }
+            IssueSeverity::Medium => {
+                report.mediums.push(issue);
+            }
+            IssueSeverity::Low => {
+                report.lows.push(issue);
+            }
+            IssueSeverity::NC => {
+                report.ncs.push(issue);
             }
         }
     }
