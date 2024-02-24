@@ -160,7 +160,7 @@ impl Display for IssueSeverity {
     }
 }
 
-pub trait IssueDetector {
+pub trait IssueDetector: Send + Sync + 'static {
     fn detect(&mut self, _context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         Ok(true)
     }
