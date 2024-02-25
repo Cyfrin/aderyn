@@ -2,7 +2,7 @@
 
 ## What is Nyth?
 
-Nyth is the framework that facilitates the creation of custom bots and detectors for Aderyn. It abstracts the Aderyn backend so bot developers can focus on what matters most: writing detectors.
+[Nyth](https://github.com/Cyfrin/aderyn/tree/dev/nyth) is the framework that facilitates the creation of custom bots and detectors for [Aderyn](https://github.com/Cyfrin/aderyn). It abstracts the Aderyn backend so bot developers can focus on what matters most: writing detectors.
 
 ## Who is it for?
 
