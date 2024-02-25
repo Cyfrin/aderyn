@@ -58,7 +58,7 @@ fn main() {
                 std::process::exit(1);
             });
             let archive: Vec<u8> = Vec::from(include_bytes!("../archive.zip"));
-            let target_dir = PathBuf::from(bot_name);
+            let target_dir = PathBuf::from(&bot_name);
             zip_extract::extract(Cursor::new(archive), &target_dir, true).unwrap();
             let _ = std::process::Command::new("git")
                 .arg("init")
@@ -83,6 +83,7 @@ fn main() {
                 .stdout(Stdio::inherit()) // This will stream the stdout
                 .stderr(Stdio::inherit())
                 .status();
+            println!("Bot initialized successfully at {}", bot_name);
         }
         PilotCommand::New {
             detector_type,
@@ -183,6 +184,11 @@ fn main() {
             fs::read_to_string(&librs).unwrap()
         )
         .unwrap();
+
+        println!(
+            "Reusable detector created successfully at {}",
+            detector_path.to_str().unwrap()
+        );
     }
 
     fn create_issue_detector(detector_name: &str) {
@@ -304,6 +310,11 @@ fn main() {
             fs::read_to_string(&librs).unwrap()
         )
         .unwrap();
+
+        println!(
+            "Issue detector created successfully at {}",
+            detector_path.to_str().unwrap()
+        );
     }
 }
 
