@@ -896,11 +896,9 @@ impl Node for TupleExpression {
     }
     fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         let mut comp_ids = vec![];
-        for elem in &self.components {
-            if let Some(expr) = elem {
-                if let Some(id) = expr.get_node_id() {
-                    comp_ids.push(id)
-                }
+        for expr in self.components.iter().flatten() {
+            if let Some(id) = expr.get_node_id() {
+                comp_ids.push(id)
             }
         }
         visitor.visit_immediate_children(self.id, comp_ids)?;
