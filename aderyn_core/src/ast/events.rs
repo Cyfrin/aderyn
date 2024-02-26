@@ -26,6 +26,11 @@ impl Node for EventDefinition {
         }
         visitor.end_visit_event_definition(self)
     }
+    fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        // TODO: documentation nodes
+        visitor.visit_immediate_children(self.id, vec![self.parameters.id])?;
+        Ok(())
+    }
 }
 
 impl Display for EventDefinition {
