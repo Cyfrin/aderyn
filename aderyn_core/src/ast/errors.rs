@@ -23,6 +23,10 @@ impl Node for ErrorDefinition {
         }
         visitor.end_visit_error_definition(self)
     }
+    fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        // TODO: send documentation nodes to visitor
+        visitor.visit_immediate_children(self.id, vec![self.parameters.id])
+    }
 }
 
 impl Display for ErrorDefinition {
