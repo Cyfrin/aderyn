@@ -975,7 +975,7 @@ impl WorkspaceContext {
     }
 
     pub fn get_parent(&self, node_id: NodeID) -> Option<&ASTNode> {
-        Some(self.nodes.get(self.parent_link.get(&node_id)?)?)
+        self.nodes.get(self.parent_link.get(&node_id)?)
     }
 
     pub fn get_source_unit_from_child_node(&self, node: &ASTNode) -> Option<&SourceUnit> {
