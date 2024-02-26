@@ -66,6 +66,34 @@ impl Node for ContractDefinitionNode {
     }
 }
 
+impl ContractDefinitionNode {
+    pub fn get_node_id(&self) -> Option<NodeID> {
+        match self {
+            ContractDefinitionNode::UsingForDirective(using_for_directive) => {
+                Some(using_for_directive.id)
+            }
+            ContractDefinitionNode::StructDefinition(struct_definition) => {
+                Some(struct_definition.id)
+            }
+            ContractDefinitionNode::EnumDefinition(enum_definition) => Some(enum_definition.id),
+            ContractDefinitionNode::VariableDeclaration(variable_declaration) => {
+                Some(variable_declaration.id)
+            }
+            ContractDefinitionNode::EventDefinition(event_definition) => Some(event_definition.id),
+            ContractDefinitionNode::FunctionDefinition(function_definition) => {
+                Some(function_definition.id)
+            }
+            ContractDefinitionNode::ModifierDefinition(modifier_definition) => {
+                Some(modifier_definition.id)
+            }
+            ContractDefinitionNode::ErrorDefinition(error_definition) => Some(error_definition.id),
+            ContractDefinitionNode::UserDefinedValueTypeDefinition(
+                user_defined_value_type_definition,
+            ) => Some(user_defined_value_type_definition.id),
+        }
+    }
+}
+
 impl Display for ContractDefinitionNode {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
@@ -109,6 +137,7 @@ impl Node for InheritanceSpecifier {
                 list_accept(self.arguments.as_ref().unwrap(), visitor)?;
             }
         }
+        self.accept_metadata(visitor)?;
         visitor.end_visit_inheritance_specifier(self)
     }
     fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
@@ -182,7 +211,25 @@ impl Node for ContractDefinition {
             list_accept(&self.base_contracts, visitor)?;
             list_accept(&self.nodes, visitor)?;
         }
+        self.accept_metadata(visitor)?;
         visitor.end_visit_contract_definition(self)
+    }
+
+    fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        // TODO: Skipping documentation for now
+        let mut base_contracts_ids = vec![];
+        for base_contract in &self.base_contracts {
+            base_contracts_ids.push(base_contract.id);
+        }
+        visitor.visit_immediate_children(self.id, base_contracts_ids)?;
+        let mut node_ids = vec![];
+        for node in &self.nodes {
+            if let Some(node_id) = node.get_node_id() {
+                node_ids.push(node_id);
+            }
+        }
+        visitor.visit_immediate_children(self.id, node_ids)?;
+        Ok(())
     }
 }
 
