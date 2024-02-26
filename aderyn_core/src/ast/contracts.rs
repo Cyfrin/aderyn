@@ -111,6 +111,20 @@ impl Node for InheritanceSpecifier {
         }
         visitor.end_visit_inheritance_specifier(self)
     }
+    fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_immediate_children(self.id, vec![self.base_name.id])?;
+        let mut argument_ids: Vec<NodeID> = vec![];
+        if let Some(arguments) = &self.arguments {
+            for expression in arguments {
+                let node_id = expression.get_node_id();
+                if let Some(node_id) = node_id {
+                    argument_ids.push(node_id)
+                }
+            }
+        }
+        visitor.visit_immediate_children(self.id, argument_ids)?;
+        Ok(())
+    }
 }
 
 impl Display for InheritanceSpecifier {

@@ -63,6 +63,35 @@ impl Node for Expression {
 }
 
 impl Expression {
+    pub fn get_node_id(&self) -> Option<NodeID> {
+        match self {
+            Expression::Literal(literal) => Some(literal.id),
+            Expression::Identifier(identifier) => Some(identifier.id),
+            Expression::UnaryOperation(unary_operation) => Some(unary_operation.id),
+            Expression::BinaryOperation(binary_operation) => Some(binary_operation.id),
+            Expression::Conditional(conditional) => Some(conditional.id),
+            Expression::Assignment(assignment) => Some(assignment.id),
+            Expression::FunctionCall(function_call) => Some(function_call.id),
+            Expression::FunctionCallOptions(function_call_options) => {
+                Some(function_call_options.id)
+            }
+            Expression::IndexAccess(index_access) => Some(index_access.id),
+            Expression::IndexRangeAccess(index_range_access) => Some(index_range_access.id),
+            Expression::MemberAccess(member_access) => Some(member_access.id),
+            Expression::ElementaryTypeNameExpression(elementary_type_name_expression) => {
+                Some(elementary_type_name_expression.id)
+            }
+
+            Expression::TupleExpression(tuple_expression) => Some(tuple_expression.id),
+            Expression::NewExpression(new_expression) => Some(new_expression.id),
+            Expression::UnhandledExpression {
+                id,
+                src: _src,
+                node_type: _node_type,
+            } => *id,
+        }
+    }
+
     pub fn root_expression(&self) -> Option<&Expression> {
         match self {
             Expression::Identifier(_) => Some(self),
