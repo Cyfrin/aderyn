@@ -35,4 +35,14 @@ impl Node for ImportDirective {
         }
         visitor.end_visit_import_directive(self)
     }
+    fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        let mut symbol_alias_ids = vec![];
+        for symbol_alias in &self.symbol_aliases {
+            if let Some(expr_id) = symbol_alias.foreign.get_node_id() {
+                symbol_alias_ids.push(expr_id);
+            }
+        }
+        visitor.visit_immediate_children(self.id, symbol_alias_ids)?;
+        Ok(())
+    }
 }
