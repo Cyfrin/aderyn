@@ -17,7 +17,36 @@ impl Node for Block {
         if visitor.visit_block(self)? {
             list_accept(&self.statements, visitor)?;
         }
+        self.accept_metadata(visitor)?;
         visitor.end_visit_block(self)
+    }
+}
+
+impl Block {
+    fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        let children_ids = self
+            .statements
+            .iter()
+            .map(|x| match x {
+                Statement::VariableDeclarationStatement(n) => Some(n.id),
+                Statement::IfStatement(n) => Some(n.id),
+                Statement::ForStatement(n) => Some(n.id),
+                Statement::WhileStatement(n) => Some(n.id),
+                Statement::InlineAssembly(n) => Some(n.id),
+                Statement::UncheckedBlock(n) => Some(n.id),
+                Statement::UnhandledStatement {
+                    node_type: _,
+                    src: _,
+                    id,
+                } => *id,
+                Statement::Return(n) => Some(n.id),
+                Statement::EmitStatement(_)
+                | Statement::TryStatement(_)
+                | Statement::RevertStatement(_)
+                | Statement::ExpressionStatement(_) => None,
+            })
+            .collect::<Vec<_>>();
+        visitor.visit_immediate_children(self.id, children_ids.into_iter().flatten().collect())
     }
 }
 
