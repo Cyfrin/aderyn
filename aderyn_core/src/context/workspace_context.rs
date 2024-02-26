@@ -974,6 +974,10 @@ impl WorkspaceContext {
         self.while_statements_context.keys().collect()
     }
 
+    pub fn get_parent(&self, node_id: NodeID) -> Option<&ASTNode> {
+        Some(self.nodes.get(self.parent_link.get(&node_id)?)?)
+    }
+
     pub fn get_source_unit_from_child_node(&self, node: &ASTNode) -> Option<&SourceUnit> {
         let source_unit_id = match node {
             ASTNode::ArrayTypeName(node) => self
