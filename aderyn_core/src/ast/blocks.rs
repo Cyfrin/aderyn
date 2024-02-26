@@ -20,9 +20,7 @@ impl Node for Block {
         self.accept_metadata(visitor)?;
         visitor.end_visit_block(self)
     }
-}
 
-impl Block {
     fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         let children_ids = self
             .statements

@@ -503,6 +503,9 @@ pub trait Node {
     fn accept(&self, _visitor: &mut impl ASTConstVisitor) -> Result<()> {
         Ok(())
     }
+    fn accept_metadata(&self, _visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        Ok(())
+    }
 }
 
 pub fn list_accept(list: &Vec<impl Node>, visitor: &mut impl ASTConstVisitor) -> Result<()> {
