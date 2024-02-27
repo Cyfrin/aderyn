@@ -588,13 +588,6 @@ impl Node for InlineAssembly {
         if visitor.visit_inline_assembly(self)? && self.ast.is_some() {
             self.ast.as_ref().unwrap().accept(visitor)?;
         }
-        self.accept_metadata(visitor)?;
         visitor.end_visit_inline_assembly(self)
-    }
-    fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        if let Some(yul_block) = &self.ast {
-            // TODO: add all yul statements as children
-        }
-        Ok(())
     }
 }
