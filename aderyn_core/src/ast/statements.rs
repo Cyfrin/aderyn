@@ -27,6 +27,33 @@ pub enum Statement {
     },
 }
 
+impl Statement {
+    pub fn get_node_id(&self) -> Option<NodeID> {
+        match self {
+            Statement::VariableDeclarationStatement(variable_declaration_statement) => {
+                Some(variable_declaration_statement.id)
+            }
+            Statement::IfStatement(if_statement) => Some(if_statement.id),
+            Statement::ForStatement(for_statement) => Some(for_statement.id),
+            Statement::WhileStatement(while_statement) => Some(while_statement.id),
+            Statement::EmitStatement(emit_statement) => emit_statement.event_call.get_node_id(),
+            Statement::UncheckedBlock(unchecked_statement) => Some(unchecked_statement.id),
+            Statement::Return(return_statement) => Some(return_statement.id),
+            Statement::RevertStatement(revert_statement) => Some(revert_statement.error_call.id),
+            Statement::ExpressionStatement(expression_statement) => {
+                expression_statement.expression.get_node_id()
+            }
+            Statement::InlineAssembly(inline_assembly) => Some(inline_assembly.id),
+            Statement::UnhandledStatement {
+                id,
+                node_type: _node_type,
+                src: _src,
+            } => *id,
+            Statement::TryStatement(_) => None,
+        }
+    }
+}
+
 impl Node for Statement {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         match self {
@@ -129,8 +156,24 @@ impl Node for VariableDeclarationStatement {
             if self.initial_value.is_some() {
                 self.initial_value.as_ref().unwrap().accept(visitor)?;
             }
+            self.accept_metadata(visitor)?;
         }
         visitor.end_visit_variable_declaration_statement(self)
+    }
+    fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        let declaration_ids = self
+            .declarations
+            .iter()
+            .flatten()
+            .map(|x| x.id)
+            .collect::<Vec<_>>();
+        visitor.visit_immediate_children(self.id, declaration_ids)?;
+        if let Some(initial_value) = &self.initial_value {
+            if let Some(id) = initial_value.get_node_id() {
+                visitor.visit_immediate_children(self.id, vec![id])?;
+            }
+        }
+        Ok(())
     }
 }
 
@@ -171,6 +214,15 @@ impl Display for VariableDeclarationStatement {
 pub enum BlockOrStatement {
     Block(Box<Block>),
     Statement(Box<Statement>),
+}
+
+impl BlockOrStatement {
+    pub fn get_node_id(&self) -> Option<NodeID> {
+        match self {
+            BlockOrStatement::Block(block) => Some(block.id),
+            BlockOrStatement::Statement(statement) => statement.get_node_id(),
+        }
+    }
 }
 
 impl Node for BlockOrStatement {
@@ -243,7 +295,22 @@ impl Node for IfStatement {
                 self.false_body.as_ref().unwrap().accept(visitor)?;
             }
         }
+        self.accept_metadata(visitor)?;
         visitor.end_visit_if_statement(self)
+    }
+    fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        if let Some(cond_id) = self.condition.get_node_id() {
+            visitor.visit_immediate_children(self.id, vec![cond_id])?;
+        }
+        if let Some(true_body_id) = self.true_body.get_node_id() {
+            visitor.visit_immediate_children(self.id, vec![true_body_id])?;
+        }
+        if let Some(false_body) = &self.false_body {
+            if let Some(false_body_id) = false_body.get_node_id() {
+                visitor.visit_immediate_children(self.id, vec![false_body_id])?;
+            }
+        }
+        Ok(())
     }
 }
 
@@ -286,8 +353,30 @@ impl Node for ForStatement {
                 self.loop_expression.as_ref().unwrap().accept(visitor)?;
             }
             self.body.accept(visitor)?;
+            self.accept_metadata(visitor)?;
         }
         visitor.end_visit_for_statement(self)
+    }
+    fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        if let Some(initialization_expr) = &self.initialization_expression {
+            if let Some(expr_id) = initialization_expr.get_node_id() {
+                visitor.visit_immediate_children(self.id, vec![expr_id])?;
+            }
+        }
+        if let Some(condition) = &self.condition {
+            if let Some(cond_id) = condition.get_node_id() {
+                visitor.visit_immediate_children(self.id, vec![cond_id])?;
+            }
+        }
+        if let Some(loop_expr) = &self.loop_expression {
+            if let Some(loop_id) = loop_expr.get_node_id() {
+                visitor.visit_immediate_children(self.id, vec![loop_id])?;
+            }
+        }
+        if let Some(body_id) = self.body.get_node_id() {
+            visitor.visit_immediate_children(self.id, vec![body_id])?;
+        }
+        Ok(())
     }
 }
 
@@ -330,7 +419,19 @@ impl Node for WhileStatement {
             self.condition.accept(visitor)?;
             self.body.accept(visitor)?;
         }
+        self.accept_metadata(visitor)?;
         visitor.end_visit_while_statement(self)
+    }
+
+    fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        if let Some(cond_id) = self.condition.get_node_id() {
+            visitor.visit_immediate_children(self.id, vec![cond_id])?;
+        }
+
+        if let Some(body_id) = self.body.get_node_id() {
+            visitor.visit_immediate_children(self.id, vec![body_id])?;
+        }
+        Ok(())
     }
 }
 
@@ -445,7 +546,16 @@ impl Node for Return {
         if visitor.visit_return(self)? && self.expression.is_some() {
             self.expression.as_ref().unwrap().accept(visitor)?;
         }
+        self.accept_metadata(visitor)?;
         visitor.end_visit_return(self)
+    }
+    fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        if let Some(expr) = &self.expression {
+            if let Some(expr_id) = expr.get_node_id() {
+                visitor.visit_immediate_children(self.id, vec![expr_id])?;
+            }
+        }
+        Ok(())
     }
 }
 
@@ -478,6 +588,13 @@ impl Node for InlineAssembly {
         if visitor.visit_inline_assembly(self)? && self.ast.is_some() {
             self.ast.as_ref().unwrap().accept(visitor)?;
         }
+        self.accept_metadata(visitor)?;
         visitor.end_visit_inline_assembly(self)
+    }
+    fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        if let Some(yul_block) = &self.ast {
+            // TODO: add all yul statements as children
+        }
+        Ok(())
     }
 }
