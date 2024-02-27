@@ -21,8 +21,13 @@ impl Node for UsingForDirective {
             if self.type_name.is_some() {
                 self.type_name.as_ref().unwrap().accept(visitor)?;
             }
+            self.accept_metadata(visitor)?;
         }
         visitor.end_visit_using_for_directive(self)
+    }
+    fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_immediate_children(self.id, vec![self.library_name.id])?;
+        Ok(())
     }
 }
 

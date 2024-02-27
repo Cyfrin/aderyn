@@ -742,6 +742,7 @@ pub struct WorkspaceContext {
     last_contract_definition_id: Option<NodeID>,
     last_function_definition_id: Option<NodeID>,
     last_modifier_definition_id: Option<NodeID>,
+    pub parent_link: HashMap<NodeID, NodeID>,
 
     // relative source filepaths
     pub src_filepaths: Vec<String>,
@@ -972,6 +973,10 @@ impl WorkspaceContext {
     }
     pub fn while_statements(&self) -> Vec<&WhileStatement> {
         self.while_statements_context.keys().collect()
+    }
+
+    pub fn get_parent(&self, node_id: NodeID) -> Option<&ASTNode> {
+        self.nodes.get(self.parent_link.get(&node_id)?)
     }
 
     pub fn get_source_unit_from_child_node(&self, node: &ASTNode) -> Option<&SourceUnit> {
@@ -1962,6 +1967,17 @@ impl ASTConstVisitor for WorkspaceContext {
             },
         );
         Ok(true)
+    }
+
+    fn visit_immediate_children(
+        &mut self,
+        node_id: NodeID,
+        node_children_ids: Vec<NodeID>,
+    ) -> Result<()> {
+        for id in node_children_ids {
+            self.parent_link.insert(id, node_id);
+        }
+        Ok(())
     }
 }
 

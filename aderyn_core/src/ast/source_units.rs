@@ -18,6 +18,25 @@ pub enum SourceUnitNode {
     UserDefinedValueTypeDefinition(UserDefinedValueTypeDefinition),
 }
 
+impl SourceUnitNode {
+    pub fn get_node_id(&self) -> Option<NodeID> {
+        match self {
+            SourceUnitNode::PragmaDirective(pragma_directive) => Some(pragma_directive.id),
+            SourceUnitNode::ImportDirective(import_directive) => Some(import_directive.id),
+            SourceUnitNode::ContractDefinition(contract_definition) => Some(contract_definition.id),
+            SourceUnitNode::StructDefinition(struct_definition) => Some(struct_definition.id),
+            SourceUnitNode::EnumDefinition(enum_definition) => Some(enum_definition.id),
+            SourceUnitNode::ErrorDefinition(error_definition) => Some(error_definition.id),
+            SourceUnitNode::VariableDeclaration(variable_declaration) => {
+                Some(variable_declaration.id)
+            }
+            SourceUnitNode::UserDefinedValueTypeDefinition(user_defined_value_type_definition) => {
+                Some(user_defined_value_type_definition.id)
+            }
+        }
+    }
+}
+
 impl Node for SourceUnitNode {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         match self {
@@ -59,7 +78,17 @@ impl Node for SourceUnit {
         if visitor.visit_source_unit(self)? {
             list_accept(&self.nodes, visitor)?;
         }
+        self.accept_metadata(visitor)?;
         visitor.end_visit_source_unit(self)
+    }
+    fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        let node_ids = &self
+            .nodes
+            .iter()
+            .flat_map(|x| x.get_node_id())
+            .collect::<Vec<_>>();
+        visitor.visit_immediate_children(self.id, node_ids.clone())?;
+        Ok(())
     }
 }
 
