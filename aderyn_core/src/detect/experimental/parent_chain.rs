@@ -90,7 +90,7 @@ mod parent_chain_demo_tests {
         /*
             Although we capture! 4 times, we will have only 3 instances
             because line 17 covers both the first and the second parent ! a.k.a block and the for statement
-                16, if statement
+                16, block
                 17, for statement, block
                 18, assignment
         */
