@@ -1,3 +1,4 @@
+#![allow(clippy::collapsible_match)]
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
