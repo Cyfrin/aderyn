@@ -63,6 +63,35 @@ impl Node for Expression {
 }
 
 impl Expression {
+    pub fn get_node_id(&self) -> Option<NodeID> {
+        match self {
+            Expression::Literal(literal) => Some(literal.id),
+            Expression::Identifier(identifier) => Some(identifier.id),
+            Expression::UnaryOperation(unary_operation) => Some(unary_operation.id),
+            Expression::BinaryOperation(binary_operation) => Some(binary_operation.id),
+            Expression::Conditional(conditional) => Some(conditional.id),
+            Expression::Assignment(assignment) => Some(assignment.id),
+            Expression::FunctionCall(function_call) => Some(function_call.id),
+            Expression::FunctionCallOptions(function_call_options) => {
+                Some(function_call_options.id)
+            }
+            Expression::IndexAccess(index_access) => Some(index_access.id),
+            Expression::IndexRangeAccess(index_range_access) => Some(index_range_access.id),
+            Expression::MemberAccess(member_access) => Some(member_access.id),
+            Expression::ElementaryTypeNameExpression(elementary_type_name_expression) => {
+                Some(elementary_type_name_expression.id)
+            }
+
+            Expression::TupleExpression(tuple_expression) => Some(tuple_expression.id),
+            Expression::NewExpression(new_expression) => Some(new_expression.id),
+            Expression::UnhandledExpression {
+                id,
+                src: _src,
+                node_type: _node_type,
+            } => *id,
+        }
+    }
+
     pub fn root_expression(&self) -> Option<&Expression> {
         match self {
             Expression::Identifier(_) => Some(self),
@@ -270,7 +299,14 @@ impl Node for UnaryOperation {
         if visitor.visit_unary_operation(self)? {
             self.sub_expression.accept(visitor)?
         }
+        self.accept_metadata(visitor)?;
         visitor.end_visit_unary_operation(self)
+    }
+    fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        if let Some(child_id) = self.sub_expression.get_node_id() {
+            visitor.visit_immediate_children(self.id, vec![child_id])?;
+        }
+        Ok(())
     }
 }
 
@@ -313,7 +349,17 @@ impl Node for BinaryOperation {
             self.left_expression.accept(visitor)?;
             self.right_expression.accept(visitor)?;
         }
+        self.accept_metadata(visitor)?;
         visitor.end_visit_binary_operation(self)
+    }
+    fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        if let Some(left_node_id) = self.left_expression.get_node_id() {
+            visitor.visit_immediate_children(self.id, vec![left_node_id])?;
+        }
+        if let Some(right_node) = self.right_expression.get_node_id() {
+            visitor.visit_immediate_children(self.id, vec![right_node])?;
+        }
+        Ok(())
     }
 }
 
@@ -357,7 +403,20 @@ impl Node for Conditional {
             self.true_expression.accept(visitor)?;
             self.false_expression.accept(visitor)?;
         }
+        self.accept_metadata(visitor)?;
         visitor.end_visit_conditional(self)
+    }
+    fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        if let Some(condition_id) = self.condition.get_node_id() {
+            visitor.visit_immediate_children(self.id, vec![condition_id])?;
+        }
+        if let Some(true_expression_id) = self.true_expression.get_node_id() {
+            visitor.visit_immediate_children(self.id, vec![true_expression_id])?;
+        }
+        if let Some(false_expression_id) = self.false_expression.get_node_id() {
+            visitor.visit_immediate_children(self.id, vec![false_expression_id])?;
+        }
+        Ok(())
     }
 }
 
@@ -400,7 +459,17 @@ impl Node for Assignment {
             self.left_hand_side.accept(visitor)?;
             self.right_hand_side.accept(visitor)?;
         }
+        self.accept_metadata(visitor)?;
         visitor.end_visit_assignment(self)
+    }
+    fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        if let Some(left_hand_id) = self.left_hand_side.get_node_id() {
+            visitor.visit_immediate_children(self.id, vec![left_hand_id])?;
+        }
+        if let Some(right_hand_id) = self.right_hand_side.get_node_id() {
+            visitor.visit_immediate_children(self.id, vec![right_hand_id])?;
+        }
+        Ok(())
     }
 }
 
@@ -451,7 +520,21 @@ impl Node for FunctionCall {
             self.expression.accept(visitor)?;
             list_accept(&self.arguments, visitor)?;
         }
+        self.accept_metadata(visitor)?;
         visitor.end_visit_function_call(self)
+    }
+    fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        if let Some(expr_id) = self.expression.get_node_id() {
+            visitor.visit_immediate_children(self.id, vec![expr_id])?;
+        }
+        let mut argument_ids = vec![];
+        for arg in &self.arguments {
+            if let Some(arg_id) = arg.get_node_id() {
+                argument_ids.push(arg_id);
+            }
+        }
+        visitor.visit_immediate_children(self.id, argument_ids)?;
+        Ok(())
     }
 }
 
@@ -509,7 +592,23 @@ impl Node for FunctionCallOptions {
                 list_accept(self.arguments.as_ref().unwrap(), visitor)?;
             }
         }
+        self.accept_metadata(visitor)?;
         visitor.end_visit_function_call_options(self)
+    }
+    fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        if let Some(expr_id) = self.expression.get_node_id() {
+            visitor.visit_immediate_children(self.id, vec![expr_id])?;
+        }
+        let mut argument_ids = vec![];
+        if let Some(arguments) = &self.arguments {
+            for arg in arguments {
+                if let Some(arg_id) = arg.get_node_id() {
+                    argument_ids.push(arg_id);
+                }
+            }
+            visitor.visit_immediate_children(self.id, argument_ids)?;
+        }
+        Ok(())
     }
 }
 
@@ -592,7 +691,17 @@ impl Node for IndexAccess {
             self.base_expression.accept(visitor)?;
             self.index_expression.accept(visitor)?;
         }
+        self.accept_metadata(visitor)?;
         visitor.end_visit_index_access(self)
+    }
+    fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        if let Some(base_expr_id) = self.base_expression.get_node_id() {
+            visitor.visit_immediate_children(self.id, vec![base_expr_id])?;
+        }
+        if let Some(index_expr_id) = self.index_expression.get_node_id() {
+            visitor.visit_immediate_children(self.id, vec![index_expr_id])?;
+        }
+        Ok(())
     }
 }
 
@@ -637,7 +746,21 @@ impl Node for IndexRangeAccess {
                 self.end_expression.as_ref().unwrap().accept(visitor)?;
             }
         }
+        self.accept_metadata(visitor)?;
         visitor.end_visit_index_range_access(self)
+    }
+    fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        if let Some(start_expression) = &self.start_expression {
+            if let Some(start_expr_id) = start_expression.get_node_id() {
+                visitor.visit_immediate_children(self.id, vec![start_expr_id])?;
+            }
+        }
+        if let Some(end_expression) = &self.end_expression {
+            if let Some(end_expr_id) = end_expression.get_node_id() {
+                visitor.visit_immediate_children(self.id, vec![end_expr_id])?;
+            }
+        }
+        Ok(())
     }
 }
 
@@ -694,7 +817,14 @@ impl Node for MemberAccess {
         if visitor.visit_member_access(self)? {
             self.expression.accept(visitor)?;
         }
+        self.accept_metadata(visitor)?;
         visitor.end_visit_member_access(self)
+    }
+    fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        if let Some(expr_id) = self.expression.get_node_id() {
+            visitor.visit_immediate_children(self.id, vec![expr_id])?;
+        }
+        Ok(())
     }
 }
 
@@ -761,7 +891,18 @@ impl Node for TupleExpression {
                 }
             }
         }
+        self.accept_metadata(visitor)?;
         visitor.end_visit_tuple_expression(self)
+    }
+    fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        let mut comp_ids = vec![];
+        for expr in self.components.iter().flatten() {
+            if let Some(id) = expr.get_node_id() {
+                comp_ids.push(id)
+            }
+        }
+        visitor.visit_immediate_children(self.id, comp_ids)?;
+        Ok(())
     }
 }
 

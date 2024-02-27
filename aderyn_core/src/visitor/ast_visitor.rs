@@ -489,10 +489,21 @@ pub trait ASTConstVisitor {
     fn end_visit_node(&mut self, _node: &impl Node) -> Result<()> {
         Ok(())
     }
+
+    fn visit_immediate_children(
+        &mut self,
+        _node_id: NodeID,
+        _node_children_ids: Vec<NodeID>,
+    ) -> Result<()> {
+        Ok(())
+    }
 }
 
 pub trait Node {
     fn accept(&self, _visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        Ok(())
+    }
+    fn accept_metadata(&self, _visitor: &mut impl ASTConstVisitor) -> Result<()> {
         Ok(())
     }
 }

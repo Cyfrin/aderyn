@@ -20,7 +20,13 @@ pub struct Identifier {
 impl Node for Identifier {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         visitor.visit_identifier(self)?;
+        self.accept_metadata(visitor)?;
         visitor.end_visit_identifier(self)
+    }
+    fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_immediate_children(self.id, self.overloaded_declarations.clone())?;
+        visitor.visit_immediate_children(self.id, vec![self.referenced_declaration])?;
+        Ok(())
     }
 }
 
@@ -68,7 +74,14 @@ pub struct IdentifierPath {
 impl Node for IdentifierPath {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         visitor.visit_identifier_path(self)?;
+        self.accept_metadata(visitor)?;
         visitor.end_visit_identifier_path(self)
+    }
+    fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        if let Some(ref_decl_id) = self.referenced_declaration {
+            visitor.visit_immediate_children(self.id, vec![ref_decl_id])?;
+        }
+        Ok(())
     }
 }
 
