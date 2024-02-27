@@ -742,7 +742,7 @@ pub struct WorkspaceContext {
     last_contract_definition_id: Option<NodeID>,
     last_function_definition_id: Option<NodeID>,
     last_modifier_definition_id: Option<NodeID>,
-    parent_link: HashMap<NodeID, NodeID>,
+    pub parent_link: HashMap<NodeID, NodeID>,
 
     // relative source filepaths
     pub src_filepaths: Vec<String>,
