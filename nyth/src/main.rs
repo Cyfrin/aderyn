@@ -59,6 +59,13 @@ fn main() {
             });
             let archive: Vec<u8> = Vec::from(include_bytes!("../archive.zip"));
             let target_dir = PathBuf::from(&bot_name);
+
+            if target_dir.exists() {
+                let panic_message =
+                    format!("{} already exists on disk!", target_dir.to_string_lossy());
+                panic!("{}", panic_message)
+            }
+
             zip_extract::extract(Cursor::new(archive), &target_dir, true).unwrap();
             let _ = std::process::Command::new("git")
                 .arg("init")
