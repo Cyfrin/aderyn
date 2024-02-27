@@ -58,6 +58,64 @@ pub enum ASTNode {
     WhileStatement(WhileStatement),
 }
 
+impl ASTNode {
+    pub fn id(&self) -> Option<NodeID> {
+        match self {
+            ASTNode::ArrayTypeName(_) => None,
+            ASTNode::Assignment(n) => Some(n.id),
+            ASTNode::BinaryOperation(n) => Some(n.id),
+            ASTNode::Block(n) => Some(n.id),
+            ASTNode::Conditional(n) => Some(n.id),
+            ASTNode::ContractDefinition(n) => Some(n.id),
+            ASTNode::ElementaryTypeName(_) => None,
+            ASTNode::ElementaryTypeNameExpression(n) => Some(n.id),
+            ASTNode::EmitStatement(_) => None,
+            ASTNode::EnumDefinition(n) => Some(n.id),
+            ASTNode::EnumValue(n) => Some(n.id),
+            ASTNode::EventDefinition(n) => Some(n.id),
+            ASTNode::ErrorDefinition(n) => Some(n.id),
+            ASTNode::ExpressionStatement(_) => None,
+            ASTNode::FunctionCall(n) => Some(n.id),
+            ASTNode::FunctionCallOptions(n) => Some(n.id),
+            ASTNode::FunctionDefinition(n) => Some(n.id),
+            ASTNode::FunctionTypeName(_) => None,
+            ASTNode::ForStatement(n) => Some(n.id),
+            ASTNode::Identifier(n) => Some(n.id),
+            ASTNode::IdentifierPath(n) => Some(n.id),
+            ASTNode::IfStatement(n) => Some(n.id),
+            ASTNode::ImportDirective(n) => Some(n.id),
+            ASTNode::IndexAccess(n) => Some(n.id),
+            ASTNode::IndexRangeAccess(n) => Some(n.id),
+            ASTNode::InheritanceSpecifier(n) => Some(n.id),
+            ASTNode::InlineAssembly(n) => Some(n.id),
+            ASTNode::Literal(n) => Some(n.id),
+            ASTNode::MemberAccess(n) => Some(n.id),
+            ASTNode::NewExpression(n) => Some(n.id),
+            ASTNode::Mapping(_n) => None,
+            ASTNode::ModifierDefinition(n) => Some(n.id),
+            ASTNode::ModifierInvocation(n) => Some(n.id),
+            ASTNode::OverrideSpecifier(n) => Some(n.id),
+            ASTNode::ParameterList(n) => Some(n.id),
+            ASTNode::PragmaDirective(n) => Some(n.id),
+            ASTNode::Return(n) => Some(n.id),
+            ASTNode::RevertStatement(_) => None,
+            ASTNode::SourceUnit(n) => Some(n.id),
+            ASTNode::StructDefinition(n) => Some(n.id),
+            ASTNode::StructuredDocumentation(n) => Some(n.id),
+            ASTNode::TryStatement(_) => None,
+            ASTNode::TryCatchClause(_) => None,
+            ASTNode::TupleExpression(n) => Some(n.id),
+            ASTNode::UnaryOperation(n) => Some(n.id),
+            ASTNode::UserDefinedTypeName(_) => None,
+            ASTNode::UserDefinedValueTypeDefinition(n) => Some(n.id),
+            ASTNode::UsingForDirective(n) => Some(n.id),
+            ASTNode::VariableDeclaration(n) => Some(n.id),
+            ASTNode::VariableDeclarationStatement(n) => Some(n.id),
+            ASTNode::WhileStatement(n) => Some(n.id),
+        }
+    }
+}
+
 impl From<ArrayTypeName> for ASTNode {
     fn from(value: ArrayTypeName) -> Self {
         ASTNode::ArrayTypeName(value)
