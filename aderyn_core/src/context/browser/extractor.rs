@@ -322,6 +322,27 @@ impl ASTConstVisitor for ExtractFunctionCalls {
     }
 }
 
+// ExtractFunctionCallsOps extracts all FunctionCallOps nodes from a given node.
+#[derive(Default)]
+pub struct ExtractFunctionCallOptions {
+    pub extracted: Vec<FunctionCallOptions>,
+}
+
+impl ExtractFunctionCallOptions {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
+        let mut extractor = Self::default();
+        node.accept(&mut extractor).unwrap_or_default();
+        extractor
+    }
+}
+
+impl ASTConstVisitor for ExtractFunctionCallOptions {
+    fn visit_function_call_options(&mut self, node: &FunctionCallOptions) -> Result<bool> {
+        self.extracted.push(node.clone());
+        Ok(true)
+    }
+}
+
 // ExtractFunctionDefinitions extracts all FunctionDefinition nodes from a given node.
 #[derive(Default)]
 
