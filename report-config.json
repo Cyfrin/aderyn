@@ -31,12 +31,16 @@
       {
         "file_path": "src/eth2/DepositContract.sol",
         "n_sloc": 95
+      },
+      {
+        "file_path": "src/parent_chain/ParentChainContract.sol",
+        "n_sloc": 29
       }
     ]
   },
   "files_summary": {
-    "total_sloc": 200,
-    "total_source_units": 6
+    "total_sloc": 229,
+    "total_source_units": 7
   },
   "high_issues": {
     "issues": []
@@ -69,6 +73,10 @@
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
             "line_no": 6
+          },
+          {
+            "contract_path": "src/parent_chain/ParentChainContract.sol",
+            "line_no": 2
           }
         ],
         "title": "PUSH0 is not supported by all chains"
@@ -107,6 +115,14 @@
           {
             "contract_path": "src/cloc/HeavilyCommentedContract.sol",
             "line_no": 38
+          },
+          {
+            "contract_path": "src/parent_chain/ParentChainContract.sol",
+            "line_no": 11
+          },
+          {
+            "contract_path": "src/parent_chain/ParentChainContract.sol",
+            "line_no": 15
           }
         ],
         "title": "Functions not used internally could be marked external"

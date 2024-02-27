@@ -101,6 +101,10 @@
         "n_sloc": 7
       },
       {
+        "file_path": "src/parent_chain/ParentChainContract.sol",
+        "n_sloc": 29
+      },
+      {
         "file_path": "src/uniswap/UniswapV2Swapper.sol",
         "n_sloc": 50
       },
@@ -111,8 +115,8 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 664,
-    "total_source_units": 21
+    "total_sloc": 693,
+    "total_source_units": 22
   },
   "high_issues": {
     "issues": [
@@ -349,6 +353,10 @@
             "line_no": 5
           },
           {
+            "contract_path": "src/parent_chain/ParentChainContract.sol",
+            "line_no": 2
+          },
+          {
             "contract_path": "src/uniswap/UniswapV2Swapper.sol",
             "line_no": 2
           },
@@ -382,6 +390,18 @@
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 7
+          },
+          {
+            "contract_path": "src/parent_chain/ParentChainContract.sol",
+            "line_no": 7
+          },
+          {
+            "contract_path": "src/parent_chain/ParentChainContract.sol",
+            "line_no": 28
+          },
+          {
+            "contract_path": "src/parent_chain/ParentChainContract.sol",
+            "line_no": 32
           }
         ],
         "title": "Centralization Risk for trusted owners"
@@ -561,6 +581,14 @@
           {
             "contract_path": "src/cloc/HeavilyCommentedContract.sol",
             "line_no": 38
+          },
+          {
+            "contract_path": "src/parent_chain/ParentChainContract.sol",
+            "line_no": 11
+          },
+          {
+            "contract_path": "src/parent_chain/ParentChainContract.sol",
+            "line_no": 15
           }
         ],
         "title": "Functions not used internally could be marked external"
@@ -672,6 +700,14 @@
           {
             "contract_path": "src/inheritance/ExtendedInheritance.sol",
             "line_no": 15
+          },
+          {
+            "contract_path": "src/parent_chain/ParentChainContract.sol",
+            "line_no": 16
+          },
+          {
+            "contract_path": "src/parent_chain/ParentChainContract.sol",
+            "line_no": 17
           }
         ],
         "title": "Constants should be defined and used instead of literals"
@@ -733,6 +769,10 @@
           {
             "contract_path": "src/AdminContract.sol",
             "line_no": 10
+          },
+          {
+            "contract_path": "src/parent_chain/ParentChainContract.sol",
+            "line_no": 28
           }
         ],
         "title": "The `nonReentrant` `modifier` should occur before all other modifiers"
