@@ -23,10 +23,8 @@ impl IssueDetector for SillyCaptureDetector {
                 if func.parameters.parameters.is_empty() {
                     speculations.push(func.parameters.clone().into());
                 }
-            } else {
-                if let Some(body) = &func.body {
-                    speculations.push(body.clone().into());
-                }
+            } else if let Some(body) = &func.body {
+                speculations.push(body.clone().into());
             }
         }
 
