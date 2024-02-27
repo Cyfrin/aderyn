@@ -32,6 +32,7 @@ impl Node for ImportDirective {
             for symbol_alias in &self.symbol_aliases {
                 symbol_alias.foreign.accept(visitor)?;
             }
+            self.accept_metadata(visitor)?;
         }
         visitor.end_visit_import_directive(self)
     }
