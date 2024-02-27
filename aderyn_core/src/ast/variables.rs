@@ -99,7 +99,19 @@ impl Node for VariableDeclaration {
                 self.value.as_ref().unwrap().accept(visitor)?;
             }
         }
+        self.accept_metadata(visitor)?;
         visitor.end_visit_variable_declaration(self)
+    }
+    fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        if let Some(overrides) = &self.overrides {
+            visitor.visit_immediate_children(self.id, vec![overrides.id])?;
+        }
+        if let Some(value) = &self.value {
+            if let Some(value_id) = value.get_node_id() {
+                visitor.visit_immediate_children(self.id, vec![value_id])?;
+            }
+        }
+        Ok(())
     }
 }
 

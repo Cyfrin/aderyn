@@ -17,7 +17,18 @@ impl Node for Block {
         if visitor.visit_block(self)? {
             list_accept(&self.statements, visitor)?;
         }
+        self.accept_metadata(visitor)?;
         visitor.end_visit_block(self)
+    }
+
+    fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        let children_ids = self
+            .statements
+            .iter()
+            .flat_map(|x| x.get_node_id())
+            .collect::<Vec<_>>();
+        visitor.visit_immediate_children(self.id, children_ids)?;
+        Ok(())
     }
 }
 
