@@ -53,12 +53,22 @@ fn main() {
     let cmd_args = CommandLineArgs::parse();
     match cmd_args.pilot {
         PilotCommand::Init { bot_name } => {
+            let target_dir = PathBuf::from(&bot_name);
+            if target_dir.as_path().exists() {
+                let panic_message = format!(
+                    "Nyth cannot initialize on \"{}\" as it already exists on disk!",
+                    target_dir.to_string_lossy()
+                );
+                eprintln!("{}", panic_message);
+                std::process::exit(1);
+            }
+
             create_dir_all(&bot_name).unwrap_or_else(|_| {
                 eprintln!("Unable to create directory {} for bot!", bot_name);
                 std::process::exit(1);
             });
             let archive: Vec<u8> = Vec::from(include_bytes!("../archive.zip"));
-            let target_dir = PathBuf::from(&bot_name);
+
             zip_extract::extract(Cursor::new(archive), &target_dir, true).unwrap();
             let _ = std::process::Command::new("git")
                 .arg("init")
