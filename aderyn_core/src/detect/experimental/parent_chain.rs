@@ -16,70 +16,32 @@ pub struct ParentChainDemonstrator {
 
 /*
 
-In ParentChainContract.sol, there is only 1 assignment done. The goal is to capture it first.
-Then walk up it's parent tree and capture a) contract definition b) if statement c) for statement
-We omit the function definition for the sake of example
-
+In ParentChainContract.sol, there is only 1 assignment done. The goal is to capture it first, second and third parent
 */
 
 impl IssueDetector for ParentChainDemonstrator {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        // println!("{:?}", context.parent_link);
-
-        // for (k, v) in context.parent_link.iter() {
-        //     let child = context.nodes.get(k);
-        //     let parent = context.nodes.get(v);
-        //     println!("{:?}\n{:?}\n\n", child, parent);
-        // }
-
-        for function_definition in context.function_definitions() {
-            if let Some(first_parent) = context.get_parent(function_definition.id) {
-                // println!("{:?}", first_parent);
-                if let ASTNode::ContractDefinition(cd) = first_parent {
-                    capture!(self, context, cd);
+        for assignment in context.assignments() {
+            println!("0 {}", assignment);
+            capture!(self, context, assignment);
+            if let Some(first_parent) = context.get_parent(assignment.id) {
+                if let ASTNode::Block(block) = first_parent {
+                    println!("1 {}", block);
+                    capture!(self, context, block);
+                    if let Some(second_parent) = context.get_parent(block.id) {
+                        if let ASTNode::ForStatement(for_statement) = second_parent {
+                            println!("2 {}", for_statement);
+                            capture!(self, context, for_statement);
+                            if let Some(third_parent) = context.get_parent(for_statement.id) {
+                                if let ASTNode::Block(block) = third_parent {
+                                    println!("3 {}", block);
+                                    capture!(self, context, block);
+                                }
+                            }
+                        }
+                    }
                 }
             }
-            // Retrieve Parent Chain (from closest to farthest)
-            // let parents = GetParentChain::of(assignment, context);
-            // {
-            //     println!("Parent Chain (from closest to farthest)\n---------");
-            //     for p in &parents {
-            //         println!("{}", p)
-            //     }
-            //     println!("------------");
-            /*
-            ---------
-            Assignment
-            Block
-            ForStatement
-            Block
-            IfStatement
-            Block
-            FunctionDefinition
-            ContractDefinition
-            ------------
-             */
-            // }
-            // for p in &parents {
-            //     if let ASTNode::ContractDefinition(f) = p {
-            //         capture!(self, context, f);
-            //     }
-            //     if let ASTNode::Block(b) = p {
-            //         for statement in &b.statements {
-            //             match statement {
-            //                 ast::statements::Statement::IfStatement(i) => {
-            //                     println!("If statement captured !\n{}", i);
-            //                     capture!(self, context, i);
-            //                 }
-            //                 ast::statements::Statement::ForStatement(f) => {
-            //                     println!("For statement captured !\n{}", f);
-            //                     capture!(self, context, f);
-            //                 }
-            //                 _ => (),
-            //             };
-            //         }
-            //     }
-            // }
         }
 
         Ok(!self.found_instances.is_empty())
@@ -125,9 +87,10 @@ mod parent_chain_demo_tests {
 
         // Instances
         /*
-            line 7, contract definition
+            Although we capture! 4 times, we will have only 3 instances
+            because line 17 covers both the first and the second parent ! a.k.a block and the for statement
                 16, if statement
-                17, for statement
+                17, for statement, block
                 18, assignment
         */
         println!("{:?}", detector.instances());
@@ -135,5 +98,6 @@ mod parent_chain_demo_tests {
             "Total number of instances: {:?}",
             detector.instances().len()
         );
+        assert!(detector.instances().len() == 3);
     }
 }
