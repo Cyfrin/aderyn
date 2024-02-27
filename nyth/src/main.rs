@@ -61,9 +61,12 @@ fn main() {
             let target_dir = PathBuf::from(&bot_name);
 
             if target_dir.exists() {
-                let panic_message =
-                    format!("{} already exists on disk!", target_dir.to_string_lossy());
-                panic!("{}", panic_message)
+                let panic_message = format!(
+                    "Target to initialize \"{}\" already exists on disk!",
+                    target_dir.to_string_lossy()
+                );
+                eprintln!("{}", panic_message);
+                std::process::exit(1);
             }
 
             zip_extract::extract(Cursor::new(archive), &target_dir, true).unwrap();
