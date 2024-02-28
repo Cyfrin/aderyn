@@ -11,7 +11,7 @@ use eyre::Result;
 #[derive(Default)]
 pub struct UnsafeERC721MintDetector {
     // Keys are source file name and line number
-    found_instances: BTreeMap<(String, usize), NodeID>,
+    found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
 impl IssueDetector for UnsafeERC721MintDetector {
@@ -49,7 +49,7 @@ impl IssueDetector for UnsafeERC721MintDetector {
         IssueSeverity::Medium
     }
 
-    fn instances(&self) -> BTreeMap<(String, usize), NodeID> {
+    fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
         self.found_instances.clone()
     }
 

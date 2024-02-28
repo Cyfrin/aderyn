@@ -1193,15 +1193,16 @@ impl WorkspaceContext {
         })
     }
 
-    pub fn get_node_sort_key(&self, node: &ASTNode) -> (String, usize) {
+    pub fn get_node_sort_key(&self, node: &ASTNode) -> (String, usize, String) {
         let source_unit = self.get_source_unit_from_child_node(node).unwrap();
         let absolute_path = source_unit.absolute_path.as_ref().unwrap().clone();
         let source_line = node
             .src()
             .map(|src| source_unit.source_line(src).unwrap_or(0)) // If `src` is `Some`, get the line number, else return 0
             .unwrap_or(0); // If `src` is `None`, default to 0
+        let src_location = node.src().unwrap_or("").to_string();
 
-        (absolute_path, source_line)
+        (absolute_path, source_line, src_location)
     }
 }
 

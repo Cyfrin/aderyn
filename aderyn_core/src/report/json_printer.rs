@@ -55,11 +55,11 @@ impl ReportPrinter<()> for JsonPrinter {
             files_summary: context.files_summary(),
             files_details: context.files_details(),
             issue_count: report.issue_count(),
-            critical_issues: report.critical_issues(context),
-            high_issues: report.high_issues(context),
-            medium_issues: report.medium_issues(context),
-            low_issues: report.low_issues(context),
-            nc_issues: report.nc_issues(context),
+            critical_issues: report.critical_issues(),
+            high_issues: report.high_issues(),
+            medium_issues: report.medium_issues(),
+            low_issues: report.low_issues(),
+            nc_issues: report.nc_issues(),
             detectors_used: detectors_used_names,
         };
         let value = serde_json::to_value(content).unwrap();

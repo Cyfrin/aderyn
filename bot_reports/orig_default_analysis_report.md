@@ -443,6 +443,12 @@ Consider using a specific version of Solidity in your contracts instead of a wid
 	pragma solidity ^0.8.13;
 	```
 
+- Found in src/Counter.sol [Line: 2](../tests/contract-playground/src/Counter.sol#L2)
+
+	```solidity
+	pragma solidity ^0.8.13;
+	```
+
 - Found in src/CrazyPragma.sol [Line: 2](../tests/contract-playground/src/CrazyPragma.sol#L2)
 
 	```solidity
@@ -467,6 +473,18 @@ Consider using a specific version of Solidity in your contracts instead of a wid
 	pragma solidity >=0.8.0;
 	```
 
+- Found in src/inheritance/IContractInheritance.sol [Line: 2](../tests/contract-playground/src/inheritance/IContractInheritance.sol#L2)
+
+	```solidity
+	pragma solidity >=0.8.0;
+	```
+
+- Found in src/inheritance/InheritanceBase.sol [Line: 2](../tests/contract-playground/src/inheritance/InheritanceBase.sol#L2)
+
+	```solidity
+	pragma solidity ^0.8.0;
+	```
+
 - Found in src/inheritance/InheritanceBase.sol [Line: 2](../tests/contract-playground/src/inheritance/InheritanceBase.sol#L2)
 
 	```solidity
@@ -483,6 +501,12 @@ Solc compiler version 0.8.20 switches the default target EVM version to Shanghai
 
 	```solidity
 	pragma solidity 0.8.20;
+	```
+
+- Found in src/Counter.sol [Line: 2](../tests/contract-playground/src/Counter.sol#L2)
+
+	```solidity
+	pragma solidity ^0.8.13;
 	```
 
 - Found in src/Counter.sol [Line: 2](../tests/contract-playground/src/Counter.sol#L2)
@@ -549,6 +573,18 @@ Solc compiler version 0.8.20 switches the default target EVM version to Shanghai
 
 	```solidity
 	pragma solidity >=0.8.0;
+	```
+
+- Found in src/inheritance/IContractInheritance.sol [Line: 2](../tests/contract-playground/src/inheritance/IContractInheritance.sol#L2)
+
+	```solidity
+	pragma solidity >=0.8.0;
+	```
+
+- Found in src/inheritance/InheritanceBase.sol [Line: 2](../tests/contract-playground/src/inheritance/InheritanceBase.sol#L2)
+
+	```solidity
+	pragma solidity ^0.8.0;
 	```
 
 - Found in src/inheritance/InheritanceBase.sol [Line: 2](../tests/contract-playground/src/inheritance/InheritanceBase.sol#L2)
@@ -629,6 +665,12 @@ Assigning values to address state variables without checking for `address(0)`.
 
 	```solidity
 	    function f(uint x) public view returns (uint r) {
+	```
+
+- Found in src/Counter.sol [Line: 7](../tests/contract-playground/src/Counter.sol#L7)
+
+	```solidity
+	    function setNumber(uint256 newNumber) public {
 	```
 
 - Found in src/Counter.sol [Line: 7](../tests/contract-playground/src/Counter.sol#L7)
@@ -721,6 +763,12 @@ Assigning values to address state variables without checking for `address(0)`.
 	        number += 2;
 	```
 
+- Found in src/Counter.sol [Line: 23](../tests/contract-playground/src/Counter.sol#L23)
+
+	```solidity
+	        number += 2;
+	```
+
 - Found in src/cloc/HeavilyCommentedContract.sol [Line: 40](../tests/contract-playground/src/cloc/HeavilyCommentedContract.sol#L40)
 
 	```solidity
@@ -737,6 +785,12 @@ Assigning values to address state variables without checking for `address(0)`.
 
 	```solidity
 	            zero_hashes[height + 1] = sha256(abi.encodePacked(zero_hashes[height], zero_hashes[height]));
+	```
+
+- Found in src/eth2/DepositContract.sol [Line: 78](../tests/contract-playground/src/eth2/DepositContract.sol#L78)
+
+	```solidity
+	            if ((size & 1) == 1) node = sha256(abi.encodePacked(branch[height], node));
 	```
 
 - Found in src/eth2/DepositContract.sol [Line: 78](../tests/contract-playground/src/eth2/DepositContract.sol#L78)
@@ -793,10 +847,22 @@ Assigning values to address state variables without checking for `address(0)`.
 	            abi.encodePacked(sha256(abi.encodePacked(signature[:64])), sha256(abi.encodePacked(signature[64:], bytes32(0))))
 	```
 
+- Found in src/eth2/DepositContract.sol [Line: 113](../tests/contract-playground/src/eth2/DepositContract.sol#L113)
+
+	```solidity
+	            abi.encodePacked(sha256(abi.encodePacked(signature[:64])), sha256(abi.encodePacked(signature[64:], bytes32(0))))
+	```
+
 - Found in src/eth2/DepositContract.sol [Line: 132](../tests/contract-playground/src/eth2/DepositContract.sol#L132)
 
 	```solidity
 	        deposit_count += 1;
+	```
+
+- Found in src/eth2/DepositContract.sol [Line: 135](../tests/contract-playground/src/eth2/DepositContract.sol#L135)
+
+	```solidity
+	            if ((size & 1) == 1) {
 	```
 
 - Found in src/eth2/DepositContract.sol [Line: 135](../tests/contract-playground/src/eth2/DepositContract.sol#L135)
@@ -829,10 +895,28 @@ Assigning values to address state variables without checking for `address(0)`.
 	        ret[1] = bytesValue[6];
 	```
 
+- Found in src/eth2/DepositContract.sol [Line: 156](../tests/contract-playground/src/eth2/DepositContract.sol#L156)
+
+	```solidity
+	        ret[1] = bytesValue[6];
+	```
+
 - Found in src/eth2/DepositContract.sol [Line: 157](../tests/contract-playground/src/eth2/DepositContract.sol#L157)
 
 	```solidity
 	        ret[2] = bytesValue[5];
+	```
+
+- Found in src/eth2/DepositContract.sol [Line: 157](../tests/contract-playground/src/eth2/DepositContract.sol#L157)
+
+	```solidity
+	        ret[2] = bytesValue[5];
+	```
+
+- Found in src/eth2/DepositContract.sol [Line: 158](../tests/contract-playground/src/eth2/DepositContract.sol#L158)
+
+	```solidity
+	        ret[3] = bytesValue[4];
 	```
 
 - Found in src/eth2/DepositContract.sol [Line: 158](../tests/contract-playground/src/eth2/DepositContract.sol#L158)
@@ -847,10 +931,28 @@ Assigning values to address state variables without checking for `address(0)`.
 	        ret[4] = bytesValue[3];
 	```
 
+- Found in src/eth2/DepositContract.sol [Line: 159](../tests/contract-playground/src/eth2/DepositContract.sol#L159)
+
+	```solidity
+	        ret[4] = bytesValue[3];
+	```
+
 - Found in src/eth2/DepositContract.sol [Line: 160](../tests/contract-playground/src/eth2/DepositContract.sol#L160)
 
 	```solidity
 	        ret[5] = bytesValue[2];
+	```
+
+- Found in src/eth2/DepositContract.sol [Line: 160](../tests/contract-playground/src/eth2/DepositContract.sol#L160)
+
+	```solidity
+	        ret[5] = bytesValue[2];
+	```
+
+- Found in src/eth2/DepositContract.sol [Line: 161](../tests/contract-playground/src/eth2/DepositContract.sol#L161)
+
+	```solidity
+	        ret[6] = bytesValue[1];
 	```
 
 - Found in src/eth2/DepositContract.sol [Line: 161](../tests/contract-playground/src/eth2/DepositContract.sol#L161)
@@ -869,6 +971,12 @@ Assigning values to address state variables without checking for `address(0)`.
 
 	```solidity
 	        for (uint256 i = 0; i < 3; i++) {
+	```
+
+- Found in src/parent_chain/ParentChainContract.sol [Line: 16](../tests/contract-playground/src/parent_chain/ParentChainContract.sol#L16)
+
+	```solidity
+	        if (number < 5 && number > 1) {
 	```
 
 - Found in src/parent_chain/ParentChainContract.sol [Line: 16](../tests/contract-playground/src/parent_chain/ParentChainContract.sol#L16)
@@ -899,6 +1007,12 @@ Index event fields make the field more quickly accessible to off-chain tools tha
 
 	```solidity
 	    event DoSomethingElse(uint256 somethingElse);
+	```
+
+- Found in src/inheritance/InheritanceBase.sol [Line: 7](../tests/contract-playground/src/inheritance/InheritanceBase.sol#L7)
+
+	```solidity
+	    event Do(uint256 something);
 	```
 
 - Found in src/inheritance/InheritanceBase.sol [Line: 7](../tests/contract-playground/src/inheritance/InheritanceBase.sol#L7)

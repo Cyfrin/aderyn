@@ -285,6 +285,11 @@
           {
             "contract_path": "src/Counter.sol",
             "line_no": 2,
+            "src": "39:24:20"
+          },
+          {
+            "contract_path": "src/Counter.sol",
+            "line_no": 2,
             "src": "39:24:23"
           },
           {
@@ -300,12 +305,22 @@
           {
             "contract_path": "src/cloc/HeavilyCommentedContract.sol",
             "line_no": 6,
-            "src": "2302:23:0"
+            "src": "46:32:0"
+          },
+          {
+            "contract_path": "src/inheritance/IContractInheritance.sol",
+            "line_no": 2,
+            "src": "32:24:23"
           },
           {
             "contract_path": "src/inheritance/IContractInheritance.sol",
             "line_no": 2,
             "src": "32:24:31"
+          },
+          {
+            "contract_path": "src/inheritance/InheritanceBase.sol",
+            "line_no": 2,
+            "src": "32:23:24"
           },
           {
             "contract_path": "src/inheritance/InheritanceBase.sol",
@@ -323,6 +338,11 @@
             "contract_path": "src/AdminContract.sol",
             "line_no": 2,
             "src": "32:23:22"
+          },
+          {
+            "contract_path": "src/Counter.sol",
+            "line_no": 2,
+            "src": "39:24:20"
           },
           {
             "contract_path": "src/Counter.sol",
@@ -377,7 +397,17 @@
           {
             "contract_path": "src/inheritance/IContractInheritance.sol",
             "line_no": 2,
+            "src": "32:24:23"
+          },
+          {
+            "contract_path": "src/inheritance/IContractInheritance.sol",
+            "line_no": 2,
             "src": "32:24:31"
+          },
+          {
+            "contract_path": "src/inheritance/InheritanceBase.sol",
+            "line_no": 2,
+            "src": "32:23:24"
           },
           {
             "contract_path": "src/inheritance/InheritanceBase.sol",
@@ -620,6 +650,11 @@
             "src": "120:80:20"
           },
           {
+            "contract_path": "src/Counter.sol",
+            "line_no": 7,
+            "src": "120:80:23"
+          },
+          {
             "contract_path": "src/StateVariables.sol",
             "line_no": 47,
             "src": "1755:145:26"
@@ -689,12 +724,17 @@
           {
             "contract_path": "src/Counter.sol",
             "line_no": 23,
+            "src": "434:1:20"
+          },
+          {
+            "contract_path": "src/Counter.sol",
+            "line_no": 23,
             "src": "434:1:23"
           },
           {
             "contract_path": "src/cloc/HeavilyCommentedContract.sol",
             "line_no": 40,
-            "src": "3749:479:0"
+            "src": "908:2:0"
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
@@ -705,6 +745,11 @@
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 71,
             "src": "5117:1:0"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 78,
+            "src": "5433:1:0"
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
@@ -749,12 +794,22 @@
           {
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 113,
+            "src": "7252:2:0"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 113,
             "src": "7293:2:0"
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 132,
             "src": "8085:1:0"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 135,
+            "src": "8227:1:0"
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
@@ -779,7 +834,17 @@
           {
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 156,
+            "src": "9067:1:0"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 156,
             "src": "9083:1:0"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 157,
+            "src": "9099:1:0"
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
@@ -789,7 +854,17 @@
           {
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 158,
+            "src": "9131:1:0"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 158,
             "src": "9147:1:0"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 159,
+            "src": "9163:1:0"
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
@@ -799,7 +874,17 @@
           {
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 160,
+            "src": "9195:1:0"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 160,
             "src": "9211:1:0"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 161,
+            "src": "9227:1:0"
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
@@ -815,6 +900,11 @@
             "contract_path": "src/inheritance/ExtendedInheritance.sol",
             "line_no": 15,
             "src": "466:1:30"
+          },
+          {
+            "contract_path": "src/parent_chain/ParentChainContract.sol",
+            "line_no": 16,
+            "src": "481:1:35"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
@@ -842,6 +932,11 @@
             "contract_path": "src/inheritance/ExtendedInheritance.sol",
             "line_no": 7,
             "src": "144:45:30"
+          },
+          {
+            "contract_path": "src/inheritance/InheritanceBase.sol",
+            "line_no": 7,
+            "src": "150:28:24"
           },
           {
             "contract_path": "src/inheritance/InheritanceBase.sol",
@@ -883,7 +978,7 @@
           {
             "contract_path": "src/cloc/HeavilyCommentedContract.sol",
             "line_no": 53,
-            "src": "5029:1:0"
+            "src": "1408:7:0"
           }
         ],
         "title": "`require()` / `revert()` statements should have descriptive reason strings or custom errors"

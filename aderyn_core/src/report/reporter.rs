@@ -25,30 +25,30 @@ impl Report {
         }
     }
 
-    pub fn critical_issues(&self, context: &WorkspaceContext) -> CriticalIssues {
+    pub fn critical_issues(&self) -> CriticalIssues {
         CriticalIssues {
-            issues: extract_issue_bodies(&self.criticals, context),
+            issues: extract_issue_bodies(&self.criticals),
         }
     }
 
-    pub fn high_issues(&self, context: &WorkspaceContext) -> HighIssues {
+    pub fn high_issues(&self) -> HighIssues {
         HighIssues {
-            issues: extract_issue_bodies(&self.highs, context),
+            issues: extract_issue_bodies(&self.highs),
         }
     }
-    pub fn medium_issues(&self, context: &WorkspaceContext) -> MediumIssues {
+    pub fn medium_issues(&self) -> MediumIssues {
         MediumIssues {
-            issues: extract_issue_bodies(&self.mediums, context),
+            issues: extract_issue_bodies(&self.mediums),
         }
     }
-    pub fn low_issues(&self, context: &WorkspaceContext) -> LowIssues {
+    pub fn low_issues(&self) -> LowIssues {
         LowIssues {
-            issues: extract_issue_bodies(&self.lows, context),
+            issues: extract_issue_bodies(&self.lows),
         }
     }
-    pub fn nc_issues(&self, context: &WorkspaceContext) -> NcIssues {
+    pub fn nc_issues(&self) -> NcIssues {
         NcIssues {
-            issues: extract_issue_bodies(&self.ncs, context),
+            issues: extract_issue_bodies(&self.ncs),
         }
     }
 }
