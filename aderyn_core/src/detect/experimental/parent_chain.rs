@@ -12,7 +12,7 @@ use eyre::Result;
 #[derive(Default)]
 pub struct ParentChainDemonstrator {
     // Keys are source file name and line number
-    found_instances: BTreeMap<(String, usize), NodeID>,
+    found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
 /*
@@ -60,7 +60,7 @@ impl IssueDetector for ParentChainDemonstrator {
         String::from("Parent Chain Demonstration")
     }
 
-    fn instances(&self) -> BTreeMap<(String, usize), NodeID> {
+    fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
         self.found_instances.clone()
     }
 
@@ -86,19 +86,11 @@ mod parent_chain_demo_tests {
         let found = detector.detect(&context).unwrap();
         assert!(found);
 
-        // Instances
-        /*
-            Although we capture! 4 times, we will have only 3 instances
-            because line 17 covers both the first and the second parent ! a.k.a block and the for statement
-                16, block
-                17, for statement, block
-                18, assignment
-        */
         println!("{:?}", detector.instances());
         println!(
             "Total number of instances: {:?}",
             detector.instances().len()
         );
-        assert!(detector.instances().len() == 3);
+        assert!(detector.instances().len() == 4);
     }
 }

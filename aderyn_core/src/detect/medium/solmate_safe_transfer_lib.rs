@@ -11,7 +11,7 @@ use eyre::Result;
 #[derive(Default)]
 pub struct SolmateSafeTransferLibDetector {
     // Keys are source file name and line number
-    found_instances: BTreeMap<(String, usize), NodeID>,
+    found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
 impl IssueDetector for SolmateSafeTransferLibDetector {
@@ -48,7 +48,7 @@ impl IssueDetector for SolmateSafeTransferLibDetector {
         String::from("There is a subtle difference between the implementation of solmate's SafeTransferLib and OZ's SafeERC20: OZ's SafeERC20 checks if the token is a contract or not, solmate's SafeTransferLib does not.\nhttps://github.com/transmissions11/solmate/blob/main/src/utils/SafeTransferLib.sol#L9 \n`@dev Note that none of the functions in this library check that a token has code at all! That responsibility is delegated to the caller`\n")
     }
 
-    fn instances(&self) -> BTreeMap<(String, usize), NodeID> {
+    fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
         self.found_instances.clone()
     }
 
