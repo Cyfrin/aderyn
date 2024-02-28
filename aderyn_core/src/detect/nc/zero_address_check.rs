@@ -20,7 +20,7 @@ pub struct ZeroAddressCheckDetector {
     mutable_address_state_variables: HashMap<i64, VariableDeclaration>,
 
     // Keys are source file name and line number
-    found_instances: BTreeMap<(String, usize), NodeID>,
+    found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
 impl IssueDetector for ZeroAddressCheckDetector {
@@ -153,7 +153,7 @@ impl IssueDetector for ZeroAddressCheckDetector {
         IssueSeverity::NC
     }
 
-    fn instances(&self) -> BTreeMap<(String, usize), NodeID> {
+    fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
         self.found_instances.clone()
     }
 

@@ -60,23 +60,28 @@
         "instances": [
           {
             "contract_path": "src/AdminContract.sol",
-            "line_no": 2
+            "line_no": 2,
+            "src": "32:23"
           },
           {
             "contract_path": "src/Counter.sol",
-            "line_no": 2
+            "line_no": 2,
+            "src": "39:24"
           },
           {
             "contract_path": "src/KeccakContract.sol",
-            "line_no": 2
+            "line_no": 2,
+            "src": "32:23"
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
-            "line_no": 6
+            "line_no": 6,
+            "src": "46:24"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
-            "line_no": 2
+            "line_no": 2,
+            "src": "32:23"
           }
         ],
         "title": "PUSH0 is not supported by all chains"
@@ -94,35 +99,43 @@
         "instances": [
           {
             "contract_path": "src/Counter.sol",
-            "line_no": 7
+            "line_no": 7,
+            "src": "120:80"
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
-            "line_no": 31
+            "line_no": 31,
+            "src": "491:131"
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
-            "line_no": 38
+            "line_no": 38,
+            "src": "628:95"
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
-            "line_no": 42
+            "line_no": 42,
+            "src": "729:1016"
           },
           {
             "contract_path": "src/cloc/HeavilyCommentedContract.sol",
-            "line_no": 31
+            "line_no": 31,
+            "src": "500:131"
           },
           {
             "contract_path": "src/cloc/HeavilyCommentedContract.sol",
-            "line_no": 38
+            "line_no": 38,
+            "src": "637:804"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
-            "line_no": 11
+            "line_no": 11,
+            "src": "346:61"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
-            "line_no": 15
+            "line_no": 15,
+            "src": "413:225"
           }
         ],
         "title": "Functions not used internally could be marked external"

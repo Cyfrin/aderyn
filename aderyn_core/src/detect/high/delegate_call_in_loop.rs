@@ -12,7 +12,7 @@ use eyre::Result;
 #[derive(Default)]
 pub struct DelegateCallInLoopDetector {
     // Keys are source file name and line number
-    found_instances: BTreeMap<(String, usize), NodeID>,
+    found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
 impl IssueDetector for DelegateCallInLoopDetector {
@@ -55,7 +55,7 @@ impl IssueDetector for DelegateCallInLoopDetector {
         String::from("When calling `delegatecall` the same `msg.value` amount will be accredited multiple times.")
     }
 
-    fn instances(&self) -> BTreeMap<(String, usize), NodeID> {
+    fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
         self.found_instances.clone()
     }
 

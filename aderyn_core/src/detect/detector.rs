@@ -181,9 +181,9 @@ pub trait IssueDetector: Send + Sync + 'static {
         format!("{}", IssueDetectorNamePool::Undecided)
     }
 
-    // Keys are source file name and line number
+    // Keys are source file name, line number and source location
     // Value is ASTNode NodeID
-    fn instances(&self) -> BTreeMap<(String, usize), NodeID> {
+    fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
         BTreeMap::new()
     }
 }
