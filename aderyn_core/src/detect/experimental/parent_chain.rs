@@ -86,19 +86,11 @@ mod parent_chain_demo_tests {
         let found = detector.detect(&context).unwrap();
         assert!(found);
 
-        // Instances
-        /*
-            Although we capture! 4 times, we will have only 3 instances
-            because line 17 covers both the first and the second parent ! a.k.a block and the for statement
-                16, block
-                17, for statement, block
-                18, assignment
-        */
         println!("{:?}", detector.instances());
         println!(
             "Total number of instances: {:?}",
             detector.instances().len()
         );
-        assert!(detector.instances().len() == 3);
+        assert!(detector.instances().len() == 4);
     }
 }
