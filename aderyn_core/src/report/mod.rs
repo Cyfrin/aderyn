@@ -17,7 +17,7 @@ pub struct Issue {
     pub detector_name: String,
     // Keys are source file name and line number
     // Value is ASTNode.src
-    pub instances: BTreeMap<(String, usize), NodeID>,
+    pub instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
 #[derive(Serialize)]
@@ -50,6 +50,7 @@ pub struct IssueCount {
 pub struct IssueInstance {
     contract_path: String,
     line_no: usize,
+    src: String,
 }
 
 #[derive(Serialize)]
@@ -92,9 +93,10 @@ pub fn extract_issue_bodies(issues: &[Issue]) -> Vec<IssueBody> {
             let instances = cr
                 .instances
                 .keys()
-                .map(|(contract_path, line_no)| IssueInstance {
+                .map(|(contract_path, line_no, src_location)| IssueInstance {
                     contract_path: contract_path.clone(),
                     line_no: *line_no,
+                    src: src_location.clone(),
                 })
                 .collect();
 
