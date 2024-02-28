@@ -66,7 +66,7 @@
           {
             "contract_path": "src/Counter.sol",
             "line_no": 2,
-            "src": "39:24:20"
+            "src": "39:24:23"
           },
           {
             "contract_path": "src/KeccakContract.sol",
@@ -100,7 +100,7 @@
           {
             "contract_path": "src/Counter.sol",
             "line_no": 7,
-            "src": "120:80:20"
+            "src": "120:80:23"
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",

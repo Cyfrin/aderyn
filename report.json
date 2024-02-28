@@ -285,7 +285,7 @@
           {
             "contract_path": "src/Counter.sol",
             "line_no": 2,
-            "src": "39:24:20"
+            "src": "39:24:23"
           },
           {
             "contract_path": "src/CrazyPragma.sol",
@@ -305,12 +305,12 @@
           {
             "contract_path": "src/inheritance/IContractInheritance.sol",
             "line_no": 2,
-            "src": "32:24:23"
+            "src": "32:24:31"
           },
           {
             "contract_path": "src/inheritance/InheritanceBase.sol",
             "line_no": 2,
-            "src": "32:23:24"
+            "src": "32:23:32"
           }
         ],
         "title": "Solidity pragma should be specific, not wide"
@@ -327,7 +327,7 @@
           {
             "contract_path": "src/Counter.sol",
             "line_no": 2,
-            "src": "39:24:20"
+            "src": "39:24:23"
           },
           {
             "contract_path": "src/CrazyPragma.sol",
@@ -377,12 +377,12 @@
           {
             "contract_path": "src/inheritance/IContractInheritance.sol",
             "line_no": 2,
-            "src": "32:24:23"
+            "src": "32:24:31"
           },
           {
             "contract_path": "src/inheritance/InheritanceBase.sol",
             "line_no": 2,
-            "src": "32:23:24"
+            "src": "32:23:32"
           },
           {
             "contract_path": "src/nested/1/Nested.sol",
@@ -689,7 +689,7 @@
           {
             "contract_path": "src/Counter.sol",
             "line_no": 23,
-            "src": "434:1:20"
+            "src": "434:1:23"
           },
           {
             "contract_path": "src/cloc/HeavilyCommentedContract.sol",
