@@ -66,12 +66,6 @@ Solc compiler version 0.8.20 switches the default target EVM version to Shanghai
 	pragma solidity ^0.8.13;
 	```
 
-- Found in src/Counter.sol [Line: 2](tests/contract-playground/src/Counter.sol#L2)
-
-	```solidity
-	pragma solidity ^0.8.13;
-	```
-
 - Found in src/KeccakContract.sol [Line: 2](tests/contract-playground/src/KeccakContract.sol#L2)
 
 	```solidity
@@ -97,12 +91,6 @@ Solc compiler version 0.8.20 switches the default target EVM version to Shanghai
 ## NC-1: Functions not used internally could be marked external
 
 
-
-- Found in src/Counter.sol [Line: 7](tests/contract-playground/src/Counter.sol#L7)
-
-	```solidity
-	    function setNumber(uint256 newNumber) public {
-	```
 
 - Found in src/Counter.sol [Line: 7](tests/contract-playground/src/Counter.sol#L7)
 

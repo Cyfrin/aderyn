@@ -1200,9 +1200,14 @@ impl WorkspaceContext {
             .src()
             .map(|src| source_unit.source_line(src).unwrap_or(0)) // If `src` is `Some`, get the line number, else return 0
             .unwrap_or(0); // If `src` is `None`, default to 0
-        let src_location = node.src().unwrap_or("").to_string();
+        let src_location = node.src().unwrap_or("");
+        let chopped_location = match src_location.rfind(':') {
+            Some(index) => &src_location[..index],
+            None => src_location, // No colon found, return the original string
+        }
+        .to_string();
 
-        (absolute_path, source_line, src_location)
+        (absolute_path, source_line, chopped_location)
     }
 }
 

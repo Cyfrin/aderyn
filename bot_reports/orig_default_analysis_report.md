@@ -443,12 +443,6 @@ Consider using a specific version of Solidity in your contracts instead of a wid
 	pragma solidity ^0.8.13;
 	```
 
-- Found in src/Counter.sol [Line: 2](../tests/contract-playground/src/Counter.sol#L2)
-
-	```solidity
-	pragma solidity ^0.8.13;
-	```
-
 - Found in src/CrazyPragma.sol [Line: 2](../tests/contract-playground/src/CrazyPragma.sol#L2)
 
 	```solidity
@@ -473,18 +467,6 @@ Consider using a specific version of Solidity in your contracts instead of a wid
 	pragma solidity >=0.8.0;
 	```
 
-- Found in src/inheritance/IContractInheritance.sol [Line: 2](../tests/contract-playground/src/inheritance/IContractInheritance.sol#L2)
-
-	```solidity
-	pragma solidity >=0.8.0;
-	```
-
-- Found in src/inheritance/InheritanceBase.sol [Line: 2](../tests/contract-playground/src/inheritance/InheritanceBase.sol#L2)
-
-	```solidity
-	pragma solidity ^0.8.0;
-	```
-
 - Found in src/inheritance/InheritanceBase.sol [Line: 2](../tests/contract-playground/src/inheritance/InheritanceBase.sol#L2)
 
 	```solidity
@@ -501,12 +483,6 @@ Solc compiler version 0.8.20 switches the default target EVM version to Shanghai
 
 	```solidity
 	pragma solidity 0.8.20;
-	```
-
-- Found in src/Counter.sol [Line: 2](../tests/contract-playground/src/Counter.sol#L2)
-
-	```solidity
-	pragma solidity ^0.8.13;
 	```
 
 - Found in src/Counter.sol [Line: 2](../tests/contract-playground/src/Counter.sol#L2)
@@ -573,18 +549,6 @@ Solc compiler version 0.8.20 switches the default target EVM version to Shanghai
 
 	```solidity
 	pragma solidity >=0.8.0;
-	```
-
-- Found in src/inheritance/IContractInheritance.sol [Line: 2](../tests/contract-playground/src/inheritance/IContractInheritance.sol#L2)
-
-	```solidity
-	pragma solidity >=0.8.0;
-	```
-
-- Found in src/inheritance/InheritanceBase.sol [Line: 2](../tests/contract-playground/src/inheritance/InheritanceBase.sol#L2)
-
-	```solidity
-	pragma solidity ^0.8.0;
 	```
 
 - Found in src/inheritance/InheritanceBase.sol [Line: 2](../tests/contract-playground/src/inheritance/InheritanceBase.sol#L2)
@@ -673,12 +637,6 @@ Assigning values to address state variables without checking for `address(0)`.
 	    function setNumber(uint256 newNumber) public {
 	```
 
-- Found in src/Counter.sol [Line: 7](../tests/contract-playground/src/Counter.sol#L7)
-
-	```solidity
-	    function setNumber(uint256 newNumber) public {
-	```
-
 - Found in src/StateVariables.sol [Line: 47](../tests/contract-playground/src/StateVariables.sol#L47)
 
 	```solidity
@@ -756,12 +714,6 @@ Assigning values to address state variables without checking for `address(0)`.
 ## NC-3: Constants should be defined and used instead of literals
 
 
-
-- Found in src/Counter.sol [Line: 23](../tests/contract-playground/src/Counter.sol#L23)
-
-	```solidity
-	        number += 2;
-	```
 
 - Found in src/Counter.sol [Line: 23](../tests/contract-playground/src/Counter.sol#L23)
 
@@ -1007,12 +959,6 @@ Index event fields make the field more quickly accessible to off-chain tools tha
 
 	```solidity
 	    event DoSomethingElse(uint256 somethingElse);
-	```
-
-- Found in src/inheritance/InheritanceBase.sol [Line: 7](../tests/contract-playground/src/inheritance/InheritanceBase.sol#L7)
-
-	```solidity
-	    event Do(uint256 something);
 	```
 
 - Found in src/inheritance/InheritanceBase.sol [Line: 7](../tests/contract-playground/src/inheritance/InheritanceBase.sol#L7)
