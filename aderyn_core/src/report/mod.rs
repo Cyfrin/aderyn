@@ -90,15 +90,15 @@ pub fn extract_issue_bodies(issues: &[Issue]) -> Vec<IssueBody> {
     issues
         .iter()
         .map(|cr| {
-            // loop through cr.instaces using both key and value
-            let mut instances = Vec::new();
-            for ((contract_path, line_no, src_location), node_id) in &cr.instances {
-                instances.push(IssueInstance {
+            let instances = cr
+                .instances
+                .keys()
+                .map(|(contract_path, line_no, src_location)| IssueInstance {
                     contract_path: contract_path.clone(),
                     line_no: *line_no,
                     src: src_location.clone(),
-                });
-            }
+                })
+                .collect();
 
             IssueBody {
                 title: cr.title.clone(),
