@@ -125,5 +125,11 @@ Index event fields make the field more quickly accessible to off-chain tools tha
 	    event DoSomethingElse(uint256 somethingElse);
 	```
 
+- Found in src/inheritance/InheritanceBase.sol [Line: 7](../tests/contract-playground/src/inheritance/InheritanceBase.sol#L7)
+
+	```solidity
+	    event Do(uint256 something);
+	```
+
 
 

@@ -119,13 +119,103 @@ Solc compiler version 0.8.20 switches the default target EVM version to Shanghai
 	pragma solidity 0.8.20;
 	```
 
+- Found in src/Counter.sol [Line: 2](../tests/contract-playground/src/Counter.sol#L2)
+
+	```solidity
+	pragma solidity ^0.8.13;
+	```
+
+- Found in src/CrazyPragma.sol [Line: 2](../tests/contract-playground/src/CrazyPragma.sol#L2)
+
+	```solidity
+	pragma solidity >=0.8.19 <0.9.1;
+	```
+
+- Found in src/DeprecatedOZFunctions.sol [Line: 2](../tests/contract-playground/src/DeprecatedOZFunctions.sol#L2)
+
+	```solidity
+	pragma solidity 0.8.20;
+	```
+
+- Found in src/KeccakContract.sol [Line: 2](../tests/contract-playground/src/KeccakContract.sol#L2)
+
+	```solidity
+	pragma solidity 0.8.20;
+	```
+
+- Found in src/StateVariables.sol [Line: 2](../tests/contract-playground/src/StateVariables.sol#L2)
+
+	```solidity
+	pragma solidity 0.8.20;
+	```
+
+- Found in src/StorageConditionals.sol [Line: 2](../tests/contract-playground/src/StorageConditionals.sol#L2)
+
+	```solidity
+	pragma solidity 0.8.20;
+	```
+
+- Found in src/T11sTranferer.sol [Line: 2](../tests/contract-playground/src/T11sTranferer.sol#L2)
+
+	```solidity
+	pragma solidity 0.8.20;
+	```
+
+- Found in src/UnsafeERC721Mint.sol [Line: 2](../tests/contract-playground/src/UnsafeERC721Mint.sol#L2)
+
+	```solidity
+	pragma solidity 0.8.20;
+	```
+
 - Found in src/cloc/AnotherHeavilyCommentedContract.sol [Line: 6](../tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol#L6)
 
 	```solidity
 	pragma solidity ^0.8.18;
 	```
 
+- Found in src/inheritance/ExtendedInheritance.sol [Line: 2](../tests/contract-playground/src/inheritance/ExtendedInheritance.sol#L2)
+
+	```solidity
+	pragma solidity 0.8.20;
+	```
+
+- Found in src/inheritance/IContractInheritance.sol [Line: 2](../tests/contract-playground/src/inheritance/IContractInheritance.sol#L2)
+
+	```solidity
+	pragma solidity >=0.8.0;
+	```
+
+- Found in src/inheritance/InheritanceBase.sol [Line: 2](../tests/contract-playground/src/inheritance/InheritanceBase.sol#L2)
+
+	```solidity
+	pragma solidity ^0.8.0;
+	```
+
 - Found in src/nested/1/Nested.sol [Line: 5](../tests/contract-playground/src/nested/1/Nested.sol#L5)
+
+	```solidity
+	pragma solidity 0.8.20;
+	```
+
+- Found in src/nested/2/Nested.sol [Line: 5](../tests/contract-playground/src/nested/2/Nested.sol#L5)
+
+	```solidity
+	pragma solidity 0.8.20;
+	```
+
+- Found in src/parent_chain/ParentChainContract.sol [Line: 2](../tests/contract-playground/src/parent_chain/ParentChainContract.sol#L2)
+
+	```solidity
+	pragma solidity 0.8.20;
+	```
+
+- Found in src/uniswap/UniswapV2Swapper.sol [Line: 2](../tests/contract-playground/src/uniswap/UniswapV2Swapper.sol#L2)
+
+	```solidity
+	pragma solidity 0.8.20;
+	```
+
+- Found in src/uniswap/UniswapV3Swapper.sol [Line: 2](../tests/contract-playground/src/uniswap/UniswapV3Swapper.sol#L2)
 
 	```solidity
 	pragma solidity 0.8.20;

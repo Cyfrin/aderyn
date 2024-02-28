@@ -230,16 +230,16 @@ impl MarkdownReportPrinter {
                 params.issue_body.detector_name.clone()
             )?;
         }
-        let mut line_nos_printed: HashSet<usize> = HashSet::new();
+        let mut line_nos_printed: HashSet<(String, usize)> = HashSet::new();
         for instance in &params.issue_body.instances {
             // If this line number has already been printed for this issue, skip it
             // This occurs when multiple instances of the same issue are found on the same line.
             // We only want to print the line once in the markdown report.
             // Other formats may want this repition, but not the markdown report.
-            if line_nos_printed.contains(&instance.line_no) {
+            if line_nos_printed.contains(&(instance.contract_path.clone(), instance.line_no)) {
                 continue;
             }
-            line_nos_printed.insert(instance.line_no);
+            line_nos_printed.insert((instance.contract_path.clone(), instance.line_no));
 
             let path = {
                 if is_file {
@@ -298,6 +298,7 @@ impl MarkdownReportPrinter {
                 line_preview,
             )?;
         }
+        line_nos_printed.clear();
         writeln!(writer, "\n")?; // Add an extra newline for spacing
         Ok(())
     }
