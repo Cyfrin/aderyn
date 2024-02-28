@@ -1,3 +1,5 @@
+use crate::context::workspace_context::WorkspaceContext;
+
 use super::{
     extract_issue_bodies, CriticalIssues, HighIssues, Issue, IssueCount, LowIssues, MediumIssues,
     NcIssues,
@@ -23,30 +25,30 @@ impl Report {
         }
     }
 
-    pub fn critical_issues(&self) -> CriticalIssues {
+    pub fn critical_issues(&self, context: &WorkspaceContext) -> CriticalIssues {
         CriticalIssues {
-            issues: extract_issue_bodies(&self.criticals),
+            issues: extract_issue_bodies(&self.criticals, context),
         }
     }
 
-    pub fn high_issues(&self) -> HighIssues {
+    pub fn high_issues(&self, context: &WorkspaceContext) -> HighIssues {
         HighIssues {
-            issues: extract_issue_bodies(&self.highs),
+            issues: extract_issue_bodies(&self.highs, context),
         }
     }
-    pub fn medium_issues(&self) -> MediumIssues {
+    pub fn medium_issues(&self, context: &WorkspaceContext) -> MediumIssues {
         MediumIssues {
-            issues: extract_issue_bodies(&self.mediums),
+            issues: extract_issue_bodies(&self.mediums, context),
         }
     }
-    pub fn low_issues(&self) -> LowIssues {
+    pub fn low_issues(&self, context: &WorkspaceContext) -> LowIssues {
         LowIssues {
-            issues: extract_issue_bodies(&self.lows),
+            issues: extract_issue_bodies(&self.lows, context),
         }
     }
-    pub fn nc_issues(&self) -> NcIssues {
+    pub fn nc_issues(&self, context: &WorkspaceContext) -> NcIssues {
         NcIssues {
-            issues: extract_issue_bodies(&self.ncs),
+            issues: extract_issue_bodies(&self.ncs, context),
         }
     }
 }

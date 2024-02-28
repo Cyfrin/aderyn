@@ -2,7 +2,10 @@ use std::collections::{BTreeMap, HashSet};
 
 use serde::Serialize;
 
-use crate::{ast::NodeID, context::workspace_context::WorkspaceContext};
+use crate::{
+    ast::{node, NodeID},
+    context::workspace_context::WorkspaceContext,
+};
 
 pub mod json_printer;
 pub mod markdown_printer;
@@ -50,6 +53,7 @@ pub struct IssueCount {
 pub struct IssueInstance {
     contract_path: String,
     line_no: usize,
+    src: String,
 }
 
 #[derive(Serialize)]
@@ -85,18 +89,35 @@ pub struct NcIssues {
     issues: Vec<IssueBody>,
 }
 
-pub fn extract_issue_bodies(issues: &[Issue]) -> Vec<IssueBody> {
+pub fn extract_issue_bodies(issues: &[Issue], context: &WorkspaceContext) -> Vec<IssueBody> {
     issues
         .iter()
         .map(|cr| {
-            let instances = cr
-                .instances
-                .keys()
-                .map(|(contract_path, line_no)| IssueInstance {
+            // let instances = cr
+            //     .instances
+            //     .keys()
+            //     .map(|(contract_path, line_no)| IssueInstance {
+            //         contract_path: contract_path.clone(),
+            //         line_no: *line_no,
+            //         src: "".to_string(),
+            //     })
+            //     .collect();
+
+            // loop through cr.instaces using both key and value
+            let mut instances = Vec::new();
+            for ((contract_path, line_no), node_id) in &cr.instances {
+                instances.push(IssueInstance {
                     contract_path: contract_path.clone(),
                     line_no: *line_no,
-                })
-                .collect();
+                    src: context
+                        .nodes
+                        .get(node_id)
+                        .unwrap()
+                        .src()
+                        .unwrap_or("")
+                        .to_string(),
+                });
+            }
 
             IssueBody {
                 title: cr.title.clone(),

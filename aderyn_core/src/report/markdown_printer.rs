@@ -36,11 +36,19 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
         }
 
         let all_issues = vec![
-            (report.critical_issues().issues, "# Critical Issues\n", "C"),
-            (report.high_issues().issues, "# High Issues\n", "H"),
-            (report.medium_issues().issues, "# Medium Issues\n", "M"),
-            (report.low_issues().issues, "# Low Issues\n", "L"),
-            (report.nc_issues().issues, "# NC Issues\n", "NC"),
+            (
+                report.critical_issues(context).issues,
+                "# Critical Issues\n",
+                "C",
+            ),
+            (report.high_issues(context).issues, "# High Issues\n", "H"),
+            (
+                report.medium_issues(context).issues,
+                "# Medium Issues\n",
+                "M",
+            ),
+            (report.low_issues(context).issues, "# Low Issues\n", "L"),
+            (report.nc_issues(context).issues, "# NC Issues\n", "NC"),
         ];
 
         for (issues, heading, severity) in all_issues {
