@@ -2,10 +2,7 @@ use std::collections::{BTreeMap, HashSet};
 
 use serde::Serialize;
 
-use crate::{
-    ast::{node, NodeID},
-    context::workspace_context::WorkspaceContext,
-};
+use crate::{ast::NodeID, context::workspace_context::WorkspaceContext};
 
 pub mod json_printer;
 pub mod markdown_printer;
