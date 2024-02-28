@@ -65,9 +65,10 @@ pub fn load_foundry(foundry_root: &PathBuf) -> Result<LoadedFoundry, Box<dyn Err
         std::process::exit(1);
     });
 
-    // Run `forge build` in the root
+    // Run `forge build --ast` in the root
     let _output = std::process::Command::new("forge")
         .arg("build")
+        .arg("--ast")
         .current_dir(&foundry_root_absolute)
         .stdout(Stdio::inherit()) // This will stream the stdout
         .stderr(Stdio::inherit())
