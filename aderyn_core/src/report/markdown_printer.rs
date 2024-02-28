@@ -1,6 +1,7 @@
 use crate::context::workspace_context::WorkspaceContext;
 
 use std::{
+    collections::HashSet,
     io::{Result, Write},
     path::{Path, PathBuf},
 };
@@ -229,7 +230,17 @@ impl MarkdownReportPrinter {
                 params.issue_body.detector_name.clone()
             )?;
         }
+        let mut line_nos_printed: HashSet<usize> = HashSet::new();
         for instance in &params.issue_body.instances {
+            // If this line number has already been printed for this issue, skip it
+            // This occurs when multiple instances of the same issue are found on the same line.
+            // We only want to print the line once in the markdown report.
+            // Other formats may want this repition, but not the markdown report.
+            if line_nos_printed.contains(&instance.line_no) {
+                continue;
+            }
+            line_nos_printed.insert(instance.line_no);
+
             let path = {
                 if is_file {
                     String::from(params.root_path.to_str().unwrap())

@@ -161,18 +161,6 @@ Contracts have owners with privileged rights to perform admin tasks and need to 
 	    function someOtherImportantThing() external nonReentrant onlyOwner {
 	```
 
-- Found in src/DeprecatedOZFunctions.sol [Line: 7](tests/contract-playground/src/DeprecatedOZFunctions.sol#L7)
-
-	```solidity
-	contract DeprecatedOZFunctions is AccessControl {
-	```
-
-- Found in src/parent_chain/ParentChainContract.sol [Line: 7](tests/contract-playground/src/parent_chain/ParentChainContract.sol#L7)
-
-	```solidity
-	contract ParentChainContract is Ownable, ReentrancyGuard {
-	```
-
 - Found in src/parent_chain/ParentChainContract.sol [Line: 28](tests/contract-playground/src/parent_chain/ParentChainContract.sol#L28)
 
 	```solidity
@@ -443,34 +431,10 @@ Consider using a specific version of Solidity in your contracts instead of a wid
 	pragma solidity ^0.8.13;
 	```
 
-- Found in src/CrazyPragma.sol [Line: 2](tests/contract-playground/src/CrazyPragma.sol#L2)
-
-	```solidity
-	pragma solidity >=0.8.19 <0.9.1;
-	```
-
 - Found in src/cloc/AnotherHeavilyCommentedContract.sol [Line: 6](tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol#L6)
 
 	```solidity
 	pragma solidity ^0.8.18;
-	```
-
-- Found in src/cloc/HeavilyCommentedContract.sol [Line: 6](tests/contract-playground/src/cloc/HeavilyCommentedContract.sol#L6)
-
-	```solidity
-	pragma solidity >=0.4.22 <0.6.0; 
-	```
-
-- Found in src/inheritance/IContractInheritance.sol [Line: 2](tests/contract-playground/src/inheritance/IContractInheritance.sol#L2)
-
-	```solidity
-	pragma solidity >=0.8.0;
-	```
-
-- Found in src/inheritance/InheritanceBase.sol [Line: 2](tests/contract-playground/src/inheritance/InheritanceBase.sol#L2)
-
-	```solidity
-	pragma solidity ^0.8.0;
 	```
 
 
@@ -485,103 +449,13 @@ Solc compiler version 0.8.20 switches the default target EVM version to Shanghai
 	pragma solidity 0.8.20;
 	```
 
-- Found in src/Counter.sol [Line: 2](tests/contract-playground/src/Counter.sol#L2)
-
-	```solidity
-	pragma solidity ^0.8.13;
-	```
-
-- Found in src/CrazyPragma.sol [Line: 2](tests/contract-playground/src/CrazyPragma.sol#L2)
-
-	```solidity
-	pragma solidity >=0.8.19 <0.9.1;
-	```
-
-- Found in src/DeprecatedOZFunctions.sol [Line: 2](tests/contract-playground/src/DeprecatedOZFunctions.sol#L2)
-
-	```solidity
-	pragma solidity 0.8.20;
-	```
-
-- Found in src/KeccakContract.sol [Line: 2](tests/contract-playground/src/KeccakContract.sol#L2)
-
-	```solidity
-	pragma solidity 0.8.20;
-	```
-
-- Found in src/StateVariables.sol [Line: 2](tests/contract-playground/src/StateVariables.sol#L2)
-
-	```solidity
-	pragma solidity 0.8.20;
-	```
-
-- Found in src/StorageConditionals.sol [Line: 2](tests/contract-playground/src/StorageConditionals.sol#L2)
-
-	```solidity
-	pragma solidity 0.8.20;
-	```
-
-- Found in src/T11sTranferer.sol [Line: 2](tests/contract-playground/src/T11sTranferer.sol#L2)
-
-	```solidity
-	pragma solidity 0.8.20;
-	```
-
-- Found in src/UnsafeERC721Mint.sol [Line: 2](tests/contract-playground/src/UnsafeERC721Mint.sol#L2)
-
-	```solidity
-	pragma solidity 0.8.20;
-	```
-
 - Found in src/cloc/AnotherHeavilyCommentedContract.sol [Line: 6](tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol#L6)
 
 	```solidity
 	pragma solidity ^0.8.18;
 	```
 
-- Found in src/inheritance/ExtendedInheritance.sol [Line: 2](tests/contract-playground/src/inheritance/ExtendedInheritance.sol#L2)
-
-	```solidity
-	pragma solidity 0.8.20;
-	```
-
-- Found in src/inheritance/IContractInheritance.sol [Line: 2](tests/contract-playground/src/inheritance/IContractInheritance.sol#L2)
-
-	```solidity
-	pragma solidity >=0.8.0;
-	```
-
-- Found in src/inheritance/InheritanceBase.sol [Line: 2](tests/contract-playground/src/inheritance/InheritanceBase.sol#L2)
-
-	```solidity
-	pragma solidity ^0.8.0;
-	```
-
 - Found in src/nested/1/Nested.sol [Line: 5](tests/contract-playground/src/nested/1/Nested.sol#L5)
-
-	```solidity
-	pragma solidity 0.8.20;
-	```
-
-- Found in src/nested/2/Nested.sol [Line: 5](tests/contract-playground/src/nested/2/Nested.sol#L5)
-
-	```solidity
-	pragma solidity 0.8.20;
-	```
-
-- Found in src/parent_chain/ParentChainContract.sol [Line: 2](tests/contract-playground/src/parent_chain/ParentChainContract.sol#L2)
-
-	```solidity
-	pragma solidity 0.8.20;
-	```
-
-- Found in src/uniswap/UniswapV2Swapper.sol [Line: 2](tests/contract-playground/src/uniswap/UniswapV2Swapper.sol#L2)
-
-	```solidity
-	pragma solidity 0.8.20;
-	```
-
-- Found in src/uniswap/UniswapV3Swapper.sol [Line: 2](tests/contract-playground/src/uniswap/UniswapV3Swapper.sol#L2)
 
 	```solidity
 	pragma solidity 0.8.20;
@@ -685,18 +559,6 @@ Assigning values to address state variables without checking for `address(0)`.
 	    function foo2(address bar) public pure {
 	```
 
-- Found in src/cloc/HeavilyCommentedContract.sol [Line: 31](tests/contract-playground/src/cloc/HeavilyCommentedContract.sol#L31)
-
-	```solidity
-	    function foo(address bar) public pure {
-	```
-
-- Found in src/cloc/HeavilyCommentedContract.sol [Line: 38](tests/contract-playground/src/cloc/HeavilyCommentedContract.sol#L38)
-
-	```solidity
-	    function foo2(address bar) public pure {
-	```
-
 - Found in src/parent_chain/ParentChainContract.sol [Line: 11](tests/contract-playground/src/parent_chain/ParentChainContract.sol#L11)
 
 	```solidity
@@ -737,12 +599,6 @@ Assigning values to address state variables without checking for `address(0)`.
 
 	```solidity
 	            zero_hashes[height + 1] = sha256(abi.encodePacked(zero_hashes[height], zero_hashes[height]));
-	```
-
-- Found in src/eth2/DepositContract.sol [Line: 78](tests/contract-playground/src/eth2/DepositContract.sol#L78)
-
-	```solidity
-	            if ((size & 1) == 1) node = sha256(abi.encodePacked(branch[height], node));
 	```
 
 - Found in src/eth2/DepositContract.sol [Line: 78](tests/contract-playground/src/eth2/DepositContract.sol#L78)
@@ -799,22 +655,10 @@ Assigning values to address state variables without checking for `address(0)`.
 	            abi.encodePacked(sha256(abi.encodePacked(signature[:64])), sha256(abi.encodePacked(signature[64:], bytes32(0))))
 	```
 
-- Found in src/eth2/DepositContract.sol [Line: 113](tests/contract-playground/src/eth2/DepositContract.sol#L113)
-
-	```solidity
-	            abi.encodePacked(sha256(abi.encodePacked(signature[:64])), sha256(abi.encodePacked(signature[64:], bytes32(0))))
-	```
-
 - Found in src/eth2/DepositContract.sol [Line: 132](tests/contract-playground/src/eth2/DepositContract.sol#L132)
 
 	```solidity
 	        deposit_count += 1;
-	```
-
-- Found in src/eth2/DepositContract.sol [Line: 135](tests/contract-playground/src/eth2/DepositContract.sol#L135)
-
-	```solidity
-	            if ((size & 1) == 1) {
 	```
 
 - Found in src/eth2/DepositContract.sol [Line: 135](tests/contract-playground/src/eth2/DepositContract.sol#L135)
@@ -847,28 +691,10 @@ Assigning values to address state variables without checking for `address(0)`.
 	        ret[1] = bytesValue[6];
 	```
 
-- Found in src/eth2/DepositContract.sol [Line: 156](tests/contract-playground/src/eth2/DepositContract.sol#L156)
-
-	```solidity
-	        ret[1] = bytesValue[6];
-	```
-
 - Found in src/eth2/DepositContract.sol [Line: 157](tests/contract-playground/src/eth2/DepositContract.sol#L157)
 
 	```solidity
 	        ret[2] = bytesValue[5];
-	```
-
-- Found in src/eth2/DepositContract.sol [Line: 157](tests/contract-playground/src/eth2/DepositContract.sol#L157)
-
-	```solidity
-	        ret[2] = bytesValue[5];
-	```
-
-- Found in src/eth2/DepositContract.sol [Line: 158](tests/contract-playground/src/eth2/DepositContract.sol#L158)
-
-	```solidity
-	        ret[3] = bytesValue[4];
 	```
 
 - Found in src/eth2/DepositContract.sol [Line: 158](tests/contract-playground/src/eth2/DepositContract.sol#L158)
@@ -883,28 +709,10 @@ Assigning values to address state variables without checking for `address(0)`.
 	        ret[4] = bytesValue[3];
 	```
 
-- Found in src/eth2/DepositContract.sol [Line: 159](tests/contract-playground/src/eth2/DepositContract.sol#L159)
-
-	```solidity
-	        ret[4] = bytesValue[3];
-	```
-
 - Found in src/eth2/DepositContract.sol [Line: 160](tests/contract-playground/src/eth2/DepositContract.sol#L160)
 
 	```solidity
 	        ret[5] = bytesValue[2];
-	```
-
-- Found in src/eth2/DepositContract.sol [Line: 160](tests/contract-playground/src/eth2/DepositContract.sol#L160)
-
-	```solidity
-	        ret[5] = bytesValue[2];
-	```
-
-- Found in src/eth2/DepositContract.sol [Line: 161](tests/contract-playground/src/eth2/DepositContract.sol#L161)
-
-	```solidity
-	        ret[6] = bytesValue[1];
 	```
 
 - Found in src/eth2/DepositContract.sol [Line: 161](tests/contract-playground/src/eth2/DepositContract.sol#L161)
@@ -923,12 +731,6 @@ Assigning values to address state variables without checking for `address(0)`.
 
 	```solidity
 	        for (uint256 i = 0; i < 3; i++) {
-	```
-
-- Found in src/parent_chain/ParentChainContract.sol [Line: 16](tests/contract-playground/src/parent_chain/ParentChainContract.sol#L16)
-
-	```solidity
-	        if (number < 5 && number > 1) {
 	```
 
 - Found in src/parent_chain/ParentChainContract.sol [Line: 16](tests/contract-playground/src/parent_chain/ParentChainContract.sol#L16)
@@ -961,12 +763,6 @@ Index event fields make the field more quickly accessible to off-chain tools tha
 	    event DoSomethingElse(uint256 somethingElse);
 	```
 
-- Found in src/inheritance/InheritanceBase.sol [Line: 7](tests/contract-playground/src/inheritance/InheritanceBase.sol#L7)
-
-	```solidity
-	    event Do(uint256 something);
-	```
-
 
 
 ## NC-5: `require()` / `revert()` statements should have descriptive reason strings or custom errors
@@ -992,12 +788,6 @@ Index event fields make the field more quickly accessible to off-chain tools tha
 	```
 
 - Found in src/cloc/AnotherHeavilyCommentedContract.sol [Line: 56](tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol#L56)
-
-	```solidity
-	        require(bar != address(0));
-	```
-
-- Found in src/cloc/HeavilyCommentedContract.sol [Line: 35](tests/contract-playground/src/cloc/HeavilyCommentedContract.sol#L35)
 
 	```solidity
 	        require(bar != address(0));

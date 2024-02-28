@@ -60,28 +60,10 @@ Solc compiler version 0.8.20 switches the default target EVM version to Shanghai
 	pragma solidity 0.8.20;
 	```
 
-- Found in src/Counter.sol [Line: 2](tests/contract-playground/src/Counter.sol#L2)
-
-	```solidity
-	pragma solidity ^0.8.13;
-	```
-
-- Found in src/KeccakContract.sol [Line: 2](tests/contract-playground/src/KeccakContract.sol#L2)
-
-	```solidity
-	pragma solidity 0.8.20;
-	```
-
 - Found in src/cloc/AnotherHeavilyCommentedContract.sol [Line: 6](tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol#L6)
 
 	```solidity
 	pragma solidity ^0.8.18;
-	```
-
-- Found in src/parent_chain/ParentChainContract.sol [Line: 2](tests/contract-playground/src/parent_chain/ParentChainContract.sol#L2)
-
-	```solidity
-	pragma solidity 0.8.20;
 	```
 
 
@@ -111,18 +93,6 @@ Solc compiler version 0.8.20 switches the default target EVM version to Shanghai
 	```
 
 - Found in src/cloc/AnotherHeavilyCommentedContract.sol [Line: 42](tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol#L42)
-
-	```solidity
-	    function foo2(address bar) public pure {
-	```
-
-- Found in src/cloc/HeavilyCommentedContract.sol [Line: 31](tests/contract-playground/src/cloc/HeavilyCommentedContract.sol#L31)
-
-	```solidity
-	    function foo(address bar) public pure {
-	```
-
-- Found in src/cloc/HeavilyCommentedContract.sol [Line: 38](tests/contract-playground/src/cloc/HeavilyCommentedContract.sol#L38)
 
 	```solidity
 	    function foo2(address bar) public pure {
