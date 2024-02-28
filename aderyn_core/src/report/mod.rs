@@ -93,16 +93,6 @@ pub fn extract_issue_bodies(issues: &[Issue], context: &WorkspaceContext) -> Vec
     issues
         .iter()
         .map(|cr| {
-            // let instances = cr
-            //     .instances
-            //     .keys()
-            //     .map(|(contract_path, line_no)| IssueInstance {
-            //         contract_path: contract_path.clone(),
-            //         line_no: *line_no,
-            //         src: "".to_string(),
-            //     })
-            //     .collect();
-
             // loop through cr.instaces using both key and value
             let mut instances = Vec::new();
             for ((contract_path, line_no), node_id) in &cr.instances {
