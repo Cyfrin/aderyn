@@ -190,7 +190,7 @@ pub trait IssueDetector: Send + Sync + 'static {
     }
 
     fn verify_blame_coverage(&self, file: &str) -> Result<bool, io::Error> {
-        type DesiredInstance = (String, usize); // File path, line number
+        type DesiredInstance = (String, usize, usize); // File path, line number, count
         let mut desired_instances: Vec<DesiredInstance> = vec![];
 
         // NOTE: Look for pattern @nyth:blame(detector-1-name,detector-2-name,detector-3-name)
@@ -209,10 +209,16 @@ pub trait IssueDetector: Send + Sync + 'static {
                 if end < line.len() {
                     let portion = &line[start + look_for.len()..end];
                     // println!("Extracted {} - {}", line_number + 1, portion);
-                    for detector_name in portion.split(',') {
+                    for detector_name_plus_count in portion.split(',') {
+                        let (detector_name, count) =
+                            detector_name_plus_count.split_once(':').unwrap();
                         if detector_name == self.name() {
-                            desired_instances
-                                .push((file.to_string_lossy().to_string(), line_number + 2));
+                            let count: usize = count.parse().unwrap();
+                            desired_instances.push((
+                                file.to_string_lossy().to_string(),
+                                line_number + 2,
+                                count,
+                            ));
                         }
                     }
                 }
@@ -222,17 +228,23 @@ pub trait IssueDetector: Send + Sync + 'static {
         let mut unblamed_found_instances = vec![];
 
         for desired_instance in &desired_instances {
-            let (filename, linenumber) = desired_instance;
-            if !self.instances().iter().any(|(found_instance, _)| {
-                filename.ends_with(&found_instance.0) && linenumber == &found_instance.1
-            }) {
+            let (filename, linenumber, count) = desired_instance;
+            if !(self
+                .instances()
+                .iter()
+                .filter(|(found_instance, _)| {
+                    filename.ends_with(&found_instance.0) && linenumber == &found_instance.1
+                })
+                .count()
+                == *count)
+            {
                 unblamed_found_instances.push(desired_instance.clone());
             }
         }
 
         if !unblamed_found_instances.is_empty() {
-            println!("\n\nInstances this detector has failed to capture :- \n");
-            for (missed, line_number) in &unblamed_found_instances {
+            println!("\n\nAt least 1 (or more) instances failed to capture :- \n");
+            for (missed, line_number, _count) in &unblamed_found_instances {
                 let contents = std::fs::read_to_string(missed).unwrap();
                 let line = contents.lines().nth(*line_number - 1).unwrap();
                 println!("File {} \nLine {}\n\n", missed, line);

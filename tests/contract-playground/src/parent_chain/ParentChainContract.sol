@@ -13,9 +13,9 @@ contract ParentChainContract is Ownable, ReentrancyGuard {
     }
 
     function increment(uint256 newNumber) public {
-        // @nyth:blame(constants-instead-of-literals)
+        // @nyth:blame(constants-instead-of-literals:2)
         if (number < 5 && number > 1) {
-            // @nyth:blame(constants-instead-of-literals)
+            // @nyth:blame(constants-instead-of-literals:1)
             for (uint256 j = 9; j != 0; --j) {
                 number = newNumber;
                 number++;
