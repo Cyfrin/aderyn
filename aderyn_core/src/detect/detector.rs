@@ -25,6 +25,8 @@ use std::{
     collections::BTreeMap,
     error::Error,
     fmt::{self, Display},
+    io,
+    path::PathBuf,
     str::FromStr,
 };
 
@@ -185,6 +187,59 @@ pub trait IssueDetector: Send + Sync + 'static {
     // Value is ASTNode NodeID
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
         BTreeMap::new()
+    }
+
+    fn verify_blame_coverage(&self, file: &str) -> Result<bool, io::Error> {
+        type DesiredInstance = (String, usize); // File path, line number
+        let mut desired_instances: Vec<DesiredInstance> = vec![];
+
+        // NOTE: Look for pattern @nyth:blame(detector-1-name,detector-2-name,detector-3-name)
+        // in the Solidity source code. When you come across one interpret it like follows:
+        // Line X: (when you see the above pattern) ==(implies)=> you want Line X + 1 captured by the detector with said name
+        let file = &PathBuf::from(file);
+        let contents = std::fs::read_to_string(file)?;
+        for (line_number, line) in contents.lines().enumerate() {
+            let look_for = "@nyth:blame(";
+            let start = line.find(look_for);
+            if let Some(start) = start {
+                let mut end = start + 1;
+                while end < line.len() && line.chars().nth(end) != Some(')') {
+                    end += 1;
+                }
+                if end < line.len() {
+                    let portion = &line[start + look_for.len()..end];
+                    // println!("Extracted {} - {}", line_number + 1, portion);
+                    for detector_name in portion.split(",") {
+                        if detector_name == self.name() {
+                            desired_instances
+                                .push((file.to_string_lossy().to_string(), line_number + 2));
+                        }
+                    }
+                }
+            }
+        }
+
+        let mut unblamed_found_instances = vec![];
+
+        for desired_instance in &desired_instances {
+            let (filename, linenumber) = desired_instance;
+            if !self.instances().iter().any(|(found_instance, _)| {
+                filename.ends_with(&found_instance.0) && linenumber == &found_instance.1
+            }) {
+                unblamed_found_instances.push(desired_instance.clone());
+            }
+        }
+
+        if !unblamed_found_instances.is_empty() {
+            println!("\n\nInstances this detector has failed to capture :- \n");
+            for (missed, line_number) in &unblamed_found_instances {
+                let contents = std::fs::read_to_string(missed).unwrap();
+                let line = contents.lines().nth(*line_number - 1).unwrap();
+                println!("File {} \nLine {}\n\n", missed, line);
+            }
+        }
+
+        Ok(unblamed_found_instances.len() == 0)
     }
 }
 

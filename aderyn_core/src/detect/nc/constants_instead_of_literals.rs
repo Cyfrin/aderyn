@@ -88,4 +88,27 @@ mod constants_instead_of_literals_tests {
         // assert that the detector returns the correct description
         assert_eq!(detector.description(), String::from(""));
     }
+
+    #[test]
+    fn test_constants_instead_of_literals_blame() {
+        let context = load_contract(
+            "../tests/contract-playground/out/ParentChainContract.sol/ParentChainContract.json",
+        );
+
+        let mut detector = ConstantsInsteadOfLiteralsDetector::default();
+        // assert that the detector finds the public function
+        let found = detector.detect(&context).unwrap();
+        assert!(found);
+
+        println!("{:?}", detector.instances());
+
+        // assert that the detector finds the correct number of instances
+        assert_eq!(detector.instances().len(), 3);
+
+        assert!(detector
+            .verify_blame_coverage(
+                "../tests/contract-playground/src/parent_chain/ParentChainContract.sol"
+            )
+            .unwrap());
+    }
 }
