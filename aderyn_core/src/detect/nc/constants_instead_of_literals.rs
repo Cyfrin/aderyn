@@ -46,10 +46,8 @@ impl IssueDetector for ConstantsInsteadOfLiteralsDetector {
                         || literal.kind == LiteralKind::Address
                     {
                         // If the literal is used as an index access in a variable, don't capture it
-                        if let Some(parent) = context.get_parent(literal.id) {
-                            if let ASTNode::IndexAccess(_) = parent {
-                                continue;
-                            }
+                        if let Some(ASTNode::IndexAccess(_)) = context.get_parent(literal.id) {
+                            continue;
                         }
 
                         if literal_values_found.contains_key(literal.value.as_ref().unwrap()) {
@@ -78,10 +76,8 @@ impl IssueDetector for ConstantsInsteadOfLiteralsDetector {
                         || literal.kind == LiteralKind::Address
                     {
                         // If the literal is used as an index access in a variable, don't capture it
-                        if let Some(parent) = context.get_parent(literal.id) {
-                            if let ASTNode::IndexAccess(_) = parent {
-                                continue;
-                            }
+                        if let Some(ASTNode::IndexAccess(_)) = context.get_parent(literal.id) {
+                            continue;
                         }
 
                         if literal_values_found.contains_key(literal.value.as_ref().unwrap()) {
