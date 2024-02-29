@@ -143,7 +143,7 @@ mod constants_instead_of_literals_tests {
         let found = detector.detect(&context).unwrap();
         assert!(found);
         // assert that the detector finds the correct number of instances
-        assert_eq!(detector.instances().len(), 4);
+        assert_eq!(detector.instances().len(), 8);
         // assert that the detector returns the correct severity
         assert_eq!(
             detector.severity(),
