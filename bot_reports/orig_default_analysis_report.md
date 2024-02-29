@@ -173,13 +173,13 @@ Contracts have owners with privileged rights to perform admin tasks and need to 
 	contract ParentChainContract is Ownable, ReentrancyGuard {
 	```
 
-- Found in src/parent_chain/ParentChainContract.sol [Line: 28](../tests/contract-playground/src/parent_chain/ParentChainContract.sol#L28)
+- Found in src/parent_chain/ParentChainContract.sol [Line: 30](../tests/contract-playground/src/parent_chain/ParentChainContract.sol#L30)
 
 	```solidity
 	    function setOwner(address _owner) external onlyOwner nonReentrant {
 	```
 
-- Found in src/parent_chain/ParentChainContract.sol [Line: 32](../tests/contract-playground/src/parent_chain/ParentChainContract.sol#L32)
+- Found in src/parent_chain/ParentChainContract.sol [Line: 34](../tests/contract-playground/src/parent_chain/ParentChainContract.sol#L34)
 
 	```solidity
 	    function someOtherImportantThing() external nonReentrant onlyOwner {
@@ -871,13 +871,13 @@ Assigning values to address state variables without checking for `address(0)`.
 	        for (uint256 i = 0; i < 3; i++) {
 	```
 
-- Found in src/parent_chain/ParentChainContract.sol [Line: 16](../tests/contract-playground/src/parent_chain/ParentChainContract.sol#L16)
+- Found in src/parent_chain/ParentChainContract.sol [Line: 17](../tests/contract-playground/src/parent_chain/ParentChainContract.sol#L17)
 
 	```solidity
 	        if (number < 5 && number > 1) {
 	```
 
-- Found in src/parent_chain/ParentChainContract.sol [Line: 17](../tests/contract-playground/src/parent_chain/ParentChainContract.sol#L17)
+- Found in src/parent_chain/ParentChainContract.sol [Line: 19](../tests/contract-playground/src/parent_chain/ParentChainContract.sol#L19)
 
 	```solidity
 	            for (uint256 j = 9; j != 0; --j) {
@@ -961,7 +961,7 @@ This is a best-practice to protect against reentrancy in other modifiers
 	    function setOwner(address _owner) external onlyOwner nonReentrant {
 	```
 
-- Found in src/parent_chain/ParentChainContract.sol [Line: 28](../tests/contract-playground/src/parent_chain/ParentChainContract.sol#L28)
+- Found in src/parent_chain/ParentChainContract.sol [Line: 30](../tests/contract-playground/src/parent_chain/ParentChainContract.sol#L30)
 
 	```solidity
 	    function setOwner(address _owner) external onlyOwner nonReentrant {

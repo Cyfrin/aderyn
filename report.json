@@ -443,17 +443,17 @@
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
             "line_no": 7,
-            "src": "250:657"
+            "src": "250:769"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
-            "line_no": 28,
-            "src": "725:9"
+            "line_no": 30,
+            "src": "837:9"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
-            "line_no": 32,
-            "src": "854:9"
+            "line_no": 34,
+            "src": "966:9"
           }
         ],
         "title": "Centralization Risk for trusted owners"
@@ -677,7 +677,7 @@
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
             "line_no": 15,
-            "src": "413:225"
+            "src": "413:337"
           }
         ],
         "title": "Functions not used internally could be marked external"
@@ -863,18 +863,18 @@
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
-            "line_no": 16,
-            "src": "481:1"
-          },
-          {
-            "contract_path": "src/parent_chain/ParentChainContract.sol",
-            "line_no": 16,
-            "src": "495:1"
+            "line_no": 17,
+            "src": "535:1"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
             "line_no": 17,
-            "src": "529:1"
+            "src": "549:1"
+          },
+          {
+            "contract_path": "src/parent_chain/ParentChainContract.sol",
+            "line_no": 19,
+            "src": "641:1"
           }
         ],
         "title": "Constants should be defined and used instead of literals"
@@ -949,8 +949,8 @@
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
-            "line_no": 28,
-            "src": "735:12"
+            "line_no": 30,
+            "src": "847:12"
           }
         ],
         "title": "The `nonReentrant` `modifier` should occur before all other modifiers"
