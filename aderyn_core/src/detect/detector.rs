@@ -192,9 +192,11 @@ pub trait IssueDetector: Send + Sync + 'static {
         type DesiredInstance = (String, usize, usize); // File path, line number, count
         let mut desired_instances: Vec<DesiredInstance> = vec![];
 
-        // NOTE: Look for pattern @nyth:blame(detector-1-name,detector-2-name,detector-3-name)
+        // NOTE: Look for pattern @nyth:blame(detector-1-name:Y,detector-2-name:Z)
         // in the Solidity source code. When you come across one interpret it like follows:
-        // Line X: (when you see the above pattern) ==(implies)=> you want Line X + 1 captured by the detector with said name
+        // Check detector-1-name captures line Y no of times AND
+        // Check detector-2-name captures line Z no of times
+
         let file = &std::fs::canonicalize(file).unwrap();
         let contents = std::fs::read_to_string(file)?;
         for (line_number, line) in contents.lines().enumerate() {
