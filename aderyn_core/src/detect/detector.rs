@@ -212,9 +212,18 @@ pub trait IssueDetector: Send + Sync + 'static {
                     // println!("Extracted {} - {}", line_number + 1, portion);
                     for detector_name_plus_count in portion.split(',') {
                         let (detector_name, count) =
-                            detector_name_plus_count.split_once(':').unwrap();
+                            detector_name_plus_count.split_once(':').unwrap_or_else(|| {
+                                eprintln!(
+                                    "{} is not properly formatted!",
+                                    detector_name_plus_count
+                                );
+                                std::process::exit(1);
+                            });
                         if detector_name == self.name() {
-                            let count: usize = count.parse().unwrap();
+                            let count: usize = count.parse().unwrap_or_else(|_| {
+                                eprintln!("{} could not be parsed to a number.", count);
+                                std::process::exit(1);
+                            });
                             desired_instances.push((
                                 file.to_string_lossy().to_string(),
                                 line_number + 2,
