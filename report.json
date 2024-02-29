@@ -37,6 +37,10 @@
         "n_sloc": 9
       },
       {
+        "file_path": "src/ConstantsLiterals.sol",
+        "n_sloc": 28
+      },
+      {
         "file_path": "src/Counter.sol",
         "n_sloc": 20
       },
@@ -115,8 +119,8 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 693,
-    "total_source_units": 22
+    "total_sloc": 721,
+    "total_source_units": 23
   },
   "high_issues": {
     "issues": [
@@ -661,11 +665,6 @@
           },
           {
             "contract_path": "src/cloc/HeavilyCommentedContract.sol",
-            "line_no": 31,
-            "src": "500:131"
-          },
-          {
-            "contract_path": "src/cloc/HeavilyCommentedContract.sol",
             "line_no": 38,
             "src": "637:804"
           },
@@ -687,69 +686,44 @@
         "detector_name": "constants-instead-of-literals",
         "instances": [
           {
-            "contract_path": "src/Counter.sol",
-            "line_no": 23,
-            "src": "434:1"
+            "contract_path": "src/ConstantsLiterals.sol",
+            "line_no": 25,
+            "src": "958:3"
           },
           {
-            "contract_path": "src/cloc/HeavilyCommentedContract.sol",
-            "line_no": 40,
-            "src": "908:2"
+            "contract_path": "src/ConstantsLiterals.sol",
+            "line_no": 26,
+            "src": "992:3"
           },
           {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 70,
-            "src": "5071:1"
+            "contract_path": "src/ConstantsLiterals.sol",
+            "line_no": 27,
+            "src": "1032:4"
           },
           {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 71,
-            "src": "5117:1"
+            "contract_path": "src/ConstantsLiterals.sol",
+            "line_no": 28,
+            "src": "1068:4"
           },
           {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 78,
-            "src": "5433:1"
+            "contract_path": "src/ConstantsLiterals.sol",
+            "line_no": 29,
+            "src": "1117:42"
           },
           {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 78,
-            "src": "5439:1"
+            "contract_path": "src/ConstantsLiterals.sol",
+            "line_no": 30,
+            "src": "1192:42"
           },
           {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 80,
-            "src": "5594:1"
+            "contract_path": "src/ConstantsLiterals.sol",
+            "line_no": 31,
+            "src": "1275:66"
           },
           {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 96,
-            "src": "6167:2"
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 97,
-            "src": "6263:2"
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 98,
-            "src": "6362:2"
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 101,
-            "src": "6474:7"
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 102,
-            "src": "6554:6"
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 103,
-            "src": "6665:6"
+            "contract_path": "src/ConstantsLiterals.sol",
+            "line_no": 32,
+            "src": "1374:66"
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
@@ -760,121 +734,6 @@
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 113,
             "src": "7293:2"
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 132,
-            "src": "8085:1"
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 135,
-            "src": "8227:1"
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 135,
-            "src": "8233:1"
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 140,
-            "src": "8402:1"
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 152,
-            "src": "8927:1"
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 155,
-            "src": "9051:1"
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 156,
-            "src": "9067:1"
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 156,
-            "src": "9083:1"
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 157,
-            "src": "9099:1"
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 157,
-            "src": "9115:1"
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 158,
-            "src": "9131:1"
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 158,
-            "src": "9147:1"
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 159,
-            "src": "9163:1"
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 159,
-            "src": "9179:1"
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 160,
-            "src": "9195:1"
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 160,
-            "src": "9211:1"
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 161,
-            "src": "9227:1"
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 161,
-            "src": "9243:1"
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 162,
-            "src": "9259:1"
-          },
-          {
-            "contract_path": "src/inheritance/ExtendedInheritance.sol",
-            "line_no": 15,
-            "src": "466:1"
-          },
-          {
-            "contract_path": "src/parent_chain/ParentChainContract.sol",
-            "line_no": 16,
-            "src": "481:1"
-          },
-          {
-            "contract_path": "src/parent_chain/ParentChainContract.sol",
-            "line_no": 16,
-            "src": "495:1"
-          },
-          {
-            "contract_path": "src/parent_chain/ParentChainContract.sol",
-            "line_no": 17,
-            "src": "529:1"
           }
         ],
         "title": "Constants should be defined and used instead of literals"
