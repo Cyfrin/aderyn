@@ -209,7 +209,7 @@ pub trait IssueDetector: Send + Sync + 'static {
                 if end < line.len() {
                     let portion = &line[start + look_for.len()..end];
                     // println!("Extracted {} - {}", line_number + 1, portion);
-                    for detector_name in portion.split(",") {
+                    for detector_name in portion.split(',') {
                         if detector_name == self.name() {
                             desired_instances
                                 .push((file.to_string_lossy().to_string(), line_number + 2));
@@ -239,7 +239,7 @@ pub trait IssueDetector: Send + Sync + 'static {
             }
         }
 
-        Ok(unblamed_found_instances.len() == 0)
+        Ok(unblamed_found_instances.is_empty())
     }
 }
 
