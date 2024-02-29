@@ -135,7 +135,7 @@
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
             "line_no": 15,
-            "src": "413:337"
+            "src": "413:341"
           }
         ],
         "title": "Functions not used internally could be marked external"
