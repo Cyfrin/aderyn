@@ -26,7 +26,6 @@ use std::{
     error::Error,
     fmt::{self, Display},
     io,
-    path::PathBuf,
     str::FromStr,
 };
 
@@ -196,7 +195,7 @@ pub trait IssueDetector: Send + Sync + 'static {
         // NOTE: Look for pattern @nyth:blame(detector-1-name,detector-2-name,detector-3-name)
         // in the Solidity source code. When you come across one interpret it like follows:
         // Line X: (when you see the above pattern) ==(implies)=> you want Line X + 1 captured by the detector with said name
-        let file = &PathBuf::from(std::fs::canonicalize(file).unwrap());
+        let file = &std::fs::canonicalize(file).unwrap();
         let contents = std::fs::read_to_string(file)?;
         for (line_number, line) in contents.lines().enumerate() {
             let look_for = "@nyth:blame(";
@@ -229,14 +228,14 @@ pub trait IssueDetector: Send + Sync + 'static {
 
         for desired_instance in &desired_instances {
             let (filename, linenumber, count) = desired_instance;
-            if !(self
+            if self
                 .instances()
                 .iter()
                 .filter(|(found_instance, _)| {
                     filename.ends_with(&found_instance.0) && linenumber == &found_instance.1
                 })
                 .count()
-                == *count)
+                != *count
             {
                 unblamed_found_instances.push(desired_instance.clone());
             }
