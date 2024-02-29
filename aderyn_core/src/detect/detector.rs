@@ -196,7 +196,7 @@ pub trait IssueDetector: Send + Sync + 'static {
         // NOTE: Look for pattern @nyth:blame(detector-1-name,detector-2-name,detector-3-name)
         // in the Solidity source code. When you come across one interpret it like follows:
         // Line X: (when you see the above pattern) ==(implies)=> you want Line X + 1 captured by the detector with said name
-        let file = &PathBuf::from(file);
+        let file = &PathBuf::from(std::fs::canonicalize(file).unwrap());
         let contents = std::fs::read_to_string(file)?;
         for (line_number, line) in contents.lines().enumerate() {
             let look_for = "@nyth:blame(";
