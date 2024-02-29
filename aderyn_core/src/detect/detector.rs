@@ -197,7 +197,7 @@ pub trait IssueDetector: Send + Sync + 'static {
         // Check detector-1-name captures line Y no of times AND
         // Check detector-2-name captures line Z no of times
 
-        let file = &std::fs::canonicalize(file).unwrap();
+        let file = &std::fs::canonicalize(file)?;
         let contents = std::fs::read_to_string(file)?;
         for (line_number, line) in contents.lines().enumerate() {
             let look_for = "@nyth:blame(";
