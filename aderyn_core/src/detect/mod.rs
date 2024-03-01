@@ -15,16 +15,4 @@ macro_rules! capture {
     };
 }
 
-#[macro_export]
-macro_rules! capture_raw {
-    ($self:ident, $context:ident, $item:expr) => {
-        if let Some(item_id) = $item.id() {
-            $self
-                .found_instances
-                .insert($context.get_node_sort_key(&$item.clone()), item_id);
-        }
-    };
-}
-
 pub use capture;
-pub use capture_raw;
