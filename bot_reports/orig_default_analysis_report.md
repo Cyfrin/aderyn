@@ -686,6 +686,12 @@ Assigning values to address state variables without checking for `address(0)`.
 	    function foo2(address bar) public pure {
 	```
 
+- Found in src/cloc/HeavilyCommentedContract.sol [Line: 31](../tests/contract-playground/src/cloc/HeavilyCommentedContract.sol#L31)
+
+	```solidity
+	    function foo(address bar) public pure {
+	```
+
 - Found in src/cloc/HeavilyCommentedContract.sol [Line: 38](../tests/contract-playground/src/cloc/HeavilyCommentedContract.sol#L38)
 
 	```solidity
@@ -807,12 +813,6 @@ Index event fields make the field more quickly accessible to off-chain tools tha
 	```
 
 - Found in src/cloc/AnotherHeavilyCommentedContract.sol [Line: 35](../tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol#L35)
-
-	```solidity
-	        require(bar != address(0));
-	```
-
-- Found in src/cloc/AnotherHeavilyCommentedContract.sol [Line: 56](../tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol#L56)
 
 	```solidity
 	        require(bar != address(0));
