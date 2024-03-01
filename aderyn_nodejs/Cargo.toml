@@ -12,6 +12,7 @@ crate-type = ["cdylib"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+aderyn_driver = { path = "../aderyn_driver", version = "0.0.16"}
 
 [dependencies.neon]
 version = "0.10"

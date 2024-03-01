@@ -43,6 +43,7 @@ dependencies = [
 name = "aderyn_nodejs"
 version = "0.0.16"
 dependencies = [
+ "aderyn_driver",
  "neon",
 ]
 
