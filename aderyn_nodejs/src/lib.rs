@@ -1,5 +1,5 @@
 use aderyn_driver::{
-    detector::get_issue_detector_by_name,
+    detector::request_issue_detector_by_name,
     driver::{self, Args},
 };
 use neon::prelude::*;
@@ -30,11 +30,16 @@ fn drive_with(mut cx: FunctionContext) -> JsResult<JsBoolean> {
     let scope = cx.argument::<JsArray>(4)?;
     let js_detectors_names = cx.argument::<JsArray>(5)?;
 
-    if let Some(detectors_name) = parse(js_detectors_names, &mut cx) {
-        let detectors = detectors_name
+    if let Some(detectors_names) = parse(js_detectors_names, &mut cx) {
+        let detectors = detectors_names
             .iter()
-            .map(|x| get_issue_detector_by_name(x))
+            .flat_map(|x| request_issue_detector_by_name(x))
             .collect::<Vec<_>>();
+
+        if detectors.len() != detectors_names.len() {
+            // At least 1 detectors' name has been passed incorrectly
+            return Ok(cx.boolean(false));
+        }
 
         driver::drive_with(
             Args {
