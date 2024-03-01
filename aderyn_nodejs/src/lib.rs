@@ -1,4 +1,7 @@
-use aderyn_driver::driver::{self, Args};
+use aderyn_driver::{
+    detector::get_issue_detector_by_name,
+    driver::{self, Args},
+};
 use neon::prelude::*;
 
 fn drive(mut cx: FunctionContext) -> JsResult<JsBoolean> {
@@ -8,47 +11,68 @@ fn drive(mut cx: FunctionContext) -> JsResult<JsBoolean> {
     let exclude = cx.argument::<JsArray>(3)?;
     let scope = cx.argument::<JsArray>(4)?;
 
-    let exclude_vector = exclude.to_vec(&mut cx).unwrap();
-    let mut exclude_rust_vector = vec![];
-    for handle in exclude_vector {
-        let s = handle
-            .downcast::<JsString, FunctionContext>(&mut cx)
-            .unwrap()
-            .value(&mut cx);
-        exclude_rust_vector.push(s);
-    }
-
-    let scope_vector = scope.to_vec(&mut cx).unwrap();
-    let mut scope_rust_vector = vec![];
-    for handle in scope_vector {
-        let s = handle
-            .downcast::<JsString, FunctionContext>(&mut cx)
-            .unwrap()
-            .value(&mut cx);
-        scope_rust_vector.push(s);
-    }
-
     driver::drive(Args {
         root: root.value(&mut cx),
         output: output.value(&mut cx),
-        exclude: if exclude_rust_vector.is_empty() {
-            None
-        } else {
-            Some(exclude_rust_vector)
-        },
-        scope: if scope_rust_vector.is_empty() {
-            None
-        } else {
-            Some(scope_rust_vector)
-        },
+        exclude: parse(exclude, &mut cx),
+        scope: parse(scope, &mut cx),
         no_snippets: no_snippets.value(&mut cx),
     });
 
     Ok(cx.boolean(true))
 }
 
+fn drive_with(mut cx: FunctionContext) -> JsResult<JsBoolean> {
+    let root = cx.argument::<JsString>(0)?;
+    let output = cx.argument::<JsString>(1)?;
+    let no_snippets = cx.argument::<JsBoolean>(2)?;
+    let exclude = cx.argument::<JsArray>(3)?;
+    let scope = cx.argument::<JsArray>(4)?;
+    let js_detectors_names = cx.argument::<JsArray>(5)?;
+
+    if let Some(detectors_name) = parse(js_detectors_names, &mut cx) {
+        let detectors = detectors_name
+            .iter()
+            .map(|x| get_issue_detector_by_name(x))
+            .collect::<Vec<_>>();
+
+        driver::drive_with(
+            Args {
+                root: root.value(&mut cx),
+                output: output.value(&mut cx),
+                exclude: parse(exclude, &mut cx),
+                scope: parse(scope, &mut cx),
+                no_snippets: no_snippets.value(&mut cx),
+            },
+            detectors,
+        );
+
+        return Ok(cx.boolean(true));
+    }
+
+    Ok(cx.boolean(false))
+}
+
+fn parse(handle: Handle<'_, JsArray>, cx: &mut FunctionContext) -> Option<Vec<String>> {
+    let js_vector = handle.to_vec(cx).unwrap();
+    let mut native_string_vector = vec![];
+    for handle in js_vector {
+        let s = handle
+            .downcast::<JsString, FunctionContext>(cx)
+            .unwrap()
+            .value(cx);
+        native_string_vector.push(s);
+    }
+    if native_string_vector.is_empty() {
+        None
+    } else {
+        Some(native_string_vector)
+    }
+}
+
 #[neon::main]
 fn main(mut cx: ModuleContext) -> NeonResult<()> {
     cx.export_function("drive", drive)?;
+    cx.export_function("drive_with", drive_with)?;
     Ok(())
 }
