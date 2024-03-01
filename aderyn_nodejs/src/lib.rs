@@ -1,5 +1,5 @@
 use aderyn_driver::{
-    detector::request_issue_detector_by_name,
+    detector::{get_all_detectors_names, request_issue_detector_by_name},
     driver::{self, Args},
 };
 use neon::prelude::*;
@@ -58,6 +58,22 @@ fn drive_with(mut cx: FunctionContext) -> JsResult<JsBoolean> {
     Ok(cx.boolean(false))
 }
 
+fn get_all_issue_detectors_names<'a, C: Context<'a>>(cx: &mut C) -> JsResult<'a, JsArray> {
+    let issue_detectors_names = get_all_detectors_names();
+    vec_to_array(&issue_detectors_names, cx)
+}
+
+fn vec_to_array<'a, C: Context<'a>>(vec: &Vec<String>, cx: &mut C) -> JsResult<'a, JsArray> {
+    let a = JsArray::new(cx, vec.len() as u32);
+
+    for (i, s) in vec.iter().enumerate() {
+        let v = cx.string(s);
+        a.set(cx, i as u32, v)?;
+    }
+
+    Ok(a)
+}
+
 fn parse(handle: Handle<'_, JsArray>, cx: &mut FunctionContext) -> Option<Vec<String>> {
     let js_vector = handle.to_vec(cx).unwrap();
     let mut native_string_vector = vec![];
@@ -79,5 +95,8 @@ fn parse(handle: Handle<'_, JsArray>, cx: &mut FunctionContext) -> Option<Vec<St
 fn main(mut cx: ModuleContext) -> NeonResult<()> {
     cx.export_function("drive", drive)?;
     cx.export_function("drive_with", drive_with)?;
+    cx.export_function("get_all_issue_detectors_names", |mut cx| {
+        get_all_issue_detectors_names(&mut cx)
+    })?;
     Ok(())
 }
