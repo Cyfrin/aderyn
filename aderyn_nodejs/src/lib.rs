@@ -63,7 +63,7 @@ fn get_all_issue_detectors_names<'a, C: Context<'a>>(cx: &mut C) -> JsResult<'a,
     vec_to_array(&issue_detectors_names, cx)
 }
 
-fn vec_to_array<'a, C: Context<'a>>(vec: &Vec<String>, cx: &mut C) -> JsResult<'a, JsArray> {
+fn vec_to_array<'a, C: Context<'a>>(vec: &[String], cx: &mut C) -> JsResult<'a, JsArray> {
     let a = JsArray::new(cx, vec.len() as u32);
 
     for (i, s) in vec.iter().enumerate() {
