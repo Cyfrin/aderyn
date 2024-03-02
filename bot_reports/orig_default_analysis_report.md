@@ -686,6 +686,12 @@ Assigning values to address state variables without checking for `address(0)`.
 	    function foo2(address bar) public pure {
 	```
 
+- Found in src/cloc/HeavilyCommentedContract.sol [Line: 31](../tests/contract-playground/src/cloc/HeavilyCommentedContract.sol#L31)
+
+	```solidity
+	    function foo(address bar) public pure {
+	```
+
 - Found in src/cloc/HeavilyCommentedContract.sol [Line: 38](../tests/contract-playground/src/cloc/HeavilyCommentedContract.sol#L38)
 
 	```solidity
