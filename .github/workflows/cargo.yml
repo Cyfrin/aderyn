@@ -144,7 +144,7 @@ jobs:
 
   nodejsbindings:
   
-    name: Check js bindings create the same report as aderyn
+    name: Check js bindings
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sources
@@ -162,10 +162,12 @@ jobs:
         with: 
           node-version: "14.x"
 
-      - name: Install dependencies
+      - name: Check JSON report matches original report.json
         run: |
           cd aderyn_nodejs/        
           npm install
+          node create_report.js
+          diff report_jsbindings.json ../report.json
 
   bots:
   
