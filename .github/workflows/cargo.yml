@@ -164,6 +164,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          cd aderyn_nodejs/        
           npm install
 
   bots:
