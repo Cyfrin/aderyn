@@ -1,6 +1,6 @@
 {
   "name": "aderyn_nodejs",
-  "version": "0.0.1",
+  "version": "0.0.16",
   "description": "Node JS Bindings for Aderyn",
   "main": "index.node",
   "scripts": {
@@ -11,7 +11,7 @@
     "test": "cargo test"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "cargo-cp-artifact": "^0.1",
     "typescript": "^5.3.3"
