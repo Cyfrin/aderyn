@@ -4,3 +4,4 @@ index.node
 **/.DS_Store
 npm-debug.log*
 report_jsbindings.json
+report_jsbindings_config.json

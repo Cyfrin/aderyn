@@ -168,6 +168,7 @@ jobs:
           npm install
           node create_report.js
           diff report_jsbindings.json ../report.json
+          diff report_jsbindings_config.json ../report-config.json
 
   bots:
   
