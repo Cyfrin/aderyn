@@ -4,13 +4,16 @@ use std::{collections::BTreeMap, error::Error};
 use crate::{
     ast::NodeID,
     capture,
-    context::workspace_context::{ASTNode, WorkspaceContext},
+    context::{
+        browser::GetImmediateParent,
+        workspace_context::{ASTNode, WorkspaceContext},
+    },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
 #[derive(Default)]
-pub struct ParentChainDemonstrator {
+pub struct ImmediateParentDemonstrator {
     // Keys are source file name and line number
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
@@ -20,20 +23,20 @@ pub struct ParentChainDemonstrator {
 In ParentChainContract.sol, there is only 1 assignment done. The goal is to capture it first, second and third parent
 */
 
-impl IssueDetector for ParentChainDemonstrator {
+impl IssueDetector for ImmediateParentDemonstrator {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for assignment in context.assignments() {
             println!("0 {}", assignment);
             capture!(self, context, assignment);
-            if let Some(first_parent) = context.get_parent(assignment.id) {
+            if let Some(first_parent) = assignment.parent(context) {
                 if let ASTNode::Block(block) = first_parent {
                     println!("1 {}", block);
                     capture!(self, context, block);
-                    if let Some(second_parent) = context.get_parent(block.id) {
+                    if let Some(second_parent) = block.parent(context) {
                         if let ASTNode::ForStatement(for_statement) = second_parent {
                             println!("2 {}", for_statement);
                             capture!(self, context, for_statement);
-                            if let Some(third_parent) = context.get_parent(for_statement.id) {
+                            if let Some(third_parent) = for_statement.parent(context) {
                                 if let ASTNode::Block(block) = third_parent {
                                     println!("3 {}", block);
                                     capture!(self, context, block);
@@ -73,16 +76,16 @@ impl IssueDetector for ParentChainDemonstrator {
 mod parent_chain_demo_tests {
     use crate::detect::{
         detector::{detector_test_helpers::load_contract, IssueDetector},
-        experimental::parent_chain::ParentChainDemonstrator,
+        experimental::immediate_parent::ImmediateParentDemonstrator,
     };
 
     #[test]
-    fn test_parent_chain_demo() {
+    fn test_immediate_parent_demo() {
         let context = load_contract(
             "../tests/contract-playground/out/ParentChainContract.sol/ParentChainContract.json",
         );
 
-        let mut detector = ParentChainDemonstrator::default();
+        let mut detector = ImmediateParentDemonstrator::default();
         let found = detector.detect(&context).unwrap();
         assert!(found);
 
