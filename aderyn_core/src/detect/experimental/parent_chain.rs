@@ -5,7 +5,7 @@ use crate::{
     ast::NodeID,
     capture,
     context::{
-        browser::GetImmediateParent,
+        browser::GetParentChain,
         workspace_context::{ASTNode, WorkspaceContext},
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
@@ -28,22 +28,16 @@ impl IssueDetector for ParentChainDemonstrator {
         for assignment in context.assignments() {
             println!("0 {}", assignment);
             capture!(self, context, assignment);
-            if let Some(first_parent) = assignment.parent(context) {
-                if let ASTNode::Block(block) = first_parent {
-                    println!("1 {}", block);
+
+            if let Some(parent_chain) = assignment.parent_chain(context) {
+                if let ASTNode::Block(block) = parent_chain[0] {
                     capture!(self, context, block);
-                    if let Some(second_parent) = block.parent(context) {
-                        if let ASTNode::ForStatement(for_statement) = second_parent {
-                            println!("2 {}", for_statement);
-                            capture!(self, context, for_statement);
-                            if let Some(third_parent) = for_statement.parent(context) {
-                                if let ASTNode::Block(block) = third_parent {
-                                    println!("3 {}", block);
-                                    capture!(self, context, block);
-                                }
-                            }
-                        }
-                    }
+                }
+                if let ASTNode::ForStatement(for_statement) = parent_chain[1] {
+                    capture!(self, context, for_statement);
+                }
+                if let ASTNode::Block(block) = parent_chain[2] {
+                    capture!(self, context, block);
                 }
             }
         }
