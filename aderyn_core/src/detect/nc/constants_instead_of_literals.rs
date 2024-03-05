@@ -7,7 +7,10 @@ use crate::{
     ast::{Literal, LiteralKind, NodeID},
     capture,
     context::{
-        browser::{ExtractFunctionDefinitions, ExtractLiterals, ExtractModifierDefinitions},
+        browser::{
+            ExtractFunctionDefinitions, ExtractLiterals, ExtractModifierDefinitions,
+            GetImmediateParent,
+        },
         workspace_context::{ASTNode, WorkspaceContext},
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
@@ -46,7 +49,7 @@ impl IssueDetector for ConstantsInsteadOfLiteralsDetector {
                         || literal.kind == LiteralKind::Address
                     {
                         // If the literal is used as an index access in a variable, don't capture it
-                        if let Some(ASTNode::IndexAccess(_)) = context.get_parent(literal.id) {
+                        if let Some(ASTNode::IndexAccess(_)) = literal.parent(context) {
                             continue;
                         }
 
