@@ -61,9 +61,7 @@ pub enum ASTNode {
 impl ASTNode {
     pub fn parent<'a>(&self, context: &'a WorkspaceContext) -> Option<&'a ASTNode> {
         if let Some(id) = self.id() {
-            if let Some(parent) = context.parent_link.get(&id) {
-                return context.nodes.get(parent);
-            }
+            return context.get_parent(id);
         }
         None
     }
