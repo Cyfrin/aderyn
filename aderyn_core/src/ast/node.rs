@@ -45,7 +45,7 @@ pub enum NodeType {
     UnaryOperation,
     BinaryOperation,
     EventDefinition,
-    ErrorDefiniton,
+    ErrorDefinition,
     EmitStatement,
     PlaceholderStatement,
     TryStatement,
@@ -69,4 +69,5 @@ pub enum NodeType {
     YulIdentifier,
     YulVariableDeclaration,
     YulBlock,
+    UserDefinedValueTypeDefinition,
 }
