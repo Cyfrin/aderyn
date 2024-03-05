@@ -59,6 +59,15 @@ pub enum ASTNode {
 }
 
 impl ASTNode {
+    pub fn parent<'a>(&self, context: &'a WorkspaceContext) -> Option<&'a ASTNode> {
+        if let Some(id) = self.id() {
+            if let Some(parent) = context.parent_link.get(&id) {
+                return context.nodes.get(parent);
+            }
+        }
+        None
+    }
+
     pub fn id(&self) -> Option<NodeID> {
         match self {
             ASTNode::ArrayTypeName(_) => None,
