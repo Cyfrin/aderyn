@@ -2,8 +2,9 @@
 name = "aderyn_nodejs"
 version = "0.0.16"
 description = "Node JS Bindings for Aderyn"
-license = "ISC"
-edition = "2018"
+authors = ["Alex Roan <alex@cyfrin.io>", "Tilak Madichetti <tilak.madichetti@gmail.com>"]
+license = "MIT"
+edition = "2021"
 exclude = ["index.node"]
 
 [lib]
