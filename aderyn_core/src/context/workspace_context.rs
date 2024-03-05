@@ -66,6 +66,13 @@ impl ASTNode {
         None
     }
 
+    pub fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+        if let Some(id) = self.id() {
+            return Some(context.get_parent_chain(id));
+        }
+        None
+    }
+
     pub fn id(&self) -> Option<NodeID> {
         match self {
             ASTNode::ArrayTypeName(_) => None,
@@ -1042,6 +1049,16 @@ impl WorkspaceContext {
 
     pub fn get_parent(&self, node_id: NodeID) -> Option<&ASTNode> {
         self.nodes.get(self.parent_link.get(&node_id)?)
+    }
+
+    pub fn get_parent_chain(&self, node_id: NodeID) -> Vec<&ASTNode> {
+        let mut chain = vec![];
+        let mut parent = self.nodes.get(&node_id);
+        while let Some(next_parent) = parent {
+            chain.push(next_parent);
+            parent = next_parent.parent(self);
+        }
+        return chain;
     }
 
     pub fn get_source_unit_from_child_node(&self, node: &ASTNode) -> Option<&SourceUnit> {
