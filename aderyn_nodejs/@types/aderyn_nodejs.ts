@@ -1,4 +1,4 @@
-declare module 'aderyn_driver' {
+declare module 'aderyn_nodejs' {
 
     export function drive(
         root: string,
