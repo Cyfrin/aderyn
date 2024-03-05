@@ -1058,7 +1058,7 @@ impl WorkspaceContext {
             chain.push(next_parent);
             parent = next_parent.parent(self);
         }
-        return chain;
+        chain
     }
 
     pub fn get_source_unit_from_child_node(&self, node: &ASTNode) -> Option<&SourceUnit> {
