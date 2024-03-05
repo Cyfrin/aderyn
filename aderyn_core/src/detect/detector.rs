@@ -91,50 +91,62 @@ pub(crate) enum ResuableDetectorNamePool {
     Undecided,
 }
 
-pub fn get_issue_detector_by_name(detector_name: &str) -> Box<dyn IssueDetector> {
+pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn IssueDetector>> {
     // Expects a valid detector_name
-    let detector_name = IssueDetectorNamePool::from_str(detector_name).unwrap();
+    let detector_name = IssueDetectorNamePool::from_str(detector_name).ok()?;
     match detector_name {
-        IssueDetectorNamePool::DelegateCallInLoop => Box::<DelegateCallInLoopDetector>::default(),
-        IssueDetectorNamePool::CentralizationRisk => Box::<CentralizationRiskDetector>::default(),
+        IssueDetectorNamePool::DelegateCallInLoop => {
+            Some(Box::<DelegateCallInLoopDetector>::default())
+        }
+        IssueDetectorNamePool::CentralizationRisk => {
+            Some(Box::<CentralizationRiskDetector>::default())
+        }
         IssueDetectorNamePool::SolmateSafeTransferLib => {
-            Box::<SolmateSafeTransferLibDetector>::default()
+            Some(Box::<SolmateSafeTransferLibDetector>::default())
         }
         IssueDetectorNamePool::AvoidAbiEncodePacked => {
-            Box::<AvoidAbiEncodePackedDetector>::default()
+            Some(Box::<AvoidAbiEncodePackedDetector>::default())
         }
-        IssueDetectorNamePool::Ecrecover => Box::<EcrecoverDetector>::default(),
+        IssueDetectorNamePool::Ecrecover => Some(Box::<EcrecoverDetector>::default()),
         IssueDetectorNamePool::DeprecatedOzFunctions => {
-            Box::<DeprecatedOZFunctionsDetector>::default()
+            Some(Box::<DeprecatedOZFunctionsDetector>::default())
         }
         IssueDetectorNamePool::UnsafeERC20Functions => {
-            Box::<UnsafeERC20FunctionsDetector>::default()
+            Some(Box::<UnsafeERC20FunctionsDetector>::default())
         }
         IssueDetectorNamePool::UnspecificSolidityPragma => {
-            Box::<UnspecificSolidityPragmaDetector>::default()
+            Some(Box::<UnspecificSolidityPragmaDetector>::default())
         }
-        IssueDetectorNamePool::ZeroAddressCheck => Box::<ZeroAddressCheckDetector>::default(),
+        IssueDetectorNamePool::ZeroAddressCheck => Some(Box::<ZeroAddressCheckDetector>::default()),
         IssueDetectorNamePool::UselessPublicFunction => {
-            Box::<UselessPublicFunctionDetector>::default()
+            Some(Box::<UselessPublicFunctionDetector>::default())
         }
         IssueDetectorNamePool::ConstantsInsteadOfLiterals => {
-            Box::<ConstantsInsteadOfLiteralsDetector>::default()
+            Some(Box::<ConstantsInsteadOfLiteralsDetector>::default())
         }
-        IssueDetectorNamePool::UnindexedEvents => Box::<UnindexedEventsDetector>::default(),
-        IssueDetectorNamePool::RequireWithString => Box::<RequireWithStringDetector>::default(),
+        IssueDetectorNamePool::UnindexedEvents => Some(Box::<UnindexedEventsDetector>::default()),
+        IssueDetectorNamePool::RequireWithString => {
+            Some(Box::<RequireWithStringDetector>::default())
+        }
         IssueDetectorNamePool::NonReentrantBeforeOthers => {
-            Box::<NonReentrantBeforeOthersDetector>::default()
+            Some(Box::<NonReentrantBeforeOthersDetector>::default())
         }
         IssueDetectorNamePool::BlockTimestampDeadline => {
-            Box::<BlockTimestampDeadlineDetector>::default()
+            Some(Box::<BlockTimestampDeadlineDetector>::default())
         }
-        IssueDetectorNamePool::UnsafeOzERC721Mint => Box::<UnsafeERC721MintDetector>::default(),
-        IssueDetectorNamePool::PushZeroOpcode => Box::<PushZeroOpcodeDetector>::default(),
+        IssueDetectorNamePool::UnsafeOzERC721Mint => {
+            Some(Box::<UnsafeERC721MintDetector>::default())
+        }
+        IssueDetectorNamePool::PushZeroOpcode => Some(Box::<PushZeroOpcodeDetector>::default()),
         IssueDetectorNamePool::ArbitraryTransferFrom => {
-            Box::<ArbitraryTransferFromDetector>::default()
+            Some(Box::<ArbitraryTransferFromDetector>::default())
         }
-        IssueDetectorNamePool::Undecided => panic!("Undecided bots should't be invoked"),
+        IssueDetectorNamePool::Undecided => None,
     }
+}
+
+pub fn get_issue_detector_by_name(detector_name: &str) -> Box<dyn IssueDetector> {
+    request_issue_detector_by_name(detector_name).unwrap()
 }
 
 #[derive(Debug, PartialEq, Serialize, Deserialize, EnumCount, Clone, EnumIter)]
