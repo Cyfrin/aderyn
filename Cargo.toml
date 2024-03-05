@@ -3,6 +3,7 @@ members = [
     "aderyn",
     "aderyn_core",
     "aderyn_driver",
+    "aderyn_nodejs",
     "aderyn_py",
     "bot_example",
     "nyth",
