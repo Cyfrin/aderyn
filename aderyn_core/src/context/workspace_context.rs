@@ -1095,11 +1095,11 @@ impl WorkspaceContext {
 
     pub fn get_closest_parent(&self, node_id: NodeID, node_type: NodeType) -> Option<&ASTNode> {
         let mut current_node_id = self.parent_link.get(&node_id)?;
-        while let Some(current) = self.nodes.get(&current_node_id) {
+        while let Some(current) = self.nodes.get(current_node_id) {
             if current.node_type() == node_type {
                 return Some(current);
             }
-            current_node_id = self.parent_link.get(&current_node_id)?;
+            current_node_id = self.parent_link.get(current_node_id)?;
         }
         None
     }
