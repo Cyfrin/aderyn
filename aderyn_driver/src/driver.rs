@@ -134,10 +134,9 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
             let framework = detect_framework(root_path.clone()).unwrap_or_else(|| {
                 // Exit with a non-zero exit code
                 eprintln!("Error detecting framework");
-                eprintln!("Neither foundry.toml nor hardhat.config.json was found in the current directory!");
+                eprintln!("Neither foundry.toml nor hardhat.config.json was found in the project directory!");
                 eprintln!();
                 eprintln!("NOTE: \nIf Foundry is detected in the project root, Aderyn will first run `forge build --ast` to ensure that the contract compiles correctly and the latest artifacts are available.");
-                
                 eprintln!("If Hardhat is detected, Aderyn does not auto-compile. Make sure to run `hardhat compile` BEFORE running Aderyn.");
                 std::process::exit(1);
             });
