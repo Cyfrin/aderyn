@@ -134,11 +134,13 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
             let framework = detect_framework(root_path.clone()).unwrap_or_else(|| {
                 // Exit with a non-zero exit code
                 eprintln!("Error detecting framework");
+                eprintln!("Neither foundry.toml nor hardhat.config.json was found in the current directory!");
+                eprintln!();
+                eprintln!("NOTE: If Foundry is detected in the project root, Aderyn will first run forge build to ensure that the contract compiles correctly and the latest artifacts are available. If Hardhat is detected, Aderyn does not auto-compile. Make sure to run hardhat compile BEFORE running Aderyn.");
                 std::process::exit(1);
             });
 
             // This whole block loads the solidity files and ASTs into the workspace context
-            // TODO: move much of this gutsy stuff into the foundry / hardhat modules.
             match framework {
                 Framework::Foundry => {
                     process_foundry::with_project_root_at(&root_path, &args.scope, &args.exclude)
