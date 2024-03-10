@@ -20,7 +20,8 @@
     "block-timestamp-deadline",
     "unsafe-oz-erc721-mint",
     "push-zero-opcode",
-    "arbitrary-transfer-from"
+    "arbitrary-transfer-from",
+    "useless-public-function"
   ],
   "files_details": {
     "files_details": [
@@ -51,6 +52,10 @@
       {
         "file_path": "src/DeprecatedOZFunctions.sol",
         "n_sloc": 32
+      },
+      {
+        "file_path": "src/InternalFunctions.sol",
+        "n_sloc": 18
       },
       {
         "file_path": "src/KeccakContract.sol",
@@ -119,8 +124,8 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 721,
-    "total_source_units": 23
+    "total_sloc": 739,
+    "total_source_units": 24
   },
   "high_issues": {
     "issues": [
@@ -180,7 +185,7 @@
     "high": 2,
     "low": 6,
     "medium": 4,
-    "nc": 6
+    "nc": 7
   },
   "low_issues": {
     "issues": [
@@ -297,6 +302,11 @@
             "src": "32:32"
           },
           {
+            "contract_path": "src/InternalFunctions.sol",
+            "line_no": 2,
+            "src": "32:23"
+          },
+          {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
             "line_no": 6,
             "src": "46:24"
@@ -340,6 +350,11 @@
           },
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
+            "line_no": 2,
+            "src": "32:23"
+          },
+          {
+            "contract_path": "src/InternalFunctions.sol",
             "line_no": 2,
             "src": "32:23"
           },
@@ -443,6 +458,11 @@
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 7,
             "src": "261:1381"
+          },
+          {
+            "contract_path": "src/InternalFunctions.sol",
+            "line_no": 12,
+            "src": "250:9"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
@@ -818,6 +838,18 @@
           }
         ],
         "title": "The `nonReentrant` `modifier` should occur before all other modifiers"
+      },
+      {
+        "description": "",
+        "detector_name": "useless-public-function",
+        "instances": [
+          {
+            "contract_path": "src/InternalFunctions.sol",
+            "line_no": 22,
+            "src": "495:150"
+          }
+        ],
+        "title": "Internal functions called only once can be inlined"
       }
     ]
   }
