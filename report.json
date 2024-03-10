@@ -20,7 +20,8 @@
     "block-timestamp-deadline",
     "unsafe-oz-erc721-mint",
     "push-zero-opcode",
-    "arbitrary-transfer-from"
+    "arbitrary-transfer-from",
+    "useless-modifier"
   ],
   "files_details": {
     "files_details": [
@@ -55,6 +56,10 @@
       {
         "file_path": "src/KeccakContract.sol",
         "n_sloc": 21
+      },
+      {
+        "file_path": "src/OnceModifierExample.sol",
+        "n_sloc": 8
       },
       {
         "file_path": "src/StateVariables.sol",
@@ -119,8 +124,8 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 721,
-    "total_source_units": 23
+    "total_sloc": 729,
+    "total_source_units": 24
   },
   "high_issues": {
     "issues": [
@@ -180,7 +185,7 @@
     "high": 2,
     "low": 6,
     "medium": 4,
-    "nc": 6
+    "nc": 7
   },
   "low_issues": {
     "issues": [
@@ -297,6 +302,11 @@
             "src": "32:32"
           },
           {
+            "contract_path": "src/OnceModifierExample.sol",
+            "line_no": 2,
+            "src": "32:23"
+          },
+          {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
             "line_no": 6,
             "src": "46:24"
@@ -345,6 +355,11 @@
           },
           {
             "contract_path": "src/KeccakContract.sol",
+            "line_no": 2,
+            "src": "32:23"
+          },
+          {
+            "contract_path": "src/OnceModifierExample.sol",
             "line_no": 2,
             "src": "32:23"
           },
@@ -624,6 +639,11 @@
             "src": "120:80"
           },
           {
+            "contract_path": "src/OnceModifierExample.sol",
+            "line_no": 10,
+            "src": "138:51"
+          },
+          {
             "contract_path": "src/StateVariables.sol",
             "line_no": 47,
             "src": "1755:145"
@@ -818,6 +838,18 @@
           }
         ],
         "title": "The `nonReentrant` `modifier` should occur before all other modifiers"
+      },
+      {
+        "description": "",
+        "detector_name": "useless-modifier",
+        "instances": [
+          {
+            "contract_path": "src/OnceModifierExample.sol",
+            "line_no": 6,
+            "src": "94:38"
+          }
+        ],
+        "title": "Modifiers invoked only once can be shoe-horned into the function"
       }
     ]
   }
