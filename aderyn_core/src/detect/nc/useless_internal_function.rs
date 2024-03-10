@@ -25,11 +25,6 @@ impl IssueDetector for UselessInternalFunctionDetector {
             .filter(|&function| matches!(function.visibility, Visibility::Internal));
 
         for internal_function in internal_functions {
-            println!(
-                "{:?}\n{:?}\n\n",
-                internal_function.name,
-                context.get_node_sort_key(&internal_function.into())
-            );
             if IdentifiersThatReferenceAFunctionDetector::default()
                 .detect(context, &[internal_function.into()], &[])
                 .map_or(false, |refs| refs.len() == 1)
