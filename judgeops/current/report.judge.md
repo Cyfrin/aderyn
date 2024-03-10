@@ -122,7 +122,7 @@ push-zero-opcode:Low
 
 arbitrary-transfer-from:High
 
-useless-public-function:NC (Non Critical)
+useless-internal-function:NC (Non Critical)
 
 # High Issues
 
@@ -956,7 +956,7 @@ This is a best-practice to protect against reentrancy in other modifiers
 
 
 
-### Responsible : useless-public-function
+### Responsible : useless-internal-function
 
 - Found in src/InternalFunctions.sol [Line: 22](../../tests/contract-playground/src/InternalFunctions.sol#L22)
 

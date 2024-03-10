@@ -21,7 +21,7 @@
     "unsafe-oz-erc721-mint",
     "push-zero-opcode",
     "arbitrary-transfer-from",
-    "useless-public-function"
+    "useless-internal-function"
   ],
   "files_details": {
     "files_details": [
@@ -841,7 +841,7 @@
       },
       {
         "description": "",
-        "detector_name": "useless-public-function",
+        "detector_name": "useless-internal-function",
         "instances": [
           {
             "contract_path": "src/InternalFunctions.sol",
