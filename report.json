@@ -20,7 +20,8 @@
     "block-timestamp-deadline",
     "unsafe-oz-erc721-mint",
     "push-zero-opcode",
-    "arbitrary-transfer-from"
+    "arbitrary-transfer-from",
+    "empty-block"
   ],
   "files_details": {
     "files_details": [
@@ -86,7 +87,7 @@
       },
       {
         "file_path": "src/inheritance/ExtendedInheritance.sol",
-        "n_sloc": 17
+        "n_sloc": 19
       },
       {
         "file_path": "src/inheritance/IContractInheritance.sol",
@@ -119,7 +120,7 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 721,
+    "total_sloc": 723,
     "total_source_units": 23
   },
   "high_issues": {
@@ -180,7 +181,7 @@
     "high": 2,
     "low": 6,
     "medium": 4,
-    "nc": 6
+    "nc": 7
   },
   "low_issues": {
     "issues": [
@@ -212,8 +213,8 @@
         "instances": [
           {
             "contract_path": "src/inheritance/ExtendedInheritance.sol",
-            "line_no": 21,
-            "src": "705:9"
+            "line_no": 24,
+            "src": "777:9"
           }
         ],
         "title": "`ecrecover` is susceptible to signature malleability"
@@ -303,6 +304,11 @@
           },
           {
             "contract_path": "src/cloc/HeavilyCommentedContract.sol",
+            "line_no": 4,
+            "src": "32:24"
+          },
+          {
+            "contract_path": "src/cloc/HeavilyCommentedContract.sol",
             "line_no": 6,
             "src": "46:32"
           },
@@ -372,6 +378,11 @@
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
             "line_no": 6,
             "src": "46:24"
+          },
+          {
+            "contract_path": "src/cloc/HeavilyCommentedContract.sol",
+            "line_no": 4,
+            "src": "32:24"
           },
           {
             "contract_path": "src/inheritance/ExtendedInheritance.sol",
@@ -818,6 +829,43 @@
           }
         ],
         "title": "The `nonReentrant` `modifier` should occur before all other modifiers"
+      },
+      {
+        "description": "",
+        "detector_name": "empty-block",
+        "instances": [
+          {
+            "contract_path": "src/AdminContract.sol",
+            "line_no": 14,
+            "src": "515:41"
+          },
+          {
+            "contract_path": "src/inheritance/ExtendedInheritance.sol",
+            "line_no": 18,
+            "src": "605:37"
+          },
+          {
+            "contract_path": "src/parent_chain/ParentChainContract.sol",
+            "line_no": 11,
+            "src": "391:16"
+          },
+          {
+            "contract_path": "src/parent_chain/ParentChainContract.sol",
+            "line_no": 32,
+            "src": "864:41"
+          },
+          {
+            "contract_path": "src/parent_chain/ParentChainContract.sol",
+            "line_no": 40,
+            "src": "980:16"
+          },
+          {
+            "contract_path": "src/parent_chain/ParentChainContract.sol",
+            "line_no": 44,
+            "src": "1046:41"
+          }
+        ],
+        "title": "Empty Block - No statements found!"
       }
     ]
   }
