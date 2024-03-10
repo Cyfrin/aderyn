@@ -859,7 +859,7 @@ This is a best-practice to protect against reentrancy in other modifiers
 
 ## NC-7: Public constants can be replaced by single getter function
 
-
+If there is more than 1 public constant in a contract, they all can be marked private and exposed via a single getter function to save deployment cost.
 
 - Found in src/ConstantsLiterals.sol [Line: 6](tests/contract-playground/src/ConstantsLiterals.sol#L6)
 
