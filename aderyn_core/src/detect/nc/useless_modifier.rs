@@ -55,15 +55,16 @@ impl IssueDetector for UselessModifierDetector {
 }
 
 #[cfg(test)]
-mod useless_public_function_tests {
+mod useless_modifier_tests {
     use crate::detect::detector::{detector_test_helpers::load_contract, IssueDetector};
 
     use super::UselessModifierDetector;
 
     #[test]
-    fn test_useless_public_functions() {
-        let context =
-            load_contract("../tests/contract-playground/out/Counter.sol/Counter.0.8.21.json");
+    fn test_useless_modifier_tests() {
+        let context = load_contract(
+            "../tests/contract-playground/out/OnceModifierExample.sol/OnceModifierExample.json",
+        );
 
         let mut detector = UselessModifierDetector::default();
         // assert that the detector finds the public function
