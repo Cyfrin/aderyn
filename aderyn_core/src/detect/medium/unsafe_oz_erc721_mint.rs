@@ -1,9 +1,12 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
-    ast::NodeID,
+    ast::{NodeID, NodeType},
     capture,
-    context::{browser::GetParent, workspace_context::WorkspaceContext},
+    context::{
+        browser::GetClosestParentOfTypeX,
+        workspace_context::{ASTNode, WorkspaceContext},
+    },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
@@ -19,17 +22,20 @@ impl IssueDetector for UnsafeERC721MintDetector {
         for identifier in context.identifiers() {
             // if source_unit has any ImportDirectives with absolute_path containing "openzeppelin"
             // call identifier.accept(self)
-            let source_unit = GetParent::source_unit_of(identifier, context).unwrap();
-
-            let import_directives = source_unit.import_directives();
-            if import_directives.iter().any(|directive| {
-                directive
-                    .absolute_path
-                    .as_ref()
-                    .map_or(false, |path| path.contains("openzeppelin"))
-            }) && identifier.name == "_mint"
+            if let Some(ASTNode::SourceUnit(source_unit)) =
+                identifier.closest_parent_of_type(context, NodeType::SourceUnit)
             {
-                capture!(self, context, identifier);
+                let import_directives = source_unit.import_directives();
+                if import_directives.iter().any(|directive| {
+                    directive
+                        .absolute_path
+                        .as_ref()
+                        .map_or(false, |path| path.contains("openzeppelin"))
+                }) && identifier.name == "_mint"
+                {
+                    capture!(self, context, identifier);
+                }
+            } else {
             }
         }
         Ok(!self.found_instances.is_empty())
