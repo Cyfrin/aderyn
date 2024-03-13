@@ -6,7 +6,7 @@ use aderyn_core::{
     report::{json_printer::JsonPrinter, markdown_printer::MarkdownReportPrinter},
     run_with_printer, run_with_printer_and_given_detectors,
 };
-use std::{fs::read_dir, path::PathBuf};
+use std::{env, fs::read_dir, path::PathBuf};
 
 pub struct Args {
     pub root: String,
@@ -153,11 +153,20 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
         }
     };
 
-    // Using the source path, calculate the sloc
-    let stats =
-        fscloc::engine::count_lines_of_code(&PathBuf::from(src_path), &context.src_filepaths);
-    let stats = stats.lock().unwrap().to_owned();
-    context.set_sloc_stats(stats);
+    let key = "ADERYN_CLOC_SKIP";
+
+    let should_cloc = match env::var(key) {
+        Ok(val) => val != "1",
+        Err(_) => true,
+    };
+
+    if should_cloc {
+        // Using the source path, calculate the sloc
+        let stats =
+            fscloc::engine::count_lines_of_code(&PathBuf::from(src_path), &context.src_filepaths);
+        let stats = stats.lock().unwrap().to_owned();
+        context.set_sloc_stats(stats);
+    }
 
     WorkspaceContextWrapper {
         context,
