@@ -55,7 +55,6 @@ impl IssueDetector for DeprecatedOZFunctionsDetector {
                 {
                     capture!(self, context, member_access);
                 }
-            } else {
             }
         }
         Ok(!self.found_instances.is_empty())

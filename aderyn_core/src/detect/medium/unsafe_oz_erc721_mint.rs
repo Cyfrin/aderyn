@@ -35,7 +35,6 @@ impl IssueDetector for UnsafeERC721MintDetector {
                 {
                     capture!(self, context, identifier);
                 }
-            } else {
             }
         }
         Ok(!self.found_instances.is_empty())
