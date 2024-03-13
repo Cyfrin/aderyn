@@ -142,6 +142,34 @@ jobs:
           cat bot_reports/custom_subscription_analysis_report.md
           diff bot_reports/orig_custom_subscription_analysis_report.md bot_reports/custom_subscription_analysis_report.md
 
+  nodejsbindings:
+  
+    name: Check js bindings
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with: 
+          node-version: "14.x"
+
+      - name: Check JSON report matches original report.json
+        run: |
+          cd aderyn_nodejs/        
+          npm install
+          node create_report.js
+          diff report_jsbindings.json ../report.json
+          diff report_jsbindings_config.json ../report-config.json
+
   bots:
   
     name: Check Bot creation and testing

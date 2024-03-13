@@ -1,9 +1,12 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
-    ast::NodeID,
+    ast::{NodeID, NodeType},
     capture,
-    context::{browser::GetParent, workspace_context::WorkspaceContext},
+    context::{
+        browser::GetClosestParentOfTypeX,
+        workspace_context::{ASTNode, WorkspaceContext},
+    },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
@@ -11,7 +14,7 @@ use eyre::Result;
 #[derive(Default)]
 pub struct DeprecatedOZFunctionsDetector {
     // Keys are source file name and line number
-    found_instances: BTreeMap<(String, usize), NodeID>,
+    found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
 impl IssueDetector for DeprecatedOZFunctionsDetector {
@@ -19,32 +22,39 @@ impl IssueDetector for DeprecatedOZFunctionsDetector {
         for identifier in context.identifiers() {
             // if source_unit has any ImportDirectives with absolute_path containing "openzeppelin"
             // call identifier.accept(self)
-            let source_unit = GetParent::source_unit_of(identifier, context).unwrap();
-
-            let import_directives = source_unit.import_directives();
-            if import_directives.iter().any(|directive| {
-                directive
-                    .absolute_path
-                    .as_ref()
-                    .map_or(false, |path| path.contains("openzeppelin"))
-            }) && identifier.name == "_setupRole"
+            if let Some(ASTNode::SourceUnit(source_unit)) =
+                identifier.closest_parent_of_type(context, NodeType::SourceUnit)
             {
-                capture!(self, context, identifier);
+                let import_directives = source_unit.import_directives();
+                if import_directives.iter().any(|directive| {
+                    directive
+                        .absolute_path
+                        .as_ref()
+                        .map_or(false, |path| path.contains("openzeppelin"))
+                }) && identifier.name == "_setupRole"
+                {
+                    capture!(self, context, identifier);
+                }
+            } else {
+                // Optional: handle other cases, or do nothing
             }
         }
         for member_access in context.member_accesses() {
             // if source_unit has any ImportDirectives with absolute_path containing "openzeppelin"
             // call member_access.accept(self)
-            let source_unit = GetParent::source_unit_of(member_access, context).unwrap();
-            let import_directives = source_unit.import_directives();
-            if import_directives.iter().any(|directive| {
-                directive
-                    .absolute_path
-                    .as_ref()
-                    .map_or(false, |path| path.contains("openzeppelin"))
-            }) && member_access.member_name == "safeApprove"
+            if let Some(ASTNode::SourceUnit(source_unit)) =
+                member_access.closest_parent_of_type(context, NodeType::SourceUnit)
             {
-                capture!(self, context, member_access);
+                let import_directives = source_unit.import_directives();
+                if import_directives.iter().any(|directive| {
+                    directive
+                        .absolute_path
+                        .as_ref()
+                        .map_or(false, |path| path.contains("openzeppelin"))
+                }) && member_access.member_name == "safeApprove"
+                {
+                    capture!(self, context, member_access);
+                }
             }
         }
         Ok(!self.found_instances.is_empty())
@@ -62,7 +72,7 @@ impl IssueDetector for DeprecatedOZFunctionsDetector {
         IssueSeverity::Low
     }
 
-    fn instances(&self) -> BTreeMap<(String, usize), NodeID> {
+    fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
         self.found_instances.clone()
     }
 

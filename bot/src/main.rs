@@ -45,8 +45,23 @@ enum PilotCommand {
     GenerateReportForJudge {
         /// Root folder of competition's project
         root: String,
+
         /// Markdown file for judging path/to/*.judge.md
         output: String,
+
+        /// List of path strings to include, delimited by comma (no spaces).
+        /// Any solidity file path not containing these strings will be ignored
+        #[clap(short, long, use_value_delimiter = true)]
+        scope: Option<Vec<String>>,
+
+        /// List of path strings to exclude, delimited by comma (no spaces).
+        /// Any solidity file path containing these strings will be ignored
+        #[clap(short, long, use_value_delimiter = true)]
+        exclude: Option<Vec<String>>,
+
+        /// Do not include code snippets in the report (reduces report size in large repos)
+        #[arg(short, long)]
+        no_snippets: bool,
     },
 }
 
@@ -61,8 +76,20 @@ fn main() {
 
     match cmd_args.pilot.unwrap() {
         PilotCommand::RefreshMetadata => bot_brain::refresh_metadata(),
-        PilotCommand::GenerateReportForJudge { root, output } => {
-            bot_brain::generate_report_for_judge(root.as_str(), output.as_str());
+        PilotCommand::GenerateReportForJudge {
+            root,
+            output,
+            scope,
+            exclude,
+            no_snippets,
+        } => {
+            bot_brain::generate_report_for_judge(
+                root.as_str(),
+                output.as_str(),
+                exclude,
+                scope,
+                no_snippets,
+            );
         }
     }
 }

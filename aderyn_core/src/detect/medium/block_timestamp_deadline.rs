@@ -11,7 +11,7 @@ use eyre::Result;
 #[derive(Default)]
 pub struct BlockTimestampDeadlineDetector {
     // Keys are source file name and line number
-    found_instances: BTreeMap<(String, usize), NodeID>,
+    found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
 impl IssueDetector for BlockTimestampDeadlineDetector {
@@ -104,7 +104,7 @@ impl IssueDetector for BlockTimestampDeadlineDetector {
         Consider allowing function caller to specify swap deadline input parameter.".to_string()
     }
 
-    fn instances(&self) -> BTreeMap<(String, usize), NodeID> {
+    fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
         self.found_instances.clone()
     }
 

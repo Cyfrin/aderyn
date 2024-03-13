@@ -37,6 +37,10 @@
         "n_sloc": 9
       },
       {
+        "file_path": "src/ConstantsLiterals.sol",
+        "n_sloc": 28
+      },
+      {
         "file_path": "src/Counter.sol",
         "n_sloc": 20
       },
@@ -115,8 +119,8 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 693,
-    "total_source_units": 22
+    "total_sloc": 721,
+    "total_source_units": 23
   },
   "high_issues": {
     "issues": [
@@ -126,7 +130,8 @@
         "instances": [
           {
             "contract_path": "src/inheritance/ExtendedInheritance.sol",
-            "line_no": 16
+            "line_no": 16,
+            "src": "488:19"
           }
         ],
         "title": "Using `delegatecall` in loop"
@@ -137,27 +142,33 @@
         "instances": [
           {
             "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 16
+            "line_no": 16,
+            "src": "370:38"
           },
           {
             "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 20
+            "line_no": 20,
+            "src": "496:42"
           },
           {
             "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 24
+            "line_no": 24,
+            "src": "634:53"
           },
           {
             "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 30
+            "line_no": 30,
+            "src": "864:44"
           },
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
-            "line_no": 17
+            "line_no": 17,
+            "src": "579:39"
           },
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
-            "line_no": 47
+            "line_no": 47,
+            "src": "1598:35"
           }
         ],
         "title": "Arbitrary `from` passed to `transferFrom` (or `safeTransferFrom`)"
@@ -179,15 +190,18 @@
         "instances": [
           {
             "contract_path": "src/KeccakContract.sol",
-            "line_no": 18
+            "line_no": 18,
+            "src": "587:16"
           },
           {
             "contract_path": "src/KeccakContract.sol",
-            "line_no": 22
+            "line_no": 22,
+            "src": "734:16"
           },
           {
             "contract_path": "src/KeccakContract.sol",
-            "line_no": 26
+            "line_no": 26,
+            "src": "887:16"
           }
         ],
         "title": "`abi.encodePacked()` should not be used with dynamic types when passing the result to a hash function such as `keccak256()`"
@@ -198,7 +212,8 @@
         "instances": [
           {
             "contract_path": "src/inheritance/ExtendedInheritance.sol",
-            "line_no": 21
+            "line_no": 21,
+            "src": "705:9"
           }
         ],
         "title": "`ecrecover` is susceptible to signature malleability"
@@ -209,11 +224,13 @@
         "instances": [
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
-            "line_no": 22
+            "line_no": 22,
+            "src": "737:10"
           },
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
-            "line_no": 27
+            "line_no": 27,
+            "src": "898:17"
           }
         ],
         "title": "Deprecated OpenZeppelin functions should not be used"
@@ -224,35 +241,43 @@
         "instances": [
           {
             "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 16
+            "line_no": 16,
+            "src": "370:20"
           },
           {
             "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 30
+            "line_no": 30,
+            "src": "864:20"
           },
           {
             "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 50
+            "line_no": 50,
+            "src": "1517:20"
           },
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
-            "line_no": 32
+            "line_no": 32,
+            "src": "1062:13"
           },
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
-            "line_no": 37
+            "line_no": 37,
+            "src": "1272:13"
           },
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
-            "line_no": 38
+            "line_no": 38,
+            "src": "1322:13"
           },
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
-            "line_no": 42
+            "line_no": 42,
+            "src": "1424:13"
           },
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
-            "line_no": 47
+            "line_no": 47,
+            "src": "1598:18"
           }
         ],
         "title": "Unsafe ERC20 Operations should not be used"
@@ -263,27 +288,33 @@
         "instances": [
           {
             "contract_path": "src/Counter.sol",
-            "line_no": 2
+            "line_no": 2,
+            "src": "39:24"
           },
           {
             "contract_path": "src/CrazyPragma.sol",
-            "line_no": 2
+            "line_no": 2,
+            "src": "32:32"
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
-            "line_no": 6
+            "line_no": 6,
+            "src": "46:24"
           },
           {
             "contract_path": "src/cloc/HeavilyCommentedContract.sol",
-            "line_no": 6
+            "line_no": 6,
+            "src": "46:32"
           },
           {
             "contract_path": "src/inheritance/IContractInheritance.sol",
-            "line_no": 2
+            "line_no": 2,
+            "src": "32:24"
           },
           {
             "contract_path": "src/inheritance/InheritanceBase.sol",
-            "line_no": 2
+            "line_no": 2,
+            "src": "32:23"
           }
         ],
         "title": "Solidity pragma should be specific, not wide"
@@ -294,75 +325,93 @@
         "instances": [
           {
             "contract_path": "src/AdminContract.sol",
-            "line_no": 2
+            "line_no": 2,
+            "src": "32:23"
           },
           {
             "contract_path": "src/Counter.sol",
-            "line_no": 2
+            "line_no": 2,
+            "src": "39:24"
           },
           {
             "contract_path": "src/CrazyPragma.sol",
-            "line_no": 2
+            "line_no": 2,
+            "src": "32:32"
           },
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
-            "line_no": 2
+            "line_no": 2,
+            "src": "32:23"
           },
           {
             "contract_path": "src/KeccakContract.sol",
-            "line_no": 2
+            "line_no": 2,
+            "src": "32:23"
           },
           {
             "contract_path": "src/StateVariables.sol",
-            "line_no": 2
+            "line_no": 2,
+            "src": "32:23"
           },
           {
             "contract_path": "src/StorageConditionals.sol",
-            "line_no": 2
+            "line_no": 2,
+            "src": "32:23"
           },
           {
             "contract_path": "src/T11sTranferer.sol",
-            "line_no": 2
+            "line_no": 2,
+            "src": "32:23"
           },
           {
             "contract_path": "src/UnsafeERC721Mint.sol",
-            "line_no": 2
+            "line_no": 2,
+            "src": "32:23"
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
-            "line_no": 6
+            "line_no": 6,
+            "src": "46:24"
           },
           {
             "contract_path": "src/inheritance/ExtendedInheritance.sol",
-            "line_no": 2
+            "line_no": 2,
+            "src": "32:23"
           },
           {
             "contract_path": "src/inheritance/IContractInheritance.sol",
-            "line_no": 2
+            "line_no": 2,
+            "src": "32:24"
           },
           {
             "contract_path": "src/inheritance/InheritanceBase.sol",
-            "line_no": 2
+            "line_no": 2,
+            "src": "32:23"
           },
           {
             "contract_path": "src/nested/1/Nested.sol",
-            "line_no": 5
+            "line_no": 5,
+            "src": "180:23"
           },
           {
             "contract_path": "src/nested/2/Nested.sol",
-            "line_no": 5
+            "line_no": 5,
+            "src": "180:23"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
-            "line_no": 2
+            "line_no": 2,
+            "src": "32:23"
           },
           {
             "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 2
+            "line_no": 2,
+            "src": "32:23"
           },
           {
             "contract_path": "src/uniswap/UniswapV3Swapper.sol",
-            "line_no": 2
+            "line_no": 2,
+            "src": "32:23"
           }
         ],
         "title": "PUSH0 is not supported by all chains"
@@ -377,31 +426,38 @@
         "instances": [
           {
             "contract_path": "src/AdminContract.sol",
-            "line_no": 7
+            "line_no": 7,
+            "src": "244:314"
           },
           {
             "contract_path": "src/AdminContract.sol",
-            "line_no": 10
+            "line_no": 10,
+            "src": "376:9"
           },
           {
             "contract_path": "src/AdminContract.sol",
-            "line_no": 14
+            "line_no": 14,
+            "src": "505:9"
           },
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
-            "line_no": 7
+            "line_no": 7,
+            "src": "261:1381"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
-            "line_no": 7
+            "line_no": 7,
+            "src": "250:657"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
-            "line_no": 28
+            "line_no": 28,
+            "src": "725:9"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
-            "line_no": 32
+            "line_no": 32,
+            "src": "854:9"
           }
         ],
         "title": "Centralization Risk for trusted owners"
@@ -412,7 +468,8 @@
         "instances": [
           {
             "contract_path": "src/T11sTranferer.sol",
-            "line_no": 4
+            "line_no": 4,
+            "src": "57:84"
           }
         ],
         "title": "Solmate's SafeTransferLib does not check for token contract's existence"
@@ -423,71 +480,88 @@
         "instances": [
           {
             "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 23
+            "line_no": 23,
+            "src": "670:83"
           },
           {
             "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 24
+            "line_no": 24,
+            "src": "763:83"
           },
           {
             "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 25
+            "line_no": 25,
+            "src": "856:70"
           },
           {
             "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 26
+            "line_no": 26,
+            "src": "936:80"
           },
           {
             "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 27
+            "line_no": 27,
+            "src": "1026:80"
           },
           {
             "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 28
+            "line_no": 28,
+            "src": "1116:67"
           },
           {
             "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 31
+            "line_no": 31,
+            "src": "1261:112"
           },
           {
             "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 32
+            "line_no": 32,
+            "src": "1383:99"
           },
           {
             "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 33
+            "line_no": 33,
+            "src": "1492:109"
           },
           {
             "contract_path": "src/uniswap/UniswapV3Swapper.sol",
-            "line_no": 52
+            "line_no": 52,
+            "src": "1115:143"
           },
           {
             "contract_path": "src/uniswap/UniswapV3Swapper.sol",
-            "line_no": 55
+            "line_no": 55,
+            "src": "1293:321"
           },
           {
             "contract_path": "src/uniswap/UniswapV3Swapper.sol",
-            "line_no": 66
+            "line_no": 66,
+            "src": "1668:131"
           },
           {
             "contract_path": "src/uniswap/UniswapV3Swapper.sol",
-            "line_no": 69
+            "line_no": 69,
+            "src": "1828:236"
           },
           {
             "contract_path": "src/uniswap/UniswapV3Swapper.sol",
-            "line_no": 77
+            "line_no": 77,
+            "src": "2132:144"
           },
           {
             "contract_path": "src/uniswap/UniswapV3Swapper.sol",
-            "line_no": 80
+            "line_no": 80,
+            "src": "2312:322"
           },
           {
             "contract_path": "src/uniswap/UniswapV3Swapper.sol",
-            "line_no": 91
+            "line_no": 91,
+            "src": "2690:132"
           },
           {
             "contract_path": "src/uniswap/UniswapV3Swapper.sol",
-            "line_no": 94
+            "line_no": 94,
+            "src": "2852:237"
           }
         ],
         "title": "Using `block.timestamp` for swap deadline offers no protection"
@@ -498,7 +572,8 @@
         "instances": [
           {
             "contract_path": "src/UnsafeERC721Mint.sol",
-            "line_no": 10
+            "line_no": 10,
+            "src": "314:5"
           }
         ],
         "title": "Using `ERC721::_mint()` can be dangerous"
@@ -513,15 +588,18 @@
         "instances": [
           {
             "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 12
+            "line_no": 12,
+            "src": "267:15"
           },
           {
             "contract_path": "src/StateVariables.sol",
-            "line_no": 58
+            "line_no": 58,
+            "src": "2121:14"
           },
           {
             "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 11
+            "line_no": 11,
+            "src": "365:17"
           }
         ],
         "title": "Missing checks for `address(0)` when assigning values to address state variables"
@@ -532,63 +610,78 @@
         "instances": [
           {
             "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 28
+            "line_no": 28,
+            "src": "763:152"
           },
           {
             "contract_path": "src/AssemblyExample.sol",
-            "line_no": 6
+            "line_no": 6,
+            "src": "104:229"
           },
           {
             "contract_path": "src/Counter.sol",
-            "line_no": 7
+            "line_no": 7,
+            "src": "120:80"
           },
           {
             "contract_path": "src/StateVariables.sol",
-            "line_no": 47
+            "line_no": 47,
+            "src": "1755:145"
           },
           {
             "contract_path": "src/StateVariables.sol",
-            "line_no": 52
+            "line_no": 52,
+            "src": "1906:151"
           },
           {
             "contract_path": "src/StateVariables.sol",
-            "line_no": 57
+            "line_no": 57,
+            "src": "2063:79"
           },
           {
             "contract_path": "src/StateVariables.sol",
-            "line_no": 61
+            "line_no": 61,
+            "src": "2148:376"
           },
           {
             "contract_path": "src/StateVariables.sol",
-            "line_no": 71
+            "line_no": 71,
+            "src": "2530:406"
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
-            "line_no": 31
+            "line_no": 31,
+            "src": "491:131"
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
-            "line_no": 38
+            "line_no": 38,
+            "src": "628:95"
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
-            "line_no": 42
+            "line_no": 42,
+            "src": "729:1016"
           },
           {
             "contract_path": "src/cloc/HeavilyCommentedContract.sol",
-            "line_no": 31
+            "line_no": 31,
+            "src": "500:131"
           },
           {
             "contract_path": "src/cloc/HeavilyCommentedContract.sol",
-            "line_no": 38
+            "line_no": 38,
+            "src": "637:804"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
-            "line_no": 11
+            "line_no": 11,
+            "src": "346:61"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
-            "line_no": 15
+            "line_no": 15,
+            "src": "413:225"
           }
         ],
         "title": "Functions not used internally could be marked external"
@@ -598,116 +691,54 @@
         "detector_name": "constants-instead-of-literals",
         "instances": [
           {
-            "contract_path": "src/Counter.sol",
-            "line_no": 23
+            "contract_path": "src/ConstantsLiterals.sol",
+            "line_no": 25,
+            "src": "958:3"
           },
           {
-            "contract_path": "src/cloc/HeavilyCommentedContract.sol",
-            "line_no": 40
+            "contract_path": "src/ConstantsLiterals.sol",
+            "line_no": 26,
+            "src": "992:3"
           },
           {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 70
+            "contract_path": "src/ConstantsLiterals.sol",
+            "line_no": 27,
+            "src": "1032:4"
           },
           {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 71
+            "contract_path": "src/ConstantsLiterals.sol",
+            "line_no": 28,
+            "src": "1068:4"
           },
           {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 78
+            "contract_path": "src/ConstantsLiterals.sol",
+            "line_no": 29,
+            "src": "1117:42"
           },
           {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 80
+            "contract_path": "src/ConstantsLiterals.sol",
+            "line_no": 30,
+            "src": "1192:42"
           },
           {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 96
+            "contract_path": "src/ConstantsLiterals.sol",
+            "line_no": 31,
+            "src": "1275:66"
           },
           {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 97
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 98
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 101
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 102
+            "contract_path": "src/ConstantsLiterals.sol",
+            "line_no": 32,
+            "src": "1374:66"
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 103
+            "line_no": 113,
+            "src": "7252:2"
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 113
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 132
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 135
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 140
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 152
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 155
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 156
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 157
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 158
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 159
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 160
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 161
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 162
-          },
-          {
-            "contract_path": "src/inheritance/ExtendedInheritance.sol",
-            "line_no": 15
-          },
-          {
-            "contract_path": "src/parent_chain/ParentChainContract.sol",
-            "line_no": 16
-          },
-          {
-            "contract_path": "src/parent_chain/ParentChainContract.sol",
-            "line_no": 17
+            "line_no": 113,
+            "src": "7293:2"
           }
         ],
         "title": "Constants should be defined and used instead of literals"
@@ -718,15 +749,18 @@
         "instances": [
           {
             "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 19
+            "line_no": 19,
+            "src": "2641:107"
           },
           {
             "contract_path": "src/inheritance/ExtendedInheritance.sol",
-            "line_no": 7
+            "line_no": 7,
+            "src": "144:45"
           },
           {
             "contract_path": "src/inheritance/InheritanceBase.sol",
-            "line_no": 7
+            "line_no": 7,
+            "src": "150:28"
           }
         ],
         "title": "Event is missing `indexed` fields"
@@ -737,27 +771,33 @@
         "instances": [
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
-            "line_no": 37
+            "line_no": 37,
+            "src": "1264:7"
           },
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
-            "line_no": 40
+            "line_no": 40,
+            "src": "1389:6"
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
-            "line_no": 35
+            "line_no": 35,
+            "src": "589:7"
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
-            "line_no": 56
+            "line_no": 56,
+            "src": "1403:7"
           },
           {
             "contract_path": "src/cloc/HeavilyCommentedContract.sol",
-            "line_no": 35
+            "line_no": 35,
+            "src": "598:7"
           },
           {
             "contract_path": "src/cloc/HeavilyCommentedContract.sol",
-            "line_no": 53
+            "line_no": 53,
+            "src": "1408:7"
           }
         ],
         "title": "`require()` / `revert()` statements should have descriptive reason strings or custom errors"
@@ -768,11 +808,13 @@
         "instances": [
           {
             "contract_path": "src/AdminContract.sol",
-            "line_no": 10
+            "line_no": 10,
+            "src": "386:12"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
-            "line_no": 28
+            "line_no": 28,
+            "src": "735:12"
           }
         ],
         "title": "The `nonReentrant` `modifier` should occur before all other modifiers"
