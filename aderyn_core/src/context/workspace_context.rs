@@ -58,6 +58,134 @@ pub enum ASTNode {
     WhileStatement(WhileStatement),
 }
 
+impl ASTNode {
+    pub fn parent<'a>(&self, context: &'a WorkspaceContext) -> Option<&'a ASTNode> {
+        if let Some(id) = self.id() {
+            return context.get_parent(id);
+        }
+        None
+    }
+
+    pub fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+        if let Some(id) = self.id() {
+            return Some(context.get_parent_chain(id));
+        }
+        None
+    }
+
+    pub fn node_type(&self) -> NodeType {
+        match self {
+            ASTNode::ArrayTypeName(_) => NodeType::ArrayTypeName,
+            ASTNode::Assignment(_) => NodeType::Assignment,
+            ASTNode::BinaryOperation(_) => NodeType::BinaryOperation,
+            ASTNode::Block(_) => NodeType::Block,
+            ASTNode::Conditional(_) => NodeType::Conditional,
+            ASTNode::ContractDefinition(_) => NodeType::ContractDefinition,
+            ASTNode::ElementaryTypeName(_) => NodeType::ElementaryTypeName,
+            ASTNode::ElementaryTypeNameExpression(_) => NodeType::ElementaryTypeNameExpression,
+            ASTNode::EmitStatement(_) => NodeType::EmitStatement,
+            ASTNode::EnumDefinition(_) => NodeType::EnumDefinition,
+            ASTNode::EnumValue(_) => NodeType::EnumValue,
+            ASTNode::EventDefinition(_) => NodeType::EventDefinition,
+            ASTNode::ErrorDefinition(_) => NodeType::ErrorDefinition,
+            ASTNode::ExpressionStatement(_) => NodeType::ExpressionStatement,
+            ASTNode::FunctionCall(_) => NodeType::FunctionCall,
+            ASTNode::FunctionCallOptions(_) => NodeType::FunctionCallOptions,
+            ASTNode::FunctionDefinition(_) => NodeType::FunctionDefinition,
+            ASTNode::FunctionTypeName(_) => NodeType::FunctionTypeName,
+            ASTNode::ForStatement(_) => NodeType::ForStatement,
+            ASTNode::Identifier(_) => NodeType::Identifier,
+            ASTNode::IdentifierPath(_) => NodeType::IdentifierPath,
+            ASTNode::IfStatement(_) => NodeType::IfStatement,
+            ASTNode::ImportDirective(_) => NodeType::ImportDirective,
+            ASTNode::IndexAccess(_) => NodeType::IndexAccess,
+            ASTNode::IndexRangeAccess(_) => NodeType::IndexRangeAccess,
+            ASTNode::InheritanceSpecifier(_) => NodeType::InheritanceSpecifier,
+            ASTNode::InlineAssembly(_) => NodeType::InlineAssembly,
+            ASTNode::Literal(_) => NodeType::Literal,
+            ASTNode::MemberAccess(_) => NodeType::MemberAccess,
+            ASTNode::NewExpression(_) => NodeType::NewExpression,
+            ASTNode::Mapping(_) => NodeType::Mapping,
+            ASTNode::ModifierDefinition(_) => NodeType::ModifierDefinition,
+            ASTNode::ModifierInvocation(_) => NodeType::ModifierInvocation,
+            ASTNode::OverrideSpecifier(_) => NodeType::OverrideSpecifier,
+            ASTNode::ParameterList(_) => NodeType::ParameterList,
+            ASTNode::PragmaDirective(_) => NodeType::PragmaDirective,
+            ASTNode::Return(_) => NodeType::Return,
+            ASTNode::RevertStatement(_) => NodeType::RevertStatement,
+            ASTNode::SourceUnit(_) => NodeType::SourceUnit,
+            ASTNode::StructDefinition(_) => NodeType::StructDefinition,
+            ASTNode::StructuredDocumentation(_) => NodeType::StructuredDocumentation,
+            ASTNode::TryStatement(_) => NodeType::TryStatement,
+            ASTNode::TryCatchClause(_) => NodeType::TryCatchClause,
+            ASTNode::TupleExpression(_) => NodeType::TupleExpression,
+            ASTNode::UnaryOperation(_) => NodeType::UnaryOperation,
+            ASTNode::UserDefinedTypeName(_) => NodeType::UserDefinedTypeName,
+            ASTNode::UserDefinedValueTypeDefinition(_) => NodeType::UserDefinedValueTypeDefinition,
+            ASTNode::UsingForDirective(_) => NodeType::UsingForDirective,
+            ASTNode::VariableDeclaration(_) => NodeType::VariableDeclaration,
+            ASTNode::VariableDeclarationStatement(_) => NodeType::VariableDeclarationStatement,
+            ASTNode::WhileStatement(_) => NodeType::WhileStatement,
+        }
+    }
+
+    pub fn id(&self) -> Option<NodeID> {
+        match self {
+            ASTNode::ArrayTypeName(_) => None,
+            ASTNode::Assignment(n) => Some(n.id),
+            ASTNode::BinaryOperation(n) => Some(n.id),
+            ASTNode::Block(n) => Some(n.id),
+            ASTNode::Conditional(n) => Some(n.id),
+            ASTNode::ContractDefinition(n) => Some(n.id),
+            ASTNode::ElementaryTypeName(_) => None,
+            ASTNode::ElementaryTypeNameExpression(n) => Some(n.id),
+            ASTNode::EmitStatement(_) => None,
+            ASTNode::EnumDefinition(n) => Some(n.id),
+            ASTNode::EnumValue(n) => Some(n.id),
+            ASTNode::EventDefinition(n) => Some(n.id),
+            ASTNode::ErrorDefinition(n) => Some(n.id),
+            ASTNode::ExpressionStatement(_) => None,
+            ASTNode::FunctionCall(n) => Some(n.id),
+            ASTNode::FunctionCallOptions(n) => Some(n.id),
+            ASTNode::FunctionDefinition(n) => Some(n.id),
+            ASTNode::FunctionTypeName(_) => None,
+            ASTNode::ForStatement(n) => Some(n.id),
+            ASTNode::Identifier(n) => Some(n.id),
+            ASTNode::IdentifierPath(n) => Some(n.id),
+            ASTNode::IfStatement(n) => Some(n.id),
+            ASTNode::ImportDirective(n) => Some(n.id),
+            ASTNode::IndexAccess(n) => Some(n.id),
+            ASTNode::IndexRangeAccess(n) => Some(n.id),
+            ASTNode::InheritanceSpecifier(n) => Some(n.id),
+            ASTNode::InlineAssembly(n) => Some(n.id),
+            ASTNode::Literal(n) => Some(n.id),
+            ASTNode::MemberAccess(n) => Some(n.id),
+            ASTNode::NewExpression(n) => Some(n.id),
+            ASTNode::Mapping(_n) => None,
+            ASTNode::ModifierDefinition(n) => Some(n.id),
+            ASTNode::ModifierInvocation(n) => Some(n.id),
+            ASTNode::OverrideSpecifier(n) => Some(n.id),
+            ASTNode::ParameterList(n) => Some(n.id),
+            ASTNode::PragmaDirective(n) => Some(n.id),
+            ASTNode::Return(n) => Some(n.id),
+            ASTNode::RevertStatement(_) => None,
+            ASTNode::SourceUnit(n) => Some(n.id),
+            ASTNode::StructDefinition(n) => Some(n.id),
+            ASTNode::StructuredDocumentation(n) => Some(n.id),
+            ASTNode::TryStatement(_) => None,
+            ASTNode::TryCatchClause(_) => None,
+            ASTNode::TupleExpression(n) => Some(n.id),
+            ASTNode::UnaryOperation(n) => Some(n.id),
+            ASTNode::UserDefinedTypeName(_) => None,
+            ASTNode::UserDefinedValueTypeDefinition(n) => Some(n.id),
+            ASTNode::UsingForDirective(n) => Some(n.id),
+            ASTNode::VariableDeclaration(n) => Some(n.id),
+            ASTNode::VariableDeclarationStatement(n) => Some(n.id),
+            ASTNode::WhileStatement(n) => Some(n.id),
+        }
+    }
+}
+
 impl From<ArrayTypeName> for ASTNode {
     fn from(value: ArrayTypeName) -> Self {
         ASTNode::ArrayTypeName(value)
@@ -979,6 +1107,26 @@ impl WorkspaceContext {
         self.nodes.get(self.parent_link.get(&node_id)?)
     }
 
+    pub fn get_parent_chain(&self, node_id: NodeID) -> Vec<&ASTNode> {
+        let mut chain = vec![];
+        let mut parent = self.nodes.get(&node_id);
+        while let Some(next_parent) = parent {
+            chain.push(next_parent);
+            parent = next_parent.parent(self);
+        }
+        chain
+    }
+    pub fn get_closest_parent(&self, node_id: NodeID, node_type: NodeType) -> Option<&ASTNode> {
+        let mut current_node_id = self.parent_link.get(&node_id)?;
+        while let Some(current) = self.nodes.get(current_node_id) {
+            if current.node_type() == node_type {
+                return Some(current);
+            }
+            current_node_id = self.parent_link.get(current_node_id)?;
+        }
+        None
+    }
+
     pub fn get_source_unit_from_child_node(&self, node: &ASTNode) -> Option<&SourceUnit> {
         let source_unit_id = match node {
             ASTNode::ArrayTypeName(node) => self
@@ -1193,15 +1341,21 @@ impl WorkspaceContext {
         })
     }
 
-    pub fn get_node_sort_key(&self, node: &ASTNode) -> (String, usize) {
+    pub fn get_node_sort_key(&self, node: &ASTNode) -> (String, usize, String) {
         let source_unit = self.get_source_unit_from_child_node(node).unwrap();
         let absolute_path = source_unit.absolute_path.as_ref().unwrap().clone();
         let source_line = node
             .src()
             .map(|src| source_unit.source_line(src).unwrap_or(0)) // If `src` is `Some`, get the line number, else return 0
             .unwrap_or(0); // If `src` is `None`, default to 0
+        let src_location = node.src().unwrap_or("");
+        let chopped_location = match src_location.rfind(':') {
+            Some(index) => &src_location[..index],
+            None => src_location, // No colon found, return the original string
+        }
+        .to_string();
 
-        (absolute_path, source_line)
+        (absolute_path, source_line, chopped_location)
     }
 }
 
