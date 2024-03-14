@@ -1,5 +1,5 @@
 use super::*;
-use crate::visitor::ast_visitor::*;
+use crate::{context::workspace_context::WorkspaceContext, visitor::ast_visitor::*};
 use eyre::Result;
 use serde::{Deserialize, Serialize};
 use std::fmt::Display;
@@ -11,6 +11,15 @@ pub struct EnumValue {
     pub name_location: Option<String>,
     pub src: String,
     pub id: NodeID,
+}
+
+impl HasUniqueID for EnumValue {
+    fn uid(&self, context: &WorkspaceContext) -> Option<UniqueNodeID> {
+        Some((
+            context.get_source_unit_id_from_child_node(&self.into())?,
+            self.id,
+        ))
+    }
 }
 
 impl Node for EnumValue {
