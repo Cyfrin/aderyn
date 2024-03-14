@@ -1127,8 +1127,8 @@ impl WorkspaceContext {
         None
     }
 
-    pub fn get_source_unit_from_child_node(&self, node: &ASTNode) -> Option<&SourceUnit> {
-        let source_unit_id = match node {
+    pub fn get_source_unit_id_from_child_node(&self, node: &ASTNode) -> Option<i64> {
+        match node {
             ASTNode::ArrayTypeName(node) => self
                 .array_type_names_context
                 .get(node)
@@ -1330,7 +1330,11 @@ impl WorkspaceContext {
                 .while_statements_context
                 .get(node)
                 .map(|context| context.source_unit_id),
-        };
+        }
+    }
+
+    pub fn get_source_unit_from_child_node(&self, node: &ASTNode) -> Option<&SourceUnit> {
+        let source_unit_id = self.get_source_unit_id_from_child_node(node);
 
         // iterate through self.source_units until the source unit with the id matching `source_unit_id` is found, then return its `absolute_path`
 

@@ -1,6 +1,14 @@
 use serde::{Deserialize, Serialize};
 
+use crate::context::workspace_context::WorkspaceContext;
+
 pub type NodeID = i64;
+
+pub type UniqueNodeID = (i64, i64); // Source Unit ID, Node ID
+
+pub trait HasUniqueID {
+    fn uid(&self, context: &WorkspaceContext) -> Option<UniqueNodeID>;
+}
 
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum NodeType {
