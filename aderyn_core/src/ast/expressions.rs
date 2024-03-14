@@ -390,6 +390,15 @@ pub struct BinaryOperation {
     pub id: NodeID,
 }
 
+impl HasUniqueID for BinaryOperation {
+    fn uid(&self, context: &WorkspaceContext) -> Option<UniqueNodeID> {
+        Some((
+            context.get_source_unit_id_from_child_node(&self.into())?,
+            self.id,
+        ))
+    }
+}
+
 impl Node for BinaryOperation {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         if visitor.visit_binary_operation(self)? {
