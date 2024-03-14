@@ -245,6 +245,15 @@ pub struct ContractDefinition {
     pub id: NodeID,
 }
 
+impl HasUniqueID for ContractDefinition {
+    fn uid(&self, context: &WorkspaceContext) -> Option<UniqueNodeID> {
+        Some((
+            context.get_source_unit_id_from_child_node(&self.into())?,
+            self.id,
+        ))
+    }
+}
+
 impl Node for ContractDefinition {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         if visitor.visit_contract_definition(self)? {
