@@ -1,4 +1,6 @@
 use super::*;
+use crate::context::workspace_context::ASTNode;
+use crate::context::workspace_context::WorkspaceContext;
 use crate::visitor::ast_visitor::*;
 use eyre::eyre;
 use eyre::Result;
@@ -29,6 +31,12 @@ pub enum Expression {
         src: Option<String>,
         id: Option<NodeID>,
     },
+}
+
+impl HasUniqueID for Expression {
+    fn uid(&self, context: &WorkspaceContext) -> Option<UniqueNodeID> {
+        Some((self.get_source_unit_id(context)?, self.get_node_id()?))
+    }
 }
 
 impl Node for Expression {
@@ -90,6 +98,36 @@ impl Expression {
                 node_type: _node_type,
             } => *id,
         }
+    }
+
+    pub fn get_source_unit_id(&self, context: &WorkspaceContext) -> Option<NodeID> {
+        let ast_node_repr: Option<ASTNode> = match self {
+            Expression::Literal(literal) => Some(literal.into()),
+            Expression::Identifier(identifier) => Some(identifier.into()),
+            Expression::UnaryOperation(unary_operation) => Some(unary_operation.into()),
+            Expression::BinaryOperation(binary_operation) => Some(binary_operation.into()),
+            Expression::Conditional(conditional) => Some(conditional.into()),
+            Expression::Assignment(assignment) => Some(assignment.into()),
+            Expression::FunctionCall(function_call) => Some(function_call.into()),
+            Expression::FunctionCallOptions(function_call_options) => {
+                Some(function_call_options.into())
+            }
+            Expression::IndexAccess(index_access) => Some(index_access.into()),
+            Expression::IndexRangeAccess(index_range_access) => Some(index_range_access.into()),
+            Expression::MemberAccess(member_access) => Some(member_access.into()),
+            Expression::ElementaryTypeNameExpression(elementary_type_name_expression) => {
+                Some(elementary_type_name_expression.into())
+            }
+
+            Expression::TupleExpression(tuple_expression) => Some(tuple_expression.into()),
+            Expression::NewExpression(new_expression) => Some(new_expression.into()),
+            Expression::UnhandledExpression {
+                id: _id,
+                src: _src,
+                node_type: _node_type,
+            } => None,
+        };
+        context.get_source_unit_id_from_child_node(&ast_node_repr?)
     }
 
     pub fn root_expression(&self) -> Option<&Expression> {
