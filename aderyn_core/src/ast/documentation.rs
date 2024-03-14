@@ -1,5 +1,5 @@
 use super::*;
-use crate::visitor::ast_visitor::*;
+use crate::{context::workspace_context::WorkspaceContext, visitor::ast_visitor::*};
 use eyre::Result;
 use serde::{Deserialize, Serialize};
 
@@ -36,6 +36,15 @@ pub struct StructuredDocumentation {
     pub text: String,
     pub src: String,
     pub id: NodeID,
+}
+
+impl HasUniqueID for StructuredDocumentation {
+    fn uid(&self, context: &WorkspaceContext) -> Option<UniqueNodeID> {
+        Some((
+            context.get_source_unit_id_from_child_node(&self.into())?,
+            self.id,
+        ))
+    }
 }
 
 impl Node for StructuredDocumentation {
