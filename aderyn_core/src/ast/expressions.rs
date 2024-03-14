@@ -332,6 +332,15 @@ pub struct UnaryOperation {
     pub id: NodeID,
 }
 
+impl HasUniqueID for UnaryOperation {
+    fn uid(&self, context: &WorkspaceContext) -> Option<UniqueNodeID> {
+        Some((
+            context.get_source_unit_id_from_child_node(&self.into())?,
+            self.id,
+        ))
+    }
+}
+
 impl Node for UnaryOperation {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         if visitor.visit_unary_operation(self)? {
