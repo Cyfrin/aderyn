@@ -46,6 +46,15 @@ pub struct EnumDefinition {
     pub id: NodeID,
 }
 
+impl HasUniqueID for EnumDefinition {
+    fn uid(&self, context: &WorkspaceContext) -> Option<UniqueNodeID> {
+        Some((
+            context.get_source_unit_id_from_child_node(&self.into())?,
+            self.id,
+        ))
+    }
+}
+
 impl Node for EnumDefinition {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         if visitor.visit_enum_definition(self)? {
