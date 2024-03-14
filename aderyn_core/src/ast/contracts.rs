@@ -1,5 +1,8 @@
 use super::*;
-use crate::visitor::ast_visitor::*;
+use crate::{
+    context::workspace_context::{ASTNode, WorkspaceContext},
+    visitor::ast_visitor::*,
+};
 use eyre::Result;
 use serde::{Deserialize, Serialize};
 use std::fmt::Display;
@@ -66,7 +69,38 @@ impl Node for ContractDefinitionNode {
     }
 }
 
+impl HasUniqueID for ContractDefinitionNode {
+    fn uid(&self, context: &WorkspaceContext) -> Option<UniqueNodeID> {
+        Some((self.get_source_unit_id(context)?, self.get_node_id()?))
+    }
+}
+
 impl ContractDefinitionNode {
+    pub fn get_source_unit_id(&self, context: &WorkspaceContext) -> Option<NodeID> {
+        let ast_repr: ASTNode = match self {
+            ContractDefinitionNode::UsingForDirective(using_for_directive) => {
+                using_for_directive.into()
+            }
+            ContractDefinitionNode::StructDefinition(struct_definition) => struct_definition.into(),
+            ContractDefinitionNode::EnumDefinition(enum_definition) => enum_definition.into(),
+            ContractDefinitionNode::VariableDeclaration(variable_declaration) => {
+                variable_declaration.into()
+            }
+            ContractDefinitionNode::EventDefinition(event_definition) => event_definition.into(),
+            ContractDefinitionNode::FunctionDefinition(function_definition) => {
+                function_definition.into()
+            }
+            ContractDefinitionNode::ModifierDefinition(modifier_definition) => {
+                modifier_definition.into()
+            }
+            ContractDefinitionNode::ErrorDefinition(error_definition) => error_definition.into(),
+            ContractDefinitionNode::UserDefinedValueTypeDefinition(
+                user_defined_value_type_definition,
+            ) => user_defined_value_type_definition.into(),
+        };
+        context.get_source_unit_id_from_child_node(&ast_repr)
+    }
+
     pub fn get_node_id(&self) -> Option<NodeID> {
         match self {
             ContractDefinitionNode::UsingForDirective(using_for_directive) => {
