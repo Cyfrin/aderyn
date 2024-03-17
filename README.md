@@ -80,7 +80,7 @@ Run the container in an interactive mode:
 ```
 Run aderyn:
 ```sh
-  aderyn /share -o /share/report.md
+  aderyn .
 ```
 
 ## Installation
