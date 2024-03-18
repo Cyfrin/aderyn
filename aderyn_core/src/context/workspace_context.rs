@@ -59,6 +59,20 @@ pub enum ASTNode {
 }
 
 impl ASTNode {
+    pub fn parent<'a>(&self, context: &'a WorkspaceContext) -> Option<&'a ASTNode> {
+        if let Some(id) = self.id() {
+            return context.get_parent(id);
+        }
+        None
+    }
+
+    pub fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+        if let Some(id) = self.id() {
+            return Some(context.get_parent_chain(id));
+        }
+        None
+    }
+
     pub fn node_type(&self) -> NodeType {
         match self {
             ASTNode::ArrayTypeName(_) => NodeType::ArrayTypeName,
@@ -1091,6 +1105,26 @@ impl WorkspaceContext {
 
     pub fn get_parent(&self, node_id: NodeID) -> Option<&ASTNode> {
         self.nodes.get(self.parent_link.get(&node_id)?)
+    }
+
+    pub fn get_parent_chain(&self, node_id: NodeID) -> Vec<&ASTNode> {
+        let mut chain = vec![];
+        let mut parent = self.nodes.get(&node_id);
+        while let Some(next_parent) = parent {
+            chain.push(next_parent);
+            parent = next_parent.parent(self);
+        }
+        chain
+    }
+    pub fn get_closest_parent(&self, node_id: NodeID, node_type: NodeType) -> Option<&ASTNode> {
+        let mut current_node_id = self.parent_link.get(&node_id)?;
+        while let Some(current) = self.nodes.get(current_node_id) {
+            if current.node_type() == node_type {
+                return Some(current);
+            }
+            current_node_id = self.parent_link.get(current_node_id)?;
+        }
+        None
     }
 
     pub fn get_source_unit_from_child_node(&self, node: &ASTNode) -> Option<&SourceUnit> {

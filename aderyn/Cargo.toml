@@ -1,6 +1,6 @@
 [package]
 name = "aderyn"
-version = "0.0.16"
+version = "0.0.17"
 edition = "2021"
 authors = ["Alex Roan <alex@cyfrin.io>"]
 description = "Rust based Solidity AST analyzer"
@@ -10,7 +10,7 @@ default-run = "aderyn"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-aderyn_driver = { path  = "../aderyn_driver", version = "0.0.16" }
+aderyn_driver = { path  = "../aderyn_driver", version = "0.0.17" }
 clap = { version = "4.4.6", features = ["derive"] }
 serde = { version = "1.0.160", features = ["derive"] }
 serde_json = "1.0.96"

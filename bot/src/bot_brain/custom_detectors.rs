@@ -42,14 +42,20 @@ pub fn refresh_metadata() {
     _ = serde_json::to_writer_pretty(bw, &value);
 }
 
-pub fn generate_report_for_judge(root: &str, output: &str) {
+pub fn generate_report_for_judge(
+    root: &str,
+    output: &str,
+    exclude: Option<Vec<String>>,
+    scope: Option<Vec<String>>,
+    no_snippets: bool,
+) {
     drive_with(
         Args {
             root: root.to_string(),
             output: output.to_string(),
-            exclude: None,
-            scope: None,
-            no_snippets: false,
+            exclude,
+            scope,
+            no_snippets,
         },
         custom_detectors(),
     )
