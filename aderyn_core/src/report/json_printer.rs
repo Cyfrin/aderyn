@@ -65,7 +65,9 @@ impl ReportPrinter<()> for JsonPrinter {
         };
         let value = serde_json::to_value(content).unwrap();
         if stdout {
+            println!("STDOUT START");
             let _ = serde_json::to_writer_pretty(io::stdout(), &value);
+            println!("STDOUT END");
             return Ok(());
         }
         _ = serde_json::to_writer_pretty(writer, &value);
