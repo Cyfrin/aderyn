@@ -144,9 +144,7 @@ impl IssueDetector for ZeroAddressCheckDetector {
     }
 
     fn description(&self) -> String {
-        String::from(
-            "Assigning values to address state variables without checking for `address(0)`.",
-        )
+        String::from("Check for `address(0)` when assigning values to address state variables.")
     }
 
     fn severity(&self) -> IssueSeverity {
@@ -197,7 +195,7 @@ mod zero_address_check_tests {
         assert_eq!(
             detector.description(),
             String::from(
-                "Assigning values to address state variables without checking for `address(0)`."
+                "Check for `address(0)` when assigning values to address state variables."
             )
         );
     }
