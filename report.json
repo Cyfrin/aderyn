@@ -1,0 +1,962 @@
+{
+  "critical_issues": {
+    "issues": []
+  },
+  "detectors_used": [
+    "delegate-call-in-loop",
+    "centralization-risk",
+    "solmate-safe-transfer-lib",
+    "avoid-abi-encode-packed",
+    "ecrecover",
+    "deprecated-oz-functions",
+    "unsafe-erc20-functions",
+    "unspecific-solidity-pragma",
+    "zero-address-check",
+    "useless-public-function",
+    "constants-instead-of-literals",
+    "unindexed-events",
+    "require-with-string",
+    "non-reentrant-before-others",
+    "block-timestamp-deadline",
+    "unsafe-oz-erc721-mint",
+    "push-zero-opcode",
+    "arbitrary-transfer-from",
+    "large-numeric-literal",
+    "useless-internal-function"
+  ],
+  "files_details": {
+    "files_details": [
+      {
+        "file_path": "src/AdminContract.sol",
+        "n_sloc": 11
+      },
+      {
+        "file_path": "src/ArbitraryTransferFrom.sol",
+        "n_sloc": 37
+      },
+      {
+        "file_path": "src/AssemblyExample.sol",
+        "n_sloc": 9
+      },
+      {
+        "file_path": "src/ConstantsLiterals.sol",
+        "n_sloc": 28
+      },
+      {
+        "file_path": "src/Counter.sol",
+        "n_sloc": 20
+      },
+      {
+        "file_path": "src/CrazyPragma.sol",
+        "n_sloc": 4
+      },
+      {
+        "file_path": "src/DeprecatedOZFunctions.sol",
+        "n_sloc": 32
+      },
+      {
+        "file_path": "src/HugeConstants.sol",
+        "n_sloc": 26
+      },
+      {
+        "file_path": "src/InternalFunctions.sol",
+        "n_sloc": 18
+      },
+      {
+        "file_path": "src/KeccakContract.sol",
+        "n_sloc": 21
+      },
+      {
+        "file_path": "src/StateVariables.sol",
+        "n_sloc": 58
+      },
+      {
+        "file_path": "src/StorageConditionals.sol",
+        "n_sloc": 59
+      },
+      {
+        "file_path": "src/T11sTranferer.sol",
+        "n_sloc": 8
+      },
+      {
+        "file_path": "src/UnsafeERC721Mint.sol",
+        "n_sloc": 11
+      },
+      {
+        "file_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
+        "n_sloc": 32
+      },
+      {
+        "file_path": "src/cloc/EmptyContractFile.sol",
+        "n_sloc": 0
+      },
+      {
+        "file_path": "src/cloc/HeavilyCommentedContract.sol",
+        "n_sloc": 21
+      },
+      {
+        "file_path": "src/eth2/DepositContract.sol",
+        "n_sloc": 95
+      },
+      {
+        "file_path": "src/inheritance/ExtendedInheritance.sol",
+        "n_sloc": 17
+      },
+      {
+        "file_path": "src/inheritance/IContractInheritance.sol",
+        "n_sloc": 4
+      },
+      {
+        "file_path": "src/inheritance/InheritanceBase.sol",
+        "n_sloc": 8
+      },
+      {
+        "file_path": "src/nested/1/Nested.sol",
+        "n_sloc": 10
+      },
+      {
+        "file_path": "src/nested/2/Nested.sol",
+        "n_sloc": 7
+      },
+      {
+        "file_path": "src/parent_chain/ParentChainContract.sol",
+        "n_sloc": 29
+      },
+      {
+        "file_path": "src/uniswap/UniswapV2Swapper.sol",
+        "n_sloc": 50
+      },
+      {
+        "file_path": "src/uniswap/UniswapV3Swapper.sol",
+        "n_sloc": 150
+      }
+    ]
+  },
+  "files_summary": {
+    "total_sloc": 765,
+    "total_source_units": 26
+  },
+  "high_issues": {
+    "issues": [
+      {
+        "description": "When calling `delegatecall` the same `msg.value` amount will be accredited multiple times.",
+        "detector_name": "delegate-call-in-loop",
+        "instances": [
+          {
+            "contract_path": "src/inheritance/ExtendedInheritance.sol",
+            "line_no": 16,
+            "src": "488:19"
+          }
+        ],
+        "title": "Using `delegatecall` in loop"
+      },
+      {
+        "description": "Passing an arbitrary `from` address to `transferFrom` (or `safeTransferFrom`) can lead to loss of funds, because anyone can transfer tokens from the `from` address if an approval is made.  ",
+        "detector_name": "arbitrary-transfer-from",
+        "instances": [
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 16,
+            "src": "370:38"
+          },
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 20,
+            "src": "496:42"
+          },
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 24,
+            "src": "634:53"
+          },
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 30,
+            "src": "864:44"
+          },
+          {
+            "contract_path": "src/DeprecatedOZFunctions.sol",
+            "line_no": 17,
+            "src": "579:39"
+          },
+          {
+            "contract_path": "src/DeprecatedOZFunctions.sol",
+            "line_no": 47,
+            "src": "1598:35"
+          }
+        ],
+        "title": "Arbitrary `from` passed to `transferFrom` (or `safeTransferFrom`)"
+      }
+    ]
+  },
+  "issue_count": {
+    "critical": 0,
+    "high": 2,
+    "low": 6,
+    "medium": 4,
+    "nc": 8
+  },
+  "low_issues": {
+    "issues": [
+      {
+        "description": "Use `abi.encode()` instead which will pad items to 32 bytes, which will [prevent hash collisions](https://docs.soliditylang.org/en/v0.8.13/abi-spec.html#non-standard-packed-mode) (e.g. `abi.encodePacked(0x123,0x456)` => `0x123456` => `abi.encodePacked(0x1,0x23456)`, but `abi.encode(0x123,0x456)` => `0x0...1230...456`). Unless there is a compelling reason, `abi.encode` should be preferred. If there is only one argument to `abi.encodePacked()` it can often be cast to `bytes()` or `bytes32()` [instead](https://ethereum.stackexchange.com/questions/30912/how-to-compare-strings-in-solidity#answer-82739).\nIf all arguments are strings and or bytes, `bytes.concat()` should be used instead.",
+        "detector_name": "avoid-abi-encode-packed",
+        "instances": [
+          {
+            "contract_path": "src/KeccakContract.sol",
+            "line_no": 18,
+            "src": "587:16"
+          },
+          {
+            "contract_path": "src/KeccakContract.sol",
+            "line_no": 22,
+            "src": "734:16"
+          },
+          {
+            "contract_path": "src/KeccakContract.sol",
+            "line_no": 26,
+            "src": "887:16"
+          }
+        ],
+        "title": "`abi.encodePacked()` should not be used with dynamic types when passing the result to a hash function such as `keccak256()`"
+      },
+      {
+        "description": "The `ecrecover` function is susceptible to signature malleability. This means that the same message can be signed in multiple ways, allowing an attacker to change the message signature without invalidating it. This can lead to unexpected behavior in smart contracts, such as the loss of funds or the ability to bypass access control. Consider using OpenZeppelin's ECDSA library instead of the built-in function.",
+        "detector_name": "ecrecover",
+        "instances": [
+          {
+            "contract_path": "src/inheritance/ExtendedInheritance.sol",
+            "line_no": 21,
+            "src": "705:9"
+          }
+        ],
+        "title": "`ecrecover` is susceptible to signature malleability"
+      },
+      {
+        "description": "Openzeppelin has deprecated several functions and replaced with newer versions. Please consult https://docs.openzeppelin.com/",
+        "detector_name": "deprecated-oz-functions",
+        "instances": [
+          {
+            "contract_path": "src/DeprecatedOZFunctions.sol",
+            "line_no": 22,
+            "src": "737:10"
+          },
+          {
+            "contract_path": "src/DeprecatedOZFunctions.sol",
+            "line_no": 27,
+            "src": "898:17"
+          }
+        ],
+        "title": "Deprecated OpenZeppelin functions should not be used"
+      },
+      {
+        "description": "ERC20 functions may not behave as expected. For example: return values are not always meaningful. It is recommended to use OpenZeppelin's SafeERC20 library.",
+        "detector_name": "unsafe-erc20-functions",
+        "instances": [
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 16,
+            "src": "370:20"
+          },
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 30,
+            "src": "864:20"
+          },
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 50,
+            "src": "1517:20"
+          },
+          {
+            "contract_path": "src/DeprecatedOZFunctions.sol",
+            "line_no": 32,
+            "src": "1062:13"
+          },
+          {
+            "contract_path": "src/DeprecatedOZFunctions.sol",
+            "line_no": 37,
+            "src": "1272:13"
+          },
+          {
+            "contract_path": "src/DeprecatedOZFunctions.sol",
+            "line_no": 38,
+            "src": "1322:13"
+          },
+          {
+            "contract_path": "src/DeprecatedOZFunctions.sol",
+            "line_no": 42,
+            "src": "1424:13"
+          },
+          {
+            "contract_path": "src/DeprecatedOZFunctions.sol",
+            "line_no": 47,
+            "src": "1598:18"
+          }
+        ],
+        "title": "Unsafe ERC20 Operations should not be used"
+      },
+      {
+        "description": "Consider using a specific version of Solidity in your contracts instead of a wide version. For example, instead of `pragma solidity ^0.8.0;`, use `pragma solidity 0.8.0;`",
+        "detector_name": "unspecific-solidity-pragma",
+        "instances": [
+          {
+            "contract_path": "src/Counter.sol",
+            "line_no": 2,
+            "src": "39:24"
+          },
+          {
+            "contract_path": "src/CrazyPragma.sol",
+            "line_no": 2,
+            "src": "32:32"
+          },
+          {
+            "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
+            "line_no": 6,
+            "src": "46:24"
+          },
+          {
+            "contract_path": "src/cloc/HeavilyCommentedContract.sol",
+            "line_no": 6,
+            "src": "46:32"
+          },
+          {
+            "contract_path": "src/inheritance/IContractInheritance.sol",
+            "line_no": 2,
+            "src": "32:24"
+          },
+          {
+            "contract_path": "src/inheritance/InheritanceBase.sol",
+            "line_no": 2,
+            "src": "32:23"
+          }
+        ],
+        "title": "Solidity pragma should be specific, not wide"
+      },
+      {
+        "description": "Solc compiler version 0.8.20 switches the default target EVM version to Shanghai, which means that the generated bytecode will include PUSH0 opcodes. Be sure to select the appropriate EVM version in case you intend to deploy on a chain other than mainnet like L2 chains that may not support PUSH0, otherwise deployment of your contracts will fail.",
+        "detector_name": "push-zero-opcode",
+        "instances": [
+          {
+            "contract_path": "src/AdminContract.sol",
+            "line_no": 2,
+            "src": "32:23"
+          },
+          {
+            "contract_path": "src/Counter.sol",
+            "line_no": 2,
+            "src": "39:24"
+          },
+          {
+            "contract_path": "src/CrazyPragma.sol",
+            "line_no": 2,
+            "src": "32:32"
+          },
+          {
+            "contract_path": "src/DeprecatedOZFunctions.sol",
+            "line_no": 2,
+            "src": "32:23"
+          },
+          {
+            "contract_path": "src/KeccakContract.sol",
+            "line_no": 2,
+            "src": "32:23"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 2,
+            "src": "32:23"
+          },
+          {
+            "contract_path": "src/StorageConditionals.sol",
+            "line_no": 2,
+            "src": "32:23"
+          },
+          {
+            "contract_path": "src/T11sTranferer.sol",
+            "line_no": 2,
+            "src": "32:23"
+          },
+          {
+            "contract_path": "src/UnsafeERC721Mint.sol",
+            "line_no": 2,
+            "src": "32:23"
+          },
+          {
+            "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
+            "line_no": 6,
+            "src": "46:24"
+          },
+          {
+            "contract_path": "src/inheritance/ExtendedInheritance.sol",
+            "line_no": 2,
+            "src": "32:23"
+          },
+          {
+            "contract_path": "src/inheritance/IContractInheritance.sol",
+            "line_no": 2,
+            "src": "32:24"
+          },
+          {
+            "contract_path": "src/inheritance/InheritanceBase.sol",
+            "line_no": 2,
+            "src": "32:23"
+          },
+          {
+            "contract_path": "src/nested/1/Nested.sol",
+            "line_no": 5,
+            "src": "180:23"
+          },
+          {
+            "contract_path": "src/nested/2/Nested.sol",
+            "line_no": 5,
+            "src": "180:23"
+          },
+          {
+            "contract_path": "src/parent_chain/ParentChainContract.sol",
+            "line_no": 2,
+            "src": "32:23"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 2,
+            "src": "32:23"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 2,
+            "src": "32:23"
+          }
+        ],
+        "title": "PUSH0 is not supported by all chains"
+      }
+    ]
+  },
+  "medium_issues": {
+    "issues": [
+      {
+        "description": "Contracts have owners with privileged rights to perform admin tasks and need to be trusted to not perform malicious updates or drain funds.",
+        "detector_name": "centralization-risk",
+        "instances": [
+          {
+            "contract_path": "src/AdminContract.sol",
+            "line_no": 7,
+            "src": "244:314"
+          },
+          {
+            "contract_path": "src/AdminContract.sol",
+            "line_no": 10,
+            "src": "376:9"
+          },
+          {
+            "contract_path": "src/AdminContract.sol",
+            "line_no": 14,
+            "src": "505:9"
+          },
+          {
+            "contract_path": "src/DeprecatedOZFunctions.sol",
+            "line_no": 7,
+            "src": "261:1381"
+          },
+          {
+            "contract_path": "src/InternalFunctions.sol",
+            "line_no": 12,
+            "src": "250:9"
+          },
+          {
+            "contract_path": "src/parent_chain/ParentChainContract.sol",
+            "line_no": 7,
+            "src": "250:657"
+          },
+          {
+            "contract_path": "src/parent_chain/ParentChainContract.sol",
+            "line_no": 28,
+            "src": "725:9"
+          },
+          {
+            "contract_path": "src/parent_chain/ParentChainContract.sol",
+            "line_no": 32,
+            "src": "854:9"
+          }
+        ],
+        "title": "Centralization Risk for trusted owners"
+      },
+      {
+        "description": "There is a subtle difference between the implementation of solmate's SafeTransferLib and OZ's SafeERC20: OZ's SafeERC20 checks if the token is a contract or not, solmate's SafeTransferLib does not.\nhttps://github.com/transmissions11/solmate/blob/main/src/utils/SafeTransferLib.sol#L9 \n`@dev Note that none of the functions in this library check that a token has code at all! That responsibility is delegated to the caller`\n",
+        "detector_name": "solmate-safe-transfer-lib",
+        "instances": [
+          {
+            "contract_path": "src/T11sTranferer.sol",
+            "line_no": 4,
+            "src": "57:84"
+          }
+        ],
+        "title": "Solmate's SafeTransferLib does not check for token contract's existence"
+      },
+      {
+        "description": "In the PoS model, proposers know well in advance if they will propose one or consecutive blocks ahead of time. In such a scenario, a malicious validator can hold back the transaction and execute it at a more favourable block number.Consider allowing function caller to specify swap deadline input parameter.",
+        "detector_name": "block-timestamp-deadline",
+        "instances": [
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 23,
+            "src": "670:83"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 24,
+            "src": "763:83"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 25,
+            "src": "856:70"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 26,
+            "src": "936:80"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 27,
+            "src": "1026:80"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 28,
+            "src": "1116:67"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 31,
+            "src": "1261:112"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 32,
+            "src": "1383:99"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 33,
+            "src": "1492:109"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 52,
+            "src": "1115:143"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 55,
+            "src": "1293:321"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 66,
+            "src": "1668:131"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 69,
+            "src": "1828:236"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 77,
+            "src": "2132:144"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 80,
+            "src": "2312:322"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 91,
+            "src": "2690:132"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 94,
+            "src": "2852:237"
+          }
+        ],
+        "title": "Using `block.timestamp` for swap deadline offers no protection"
+      },
+      {
+        "description": "Using `ERC721::_mint()` can mint ERC721 tokens to addresses which don't support ERC721 tokens. Use `_safeMint()` instead of `_mint()` for ERC721.",
+        "detector_name": "unsafe-oz-erc721-mint",
+        "instances": [
+          {
+            "contract_path": "src/UnsafeERC721Mint.sol",
+            "line_no": 10,
+            "src": "314:5"
+          }
+        ],
+        "title": "Using `ERC721::_mint()` can be dangerous"
+      }
+    ]
+  },
+  "nc_issues": {
+    "issues": [
+      {
+        "description": "Check for `address(0)` when assigning values to address state variables.",
+        "detector_name": "zero-address-check",
+        "instances": [
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 12,
+            "src": "267:15"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 58,
+            "src": "2121:14"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 11,
+            "src": "365:17"
+          }
+        ],
+        "title": "Missing checks for `address(0)` when assigning values to address state variables"
+      },
+      {
+        "description": "Instead of marking a function as `public`, consider marking it as `external` if it is not used internally.",
+        "detector_name": "useless-public-function",
+        "instances": [
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 28,
+            "src": "763:152"
+          },
+          {
+            "contract_path": "src/AssemblyExample.sol",
+            "line_no": 6,
+            "src": "104:229"
+          },
+          {
+            "contract_path": "src/Counter.sol",
+            "line_no": 7,
+            "src": "120:80"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 47,
+            "src": "1755:145"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 52,
+            "src": "1906:151"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 57,
+            "src": "2063:79"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 61,
+            "src": "2148:376"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 71,
+            "src": "2530:406"
+          },
+          {
+            "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
+            "line_no": 31,
+            "src": "491:131"
+          },
+          {
+            "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
+            "line_no": 38,
+            "src": "628:95"
+          },
+          {
+            "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
+            "line_no": 42,
+            "src": "729:1016"
+          },
+          {
+            "contract_path": "src/cloc/HeavilyCommentedContract.sol",
+            "line_no": 31,
+            "src": "500:131"
+          },
+          {
+            "contract_path": "src/cloc/HeavilyCommentedContract.sol",
+            "line_no": 38,
+            "src": "637:804"
+          },
+          {
+            "contract_path": "src/parent_chain/ParentChainContract.sol",
+            "line_no": 11,
+            "src": "346:61"
+          },
+          {
+            "contract_path": "src/parent_chain/ParentChainContract.sol",
+            "line_no": 15,
+            "src": "413:225"
+          }
+        ],
+        "title": "`public` functions not used internally could be marked `external`"
+      },
+      {
+        "description": "Create a constant state variable and reference it throughout the contract.",
+        "detector_name": "constants-instead-of-literals",
+        "instances": [
+          {
+            "contract_path": "src/ConstantsLiterals.sol",
+            "line_no": 25,
+            "src": "958:3"
+          },
+          {
+            "contract_path": "src/ConstantsLiterals.sol",
+            "line_no": 26,
+            "src": "992:3"
+          },
+          {
+            "contract_path": "src/ConstantsLiterals.sol",
+            "line_no": 27,
+            "src": "1032:4"
+          },
+          {
+            "contract_path": "src/ConstantsLiterals.sol",
+            "line_no": 28,
+            "src": "1068:4"
+          },
+          {
+            "contract_path": "src/ConstantsLiterals.sol",
+            "line_no": 29,
+            "src": "1117:42"
+          },
+          {
+            "contract_path": "src/ConstantsLiterals.sol",
+            "line_no": 30,
+            "src": "1192:42"
+          },
+          {
+            "contract_path": "src/ConstantsLiterals.sol",
+            "line_no": 31,
+            "src": "1275:66"
+          },
+          {
+            "contract_path": "src/ConstantsLiterals.sol",
+            "line_no": 32,
+            "src": "1374:66"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 113,
+            "src": "7252:2"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 113,
+            "src": "7293:2"
+          }
+        ],
+        "title": "Constants should be defined and used instead of literals"
+      },
+      {
+        "description": "Index event fields make the field more quickly accessible to off-chain tools that parse events. However, note that each index field costs extra gas during emission, so it's not necessarily best to index the maximum allowed per event (three fields). Each event should use three indexed fields if there are three or more fields, and gas usage is not particularly of concern for the events in question. If there are fewer than three fields, all of the fields should be indexed.",
+        "detector_name": "unindexed-events",
+        "instances": [
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 19,
+            "src": "2641:107"
+          },
+          {
+            "contract_path": "src/inheritance/ExtendedInheritance.sol",
+            "line_no": 7,
+            "src": "144:45"
+          },
+          {
+            "contract_path": "src/inheritance/InheritanceBase.sol",
+            "line_no": 7,
+            "src": "150:28"
+          }
+        ],
+        "title": "Event is missing `indexed` fields"
+      },
+      {
+        "description": "Use descriptive reason strings or custom errors for revert paths.",
+        "detector_name": "require-with-string",
+        "instances": [
+          {
+            "contract_path": "src/DeprecatedOZFunctions.sol",
+            "line_no": 37,
+            "src": "1264:7"
+          },
+          {
+            "contract_path": "src/DeprecatedOZFunctions.sol",
+            "line_no": 40,
+            "src": "1389:6"
+          },
+          {
+            "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
+            "line_no": 35,
+            "src": "589:7"
+          },
+          {
+            "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
+            "line_no": 56,
+            "src": "1403:7"
+          },
+          {
+            "contract_path": "src/cloc/HeavilyCommentedContract.sol",
+            "line_no": 35,
+            "src": "598:7"
+          },
+          {
+            "contract_path": "src/cloc/HeavilyCommentedContract.sol",
+            "line_no": 53,
+            "src": "1408:7"
+          }
+        ],
+        "title": "Empty `require()` / `revert()` statements"
+      },
+      {
+        "description": "This is a best-practice to protect against reentrancy in other modifiers.",
+        "detector_name": "non-reentrant-before-others",
+        "instances": [
+          {
+            "contract_path": "src/AdminContract.sol",
+            "line_no": 10,
+            "src": "386:12"
+          },
+          {
+            "contract_path": "src/parent_chain/ParentChainContract.sol",
+            "line_no": 28,
+            "src": "735:12"
+          }
+        ],
+        "title": "The `nonReentrant` `modifier` should occur before all other modifiers"
+      },
+      {
+        "description": "Use `e` notation, for example: `1e18`, instead of its full numeric value.",
+        "detector_name": "large-numeric-literal",
+        "instances": [
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 6,
+            "src": "182:24"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 7,
+            "src": "252:23"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 8,
+            "src": "321:22"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 9,
+            "src": "389:21"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 10,
+            "src": "456:20"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 11,
+            "src": "522:19"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 12,
+            "src": "587:18"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 13,
+            "src": "651:17"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 14,
+            "src": "714:16"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 15,
+            "src": "777:15"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 16,
+            "src": "839:14"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 17,
+            "src": "900:13"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 18,
+            "src": "960:12"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 19,
+            "src": "1019:11"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 20,
+            "src": "1077:10"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 21,
+            "src": "1134:9"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 22,
+            "src": "1190:8"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 23,
+            "src": "1245:7"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 24,
+            "src": "1299:6"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 25,
+            "src": "1352:5"
+          }
+        ],
+        "title": "Large literal values multiples of 10000 can be replaced with scientific notation"
+      },
+      {
+        "description": "Instead of separating the logic into a separate function, consider inlining the logic into the calling function. This can reduce the number of function calls and improve readability.",
+        "detector_name": "useless-internal-function",
+        "instances": [
+          {
+            "contract_path": "src/InternalFunctions.sol",
+            "line_no": 22,
+            "src": "495:150"
+          }
+        ],
+        "title": "Internal functions called only once can be inlined"
+      }
+    ]
+  }
+}
