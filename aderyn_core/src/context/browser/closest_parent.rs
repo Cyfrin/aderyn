@@ -12,6 +12,16 @@ pub trait GetClosestParentOfTypeX {
     ) -> Option<&'a ASTNode>;
 }
 
+impl GetClosestParentOfTypeX for ASTNode {
+    fn closest_parent_of_type<'a>(
+        &self,
+        context: &'a WorkspaceContext,
+        node_type: NodeType,
+    ) -> Option<&'a ASTNode> {
+        context.get_closest_parent(self.id()?, node_type)
+    }
+}
+
 impl GetClosestParentOfTypeX for Assignment {
     fn closest_parent_of_type<'a>(
         &self,

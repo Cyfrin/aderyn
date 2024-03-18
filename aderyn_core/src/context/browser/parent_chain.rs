@@ -8,6 +8,12 @@ pub trait GetParentChain {
     fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>>;
 }
 
+impl GetParentChain for ASTNode {
+    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+        Some(context.get_parent_chain(self.id()?))
+    }
+}
+
 impl GetParentChain for Assignment {
     fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         Some(context.get_parent_chain(self.id))

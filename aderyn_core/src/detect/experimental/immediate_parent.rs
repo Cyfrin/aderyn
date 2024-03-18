@@ -32,7 +32,7 @@ impl IssueDetector for ImmediateParentDemonstrator {
                 if let ASTNode::Block(block) = first_parent {
                     println!("1 {}", block);
                     capture!(self, context, first_parent);
-                    if let Some(second_parent) = block.parent(context) {
+                    if let Some(second_parent) = first_parent.parent(context) {
                         if let ASTNode::ForStatement(for_statement) = second_parent {
                             println!("2 {}", for_statement);
                             capture!(self, context, second_parent);
