@@ -21,7 +21,8 @@
     "unsafe-oz-erc721-mint",
     "push-zero-opcode",
     "arbitrary-transfer-from",
-    "large-numeric-literal"
+    "large-numeric-literal",
+    "useless-internal-function"
   ],
   "files_details": {
     "files_details": [
@@ -56,6 +57,10 @@
       {
         "file_path": "src/HugeConstants.sol",
         "n_sloc": 7
+      },
+      {
+        "file_path": "src/InternalFunctions.sol",
+        "n_sloc": 18
       },
       {
         "file_path": "src/KeccakContract.sol",
@@ -128,8 +133,8 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 728,
-    "total_source_units": 25
+    "total_sloc": 746,
+    "total_source_units": 26
   },
   "high_issues": {
     "issues": [
@@ -189,7 +194,7 @@
     "high": 2,
     "low": 6,
     "medium": 4,
-    "nc": 7
+    "nc": 8
   },
   "low_issues": {
     "issues": [
@@ -462,6 +467,11 @@
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 7,
             "src": "261:1381"
+          },
+          {
+            "contract_path": "src/InternalFunctions.sol",
+            "line_no": 12,
+            "src": "250:9"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
@@ -859,6 +869,18 @@
           }
         ],
         "title": "Large literal values multiples of 10000 can be replaced with scientific notation"
+      },
+      {
+        "description": "",
+        "detector_name": "useless-internal-function",
+        "instances": [
+          {
+            "contract_path": "src/InternalFunctions.sol",
+            "line_no": 22,
+            "src": "495:150"
+          }
+        ],
+        "title": "Internal functions called only once can be inlined"
       }
     ]
   }
