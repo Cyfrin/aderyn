@@ -87,6 +87,6 @@ mod uselss_internal_function {
             String::from("Internal functions called only once can be inlined")
         );
         // assert that the detector returns the correct description
-        assert_eq!(detector.description(), String::from(""));
+        assert_eq!(detector.description(), String::from("Instead of separating the logic into a separate function, consider inlining the logic into the calling function. This can reduce the number of function calls and improve readability."));
     }
 }

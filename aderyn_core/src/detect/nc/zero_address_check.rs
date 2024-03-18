@@ -195,7 +195,7 @@ mod zero_address_check_tests {
         assert_eq!(
             detector.description(),
             String::from(
-                "Assigning values to address state variables without checking for `address(0)`."
+                "Check for `address(0)` when assigning values to address state variables."
             )
         );
     }

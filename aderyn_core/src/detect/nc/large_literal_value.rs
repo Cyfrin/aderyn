@@ -38,7 +38,7 @@ impl IssueDetector for LargeLiteralValueDetector {
     }
 
     fn description(&self) -> String {
-        String::from("Use `1e18` instead of the full numeric value.")
+        String::from("Use `e` notation, for example: `1e18`, instead of its full numeric value.")
     }
 
     fn severity(&self) -> IssueSeverity {
@@ -84,6 +84,11 @@ mod large_literal_values {
             )
         );
         // assert that the detector returns the correct description
-        assert_eq!(detector.description(), String::from(""));
+        assert_eq!(
+            detector.description(),
+            String::from(
+                "Use `e` notation, for example: `1e18`, instead of its full numeric value."
+            )
+        );
     }
 }

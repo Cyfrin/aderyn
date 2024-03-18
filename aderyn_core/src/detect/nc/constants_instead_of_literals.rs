@@ -160,6 +160,11 @@ mod constants_instead_of_literals_tests {
             String::from("Constants should be defined and used instead of literals")
         );
         // assert that the detector returns the correct description
-        assert_eq!(detector.description(), String::from(""));
+        assert_eq!(
+            detector.description(),
+            String::from(
+                "Create a constant state variable and reference it throughout the contract."
+            )
+        );
     }
 }

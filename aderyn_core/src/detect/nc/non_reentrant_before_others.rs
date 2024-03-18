@@ -81,7 +81,7 @@ mod non_reentrant_before_others_tests {
         // assert that the detector returns the correct description
         assert_eq!(
             detector.description(),
-            "This is a best-practice to protect against reentrancy in other modifiers"
+            "This is a best-practice to protect against reentrancy in other modifiers."
         );
     }
 }

@@ -84,9 +84,9 @@ mod useless_public_function_tests {
         // assert that the detector returns the correct title
         assert_eq!(
             detector.title(),
-            String::from("Functions not used internally could be marked external")
+            String::from("`public` functions not used internally could be marked `external`")
         );
         // assert that the detector returns the correct description
-        assert_eq!(detector.description(), String::from(""));
+        assert_eq!(detector.description(), String::from("Instead of marking a function as `public`, consider marking it as `external` if it is not used internally."));
     }
 }
