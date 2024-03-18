@@ -602,7 +602,7 @@
   "nc_issues": {
     "issues": [
       {
-        "description": "Assigning values to address state variables without checking for `address(0)`.",
+        "description": "Check for `address(0)` when assigning values to address state variables.",
         "detector_name": "zero-address-check",
         "instances": [
           {
@@ -624,7 +624,7 @@
         "title": "Missing checks for `address(0)` when assigning values to address state variables"
       },
       {
-        "description": "",
+        "description": "Instead of marking a function as `public`, consider marking it as `external` if it is not used internally.",
         "detector_name": "useless-public-function",
         "instances": [
           {
@@ -703,10 +703,10 @@
             "src": "413:225"
           }
         ],
-        "title": "Functions not used internally could be marked external"
+        "title": "`public` functions not used internally could be marked `external`"
       },
       {
-        "description": "",
+        "description": "Create a constant state variable and reference it throughout the contract.",
         "detector_name": "constants-instead-of-literals",
         "instances": [
           {
@@ -785,7 +785,7 @@
         "title": "Event is missing `indexed` fields"
       },
       {
-        "description": "",
+        "description": "Use descriptive reason strings or custom errors for revert paths.",
         "detector_name": "require-with-string",
         "instances": [
           {
@@ -819,10 +819,10 @@
             "src": "1408:7"
           }
         ],
-        "title": "`require()` / `revert()` statements should have descriptive reason strings or custom errors"
+        "title": "Empty `require()` / `revert()` statements"
       },
       {
-        "description": "This is a best-practice to protect against reentrancy in other modifiers",
+        "description": "This is a best-practice to protect against reentrancy in other modifiers.",
         "detector_name": "non-reentrant-before-others",
         "instances": [
           {
@@ -839,7 +839,7 @@
         "title": "The `nonReentrant` `modifier` should occur before all other modifiers"
       },
       {
-        "description": "",
+        "description": "Use `e` notation, for example: `1e18`, instead of its full numeric value.",
         "detector_name": "large-numeric-literal",
         "instances": [
           {
@@ -946,7 +946,7 @@
         "title": "Large literal values multiples of 10000 can be replaced with scientific notation"
       },
       {
-        "description": "",
+        "description": "Instead of separating the logic into a separate function, consider inlining the logic into the calling function. This can reduce the number of function calls and improve readability.",
         "detector_name": "useless-internal-function",
         "instances": [
           {
