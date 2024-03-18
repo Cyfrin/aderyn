@@ -33,6 +33,7 @@ fn main() {
         output: format!("bot_reports/{}default_analysis_report.md", cmd_args.prefix).to_string(),
         exclude: None,
         no_snippets: false,
+        stdout: false,
         scope: None,
     });
 
@@ -54,6 +55,7 @@ fn main() {
             .to_string(),
             exclude: None,
             no_snippets: false,
+            stdout: false,
             scope: None,
         },
         subscribe_to, // inject subscriptions here
@@ -80,6 +82,7 @@ fn main() {
             .to_string(),
             exclude: None,
             no_snippets: false,
+            stdout: false,
             scope: None,
         },
         subscribe_to_hybrid, // inject subscriptions here
