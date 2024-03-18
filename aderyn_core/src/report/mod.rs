@@ -5,6 +5,7 @@ use serde::Serialize;
 use crate::{ast::NodeID, context::workspace_context::WorkspaceContext};
 
 pub mod json_printer;
+pub mod json_stdout_printer;
 pub mod markdown_printer;
 pub mod printer;
 pub mod reporter;

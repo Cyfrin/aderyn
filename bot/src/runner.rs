@@ -20,6 +20,7 @@ pub fn run() {
             exclude: None,
             scope: None,
             no_snippets: false,
+            stdout: false,
         },
         subscriptions,
     )
