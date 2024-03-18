@@ -27,6 +27,7 @@ pub fn run_with_printer<T>(
     reporter: T,
     root_rel_path: PathBuf,
     no_snippets: bool,
+    stdout: bool,
 ) -> Result<(), Box<dyn Error>>
 where
     T: ReportPrinter<()>,
@@ -38,6 +39,7 @@ where
         reporter,
         root_rel_path,
         no_snippets,
+        stdout,
         detectors,
     )
 }
@@ -48,6 +50,7 @@ pub fn run_with_printer_and_given_detectors<T>(
     reporter: T,
     root_rel_path: PathBuf,
     no_snippets: bool,
+    stdout: bool,
     mut detectors: Vec<Box<dyn IssueDetector>>,
 ) -> Result<(), Box<dyn Error>>
 where
@@ -104,21 +107,34 @@ where
     println!("Detectors run, processing found issues");
 
     println!("Found issues processed. Printing report");
-    reporter.print_report(
-        get_markdown_writer(&output_file_path)?,
-        &report,
-        context,
-        root_rel_path,
-        Some(output_file_path.clone()),
-        no_snippets,
-        detectors_used,
-    )?;
-
-    println!("Report printed to {}", output_file_path);
+    if !stdout {
+        reporter.print_report(
+            get_writer(&output_file_path)?,
+            &report,
+            context,
+            root_rel_path,
+            Some(output_file_path.clone()),
+            no_snippets,
+            stdout,
+            detectors_used,
+        )?;
+        println!("Report printed to {}", output_file_path);
+    } else {
+        reporter.print_report(
+            io::stdout(),
+            &report,
+            context,
+            root_rel_path,
+            Some(output_file_path.clone()),
+            no_snippets,
+            stdout,
+            detectors_used,
+        )?;
+    }
     Ok(())
 }
 
-fn get_markdown_writer(filename: &str) -> io::Result<File> {
+fn get_writer(filename: &str) -> io::Result<File> {
     let file_path = Path::new(filename);
     if let Some(parent_dir) = file_path.parent() {
         std::fs::create_dir_all(parent_dir)?;
