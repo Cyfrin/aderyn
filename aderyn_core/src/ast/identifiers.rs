@@ -23,9 +23,7 @@ impl Node for Identifier {
         self.accept_metadata(visitor)?;
         visitor.end_visit_identifier(self)
     }
-    fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_immediate_children(self.id, self.overloaded_declarations.clone())?;
-        visitor.visit_immediate_children(self.id, vec![self.referenced_declaration])?;
+    fn accept_metadata(&self, _visitor: &mut impl ASTConstVisitor) -> Result<()> {
         Ok(())
     }
 }
@@ -77,10 +75,7 @@ impl Node for IdentifierPath {
         self.accept_metadata(visitor)?;
         visitor.end_visit_identifier_path(self)
     }
-    fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        if let Some(ref_decl_id) = self.referenced_declaration {
-            visitor.visit_immediate_children(self.id, vec![ref_decl_id])?;
-        }
+    fn accept_metadata(&self, _visitor: &mut impl ASTConstVisitor) -> Result<()> {
         Ok(())
     }
 }
