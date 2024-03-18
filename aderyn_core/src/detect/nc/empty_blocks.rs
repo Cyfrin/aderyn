@@ -33,11 +33,11 @@ impl IssueDetector for EmptyBlockDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Empty Block - No statements found!")
+        String::from("Empty Block")
     }
 
     fn description(&self) -> String {
-        String::from("")
+        String::from("Consider removing empty blocks.")
     }
 
     fn severity(&self) -> IssueSeverity {
@@ -62,25 +62,25 @@ mod empty_block_tests {
     #[test]
     fn test_empty_block() {
         let context =
-            load_contract("../tests/contract-playground/out/AdminContract.sol/AdminContract.json");
+            load_contract("../tests/contract-playground/out/EmptyBlocks.sol/EmptyBlocks.json");
 
         let mut detector = EmptyBlockDetector::default();
         // assert that the detector finds something
         let found = detector.detect(&context).unwrap();
         assert!(found);
         // assert that the detector returns the correct number of instances
-        assert_eq!(detector.instances().len(), 1);
+        assert_eq!(detector.instances().len(), 4);
         // assert that the detector returns the correct severity
         assert_eq!(
             detector.severity(),
             crate::detect::detector::IssueSeverity::NC
         );
         // assert that the detector returns the correct title
-        assert_eq!(
-            detector.title(),
-            String::from("Empty Block - No statements found!")
-        );
+        assert_eq!(detector.title(), String::from("Empty Block"));
         // assert that the detector returns the correct description
-        assert_eq!(detector.description(), String::from(""));
+        assert_eq!(
+            detector.description(),
+            String::from("Consider removing empty blocks.")
+        );
     }
 }

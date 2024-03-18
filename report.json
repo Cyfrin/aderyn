@@ -56,6 +56,10 @@
         "n_sloc": 32
       },
       {
+        "file_path": "src/EmptyBlocks.sol",
+        "n_sloc": 24
+      },
+      {
         "file_path": "src/HugeConstants.sol",
         "n_sloc": 26
       },
@@ -134,8 +138,8 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 765,
-    "total_source_units": 26
+    "total_sloc": 789,
+    "total_source_units": 27
   },
   "high_issues": {
     "issues": [
@@ -840,13 +844,48 @@
         "title": "The `nonReentrant` `modifier` should occur before all other modifiers"
       },
       {
-        "description": "",
+        "description": "Consider removing empty blocks.",
         "detector_name": "empty-block",
         "instances": [
           {
             "contract_path": "src/AdminContract.sol",
             "line_no": 14,
             "src": "515:41"
+          },
+          {
+            "contract_path": "src/EmptyBlocks.sol",
+            "line_no": 6,
+            "src": "110:7"
+          },
+          {
+            "contract_path": "src/EmptyBlocks.sol",
+            "line_no": 10,
+            "src": "162:7"
+          },
+          {
+            "contract_path": "src/EmptyBlocks.sol",
+            "line_no": 14,
+            "src": "215:7"
+          },
+          {
+            "contract_path": "src/EmptyBlocks.sol",
+            "line_no": 18,
+            "src": "273:7"
+          },
+          {
+            "contract_path": "src/EmptyBlocks.sol",
+            "line_no": 22,
+            "src": "342:36"
+          },
+          {
+            "contract_path": "src/EmptyBlocks.sol",
+            "line_no": 31,
+            "src": "536:11"
+          },
+          {
+            "contract_path": "src/EmptyBlocks.sol",
+            "line_no": 39,
+            "src": "698:44"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
@@ -869,7 +908,7 @@
             "src": "1046:41"
           }
         ],
-        "title": "Empty Block - No statements found!"
+        "title": "Empty Block"
       },
       {
         "description": "Use `e` notation, for example: `1e18`, instead of its full numeric value.",
