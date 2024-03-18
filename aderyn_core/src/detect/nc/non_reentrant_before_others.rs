@@ -34,7 +34,7 @@ impl IssueDetector for NonReentrantBeforeOthersDetector {
     }
 
     fn description(&self) -> String {
-        String::from("This is a best-practice to protect against reentrancy in other modifiers")
+        String::from("This is a best-practice to protect against reentrancy in other modifiers.")
     }
 
     fn severity(&self) -> IssueSeverity {
@@ -81,7 +81,7 @@ mod non_reentrant_before_others_tests {
         // assert that the detector returns the correct description
         assert_eq!(
             detector.description(),
-            "This is a best-practice to protect against reentrancy in other modifiers"
+            "This is a best-practice to protect against reentrancy in other modifiers."
         );
     }
 }
