@@ -74,13 +74,13 @@ Build the image:
 ```
 `/path/to/project/root` should be the path to your Foundry or Hardhat project root directory and it will be mounted to `/share` in the container.
 
-Run the container in an interactive mode:
+Run Aderyn in Docker:
 ```sh
-  docker run -it -v /path/to/project/root/:/share aderyn
+  docker run -v /path/to/project/root/:/share aderyn
 ```
-Run aderyn:
+Run Aderyn with flags in Docker:
 ```sh
-  aderyn .
+  docker run -v /path/to/project/root/:/share aderyn -h
 ```
 
 ## Installation
