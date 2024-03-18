@@ -3,10 +3,7 @@ use aderyn_core::{
     context::workspace_context::WorkspaceContext,
     detect::detector::IssueDetector,
     fscloc,
-    report::{
-        json_printer::JsonPrinter, json_stdout_printer::JsonStdoutPrinter,
-        markdown_printer::MarkdownReportPrinter,
-    },
+    report::{json_printer::JsonPrinter, markdown_printer::MarkdownReportPrinter},
     run_with_printer, run_with_printer_and_given_detectors,
 };
 use std::{env, fs::read_dir, path::PathBuf};
@@ -31,14 +28,15 @@ pub fn drive(args: Args) {
     let root_rel_path = PathBuf::from(&args.root);
     let context = &cx_wrapper.context;
 
-    if args.stdout {
+    if args.output.ends_with(".json") {
         // Load the workspace context into the run function, which runs the detectors
         run_with_printer(
             context,
             output,
-            JsonStdoutPrinter,
+            JsonPrinter,
             root_rel_path,
             args.no_snippets,
+            args.stdout,
         )
         .unwrap_or_else(|err| {
             // Exit with a non-zero exit code
@@ -47,37 +45,21 @@ pub fn drive(args: Args) {
             std::process::exit(1);
         });
     } else {
-        if args.output.ends_with(".json") {
-            // Load the workspace context into the run function, which runs the detectors
-            run_with_printer(
-                context,
-                output,
-                JsonPrinter,
-                root_rel_path,
-                args.no_snippets,
-            )
-            .unwrap_or_else(|err| {
-                // Exit with a non-zero exit code
-                eprintln!("Error running aderyn");
-                eprintln!("{:?}", err);
-                std::process::exit(1);
-            });
-        } else {
-            // Load the workspace context into the run function, which runs the detectors
-            run_with_printer(
-                context,
-                output,
-                MarkdownReportPrinter,
-                root_rel_path,
-                args.no_snippets,
-            )
-            .unwrap_or_else(|err| {
-                // Exit with a non-zero exit code
-                eprintln!("Error running aderyn");
-                eprintln!("{:?}", err);
-                std::process::exit(1);
-            });
-        }
+        // Load the workspace context into the run function, which runs the detectors
+        run_with_printer(
+            context,
+            output,
+            MarkdownReportPrinter,
+            root_rel_path,
+            args.no_snippets,
+            args.stdout,
+        )
+        .unwrap_or_else(|err| {
+            // Exit with a non-zero exit code
+            eprintln!("Error running aderyn");
+            eprintln!("{:?}", err);
+            std::process::exit(1);
+        });
     }
 }
 
@@ -86,14 +68,16 @@ pub fn drive_with(args: Args, detectors: Vec<Box<dyn IssueDetector>>) {
     let cx_wrapper = make_context(&args);
     let root_rel_path = PathBuf::from(&args.root);
     let context = &cx_wrapper.context;
-    if args.stdout {
+
+    if args.output.ends_with(".json") {
         // Load the workspace context into the run function, which runs the detectors
         run_with_printer_and_given_detectors(
             context,
             output,
-            JsonStdoutPrinter,
+            JsonPrinter,
             root_rel_path,
             args.no_snippets,
+            args.stdout,
             detectors,
         )
         .unwrap_or_else(|err| {
@@ -103,39 +87,22 @@ pub fn drive_with(args: Args, detectors: Vec<Box<dyn IssueDetector>>) {
             std::process::exit(1);
         });
     } else {
-        if args.output.ends_with(".json") {
-            // Load the workspace context into the run function, which runs the detectors
-            run_with_printer_and_given_detectors(
-                context,
-                output,
-                JsonPrinter,
-                root_rel_path,
-                args.no_snippets,
-                detectors,
-            )
-            .unwrap_or_else(|err| {
-                // Exit with a non-zero exit code
-                eprintln!("Error running aderyn");
-                eprintln!("{:?}", err);
-                std::process::exit(1);
-            });
-        } else {
-            // Load the workspace context into the run function, which runs the detectors
-            run_with_printer_and_given_detectors(
-                context,
-                output,
-                MarkdownReportPrinter,
-                root_rel_path,
-                args.no_snippets,
-                detectors,
-            )
-            .unwrap_or_else(|err| {
-                // Exit with a non-zero exit code
-                eprintln!("Error running aderyn");
-                eprintln!("{:?}", err);
-                std::process::exit(1);
-            });
-        }
+        // Load the workspace context into the run function, which runs the detectors
+        run_with_printer_and_given_detectors(
+            context,
+            output,
+            MarkdownReportPrinter,
+            root_rel_path,
+            args.no_snippets,
+            args.stdout,
+            detectors,
+        )
+        .unwrap_or_else(|err| {
+            // Exit with a non-zero exit code
+            eprintln!("Error running aderyn");
+            eprintln!("{:?}", err);
+            std::process::exit(1);
+        });
     }
 }
 

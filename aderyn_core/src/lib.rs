@@ -27,6 +27,7 @@ pub fn run_with_printer<T>(
     reporter: T,
     root_rel_path: PathBuf,
     no_snippets: bool,
+    stdout: bool,
 ) -> Result<(), Box<dyn Error>>
 where
     T: ReportPrinter<()>,
@@ -38,6 +39,7 @@ where
         reporter,
         root_rel_path,
         no_snippets,
+        stdout,
         detectors,
     )
 }
@@ -48,6 +50,7 @@ pub fn run_with_printer_and_given_detectors<T>(
     reporter: T,
     root_rel_path: PathBuf,
     no_snippets: bool,
+    stdout: bool,
     mut detectors: Vec<Box<dyn IssueDetector>>,
 ) -> Result<(), Box<dyn Error>>
 where
@@ -111,6 +114,7 @@ where
         root_rel_path,
         Some(output_file_path.clone()),
         no_snippets,
+        stdout,
         detectors_used,
     )?;
 

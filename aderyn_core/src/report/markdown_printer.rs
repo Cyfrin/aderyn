@@ -2,7 +2,7 @@ use crate::context::workspace_context::WorkspaceContext;
 
 use std::{
     collections::HashSet,
-    io::{Result, Write},
+    io::{self, Result, Write},
     path::{Path, PathBuf},
 };
 
@@ -21,6 +21,7 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
         root_path: PathBuf,
         output_rel_path: Option<String>,
         no_snippets: bool,
+        _: bool,
         detectors_used: &[(String, String)],
     ) -> Result<()> {
         self.print_title_and_disclaimer(&mut writer)?;
