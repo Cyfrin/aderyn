@@ -3,6 +3,7 @@ use crate::visitor::ast_visitor::*;
 use eyre::Result;
 use std::collections::HashMap;
 
+use super::browser::GetImmediateParent;
 use super::capturable::Capturable;
 
 #[derive(Debug, Clone, PartialEq)]
@@ -61,20 +62,6 @@ pub enum ASTNode {
 }
 
 impl ASTNode {
-    pub fn parent<'a>(&self, context: &'a WorkspaceContext) -> Option<&'a ASTNode> {
-        if let Some(id) = self.id() {
-            return context.get_parent(id);
-        }
-        None
-    }
-
-    pub fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        if let Some(id) = self.id() {
-            return Some(context.get_parent_chain(id));
-        }
-        None
-    }
-
     pub fn node_type(&self) -> NodeType {
         match self {
             ASTNode::ArrayTypeName(_) => NodeType::ArrayTypeName,
