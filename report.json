@@ -56,7 +56,7 @@
       },
       {
         "file_path": "src/HugeConstants.sol",
-        "n_sloc": 7
+        "n_sloc": 26
       },
       {
         "file_path": "src/InternalFunctions.sol",
@@ -133,7 +133,7 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 746,
+    "total_sloc": 765,
     "total_source_units": 26
   },
   "high_issues": {
@@ -311,11 +311,6 @@
             "src": "32:32"
           },
           {
-            "contract_path": "src/HugeConstants.sol",
-            "line_no": 2,
-            "src": "32:23"
-          },
-          {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
             "line_no": 6,
             "src": "46:24"
@@ -359,11 +354,6 @@
           },
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
-            "line_no": 2,
-            "src": "32:23"
-          },
-          {
-            "contract_path": "src/HugeConstants.sol",
             "line_no": 2,
             "src": "32:23"
           },
@@ -855,17 +845,102 @@
           {
             "contract_path": "src/HugeConstants.sol",
             "line_no": 6,
-            "src": "182:22"
+            "src": "182:24"
           },
           {
             "contract_path": "src/HugeConstants.sol",
             "line_no": 7,
-            "src": "259:23"
+            "src": "252:23"
           },
           {
             "contract_path": "src/HugeConstants.sol",
             "line_no": 8,
-            "src": "337:24"
+            "src": "321:22"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 9,
+            "src": "389:21"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 10,
+            "src": "456:20"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 11,
+            "src": "522:19"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 12,
+            "src": "587:18"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 13,
+            "src": "651:17"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 14,
+            "src": "714:16"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 15,
+            "src": "777:15"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 16,
+            "src": "839:14"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 17,
+            "src": "900:13"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 18,
+            "src": "960:12"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 19,
+            "src": "1019:11"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 20,
+            "src": "1077:10"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 21,
+            "src": "1134:9"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 22,
+            "src": "1190:8"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 23,
+            "src": "1245:7"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 24,
+            "src": "1299:6"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 25,
+            "src": "1352:5"
           }
         ],
         "title": "Large literal values multiples of 10000 can be replaced with scientific notation"
