@@ -39,6 +39,10 @@ pub struct CommandLineArgs {
     #[arg(short, long)]
     no_snippets: bool,
 
+    /// Print the output to stdout instead of a file
+    #[arg(long)]
+    stdout: bool,
+
     /// Path to aderyn.config.json
     #[arg(short, long)]
     config_file: Option<String>,
@@ -81,6 +85,7 @@ fn main() {
         scope: cmd_args.scope,
         exclude: cmd_args.exclude,
         no_snippets: cmd_args.no_snippets,
+        stdout: cmd_args.stdout,
     };
 
     let aderyn_config_path = match cmd_args.config_file {
@@ -176,6 +181,7 @@ fn main() {
                     scope: scope_lines,
                     exclude: args.exclude,
                     no_snippets: args.no_snippets,
+                    stdout: args.stdout,
                 };
                 driver::drive_with(new_args, subscriptions);
             }

@@ -8,6 +8,12 @@ pub trait GetImmediateParent {
     fn parent<'a>(&self, context: &'a WorkspaceContext) -> Option<&'a ASTNode>;
 }
 
+impl GetImmediateParent for ASTNode {
+    fn parent<'a>(&self, context: &'a WorkspaceContext) -> Option<&'a ASTNode> {
+        context.get_parent(self.id()?)
+    }
+}
+
 impl GetImmediateParent for Assignment {
     fn parent<'a>(&self, context: &'a WorkspaceContext) -> Option<&'a ASTNode> {
         context.get_parent(self.id)
