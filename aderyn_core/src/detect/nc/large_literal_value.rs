@@ -38,7 +38,7 @@ impl IssueDetector for LargeLiteralValueDetector {
     }
 
     fn description(&self) -> String {
-        String::from("")
+        String::from("Use `1e18` instead of the full numeric value.")
     }
 
     fn severity(&self) -> IssueSeverity {

@@ -115,7 +115,7 @@ impl IssueDetector for ConstantsInsteadOfLiteralsDetector {
     }
 
     fn description(&self) -> String {
-        String::from("")
+        String::from("Create a constant state variable and reference it throughout the contract.")
     }
 
     fn severity(&self) -> IssueSeverity {

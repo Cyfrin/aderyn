@@ -39,11 +39,11 @@ impl IssueDetector for UselessPublicFunctionDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Functions not used internally could be marked external")
+        String::from("`public` functions not used internally could be marked `external`")
     }
 
     fn description(&self) -> String {
-        String::from("")
+        String::from("Instead of marking a function as `public`, consider marking it as `external` if it is not used internally.")
     }
 
     fn severity(&self) -> IssueSeverity {

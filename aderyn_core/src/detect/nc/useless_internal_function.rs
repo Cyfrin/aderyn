@@ -41,7 +41,7 @@ impl IssueDetector for UselessInternalFunctionDetector {
     }
 
     fn description(&self) -> String {
-        String::from("")
+        String::from("Instead of separating the logic into a separate function, consider inlining the logic into the calling function. This can reduce the number of function calls and improve readability.")
     }
 
     fn severity(&self) -> IssueSeverity {
