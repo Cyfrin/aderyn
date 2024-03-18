@@ -9,9 +9,12 @@ pub mod reusable;
 #[macro_export]
 macro_rules! capture {
     ($self:ident, $context:ident, $item:expr) => {
-        $self
-            .found_instances
-            .insert($context.get_node_sort_key(&$item.clone().into()), $item.id);
+        if let Some(id) = $context.get_node_id_of_capturable(&$item.clone().into()) {
+            $self.found_instances.insert(
+                $context.get_node_sort_key_from_capturable(&$item.clone().into()),
+                id,
+            );
+        }
     };
 }
 

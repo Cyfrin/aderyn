@@ -3,6 +3,8 @@ use crate::visitor::ast_visitor::*;
 use eyre::Result;
 use std::collections::HashMap;
 
+use super::capturable::Capturable;
+
 #[derive(Debug, Clone, PartialEq)]
 pub enum ASTNode {
     ArrayTypeName(ArrayTypeName),
@@ -1339,6 +1341,17 @@ impl WorkspaceContext {
                 .iter()
                 .find(|source_unit| source_unit.id == id)
         })
+    }
+
+    pub fn get_node_sort_key_from_capturable(
+        &self,
+        capturable: &Capturable,
+    ) -> (String, usize, String) {
+        capturable.make_key(self)
+    }
+
+    pub fn get_node_id_of_capturable(&self, capturable: &Capturable) -> Option<NodeID> {
+        capturable.id()
     }
 
     pub fn get_node_sort_key(&self, node: &ASTNode) -> (String, usize, String) {
