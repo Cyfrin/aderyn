@@ -77,6 +77,10 @@
         "n_sloc": 32
       },
       {
+        "file_path": "src/cloc/EmptyContractFile.sol",
+        "n_sloc": 0
+      },
+      {
         "file_path": "src/cloc/HeavilyCommentedContract.sol",
         "n_sloc": 21
       },
@@ -120,7 +124,7 @@
   },
   "files_summary": {
     "total_sloc": 721,
-    "total_source_units": 23
+    "total_source_units": 24
   },
   "high_issues": {
     "issues": [
