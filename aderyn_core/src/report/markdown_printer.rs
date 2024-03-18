@@ -2,7 +2,7 @@ use crate::context::workspace_context::WorkspaceContext;
 
 use std::{
     collections::HashSet,
-    io::{self, Result, Write},
+    io::{Result, Write},
     path::{Path, PathBuf},
 };
 
