@@ -869,7 +869,7 @@ This is a best-practice to protect against reentrancy in other modifiers.
 
 ## NC-7: Large literal values multiples of 10000 can be replaced with scientific notation
 
-Use `1e18` instead of the full numeric value.
+Use `e` notation, for example: `1e18`, instead of its full numeric value.
 
 - Found in src/HugeConstants.sol [Line: 6](../tests/contract-playground/src/HugeConstants.sol#L6)
 
