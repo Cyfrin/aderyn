@@ -30,11 +30,11 @@ impl IssueDetector for ParentChainDemonstrator {
             capture!(self, context, assignment);
 
             if let Some(parent_chain) = assignment.parent_chain(context) {
-                if let ASTNode::Block(block) = parent_chain[0] {
-                    capture!(self, context, block);
+                if let ASTNode::Block(_) = parent_chain[0] {
+                    capture!(self, context, parent_chain[0]);
                 }
-                if let ASTNode::ForStatement(for_statement) = parent_chain[1] {
-                    capture!(self, context, for_statement);
+                if let ASTNode::ForStatement(_) = parent_chain[1] {
+                    capture!(self, context, parent_chain[1]);
                 }
                 if let ASTNode::Block(block) = parent_chain[2] {
                     capture!(self, context, block);
