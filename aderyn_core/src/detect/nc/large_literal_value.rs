@@ -70,7 +70,7 @@ mod large_literal_values {
         let found = detector.detect(&context).unwrap();
         assert!(found);
         // assert that the detector finds the correct number of instances
-        assert_eq!(detector.instances().len(), 3);
+        assert_eq!(detector.instances().len(), 20);
         // assert that the detector returns the correct severity
         assert_eq!(
             detector.severity(),
