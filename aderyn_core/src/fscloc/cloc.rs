@@ -33,6 +33,10 @@ pub struct TokenInsightGroup {
 }
 
 pub fn get_stats(r_content: &str) -> Stats {
+    if r_content.is_empty() {
+        return Stats { code: 0 };
+    }
+
     let token_descriptors = tokenize(r_content);
     let mut content = String::new();
 
