@@ -306,11 +306,6 @@
             "src": "32:32"
           },
           {
-            "contract_path": "src/InternalFunctions.sol",
-            "line_no": 2,
-            "src": "32:23"
-          },
-          {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
             "line_no": 6,
             "src": "46:24"
@@ -354,11 +349,6 @@
           },
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
-            "line_no": 2,
-            "src": "32:23"
-          },
-          {
-            "contract_path": "src/InternalFunctions.sol",
             "line_no": 2,
             "src": "32:23"
           },
