@@ -868,21 +868,6 @@
             "src": "448:108"
           },
           {
-            "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 45,
-            "src": "1315:134"
-          },
-          {
-            "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 49,
-            "src": "1455:113"
-          },
-          {
-            "contract_path": "src/AssemblyExample.sol",
-            "line_no": 6,
-            "src": "104:229"
-          },
-          {
             "contract_path": "src/EmptyBlocks.sol",
             "line_no": 22,
             "src": "373:98"

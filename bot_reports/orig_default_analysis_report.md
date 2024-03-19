@@ -897,24 +897,6 @@ Consider removing empty blocks.
 	    function someOtherImportantThing() external nonReentrant onlyOwner {
 	```
 
-- Found in src/ArbitraryTransferFrom.sol [Line: 45](../tests/contract-playground/src/ArbitraryTransferFrom.sol#L45)
-
-	```solidity
-	    function good5(address from, address to, uint256 amount) external {
-	```
-
-- Found in src/ArbitraryTransferFrom.sol [Line: 49](../tests/contract-playground/src/ArbitraryTransferFrom.sol#L49)
-
-	```solidity
-	    function good6(address to, uint256 amount) external {
-	```
-
-- Found in src/AssemblyExample.sol [Line: 6](../tests/contract-playground/src/AssemblyExample.sol#L6)
-
-	```solidity
-	    function f(uint x) public view returns (uint r) {
-	```
-
 - Found in src/EmptyBlocks.sol [Line: 22](../tests/contract-playground/src/EmptyBlocks.sol#L22)
 
 	```solidity
