@@ -441,7 +441,7 @@
           {
             "contract_path": "src/AdminContract.sol",
             "line_no": 7,
-            "src": "244:314"
+            "src": "270:7"
           },
           {
             "contract_path": "src/AdminContract.sol",
@@ -456,7 +456,7 @@
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 7,
-            "src": "261:1381"
+            "src": "295:13"
           },
           {
             "contract_path": "src/InternalFunctions.sol",
@@ -466,7 +466,7 @@
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
             "line_no": 7,
-            "src": "250:657"
+            "src": "282:7"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
