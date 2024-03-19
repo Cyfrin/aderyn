@@ -79,6 +79,16 @@
             "src": "46:24"
           },
           {
+            "contract_path": "src/cloc/HeavilyCommentedContract.sol",
+            "line_no": 6,
+            "src": "46:32"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 12,
+            "src": "2302:23"
+          },
+          {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
             "line_no": 2,
             "src": "32:23"

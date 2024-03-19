@@ -1,9 +1,30 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.19;
 
-contract EmptyBlocks {
+import {Ownable} from "../lib/openzeppelin-contracts/contracts/access/Ownable.sol";
+
+contract EmptyBlocksWithOwnableConstructor is Ownable {
+    // Good
+    constructor() Ownable() {
+
+    }
+}
+
+contract EmptyBlocksWithEmptyConstructor {
     // Good
     constructor() {
+
+    }
+}
+
+contract EmptyBlocks {
+    // Bad
+    constructor() {
+        emit EmptyEvent();
+        // Empty Block Below
+        {
+
+        }
     }
 
     // Good

@@ -4,7 +4,7 @@ use crate::{
     ast::{FunctionKind, NodeID, NodeType},
     capture,
     context::{
-        browser::GetClosestParentOfTypeX,
+        browser::{GetClosestParentOfTypeX, GetParentChain},
         workspace_context::{ASTNode, WorkspaceContext},
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
@@ -25,10 +25,24 @@ impl IssueDetector for EmptyBlockDetector {
             {
                 // It's okay to have empty block if it's a constructor, receive, or fallback
                 if f.kind == FunctionKind::Function {
-                    capture!(self, context, empty_block);
+                    capture!(self, context, f);
+                } else if f.kind == FunctionKind::Constructor {
+                    // It's not okay to have empty block nested somewhere inside constructor
+                    if let Some(block_chain) = empty_block.parent_chain(context) {
+                        let function_definition_index = block_chain
+                            .iter()
+                            .position(|x| x.node_type() == NodeType::FunctionDefinition)
+                            .unwrap(); // Remember, we know we are already inside a constructor function
+
+                        //We start from going up from first parent to the function definition
+                        if function_definition_index > 1 {
+                            // 1 here, means the first parent.
+                            // So if the constructor is NOT the immediate parent of this empty block
+                            // capture it!
+                            capture!(self, context, f);
+                        }
+                    }
                 }
-            } else {
-                capture!(self, context, empty_block);
             }
         }
         Ok(!self.found_instances.is_empty())
@@ -71,7 +85,7 @@ mod empty_block_tests {
         let found = detector.detect(&context).unwrap();
         assert!(found);
         // assert that the detector returns the correct number of instances
-        assert_eq!(detector.instances().len(), 4);
+        assert_eq!(detector.instances().len(), 5);
         // assert that the detector returns the correct severity
         assert_eq!(
             detector.severity(),

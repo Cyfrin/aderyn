@@ -57,7 +57,7 @@
       },
       {
         "file_path": "src/EmptyBlocks.sol",
-        "n_sloc": 24
+        "n_sloc": 36
       },
       {
         "file_path": "src/HugeConstants.sol",
@@ -138,7 +138,7 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 789,
+    "total_sloc": 801,
     "total_source_units": 27
   },
   "high_issues": {
@@ -393,6 +393,16 @@
             "src": "46:24"
           },
           {
+            "contract_path": "src/cloc/HeavilyCommentedContract.sol",
+            "line_no": 6,
+            "src": "46:32"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 12,
+            "src": "2302:23"
+          },
+          {
             "contract_path": "src/inheritance/ExtendedInheritance.sol",
             "line_no": 2,
             "src": "32:23"
@@ -462,6 +472,11 @@
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 7,
             "src": "261:1381"
+          },
+          {
+            "contract_path": "src/EmptyBlocks.sol",
+            "line_no": 6,
+            "src": "142:106"
           },
           {
             "contract_path": "src/InternalFunctions.sol",
@@ -850,47 +865,67 @@
           {
             "contract_path": "src/AdminContract.sol",
             "line_no": 14,
-            "src": "515:41"
+            "src": "448:108"
           },
           {
-            "contract_path": "src/EmptyBlocks.sol",
-            "line_no": 18,
-            "src": "273:7"
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 45,
+            "src": "1315:134"
+          },
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 49,
+            "src": "1455:113"
+          },
+          {
+            "contract_path": "src/AssemblyExample.sol",
+            "line_no": 6,
+            "src": "104:229"
           },
           {
             "contract_path": "src/EmptyBlocks.sol",
             "line_no": 22,
-            "src": "342:36"
-          },
-          {
-            "contract_path": "src/EmptyBlocks.sol",
-            "line_no": 31,
-            "src": "536:11"
+            "src": "373:98"
           },
           {
             "contract_path": "src/EmptyBlocks.sol",
             "line_no": 39,
-            "src": "698:44"
+            "src": "593:41"
+          },
+          {
+            "contract_path": "src/EmptyBlocks.sol",
+            "line_no": 43,
+            "src": "651:81"
+          },
+          {
+            "contract_path": "src/EmptyBlocks.sol",
+            "line_no": 49,
+            "src": "773:134"
+          },
+          {
+            "contract_path": "src/EmptyBlocks.sol",
+            "line_no": 57,
+            "src": "924:178"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
             "line_no": 11,
-            "src": "391:16"
+            "src": "346:61"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
             "line_no": 32,
-            "src": "864:41"
+            "src": "797:108"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
             "line_no": 40,
-            "src": "980:16"
+            "src": "937:59"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
             "line_no": 44,
-            "src": "1046:41"
+            "src": "1002:85"
           }
         ],
         "title": "Empty Block"
