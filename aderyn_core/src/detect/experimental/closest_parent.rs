@@ -34,7 +34,7 @@ impl IssueDetector for ClosestParentDemonstrator {
                 capture!(self, context, block);
             }
 
-            if let Some(ASTNode::ForStatement(for_statement)) =
+            if let Some(for_statement) =
                 assignment.closest_parent_of_type(context, NodeType::ForStatement)
             {
                 capture!(self, context, for_statement);

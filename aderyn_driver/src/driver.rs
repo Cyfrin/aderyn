@@ -14,6 +14,7 @@ pub struct Args {
     pub exclude: Option<Vec<String>>,
     pub scope: Option<Vec<String>>,
     pub no_snippets: bool,
+    pub stdout: bool,
 }
 
 enum Framework {
@@ -35,6 +36,7 @@ pub fn drive(args: Args) {
             JsonPrinter,
             root_rel_path,
             args.no_snippets,
+            args.stdout,
         )
         .unwrap_or_else(|err| {
             // Exit with a non-zero exit code
@@ -50,6 +52,7 @@ pub fn drive(args: Args) {
             MarkdownReportPrinter,
             root_rel_path,
             args.no_snippets,
+            args.stdout,
         )
         .unwrap_or_else(|err| {
             // Exit with a non-zero exit code
@@ -74,6 +77,7 @@ pub fn drive_with(args: Args, detectors: Vec<Box<dyn IssueDetector>>) {
             JsonPrinter,
             root_rel_path,
             args.no_snippets,
+            args.stdout,
             detectors,
         )
         .unwrap_or_else(|err| {
@@ -90,6 +94,7 @@ pub fn drive_with(args: Args, detectors: Vec<Box<dyn IssueDetector>>) {
             MarkdownReportPrinter,
             root_rel_path,
             args.no_snippets,
+            args.stdout,
             detectors,
         )
         .unwrap_or_else(|err| {
