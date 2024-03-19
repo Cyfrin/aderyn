@@ -1,10 +1,10 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
-    ast::{FunctionKind, NodeID},
+    ast::{FunctionKind, NodeID, NodeType},
     capture,
     context::{
-        browser::GetImmediateParent,
+        browser::GetClosestParentOfTypeX,
         workspace_context::{ASTNode, WorkspaceContext},
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
@@ -20,7 +20,9 @@ pub struct EmptyBlockDetector {
 impl IssueDetector for EmptyBlockDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for empty_block in context.blocks().iter().filter(|b| b.statements.is_empty()) {
-            if let Some(ASTNode::FunctionDefinition(f)) = &empty_block.parent(context) {
+            if let Some(ASTNode::FunctionDefinition(f)) =
+                &empty_block.closest_parent_of_type(context, NodeType::FunctionDefinition)
+            {
                 // It's okay to have empty block if it's a constructor, receive, or fallback
                 if f.kind == FunctionKind::Function {
                     capture!(self, context, empty_block);

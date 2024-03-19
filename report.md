@@ -879,24 +879,6 @@ Consider removing empty blocks.
 	    function someOtherImportantThing() external nonReentrant onlyOwner {
 	```
 
-- Found in src/EmptyBlocks.sol [Line: 6](tests/contract-playground/src/EmptyBlocks.sol#L6)
-
-	```solidity
-	    constructor() {
-	```
-
-- Found in src/EmptyBlocks.sol [Line: 10](tests/contract-playground/src/EmptyBlocks.sol#L10)
-
-	```solidity
-	    receive() external payable {
-	```
-
-- Found in src/EmptyBlocks.sol [Line: 14](tests/contract-playground/src/EmptyBlocks.sol#L14)
-
-	```solidity
-	    fallback() external payable {
-	```
-
 - Found in src/EmptyBlocks.sol [Line: 18](tests/contract-playground/src/EmptyBlocks.sol#L18)
 
 	```solidity

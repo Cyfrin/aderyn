@@ -854,21 +854,6 @@
           },
           {
             "contract_path": "src/EmptyBlocks.sol",
-            "line_no": 6,
-            "src": "110:7"
-          },
-          {
-            "contract_path": "src/EmptyBlocks.sol",
-            "line_no": 10,
-            "src": "162:7"
-          },
-          {
-            "contract_path": "src/EmptyBlocks.sol",
-            "line_no": 14,
-            "src": "215:7"
-          },
-          {
-            "contract_path": "src/EmptyBlocks.sol",
             "line_no": 18,
             "src": "273:7"
           },
