@@ -21,6 +21,7 @@
     "unsafe-oz-erc721-mint",
     "push-zero-opcode",
     "arbitrary-transfer-from",
+    "useless-modifier",
     "large-numeric-literal",
     "useless-internal-function"
   ],
@@ -65,6 +66,10 @@
       {
         "file_path": "src/KeccakContract.sol",
         "n_sloc": 21
+      },
+      {
+        "file_path": "src/OnceModifierExample.sol",
+        "n_sloc": 8
       },
       {
         "file_path": "src/StateVariables.sol",
@@ -137,8 +142,8 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 806,
-    "total_source_units": 27
+    "total_sloc": 814,
+    "total_source_units": 28
   },
   "high_issues": {
     "issues": [
@@ -198,7 +203,7 @@
     "high": 2,
     "low": 6,
     "medium": 4,
-    "nc": 8
+    "nc": 9
   },
   "low_issues": {
     "issues": [
@@ -916,6 +921,23 @@
           }
         ],
         "title": "The `nonReentrant` `modifier` should occur before all other modifiers"
+      },
+      {
+        "description": "",
+        "detector_name": "useless-modifier",
+        "instances": [
+          {
+            "contract_path": "src/InternalFunctions.sol",
+            "line_no": 17,
+            "src": "371:118"
+          },
+          {
+            "contract_path": "src/OnceModifierExample.sol",
+            "line_no": 6,
+            "src": "94:38"
+          }
+        ],
+        "title": "Modifiers invoked only once can be shoe-horned into the function"
       },
       {
         "description": "Use `e` notation, for example: `1e18`, instead of its full numeric value.",
