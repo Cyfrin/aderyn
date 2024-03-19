@@ -83,6 +83,10 @@
         "n_sloc": 11
       },
       {
+        "file_path": "src/ZeroAddressCheck.sol",
+        "n_sloc": 41
+      },
+      {
         "file_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
         "n_sloc": 32
       },
@@ -133,8 +137,8 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 765,
-    "total_source_units": 26
+    "total_sloc": 806,
+    "total_source_units": 27
   },
   "high_issues": {
     "issues": [
@@ -616,6 +620,21 @@
             "src": "2121:14"
           },
           {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 43,
+            "src": "1157:14"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 47,
+            "src": "1232:16"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 51,
+            "src": "1309:23"
+          },
+          {
             "contract_path": "src/uniswap/UniswapV2Swapper.sol",
             "line_no": 11,
             "src": "365:17"
@@ -666,6 +685,51 @@
             "contract_path": "src/StateVariables.sol",
             "line_no": 71,
             "src": "2530:406"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 12,
+            "src": "244:122"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 17,
+            "src": "372:143"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 22,
+            "src": "521:129"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 27,
+            "src": "656:150"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 32,
+            "src": "812:153"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 37,
+            "src": "971:132"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 42,
+            "src": "1109:69"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 46,
+            "src": "1184:71"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 50,
+            "src": "1261:78"
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
@@ -797,6 +861,21 @@
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 40,
             "src": "1389:6"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 13,
+            "src": "327:6"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 23,
+            "src": "602:6"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 38,
+            "src": "1062:6"
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",

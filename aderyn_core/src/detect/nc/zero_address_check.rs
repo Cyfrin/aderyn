@@ -186,7 +186,7 @@ impl IssueDetector for ZeroAddressCheckDetector {
 #[cfg(test)]
 mod zero_address_check_tests {
     use crate::{
-        ast::{Assignment, NodeType},
+        ast::NodeType,
         context::{browser::GetClosestParentOfTypeX, workspace_context::ASTNode},
         detect::{
             detector::{detector_test_helpers::load_contract, IssueDetector},
@@ -214,10 +214,10 @@ mod zero_address_check_tests {
                 {
                     assert!(function.name.contains("bad"));
                 } else {
-                    assert!(false)
+                    panic!()
                 }
             } else {
-                assert!(false)
+                panic!()
             }
         }
         // assert that the severity is NC
