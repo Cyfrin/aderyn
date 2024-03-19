@@ -7,7 +7,7 @@ use crate::{
     ast::{BinaryOperation, Expression, Mutability, NodeID, VariableDeclaration},
     capture,
     context::{
-        browser::{ExtractAssignments, ExtractBinaryOperations},
+        browser::{ExtractAssignments, ExtractBinaryOperations, ExtractIdentifiers},
         workspace_context::WorkspaceContext,
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
@@ -60,35 +60,39 @@ impl IssueDetector for ZeroAddressCheckDetector {
                 ExtractBinaryOperations::from(function_definition)
                     .extracted
                     .into_iter()
-                    .filter(|x| x.operator == "==" || x.operator == "!=")
+                    .filter(|x| (x.operator == "==" || x.operator == "!="))
                     .collect();
 
             // Filter the binary checks and extract all node ids into a vector
             let mut binary_checks_against_zero_address = HashSet::new();
 
             for x in binary_operations {
-                let l_node_id: Option<NodeID> = {
-                    let l = x.left_expression.as_ref();
-                    if let Expression::Identifier(left_identifier) = l {
-                        Some(left_identifier.referenced_declaration)
-                    } else {
-                        None
-                    }
-                };
-                if let Some(l_node_id) = l_node_id {
-                    binary_checks_against_zero_address.insert(l_node_id);
+                let l = x.left_expression.as_ref();
+                if let Expression::Identifier(left_identifier) = l {
+                    binary_checks_against_zero_address
+                        .insert(left_identifier.referenced_declaration);
+                } else {
+                    ExtractIdentifiers::from(l)
+                        .extracted
+                        .into_iter()
+                        .map(|f| f.referenced_declaration)
+                        .for_each(|f| {
+                            binary_checks_against_zero_address.insert(f);
+                        });
                 }
 
-                let r_node_id: Option<NodeID> = {
-                    let r = x.right_expression.as_ref();
-                    if let Expression::Identifier(right_identifier) = r {
-                        Some(right_identifier.referenced_declaration)
-                    } else {
-                        None
-                    }
-                };
-                if let Some(r_node_ids) = r_node_id {
-                    binary_checks_against_zero_address.insert(r_node_ids);
+                let r = x.right_expression.as_ref();
+                if let Expression::Identifier(right_identifier) = r {
+                    binary_checks_against_zero_address
+                        .insert(right_identifier.referenced_declaration);
+                } else {
+                    ExtractIdentifiers::from(r)
+                        .extracted
+                        .into_iter()
+                        .map(|f| f.referenced_declaration)
+                        .for_each(|f| {
+                            binary_checks_against_zero_address.insert(f);
+                        });
                 }
             }
 
@@ -134,6 +138,8 @@ impl IssueDetector for ZeroAddressCheckDetector {
             }
         }
 
+        println!("Found instances: {:?}", self.found_instances);
+
         Ok(!self.found_instances.is_empty())
     }
 
@@ -170,7 +176,7 @@ mod zero_address_check_tests {
     #[test]
     fn test_deprecated_oz_functions_detector() {
         let context = load_contract(
-            "../tests/contract-playground/out/StateVariables.sol/StateVariables.json",
+            "../tests/contract-playground/out/ZeroAddressCheck.sol/ZeroAddressCheck.json",
         );
 
         let mut detector = ZeroAddressCheckDetector::default();
