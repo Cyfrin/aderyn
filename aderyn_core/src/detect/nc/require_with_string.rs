@@ -34,11 +34,11 @@ impl IssueDetector for RequireWithStringDetector {
     }
 
     fn title(&self) -> String {
-        String::from("`require()` / `revert()` statements should have descriptive reason strings or custom errors")
+        String::from("Empty `require()` / `revert()` statements")
     }
 
     fn description(&self) -> String {
-        String::from("")
+        String::from("Use descriptive reason strings or custom errors for revert paths.")
     }
 
     fn severity(&self) -> IssueSeverity {
@@ -80,9 +80,12 @@ mod require_with_string_tests {
         // assert that the detector returns the correct title
         assert_eq!(
             detector.title(),
-            String::from("`require()` / `revert()` statements should have descriptive reason strings or custom errors")
+            String::from("Empty `require()` / `revert()` statements")
         );
         // assert that the detector returns the correct description
-        assert_eq!(detector.description(), String::from(""));
+        assert_eq!(
+            detector.description(),
+            String::from("Use descriptive reason strings or custom errors for revert paths.")
+        );
     }
 }

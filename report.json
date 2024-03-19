@@ -21,7 +21,9 @@
     "unsafe-oz-erc721-mint",
     "push-zero-opcode",
     "arbitrary-transfer-from",
-    "useless-modifier"
+    "useless-modifier",
+    "large-numeric-literal",
+    "useless-internal-function"
   ],
   "files_details": {
     "files_details": [
@@ -54,6 +56,14 @@
         "n_sloc": 32
       },
       {
+        "file_path": "src/HugeConstants.sol",
+        "n_sloc": 26
+      },
+      {
+        "file_path": "src/InternalFunctions.sol",
+        "n_sloc": 18
+      },
+      {
         "file_path": "src/KeccakContract.sol",
         "n_sloc": 21
       },
@@ -76,6 +86,10 @@
       {
         "file_path": "src/UnsafeERC721Mint.sol",
         "n_sloc": 11
+      },
+      {
+        "file_path": "src/ZeroAddressCheck.sol",
+        "n_sloc": 41
       },
       {
         "file_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
@@ -128,8 +142,8 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 729,
-    "total_source_units": 25
+    "total_sloc": 814,
+    "total_source_units": 28
   },
   "high_issues": {
     "issues": [
@@ -189,7 +203,7 @@
     "high": 2,
     "low": 6,
     "medium": 4,
-    "nc": 7
+    "nc": 9
   },
   "low_issues": {
     "issues": [
@@ -446,7 +460,7 @@
           {
             "contract_path": "src/AdminContract.sol",
             "line_no": 7,
-            "src": "244:314"
+            "src": "270:7"
           },
           {
             "contract_path": "src/AdminContract.sol",
@@ -461,12 +475,17 @@
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 7,
-            "src": "261:1381"
+            "src": "295:13"
+          },
+          {
+            "contract_path": "src/InternalFunctions.sol",
+            "line_no": 12,
+            "src": "250:9"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
             "line_no": 7,
-            "src": "250:657"
+            "src": "282:7"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
@@ -602,7 +621,7 @@
   "nc_issues": {
     "issues": [
       {
-        "description": "Assigning values to address state variables without checking for `address(0)`.",
+        "description": "Check for `address(0)` when assigning values to address state variables.",
         "detector_name": "zero-address-check",
         "instances": [
           {
@@ -616,6 +635,21 @@
             "src": "2121:14"
           },
           {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 43,
+            "src": "1157:14"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 47,
+            "src": "1232:16"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 51,
+            "src": "1309:23"
+          },
+          {
             "contract_path": "src/uniswap/UniswapV2Swapper.sol",
             "line_no": 11,
             "src": "365:17"
@@ -624,7 +658,7 @@
         "title": "Missing checks for `address(0)` when assigning values to address state variables"
       },
       {
-        "description": "",
+        "description": "Instead of marking a function as `public`, consider marking it as `external` if it is not used internally.",
         "detector_name": "useless-public-function",
         "instances": [
           {
@@ -673,6 +707,51 @@
             "src": "2530:406"
           },
           {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 12,
+            "src": "244:122"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 17,
+            "src": "372:143"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 22,
+            "src": "521:129"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 27,
+            "src": "656:150"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 32,
+            "src": "812:153"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 37,
+            "src": "971:132"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 42,
+            "src": "1109:69"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 46,
+            "src": "1184:71"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 50,
+            "src": "1261:78"
+          },
+          {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
             "line_no": 31,
             "src": "491:131"
@@ -708,10 +787,10 @@
             "src": "413:225"
           }
         ],
-        "title": "Functions not used internally could be marked external"
+        "title": "`public` functions not used internally could be marked `external`"
       },
       {
-        "description": "",
+        "description": "Create a constant state variable and reference it throughout the contract.",
         "detector_name": "constants-instead-of-literals",
         "instances": [
           {
@@ -790,7 +869,7 @@
         "title": "Event is missing `indexed` fields"
       },
       {
-        "description": "",
+        "description": "Use descriptive reason strings or custom errors for revert paths.",
         "detector_name": "require-with-string",
         "instances": [
           {
@@ -802,6 +881,21 @@
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 40,
             "src": "1389:6"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 13,
+            "src": "327:6"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 23,
+            "src": "602:6"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 38,
+            "src": "1062:6"
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
@@ -824,10 +918,10 @@
             "src": "1408:7"
           }
         ],
-        "title": "`require()` / `revert()` statements should have descriptive reason strings or custom errors"
+        "title": "Empty `require()` / `revert()` statements"
       },
       {
-        "description": "This is a best-practice to protect against reentrancy in other modifiers",
+        "description": "This is a best-practice to protect against reentrancy in other modifiers.",
         "detector_name": "non-reentrant-before-others",
         "instances": [
           {
@@ -848,12 +942,136 @@
         "detector_name": "useless-modifier",
         "instances": [
           {
+            "contract_path": "src/InternalFunctions.sol",
+            "line_no": 17,
+            "src": "371:118"
+          },
+          {
             "contract_path": "src/OnceModifierExample.sol",
             "line_no": 6,
             "src": "94:38"
           }
         ],
         "title": "Modifiers invoked only once can be shoe-horned into the function"
+      },
+      {
+        "description": "Use `e` notation, for example: `1e18`, instead of its full numeric value.",
+        "detector_name": "large-numeric-literal",
+        "instances": [
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 6,
+            "src": "182:24"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 7,
+            "src": "252:23"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 8,
+            "src": "321:22"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 9,
+            "src": "389:21"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 10,
+            "src": "456:20"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 11,
+            "src": "522:19"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 12,
+            "src": "587:18"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 13,
+            "src": "651:17"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 14,
+            "src": "714:16"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 15,
+            "src": "777:15"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 16,
+            "src": "839:14"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 17,
+            "src": "900:13"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 18,
+            "src": "960:12"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 19,
+            "src": "1019:11"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 20,
+            "src": "1077:10"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 21,
+            "src": "1134:9"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 22,
+            "src": "1190:8"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 23,
+            "src": "1245:7"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 24,
+            "src": "1299:6"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 25,
+            "src": "1352:5"
+          }
+        ],
+        "title": "Large literal values multiples of 10000 can be replaced with scientific notation"
+      },
+      {
+        "description": "Instead of separating the logic into a separate function, consider inlining the logic into the calling function. This can reduce the number of function calls and improve readability.",
+        "detector_name": "useless-internal-function",
+        "instances": [
+          {
+            "contract_path": "src/InternalFunctions.sol",
+            "line_no": 22,
+            "src": "495:150"
+          }
+        ],
+        "title": "Internal functions called only once can be inlined"
       }
     ]
   }

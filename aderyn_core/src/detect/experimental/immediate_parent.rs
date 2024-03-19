@@ -31,15 +31,15 @@ impl IssueDetector for ImmediateParentDemonstrator {
             if let Some(first_parent) = assignment.parent(context) {
                 if let ASTNode::Block(block) = first_parent {
                     println!("1 {}", block);
-                    capture!(self, context, block);
-                    if let Some(second_parent) = block.parent(context) {
+                    capture!(self, context, first_parent);
+                    if let Some(second_parent) = first_parent.parent(context) {
                         if let ASTNode::ForStatement(for_statement) = second_parent {
                             println!("2 {}", for_statement);
-                            capture!(self, context, for_statement);
+                            capture!(self, context, second_parent);
                             if let Some(third_parent) = for_statement.parent(context) {
                                 if let ASTNode::Block(block) = third_parent {
                                     println!("3 {}", block);
-                                    capture!(self, context, block);
+                                    capture!(self, context, third_parent);
                                 }
                             }
                         }

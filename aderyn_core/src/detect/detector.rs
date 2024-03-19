@@ -15,9 +15,10 @@ use crate::{
             SolmateSafeTransferLibDetector, UnsafeERC721MintDetector,
         },
         nc::{
-            ConstantsInsteadOfLiteralsDetector, NonReentrantBeforeOthersDetector,
-            RequireWithStringDetector, UnindexedEventsDetector, UselessPublicFunctionDetector,
-            ZeroAddressCheckDetector,
+            ConstantsInsteadOfLiteralsDetector, LargeLiteralValueDetector,
+            NonReentrantBeforeOthersDetector, RequireWithStringDetector, UnindexedEventsDetector,
+            UselessInternalFunctionDetector, UselessModifierDetector,
+            UselessPublicFunctionDetector, ZeroAddressCheckDetector,
         },
     },
 };
@@ -27,8 +28,6 @@ use std::{
     fmt::{self, Display},
     str::FromStr,
 };
-
-use super::nc::UselessModifierDetector;
 
 pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
     vec![
@@ -51,6 +50,8 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<PushZeroOpcodeDetector>::default(),
         Box::<ArbitraryTransferFromDetector>::default(),
         Box::<UselessModifierDetector>::default(),
+        Box::<LargeLiteralValueDetector>::default(),
+        Box::<UselessInternalFunctionDetector>::default(),
     ]
 }
 
@@ -81,6 +82,8 @@ pub(crate) enum IssueDetectorNamePool {
     PushZeroOpcode,
     ArbitraryTransferFrom,
     UselessModifier,
+    LargeNumericLiteral,
+    UselessInternalFunction,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -146,6 +149,12 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
             Some(Box::<ArbitraryTransferFromDetector>::default())
         }
         IssueDetectorNamePool::UselessModifier => Some(Box::<UselessModifierDetector>::default()),
+        IssueDetectorNamePool::LargeNumericLiteral => {
+            Some(Box::<LargeLiteralValueDetector>::default())
+        }
+        IssueDetectorNamePool::UselessInternalFunction => {
+            Some(Box::<UselessInternalFunctionDetector>::default())
+        }
         IssueDetectorNamePool::Undecided => None,
     }
 }

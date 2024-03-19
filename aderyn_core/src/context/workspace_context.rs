@@ -3,6 +3,9 @@ use crate::visitor::ast_visitor::*;
 use eyre::Result;
 use std::collections::HashMap;
 
+use super::browser::GetImmediateParent;
+use super::capturable::Capturable;
+
 #[derive(Debug, Clone, PartialEq)]
 pub enum ASTNode {
     ArrayTypeName(ArrayTypeName),
@@ -59,20 +62,6 @@ pub enum ASTNode {
 }
 
 impl ASTNode {
-    pub fn parent<'a>(&self, context: &'a WorkspaceContext) -> Option<&'a ASTNode> {
-        if let Some(id) = self.id() {
-            return context.get_parent(id);
-        }
-        None
-    }
-
-    pub fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        if let Some(id) = self.id() {
-            return Some(context.get_parent_chain(id));
-        }
-        None
-    }
-
     pub fn node_type(&self) -> NodeType {
         match self {
             ASTNode::ArrayTypeName(_) => NodeType::ArrayTypeName,
@@ -182,6 +171,120 @@ impl ASTNode {
             ASTNode::VariableDeclaration(n) => Some(n.id),
             ASTNode::VariableDeclarationStatement(n) => Some(n.id),
             ASTNode::WhileStatement(n) => Some(n.id),
+        }
+    }
+}
+
+impl Node for ASTNode {
+    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> eyre::Result<()> {
+        match self {
+            ASTNode::ArrayTypeName(n) => n.accept(visitor),
+            ASTNode::Assignment(n) => n.accept(visitor),
+            ASTNode::BinaryOperation(n) => n.accept(visitor),
+            ASTNode::Block(n) => n.accept(visitor),
+            ASTNode::Conditional(n) => n.accept(visitor),
+            ASTNode::ContractDefinition(n) => n.accept(visitor),
+            ASTNode::ElementaryTypeName(n) => n.accept(visitor),
+            ASTNode::ElementaryTypeNameExpression(n) => n.accept(visitor),
+            ASTNode::EmitStatement(n) => n.accept(visitor),
+            ASTNode::EnumDefinition(n) => n.accept(visitor),
+            ASTNode::EnumValue(n) => n.accept(visitor),
+            ASTNode::EventDefinition(n) => n.accept(visitor),
+            ASTNode::ErrorDefinition(n) => n.accept(visitor),
+            ASTNode::ExpressionStatement(n) => n.accept(visitor),
+            ASTNode::FunctionCall(n) => n.accept(visitor),
+            ASTNode::FunctionCallOptions(n) => n.accept(visitor),
+            ASTNode::FunctionDefinition(n) => n.accept(visitor),
+            ASTNode::FunctionTypeName(n) => n.accept(visitor),
+            ASTNode::ForStatement(n) => n.accept(visitor),
+            ASTNode::Identifier(n) => n.accept(visitor),
+            ASTNode::IdentifierPath(n) => n.accept(visitor),
+            ASTNode::IfStatement(n) => n.accept(visitor),
+            ASTNode::ImportDirective(n) => n.accept(visitor),
+            ASTNode::IndexAccess(n) => n.accept(visitor),
+            ASTNode::IndexRangeAccess(n) => n.accept(visitor),
+            ASTNode::InheritanceSpecifier(n) => n.accept(visitor),
+            ASTNode::InlineAssembly(n) => n.accept(visitor),
+            ASTNode::Literal(n) => n.accept(visitor),
+            ASTNode::MemberAccess(n) => n.accept(visitor),
+            ASTNode::NewExpression(n) => n.accept(visitor),
+            ASTNode::Mapping(n) => n.accept(visitor),
+            ASTNode::ModifierDefinition(n) => n.accept(visitor),
+            ASTNode::ModifierInvocation(n) => n.accept(visitor),
+            ASTNode::OverrideSpecifier(n) => n.accept(visitor),
+            ASTNode::ParameterList(n) => n.accept(visitor),
+            ASTNode::PragmaDirective(n) => n.accept(visitor),
+            ASTNode::Return(n) => n.accept(visitor),
+            ASTNode::RevertStatement(n) => n.accept(visitor),
+            ASTNode::SourceUnit(n) => n.accept(visitor),
+            ASTNode::StructDefinition(n) => n.accept(visitor),
+            ASTNode::StructuredDocumentation(n) => n.accept(visitor),
+            ASTNode::TryStatement(n) => n.accept(visitor),
+            ASTNode::TryCatchClause(n) => n.accept(visitor),
+            ASTNode::TupleExpression(n) => n.accept(visitor),
+            ASTNode::UnaryOperation(n) => n.accept(visitor),
+            ASTNode::UserDefinedTypeName(n) => n.accept(visitor),
+            ASTNode::UserDefinedValueTypeDefinition(n) => n.accept(visitor),
+            ASTNode::UsingForDirective(n) => n.accept(visitor),
+            ASTNode::VariableDeclaration(n) => n.accept(visitor),
+            ASTNode::VariableDeclarationStatement(n) => n.accept(visitor),
+            ASTNode::WhileStatement(n) => n.accept(visitor),
+        }
+    }
+
+    fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> eyre::Result<()> {
+        match self {
+            ASTNode::ArrayTypeName(n) => n.accept_metadata(visitor),
+            ASTNode::Assignment(n) => n.accept_metadata(visitor),
+            ASTNode::BinaryOperation(n) => n.accept_metadata(visitor),
+            ASTNode::Block(n) => n.accept_metadata(visitor),
+            ASTNode::Conditional(n) => n.accept_metadata(visitor),
+            ASTNode::ContractDefinition(n) => n.accept_metadata(visitor),
+            ASTNode::ElementaryTypeName(n) => n.accept_metadata(visitor),
+            ASTNode::ElementaryTypeNameExpression(n) => n.accept_metadata(visitor),
+            ASTNode::EmitStatement(n) => n.accept_metadata(visitor),
+            ASTNode::EnumDefinition(n) => n.accept_metadata(visitor),
+            ASTNode::EnumValue(n) => n.accept_metadata(visitor),
+            ASTNode::EventDefinition(n) => n.accept_metadata(visitor),
+            ASTNode::ErrorDefinition(n) => n.accept_metadata(visitor),
+            ASTNode::ExpressionStatement(n) => n.accept_metadata(visitor),
+            ASTNode::FunctionCall(n) => n.accept_metadata(visitor),
+            ASTNode::FunctionCallOptions(n) => n.accept_metadata(visitor),
+            ASTNode::FunctionDefinition(n) => n.accept_metadata(visitor),
+            ASTNode::FunctionTypeName(n) => n.accept_metadata(visitor),
+            ASTNode::ForStatement(n) => n.accept_metadata(visitor),
+            ASTNode::Identifier(n) => n.accept_metadata(visitor),
+            ASTNode::IdentifierPath(n) => n.accept_metadata(visitor),
+            ASTNode::IfStatement(n) => n.accept_metadata(visitor),
+            ASTNode::ImportDirective(n) => n.accept_metadata(visitor),
+            ASTNode::IndexAccess(n) => n.accept_metadata(visitor),
+            ASTNode::IndexRangeAccess(n) => n.accept_metadata(visitor),
+            ASTNode::InheritanceSpecifier(n) => n.accept_metadata(visitor),
+            ASTNode::InlineAssembly(n) => n.accept_metadata(visitor),
+            ASTNode::Literal(n) => n.accept_metadata(visitor),
+            ASTNode::MemberAccess(n) => n.accept_metadata(visitor),
+            ASTNode::NewExpression(n) => n.accept_metadata(visitor),
+            ASTNode::Mapping(n) => n.accept_metadata(visitor),
+            ASTNode::ModifierDefinition(n) => n.accept_metadata(visitor),
+            ASTNode::ModifierInvocation(n) => n.accept_metadata(visitor),
+            ASTNode::OverrideSpecifier(n) => n.accept_metadata(visitor),
+            ASTNode::ParameterList(n) => n.accept_metadata(visitor),
+            ASTNode::PragmaDirective(n) => n.accept_metadata(visitor),
+            ASTNode::Return(n) => n.accept_metadata(visitor),
+            ASTNode::RevertStatement(n) => n.accept_metadata(visitor),
+            ASTNode::SourceUnit(n) => n.accept_metadata(visitor),
+            ASTNode::StructDefinition(n) => n.accept_metadata(visitor),
+            ASTNode::StructuredDocumentation(n) => n.accept_metadata(visitor),
+            ASTNode::TryStatement(n) => n.accept_metadata(visitor),
+            ASTNode::TryCatchClause(n) => n.accept_metadata(visitor),
+            ASTNode::TupleExpression(n) => n.accept_metadata(visitor),
+            ASTNode::UnaryOperation(n) => n.accept_metadata(visitor),
+            ASTNode::UserDefinedTypeName(n) => n.accept_metadata(visitor),
+            ASTNode::UserDefinedValueTypeDefinition(n) => n.accept_metadata(visitor),
+            ASTNode::UsingForDirective(n) => n.accept_metadata(visitor),
+            ASTNode::VariableDeclaration(n) => n.accept_metadata(visitor),
+            ASTNode::VariableDeclarationStatement(n) => n.accept_metadata(visitor),
+            ASTNode::WhileStatement(n) => n.accept_metadata(visitor),
         }
     }
 }
@@ -1339,6 +1442,17 @@ impl WorkspaceContext {
                 .iter()
                 .find(|source_unit| source_unit.id == id)
         })
+    }
+
+    pub fn get_node_sort_key_from_capturable(
+        &self,
+        capturable: &Capturable,
+    ) -> (String, usize, String) {
+        capturable.make_key(self)
+    }
+
+    pub fn get_node_id_of_capturable(&self, capturable: &Capturable) -> Option<NodeID> {
+        capturable.id()
     }
 
     pub fn get_node_sort_key(&self, node: &ASTNode) -> (String, usize, String) {
