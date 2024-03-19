@@ -667,11 +667,6 @@
             "src": "120:80"
           },
           {
-            "contract_path": "src/OnceModifierExample.sol",
-            "line_no": 10,
-            "src": "138:51"
-          },
-          {
             "contract_path": "src/StateVariables.sol",
             "line_no": 47,
             "src": "1755:145"

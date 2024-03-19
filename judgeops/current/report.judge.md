@@ -742,12 +742,6 @@ Instead of marking a function as `public`, consider marking it as `external` if 
 	    function setNumber(uint256 newNumber) public {
 	```
 
-- Found in src/OnceModifierExample.sol [Line: 10](../../tests/contract-playground/src/OnceModifierExample.sol#L10)
-
-	```solidity
-	    function perform() public onlyOnce {
-	```
-
 - Found in src/StateVariables.sol [Line: 47](../../tests/contract-playground/src/StateVariables.sol#L47)
 
 	```solidity

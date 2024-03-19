@@ -7,7 +7,7 @@ contract OnceModifierExample {
         _;
     }
 
-    function perform() public onlyOnce {
+    function perform() external onlyOnce {
         
     }
 }
