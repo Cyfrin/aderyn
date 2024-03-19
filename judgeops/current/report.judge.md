@@ -530,12 +530,6 @@ Consider using a specific version of Solidity in your contracts instead of a wid
 	pragma solidity >=0.8.19 <0.9.1;
 	```
 
-- Found in src/OnceModifierExample.sol [Line: 2](../../tests/contract-playground/src/OnceModifierExample.sol#L2)
-
-	```solidity
-	pragma solidity ^0.8.0;
-	```
-
 - Found in src/cloc/AnotherHeavilyCommentedContract.sol [Line: 6](../../tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol#L6)
 
 	```solidity
@@ -596,12 +590,6 @@ Solc compiler version 0.8.20 switches the default target EVM version to Shanghai
 
 	```solidity
 	pragma solidity 0.8.20;
-	```
-
-- Found in src/OnceModifierExample.sol [Line: 2](../../tests/contract-playground/src/OnceModifierExample.sol#L2)
-
-	```solidity
-	pragma solidity ^0.8.0;
 	```
 
 - Found in src/StateVariables.sol [Line: 2](../../tests/contract-playground/src/StateVariables.sol#L2)

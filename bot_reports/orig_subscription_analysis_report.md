@@ -149,12 +149,6 @@ Solc compiler version 0.8.20 switches the default target EVM version to Shanghai
 	pragma solidity 0.8.20;
 	```
 
-- Found in src/OnceModifierExample.sol [Line: 2](../tests/contract-playground/src/OnceModifierExample.sol#L2)
-
-	```solidity
-	pragma solidity ^0.8.0;
-	```
-
 - Found in src/StateVariables.sol [Line: 2](../tests/contract-playground/src/StateVariables.sol#L2)
 
 	```solidity
