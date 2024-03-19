@@ -111,11 +111,11 @@ impl IssueDetector for ConstantsInsteadOfLiteralsDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Constants should be defined and used instead of literals")
+        String::from("Define and use `constant` variables instead of literals")
     }
 
     fn description(&self) -> String {
-        String::from("Create a constant state variable and reference it throughout the contract.")
+        String::from("If the same constant literal value is used multiple times, create a constant state variable and reference it throughout the contract.")
     }
 
     fn severity(&self) -> IssueSeverity {
