@@ -19,11 +19,13 @@ contract ZeroAddressCheck {
         addr = newAddr;
     }
 
+    // False Positive
     function goodToken1(address newAddr) public {
         if (newAddr == address(0)) revert();
         token = IERC20(newAddr);
     }
 
+    // False Positive
     function goodToken2(address newAddr) public {
         require(newAddr != address(0), "Address cannot be zero");
         token = IERC20(newAddr);
@@ -47,7 +49,6 @@ contract ZeroAddressCheck {
         token = newToken;
     }
 
-    // False negative
     function bad3(address newAddr) public {
         token = IERC20(newAddr);
     }

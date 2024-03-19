@@ -109,13 +109,29 @@ impl IssueDetector for ZeroAddressCheckDetector {
                         {
                             return true;
                         }
+                        false
+                    } else {
+                        let left_identifiers = ExtractIdentifiers::from(left_hand_side);
+                        for identifier in left_identifiers.extracted {
+                            if self
+                                .mutable_address_state_variables
+                                .contains_key(&identifier.referenced_declaration)
+                            {
+                                return true;
+                            }
+                        }
+                        false
                     }
-                    false
                 })
                 .filter_map(|x| {
                     let right_hand_side = x.right_hand_side.as_ref();
                     if let Expression::Identifier(right_identifier) = right_hand_side {
                         return Some((right_identifier.referenced_declaration, x.clone()));
+                    } else {
+                        let right_identifiers = ExtractIdentifiers::from(right_hand_side);
+                        for identifier in right_identifiers.extracted {
+                            return Some((identifier.referenced_declaration, x.clone()));
+                        }
                     }
                     None
                 });
