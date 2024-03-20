@@ -111,7 +111,7 @@ impl IssueDetector for ConstantsInsteadOfLiteralsDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Define and use `constant` variables instead of literals")
+        String::from("Define and use `constant` variables instead of using literals")
     }
 
     fn description(&self) -> String {
@@ -157,7 +157,7 @@ mod constants_instead_of_literals_tests {
         // assert that the detector returns the correct title
         assert_eq!(
             detector.title(),
-            String::from("Define and use `constant` variables instead of literals")
+            String::from("Define and use `constant` variables instead of using literals")
         );
         // assert that the detector returns the correct description
         assert_eq!(
