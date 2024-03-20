@@ -1462,7 +1462,39 @@ impl WorkspaceContext {
             .src()
             .map(|src| source_unit.source_line(src).unwrap_or(0)) // If `src` is `Some`, get the line number, else return 0
             .unwrap_or(0); // If `src` is `None`, default to 0
-        let src_location = node.src().unwrap_or("");
+
+        // If the node is one of these, and it has a `name_location`, use that instead of the full `src`
+        let src_location = match node {
+            ASTNode::ContractDefinition(node) => {
+                if let Some(name_location) = &node.name_location {
+                    &name_location
+                } else {
+                    &node.src
+                }
+            }
+            ASTNode::FunctionDefinition(node) => {
+                if let Some(name_location) = &node.name_location {
+                    &name_location
+                } else {
+                    &node.src
+                }
+            }
+            ASTNode::ModifierDefinition(node) => {
+                if let Some(name_location) = &node.name_location {
+                    &name_location
+                } else {
+                    &node.src
+                }
+            }
+            ASTNode::VariableDeclaration(node) => {
+                if let Some(name_location) = &node.name_location {
+                    &name_location
+                } else {
+                    &node.src
+                }
+            }
+            _ => node.src().unwrap_or(""),
+        };
         let chopped_location = match src_location.rfind(':') {
             Some(index) => &src_location[..index],
             None => src_location, // No colon found, return the original string

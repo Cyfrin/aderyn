@@ -654,102 +654,102 @@
           {
             "contract_path": "src/ArbitraryTransferFrom.sol",
             "line_no": 28,
-            "src": "763:152"
+            "src": "772:5"
           },
           {
             "contract_path": "src/AssemblyExample.sol",
             "line_no": 6,
-            "src": "104:229"
+            "src": "113:1"
           },
           {
             "contract_path": "src/Counter.sol",
             "line_no": 7,
-            "src": "120:80"
+            "src": "129:9"
           },
           {
             "contract_path": "src/StateVariables.sol",
             "line_no": 47,
-            "src": "1755:145"
+            "src": "1764:18"
           },
           {
             "contract_path": "src/StateVariables.sol",
             "line_no": 52,
-            "src": "1906:151"
+            "src": "1915:20"
           },
           {
             "contract_path": "src/StateVariables.sol",
             "line_no": 57,
-            "src": "2063:79"
+            "src": "2072:14"
           },
           {
             "contract_path": "src/StateVariables.sol",
             "line_no": 61,
-            "src": "2148:376"
+            "src": "2157:22"
           },
           {
             "contract_path": "src/StateVariables.sol",
             "line_no": 71,
-            "src": "2530:406"
+            "src": "2539:25"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
             "line_no": 12,
-            "src": "244:122"
+            "src": "253:12"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
             "line_no": 17,
-            "src": "372:143"
+            "src": "381:12"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
             "line_no": 22,
-            "src": "521:129"
+            "src": "530:10"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
             "line_no": 27,
-            "src": "656:150"
+            "src": "665:10"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
             "line_no": 32,
-            "src": "812:153"
+            "src": "821:10"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
             "line_no": 37,
-            "src": "971:132"
+            "src": "980:10"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
             "line_no": 42,
-            "src": "1109:69"
+            "src": "1118:4"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
             "line_no": 46,
-            "src": "1184:71"
+            "src": "1193:4"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
             "line_no": 50,
-            "src": "1261:78"
+            "src": "1270:4"
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
             "line_no": 31,
-            "src": "491:131"
+            "src": "500:3"
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
             "line_no": 38,
-            "src": "628:95"
+            "src": "637:5"
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
             "line_no": 42,
-            "src": "729:1016"
+            "src": "738:4"
           },
           {
             "contract_path": "src/cloc/HeavilyCommentedContract.sol",
@@ -764,12 +764,12 @@
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
             "line_no": 11,
-            "src": "346:61"
+            "src": "355:9"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
             "line_no": 15,
-            "src": "413:225"
+            "src": "422:9"
           }
         ],
         "title": "`public` functions not used internally could be marked `external`"
@@ -929,12 +929,12 @@
           {
             "contract_path": "src/InternalFunctions.sol",
             "line_no": 17,
-            "src": "371:118"
+            "src": "380:9"
           },
           {
             "contract_path": "src/OnceModifierExample.sol",
             "line_no": 6,
-            "src": "94:38"
+            "src": "103:8"
           }
         ],
         "title": "Modifiers invoked only once can be shoe-horned into the function"
@@ -1053,7 +1053,7 @@
           {
             "contract_path": "src/InternalFunctions.sol",
             "line_no": 22,
-            "src": "495:150"
+            "src": "504:12"
           }
         ],
         "title": "Internal functions called only once can be inlined"
