@@ -627,17 +627,17 @@
           {
             "contract_path": "src/ZeroAddressCheck.sol",
             "line_no": 43,
-            "src": "1157:14"
+            "src": "1171:14"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
             "line_no": 47,
-            "src": "1232:16"
+            "src": "1248:16"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
             "line_no": 51,
-            "src": "1309:23"
+            "src": "1327:23"
           },
           {
             "contract_path": "src/uniswap/UniswapV2Swapper.sol",
@@ -690,51 +690,6 @@
             "contract_path": "src/StateVariables.sol",
             "line_no": 71,
             "src": "2539:25"
-          },
-          {
-            "contract_path": "src/ZeroAddressCheck.sol",
-            "line_no": 12,
-            "src": "253:12"
-          },
-          {
-            "contract_path": "src/ZeroAddressCheck.sol",
-            "line_no": 17,
-            "src": "381:12"
-          },
-          {
-            "contract_path": "src/ZeroAddressCheck.sol",
-            "line_no": 22,
-            "src": "530:10"
-          },
-          {
-            "contract_path": "src/ZeroAddressCheck.sol",
-            "line_no": 27,
-            "src": "665:10"
-          },
-          {
-            "contract_path": "src/ZeroAddressCheck.sol",
-            "line_no": 32,
-            "src": "821:10"
-          },
-          {
-            "contract_path": "src/ZeroAddressCheck.sol",
-            "line_no": 37,
-            "src": "980:10"
-          },
-          {
-            "contract_path": "src/ZeroAddressCheck.sol",
-            "line_no": 42,
-            "src": "1118:4"
-          },
-          {
-            "contract_path": "src/ZeroAddressCheck.sol",
-            "line_no": 46,
-            "src": "1193:4"
-          },
-          {
-            "contract_path": "src/ZeroAddressCheck.sol",
-            "line_no": 50,
-            "src": "1270:4"
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
@@ -870,17 +825,17 @@
           {
             "contract_path": "src/ZeroAddressCheck.sol",
             "line_no": 13,
-            "src": "327:6"
+            "src": "329:6"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
             "line_no": 23,
-            "src": "602:6"
+            "src": "608:6"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
             "line_no": 38,
-            "src": "1062:6"
+            "src": "1074:6"
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
