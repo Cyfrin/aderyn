@@ -1,0 +1,180 @@
+name: Build and release binaries
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "Git REF to use for manual pre-release"
+        required: true
+        type: string
+      prerelease_suffix:
+        description: "Suffix which has been used for manual pre-release name"
+        required: false
+        type: string
+        default: "notag"
+      release_macos_amd64:
+        description: "Release for MacOS amd64?"
+        required: false
+        type: boolean
+        default: true
+      release_macos_arm64:
+        description: "Release for MacOS arm64?"
+        required: false
+        type: boolean
+        default: true
+      release_linux_amd64:
+        description: "Release for Linux amd64?"
+        required: false
+        type: boolean
+        default: true
+      release_linux_arm64:
+        description: "Release for Linux arm64?"
+        required: false
+        type: boolean
+        default: true
+      release_windows_amd64:
+        description: "Release for Windows amd64?"
+        required: false
+        type: boolean
+        default: true
+  push:
+    tags:
+      - "v*.*.*"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - name: "MacOS x86"
+            runner: macos-12-large
+            release-suffix: macosx-amd64
+            required: ${{ github.event.inputs.release_macos_amd64 || 'true' }}
+          - name: "MacOS arm64"
+            runner: [self-hosted, macOS, ARM64]
+            release-suffix: macosx-arm64
+            required: ${{ github.event.inputs.release_macos_arm64 || 'true' }}
+          - name: "Linux x86"
+            runner: matterlabs-ci-runner
+            image: matterlabs/llvm_runner:ubuntu22-llvm15-latest
+            target: "x86_64-unknown-linux-musl"
+            release-suffix: linux-amd64-musl
+            required: ${{ github.event.inputs.release_linux_amd64 || 'true' }}
+          - name: "Linux ARM64"
+            runner: matterlabs-ci-runner-arm
+            image: matterlabs/llvm_runner:ubuntu22-llvm15-latest
+            target: "aarch64-unknown-linux-musl"
+            rustflags: "-C link-arg=-Wl,-Bstatic -C link-arg=-lc -C link-arg=-L/usr/lib/llvm-15/lib/clang/15.0.7/lib/linux/ -C link-arg=-lclang_rt.builtins-aarch64"
+            release-suffix: linux-arm64-musl
+            required: ${{ github.event.inputs.release_linux_arm64 || 'true' }}
+          - name: "Windows"
+            runner: windows-2022-github-hosted-16core
+            release-suffix: windows-amd64-gnu
+            required: ${{ github.event.inputs.release_windows_amd64 || 'true' }}
+    runs-on: ${{ matrix.runner }}
+    container:
+      image: ${{ matrix.image || '' }} # Special workaround to allow matrix builds with optional container
+    name: ${{ matrix.name }}
+    steps:
+      - name: Checkout source
+        if: ${{ matrix.required == 'true' }} # Important to use 'true' here, because the value is a string here
+        uses: actions/checkout@v4
+
+      - name: Prepare Windows env
+        if: runner.os == 'Windows'
+        uses: ./.github/actions/prepare-msys
+
+      - name: Build LLVM
+        if: ${{ matrix.required == 'true' }}
+        uses: ./.github/actions/build-llvm
+        with:
+          target: ${{ matrix.target }}
+
+      - name: Build zksolc
+        if: ${{ matrix.required == 'true' }}
+        uses: ./.github/actions/build
+        with:
+          target: ${{ matrix.target }}
+          rustflags: ${{ matrix.rustflags }}
+          release-suffix: ${{ matrix.release-suffix }}
+
+  prepare-release:
+    name: Prepare release
+    runs-on: ubuntu-latest
+    needs:
+      - build
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.ref || '' }}
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: release*
+          path: releases
+
+      - name: Generate Version or SHA
+        id: version_or_sha
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            git config --global --add safe.directory $GITHUB_WORKSPACE
+            echo "version_or_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          else
+            echo "version_or_sha=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: List binaries to be released
+        run: tree ./releases
+
+      - name: Publish pre-release
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          BINARIES=($(find ./releases -type f))
+          gh release create \
+            --prerelease prerelease-${{ steps.version_or_sha.outputs.version_or_sha }}-${{ github.event.inputs.prerelease_suffix }} \
+            --target ${{ github.event.inputs.ref }} \
+            --title prerelease-${{ steps.version_or_sha.outputs.version_or_sha }}-${{ github.event.inputs.prerelease_suffix }} \
+            "${BINARIES[@]}"
+
+      - name: Publish release (this repository)
+        if: github.ref_type == 'tag'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          BINARIES=($(find ./releases -type f))
+          gh release create ${{ steps.version_or_sha.outputs.version_or_sha }} \
+            --title ${{ steps.version_or_sha.outputs.version_or_sha }} \
+            "${BINARIES[@]}"
+
+      - name: Get changelog
+        if: github.ref_type == 'tag'
+        id: changelog_reader
+        uses: mindsers/changelog-reader-action@v2
+        with:
+          validation_level: warn
+          path: ./CHANGELOG.md
+
+      - name: Prepare CHANGELOG for publishing
+        if: github.ref_type == 'tag'
+        run: |
+          echo "## ${{ github.event.repository.name }}" >> ./release_changelog.md
+          echo "## [${{ steps.changelog_reader.outputs.version }}] - ${{ steps.changelog_reader.outputs.date }}" >> ./release_changelog.md
+          echo '${{ steps.changelog_reader.outputs.changes }}' >> ./release_changelog.md
+          echo "{\"text\":\"$(cat ./release_changelog.md)\"}" > ./slack-payload.json
+
+      - name: Send Slack notification
+        if: github.ref_type == 'tag'
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          payload-file-path: "./slack-payload.json"
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_RELEASES }}
