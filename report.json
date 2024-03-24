@@ -21,6 +21,7 @@
     "unsafe-oz-erc721-mint",
     "push-zero-opcode",
     "arbitrary-transfer-from",
+    "useless-modifier",
     "empty-block",
     "large-numeric-literal",
     "useless-internal-function"
@@ -146,8 +147,8 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 801,
-    "total_source_units": 27
+    "total_sloc": 850,
+    "total_source_units": 29
   },
   "high_issues": {
     "issues": [
@@ -207,7 +208,7 @@
     "high": 2,
     "low": 6,
     "medium": 4,
-    "nc": 9
+    "nc": 10
   },
   "low_issues": {
     "issues": [
@@ -484,7 +485,7 @@
           {
             "contract_path": "src/EmptyBlocks.sol",
             "line_no": 6,
-            "src": "142:106"
+            "src": "188:7"
           },
           {
             "contract_path": "src/InternalFunctions.sol",
@@ -728,12 +729,12 @@
           {
             "contract_path": "src/cloc/HeavilyCommentedContract.sol",
             "line_no": 31,
-            "src": "500:131"
+            "src": "509:3"
           },
           {
             "contract_path": "src/cloc/HeavilyCommentedContract.sol",
             "line_no": 38,
-            "src": "637:804"
+            "src": "646:4"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
@@ -897,58 +898,80 @@
         "title": "The `nonReentrant` `modifier` should occur before all other modifiers"
       },
       {
+        "description": "",
+        "detector_name": "useless-modifier",
+        "instances": [
+          {
+            "contract_path": "src/InternalFunctions.sol",
+            "line_no": 17,
+            "src": "380:9"
+          },
+          {
+            "contract_path": "src/OnceModifierExample.sol",
+            "line_no": 6,
+            "src": "103:8"
+          }
+        ],
+        "title": "Modifiers invoked only once can be shoe-horned into the function"
+      },
+      {
         "description": "Consider removing empty blocks.",
         "detector_name": "empty-block",
         "instances": [
           {
             "contract_path": "src/AdminContract.sol",
             "line_no": 14,
-            "src": "448:108"
+            "src": "457:23"
           },
           {
             "contract_path": "src/EmptyBlocks.sol",
-            "line_no": 22,
-            "src": "373:98"
+            "line_no": 25,
+            "src": "453:12"
           },
           {
             "contract_path": "src/EmptyBlocks.sol",
             "line_no": 39,
-            "src": "593:41"
+            "src": "602:13"
           },
           {
             "contract_path": "src/EmptyBlocks.sol",
             "line_no": 43,
-            "src": "651:81"
+            "src": "660:24"
           },
           {
             "contract_path": "src/EmptyBlocks.sol",
             "line_no": 49,
-            "src": "773:134"
+            "src": "782:30"
           },
           {
             "contract_path": "src/EmptyBlocks.sol",
             "line_no": 57,
-            "src": "924:178"
+            "src": "933:41"
+          },
+          {
+            "contract_path": "src/OnceModifierExample.sol",
+            "line_no": 10,
+            "src": "147:7"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
             "line_no": 11,
-            "src": "346:61"
+            "src": "355:9"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
             "line_no": 32,
-            "src": "797:108"
+            "src": "806:23"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
             "line_no": 40,
-            "src": "937:59"
+            "src": "946:8"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
             "line_no": 44,
-            "src": "1002:85"
+            "src": "1011:23"
           }
         ],
         "title": "Empty Block"
