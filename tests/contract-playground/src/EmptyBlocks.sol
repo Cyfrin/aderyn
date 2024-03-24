@@ -17,6 +17,30 @@ contract EmptyBlocksWithEmptyConstructor {
     }
 }
 
+contract EmptyBlocksNestedInReceiverAndFallbacks {
+
+    // Good
+    constructor() {
+
+    }
+
+     // Bad
+    receive() external payable {
+        // Empty block
+        {
+
+        }
+    }
+
+    // Bad
+    fallback() external payable {
+        // Empty block
+        {
+
+        }
+    }
+}
+
 contract EmptyBlocks {
     // Bad
     constructor() {
