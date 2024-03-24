@@ -58,7 +58,7 @@
       },
       {
         "file_path": "src/EmptyBlocks.sol",
-        "n_sloc": 36
+        "n_sloc": 48
       },
       {
         "file_path": "src/HugeConstants.sol",
@@ -147,7 +147,7 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 850,
+    "total_sloc": 862,
     "total_source_units": 29
   },
   "high_issues": {
@@ -925,28 +925,38 @@
           },
           {
             "contract_path": "src/EmptyBlocks.sol",
-            "line_no": 25,
-            "src": "453:12"
+            "line_no": 30,
+            "src": "503:12"
           },
           {
             "contract_path": "src/EmptyBlocks.sol",
-            "line_no": 39,
-            "src": "602:13"
-          },
-          {
-            "contract_path": "src/EmptyBlocks.sol",
-            "line_no": 43,
-            "src": "660:24"
+            "line_no": 38,
+            "src": "599:12"
           },
           {
             "contract_path": "src/EmptyBlocks.sol",
             "line_no": 49,
-            "src": "782:30"
+            "src": "739:12"
           },
           {
             "contract_path": "src/EmptyBlocks.sol",
-            "line_no": 57,
-            "src": "933:41"
+            "line_no": 63,
+            "src": "888:13"
+          },
+          {
+            "contract_path": "src/EmptyBlocks.sol",
+            "line_no": 67,
+            "src": "946:24"
+          },
+          {
+            "contract_path": "src/EmptyBlocks.sol",
+            "line_no": 73,
+            "src": "1068:30"
+          },
+          {
+            "contract_path": "src/EmptyBlocks.sol",
+            "line_no": 81,
+            "src": "1219:41"
           },
           {
             "contract_path": "src/OnceModifierExample.sol",
