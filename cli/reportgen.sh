@@ -4,6 +4,8 @@ cd tests/contract-playground
 forge build --ast
 cd ../../
 
+export ADERYN_SKIP_BUILD=1
+
 #### MARKDOWN REPORTS ######
 
 # Basic report.md 
@@ -27,6 +29,7 @@ cargo run -- ./tests/contract-playground -o report.json
 # Create report-config.json based on config file
 cargo run -- --config-file ./tests/aderyn.config.json -o report-config.json ./tests/contract-playground/ 
 
+unset ADERYN_SKIP_BUILD=1
 
 #### BOT ###################
 
@@ -37,3 +40,4 @@ cargo run --bin bot_example -- -p orig_
 
 cli/bot_archivegen.sh
 cli/sample_metricsdbgen.sh judgeops/samples/sample_db.json
+
