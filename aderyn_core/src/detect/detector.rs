@@ -30,8 +30,6 @@ use std::{
 };
 
 use super::nc::EmptyBlockDetector;
-use super::nc::LargeLiteralValueDetector;
-use super::nc::UselessInternalFunctionDetector;
 
 pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
     vec![
@@ -53,6 +51,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<UnsafeERC721MintDetector>::default(),
         Box::<PushZeroOpcodeDetector>::default(),
         Box::<ArbitraryTransferFromDetector>::default(),
+        Box::<UselessModifierDetector>::default(),
         Box::<EmptyBlockDetector>::default(),
         Box::<LargeLiteralValueDetector>::default(),
         Box::<UselessInternalFunctionDetector>::default(),
@@ -85,9 +84,10 @@ pub(crate) enum IssueDetectorNamePool {
     UnsafeOzERC721Mint,
     PushZeroOpcode,
     ArbitraryTransferFrom,
-    EmptyBlock,
+    UselessModifier,
     LargeNumericLiteral,
     UselessInternalFunction,
+    EmptyBlock,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -152,13 +152,14 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::ArbitraryTransferFrom => {
             Some(Box::<ArbitraryTransferFromDetector>::default())
         }
-        IssueDetectorNamePool::EmptyBlock => Some(Box::<EmptyBlockDetector>::default()),
+        IssueDetectorNamePool::UselessModifier => Some(Box::<UselessModifierDetector>::default()),
         IssueDetectorNamePool::LargeNumericLiteral => {
             Some(Box::<LargeLiteralValueDetector>::default())
         }
         IssueDetectorNamePool::UselessInternalFunction => {
             Some(Box::<UselessInternalFunctionDetector>::default())
         }
+        IssueDetectorNamePool::EmptyBlock => Some(Box::<EmptyBlockDetector>::default()),
         IssueDetectorNamePool::Undecided => None,
     }
 }

@@ -39,7 +39,7 @@ impl IssueDetector for EmptyBlockDetector {
                             // 1 here, means the first parent.
                             // So if the constructor is NOT the immediate parent of this empty block
                             // capture it!
-                            capture!(self, context, f);
+                            capture!(self, context, empty_block);
                         }
                     }
                 }
