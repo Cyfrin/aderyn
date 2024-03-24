@@ -136,6 +136,7 @@ fn main() {
             .read(true)
             .write(true)
             .create(true)
+            .truncate(true)
             .open(detector_path.join("detector.rs"))
             .unwrap();
 
@@ -162,6 +163,7 @@ fn main() {
             .read(true)
             .write(true)
             .create(true)
+            .truncate(false)
             .open(detector_path.join("mod.rs"))
             .unwrap();
 
@@ -182,6 +184,7 @@ fn main() {
             .read(true)
             .write(true)
             .create(true)
+            .truncate(false)
             .open(&librs)
             .unwrap();
 
@@ -223,6 +226,7 @@ fn main() {
             .read(true)
             .write(true)
             .create(true)
+            .truncate(true)
             .open(detector_path.join("detector.rs"))
             .unwrap();
 
@@ -249,6 +253,7 @@ fn main() {
             .read(true)
             .write(true)
             .create(true)
+            .truncate(false)
             .open(detector_path.join("mod.rs"))
             .unwrap();
 
@@ -292,6 +297,7 @@ fn main() {
             .read(true)
             .write(true)
             .create(true)
+            .truncate(false)
             .open(custom_detector_rs_path)
             .unwrap();
 
@@ -308,6 +314,7 @@ fn main() {
             .read(true)
             .write(true)
             .create(true)
+            .truncate(false)
             .open(&librs)
             .unwrap();
 
