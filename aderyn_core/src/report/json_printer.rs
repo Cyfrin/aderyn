@@ -1,5 +1,5 @@
 use std::{
-    io::{Result, Write},
+    io::{self, Result, Write},
     path::PathBuf,
 };
 
@@ -47,6 +47,7 @@ impl ReportPrinter<()> for JsonPrinter {
         _: PathBuf,
         _: Option<String>,
         _: bool,
+        stdout: bool,
         detectors_used: &[(String, String)],
     ) -> Result<()> {
         let detectors_used_names: Vec<_> = detectors_used.iter().map(|x| x.0.clone()).collect();
@@ -63,6 +64,12 @@ impl ReportPrinter<()> for JsonPrinter {
             detectors_used: detectors_used_names,
         };
         let value = serde_json::to_value(content).unwrap();
+        if stdout {
+            println!("STDOUT START");
+            let _ = serde_json::to_writer_pretty(io::stdout(), &value);
+            println!("STDOUT END");
+            return Ok(());
+        }
         _ = serde_json::to_writer_pretty(writer, &value);
         Ok(())
     }

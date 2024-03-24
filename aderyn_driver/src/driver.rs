@@ -6,7 +6,7 @@ use aderyn_core::{
     report::{json_printer::JsonPrinter, markdown_printer::MarkdownReportPrinter},
     run_with_printer, run_with_printer_and_given_detectors,
 };
-use std::{fs::read_dir, path::PathBuf};
+use std::{env, fs::read_dir, path::PathBuf};
 
 pub struct Args {
     pub root: String,
@@ -14,6 +14,7 @@ pub struct Args {
     pub exclude: Option<Vec<String>>,
     pub scope: Option<Vec<String>>,
     pub no_snippets: bool,
+    pub stdout: bool,
 }
 
 enum Framework {
@@ -35,6 +36,7 @@ pub fn drive(args: Args) {
             JsonPrinter,
             root_rel_path,
             args.no_snippets,
+            args.stdout,
         )
         .unwrap_or_else(|err| {
             // Exit with a non-zero exit code
@@ -50,6 +52,7 @@ pub fn drive(args: Args) {
             MarkdownReportPrinter,
             root_rel_path,
             args.no_snippets,
+            args.stdout,
         )
         .unwrap_or_else(|err| {
             // Exit with a non-zero exit code
@@ -74,6 +77,7 @@ pub fn drive_with(args: Args, detectors: Vec<Box<dyn IssueDetector>>) {
             JsonPrinter,
             root_rel_path,
             args.no_snippets,
+            args.stdout,
             detectors,
         )
         .unwrap_or_else(|err| {
@@ -90,6 +94,7 @@ pub fn drive_with(args: Args, detectors: Vec<Box<dyn IssueDetector>>) {
             MarkdownReportPrinter,
             root_rel_path,
             args.no_snippets,
+            args.stdout,
             detectors,
         )
         .unwrap_or_else(|err| {
@@ -134,11 +139,14 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
             let framework = detect_framework(root_path.clone()).unwrap_or_else(|| {
                 // Exit with a non-zero exit code
                 eprintln!("Error detecting framework");
+                eprintln!("Neither foundry.toml nor hardhat.config.json was found in the project directory!");
+                eprintln!();
+                eprintln!("NOTE: \nIf Foundry is detected in the project root, Aderyn will first run `forge build --ast` to ensure that the contract compiles correctly and the latest artifacts are available.");
+                eprintln!("If Hardhat is detected, Aderyn does not auto-compile. Make sure to run `hardhat compile` BEFORE running Aderyn.");
                 std::process::exit(1);
             });
 
             // This whole block loads the solidity files and ASTs into the workspace context
-            // TODO: move much of this gutsy stuff into the foundry / hardhat modules.
             match framework {
                 Framework::Foundry => {
                     process_foundry::with_project_root_at(&root_path, &args.scope, &args.exclude)
@@ -150,11 +158,20 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
         }
     };
 
-    // Using the source path, calculate the sloc
-    let stats =
-        fscloc::engine::count_lines_of_code(&PathBuf::from(src_path), &context.src_filepaths);
-    let stats = stats.lock().unwrap().to_owned();
-    context.set_sloc_stats(stats);
+    let key = "ADERYN_CLOC_SKIP";
+
+    let should_cloc = match env::var(key) {
+        Ok(val) => val != "1",
+        Err(_) => true,
+    };
+
+    if should_cloc {
+        // Using the source path, calculate the sloc
+        let stats =
+            fscloc::engine::count_lines_of_code(&PathBuf::from(src_path), &context.src_filepaths);
+        let stats = stats.lock().unwrap().to_owned();
+        context.set_sloc_stats(stats);
+    }
 
     WorkspaceContextWrapper {
         context,
