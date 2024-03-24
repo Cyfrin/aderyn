@@ -15,9 +15,10 @@ use crate::{
             SolmateSafeTransferLibDetector, UnsafeERC721MintDetector,
         },
         nc::{
-            ConstantsInsteadOfLiteralsDetector, NonReentrantBeforeOthersDetector,
-            RequireWithStringDetector, UnindexedEventsDetector, UselessPublicFunctionDetector,
-            ZeroAddressCheckDetector,
+            ConstantsInsteadOfLiteralsDetector, LargeLiteralValueDetector,
+            NonReentrantBeforeOthersDetector, RequireWithStringDetector, UnindexedEventsDetector,
+            UselessInternalFunctionDetector, UselessModifierDetector,
+            UselessPublicFunctionDetector, ZeroAddressCheckDetector,
         },
     },
 };
