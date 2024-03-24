@@ -1083,7 +1083,7 @@ pub(crate) struct ExtractImmediateChildrenIDs {
 impl ExtractImmediateChildrenIDs {
     pub(crate) fn from<T: Node + ?Sized>(node: &T) -> Self {
         let mut extractor: ExtractImmediateChildrenIDs = Self::default();
-        node.accept(&mut extractor).unwrap_or_default();
+        node.accept_metadata(&mut extractor).unwrap_or_default();
         extractor
     }
 }
