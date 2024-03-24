@@ -2,7 +2,7 @@
 
 cd tests/contract-playground
 forge build --ast
-cd ..
+cd ../../
 
 #### MARKDOWN REPORTS ######
 
