@@ -1474,8 +1474,8 @@ impl WorkspaceContext {
             Ordering::Less => Some(Ordering::Less),
             Ordering::Equal => {
                 // If the nodes are on the same line, we must compare offset in the chopped_location
-                let first_character_offset = f.2.split_once(":").unwrap();
-                let second_character_offset = s.2.split_once(":").unwrap();
+                let first_character_offset = f.2.split_once(':').unwrap();
+                let second_character_offset = s.2.split_once(':').unwrap();
                 Some(first_character_offset.0.cmp(second_character_offset.0))
             }
             Ordering::Greater => Some(Ordering::Greater),
