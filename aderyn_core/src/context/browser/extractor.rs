@@ -4,6 +4,8 @@ use crate::{
 };
 use eyre::Result;
 
+////////// PUBLICLY AVAILABLE EXTRACTION LIBRARY /////////////////////////
+
 // ExtractArrayTypeNames is an extractor that extracts all ArrayTypeName nodes from a node.
 #[derive(Default)]
 pub struct ExtractArrayTypeNames {
@@ -1067,5 +1069,32 @@ impl ASTConstVisitor for ExtractWhileStatements {
     fn visit_while_statement(&mut self, node: &WhileStatement) -> Result<bool> {
         self.extracted.push(node.clone());
         Ok(true)
+    }
+}
+
+/////////// EXTRACTION UTILS FOR CRATE - LEVEL ACCESS //////////////////
+
+// ExtractImmediateChildren is an extractor that extracts immediate children from a node
+#[derive(Default)]
+pub(crate) struct ExtractImmediateChildrenIDs {
+    pub extracted: Vec<NodeID>,
+}
+
+impl ExtractImmediateChildrenIDs {
+    pub(crate) fn from<T: Node + ?Sized>(node: &T) -> Self {
+        let mut extractor: ExtractImmediateChildrenIDs = Self::default();
+        node.accept(&mut extractor).unwrap_or_default();
+        extractor
+    }
+}
+
+impl ASTConstVisitor for ExtractImmediateChildrenIDs {
+    fn visit_immediate_children(
+        &mut self,
+        _node_id: NodeID,
+        node_children_ids: Vec<NodeID>,
+    ) -> Result<()> {
+        self.extracted.extend(node_children_ids);
+        Ok(())
     }
 }
