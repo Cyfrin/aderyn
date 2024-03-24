@@ -14,8 +14,7 @@ impl GetImmediateChildren for ASTNode {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id()?)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
@@ -26,8 +25,7 @@ impl GetImmediateChildren for Assignment {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
@@ -37,8 +35,7 @@ impl GetImmediateChildren for BinaryOperation {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
@@ -48,8 +45,7 @@ impl GetImmediateChildren for Block {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
@@ -59,8 +55,7 @@ impl GetImmediateChildren for Conditional {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
@@ -70,8 +65,7 @@ impl GetImmediateChildren for ContractDefinition {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
@@ -81,8 +75,7 @@ impl GetImmediateChildren for ElementaryTypeNameExpression {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
@@ -92,8 +85,7 @@ impl GetImmediateChildren for EnumDefinition {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
@@ -103,8 +95,7 @@ impl GetImmediateChildren for EnumValue {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
@@ -114,8 +105,7 @@ impl GetImmediateChildren for EventDefinition {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
@@ -125,8 +115,7 @@ impl GetImmediateChildren for ErrorDefinition {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
@@ -136,8 +125,7 @@ impl GetImmediateChildren for FunctionCall {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
@@ -147,8 +135,7 @@ impl GetImmediateChildren for FunctionCallOptions {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
@@ -158,8 +145,7 @@ impl GetImmediateChildren for FunctionDefinition {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
@@ -169,8 +155,7 @@ impl GetImmediateChildren for ForStatement {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
@@ -180,8 +165,7 @@ impl GetImmediateChildren for Identifier {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
@@ -191,8 +175,7 @@ impl GetImmediateChildren for IdentifierPath {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
@@ -202,8 +185,7 @@ impl GetImmediateChildren for IfStatement {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
@@ -213,8 +195,7 @@ impl GetImmediateChildren for ImportDirective {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
@@ -224,8 +205,7 @@ impl GetImmediateChildren for IndexAccess {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
@@ -235,8 +215,7 @@ impl GetImmediateChildren for IndexRangeAccess {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
@@ -246,8 +225,7 @@ impl GetImmediateChildren for InheritanceSpecifier {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
@@ -257,8 +235,7 @@ impl GetImmediateChildren for InlineAssembly {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
@@ -268,8 +245,7 @@ impl GetImmediateChildren for Literal {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
@@ -279,8 +255,7 @@ impl GetImmediateChildren for MemberAccess {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
@@ -290,8 +265,7 @@ impl GetImmediateChildren for NewExpression {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
@@ -301,8 +275,7 @@ impl GetImmediateChildren for ModifierDefinition {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
@@ -312,8 +285,7 @@ impl GetImmediateChildren for ModifierInvocation {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
@@ -323,8 +295,7 @@ impl GetImmediateChildren for OverrideSpecifier {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
@@ -334,8 +305,7 @@ impl GetImmediateChildren for ParameterList {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
@@ -345,8 +315,7 @@ impl GetImmediateChildren for PragmaDirective {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
@@ -356,8 +325,7 @@ impl GetImmediateChildren for Return {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
@@ -367,8 +335,7 @@ impl GetImmediateChildren for SourceUnit {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
@@ -378,8 +345,7 @@ impl GetImmediateChildren for StructDefinition {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
@@ -389,8 +355,7 @@ impl GetImmediateChildren for StructuredDocumentation {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
@@ -400,8 +365,7 @@ impl GetImmediateChildren for TupleExpression {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
@@ -411,8 +375,7 @@ impl GetImmediateChildren for UnaryOperation {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
@@ -422,8 +385,7 @@ impl GetImmediateChildren for UserDefinedValueTypeDefinition {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
@@ -433,8 +395,7 @@ impl GetImmediateChildren for UsingForDirective {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
@@ -444,8 +405,7 @@ impl GetImmediateChildren for VariableDeclaration {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
@@ -455,8 +415,7 @@ impl GetImmediateChildren for VariableDeclarationStatement {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
@@ -466,8 +425,7 @@ impl GetImmediateChildren for WhileStatement {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
-            .map(|x| context.nodes.get(&x))
-            .flatten()
+            .filter_map(|x| context.nodes.get(&x))
             .collect::<Vec<_>>();
         Some(children)
     }
