@@ -15,3 +15,17 @@ impl AppearsAfterASTNodeLocation for ASTNode {
         }
     }
 }
+
+pub trait AppearsBeforeASTNodeLocation {
+    fn appears_before<'a>(&self, context: &'a WorkspaceContext, other: &ASTNode) -> Option<bool>;
+}
+
+impl AppearsBeforeASTNodeLocation for ASTNode {
+    fn appears_before<'a>(&self, context: &'a WorkspaceContext, other: &ASTNode) -> Option<bool> {
+        match context.get_relative_location_of_nodes(self.id()?, other.id()?)? {
+            Ordering::Less => Some(true),
+            Ordering::Greater => Some(false),
+            Ordering::Equal => Some(false),
+        }
+    }
+}
