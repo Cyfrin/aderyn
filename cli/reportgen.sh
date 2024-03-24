@@ -1,5 +1,9 @@
 #!/bin/bash
 
+cd tests/contract-playground
+forge build --ast
+cd ..
+
 #### MARKDOWN REPORTS ######
 
 # Basic report.md 
