@@ -16,15 +16,13 @@ pub struct PublicConstantDetector {
 impl IssueDetector for PublicConstantDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn std::error::Error>> {
         for contract in context.contract_definitions() {
-            let public_constant_variables = ExtractVariableDeclarations::from(contract).extracted;
-            let public_constant_variables = public_constant_variables
-                .iter()
+            let num_public_constant_variables = ExtractVariableDeclarations::from(contract)
+                .extracted
+                .into_iter()
                 .filter(|x| x.constant && matches!(x.visibility, Visibility::Public))
-                .collect::<Vec<_>>();
-            if public_constant_variables.len() > 1 {
-                for c in public_constant_variables {
-                    capture!(self, context, c);
-                }
+                .count();
+            if num_public_constant_variables > 1 {
+                capture!(self, context, contract);
             }
         }
 
@@ -68,7 +66,7 @@ mod public_constant_detector {
         let found = detector.detect(&context).unwrap();
         assert!(found);
         // assert that the detector returns the correct number of instances
-        assert_eq!(detector.instances().len(), 3);
+        assert_eq!(detector.instances().len(), 1);
         // assert that the detector returns the correct severity
         assert_eq!(
             detector.severity(),

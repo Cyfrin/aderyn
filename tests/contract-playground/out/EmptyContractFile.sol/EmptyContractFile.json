@@ -1,1 +1,1 @@
-{"abi":[],"bytecode":{"object":"0x","linkReferences":{}},"deployedBytecode":{"object":"0x","linkReferences":{}},"ast":{"absolutePath":"src/cloc/EmptyContractFile.sol","id":43091,"exportedSymbols":{},"nodeType":"SourceUnit","src":"0:0:24","nodes":[]},"id":24}
+{"abi":[],"bytecode":{"object":"0x","linkReferences":{}},"deployedBytecode":{"object":"0x","linkReferences":{}},"ast":{"absolutePath":"src/cloc/EmptyContractFile.sol","id":43078,"exportedSymbols":{},"nodeType":"SourceUnit","src":"0:0:23","nodes":[]},"id":23}

@@ -21,6 +21,7 @@
     "unsafe-oz-erc721-mint",
     "push-zero-opcode",
     "arbitrary-transfer-from",
+    "public-constant",
     "useless-modifier",
     "large-numeric-literal",
     "useless-internal-function"
@@ -203,7 +204,7 @@
     "high": 2,
     "low": 6,
     "medium": 4,
-    "nc": 9
+    "nc": 10
   },
   "low_issues": {
     "issues": [
@@ -876,6 +877,23 @@
           }
         ],
         "title": "The `nonReentrant` `modifier` should occur before all other modifiers"
+      },
+      {
+        "description": "If there is more than 1 public constant in a contract, they all can be marked private and exposed via a single getter function to save deployment cost.",
+        "detector_name": "public-constant",
+        "instances": [
+          {
+            "contract_path": "src/ConstantsLiterals.sol",
+            "line_no": 4,
+            "src": "66:17"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 4,
+            "src": "66:13"
+          }
+        ],
+        "title": "Public constants can be replaced by single getter function"
       },
       {
         "description": "",
