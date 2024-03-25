@@ -343,6 +343,10 @@ jobs:
           # Define a better name for the final binary
           BIN_RELEASE="${PROJECT_NAME}-${{ matrix.name }}${BIN_SUFFIX}"
           BIN_RELEASE_VERSIONED="${PROJECT_NAME}-${{ github.ref_name }}-${{ matrix.name }}${BIN_SUFFIX}"
+  
+          # Move the built binary where you want it
+          ls -la
+          mv "${BIN_OUTPUT}" "./${BIN_RELEASE}"
 
           # Export BIN_RELEASE to GITHUB_ENV
           echo "BIN_RELEASE=${BIN_RELEASE}" >> $GITHUB_ENV
