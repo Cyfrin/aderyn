@@ -346,4 +346,4 @@ jobs:
   
           # Move the built binary where you want it
           ls -la
-          mv "${BIN_OUTPUT}" "./releases/${BIN_RELEASE}"
+          mv "${BIN_OUTPUT}" "./${BIN_RELEASE}"
