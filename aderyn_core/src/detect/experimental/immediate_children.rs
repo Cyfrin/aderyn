@@ -37,7 +37,7 @@ impl IssueDetector for ImmediateChildrenDemonstrator {
             .next()
             .unwrap();
 
-        if let Some(children) = inc.body.as_ref().unwrap().immediate_children(context) {
+        if let Some(children) = inc.body.as_ref().unwrap().children(context) {
             for child in children {
                 assert!(
                     child.node_type() == NodeType::IfStatement,

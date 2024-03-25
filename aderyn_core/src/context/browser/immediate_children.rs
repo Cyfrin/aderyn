@@ -6,11 +6,11 @@ use crate::{
 
 pub trait GetImmediateChildren {
     /// Get the immediate children of an ASTNode
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>>;
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>>;
 }
 
 impl GetImmediateChildren for ASTNode {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id()?)?)
             .extracted
             .into_iter()
@@ -21,7 +21,7 @@ impl GetImmediateChildren for ASTNode {
 }
 
 impl GetImmediateChildren for Assignment {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
@@ -31,7 +31,7 @@ impl GetImmediateChildren for Assignment {
     }
 }
 impl GetImmediateChildren for BinaryOperation {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
@@ -41,7 +41,7 @@ impl GetImmediateChildren for BinaryOperation {
     }
 }
 impl GetImmediateChildren for Block {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
@@ -51,7 +51,7 @@ impl GetImmediateChildren for Block {
     }
 }
 impl GetImmediateChildren for Conditional {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
@@ -61,7 +61,7 @@ impl GetImmediateChildren for Conditional {
     }
 }
 impl GetImmediateChildren for ContractDefinition {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
@@ -71,7 +71,7 @@ impl GetImmediateChildren for ContractDefinition {
     }
 }
 impl GetImmediateChildren for ElementaryTypeNameExpression {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
@@ -81,7 +81,7 @@ impl GetImmediateChildren for ElementaryTypeNameExpression {
     }
 }
 impl GetImmediateChildren for EnumDefinition {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
@@ -91,7 +91,7 @@ impl GetImmediateChildren for EnumDefinition {
     }
 }
 impl GetImmediateChildren for EnumValue {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
@@ -101,7 +101,7 @@ impl GetImmediateChildren for EnumValue {
     }
 }
 impl GetImmediateChildren for EventDefinition {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
@@ -111,7 +111,7 @@ impl GetImmediateChildren for EventDefinition {
     }
 }
 impl GetImmediateChildren for ErrorDefinition {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
@@ -121,7 +121,7 @@ impl GetImmediateChildren for ErrorDefinition {
     }
 }
 impl GetImmediateChildren for FunctionCall {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
@@ -131,7 +131,7 @@ impl GetImmediateChildren for FunctionCall {
     }
 }
 impl GetImmediateChildren for FunctionCallOptions {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
@@ -141,7 +141,7 @@ impl GetImmediateChildren for FunctionCallOptions {
     }
 }
 impl GetImmediateChildren for FunctionDefinition {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
@@ -151,7 +151,7 @@ impl GetImmediateChildren for FunctionDefinition {
     }
 }
 impl GetImmediateChildren for ForStatement {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
@@ -161,7 +161,7 @@ impl GetImmediateChildren for ForStatement {
     }
 }
 impl GetImmediateChildren for Identifier {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
@@ -171,7 +171,7 @@ impl GetImmediateChildren for Identifier {
     }
 }
 impl GetImmediateChildren for IdentifierPath {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
@@ -181,7 +181,7 @@ impl GetImmediateChildren for IdentifierPath {
     }
 }
 impl GetImmediateChildren for IfStatement {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
@@ -191,7 +191,7 @@ impl GetImmediateChildren for IfStatement {
     }
 }
 impl GetImmediateChildren for ImportDirective {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
@@ -201,7 +201,7 @@ impl GetImmediateChildren for ImportDirective {
     }
 }
 impl GetImmediateChildren for IndexAccess {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
@@ -211,7 +211,7 @@ impl GetImmediateChildren for IndexAccess {
     }
 }
 impl GetImmediateChildren for IndexRangeAccess {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
@@ -221,7 +221,7 @@ impl GetImmediateChildren for IndexRangeAccess {
     }
 }
 impl GetImmediateChildren for InheritanceSpecifier {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
@@ -231,7 +231,7 @@ impl GetImmediateChildren for InheritanceSpecifier {
     }
 }
 impl GetImmediateChildren for InlineAssembly {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
@@ -241,7 +241,7 @@ impl GetImmediateChildren for InlineAssembly {
     }
 }
 impl GetImmediateChildren for Literal {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
@@ -251,7 +251,7 @@ impl GetImmediateChildren for Literal {
     }
 }
 impl GetImmediateChildren for MemberAccess {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
@@ -261,7 +261,7 @@ impl GetImmediateChildren for MemberAccess {
     }
 }
 impl GetImmediateChildren for NewExpression {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
@@ -271,7 +271,7 @@ impl GetImmediateChildren for NewExpression {
     }
 }
 impl GetImmediateChildren for ModifierDefinition {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
@@ -281,7 +281,7 @@ impl GetImmediateChildren for ModifierDefinition {
     }
 }
 impl GetImmediateChildren for ModifierInvocation {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
@@ -291,7 +291,7 @@ impl GetImmediateChildren for ModifierInvocation {
     }
 }
 impl GetImmediateChildren for OverrideSpecifier {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
@@ -301,7 +301,7 @@ impl GetImmediateChildren for OverrideSpecifier {
     }
 }
 impl GetImmediateChildren for ParameterList {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
@@ -311,7 +311,7 @@ impl GetImmediateChildren for ParameterList {
     }
 }
 impl GetImmediateChildren for PragmaDirective {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
@@ -321,7 +321,7 @@ impl GetImmediateChildren for PragmaDirective {
     }
 }
 impl GetImmediateChildren for Return {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
@@ -331,7 +331,7 @@ impl GetImmediateChildren for Return {
     }
 }
 impl GetImmediateChildren for SourceUnit {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
@@ -341,7 +341,7 @@ impl GetImmediateChildren for SourceUnit {
     }
 }
 impl GetImmediateChildren for StructDefinition {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
@@ -351,7 +351,7 @@ impl GetImmediateChildren for StructDefinition {
     }
 }
 impl GetImmediateChildren for StructuredDocumentation {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
@@ -361,7 +361,7 @@ impl GetImmediateChildren for StructuredDocumentation {
     }
 }
 impl GetImmediateChildren for TupleExpression {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
@@ -371,7 +371,7 @@ impl GetImmediateChildren for TupleExpression {
     }
 }
 impl GetImmediateChildren for UnaryOperation {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
@@ -381,7 +381,7 @@ impl GetImmediateChildren for UnaryOperation {
     }
 }
 impl GetImmediateChildren for UserDefinedValueTypeDefinition {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
@@ -391,7 +391,7 @@ impl GetImmediateChildren for UserDefinedValueTypeDefinition {
     }
 }
 impl GetImmediateChildren for UsingForDirective {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
@@ -401,7 +401,7 @@ impl GetImmediateChildren for UsingForDirective {
     }
 }
 impl GetImmediateChildren for VariableDeclaration {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
@@ -411,7 +411,7 @@ impl GetImmediateChildren for VariableDeclaration {
     }
 }
 impl GetImmediateChildren for VariableDeclarationStatement {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
@@ -421,7 +421,7 @@ impl GetImmediateChildren for VariableDeclarationStatement {
     }
 }
 impl GetImmediateChildren for WhileStatement {
-    fn immediate_children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn children<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         let children = ExtractImmediateChildrenIDs::from(context.nodes.get(&self.id)?)
             .extracted
             .into_iter()
