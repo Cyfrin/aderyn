@@ -29,6 +29,8 @@ use std::{
     str::FromStr,
 };
 
+use super::nc::EmptyBlockDetector;
+
 pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
     vec![
         Box::<DelegateCallInLoopDetector>::default(),
@@ -50,6 +52,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<PushZeroOpcodeDetector>::default(),
         Box::<ArbitraryTransferFromDetector>::default(),
         Box::<UselessModifierDetector>::default(),
+        Box::<EmptyBlockDetector>::default(),
         Box::<LargeLiteralValueDetector>::default(),
         Box::<UselessInternalFunctionDetector>::default(),
     ]
@@ -84,6 +87,7 @@ pub(crate) enum IssueDetectorNamePool {
     UselessModifier,
     LargeNumericLiteral,
     UselessInternalFunction,
+    EmptyBlock,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -155,6 +159,7 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::UselessInternalFunction => {
             Some(Box::<UselessInternalFunctionDetector>::default())
         }
+        IssueDetectorNamePool::EmptyBlock => Some(Box::<EmptyBlockDetector>::default()),
         IssueDetectorNamePool::Undecided => None,
     }
 }
