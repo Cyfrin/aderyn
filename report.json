@@ -22,6 +22,7 @@
     "push-zero-opcode",
     "arbitrary-transfer-from",
     "useless-modifier",
+    "empty-block",
     "large-numeric-literal",
     "useless-internal-function"
   ],
@@ -54,6 +55,10 @@
       {
         "file_path": "src/DeprecatedOZFunctions.sol",
         "n_sloc": 32
+      },
+      {
+        "file_path": "src/EmptyBlocks.sol",
+        "n_sloc": 48
       },
       {
         "file_path": "src/HugeConstants.sol",
@@ -142,8 +147,8 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 814,
-    "total_source_units": 28
+    "total_sloc": 862,
+    "total_source_units": 29
   },
   "high_issues": {
     "issues": [
@@ -203,7 +208,7 @@
     "high": 2,
     "low": 6,
     "medium": 4,
-    "nc": 9
+    "nc": 10
   },
   "low_issues": {
     "issues": [
@@ -397,6 +402,16 @@
             "src": "46:24"
           },
           {
+            "contract_path": "src/cloc/HeavilyCommentedContract.sol",
+            "line_no": 6,
+            "src": "46:32"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 12,
+            "src": "2302:23"
+          },
+          {
             "contract_path": "src/inheritance/ExtendedInheritance.sol",
             "line_no": 2,
             "src": "32:23"
@@ -466,6 +481,11 @@
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 7,
             "src": "295:13"
+          },
+          {
+            "contract_path": "src/EmptyBlocks.sol",
+            "line_no": 6,
+            "src": "188:7"
           },
           {
             "contract_path": "src/InternalFunctions.sol",
@@ -709,12 +729,12 @@
           {
             "contract_path": "src/cloc/HeavilyCommentedContract.sol",
             "line_no": 31,
-            "src": "500:131"
+            "src": "509:3"
           },
           {
             "contract_path": "src/cloc/HeavilyCommentedContract.sol",
             "line_no": 38,
-            "src": "637:804"
+            "src": "646:4"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
@@ -893,6 +913,78 @@
           }
         ],
         "title": "Modifiers invoked only once can be shoe-horned into the function"
+      },
+      {
+        "description": "Consider removing empty blocks.",
+        "detector_name": "empty-block",
+        "instances": [
+          {
+            "contract_path": "src/AdminContract.sol",
+            "line_no": 14,
+            "src": "457:23"
+          },
+          {
+            "contract_path": "src/EmptyBlocks.sol",
+            "line_no": 30,
+            "src": "503:12"
+          },
+          {
+            "contract_path": "src/EmptyBlocks.sol",
+            "line_no": 38,
+            "src": "599:12"
+          },
+          {
+            "contract_path": "src/EmptyBlocks.sol",
+            "line_no": 49,
+            "src": "739:12"
+          },
+          {
+            "contract_path": "src/EmptyBlocks.sol",
+            "line_no": 63,
+            "src": "888:13"
+          },
+          {
+            "contract_path": "src/EmptyBlocks.sol",
+            "line_no": 67,
+            "src": "946:24"
+          },
+          {
+            "contract_path": "src/EmptyBlocks.sol",
+            "line_no": 73,
+            "src": "1068:30"
+          },
+          {
+            "contract_path": "src/EmptyBlocks.sol",
+            "line_no": 81,
+            "src": "1219:41"
+          },
+          {
+            "contract_path": "src/OnceModifierExample.sol",
+            "line_no": 10,
+            "src": "147:7"
+          },
+          {
+            "contract_path": "src/parent_chain/ParentChainContract.sol",
+            "line_no": 11,
+            "src": "355:9"
+          },
+          {
+            "contract_path": "src/parent_chain/ParentChainContract.sol",
+            "line_no": 32,
+            "src": "806:23"
+          },
+          {
+            "contract_path": "src/parent_chain/ParentChainContract.sol",
+            "line_no": 40,
+            "src": "946:8"
+          },
+          {
+            "contract_path": "src/parent_chain/ParentChainContract.sol",
+            "line_no": 44,
+            "src": "1011:23"
+          }
+        ],
+        "title": "Empty Block"
       },
       {
         "description": "Use `e` notation, for example: `1e18`, instead of its full numeric value.",
