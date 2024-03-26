@@ -1,6 +1,7 @@
 use crate::ast::*;
 use crate::visitor::ast_visitor::*;
 use eyre::Result;
+use std::cmp::Ordering;
 use std::collections::HashMap;
 
 use super::browser::GetImmediateParent;
@@ -1453,6 +1454,51 @@ impl WorkspaceContext {
 
     pub fn get_node_id_of_capturable(&self, capturable: &Capturable) -> Option<NodeID> {
         capturable.id()
+    }
+
+    /// Returns the relative location of nodes in the source code (if they are in same file)
+    pub fn get_relative_location_of_nodes(
+        &self,
+        first: NodeID,
+        second: NodeID,
+    ) -> Option<Ordering> {
+        let f = self.get_node_sort_key_pure(self.nodes.get(&first)?);
+        let s = self.get_node_sort_key_pure(self.nodes.get(&second)?);
+
+        // If the nodes aren't in the same file location comparison doesn't make sense
+        if f.0 != s.0 {
+            return None;
+        }
+
+        match f.1.cmp(&s.1) {
+            Ordering::Less => Some(Ordering::Less),
+            Ordering::Equal => {
+                // If the nodes are on the same line, we must compare offset in the chopped_location
+                let first_character_offset = f.2.split_once(':').unwrap();
+                let second_character_offset = s.2.split_once(':').unwrap();
+                Some(first_character_offset.0.cmp(second_character_offset.0))
+            }
+            Ordering::Greater => Some(Ordering::Greater),
+        }
+    }
+
+    pub fn get_node_sort_key_pure(&self, node: &ASTNode) -> (String, usize, String) {
+        let source_unit = self.get_source_unit_from_child_node(node).unwrap();
+        let absolute_path = source_unit.absolute_path.as_ref().unwrap().clone();
+        let source_line = node
+            .src()
+            .map(|src| source_unit.source_line(src).unwrap_or(0)) // If `src` is `Some`, get the line number, else return 0
+            .unwrap_or(0); // If `src` is `None`, default to 0
+
+        let src_location = node.src().unwrap_or("");
+
+        let chopped_location = match src_location.rfind(':') {
+            Some(index) => &src_location[..index],
+            None => src_location, // No colon found, return the original string
+        }
+        .to_string();
+
+        (absolute_path, source_line, chopped_location)
     }
 
     pub fn get_node_sort_key(&self, node: &ASTNode) -> (String, usize, String) {
