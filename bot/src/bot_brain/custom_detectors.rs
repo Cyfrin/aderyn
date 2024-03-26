@@ -32,6 +32,7 @@ pub fn refresh_metadata() {
 
     let file = OpenOptions::new()
         .create(true)
+        .truncate(true)
         .write(true)
         .open(&path)
         .unwrap();

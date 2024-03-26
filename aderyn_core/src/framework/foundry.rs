@@ -1,6 +1,7 @@
 use crate::ast::*;
 use eyre::Result;
 use serde::{Deserialize, Serialize};
+use std::env;
 use std::error::Error;
 use std::fs::{canonicalize, read_dir, read_to_string, File};
 use std::io::BufReader;
@@ -65,14 +66,23 @@ pub fn load_foundry(foundry_root: &PathBuf) -> Result<LoadedFoundry, Box<dyn Err
         std::process::exit(1);
     });
 
-    // Run `forge build --ast` in the root
-    let _output = std::process::Command::new("forge")
-        .arg("build")
-        .arg("--ast")
-        .current_dir(&foundry_root_absolute)
-        .stdout(Stdio::inherit()) // This will stream the stdout
-        .stderr(Stdio::inherit())
-        .status();
+    let key = "ADERYN_SKIP_BUILD";
+
+    let should_build = match env::var(key) {
+        Ok(val) => val != "1",
+        Err(_) => true,
+    };
+
+    if should_build {
+        // Run `forge build --ast` in the root
+        let _output = std::process::Command::new("forge")
+            .arg("build")
+            .arg("--ast")
+            .current_dir(&foundry_root_absolute)
+            .stdout(Stdio::inherit()) // This will stream the stdout
+            .stderr(Stdio::inherit())
+            .status();
+    }
 
     let foundry_config_filepath = foundry_root_absolute.join("foundry.toml");
     let foundry_config = read_config(&foundry_config_filepath).unwrap_or_else(|_err| {

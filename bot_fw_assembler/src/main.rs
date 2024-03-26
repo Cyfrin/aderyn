@@ -150,6 +150,7 @@ fn write_to_cargo_toml(content: String) {
     let file = OpenOptions::new()
         .write(true)
         .create(true)
+        .truncate(true)
         .open(PathBuf::from("bot/Cargo.toml"))
         .unwrap();
 
