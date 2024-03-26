@@ -25,6 +25,9 @@ impl Node for ModifierDefinition {
             // TODO: should we implement a string based visitor?
             // self.name.accept(visitor)?;
             self.body.accept(visitor)?;
+            if let Some(override_specifier) = &self.overrides {
+                override_specifier.accept(visitor)?;
+            }
             self.parameters.accept(visitor)?;
         }
         self.accept_metadata(visitor)?;
@@ -32,6 +35,9 @@ impl Node for ModifierDefinition {
     }
     fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         visitor.visit_immediate_children(self.id, vec![self.body.id])?;
+        if let Some(override_specifier) = &self.overrides {
+            visitor.visit_immediate_children(self.id, vec![override_specifier.id])?;
+        }
         visitor.visit_immediate_children(self.id, vec![self.parameters.id])?;
         Ok(())
     }

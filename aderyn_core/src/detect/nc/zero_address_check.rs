@@ -4,10 +4,10 @@ use std::{
 };
 
 use crate::{
-    ast::{BinaryOperation, Expression, Mutability, NodeID, VariableDeclaration},
+    ast::{Assignment, BinaryOperation, Expression, Mutability, NodeID, VariableDeclaration},
     capture,
     context::{
-        browser::{ExtractAssignments, ExtractBinaryOperations},
+        browser::{ExtractAssignments, ExtractBinaryOperations, ExtractIdentifiers},
         workspace_context::WorkspaceContext,
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
@@ -60,40 +60,44 @@ impl IssueDetector for ZeroAddressCheckDetector {
                 ExtractBinaryOperations::from(function_definition)
                     .extracted
                     .into_iter()
-                    .filter(|x| x.operator == "==" || x.operator == "!=")
+                    .filter(|x| (x.operator == "==" || x.operator == "!="))
                     .collect();
 
             // Filter the binary checks and extract all node ids into a vector
-            let mut binary_checks_against_zero_address = HashSet::new();
+            let mut identifier_reference_declaration_ids_in_binary_checks = HashSet::new();
 
             for x in binary_operations {
-                let l_node_id: Option<NodeID> = {
-                    let l = x.left_expression.as_ref();
-                    if let Expression::Identifier(left_identifier) = l {
-                        Some(left_identifier.referenced_declaration)
-                    } else {
-                        None
-                    }
-                };
-                if let Some(l_node_id) = l_node_id {
-                    binary_checks_against_zero_address.insert(l_node_id);
+                let l = x.left_expression.as_ref();
+                if let Expression::Identifier(left_identifier) = l {
+                    identifier_reference_declaration_ids_in_binary_checks
+                        .insert(left_identifier.referenced_declaration);
+                } else {
+                    ExtractIdentifiers::from(l)
+                        .extracted
+                        .into_iter()
+                        .map(|f| f.referenced_declaration)
+                        .for_each(|f| {
+                            identifier_reference_declaration_ids_in_binary_checks.insert(f);
+                        });
                 }
 
-                let r_node_id: Option<NodeID> = {
-                    let r = x.right_expression.as_ref();
-                    if let Expression::Identifier(right_identifier) = r {
-                        Some(right_identifier.referenced_declaration)
-                    } else {
-                        None
-                    }
-                };
-                if let Some(r_node_ids) = r_node_id {
-                    binary_checks_against_zero_address.insert(r_node_ids);
+                let r = x.right_expression.as_ref();
+                if let Expression::Identifier(right_identifier) = r {
+                    identifier_reference_declaration_ids_in_binary_checks
+                        .insert(right_identifier.referenced_declaration);
+                } else {
+                    ExtractIdentifiers::from(r)
+                        .extracted
+                        .into_iter()
+                        .map(|f| f.referenced_declaration)
+                        .for_each(|f| {
+                            identifier_reference_declaration_ids_in_binary_checks.insert(f);
+                        });
                 }
             }
 
-            // Get all the assignments in the function
-            let assignments = ExtractAssignments::from(function_definition)
+            // Get all the assignments where the left hand side is a mutable address state variable
+            let assignments: Vec<Assignment> = ExtractAssignments::from(function_definition)
                 .extracted
                 .into_iter()
                 .filter(|x| {
@@ -105,31 +109,50 @@ impl IssueDetector for ZeroAddressCheckDetector {
                         {
                             return true;
                         }
+                        false
+                    } else {
+                        let left_identifiers = ExtractIdentifiers::from(left_hand_side);
+                        for identifier in left_identifiers.extracted {
+                            if self
+                                .mutable_address_state_variables
+                                .contains_key(&identifier.referenced_declaration)
+                            {
+                                return true;
+                            }
+                        }
+                        false
                     }
-                    false
                 })
-                .filter_map(|x| {
-                    let right_hand_side = x.right_hand_side.as_ref();
-                    if let Expression::Identifier(right_identifier) = right_hand_side {
-                        return Some((right_identifier.referenced_declaration, x.clone()));
+                .collect();
+
+            // For each assignment, if the right hand side is in the identifier_reference_declaration_ids_in_binary_checks
+            // and is also in the function.parameters, then add the assignment to the found_instances
+            for assignment in assignments {
+                if let Expression::Identifier(right_identifier) = &*assignment.right_hand_side {
+                    if !identifier_reference_declaration_ids_in_binary_checks
+                        .contains(&right_identifier.referenced_declaration)
+                        && function_definition
+                            .parameters
+                            .parameters
+                            .iter()
+                            .any(|x| x.id == right_identifier.referenced_declaration)
+                    {
+                        capture!(self, context, assignment);
                     }
-                    None
-                });
-
-            // HashMap where the key is the referenced_declaration of the right hand side of an assignment
-            // where the left hand side is a mutable address state variable
-
-            let mut assignments_to_mutable_address_state_variables = HashMap::new();
-
-            for tuple in assignments {
-                assignments_to_mutable_address_state_variables.insert(tuple.0, tuple.1.clone());
-            }
-
-            // if there are assignments to mutable address state variables that are not present
-            // in the binary_checks_against_zero_address, add the assignment to the found_no_zero_address_check
-            for (key, value) in &assignments_to_mutable_address_state_variables {
-                if !binary_checks_against_zero_address.contains(key) {
-                    capture!(self, context, value);
+                } else {
+                    let right_identifiers = ExtractIdentifiers::from(&*assignment.right_hand_side);
+                    for right_identifier in right_identifiers.extracted {
+                        if !identifier_reference_declaration_ids_in_binary_checks
+                            .contains(&right_identifier.referenced_declaration)
+                            && function_definition
+                                .parameters
+                                .parameters
+                                .iter()
+                                .any(|x| x.id == right_identifier.referenced_declaration)
+                        {
+                            capture!(self, context, assignment);
+                        }
+                    }
                 }
             }
         }
@@ -162,15 +185,19 @@ impl IssueDetector for ZeroAddressCheckDetector {
 
 #[cfg(test)]
 mod zero_address_check_tests {
-    use crate::detect::{
-        detector::{detector_test_helpers::load_contract, IssueDetector},
-        nc::zero_address_check::ZeroAddressCheckDetector,
+    use crate::{
+        ast::NodeType,
+        context::{browser::GetClosestParentOfTypeX, workspace_context::ASTNode},
+        detect::{
+            detector::{detector_test_helpers::load_contract, IssueDetector},
+            nc::zero_address_check::ZeroAddressCheckDetector,
+        },
     };
 
     #[test]
     fn test_deprecated_oz_functions_detector() {
         let context = load_contract(
-            "../tests/contract-playground/out/StateVariables.sol/StateVariables.json",
+            "../tests/contract-playground/out/ZeroAddressCheck.sol/ZeroAddressCheck.json",
         );
 
         let mut detector = ZeroAddressCheckDetector::default();
@@ -178,7 +205,21 @@ mod zero_address_check_tests {
         // assert that the detector found the issue
         assert!(found);
         // assert that the detector found the correct number of issues
-        assert_eq!(detector.instances().len(), 1);
+        assert_eq!(detector.instances().len(), 3);
+        for node_id in detector.instances().values() {
+            if let ASTNode::Assignment(assignment) = context.nodes.get(node_id).unwrap() {
+                if let ASTNode::FunctionDefinition(function) = assignment
+                    .closest_parent_of_type(&context, NodeType::FunctionDefinition)
+                    .unwrap()
+                {
+                    assert!(function.name.contains("bad"));
+                } else {
+                    panic!()
+                }
+            } else {
+                panic!()
+            }
+        }
         // assert that the severity is NC
         assert_eq!(
             detector.severity(),
