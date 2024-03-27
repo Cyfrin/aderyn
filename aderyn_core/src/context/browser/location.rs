@@ -26,8 +26,8 @@ impl ASTConstVisitor for NodeIDReceiver {
     }
 }
 
-impl<T: Node + ?Sized> AppearsBeforeNodeLocation<T> for T {
-    fn appears_before(&self, context: &WorkspaceContext, other: &T) -> Option<bool> {
+impl<T: Node + ?Sized, U: Node + ?Sized> AppearsBeforeNodeLocation<U> for T {
+    fn appears_before(&self, context: &WorkspaceContext, other: &U) -> Option<bool> {
         // Setup a Node ID receiver
         let mut node_id_receiver = NodeIDReceiver::default();
 
@@ -47,8 +47,8 @@ impl<T: Node + ?Sized> AppearsBeforeNodeLocation<T> for T {
     }
 }
 
-impl<T: Node + ?Sized> AppearsAfterNodeLocation<T> for T {
-    fn appears_after(&self, context: &WorkspaceContext, other: &T) -> Option<bool> {
+impl<T: Node + ?Sized, U: Node + ?Sized> AppearsAfterNodeLocation<U> for T {
+    fn appears_after(&self, context: &WorkspaceContext, other: &U) -> Option<bool> {
         // Setup a Node ID receiver
         let mut node_id_receiver = NodeIDReceiver::default();
 
