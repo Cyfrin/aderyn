@@ -5,7 +5,7 @@ use crate::{
     ast::NodeID,
     capture,
     context::{
-        browser::{AppearsAfterASTNodeLocation, AppearsBeforeASTNodeLocation, GetImmediateParent},
+        browser::{AppearsAfterNodeLocation, AppearsBeforeNodeLocation, GetImmediateParent},
         workspace_context::{ASTNode, WorkspaceContext},
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},

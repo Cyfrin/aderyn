@@ -1,30 +1,68 @@
 use std::cmp::Ordering;
 
-use crate::context::workspace_context::{ASTNode, WorkspaceContext};
+use crate::{
+    ast::NodeID,
+    context::workspace_context::WorkspaceContext,
+    visitor::ast_visitor::{ASTConstVisitor, Node},
+};
 
-pub trait AppearsAfterASTNodeLocation {
-    fn appears_after(&self, context: &WorkspaceContext, other: &ASTNode) -> Option<bool>;
+pub trait AppearsAfterNodeLocation<T: Node + ?Sized> {
+    fn appears_after(&self, context: &WorkspaceContext, other: &T) -> Option<bool>;
 }
 
-impl AppearsAfterASTNodeLocation for ASTNode {
-    fn appears_after(&self, context: &WorkspaceContext, other: &ASTNode) -> Option<bool> {
-        match context.get_relative_location_of_nodes(self.id()?, other.id()?)? {
-            Ordering::Less => Some(false),
-            Ordering::Greater => Some(true),
+pub trait AppearsBeforeNodeLocation<T: Node + ?Sized> {
+    fn appears_before(&self, context: &WorkspaceContext, other: &T) -> Option<bool>;
+}
+
+#[derive(Default)]
+struct NodeIDReceiver {
+    id: Option<NodeID>,
+}
+
+impl ASTConstVisitor for NodeIDReceiver {
+    fn visit_node_id(&mut self, node_id: Option<NodeID>) -> eyre::Result<()> {
+        self.id = node_id;
+        Ok(())
+    }
+}
+
+impl<T: Node + ?Sized> AppearsBeforeNodeLocation<T> for T {
+    fn appears_before(&self, context: &WorkspaceContext, other: &T) -> Option<bool> {
+        // Setup a Node ID receiver
+        let mut node_id_receiver = NodeIDReceiver::default();
+
+        // Find the ID of the node this method is called upon
+        self.accept_id(&mut node_id_receiver).ok()?;
+        let current_node_id = node_id_receiver.id?;
+
+        // FInd the ID of the target node
+        other.accept_id(&mut node_id_receiver).ok()?;
+        let target_node_id = node_id_receiver.id?;
+
+        match context.get_relative_location_of_nodes(current_node_id, target_node_id)? {
+            Ordering::Less => Some(true),
+            Ordering::Greater => Some(false),
             Ordering::Equal => Some(false),
         }
     }
 }
 
-pub trait AppearsBeforeASTNodeLocation {
-    fn appears_before(&self, context: &WorkspaceContext, other: &ASTNode) -> Option<bool>;
-}
+impl<T: Node + ?Sized> AppearsAfterNodeLocation<T> for T {
+    fn appears_after(&self, context: &WorkspaceContext, other: &T) -> Option<bool> {
+        // Setup a Node ID receiver
+        let mut node_id_receiver = NodeIDReceiver::default();
 
-impl AppearsBeforeASTNodeLocation for ASTNode {
-    fn appears_before(&self, context: &WorkspaceContext, other: &ASTNode) -> Option<bool> {
-        match context.get_relative_location_of_nodes(self.id()?, other.id()?)? {
-            Ordering::Less => Some(true),
-            Ordering::Greater => Some(false),
+        // Find the ID of the node this method is called upon
+        self.accept_id(&mut node_id_receiver).ok()?;
+        let current_node_id = node_id_receiver.id?;
+
+        // FInd the ID of the target node
+        other.accept_id(&mut node_id_receiver).ok()?;
+        let target_node_id = node_id_receiver.id?;
+
+        match context.get_relative_location_of_nodes(current_node_id, target_node_id)? {
+            Ordering::Less => Some(false),
+            Ordering::Greater => Some(true),
             Ordering::Equal => Some(false),
         }
     }
