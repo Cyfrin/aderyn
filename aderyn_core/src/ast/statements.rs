@@ -80,6 +80,10 @@ impl Node for Statement {
             }
         }
     }
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(self.get_node_id())?;
+        Ok(())
+    }
 }
 
 impl Statement {
@@ -175,6 +179,10 @@ impl Node for VariableDeclarationStatement {
         }
         Ok(())
     }
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
+        Ok(())
+    }
 }
 
 impl Display for VariableDeclarationStatement {
@@ -231,6 +239,10 @@ impl Node for BlockOrStatement {
             BlockOrStatement::Block(block) => block.accept(visitor),
             BlockOrStatement::Statement(statement) => statement.accept(visitor),
         }
+    }
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(self.get_node_id())?;
+        Ok(())
     }
 }
 
@@ -312,6 +324,10 @@ impl Node for IfStatement {
         }
         Ok(())
     }
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
+        Ok(())
+    }
 }
 
 impl Display for IfStatement {
@@ -378,6 +394,10 @@ impl Node for ForStatement {
         }
         Ok(())
     }
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
+        Ok(())
+    }
 }
 
 impl Display for ForStatement {
@@ -431,6 +451,11 @@ impl Node for WhileStatement {
         if let Some(body_id) = self.body.get_node_id() {
             visitor.visit_immediate_children(self.id, vec![body_id])?;
         }
+        Ok(())
+    }
+
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
         Ok(())
     }
 }
@@ -557,6 +582,10 @@ impl Node for Return {
         }
         Ok(())
     }
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
+        Ok(())
+    }
 }
 
 impl Display for Return {
@@ -589,5 +618,9 @@ impl Node for InlineAssembly {
             self.ast.as_ref().unwrap().accept(visitor)?;
         }
         visitor.end_visit_inline_assembly(self)
+    }
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
+        Ok(())
     }
 }
