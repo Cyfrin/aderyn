@@ -497,6 +497,10 @@ pub trait ASTConstVisitor {
     ) -> Result<()> {
         Ok(())
     }
+
+    fn visit_node_id(&mut self, _node_id: Option<NodeID>) -> Result<()> {
+        Ok(())
+    }
 }
 
 pub trait Node {
@@ -504,6 +508,10 @@ pub trait Node {
         Ok(())
     }
     fn accept_metadata(&self, _visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        Ok(())
+    }
+    /// [`Node::accept_id`] is not designed to propagate into the AST subtree
+    fn accept_id(&self, _visitor: &mut impl ASTConstVisitor) -> Result<()> {
         Ok(())
     }
 }
