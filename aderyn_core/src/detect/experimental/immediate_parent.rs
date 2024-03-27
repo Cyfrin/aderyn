@@ -48,6 +48,7 @@ impl IssueDetector for ImmediateParentDemonstrator {
                                 assert!(first_parent
                                     .appears_after(context, for_statement)
                                     .unwrap());
+                                assert!(block.appears_after(context, for_statement).unwrap());
                                 assert!(second_parent
                                     .appears_after(context, third_parent)
                                     .unwrap());
