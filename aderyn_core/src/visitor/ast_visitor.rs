@@ -511,7 +511,8 @@ pub trait Node {
         Ok(())
     }
     /// [`Node::accept_id`] is not designed to propagate into the AST subtree
-    fn accept_id(&self, _visitor: &mut impl ASTConstVisitor) -> Result<()> {
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(None)?;
         Ok(())
     }
 }
