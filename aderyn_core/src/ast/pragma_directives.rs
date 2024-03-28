@@ -16,4 +16,8 @@ impl Node for PragmaDirective {
         visitor.visit_pragma_directive(self)?;
         visitor.end_visit_pragma_directive(self)
     }
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
+        Ok(())
+    }
 }

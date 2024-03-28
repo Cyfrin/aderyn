@@ -60,6 +60,11 @@ impl Node for Expression {
             }
         }
     }
+
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(self.get_node_id())?;
+        Ok(())
+    }
 }
 
 impl Expression {
@@ -308,6 +313,10 @@ impl Node for UnaryOperation {
         }
         Ok(())
     }
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
+        Ok(())
+    }
 }
 
 impl UnaryOperation {
@@ -359,6 +368,10 @@ impl Node for BinaryOperation {
         if let Some(right_node) = self.right_expression.get_node_id() {
             visitor.visit_immediate_children(self.id, vec![right_node])?;
         }
+        Ok(())
+    }
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
         Ok(())
     }
 }
@@ -418,6 +431,10 @@ impl Node for Conditional {
         }
         Ok(())
     }
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
+        Ok(())
+    }
 }
 
 impl Conditional {
@@ -469,6 +486,10 @@ impl Node for Assignment {
         if let Some(right_hand_id) = self.right_hand_side.get_node_id() {
             visitor.visit_immediate_children(self.id, vec![right_hand_id])?;
         }
+        Ok(())
+    }
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
         Ok(())
     }
 }
@@ -534,6 +555,10 @@ impl Node for FunctionCall {
             }
         }
         visitor.visit_immediate_children(self.id, argument_ids)?;
+        Ok(())
+    }
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
         Ok(())
     }
 }
@@ -608,6 +633,10 @@ impl Node for FunctionCallOptions {
             }
             visitor.visit_immediate_children(self.id, argument_ids)?;
         }
+        Ok(())
+    }
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
         Ok(())
     }
 }
@@ -703,6 +732,10 @@ impl Node for IndexAccess {
         }
         Ok(())
     }
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
+        Ok(())
+    }
 }
 
 impl IndexAccess {
@@ -760,6 +793,10 @@ impl Node for IndexRangeAccess {
                 visitor.visit_immediate_children(self.id, vec![end_expr_id])?;
             }
         }
+        Ok(())
+    }
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
         Ok(())
     }
 }
@@ -826,6 +863,10 @@ impl Node for MemberAccess {
         }
         Ok(())
     }
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
+        Ok(())
+    }
 }
 
 impl MemberAccess {
@@ -858,6 +899,10 @@ impl Node for ElementaryTypeNameExpression {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         visitor.visit_elementary_type_name_expression(self)?;
         visitor.end_visit_elementary_type_name_expression(self)
+    }
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
+        Ok(())
     }
 }
 
@@ -902,6 +947,10 @@ impl Node for TupleExpression {
             }
         }
         visitor.visit_immediate_children(self.id, comp_ids)?;
+        Ok(())
+    }
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
         Ok(())
     }
 }
@@ -960,6 +1009,10 @@ impl Node for NewExpression {
             self.type_name.accept(visitor)?;
         }
         visitor.end_visit_new_expression(self)
+    }
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
+        Ok(())
     }
 }
 

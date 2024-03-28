@@ -41,6 +41,10 @@ impl Node for ModifierDefinition {
         visitor.visit_immediate_children(self.id, vec![self.parameters.id])?;
         Ok(())
     }
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
+        Ok(())
+    }
 }
 
 impl Display for ModifierDefinition {
@@ -108,6 +112,10 @@ impl Node for ModifierInvocation {
             }
             visitor.visit_immediate_children(self.id, argument_ids)?;
         }
+        Ok(())
+    }
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
         Ok(())
     }
 }

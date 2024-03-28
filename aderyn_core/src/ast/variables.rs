@@ -113,6 +113,10 @@ impl Node for VariableDeclaration {
         }
         Ok(())
     }
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
+        Ok(())
+    }
 }
 
 impl Display for VariableDeclaration {

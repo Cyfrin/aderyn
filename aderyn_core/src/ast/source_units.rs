@@ -58,6 +58,10 @@ impl Node for SourceUnitNode {
             }
         }
     }
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(self.get_node_id())?;
+        Ok(())
+    }
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
@@ -88,6 +92,10 @@ impl Node for SourceUnit {
             .flat_map(|x| x.get_node_id())
             .collect::<Vec<_>>();
         visitor.visit_immediate_children(self.id, node_ids.clone())?;
+        Ok(())
+    }
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
         Ok(())
     }
 }

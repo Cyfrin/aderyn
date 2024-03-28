@@ -1,6 +1,7 @@
 use crate::{
     ast::*,
     context::workspace_context::{ASTNode, WorkspaceContext},
+    visitor::ast_visitor::{ASTConstVisitor, Node},
 };
 
 pub trait GetParentChain {
@@ -8,214 +9,27 @@ pub trait GetParentChain {
     fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>>;
 }
 
-impl GetParentChain for ASTNode {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id()?))
+#[derive(Default)]
+struct NodeIDReceiver {
+    id: Option<NodeID>,
+}
+
+impl ASTConstVisitor for NodeIDReceiver {
+    fn visit_node_id(&mut self, node_id: Option<NodeID>) -> eyre::Result<()> {
+        self.id = node_id;
+        Ok(())
     }
 }
 
-impl GetParentChain for Assignment {
+impl<T: Node + ?Sized> GetParentChain for T {
     fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id))
-    }
-}
-impl GetParentChain for BinaryOperation {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id))
-    }
-}
-impl GetParentChain for Block {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id))
-    }
-}
-impl GetParentChain for Conditional {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id))
-    }
-}
-impl GetParentChain for ContractDefinition {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id))
-    }
-}
-impl GetParentChain for ElementaryTypeNameExpression {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id))
-    }
-}
-impl GetParentChain for EnumDefinition {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id))
-    }
-}
-impl GetParentChain for EnumValue {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id))
-    }
-}
-impl GetParentChain for EventDefinition {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id))
-    }
-}
-impl GetParentChain for ErrorDefinition {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id))
-    }
-}
-impl GetParentChain for FunctionCall {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id))
-    }
-}
-impl GetParentChain for FunctionCallOptions {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id))
-    }
-}
-impl GetParentChain for FunctionDefinition {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id))
-    }
-}
-impl GetParentChain for ForStatement {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id))
-    }
-}
-impl GetParentChain for Identifier {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id))
-    }
-}
-impl GetParentChain for IdentifierPath {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id))
-    }
-}
-impl GetParentChain for IfStatement {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id))
-    }
-}
-impl GetParentChain for ImportDirective {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id))
-    }
-}
-impl GetParentChain for IndexAccess {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id))
-    }
-}
-impl GetParentChain for IndexRangeAccess {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id))
-    }
-}
-impl GetParentChain for InheritanceSpecifier {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id))
-    }
-}
-impl GetParentChain for InlineAssembly {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id))
-    }
-}
-impl GetParentChain for Literal {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id))
-    }
-}
-impl GetParentChain for MemberAccess {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id))
-    }
-}
-impl GetParentChain for NewExpression {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id))
-    }
-}
-impl GetParentChain for ModifierDefinition {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id))
-    }
-}
-impl GetParentChain for ModifierInvocation {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id))
-    }
-}
-impl GetParentChain for OverrideSpecifier {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id))
-    }
-}
-impl GetParentChain for ParameterList {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id))
-    }
-}
-impl GetParentChain for PragmaDirective {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id))
-    }
-}
-impl GetParentChain for Return {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id))
-    }
-}
-impl GetParentChain for SourceUnit {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id))
-    }
-}
-impl GetParentChain for StructDefinition {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id))
-    }
-}
-impl GetParentChain for StructuredDocumentation {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id))
-    }
-}
-impl GetParentChain for TupleExpression {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id))
-    }
-}
-impl GetParentChain for UnaryOperation {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id))
-    }
-}
-impl GetParentChain for UserDefinedValueTypeDefinition {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id))
-    }
-}
-impl GetParentChain for UsingForDirective {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id))
-    }
-}
-impl GetParentChain for VariableDeclaration {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id))
-    }
-}
-impl GetParentChain for VariableDeclarationStatement {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id))
-    }
-}
-impl GetParentChain for WhileStatement {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        Some(context.get_parent_chain(self.id))
+        // Setup a Node ID receiver
+        let mut node_id_receiver = NodeIDReceiver::default();
+
+        // Find the ID of the node this method is called upon
+        self.accept_id(&mut node_id_receiver).ok()?;
+        let current_node_id = node_id_receiver.id?;
+
+        Some(context.get_parent_chain(current_node_id))
     }
 }

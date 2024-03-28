@@ -46,4 +46,8 @@ impl Node for ImportDirective {
         visitor.visit_immediate_children(self.id, symbol_alias_ids)?;
         Ok(())
     }
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
+        Ok(())
+    }
 }

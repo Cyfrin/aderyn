@@ -64,6 +64,11 @@ impl Node for ContractDefinitionNode {
             ) => user_defined_value_type_definition.accept(visitor),
         }
     }
+
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(self.get_node_id())?;
+        Ok(())
+    }
 }
 
 impl ContractDefinitionNode {
@@ -154,6 +159,10 @@ impl Node for InheritanceSpecifier {
         visitor.visit_immediate_children(self.id, argument_ids)?;
         Ok(())
     }
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
+        Ok(())
+    }
 }
 
 impl Display for InheritanceSpecifier {
@@ -229,6 +238,11 @@ impl Node for ContractDefinition {
             }
         }
         visitor.visit_immediate_children(self.id, node_ids)?;
+        Ok(())
+    }
+
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
         Ok(())
     }
 }

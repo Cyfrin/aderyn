@@ -18,6 +18,10 @@ impl Node for EnumValue {
         visitor.visit_enum_value(self)?;
         visitor.end_visit_enum_value(self)
     }
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
+        Ok(())
+    }
 }
 
 impl Display for EnumValue {
@@ -53,6 +57,10 @@ impl Node for EnumDefinition {
             .collect::<Vec<_>>()
             .clone();
         visitor.visit_immediate_children(self.id, member_ids.clone())?;
+        Ok(())
+    }
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
         Ok(())
     }
 }

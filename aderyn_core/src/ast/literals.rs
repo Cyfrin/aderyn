@@ -36,6 +36,10 @@ impl Node for Literal {
         visitor.visit_literal(self)?;
         visitor.end_visit_literal(self)
     }
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
+        Ok(())
+    }
 }
 
 impl Display for Literal {

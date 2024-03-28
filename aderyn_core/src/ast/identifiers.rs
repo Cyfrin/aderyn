@@ -26,6 +26,10 @@ impl Node for Identifier {
     fn accept_metadata(&self, _visitor: &mut impl ASTConstVisitor) -> Result<()> {
         Ok(())
     }
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
+        Ok(())
+    }
 }
 
 impl PartialEq for Identifier {
@@ -76,6 +80,10 @@ impl Node for IdentifierPath {
         visitor.end_visit_identifier_path(self)
     }
     fn accept_metadata(&self, _visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        Ok(())
+    }
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
         Ok(())
     }
 }

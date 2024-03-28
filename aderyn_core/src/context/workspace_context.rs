@@ -288,6 +288,11 @@ impl Node for ASTNode {
             ASTNode::WhileStatement(n) => n.accept_metadata(visitor),
         }
     }
+
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(self.id())?;
+        Ok(())
+    }
 }
 
 impl From<ArrayTypeName> for ASTNode {
