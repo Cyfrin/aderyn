@@ -50,7 +50,10 @@ impl IssueDetector for LibraryHasPublicOrExternalFunctionsDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::LargeNumericLiteral)
+        format!(
+            "{}",
+            IssueDetectorNamePool::LibraryHasPublicOrExternalFunctions
+        )
     }
 }
 
