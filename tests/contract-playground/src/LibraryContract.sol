@@ -2,6 +2,7 @@
 pragma solidity ^0.8.24;
 
 library Math {
+    // GOOD
     function sqrt(uint256 y) internal pure returns (uint256 z) {
         if (y > 3) {
             z = y;
@@ -15,6 +16,7 @@ library Math {
         }
         // else z = 0 (default value)
     }
+    // BAD
     function remove(uint256[] storage arr, uint256 index) public {
         // Move the last element into the place to delete
         require(arr.length > 0, "Can't remove from empty array");

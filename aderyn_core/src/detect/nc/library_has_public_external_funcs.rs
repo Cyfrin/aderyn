@@ -25,7 +25,7 @@ impl IssueDetector for LibraryHasPublicOrExternalFunctionsDetector {
                 if function.visibility == Visibility::Public
                     || function.visibility == Visibility::External
                 {
-                    capture!(self, context, contract);
+                    capture!(self, context, function);
                 }
             }
         }
@@ -38,7 +38,7 @@ impl IssueDetector for LibraryHasPublicOrExternalFunctionsDetector {
     }
 
     fn description(&self) -> String {
-        String::from("Public / external functions are not ideal to have in libraries as they are not designed to be called by other contracts and hold state.")
+        String::from("Public / external functions are not ideal to have in libraries as they are not designed to hold state and this can be misleading.")
     }
 
     fn severity(&self) -> IssueSeverity {
@@ -69,7 +69,10 @@ mod library_has_public_or_external_functions {
         // assert that the detector finds the public function
         let found = detector.detect(&context).unwrap();
         assert!(found);
+
+        println!("{:?}", detector.instances());
+
         // assert that the detector finds the correct number of instances
-        // assert_eq!(detector.instances().len(), 20);
+        assert_eq!(detector.instances().len(), 1);
     }
 }
