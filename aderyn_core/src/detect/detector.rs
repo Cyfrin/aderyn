@@ -162,7 +162,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
             Some(Box::<UselessInternalFunctionDetector>::default())
         }
         IssueDetectorNamePool::EmptyBlock => Some(Box::<EmptyBlockDetector>::default()),
-        IssueDetectorNamePool::BooleanIsNotDoesNot => Some(Box::<BooleanNameIsNotDoesNotDetector>::default())
+        IssueDetectorNamePool::BooleanIsNotDoesNot => {
+            Some(Box::<BooleanNameIsNotDoesNotDetector>::default())
+        }
         IssueDetectorNamePool::Undecided => None,
     }
 }

@@ -24,7 +24,8 @@
     "useless-modifier",
     "empty-block",
     "large-numeric-literal",
-    "useless-internal-function"
+    "useless-internal-function",
+    "boolean-is-not-does-not"
   ],
   "files_details": {
     "files_details": [
@@ -39,6 +40,10 @@
       {
         "file_path": "src/AssemblyExample.sol",
         "n_sloc": 9
+      },
+      {
+        "file_path": "src/BooleanIsNot.sol",
+        "n_sloc": 7
       },
       {
         "file_path": "src/ConstantsLiterals.sol",
@@ -147,8 +152,8 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 862,
-    "total_source_units": 29
+    "total_sloc": 869,
+    "total_source_units": 30
   },
   "high_issues": {
     "issues": [
@@ -208,7 +213,7 @@
     "high": 2,
     "low": 6,
     "medium": 4,
-    "nc": 10
+    "nc": 11
   },
   "low_issues": {
     "issues": [
@@ -1104,6 +1109,23 @@
           }
         ],
         "title": "Internal functions called only once can be inlined"
+      },
+      {
+        "description": "In order to avoid confusion it's better to name variables with `isXX` and `doesXX` rather than `isNotXXX` and `doesNotXXX`.",
+        "detector_name": "boolean-is-not-does-not",
+        "instances": [
+          {
+            "contract_path": "src/BooleanIsNot.sol",
+            "line_no": 7,
+            "src": "132:13"
+          },
+          {
+            "contract_path": "src/BooleanIsNot.sol",
+            "line_no": 9,
+            "src": "196:17"
+          }
+        ],
+        "title": "Boolean variable name should not contain negatives."
       }
     ]
   }
