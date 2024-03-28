@@ -21,6 +21,10 @@
         "n_sloc": 21
       },
       {
+        "file_path": "src/LibraryContract.sol",
+        "n_sloc": 25
+      },
+      {
         "file_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
         "n_sloc": 32
       },
@@ -39,8 +43,8 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 229,
-    "total_source_units": 7
+    "total_sloc": 254,
+    "total_source_units": 8
   },
   "high_issues": {
     "issues": []
@@ -72,6 +76,11 @@
             "contract_path": "src/KeccakContract.sol",
             "line_no": 2,
             "src": "32:23"
+          },
+          {
+            "contract_path": "src/LibraryContract.sol",
+            "line_no": 2,
+            "src": "32:24"
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
@@ -111,6 +120,16 @@
             "contract_path": "src/Counter.sol",
             "line_no": 7,
             "src": "129:9"
+          },
+          {
+            "contract_path": "src/LibraryContract.sol",
+            "line_no": 20,
+            "src": "453:6"
+          },
+          {
+            "contract_path": "src/LibraryContract.sol",
+            "line_no": 29,
+            "src": "734:14"
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",

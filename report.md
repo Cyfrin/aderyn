@@ -704,13 +704,13 @@ Instead of marking a function as `public`, consider marking it as `external` if 
 	    function setNumber(uint256 newNumber) public {
 	```
 
-- Found in src/LibraryContract.sol [Line: 18](tests/contract-playground/src/LibraryContract.sol#L18)
+- Found in src/LibraryContract.sol [Line: 20](tests/contract-playground/src/LibraryContract.sol#L20)
 
 	```solidity
 	    function remove(uint256[] storage arr, uint256 index) public {
 	```
 
-- Found in src/LibraryContract.sol [Line: 27](tests/contract-playground/src/LibraryContract.sol#L27)
+- Found in src/LibraryContract.sol [Line: 29](tests/contract-playground/src/LibraryContract.sol#L29)
 
 	```solidity
 	    function testSquareRoot(uint256 x) public pure returns (uint256) {
@@ -1196,7 +1196,7 @@ Instead of separating the logic into a separate function, consider inlining the 
 
 Public / external functions are not ideal to have in libraries as they are not designed to hold state and this can be misleading.
 
-- Found in src/LibraryContract.sol [Line: 18](tests/contract-playground/src/LibraryContract.sol#L18)
+- Found in src/LibraryContract.sol [Line: 20](tests/contract-playground/src/LibraryContract.sol#L20)
 
 	```solidity
 	    function remove(uint256[] storage arr, uint256 index) public {

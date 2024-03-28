@@ -24,7 +24,8 @@
     "useless-modifier",
     "empty-block",
     "large-numeric-literal",
-    "useless-internal-function"
+    "useless-internal-function",
+    "large-numeric-literal"
   ],
   "files_details": {
     "files_details": [
@@ -71,6 +72,10 @@
       {
         "file_path": "src/KeccakContract.sol",
         "n_sloc": 21
+      },
+      {
+        "file_path": "src/LibraryContract.sol",
+        "n_sloc": 25
       },
       {
         "file_path": "src/OnceModifierExample.sol",
@@ -147,8 +152,8 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 862,
-    "total_source_units": 29
+    "total_sloc": 887,
+    "total_source_units": 30
   },
   "high_issues": {
     "issues": [
@@ -208,7 +213,7 @@
     "high": 2,
     "low": 6,
     "medium": 4,
-    "nc": 10
+    "nc": 11
   },
   "low_issues": {
     "issues": [
@@ -325,6 +330,11 @@
             "src": "32:32"
           },
           {
+            "contract_path": "src/LibraryContract.sol",
+            "line_no": 2,
+            "src": "32:24"
+          },
+          {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
             "line_no": 6,
             "src": "46:24"
@@ -375,6 +385,11 @@
             "contract_path": "src/KeccakContract.sol",
             "line_no": 2,
             "src": "32:23"
+          },
+          {
+            "contract_path": "src/LibraryContract.sol",
+            "line_no": 2,
+            "src": "32:24"
           },
           {
             "contract_path": "src/StateVariables.sol",
@@ -685,6 +700,16 @@
             "contract_path": "src/Counter.sol",
             "line_no": 7,
             "src": "129:9"
+          },
+          {
+            "contract_path": "src/LibraryContract.sol",
+            "line_no": 20,
+            "src": "453:6"
+          },
+          {
+            "contract_path": "src/LibraryContract.sol",
+            "line_no": 29,
+            "src": "734:14"
           },
           {
             "contract_path": "src/StateVariables.sol",
@@ -1104,6 +1129,18 @@
           }
         ],
         "title": "Internal functions called only once can be inlined"
+      },
+      {
+        "description": "Public / external functions are not ideal to have in libraries as they are not designed to hold state and this can be misleading.",
+        "detector_name": "large-numeric-literal",
+        "instances": [
+          {
+            "contract_path": "src/LibraryContract.sol",
+            "line_no": 20,
+            "src": "453:6"
+          }
+        ],
+        "title": "Library has public or external function"
       }
     ]
   }
