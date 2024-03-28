@@ -25,7 +25,7 @@
     "empty-block",
     "large-numeric-literal",
     "useless-internal-function",
-    "large-numeric-literal"
+    "library-has-public-or-external-functions"
   ],
   "files_details": {
     "files_details": [
@@ -1132,7 +1132,7 @@
       },
       {
         "description": "Public / external functions are not ideal to have in libraries as they are not designed to hold state and this can be misleading.",
-        "detector_name": "large-numeric-literal",
+        "detector_name": "library-has-public-or-external-functions",
         "instances": [
           {
             "contract_path": "src/LibraryContract.sol",
