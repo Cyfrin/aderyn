@@ -24,7 +24,8 @@
     "useless-modifier",
     "empty-block",
     "large-numeric-literal",
-    "useless-internal-function"
+    "useless-internal-function",
+    "time-units-not-used"
   ],
   "files_details": {
     "files_details": [
@@ -89,6 +90,10 @@
         "n_sloc": 8
       },
       {
+        "file_path": "src/TimeUnits.sol",
+        "n_sloc": 6
+      },
+      {
         "file_path": "src/UnsafeERC721Mint.sol",
         "n_sloc": 11
       },
@@ -147,8 +152,8 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 862,
-    "total_source_units": 29
+    "total_sloc": 868,
+    "total_source_units": 30
   },
   "high_issues": {
     "issues": [
@@ -208,7 +213,7 @@
     "high": 2,
     "low": 6,
     "medium": 4,
-    "nc": 10
+    "nc": 11
   },
   "low_issues": {
     "issues": [
@@ -388,6 +393,11 @@
           },
           {
             "contract_path": "src/T11sTranferer.sol",
+            "line_no": 2,
+            "src": "32:23"
+          },
+          {
+            "contract_path": "src/TimeUnits.sol",
             "line_no": 2,
             "src": "32:23"
           },
@@ -1104,6 +1114,28 @@
           }
         ],
         "title": "Internal functions called only once can be inlined"
+      },
+      {
+        "description": "Suffixes like seconds, minutes, hours, days and weeks after literal numbers can be used to specify units of time where seconds are the base unit and units are considered naively.",
+        "detector_name": "time-units-not-used",
+        "instances": [
+          {
+            "contract_path": "src/TimeUnits.sol",
+            "line_no": 7,
+            "src": "109:3"
+          },
+          {
+            "contract_path": "src/TimeUnits.sol",
+            "line_no": 8,
+            "src": "158:5"
+          },
+          {
+            "contract_path": "src/TimeUnits.sol",
+            "line_no": 9,
+            "src": "213:5"
+          }
+        ],
+        "title": "Native time units would be ideal instead of custom definitions"
       }
     ]
   }
