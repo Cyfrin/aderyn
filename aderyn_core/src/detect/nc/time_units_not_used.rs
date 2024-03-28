@@ -16,7 +16,7 @@ pub struct TimeUnitsNotUsedDetector {
 
 impl IssueDetector for TimeUnitsNotUsedDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        let disallow = vec![
+        let disallow = [
             "second", "seconds", "minute", "minutes", "hour", "hours", "day", "days", "week",
             "weeks", "month", "months",
         ];
