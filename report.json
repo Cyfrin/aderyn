@@ -24,7 +24,8 @@
     "useless-modifier",
     "empty-block",
     "large-numeric-literal",
-    "useless-internal-function"
+    "useless-internal-function",
+    "create2-instead-of-create"
   ],
   "files_details": {
     "files_details": [
@@ -51,6 +52,10 @@
       {
         "file_path": "src/CrazyPragma.sol",
         "n_sloc": 4
+      },
+      {
+        "file_path": "src/Create.sol",
+        "n_sloc": 59
       },
       {
         "file_path": "src/DeprecatedOZFunctions.sol",
@@ -147,8 +152,8 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 862,
-    "total_source_units": 29
+    "total_sloc": 921,
+    "total_source_units": 30
   },
   "high_issues": {
     "issues": [
@@ -206,7 +211,7 @@
   "issue_count": {
     "critical": 0,
     "high": 2,
-    "low": 6,
+    "low": 7,
     "medium": 4,
     "nc": 10
   },
@@ -325,6 +330,11 @@
             "src": "32:32"
           },
           {
+            "contract_path": "src/Create.sol",
+            "line_no": 4,
+            "src": "96:24"
+          },
+          {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
             "line_no": 6,
             "src": "46:24"
@@ -365,6 +375,11 @@
             "contract_path": "src/CrazyPragma.sol",
             "line_no": 2,
             "src": "32:32"
+          },
+          {
+            "contract_path": "src/Create.sol",
+            "line_no": 4,
+            "src": "96:24"
           },
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
@@ -453,6 +468,28 @@
           }
         ],
         "title": "PUSH0 is not supported by all chains"
+      },
+      {
+        "description": "create2 makes deployment addresses consistent and is less susceptible to chain reorg attacks especially in L2 scaling solutions",
+        "detector_name": "create2-instead-of-create",
+        "instances": [
+          {
+            "contract_path": "src/Create.sol",
+            "line_no": 23,
+            "src": "517:23"
+          },
+          {
+            "contract_path": "src/Create.sol",
+            "line_no": 32,
+            "src": "713:43"
+          },
+          {
+            "contract_path": "src/Create.sol",
+            "line_no": 41,
+            "src": "931:41"
+          }
+        ],
+        "title": "create2 opcode should be used instead of create"
       }
     ]
   },
@@ -640,6 +677,11 @@
             "src": "267:15"
           },
           {
+            "contract_path": "src/Create.sol",
+            "line_no": 12,
+            "src": "289:14"
+          },
+          {
             "contract_path": "src/StateVariables.sol",
             "line_no": 58,
             "src": "2121:14"
@@ -685,6 +727,36 @@
             "contract_path": "src/Counter.sol",
             "line_no": 7,
             "src": "129:9"
+          },
+          {
+            "contract_path": "src/Create.sol",
+            "line_no": 21,
+            "src": "430:6"
+          },
+          {
+            "contract_path": "src/Create.sol",
+            "line_no": 27,
+            "src": "586:18"
+          },
+          {
+            "contract_path": "src/Create.sol",
+            "line_no": 36,
+            "src": "803:19"
+          },
+          {
+            "contract_path": "src/Create.sol",
+            "line_no": 45,
+            "src": "1018:7"
+          },
+          {
+            "contract_path": "src/Create.sol",
+            "line_no": 53,
+            "src": "1218:19"
+          },
+          {
+            "contract_path": "src/Create.sol",
+            "line_no": 63,
+            "src": "1474:6"
           },
           {
             "contract_path": "src/StateVariables.sol",
