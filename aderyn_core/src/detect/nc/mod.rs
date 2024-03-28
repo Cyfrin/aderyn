@@ -1,3 +1,4 @@
+pub(crate) mod bool_is_not;
 pub(crate) mod constants_instead_of_literals;
 pub(crate) mod empty_blocks;
 pub(crate) mod large_literal_value;
@@ -9,6 +10,7 @@ pub(crate) mod useless_modifier;
 pub(crate) mod useless_public_function;
 pub(crate) mod zero_address_check;
 
+pub use bool_is_not::BooleanNameIsNotDoesNotDetector;
 pub use constants_instead_of_literals::ConstantsInsteadOfLiteralsDetector;
 pub use empty_blocks::EmptyBlockDetector;
 pub use large_literal_value::LargeLiteralValueDetector;
