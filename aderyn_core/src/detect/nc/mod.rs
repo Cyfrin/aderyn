@@ -1,4 +1,5 @@
 pub(crate) mod constants_instead_of_literals;
+pub(crate) mod contracts_with_todos;
 pub(crate) mod empty_blocks;
 pub(crate) mod large_literal_value;
 pub(crate) mod non_reentrant_before_others;
@@ -10,6 +11,7 @@ pub(crate) mod useless_public_function;
 pub(crate) mod zero_address_check;
 
 pub use constants_instead_of_literals::ConstantsInsteadOfLiteralsDetector;
+pub use contracts_with_todos::ContractsWithTodosDetector;
 pub use empty_blocks::EmptyBlockDetector;
 pub use large_literal_value::LargeLiteralValueDetector;
 pub use non_reentrant_before_others::NonReentrantBeforeOthersDetector;
