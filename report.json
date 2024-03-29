@@ -24,7 +24,8 @@
     "useless-modifier",
     "empty-block",
     "large-numeric-literal",
-    "useless-internal-function"
+    "useless-internal-function",
+    "contract-with-todos"
   ],
   "files_details": {
     "files_details": [
@@ -43,6 +44,10 @@
       {
         "file_path": "src/ConstantsLiterals.sol",
         "n_sloc": 28
+      },
+      {
+        "file_path": "src/ContractWithTodo.sol",
+        "n_sloc": 7
       },
       {
         "file_path": "src/Counter.sol",
@@ -147,8 +152,8 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 862,
-    "total_source_units": 29
+    "total_sloc": 869,
+    "total_source_units": 30
   },
   "high_issues": {
     "issues": [
@@ -208,7 +213,7 @@
     "high": 2,
     "low": 6,
     "medium": 4,
-    "nc": 10
+    "nc": 11
   },
   "low_issues": {
     "issues": [
@@ -315,6 +320,11 @@
         "detector_name": "unspecific-solidity-pragma",
         "instances": [
           {
+            "contract_path": "src/ContractWithTodo.sol",
+            "line_no": 2,
+            "src": "32:23"
+          },
+          {
             "contract_path": "src/Counter.sol",
             "line_no": 2,
             "src": "39:24"
@@ -353,6 +363,11 @@
         "instances": [
           {
             "contract_path": "src/AdminContract.sol",
+            "line_no": 2,
+            "src": "32:23"
+          },
+          {
+            "contract_path": "src/ContractWithTodo.sol",
             "line_no": 2,
             "src": "32:23"
           },
@@ -682,6 +697,11 @@
             "src": "113:1"
           },
           {
+            "contract_path": "src/ContractWithTodo.sol",
+            "line_no": 13,
+            "src": "337:15"
+          },
+          {
             "contract_path": "src/Counter.sol",
             "line_no": 7,
             "src": "129:9"
@@ -924,6 +944,16 @@
             "src": "457:23"
           },
           {
+            "contract_path": "src/ContractWithTodo.sol",
+            "line_no": 7,
+            "src": "129:10"
+          },
+          {
+            "contract_path": "src/ContractWithTodo.sol",
+            "line_no": 13,
+            "src": "337:15"
+          },
+          {
             "contract_path": "src/EmptyBlocks.sol",
             "line_no": 30,
             "src": "503:12"
@@ -1104,6 +1134,23 @@
           }
         ],
         "title": "Internal functions called only once can be inlined"
+      },
+      {
+        "description": "Contract contains comments with TODOS",
+        "detector_name": "contract-with-todos",
+        "instances": [
+          {
+            "contract_path": "src/ContractWithTodo.sol",
+            "line_no": 4,
+            "src": "66:8"
+          },
+          {
+            "contract_path": "src/Counter.sol",
+            "line_no": 4,
+            "src": "74:7"
+          }
+        ],
+        "title": "Contract still has TODOs"
       }
     ]
   }
