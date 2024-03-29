@@ -22,18 +22,14 @@ impl IssueDetector for BooleanNameIsNotDoesNotDetector {
             //     variable_declaration.type_name, variable_declaration.name
             // );
             let var_name_lowercase = variable_declaration.name.to_lowercase();
-            if let Some(var_type) = &variable_declaration.type_name {
-                match var_type {
-                    TypeName::ElementaryTypeName(e) => {
-                        if e.name == "bool"
-                            && (var_name_lowercase.starts_with("isnot")
-                                || var_name_lowercase.starts_with("doesnot"))
-                        {
-                            capture!(self, context, variable_declaration);
-                        }
-                    }
-                    _ => (),
-                };
+
+            if let Some(TypeName::ElementaryTypeName(e)) = &variable_declaration.type_name {
+                if e.name == "bool"
+                    && (var_name_lowercase.starts_with("isnot")
+                        || var_name_lowercase.starts_with("doesnot"))
+                {
+                    capture!(self, context, variable_declaration);
+                }
             }
         }
         Ok(!self.found_instances.is_empty())
