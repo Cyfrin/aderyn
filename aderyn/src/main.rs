@@ -1,6 +1,7 @@
 #![allow(clippy::borrowed_box)]
 
 use serde::Deserialize;
+use serde_json::Value;
 use std::path::{Path, PathBuf};
 use strum::IntoEnumIterator;
 
@@ -192,6 +193,16 @@ fn main() {
     } else {
         driver::drive(args);
     }
+
+    println!();
+
+    if let Ok(yes) = aderyn_is_currently_running_newest_version() {
+        if !yes {
+            println!(
+                "Oh wait! There is a new version of aderyn available! Please run `cargo install aderyn` to fully upgrade the current version"
+            );
+        }
+    }
 }
 
 #[derive(Deserialize)]
@@ -272,4 +283,51 @@ fn right_pad(s: &str, by: usize) -> String {
     let mut new_string = s.to_string();
     new_string.push_str(&spaces);
     new_string
+}
+
+static APP_USER_AGENT: &str = concat!(env!("CARGO_PKG_NAME"), "/", env!("CARGO_PKG_VERSION"));
+
+fn aderyn_is_currently_running_newest_version() -> Result<bool, reqwest::Error> {
+    let client = reqwest::blocking::Client::builder()
+        .user_agent(APP_USER_AGENT)
+        .build()?;
+
+    let latest_version_checker = client
+        .get("https://crates.io/api/v1/crates?q=aderyn&per_page=1")
+        .send()?;
+
+    let data = latest_version_checker.json::<Value>()?;
+
+    let newest_version = data["crates"][0]["newest_version"].to_string();
+    let newest_version = &newest_version[1..newest_version.len() - 1];
+
+    Ok(newest_version == env!("CARGO_PKG_VERSION"))
+}
+
+#[cfg(test)]
+mod latest_version_checker_tests {
+    use super::*;
+
+    #[test]
+    fn can_get_latest_version_from_crate_registry() {
+        let client = reqwest::blocking::Client::builder()
+            .user_agent(APP_USER_AGENT)
+            .build()
+            .unwrap();
+
+        let latest_version_checker = client
+            .get("https://crates.io/api/v1/crates?q=aderyn&per_page=1")
+            .send()
+            .unwrap();
+
+        let data = latest_version_checker.json::<Value>().unwrap();
+
+        let newest_version = data["crates"][0]["newest_version"].to_string();
+        let newest_version = &newest_version[1..newest_version.len() - 1];
+
+        println!("Current Version: {}", env!("CARGO_PKG_VERSION"));
+        println!("Newest Version: {}", newest_version);
+
+        assert!(!newest_version.is_empty())
+    }
 }
