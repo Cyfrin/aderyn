@@ -322,24 +322,6 @@ mod latest_version_checker_tests {
 
     #[test]
     fn can_get_latest_version_from_crate_registry() {
-        let client = reqwest::blocking::Client::builder()
-            .user_agent(APP_USER_AGENT)
-            .build()
-            .unwrap();
-
-        let latest_version_checker = client
-            .get("https://crates.io/api/v1/crates?q=aderyn&per_page=1")
-            .send()
-            .unwrap();
-
-        let data = latest_version_checker.json::<Value>().unwrap();
-
-        let newest_version = data["crates"][0]["newest_version"].to_string();
-        let newest_version = &newest_version[1..newest_version.len() - 1];
-
-        println!("Current Version: {}", env!("CARGO_PKG_VERSION"));
-        println!("Newest Version: {}", newest_version);
-
-        assert!(!newest_version.is_empty())
+        assert!(aderyn_is_currently_running_newest_version().is_ok())
     }
 }
