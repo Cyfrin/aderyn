@@ -1231,6 +1231,28 @@ impl WorkspaceContext {
         None
     }
 
+    pub fn get_source_code_of_node(&self, node_id: NodeID) -> Option<String> {
+        let node = self.nodes.get(&node_id)?;
+        let source_unit = self.get_source_unit_from_child_node(node).unwrap();
+        let src_location = node.src().unwrap_or("");
+
+        let chopped_location = match src_location.rfind(':') {
+            Some(index) => &src_location[..index],
+            None => src_location, // No colon found, return the original string
+        }
+        .to_string();
+
+        if let Some((offset, len)) = chopped_location.split_once(':') {
+            let offset: usize = offset.parse().ok()?;
+            let len: usize = len.parse().ok()?;
+            if let Some(content) = source_unit.source.as_ref() {
+                let requried_content = &content[offset..offset + len];
+                return Some(requried_content.to_string());
+            }
+        }
+        None
+    }
+
     pub fn get_source_unit_from_child_node(&self, node: &ASTNode) -> Option<&SourceUnit> {
         let source_unit_id = match node {
             ASTNode::ArrayTypeName(node) => self
