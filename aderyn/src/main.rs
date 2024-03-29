@@ -2,7 +2,10 @@
 
 use serde::Deserialize;
 use serde_json::Value;
-use std::path::{Path, PathBuf};
+use std::{
+    env,
+    path::{Path, PathBuf},
+};
 use strum::IntoEnumIterator;
 
 use aderyn_driver::{
@@ -194,13 +197,22 @@ fn main() {
         driver::drive(args);
     }
 
-    println!();
+    let key = "ADERYN_SKIP_UPDATE_CHECK";
 
-    if let Ok(yes) = aderyn_is_currently_running_newest_version() {
-        if !yes {
-            println!(
-                "Oh wait! There is a new version of aderyn available! Please run `cargo install aderyn` to fully upgrade the current version"
-            );
+    let should_check_for_update = match env::var(key) {
+        Ok(val) => val != "1",
+        Err(_) => true,
+    };
+
+    if should_check_for_update {
+        println!();
+
+        if let Ok(yes) = aderyn_is_currently_running_newest_version() {
+            if !yes {
+                println!(
+                    "Oh wait! There is a new version of aderyn available! Please run `cargo install aderyn` to fully upgrade the current version"
+                );
+            }
         }
     }
 }
