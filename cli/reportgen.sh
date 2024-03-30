@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cd tests/contract-playground
-forge build --ast
+forge build --ast --force
 cd ../../
 
 export ADERYN_SKIP_BUILD=1
