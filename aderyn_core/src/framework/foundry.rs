@@ -16,7 +16,7 @@ pub struct FoundryOutput {
     pub ast: SourceUnit,
 }
 
-// Foundry TOML config file (according to relavant profile)
+// Foundry TOML config file (according to relevant profile)
 #[derive(Debug, Deserialize)]
 struct FoundryConfig {
     src: String,
@@ -161,7 +161,7 @@ fn read_config(path: &PathBuf) -> Result<FoundryConfig, Box<dyn Error>> {
                         }
                     };
 
-                    println!("SOURCE - {}\nOUT - {}", profile_src, profile_out);
+                    println!("Scanning out folder - {}", profile_src, profile_out);
 
                     return Ok(FoundryConfig {
                         src: profile_src.to_string(),
