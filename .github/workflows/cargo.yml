@@ -55,6 +55,10 @@ jobs:
           toolchain: stable
           override: true
 
+      - name: Remove the out folder in ./tests/contract-playground
+        run: |
+          rm -rf ./tests/contract-playground/out
+
       # Verify report.md
 
       - name: Generate report-workflow.md
