@@ -54,12 +54,16 @@ pub fn load_foundry(foundry_root: &PathBuf) -> Result<LoadedFoundry, Box<dyn Err
     };
 
     if should_build {
+        println!(
+            "Running `forge build --ast` in {:?}",
+            &foundry_root_absolute
+        );
+
         // Run `forge build --ast` in the root
         let _output = std::process::Command::new("forge")
             .arg("build")
             .arg("--ast")
             .current_dir(&foundry_root_absolute)
-            .env_clear() // To inherit environment variables from parent process (like FOUNDRY_, DAPP_, etc)
             .stdout(Stdio::inherit()) // This will stream the stdout
             .stderr(Stdio::inherit())
             .status();
@@ -120,15 +124,49 @@ fn read_config(path: &PathBuf) -> Result<FoundryConfig, Box<dyn Error>> {
     if let Some(foundry_profiles) = foundry_config["profile"].as_table() {
         // println!("{:#?}", foundry_profiles);
 
+        let default_profile = foundry_profiles.get("default");
+
         for (profile_key, value) in foundry_profiles {
             if profile_key.contains(&foundry_profile) {
-                if let toml::Value::String(profile_src) = &value["src"] {
-                    if let toml::Value::String(profile_out) = &value["out"] {
-                        return Ok(FoundryConfig {
-                            src: profile_src.to_string(),
-                            out: profile_out.to_string(),
-                        });
-                    }
+                if let Some(value) = value.as_table() {
+                    let profile_src = {
+                        if let Some(toml::Value::String(src)) = value.get("src") {
+                            src.clone()
+                        } else if let Some(default_profile) = default_profile {
+                            if let Some(toml::Value::String(src)) = default_profile.get("src") {
+                                src.clone()
+                            } else {
+                                eprintln!("Default config for src not found in foundry.toml");
+                                std::process::exit(1);
+                            }
+                        } else {
+                            eprintln!("Error reading src from foundry.toml");
+                            std::process::exit(1);
+                        }
+                    };
+
+                    let profile_out = {
+                        if let Some(toml::Value::String(out)) = value.get("out") {
+                            out.clone()
+                        } else if let Some(default_profile) = default_profile {
+                            if let Some(toml::Value::String(out)) = default_profile.get("out") {
+                                out.clone()
+                            } else {
+                                eprintln!("Default config for out not found in foundry.toml");
+                                std::process::exit(1);
+                            }
+                        } else {
+                            eprintln!("Error reading out from foundry.toml");
+                            std::process::exit(1);
+                        }
+                    };
+
+                    println!("SOURCE - {}\nOUT - {}", profile_src, profile_out);
+
+                    return Ok(FoundryConfig {
+                        src: profile_src.to_string(),
+                        out: profile_out.to_string(),
+                    });
                 }
             }
         }
