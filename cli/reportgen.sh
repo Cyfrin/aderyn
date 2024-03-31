@@ -31,7 +31,7 @@ cargo run -- --config-file ./tests/aderyn.config.json -o report-config.json ./te
 
 wait
 
-unset ADERYN_SKIP_BUILD=1
+unset ADERYN_SKIP_BUILD
 
 #### BOT ###################
 
