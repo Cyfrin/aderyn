@@ -2,6 +2,7 @@
 
 cd tests/contract-playground
 forge build --ast
+FOUNDRY_SAMPLE=sample forge build --ast
 cd ../../
 
 export ADERYN_SKIP_BUILD=1
@@ -10,6 +11,9 @@ export ADERYN_SKIP_BUILD=1
 
 # Basic report.md 
 cargo run -- ./tests/contract-playground &
+
+# Basic report.profile.md 
+FOUNDRY_SAMPLE=sample cargo run -- -o report.sample_profile.md ./tests/contract-playground &
 
 # Create report-config.md based on config file
 cargo run -- --config-file ./tests/aderyn.config.json -o report-config.md ./tests/contract-playground/  &
