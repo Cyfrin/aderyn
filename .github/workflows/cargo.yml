@@ -70,18 +70,18 @@ jobs:
 
       # Verify report.md with FOUNDRY_PROFILE=sample
 
-      - name: Generate report-workflow-profile.md 
-        env:
-          FOUNDRY_PROFILE: sample
+      - name: Generate report-workflow-sample-foundry-profile.md 
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: -- -o report-workflow-profile.md ./tests/contract-playground/
-
-      - name: Check report.md vs report-workflow-profile.md
+          args: -- -o report-workflow-sample-foundry-profile.md ./tests/contract-playground/
+        env:
+          FOUNDRY_PROFILE: sample
+        
+      - name: Check report.md vs report-workflow-sample-foundry-profile.md
         run: |
-          cat report-workflow-profile.md
-          diff report.md report-workflow-profile.md
+          cat report-workflow-sample-foundry-profile.md
+          diff report.md report-workflow-sample-foundry-profile.md
 
       # Verify report-config.md
 
