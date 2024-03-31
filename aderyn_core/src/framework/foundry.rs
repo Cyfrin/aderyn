@@ -161,7 +161,7 @@ fn read_config(path: &PathBuf) -> Result<FoundryConfig, Box<dyn Error>> {
                         }
                     };
 
-                    println!("Scanning out folder - {}", profile_src, profile_out);
+                    println!("Scanning out folder - {}", profile_out);
 
                     return Ok(FoundryConfig {
                         src: profile_src.to_string(),
