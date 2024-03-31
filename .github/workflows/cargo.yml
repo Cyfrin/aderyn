@@ -58,9 +58,10 @@ jobs:
       # Verify report.md
 
       - name: Generate report-workflow.md
-        run: |
-          rm -rf ./tests/contract-playground/out
-          cargo run -- -o report-workflow.md ./tests/contract-playground/
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+          args: -- -o report-workflow.md ./tests/contract-playground/
 
       - name: Check report.md vs report-workflow.md
         run: |
@@ -72,10 +73,8 @@ jobs:
       - name: Generate report-workflow-sample-foundry-profile.md 
         run: |
           export FOUNDRY_PROFILE=sample
-          rm -rf ./tests/contract-playground/sample_out
           cargo run -- -o report-workflow-sample-foundry-profile.md ./tests/contract-playground/
-          unset FOUNDRY_PROFILE
-
+        
       - name: Check report.md vs report-workflow-sample-foundry-profile.md
         run: |
           cat report-workflow-sample-foundry-profile.md
