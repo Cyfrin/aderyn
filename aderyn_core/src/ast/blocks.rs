@@ -30,6 +30,11 @@ impl Node for Block {
         visitor.visit_immediate_children(self.id, children_ids)?;
         Ok(())
     }
+
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
+        Ok(())
+    }
 }
 
 impl Display for Block {
