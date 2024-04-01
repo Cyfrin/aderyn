@@ -28,6 +28,10 @@ impl Node for ErrorDefinition {
         // TODO: send documentation nodes to visitor
         visitor.visit_immediate_children(self.id, vec![self.parameters.id])
     }
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
+        Ok(())
+    }
 }
 
 impl Display for ErrorDefinition {
