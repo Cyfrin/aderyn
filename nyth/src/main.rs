@@ -88,6 +88,13 @@ fn main() {
                 .status();
 
             let _ = std::process::Command::new("forge")
+                .args(["update"])
+                .current_dir(&foundry_workspace_dir)
+                .stdout(Stdio::inherit()) // This will stream the stdout
+                .stderr(Stdio::inherit())
+                .status();
+
+            let _ = std::process::Command::new("forge")
                 .arg("build")
                 .current_dir(&foundry_workspace_dir)
                 .stdout(Stdio::inherit()) // This will stream the stdout
