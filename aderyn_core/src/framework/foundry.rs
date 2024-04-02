@@ -163,10 +163,10 @@ fn read_config(path: &PathBuf) -> Result<FoundryConfig, Box<dyn Error>> {
         }
     }
 
-    return Ok(FoundryConfig {
+    Ok(FoundryConfig {
         src: default_foundry_src,
         out: default_foundry_out,
-    });
+    })
 }
 
 fn collect_nested_files(path: &PathBuf, extension: &str) -> Result<Vec<PathBuf>, std::io::Error> {
