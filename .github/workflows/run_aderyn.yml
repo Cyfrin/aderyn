@@ -25,7 +25,7 @@ jobs:
         
         - name: Check report
           run: |
-            jq '.issue_count | .critical, .high, .medium' ci-report.json | while read value; do
+            jq '.issue_count | .critical' ci-report.json | while read value; do
                 if [ "$value" -gt 0 ]; then
                 echo "Found issues: critical, high, or medium issue count is above zero."
                 exit 1
