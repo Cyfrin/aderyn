@@ -121,43 +121,34 @@ fn read_config(path: &PathBuf) -> Result<FoundryConfig, Box<dyn Error>> {
         .unwrap_or("default".to_string())
         .to_lowercase();
 
+    // Official Foundry docs defaults
+    // https://book.getfoundry.sh/reference/config/project#src
+
+    let default_foundry_src = std::env::var("FOUNDRY_SRC")
+        .unwrap_or(std::env::var("DAPP_SRC").unwrap_or(String::from("src")));
+
+    let default_foundry_out = std::env::var("FOUNDRY_OUT")
+        .unwrap_or(std::env::var("DAPP_OUT").unwrap_or(String::from("out")));
+
     if let Some(foundry_profiles) = foundry_config["profile"].as_table() {
         // println!("{:#?}", foundry_profiles);
 
-        let default_profile = foundry_profiles.get("default");
-
         for (profile_key, value) in foundry_profiles {
-            if profile_key.contains(&foundry_profile) {
+            if profile_key == &foundry_profile {
                 if let Some(value) = value.as_table() {
                     let profile_src = {
                         if let Some(toml::Value::String(src)) = value.get("src") {
                             src.clone()
-                        } else if let Some(default_profile) = default_profile {
-                            if let Some(toml::Value::String(src)) = default_profile.get("src") {
-                                src.clone()
-                            } else {
-                                eprintln!("Default config for src not found in foundry.toml");
-                                std::process::exit(1);
-                            }
                         } else {
-                            eprintln!("Error reading src from foundry.toml");
-                            std::process::exit(1);
+                            default_foundry_src
                         }
                     };
 
                     let profile_out = {
                         if let Some(toml::Value::String(out)) = value.get("out") {
                             out.clone()
-                        } else if let Some(default_profile) = default_profile {
-                            if let Some(toml::Value::String(out)) = default_profile.get("out") {
-                                out.clone()
-                            } else {
-                                eprintln!("Default config for out not found in foundry.toml");
-                                std::process::exit(1);
-                            }
                         } else {
-                            eprintln!("Error reading out from foundry.toml");
-                            std::process::exit(1);
+                            default_foundry_out
                         }
                     };
 
