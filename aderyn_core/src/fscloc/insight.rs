@@ -62,7 +62,7 @@ impl TokenType {
                 let mut actual_first_line = -1;
                 let mut count = 0;
                 #[allow(clippy::explicit_counter_loop)]
-                for curr in content.split('\n') {
+                for curr in content.to_string().split('\n') {
                     if curr.trim() != "" {
                         non_blank_lines += 1;
                         if actual_first_line == -1 {

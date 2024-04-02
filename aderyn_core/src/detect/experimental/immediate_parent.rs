@@ -5,7 +5,7 @@ use crate::{
     ast::NodeID,
     capture,
     context::{
-        browser::{AppearsAfterASTNodeLocation, AppearsBeforeASTNodeLocation, GetImmediateParent},
+        browser::GetImmediateParent,
         workspace_context::{ASTNode, WorkspaceContext},
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
@@ -41,19 +41,6 @@ impl IssueDetector for ImmediateParentDemonstrator {
                                     println!("3 {}", block);
                                     capture!(self, context, third_parent);
                                 }
-
-                                assert!(first_parent
-                                    .appears_after(context, second_parent)
-                                    .unwrap());
-                                assert!(second_parent
-                                    .appears_after(context, third_parent)
-                                    .unwrap());
-                                assert!(second_parent
-                                    .appears_before(context, first_parent)
-                                    .unwrap());
-                                assert!(third_parent
-                                    .appears_before(context, second_parent)
-                                    .unwrap());
                             }
                         }
                     }

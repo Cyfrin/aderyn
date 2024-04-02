@@ -64,25 +64,6 @@ You can install Rust and Cargo by running the following command on your terminal
 
 You can install Rust and Cargo by downloading and running [`rustup-init.exe`](https://static.rust-lang.org/rustup/dist/i686-pc-windows-gnu/rustup-init.exe).
 
-## Docker
-
-You can run Aderyn from Docker container. 
-
-Build the image:
-```sh
-  docker build -t aderyn .
-```
-`/path/to/project/root` should be the path to your Foundry or Hardhat project root directory and it will be mounted to `/share` in the container.
-
-Run Aderyn:
-```sh
-  docker run -v /path/to/project/root/:/share aderyn
-```
-Run with flags:
-```sh
-  docker run -v /path/to/project/root/:/share aderyn -h
-```
-
 ## Installation
 
 In the command line, run:

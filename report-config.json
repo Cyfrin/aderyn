@@ -79,16 +79,6 @@
             "src": "46:24"
           },
           {
-            "contract_path": "src/cloc/HeavilyCommentedContract.sol",
-            "line_no": 6,
-            "src": "46:32"
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 12,
-            "src": "2302:23"
-          },
-          {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
             "line_no": 2,
             "src": "32:23"
@@ -110,42 +100,42 @@
           {
             "contract_path": "src/Counter.sol",
             "line_no": 7,
-            "src": "129:9"
+            "src": "120:80"
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
             "line_no": 31,
-            "src": "500:3"
+            "src": "491:131"
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
             "line_no": 38,
-            "src": "637:5"
+            "src": "628:95"
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
             "line_no": 42,
-            "src": "738:4"
+            "src": "729:1016"
           },
           {
             "contract_path": "src/cloc/HeavilyCommentedContract.sol",
             "line_no": 31,
-            "src": "509:3"
+            "src": "500:131"
           },
           {
             "contract_path": "src/cloc/HeavilyCommentedContract.sol",
             "line_no": 38,
-            "src": "646:4"
+            "src": "637:804"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
             "line_no": 11,
-            "src": "355:9"
+            "src": "346:61"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
             "line_no": 15,
-            "src": "422:9"
+            "src": "413:225"
           }
         ],
         "title": "`public` functions not used internally could be marked `external`"

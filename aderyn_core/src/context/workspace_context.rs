@@ -1,7 +1,6 @@
 use crate::ast::*;
 use crate::visitor::ast_visitor::*;
 use eyre::Result;
-use std::cmp::Ordering;
 use std::collections::HashMap;
 
 use super::browser::GetImmediateParent;
@@ -172,120 +171,6 @@ impl ASTNode {
             ASTNode::VariableDeclaration(n) => Some(n.id),
             ASTNode::VariableDeclarationStatement(n) => Some(n.id),
             ASTNode::WhileStatement(n) => Some(n.id),
-        }
-    }
-}
-
-impl Node for ASTNode {
-    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> eyre::Result<()> {
-        match self {
-            ASTNode::ArrayTypeName(n) => n.accept(visitor),
-            ASTNode::Assignment(n) => n.accept(visitor),
-            ASTNode::BinaryOperation(n) => n.accept(visitor),
-            ASTNode::Block(n) => n.accept(visitor),
-            ASTNode::Conditional(n) => n.accept(visitor),
-            ASTNode::ContractDefinition(n) => n.accept(visitor),
-            ASTNode::ElementaryTypeName(n) => n.accept(visitor),
-            ASTNode::ElementaryTypeNameExpression(n) => n.accept(visitor),
-            ASTNode::EmitStatement(n) => n.accept(visitor),
-            ASTNode::EnumDefinition(n) => n.accept(visitor),
-            ASTNode::EnumValue(n) => n.accept(visitor),
-            ASTNode::EventDefinition(n) => n.accept(visitor),
-            ASTNode::ErrorDefinition(n) => n.accept(visitor),
-            ASTNode::ExpressionStatement(n) => n.accept(visitor),
-            ASTNode::FunctionCall(n) => n.accept(visitor),
-            ASTNode::FunctionCallOptions(n) => n.accept(visitor),
-            ASTNode::FunctionDefinition(n) => n.accept(visitor),
-            ASTNode::FunctionTypeName(n) => n.accept(visitor),
-            ASTNode::ForStatement(n) => n.accept(visitor),
-            ASTNode::Identifier(n) => n.accept(visitor),
-            ASTNode::IdentifierPath(n) => n.accept(visitor),
-            ASTNode::IfStatement(n) => n.accept(visitor),
-            ASTNode::ImportDirective(n) => n.accept(visitor),
-            ASTNode::IndexAccess(n) => n.accept(visitor),
-            ASTNode::IndexRangeAccess(n) => n.accept(visitor),
-            ASTNode::InheritanceSpecifier(n) => n.accept(visitor),
-            ASTNode::InlineAssembly(n) => n.accept(visitor),
-            ASTNode::Literal(n) => n.accept(visitor),
-            ASTNode::MemberAccess(n) => n.accept(visitor),
-            ASTNode::NewExpression(n) => n.accept(visitor),
-            ASTNode::Mapping(n) => n.accept(visitor),
-            ASTNode::ModifierDefinition(n) => n.accept(visitor),
-            ASTNode::ModifierInvocation(n) => n.accept(visitor),
-            ASTNode::OverrideSpecifier(n) => n.accept(visitor),
-            ASTNode::ParameterList(n) => n.accept(visitor),
-            ASTNode::PragmaDirective(n) => n.accept(visitor),
-            ASTNode::Return(n) => n.accept(visitor),
-            ASTNode::RevertStatement(n) => n.accept(visitor),
-            ASTNode::SourceUnit(n) => n.accept(visitor),
-            ASTNode::StructDefinition(n) => n.accept(visitor),
-            ASTNode::StructuredDocumentation(n) => n.accept(visitor),
-            ASTNode::TryStatement(n) => n.accept(visitor),
-            ASTNode::TryCatchClause(n) => n.accept(visitor),
-            ASTNode::TupleExpression(n) => n.accept(visitor),
-            ASTNode::UnaryOperation(n) => n.accept(visitor),
-            ASTNode::UserDefinedTypeName(n) => n.accept(visitor),
-            ASTNode::UserDefinedValueTypeDefinition(n) => n.accept(visitor),
-            ASTNode::UsingForDirective(n) => n.accept(visitor),
-            ASTNode::VariableDeclaration(n) => n.accept(visitor),
-            ASTNode::VariableDeclarationStatement(n) => n.accept(visitor),
-            ASTNode::WhileStatement(n) => n.accept(visitor),
-        }
-    }
-
-    fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> eyre::Result<()> {
-        match self {
-            ASTNode::ArrayTypeName(n) => n.accept_metadata(visitor),
-            ASTNode::Assignment(n) => n.accept_metadata(visitor),
-            ASTNode::BinaryOperation(n) => n.accept_metadata(visitor),
-            ASTNode::Block(n) => n.accept_metadata(visitor),
-            ASTNode::Conditional(n) => n.accept_metadata(visitor),
-            ASTNode::ContractDefinition(n) => n.accept_metadata(visitor),
-            ASTNode::ElementaryTypeName(n) => n.accept_metadata(visitor),
-            ASTNode::ElementaryTypeNameExpression(n) => n.accept_metadata(visitor),
-            ASTNode::EmitStatement(n) => n.accept_metadata(visitor),
-            ASTNode::EnumDefinition(n) => n.accept_metadata(visitor),
-            ASTNode::EnumValue(n) => n.accept_metadata(visitor),
-            ASTNode::EventDefinition(n) => n.accept_metadata(visitor),
-            ASTNode::ErrorDefinition(n) => n.accept_metadata(visitor),
-            ASTNode::ExpressionStatement(n) => n.accept_metadata(visitor),
-            ASTNode::FunctionCall(n) => n.accept_metadata(visitor),
-            ASTNode::FunctionCallOptions(n) => n.accept_metadata(visitor),
-            ASTNode::FunctionDefinition(n) => n.accept_metadata(visitor),
-            ASTNode::FunctionTypeName(n) => n.accept_metadata(visitor),
-            ASTNode::ForStatement(n) => n.accept_metadata(visitor),
-            ASTNode::Identifier(n) => n.accept_metadata(visitor),
-            ASTNode::IdentifierPath(n) => n.accept_metadata(visitor),
-            ASTNode::IfStatement(n) => n.accept_metadata(visitor),
-            ASTNode::ImportDirective(n) => n.accept_metadata(visitor),
-            ASTNode::IndexAccess(n) => n.accept_metadata(visitor),
-            ASTNode::IndexRangeAccess(n) => n.accept_metadata(visitor),
-            ASTNode::InheritanceSpecifier(n) => n.accept_metadata(visitor),
-            ASTNode::InlineAssembly(n) => n.accept_metadata(visitor),
-            ASTNode::Literal(n) => n.accept_metadata(visitor),
-            ASTNode::MemberAccess(n) => n.accept_metadata(visitor),
-            ASTNode::NewExpression(n) => n.accept_metadata(visitor),
-            ASTNode::Mapping(n) => n.accept_metadata(visitor),
-            ASTNode::ModifierDefinition(n) => n.accept_metadata(visitor),
-            ASTNode::ModifierInvocation(n) => n.accept_metadata(visitor),
-            ASTNode::OverrideSpecifier(n) => n.accept_metadata(visitor),
-            ASTNode::ParameterList(n) => n.accept_metadata(visitor),
-            ASTNode::PragmaDirective(n) => n.accept_metadata(visitor),
-            ASTNode::Return(n) => n.accept_metadata(visitor),
-            ASTNode::RevertStatement(n) => n.accept_metadata(visitor),
-            ASTNode::SourceUnit(n) => n.accept_metadata(visitor),
-            ASTNode::StructDefinition(n) => n.accept_metadata(visitor),
-            ASTNode::StructuredDocumentation(n) => n.accept_metadata(visitor),
-            ASTNode::TryStatement(n) => n.accept_metadata(visitor),
-            ASTNode::TryCatchClause(n) => n.accept_metadata(visitor),
-            ASTNode::TupleExpression(n) => n.accept_metadata(visitor),
-            ASTNode::UnaryOperation(n) => n.accept_metadata(visitor),
-            ASTNode::UserDefinedTypeName(n) => n.accept_metadata(visitor),
-            ASTNode::UserDefinedValueTypeDefinition(n) => n.accept_metadata(visitor),
-            ASTNode::UsingForDirective(n) => n.accept_metadata(visitor),
-            ASTNode::VariableDeclaration(n) => n.accept_metadata(visitor),
-            ASTNode::VariableDeclarationStatement(n) => n.accept_metadata(visitor),
-            ASTNode::WhileStatement(n) => n.accept_metadata(visitor),
         }
     }
 }
@@ -1456,51 +1341,6 @@ impl WorkspaceContext {
         capturable.id()
     }
 
-    /// Returns the relative location of nodes in the source code (if they are in same file)
-    pub fn get_relative_location_of_nodes(
-        &self,
-        first: NodeID,
-        second: NodeID,
-    ) -> Option<Ordering> {
-        let f = self.get_node_sort_key_pure(self.nodes.get(&first)?);
-        let s = self.get_node_sort_key_pure(self.nodes.get(&second)?);
-
-        // If the nodes aren't in the same file location comparison doesn't make sense
-        if f.0 != s.0 {
-            return None;
-        }
-
-        match f.1.cmp(&s.1) {
-            Ordering::Less => Some(Ordering::Less),
-            Ordering::Equal => {
-                // If the nodes are on the same line, we must compare offset in the chopped_location
-                let first_character_offset = f.2.split_once(':').unwrap();
-                let second_character_offset = s.2.split_once(':').unwrap();
-                Some(first_character_offset.0.cmp(second_character_offset.0))
-            }
-            Ordering::Greater => Some(Ordering::Greater),
-        }
-    }
-
-    pub fn get_node_sort_key_pure(&self, node: &ASTNode) -> (String, usize, String) {
-        let source_unit = self.get_source_unit_from_child_node(node).unwrap();
-        let absolute_path = source_unit.absolute_path.as_ref().unwrap().clone();
-        let source_line = node
-            .src()
-            .map(|src| source_unit.source_line(src).unwrap_or(0)) // If `src` is `Some`, get the line number, else return 0
-            .unwrap_or(0); // If `src` is `None`, default to 0
-
-        let src_location = node.src().unwrap_or("");
-
-        let chopped_location = match src_location.rfind(':') {
-            Some(index) => &src_location[..index],
-            None => src_location, // No colon found, return the original string
-        }
-        .to_string();
-
-        (absolute_path, source_line, chopped_location)
-    }
-
     pub fn get_node_sort_key(&self, node: &ASTNode) -> (String, usize, String) {
         let source_unit = self.get_source_unit_from_child_node(node).unwrap();
         let absolute_path = source_unit.absolute_path.as_ref().unwrap().clone();
@@ -1508,39 +1348,7 @@ impl WorkspaceContext {
             .src()
             .map(|src| source_unit.source_line(src).unwrap_or(0)) // If `src` is `Some`, get the line number, else return 0
             .unwrap_or(0); // If `src` is `None`, default to 0
-
-        // If the node is one of these, and it has a `name_location`, use that instead of the full `src`
-        let src_location = match node {
-            ASTNode::ContractDefinition(node) => {
-                if let Some(name_location) = &node.name_location {
-                    name_location
-                } else {
-                    &node.src
-                }
-            }
-            ASTNode::FunctionDefinition(node) => {
-                if let Some(name_location) = &node.name_location {
-                    name_location
-                } else {
-                    &node.src
-                }
-            }
-            ASTNode::ModifierDefinition(node) => {
-                if let Some(name_location) = &node.name_location {
-                    name_location
-                } else {
-                    &node.src
-                }
-            }
-            ASTNode::VariableDeclaration(node) => {
-                if let Some(name_location) = &node.name_location {
-                    name_location
-                } else {
-                    &node.src
-                }
-            }
-            _ => node.src().unwrap_or(""),
-        };
+        let src_location = node.src().unwrap_or("");
         let chopped_location = match src_location.rfind(':') {
             Some(index) => &src_location[..index],
             None => src_location, // No colon found, return the original string
@@ -2362,10 +2170,10 @@ mod context_tests {
             "../tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",
         )?;
         let inheritance_base = read_compiler_output(
-            "../tests/contract-playground/out/InheritanceBase.sol/InheritanceBase.0.8.24.json",
+            "../tests/contract-playground/out/InheritanceBase.sol/InheritanceBase.0.8.21.json",
         )?;
         let i_contract_inheritance = read_compiler_output(
-            "../tests/contract-playground/out/IContractInheritance.sol/IContractInheritance.0.8.24.json",
+            "../tests/contract-playground/out/IContractInheritance.sol/IContractInheritance.0.8.21.json",
         )?;
         extended_inheritance.ast.accept(&mut context)?;
         inheritance_base.ast.accept(&mut context)?;
