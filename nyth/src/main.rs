@@ -95,7 +95,7 @@ fn main() {
                 .status();
 
             let _ = std::process::Command::new("forge")
-                .arg("build")
+                .args(["build", "--ast"])
                 .current_dir(&foundry_workspace_dir)
                 .stdout(Stdio::inherit()) // This will stream the stdout
                 .stderr(Stdio::inherit())
