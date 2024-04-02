@@ -1,0 +1,35 @@
+on: [push, pull_request, workflow_dispatch]
+
+name: Run Aderyn
+
+jobs:
+    check:
+      name: Check
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout sources
+          uses: actions/checkout@v2
+  
+        - name: Install stable toolchain
+          uses: actions-rs/toolchain@v1
+          with:
+            profile: minimal
+            toolchain: stable
+            override: true
+  
+        - name: Install aderyn
+          run: cargo install aderyn
+
+        - name: Run aderyn
+          run: aderyn ./tests/contract-playground -o ci-report.json
+        
+        - name: Check report
+          run: |
+            jq '.issue_count | .critical, .high, .medium' ci-report.json | while read value; do
+                if [ "$value" -gt 0 ]; then
+                echo "Found issues: critical, high, or medium issue count is above zero."
+                exit 1
+                fi
+            done
+
+        
