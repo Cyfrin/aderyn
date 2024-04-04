@@ -68,6 +68,21 @@ jobs:
           cat report-workflow.md
           diff report.md report-workflow.md
 
+      # Verify sample profile report
+
+      - name: Generate report.sample_profile.workflow.md
+        uses: actions-rs/cargo@v1
+        env:
+          FOUNDRY_PROFILE: sample
+        with:
+          command: run
+          args: -- -o report.sample_profile.workflow.md ./tests/contract-playground/
+
+      - name: Check report.sample_profile.md vs report.sample_profile.workflow.md
+        run: |
+          cat report.sample_profile.workflow.md
+          diff report.sample_profile.md report.sample_profile.workflow.md
+  
       # Verify report-config.md
 
       - name: Generate report-config-workflow.md
