@@ -10,13 +10,13 @@ pub trait SortOwnedNodesToSequence<'a> {
     fn sort_by_line_nos(self, context: &'a WorkspaceContext) -> Option<Vec<ASTNode>>;
 }
 
-impl<'a> SortNodeReferencesToSequence<'a> for &mut [&'a ASTNode] {
+impl<'a> SortNodeReferencesToSequence<'a> for &[&'a ASTNode] {
     fn sort_by_line_nos(self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         sort_by_line_nos(self, context)
     }
 }
 
-impl<'a> SortOwnedNodesToSequence<'a> for &mut [ASTNode] {
+impl<'a> SortOwnedNodesToSequence<'a> for &[ASTNode] {
     fn sort_by_line_nos(self, context: &'a WorkspaceContext) -> Option<Vec<ASTNode>> {
         let mut nodes = self.iter().collect::<Vec<_>>();
         let sorted = sort_by_line_nos(&mut nodes, context);
@@ -29,7 +29,7 @@ impl<'a> SortOwnedNodesToSequence<'a> for &mut [ASTNode] {
 }
 
 fn sort_by_line_nos<'a>(
-    nodes: &mut [&'a ASTNode],
+    nodes: &[&'a ASTNode],
     context: &'a WorkspaceContext,
 ) -> Option<Vec<&'a ASTNode>> {
     if !nodes.iter().all(|x| x.id().is_some()) {
