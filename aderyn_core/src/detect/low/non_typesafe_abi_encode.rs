@@ -18,13 +18,13 @@ impl IssueDetector for NonTypesafeAbiEncodeDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for member_access in context.member_accesses() {
             if let Expression::Identifier(identifier) = &member_access.expression.as_ref() {
-                if identifier.name == "abi" {
-                    if matches!(
+                if identifier.name == "abi"
+                    && matches!(
                         member_access.member_name.as_ref(),
                         "encodeWithSignature" | "encodeWithSelector"
-                    ) {
-                        capture!(self, context, member_access);
-                    }
+                    )
+                {
+                    capture!(self, context, member_access);
                 }
             }
         }
