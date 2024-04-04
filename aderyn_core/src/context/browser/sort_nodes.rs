@@ -18,7 +18,7 @@ impl<'a> SortNodeReferencesToSequence<'a> for &mut [&'a ASTNode] {
 
 impl<'a> SortOwnedNodesToSequence<'a> for &mut [ASTNode] {
     fn sequence_sort(self, context: &'a WorkspaceContext) -> Option<Vec<ASTNode>> {
-        let mut nodes = self.iter().map(|x| x).collect::<Vec<_>>();
+        let mut nodes = self.iter().collect::<Vec<_>>();
         let sorted = sequence_sort(&mut nodes, context);
         if let Some(sorted_nodes) = sorted {
             let owned_nodes = sorted_nodes.iter().map(|&x| x.clone()).collect::<Vec<_>>();
@@ -50,7 +50,7 @@ fn sequence_sort<'a>(
     }
 
     // Now sort them
-    let mut nodes: Vec<_> = nodes.iter().map(|x| *x).collect();
+    let mut nodes = nodes.to_vec();
     nodes.sort_by(|a, b| {
         context
             .get_relative_location_of_nodes(a.id().unwrap(), b.id().unwrap())
