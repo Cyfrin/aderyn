@@ -18,8 +18,8 @@ impl<'a> SortNodeReferencesToSequence<'a> for &[&'a ASTNode] {
 
 impl<'a> SortOwnedNodesToSequence<'a> for &[ASTNode] {
     fn sort_by_line_nos(self, context: &'a WorkspaceContext) -> Option<Vec<ASTNode>> {
-        let mut nodes = self.iter().collect::<Vec<_>>();
-        let sorted = sort_by_line_nos(&mut nodes, context);
+        let nodes = self.iter().collect::<Vec<_>>();
+        let sorted = sort_by_line_nos(&nodes, context);
         if let Some(sorted_nodes) = sorted {
             let owned_nodes = sorted_nodes.iter().map(|&x| x.clone()).collect::<Vec<_>>();
             return Some(owned_nodes);
