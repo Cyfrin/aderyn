@@ -67,7 +67,7 @@
       },
       {
         "file_path": "src/InternalFunctions.sol",
-        "n_sloc": 18
+        "n_sloc": 22
       },
       {
         "file_path": "src/KeccakContract.sol",
@@ -152,7 +152,7 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 887,
+    "total_sloc": 891,
     "total_source_units": 30
   },
   "high_issues": {
@@ -920,8 +920,8 @@
         "instances": [
           {
             "contract_path": "src/InternalFunctions.sol",
-            "line_no": 17,
-            "src": "380:9"
+            "line_no": 18,
+            "src": "413:9"
           },
           {
             "contract_path": "src/OnceModifierExample.sol",
@@ -1121,8 +1121,8 @@
         "instances": [
           {
             "contract_path": "src/InternalFunctions.sol",
-            "line_no": 22,
-            "src": "504:12"
+            "line_no": 28,
+            "src": "693:12"
           }
         ],
         "title": "Internal functions called only once can be inlined"
