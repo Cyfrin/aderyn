@@ -22,7 +22,7 @@ impl ASTConstVisitor for NodeIDReceiver {
 }
 
 impl<T: Node + ?Sized> Peek for T {
-    fn peek<'a>(&self, context: &'a WorkspaceContext) -> Option<String> {
+    fn peek(&self, context: &WorkspaceContext) -> Option<String> {
         // Setup a Node ID receiver
         let mut node_id_receiver = NodeIDReceiver::default();
 
