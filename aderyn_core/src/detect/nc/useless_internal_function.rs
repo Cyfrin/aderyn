@@ -22,7 +22,10 @@ impl IssueDetector for UselessInternalFunctionDetector {
         let internal_functions = context
             .function_definitions()
             .into_iter()
-            .filter(|&function| matches!(function.visibility, Visibility::Internal));
+            .filter(|&function| {
+                matches!(function.visibility, Visibility::Internal)
+                    && !function.name.starts_with('_')
+            });
 
         for internal_function in internal_functions {
             if IdentifiersThatReferenceAFunctionDetector::default()
