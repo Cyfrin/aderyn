@@ -6,6 +6,7 @@ pub(crate) mod push_0_opcode;
 pub(crate) mod unprotected_init_function;
 pub(crate) mod unsafe_erc20_functions;
 pub(crate) mod unspecific_solidity_pragma;
+pub(crate) mod weak_randomness;
 
 pub use avoid_abi_encode_packed::AvoidAbiEncodePackedDetector;
 pub use deprecated_oz_functions::DeprecatedOZFunctionsDetector;
@@ -15,3 +16,4 @@ pub use push_0_opcode::PushZeroOpcodeDetector;
 pub use unprotected_init_function::UnprotectedInitializerDetector;
 pub use unsafe_erc20_functions::UnsafeERC20FunctionsDetector;
 pub use unspecific_solidity_pragma::UnspecificSolidityPragmaDetector;
+pub use weak_randomness::WeakRandomnessDetector;
