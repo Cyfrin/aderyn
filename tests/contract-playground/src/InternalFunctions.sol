@@ -12,6 +12,7 @@ contract InternalFunctionExample {
     function setValue(uint256 _newValue) external onlyOwner {
         // Here, the internal function `_internalSet` is called.
         _internalSet(_newValue);
+        internalSet2(_newValue);
     }
 
     modifier onlyOwner() {
@@ -20,6 +21,11 @@ contract InternalFunctionExample {
     }
 
     function _internalSet(uint256 _newValue) internal {
+        // This function is called only once within the contract.
+        value = _newValue;
+    }
+
+    function internalSet2(uint256 _newValue) internal {
         // This function is called only once within the contract.
         value = _newValue;
     }
