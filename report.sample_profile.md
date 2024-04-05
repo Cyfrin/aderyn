@@ -700,6 +700,12 @@ Consider using Chainlink VRF (Verifiable Random Function). It is a provably fair
 	            keccak256(abi.encodePacked(blockhash(block.number - 1), block.timestamp))
 	```
 
+- Found in src/WeakRandomness.sol [Line: 18](tests/contract-playground/src/WeakRandomness.sol#L18)
+
+	```solidity
+	            keccak256(abi.encodePacked(blockhash(block.number - 1), block.timestamp))
+	```
+
 
 
 # NC Issues
