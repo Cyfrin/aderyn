@@ -59,6 +59,7 @@ jobs:
 
       - name: Generate report-workflow.md
         run: |
+          export RUST_BACKTRACE=1
           cargo run -- -o report-workflow.md ./tests/contract-playground/
         
       - name: Check report.md vs report-workflow.md
