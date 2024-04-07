@@ -31,7 +31,7 @@ impl IssueDetector for EmptyBlockDetector {
                     || f.kind == FunctionKind::Fallback
                 {
                     // It's not okay to have empty block nested somewhere inside constructor
-                    if let Some(block_chain) = empty_block.parent_chain(context) {
+                    if let Some(block_chain) = empty_block.ancestors(context) {
                         let function_definition_index = block_chain
                             .iter()
                             .position(|x| x.node_type() == NodeType::FunctionDefinition)

@@ -6,7 +6,7 @@ use crate::{
 
 pub trait GetParentChain {
     /// Get the parent Chain of an ASTNode
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>>;
+    fn ancestors<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>>;
 }
 
 #[derive(Default)]
@@ -22,7 +22,7 @@ impl ASTConstVisitor for NodeIDReceiver {
 }
 
 impl<T: Node + ?Sized> GetParentChain for T {
-    fn parent_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+    fn ancestors<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         // Setup a Node ID receiver
         let mut node_id_receiver = NodeIDReceiver::default();
 

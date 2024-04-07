@@ -28,7 +28,7 @@ impl IssueDetector for ParentChainDemonstrator {
         for assignment in context.assignments() {
             capture!(self, context, assignment);
 
-            if let Some(parent_chain) = assignment.parent_chain(context) {
+            if let Some(parent_chain) = assignment.ancestors(context) {
                 if let ASTNode::Block(_) = parent_chain[1] {
                     capture!(self, context, parent_chain[1]);
                 }
@@ -40,7 +40,7 @@ impl IssueDetector for ParentChainDemonstrator {
                 }
             }
 
-            if let Some(mut parent_chain) = assignment.parent_chain(context) {
+            if let Some(mut parent_chain) = assignment.ancestors(context) {
                 let sorted_chain = parent_chain.sort_by_src_position(context).unwrap();
                 parent_chain.reverse();
                 assert_eq!(sorted_chain, parent_chain);
