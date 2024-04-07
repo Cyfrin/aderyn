@@ -3,23 +3,23 @@ use std::collections::BTreeSet;
 use crate::context::workspace_context::{ASTNode, WorkspaceContext};
 
 pub trait SortNodeReferencesToSequence<'a> {
-    fn sort_by_line_nos(self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>>;
+    fn sort_by_src_position(self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>>;
 }
 
 pub trait SortOwnedNodesToSequence<'a> {
-    fn sort_by_line_nos(self, context: &'a WorkspaceContext) -> Option<Vec<ASTNode>>;
+    fn sort_by_src_position(self, context: &'a WorkspaceContext) -> Option<Vec<ASTNode>>;
 }
 
 impl<'a> SortNodeReferencesToSequence<'a> for &[&'a ASTNode] {
-    fn sort_by_line_nos(self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
-        sort_by_line_nos(self, context)
+    fn sort_by_src_position(self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+        sort_by_src_position(self, context)
     }
 }
 
 impl<'a> SortOwnedNodesToSequence<'a> for &[ASTNode] {
-    fn sort_by_line_nos(self, context: &'a WorkspaceContext) -> Option<Vec<ASTNode>> {
+    fn sort_by_src_position(self, context: &'a WorkspaceContext) -> Option<Vec<ASTNode>> {
         let nodes = self.iter().collect::<Vec<_>>();
-        let sorted = sort_by_line_nos(&nodes, context);
+        let sorted = sort_by_src_position(&nodes, context);
         if let Some(sorted_nodes) = sorted {
             let owned_nodes = sorted_nodes.iter().map(|&x| x.clone()).collect::<Vec<_>>();
             return Some(owned_nodes);
@@ -28,7 +28,7 @@ impl<'a> SortOwnedNodesToSequence<'a> for &[ASTNode] {
     }
 }
 
-fn sort_by_line_nos<'a>(
+fn sort_by_src_position<'a>(
     nodes: &[&'a ASTNode],
     context: &'a WorkspaceContext,
 ) -> Option<Vec<&'a ASTNode>> {

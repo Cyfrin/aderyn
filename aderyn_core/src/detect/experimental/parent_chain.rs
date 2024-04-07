@@ -41,7 +41,7 @@ impl IssueDetector for ParentChainDemonstrator {
             }
 
             if let Some(mut parent_chain) = assignment.parent_chain(context) {
-                let sorted_chain = parent_chain.sort_by_line_nos(context).unwrap();
+                let sorted_chain = parent_chain.sort_by_src_position(context).unwrap();
                 parent_chain.reverse();
                 assert_eq!(sorted_chain, parent_chain);
             }
