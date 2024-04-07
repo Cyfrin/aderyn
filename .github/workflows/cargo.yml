@@ -58,11 +58,11 @@ jobs:
       # Verify report.md
 
       - name: Generate report-workflow.md
-        uses: actions-rs/cargo@v1
-        with:
-          command: run
-          args: -- -o report-workflow.md ./tests/contract-playground/
-
+        run: |
+          pwd
+          ls
+          target/debug/aderyn -o report-workflow.md ./tests/contract-playground/
+        
       - name: Check report.md vs report-workflow.md
         run: |
           cat report-workflow.md
