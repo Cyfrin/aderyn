@@ -30,7 +30,7 @@ use std::{
     str::FromStr,
 };
 
-use super::nc::EmptyBlockDetector;
+use super::nc::{EmptyBlockDetector, InconsistentTypeNamesDetector};
 
 pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
     vec![
@@ -56,6 +56,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<EmptyBlockDetector>::default(),
         Box::<LargeLiteralValueDetector>::default(),
         Box::<UselessInternalFunctionDetector>::default(),
+        Box::<InconsistentTypeNamesDetector>::default(),
         Box::<UnprotectedInitializerDetector>::default(),
     ]
 }
@@ -90,6 +91,7 @@ pub(crate) enum IssueDetectorNamePool {
     LargeNumericLiteral,
     UselessInternalFunction,
     EmptyBlock,
+    InconsistentTypeNames,
     UnprotectedInitializer,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
@@ -163,6 +165,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
             Some(Box::<UselessInternalFunctionDetector>::default())
         }
         IssueDetectorNamePool::EmptyBlock => Some(Box::<EmptyBlockDetector>::default()),
+        IssueDetectorNamePool::InconsistentTypeNames => {
+            Some(Box::<InconsistentTypeNamesDetector>::default())
+        }
         IssueDetectorNamePool::UnprotectedInitializer => {
             Some(Box::<UnprotectedInitializerDetector>::default())
         }

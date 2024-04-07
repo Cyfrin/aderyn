@@ -25,6 +25,7 @@
     "empty-block",
     "large-numeric-literal",
     "useless-internal-function",
+    "inconsistent-type-names",
     "unprotected-initializer"
   ],
   "files_details": {
@@ -64,6 +65,10 @@
       {
         "file_path": "src/HugeConstants.sol",
         "n_sloc": 26
+      },
+      {
+        "file_path": "src/InconsistentUints.sol",
+        "n_sloc": 17
       },
       {
         "file_path": "src/InternalFunctions.sol",
@@ -152,8 +157,8 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 891,
-    "total_source_units": 30
+    "total_sloc": 908,
+    "total_source_units": 31
   },
   "high_issues": {
     "issues": [
@@ -213,7 +218,7 @@
     "high": 2,
     "low": 7,
     "medium": 4,
-    "nc": 10
+    "nc": 11
   },
   "low_issues": {
     "issues": [
@@ -330,6 +335,11 @@
             "src": "32:32"
           },
           {
+            "contract_path": "src/InconsistentUints.sol",
+            "line_no": 1,
+            "src": "0:24"
+          },
+          {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
             "line_no": 6,
             "src": "46:24"
@@ -375,6 +385,11 @@
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 2,
             "src": "32:23"
+          },
+          {
+            "contract_path": "src/InconsistentUints.sol",
+            "line_no": 1,
+            "src": "0:24"
           },
           {
             "contract_path": "src/KeccakContract.sol",
@@ -1126,6 +1141,23 @@
           }
         ],
         "title": "Internal functions called only once can be inlined"
+      },
+      {
+        "description": "Consider keeping the naming convention consistent in a given contract",
+        "detector_name": "inconsistent-type-names",
+        "instances": [
+          {
+            "contract_path": "src/InconsistentUints.sol",
+            "line_no": 3,
+            "src": "35:34"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 58,
+            "src": "4547:15"
+          }
+        ],
+        "title": "Inconsistency in declaring uint256/uint (or) int256/int variables within a contract"
       }
     ]
   }
