@@ -63,7 +63,7 @@ pub fn load_foundry(foundry_root: &PathBuf) -> Result<LoadedFoundry, Box<dyn Err
         let output = std::process::Command::new("forge")
             .arg("build")
             .arg("--ast")
-            // .current_dir(&foundry_root_absolute)
+            .current_dir("./tests/contract-playground")
             .stdout(Stdio::inherit()) // This will stream the stdout
             .stderr(Stdio::inherit())
             .status()
