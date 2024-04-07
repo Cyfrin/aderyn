@@ -13,7 +13,7 @@ use crate::{
 use eyre::Result;
 
 #[derive(Default)]
-pub struct ParentChainDemonstrator {
+pub struct AncestralLineDemonstrator {
     // Keys are source file name and line number
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
@@ -23,7 +23,7 @@ pub struct ParentChainDemonstrator {
 In ParentChainContract.sol, there is only 1 assignment done. The goal is to capture it first, second and third parent
 */
 
-impl IssueDetector for ParentChainDemonstrator {
+impl IssueDetector for AncestralLineDemonstrator {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for assignment in context.assignments() {
             capture!(self, context, assignment);
@@ -72,19 +72,19 @@ impl IssueDetector for ParentChainDemonstrator {
 }
 
 #[cfg(test)]
-mod parent_chain_demo_tests {
+mod ancestral_line_demo_tests {
     use crate::detect::{
         detector::{detector_test_helpers::load_contract, IssueDetector},
-        experimental::parent_chain::ParentChainDemonstrator,
+        experimental::ancestral_line::AncestralLineDemonstrator,
     };
 
     #[test]
-    fn test_parent_chain_demo() {
+    fn test_ancestral_line_demo() {
         let context = load_contract(
             "../tests/contract-playground/out/ParentChainContract.sol/ParentChainContract.json",
         );
 
-        let mut detector = ParentChainDemonstrator::default();
+        let mut detector = AncestralLineDemonstrator::default();
         let found = detector.detect(&context).unwrap();
         assert!(found);
 
