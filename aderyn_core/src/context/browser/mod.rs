@@ -1,11 +1,11 @@
-mod ancestral_chain;
+mod ancestral_line;
 mod closest_ancestor;
 mod extractor;
 mod immediate_children;
 mod location;
 mod parent;
 mod sort_nodes;
-pub use ancestral_chain::*;
+pub use ancestral_line::*;
 pub use closest_ancestor::*;
 pub use extractor::*;
 pub use immediate_children::*;
