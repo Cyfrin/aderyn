@@ -1216,7 +1216,7 @@ impl WorkspaceContext {
         self.nodes.get(self.parent_link.get(&node_id)?)
     }
 
-    pub fn get_ancestral_chain(&self, node_id: NodeID) -> Vec<&ASTNode> {
+    pub fn get_ancestral_line(&self, node_id: NodeID) -> Vec<&ASTNode> {
         let mut chain = vec![];
         let mut parent = self.nodes.get(&node_id);
         while let Some(next_parent) = parent {

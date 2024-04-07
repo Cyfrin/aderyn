@@ -4,9 +4,9 @@ use crate::{
     visitor::ast_visitor::{ASTConstVisitor, Node},
 };
 
-pub trait GetAncestralChain {
+pub trait GetAncestralLine {
     /// Get the parent Chain of an ASTNode
-    fn ancestral_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>>;
+    fn ancestral_line<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>>;
 }
 
 #[derive(Default)]
@@ -21,8 +21,8 @@ impl ASTConstVisitor for NodeIDReceiver {
     }
 }
 
-impl<T: Node + ?Sized> GetAncestralChain for T {
-    fn ancestral_chain<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
+impl<T: Node + ?Sized> GetAncestralLine for T {
+    fn ancestral_line<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         // Setup a Node ID receiver
         let mut node_id_receiver = NodeIDReceiver::default();
 
@@ -30,6 +30,6 @@ impl<T: Node + ?Sized> GetAncestralChain for T {
         self.accept_id(&mut node_id_receiver).ok()?;
         let current_node_id = node_id_receiver.id?;
 
-        Some(context.get_ancestral_chain(current_node_id))
+        Some(context.get_ancestral_line(current_node_id))
     }
 }
