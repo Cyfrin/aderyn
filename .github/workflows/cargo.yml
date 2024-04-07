@@ -59,9 +59,7 @@ jobs:
 
       - name: Generate report-workflow.md
         run: |
-          pwd
-          ls
-          target/debug/aderyn -o report-workflow.md ./tests/contract-playground/
+          cargo run -- -o report-workflow.md ./tests/contract-playground/
         
       - name: Check report.md vs report-workflow.md
         run: |
