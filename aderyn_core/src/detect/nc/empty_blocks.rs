@@ -4,7 +4,7 @@ use crate::{
     ast::{FunctionKind, NodeID, NodeType},
     capture,
     context::{
-        browser::{GetAncestors, GetClosestAncestorOfTypeX},
+        browser::{GetAncestralChain, GetClosestAncestorOfTypeX},
         workspace_context::{ASTNode, WorkspaceContext},
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
@@ -31,7 +31,7 @@ impl IssueDetector for EmptyBlockDetector {
                     || f.kind == FunctionKind::Fallback
                 {
                     // It's not okay to have empty block nested somewhere inside constructor
-                    if let Some(block_chain) = empty_block.ancestors(context) {
+                    if let Some(block_chain) = empty_block.ancestral_chain(context) {
                         let function_definition_index = block_chain
                             .iter()
                             .position(|x| x.node_type() == NodeType::FunctionDefinition)
