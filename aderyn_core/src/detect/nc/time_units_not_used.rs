@@ -18,7 +18,7 @@ impl IssueDetector for TimeUnitsNotUsedDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         let disallow = [
             "second", "seconds", "minute", "minutes", "hour", "hours", "day", "days", "week",
-            "weeks", "month", "months",
+            "weeks",
         ];
 
         for variable in context.variable_declarations() {
@@ -35,7 +35,7 @@ impl IssueDetector for TimeUnitsNotUsedDetector {
     }
 
     fn description(&self) -> String {
-        String::from("Suffixes like seconds, minutes, hours, days and weeks after literal numbers can be used to specify units of time where seconds are the base unit and units are considered naively.")
+        String::from("Suffixes like `seconds`, `minutes`, `hours`, `days` and `weeks` after literal numbers can be used to specify units of time where seconds are the base unit and units are considered naively.")
     }
 
     fn severity(&self) -> IssueSeverity {
