@@ -5,7 +5,7 @@ use crate::{
     ast::{NodeID, NodeType},
     capture,
     context::{
-        browser::GetClosestParentOfTypeX,
+        browser::GetClosestAncestorOfTypeX,
         workspace_context::{ASTNode, WorkspaceContext},
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
@@ -29,18 +29,18 @@ impl IssueDetector for ClosestParentDemonstrator {
             capture!(self, context, assignment);
 
             if let Some(ASTNode::Block(block)) =
-                assignment.closest_parent_of_type(context, NodeType::Block)
+                assignment.closest_ancestor_of_type(context, NodeType::Block)
             {
                 capture!(self, context, block);
             }
 
             if let Some(for_statement) =
-                assignment.closest_parent_of_type(context, NodeType::ForStatement)
+                assignment.closest_ancestor_of_type(context, NodeType::ForStatement)
             {
                 capture!(self, context, for_statement);
 
                 if let Some(ASTNode::Block(block)) =
-                    for_statement.closest_parent_of_type(context, NodeType::Block)
+                    for_statement.closest_ancestor_of_type(context, NodeType::Block)
                 {
                     capture!(self, context, block);
                 }

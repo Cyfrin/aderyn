@@ -5,7 +5,7 @@ use crate::{
     ast::NodeID,
     capture,
     context::{
-        browser::{GetParentChain, SortNodeReferencesToSequence},
+        browser::{GetAncestors, SortNodeReferencesToSequence},
         workspace_context::{ASTNode, WorkspaceContext},
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},

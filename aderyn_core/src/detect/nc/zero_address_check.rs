@@ -187,7 +187,7 @@ impl IssueDetector for ZeroAddressCheckDetector {
 mod zero_address_check_tests {
     use crate::{
         ast::NodeType,
-        context::{browser::GetClosestParentOfTypeX, workspace_context::ASTNode},
+        context::{browser::GetClosestAncestorOfTypeX, workspace_context::ASTNode},
         detect::{
             detector::{detector_test_helpers::load_contract, IssueDetector},
             nc::zero_address_check::ZeroAddressCheckDetector,
@@ -209,7 +209,7 @@ mod zero_address_check_tests {
         for node_id in detector.instances().values() {
             if let ASTNode::Assignment(assignment) = context.nodes.get(node_id).unwrap() {
                 if let ASTNode::FunctionDefinition(function) = assignment
-                    .closest_parent_of_type(&context, NodeType::FunctionDefinition)
+                    .closest_ancestor_of_type(&context, NodeType::FunctionDefinition)
                     .unwrap()
                 {
                     assert!(function.name.contains("bad"));
