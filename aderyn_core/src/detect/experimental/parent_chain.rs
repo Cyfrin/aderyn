@@ -5,7 +5,7 @@ use crate::{
     ast::NodeID,
     capture,
     context::{
-        browser::GetParentChain,
+        browser::{GetParentChain, SortNodeReferencesToSequence},
         workspace_context::{ASTNode, WorkspaceContext},
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
@@ -26,19 +26,24 @@ In ParentChainContract.sol, there is only 1 assignment done. The goal is to capt
 impl IssueDetector for ParentChainDemonstrator {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for assignment in context.assignments() {
-            println!("0 {}", assignment);
             capture!(self, context, assignment);
 
             if let Some(parent_chain) = assignment.parent_chain(context) {
-                if let ASTNode::Block(_) = parent_chain[0] {
-                    capture!(self, context, parent_chain[0]);
-                }
-                if let ASTNode::ForStatement(_) = parent_chain[1] {
+                if let ASTNode::Block(_) = parent_chain[1] {
                     capture!(self, context, parent_chain[1]);
                 }
-                if let ASTNode::Block(block) = parent_chain[2] {
+                if let ASTNode::ForStatement(_) = parent_chain[2] {
+                    capture!(self, context, parent_chain[2]);
+                }
+                if let ASTNode::Block(block) = parent_chain[3] {
                     capture!(self, context, block);
                 }
+            }
+
+            if let Some(mut parent_chain) = assignment.parent_chain(context) {
+                let sorted_chain = parent_chain.sort_by_line_nos(context).unwrap();
+                parent_chain.reverse();
+                assert_eq!(sorted_chain, parent_chain);
             }
         }
 
@@ -70,7 +75,7 @@ impl IssueDetector for ParentChainDemonstrator {
 mod parent_chain_demo_tests {
     use crate::detect::{
         detector::{detector_test_helpers::load_contract, IssueDetector},
-        experimental::immediate_parent::ImmediateParentDemonstrator,
+        experimental::parent_chain::ParentChainDemonstrator,
     };
 
     #[test]
@@ -79,7 +84,7 @@ mod parent_chain_demo_tests {
             "../tests/contract-playground/out/ParentChainContract.sol/ParentChainContract.json",
         );
 
-        let mut detector = ImmediateParentDemonstrator::default();
+        let mut detector = ParentChainDemonstrator::default();
         let found = detector.detect(&context).unwrap();
         assert!(found);
 

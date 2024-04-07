@@ -25,7 +25,9 @@
     "empty-block",
     "large-numeric-literal",
     "useless-internal-function",
-    "time-units-not-used"
+    "time-units-not-used",
+    "inconsistent-type-names",
+    "unprotected-initializer"
   ],
   "files_details": {
     "files_details": [
@@ -66,8 +68,12 @@
         "n_sloc": 26
       },
       {
+        "file_path": "src/InconsistentUints.sol",
+        "n_sloc": 17
+      },
+      {
         "file_path": "src/InternalFunctions.sol",
-        "n_sloc": 18
+        "n_sloc": 22
       },
       {
         "file_path": "src/KeccakContract.sol",
@@ -92,6 +98,10 @@
       {
         "file_path": "src/TimeUnits.sol",
         "n_sloc": 6
+      },
+      {
+        "file_path": "src/UnprotectedInitialize.sol",
+        "n_sloc": 25
       },
       {
         "file_path": "src/UnsafeERC721Mint.sol",
@@ -152,8 +162,8 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 868,
-    "total_source_units": 30
+    "total_sloc": 914,
+    "total_source_units": 32
   },
   "high_issues": {
     "issues": [
@@ -211,9 +221,9 @@
   "issue_count": {
     "critical": 0,
     "high": 2,
-    "low": 6,
+    "low": 7,
     "medium": 4,
-    "nc": 11
+    "nc": 12
   },
   "low_issues": {
     "issues": [
@@ -330,6 +340,11 @@
             "src": "32:32"
           },
           {
+            "contract_path": "src/InconsistentUints.sol",
+            "line_no": 1,
+            "src": "0:24"
+          },
+          {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
             "line_no": 6,
             "src": "46:24"
@@ -375,6 +390,11 @@
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 2,
             "src": "32:23"
+          },
+          {
+            "contract_path": "src/InconsistentUints.sol",
+            "line_no": 1,
+            "src": "0:24"
           },
           {
             "contract_path": "src/KeccakContract.sol",
@@ -463,6 +483,18 @@
           }
         ],
         "title": "PUSH0 is not supported by all chains"
+      },
+      {
+        "description": "Consider protecting the initializer functions with modifiers.",
+        "detector_name": "unprotected-initializer",
+        "instances": [
+          {
+            "contract_path": "src/UnprotectedInitialize.sol",
+            "line_no": 35,
+            "src": "820:33"
+          }
+        ],
+        "title": "Unprotected initializer"
       }
     ]
   },
@@ -913,13 +945,18 @@
         "instances": [
           {
             "contract_path": "src/InternalFunctions.sol",
-            "line_no": 17,
-            "src": "380:9"
+            "line_no": 18,
+            "src": "413:9"
           },
           {
             "contract_path": "src/OnceModifierExample.sol",
             "line_no": 6,
             "src": "103:8"
+          },
+          {
+            "contract_path": "src/UnprotectedInitialize.sol",
+            "line_no": 13,
+            "src": "222:21"
           }
         ],
         "title": "Modifiers invoked only once can be shoe-horned into the function"
@@ -1109,8 +1146,8 @@
         "instances": [
           {
             "contract_path": "src/InternalFunctions.sol",
-            "line_no": 22,
-            "src": "504:12"
+            "line_no": 28,
+            "src": "693:12"
           }
         ],
         "title": "Internal functions called only once can be inlined"
@@ -1136,6 +1173,23 @@
           }
         ],
         "title": "Native time units would be ideal instead of custom definitions"
+      },
+      {
+        "description": "Consider keeping the naming convention consistent in a given contract",
+        "detector_name": "inconsistent-type-names",
+        "instances": [
+          {
+            "contract_path": "src/InconsistentUints.sol",
+            "line_no": 3,
+            "src": "35:34"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 58,
+            "src": "4547:15"
+          }
+        ],
+        "title": "Inconsistency in declaring uint256/uint (or) int256/int variables within a contract"
       }
     ]
   }

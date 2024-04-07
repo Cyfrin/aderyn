@@ -8,17 +8,18 @@ use crate::{
         high::{ArbitraryTransferFromDetector, DelegateCallInLoopDetector},
         low::{
             AvoidAbiEncodePackedDetector, DeprecatedOZFunctionsDetector, EcrecoverDetector,
-            PushZeroOpcodeDetector, UnsafeERC20FunctionsDetector, UnspecificSolidityPragmaDetector,
+            PushZeroOpcodeDetector, UnprotectedInitializerDetector, UnsafeERC20FunctionsDetector,
+            UnspecificSolidityPragmaDetector,
         },
         medium::{
             BlockTimestampDeadlineDetector, CentralizationRiskDetector,
             SolmateSafeTransferLibDetector, UnsafeERC721MintDetector,
         },
         nc::{
-            ConstantsInsteadOfLiteralsDetector, LargeLiteralValueDetector,
-            NonReentrantBeforeOthersDetector, RequireWithStringDetector, UnindexedEventsDetector,
-            UselessInternalFunctionDetector, UselessModifierDetector,
-            UselessPublicFunctionDetector, ZeroAddressCheckDetector,
+            ConstantsInsteadOfLiteralsDetector, EmptyBlockDetector, InconsistentTypeNamesDetector,
+            LargeLiteralValueDetector, NonReentrantBeforeOthersDetector, RequireWithStringDetector,
+            TimeUnitsNotUsedDetector, UnindexedEventsDetector, UselessInternalFunctionDetector,
+            UselessModifierDetector, UselessPublicFunctionDetector, ZeroAddressCheckDetector,
         },
     },
 };
@@ -28,8 +29,6 @@ use std::{
     fmt::{self, Display},
     str::FromStr,
 };
-
-use super::nc::{EmptyBlockDetector, TimeUnitsNotUsedDetector};
 
 pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
     vec![
@@ -56,6 +55,8 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<LargeLiteralValueDetector>::default(),
         Box::<UselessInternalFunctionDetector>::default(),
         Box::<TimeUnitsNotUsedDetector>::default(),
+        Box::<InconsistentTypeNamesDetector>::default(),
+        Box::<UnprotectedInitializerDetector>::default(),
     ]
 }
 
@@ -90,6 +91,8 @@ pub(crate) enum IssueDetectorNamePool {
     UselessInternalFunction,
     TimeUnitsNotUsed,
     EmptyBlock,
+    InconsistentTypeNames,
+    UnprotectedInitializer,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -163,6 +166,12 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         }
         IssueDetectorNamePool::EmptyBlock => Some(Box::<EmptyBlockDetector>::default()),
         IssueDetectorNamePool::TimeUnitsNotUsed => Some(Box::<TimeUnitsNotUsedDetector>::default()),
+        IssueDetectorNamePool::InconsistentTypeNames => {
+            Some(Box::<InconsistentTypeNamesDetector>::default())
+        }
+        IssueDetectorNamePool::UnprotectedInitializer => {
+            Some(Box::<UnprotectedInitializerDetector>::default())
+        }
         IssueDetectorNamePool::Undecided => None,
     }
 }
