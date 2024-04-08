@@ -5,7 +5,7 @@ use crate::{
     ast::NodeID,
     capture,
     context::{
-        browser::{GetParentChain, SortNodeReferencesToSequence},
+        browser::{GetAncestralLine, SortNodeReferencesToSequence},
         workspace_context::{ASTNode, WorkspaceContext},
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
@@ -13,7 +13,7 @@ use crate::{
 use eyre::Result;
 
 #[derive(Default)]
-pub struct ParentChainDemonstrator {
+pub struct AncestralLineDemonstrator {
     // Keys are source file name and line number
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
@@ -23,12 +23,12 @@ pub struct ParentChainDemonstrator {
 In ParentChainContract.sol, there is only 1 assignment done. The goal is to capture it first, second and third parent
 */
 
-impl IssueDetector for ParentChainDemonstrator {
+impl IssueDetector for AncestralLineDemonstrator {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for assignment in context.assignments() {
             capture!(self, context, assignment);
 
-            if let Some(parent_chain) = assignment.parent_chain(context) {
+            if let Some(parent_chain) = assignment.ancestral_line(context) {
                 if let ASTNode::Block(_) = parent_chain[1] {
                     capture!(self, context, parent_chain[1]);
                 }
@@ -40,8 +40,8 @@ impl IssueDetector for ParentChainDemonstrator {
                 }
             }
 
-            if let Some(mut parent_chain) = assignment.parent_chain(context) {
-                let sorted_chain = parent_chain.sort_by_line_nos(context).unwrap();
+            if let Some(mut parent_chain) = assignment.ancestral_line(context) {
+                let sorted_chain = parent_chain.sort_by_src_position(context).unwrap();
                 parent_chain.reverse();
                 assert_eq!(sorted_chain, parent_chain);
             }
@@ -72,19 +72,19 @@ impl IssueDetector for ParentChainDemonstrator {
 }
 
 #[cfg(test)]
-mod parent_chain_demo_tests {
+mod ancestral_line_demo_tests {
     use crate::detect::{
         detector::{detector_test_helpers::load_contract, IssueDetector},
-        experimental::parent_chain::ParentChainDemonstrator,
+        experimental::ancestral_line::AncestralLineDemonstrator,
     };
 
     #[test]
-    fn test_parent_chain_demo() {
+    fn test_ancestral_line_demo() {
         let context = load_contract(
             "../tests/contract-playground/out/ParentChainContract.sol/ParentChainContract.json",
         );
 
-        let mut detector = ParentChainDemonstrator::default();
+        let mut detector = AncestralLineDemonstrator::default();
         let found = detector.detect(&context).unwrap();
         assert!(found);
 

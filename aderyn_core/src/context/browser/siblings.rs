@@ -40,7 +40,7 @@ impl<T: Node + ?Sized> GetNextSibling for T {
 
         let parent = context.get_parent(current_node_id)?;
         let children = parent.children(context)?;
-        let sorted_children = children.sort_by_line_nos(context)?;
+        let sorted_children = children.sort_by_src_position(context)?;
 
         for i in 0..sorted_children.len() - 1 {
             if sorted_children[i].id()? == current_node_id {
@@ -63,7 +63,7 @@ impl<T: Node + ?Sized> GetPreviousSibling for T {
 
         let parent = context.get_parent(current_node_id)?;
         let children = parent.children(context)?;
-        let sorted_children = children.sort_by_line_nos(context)?;
+        let sorted_children = children.sort_by_src_position(context)?;
 
         for i in (1..sorted_children.len()).rev() {
             if sorted_children[i].id()? == current_node_id {

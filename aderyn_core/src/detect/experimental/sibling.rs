@@ -22,7 +22,7 @@ impl IssueDetector for SiblingDemonstrator {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for contract in context.contract_definitions() {
             if let Some(children) = contract.children(context) {
-                if let Some(sorted) = children.sort_by_line_nos(context) {
+                if let Some(sorted) = children.sort_by_src_position(context) {
                     assert!(sorted.len() >= 2);
                     assert!(sorted[1].previous_sibling(context).unwrap() == sorted[0]);
                     assert!(sorted[0].next_sibling(context).unwrap() == sorted[1]);
