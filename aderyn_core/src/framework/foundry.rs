@@ -70,7 +70,7 @@ pub fn load_foundry(foundry_root: &PathBuf) -> Result<LoadedFoundry, Box<dyn Err
             .expect("Failed to run `forge build --ast`");
 
         if !output.success() {
-            eprintln!("The command `forge build --ast` did not execute successfully");
+            eprintln!("The command `forge build --ast` did not execute successfully. Please run `foundryup` and try again otherwise, install foundry by following the official guide https://book.getfoundry.sh/getting-started/installation");
             std::process::exit(output.code().unwrap());
         }
     }
