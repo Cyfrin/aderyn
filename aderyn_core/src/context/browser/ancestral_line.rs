@@ -4,13 +4,9 @@ use crate::{
     visitor::ast_visitor::{ASTConstVisitor, Node},
 };
 
-pub trait GetClosestParentOfTypeX {
+pub trait GetAncestralLine {
     /// Get the parent Chain of an ASTNode
-    fn closest_parent_of_type<'a>(
-        &self,
-        context: &'a WorkspaceContext,
-        node_type: NodeType,
-    ) -> Option<&'a ASTNode>;
+    fn ancestral_line<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>>;
 }
 
 #[derive(Default)]
@@ -25,18 +21,15 @@ impl ASTConstVisitor for NodeIDReceiver {
     }
 }
 
-impl<T: Node + ?Sized> GetClosestParentOfTypeX for T {
-    fn closest_parent_of_type<'a>(
-        &self,
-        context: &'a WorkspaceContext,
-        node_type: NodeType,
-    ) -> Option<&'a ASTNode> {
+impl<T: Node + ?Sized> GetAncestralLine for T {
+    fn ancestral_line<'a>(&self, context: &'a WorkspaceContext) -> Option<Vec<&'a ASTNode>> {
         // Setup a Node ID receiver
         let mut node_id_receiver = NodeIDReceiver::default();
 
         // Find the ID of the node this method is called upon
         self.accept_id(&mut node_id_receiver).ok()?;
         let current_node_id = node_id_receiver.id?;
-        context.get_closest_parent(current_node_id, node_type)
+
+        Some(context.get_ancestral_line(current_node_id))
     }
 }
