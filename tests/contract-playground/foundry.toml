@@ -3,3 +3,6 @@ src = "src"
 out = "out"
 libs = ["lib"]
 bytecode_hash = "none"
+
+[profile.sample]
+out = "sample_out"
