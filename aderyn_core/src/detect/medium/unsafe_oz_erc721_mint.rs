@@ -4,7 +4,7 @@ use crate::{
     ast::{NodeID, NodeType},
     capture,
     context::{
-        browser::GetClosestParentOfTypeX,
+        browser::GetClosestAncestorOfTypeX,
         workspace_context::{ASTNode, WorkspaceContext},
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
@@ -23,7 +23,7 @@ impl IssueDetector for UnsafeERC721MintDetector {
             // if source_unit has any ImportDirectives with absolute_path containing "openzeppelin"
             // call identifier.accept(self)
             if let Some(ASTNode::SourceUnit(source_unit)) =
-                identifier.closest_parent_of_type(context, NodeType::SourceUnit)
+                identifier.closest_ancestor_of_type(context, NodeType::SourceUnit)
             {
                 let import_directives = source_unit.import_directives();
                 if import_directives.iter().any(|directive| {
