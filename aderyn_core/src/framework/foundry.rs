@@ -60,13 +60,19 @@ pub fn load_foundry(foundry_root: &PathBuf) -> Result<LoadedFoundry, Box<dyn Err
         );
 
         // Run `forge build --ast` in the root
-        let _output = std::process::Command::new("forge")
+        let output = std::process::Command::new("forge")
             .arg("build")
             .arg("--ast")
             .current_dir(&foundry_root_absolute)
             .stdout(Stdio::inherit()) // This will stream the stdout
             .stderr(Stdio::inherit())
-            .status();
+            .status()
+            .expect("Failed to run `forge build --ast`");
+
+        if !output.success() {
+            eprintln!("The command `forge build --ast` did not execute successfully");
+            std::process::exit(output.code().unwrap());
+        }
     }
 
     let foundry_config_filepath = foundry_root_absolute.join("foundry.toml");
