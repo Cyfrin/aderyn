@@ -288,6 +288,11 @@ impl Node for ASTNode {
             ASTNode::WhileStatement(n) => n.accept_metadata(visitor),
         }
     }
+
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(self.id())?;
+        Ok(())
+    }
 }
 
 impl From<ArrayTypeName> for ASTNode {
@@ -1211,7 +1216,7 @@ impl WorkspaceContext {
         self.nodes.get(self.parent_link.get(&node_id)?)
     }
 
-    pub fn get_parent_chain(&self, node_id: NodeID) -> Vec<&ASTNode> {
+    pub fn get_ancestral_line(&self, node_id: NodeID) -> Vec<&ASTNode> {
         let mut chain = vec![];
         let mut parent = self.nodes.get(&node_id);
         while let Some(next_parent) = parent {
@@ -1220,7 +1225,7 @@ impl WorkspaceContext {
         }
         chain
     }
-    pub fn get_closest_parent(&self, node_id: NodeID, node_type: NodeType) -> Option<&ASTNode> {
+    pub fn get_closest_ancestor(&self, node_id: NodeID, node_type: NodeType) -> Option<&ASTNode> {
         let mut current_node_id = self.parent_link.get(&node_id)?;
         while let Some(current) = self.nodes.get(current_node_id) {
             if current.node_type() == node_type {
@@ -2362,10 +2367,10 @@ mod context_tests {
             "../tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",
         )?;
         let inheritance_base = read_compiler_output(
-            "../tests/contract-playground/out/InheritanceBase.sol/InheritanceBase.0.8.24.json",
+            "../tests/contract-playground/out/InheritanceBase.sol/InheritanceBase.0.8.25.json",
         )?;
         let i_contract_inheritance = read_compiler_output(
-            "../tests/contract-playground/out/IContractInheritance.sol/IContractInheritance.0.8.24.json",
+            "../tests/contract-playground/out/IContractInheritance.sol/IContractInheritance.0.8.25.json",
         )?;
         extended_inheritance.ast.accept(&mut context)?;
         inheritance_base.ast.accept(&mut context)?;
