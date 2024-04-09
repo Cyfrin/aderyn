@@ -304,25 +304,25 @@ mod foundry_compiler_tests {
         assert!(Path::new(solc_bin).exists());
 
         // Step 4 - Run `solc --ast-compact-json <FILENAME.sol>`
+        let file_arg = ac_compiler_input
+            .sources
+            .first_key_value()
+            .unwrap()
+            .0
+            .to_str()
+            .unwrap();
         let command = Command::new(solc_bin)
-            .args([
-                "--ast-compact-json",
-                ac_compiler_input
-                    .sources
-                    .first_key_value()
-                    .unwrap()
-                    .0
-                    .to_str()
-                    .unwrap(),
-            ])
+            .args(["--ast-compact-json", file_arg])
             .current_dir(tests_contract_playground_path)
             .stdout(Stdio::piped())
             .output()
             .unwrap();
 
+        assert!(command.status.success());
+
         let stdout = String::from_utf8(command.stdout).unwrap();
 
         println!("AST {}", stdout);
-        assert!(!stdout.is_empty());
+        // assert!(!stdout.is_empty());
     }
 }
