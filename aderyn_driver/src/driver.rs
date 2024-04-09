@@ -210,7 +210,7 @@ fn detect_framework(path: PathBuf) -> Option<Framework> {
 mod foundry_compiler_tests {
     use foundry_compilers::{artifacts::Source, CompilerInput, Solc};
     use std::{
-        path::PathBuf,
+        path::{Path, PathBuf},
         process::{Command, Stdio},
         sync::Arc,
     };
@@ -226,15 +226,6 @@ mod foundry_compiler_tests {
         let admin_contract = tests_contract_playground_path.join("src/AdminContract.sol");
 
         assert!(admin_contract.exists());
-    }
-
-    #[test]
-    fn solc_versions_exist() {
-        let versions = Solc::installed_versions();
-        assert!(!versions.is_empty());
-        println!("Available solc versions");
-        versions.iter().for_each(|x| print!("{} ", x));
-        println!();
     }
 
     #[test]
@@ -309,6 +300,8 @@ mod foundry_compiler_tests {
         let solc = Solc::find_or_install_svm_version(format!("{}", version)).unwrap();
         let solc_bin = solc.solc.to_str().unwrap();
         println!("Path to binary {}", solc_bin);
+
+        assert!(Path::new(solc_bin).exists());
 
         // Step 4 - Run `solc --ast-compact-json <FILENAME.sol>`
         let command = Command::new(solc_bin)
