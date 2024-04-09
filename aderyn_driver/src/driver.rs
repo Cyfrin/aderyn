@@ -323,6 +323,7 @@ mod foundry_compiler_tests {
         let stdout = String::from_utf8(command.stdout).unwrap();
 
         println!("AST {}", stdout);
+        println!("If you are seeing this in CI, likely the above AST is empty because stdout of is streamed to github infra.")
         // assert!(!stdout.is_empty());
     }
 }
