@@ -205,3 +205,131 @@ fn detect_framework(path: PathBuf) -> Option<Framework> {
 
     None
 }
+
+#[cfg(test)]
+mod foundry_compiler_tests {
+    use foundry_compilers::{artifacts::Source, CompilerInput, Solc};
+    use std::{
+        path::PathBuf,
+        process::{Command, Stdio},
+        sync::Arc,
+    };
+
+    #[test]
+    fn admin_contract_exists() {
+        let cargo_root = PathBuf::from(std::env::var("CARGO_MANIFEST_DIR").unwrap());
+        let tests_contract_playground_path = cargo_root
+            .join("../tests/contract-playground/")
+            .canonicalize()
+            .unwrap();
+
+        let admin_contract = tests_contract_playground_path.join("src/AdminContract.sol");
+
+        assert!(admin_contract.exists());
+    }
+
+    #[test]
+    fn solc_versions_exist() {
+        let versions = Solc::installed_versions();
+        assert!(!versions.is_empty());
+        println!("Available solc versions");
+        versions.iter().for_each(|x| print!("{} ", x));
+        println!();
+    }
+
+    #[test]
+    fn can_detect_version() {
+        let cargo_root = PathBuf::from(std::env::var("CARGO_MANIFEST_DIR").unwrap());
+        let tests_contract_playground_path = cargo_root
+            .join("../tests/contract-playground/")
+            .canonicalize()
+            .unwrap();
+
+        let admin_contract_file = tests_contract_playground_path.join("src/AdminContract.sol");
+        let admin_contract_file_content = std::fs::read_to_string(admin_contract_file).unwrap();
+
+        // This will install the compiler if not there
+        let version = Solc::detect_version(&Source {
+            content: Arc::new(admin_contract_file_content),
+        });
+        assert!(version.is_ok());
+    }
+
+    #[test]
+    fn can_get_compiler_of_required_version() {
+        let cargo_root = PathBuf::from(std::env::var("CARGO_MANIFEST_DIR").unwrap());
+        let tests_contract_playground_path = cargo_root
+            .join("../tests/contract-playground/")
+            .canonicalize()
+            .unwrap();
+
+        let admin_contract_file = tests_contract_playground_path.join("src/AdminContract.sol");
+        let admin_contract_file_content = std::fs::read_to_string(admin_contract_file).unwrap();
+
+        // This will install the compiler if not there
+        let version = Solc::detect_version(&Source {
+            content: Arc::new(admin_contract_file_content),
+        })
+        .unwrap();
+
+        let solc = Solc::find_or_install_svm_version(format!("{}", version));
+        assert!(solc.is_ok());
+
+        println!("Solc binary: {:?}", solc.unwrap());
+    }
+
+    #[test]
+    fn can_generate_ast_for_admin_contract() {
+        let cargo_root = PathBuf::from(std::env::var("CARGO_MANIFEST_DIR").unwrap());
+        let tests_contract_playground_path = cargo_root
+            .join("../tests/contract-playground/")
+            .canonicalize()
+            .unwrap();
+
+        let admin_contract_file = tests_contract_playground_path.join("src/AdminContract.sol");
+        let admin_contract_file_content = std::fs::read_to_string(&admin_contract_file).unwrap();
+
+        // Step 1 - Gather the data to input to the compiler
+        let compiler_input = CompilerInput::new(
+            // This will work with root directory as well (it will fetch list of files)
+            admin_contract_file.as_path(),
+        )
+        .unwrap();
+
+        let ac_compiler_input = compiler_input.get(0).unwrap();
+
+        // Step 2 - Detect the version of solc that can be used with compiler input
+        let version = Solc::detect_version(&Source {
+            // This will install the compiler if not there
+            content: Arc::new(admin_contract_file_content),
+        })
+        .unwrap();
+
+        // Step 3 -  Get a representation of binary to use for compiling
+        let solc = Solc::find_or_install_svm_version(format!("{}", version)).unwrap();
+        let solc_bin = solc.solc.to_str().unwrap();
+        println!("Path to binary {}", solc_bin);
+
+        // Step 4 - Run `solc --ast-compact-json <FILENAME.sol>`
+        let command = Command::new(solc_bin)
+            .args([
+                "--ast-compact-json",
+                ac_compiler_input
+                    .sources
+                    .first_key_value()
+                    .unwrap()
+                    .0
+                    .to_str()
+                    .unwrap(),
+            ])
+            .current_dir(tests_contract_playground_path)
+            .stdout(Stdio::piped())
+            .output()
+            .unwrap();
+
+        let stdout = String::from_utf8(command.stdout).unwrap();
+
+        println!("AST {}", stdout);
+        assert!(!stdout.is_empty());
+    }
+}

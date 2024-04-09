@@ -11,7 +11,7 @@ license = "MIT"
 [dependencies]
 crossbeam = "0.8.2"
 crossbeam-channel = "0.5.9"
-eyre = "0.6.8"
+eyre = "0.6.12"
 ignore = "0.4.21"
 rayon = "1.8.0"
 semver = "1.0.20"
