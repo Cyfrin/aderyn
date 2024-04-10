@@ -37,11 +37,6 @@ wait
 
 unset ADERYN_SKIP_BUILD
 
-#### BOT ###################
-
-# Make sure nyth users can actually interact with driver
-cargo run --bin bot_example -- -p orig_ 
-
 #### Other scripts #############
 
 cli/bot_archivegen.sh
