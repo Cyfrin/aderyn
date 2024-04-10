@@ -22,7 +22,7 @@
 
 # Aderyn Core
 
-aderyn_core is the backend infrastructure for the Aderyn and Nyth tools.
+aderyn_core is the backend infrastructure for Aderyn.
 
 ```
 src/
