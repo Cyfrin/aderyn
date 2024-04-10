@@ -47,7 +47,6 @@ Aderyn is a Rust-based static analyzer specifically designed for Web3 smart cont
 * Modular [detectors](./aderyn_core/src/detect/)
 * AST Traversal
 * Markdown reports
-* Bot development framework ([Nyth](./nyth/))
 
 # Usage
 
