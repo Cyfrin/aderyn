@@ -33,7 +33,18 @@ impl IssueDetector for UnsafeERC721MintDetector {
                         .map_or(false, |path| path.contains("openzeppelin"))
                 }) && identifier.name == "_mint"
                 {
-                    capture!(self, context, identifier);
+                    let this_contract_definition = identifier
+                        .closest_ancestor_of_type(context, NodeType::ContractDefinition)
+                        .unwrap();
+                    if let ASTNode::ContractDefinition(contract_definition) =
+                        this_contract_definition
+                    {
+                        for base_contract in contract_definition.base_contracts.iter() {
+                            if base_contract.base_name.name.contains("ERC721") {
+                                capture!(self, context, identifier);
+                            }
+                        }
+                    }
                 }
             }
         }
