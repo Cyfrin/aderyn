@@ -689,7 +689,7 @@
         "title": "Define and use `constant` variables instead of using literals"
       },
       {
-        "description": "Index event fields make the field more quickly accessible to off-chain tools that parse events. However, note that each index field costs extra gas during emission, so it's not necessarily best to index the maximum allowed per event (three fields). Each event should use three indexed fields if there are three or more fields, and gas usage is not particularly of coLowern for the events in question. If there are fewer than three fields, all of the fields should be indexed.",
+        "description": "Index event fields make the field more quickly accessible to off-chain tools that parse events. However, note that each index field costs extra gas during emission, so it's not necessarily best to index the maximum allowed per event (three fields). Each event should use three indexed fields if there are three or more fields, and gas usage is not particularly of concern for the events in question. If there are fewer than three fields, all of the fields should be indexed.",
         "detector_name": "unindexed-events",
         "instances": [
           {
@@ -923,7 +923,7 @@
             "src": "222:21"
           }
         ],
-        "title": "Modifiers invoked only oLowe can be shoe-horned into the Function"
+        "title": "Modifiers invoked only once can be shoe-horned into the Function"
       },
       {
         "description": "Consider removing empty blocks.",
@@ -1114,7 +1114,7 @@
             "src": "693:12"
           }
         ],
-        "title": "Internal Functions called only oLowe can be inlined"
+        "title": "Internal Functions called only once can be inlined"
       },
       {
         "description": "Consider keeping the naming convention consistent in a given contract",

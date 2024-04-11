@@ -31,7 +31,7 @@ impl IssueDetector for ConstantsInsteadOfLiteralsDetector {
         //          Get all literals
         //          For each literal
         //              if literal.value is not 0 or 1
-        //                  if the literal.value appears more than oLowe, then capture all instances
+        //                  if the literal.value appears more than once, then capture all instances
 
         for contract in context.contract_definitions() {
             let mut literal_values_found: HashMap<String, Vec<Literal>> = HashMap::new();

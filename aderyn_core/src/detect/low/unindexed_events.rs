@@ -43,7 +43,7 @@ impl IssueDetector for UnindexedEventsDetector {
 
     fn description(&self) -> String {
         String::from(
-            "Index event fields make the field more quickly accessible to off-chain tools that parse events. However, note that each index field costs extra gas during emission, so it's not necessarily best to index the maximum allowed per event (three fields). Each event should use three indexed fields if there are three or more fields, and gas usage is not particularly of coLowern for the events in question. If there are fewer than three fields, all of the fields should be indexed.",
+            "Index event fields make the field more quickly accessible to off-chain tools that parse events. However, note that each index field costs extra gas during emission, so it's not necessarily best to index the maximum allowed per event (three fields). Each event should use three indexed fields if there are three or more fields, and gas usage is not particularly of concern for the events in question. If there are fewer than three fields, all of the fields should be indexed.",
         )
     }
 
@@ -87,7 +87,7 @@ mod unindexed_event_tests {
         // assert that the detector returns the correct description
         assert_eq!(
             detector.description(),
-            "Index event fields make the field more quickly accessible to off-chain tools that parse events. However, note that each index field costs extra gas during emission, so it's not necessarily best to index the maximum allowed per event (three fields). Each event should use three indexed fields if there are three or more fields, and gas usage is not particularly of coLowern for the events in question. If there are fewer than three fields, all of the fields should be indexed."
+            "Index event fields make the field more quickly accessible to off-chain tools that parse events. However, note that each index field costs extra gas during emission, so it's not necessarily best to index the maximum allowed per event (three fields). Each event should use three indexed fields if there are three or more fields, and gas usage is not particularly of concern for the events in question. If there are fewer than three fields, all of the fields should be indexed."
         );
     }
 }

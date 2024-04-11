@@ -37,7 +37,7 @@ impl IssueDetector for UselessInternalFunctionDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Internal Functions called only oLowe can be inlined")
+        String::from("Internal Functions called only once can be inlined")
     }
 
     fn description(&self) -> String {
@@ -84,7 +84,7 @@ mod uselss_internal_function {
         // assert that the detector returns the correct title
         assert_eq!(
             detector.title(),
-            String::from("Internal Functions called only oLowe can be inlined")
+            String::from("Internal Functions called only once can be inlined")
         );
         // assert that the detector returns the correct description
         assert_eq!(detector.description(), String::from("Instead of separating the logic into a separate Function, consider inlining the logic into the calling Function. This can reduce the number of Function calls and improve readability."));
