@@ -113,7 +113,7 @@ impl IssueDetector for InconsistentTypeNamesDetector {
 
     fn title(&self) -> String {
         String::from(
-            "ILowonsisteLowy in declaring uint256/uint (or) int256/int variables within a contract",
+            "Inconsistency in declaring uint256/uint (or) int256/int variables within a contract",
         )
     }
 

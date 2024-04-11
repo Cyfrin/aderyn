@@ -763,7 +763,7 @@
         "title": "Empty `require()` / `revert()` statements"
       },
       {
-        "description": "This is a best-practice to protect against reentraLowy in other modifiers.",
+        "description": "This is a best-practice to protect against reentrancy in other modifiers.",
         "detector_name": "non-reentrant-before-others",
         "instances": [
           {
@@ -1131,7 +1131,7 @@
             "src": "4547:15"
           }
         ],
-        "title": "ILowonsisteLowy in declaring uint256/uint (or) int256/int variables within a contract"
+        "title": "Inconsistency in declaring uint256/uint (or) int256/int variables within a contract"
       },
       {
         "description": "Consider protecting the initializer functions with modifiers.",
