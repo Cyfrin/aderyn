@@ -54,10 +54,10 @@ impl IssueDetector for ZeroAddressCheckDetector {
             .collect();
 
         // Get all Function definitions
-        for Function_definition in context.function_definitions() {
+        for function_definition in context.function_definitions() {
             // Get all the binary checks inside the Function
             let binary_operations: Vec<BinaryOperation> =
-                ExtractBinaryOperations::from(Function_definition)
+                ExtractBinaryOperations::from(function_definition)
                     .extracted
                     .into_iter()
                     .filter(|x| (x.operator == "==" || x.operator == "!="))
@@ -97,7 +97,7 @@ impl IssueDetector for ZeroAddressCheckDetector {
             }
 
             // Get all the assignments where the left hand side is a mutable address state variable
-            let assignments: Vec<Assignment> = ExtractAssignments::from(Function_definition)
+            let assignments: Vec<Assignment> = ExtractAssignments::from(function_definition)
                 .extracted
                 .into_iter()
                 .filter(|x| {
@@ -131,7 +131,7 @@ impl IssueDetector for ZeroAddressCheckDetector {
                 if let Expression::Identifier(right_identifier) = &*assignment.right_hand_side {
                     if !identifier_reference_declaration_ids_in_binary_checks
                         .contains(&right_identifier.referenced_declaration)
-                        && Function_definition
+                        && function_definition
                             .parameters
                             .parameters
                             .iter()
@@ -144,7 +144,7 @@ impl IssueDetector for ZeroAddressCheckDetector {
                     for right_identifier in right_identifiers.extracted {
                         if !identifier_reference_declaration_ids_in_binary_checks
                             .contains(&right_identifier.referenced_declaration)
-                            && Function_definition
+                            && function_definition
                                 .parameters
                                 .parameters
                                 .iter()
@@ -195,7 +195,7 @@ mod zero_address_check_tests {
     };
 
     #[test]
-    fn test_deprecated_oz_Functions_detector() {
+    fn test_deprecated_oz_functions_detector() {
         let context = load_contract(
             "../tests/contract-playground/out/ZeroAddressCheck.sol/ZeroAddressCheck.json",
         );
@@ -208,11 +208,11 @@ mod zero_address_check_tests {
         assert_eq!(detector.instances().len(), 3);
         for node_id in detector.instances().values() {
             if let ASTNode::Assignment(assignment) = context.nodes.get(node_id).unwrap() {
-                if let ASTNode::FunctionDefinition(Function) = assignment
+                if let ASTNode::FunctionDefinition(function) = assignment
                     .closest_ancestor_of_type(&context, NodeType::FunctionDefinition)
                     .unwrap()
                 {
-                    assert!(Function.name.contains("bad"));
+                    assert!(function.name.contains("bad"));
                 } else {
                     panic!()
                 }

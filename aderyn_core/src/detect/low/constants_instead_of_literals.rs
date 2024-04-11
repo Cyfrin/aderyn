@@ -36,11 +36,11 @@ impl IssueDetector for ConstantsInsteadOfLiteralsDetector {
         for contract in context.contract_definitions() {
             let mut literal_values_found: HashMap<String, Vec<Literal>> = HashMap::new();
 
-            for Function in ExtractFunctionDefinitions::from(contract)
+            for function in ExtractFunctionDefinitions::from(contract)
                 .extracted
                 .into_iter()
             {
-                for literal in ExtractLiterals::from(&Function).extracted.into_iter() {
+                for literal in ExtractLiterals::from(&function).extracted.into_iter() {
                     if (literal.kind == LiteralKind::Number
                         && literal.value != Some(String::from("0"))
                         && literal.value != Some(String::from("1")))

@@ -19,17 +19,17 @@ pub struct UselessInternalFunctionDetector {
 
 impl IssueDetector for UselessInternalFunctionDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        let internal_Functions = context
+        let internal_functions = context
             .function_definitions()
             .into_iter()
-            .filter(|&Function| {
-                matches!(Function.visibility, Visibility::Internal)
-                    && !Function.name.starts_with('_')
+            .filter(|&function| {
+                matches!(function.visibility, Visibility::Internal)
+                    && !function.name.starts_with('_')
             });
 
-        for internal_Function in internal_Functions {
-            if count_identifiers_that_reference_an_id(context, internal_Function.id) == 1 {
-                capture!(self, context, internal_Function);
+        for internal_function in internal_functions {
+            if count_identifiers_that_reference_an_id(context, internal_function.id) == 1 {
+                capture!(self, context, internal_function);
             }
         }
 
@@ -58,13 +58,13 @@ impl IssueDetector for UselessInternalFunctionDetector {
 }
 
 #[cfg(test)]
-mod uselss_internal_Function {
+mod uselss_internal_function {
     use crate::detect::detector::{detector_test_helpers::load_contract, IssueDetector};
 
     use super::UselessInternalFunctionDetector;
 
     #[test]
-    fn test_useless_internal_Functions() {
+    fn test_useless_internal_functions() {
         let context = load_contract(
             "../tests/contract-playground/out/InternalFunctions.sol/InternalFunctionExample.json",
         );

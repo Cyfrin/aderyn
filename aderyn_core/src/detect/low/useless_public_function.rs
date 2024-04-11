@@ -19,18 +19,18 @@ pub struct UselessPublicFunctionDetector {
 
 impl IssueDetector for UselessPublicFunctionDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        let unreferenced_public_Functions =
+        let unreferenced_public_functions =
             context
                 .function_definitions()
                 .into_iter()
-                .filter(|&Function| {
-                    matches!(Function.visibility, Visibility::Public)
-                        && !matches!(Function.kind, FunctionKind::Constructor)
-                        && count_identifiers_that_reference_an_id(context, Function.id) == 0
+                .filter(|&function| {
+                    matches!(function.visibility, Visibility::Public)
+                        && !matches!(function.kind, FunctionKind::Constructor)
+                        && count_identifiers_that_reference_an_id(context, function.id) == 0
                 });
 
-        for unreferenced_public_Function in unreferenced_public_Functions {
-            capture!(self, context, unreferenced_public_Function);
+        for unreferenced_public_function in unreferenced_public_functions {
+            capture!(self, context, unreferenced_public_function);
         }
 
         Ok(!self.found_instances.is_empty())
@@ -58,13 +58,13 @@ impl IssueDetector for UselessPublicFunctionDetector {
 }
 
 #[cfg(test)]
-mod useless_public_Function_tests {
+mod useless_public_function_tests {
     use crate::detect::detector::{detector_test_helpers::load_contract, IssueDetector};
 
     use super::UselessPublicFunctionDetector;
 
     #[test]
-    fn test_useless_public_Functions() {
+    fn test_useless_public_functions() {
         let context =
             load_contract("../tests/contract-playground/out/Counter.sol/Counter.0.8.25.json");
 
