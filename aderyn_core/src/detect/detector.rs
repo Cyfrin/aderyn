@@ -3,7 +3,7 @@ use strum::{Display, EnumCount, EnumIter, EnumString};
 
 use crate::{
     ast::NodeID,
-    context::workspace_context::{ASTNode, WorkspaceContext},
+    context::workspace_context::WorkspaceContext,
     detect::{
         high::{ArbitraryTransferFromDetector, DelegateCallInLoopDetector},
         low::{
@@ -227,21 +227,6 @@ pub trait IssueDetector: Send + Sync + 'static {
     // Value is ASTNode NodeID
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
         BTreeMap::new()
-    }
-}
-
-pub trait ReusableDetector {
-    fn detect(
-        &mut self,
-        _context: &WorkspaceContext,
-        _using: &[ASTNode],
-        _within: &[ASTNode],
-    ) -> Result<&[ASTNode], Box<dyn Error>> {
-        Ok(&[])
-    }
-
-    fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::Undecided)
     }
 }
 
