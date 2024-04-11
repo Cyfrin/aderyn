@@ -52,19 +52,19 @@ impl IssueDetector for TemplateDetector {
 }
 
 #[cfg(test)]
-mod arbitrary_transfer_from_tests {
+mod template_detector_tests {
     use crate::detect::{
         detector::{detector_test_helpers::load_contract, IssueDetector},
-        high::arbitrary_transfer_from::ArbitraryTransferFromDetector,
+        high::template_detector::TemplateDetector,
     };
 
     #[test]
-    fn test_arbitrary_transfer_from_detector() {
+    fn test_template_detector() {
         let context = load_contract(
             "../tests/contract-playground/out/ArbitraryTransferFrom.sol/ArbitraryTransferFrom.json",
         );
 
-        let mut detector = ArbitraryTransferFromDetector::default();
+        let mut detector = TemplateDetector::default();
         let found = detector.detect(&context).unwrap();
         // assert that the detector found an issue
         assert!(found);
