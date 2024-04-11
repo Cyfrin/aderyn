@@ -44,9 +44,9 @@
   },
   "issue_count": {
     "high": 0,
-    "low": 1,
+    "low": 2,
     "medium": 0,
-    "nc": 1
+    "nc": 0
   },
   "low_issues": {
     "issues": [
@@ -91,16 +91,9 @@
           }
         ],
         "title": "PUSH0 is not supported by all chains"
-      }
-    ]
-  },
-  "medium_issues": {
-    "issues": []
-  },
-  "nc_issues": {
-    "issues": [
+      },
       {
-        "description": "Instead of marking a function as `public`, consider marking it as `external` if it is not used internally.",
+        "description": "Instead of marking a Function as `public`, consider marking it as `external` if it is not used internally.",
         "detector_name": "useless-public-function",
         "instances": [
           {
@@ -144,8 +137,14 @@
             "src": "422:9"
           }
         ],
-        "title": "`public` functions not used internally could be marked `external`"
+        "title": "`public` Functions not used internally could be marked `external`"
       }
     ]
+  },
+  "medium_issues": {
+    "issues": []
+  },
+  "nc_issues": {
+    "issues": []
   }
 }
