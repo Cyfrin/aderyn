@@ -34,11 +34,11 @@ impl IssueDetector for NonReentrantBeforeOthersDetector {
     }
 
     fn description(&self) -> String {
-        String::from("This is a best-practice to protect against reentrancy in other modifiers.")
+        String::from("This is a best-practice to protect against reentraLowy in other modifiers.")
     }
 
     fn severity(&self) -> IssueSeverity {
-        IssueSeverity::NC
+        IssueSeverity::Low
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -54,13 +54,14 @@ impl IssueDetector for NonReentrantBeforeOthersDetector {
 mod non_reentrant_before_others_tests {
     use crate::detect::{
         detector::{detector_test_helpers::load_contract, IssueDetector},
-        nc::non_reentrant_before_others::NonReentrantBeforeOthersDetector,
+        low::NonReentrantBeforeOthersDetector,
     };
 
     #[test]
     fn test_non_reentrant_before_others() {
-        let context =
-            load_contract("../tests/contract-playground/out/AdminContract.sol/AdminContract.json");
+        let context = load_contract(
+            "../tests/contract-playground/out/AdmiLowontract.sol/AdmiLowontract.json",
+        );
 
         let mut detector = NonReentrantBeforeOthersDetector::default();
         let found = detector.detect(&context).unwrap();
@@ -71,7 +72,7 @@ mod non_reentrant_before_others_tests {
         // assert that the detector returns the correct severity
         assert_eq!(
             detector.severity(),
-            crate::detect::detector::IssueSeverity::NC
+            crate::detect::detector::IssueSeverity::Low
         );
         // assert that the detector returns the correct title
         assert_eq!(
@@ -81,7 +82,7 @@ mod non_reentrant_before_others_tests {
         // assert that the detector returns the correct description
         assert_eq!(
             detector.description(),
-            "This is a best-practice to protect against reentrancy in other modifiers."
+            "This is a best-practice to protect against reentraLowy in other modifiers."
         );
     }
 }

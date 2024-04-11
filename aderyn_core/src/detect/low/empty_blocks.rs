@@ -32,13 +32,13 @@ impl IssueDetector for EmptyBlockDetector {
                 {
                     // It's not okay to have empty block nested somewhere inside constructor
                     if let Some(block_chain) = empty_block.ancestral_line(context) {
-                        let function_definition_index = block_chain
+                        let Function_definition_index = block_chain
                             .iter()
                             .position(|x| x.node_type() == NodeType::FunctionDefinition)
-                            .unwrap(); // Remember, we know we are already inside a constructor function
+                            .unwrap(); // Remember, we know we are already inside a constructor Function
 
-                        //We start from going up from first parent to the function definition
-                        if function_definition_index > 1 {
+                        //We start from going up from first parent to the Function definition
+                        if Function_definition_index > 1 {
                             // 1 here, means the first parent.
                             // So if the constructor is NOT the immediate parent of this empty block
                             // capture it!
@@ -60,7 +60,7 @@ impl IssueDetector for EmptyBlockDetector {
     }
 
     fn severity(&self) -> IssueSeverity {
-        IssueSeverity::NC
+        IssueSeverity::Low
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -92,7 +92,7 @@ mod empty_block_tests {
         // assert that the detector returns the correct severity
         assert_eq!(
             detector.severity(),
-            crate::detect::detector::IssueSeverity::NC
+            crate::detect::detector::IssueSeverity::Low
         );
         // assert that the detector returns the correct title
         assert_eq!(detector.title(), String::from("Empty Block"));

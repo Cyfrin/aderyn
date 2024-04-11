@@ -37,7 +37,7 @@ impl IssueDetector for SolmateSafeTransferLibDetector {
     }
 
     fn severity(&self) -> IssueSeverity {
-        IssueSeverity::Medium
+        IssueSeverity::Low
     }
 
     fn title(&self) -> String {
@@ -61,7 +61,7 @@ impl IssueDetector for SolmateSafeTransferLibDetector {
 mod solmate_safe_transfer_lib_tests {
     use crate::detect::{
         detector::{detector_test_helpers::load_contract, IssueDetector},
-        medium::solmate_safe_transfer_lib::SolmateSafeTransferLibDetector,
+        low::SolmateSafeTransferLibDetector,
     };
 
     #[test]
@@ -75,10 +75,10 @@ mod solmate_safe_transfer_lib_tests {
         assert!(found);
         // assert that the detector found the correct number of instances (1)
         assert_eq!(detector.instances().len(), 1);
-        // assert the severity is medium
+        // assert the severity is Low
         assert_eq!(
             detector.severity(),
-            crate::detect::detector::IssueSeverity::Medium
+            crate::detect::detector::IssueSeverity::Low
         );
         // assert the title is correct
         assert_eq!(

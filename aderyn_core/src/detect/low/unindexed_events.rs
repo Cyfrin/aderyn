@@ -43,12 +43,12 @@ impl IssueDetector for UnindexedEventsDetector {
 
     fn description(&self) -> String {
         String::from(
-            "Index event fields make the field more quickly accessible to off-chain tools that parse events. However, note that each index field costs extra gas during emission, so it's not necessarily best to index the maximum allowed per event (three fields). Each event should use three indexed fields if there are three or more fields, and gas usage is not particularly of concern for the events in question. If there are fewer than three fields, all of the fields should be indexed.",
+            "Index event fields make the field more quickly accessible to off-chain tools that parse events. However, note that each index field costs extra gas during emission, so it's not necessarily best to index the maximum allowed per event (three fields). Each event should use three indexed fields if there are three or more fields, and gas usage is not particularly of coLowern for the events in question. If there are fewer than three fields, all of the fields should be indexed.",
         )
     }
 
     fn severity(&self) -> IssueSeverity {
-        IssueSeverity::NC
+        IssueSeverity::Low
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -68,11 +68,11 @@ mod unindexed_event_tests {
     #[test]
     fn test_unindexed_events() {
         let context = load_contract(
-            "../tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",
+            "../tests/contract-playground/out/ExtendedInheritaLowe.sol/ExtendedInheritaLowe.json",
         );
 
         let mut detector = UnindexedEventsDetector::default();
-        // assert that the detector finds the public function
+        // assert that the detector finds the public Function
         let found = detector.detect(&context).unwrap();
         assert!(found);
         // assert that the detector finds the correct number of unindexed events
@@ -80,14 +80,14 @@ mod unindexed_event_tests {
         // assert that the detector returns the correct severity
         assert_eq!(
             detector.severity(),
-            crate::detect::detector::IssueSeverity::NC
+            crate::detect::detector::IssueSeverity::Low
         );
         // assert that the detector returns the correct title
         assert_eq!(detector.title(), "Event is missing `indexed` fields");
         // assert that the detector returns the correct description
         assert_eq!(
             detector.description(),
-            "Index event fields make the field more quickly accessible to off-chain tools that parse events. However, note that each index field costs extra gas during emission, so it's not necessarily best to index the maximum allowed per event (three fields). Each event should use three indexed fields if there are three or more fields, and gas usage is not particularly of concern for the events in question. If there are fewer than three fields, all of the fields should be indexed."
+            "Index event fields make the field more quickly accessible to off-chain tools that parse events. However, note that each index field costs extra gas during emission, so it's not necessarily best to index the maximum allowed per event (three fields). Each event should use three indexed fields if there are three or more fields, and gas usage is not particularly of coLowern for the events in question. If there are fewer than three fields, all of the fields should be indexed."
         );
     }
 }

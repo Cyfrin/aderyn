@@ -19,17 +19,17 @@ pub struct UselessInternalFunctionDetector {
 
 impl IssueDetector for UselessInternalFunctionDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        let internal_functions = context
+        let internal_Functions = context
             .function_definitions()
             .into_iter()
-            .filter(|&function| {
-                matches!(function.visibility, Visibility::Internal)
-                    && !function.name.starts_with('_')
+            .filter(|&Function| {
+                matches!(Function.visibility, Visibility::Internal)
+                    && !Function.name.starts_with('_')
             });
 
-        for internal_function in internal_functions {
-            if count_identifiers_that_reference_an_id(context, internal_function.id) == 1 {
-                capture!(self, context, internal_function);
+        for internal_Function in internal_Functions {
+            if count_identifiers_that_reference_an_id(context, internal_Function.id) == 1 {
+                capture!(self, context, internal_Function);
             }
         }
 
@@ -37,15 +37,15 @@ impl IssueDetector for UselessInternalFunctionDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Internal functions called only once can be inlined")
+        String::from("Internal Functions called only oLowe can be inlined")
     }
 
     fn description(&self) -> String {
-        String::from("Instead of separating the logic into a separate function, consider inlining the logic into the calling function. This can reduce the number of function calls and improve readability.")
+        String::from("Instead of separating the logic into a separate Function, consider inlining the logic into the calling Function. This can reduce the number of Function calls and improve readability.")
     }
 
     fn severity(&self) -> IssueSeverity {
-        IssueSeverity::NC
+        IssueSeverity::Low
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -58,19 +58,19 @@ impl IssueDetector for UselessInternalFunctionDetector {
 }
 
 #[cfg(test)]
-mod uselss_internal_function {
+mod uselss_internal_Function {
     use crate::detect::detector::{detector_test_helpers::load_contract, IssueDetector};
 
     use super::UselessInternalFunctionDetector;
 
     #[test]
-    fn test_useless_internal_functions() {
+    fn test_useless_internal_Functions() {
         let context = load_contract(
             "../tests/contract-playground/out/InternalFunctions.sol/InternalFunctionExample.json",
         );
 
         let mut detector = UselessInternalFunctionDetector::default();
-        // assert that the detector finds the public function
+        // assert that the detector finds the public Function
         let found = detector.detect(&context).unwrap();
         assert!(found);
         // assert that the detector returns the correct number of instances
@@ -79,14 +79,14 @@ mod uselss_internal_function {
         // assert that the detector returns the correct severity
         assert_eq!(
             detector.severity(),
-            crate::detect::detector::IssueSeverity::NC
+            crate::detect::detector::IssueSeverity::Low
         );
         // assert that the detector returns the correct title
         assert_eq!(
             detector.title(),
-            String::from("Internal functions called only once can be inlined")
+            String::from("Internal Functions called only oLowe can be inlined")
         );
         // assert that the detector returns the correct description
-        assert_eq!(detector.description(), String::from("Instead of separating the logic into a separate function, consider inlining the logic into the calling function. This can reduce the number of function calls and improve readability."));
+        assert_eq!(detector.description(), String::from("Instead of separating the logic into a separate Function, consider inlining the logic into the calling Function. This can reduce the number of Function calls and improve readability."));
     }
 }

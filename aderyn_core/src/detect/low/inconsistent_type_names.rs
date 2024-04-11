@@ -113,7 +113,7 @@ impl IssueDetector for InconsistentTypeNamesDetector {
 
     fn title(&self) -> String {
         String::from(
-            "Inconsistency in declaring uint256/uint (or) int256/int variables within a contract",
+            "ILowonsisteLowy in declaring uint256/uint (or) int256/int variables within a contract",
         )
     }
 
@@ -122,7 +122,7 @@ impl IssueDetector for InconsistentTypeNamesDetector {
     }
 
     fn severity(&self) -> IssueSeverity {
-        IssueSeverity::NC
+        IssueSeverity::Low
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -135,18 +135,18 @@ impl IssueDetector for InconsistentTypeNamesDetector {
 }
 
 #[cfg(test)]
-mod inconsistent_type_names {
+mod Inconsistent_type_names {
     use crate::detect::detector::{detector_test_helpers::load_contract, IssueDetector};
 
     use super::InconsistentTypeNamesDetector;
 
     #[test]
-    fn test_inconsistent_type_names() {
+    fn test_Inconsistent_type_names() {
         let context =
             load_contract("../tests/contract-playground/out/InconsistentUints.sol/InconsistentStateVariablesContract.json");
 
         let mut detector = InconsistentTypeNamesDetector::default();
-        // assert that the detector finds the public function
+        // assert that the detector finds the public Function
         let found = detector.detect(&context).unwrap();
         assert!(found);
         println!("{:?}", detector.instances());
@@ -155,7 +155,7 @@ mod inconsistent_type_names {
         // assert that the detector returns the correct severity
         assert_eq!(
             detector.severity(),
-            crate::detect::detector::IssueSeverity::NC
+            crate::detect::detector::IssueSeverity::Low
         );
     }
 }

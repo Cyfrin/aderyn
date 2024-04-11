@@ -5,21 +5,19 @@ use crate::{
     ast::NodeID,
     context::workspace_context::WorkspaceContext,
     detect::{
-        high::{ArbitraryTransferFromDetector, DelegateCallInLoopDetector},
+        high::{
+            ArbitraryTransferFromDetector, BlockTimestampDeadlineDetector,
+            DelegateCallInLoopDetector,
+        },
         low::{
-            AvoidAbiEncodePackedDetector, DeprecatedOZFunctionsDetector, EcrecoverDetector,
-            PushZeroOpcodeDetector, UnprotectedInitializerDetector, UnsafeERC20FunctionsDetector,
-            UnspecificSolidityPragmaDetector,
-        },
-        medium::{
-            BlockTimestampDeadlineDetector, CentralizationRiskDetector,
-            SolmateSafeTransferLibDetector, UnsafeERC721MintDetector,
-        },
-        nc::{
-            ConstantsInsteadOfLiteralsDetector, LargeLiteralValueDetector,
-            NonReentrantBeforeOthersDetector, RequireWithStringDetector, UnindexedEventsDetector,
-            UselessInternalFunctionDetector, UselessModifierDetector,
-            UselessPublicFunctionDetector, ZeroAddressCheckDetector,
+            AvoidAbiEncodePackedDetector, CentralizationRiskDetector,
+            ConstantsInsteadOfLiteralsDetector, DeprecatedOZFunctionsDetector, EcrecoverDetector,
+            EmptyBlockDetector, InconsistentTypeNamesDetector, LargeLiteralValueDetector,
+            NonReentrantBeforeOthersDetector, PushZeroOpcodeDetector, RequireWithStringDetector,
+            SolmateSafeTransferLibDetector, UnindexedEventsDetector,
+            UnprotectedInitializerDetector, UnsafeERC20FunctionsDetector, UnsafeERC721MintDetector,
+            UnspecificSolidityPragmaDetector, UselessInternalFunctionDetector,
+            UselessModifierDetector, UselessPublicFunctionDetector, ZeroAddressCheckDetector,
         },
     },
 };
@@ -29,8 +27,6 @@ use std::{
     fmt::{self, Display},
     str::FromStr,
 };
-
-use super::nc::{EmptyBlockDetector, InconsistentTypeNamesDetector};
 
 pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
     vec![
@@ -181,18 +177,14 @@ pub fn get_issue_detector_by_name(detector_name: &str) -> Box<dyn IssueDetector>
 
 #[derive(Debug, PartialEq, Serialize, Deserialize, EnumCount, Clone, EnumIter)]
 pub enum IssueSeverity {
-    NC,
     Low,
-    Medium,
     High,
 }
 
 impl Display for IssueSeverity {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let issue_description = match self {
-            IssueSeverity::NC => "NC (Non Critical)",
             IssueSeverity::Low => "Low",
-            IssueSeverity::Medium => "Medium",
             IssueSeverity::High => "High",
         };
         write!(f, "{}", issue_description).unwrap();
@@ -206,7 +198,7 @@ pub trait IssueDetector: Send + Sync + 'static {
     }
 
     fn severity(&self) -> IssueSeverity {
-        IssueSeverity::Medium
+        IssueSeverity::High
     }
 
     fn title(&self) -> String {
