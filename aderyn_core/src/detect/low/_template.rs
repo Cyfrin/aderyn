@@ -39,7 +39,7 @@ impl IssueDetector for TemplateDetector {
     }
 
     fn description(&self) -> String {
-        String::from("Description of the Low issue.")
+        String::from("Description of the low issue.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -47,30 +47,30 @@ impl IssueDetector for TemplateDetector {
     }
 
     fn name(&self) -> String {
-        format!("Low-issue-template")
+        format!("low-issue-template")
     }
 }
 
 #[cfg(test)]
-mod arbitrary_transfer_from_tests {
+mod template_detector_tests {
     use crate::detect::{
         detector::{detector_test_helpers::load_contract, IssueDetector},
-        Low::arbitrary_transfer_from::ArbitraryTransferFromDetector,
+        low::template_detector::TemplateDetector,
     };
 
     #[test]
-    fn test_arbitrary_transfer_from_detector() {
+    fn test_template_detector() {
         let context = load_contract(
             "../tests/contract-playground/out/ArbitraryTransferFrom.sol/ArbitraryTransferFrom.json",
         );
 
-        let mut detector = ArbitraryTransferFromDetector::default();
+        let mut detector = TemplateDetector::default();
         let found = detector.detect(&context).unwrap();
         // assert that the detector found an issue
         assert!(found);
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
-        // assert the severity is Low
+        // assert the severity is low
         assert_eq!(
             detector.severity(),
             crate::detect::detector::IssueSeverity::Low
@@ -80,7 +80,7 @@ mod arbitrary_transfer_from_tests {
         // assert the description is correct
         assert_eq!(
             detector.description(),
-            String::from("Description of the Low issue.")
+            String::from("Description of the low issue.")
         );
     }
 }
