@@ -1,7 +1,4 @@
 {
-  "critical_issues": {
-    "issues": []
-  },
   "detectors_used": [
     "push-zero-opcode",
     "useless-public-function"
@@ -46,7 +43,6 @@
     "issues": []
   },
   "issue_count": {
-    "critical": 0,
     "high": 0,
     "low": 1,
     "medium": 0,

@@ -185,7 +185,6 @@ pub enum IssueSeverity {
     Low,
     Medium,
     High,
-    Critical,
 }
 
 impl Display for IssueSeverity {
@@ -195,7 +194,6 @@ impl Display for IssueSeverity {
             IssueSeverity::Low => "Low",
             IssueSeverity::Medium => "Medium",
             IssueSeverity::High => "High",
-            IssueSeverity::Critical => "Critical",
         };
         write!(f, "{}", issue_description).unwrap();
         Ok(())
