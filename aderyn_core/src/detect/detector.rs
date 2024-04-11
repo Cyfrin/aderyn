@@ -230,21 +230,6 @@ pub trait IssueDetector: Send + Sync + 'static {
     }
 }
 
-pub trait ReusableDetector {
-    fn detect(
-        &mut self,
-        _context: &WorkspaceContext,
-        _using: &[ASTNode],
-        _within: &[ASTNode],
-    ) -> Result<&[ASTNode], Box<dyn Error>> {
-        Ok(&[])
-    }
-
-    fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::Undecided)
-    }
-}
-
 pub mod detector_test_helpers {
     use std::path::PathBuf;
 

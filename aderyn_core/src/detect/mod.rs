@@ -1,10 +1,10 @@
 pub mod detector;
 pub(crate) mod experimental;
+pub mod helpers;
 pub mod high;
 pub mod low;
 pub mod medium;
 pub mod nc;
-pub mod reusable;
 
 #[macro_export]
 macro_rules! capture {
