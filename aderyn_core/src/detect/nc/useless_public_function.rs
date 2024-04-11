@@ -5,8 +5,8 @@ use crate::{
     capture,
     context::workspace_context::WorkspaceContext,
     detect::{
-        detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity, ReusableDetector},
-        reusable::IdentifiersThatReferenceAFunctionDetector,
+        detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
+        helpers::count_identifiers_that_reference_an_id,
     },
 };
 use eyre::Result;
@@ -26,9 +26,7 @@ impl IssueDetector for UselessPublicFunctionDetector {
                 .filter(|&function| {
                     matches!(function.visibility, Visibility::Public)
                         && !matches!(function.kind, FunctionKind::Constructor)
-                        && IdentifiersThatReferenceAFunctionDetector::default()
-                            .detect(context, &[function.into()], &[])
-                            .map_or(false, |refs| refs.is_empty())
+                        && count_identifiers_that_reference_an_id(context, function.id) == 0
                 });
 
         for unreferenced_public_function in unreferenced_public_functions {
