@@ -155,9 +155,7 @@ pub(crate) fn register_unseen_detectors(
             println!("Registering {} {}", detector_name, severity);
             // let assigned_severity: IssueSeverity = serde_json::from_str(&severity).unwrap();
 
-            let assigned_severity = if severity == &IssueSeverity::Critical.to_string() {
-                IssueSeverity::Critical
-            } else if severity == &IssueSeverity::High.to_string() {
+            let assigned_severity = if severity == &IssueSeverity::High.to_string() {
                 IssueSeverity::High
             } else if severity == &IssueSeverity::Medium.to_string() {
                 IssueSeverity::Medium
