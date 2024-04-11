@@ -304,9 +304,7 @@
   },
   "issue_count": {
     "high": 3,
-    "low": 21,
-    "medium": 0,
-    "nc": 0
+    "low": 21
   },
   "low_issues": {
     "issues": [
@@ -1148,11 +1146,5 @@
         "title": "Unprotected initializer"
       }
     ]
-  },
-  "medium_issues": {
-    "issues": []
-  },
-  "nc_issues": {
-    "issues": []
   }
 }

@@ -8,7 +8,7 @@ use serde::Serialize;
 
 use super::{
     printer::ReportPrinter, reporter::Report, FilesDetails, FilesSummary, HighIssues, IssueCount,
-    LowIssues, MediumIssues, NcIssues,
+    LowIssues,
 };
 
 #[derive(Serialize)]
@@ -17,9 +17,7 @@ pub struct JsonContent {
     files_details: FilesDetails,
     issue_count: IssueCount,
     high_issues: HighIssues,
-    medium_issues: MediumIssues,
     low_issues: LowIssues,
-    nc_issues: NcIssues,
     detectors_used: Vec<String>,
 }
 
@@ -55,9 +53,7 @@ impl ReportPrinter<()> for JsonPrinter {
             files_details: context.files_details(),
             issue_count: report.issue_count(),
             high_issues: report.high_issues(),
-            medium_issues: report.medium_issues(),
             low_issues: report.low_issues(),
-            nc_issues: report.nc_issues(),
             detectors_used: detectors_used_names,
         };
         let value = serde_json::to_value(content).unwrap();
