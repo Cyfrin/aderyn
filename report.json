@@ -1,7 +1,4 @@
 {
-  "critical_issues": {
-    "issues": []
-  },
   "detectors_used": [
     "delegate-call-in-loop",
     "centralization-risk",
@@ -100,7 +97,7 @@
       },
       {
         "file_path": "src/UnsafeERC721Mint.sol",
-        "n_sloc": 11
+        "n_sloc": 18
       },
       {
         "file_path": "src/ZeroAddressCheck.sol",
@@ -157,7 +154,7 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 908,
+    "total_sloc": 915,
     "total_source_units": 31
   },
   "high_issues": {
@@ -214,7 +211,6 @@
     ]
   },
   "issue_count": {
-    "critical": 0,
     "high": 2,
     "low": 7,
     "medium": 4,
@@ -652,8 +648,8 @@
         "instances": [
           {
             "contract_path": "src/UnsafeERC721Mint.sol",
-            "line_no": 10,
-            "src": "314:5"
+            "line_no": 12,
+            "src": "410:5"
           }
         ],
         "title": "Using `ERC721::_mint()` can be dangerous"

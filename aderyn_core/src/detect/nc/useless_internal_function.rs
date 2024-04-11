@@ -5,8 +5,8 @@ use crate::{
     capture,
     context::workspace_context::WorkspaceContext,
     detect::{
-        detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity, ReusableDetector},
-        reusable::IdentifiersThatReferenceAFunctionDetector,
+        detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
+        helpers::count_identifiers_that_reference_an_id,
     },
 };
 use eyre::Result;
@@ -28,10 +28,7 @@ impl IssueDetector for UselessInternalFunctionDetector {
             });
 
         for internal_function in internal_functions {
-            if IdentifiersThatReferenceAFunctionDetector::default()
-                .detect(context, &[internal_function.into()], &[])
-                .map_or(false, |refs| refs.len() == 1)
-            {
+            if count_identifiers_that_reference_an_id(context, internal_function.id) == 1 {
                 capture!(self, context, internal_function);
             }
         }
