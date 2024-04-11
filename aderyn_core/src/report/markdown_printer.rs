@@ -38,7 +38,6 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
         }
 
         let all_issues = vec![
-            (report.critical_issues().issues, "# Critical Issues\n", "C"),
             (report.high_issues().issues, "# High Issues\n", "H"),
             (report.medium_issues().issues, "# Medium Issues\n", "M"),
             (report.low_issues().issues, "# Low Issues\n", "L"),
@@ -147,7 +146,6 @@ impl MarkdownReportPrinter {
             // Start the markdown table
             writeln!(writer, "| Category | No. of Issues |")?;
             writeln!(writer, "| --- | --- |")?;
-            writeln!(writer, "| Critical | {} |", issue_count.critical)?;
             writeln!(writer, "| High | {} |", issue_count.high)?;
             writeln!(writer, "| Medium | {} |", issue_count.medium)?;
             writeln!(writer, "| Low | {} |", issue_count.low)?;
@@ -197,11 +195,6 @@ impl MarkdownReportPrinter {
         writeln!(writer, "  - [Issue Summary](#issue-summary)")?;
 
         let issues = [
-            (
-                &report.criticals,
-                "- [Critical Issues](#critical-issues)",
-                "C",
-            ),
             (&report.highs, "- [High Issues](#high-issues)", "H"),
             (&report.mediums, "- [Medium Issues](#medium-issues)", "M"),
             (&report.lows, "- [Low Issues](#low-issues)", "L"),
