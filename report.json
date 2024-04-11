@@ -550,7 +550,7 @@
         "title": "Missing checks for `address(0)` when assigning values to address state variables"
       },
       {
-        "description": "Instead of marking a Function as `public`, consider marking it as `external` if it is not used internally.",
+        "description": "Instead of marking a function as `public`, consider marking it as `external` if it is not used internally.",
         "detector_name": "useless-public-function",
         "instances": [
           {
@@ -629,7 +629,7 @@
             "src": "422:9"
           }
         ],
-        "title": "`public` Functions not used internally could be marked `external`"
+        "title": "`public` functions not used internally could be marked `external`"
       },
       {
         "description": "If the same constant literal value is used multiple times, create a constant state variable and reference it throughout the contract.",
@@ -923,7 +923,7 @@
             "src": "222:21"
           }
         ],
-        "title": "Modifiers invoked only once can be shoe-horned into the Function"
+        "title": "Modifiers invoked only once can be shoe-horned into the function"
       },
       {
         "description": "Consider removing empty blocks.",
@@ -1105,7 +1105,7 @@
         "title": "Large literal values multiples of 10000 can be replaced with scientific notation"
       },
       {
-        "description": "Instead of separating the logic into a separate Function, consider inlining the logic into the calling Function. This can reduce the number of Function calls and improve readability.",
+        "description": "Instead of separating the logic into a separate function, consider inlining the logic into the calling Function. This can reduce the number of Function calls and improve readability.",
         "detector_name": "useless-internal-function",
         "instances": [
           {
@@ -1114,7 +1114,7 @@
             "src": "693:12"
           }
         ],
-        "title": "Internal Functions called only once can be inlined"
+        "title": "Internal functions called only once can be inlined"
       },
       {
         "description": "Consider keeping the naming convention consistent in a given contract",

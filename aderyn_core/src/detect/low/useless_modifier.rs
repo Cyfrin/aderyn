@@ -34,7 +34,7 @@ impl IssueDetector for UselessModifierDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Modifiers invoked only once can be shoe-horned into the Function")
+        String::from("Modifiers invoked only once can be shoe-horned into the function")
     }
 
     fn description(&self) -> String {
@@ -80,7 +80,7 @@ mod useless_modifier_tests {
         // assert that the detector returns the correct title
         assert_eq!(
             detector.title(),
-            String::from("Modifiers invoked only once can be shoe-horned into the Function")
+            String::from("Modifiers invoked only once can be shoe-horned into the function")
         );
         // assert that the detector returns the correct description
         assert_eq!(detector.description(), String::from(""));
