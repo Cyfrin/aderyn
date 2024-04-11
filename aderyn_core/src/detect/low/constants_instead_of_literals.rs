@@ -27,7 +27,7 @@ impl IssueDetector for ConstantsInsteadOfLiteralsDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // Get all contracts
         // For each contract
-        //      Get all function definitions (and to the same for modifiers)
+        //      Get all Function definitions (and to the same for modifiers)
         //          Get all literals
         //          For each literal
         //              if literal.value is not 0 or 1
@@ -119,7 +119,7 @@ impl IssueDetector for ConstantsInsteadOfLiteralsDetector {
     }
 
     fn severity(&self) -> IssueSeverity {
-        IssueSeverity::NC
+        IssueSeverity::Low
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -144,7 +144,7 @@ mod constants_instead_of_literals_tests {
         );
 
         let mut detector = ConstantsInsteadOfLiteralsDetector::default();
-        // assert that the detector finds the public function
+        // assert that the detector finds the public Function
         let found = detector.detect(&context).unwrap();
         assert!(found);
         // assert that the detector finds the correct number of instances
@@ -152,7 +152,7 @@ mod constants_instead_of_literals_tests {
         // assert that the detector returns the correct severity
         assert_eq!(
             detector.severity(),
-            crate::detect::detector::IssueSeverity::NC
+            crate::detect::detector::IssueSeverity::Low
         );
         // assert that the detector returns the correct title
         assert_eq!(

@@ -47,7 +47,7 @@ impl IssueDetector for CentralizationRiskDetector {
     }
 
     fn severity(&self) -> IssueSeverity {
-        IssueSeverity::Medium
+        IssueSeverity::Low
     }
 
     fn title(&self) -> String {
@@ -84,10 +84,10 @@ mod centralization_risk_detector_tests {
         assert!(found);
         // assert that the number of instances found is 3
         assert_eq!(detector.instances().len(), 3);
-        // assert that the severity is medium
+        // assert that the severity is Low
         assert_eq!(
             detector.severity(),
-            crate::detect::detector::IssueSeverity::Medium
+            crate::detect::detector::IssueSeverity::Low
         );
         // assert that the title is correct
         assert_eq!(

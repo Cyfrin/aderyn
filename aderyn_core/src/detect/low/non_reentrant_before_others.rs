@@ -38,7 +38,7 @@ impl IssueDetector for NonReentrantBeforeOthersDetector {
     }
 
     fn severity(&self) -> IssueSeverity {
-        IssueSeverity::NC
+        IssueSeverity::Low
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -54,7 +54,7 @@ impl IssueDetector for NonReentrantBeforeOthersDetector {
 mod non_reentrant_before_others_tests {
     use crate::detect::{
         detector::{detector_test_helpers::load_contract, IssueDetector},
-        nc::non_reentrant_before_others::NonReentrantBeforeOthersDetector,
+        low::NonReentrantBeforeOthersDetector,
     };
 
     #[test]
@@ -71,7 +71,7 @@ mod non_reentrant_before_others_tests {
         // assert that the detector returns the correct severity
         assert_eq!(
             detector.severity(),
-            crate::detect::detector::IssueSeverity::NC
+            crate::detect::detector::IssueSeverity::Low
         );
         // assert that the detector returns the correct title
         assert_eq!(

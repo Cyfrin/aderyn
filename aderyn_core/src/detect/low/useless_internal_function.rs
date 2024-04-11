@@ -45,7 +45,7 @@ impl IssueDetector for UselessInternalFunctionDetector {
     }
 
     fn severity(&self) -> IssueSeverity {
-        IssueSeverity::NC
+        IssueSeverity::Low
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -70,7 +70,7 @@ mod uselss_internal_function {
         );
 
         let mut detector = UselessInternalFunctionDetector::default();
-        // assert that the detector finds the public function
+        // assert that the detector finds the public Function
         let found = detector.detect(&context).unwrap();
         assert!(found);
         // assert that the detector returns the correct number of instances
@@ -79,7 +79,7 @@ mod uselss_internal_function {
         // assert that the detector returns the correct severity
         assert_eq!(
             detector.severity(),
-            crate::detect::detector::IssueSeverity::NC
+            crate::detect::detector::IssueSeverity::Low
         );
         // assert that the detector returns the correct title
         assert_eq!(

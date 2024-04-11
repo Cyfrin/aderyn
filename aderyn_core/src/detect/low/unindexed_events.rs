@@ -48,7 +48,7 @@ impl IssueDetector for UnindexedEventsDetector {
     }
 
     fn severity(&self) -> IssueSeverity {
-        IssueSeverity::NC
+        IssueSeverity::Low
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -72,7 +72,7 @@ mod unindexed_event_tests {
         );
 
         let mut detector = UnindexedEventsDetector::default();
-        // assert that the detector finds the public function
+        // assert that the detector finds the public Function
         let found = detector.detect(&context).unwrap();
         assert!(found);
         // assert that the detector finds the correct number of unindexed events
@@ -80,7 +80,7 @@ mod unindexed_event_tests {
         // assert that the detector returns the correct severity
         assert_eq!(
             detector.severity(),
-            crate::detect::detector::IssueSeverity::NC
+            crate::detect::detector::IssueSeverity::Low
         );
         // assert that the detector returns the correct title
         assert_eq!(detector.title(), "Event is missing `indexed` fields");
