@@ -1261,7 +1261,7 @@ Use `e` notation, for example: `1e18`, instead of its full numeric value.
 
 ## L-19: Internal functions called only once can be inlined
 
-Instead of separating the logic into a separate function, consider inlining the logic into the calling Function. This can reduce the number of Function calls and improve readability.
+Instead of separating the logic into a separate function, consider inlining the logic into the calling function. This can reduce the number of function calls and improve readability.
 
 ### Responsible : useless-internal-function
 

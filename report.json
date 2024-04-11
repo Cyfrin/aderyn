@@ -1105,7 +1105,7 @@
         "title": "Large literal values multiples of 10000 can be replaced with scientific notation"
       },
       {
-        "description": "Instead of separating the logic into a separate function, consider inlining the logic into the calling Function. This can reduce the number of Function calls and improve readability.",
+        "description": "Instead of separating the logic into a separate function, consider inlining the logic into the calling function. This can reduce the number of function calls and improve readability.",
         "detector_name": "useless-internal-function",
         "instances": [
           {
