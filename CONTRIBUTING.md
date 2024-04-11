@@ -1,12 +1,10 @@
 # Welcome to the Cyfrin Aderyn Contributing Guide
 
-Thank you for investing your time in contributing to Scaffold-ETH 2!
-
-This guide aims to provide an overview of the contribution workflow to help us make the contribution process effective for everyone involved.
+This guide aims to provide an overview of the contribution workflow to help make the contribution process effective for everyone involved.
 
 ## About the Project
 
-Aderyn is a Rust-based solidity smart contract static analyzer specifically designed to help protocol engineers and security researchers find vulnerabilities in Solidity code bases.
+Aderyn is a Rust-based solidity smart contract static analyzer designed to help protocol engineers and security researchers find vulnerabilities in Solidity code bases.
 
 Thanks to its detectors, running Cyfrin Aderyn on your Solidity codebase will highlight all the issues currently supported, drastically reducing the potential for unknown vulnerabilities in your Solidity code.
 
@@ -16,7 +14,7 @@ Read the [README](README.md) and consult the docs for an in-depth project overvi
 
 ### Vision
 
-The goal of Cyfrin Aderyn is to give engineers and smart contract security researchers reliable and open-source Solidity static analysis tools to find and suggest solutions to smart contract vulnerabilities while adapting quickly and efficiently to different codebases.
+Cyfrin Aderyn aims to give engineers and smart contract security researchers reliable and open-source Solidity static analysis tools to find and suggest solutions to smart contract vulnerabilities while adapting quickly and efficiently to different codebases.
 
 ### Project Status
 
@@ -81,7 +79,7 @@ Here are some tips for a high-quality pull request:
 
 Once you submit your PR:
 
-- We may ask questions, request additional information, or ask for changes to be made before a PR can be merged. Just so you know, these are to make the PR clear for everyone involved and aim to create a frictionless interaction process.
+- We may ask questions, request additional information, or ask for changes to be made before a PR can be merged. These are to clarify the PR for everyone involved and create a frictionless interaction process.
 - As you update your PR and apply changes, mark each conversation resolved.
 
 Once the PR is approved, we'll "squash-and-merge" to keep the git commit history clean.
