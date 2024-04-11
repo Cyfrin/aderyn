@@ -1,87 +1,84 @@
-# Welcome to the Cyfrin Aderyn Contributing Guide
+# Contributing
 
-Thank you for investing your time in contributing to Scaffold-ETH 2!
+When contributing to this repository, please first discuss the change you wish to make via issue,
+email, or any other method with the owners of this repository before making a change. 
 
-This guide aims to provide an overview of the contribution workflow to help us make the contribution process effective for everyone involved.
+Please note we have a code of conduct, please follow it in all your interactions with the project.
 
-## About the Project
+## Pull Request Process
 
-Aderyn is a Rust-based solidity smart contract static analyzer specifically designed to help protocol engineers and security researchers find vulnerabilities in Solidity code bases.
+1. Ensure any install or build dependencies are removed before the end of the layer when doing a 
+   build.
+2. Update the README.md with details of changes to the interface, this includes new environment 
+   variables, exposed ports, useful file locations and container parameters.
+3. Increase the version numbers in any examples files and the README.md to the new version that this
+   Pull Request would represent. The versioning scheme we use is [SemVer](http://semver.org/).
+4. You may merge the Pull Request in once you have the sign-off of two other developers, or if you 
+   do not have permission to do that, you may request the second reviewer to merge it for you.
 
-Thanks to its detectors, running Cyfrin Aderyn on your Solidity codebase will highlight all the issues currently supported, drastically reducing the potential for unknown vulnerabilities in your Solidity code.
+## Code of Conduct
 
-Aderyn also makes it easier for smart contract engineers and protocols to create custom detectors to find specific or unsupported code vulnerabilities.
+### Our Pledge
 
-Read the [README](README.md) and consult the docs for an in-depth project overview.
+In the interest of fostering an open and welcoming environment, we as
+contributors and maintainers pledge to making participation in our project and
+our community a harassment-free experience for everyone, regardless of age, body
+size, disability, ethnicity, gender identity and expression, level of experience,
+nationality, personal appearance, race, religion, or sexual identity and
+orientation.
 
-### Vision
+### Our Standards
 
-The goal of Cyfrin Aderyn is to give engineers and smart contract security researchers reliable and open-source Solidity static analysis tools to find and suggest solutions to smart contract vulnerabilities while adapting quickly and efficiently to different codebases.
+Examples of behavior that contributes to creating a positive environment
+include:
 
-### Project Status
+* Using welcoming and inclusive language
+* Being respectful of differing viewpoints and experiences
+* Gracefully accepting constructive criticism
+* Focusing on what is best for the community
+* Showing empathy towards other community members
 
-The project is under active development.
+Examples of unacceptable behavior by participants include:
 
-You can view the open issues, follow the development process, and contribute to the project.
+* The use of sexualized language or imagery and unwelcome sexual attention or
+advances
+* Trolling, insulting/derogatory comments, and personal or political attacks
+* Public or private harassment
+* Publishing others' private information, such as a physical or electronic
+  address, without explicit permission
+* Other conduct which could reasonably be considered inappropriate in a
+  professional setting
 
-## Getting started
+### Our Responsibilities
 
-You can contribute to this repo in many ways:
+Project maintainers are responsible for clarifying the standards of acceptable
+behavior and are expected to take appropriate and fair corrective action in
+response to any instances of unacceptable behavior.
 
-- Solve open issues
-- Report bugs or feature requests
-- Improve the documentation
+Project maintainers have the right and responsibility to remove, edit, or
+reject comments, commits, code, wiki edits, issues, and other contributions
+that are not aligned to this Code of Conduct, or to ban temporarily or
+permanently any contributor for other behaviors that they deem inappropriate,
+threatening, offensive, or harmful.
 
-Contributions are made via Issues and Pull Requests (PRs). A few general guidelines for contributions:
+### Scope
 
-- Search for existing Issues and PRs before creating your own.
-- Contributions should only fix/add the functionality in the issue OR address style issues, not both.
-- If you're running into an error, please give context. Explain what you're trying to do and how to reproduce the error.
-- If applicable, please edit the README.md file to reflect the changes.
+This Code of Conduct applies both within project spaces and in public spaces
+when an individual is representing the project or its community. Examples of
+representing a project or community include using an official project e-mail
+address, posting via an official social media account, or acting as an appointed
+representative at an online or offline event. Representation of a project may be
+further defined and clarified by project maintainers.
 
-### Issues
+### Enforcement
 
-Issues should be used to report problems, request a new feature, or discuss potential changes before a PR is created.
+Instances of abusive, harassing, or otherwise unacceptable behavior may be
+reported by contacting the project team at aderyn@cyfrin.io. All
+complaints will be reviewed and investigated and will result in a response that
+is deemed necessary and appropriate to the circumstances. The project team is
+obligated to maintain confidentiality with regard to the reporter of an incident.
+Further details of specific enforcement policies may be posted separately.
 
-#### Solve an issue
-
-Please review our [existing issues](https://github.com/cyfrin/aderyn/issues) to find one that interests you.
-
-If a contributor is working on the issue, they will be assigned to the individual. If you find an issue to work on, you can assign it to yourself and open a PR with a fix.
-
-#### Create a new issue
-
-If a related issue doesn't exist, you can open a new issue.
-
-Some tips to follow when you are creating an issue:
-
-- Provide as much context as possible. Over-communicate to give the most details to the reader.
-- Include the steps to reproduce the issue or the reason for adding the feature.
-- Screenshots, videos, etc., are highly appreciated.
-
-### Pull Requests
-
-#### Pull Request Process
-
-We follow the ["fork-and-pull" Git workflow](https://github.com/susam/gitpr)
-
-1. Fork the repo
-2. Clone the project
-3. Create a new branch with a descriptive name
-4. Commit your changes to the new branch
-5. Push changes to your fork
-6. Open a PR in our repository and tag one of the maintainers to review your PR
-
-Here are some tips for a high-quality pull request:
-
-- Create a title for the PR that accurately defines the work done.
-- Structure the description neatly to make it easy for the readers to consume. For example, you can include bullet points and screenshots instead of having one large paragraph.
-- Add the link to the issue if applicable.
-- Have a good commit message that summarises the work done.
-
-Once you submit your PR:
-
-- We may ask questions, request additional information, or ask for changes to be made before a PR can be merged. Just so you know, these are to make the PR clear for everyone involved and aim to create a frictionless interaction process.
-- As you update your PR and apply changes, mark each conversation resolved.
-
-Once the PR is approved, we'll "squash-and-merge" to keep the git commit history clean.
+Project maintainers who do not follow or enforce the Code of Conduct in good
+faith may face temporary or permanent repercussions as determined by other
+members of the project's leadership.
