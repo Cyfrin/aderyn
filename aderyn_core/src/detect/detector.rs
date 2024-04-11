@@ -3,7 +3,7 @@ use strum::{Display, EnumCount, EnumIter, EnumString};
 
 use crate::{
     ast::NodeID,
-    context::workspace_context::{ASTNode, WorkspaceContext},
+    context::workspace_context::WorkspaceContext,
     detect::{
         high::{ArbitraryTransferFromDetector, DelegateCallInLoopDetector},
         low::{
@@ -185,7 +185,6 @@ pub enum IssueSeverity {
     Low,
     Medium,
     High,
-    Critical,
 }
 
 impl Display for IssueSeverity {
@@ -195,7 +194,6 @@ impl Display for IssueSeverity {
             IssueSeverity::Low => "Low",
             IssueSeverity::Medium => "Medium",
             IssueSeverity::High => "High",
-            IssueSeverity::Critical => "Critical",
         };
         write!(f, "{}", issue_description).unwrap();
         Ok(())
@@ -227,21 +225,6 @@ pub trait IssueDetector: Send + Sync + 'static {
     // Value is ASTNode NodeID
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
         BTreeMap::new()
-    }
-}
-
-pub trait ReusableDetector {
-    fn detect(
-        &mut self,
-        _context: &WorkspaceContext,
-        _using: &[ASTNode],
-        _within: &[ASTNode],
-    ) -> Result<&[ASTNode], Box<dyn Error>> {
-        Ok(&[])
-    }
-
-    fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::Undecided)
     }
 }
 

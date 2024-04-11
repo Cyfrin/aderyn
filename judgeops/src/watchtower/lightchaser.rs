@@ -109,7 +109,6 @@ impl InfersMetrics for Metrics {
         }
 
         match self.current_severity {
-            IssueSeverity::Critical => lc_accuracy == IssueSeverity::COUNT as u64,
             IssueSeverity::High => lc_accuracy >= IssueSeverity::COUNT as u64 - 1,
             IssueSeverity::Medium => lc_accuracy >= IssueSeverity::COUNT as u64 - 2,
             IssueSeverity::Low => lc_accuracy >= IssueSeverity::COUNT as u64 - 3,
@@ -408,20 +407,6 @@ mod lightchaser_tests {
 
         let current_metrics =
             watchtower.metrics(IssueDetectorNamePool::CentralizationRisk.to_string());
-        assert!(current_metrics.lc_accuracy() == 4);
-        assert!(current_metrics.is_acceptable());
-
-        watchtower.take_feedback(Feedback {
-            positive_feedbacks: vec![],
-            negative_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
-            all_exposed_detectors: HashMap::from([(
-                IssueDetectorNamePool::CentralizationRisk.to_string(),
-                IssueSeverity::Medium.to_string(),
-            )]),
-        });
-
-        let current_metrics =
-            watchtower.metrics(IssueDetectorNamePool::CentralizationRisk.to_string());
         assert!(current_metrics.lc_accuracy() == 3);
         assert!(current_metrics.is_acceptable());
 
@@ -437,6 +422,20 @@ mod lightchaser_tests {
         let current_metrics =
             watchtower.metrics(IssueDetectorNamePool::CentralizationRisk.to_string());
         assert!(current_metrics.lc_accuracy() == 2);
+        assert!(current_metrics.is_acceptable());
+
+        watchtower.take_feedback(Feedback {
+            positive_feedbacks: vec![],
+            negative_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: HashMap::from([(
+                IssueDetectorNamePool::CentralizationRisk.to_string(),
+                IssueSeverity::Medium.to_string(),
+            )]),
+        });
+
+        let current_metrics =
+            watchtower.metrics(IssueDetectorNamePool::CentralizationRisk.to_string());
+        assert!(current_metrics.lc_accuracy() == 1);
         assert!(!current_metrics.is_acceptable());
     }
 
@@ -503,7 +502,7 @@ mod lightchaser_tests {
 
         let current_metrics =
             watchtower.metrics(IssueDetectorNamePool::CentralizationRisk.to_string());
-        assert!(current_metrics.lc_accuracy() == 4);
+        assert!(current_metrics.lc_accuracy() == 3);
 
         watchtower.take_feedback(Feedback {
             positive_feedbacks: vec![],
@@ -516,11 +515,24 @@ mod lightchaser_tests {
 
         let current_metrics =
             watchtower.metrics(IssueDetectorNamePool::CentralizationRisk.to_string());
-        assert!(current_metrics.lc_accuracy() == 3);
+        assert!(current_metrics.lc_accuracy() == 2);
 
         watchtower.take_feedback(Feedback {
             positive_feedbacks: vec![],
             negative_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
+            all_exposed_detectors: HashMap::from([(
+                IssueDetectorNamePool::CentralizationRisk.to_string(),
+                IssueSeverity::Medium.to_string(),
+            )]),
+        });
+
+        let current_metrics =
+            watchtower.metrics(IssueDetectorNamePool::CentralizationRisk.to_string());
+        assert!(current_metrics.lc_accuracy() == 1);
+
+        watchtower.take_feedback(Feedback {
+            positive_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
+            negative_feedbacks: vec![],
             all_exposed_detectors: HashMap::from([(
                 IssueDetectorNamePool::CentralizationRisk.to_string(),
                 IssueSeverity::Medium.to_string(),
@@ -543,19 +555,6 @@ mod lightchaser_tests {
         let current_metrics =
             watchtower.metrics(IssueDetectorNamePool::CentralizationRisk.to_string());
         assert!(current_metrics.lc_accuracy() == 3);
-
-        watchtower.take_feedback(Feedback {
-            positive_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
-            negative_feedbacks: vec![],
-            all_exposed_detectors: HashMap::from([(
-                IssueDetectorNamePool::CentralizationRisk.to_string(),
-                IssueSeverity::Medium.to_string(),
-            )]),
-        });
-
-        let current_metrics =
-            watchtower.metrics(IssueDetectorNamePool::CentralizationRisk.to_string());
-        assert!(current_metrics.lc_accuracy() == 4);
     }
 
     #[test]
@@ -578,7 +577,7 @@ mod lightchaser_tests {
 
         let current_metrics =
             watchtower.metrics(IssueDetectorNamePool::CentralizationRisk.to_string());
-        assert!(current_metrics.lc_accuracy() == 5);
+        assert!(current_metrics.lc_accuracy() == 4);
 
         watchtower.take_feedback(Feedback {
             positive_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
@@ -591,7 +590,7 @@ mod lightchaser_tests {
 
         let current_metrics =
             watchtower.metrics(IssueDetectorNamePool::CentralizationRisk.to_string());
-        assert!(current_metrics.lc_accuracy() == 5);
+        assert!(current_metrics.lc_accuracy() == 4);
     }
 
     #[test]
@@ -614,7 +613,7 @@ mod lightchaser_tests {
 
         let current_metrics =
             watchtower.metrics(IssueDetectorNamePool::CentralizationRisk.to_string());
-        assert!(current_metrics.lc_accuracy() == 5);
+        assert!(current_metrics.lc_accuracy() == 4);
 
         watchtower.take_feedback(Feedback {
             positive_feedbacks: vec![],
@@ -627,7 +626,7 @@ mod lightchaser_tests {
 
         let current_metrics =
             watchtower.metrics(IssueDetectorNamePool::CentralizationRisk.to_string());
-        assert!(current_metrics.lc_accuracy() == 4);
+        assert!(current_metrics.lc_accuracy() == 3);
 
         watchtower.take_feedback(Feedback {
             positive_feedbacks: vec![IssueDetectorNamePool::CentralizationRisk.to_string()],
@@ -640,7 +639,7 @@ mod lightchaser_tests {
 
         let current_metrics =
             watchtower.metrics(IssueDetectorNamePool::CentralizationRisk.to_string());
-        assert!(current_metrics.lc_accuracy() == 4);
+        assert!(current_metrics.lc_accuracy() == 3);
     }
 
     #[test]
@@ -663,7 +662,7 @@ mod lightchaser_tests {
 
         let current_metrics =
             watchtower.metrics(IssueDetectorNamePool::CentralizationRisk.to_string());
-        assert!(current_metrics.lc_accuracy() == 5);
+        assert!(current_metrics.lc_accuracy() == 4);
 
         for _ in 1..=5 {
             watchtower.take_feedback(Feedback {

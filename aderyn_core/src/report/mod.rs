@@ -39,7 +39,6 @@ pub struct FilesDetail {
 
 #[derive(Serialize)]
 pub struct IssueCount {
-    critical: usize,
     high: usize,
     medium: usize,
     low: usize,
@@ -59,11 +58,6 @@ pub struct IssueBody {
     description: String,
     detector_name: String,
     instances: Vec<IssueInstance>,
-}
-
-#[derive(Serialize)]
-pub struct CriticalIssues {
-    issues: Vec<IssueBody>,
 }
 
 #[derive(Serialize)]
