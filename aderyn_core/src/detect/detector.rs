@@ -3,7 +3,7 @@ use strum::{Display, EnumCount, EnumIter, EnumString};
 
 use crate::{
     ast::NodeID,
-    context::workspace_context::{WorkspaceContext},
+    context::workspace_context::WorkspaceContext,
     detect::{
         high::{ArbitraryTransferFromDetector, DelegateCallInLoopDetector},
         low::{
