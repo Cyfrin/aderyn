@@ -1,7 +1,4 @@
 {
-  "critical_issues": {
-    "issues": []
-  },
   "detectors_used": [
     "delegate-call-in-loop",
     "centralization-risk",
@@ -214,7 +211,6 @@
     ]
   },
   "issue_count": {
-    "critical": 0,
     "high": 2,
     "low": 7,
     "medium": 4,
