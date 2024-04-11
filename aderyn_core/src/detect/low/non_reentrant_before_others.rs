@@ -59,9 +59,8 @@ mod non_reentrant_before_others_tests {
 
     #[test]
     fn test_non_reentrant_before_others() {
-        let context = load_contract(
-            "../tests/contract-playground/out/AdmiLowontract.sol/AdmiLowontract.json",
-        );
+        let context =
+            load_contract("../tests/contract-playground/out/AdminContract.sol/AdminContract.json");
 
         let mut detector = NonReentrantBeforeOthersDetector::default();
         let found = detector.detect(&context).unwrap();

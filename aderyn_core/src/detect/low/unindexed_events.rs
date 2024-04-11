@@ -68,7 +68,7 @@ mod unindexed_event_tests {
     #[test]
     fn test_unindexed_events() {
         let context = load_contract(
-            "../tests/contract-playground/out/ExtendedInheritaLowe.sol/ExtendedInheritaLowe.json",
+            "../tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",
         );
 
         let mut detector = UnindexedEventsDetector::default();

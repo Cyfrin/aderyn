@@ -63,7 +63,7 @@ mod useless_modifier_tests {
     #[test]
     fn test_useless_modifier_tests() {
         let context = load_contract(
-            "../tests/contract-playground/out/OLoweModifierExample.sol/OLoweModifierExample.json",
+            "../tests/contract-playground/out/OnceModifierExample.sol/OnceModifierExample.json",
         );
 
         let mut detector = UselessModifierDetector::default();
