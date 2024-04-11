@@ -92,7 +92,7 @@ impl IssueDetector for BlockTimestampDeadlineDetector {
     }
 
     fn severity(&self) -> IssueSeverity {
-        IssueSeverity::Medium
+        IssueSeverity::High
     }
 
     fn title(&self) -> String {
@@ -117,7 +117,7 @@ impl IssueDetector for BlockTimestampDeadlineDetector {
 mod block_timestamp_deadline_detector_tests {
     use crate::detect::{
         detector::{detector_test_helpers::load_contract, IssueDetector},
-        medium::block_timestamp_deadline::BlockTimestampDeadlineDetector,
+        high::BlockTimestampDeadlineDetector,
     };
 
     #[test]
@@ -132,10 +132,10 @@ mod block_timestamp_deadline_detector_tests {
         assert!(found);
         // assert that the number of instances found is correct
         assert_eq!(detector.instances().len(), 9);
-        // assert that the severity is medium
+        // assert that the severity is High
         assert_eq!(
             detector.severity(),
-            crate::detect::detector::IssueSeverity::Medium
+            crate::detect::detector::IssueSeverity::High
         );
         // assert that the title is correct
         assert_eq!(
@@ -164,10 +164,10 @@ mod block_timestamp_deadline_detector_tests {
         assert!(found);
         // assert that the number of instances found is correct
         assert_eq!(detector.instances().len(), 8);
-        // assert that the severity is medium
+        // assert that the severity is High
         assert_eq!(
             detector.severity(),
-            crate::detect::detector::IssueSeverity::Medium
+            crate::detect::detector::IssueSeverity::High
         );
         // assert that the title is correct
         assert_eq!(

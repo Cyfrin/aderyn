@@ -122,7 +122,7 @@ impl IssueDetector for InconsistentTypeNamesDetector {
     }
 
     fn severity(&self) -> IssueSeverity {
-        IssueSeverity::NC
+        IssueSeverity::Low
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -146,7 +146,7 @@ mod inconsistent_type_names {
             load_contract("../tests/contract-playground/out/InconsistentUints.sol/InconsistentStateVariablesContract.json");
 
         let mut detector = InconsistentTypeNamesDetector::default();
-        // assert that the detector finds the public function
+        // assert that the detector finds the public Function
         let found = detector.detect(&context).unwrap();
         assert!(found);
         println!("{:?}", detector.instances());
@@ -155,7 +155,7 @@ mod inconsistent_type_names {
         // assert that the detector returns the correct severity
         assert_eq!(
             detector.severity(),
-            crate::detect::detector::IssueSeverity::NC
+            crate::detect::detector::IssueSeverity::Low
         );
     }
 }
