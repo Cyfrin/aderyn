@@ -40,9 +40,7 @@ pub struct FilesDetail {
 #[derive(Serialize)]
 pub struct IssueCount {
     high: usize,
-    medium: usize,
     low: usize,
-    nc: usize,
 }
 
 #[derive(Serialize)]
@@ -66,17 +64,7 @@ pub struct HighIssues {
 }
 
 #[derive(Serialize)]
-pub struct MediumIssues {
-    issues: Vec<IssueBody>,
-}
-
-#[derive(Serialize)]
 pub struct LowIssues {
-    issues: Vec<IssueBody>,
-}
-
-#[derive(Serialize)]
-pub struct NcIssues {
     issues: Vec<IssueBody>,
 }
 

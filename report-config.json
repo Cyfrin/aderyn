@@ -44,9 +44,7 @@
   },
   "issue_count": {
     "high": 0,
-    "low": 1,
-    "medium": 0,
-    "nc": 1
+    "low": 2
   },
   "low_issues": {
     "issues": [
@@ -91,14 +89,7 @@
           }
         ],
         "title": "PUSH0 is not supported by all chains"
-      }
-    ]
-  },
-  "medium_issues": {
-    "issues": []
-  },
-  "nc_issues": {
-    "issues": [
+      },
       {
         "description": "Instead of marking a function as `public`, consider marking it as `external` if it is not used internally.",
         "detector_name": "useless-public-function",

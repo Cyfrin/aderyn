@@ -16,7 +16,7 @@ use eyre::Result;
 
 #[derive(Default)]
 pub struct ZeroAddressCheckDetector {
-    // All the state variables, set at the beginning of the detect function
+    // All the state variables, set at the beginning of the detect Function
     mutable_address_state_variables: HashMap<i64, VariableDeclaration>,
 
     // Keys are source file name and line number
@@ -53,9 +53,9 @@ impl IssueDetector for ZeroAddressCheckDetector {
             })
             .collect();
 
-        // Get all function definitions
+        // Get all Function definitions
         for function_definition in context.function_definitions() {
-            // Get all the binary checks inside the function
+            // Get all the binary checks inside the Function
             let binary_operations: Vec<BinaryOperation> =
                 ExtractBinaryOperations::from(function_definition)
                     .extracted
@@ -126,7 +126,7 @@ impl IssueDetector for ZeroAddressCheckDetector {
                 .collect();
 
             // For each assignment, if the right hand side is in the identifier_reference_declaration_ids_in_binary_checks
-            // and is also in the function.parameters, then add the assignment to the found_instances
+            // and is also in the Function.parameters, then add the assignment to the found_instances
             for assignment in assignments {
                 if let Expression::Identifier(right_identifier) = &*assignment.right_hand_side {
                     if !identifier_reference_declaration_ids_in_binary_checks
@@ -171,7 +171,7 @@ impl IssueDetector for ZeroAddressCheckDetector {
     }
 
     fn severity(&self) -> IssueSeverity {
-        IssueSeverity::NC
+        IssueSeverity::Low
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -190,7 +190,7 @@ mod zero_address_check_tests {
         context::{browser::GetClosestAncestorOfTypeX, workspace_context::ASTNode},
         detect::{
             detector::{detector_test_helpers::load_contract, IssueDetector},
-            nc::zero_address_check::ZeroAddressCheckDetector,
+            low::ZeroAddressCheckDetector,
         },
     };
 
@@ -220,10 +220,10 @@ mod zero_address_check_tests {
                 panic!()
             }
         }
-        // assert that the severity is NC
+        // assert that the severity is Low
         assert_eq!(
             detector.severity(),
-            crate::detect::detector::IssueSeverity::NC
+            crate::detect::detector::IssueSeverity::Low
         );
         // assert that the title is correct
         assert_eq!(

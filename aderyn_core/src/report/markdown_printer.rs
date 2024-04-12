@@ -39,9 +39,7 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
 
         let all_issues = vec![
             (report.high_issues().issues, "# High Issues\n", "H"),
-            (report.medium_issues().issues, "# Medium Issues\n", "M"),
             (report.low_issues().issues, "# Low Issues\n", "L"),
-            (report.nc_issues().issues, "# NC Issues\n", "NC"),
         ];
 
         for (issues, heading, severity) in all_issues {
@@ -147,9 +145,7 @@ impl MarkdownReportPrinter {
             writeln!(writer, "| Category | No. of Issues |")?;
             writeln!(writer, "| --- | --- |")?;
             writeln!(writer, "| High | {} |", issue_count.high)?;
-            writeln!(writer, "| Medium | {} |", issue_count.medium)?;
             writeln!(writer, "| Low | {} |", issue_count.low)?;
-            writeln!(writer, "| NC | {} |", issue_count.nc)?;
             writeln!(writer, "\n")?; // Add an extra newline for spacing
         }
 
@@ -196,9 +192,7 @@ impl MarkdownReportPrinter {
 
         let issues = [
             (&report.highs, "- [High Issues](#high-issues)", "H"),
-            (&report.mediums, "- [Medium Issues](#medium-issues)", "M"),
             (&report.lows, "- [Low Issues](#low-issues)", "L"),
-            (&report.ncs, "- [NC Issues](#nc-issues)", "NC"),
         ];
 
         issues.iter().for_each(|rec| {

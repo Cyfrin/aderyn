@@ -172,6 +172,98 @@
         "title": "Using `delegatecall` in loop"
       },
       {
+        "description": "In the PoS model, proposers know well in advance if they will propose one or consecutive blocks ahead of time. In such a scenario, a malicious validator can hold back the transaction and execute it at a more favourable block number.Consider allowing function caller to specify swap deadline input parameter.",
+        "detector_name": "block-timestamp-deadline",
+        "instances": [
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 23,
+            "src": "670:83"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 24,
+            "src": "763:83"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 25,
+            "src": "856:70"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 26,
+            "src": "936:80"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 27,
+            "src": "1026:80"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 28,
+            "src": "1116:67"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 31,
+            "src": "1261:112"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 32,
+            "src": "1383:99"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 33,
+            "src": "1492:109"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 52,
+            "src": "1115:143"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 55,
+            "src": "1293:321"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 66,
+            "src": "1668:131"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 69,
+            "src": "1828:236"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 77,
+            "src": "2132:144"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 80,
+            "src": "2312:322"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 91,
+            "src": "2690:132"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 94,
+            "src": "2852:237"
+          }
+        ],
+        "title": "Using `block.timestamp` for swap deadline offers no protection"
+      },
+      {
         "description": "Passing an arbitrary `from` address to `transferFrom` (or `safeTransferFrom`) can lead to loss of funds, because anyone can transfer tokens from the `from` address if an approval is made.  ",
         "detector_name": "arbitrary-transfer-from",
         "instances": [
@@ -211,13 +303,75 @@
     ]
   },
   "issue_count": {
-    "high": 2,
-    "low": 7,
-    "medium": 4,
-    "nc": 11
+    "high": 3,
+    "low": 21
   },
   "low_issues": {
     "issues": [
+      {
+        "description": "Contracts have owners with privileged rights to perform admin tasks and need to be trusted to not perform malicious updates or drain funds.",
+        "detector_name": "centralization-risk",
+        "instances": [
+          {
+            "contract_path": "src/AdminContract.sol",
+            "line_no": 7,
+            "src": "270:7"
+          },
+          {
+            "contract_path": "src/AdminContract.sol",
+            "line_no": 10,
+            "src": "376:9"
+          },
+          {
+            "contract_path": "src/AdminContract.sol",
+            "line_no": 14,
+            "src": "505:9"
+          },
+          {
+            "contract_path": "src/DeprecatedOZFunctions.sol",
+            "line_no": 7,
+            "src": "295:13"
+          },
+          {
+            "contract_path": "src/EmptyBlocks.sol",
+            "line_no": 6,
+            "src": "188:7"
+          },
+          {
+            "contract_path": "src/InternalFunctions.sol",
+            "line_no": 12,
+            "src": "250:9"
+          },
+          {
+            "contract_path": "src/parent_chain/ParentChainContract.sol",
+            "line_no": 7,
+            "src": "282:7"
+          },
+          {
+            "contract_path": "src/parent_chain/ParentChainContract.sol",
+            "line_no": 28,
+            "src": "725:9"
+          },
+          {
+            "contract_path": "src/parent_chain/ParentChainContract.sol",
+            "line_no": 32,
+            "src": "854:9"
+          }
+        ],
+        "title": "Centralization Risk for trusted owners"
+      },
+      {
+        "description": "There is a subtle difference between the implementation of solmate's SafeTransferLib and OZ's SafeERC20: OZ's SafeERC20 checks if the token is a contract or not, solmate's SafeTransferLib does not.\nhttps://github.com/transmissions11/solmate/blob/main/src/utils/SafeTransferLib.sol#L9 \n`@dev Note that none of the functions in this library check that a token has code at all! That responsibility is delegated to the caller`\n",
+        "detector_name": "solmate-safe-transfer-lib",
+        "instances": [
+          {
+            "contract_path": "src/T11sTranferer.sol",
+            "line_no": 4,
+            "src": "57:84"
+          }
+        ],
+        "title": "Solmate's SafeTransferLib does not check for token contract's existence"
+      },
       {
         "description": "Use `abi.encode()` instead which will pad items to 32 bytes, which will [prevent hash collisions](https://docs.soliditylang.org/en/v0.8.13/abi-spec.html#non-standard-packed-mode) (e.g. `abi.encodePacked(0x123,0x456)` => `0x123456` => `abi.encodePacked(0x1,0x23456)`, but `abi.encode(0x123,0x456)` => `0x0...1230...456`). Unless there is a compelling reason, `abi.encode` should be preferred. If there is only one argument to `abi.encodePacked()` it can often be cast to `bytes()` or `bytes32()` [instead](https://ethereum.stackexchange.com/questions/30912/how-to-compare-strings-in-solidity#answer-82739).\nIf all arguments are strings and or bytes, `bytes.concat()` should be used instead.",
         "detector_name": "avoid-abi-encode-packed",
@@ -358,306 +512,6 @@
         ],
         "title": "Solidity pragma should be specific, not wide"
       },
-      {
-        "description": "Solc compiler version 0.8.20 switches the default target EVM version to Shanghai, which means that the generated bytecode will include PUSH0 opcodes. Be sure to select the appropriate EVM version in case you intend to deploy on a chain other than mainnet like L2 chains that may not support PUSH0, otherwise deployment of your contracts will fail.",
-        "detector_name": "push-zero-opcode",
-        "instances": [
-          {
-            "contract_path": "src/AdminContract.sol",
-            "line_no": 2,
-            "src": "32:23"
-          },
-          {
-            "contract_path": "src/Counter.sol",
-            "line_no": 2,
-            "src": "39:24"
-          },
-          {
-            "contract_path": "src/CrazyPragma.sol",
-            "line_no": 2,
-            "src": "32:32"
-          },
-          {
-            "contract_path": "src/DeprecatedOZFunctions.sol",
-            "line_no": 2,
-            "src": "32:23"
-          },
-          {
-            "contract_path": "src/InconsistentUints.sol",
-            "line_no": 1,
-            "src": "0:24"
-          },
-          {
-            "contract_path": "src/KeccakContract.sol",
-            "line_no": 2,
-            "src": "32:23"
-          },
-          {
-            "contract_path": "src/StateVariables.sol",
-            "line_no": 2,
-            "src": "32:23"
-          },
-          {
-            "contract_path": "src/StorageConditionals.sol",
-            "line_no": 2,
-            "src": "32:23"
-          },
-          {
-            "contract_path": "src/T11sTranferer.sol",
-            "line_no": 2,
-            "src": "32:23"
-          },
-          {
-            "contract_path": "src/UnsafeERC721Mint.sol",
-            "line_no": 2,
-            "src": "32:23"
-          },
-          {
-            "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
-            "line_no": 6,
-            "src": "46:24"
-          },
-          {
-            "contract_path": "src/cloc/HeavilyCommentedContract.sol",
-            "line_no": 6,
-            "src": "46:32"
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 12,
-            "src": "2302:23"
-          },
-          {
-            "contract_path": "src/inheritance/ExtendedInheritance.sol",
-            "line_no": 2,
-            "src": "32:23"
-          },
-          {
-            "contract_path": "src/inheritance/IContractInheritance.sol",
-            "line_no": 2,
-            "src": "32:24"
-          },
-          {
-            "contract_path": "src/inheritance/InheritanceBase.sol",
-            "line_no": 2,
-            "src": "32:23"
-          },
-          {
-            "contract_path": "src/nested/1/Nested.sol",
-            "line_no": 5,
-            "src": "180:23"
-          },
-          {
-            "contract_path": "src/nested/2/Nested.sol",
-            "line_no": 5,
-            "src": "180:23"
-          },
-          {
-            "contract_path": "src/parent_chain/ParentChainContract.sol",
-            "line_no": 2,
-            "src": "32:23"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 2,
-            "src": "32:23"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
-            "line_no": 2,
-            "src": "32:23"
-          }
-        ],
-        "title": "PUSH0 is not supported by all chains"
-      },
-      {
-        "description": "Consider protecting the initializer functions with modifiers.",
-        "detector_name": "unprotected-initializer",
-        "instances": [
-          {
-            "contract_path": "src/UnprotectedInitialize.sol",
-            "line_no": 35,
-            "src": "820:33"
-          }
-        ],
-        "title": "Unprotected initializer"
-      }
-    ]
-  },
-  "medium_issues": {
-    "issues": [
-      {
-        "description": "Contracts have owners with privileged rights to perform admin tasks and need to be trusted to not perform malicious updates or drain funds.",
-        "detector_name": "centralization-risk",
-        "instances": [
-          {
-            "contract_path": "src/AdminContract.sol",
-            "line_no": 7,
-            "src": "270:7"
-          },
-          {
-            "contract_path": "src/AdminContract.sol",
-            "line_no": 10,
-            "src": "376:9"
-          },
-          {
-            "contract_path": "src/AdminContract.sol",
-            "line_no": 14,
-            "src": "505:9"
-          },
-          {
-            "contract_path": "src/DeprecatedOZFunctions.sol",
-            "line_no": 7,
-            "src": "295:13"
-          },
-          {
-            "contract_path": "src/EmptyBlocks.sol",
-            "line_no": 6,
-            "src": "188:7"
-          },
-          {
-            "contract_path": "src/InternalFunctions.sol",
-            "line_no": 12,
-            "src": "250:9"
-          },
-          {
-            "contract_path": "src/parent_chain/ParentChainContract.sol",
-            "line_no": 7,
-            "src": "282:7"
-          },
-          {
-            "contract_path": "src/parent_chain/ParentChainContract.sol",
-            "line_no": 28,
-            "src": "725:9"
-          },
-          {
-            "contract_path": "src/parent_chain/ParentChainContract.sol",
-            "line_no": 32,
-            "src": "854:9"
-          }
-        ],
-        "title": "Centralization Risk for trusted owners"
-      },
-      {
-        "description": "There is a subtle difference between the implementation of solmate's SafeTransferLib and OZ's SafeERC20: OZ's SafeERC20 checks if the token is a contract or not, solmate's SafeTransferLib does not.\nhttps://github.com/transmissions11/solmate/blob/main/src/utils/SafeTransferLib.sol#L9 \n`@dev Note that none of the functions in this library check that a token has code at all! That responsibility is delegated to the caller`\n",
-        "detector_name": "solmate-safe-transfer-lib",
-        "instances": [
-          {
-            "contract_path": "src/T11sTranferer.sol",
-            "line_no": 4,
-            "src": "57:84"
-          }
-        ],
-        "title": "Solmate's SafeTransferLib does not check for token contract's existence"
-      },
-      {
-        "description": "In the PoS model, proposers know well in advance if they will propose one or consecutive blocks ahead of time. In such a scenario, a malicious validator can hold back the transaction and execute it at a more favourable block number.Consider allowing function caller to specify swap deadline input parameter.",
-        "detector_name": "block-timestamp-deadline",
-        "instances": [
-          {
-            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 23,
-            "src": "670:83"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 24,
-            "src": "763:83"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 25,
-            "src": "856:70"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 26,
-            "src": "936:80"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 27,
-            "src": "1026:80"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 28,
-            "src": "1116:67"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 31,
-            "src": "1261:112"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 32,
-            "src": "1383:99"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 33,
-            "src": "1492:109"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
-            "line_no": 52,
-            "src": "1115:143"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
-            "line_no": 55,
-            "src": "1293:321"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
-            "line_no": 66,
-            "src": "1668:131"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
-            "line_no": 69,
-            "src": "1828:236"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
-            "line_no": 77,
-            "src": "2132:144"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
-            "line_no": 80,
-            "src": "2312:322"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
-            "line_no": 91,
-            "src": "2690:132"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
-            "line_no": 94,
-            "src": "2852:237"
-          }
-        ],
-        "title": "Using `block.timestamp` for swap deadline offers no protection"
-      },
-      {
-        "description": "Using `ERC721::_mint()` can mint ERC721 tokens to addresses which don't support ERC721 tokens. Use `_safeMint()` instead of `_mint()` for ERC721.",
-        "detector_name": "unsafe-oz-erc721-mint",
-        "instances": [
-          {
-            "contract_path": "src/UnsafeERC721Mint.sol",
-            "line_no": 12,
-            "src": "410:5"
-          }
-        ],
-        "title": "Using `ERC721::_mint()` can be dangerous"
-      }
-    ]
-  },
-  "nc_issues": {
-    "issues": [
       {
         "description": "Check for `address(0)` when assigning values to address state variables.",
         "detector_name": "zero-address-check",
@@ -926,6 +780,130 @@
         "title": "The `nonReentrant` `modifier` should occur before all other modifiers"
       },
       {
+        "description": "Using `ERC721::_mint()` can mint ERC721 tokens to addresses which don't support ERC721 tokens. Use `_safeMint()` instead of `_mint()` for ERC721.",
+        "detector_name": "unsafe-oz-erc721-mint",
+        "instances": [
+          {
+            "contract_path": "src/UnsafeERC721Mint.sol",
+            "line_no": 12,
+            "src": "410:5"
+          }
+        ],
+        "title": "Using `ERC721::_mint()` can be dangerous"
+      },
+      {
+        "description": "Solc compiler version 0.8.20 switches the default target EVM version to Shanghai, which means that the generated bytecode will include PUSH0 opcodes. Be sure to select the appropriate EVM version in case you intend to deploy on a chain other than mainnet like L2 chains that may not support PUSH0, otherwise deployment of your contracts will fail.",
+        "detector_name": "push-zero-opcode",
+        "instances": [
+          {
+            "contract_path": "src/AdminContract.sol",
+            "line_no": 2,
+            "src": "32:23"
+          },
+          {
+            "contract_path": "src/Counter.sol",
+            "line_no": 2,
+            "src": "39:24"
+          },
+          {
+            "contract_path": "src/CrazyPragma.sol",
+            "line_no": 2,
+            "src": "32:32"
+          },
+          {
+            "contract_path": "src/DeprecatedOZFunctions.sol",
+            "line_no": 2,
+            "src": "32:23"
+          },
+          {
+            "contract_path": "src/InconsistentUints.sol",
+            "line_no": 1,
+            "src": "0:24"
+          },
+          {
+            "contract_path": "src/KeccakContract.sol",
+            "line_no": 2,
+            "src": "32:23"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 2,
+            "src": "32:23"
+          },
+          {
+            "contract_path": "src/StorageConditionals.sol",
+            "line_no": 2,
+            "src": "32:23"
+          },
+          {
+            "contract_path": "src/T11sTranferer.sol",
+            "line_no": 2,
+            "src": "32:23"
+          },
+          {
+            "contract_path": "src/UnsafeERC721Mint.sol",
+            "line_no": 2,
+            "src": "32:23"
+          },
+          {
+            "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
+            "line_no": 6,
+            "src": "46:24"
+          },
+          {
+            "contract_path": "src/cloc/HeavilyCommentedContract.sol",
+            "line_no": 6,
+            "src": "46:32"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 12,
+            "src": "2302:23"
+          },
+          {
+            "contract_path": "src/inheritance/ExtendedInheritance.sol",
+            "line_no": 2,
+            "src": "32:23"
+          },
+          {
+            "contract_path": "src/inheritance/IContractInheritance.sol",
+            "line_no": 2,
+            "src": "32:24"
+          },
+          {
+            "contract_path": "src/inheritance/InheritanceBase.sol",
+            "line_no": 2,
+            "src": "32:23"
+          },
+          {
+            "contract_path": "src/nested/1/Nested.sol",
+            "line_no": 5,
+            "src": "180:23"
+          },
+          {
+            "contract_path": "src/nested/2/Nested.sol",
+            "line_no": 5,
+            "src": "180:23"
+          },
+          {
+            "contract_path": "src/parent_chain/ParentChainContract.sol",
+            "line_no": 2,
+            "src": "32:23"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 2,
+            "src": "32:23"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 2,
+            "src": "32:23"
+          }
+        ],
+        "title": "PUSH0 is not supported by all chains"
+      },
+      {
         "description": "",
         "detector_name": "useless-modifier",
         "instances": [
@@ -1154,6 +1132,18 @@
           }
         ],
         "title": "Inconsistency in declaring uint256/uint (or) int256/int variables within a contract"
+      },
+      {
+        "description": "Consider protecting the initializer functions with modifiers.",
+        "detector_name": "unprotected-initializer",
+        "instances": [
+          {
+            "contract_path": "src/UnprotectedInitialize.sol",
+            "line_no": 35,
+            "src": "820:33"
+          }
+        ],
+        "title": "Unprotected initializer"
       }
     ]
   }

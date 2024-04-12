@@ -34,7 +34,7 @@ impl IssueDetector for SiblingDemonstrator {
     }
 
     fn severity(&self) -> IssueSeverity {
-        IssueSeverity::Medium
+        IssueSeverity::High
     }
 
     fn title(&self) -> String {

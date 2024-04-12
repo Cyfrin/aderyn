@@ -51,7 +51,7 @@ impl IssueDetector for ClosestAncestorDemonstrator {
     }
 
     fn severity(&self) -> IssueSeverity {
-        IssueSeverity::Medium
+        IssueSeverity::High
     }
 
     fn title(&self) -> String {

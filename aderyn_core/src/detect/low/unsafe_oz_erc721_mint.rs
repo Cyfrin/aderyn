@@ -62,7 +62,7 @@ impl IssueDetector for UnsafeERC721MintDetector {
     }
 
     fn severity(&self) -> IssueSeverity {
-        IssueSeverity::Medium
+        IssueSeverity::Low
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -78,7 +78,7 @@ impl IssueDetector for UnsafeERC721MintDetector {
 mod unsafe_erc721_mint_tests {
     use crate::detect::{
         detector::{detector_test_helpers::load_contract, IssueDetector},
-        medium::unsafe_oz_erc721_mint::UnsafeERC721MintDetector,
+        low::UnsafeERC721MintDetector,
     };
 
     #[test]
@@ -93,10 +93,10 @@ mod unsafe_erc721_mint_tests {
         assert!(found);
         // assert that the detector found the correct number of instance
         assert_eq!(detector.instances().len(), 1);
-        // assert that the severity is medium
+        // assert that the severity is Low
         assert_eq!(
             detector.severity(),
-            crate::detect::detector::IssueSeverity::Medium
+            crate::detect::detector::IssueSeverity::Low
         );
         // assert that the title is correct
         assert_eq!(

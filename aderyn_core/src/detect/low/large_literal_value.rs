@@ -42,7 +42,7 @@ impl IssueDetector for LargeLiteralValueDetector {
     }
 
     fn severity(&self) -> IssueSeverity {
-        IssueSeverity::NC
+        IssueSeverity::Low
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -66,7 +66,7 @@ mod large_literal_values {
             load_contract("../tests/contract-playground/out/HugeConstants.sol/HugeConstants.json");
 
         let mut detector = LargeLiteralValueDetector::default();
-        // assert that the detector finds the public function
+        // assert that the detector finds the public Function
         let found = detector.detect(&context).unwrap();
         assert!(found);
         // assert that the detector finds the correct number of instances
@@ -74,7 +74,7 @@ mod large_literal_values {
         // assert that the detector returns the correct severity
         assert_eq!(
             detector.severity(),
-            crate::detect::detector::IssueSeverity::NC
+            crate::detect::detector::IssueSeverity::Low
         );
         // assert that the detector returns the correct title
         assert_eq!(
