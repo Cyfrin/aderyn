@@ -43,7 +43,7 @@ pub struct IssueCount {
     low: usize,
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Debug)]
 pub struct IssueInstance {
     contract_path: String,
     line_no: usize,

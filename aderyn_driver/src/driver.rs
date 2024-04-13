@@ -21,12 +21,11 @@ pub fn drive(args: Args) {
     let output = args.output.clone();
     let cx_wrapper = make_context(&args);
     let root_rel_path = PathBuf::from(&args.root);
-    let context = &cx_wrapper.context;
 
     if args.output.ends_with(".json") {
         // Load the workspace context into the run function, which runs the detectors
         run_with_printer(
-            context,
+            &cx_wrapper.contexts,
             output,
             JsonPrinter,
             root_rel_path,
@@ -42,7 +41,7 @@ pub fn drive(args: Args) {
     } else {
         // Load the workspace context into the run function, which runs the detectors
         run_with_printer(
-            context,
+            &cx_wrapper.contexts,
             output,
             MarkdownReportPrinter,
             root_rel_path,
@@ -62,12 +61,11 @@ pub fn drive_with(args: Args, detectors: Vec<Box<dyn IssueDetector>>) {
     let output = args.output.clone();
     let cx_wrapper = make_context(&args);
     let root_rel_path = PathBuf::from(&args.root);
-    let context = &cx_wrapper.context;
 
     if args.output.ends_with(".json") {
         // Load the workspace context into the run function, which runs the detectors
         run_with_printer_and_given_detectors(
-            context,
+            &cx_wrapper.contexts,
             output,
             JsonPrinter,
             root_rel_path,
@@ -84,7 +82,7 @@ pub fn drive_with(args: Args, detectors: Vec<Box<dyn IssueDetector>>) {
     } else {
         // Load the workspace context into the run function, which runs the detectors
         run_with_printer_and_given_detectors(
-            context,
+            &cx_wrapper.contexts,
             output,
             MarkdownReportPrinter,
             root_rel_path,
@@ -102,7 +100,7 @@ pub fn drive_with(args: Args, detectors: Vec<Box<dyn IssueDetector>>) {
 }
 
 pub struct WorkspaceContextWrapper {
-    pub context: WorkspaceContext,
+    pub contexts: Vec<WorkspaceContext>,
 }
 
 fn make_context(args: &Args) -> WorkspaceContextWrapper {
@@ -110,7 +108,7 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
         eprintln!("Warning: output file lacks the \".md\" or \".json\" extension in its filename.");
     }
 
-    let (src_path, mut context) = {
+    let (src_path, mut contexts) = {
         let root_path = PathBuf::from(&args.root);
         process_auto::with_project_root_at(&root_path, &args.scope, &args.exclude)
     };
@@ -124,13 +122,13 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
 
     if should_cloc {
         // Using the source path, calculate the sloc
-        let stats =
-            fscloc::engine::count_lines_of_code(&PathBuf::from(src_path), &context.src_filepaths);
-        let stats = stats.lock().unwrap().to_owned();
-        context.set_sloc_stats(stats);
+        // let stats =
+        //     fscloc::engine::count_lines_of_code(&PathBuf::from(src_path), &context.src_filepaths);
+        // let stats = stats.lock().unwrap().to_owned();
+        // context.set_sloc_stats(stats);
     }
 
-    WorkspaceContextWrapper { context }
+    WorkspaceContextWrapper { contexts }
 }
 
 #[cfg(test)]

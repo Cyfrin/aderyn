@@ -39,7 +39,7 @@ impl ReportPrinter<()> for JsonPrinter {
         &self,
         writer: W,
         report: &Report,
-        context: &WorkspaceContext,
+        contexts: &Vec<WorkspaceContext>,
         _: PathBuf,
         _: Option<String>,
         _: bool,
@@ -49,8 +49,8 @@ impl ReportPrinter<()> for JsonPrinter {
         let detectors_used_names: Vec<_> = detectors_used.iter().map(|x| x.0.clone()).collect();
 
         let content = JsonContent {
-            files_summary: context.files_summary(),
-            files_details: context.files_details(),
+            files_summary: contexts[0].files_summary(), // todo accumulate
+            files_details: contexts[0].files_details(), // todo accumulate
             issue_count: report.issue_count(),
             high_issues: report.high_issues(),
             low_issues: report.low_issues(),

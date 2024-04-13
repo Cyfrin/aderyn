@@ -22,7 +22,7 @@ use crate::report::reporter::Report;
 use crate::report::Issue;
 
 pub fn run_with_printer<T>(
-    context: &WorkspaceContext,
+    contexts: &Vec<WorkspaceContext>,
     output_file_path: String,
     reporter: T,
     root_rel_path: PathBuf,
@@ -34,7 +34,7 @@ where
 {
     let detectors = get_all_issue_detectors();
     run_with_printer_and_given_detectors(
-        context,
+        contexts,
         output_file_path,
         reporter,
         root_rel_path,
@@ -45,7 +45,7 @@ where
 }
 
 pub fn run_with_printer_and_given_detectors<T>(
-    context: &WorkspaceContext,
+    contexts: &Vec<WorkspaceContext>,
     output_file_path: String,
     reporter: T,
     root_rel_path: PathBuf,
@@ -69,15 +69,17 @@ where
     let issues: Vec<Option<(Issue, IssueSeverity)>> = detectors
         .par_iter_mut()
         .map(|detector| {
-            if let Ok(found) = detector.detect(context) {
-                if found {
-                    let issue: Issue = Issue {
-                        title: detector.title(),
-                        description: detector.description(),
-                        detector_name: detector.name(),
-                        instances: detector.instances(),
-                    };
-                    return Some((issue, detector.severity()));
+            for context in contexts {
+                if let Ok(found) = detector.detect(context) {
+                    if found {
+                        let issue: Issue = Issue {
+                            title: detector.title(),
+                            description: detector.description(),
+                            detector_name: detector.name(),
+                            instances: detector.instances(),
+                        };
+                        return Some((issue, detector.severity())); // todo collect before return
+                    }
                 }
             }
             None
@@ -102,7 +104,7 @@ where
         reporter.print_report(
             get_writer(&output_file_path)?,
             &report,
-            context,
+            contexts,
             root_rel_path,
             Some(output_file_path.clone()),
             no_snippets,
@@ -114,7 +116,7 @@ where
         reporter.print_report(
             io::stdout(),
             &report,
-            context,
+            contexts,
             root_rel_path,
             Some(output_file_path.clone()),
             no_snippets,
