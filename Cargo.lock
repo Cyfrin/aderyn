@@ -47,6 +47,9 @@ dependencies = [
  "aderyn_core",
  "foundry-compilers",
  "rayon",
+ "serde",
+ "serde_json",
+ "serde_repr",
 ]
 
 [[package]]
