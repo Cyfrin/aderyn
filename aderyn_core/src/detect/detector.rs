@@ -279,7 +279,7 @@ pub mod detector_test_helpers {
         let solidity_content = std::fs::read_to_string(solidity_file).unwrap();
 
         let compiler_input = CompilerInput::new(solidity_file.as_path()).unwrap();
-        let compiler_input = compiler_input.get(0).unwrap(); // There's only 1 file in the path
+        let compiler_input = compiler_input.first().unwrap(); // There's only 1 file in the path
         let version = Solc::detect_version(&Source {
             content: Arc::new(solidity_content.clone()),
         })
@@ -295,8 +295,6 @@ pub mod detector_test_helpers {
             .0
             .to_str()
             .unwrap();
-
-        println!("FA {}", file_arg);
 
         let command = Command::new(solc_bin)
             .args(["--ast-compact-json", file_arg])
@@ -332,7 +330,7 @@ pub mod detector_test_helpers {
                 std::process::exit(1);
             });
             // println!("Workspace Context {:#?}", context);
-            return context;
+            context
         } else {
             eprintln!("Error running solc command");
             std::process::exit(1);
