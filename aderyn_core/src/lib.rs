@@ -9,6 +9,7 @@ pub mod visitor;
 use detect::detector::IssueDetector;
 use eyre::Result;
 use rayon::iter::{IntoParallelRefMutIterator, ParallelIterator};
+use std::collections::BTreeMap;
 use std::error::Error;
 use std::fs::{remove_file, File};
 use std::io::{self};
@@ -66,33 +67,45 @@ where
         .collect::<Vec<_>>();
     let mut report: Report = Report::default();
 
-    let issues: Vec<Option<(Issue, IssueSeverity)>> = detectors
+    let issues_collection: Vec<Vec<(Issue, IssueSeverity)>> = detectors
         .par_iter_mut()
         .map(|detector| {
+            let mut issues: Vec<(Issue, IssueSeverity)> = vec![];
+
+            let mut issue: Issue = Issue {
+                title: detector.title(),
+                description: detector.description(),
+                detector_name: detector.name(),
+                instances: Default::default(),
+            };
+
+            let mut detectors_instances = BTreeMap::new();
+
             for context in contexts {
                 if let Ok(found) = detector.detect(context) {
                     if found {
-                        let issue: Issue = Issue {
-                            title: detector.title(),
-                            description: detector.description(),
-                            detector_name: detector.name(),
-                            instances: detector.instances(),
-                        };
-                        return Some((issue, detector.severity())); // todo collect before return
+                        let instances = detector.instances();
+                        detectors_instances.extend(instances);
                     }
                 }
             }
-            None
+
+            issue.instances = detectors_instances;
+
+            issues.push((issue, detector.severity()));
+            issues
         })
         .collect();
 
-    for (issue, severity) in issues.into_iter().flatten() {
-        match severity {
-            IssueSeverity::High => {
-                report.highs.push(issue);
-            }
-            IssueSeverity::Low => {
-                report.lows.push(issue);
+    for issues in issues_collection {
+        for (issue, severity) in issues.into_iter() {
+            match severity {
+                IssueSeverity::High => {
+                    report.highs.push(issue);
+                }
+                IssueSeverity::Low => {
+                    report.lows.push(issue);
+                }
             }
         }
     }
