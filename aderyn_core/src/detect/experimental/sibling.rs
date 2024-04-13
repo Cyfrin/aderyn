@@ -57,7 +57,10 @@ impl IssueDetector for SiblingDemonstrator {
 #[cfg(test)]
 mod sibling_demo_tests {
     use crate::detect::{
-        detector::{detector_test_helpers::load_contract, IssueDetector},
+        detector::{
+            detector_test_helpers::{load_contract, load_contract_directly},
+            IssueDetector,
+        },
         experimental::sibling::SiblingDemonstrator,
     };
 
@@ -66,6 +69,15 @@ mod sibling_demo_tests {
         let context = load_contract(
             "../tests/contract-playground/out/StorageConditionals.sol/StorageConditionals.json",
         );
+
+        let mut detector = SiblingDemonstrator::default();
+        let _ = detector.detect(&context).unwrap();
+    }
+
+    #[test]
+    fn test_siblings_by_loading_contract_directly() {
+        let context =
+            load_contract_directly("../tests/contract-playground/src/StorageConditionals.sol");
 
         let mut detector = SiblingDemonstrator::default();
         let _ = detector.detect(&context).unwrap();

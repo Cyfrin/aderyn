@@ -29,6 +29,7 @@ dependencies = [
  "crossbeam",
  "crossbeam-channel",
  "eyre",
+ "foundry-compilers",
  "ignore",
  "rayon",
  "semver 1.0.22",

@@ -221,11 +221,18 @@ pub trait IssueDetector: Send + Sync + 'static {
 }
 
 pub mod detector_test_helpers {
-    use std::path::PathBuf;
+    use std::{
+        path::PathBuf,
+        process::{Command, Stdio},
+        sync::Arc,
+    };
+
+    use foundry_compilers::{artifacts::Source, CompilerInput, Solc};
 
     use crate::{
-        context::workspace_context::WorkspaceContext, framework::foundry::read_foundry_output_file,
-        read_file_to_string, visitor::ast_visitor::Node,
+        ast::SourceUnit, context::workspace_context::WorkspaceContext,
+        framework::foundry::read_foundry_output_file, read_file_to_string,
+        visitor::ast_visitor::Node,
     };
 
     pub fn load_contract(filepath: &str) -> WorkspaceContext {
@@ -265,5 +272,94 @@ pub mod detector_test_helpers {
             eprintln!("{:?}", err);
         });
         context
+    }
+
+    pub fn load_contract_directly(filepath: &str) -> WorkspaceContext {
+        let solidity_file = &ensure_valid_solidity_file(filepath);
+        let solidity_content = std::fs::read_to_string(solidity_file).unwrap();
+
+        let compiler_input = CompilerInput::new(solidity_file.as_path()).unwrap();
+        let compiler_input = compiler_input.get(0).unwrap(); // There's only 1 file in the path
+        let version = Solc::detect_version(&Source {
+            content: Arc::new(solidity_content.clone()),
+        })
+        .unwrap();
+
+        let solc = Solc::find_or_install_svm_version(format!("{}", version)).unwrap();
+        let solc_bin = solc.solc.to_str().unwrap();
+
+        let file_arg = compiler_input
+            .sources
+            .first_key_value()
+            .unwrap()
+            .0
+            .to_str()
+            .unwrap();
+
+        println!("FA {}", file_arg);
+
+        let command = Command::new(solc_bin)
+            .args(["--ast-compact-json", file_arg])
+            .current_dir("/")
+            .stdout(Stdio::piped())
+            .output();
+
+        if let Ok(command) = command {
+            let stdout = String::from_utf8(command.stdout).unwrap();
+
+            let mut pick_next_line = false;
+            let mut ast_content = String::new();
+            for line in stdout.lines() {
+                if line.starts_with("======= ") {
+                    let end_marker = line.find(" =======").unwrap();
+                    let filepath = &line["======= ".len()..end_marker];
+                    if file_arg.contains(filepath) {
+                        pick_next_line = true;
+                    }
+                } else if pick_next_line {
+                    ast_content = line.to_string();
+                    break;
+                }
+            }
+
+            let mut source_unit: SourceUnit = serde_json::from_str(&ast_content).unwrap();
+            let mut context = WorkspaceContext::default();
+            source_unit.source = Some(solidity_content);
+            source_unit.accept(&mut context).unwrap_or_else(|err| {
+                // Exit with a non-zero exit code
+                eprintln!("Error loading AST into WorkspaceContext");
+                eprintln!("{:?}", err);
+                std::process::exit(1);
+            });
+            // println!("Workspace Context {:#?}", context);
+            return context;
+        } else {
+            eprintln!("Error running solc command");
+            std::process::exit(1);
+        }
+    }
+
+    fn ensure_valid_solidity_file(filepath: &str) -> PathBuf {
+        let filepath = PathBuf::from(filepath);
+
+        if !filepath.exists() {
+            eprintln!("{} does not exist!", filepath.to_string_lossy());
+            std::process::exit(1);
+        }
+
+        let extension = filepath.extension().unwrap_or_else(|| {
+            eprintln!("{} is not a solidity file!", filepath.to_string_lossy());
+            std::process::exit(1);
+        });
+
+        if extension != "sol" {
+            eprintln!(
+                "Please make sure {} represents a solidity file!",
+                filepath.to_string_lossy()
+            );
+            std::process::exit(1);
+        }
+
+        filepath.canonicalize().unwrap()
     }
 }
