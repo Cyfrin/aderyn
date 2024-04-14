@@ -47,7 +47,13 @@ impl Add<&FilesDetails> for FilesDetails {
     type Output = FilesDetails;
     fn add(mut self, rhs: &FilesDetails) -> Self::Output {
         for fd in &rhs.files_details {
-            self.files_details.push(fd.clone());
+            if self
+                .files_details
+                .iter()
+                .all(|x| x.file_path != fd.file_path)
+            {
+                self.files_details.push(fd.clone());
+            }
         }
         self
     }
