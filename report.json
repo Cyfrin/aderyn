@@ -6,46 +6,6 @@
   "files_details": {
     "files_details": [
       {
-        "file_path": "src/ArbitraryTransferFrom.sol",
-        "n_sloc": 37
-      },
-      {
-        "file_path": "src/AssemblyExample.sol",
-        "n_sloc": 9
-      },
-      {
-        "file_path": "src/ConstantsLiterals.sol",
-        "n_sloc": 28
-      },
-      {
-        "file_path": "src/EmptyBlocks.sol",
-        "n_sloc": 48
-      },
-      {
-        "file_path": "src/HugeConstants.sol",
-        "n_sloc": 26
-      },
-      {
-        "file_path": "src/InternalFunctions.sol",
-        "n_sloc": 22
-      },
-      {
-        "file_path": "src/OnceModifierExample.sol",
-        "n_sloc": 8
-      },
-      {
-        "file_path": "src/UnprotectedInitialize.sol",
-        "n_sloc": 25
-      },
-      {
-        "file_path": "src/ZeroAddressCheck.sol",
-        "n_sloc": 41
-      },
-      {
-        "file_path": "src/cloc/HeavilyCommentedContract.sol",
-        "n_sloc": 21
-      },
-      {
         "file_path": "src/AdminContract.sol",
         "n_sloc": 11
       },
@@ -114,6 +74,42 @@
         "n_sloc": 150
       },
       {
+        "file_path": "src/ArbitraryTransferFrom.sol",
+        "n_sloc": 37
+      },
+      {
+        "file_path": "src/AssemblyExample.sol",
+        "n_sloc": 9
+      },
+      {
+        "file_path": "src/ConstantsLiterals.sol",
+        "n_sloc": 28
+      },
+      {
+        "file_path": "src/EmptyBlocks.sol",
+        "n_sloc": 48
+      },
+      {
+        "file_path": "src/HugeConstants.sol",
+        "n_sloc": 26
+      },
+      {
+        "file_path": "src/InternalFunctions.sol",
+        "n_sloc": 22
+      },
+      {
+        "file_path": "src/OnceModifierExample.sol",
+        "n_sloc": 8
+      },
+      {
+        "file_path": "src/UnprotectedInitialize.sol",
+        "n_sloc": 25
+      },
+      {
+        "file_path": "src/ZeroAddressCheck.sol",
+        "n_sloc": 41
+      },
+      {
         "file_path": "src/CrazyPragma.sol",
         "n_sloc": 4
       },
@@ -124,6 +120,10 @@
       {
         "file_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
         "n_sloc": 32
+      },
+      {
+        "file_path": "src/cloc/HeavilyCommentedContract.sol",
+        "n_sloc": 21
       }
     ]
   },
