@@ -29,15 +29,6 @@ pub struct FilesSummary {
     total_sloc: usize,
 }
 
-impl Add<&FilesSummary> for FilesSummary {
-    type Output = FilesSummary;
-    fn add(mut self, rhs: &FilesSummary) -> Self::Output {
-        self.total_sloc += rhs.total_sloc;
-        self.total_source_units += rhs.total_source_units;
-        self
-    }
-}
-
 #[derive(Serialize, Default)]
 pub struct FilesDetails {
     files_details: Vec<FilesDetail>,

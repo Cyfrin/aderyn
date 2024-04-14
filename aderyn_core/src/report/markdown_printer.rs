@@ -95,14 +95,15 @@ impl MarkdownReportPrinter {
         report: &Report,
         contexts: &Vec<WorkspaceContext>,
     ) -> Result<()> {
-        let mut all_files_summary = FilesSummary::default();
-        for context in contexts {
-            all_files_summary = all_files_summary + &context.files_summary();
-        }
-
         let mut all_files_details = FilesDetails::default();
         for context in contexts {
             all_files_details = all_files_details + &context.files_details();
+        }
+
+        let mut all_files_summary = FilesSummary::default();
+        for details in &all_files_details.files_details {
+            all_files_summary.total_sloc += details.n_sloc;
+            all_files_summary.total_source_units += 1;
         }
 
         writeln!(writer, "# Summary\n")?;
