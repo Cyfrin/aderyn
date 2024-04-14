@@ -9,11 +9,13 @@ use aderyn_core::{
 };
 use foundry_compilers::{CompilerInput, Solc};
 
+use crate::ensure_valid_root_path;
+
 pub fn with_project_root_at(
     root_path: &PathBuf,
     scope: &Option<Vec<String>>,
     exclude: &Option<Vec<String>>,
-) -> (String, Vec<WorkspaceContext>) {
+) -> Vec<WorkspaceContext> {
     let absolute_root_path = &ensure_valid_root_path(root_path);
     let absolute_root_path_str = &absolute_root_path.to_string_lossy().to_string();
     let compiler_input = CompilerInput::new(absolute_root_path).unwrap();
@@ -65,6 +67,7 @@ pub fn with_project_root_at(
             // dbg!(&stdout)
 
             let mut pick_next_line = false;
+            let mut src_filepaths = vec![];
 
             for line in stdout.lines() {
                 if line.starts_with("======= ") {
@@ -74,6 +77,7 @@ pub fn with_project_root_at(
                     if passes_scope(scope, filepath, absolute_root_path_str)
                         && passes_exclude(exclude, filepath, absolute_root_path_str)
                     {
+                        src_filepaths.push(filepath.to_string_lossy().to_string());
                         pick_next_line = true;
                     }
                 } else if pick_next_line {
@@ -99,13 +103,14 @@ pub fn with_project_root_at(
 
             // println!("{:#?}", context);
             // println!("New context !");
+            context.src_filepaths = src_filepaths;
             workspace_contexts.push(context);
         } else {
             eprintln!("Error running solc command");
         }
     }
 
-    (root_path.to_string_lossy().to_string(), workspace_contexts)
+    workspace_contexts
 }
 
 fn passes_scope(
@@ -148,12 +153,4 @@ fn passes_exclude(
     }
 
     true
-}
-
-fn ensure_valid_root_path(root_path: &PathBuf) -> PathBuf {
-    if !root_path.exists() {
-        eprintln!("{} does not exist!", root_path.to_string_lossy());
-        std::process::exit(1);
-    }
-    root_path.canonicalize().unwrap()
 }

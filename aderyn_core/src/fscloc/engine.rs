@@ -10,16 +10,16 @@ pub fn count_lines_of_code(src: &Path, src_filepaths: &[String]) -> Mutex<HashMa
         let tx = tx.clone();
         Box::new(move |res| {
             if let Ok(target) = res {
-                if target.file_type().unwrap().is_file()
-                    && src_filepaths.iter().any(|fp| {
-                        target
-                            .path()
-                            .to_str()
-                            .map_or(false, |path| path.contains(fp))
-                    })
-                {
-                    let send = target.to_owned();
-                    tx.send(send).unwrap();
+                let target_path = target.path().to_str();
+                if target.file_type().unwrap().is_file() {
+                    // dbg!(target_path.unwrap());
+                    if src_filepaths
+                        .iter()
+                        .any(|fp| target_path.map_or(false, |path| path.contains(fp)))
+                    {
+                        let send = target.to_owned();
+                        tx.send(send).unwrap();
+                    }
                 }
             }
             Continue

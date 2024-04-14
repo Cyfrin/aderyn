@@ -1,4 +1,4 @@
-use crate::process_auto;
+use crate::{ensure_valid_root_path, process_auto};
 use aderyn_core::{
     context::workspace_context::WorkspaceContext,
     detect::detector::IssueDetector,
@@ -108,10 +108,10 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
         eprintln!("Warning: output file lacks the \".md\" or \".json\" extension in its filename.");
     }
 
-    let (src_path, mut contexts) = {
-        let root_path = PathBuf::from(&args.root);
-        process_auto::with_project_root_at(&root_path, &args.scope, &args.exclude)
-    };
+    let root_path = PathBuf::from(&args.root);
+    let absolute_root_path = &ensure_valid_root_path(&root_path);
+
+    let mut contexts = process_auto::with_project_root_at(&root_path, &args.scope, &args.exclude);
 
     let key = "ADERYN_CLOC_SKIP";
 
@@ -121,11 +121,16 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
     };
 
     if should_cloc {
+        for context in contexts.iter_mut() {
+            let stats = fscloc::engine::count_lines_of_code(
+                &absolute_root_path.as_path(),
+                &context.src_filepaths,
+            );
+            let stats = stats.lock().unwrap().to_owned();
+            // dbg!(&stats);
+            context.set_sloc_stats(stats);
+        }
         // Using the source path, calculate the sloc
-        // let stats =
-        //     fscloc::engine::count_lines_of_code(&PathBuf::from(src_path), &context.src_filepaths);
-        // let stats = stats.lock().unwrap().to_owned();
-        // context.set_sloc_stats(stats);
     }
 
     WorkspaceContextWrapper { contexts }
