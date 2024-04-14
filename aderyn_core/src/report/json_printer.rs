@@ -51,6 +51,10 @@ impl ReportPrinter<()> for JsonPrinter {
             all_files_details = all_files_details + &context.files_details();
         }
 
+        all_files_details
+            .files_details
+            .sort_by(|a, b| a.file_path.cmp(&b.file_path));
+
         let mut all_files_summary = FilesSummary::default();
         for details in &all_files_details.files_details {
             all_files_summary.total_sloc += details.n_sloc;
