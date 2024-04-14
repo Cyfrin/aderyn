@@ -32,52 +32,16 @@
         "n_sloc": 11
       },
       {
-        "file_path": "src/ArbitraryTransferFrom.sol",
-        "n_sloc": 37
-      },
-      {
-        "file_path": "src/AssemblyExample.sol",
-        "n_sloc": 9
-      },
-      {
-        "file_path": "src/ConstantsLiterals.sol",
-        "n_sloc": 28
-      },
-      {
         "file_path": "src/Counter.sol",
         "n_sloc": 20
-      },
-      {
-        "file_path": "src/CrazyPragma.sol",
-        "n_sloc": 4
       },
       {
         "file_path": "src/DeprecatedOZFunctions.sol",
         "n_sloc": 32
       },
       {
-        "file_path": "src/EmptyBlocks.sol",
-        "n_sloc": 48
-      },
-      {
-        "file_path": "src/HugeConstants.sol",
-        "n_sloc": 26
-      },
-      {
-        "file_path": "src/InconsistentUints.sol",
-        "n_sloc": 17
-      },
-      {
-        "file_path": "src/InternalFunctions.sol",
-        "n_sloc": 22
-      },
-      {
         "file_path": "src/KeccakContract.sol",
         "n_sloc": 21
-      },
-      {
-        "file_path": "src/OnceModifierExample.sol",
-        "n_sloc": 8
       },
       {
         "file_path": "src/StateVariables.sol",
@@ -92,28 +56,8 @@
         "n_sloc": 8
       },
       {
-        "file_path": "src/UnprotectedInitialize.sol",
-        "n_sloc": 25
-      },
-      {
         "file_path": "src/UnsafeERC721Mint.sol",
         "n_sloc": 18
-      },
-      {
-        "file_path": "src/ZeroAddressCheck.sol",
-        "n_sloc": 41
-      },
-      {
-        "file_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
-        "n_sloc": 32
-      },
-      {
-        "file_path": "src/cloc/EmptyContractFile.sol",
-        "n_sloc": 0
-      },
-      {
-        "file_path": "src/cloc/HeavilyCommentedContract.sol",
-        "n_sloc": 21
       },
       {
         "file_path": "src/eth2/DepositContract.sol",
@@ -150,12 +94,64 @@
       {
         "file_path": "src/uniswap/UniswapV3Swapper.sol",
         "n_sloc": 150
+      },
+      {
+        "file_path": "src/ArbitraryTransferFrom.sol",
+        "n_sloc": 37
+      },
+      {
+        "file_path": "src/AssemblyExample.sol",
+        "n_sloc": 9
+      },
+      {
+        "file_path": "src/ConstantsLiterals.sol",
+        "n_sloc": 28
+      },
+      {
+        "file_path": "src/EmptyBlocks.sol",
+        "n_sloc": 48
+      },
+      {
+        "file_path": "src/HugeConstants.sol",
+        "n_sloc": 26
+      },
+      {
+        "file_path": "src/InternalFunctions.sol",
+        "n_sloc": 22
+      },
+      {
+        "file_path": "src/OnceModifierExample.sol",
+        "n_sloc": 8
+      },
+      {
+        "file_path": "src/UnprotectedInitialize.sol",
+        "n_sloc": 25
+      },
+      {
+        "file_path": "src/ZeroAddressCheck.sol",
+        "n_sloc": 41
+      },
+      {
+        "file_path": "src/CrazyPragma.sol",
+        "n_sloc": 4
+      },
+      {
+        "file_path": "src/InconsistentUints.sol",
+        "n_sloc": 17
+      },
+      {
+        "file_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
+        "n_sloc": 32
+      },
+      {
+        "file_path": "src/cloc/HeavilyCommentedContract.sol",
+        "n_sloc": 21
       }
     ]
   },
   "files_summary": {
     "total_sloc": 915,
-    "total_source_units": 31
+    "total_source_units": 30
   },
   "high_issues": {
     "issues": [
