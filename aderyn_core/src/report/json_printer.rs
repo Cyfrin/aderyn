@@ -39,7 +39,7 @@ impl ReportPrinter<()> for JsonPrinter {
         &self,
         writer: W,
         report: &Report,
-        contexts: &Vec<WorkspaceContext>,
+        contexts: &[WorkspaceContext],
         _: PathBuf,
         _: Option<String>,
         _: bool,

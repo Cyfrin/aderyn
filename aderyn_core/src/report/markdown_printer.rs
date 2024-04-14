@@ -18,7 +18,7 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
         &self,
         mut writer: W,
         report: &Report,
-        contexts: &Vec<WorkspaceContext>,
+        contexts: &[WorkspaceContext],
         root_path: PathBuf,
         output_rel_path: Option<String>,
         no_snippets: bool,
@@ -93,7 +93,7 @@ impl MarkdownReportPrinter {
         &self,
         mut writer: W,
         report: &Report,
-        contexts: &Vec<WorkspaceContext>,
+        contexts: &[WorkspaceContext],
     ) -> Result<()> {
         let mut all_files_details = FilesDetails::default();
         for context in contexts {

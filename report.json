@@ -28,72 +28,8 @@
   "files_details": {
     "files_details": [
       {
-        "file_path": "src/AdminContract.sol",
-        "n_sloc": 11
-      },
-      {
-        "file_path": "src/Counter.sol",
-        "n_sloc": 20
-      },
-      {
-        "file_path": "src/DeprecatedOZFunctions.sol",
-        "n_sloc": 32
-      },
-      {
-        "file_path": "src/KeccakContract.sol",
+        "file_path": "src/cloc/HeavilyCommentedContract.sol",
         "n_sloc": 21
-      },
-      {
-        "file_path": "src/StateVariables.sol",
-        "n_sloc": 58
-      },
-      {
-        "file_path": "src/StorageConditionals.sol",
-        "n_sloc": 59
-      },
-      {
-        "file_path": "src/T11sTranferer.sol",
-        "n_sloc": 8
-      },
-      {
-        "file_path": "src/UnsafeERC721Mint.sol",
-        "n_sloc": 18
-      },
-      {
-        "file_path": "src/eth2/DepositContract.sol",
-        "n_sloc": 95
-      },
-      {
-        "file_path": "src/inheritance/ExtendedInheritance.sol",
-        "n_sloc": 17
-      },
-      {
-        "file_path": "src/inheritance/IContractInheritance.sol",
-        "n_sloc": 4
-      },
-      {
-        "file_path": "src/inheritance/InheritanceBase.sol",
-        "n_sloc": 8
-      },
-      {
-        "file_path": "src/nested/1/Nested.sol",
-        "n_sloc": 10
-      },
-      {
-        "file_path": "src/nested/2/Nested.sol",
-        "n_sloc": 7
-      },
-      {
-        "file_path": "src/parent_chain/ParentChainContract.sol",
-        "n_sloc": 29
-      },
-      {
-        "file_path": "src/uniswap/UniswapV2Swapper.sol",
-        "n_sloc": 50
-      },
-      {
-        "file_path": "src/uniswap/UniswapV3Swapper.sol",
-        "n_sloc": 150
       },
       {
         "file_path": "src/ArbitraryTransferFrom.sol",
@@ -132,6 +68,10 @@
         "n_sloc": 41
       },
       {
+        "file_path": "src/Counter.sol",
+        "n_sloc": 20
+      },
+      {
         "file_path": "src/CrazyPragma.sol",
         "n_sloc": 4
       },
@@ -144,8 +84,68 @@
         "n_sloc": 32
       },
       {
-        "file_path": "src/cloc/HeavilyCommentedContract.sol",
+        "file_path": "src/inheritance/IContractInheritance.sol",
+        "n_sloc": 4
+      },
+      {
+        "file_path": "src/inheritance/InheritanceBase.sol",
+        "n_sloc": 8
+      },
+      {
+        "file_path": "src/AdminContract.sol",
+        "n_sloc": 11
+      },
+      {
+        "file_path": "src/DeprecatedOZFunctions.sol",
+        "n_sloc": 32
+      },
+      {
+        "file_path": "src/KeccakContract.sol",
         "n_sloc": 21
+      },
+      {
+        "file_path": "src/StateVariables.sol",
+        "n_sloc": 58
+      },
+      {
+        "file_path": "src/StorageConditionals.sol",
+        "n_sloc": 59
+      },
+      {
+        "file_path": "src/T11sTranferer.sol",
+        "n_sloc": 8
+      },
+      {
+        "file_path": "src/UnsafeERC721Mint.sol",
+        "n_sloc": 18
+      },
+      {
+        "file_path": "src/eth2/DepositContract.sol",
+        "n_sloc": 95
+      },
+      {
+        "file_path": "src/inheritance/ExtendedInheritance.sol",
+        "n_sloc": 17
+      },
+      {
+        "file_path": "src/nested/1/Nested.sol",
+        "n_sloc": 10
+      },
+      {
+        "file_path": "src/nested/2/Nested.sol",
+        "n_sloc": 7
+      },
+      {
+        "file_path": "src/parent_chain/ParentChainContract.sol",
+        "n_sloc": 29
+      },
+      {
+        "file_path": "src/uniswap/UniswapV2Swapper.sol",
+        "n_sloc": 50
+      },
+      {
+        "file_path": "src/uniswap/UniswapV3Swapper.sol",
+        "n_sloc": 150
       }
     ]
   },

@@ -22,16 +22,16 @@
         "n_sloc": 29
       },
       {
-        "file_path": "src/cloc/HeavilyCommentedContract.sol",
-        "n_sloc": 21
-      },
-      {
         "file_path": "src/Counter.sol",
         "n_sloc": 20
       },
       {
         "file_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
         "n_sloc": 32
+      },
+      {
+        "file_path": "src/cloc/HeavilyCommentedContract.sol",
+        "n_sloc": 21
       }
     ]
   },

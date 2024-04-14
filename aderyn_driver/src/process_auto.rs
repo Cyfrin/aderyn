@@ -1,6 +1,6 @@
 use std::{
     collections::{hash_map::Entry, HashMap},
-    path::PathBuf,
+    path::{Path, PathBuf},
     process::{Command, Stdio},
 };
 
@@ -12,7 +12,7 @@ use foundry_compilers::{CompilerInput, Solc};
 use crate::ensure_valid_root_path;
 
 pub fn with_project_root_at(
-    root_path: &PathBuf,
+    root_path: &Path,
     scope: &Option<Vec<String>>,
     exclude: &Option<Vec<String>>,
 ) -> Vec<WorkspaceContext> {
@@ -21,7 +21,7 @@ pub fn with_project_root_at(
     let compiler_input = CompilerInput::new(absolute_root_path).unwrap();
     let solidity_files = compiler_input
         .into_iter()
-        .filter(|c| c.language == "Solidity".to_string())
+        .filter(|c| c.language == *"Solidity")
         .collect::<Vec<_>>();
     let solidity_files = &solidity_files[0]; // No Yul Support as of now
 
@@ -51,7 +51,7 @@ pub fn with_project_root_at(
     let mut workspace_contexts: Vec<WorkspaceContext> = vec![];
 
     for (version, file_paths) in &compilation_groups {
-        let solc = Solc::find_or_install_svm_version(format!("{}", version)).unwrap();
+        let solc = Solc::find_or_install_svm_version(version).unwrap();
         let solc_bin = solc.solc.to_str().unwrap();
 
         let command = Command::new(solc_bin)
@@ -115,7 +115,7 @@ pub fn with_project_root_at(
 
 fn passes_scope(
     scope: &Option<Vec<String>>,
-    solidity_file: &PathBuf,
+    solidity_file: &Path,
     absolute_root_path_str: &str,
 ) -> bool {
     let sol_path_string = solidity_file.to_string_lossy().to_string();
@@ -136,7 +136,7 @@ fn passes_scope(
 
 fn passes_exclude(
     exclude: &Option<Vec<String>>,
-    solidity_file: &PathBuf,
+    solidity_file: &Path,
     absolute_root_path_str: &str,
 ) -> bool {
     let sol_path_string = solidity_file.to_string_lossy().to_string();

@@ -123,7 +123,7 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
     if should_cloc {
         for context in contexts.iter_mut() {
             let stats = fscloc::engine::count_lines_of_code(
-                &absolute_root_path.as_path(),
+                absolute_root_path.as_path(),
                 &context.src_filepaths,
             );
             let stats = stats.lock().unwrap().to_owned();

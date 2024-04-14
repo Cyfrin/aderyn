@@ -13,7 +13,7 @@ pub trait ReportPrinter<T> {
         &self,
         writer: W,
         report: &Report,
-        contexts: &Vec<WorkspaceContext>,
+        contexts: &[WorkspaceContext],
         root_rel_path: PathBuf,
         output_rel_path: Option<String>, // you writer 'W' may or may not be writing a file. Eg: it can simply consume and forget :P
         no_snippets: bool,

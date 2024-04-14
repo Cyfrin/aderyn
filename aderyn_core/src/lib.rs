@@ -23,7 +23,7 @@ use crate::report::reporter::Report;
 use crate::report::Issue;
 
 pub fn run_with_printer<T>(
-    contexts: &Vec<WorkspaceContext>,
+    contexts: &[WorkspaceContext],
     output_file_path: String,
     reporter: T,
     root_rel_path: PathBuf,
@@ -46,7 +46,7 @@ where
 }
 
 pub fn run_with_printer_and_given_detectors<T>(
-    contexts: &Vec<WorkspaceContext>,
+    contexts: &[WorkspaceContext],
     output_file_path: String,
     reporter: T,
     root_rel_path: PathBuf,
