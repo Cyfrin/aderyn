@@ -1,4 +1,7 @@
-use std::collections::{BTreeMap, HashSet};
+use std::{
+    collections::{BTreeMap, HashSet},
+    ops::Add,
+};
 
 use serde::Serialize;
 
@@ -26,12 +29,31 @@ pub struct FilesSummary {
     total_sloc: usize,
 }
 
+impl Add<&FilesSummary> for FilesSummary {
+    type Output = FilesSummary;
+    fn add(mut self, rhs: &FilesSummary) -> Self::Output {
+        self.total_sloc += rhs.total_sloc;
+        self.total_source_units += rhs.total_source_units;
+        self
+    }
+}
+
 #[derive(Serialize)]
 pub struct FilesDetails {
     files_details: Vec<FilesDetail>,
 }
 
-#[derive(Serialize)]
+impl Add<&FilesDetails> for FilesDetails {
+    type Output = FilesDetails;
+    fn add(mut self, rhs: &FilesDetails) -> Self::Output {
+        for fd in &rhs.files_details {
+            self.files_details.push(fd.clone());
+        }
+        self
+    }
+}
+
+#[derive(Serialize, Clone)]
 pub struct FilesDetail {
     file_path: String,
     n_sloc: usize,
