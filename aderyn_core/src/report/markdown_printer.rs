@@ -7,7 +7,8 @@ use std::{
 };
 
 use super::{
-    printer::ReportPrinter, reporter::Report, util::carve_shortest_path, Issue, IssueBody,
+    printer::ReportPrinter, reporter::Report, util::carve_shortest_path, FilesDetails,
+    FilesSummary, Issue, IssueBody,
 };
 
 pub struct MarkdownReportPrinter;
@@ -94,12 +95,21 @@ impl MarkdownReportPrinter {
         report: &Report,
         contexts: &Vec<WorkspaceContext>,
     ) -> Result<()> {
+        let mut all_files_summary = FilesSummary::default();
+        for context in contexts {
+            all_files_summary = all_files_summary + &context.files_summary();
+        }
+
+        let mut all_files_details = FilesDetails::default();
+        for context in contexts {
+            all_files_details = all_files_details + &context.files_details();
+        }
+
         writeln!(writer, "# Summary\n")?;
 
         // Files Summary
         {
             writeln!(writer, "## Files Summary\n")?;
-            let files_summary = contexts[0].files_summary(); // todo accumulate
 
             // Start the markdown table
             writeln!(writer, "| Key | Value |")?;
@@ -107,9 +117,9 @@ impl MarkdownReportPrinter {
             writeln!(
                 writer,
                 "| .sol Files | {} |",
-                files_summary.total_source_units
+                all_files_summary.total_source_units
             )?;
-            writeln!(writer, "| Total nSLOC | {} |", files_summary.total_sloc)?;
+            writeln!(writer, "| Total nSLOC | {} |", all_files_summary.total_sloc)?;
 
             writeln!(writer, "\n")?; // Add an extra newline for spacing
         }
@@ -122,7 +132,10 @@ impl MarkdownReportPrinter {
             writeln!(writer, "| Filepath | nSLOC |")?;
             writeln!(writer, "| --- | --- |")?;
 
-            let files_details = contexts[0].files_details();
+            let mut files_details = all_files_details;
+            files_details
+                .files_details
+                .sort_by(|a, b| a.file_path.cmp(&b.file_path));
 
             files_details.files_details.iter().for_each(|detail| {
                 writeln!(writer, "| {} | {} |", detail.file_path, detail.n_sloc).unwrap();
@@ -131,7 +144,7 @@ impl MarkdownReportPrinter {
             writeln!(
                 writer,
                 "| **Total** | **{}** |",
-                contexts[0].files_summary().total_sloc
+                all_files_summary.total_sloc
             )?;
             writeln!(writer, "\n")?; // Add an extra newline for spacing
         }

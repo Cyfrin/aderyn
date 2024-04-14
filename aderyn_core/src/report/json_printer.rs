@@ -46,11 +46,21 @@ impl ReportPrinter<()> for JsonPrinter {
         stdout: bool,
         detectors_used: &[(String, String)],
     ) -> Result<()> {
+        let mut all_files_summary = FilesSummary::default();
+        for context in contexts {
+            all_files_summary = all_files_summary + &context.files_summary();
+        }
+
+        let mut all_files_details = FilesDetails::default();
+        for context in contexts {
+            all_files_details = all_files_details + &context.files_details();
+        }
+
         let detectors_used_names: Vec<_> = detectors_used.iter().map(|x| x.0.clone()).collect();
 
         let content = JsonContent {
-            files_summary: contexts[0].files_summary(), // todo accumulate
-            files_details: contexts[0].files_details(), // todo accumulate
+            files_summary: all_files_summary,
+            files_details: all_files_details,
             issue_count: report.issue_count(),
             high_issues: report.high_issues(),
             low_issues: report.low_issues(),

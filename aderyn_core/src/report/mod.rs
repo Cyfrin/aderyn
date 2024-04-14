@@ -23,7 +23,7 @@ pub struct Issue {
     pub instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Default)]
 pub struct FilesSummary {
     total_source_units: usize,
     total_sloc: usize,
@@ -38,7 +38,7 @@ impl Add<&FilesSummary> for FilesSummary {
     }
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Default)]
 pub struct FilesDetails {
     files_details: Vec<FilesDetail>,
 }
