@@ -58,7 +58,7 @@ impl IssueDetector for AvoidAbiEncodePackedDetector {
     }
 
     fn severity(&self) -> IssueSeverity {
-        IssueSeverity::Low
+        IssueSeverity::High
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -92,7 +92,7 @@ mod avoid_abi_encode_packed_tests {
         // assert that the severity is low
         assert_eq!(
             detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
+            crate::detect::detector::IssueSeverity::High
         );
         // assert that the title is correct
         assert_eq!(

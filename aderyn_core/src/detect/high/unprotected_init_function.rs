@@ -43,7 +43,7 @@ impl IssueDetector for UnprotectedInitializerDetector {
     }
 
     fn severity(&self) -> IssueSeverity {
-        IssueSeverity::Low
+        IssueSeverity::High
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
