@@ -301,11 +301,17 @@ pub mod detector_test_helpers {
 
         let command = Command::new(solc_bin)
             .args(["--ast-compact-json", file_arg])
-            // .current_dir("/")
+            .current_dir("/")
             .stdout(Stdio::piped())
             .output();
 
         if let Ok(command) = command {
+            println!("raw stderr: {:?}", command.stderr);
+            println!(
+                "success: {}, code: {:?}",
+                command.status.success(),
+                command.status.code()
+            );
             println!("raw stdout: {:?}", command.stdout);
             let stdout = String::from_utf8(command.stdout).unwrap();
             println!("stdout: {}", stdout);
