@@ -177,6 +177,28 @@
         "title": "Using `delegatecall` in loop"
       },
       {
+        "description": "Use `abi.encode()` instead which will pad items to 32 bytes, which will [prevent hash collisions](https://docs.soliditylang.org/en/v0.8.13/abi-spec.html#non-standard-packed-mode) (e.g. `abi.encodePacked(0x123,0x456)` => `0x123456` => `abi.encodePacked(0x1,0x23456)`, but `abi.encode(0x123,0x456)` => `0x0...1230...456`). Unless there is a compelling reason, `abi.encode` should be preferred. If there is only one argument to `abi.encodePacked()` it can often be cast to `bytes()` or `bytes32()` [instead](https://ethereum.stackexchange.com/questions/30912/how-to-compare-strings-in-solidity#answer-82739).\nIf all arguments are strings and or bytes, `bytes.concat()` should be used instead.",
+        "detector_name": "avoid-abi-encode-packed",
+        "instances": [
+          {
+            "contract_path": "src/KeccakContract.sol",
+            "line_no": 18,
+            "src": "587:16"
+          },
+          {
+            "contract_path": "src/KeccakContract.sol",
+            "line_no": 22,
+            "src": "734:16"
+          },
+          {
+            "contract_path": "src/KeccakContract.sol",
+            "line_no": 26,
+            "src": "887:16"
+          }
+        ],
+        "title": "`abi.encodePacked()` should not be used with dynamic types when passing the result to a hash function such as `keccak256()`"
+      },
+      {
         "description": "In the PoS model, proposers know well in advance if they will propose one or consecutive blocks ahead of time. In such a scenario, a malicious validator can hold back the transaction and execute it at a more favourable block number.Consider allowing function caller to specify swap deadline input parameter.",
         "detector_name": "block-timestamp-deadline",
         "instances": [
@@ -304,12 +326,24 @@
           }
         ],
         "title": "Arbitrary `from` passed to `transferFrom` (or `safeTransferFrom`)"
+      },
+      {
+        "description": "Consider protecting the initializer functions with modifiers.",
+        "detector_name": "unprotected-initializer",
+        "instances": [
+          {
+            "contract_path": "src/UnprotectedInitialize.sol",
+            "line_no": 35,
+            "src": "820:33"
+          }
+        ],
+        "title": "Unprotected initializer"
       }
     ]
   },
   "issue_count": {
-    "high": 3,
-    "low": 22
+    "high": 5,
+    "low": 20
   },
   "low_issues": {
     "issues": [
@@ -376,28 +410,6 @@
           }
         ],
         "title": "Solmate's SafeTransferLib does not check for token contract's existence"
-      },
-      {
-        "description": "Use `abi.encode()` instead which will pad items to 32 bytes, which will [prevent hash collisions](https://docs.soliditylang.org/en/v0.8.13/abi-spec.html#non-standard-packed-mode) (e.g. `abi.encodePacked(0x123,0x456)` => `0x123456` => `abi.encodePacked(0x1,0x23456)`, but `abi.encode(0x123,0x456)` => `0x0...1230...456`). Unless there is a compelling reason, `abi.encode` should be preferred. If there is only one argument to `abi.encodePacked()` it can often be cast to `bytes()` or `bytes32()` [instead](https://ethereum.stackexchange.com/questions/30912/how-to-compare-strings-in-solidity#answer-82739).\nIf all arguments are strings and or bytes, `bytes.concat()` should be used instead.",
-        "detector_name": "avoid-abi-encode-packed",
-        "instances": [
-          {
-            "contract_path": "src/KeccakContract.sol",
-            "line_no": 18,
-            "src": "587:16"
-          },
-          {
-            "contract_path": "src/KeccakContract.sol",
-            "line_no": 22,
-            "src": "734:16"
-          },
-          {
-            "contract_path": "src/KeccakContract.sol",
-            "line_no": 26,
-            "src": "887:16"
-          }
-        ],
-        "title": "`abi.encodePacked()` should not be used with dynamic types when passing the result to a hash function such as `keccak256()`"
       },
       {
         "description": "The `ecrecover` function is susceptible to signature malleability. This means that the same message can be signed in multiple ways, allowing an attacker to change the message signature without invalidating it. This can lead to unexpected behavior in smart contracts, such as the loss of funds or the ability to bypass access control. Consider using OpenZeppelin's ECDSA library instead of the built-in function.",
@@ -1179,18 +1191,6 @@
           }
         ],
         "title": "Inconsistency in declaring uint256/uint (or) int256/int variables within a contract"
-      },
-      {
-        "description": "Consider protecting the initializer functions with modifiers.",
-        "detector_name": "unprotected-initializer",
-        "instances": [
-          {
-            "contract_path": "src/UnprotectedInitialize.sol",
-            "line_no": 35,
-            "src": "820:33"
-          }
-        ],
-        "title": "Unprotected initializer"
       }
     ]
   }
