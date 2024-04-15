@@ -31,6 +31,7 @@ fn bench_aderyn_on_contract_playground(c: &mut Criterion) {
                 no_snippets: false,
                 skip_build: true,
                 skip_cloc: true,
+                skip_update_check: true,
                 exclude: None,
                 scope: None,
                 stdout: false,
