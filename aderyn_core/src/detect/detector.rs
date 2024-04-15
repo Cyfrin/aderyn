@@ -296,6 +296,9 @@ pub mod detector_test_helpers {
             .to_str()
             .unwrap();
 
+        println!("file_arg: {}", file_arg);
+        println!("solc_bin: {}", solc_bin);
+
         let command = Command::new(solc_bin)
             .args(["--ast-compact-json", file_arg])
             .current_dir("/")
