@@ -304,7 +304,7 @@ pub mod detector_test_helpers {
 
         if let Ok(command) = command {
             let stdout = String::from_utf8(command.stdout).unwrap();
-            // println!("{}", stdout);
+            println!("stdout: {}", stdout);
 
             let mut pick_next_line = false;
             let mut ast_content = String::new();
