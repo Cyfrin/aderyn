@@ -6,7 +6,7 @@ use aderyn_core::{
     report::{json_printer::JsonPrinter, markdown_printer::MarkdownReportPrinter},
     run_with_printer, run_with_printer_and_given_detectors,
 };
-use std::{env, fs::read_dir, path::PathBuf};
+use std::{fs::read_dir, path::PathBuf};
 
 pub struct Args {
     pub root: String,
@@ -14,6 +14,9 @@ pub struct Args {
     pub exclude: Option<Vec<String>>,
     pub scope: Option<Vec<String>>,
     pub no_snippets: bool,
+    pub skip_build: bool,
+    pub skip_cloc: bool,
+    pub skip_update_check: bool,
     pub stdout: bool,
 }
 
@@ -132,7 +135,12 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
     let (src_path, mut context) = {
         if is_single_file {
             safe_space = virtual_foundry::build_isolated_workspace_for_file(&args.root);
-            process_foundry::with_project_root_at(&safe_space, &args.scope, &args.exclude)
+            process_foundry::with_project_root_at(
+                &safe_space,
+                &args.scope,
+                &args.exclude,
+                args.skip_build,
+            )
         } else {
             println!("Detecting framework...");
             let root_path = PathBuf::from(&args.root);
@@ -148,9 +156,12 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
 
             // This whole block loads the solidity files and ASTs into the workspace context
             match framework {
-                Framework::Foundry => {
-                    process_foundry::with_project_root_at(&root_path, &args.scope, &args.exclude)
-                }
+                Framework::Foundry => process_foundry::with_project_root_at(
+                    &root_path,
+                    &args.scope,
+                    &args.exclude,
+                    args.skip_build,
+                ),
                 Framework::Hardhat => {
                     process_hardhat::with_project_root_at(&root_path, &args.scope, &args.exclude)
                 }
@@ -158,14 +169,7 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
         }
     };
 
-    let key = "ADERYN_CLOC_SKIP";
-
-    let should_cloc = match env::var(key) {
-        Ok(val) => val != "1",
-        Err(_) => true,
-    };
-
-    if should_cloc {
+    if !args.skip_cloc {
         // Using the source path, calculate the sloc
         let stats =
             fscloc::engine::count_lines_of_code(&PathBuf::from(src_path), &context.src_filepaths);

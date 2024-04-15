@@ -1,7 +1,7 @@
 use crate::ast::*;
 use eyre::Result;
 use serde::{Deserialize, Serialize};
-use std::env;
+
 use std::error::Error;
 use std::fs::{canonicalize, read_dir, read_to_string, File};
 use std::io::BufReader;
@@ -37,7 +37,10 @@ pub struct LoadedFoundry {
 }
 
 // Load foundry and return a Vector of PathBufs to the AST JSON files
-pub fn load_foundry(foundry_root: &PathBuf) -> Result<LoadedFoundry, Box<dyn Error>> {
+pub fn load_foundry(
+    foundry_root: &PathBuf,
+    skip_build: bool,
+) -> Result<LoadedFoundry, Box<dyn Error>> {
     let foundry_root_absolute = canonicalize(foundry_root).unwrap_or_else(|err| {
         // Exit with a non-zero exit code
         eprintln!("Error getting absolute path of Foundry root directory");
@@ -46,14 +49,7 @@ pub fn load_foundry(foundry_root: &PathBuf) -> Result<LoadedFoundry, Box<dyn Err
         std::process::exit(1);
     });
 
-    let key = "ADERYN_SKIP_BUILD";
-
-    let should_build = match env::var(key) {
-        Ok(val) => val != "1",
-        Err(_) => true,
-    };
-
-    if should_build {
+    if !skip_build {
         println!(
             "Running `forge build --ast` in {:?}",
             &foundry_root_absolute
@@ -226,7 +222,7 @@ mod tests {
             .join("../tests/contract-playground/")
             .canonicalize()
             .unwrap();
-        let result = load_foundry(&tests_contract_playground_path).unwrap();
+        let result = load_foundry(&tests_contract_playground_path, false).unwrap();
         let nested_1_exists = result
             .output_filepaths
             .iter()

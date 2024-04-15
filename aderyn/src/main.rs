@@ -1,6 +1,8 @@
 #![allow(clippy::borrowed_box)]
 
+use semver::Version;
 use serde::Deserialize;
+use serde_json::Value;
 use std::path::{Path, PathBuf};
 use strum::IntoEnumIterator;
 
@@ -47,8 +49,21 @@ pub struct CommandLineArgs {
     #[arg(short, long)]
     config_file: Option<String>,
 
+    /// Print every detector available
     #[clap(subcommand, name = "registry")]
     registry: Option<RegistryCommand>,
+
+    /// Skip contract build step
+    #[arg(long)]
+    skip_build: bool,
+
+    /// Skip cloc analysis (line numbers, etc.)
+    #[arg(long)]
+    skip_cloc: bool,
+
+    /// Skip checking for new versions of Aderyn
+    #[arg(long)]
+    skip_update_check: bool,
 }
 
 #[derive(Debug, Subcommand)]
@@ -85,6 +100,9 @@ fn main() {
         scope: cmd_args.scope,
         exclude: cmd_args.exclude,
         no_snippets: cmd_args.no_snippets,
+        skip_build: cmd_args.skip_build,
+        skip_cloc: cmd_args.skip_cloc,
+        skip_update_check: cmd_args.skip_update_check,
         stdout: cmd_args.stdout,
     };
 
@@ -181,6 +199,9 @@ fn main() {
                     scope: scope_lines,
                     exclude: args.exclude,
                     no_snippets: args.no_snippets,
+                    skip_build: args.skip_build,
+                    skip_cloc: args.skip_cloc,
+                    skip_update_check: args.skip_update_check,
                     stdout: args.stdout,
                 };
                 driver::drive_with(new_args, subscriptions);
@@ -191,6 +212,17 @@ fn main() {
         }
     } else {
         driver::drive(args);
+    }
+
+    if !cmd_args.skip_update_check {
+        if let Ok(yes) = aderyn_is_currently_running_newest_version() {
+            if !yes {
+                println!();
+                println!(
+                    "NEW VERSION OF ADERYN AVAILABLE! Please run `cargo install aderyn` to fully upgrade the current version"
+                );
+            }
+        }
     }
 }
 
@@ -272,4 +304,36 @@ fn right_pad(s: &str, by: usize) -> String {
     let mut new_string = s.to_string();
     new_string.push_str(&spaces);
     new_string
+}
+
+static APP_USER_AGENT: &str = concat!(env!("CARGO_PKG_NAME"), "/", env!("CARGO_PKG_VERSION"));
+
+fn aderyn_is_currently_running_newest_version() -> Result<bool, reqwest::Error> {
+    let client = reqwest::blocking::Client::builder()
+        .user_agent(APP_USER_AGENT)
+        .build()?;
+
+    let latest_version_checker = client
+        .get("https://crates.io/api/v1/crates?q=aderyn&per_page=1")
+        .send()?;
+
+    let data = latest_version_checker.json::<Value>()?;
+
+    let newest_version = data["crates"][0]["newest_version"].to_string();
+    let newest_version = &newest_version[1..newest_version.len() - 1];
+
+    let newest = Version::parse(newest_version).unwrap();
+    let current = Version::parse(env!("CARGO_PKG_VERSION")).unwrap();
+
+    Ok(current >= newest)
+}
+
+#[cfg(test)]
+mod latest_version_checker_tests {
+    use super::*;
+
+    #[test]
+    fn can_get_latest_version_from_crate_registry() {
+        assert!(aderyn_is_currently_running_newest_version().is_ok())
+    }
 }

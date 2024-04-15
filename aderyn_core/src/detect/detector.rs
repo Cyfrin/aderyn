@@ -6,18 +6,19 @@ use crate::{
     context::workspace_context::WorkspaceContext,
     detect::{
         high::{
-            ArbitraryTransferFromDetector, BlockTimestampDeadlineDetector,
-            DelegateCallInLoopDetector,
+            ArbitraryTransferFromDetector, AvoidAbiEncodePackedDetector,
+            BlockTimestampDeadlineDetector, DelegateCallInLoopDetector,
+            UnprotectedInitializerDetector,
         },
         low::{
-            AvoidAbiEncodePackedDetector, CentralizationRiskDetector,
-            ConstantsInsteadOfLiteralsDetector, DeprecatedOZFunctionsDetector, EcrecoverDetector,
+            CentralizationRiskDetector, ConstantsInsteadOfLiteralsDetector,
+            ContractsWithTodosDetector, DeprecatedOZFunctionsDetector, EcrecoverDetector,
             EmptyBlockDetector, InconsistentTypeNamesDetector, LargeLiteralValueDetector,
             NonReentrantBeforeOthersDetector, PushZeroOpcodeDetector, RequireWithStringDetector,
-            SolmateSafeTransferLibDetector, UnindexedEventsDetector,
-            UnprotectedInitializerDetector, UnsafeERC20FunctionsDetector, UnsafeERC721MintDetector,
-            UnspecificSolidityPragmaDetector, UselessInternalFunctionDetector,
-            UselessModifierDetector, UselessPublicFunctionDetector, ZeroAddressCheckDetector,
+            SolmateSafeTransferLibDetector, UnindexedEventsDetector, UnsafeERC20FunctionsDetector,
+            UnsafeERC721MintDetector, UnspecificSolidityPragmaDetector,
+            UselessInternalFunctionDetector, UselessModifierDetector,
+            UselessPublicFunctionDetector, ZeroAddressCheckDetector,
         },
     },
 };
@@ -52,6 +53,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<EmptyBlockDetector>::default(),
         Box::<LargeLiteralValueDetector>::default(),
         Box::<UselessInternalFunctionDetector>::default(),
+        Box::<ContractsWithTodosDetector>::default(),
         Box::<InconsistentTypeNamesDetector>::default(),
         Box::<UnprotectedInitializerDetector>::default(),
     ]
@@ -87,6 +89,7 @@ pub(crate) enum IssueDetectorNamePool {
     LargeNumericLiteral,
     UselessInternalFunction,
     EmptyBlock,
+    ContractWithTodos,
     InconsistentTypeNames,
     UnprotectedInitializer,
     // NOTE: `Undecided` will be the default name (for new bots).
@@ -161,6 +164,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
             Some(Box::<UselessInternalFunctionDetector>::default())
         }
         IssueDetectorNamePool::EmptyBlock => Some(Box::<EmptyBlockDetector>::default()),
+        IssueDetectorNamePool::ContractWithTodos => {
+            Some(Box::<ContractsWithTodosDetector>::default())
+        }
         IssueDetectorNamePool::InconsistentTypeNames => {
             Some(Box::<InconsistentTypeNamesDetector>::default())
         }
