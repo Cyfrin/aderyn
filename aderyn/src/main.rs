@@ -2,10 +2,7 @@
 
 use serde::Deserialize;
 use serde_json::Value;
-use std::{
-    env,
-    path::{Path, PathBuf},
-};
+use std::path::{Path, PathBuf};
 use strum::IntoEnumIterator;
 
 use aderyn_driver::{
@@ -62,6 +59,10 @@ pub struct CommandLineArgs {
     /// Skip cloc analysis (line numbers, etc.)
     #[arg(long)]
     skip_cloc: bool,
+
+    /// Skip checking for new versions of Aderyn
+    #[arg(long)]
+    skip_update_check: bool,
 }
 
 #[derive(Debug, Subcommand)]
@@ -100,6 +101,7 @@ fn main() {
         no_snippets: cmd_args.no_snippets,
         skip_build: cmd_args.skip_build,
         skip_cloc: cmd_args.skip_cloc,
+        skip_update_check: cmd_args.skip_update_check,
         stdout: cmd_args.stdout,
     };
 
@@ -198,6 +200,7 @@ fn main() {
                     no_snippets: args.no_snippets,
                     skip_build: args.skip_build,
                     skip_cloc: args.skip_cloc,
+                    skip_update_check: args.skip_update_check,
                     stdout: args.stdout,
                 };
                 driver::drive_with(new_args, subscriptions);
@@ -210,14 +213,7 @@ fn main() {
         driver::drive(args);
     }
 
-    let key = "ADERYN_SKIP_UPDATE_CHECK";
-
-    let should_check_for_update = match env::var(key) {
-        Ok(val) => val != "1",
-        Err(_) => true,
-    };
-
-    if should_check_for_update {
+    {
         println!();
 
         if let Ok(yes) = aderyn_is_currently_running_newest_version() {
