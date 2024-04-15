@@ -303,6 +303,7 @@ pub mod detector_test_helpers {
             .output();
 
         if let Ok(command) = command {
+            println!("raw stdout: {:?}", command.stdout);
             let stdout = String::from_utf8(command.stdout).unwrap();
             println!("stdout: {}", stdout);
 
