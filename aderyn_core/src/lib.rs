@@ -86,20 +86,11 @@ where
 
     for (issue, severity) in issues.into_iter().flatten() {
         match severity {
-            IssueSeverity::Critical => {
-                report.criticals.push(issue);
-            }
             IssueSeverity::High => {
                 report.highs.push(issue);
             }
-            IssueSeverity::Medium => {
-                report.mediums.push(issue);
-            }
             IssueSeverity::Low => {
                 report.lows.push(issue);
-            }
-            IssueSeverity::NC => {
-                report.ncs.push(issue);
             }
         }
     }

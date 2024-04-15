@@ -3,22 +3,22 @@ use strum::{Display, EnumCount, EnumIter, EnumString};
 
 use crate::{
     ast::NodeID,
-    context::workspace_context::{ASTNode, WorkspaceContext},
+    context::workspace_context::WorkspaceContext,
     detect::{
-        high::{ArbitraryTransferFromDetector, DelegateCallInLoopDetector},
+        high::{
+            ArbitraryTransferFromDetector, BlockTimestampDeadlineDetector,
+            DelegateCallInLoopDetector,
+        },
         low::{
-            AvoidAbiEncodePackedDetector, DeprecatedOZFunctionsDetector, EcrecoverDetector,
-            PushZeroOpcodeDetector, UnsafeERC20FunctionsDetector, UnspecificSolidityPragmaDetector,
-        },
-        medium::{
-            BlockTimestampDeadlineDetector, CentralizationRiskDetector,
-            SolmateSafeTransferLibDetector, UnsafeERC721MintDetector,
-        },
-        nc::{
-            ConstantsInsteadOfLiteralsDetector, LargeLiteralValueDetector,
-            NonReentrantBeforeOthersDetector, RequireWithStringDetector, UnindexedEventsDetector,
-            UselessInternalFunctionDetector, UselessModifierDetector,
-            UselessPublicFunctionDetector, ZeroAddressCheckDetector,
+            AvoidAbiEncodePackedDetector, CentralizationRiskDetector,
+            ConstantsInsteadOfLiteralsDetector, ContractsWithTodosDetector,
+            DeprecatedOZFunctionsDetector, EcrecoverDetector, EmptyBlockDetector,
+            InconsistentTypeNamesDetector, LargeLiteralValueDetector,
+            NonReentrantBeforeOthersDetector, PushZeroOpcodeDetector, RequireWithStringDetector,
+            SolmateSafeTransferLibDetector, UnindexedEventsDetector,
+            UnprotectedInitializerDetector, UnsafeERC20FunctionsDetector, UnsafeERC721MintDetector,
+            UnspecificSolidityPragmaDetector, UselessInternalFunctionDetector,
+            UselessModifierDetector, UselessPublicFunctionDetector, ZeroAddressCheckDetector,
         },
     },
 };
@@ -28,8 +28,6 @@ use std::{
     fmt::{self, Display},
     str::FromStr,
 };
-
-use super::nc::{contracts_with_todos::ContractsWithTodosDetector, EmptyBlockDetector};
 
 pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
     vec![
@@ -56,6 +54,8 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<LargeLiteralValueDetector>::default(),
         Box::<UselessInternalFunctionDetector>::default(),
         Box::<ContractsWithTodosDetector>::default(),
+        Box::<InconsistentTypeNamesDetector>::default(),
+        Box::<UnprotectedInitializerDetector>::default(),
     ]
 }
 
@@ -90,6 +90,8 @@ pub(crate) enum IssueDetectorNamePool {
     UselessInternalFunction,
     EmptyBlock,
     ContractWithTodos,
+    InconsistentTypeNames,
+    UnprotectedInitializer,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -165,6 +167,12 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::ContractWithTodos => {
             Some(Box::<ContractsWithTodosDetector>::default())
         }
+        IssueDetectorNamePool::InconsistentTypeNames => {
+            Some(Box::<InconsistentTypeNamesDetector>::default())
+        }
+        IssueDetectorNamePool::UnprotectedInitializer => {
+            Some(Box::<UnprotectedInitializerDetector>::default())
+        }
         IssueDetectorNamePool::Undecided => None,
     }
 }
@@ -175,21 +183,15 @@ pub fn get_issue_detector_by_name(detector_name: &str) -> Box<dyn IssueDetector>
 
 #[derive(Debug, PartialEq, Serialize, Deserialize, EnumCount, Clone, EnumIter)]
 pub enum IssueSeverity {
-    NC,
     Low,
-    Medium,
     High,
-    Critical,
 }
 
 impl Display for IssueSeverity {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let issue_description = match self {
-            IssueSeverity::NC => "NC (Non Critical)",
             IssueSeverity::Low => "Low",
-            IssueSeverity::Medium => "Medium",
             IssueSeverity::High => "High",
-            IssueSeverity::Critical => "Critical",
         };
         write!(f, "{}", issue_description).unwrap();
         Ok(())
@@ -202,7 +204,7 @@ pub trait IssueDetector: Send + Sync + 'static {
     }
 
     fn severity(&self) -> IssueSeverity {
-        IssueSeverity::Medium
+        IssueSeverity::High
     }
 
     fn title(&self) -> String {
@@ -221,21 +223,6 @@ pub trait IssueDetector: Send + Sync + 'static {
     // Value is ASTNode NodeID
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
         BTreeMap::new()
-    }
-}
-
-pub trait ReusableDetector {
-    fn detect(
-        &mut self,
-        _context: &WorkspaceContext,
-        _using: &[ASTNode],
-        _within: &[ASTNode],
-    ) -> Result<&[ASTNode], Box<dyn Error>> {
-        Ok(&[])
-    }
-
-    fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::Undecided)
     }
 }
 

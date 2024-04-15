@@ -2,6 +2,7 @@
 
 cd tests/contract-playground
 forge build --ast
+FOUNDRY_PROFILE=sample forge build --ast
 cd ../../
 
 export ADERYN_SKIP_BUILD=1
@@ -10,6 +11,9 @@ export ADERYN_SKIP_BUILD=1
 
 # Basic report.md 
 cargo run -- ./tests/contract-playground &
+
+# Basic report.profile.md 
+FOUNDRY_PROFILE=sample cargo run -- -o report.sample_profile.md ./tests/contract-playground &
 
 # Create report-config.md based on config file
 cargo run -- --config-file ./tests/aderyn.config.json -o report-config.md ./tests/contract-playground/  &
@@ -31,12 +35,7 @@ cargo run -- --config-file ./tests/aderyn.config.json -o report-config.json ./te
 
 wait
 
-unset ADERYN_SKIP_BUILD=1
-
-#### BOT ###################
-
-# Make sure nyth users can actually interact with driver
-cargo run --bin bot_example -- -p orig_ 
+unset ADERYN_SKIP_BUILD
 
 #### Other scripts #############
 
