@@ -1,7 +1,7 @@
 use crate::ast::*;
 use eyre::Result;
 use serde::{Deserialize, Serialize};
-use std::env;
+
 use std::error::Error;
 use std::fs::{canonicalize, read_dir, read_to_string, File};
 use std::io::BufReader;
