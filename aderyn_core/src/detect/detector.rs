@@ -301,7 +301,7 @@ pub mod detector_test_helpers {
 
         let command = Command::new(solc_bin)
             .args(["--ast-compact-json", file_arg])
-            .current_dir("/")
+            // .current_dir("/")
             .stdout(Stdio::piped())
             .output();
 
