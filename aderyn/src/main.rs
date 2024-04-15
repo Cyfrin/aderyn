@@ -93,6 +93,8 @@ fn main() {
         scope: cmd_args.scope,
         exclude: cmd_args.exclude,
         no_snippets: cmd_args.no_snippets,
+        skip_build: cmd_args.skip_build,
+        skip_cloc: cmd_args.skip_cloc,
         stdout: cmd_args.stdout,
     };
 
@@ -189,6 +191,8 @@ fn main() {
                     scope: scope_lines,
                     exclude: args.exclude,
                     no_snippets: args.no_snippets,
+                    skip_build: args.skip_build,
+                    skip_cloc: args.skip_cloc,
                     stdout: args.stdout,
                 };
                 driver::drive_with(new_args, subscriptions);
