@@ -1,6 +1,7 @@
 pub(crate) mod avoid_abi_encode_packed;
 pub(crate) mod centralization_risk;
 pub(crate) mod constants_instead_of_literals;
+pub(crate) mod contracts_with_todos;
 pub(crate) mod deprecated_oz_functions;
 pub(crate) mod ecrecover;
 pub(crate) mod empty_blocks;
@@ -23,6 +24,7 @@ pub(crate) mod zero_address_check;
 pub use avoid_abi_encode_packed::AvoidAbiEncodePackedDetector;
 pub use centralization_risk::CentralizationRiskDetector;
 pub use constants_instead_of_literals::ConstantsInsteadOfLiteralsDetector;
+pub use contracts_with_todos::ContractsWithTodosDetector;
 pub use deprecated_oz_functions::DeprecatedOZFunctionsDetector;
 pub use ecrecover::EcrecoverDetector;
 pub use empty_blocks::EmptyBlockDetector;
