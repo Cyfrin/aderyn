@@ -1,12 +1,13 @@
 use crate::ast::*;
 use eyre::Result;
 use serde::{Deserialize, Serialize};
-use std::env;
+
 use std::error::Error;
 use std::fs::{canonicalize, read_dir, read_to_string, File};
 use std::io::BufReader;
 use std::path::PathBuf;
 use std::process::Stdio;
+use toml::Table;
 
 // Foundry compiler output file
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
@@ -15,32 +16,11 @@ pub struct FoundryOutput {
     pub ast: SourceUnit,
 }
 
-// Foundry TOML config file
+// Foundry TOML config file (according to relevant profile)
 #[derive(Debug, Deserialize)]
 struct FoundryConfig {
-    profile: ProfileSection,
-}
-
-#[derive(Debug, Deserialize)]
-struct ProfileSection {
-    #[serde(rename = "default")]
-    default: DefaultProfile,
-}
-
-#[derive(Debug, Deserialize)]
-struct DefaultProfile {
-    #[serde(default = "default_src")]
     src: String,
-    #[serde(default = "default_out")]
     out: String,
-}
-
-fn default_src() -> String {
-    "src".to_string()
-}
-
-fn default_out() -> String {
-    "out".to_string()
 }
 
 pub fn read_foundry_output_file(filepath: &str) -> Result<FoundryOutput> {
@@ -57,7 +37,10 @@ pub struct LoadedFoundry {
 }
 
 // Load foundry and return a Vector of PathBufs to the AST JSON files
-pub fn load_foundry(foundry_root: &PathBuf) -> Result<LoadedFoundry, Box<dyn Error>> {
+pub fn load_foundry(
+    foundry_root: &PathBuf,
+    skip_build: bool,
+) -> Result<LoadedFoundry, Box<dyn Error>> {
     let foundry_root_absolute = canonicalize(foundry_root).unwrap_or_else(|err| {
         // Exit with a non-zero exit code
         eprintln!("Error getting absolute path of Foundry root directory");
@@ -66,22 +49,26 @@ pub fn load_foundry(foundry_root: &PathBuf) -> Result<LoadedFoundry, Box<dyn Err
         std::process::exit(1);
     });
 
-    let key = "ADERYN_SKIP_BUILD";
+    if !skip_build {
+        println!(
+            "Running `forge build --ast` in {:?}",
+            &foundry_root_absolute
+        );
 
-    let should_build = match env::var(key) {
-        Ok(val) => val != "1",
-        Err(_) => true,
-    };
-
-    if should_build {
         // Run `forge build --ast` in the root
-        let _output = std::process::Command::new("forge")
+        let output = std::process::Command::new("forge")
             .arg("build")
             .arg("--ast")
             .current_dir(&foundry_root_absolute)
             .stdout(Stdio::inherit()) // This will stream the stdout
             .stderr(Stdio::inherit())
-            .status();
+            .status()
+            .expect("Failed to run `forge build --ast`");
+
+        if !output.success() {
+            eprintln!("The command `forge build --ast` did not execute successfully. Please run `foundryup` and try again otherwise, install foundry by following the official guide https://book.getfoundry.sh/getting-started/installation");
+            std::process::exit(output.code().unwrap());
+        }
     }
 
     let foundry_config_filepath = foundry_root_absolute.join("foundry.toml");
@@ -92,7 +79,7 @@ pub fn load_foundry(foundry_root: &PathBuf) -> Result<LoadedFoundry, Box<dyn Err
     });
 
     // Get the file names of all contracts in the Foundry src directory
-    let foundry_src_path = foundry_root_absolute.join(&foundry_config.profile.default.src);
+    let foundry_src_path = foundry_root_absolute.join(&foundry_config.src);
     let contract_filepaths =
         collect_nested_files(&foundry_src_path, "sol").unwrap_or_else(|_err| {
             // Exit with a non-zero exit code
@@ -102,7 +89,7 @@ pub fn load_foundry(foundry_root: &PathBuf) -> Result<LoadedFoundry, Box<dyn Err
 
     // For each contract in the Foundry output directory, check if it is in the list of contracts in the Foundry src directory
     // (This is because some contracts may be imported but not deployed, or there may be old contracts in the output directory)
-    let foundry_out_path = foundry_root_absolute.join(&foundry_config.profile.default.out);
+    let foundry_out_path = foundry_root_absolute.join(&foundry_config.out);
 
     let json_output_filepaths = collect_nested_files(&foundry_out_path.clone(), "json")
         .unwrap_or_else(|_err| {
@@ -113,7 +100,7 @@ pub fn load_foundry(foundry_root: &PathBuf) -> Result<LoadedFoundry, Box<dyn Err
     let output_filepaths = get_matching_output_files(&json_output_filepaths, &contract_filepaths);
 
     Ok(LoadedFoundry {
-        src_path: foundry_config.profile.default.src,
+        src_path: foundry_config.src,
         src_filepaths: contract_filepaths,
         output_filepaths,
     })
@@ -121,7 +108,9 @@ pub fn load_foundry(foundry_root: &PathBuf) -> Result<LoadedFoundry, Box<dyn Err
 
 fn read_config(path: &PathBuf) -> Result<FoundryConfig, Box<dyn Error>> {
     let contents = read_to_string(path).unwrap();
-    let foundry_config_toml = toml::from_str(&contents);
+
+    let foundry_config_toml = contents.parse::<Table>();
+
     let foundry_config = match foundry_config_toml {
         Ok(config) => config,
         Err(e) => {
@@ -129,7 +118,57 @@ fn read_config(path: &PathBuf) -> Result<FoundryConfig, Box<dyn Error>> {
             std::process::exit(1);
         }
     };
-    Ok(foundry_config)
+
+    let foundry_profile = std::env::var("FOUNDRY_PROFILE")
+        .unwrap_or("default".to_string())
+        .to_lowercase();
+
+    // Official Foundry docs defaults
+    // https://book.getfoundry.sh/reference/config/project#src
+
+    let default_foundry_src = std::env::var("FOUNDRY_SRC")
+        .unwrap_or(std::env::var("DAPP_SRC").unwrap_or(String::from("src")));
+
+    let default_foundry_out = std::env::var("FOUNDRY_OUT")
+        .unwrap_or(std::env::var("DAPP_OUT").unwrap_or(String::from("out")));
+
+    if let Some(foundry_profiles) = foundry_config["profile"].as_table() {
+        // println!("{:#?}", foundry_profiles);
+
+        for (profile_key, value) in foundry_profiles {
+            if profile_key == &foundry_profile {
+                if let Some(value) = value.as_table() {
+                    let profile_src = {
+                        if let Some(toml::Value::String(src)) = value.get("src") {
+                            src.clone()
+                        } else {
+                            default_foundry_src
+                        }
+                    };
+
+                    let profile_out = {
+                        if let Some(toml::Value::String(out)) = value.get("out") {
+                            out.clone()
+                        } else {
+                            default_foundry_out
+                        }
+                    };
+
+                    println!("Scanning out folder - {}", profile_out);
+
+                    return Ok(FoundryConfig {
+                        src: profile_src.to_string(),
+                        out: profile_out.to_string(),
+                    });
+                }
+            }
+        }
+    }
+
+    Ok(FoundryConfig {
+        src: default_foundry_src,
+        out: default_foundry_out,
+    })
 }
 
 fn collect_nested_files(path: &PathBuf, extension: &str) -> Result<Vec<PathBuf>, std::io::Error> {
@@ -183,7 +222,7 @@ mod tests {
             .join("../tests/contract-playground/")
             .canonicalize()
             .unwrap();
-        let result = load_foundry(&tests_contract_playground_path).unwrap();
+        let result = load_foundry(&tests_contract_playground_path, false).unwrap();
         let nested_1_exists = result
             .output_filepaths
             .iter()

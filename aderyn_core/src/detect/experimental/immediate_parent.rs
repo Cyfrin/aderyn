@@ -5,7 +5,7 @@ use crate::{
     ast::NodeID,
     capture,
     context::{
-        browser::{AppearsAfterASTNodeLocation, AppearsBeforeASTNodeLocation, GetImmediateParent},
+        browser::{AppearsAfterNodeLocation, AppearsBeforeNodeLocation, GetImmediateParent},
         workspace_context::{ASTNode, WorkspaceContext},
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
@@ -45,6 +45,10 @@ impl IssueDetector for ImmediateParentDemonstrator {
                                 assert!(first_parent
                                     .appears_after(context, second_parent)
                                     .unwrap());
+                                assert!(first_parent
+                                    .appears_after(context, for_statement)
+                                    .unwrap());
+                                assert!(block.appears_after(context, for_statement).unwrap());
                                 assert!(second_parent
                                     .appears_after(context, third_parent)
                                     .unwrap());
@@ -65,7 +69,7 @@ impl IssueDetector for ImmediateParentDemonstrator {
     }
 
     fn severity(&self) -> IssueSeverity {
-        IssueSeverity::Medium
+        IssueSeverity::High
     }
 
     fn title(&self) -> String {

@@ -11,6 +11,8 @@ fn main() {
             root,
             output,
             no_snippets: false, // TODO support this later
+            skip_build: false,  // TODO support this later
+            skip_cloc: false,   // TODO support this later
             scope: None,        // TODO support this later
             exclude: None,      // TODO support this later
             stdout: false,      // TODO support this later

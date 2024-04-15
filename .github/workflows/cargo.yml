@@ -26,6 +26,10 @@ jobs:
     name: Tests
     runs-on: ubuntu-latest
     steps:
+
+      - name: foundry-toolchain
+        uses: foundry-rs/foundry-toolchain@v1.2.0
+
       - name: Checkout sources
         uses: actions/checkout@v2
 
@@ -45,6 +49,10 @@ jobs:
     name: Check Reports
     runs-on: ubuntu-latest
     steps:
+
+      - name: foundry-toolchain
+        uses: foundry-rs/foundry-toolchain@v1.2.0
+
       - name: Checkout sources
         uses: actions/checkout@v2
 
@@ -68,6 +76,21 @@ jobs:
           cat report-workflow.md
           diff report.md report-workflow.md
 
+      # Verify sample profile report
+
+      - name: Generate report.sample_profile.workflow.md
+        uses: actions-rs/cargo@v1
+        env:
+          FOUNDRY_PROFILE: sample
+        with:
+          command: run
+          args: -- -o report.sample_profile.workflow.md ./tests/contract-playground/
+
+      - name: Check report.sample_profile.md vs report.sample_profile.workflow.md
+        run: |
+          cat report.sample_profile.workflow.md
+          diff report.sample_profile.md report.sample_profile.workflow.md
+  
       # Verify report-config.md
 
       - name: Generate report-config-workflow.md
@@ -131,74 +154,15 @@ jobs:
           cat report3.md
           diff report-config.md report3.md
 
-      - name: Generate bot results
-        uses: actions-rs/cargo@v1
-        with:
-          command: run
-          args: --bin bot_example
-
-      - name: Check custom_subscription_analysis_report.md 
-        run: |
-          cat bot_reports/custom_subscription_analysis_report.md
-          diff bot_reports/orig_custom_subscription_analysis_report.md bot_reports/custom_subscription_analysis_report.md
-
-  bots:
-  
-    name: Check Bot creation and testing
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout sources
-        uses: actions/checkout@v2
-
-      - name: Install stable toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
-
-      - name: Ask assembler make a dev archive.zip
-        uses: actions-rs/cargo@v1
-        with:
-          command: run
-          args: --bin bot_fw_assembler -- dev ../aderyn_driver
-
-      - name: Create a bot with nyth
-        uses: actions-rs/cargo@v1
-        with:
-          command: run
-          args: --bin nyth -- init bot_ci_cd
-          
-      - name: Build the bot 
-        uses: actions-rs/cargo@v1
-        with:
-          command: build
-          args: --manifest-path ./bot_ci_cd/Cargo.toml
-
-      - name: Add detectors to the bot
-        run: |
-          cd bot_ci_cd
-          ../target/debug/nyth new issue my_issue_detector_thing
-          ../target/debug/nyth new reusable my_reusable_thing
-
-      - name: Build the bot again 
-        uses: actions-rs/cargo@v1
-        with:
-          command: build
-          args: --manifest-path ./bot_ci_cd/Cargo.toml 
-
-      - name: Test the bot 
-        uses: actions-rs/cargo@v1
-        with:
-          command: test
-          args: --manifest-path ./bot_ci_cd/Cargo.toml
-
-
   judgeopsreports: 
   
     name: Check judge.md report creation
     runs-on: ubuntu-latest
     steps:
+
+      - name: foundry-toolchain
+        uses: foundry-rs/foundry-toolchain@v1.2.0
+
       - name: Checkout sources
         uses: actions/checkout@v2
 
@@ -238,6 +202,10 @@ jobs:
     name: Check metrics changes with feedback consistently
     runs-on: ubuntu-latest
     steps:
+
+      - name: foundry-toolchain
+        uses: foundry-rs/foundry-toolchain@v1.2.0
+
       - name: Checkout sources
         uses: actions/checkout@v2
 

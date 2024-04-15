@@ -40,6 +40,10 @@ impl Node for ParameterList {
         visitor.visit_immediate_children(self.id, parameters_ids.clone())?;
         Ok(())
     }
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
+        Ok(())
+    }
 }
 
 impl Display for ParameterList {
@@ -77,6 +81,10 @@ impl Node for OverrideSpecifier {
     fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         let overrides_ids = &self.overrides.iter().map(|x| x.id).collect::<Vec<_>>();
         visitor.visit_immediate_children(self.id, overrides_ids.clone())?;
+        Ok(())
+    }
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
         Ok(())
     }
 }
@@ -158,6 +166,10 @@ impl Node for FunctionDefinition {
         if let Some(body) = &self.body {
             visitor.visit_immediate_children(self.id, vec![body.id])?;
         }
+        Ok(())
+    }
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
         Ok(())
     }
 }
