@@ -18,6 +18,7 @@ dependencies = [
  "aderyn_driver",
  "clap",
  "reqwest",
+ "semver",
  "serde",
  "serde_json",
  "strum",

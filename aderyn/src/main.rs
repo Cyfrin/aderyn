@@ -1,5 +1,6 @@
 #![allow(clippy::borrowed_box)]
 
+use semver::Version;
 use serde::Deserialize;
 use serde_json::Value;
 use std::path::{Path, PathBuf};
@@ -214,10 +215,9 @@ fn main() {
     }
 
     if !cmd_args.skip_update_check {
-        println!();
-
         if let Ok(yes) = aderyn_is_currently_running_newest_version() {
             if !yes {
+                println!();
                 println!(
                     "NEW VERSION OF ADERYN AVAILABLE! Please run `cargo install aderyn` to fully upgrade the current version"
                 );
@@ -322,9 +322,10 @@ fn aderyn_is_currently_running_newest_version() -> Result<bool, reqwest::Error> 
     let newest_version = data["crates"][0]["newest_version"].to_string();
     let newest_version = &newest_version[1..newest_version.len() - 1];
 
-    println!("Current version: {}", env!("CARGO_PKG_VERSION"));
-    println!(" | Latest version: {}", newest_version);
-    Ok(newest_version == env!("CARGO_PKG_VERSION"))
+    let newest = Version::parse(newest_version).unwrap();
+    let current = Version::parse(env!("CARGO_PKG_VERSION")).unwrap();
+
+    Ok(current >= newest)
 }
 
 #[cfg(test)]
