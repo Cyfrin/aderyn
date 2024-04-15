@@ -303,43 +303,36 @@ pub mod detector_test_helpers {
             .output();
 
         if let Ok(command) = command {
-            if command.status.success() {
-                let stdout = String::from_utf8(command.stdout).unwrap();
+            let stdout = String::from_utf8(command.stdout).unwrap();
+            let stderr = String::from_utf8(command.stderr).unwrap();
+            println!("stdout = {}", stdout);
+            println!("stderr = {}", stderr);
 
-                let mut pick_next_line = false;
-                let mut ast_content = String::new();
-                for line in stdout.lines() {
-                    if line.starts_with("======= ") {
-                        let end_marker = line.find(" =======").unwrap();
-                        let filepath = &line["======= ".len()..end_marker];
-                        if file_arg.contains(filepath) {
-                            pick_next_line = true;
-                        }
-                    } else if pick_next_line {
-                        ast_content = line.to_string();
-                        break;
+            let mut pick_next_line = false;
+            let mut ast_content = String::new();
+            for line in stdout.lines() {
+                if line.starts_with("======= ") {
+                    let end_marker = line.find(" =======").unwrap();
+                    let filepath = &line["======= ".len()..end_marker];
+                    if file_arg.contains(filepath) {
+                        pick_next_line = true;
                     }
+                } else if pick_next_line {
+                    ast_content = line.to_string();
+                    break;
                 }
+            }
 
-                let mut source_unit: SourceUnit = serde_json::from_str(&ast_content).unwrap();
-                let mut context = WorkspaceContext::default();
-                source_unit.source = Some(solidity_content);
-                source_unit.accept(&mut context).unwrap_or_else(|err| {
-                    // Exit with a non-zero exit code
-                    eprintln!("Error loading AST into WorkspaceContext");
-                    eprintln!("{:?}", err);
-                    std::process::exit(1);
-                });
-                // println!("Workspace Context {:#?}", context);
-                context
-            }
-            // If the command failed
-            else {
-                eprintln!("Error running solc command");
-                let error_message = String::from_utf8(command.stderr).unwrap();
-                eprintln!("{:?}", error_message);
-                std::process::exit(command.status.code().unwrap_or(1));
-            }
+            let mut source_unit: SourceUnit = serde_json::from_str(&ast_content).unwrap();
+            let mut context = WorkspaceContext::default();
+            source_unit.source = Some(solidity_content);
+            source_unit.accept(&mut context).unwrap_or_else(|err| {
+                // Exit with a non-zero exit code
+                eprintln!("Error loading AST into WorkspaceContext");
+                eprintln!("{:?}", err);
+                std::process::exit(1);
+            });
+            context
         } else {
             eprintln!("Error running solc command");
             std::process::exit(1);
