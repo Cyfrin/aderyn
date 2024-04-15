@@ -304,6 +304,7 @@ pub mod detector_test_helpers {
 
         if let Ok(command) = command {
             let stdout = String::from_utf8(command.stdout).unwrap();
+            // println!("{}", stdout);
 
             let mut pick_next_line = false;
             let mut ast_content = String::new();
@@ -319,6 +320,7 @@ pub mod detector_test_helpers {
                     break;
                 }
             }
+            println!("AST Content: {}", ast_content);
 
             let mut source_unit: SourceUnit = serde_json::from_str(&ast_content).unwrap();
             let mut context = WorkspaceContext::default();
