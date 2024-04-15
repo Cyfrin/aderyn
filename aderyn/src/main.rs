@@ -47,6 +47,7 @@ pub struct CommandLineArgs {
     #[arg(short, long)]
     config_file: Option<String>,
 
+    /// Print every detector available
     #[clap(subcommand, name = "registry")]
     registry: Option<RegistryCommand>,
 
