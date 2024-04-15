@@ -1,6 +1,6 @@
 [package]
 name = "aderyn_driver"
-version = "0.0.21"
+version = "0.0.22"
 edition = "2021"
 authors = ["Alex Roan <alex@cyfrin.io>"]
 description = "Rust based Solidity AST analyzer driver"
@@ -9,7 +9,7 @@ license = "MIT"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-aderyn_core = { path  = "../aderyn_core", version = "0.0.21" }
+aderyn_core = { path  = "../aderyn_core", version = "0.0.22" }
 rayon = "1.8.0"
 
 [dev-dependencies]
