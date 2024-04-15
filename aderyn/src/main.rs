@@ -213,13 +213,13 @@ fn main() {
         driver::drive(args);
     }
 
-    {
+    if !cmd_args.skip_update_check {
         println!();
 
         if let Ok(yes) = aderyn_is_currently_running_newest_version() {
             if !yes {
                 println!(
-                    "Oh wait! There is a new version of aderyn available! Please run `cargo install aderyn` to fully upgrade the current version"
+                    "NEW VERSION OF ADERYN AVAILABLE! Please run `cargo install aderyn` to fully upgrade the current version"
                 );
             }
         }
@@ -322,6 +322,8 @@ fn aderyn_is_currently_running_newest_version() -> Result<bool, reqwest::Error> 
     let newest_version = data["crates"][0]["newest_version"].to_string();
     let newest_version = &newest_version[1..newest_version.len() - 1];
 
+    println!("Current version: {}", env!("CARGO_PKG_VERSION"));
+    println!(" | Latest version: {}", newest_version);
     Ok(newest_version == env!("CARGO_PKG_VERSION"))
 }
 
