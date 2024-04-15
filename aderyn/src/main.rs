@@ -54,7 +54,7 @@ pub struct CommandLineArgs {
     #[arg(long)]
     skip_build: bool,
 
-    /// Skip cloc analysis
+    /// Skip cloc analysis (line numbers, etc.)
     #[arg(long)]
     skip_cloc: bool,
 }
