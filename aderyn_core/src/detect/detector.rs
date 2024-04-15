@@ -336,7 +336,8 @@ pub mod detector_test_helpers {
             // If the command failed
             else {
                 eprintln!("Error running solc command");
-                eprintln!("{:?}", String::from_utf8(command.stderr).unwrap());
+                let error_message = String::from_utf8(command.stderr).unwrap();
+                eprintln!("{:?}", error_message);
                 std::process::exit(command.status.code().unwrap_or(1));
             }
         } else {
