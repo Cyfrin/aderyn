@@ -1,4 +1,3 @@
-pub(crate) mod avoid_abi_encode_packed;
 pub(crate) mod centralization_risk;
 pub(crate) mod constants_instead_of_literals;
 pub(crate) mod contracts_with_todos;
@@ -12,7 +11,6 @@ pub(crate) mod push_0_opcode;
 pub(crate) mod require_with_string;
 pub(crate) mod solmate_safe_transfer_lib;
 pub(crate) mod unindexed_events;
-pub(crate) mod unprotected_init_function;
 pub(crate) mod unsafe_erc20_functions;
 pub(crate) mod unsafe_oz_erc721_mint;
 pub(crate) mod unspecific_solidity_pragma;
@@ -21,7 +19,6 @@ pub(crate) mod useless_modifier;
 pub(crate) mod useless_public_function;
 pub(crate) mod zero_address_check;
 
-pub use avoid_abi_encode_packed::AvoidAbiEncodePackedDetector;
 pub use centralization_risk::CentralizationRiskDetector;
 pub use constants_instead_of_literals::ConstantsInsteadOfLiteralsDetector;
 pub use contracts_with_todos::ContractsWithTodosDetector;
@@ -35,7 +32,6 @@ pub use push_0_opcode::PushZeroOpcodeDetector;
 pub use require_with_string::RequireWithStringDetector;
 pub use solmate_safe_transfer_lib::SolmateSafeTransferLibDetector;
 pub use unindexed_events::UnindexedEventsDetector;
-pub use unprotected_init_function::UnprotectedInitializerDetector;
 pub use unsafe_erc20_functions::UnsafeERC20FunctionsDetector;
 pub use unsafe_oz_erc721_mint::UnsafeERC721MintDetector;
 pub use unspecific_solidity_pragma::UnspecificSolidityPragmaDetector;
