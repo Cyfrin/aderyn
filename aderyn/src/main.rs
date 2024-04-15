@@ -49,6 +49,14 @@ pub struct CommandLineArgs {
 
     #[clap(subcommand, name = "registry")]
     registry: Option<RegistryCommand>,
+
+    /// Skip contract build step
+    #[arg(long)]
+    skip_build: bool,
+
+    /// Skip cloc analysis
+    #[arg(long)]
+    skip_cloc: bool,
 }
 
 #[derive(Debug, Subcommand)]
