@@ -16,7 +16,6 @@ pub struct Args {
     pub no_snippets: bool,
     pub skip_build: bool,
     pub skip_cloc: bool,
-    pub skip_update_check: bool,
     pub stdout: bool,
 }
 
