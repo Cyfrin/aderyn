@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 30,
-    "total_sloc": 915
+    "total_source_units": 31,
+    "total_sloc": 922
   },
   "files_details": {
     "files_details": [
@@ -20,6 +20,10 @@
       {
         "file_path": "src/ConstantsLiterals.sol",
         "n_sloc": 28
+      },
+      {
+        "file_path": "src/ContractWithTodo.sol",
+        "n_sloc": 7
       },
       {
         "file_path": "src/Counter.sol",
@@ -128,8 +132,8 @@
     ]
   },
   "issue_count": {
-    "high": 3,
-    "low": 21
+    "high": 5,
+    "low": 20
   },
   "high_issues": {
     "issues": [
@@ -142,6 +146,28 @@
             "contract_path": "src/inheritance/ExtendedInheritance.sol",
             "line_no": 16,
             "src": "488:19"
+          }
+        ]
+      },
+      {
+        "title": "`abi.encodePacked()` should not be used with dynamic types when passing the result to a hash function such as `keccak256()`",
+        "description": "Use `abi.encode()` instead which will pad items to 32 bytes, which will [prevent hash collisions](https://docs.soliditylang.org/en/v0.8.13/abi-spec.html#non-standard-packed-mode) (e.g. `abi.encodePacked(0x123,0x456)` => `0x123456` => `abi.encodePacked(0x1,0x23456)`, but `abi.encode(0x123,0x456)` => `0x0...1230...456`). Unless there is a compelling reason, `abi.encode` should be preferred. If there is only one argument to `abi.encodePacked()` it can often be cast to `bytes()` or `bytes32()` [instead](https://ethereum.stackexchange.com/questions/30912/how-to-compare-strings-in-solidity#answer-82739).\nIf all arguments are strings and or bytes, `bytes.concat()` should be used instead.",
+        "detector_name": "avoid-abi-encode-packed",
+        "instances": [
+          {
+            "contract_path": "src/KeccakContract.sol",
+            "line_no": 18,
+            "src": "587:16"
+          },
+          {
+            "contract_path": "src/KeccakContract.sol",
+            "line_no": 22,
+            "src": "734:16"
+          },
+          {
+            "contract_path": "src/KeccakContract.sol",
+            "line_no": 26,
+            "src": "887:16"
           }
         ]
       },
@@ -273,6 +299,18 @@
             "src": "1598:35"
           }
         ]
+      },
+      {
+        "title": "Unprotected initializer",
+        "description": "Consider protecting the initializer functions with modifiers.",
+        "detector_name": "unprotected-initializer",
+        "instances": [
+          {
+            "contract_path": "src/UnprotectedInitialize.sol",
+            "line_no": 35,
+            "src": "820:33"
+          }
+        ]
       }
     ]
   },
@@ -339,28 +377,6 @@
             "contract_path": "src/T11sTranferer.sol",
             "line_no": 4,
             "src": "57:84"
-          }
-        ]
-      },
-      {
-        "title": "`abi.encodePacked()` should not be used with dynamic types when passing the result to a hash function such as `keccak256()`",
-        "description": "Use `abi.encode()` instead which will pad items to 32 bytes, which will [prevent hash collisions](https://docs.soliditylang.org/en/v0.8.13/abi-spec.html#non-standard-packed-mode) (e.g. `abi.encodePacked(0x123,0x456)` => `0x123456` => `abi.encodePacked(0x1,0x23456)`, but `abi.encode(0x123,0x456)` => `0x0...1230...456`). Unless there is a compelling reason, `abi.encode` should be preferred. If there is only one argument to `abi.encodePacked()` it can often be cast to `bytes()` or `bytes32()` [instead](https://ethereum.stackexchange.com/questions/30912/how-to-compare-strings-in-solidity#answer-82739).\nIf all arguments are strings and or bytes, `bytes.concat()` should be used instead.",
-        "detector_name": "avoid-abi-encode-packed",
-        "instances": [
-          {
-            "contract_path": "src/KeccakContract.sol",
-            "line_no": 18,
-            "src": "587:16"
-          },
-          {
-            "contract_path": "src/KeccakContract.sol",
-            "line_no": 22,
-            "src": "734:16"
-          },
-          {
-            "contract_path": "src/KeccakContract.sol",
-            "line_no": 26,
-            "src": "887:16"
           }
         ]
       },
@@ -445,6 +461,11 @@
         "description": "Consider using a specific version of Solidity in your contracts instead of a wide version. For example, instead of `pragma solidity ^0.8.0;`, use `pragma solidity 0.8.0;`",
         "detector_name": "unspecific-solidity-pragma",
         "instances": [
+          {
+            "contract_path": "src/ContractWithTodo.sol",
+            "line_no": 2,
+            "src": "32:23"
+          },
           {
             "contract_path": "src/Counter.sol",
             "line_no": 2,
@@ -533,6 +554,11 @@
             "contract_path": "src/AssemblyExample.sol",
             "line_no": 6,
             "src": "113:1"
+          },
+          {
+            "contract_path": "src/ContractWithTodo.sol",
+            "line_no": 13,
+            "src": "337:15"
           },
           {
             "contract_path": "src/Counter.sol",
@@ -772,6 +798,11 @@
             "src": "32:23"
           },
           {
+            "contract_path": "src/ContractWithTodo.sol",
+            "line_no": 2,
+            "src": "32:23"
+          },
+          {
             "contract_path": "src/Counter.sol",
             "line_no": 2,
             "src": "39:24"
@@ -904,6 +935,16 @@
             "contract_path": "src/AdminContract.sol",
             "line_no": 14,
             "src": "457:23"
+          },
+          {
+            "contract_path": "src/ContractWithTodo.sol",
+            "line_no": 7,
+            "src": "129:10"
+          },
+          {
+            "contract_path": "src/ContractWithTodo.sol",
+            "line_no": 13,
+            "src": "337:15"
           },
           {
             "contract_path": "src/EmptyBlocks.sol",
@@ -1087,6 +1128,23 @@
         ]
       },
       {
+        "title": "Contract still has TODOs",
+        "description": "Contract contains comments with TODOS",
+        "detector_name": "contract-with-todos",
+        "instances": [
+          {
+            "contract_path": "src/ContractWithTodo.sol",
+            "line_no": 4,
+            "src": "66:8"
+          },
+          {
+            "contract_path": "src/Counter.sol",
+            "line_no": 4,
+            "src": "74:7"
+          }
+        ]
+      },
+      {
         "title": "Inconsistency in declaring uint256/uint (or) int256/int variables within a contract",
         "description": "Consider keeping the naming convention consistent in a given contract",
         "detector_name": "inconsistent-type-names",
@@ -1100,18 +1158,6 @@
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 58,
             "src": "4547:15"
-          }
-        ]
-      },
-      {
-        "title": "Unprotected initializer",
-        "description": "Consider protecting the initializer functions with modifiers.",
-        "detector_name": "unprotected-initializer",
-        "instances": [
-          {
-            "contract_path": "src/UnprotectedInitialize.sol",
-            "line_no": 35,
-            "src": "820:33"
           }
         ]
       }
@@ -1140,6 +1186,7 @@
     "empty-block",
     "large-numeric-literal",
     "useless-internal-function",
+    "contract-with-todos",
     "inconsistent-type-names",
     "unprotected-initializer"
   ]
