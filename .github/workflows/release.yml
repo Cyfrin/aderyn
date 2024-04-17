@@ -1,0 +1,68 @@
+name: Release Binaries
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build-and-upload:
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      matrix:
+        include:
+          - name: linux-amd64
+            runner: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+          - name: win-amd64
+            runner: windows-latest
+            target: x86_64-pc-windows-msvc
+          - name: macos-amd64
+            runner: macos-latest
+            target: x86_64-apple-darwin
+          - name: macos-arm64
+            runner: macos-latest
+            target: aarch64-apple-darwin
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          target: ${{ matrix.target }}
+          override: true
+
+      - name: Cache cargo registry
+        uses: actions/cache@v2
+        with:
+          path: ~/.cargo/registry
+          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Cache cargo build
+        uses: actions/cache@v2
+        with:
+          path: target
+          key: ${{ runner.os }}-cargo-build-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Build binary
+        run: cargo build --release --target ${{ matrix.target }}
+
+      - name: Rename and move binary
+        run: |
+          BIN_SUFFIX=""
+          if [ "${{ matrix.runner }}" == "windows-latest" ]; then
+            BIN_SUFFIX=".exe"
+          fi
+          mkdir -p ${{ github.workspace }}/release
+          mv target/${{ matrix.target }}/release/aderyn${BIN_SUFFIX} ${{ github.workspace }}/release/aderyn-${{ matrix.name }}${BIN_SUFFIX}
+
+      - name: Upload binary to Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: release/aderyn-*
+          draft: false
+          prerelease: false
+          token: ${{ secrets.GITHUB_TOKEN }}
