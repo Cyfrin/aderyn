@@ -6,7 +6,7 @@ use aderyn_core::{
     report::{json_printer::JsonPrinter, markdown_printer::MarkdownReportPrinter},
     run_with_printer, run_with_printer_and_given_detectors,
 };
-use std::{env, fs::read_dir, path::PathBuf};
+use std::{path::PathBuf};
 
 pub struct Args {
     pub root: String,
@@ -214,7 +214,7 @@ mod foundry_compiler_tests {
         )
         .unwrap();
 
-        let ac_compiler_input = compiler_input.get(0).unwrap();
+        let ac_compiler_input = compiler_input.first().unwrap();
 
         // Step 2 - Detect the version of solc that can be used with compiler input
         let version = Solc::detect_version(&Source {
@@ -272,7 +272,7 @@ mod foundry_compiler_tests {
         )
         .unwrap();
 
-        let ac_compiler_input = compiler_input.get(0).unwrap();
+        let ac_compiler_input = compiler_input.first().unwrap();
 
         // Step 2 - Detect the version of solc that can be used with compiler input
         let version = Solc::detect_version(&Source {
