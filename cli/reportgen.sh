@@ -1,6 +1,8 @@
 #!/bin/bash
 
 cd tests/contract-playground
+rm -r out
+rm -r sample_out
 forge build --ast
 FOUNDRY_PROFILE=sample forge build --ast
 cd ../../
