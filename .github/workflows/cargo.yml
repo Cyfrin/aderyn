@@ -84,7 +84,7 @@ jobs:
           FOUNDRY_PROFILE: sample
         with:
           command: run
-          args: -- -o report.sample_profile.workflow.md ./tests/contract-playground/
+          args: -- -o report.sample_profile.workflow.md ./tests/contract-playground/ --skip-update-check
 
       - name: Original MD
         run: |
@@ -93,7 +93,7 @@ jobs:
       - name: CI MD
         run: |
           cat report.sample_profile.workflow.md
-          
+
       - name: Check report.sample_profile.md vs report.sample_profile.workflow.md
         run: |
           cat report.sample_profile.workflow.md
