@@ -54,7 +54,7 @@ jobs:
       - name: Rename and move binary
         run: |
           BIN_SUFFIX=""
-          if [ "${{ matrix.runner }}" == "windows-latest" ]; then
+          if [[ "${{ matrix.runner }}" == "windows-latest" ]]; then
             BIN_SUFFIX=".exe"
           fi
           mkdir -p ${{ github.workspace }}/release
