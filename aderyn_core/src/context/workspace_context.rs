@@ -1276,6 +1276,11 @@ impl WorkspaceContext {
         None
     }
 
+    pub fn get_source_unit_from_child_node_id(&self, node_id: NodeID) -> Option<&SourceUnit> {
+        let node = self.nodes.get(&node_id)?;
+        self.get_source_unit_from_child_node(node)
+    }
+
     pub fn get_source_unit_from_child_node(&self, node: &ASTNode) -> Option<&SourceUnit> {
         let source_unit_id = match node {
             ASTNode::ArrayTypeName(node) => self
