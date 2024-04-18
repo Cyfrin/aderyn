@@ -16,7 +16,7 @@ use crate::{
             EmptyBlockDetector, InconsistentTypeNamesDetector, LargeLiteralValueDetector,
             NonReentrantBeforeOthersDetector, PushZeroOpcodeDetector, RequireWithStringDetector,
             SolmateSafeTransferLibDetector, UnindexedEventsDetector, UnsafeERC20FunctionsDetector,
-            UnsafeERC721MintDetector, UnspecificSolidityPragmaDetector,
+            UnsafeERC721MintDetector, UnspecificSolidityPragmaDetector, UnusedImportsDetector,
             UselessInternalFunctionDetector, UselessModifierDetector,
             UselessPublicFunctionDetector, ZeroAddressCheckDetector,
         },
@@ -56,6 +56,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<ContractsWithTodosDetector>::default(),
         Box::<InconsistentTypeNamesDetector>::default(),
         Box::<UnprotectedInitializerDetector>::default(),
+        Box::<UnusedImportsDetector>::default(),
     ]
 }
 
@@ -92,6 +93,7 @@ pub(crate) enum IssueDetectorNamePool {
     ContractWithTodos,
     InconsistentTypeNames,
     UnprotectedInitializer,
+    UnusedImports,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -173,6 +175,7 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::UnprotectedInitializer => {
             Some(Box::<UnprotectedInitializerDetector>::default())
         }
+        IssueDetectorNamePool::UnusedImports => Some(Box::<UnusedImportsDetector>::default()),
         IssueDetectorNamePool::Undecided => None,
     }
 }

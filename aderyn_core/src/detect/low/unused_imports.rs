@@ -31,12 +31,16 @@ fn process_imports<'a>(
     let import_source_unit = context
         .source_units()
         .into_iter()
-        .find(|source_unit| source_unit.id == import.source_unit)
-        .unwrap();
-    let next_level_imports = ExtractImportDirectives::from(import_source_unit).extracted;
-    next_level_imports.iter().for_each(|next_level_import| {
-        process_imports(distant_relatives, next_level_import, context);
-    });
+        .find(|source_unit| source_unit.id == import.source_unit);
+    match import_source_unit {
+        Some(import_source_unit) => {
+            let next_level_imports = ExtractImportDirectives::from(import_source_unit).extracted;
+            next_level_imports.iter().for_each(|next_level_import| {
+                process_imports(distant_relatives, next_level_import, context);
+            });
+        }
+        None => {}
+    }
 }
 
 impl IssueDetector for UnusedImportsDetector {
