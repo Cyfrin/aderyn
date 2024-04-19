@@ -17,9 +17,10 @@
 
 
 <p align="center">
-<a href="https://twitter.com/cyfrinaudits">Twitter</a>
+<a href="https://docs.cyfrin.io">Docs</a>
+<a href="https://discord.gg/cyfrin">Get support</a>
 <a href="https://cyfrin.io">Website</a>
-<a href="https://discord.gg/cyfrin">Discord</a>
+<a href="https://twitter.com/cyfrinaudits">Twitter</a>
 <p>
 
 ---
@@ -112,7 +113,7 @@ aderyn [OPTIONS] path/to/your/project
 ```
 Replace [OPTIONS] with specific command-line arguments as needed.
 
-For an in-depth walkthrough on how to get started using Aderyn, check the [Cyfrin official docs](ADD LINK)
+For an in-depth walkthrough on how to get started using Aderyn, check the [Cyfrin official docs](https://docs.cyfrin.io/aderyn-static-analyzer/quickstart)
 
 ### Arguments
 
@@ -136,11 +137,11 @@ Examples:
 ```sh
 aderyn /path/to/your/foundry/project/root/directory/
 ```
-Find more examples on the official [Cyfrin Docs](ADD LINK)
+Find more examples on the official [Cyfrin Docs](https://docs.cyfrin.io)
 
 ## Building a custom Aderyn detector
 Aderyn makes it easy to build Static Analysis detectors that can adapt to any Solidity codebase and protocol. This guide will teach you how to build, test, and run your custom Aderyn detectors.
-To learn how to create your custom Aderyn detectors, [checkout the official docs](ADD LINK)
+To learn how to create your custom Aderyn detectors, [checkout the official docs](https://docs.cyfrin.io/aderyn-custom-detectors/detectors-quickstart)
 
 ## Docker
 
