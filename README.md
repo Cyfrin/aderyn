@@ -39,11 +39,13 @@
 
 
 ## What is Aderyn?
-Aderyn is a Rust-based solidity smart contract static analyzer designed to help protocol engineers and security researchers find vulnerabilities in Solidity code bases. 
+Aderyn is a **Rust-based solidity smart contract static analyzer** designed to help protocol engineers and security researchers find vulnerabilities in Solidity code bases. 
 
-Thanks to its collection of static vulnerability detectors, running Cyfrin Aderyn on your Solidity codebase will highlight all the potential vulnerabilities, drastically reducing the potential for unknown issues in your Solidity code and giving you the time to focus on more complex problems.
+Thanks to its collection of static vulnerability detectors, running Cyfrin Aderyn on your Solidity codebase will **highlight all the potential vulnerabilities**, drastically reducing the potential for unknown issues in your Solidity code and giving you the time to focus on more complex problems.
 
-Built using Rust, Aderyn integrates seamlessly into small and enterprise-level development workflows, offering lighting-fast command-line functionality and a framework to build custom detectors to adapt to your codebase.
+Built using **Rust**, Aderyn integrates seamlessly into small and **enterprise-level development workflows**, offering lighting-fast command-line functionality and a framework to [build custom detectors](https://docs.cyfrin.io/aderyn-custom-detectors/what-is-a-detector) to adapt to your codebase.
+
+You can read the [Cyfrin official documentation](https://docs.cyfrin.io) for an in-depth look at Aderyn's functionalities.
 
 ## Features
 * [Foundry](https://book.getfoundry.sh/) support
