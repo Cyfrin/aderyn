@@ -45,6 +45,8 @@ Thanks to its collection of static vulnerability detectors, running Cyfrin Adery
 
 Built using Rust, Aderyn integrates seamlessly into small and enterprise-level development workflows, offering lighting-fast command-line functionality and a framework to build custom detectors to adapt to your codebase.
 
+You can read the [Cyfrin official documentation[(https://docs.cyfrin.io) for an in-depth look at Aderyn's functionalities.
+
 ## Features
 * [Foundry](https://book.getfoundry.sh/) support
 * Modular [detectors](./aderyn_core/src/detect/)
