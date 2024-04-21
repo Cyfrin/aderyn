@@ -67,6 +67,10 @@ jobs:
           toolchain: stable
           override: true
 
+      - name: Install git submodules
+        run: |
+          git submodule update --init --recursive
+
       # Verify report.md
 
       - name: Generate report-workflow.md
@@ -177,6 +181,10 @@ jobs:
           toolchain: stable
           override: true
 
+      - name: Install git submodules
+        run: |
+          git submodule update --init --recursive
+  
       # Verify report.judge.md
       - name: Generate report-workflow.judge.md
         uses: actions-rs/cargo@v1
