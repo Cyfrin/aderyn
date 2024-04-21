@@ -242,6 +242,8 @@ pub mod detector_test_helpers {
         visitor::ast_visitor::Node,
     };
 
+    use once_cell::sync::Lazy;
+
     #[cfg(test)]
     pub fn load_contract(filepath: &str) -> WorkspaceContext {
         let path_buf_filepath = std::path::PathBuf::from(filepath);
@@ -283,6 +285,12 @@ pub mod detector_test_helpers {
     }
 
     #[cfg(test)]
+    pub(crate) fn take_solc_installer_lock() -> impl Drop {
+        static LOCK: Lazy<std::sync::Mutex<()>> = Lazy::new(|| std::sync::Mutex::new(()));
+        LOCK.lock().unwrap()
+    }
+
+    #[cfg(test)]
     pub fn load_contract_directly(filepath: &str) -> WorkspaceContext {
         let solidity_file = &ensure_valid_solidity_file(filepath);
         let solidity_content = std::fs::read_to_string(solidity_file).unwrap();
@@ -291,7 +299,7 @@ pub mod detector_test_helpers {
         let compiler_input = compiler_input.first().unwrap(); // There's only 1 file in the path
 
         // When in cfg(test), the detect_version functions takes holds lock
-        // let _lock = take_solc_installer_lock();
+        let _lock = take_solc_installer_lock();
         let version = Solc::detect_version(&Source {
             content: Arc::new(solidity_content.clone()),
         })
