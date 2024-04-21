@@ -310,6 +310,9 @@ pub mod detector_test_helpers {
 
         if let Ok(command) = command {
             let stdout = String::from_utf8(command.stdout).unwrap();
+            let stderr = String::from_utf8(command.stderr).unwrap();
+            println!("stdout = {}", stdout);
+            println!("stderr = {}", stderr);
 
             let mut pick_next_line = false;
             let mut ast_content = String::new();
@@ -335,7 +338,6 @@ pub mod detector_test_helpers {
                 eprintln!("{:?}", err);
                 std::process::exit(1);
             });
-            // println!("Workspace Context {:#?}", context);
             context
         } else {
             eprintln!("Error running solc command");
