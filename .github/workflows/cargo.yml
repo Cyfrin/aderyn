@@ -40,6 +40,10 @@ jobs:
           toolchain: stable
           override: true
 
+      - name: Install git submodules
+        run: |
+          git submodule update --init --recursive
+
       - name: Run cargo test
         uses: actions-rs/cargo@v1
         with:
