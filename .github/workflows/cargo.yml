@@ -44,10 +44,10 @@ jobs:
         run: |
           git submodule update --init --recursive
 
-      - name: Run cargo test
+      - name: Run cargo test 
         uses: actions-rs/cargo@v1
         with:
-          command: test
+          command: test -- --test-threads=1
 
   reports:
     name: Check Reports
