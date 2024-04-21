@@ -284,8 +284,7 @@ pub mod detector_test_helpers {
         context
     }
 
-    #[cfg(test)]
-    pub(crate) fn take_solc_installer_lock() -> impl Drop {
+    pub fn take_contract_loader_lock() -> impl Drop {
         static LOCK: Lazy<std::sync::Mutex<()>> = Lazy::new(|| std::sync::Mutex::new(()));
         LOCK.lock().unwrap()
     }
@@ -299,7 +298,7 @@ pub mod detector_test_helpers {
         let compiler_input = compiler_input.first().unwrap(); // There's only 1 file in the path
 
         // When in cfg(test), the detect_version functions takes holds lock
-        let _lock = take_solc_installer_lock();
+        let _lock = take_contract_loader_lock();
         let version = Solc::detect_version(&Source {
             content: Arc::new(solidity_content.clone()),
         })
