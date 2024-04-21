@@ -7,6 +7,7 @@ pub use aderyn_core::ast as core_ast;
 pub use aderyn_core::context;
 pub use aderyn_core::detect as detection_modules;
 pub use aderyn_core::detect::detector;
+pub use process_auto::with_project_root_at;
 
 fn ensure_valid_root_path(root_path: &Path) -> PathBuf {
     if !root_path.exists() {
