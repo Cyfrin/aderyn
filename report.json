@@ -1228,13 +1228,13 @@
         "instances": [
           {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
-            "line_no": 11,
-            "src": "272:7"
+            "line_no": 10,
+            "src": "222:129"
           },
           {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
-            "line_no": 19,
-            "src": "498:6"
+            "line_no": 17,
+            "src": "411:150"
           }
         ],
         "title": "Loop contains `require`/`revert` statements"

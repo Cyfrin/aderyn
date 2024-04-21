@@ -28,11 +28,13 @@ impl IssueDetector for RevertsAndRequiresInLoopsDetector {
             .collect::<Vec<_>>();
 
         for item in requires_and_reverts {
-            if let Some(_) = item.closest_ancestor_of_type(context, NodeType::ForStatement) {
-                capture!(self, context, item);
+            if let Some(for_loop) = item.closest_ancestor_of_type(context, NodeType::ForStatement) {
+                capture!(self, context, for_loop);
             }
-            if let Some(_) = item.closest_ancestor_of_type(context, NodeType::WhileStatement) {
-                capture!(self, context, item);
+            if let Some(while_loop) =
+                item.closest_ancestor_of_type(context, NodeType::WhileStatement)
+            {
+                capture!(self, context, while_loop);
             }
         }
 
