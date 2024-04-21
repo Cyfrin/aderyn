@@ -1,6 +1,6 @@
 [package]
 name = "aderyn_driver"
-version = "0.0.23"
+version = "0.0.24"
 edition = "2021"
 authors = ["Alex Roan <alex@cyfrin.io>"]
 description = "Rust based Solidity AST analyzer driver"
@@ -9,7 +9,7 @@ license = "MIT"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-aderyn_core = { path  = "../aderyn_core", version = "0.0.23" }
+aderyn_core = { path  = "../aderyn_core", version = "0.0.24" }
 rayon = "1.8.0"
 foundry-compilers = { git = "https://github.com/foundry-rs/compilers", features = ["svm-solc"] }
 serde_json = { version = "1.0.96", features = ["preserve_order"] }
