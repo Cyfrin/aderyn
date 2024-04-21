@@ -112,13 +112,6 @@ pub fn extract_issue_bodies(issues: &[Issue]) -> Vec<IssueBody> {
 }
 
 impl WorkspaceContext {
-    pub fn files_summary(&self) -> FilesSummary {
-        FilesSummary {
-            total_source_units: self.src_filepaths.len(),
-            total_sloc: self.sloc_stats.iter().fold(0, |acc, x| acc + *x.1),
-        }
-    }
-
     pub fn files_details(&self) -> FilesDetails {
         let sloc_stats = &self.sloc_stats;
 
