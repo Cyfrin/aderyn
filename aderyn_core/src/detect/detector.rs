@@ -226,6 +226,7 @@ pub trait IssueDetector: Send + Sync + 'static {
     }
 }
 
+#[cfg(test)]
 pub mod detector_test_helpers {
     use std::{
         path::PathBuf,
@@ -280,7 +281,6 @@ pub mod detector_test_helpers {
         context
     }
 
-    #[cfg(test)]
     pub fn load_contract_directly(filepath: &str) -> WorkspaceContext {
         let solidity_file = &ensure_valid_solidity_file(filepath);
         let solidity_content = std::fs::read_to_string(solidity_file).unwrap();
