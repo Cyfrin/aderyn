@@ -6,7 +6,7 @@ use aderyn_core::{
     report::{json_printer::JsonPrinter, markdown_printer::MarkdownReportPrinter},
     run_with_printer, run_with_printer_and_given_detectors,
 };
-use std::{path::PathBuf};
+use std::path::PathBuf;
 
 pub struct Args {
     pub root: String,
