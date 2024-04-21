@@ -242,6 +242,7 @@ pub mod detector_test_helpers {
         visitor::ast_visitor::Node,
     };
 
+    #[cfg(test)]
     pub fn load_contract(filepath: &str) -> WorkspaceContext {
         let path_buf_filepath = std::path::PathBuf::from(filepath);
         let mut context = WorkspaceContext::default();
@@ -281,12 +282,16 @@ pub mod detector_test_helpers {
         context
     }
 
+    #[cfg(test)]
     pub fn load_contract_directly(filepath: &str) -> WorkspaceContext {
         let solidity_file = &ensure_valid_solidity_file(filepath);
         let solidity_content = std::fs::read_to_string(solidity_file).unwrap();
 
         let compiler_input = CompilerInput::new(solidity_file.as_path()).unwrap();
         let compiler_input = compiler_input.first().unwrap(); // There's only 1 file in the path
+
+        // When in cfg(test), the detect_version functions takes holds lock
+        // let _lock = take_solc_installer_lock();
         let version = Solc::detect_version(&Source {
             content: Arc::new(solidity_content.clone()),
         })
