@@ -19,7 +19,11 @@ impl IssueDetector for UnprotectedInitializerDetector {
         for function in context.function_definitions() {
             if function.name.to_lowercase().contains("init") {
                 let has_modifiers = !function.modifiers.is_empty();
-                if !has_modifiers {
+                let has_non_reentrant_modifier = function
+                    .modifiers
+                    .iter()
+                    .any(|m| m.modifier_name.name.to_lowercase().contains("nonreentrant"));
+                if !has_modifiers || (function.modifiers.len() == 1 && has_non_reentrant_modifier) {
                     let identifiers = ExtractIdentifiers::from(function).extracted;
                     if !identifiers
                         .iter()
