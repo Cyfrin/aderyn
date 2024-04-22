@@ -50,13 +50,13 @@ impl IssueDetector for UnsafeERC20FunctionsDetector {
 
 #[cfg(test)]
 mod unsafe_erc20_functions_tests {
-    use crate::detect::detector::{detector_test_helpers::load_contract, IssueDetector};
+    use crate::detect::detector::IssueDetector;
 
     use super::UnsafeERC20FunctionsDetector;
 
     #[test]
     fn test_unsafe_erc20_functions() {
-        let context = load_contract(
+        let context = crate::detect::test_utils::load_contract(
             "../tests/contract-playground/out/DeprecatedOZFunctions.sol/DeprecatedOZFunctions.json",
         );
 

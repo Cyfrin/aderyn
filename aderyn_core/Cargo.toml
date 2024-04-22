@@ -22,10 +22,5 @@ strum = { version = "0.26", features = ["derive"] }
 toml = "0.8.2"
 foundry-compilers = { git = "https://github.com/foundry-rs/compilers", features = ["svm-solc"] }
 
-
 [dev-dependencies]
 serial_test = "3.0.0"
-once_cell = "1.19.0"
-
-[env]
-RUST_TEST_THREADS = "1"

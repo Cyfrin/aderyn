@@ -93,13 +93,12 @@ impl IssueDetector for ArbitraryTransferFromDetector {
 #[cfg(test)]
 mod arbitrary_transfer_from_tests {
     use crate::detect::{
-        detector::{detector_test_helpers::load_contract, IssueDetector},
-        high::arbitrary_transfer_from::ArbitraryTransferFromDetector,
+        detector::IssueDetector, high::arbitrary_transfer_from::ArbitraryTransferFromDetector,
     };
 
     #[test]
     fn test_arbitrary_transfer_from_detector() {
-        let context = load_contract(
+        let context = crate::detect::test_utils::load_contract(
             "../tests/contract-playground/out/ArbitraryTransferFrom.sol/ArbitraryTransferFrom.json",
         );
 

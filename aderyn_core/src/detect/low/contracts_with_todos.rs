@@ -68,14 +68,15 @@ impl IssueDetector for ContractsWithTodosDetector {
 
 #[cfg(test)]
 mod contracts_with_todos {
-    use crate::detect::detector::{detector_test_helpers::load_contract, IssueDetector};
+    use crate::detect::detector::IssueDetector;
 
     use super::ContractsWithTodosDetector;
 
     #[test]
     fn test_contracts_with_todos() {
-        let context =
-            load_contract("../tests/contract-playground/out/ContractWithTodo.sol/TodoList.json");
+        let context = crate::detect::test_utils::load_contract(
+            "../tests/contract-playground/out/ContractWithTodo.sol/TodoList.json",
+        );
 
         let mut detector = ContractsWithTodosDetector::default();
         let found = detector.detect(&context).unwrap();

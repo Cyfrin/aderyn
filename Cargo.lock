@@ -33,7 +33,6 @@ dependencies = [
  "eyre",
  "foundry-compilers",
  "ignore",
- "once_cell",
  "rayon",
  "semver 1.0.22",
  "serde",

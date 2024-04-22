@@ -136,14 +136,14 @@ impl IssueDetector for InconsistentTypeNamesDetector {
 
 #[cfg(test)]
 mod inconsistent_type_names {
-    use crate::detect::detector::{detector_test_helpers::load_contract, IssueDetector};
+    use crate::detect::detector::IssueDetector;
 
     use super::InconsistentTypeNamesDetector;
 
     #[test]
     fn test_inconsistent_type_names() {
         let context =
-            load_contract("../tests/contract-playground/out/InconsistentUints.sol/InconsistentStateVariablesContract.json");
+            crate::detect::test_utils::load_contract("../tests/contract-playground/out/InconsistentUints.sol/InconsistentStateVariablesContract.json");
 
         let mut detector = InconsistentTypeNamesDetector::default();
         // assert that the detector finds the public Function

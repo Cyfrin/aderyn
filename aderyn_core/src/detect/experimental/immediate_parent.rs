@@ -92,8 +92,8 @@ impl IssueDetector for ImmediateParentDemonstrator {
 #[cfg(test)]
 mod parent_chain_demo_tests {
     use crate::detect::{
-        detector::{detector_test_helpers::load_contract, IssueDetector},
-        experimental::immediate_parent::ImmediateParentDemonstrator,
+        detector::IssueDetector, experimental::immediate_parent::ImmediateParentDemonstrator,
+        test_utils::load_contract,
     };
 
     #[test]

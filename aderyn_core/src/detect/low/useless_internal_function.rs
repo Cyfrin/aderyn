@@ -59,13 +59,13 @@ impl IssueDetector for UselessInternalFunctionDetector {
 
 #[cfg(test)]
 mod uselss_internal_function {
-    use crate::detect::detector::{detector_test_helpers::load_contract, IssueDetector};
+    use crate::detect::detector::IssueDetector;
 
     use super::UselessInternalFunctionDetector;
 
     #[test]
     fn test_useless_internal_functions() {
-        let context = load_contract(
+        let context = crate::detect::test_utils::load_contract(
             "../tests/contract-playground/out/InternalFunctions.sol/InternalFunctionExample.json",
         );
 

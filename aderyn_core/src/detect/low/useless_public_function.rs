@@ -59,14 +59,15 @@ impl IssueDetector for UselessPublicFunctionDetector {
 
 #[cfg(test)]
 mod useless_public_function_tests {
-    use crate::detect::detector::{detector_test_helpers::load_contract, IssueDetector};
+    use crate::detect::detector::IssueDetector;
 
     use super::UselessPublicFunctionDetector;
 
     #[test]
     fn test_useless_public_functions() {
-        let context =
-            load_contract("../tests/contract-playground/out/Counter.sol/Counter.0.8.25.json");
+        let context = crate::detect::test_utils::load_contract(
+            "../tests/contract-playground/out/Counter.sol/Counter.0.8.25.json",
+        );
 
         let mut detector = UselessPublicFunctionDetector::default();
         // assert that the detector finds the public Function

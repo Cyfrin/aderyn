@@ -58,12 +58,12 @@ impl IssueDetector for SiblingDemonstrator {
 
 #[cfg(test)]
 mod sibling_demo_tests {
+    use serial_test::serial;
+
     use crate::detect::{
-        detector::{
-            detector_test_helpers::{load_contract, load_contract_directly},
-            IssueDetector,
-        },
+        detector::IssueDetector,
         experimental::sibling::SiblingDemonstrator,
+        test_utils::{load_contract, load_solidity_source_unit},
     };
 
     #[test]
@@ -78,9 +78,10 @@ mod sibling_demo_tests {
     }
 
     #[test]
+    #[serial(fc_solc)]
     fn test_siblings_by_loading_contract_directly() {
         let context =
-            load_contract_directly("../tests/contract-playground/src/StorageConditionals.sol");
+            load_solidity_source_unit("../tests/contract-playground/src/StorageConditionals.sol");
 
         let mut detector = SiblingDemonstrator::default();
         let _ = detector.detect(&context).unwrap();

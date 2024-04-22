@@ -59,15 +59,13 @@ impl IssueDetector for SolmateSafeTransferLibDetector {
 
 #[cfg(test)]
 mod solmate_safe_transfer_lib_tests {
-    use crate::detect::{
-        detector::{detector_test_helpers::load_contract, IssueDetector},
-        low::SolmateSafeTransferLibDetector,
-    };
+    use crate::detect::{detector::IssueDetector, low::SolmateSafeTransferLibDetector};
 
     #[test]
     fn test_solmate_safe_transfer_lib() {
-        let context =
-            load_contract("../tests/contract-playground/out/T11sTranferer.sol/T11sTranferer.json");
+        let context = crate::detect::test_utils::load_contract(
+            "../tests/contract-playground/out/T11sTranferer.sol/T11sTranferer.json",
+        );
 
         let mut detector = SolmateSafeTransferLibDetector::default();
         let found = detector.detect(&context).unwrap();
@@ -98,7 +96,7 @@ mod solmate_safe_transfer_lib_tests {
 
     #[test]
     fn test_solmate_safe_transfer_lib_no_issue() {
-        let context = load_contract(
+        let context = crate::detect::test_utils::load_contract(
             "../tests/contract-playground/out/ArbitraryTransferFrom.sol/ArbitraryTransferFrom.json",
         );
 

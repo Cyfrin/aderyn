@@ -57,13 +57,13 @@ impl IssueDetector for UnprotectedInitializerDetector {
 
 #[cfg(test)]
 mod unprotected_initializer {
-    use crate::detect::detector::{detector_test_helpers::load_contract, IssueDetector};
+    use crate::detect::detector::IssueDetector;
 
     use super::UnprotectedInitializerDetector;
 
     #[test]
     fn test_unprotected_initializer() {
-        let context = load_contract(
+        let context = crate::detect::test_utils::load_contract(
             "../tests/contract-playground/out/UnprotectedInitialize.sol/InitializedContract.json",
         );
 

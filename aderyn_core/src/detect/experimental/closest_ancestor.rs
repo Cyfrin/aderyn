@@ -74,8 +74,8 @@ impl IssueDetector for ClosestAncestorDemonstrator {
 #[cfg(test)]
 mod closest_ancestor_demo_tests {
     use crate::detect::{
-        detector::{detector_test_helpers::load_contract, IssueDetector},
-        experimental::closest_ancestor::ClosestAncestorDemonstrator,
+        detector::IssueDetector, experimental::closest_ancestor::ClosestAncestorDemonstrator,
+        test_utils::load_contract,
     };
 
     #[test]
