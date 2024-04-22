@@ -153,9 +153,9 @@ mod block_timestamp_deadline_detector_tests {
     }
 
     #[test]
-    fn test_block_timestamp_deadline_uniswap_v3_detector() {
-        let context = crate::detect::test_utils::load_contract(
-            "../tests/contract-playground/out/UniswapV3Swapper.sol/UniswapV3Swapper.json",
+    fn test_block_timestamp_deadline_uniswap_v3_detector_by_loading_contract_directly() {
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/uniswap/UniswapV3Swapper.sol",
         );
 
         let mut detector = BlockTimestampDeadlineDetector::default();

@@ -53,11 +53,13 @@ mod unsafe_erc20_functions_tests {
     use crate::detect::detector::IssueDetector;
 
     use super::UnsafeERC20FunctionsDetector;
+    use serial_test::serial;
 
     #[test]
-    fn test_unsafe_erc20_functions() {
-        let context = crate::detect::test_utils::load_contract(
-            "../tests/contract-playground/out/DeprecatedOZFunctions.sol/DeprecatedOZFunctions.json",
+    #[serial]
+    fn test_unsafe_erc20_functions_by_loading_contract_directly() {
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/DeprecatedOZFunctions.sol",
         );
 
         let mut detector = UnsafeERC20FunctionsDetector::default();

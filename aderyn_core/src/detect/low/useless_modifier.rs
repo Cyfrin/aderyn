@@ -59,11 +59,13 @@ mod useless_modifier_tests {
     use crate::detect::detector::IssueDetector;
 
     use super::UselessModifierDetector;
+    use serial_test::serial;
 
     #[test]
-    fn test_useless_modifier_tests() {
-        let context = crate::detect::test_utils::load_contract(
-            "../tests/contract-playground/out/OnceModifierExample.sol/OnceModifierExample.json",
+    #[serial]
+    fn test_useless_modifier_tests_by_loading_contract_directly() {
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/OnceModifierExample.sol",
         );
 
         let mut detector = UselessModifierDetector::default();

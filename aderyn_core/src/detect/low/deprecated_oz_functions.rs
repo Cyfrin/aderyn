@@ -83,14 +83,17 @@ impl IssueDetector for DeprecatedOZFunctionsDetector {
 
 #[cfg(test)]
 mod deprecated_oz_functions_tests {
+    use serial_test::serial;
+
     use crate::detect::detector::IssueDetector;
 
     use super::DeprecatedOZFunctionsDetector;
 
     #[test]
-    fn test_deprecated_oz_functions_detector() {
-        let context = crate::detect::test_utils::load_contract(
-            "../tests/contract-playground/out/DeprecatedOZFunctions.sol/DeprecatedOZFunctions.json",
+    #[serial]
+    fn test_deprecated_oz_functions_detector_by_loading_contract_directly() {
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/DeprecatedOZFunctions.sol",
         );
 
         let mut detector = DeprecatedOZFunctionsDetector::default();

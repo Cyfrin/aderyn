@@ -56,14 +56,17 @@ impl IssueDetector for RequireWithStringDetector {
 
 #[cfg(test)]
 mod require_with_string_tests {
+    use serial_test::serial;
+
     use crate::detect::detector::IssueDetector;
 
     use super::RequireWithStringDetector;
 
     #[test]
-    fn test_require_with_string() {
-        let context = crate::detect::test_utils::load_contract(
-            "../tests/contract-playground/out/DeprecatedOZFunctions.sol/DeprecatedOZFunctions.json",
+    #[serial]
+    fn test_require_with_string_by_loading_contract_directly() {
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/DeprecatedOZFunctions.sol",
         );
 
         let mut detector = RequireWithStringDetector::default();

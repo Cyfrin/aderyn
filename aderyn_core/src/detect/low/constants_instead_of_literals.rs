@@ -133,14 +133,17 @@ impl IssueDetector for ConstantsInsteadOfLiteralsDetector {
 
 #[cfg(test)]
 mod constants_instead_of_literals_tests {
+    use serial_test::serial;
+
     use crate::detect::detector::IssueDetector;
 
     use super::ConstantsInsteadOfLiteralsDetector;
 
     #[test]
-    fn test_constants_instead_of_literals() {
-        let context = crate::detect::test_utils::load_contract(
-            "../tests/contract-playground/out/ConstantsLiterals.sol/ConstantsLiterals.json",
+    #[serial]
+    fn test_constants_instead_of_literals_by_loading_contract_directly() {
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/ConstantsLiterals.sol",
         );
 
         let mut detector = ConstantsInsteadOfLiteralsDetector::default();
