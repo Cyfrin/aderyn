@@ -95,4 +95,38 @@ mod large_literal_values {
             )
         );
     }
+
+    #[test]
+    #[serial]
+    fn test_large_literal_values_multiples_of_10000_by_loading_contract_directly() {
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/HugeConstants.sol",
+        );
+
+        let mut detector = LargeLiteralValueDetector::default();
+        // assert that the detector finds the public Function
+        let found = detector.detect(&context).unwrap();
+        assert!(found);
+        // assert that the detector finds the correct number of instances
+        assert_eq!(detector.instances().len(), 20);
+        // assert that the detector returns the correct severity
+        assert_eq!(
+            detector.severity(),
+            crate::detect::detector::IssueSeverity::Low
+        );
+        // assert that the detector returns the correct title
+        assert_eq!(
+            detector.title(),
+            String::from(
+                "Large literal values multiples of 10000 can be replaced with scientific notation"
+            )
+        );
+        // assert that the detector returns the correct description
+        assert_eq!(
+            detector.description(),
+            String::from(
+                "Use `e` notation, for example: `1e18`, instead of its full numeric value."
+            )
+        );
+    }
 }

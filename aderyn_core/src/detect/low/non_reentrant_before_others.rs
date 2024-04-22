@@ -95,4 +95,38 @@ mod non_reentrant_before_others_tests {
             "This is a best-practice to protect against reentrancy in other modifiers."
         );
     }
+
+    #[test]
+    #[serial]
+    fn test_non_reentrant_before_others_by_loading_contract_directly() {
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/AdminContract.sol",
+        );
+
+        let mut detector = NonReentrantBeforeOthersDetector::default();
+        let found = detector.detect(&context).unwrap();
+        // assert that the detector found something
+        assert!(found);
+        // assert that the detector found the correct number
+        assert_eq!(detector.instances().len(), 1);
+
+        // assert that the line number is 10
+        let (_, line_number, _) = detector.instances().keys().next().unwrap().clone();
+        assert_eq!(line_number, 10);
+        // assert that the detector returns the correct severity
+        assert_eq!(
+            detector.severity(),
+            crate::detect::detector::IssueSeverity::Low
+        );
+        // assert that the detector returns the correct title
+        assert_eq!(
+            detector.title(),
+            "The `nonReentrant` `modifier` should occur before all other modifiers"
+        );
+        // assert that the detector returns the correct description
+        assert_eq!(
+            detector.description(),
+            "This is a best-practice to protect against reentrancy in other modifiers."
+        );
+    }
 }
