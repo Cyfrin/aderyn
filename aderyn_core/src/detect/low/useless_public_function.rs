@@ -62,8 +62,10 @@ mod useless_public_function_tests {
     use crate::detect::detector::IssueDetector;
 
     use super::UselessPublicFunctionDetector;
+    use serial_test::serial;
 
     #[test]
+    #[serial]
     fn test_useless_public_functions() {
         let context = crate::detect::test_utils::load_contract(
             "../tests/contract-playground/out/Counter.sol/Counter.0.8.25.json",

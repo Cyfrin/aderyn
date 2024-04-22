@@ -55,11 +55,14 @@ impl IssueDetector for EcrecoverDetector {
 #[cfg(test)]
 mod ecrecover_tests {
 
+    use serial_test::serial;
+
     use crate::detect::detector::IssueDetector;
 
     use super::EcrecoverDetector;
 
     #[test]
+    #[serial]
     fn test_ecrecover_detector() {
         let context = crate::detect::test_utils::load_contract(
             "../tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",

@@ -78,38 +78,13 @@ mod empty_block_tests {
 
     use crate::detect::{
         detector::IssueDetector,
-        test_utils::{load_contract, load_solidity_source_unit, take_loader_lock},
+        test_utils::{load_solidity_source_unit, take_loader_lock},
     };
 
     use super::EmptyBlockDetector;
 
     #[test]
-    fn test_empty_block() {
-        let context =
-            load_contract("../tests/contract-playground/out/EmptyBlocks.sol/EmptyBlocks.json");
-
-        let mut detector = EmptyBlockDetector::default();
-        // assert that the detector finds something
-        let found = detector.detect(&context).unwrap();
-        assert!(found);
-        // assert that the detector returns the correct number of instances
-        assert_eq!(detector.instances().len(), 7);
-        // assert that the detector returns the correct severity
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
-        // assert that the detector returns the correct title
-        assert_eq!(detector.title(), String::from("Empty Block"));
-        // assert that the detector returns the correct description
-        assert_eq!(
-            detector.description(),
-            String::from("Consider removing empty blocks.")
-        );
-    }
-
-    #[test]
-    #[serial(fc_solc)]
+    #[serial]
     fn test_empty_block_by_loading_contract_directly() {
         let _lock = take_loader_lock();
         let context = load_solidity_source_unit("../tests/contract-playground/src/EmptyBlocks.sol");

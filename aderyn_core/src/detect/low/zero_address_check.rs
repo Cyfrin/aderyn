@@ -190,8 +190,10 @@ mod zero_address_check_tests {
         context::{browser::GetClosestAncestorOfTypeX, workspace_context::ASTNode},
         detect::{detector::IssueDetector, low::ZeroAddressCheckDetector},
     };
+    use serial_test::serial;
 
     #[test]
+    #[serial]
     fn test_deprecated_oz_functions_detector() {
         let context = crate::detect::test_utils::load_contract(
             "../tests/contract-playground/out/ZeroAddressCheck.sol/ZeroAddressCheck.json",

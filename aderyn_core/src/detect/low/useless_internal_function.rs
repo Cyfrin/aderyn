@@ -62,8 +62,10 @@ mod uselss_internal_function {
     use crate::detect::detector::IssueDetector;
 
     use super::UselessInternalFunctionDetector;
+    use serial_test::serial;
 
     #[test]
+    #[serial]
     fn test_useless_internal_functions() {
         let context = crate::detect::test_utils::load_contract(
             "../tests/contract-playground/out/InternalFunctions.sol/InternalFunctionExample.json",

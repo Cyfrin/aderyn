@@ -68,11 +68,14 @@ impl IssueDetector for ContractsWithTodosDetector {
 
 #[cfg(test)]
 mod contracts_with_todos {
+    use serial_test::serial;
+
     use crate::detect::detector::IssueDetector;
 
     use super::ContractsWithTodosDetector;
 
     #[test]
+    #[serial]
     fn test_contracts_with_todos() {
         let context = crate::detect::test_utils::load_contract(
             "../tests/contract-playground/out/ContractWithTodo.sol/TodoList.json",

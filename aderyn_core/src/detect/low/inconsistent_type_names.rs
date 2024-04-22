@@ -136,11 +136,14 @@ impl IssueDetector for InconsistentTypeNamesDetector {
 
 #[cfg(test)]
 mod inconsistent_type_names {
+    use serial_test::serial;
+
     use crate::detect::detector::IssueDetector;
 
     use super::InconsistentTypeNamesDetector;
 
     #[test]
+    #[serial]
     fn test_inconsistent_type_names() {
         let context =
             crate::detect::test_utils::load_contract("../tests/contract-playground/out/InconsistentUints.sol/InconsistentStateVariablesContract.json");
