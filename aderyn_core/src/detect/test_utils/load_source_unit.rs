@@ -8,7 +8,7 @@ use std::{
 use crate::visitor::ast_visitor::Node;
 use crate::{ast::SourceUnit, context::workspace_context::WorkspaceContext};
 
-use super::{ensure_valid_solidity_file, take_solidity_source_unit_loader_lock};
+use super::ensure_valid_solidity_file;
 
 pub fn load_solidity_source_unit(filepath: &str) -> WorkspaceContext {
     let solidity_file = &ensure_valid_solidity_file(filepath);
@@ -17,7 +17,6 @@ pub fn load_solidity_source_unit(filepath: &str) -> WorkspaceContext {
     let compiler_input = CompilerInput::new(solidity_file.as_path()).unwrap();
     let compiler_input = compiler_input.first().unwrap(); // There's only 1 file in the path
 
-    let lock = take_solidity_source_unit_loader_lock();
     let version = Solc::detect_version(&Source {
         content: Arc::new(solidity_content.clone()),
     })
@@ -73,7 +72,6 @@ pub fn load_solidity_source_unit(filepath: &str) -> WorkspaceContext {
         context
     } else {
         eprintln!("Error running solc command");
-        drop(lock);
         std::process::exit(1);
     }
 }
