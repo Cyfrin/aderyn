@@ -141,7 +141,7 @@ mod constants_instead_of_literals_tests {
 
     #[test]
     #[serial]
-    fn test_constants_instead_of_literals() {
+    fn test_constants_instead_of_literals_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_contract(
             "../tests/contract-playground/out/ConstantsLiterals.sol/ConstantsLiterals.json",
         );

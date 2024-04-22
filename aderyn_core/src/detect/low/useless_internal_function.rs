@@ -66,7 +66,7 @@ mod uselss_internal_function {
 
     #[test]
     #[serial]
-    fn test_useless_internal_functions() {
+    fn test_useless_internal_functions_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_contract(
             "../tests/contract-playground/out/InternalFunctions.sol/InternalFunctionExample.json",
         );

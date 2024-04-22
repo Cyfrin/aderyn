@@ -144,7 +144,7 @@ mod inconsistent_type_names {
 
     #[test]
     #[serial]
-    fn test_inconsistent_type_names() {
+    fn test_inconsistent_type_names_by_loading_contract_directly() {
         let context =
             crate::detect::test_utils::load_contract("../tests/contract-playground/out/InconsistentUints.sol/InconsistentStateVariablesContract.json");
 

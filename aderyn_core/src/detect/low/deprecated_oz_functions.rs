@@ -91,7 +91,7 @@ mod deprecated_oz_functions_tests {
 
     #[test]
     #[serial]
-    fn test_deprecated_oz_functions_detector() {
+    fn test_deprecated_oz_functions_detector_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_contract(
             "../tests/contract-playground/out/DeprecatedOZFunctions.sol/DeprecatedOZFunctions.json",
         );

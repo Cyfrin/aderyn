@@ -77,9 +77,9 @@ mod centralization_risk_detector_tests {
 
     #[test]
     #[serial]
-    fn test_centralization_risk_detector() {
-        let context = crate::detect::test_utils::load_contract(
-            "../tests/contract-playground/out/AdminContract.sol/AdminContract.json",
+    fn test_centralization_risk_detector_by_loading_contract_directly() {
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/AdminContract.sol",
         );
 
         let mut detector = CentralizationRiskDetector::default();

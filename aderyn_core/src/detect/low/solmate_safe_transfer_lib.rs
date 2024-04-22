@@ -65,7 +65,7 @@ mod solmate_safe_transfer_lib_tests {
 
     #[test]
     #[serial]
-    fn test_solmate_safe_transfer_lib() {
+    fn test_solmate_safe_transfer_lib_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_contract(
             "../tests/contract-playground/out/T11sTranferer.sol/T11sTranferer.json",
         );
@@ -99,7 +99,7 @@ mod solmate_safe_transfer_lib_tests {
 
     #[test]
     #[serial]
-    fn test_solmate_safe_transfer_lib_no_issue() {
+    fn test_solmate_safe_transfer_lib_no_issue_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_contract(
             "../tests/contract-playground/out/ArbitraryTransferFrom.sol/ArbitraryTransferFrom.json",
         );

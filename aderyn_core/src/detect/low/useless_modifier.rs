@@ -63,7 +63,7 @@ mod useless_modifier_tests {
 
     #[test]
     #[serial]
-    fn test_useless_modifier_tests() {
+    fn test_useless_modifier_tests_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_contract(
             "../tests/contract-playground/out/OnceModifierExample.sol/OnceModifierExample.json",
         );

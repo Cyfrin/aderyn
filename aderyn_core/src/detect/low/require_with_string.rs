@@ -64,7 +64,7 @@ mod require_with_string_tests {
 
     #[test]
     #[serial]
-    fn test_require_with_string() {
+    fn test_require_with_string_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_contract(
             "../tests/contract-playground/out/DeprecatedOZFunctions.sol/DeprecatedOZFunctions.json",
         );
