@@ -11,7 +11,7 @@ pub use load_contract::load_contract;
 pub use load_source_unit::load_solidity_source_unit;
 
 // This lock should be held when using `solc` binary in your tests
-fn take_solidity_source_unit_loader_lock() -> impl Drop {
+pub fn take_solidity_source_unit_loader_lock() -> impl Drop {
     static LOCK: Lazy<std::sync::Mutex<()>> = Lazy::new(|| std::sync::Mutex::new(()));
     LOCK.lock().unwrap()
 }
