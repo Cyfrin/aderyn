@@ -97,7 +97,7 @@ mod large_literal_values {
 
     #[test]
     #[serial]
-    fn test_large_literal_values_multiples_of_10000_by_directly_loading_contract() {
+    fn test_large_literal_values_multiples_of_10000_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/HugeConstants.sol",
         );
