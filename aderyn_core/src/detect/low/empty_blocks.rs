@@ -109,7 +109,7 @@ mod empty_block_tests {
     }
 
     #[test]
-    #[serial(fc_solc)]
+    #[serial]
     fn test_empty_block_by_loading_contract_directly() {
         let _lock = take_loader_lock();
         let context = load_solidity_source_unit("../tests/contract-playground/src/EmptyBlocks.sol");
