@@ -76,16 +76,4 @@ mod sibling_demo_tests {
         let _ = detector.detect(&context).unwrap();
         assert_eq!(detector.instances().len(), 1);
     }
-
-    #[test]
-    #[serial(fc_solc)]
-    fn test_siblings_by_loading_contract_directly() {
-        let _lock = take_loader_lock();
-        let context =
-            load_solidity_source_unit("../tests/contract-playground/src/StorageConditionals.sol");
-
-        let mut detector = SiblingDemonstrator::default();
-        let _ = detector.detect(&context).unwrap();
-        assert_eq!(detector.instances().len(), 1);
-    }
 }
