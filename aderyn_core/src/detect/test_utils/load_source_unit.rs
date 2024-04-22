@@ -17,7 +17,7 @@ pub fn load_solidity_source_unit(filepath: &str) -> WorkspaceContext {
     let compiler_input = CompilerInput::new(solidity_file.as_path()).unwrap();
     let compiler_input = compiler_input.first().unwrap(); // There's only 1 file in the path
 
-    let _lock = take_solidity_source_unit_loader_lock();
+    let lock = take_solidity_source_unit_loader_lock();
     let version = Solc::detect_version(&Source {
         content: Arc::new(solidity_content.clone()),
     })
@@ -73,6 +73,7 @@ pub fn load_solidity_source_unit(filepath: &str) -> WorkspaceContext {
         context
     } else {
         eprintln!("Error running solc command");
+        drop(lock);
         std::process::exit(1);
     }
 }
