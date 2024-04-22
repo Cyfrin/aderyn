@@ -58,6 +58,8 @@ impl IssueDetector for SiblingDemonstrator {
 
 #[cfg(test)]
 mod sibling_demo_tests {
+    use serial_test::serial;
+
     use crate::detect::{
         detector::IssueDetector,
         experimental::sibling::SiblingDemonstrator,
@@ -76,6 +78,7 @@ mod sibling_demo_tests {
     }
 
     #[test]
+    #[serial(fc_solc)]
     fn test_siblings_by_loading_contract_directly() {
         let context =
             load_solidity_source_unit("../tests/contract-playground/src/StorageConditionals.sol");
