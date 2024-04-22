@@ -10,7 +10,7 @@ use eyre::Result;
 
 #[derive(Default)]
 pub struct NonReentrantBeforeOthersDetector {
-    // Keys are source file name and line number
+    // Keys are source file name, line number and source location
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
@@ -74,6 +74,10 @@ mod non_reentrant_before_others_tests {
         assert!(found);
         // assert that the detector found the correct number
         assert_eq!(detector.instances().len(), 1);
+
+        // assert that the line number is 10
+        let (_, line_number, _) = detector.instances().keys().next().unwrap().clone();
+        assert_eq!(line_number, 10);
         // assert that the detector returns the correct severity
         assert_eq!(
             detector.severity(),
