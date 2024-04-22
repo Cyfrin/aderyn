@@ -77,8 +77,8 @@ mod contracts_with_todos {
     #[test]
     #[serial]
     fn test_contracts_with_todos_by_loading_contract_directly() {
-        let context = crate::detect::test_utils::load_contract(
-            "../tests/contract-playground/out/ContractWithTodo.sol/TodoList.json",
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/ContractWithTodo.sol",
         );
 
         let mut detector = ContractsWithTodosDetector::default();

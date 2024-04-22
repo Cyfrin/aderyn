@@ -195,8 +195,8 @@ mod zero_address_check_tests {
     #[test]
     #[serial]
     fn test_deprecated_oz_functions_detector_by_loading_contract_directly() {
-        let context = crate::detect::test_utils::load_contract(
-            "../tests/contract-playground/out/ZeroAddressCheck.sol/ZeroAddressCheck.json",
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/ZeroAddressCheck.sol",
         );
 
         let mut detector = ZeroAddressCheckDetector::default();

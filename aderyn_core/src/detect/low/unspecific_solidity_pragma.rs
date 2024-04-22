@@ -58,8 +58,8 @@ mod unspecific_solidity_pragma_tests {
     #[test]
     #[serial]
     fn test_unspecific_solidity_pragma_detector_by_loading_contract_directly() {
-        let context = crate::detect::test_utils::load_contract(
-            "../tests/contract-playground/out/IContractInheritance.sol/IContractInheritance.json",
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/inheritance/IContractInheritance.sol",
         );
 
         let mut detector = UnspecificSolidityPragmaDetector::default();

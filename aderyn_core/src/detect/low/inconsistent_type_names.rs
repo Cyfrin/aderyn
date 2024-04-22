@@ -145,8 +145,9 @@ mod inconsistent_type_names {
     #[test]
     #[serial]
     fn test_inconsistent_type_names_by_loading_contract_directly() {
-        let context =
-            crate::detect::test_utils::load_contract("../tests/contract-playground/out/InconsistentUints.sol/InconsistentStateVariablesContract.json");
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/InconsistentUints.sol",
+        );
 
         let mut detector = InconsistentTypeNamesDetector::default();
         // assert that the detector finds the public Function

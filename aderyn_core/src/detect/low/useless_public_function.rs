@@ -67,8 +67,8 @@ mod useless_public_function_tests {
     #[test]
     #[serial]
     fn test_useless_public_functions_by_loading_contract_directly() {
-        let context = crate::detect::test_utils::load_contract(
-            "../tests/contract-playground/out/Counter.sol/Counter.0.8.25.json",
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/Counter.sol",
         );
 
         let mut detector = UselessPublicFunctionDetector::default();

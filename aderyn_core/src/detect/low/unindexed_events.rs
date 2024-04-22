@@ -70,8 +70,8 @@ mod unindexed_event_tests {
     #[test]
     #[serial]
     fn test_unindexed_events_by_loading_contract_directly() {
-        let context = crate::detect::test_utils::load_contract(
-            "../tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/inheritance/ExtendedInheritance.sol",
         );
 
         let mut detector = UnindexedEventsDetector::default();

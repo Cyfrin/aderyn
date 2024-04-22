@@ -58,8 +58,8 @@ mod unsafe_erc20_functions_tests {
     #[test]
     #[serial]
     fn test_unsafe_erc20_functions_by_loading_contract_directly() {
-        let context = crate::detect::test_utils::load_contract(
-            "../tests/contract-playground/out/DeprecatedOZFunctions.sol/DeprecatedOZFunctions.json",
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/DeprecatedOZFunctions.sol",
         );
 
         let mut detector = UnsafeERC20FunctionsDetector::default();

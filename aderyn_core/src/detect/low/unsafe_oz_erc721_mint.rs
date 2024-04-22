@@ -82,8 +82,8 @@ mod unsafe_erc721_mint_tests {
     #[test]
     #[serial]
     fn test_unsafe_erc721_mint_detector_by_loading_contract_directly() {
-        let context = crate::detect::test_utils::load_contract(
-            "../tests/contract-playground/out/UnsafeERC721Mint.sol/UnsafeERC721Mint.json",
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/UnsafeERC721Mint.sol",
         );
 
         let mut detector = UnsafeERC721MintDetector::default();

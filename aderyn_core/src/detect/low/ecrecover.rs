@@ -64,8 +64,8 @@ mod ecrecover_tests {
     #[test]
     #[serial]
     fn test_ecrecover_detector_by_loading_contract_directly() {
-        let context = crate::detect::test_utils::load_contract(
-            "../tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/inheritance/ExtendedInheritance.sol",
         );
 
         let mut detector = EcrecoverDetector::default();

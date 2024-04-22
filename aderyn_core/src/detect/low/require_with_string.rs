@@ -65,8 +65,8 @@ mod require_with_string_tests {
     #[test]
     #[serial]
     fn test_require_with_string_by_loading_contract_directly() {
-        let context = crate::detect::test_utils::load_contract(
-            "../tests/contract-playground/out/DeprecatedOZFunctions.sol/DeprecatedOZFunctions.json",
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/DeprecatedOZFunctions.sol",
         );
 
         let mut detector = RequireWithStringDetector::default();

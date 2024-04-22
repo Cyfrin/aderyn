@@ -66,8 +66,8 @@ mod solmate_safe_transfer_lib_tests {
     #[test]
     #[serial]
     fn test_solmate_safe_transfer_lib_by_loading_contract_directly() {
-        let context = crate::detect::test_utils::load_contract(
-            "../tests/contract-playground/out/T11sTranferer.sol/T11sTranferer.json",
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/T11sTranferer.sol",
         );
 
         let mut detector = SolmateSafeTransferLibDetector::default();
@@ -100,8 +100,8 @@ mod solmate_safe_transfer_lib_tests {
     #[test]
     #[serial]
     fn test_solmate_safe_transfer_lib_no_issue_by_loading_contract_directly() {
-        let context = crate::detect::test_utils::load_contract(
-            "../tests/contract-playground/out/ArbitraryTransferFrom.sol/ArbitraryTransferFrom.json",
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/ArbitraryTransferFrom.sol",
         );
 
         let mut detector = SolmateSafeTransferLibDetector::default();
