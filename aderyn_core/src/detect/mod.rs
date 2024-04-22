@@ -3,6 +3,8 @@ pub(crate) mod experimental;
 pub mod helpers;
 pub mod high;
 pub mod low;
+
+#[cfg(test)]
 pub mod test_utils;
 
 #[macro_export]

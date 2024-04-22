@@ -63,7 +63,7 @@ mod sibling_demo_tests {
     use crate::detect::{
         detector::IssueDetector,
         experimental::sibling::SiblingDemonstrator,
-        test_utils::{load_contract, load_solidity_source_unit},
+        test_utils::{load_contract, load_solidity_source_unit, take_loader_lock},
     };
 
     #[test]
@@ -80,6 +80,7 @@ mod sibling_demo_tests {
     #[test]
     #[serial(fc_solc)]
     fn test_siblings_by_loading_contract_directly() {
+        let _lock = take_loader_lock();
         let context =
             load_solidity_source_unit("../tests/contract-playground/src/StorageConditionals.sol");
 

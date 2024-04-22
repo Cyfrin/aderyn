@@ -10,6 +10,7 @@ use crate::{ast::SourceUnit, context::workspace_context::WorkspaceContext};
 
 use super::ensure_valid_solidity_file;
 
+#[cfg(test)]
 pub fn load_solidity_source_unit(filepath: &str) -> WorkspaceContext {
     let solidity_file = &ensure_valid_solidity_file(filepath);
     let solidity_content = std::fs::read_to_string(solidity_file).unwrap();

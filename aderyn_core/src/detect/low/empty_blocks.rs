@@ -78,7 +78,7 @@ mod empty_block_tests {
 
     use crate::detect::{
         detector::IssueDetector,
-        test_utils::{load_contract, load_solidity_source_unit},
+        test_utils::{load_contract, load_solidity_source_unit, take_loader_lock},
     };
 
     use super::EmptyBlockDetector;
@@ -111,6 +111,7 @@ mod empty_block_tests {
     #[test]
     #[serial(fc_solc)]
     fn test_empty_block_by_loading_contract_directly() {
+        let _lock = take_loader_lock();
         let context = load_solidity_source_unit("../tests/contract-playground/src/EmptyBlocks.sol");
 
         let mut detector = EmptyBlockDetector::default();

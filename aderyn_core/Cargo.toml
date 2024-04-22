@@ -24,3 +24,4 @@ foundry-compilers = { git = "https://github.com/foundry-rs/compilers", features 
 
 [dev-dependencies]
 serial_test = "3.0.0"
+once_cell = "1.19.0"
