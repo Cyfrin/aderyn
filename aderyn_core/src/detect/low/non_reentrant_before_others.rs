@@ -20,7 +20,13 @@ impl IssueDetector for NonReentrantBeforeOthersDetector {
         for definition in function_definitions {
             if definition.modifiers.len() > 1 {
                 for (index, modifier) in definition.modifiers.iter().enumerate() {
-                    if modifier.modifier_name.name == "nonReentrant" && index != 0 {
+                    if modifier
+                        .modifier_name
+                        .name
+                        .to_lowercase()
+                        .contains("nonreentrant")
+                        && index != 0
+                    {
                         capture!(self, context, modifier);
                     }
                 }
