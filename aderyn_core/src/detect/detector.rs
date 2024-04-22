@@ -358,6 +358,60 @@ pub mod detector_test_helpers {
         }
     }
 
+    pub struct ContractLoader {
+        compiler_input: CompilerInput,
+    }
+
+    impl ContractLoader {
+        pub fn lock() -> impl Drop {
+            static LOCK: Lazy<std::sync::Mutex<()>> = Lazy::new(|| std::sync::Mutex::new(()));
+            LOCK.lock().unwrap()
+        }
+    }
+
+    pub enum ContractLoaderInput {
+        SingleSourceUnit(String),
+        SourceUnitWithAllDependencies(String),
+        SourceUnitWithAllDependenciesScopedAndExcluded(
+            String,
+            Option<Vec<String>>,
+            Option<Vec<String>>,
+        ),
+    }
+
+    impl From<ContractLoaderInput> for ContractLoader {
+        fn from(value: ContractLoaderInput) -> Self {
+            match value {
+                ContractLoaderInput::SingleSourceUnit(filepath) => ContractLoader {
+                    compiler_input: compute_compiler_input(&filepath),
+                },
+                ContractLoaderInput::SourceUnitWithAllDependencies(_) => todo!(),
+                ContractLoaderInput::SourceUnitWithAllDependenciesScopedAndExcluded(_, _, _) => {
+                    todo!()
+                }
+            }
+        }
+    }
+
+    fn compute_compiler_input(filepath: &str) -> CompilerInput {
+        let solidity_file = &ensure_valid_solidity_file(filepath);
+        let compiler_input = CompilerInput::new(solidity_file.as_path()).unwrap();
+        let compiler_input = compiler_input.first().unwrap().to_owned(); // As it is only *.sol files, not YUL
+        compiler_input
+    }
+
+    fn compute_compiler_input_for_specified_files(filepaths: &[&str]) -> CompilerInput {
+        let mut source_paths = vec![];
+        for filepath in filepaths {
+            let solidity_file = &ensure_valid_solidity_file(filepath);
+            source_paths.push(solidity_file.to_owned());
+        }
+        let sources = Source::read_all_files(source_paths).unwrap();
+        let compiler_input = CompilerInput::with_sources(sources);
+        let compiler_input = compiler_input.first().unwrap().to_owned(); // As it is only *.sol files, not YUL
+        compiler_input
+    }
+
     fn ensure_valid_solidity_file(filepath: &str) -> PathBuf {
         let filepath = PathBuf::from(filepath);
 
