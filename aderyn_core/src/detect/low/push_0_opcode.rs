@@ -196,7 +196,7 @@ mod unspecific_solidity_pragma_tests {
     #[test]
     fn test_push_0_opcode_detector_on_greter_equal_0_8_0() {
         let context = crate::detect::test_utils::load_contract(
-            "../tests/contract-playground/out/IContractInheritance.sol/IContractInheritance.0.8.25.json",
+            "../tests/contract-playground/out/IContractInheritance.sol/IContractInheritance.json",
         );
 
         let mut detector = super::PushZeroOpcodeDetector::default();
