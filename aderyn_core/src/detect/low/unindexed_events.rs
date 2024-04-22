@@ -61,13 +61,13 @@ impl IssueDetector for UnindexedEventsDetector {
 
 #[cfg(test)]
 mod unindexed_event_tests {
-    use crate::detect::detector::{detector_test_helpers::load_contract, IssueDetector};
+    use crate::detect::detector::IssueDetector;
 
     use super::UnindexedEventsDetector;
 
     #[test]
     fn test_unindexed_events() {
-        let context = load_contract(
+        let context = crate::detect::test_utils::load_contract(
             "../tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",
         );
 

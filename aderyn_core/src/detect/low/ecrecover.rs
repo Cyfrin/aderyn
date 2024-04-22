@@ -55,13 +55,13 @@ impl IssueDetector for EcrecoverDetector {
 #[cfg(test)]
 mod ecrecover_tests {
 
-    use crate::detect::detector::{detector_test_helpers::load_contract, IssueDetector};
+    use crate::detect::detector::IssueDetector;
 
     use super::EcrecoverDetector;
 
     #[test]
     fn test_ecrecover_detector() {
-        let context = load_contract(
+        let context = crate::detect::test_utils::load_contract(
             "../tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",
         );
 

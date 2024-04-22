@@ -53,8 +53,8 @@ impl IssueDetector for PeekOverDemonstrator {
 #[cfg(test)]
 mod peek_over_demonstrator_tests {
     use crate::detect::{
-        detector::{detector_test_helpers::load_contract, IssueDetector},
-        experimental::peek_over::PeekOverDemonstrator,
+        detector::IssueDetector, experimental::peek_over::PeekOverDemonstrator,
+        test_utils::load_contract,
     };
 
     #[test]

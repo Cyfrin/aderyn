@@ -72,13 +72,13 @@ impl IssueDetector for AvoidAbiEncodePackedDetector {
 
 #[cfg(test)]
 mod avoid_abi_encode_packed_tests {
-    use crate::detect::detector::{detector_test_helpers::load_contract, IssueDetector};
+    use crate::detect::detector::IssueDetector;
 
     use super::AvoidAbiEncodePackedDetector;
 
     #[test]
     fn test_avoid_abi_encode_packed_detector() {
-        let context = load_contract(
+        let context = crate::detect::test_utils::load_contract(
             "../tests/contract-playground/out/KeccakContract.sol/KeccakContract.json",
         );
 

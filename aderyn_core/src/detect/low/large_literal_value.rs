@@ -56,14 +56,15 @@ impl IssueDetector for LargeLiteralValueDetector {
 
 #[cfg(test)]
 mod large_literal_values {
-    use crate::detect::detector::{detector_test_helpers::load_contract, IssueDetector};
+    use crate::detect::detector::IssueDetector;
 
     use super::LargeLiteralValueDetector;
 
     #[test]
     fn test_large_literal_values_multiples_of_10000() {
-        let context =
-            load_contract("../tests/contract-playground/out/HugeConstants.sol/HugeConstants.json");
+        let context = crate::detect::test_utils::load_contract(
+            "../tests/contract-playground/out/HugeConstants.sol/HugeConstants.json",
+        );
 
         let mut detector = LargeLiteralValueDetector::default();
         // assert that the detector finds the public Function

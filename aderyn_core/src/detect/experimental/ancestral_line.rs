@@ -74,8 +74,8 @@ impl IssueDetector for AncestralLineDemonstrator {
 #[cfg(test)]
 mod ancestral_line_demo_tests {
     use crate::detect::{
-        detector::{detector_test_helpers::load_contract, IssueDetector},
-        experimental::ancestral_line::AncestralLineDemonstrator,
+        detector::IssueDetector, experimental::ancestral_line::AncestralLineDemonstrator,
+        test_utils::load_contract,
     };
 
     #[test]

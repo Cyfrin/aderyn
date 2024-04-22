@@ -53,10 +53,7 @@ impl IssueDetector for TemplateDetector {
 
 #[cfg(test)]
 mod template_detector_tests {
-    use crate::detect::{
-        detector::{detector_test_helpers::load_contract, IssueDetector},
-        high::template_detector::TemplateDetector,
-    };
+    use crate::detect::{detector::IssueDetector, high::template_detector::TemplateDetector};
 
     #[test]
     fn test_template_detector() {
