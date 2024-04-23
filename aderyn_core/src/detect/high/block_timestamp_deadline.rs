@@ -151,5 +151,4 @@ mod block_timestamp_deadline_detector_tests {
             )
         );
     }
-
 }
