@@ -92,14 +92,15 @@ impl IssueDetector for ImmediateParentDemonstrator {
 #[cfg(test)]
 mod parent_chain_demo_tests {
     use crate::detect::{
-        detector::IssueDetector, experimental::immediate_parent::ImmediateParentDemonstrator,
-        test_utils::load_contract,
-    };
+        detector::IssueDetector, experimental::immediate_parent::ImmediateParentDemonstrator    };
+
+    use serial_test::serial;
 
     #[test]
+    #[serial]
     fn test_immediate_parent_demo() {
-        let context = load_contract(
-            "../tests/contract-playground/out/ParentChainContract.sol/ParentChainContract.json",
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/parent_chain/ParentChainContract.sol",
         );
 
         let mut detector = ImmediateParentDemonstrator::default();
