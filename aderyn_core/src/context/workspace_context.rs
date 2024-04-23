@@ -2400,33 +2400,4 @@ mod context_tests {
         }
     }
 
-    #[test]
-    fn test_delegate_call_in_loops() -> Result<()> {
-        let mut context = WorkspaceContext::default();
-        let extended_inheritance = read_compiler_output(
-            "../tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",
-        )?;
-        let inheritance_base = read_compiler_output(
-            "../tests/contract-playground/out/InheritanceBase.sol/InheritanceBase.json",
-        )?;
-        let i_contract_inheritance = read_compiler_output(
-            "../tests/contract-playground/out/IContractInheritance.sol/IContractInheritance.json",
-        )?;
-        extended_inheritance.ast.accept(&mut context)?;
-        inheritance_base.ast.accept(&mut context)?;
-        i_contract_inheritance.ast.accept(&mut context)?;
-
-        // Get all for statements, and check if there is a delegate call in the body of each for statement
-        let mut delegate_call_in_loop_detector = DelegateCallInLoopDetector::default();
-        let for_statements = context.for_statements_context.keys();
-        for for_statement in for_statements {
-            for_statement.accept(&mut delegate_call_in_loop_detector)?;
-        }
-        println!(
-            "Found delegate call in loop: {:?}",
-            delegate_call_in_loop_detector.found_delegate_call_in_loop
-        );
-
-        Ok(())
-    }
 }
