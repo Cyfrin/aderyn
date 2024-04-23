@@ -2371,33 +2371,3 @@ impl ASTConstVisitor for WorkspaceContext {
         Ok(())
     }
 }
-
-#[cfg(test)]
-mod context_tests {
-    use crate::ast::*;
-    use crate::context::workspace_context::WorkspaceContext;
-    use crate::framework::foundry::FoundryOutput;
-    use crate::visitor::ast_visitor::*;
-    use eyre::Result;
-
-    fn read_compiler_output(filepath: &str) -> Result<FoundryOutput> {
-        Ok(serde_json::from_reader(std::io::BufReader::new(
-            std::fs::File::open(filepath)?,
-        ))?)
-    }
-
-    #[derive(Default, Debug)]
-    pub struct DelegateCallInLoopDetector {
-        pub found_delegate_call_in_loop: Vec<MemberAccess>,
-    }
-
-    impl ASTConstVisitor for DelegateCallInLoopDetector {
-        fn visit_member_access(&mut self, node: &MemberAccess) -> Result<bool> {
-            if node.member_name == "delegatecall" {
-                self.found_delegate_call_in_loop.push(node.clone());
-            }
-            Ok(true)
-        }
-    }
-
-}
