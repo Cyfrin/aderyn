@@ -75,13 +75,15 @@ impl IssueDetector for ClosestAncestorDemonstrator {
 mod closest_ancestor_demo_tests {
     use crate::detect::{
         detector::IssueDetector, experimental::closest_ancestor::ClosestAncestorDemonstrator,
-        test_utils::load_contract,
     };
 
+    use serial_test::serial;
+
     #[test]
+    #[serial]
     fn test_closest_ancestor() {
-        let context = load_contract(
-            "../tests/contract-playground/out/ParentChainContract.sol/ParentChainContract.json",
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/parent_chain/ParentChainContract.sol",
         );
 
         let mut detector = ClosestAncestorDemonstrator::default();
