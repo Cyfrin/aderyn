@@ -83,7 +83,7 @@ mod ancestral_line_demo_tests {
     #[serial]
     fn test_ancestral_line_demo() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
-            "../tests/contract-playground/src/ParentChainContract.sol",
+            "../tests/contract-playground/src/parent_chain/ParentChainContract.sol",
         );
 
         let mut detector = AncestralLineDemonstrator::default();
