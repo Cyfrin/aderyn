@@ -52,9 +52,7 @@ impl IssueDetector for PeekOverDemonstrator {
 
 #[cfg(test)]
 mod peek_over_demonstrator_tests {
-    use crate::detect::{
-        detector::IssueDetector, experimental::peek_over::PeekOverDemonstrator
-    };
+    use crate::detect::{detector::IssueDetector, experimental::peek_over::PeekOverDemonstrator};
 
     use serial_test::serial;
 

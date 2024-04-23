@@ -74,7 +74,7 @@ impl IssueDetector for ClosestAncestorDemonstrator {
 #[cfg(test)]
 mod closest_ancestor_demo_tests {
     use crate::detect::{
-        detector::IssueDetector, experimental::closest_ancestor::ClosestAncestorDemonstrator
+        detector::IssueDetector, experimental::closest_ancestor::ClosestAncestorDemonstrator,
     };
 
     use serial_test::serial;

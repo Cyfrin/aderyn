@@ -59,9 +59,7 @@ impl IssueDetector for SiblingDemonstrator {
 #[cfg(test)]
 mod sibling_demo_tests {
 
-    use crate::detect::{
-        detector::IssueDetector, experimental::sibling::SiblingDemonstrator
-    };
+    use crate::detect::{detector::IssueDetector, experimental::sibling::SiblingDemonstrator};
 
     use serial_test::serial;
 

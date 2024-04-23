@@ -74,7 +74,7 @@ impl IssueDetector for ImmediateChildrenDemonstrator {
 #[cfg(test)]
 mod child_chain_demo_tests {
     use crate::detect::{
-        detector::IssueDetector, experimental::immediate_children::ImmediateChildrenDemonstrator
+        detector::IssueDetector, experimental::immediate_children::ImmediateChildrenDemonstrator,
     };
 
     use serial_test::serial;
