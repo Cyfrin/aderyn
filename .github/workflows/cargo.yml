@@ -44,7 +44,11 @@ jobs:
         run: |
           git submodule update --init --recursive
 
-      - name: Run cargo test for new loading modules
+      - name: Run cargo test by_loading_contract_directly
+        run: |
+          cargo test by_loading_contract_directly
+
+      - name: Run cargo test by_loading_contract_directly with output
         run: |
           cargo test by_loading_contract_directly -- --nocapture
 
