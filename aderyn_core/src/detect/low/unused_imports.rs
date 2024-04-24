@@ -87,19 +87,13 @@ impl IssueDetector for UnusedImportsDetector {
                 let declaring_source_unit =
                     context.get_source_unit_from_child_node_id(identifier.referenced_declaration);
 
-                match declaring_source_unit {
-                    Some(declaring_source_unit) => {
-                        let used_import = distant_relative_source_unit_to_original_import
-                            .get(&declaring_source_unit.id);
+                if let Some(declaring_source_unit) = declaring_source_unit {
+                    let used_import = distant_relative_source_unit_to_original_import
+                        .get(&declaring_source_unit.id);
 
-                        match used_import {
-                            Some(import) => {
-                                imports_used.insert(import);
-                            }
-                            None => {}
-                        }
+                    if let Some(import) = used_import {
+                        imports_used.insert(import);
                     }
-                    None => {}
                 }
             }
             // Do the same with InheritanceSpecifier
@@ -112,19 +106,13 @@ impl IssueDetector for UnusedImportsDetector {
                         .unwrap(),
                 );
 
-                match declaring_source_unit {
-                    Some(declaring_source_unit) => {
-                        let used_import = distant_relative_source_unit_to_original_import
-                            .get(&declaring_source_unit.id);
+                if let Some(declaring_source_unit) = declaring_source_unit {
+                    let used_import = distant_relative_source_unit_to_original_import
+                        .get(&declaring_source_unit.id);
 
-                        match used_import {
-                            Some(import) => {
-                                imports_used.insert(import);
-                            }
-                            None => {}
-                        }
+                    if let Some(import) = used_import {
+                        imports_used.insert(import);
                     }
-                    None => {}
                 }
             }
 
@@ -156,7 +144,7 @@ impl IssueDetector for UnusedImportsDetector {
     }
 
     fn name(&self) -> String {
-        format!("unused-imports")
+        "unused-imports".to_string()
     }
 }
 
