@@ -1,19 +1,17 @@
 use std::collections::{BTreeMap, HashMap, HashSet};
 use std::error::Error;
 
-use crate::ast::{ImportDirective, NodeID, SourceUnit, TypeName};
+use crate::ast::{ImportDirective, NodeID};
 
 use crate::capture;
 use crate::context::browser::{
     ExtractIdentifiers, ExtractImportDirectives, ExtractInheritanceSpecifiers,
 };
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
     context::workspace_context::WorkspaceContext,
     detect::detector::{IssueDetector, IssueSeverity},
 };
 use eyre::Result;
-use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
 
 #[derive(Default)]
 pub struct UnusedImportsDetector {
@@ -39,7 +37,9 @@ fn process_imports<'a>(
                 process_imports(distant_relatives, next_level_import, context);
             });
         }
-        None => {}
+        None => {
+            distant_relatives.push(-99);
+        }
     }
 }
 
@@ -52,6 +52,10 @@ impl IssueDetector for UnusedImportsDetector {
                 NodeID,
                 &ImportDirective,
             > = HashMap::new();
+            // This is needed to track unknown import lines, because aderyn doesn't load in AST output files
+            // from out-of-scope contracts. This means that if a contract imports a lib/ contract, we cannot
+            // trace the identifiers to it here, because aderyn does not load them in before hand.
+            let mut imports_with_unknown_imports: HashSet<&ImportDirective> = HashSet::new();
             let imports = ExtractImportDirectives::from(source_unit).extracted;
             if imports.is_empty() {
                 return;
@@ -60,6 +64,16 @@ impl IssueDetector for UnusedImportsDetector {
             for import in &imports {
                 let mut distant_relatives: Vec<NodeID> = Vec::new();
                 process_imports(&mut distant_relatives, import, context);
+                // If there exists a -99 key, it means that process_imports found an import that was outside
+                // the scope of AST that was originally loaded. This happen mostly when the --scope or --exclude
+                // flags are applied, or when lib/ AST nodes are trying to be accessed, since these are not loaded
+                // upon running aderyn.
+                // TODO: Figure out a new way of loading in things out of scope, but needed because of import directives
+                // from within in-scope files.
+                if distant_relatives.contains(&-99) {
+                    imports_with_unknown_imports.insert(import);
+                    continue;
+                }
                 distant_relatives.into_iter().for_each(|distant_relative| {
                     distant_relative_source_unit_to_original_import
                         .insert(distant_relative, import);
@@ -115,13 +129,13 @@ impl IssueDetector for UnusedImportsDetector {
             }
 
             for import in &imports {
-                if !imports_used.contains(import) {
+                if !imports_with_unknown_imports.contains(import) && !imports_used.contains(import)
+                {
                     capture!(self, context, import);
                 }
             }
         });
 
-        println!("found_instances: {:#?}", self.found_instances);
         Ok(!self.found_instances.is_empty())
     }
 
@@ -130,11 +144,11 @@ impl IssueDetector for UnusedImportsDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Unused Import")
+        String::from("Unused Imports")
     }
 
     fn description(&self) -> String {
-        String::from("This import is not used, consider removing it.")
+        String::from("Unused import, consider removing it.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -157,8 +171,8 @@ mod unused_imports_detector_tests {
     fn test_unused_imports_with_admin_contracts() {
         let context = load_multiple_contracts(vec![
             "../tests/contract-playground/out/AdminContract.sol/AdminContract.json",
-            "../tests/contract-playground/out/Ownable.sol/Ownable.0.8.25.json",
-            "../tests/contract-playground/out/Context.sol/Context.0.8.25.json",
+            "../tests/contract-playground/out/Ownable.sol/Ownable.0.8.20.json",
+            "../tests/contract-playground/out/Context.sol/Context.0.8.20.json",
             "../tests/contract-playground/out/ReentrancyGuard.sol/ReentrancyGuard.json",
         ]);
 
@@ -173,8 +187,8 @@ mod unused_imports_detector_tests {
         let context = load_multiple_contracts(vec![
             "../tests/contract-playground/out/FourthLevel.sol/FourthLevel.json",
             "../tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",
-            "../tests/contract-playground/out/InheritanceBase.sol/InheritanceBase.0.8.25.json",
-            "../tests/contract-playground/out/IContractInheritance.sol/IContractInheritance.0.8.25.json",
+            "../tests/contract-playground/out/InheritanceBase.sol/InheritanceBase.json",
+            "../tests/contract-playground/out/IContractInheritance.sol/IContractInheritance.json",
             "../tests/contract-playground/out/EnumerableSet.sol/EnumerableSet.json",
         ]);
 
@@ -190,11 +204,11 @@ mod unused_imports_detector_tests {
             crate::detect::detector::IssueSeverity::Low
         );
         // assert the title is correct
-        assert_eq!(detector.title(), String::from("Low Issue Title"));
+        assert_eq!(detector.title(), String::from("Unused Imports"));
         // assert the description is correct
         assert_eq!(
             detector.description(),
-            String::from("Description of the low issue.")
+            String::from("Unused import, consider removing it.")
         );
     }
 }

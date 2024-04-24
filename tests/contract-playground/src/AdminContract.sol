@@ -3,6 +3,7 @@ pragma solidity 0.8.20;
 
 import {Ownable} from "../lib/openzeppelin-contracts/contracts/access/Ownable.sol";
 import {ReentrancyGuard} from "../lib/openzeppelin-contracts/contracts/security/ReentrancyGuard.sol";
+import "./Counter.sol";
 
 contract AdminContract is Ownable, ReentrancyGuard {
     constructor() Ownable() {}
