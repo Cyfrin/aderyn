@@ -154,12 +154,27 @@ mod unused_imports_detector_tests {
     };
 
     #[test]
-    fn test_unused_imports_detector() {
+    fn test_unused_imports_with_admin_contracts() {
+        let context = load_multiple_contracts(vec![
+            "../tests/contract-playground/out/AdminContract.sol/AdminContract.json",
+            "../tests/contract-playground/out/Ownable.sol/Ownable.0.8.25.json",
+            "../tests/contract-playground/out/Context.sol/Context.0.8.25.json",
+            "../tests/contract-playground/out/ReentrancyGuard.sol/ReentrancyGuard.json",
+        ]);
+
+        let mut detector = UnusedImportsDetector::default();
+        let found = detector.detect(&context).unwrap();
+
+        assert!(!found);
+    }
+
+    #[test]
+    fn test_unused_imports_with_inheritance_contracts() {
         let context = load_multiple_contracts(vec![
             "../tests/contract-playground/out/FourthLevel.sol/FourthLevel.json",
             "../tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",
-            "../tests/contract-playground/out/InheritanceBase.sol/InheritanceBase.0.8.20.json",
-            "../tests/contract-playground/out/IContractInheritance.sol/IContractInheritance.0.8.20.json",
+            "../tests/contract-playground/out/InheritanceBase.sol/InheritanceBase.0.8.25.json",
+            "../tests/contract-playground/out/IContractInheritance.sol/IContractInheritance.0.8.25.json",
             "../tests/contract-playground/out/EnumerableSet.sol/EnumerableSet.json",
         ]);
 
