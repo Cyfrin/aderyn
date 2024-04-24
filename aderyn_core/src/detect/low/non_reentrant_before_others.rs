@@ -77,7 +77,7 @@ mod non_reentrant_before_others_tests {
 
         // assert that the line number is 10
         let (_, line_number, _) = detector.instances().keys().next().unwrap().clone();
-        assert_eq!(line_number, 10);
+        assert_eq!(line_number, 11);
         // assert that the detector returns the correct severity
         assert_eq!(
             detector.severity(),
