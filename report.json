@@ -31,7 +31,7 @@
     "files_details": [
       {
         "file_path": "src/AdminContract.sol",
-        "n_sloc": 11
+        "n_sloc": 12
       },
       {
         "file_path": "src/ArbitraryTransferFrom.sol",
@@ -164,7 +164,7 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 937,
+    "total_sloc": 938,
     "total_source_units": 33
   },
   "high_issues": {
@@ -358,18 +358,18 @@
         "instances": [
           {
             "contract_path": "src/AdminContract.sol",
-            "line_no": 7,
-            "src": "270:7"
+            "line_no": 8,
+            "src": "294:7"
           },
           {
             "contract_path": "src/AdminContract.sol",
-            "line_no": 10,
-            "src": "376:9"
+            "line_no": 11,
+            "src": "400:9"
           },
           {
             "contract_path": "src/AdminContract.sol",
-            "line_no": 14,
-            "src": "505:9"
+            "line_no": 15,
+            "src": "529:9"
           },
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
@@ -800,8 +800,8 @@
         "instances": [
           {
             "contract_path": "src/AdminContract.sol",
-            "line_no": 10,
-            "src": "386:12"
+            "line_no": 11,
+            "src": "410:12"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
@@ -973,8 +973,8 @@
         "instances": [
           {
             "contract_path": "src/AdminContract.sol",
-            "line_no": 14,
-            "src": "457:23"
+            "line_no": 15,
+            "src": "481:23"
           },
           {
             "contract_path": "src/ContractWithTodo.sol",
@@ -1208,73 +1208,8 @@
         "instances": [
           {
             "contract_path": "src/AdminContract.sol",
-            "line_no": 4,
-            "src": "57:83"
-          },
-          {
-            "contract_path": "src/AdminContract.sol",
-            "line_no": 5,
-            "src": "141:101"
-          },
-          {
-            "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 4,
-            "src": "57:81"
-          },
-          {
-            "contract_path": "src/DeprecatedOZFunctions.sol",
-            "line_no": 4,
-            "src": "57:95"
-          },
-          {
-            "contract_path": "src/DeprecatedOZFunctions.sol",
-            "line_no": 5,
-            "src": "153:106"
-          },
-          {
-            "contract_path": "src/EmptyBlocks.sol",
-            "line_no": 4,
-            "src": "57:83"
-          },
-          {
-            "contract_path": "src/T11sTranferer.sol",
-            "line_no": 4,
-            "src": "57:84"
-          },
-          {
-            "contract_path": "src/UnsafeERC721Mint.sol",
-            "line_no": 4,
-            "src": "57:87"
-          },
-          {
-            "contract_path": "src/UnsafeERC721Mint.sol",
-            "line_no": 5,
-            "src": "145:84"
-          },
-          {
-            "contract_path": "src/inheritance/FourthLevel.sol",
-            "line_no": 5,
-            "src": "93:84"
-          },
-          {
-            "contract_path": "src/parent_chain/ParentChainContract.sol",
-            "line_no": 4,
-            "src": "57:86"
-          },
-          {
-            "contract_path": "src/parent_chain/ParentChainContract.sol",
-            "line_no": 5,
-            "src": "144:104"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 4,
-            "src": "57:102"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 5,
-            "src": "160:102"
+            "line_no": 6,
+            "src": "243:23"
           }
         ],
         "title": "Unused Imports"

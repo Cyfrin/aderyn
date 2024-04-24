@@ -7,7 +7,7 @@
     "files_details": [
       {
         "file_path": "src/AdminContract.sol",
-        "n_sloc": 11
+        "n_sloc": 12
       },
       {
         "file_path": "src/Counter.sol",
@@ -36,7 +36,7 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 229,
+    "total_sloc": 230,
     "total_source_units": 7
   },
   "high_issues": {
