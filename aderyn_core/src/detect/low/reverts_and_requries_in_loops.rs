@@ -72,7 +72,7 @@ mod reevrts_and_requires_in_loops {
     #[test]
     fn test_reverts_and_requires_in_loops() {
         let context = load_contract(
-            "../tests/contract-playground/out/RevertsAndRequriesInLoops.sol/PotentialPanicInLoop.json",
+            "../tests/contract-playground/out/RevertsAndRequriesInLoops.sol/RevertsAndRequiresInLoops.json",
         );
 
         let mut detector = RevertsAndRequiresInLoopsDetector::default();

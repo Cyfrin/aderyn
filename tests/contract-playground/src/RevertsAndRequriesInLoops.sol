@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.25;
 
-contract PotentialPanicInLoop {
+contract RevertsAndRequiresInLoops {
 
     // Maximum of 10 ids allowed
     mapping(uint256 id => uint256 amt) funds;

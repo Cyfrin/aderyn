@@ -710,22 +710,22 @@
           {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
             "line_no": 10,
-            "src": "248:2"
+            "src": "253:2"
           },
           {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
             "line_no": 17,
-            "src": "437:2"
+            "src": "442:2"
           },
           {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
             "line_no": 26,
-            "src": "701:2"
+            "src": "706:2"
           },
           {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
             "line_no": 27,
-            "src": "740:2"
+            "src": "745:2"
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
@@ -779,7 +779,7 @@
           {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
             "line_no": 19,
-            "src": "498:6"
+            "src": "503:6"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
@@ -1229,12 +1229,12 @@
           {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
             "line_no": 10,
-            "src": "222:129"
+            "src": "227:129"
           },
           {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
             "line_no": 17,
-            "src": "411:150"
+            "src": "416:150"
           }
         ],
         "title": "Loop contains `require`/`revert` statements"
