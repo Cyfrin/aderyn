@@ -11,10 +11,10 @@ use crate::{
             UnprotectedInitializerDetector, UnsafeCastingDetector,
         },
         low::{
-            CentralizationRiskDetector, ConstantsInsteadOfLiteralsDetector,
-            ContractsWithTodosDetector, DeprecatedOZFunctionsDetector,
-            DivisionBeforeMultiplicationDetector, EcrecoverDetector, EmptyBlockDetector,
-            InconsistentTypeNamesDetector, LargeLiteralValueDetector,
+            CentralizationRiskDetector, ConstantDefinedMultipleTimesDetector,
+            ConstantsInsteadOfLiteralsDetector, ContractsWithTodosDetector,
+            DeprecatedOZFunctionsDetector, DivisionBeforeMultiplicationDetector, EcrecoverDetector,
+            EmptyBlockDetector, InconsistentTypeNamesDetector, LargeLiteralValueDetector,
             NonReentrantBeforeOthersDetector, PushZeroOpcodeDetector, RequireWithStringDetector,
             RevertsAndRequiresInLoopsDetector, SolmateSafeTransferLibDetector,
             UnindexedEventsDetector, UnsafeERC20FunctionsDetector, UnsafeERC721MintDetector,
@@ -62,6 +62,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<RevertsAndRequiresInLoopsDetector>::default(),
         Box::<DivisionBeforeMultiplicationDetector>::default(),
         Box::<UnsafeCastingDetector>::default(),
+        Box::<ConstantDefinedMultipleTimesDetector>::default(),
     ]
 }
 
@@ -102,6 +103,7 @@ pub(crate) enum IssueDetectorNamePool {
     RevertsAndRequiresInLoops,
     DivisionBeforeMultiplication,
     UnsafeCastingDetector,
+    ConstantDefinedMultipleTimes,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -183,6 +185,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         }
         IssueDetectorNamePool::UnsafeCastingDetector => {
             Some(Box::<UnsafeCastingDetector>::default())
+        }
+        IssueDetectorNamePool::ConstantDefinedMultipleTimes => {
+            Some(Box::<ConstantDefinedMultipleTimesDetector>::default())
         }
         IssueDetectorNamePool::Undecided => None,
     }

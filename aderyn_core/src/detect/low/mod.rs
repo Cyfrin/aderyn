@@ -1,4 +1,5 @@
 pub(crate) mod centralization_risk;
+pub(crate) mod const_multiple_definitions;
 pub(crate) mod constants_instead_of_literals;
 pub(crate) mod contracts_with_todos;
 pub(crate) mod deprecated_oz_functions;
@@ -23,6 +24,7 @@ pub(crate) mod useless_public_function;
 pub(crate) mod zero_address_check;
 
 pub use centralization_risk::CentralizationRiskDetector;
+pub use const_multiple_definitions::ConstantDefinedMultipleTimesDetector;
 pub use constants_instead_of_literals::ConstantsInsteadOfLiteralsDetector;
 pub use contracts_with_todos::ContractsWithTodosDetector;
 pub use deprecated_oz_functions::DeprecatedOZFunctionsDetector;
