@@ -39,12 +39,19 @@ impl<T: Node + ?Sized> PeekOver for T {
         if let Some(previous_sibling) = self.previous_sibling(context) {
             let (prev_offset, prev_len) =
                 context.get_offset_and_length_of_node(previous_sibling.id()?)?;
-            let requried_content = &content[prev_offset + prev_len..curr_offset];
-            return Some(requried_content.to_string());
+            if prev_offset + prev_len < curr_offset && curr_offset < content.len() {
+                let requried_content = &content[prev_offset + prev_len..curr_offset];
+                return Some(requried_content.to_string());
+            }
         }
 
         // If there is no previous sibling we must return content from the top of the file
-        let requried_content = &content[0..curr_offset];
-        Some(requried_content.to_string())
+
+        if curr_offset < content.len() {
+            let requried_content = &content[0..curr_offset];
+            return Some(requried_content.to_string());
+        }
+
+        None
     }
 }
