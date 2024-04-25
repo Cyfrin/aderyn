@@ -41,6 +41,8 @@ impl<T: Node + ?Sized> PeekUnder for T {
             if curr_offset + curr_len < next_offset && next_offset < content.len() {
                 let requried_content = &content[curr_offset + curr_len..next_offset];
                 return Some(requried_content.to_string());
+            } else {
+                return None;
             }
         }
 

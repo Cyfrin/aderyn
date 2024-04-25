@@ -42,6 +42,8 @@ impl<T: Node + ?Sized> PeekOver for T {
             if prev_offset + prev_len < curr_offset && curr_offset < content.len() {
                 let requried_content = &content[prev_offset + prev_len..curr_offset];
                 return Some(requried_content.to_string());
+            } else {
+                return None;
             }
         }
 
