@@ -25,7 +25,8 @@
     "contract-with-todos",
     "inconsistent-type-names",
     "unprotected-initializer",
-    "reverts-and-requires-in-loops"
+    "reverts-and-requires-in-loops",
+    "operation-order-detector"
   ],
   "files_details": {
     "files_details": [
@@ -126,6 +127,10 @@
         "n_sloc": 21
       },
       {
+        "file_path": "src/divisionBeforeMultiplication.sol",
+        "n_sloc": 22
+      },
+      {
         "file_path": "src/eth2/DepositContract.sol",
         "n_sloc": 95
       },
@@ -164,8 +169,8 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 949,
-    "total_source_units": 33
+    "total_sloc": 971,
+    "total_source_units": 34
   },
   "high_issues": {
     "issues": [
@@ -348,7 +353,7 @@
   },
   "issue_count": {
     "high": 5,
-    "low": 21
+    "low": 22
   },
   "low_issues": {
     "issues": [
@@ -527,6 +532,11 @@
             "src": "46:32"
           },
           {
+            "contract_path": "src/divisionBeforeMultiplication.sol",
+            "line_no": 2,
+            "src": "32:24"
+          },
+          {
             "contract_path": "src/inheritance/IContractInheritance.sol",
             "line_no": 2,
             "src": "32:24"
@@ -649,6 +659,36 @@
             "contract_path": "src/cloc/HeavilyCommentedContract.sol",
             "line_no": 38,
             "src": "646:4"
+          },
+          {
+            "contract_path": "src/divisionBeforeMultiplication.sol",
+            "line_no": 7,
+            "src": "123:14"
+          },
+          {
+            "contract_path": "src/divisionBeforeMultiplication.sol",
+            "line_no": 11,
+            "src": "240:18"
+          },
+          {
+            "contract_path": "src/divisionBeforeMultiplication.sol",
+            "line_no": 15,
+            "src": "351:11"
+          },
+          {
+            "contract_path": "src/divisionBeforeMultiplication.sol",
+            "line_no": 19,
+            "src": "447:19"
+          },
+          {
+            "contract_path": "src/divisionBeforeMultiplication.sol",
+            "line_no": 23,
+            "src": "557:16"
+          },
+          {
+            "contract_path": "src/divisionBeforeMultiplication.sol",
+            "line_no": 27,
+            "src": "668:20"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
@@ -916,6 +956,11 @@
             "contract_path": "src/cloc/HeavilyCommentedContract.sol",
             "line_no": 6,
             "src": "46:32"
+          },
+          {
+            "contract_path": "src/divisionBeforeMultiplication.sol",
+            "line_no": 2,
+            "src": "32:24"
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
@@ -1238,6 +1283,33 @@
           }
         ],
         "title": "Loop contains `require`/`revert` statements"
+      },
+      {
+        "description": "Division operations followed directly by multiplication operations can lead to precision loss due to the way integer arithmetic is handled in Solidity.",
+        "detector_name": "operation-order-detector",
+        "instances": [
+          {
+            "contract_path": "src/divisionBeforeMultiplication.sol",
+            "line_no": 8,
+            "src": "204:5"
+          },
+          {
+            "contract_path": "src/divisionBeforeMultiplication.sol",
+            "line_no": 12,
+            "src": "314:5"
+          },
+          {
+            "contract_path": "src/divisionBeforeMultiplication.sol",
+            "line_no": 16,
+            "src": "414:5"
+          },
+          {
+            "contract_path": "src/divisionBeforeMultiplication.sol",
+            "line_no": 20,
+            "src": "521:5"
+          }
+        ],
+        "title": "Incorrect Order of Division and Multiplication"
       }
     ]
   }
