@@ -1258,6 +1258,24 @@ impl WorkspaceContext {
         None
     }
 
+    pub fn get_offset_and_length_of_node(&self, node_id: NodeID) -> Option<(usize, usize)> {
+        let node = self.nodes.get(&node_id)?;
+        let src_location = node.src().unwrap_or("");
+
+        let chopped_location = match src_location.rfind(':') {
+            Some(index) => &src_location[..index],
+            None => src_location, // No colon found, return the original string
+        }
+        .to_string();
+
+        if let Some((offset, len)) = chopped_location.split_once(':') {
+            let offset: usize = offset.parse().ok()?;
+            let len: usize = len.parse().ok()?;
+            return Some((offset, len));
+        }
+        None
+    }
+
     pub fn get_source_unit_from_child_node(&self, node: &ASTNode) -> Option<&SourceUnit> {
         let source_unit_id = match node {
             ASTNode::ArrayTypeName(node) => self
@@ -2389,10 +2407,10 @@ mod context_tests {
             "../tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",
         )?;
         let inheritance_base = read_compiler_output(
-            "../tests/contract-playground/out/InheritanceBase.sol/InheritanceBase.0.8.25.json",
+            "../tests/contract-playground/out/InheritanceBase.sol/InheritanceBase.json",
         )?;
         let i_contract_inheritance = read_compiler_output(
-            "../tests/contract-playground/out/IContractInheritance.sol/IContractInheritance.0.8.25.json",
+            "../tests/contract-playground/out/IContractInheritance.sol/IContractInheritance.json",
         )?;
         extended_inheritance.ast.accept(&mut context)?;
         inheritance_base.ast.accept(&mut context)?;

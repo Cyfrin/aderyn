@@ -24,7 +24,8 @@
     "useless-internal-function",
     "contract-with-todos",
     "inconsistent-type-names",
-    "unprotected-initializer"
+    "unprotected-initializer",
+    "reverts-and-requires-in-loops"
   ],
   "files_details": {
     "files_details": [
@@ -83,6 +84,10 @@
       {
         "file_path": "src/OnceModifierExample.sol",
         "n_sloc": 8
+      },
+      {
+        "file_path": "src/RevertsAndRequriesInLoops.sol",
+        "n_sloc": 27
       },
       {
         "file_path": "src/StateVariables.sol",
@@ -159,8 +164,8 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 922,
-    "total_source_units": 32
+    "total_sloc": 949,
+    "total_source_units": 33
   },
   "high_issues": {
     "issues": [
@@ -343,7 +348,7 @@
   },
   "issue_count": {
     "high": 5,
-    "low": 20
+    "low": 21
   },
   "low_issues": {
     "issues": [
@@ -703,6 +708,26 @@
             "src": "1374:66"
           },
           {
+            "contract_path": "src/RevertsAndRequriesInLoops.sol",
+            "line_no": 10,
+            "src": "253:2"
+          },
+          {
+            "contract_path": "src/RevertsAndRequriesInLoops.sol",
+            "line_no": 17,
+            "src": "442:2"
+          },
+          {
+            "contract_path": "src/RevertsAndRequriesInLoops.sol",
+            "line_no": 26,
+            "src": "706:2"
+          },
+          {
+            "contract_path": "src/RevertsAndRequriesInLoops.sol",
+            "line_no": 27,
+            "src": "745:2"
+          },
+          {
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 113,
             "src": "7252:2"
@@ -750,6 +775,11 @@
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 40,
             "src": "1389:6"
+          },
+          {
+            "contract_path": "src/RevertsAndRequriesInLoops.sol",
+            "line_no": 19,
+            "src": "503:6"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
@@ -1191,6 +1221,23 @@
           }
         ],
         "title": "Inconsistency in declaring uint256/uint (or) int256/int variables within a contract"
+      },
+      {
+        "description": "Avoid `require` / `revert` statements in a loop because a single bad item can cause the whole transaction to fail. It's better to forgive on fail and return failed elements post processing of the loop",
+        "detector_name": "reverts-and-requires-in-loops",
+        "instances": [
+          {
+            "contract_path": "src/RevertsAndRequriesInLoops.sol",
+            "line_no": 10,
+            "src": "227:129"
+          },
+          {
+            "contract_path": "src/RevertsAndRequriesInLoops.sol",
+            "line_no": 17,
+            "src": "416:150"
+          }
+        ],
+        "title": "Loop contains `require`/`revert` statements"
       }
     ]
   }
