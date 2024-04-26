@@ -1,12 +1,12 @@
 use std::collections::BTreeMap;
 use std::error::Error;
 
-use crate::ast::{NodeID, TypeName};
+use crate::ast::NodeID;
 
 use crate::capture;
 use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
-    ast::{BinaryOperation, Expression},
+    ast::Expression,
     context::workspace_context::WorkspaceContext,
     detect::detector::{IssueDetector, IssueSeverity},
 };
