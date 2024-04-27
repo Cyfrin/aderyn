@@ -95,7 +95,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: -- -o ./tests/adhoc-sol-files-report-workflow.md ./tests/adhoc-sol-files --skip-update-check &
+          args: -- -o ./tests/adhoc-sol-files-report-workflow.md ./tests/adhoc-sol-files --skip-update-check
       
       - name: Check adhoc-sol-files-report.md vs adhoc-sol-files-report-workflow.md
         run: |
