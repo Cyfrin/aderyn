@@ -14,6 +14,9 @@ cargo run --  --scope src/ --exclude lib/ -o judgeops/current/report.judge.md  .
 # Create report-config.judge.md based on config file
 cargo run -- --config-file ./tests/aderyn.config.json --exclude lib/ -o judgeops/current/report-config.judge.md ./tests/contract-playground --skip-build --skip-update-check &
 
+# Adhoc sol files report.md 
+cargo run --  ./tests/adhoc-sol-files -o ./tests/adhoc-sol-files-report.md --skip-build --skip-update-check &
+
 
 ##### JSON REPORTS ########
 

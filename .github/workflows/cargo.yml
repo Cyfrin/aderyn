@@ -88,7 +88,21 @@ jobs:
         run: |
           cat report-workflow.md
           diff report.md report-workflow.md
-  
+
+      # Verify adhoc-sol-files-workflow-report.md
+          
+      - name: Generate adhoc-sol-files-workflow-report.md
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+          args: -- -o ./tests/adhoc-sol-files-report-workflow.md ./tests/adhoc-sol-files --skip-update-check &
+      
+      - name: Check adhoc-sol-files-report.md vs adhoc-sol-files-report-workflow.md
+        run: |
+          cat ./tests/adhoc-sol-files-report-workflow.md
+          diff ./tests/adhoc-sol-files-report.md ./tests/adhoc-sol-files-report-workflow.md
+
+
       # Verify report-config.md
 
       - name: Generate report-config-workflow.md
