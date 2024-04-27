@@ -18,18 +18,15 @@ impl IssueDetector for UselessErrorDetector {
         let error_definitions = context.error_definitions().into_iter().collect::<Vec<_>>();
         let mut used_errors = HashSet::new();
 
-        // Collect all used errors from revert statements
         for revert_stmt in context.revert_statements() {
-            //  extract the name directly from the expression of the function call
             if let Expression::Identifier(identifier) = &*revert_stmt.error_call.expression {
-                used_errors.insert(identifier.name.clone());
+                used_errors.insert(identifier.referenced_declaration);
             }
         }
 
-        // Identify unused errors by comparing defined and used errors
+        // Identify unused errors by comparing defined and used error IDs
         for error_def in error_definitions {
-            if !used_errors.contains(&error_def.name) {
-                // Capture unused error instances
+            if !used_errors.contains(&error_def.id) {
                 capture!(self, context, error_def);
             }
         }
