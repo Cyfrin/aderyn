@@ -17,8 +17,9 @@ use crate::{
             NonReentrantBeforeOthersDetector, PushZeroOpcodeDetector, RequireWithStringDetector,
             RevertsAndRequiresInLoopsDetector, SolmateSafeTransferLibDetector,
             UnindexedEventsDetector, UnsafeERC20FunctionsDetector, UnsafeERC721MintDetector,
-            UnspecificSolidityPragmaDetector, UselessInternalFunctionDetector,
-            UselessModifierDetector, UselessPublicFunctionDetector, ZeroAddressCheckDetector,
+            UnspecificSolidityPragmaDetector, UselessErrorDetector,
+            UselessInternalFunctionDetector, UselessModifierDetector,
+            UselessPublicFunctionDetector, ZeroAddressCheckDetector,
         },
     },
 };
@@ -56,6 +57,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<ContractsWithTodosDetector>::default(),
         Box::<InconsistentTypeNamesDetector>::default(),
         Box::<UnprotectedInitializerDetector>::default(),
+        Box::<UselessErrorDetector>::default(),
         Box::<RevertsAndRequiresInLoopsDetector>::default(),
     ]
 }
@@ -87,6 +89,7 @@ pub(crate) enum IssueDetectorNamePool {
     PushZeroOpcode,
     ArbitraryTransferFrom,
     UselessModifier,
+    UselessError,
     LargeNumericLiteral,
     UselessInternalFunction,
     EmptyBlock,
@@ -169,6 +172,7 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::RevertsAndRequiresInLoops => {
             Some(Box::<RevertsAndRequiresInLoopsDetector>::default())
         }
+        IssueDetectorNamePool::UselessError => Some(Box::<UselessErrorDetector>::default()),
         IssueDetectorNamePool::Undecided => None,
     }
 }
