@@ -115,7 +115,7 @@ pub fn with_project_root_at(
                     let mut source_unit: SourceUnit = serde_json::from_str(&ast_content).unwrap();
                     let filepath = source_unit.absolute_path.as_ref().unwrap();
                     source_unit.source = std::fs::read_to_string(&root_path.join(filepath)).ok();
-                    dbg!(&filepath);
+                    // dbg!(&filepath);
                     source_unit.absolute_path = Some(filepath.to_string());
                     // dbg!(&filepath);
 
