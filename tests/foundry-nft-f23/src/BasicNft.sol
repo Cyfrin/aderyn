@@ -2,7 +2,7 @@
 
 pragma solidity 0.8.25;
 
-import "@oz/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "icm/ICM.sol"; // icm is remapped to src/inner-core-modules
 import "./Initializer.sol";
 
