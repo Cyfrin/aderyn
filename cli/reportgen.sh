@@ -17,6 +17,9 @@ cargo run -- --config-file ./tests/aderyn.config.json --exclude lib/ -o judgeops
 # Adhoc sol files report.md 
 cargo run --  ./tests/adhoc-sol-files -o ./tests/adhoc-sol-files-report.md --skip-build --skip-update-check &
 
+# nft-report.md (Handle remappings)
+cargo run --  ./tests/foundry-nft-f23 --scope src/ --exclude lib/ -o ./tests/nft-report.md --skip-build --skip-update-check &
+
 
 ##### JSON REPORTS ########
 
@@ -30,6 +33,5 @@ wait
 
 #### Other scripts #############
 
-cli/bot_archivegen.sh
 cli/sample_metricsdbgen.sh judgeops/samples/sample_db.json
 

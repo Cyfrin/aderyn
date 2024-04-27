@@ -85,6 +85,7 @@ pub fn with_project_root_at(
                 let msg = String::from_utf8(command.stderr).unwrap();
                 println!("stderr = {}", msg);
                 println!("cwd = {}", root_path.display());
+                dbg!(compilation_groups);
                 panic!("Error running solc command");
             }
             let stdout = String::from_utf8(command.stdout).unwrap();
