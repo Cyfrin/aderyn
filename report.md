@@ -799,6 +799,12 @@ Use descriptive reason strings or custom errors for revert paths.
 	        if (newAddr == address(0)) revert();
 	```
 
+- Found in src/ZeroAddressCheck.sol [Line: 38](tests/contract-playground/src/ZeroAddressCheck.sol#L38)
+
+	```solidity
+	        if (address(newToken) == address(0)) revert();
+	```
+
 - Found in src/cloc/AnotherHeavilyCommentedContract.sol [Line: 35](tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol#L35)
 
 	```solidity
