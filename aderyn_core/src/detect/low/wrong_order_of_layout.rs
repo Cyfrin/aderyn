@@ -4,7 +4,7 @@ use crate::{
     ast::{NodeID, NodeType},
     capture,
     context::{
-        browser::{GetImmediateChildren, GetNextSibling, SortNodeReferencesToSequence},
+        browser::{GetImmediateChildren, GetPreviousSibling, SortNodeReferencesToSequence},
         workspace_context::WorkspaceContext,
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
@@ -22,47 +22,85 @@ impl IssueDetector for WrongOrderOfLayoutDetector {
         for contract_defs in context.contract_definitions() {
             if let Some(children) = contract_defs.children(context) {
                 if let Some(sorted) = children.sort_by_src_position(context) {
-                    for (index, &sorted_child_node) in sorted.iter().enumerate() {
-                        if sorted_child_node.node_type() == NodeType::StructDefinition && index != 0
+                    for &sorted_child_node in sorted.iter() {
+                        if sorted_child_node.node_type() == NodeType::StructDefinition
+                            && sorted_child_node
+                                .previous_sibling(context)
+                                .is_some_and(|n| {
+                                    n.node_type() != NodeType::InheritanceSpecifier
+                                        && n.node_type() != NodeType::UsingForDirective
+                                        && n.node_type() != NodeType::StructDefinition
+                                })
                         {
                             capture!(self, context, sorted_child_node);
                         }
                         if sorted_child_node.node_type() == NodeType::VariableDeclaration
-                            && sorted_child_node.next_sibling(context).is_some_and(|n| {
-                                n.node_type() != NodeType::VariableDeclaration
-                                    && n.node_type() != NodeType::EventDefinition
-                            })
+                            && sorted_child_node
+                                .previous_sibling(context)
+                                .is_some_and(|n| {
+                                    n.node_type() != NodeType::InheritanceSpecifier
+                                        && n.node_type() != NodeType::UsingForDirective
+                                        && n.node_type() != NodeType::StructDefinition
+                                        && n.node_type() != NodeType::VariableDeclaration
+                                })
                         {
                             capture!(self, context, sorted_child_node);
                         }
                         if sorted_child_node.node_type() == NodeType::EventDefinition
-                            && sorted_child_node.next_sibling(context).is_some_and(|n| {
-                                n.node_type() != NodeType::EventDefinition
-                                    && n.node_type() != NodeType::ErrorDefinition
-                            })
+                            && sorted_child_node
+                                .previous_sibling(context)
+                                .is_some_and(|n| {
+                                    n.node_type() != NodeType::InheritanceSpecifier
+                                        && n.node_type() != NodeType::UsingForDirective
+                                        && n.node_type() != NodeType::StructDefinition
+                                        && n.node_type() != NodeType::VariableDeclaration
+                                        && n.node_type() != NodeType::EventDefinition
+                                })
                         {
                             capture!(self, context, sorted_child_node);
                         }
                         if sorted_child_node.node_type() == NodeType::ErrorDefinition
-                            && sorted_child_node.next_sibling(context).is_some_and(|n| {
-                                n.node_type() != NodeType::ModifierDefinition
-                                    && n.node_type() != NodeType::ErrorDefinition
-                            })
+                            && sorted_child_node
+                                .previous_sibling(context)
+                                .is_some_and(|n| {
+                                    n.node_type() != NodeType::InheritanceSpecifier
+                                        && n.node_type() != NodeType::UsingForDirective
+                                        && n.node_type() != NodeType::StructDefinition
+                                        && n.node_type() != NodeType::VariableDeclaration
+                                        && n.node_type() != NodeType::EventDefinition
+                                        && n.node_type() != NodeType::ErrorDefinition
+                                })
                         {
                             capture!(self, context, sorted_child_node);
                         }
                         if sorted_child_node.node_type() == NodeType::ModifierDefinition
-                            && sorted_child_node.next_sibling(context).is_some_and(|n| {
-                                n.node_type() != NodeType::ModifierDefinition
-                                    && n.node_type() != NodeType::FunctionDefinition
-                            })
+                            && sorted_child_node
+                                .previous_sibling(context)
+                                .is_some_and(|n| {
+                                    n.node_type() != NodeType::InheritanceSpecifier
+                                        && n.node_type() != NodeType::UsingForDirective
+                                        && n.node_type() != NodeType::StructDefinition
+                                        && n.node_type() != NodeType::VariableDeclaration
+                                        && n.node_type() != NodeType::EventDefinition
+                                        && n.node_type() != NodeType::ErrorDefinition
+                                        && n.node_type() != NodeType::ModifierDefinition
+                                })
                         {
                             capture!(self, context, sorted_child_node);
                         }
                         if sorted_child_node.node_type() == NodeType::FunctionDefinition
                             && sorted_child_node
-                                .next_sibling(context)
-                                .is_some_and(|n| n.node_type() != NodeType::FunctionDefinition)
+                                .previous_sibling(context)
+                                .is_some_and(|n| {
+                                    n.node_type() != NodeType::InheritanceSpecifier
+                                        && n.node_type() != NodeType::UsingForDirective
+                                        && n.node_type() != NodeType::StructDefinition
+                                        && n.node_type() != NodeType::VariableDeclaration
+                                        && n.node_type() != NodeType::EventDefinition
+                                        && n.node_type() != NodeType::ErrorDefinition
+                                        && n.node_type() != NodeType::ModifierDefinition
+                                        && n.node_type() != NodeType::FunctionDefinition
+                                })
                         {
                             capture!(self, context, sorted_child_node);
                         }
@@ -112,7 +150,7 @@ mod wrong_order_of_layout_tests {
         let found = detector.detect(&context).unwrap();
         assert!(found);
         // assert that the detector returns the correct number of instances
-        assert_eq!(detector.instances().len(), 5);
+        assert_eq!(detector.instances().len(), 2);
         // assert that the detector returns the correct severity
         assert_eq!(
             detector.severity(),
