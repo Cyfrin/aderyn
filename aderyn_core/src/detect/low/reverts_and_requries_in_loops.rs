@@ -65,14 +65,14 @@ impl IssueDetector for RevertsAndRequiresInLoopsDetector {
 #[cfg(test)]
 mod reevrts_and_requires_in_loops {
     use crate::detect::{
-        detector::{detector_test_helpers::load_contract, IssueDetector},
+        detector::IssueDetector,
         low::reverts_and_requries_in_loops::RevertsAndRequiresInLoopsDetector,
     };
 
     #[test]
     fn test_reverts_and_requires_in_loops() {
-        let context = load_contract(
-            "../tests/contract-playground/out/RevertsAndRequriesInLoops.sol/RevertsAndRequiresInLoops.json",
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/RevertsAndRequriesInLoops.sol",
         );
 
         let mut detector = RevertsAndRequiresInLoopsDetector::default();
