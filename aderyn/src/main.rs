@@ -236,7 +236,7 @@ fn main() {
                     // Run it once, for the first time
                     let mut subscriptions: Vec<Box<dyn IssueDetector>> = vec![];
                     for detector in &detector_names {
-                        subscriptions.push(get_issue_detector_by_name(&detector));
+                        subscriptions.push(get_issue_detector_by_name(detector));
                     }
 
                     driver::drive_with(new_args.clone(), subscriptions);
@@ -247,7 +247,7 @@ fn main() {
                             Ok(_) => {
                                 let mut subscriptions: Vec<Box<dyn IssueDetector>> = vec![];
                                 for detector in &detector_names {
-                                    subscriptions.push(get_issue_detector_by_name(&detector));
+                                    subscriptions.push(get_issue_detector_by_name(detector));
                                 }
 
                                 driver::drive_with(new_args.clone(), subscriptions);
@@ -265,6 +265,10 @@ fn main() {
             }
         }
     } else {
+        // Run it once, for the first time
+        driver::drive(args.clone());
+
+        // Then run only if file change events are observed
         if cmd_args.watch {
             println!("INFO: Aderyn is entering watch mode !");
             // setup debouncer
@@ -281,10 +285,6 @@ fn main() {
                 )
                 .unwrap();
 
-            // Run it once, for the first time
-            driver::drive(args.clone());
-
-            // Then run only if file change events are observed
             for result in rx {
                 match result {
                     Ok(_) => {
@@ -294,8 +294,6 @@ fn main() {
                 }
                 println!();
             }
-        } else {
-            driver::drive(args);
         }
     }
 
