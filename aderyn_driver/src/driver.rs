@@ -8,6 +8,7 @@ use aderyn_core::{
 };
 use std::path::PathBuf;
 
+#[derive(Clone)]
 pub struct Args {
     pub root: String,
     pub output: String,

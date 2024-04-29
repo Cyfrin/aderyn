@@ -3,7 +3,10 @@
 use semver::Version;
 use serde::Deserialize;
 use serde_json::Value;
-use std::path::{Path, PathBuf};
+use std::{
+    path::{Path, PathBuf},
+    time::Duration,
+};
 use strum::IntoEnumIterator;
 
 use aderyn_driver::{
@@ -15,6 +18,10 @@ use aderyn_driver::{
 };
 
 use clap::{Parser, Subcommand};
+use notify_debouncer_full::{
+    new_debouncer,
+    notify::{RecursiveMode, Watcher},
+};
 
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
@@ -64,6 +71,10 @@ pub struct CommandLineArgs {
     /// Skip checking for new versions of Aderyn
     #[arg(long)]
     skip_update_check: bool,
+
+    /// Watch for file changes and continuously generate report
+    #[arg(short, long)]
+    watch: bool,
 }
 
 #[derive(Debug, Subcommand)]
@@ -121,12 +132,13 @@ fn main() {
         match aderyn_config {
             Ok(config) => {
                 let all_detector_names = get_all_detectors_names();
-
+                let mut detector_names = Vec::new();
                 let mut subscriptions: Vec<Box<dyn IssueDetector>> = vec![];
                 let mut scope_lines: Option<Vec<String>> = args.scope.clone();
                 match config.detectors {
                     Some(config_detectors) => {
                         for detector_name in &config_detectors {
+                            detector_names.push(detector_name.clone());
                             if !all_detector_names.contains(&detector_name.to_string()) {
                                 println!(
                                             "Couldn't recognize detector with name {} in aderyn.config.json",
@@ -140,6 +152,7 @@ fn main() {
                     }
                     None => {
                         subscriptions.extend(get_all_issue_detectors());
+                        detector_names.extend(all_detector_names);
                     }
                 }
 
@@ -204,14 +217,75 @@ fn main() {
                     skip_update_check: args.skip_update_check,
                     stdout: args.stdout,
                 };
-                driver::drive_with(new_args, subscriptions);
+                if cmd_args.watch {
+                    println!("INFO: Aderyn is entering watch mode !");
+                    // setup debouncer
+                    let (tx, rx) = std::sync::mpsc::channel();
+
+                    // no specific tickrate, max debounce time 2 seconds
+                    let mut debouncer = new_debouncer(Duration::from_secs(2), None, tx).unwrap();
+
+                    debouncer
+                        .watcher()
+                        .watch(
+                            PathBuf::from(new_args.root.clone()).as_path(),
+                            RecursiveMode::Recursive,
+                        )
+                        .unwrap();
+
+                    // print all events and errors
+                    for result in rx {
+                        match result {
+                            Ok(_) => {
+                                let mut subscriptions: Vec<Box<dyn IssueDetector>> = vec![];
+                                for detector in &detector_names {
+                                    subscriptions.push(get_issue_detector_by_name(&detector));
+                                }
+
+                                driver::drive_with(new_args.clone(), subscriptions);
+                            }
+                            Err(errors) => errors.iter().for_each(|error| println!("{error:?}")),
+                        }
+                        println!();
+                    }
+                } else {
+                    driver::drive_with(new_args, subscriptions);
+                }
             }
             Err(_e) => {
                 println!("aderyn.config.json wasn't formatted properly! {:?}", _e);
             }
         }
     } else {
-        driver::drive(args);
+        if cmd_args.watch {
+            println!("INFO: Aderyn is entering watch mode !");
+            // setup debouncer
+            let (tx, rx) = std::sync::mpsc::channel();
+
+            // no specific tickrate, max debounce time 2 seconds
+            let mut debouncer = new_debouncer(Duration::from_secs(2), None, tx).unwrap();
+
+            debouncer
+                .watcher()
+                .watch(
+                    PathBuf::from(args.root.clone()).as_path(),
+                    RecursiveMode::Recursive,
+                )
+                .unwrap();
+
+            // print all events and errors
+            for result in rx {
+                match result {
+                    Ok(_) => {
+                        driver::drive(args.clone());
+                    }
+                    Err(errors) => errors.iter().for_each(|error| println!("{error:?}")),
+                }
+                println!();
+            }
+        } else {
+            driver::drive(args);
+        }
     }
 
     if !cmd_args.skip_update_check {
@@ -226,7 +300,7 @@ fn main() {
     }
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Clone)]
 struct AderynConfig {
     /// Detector names separated by commas
     #[serde(rename = "use_detectors")]
