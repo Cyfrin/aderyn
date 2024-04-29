@@ -88,7 +88,34 @@ jobs:
         run: |
           cat report-workflow.md
           diff report.md report-workflow.md
-  
+
+      # Verify adhoc-sol-files-workflow-report.md
+          
+      - name: Generate adhoc-sol-files-workflow-report.md
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+          args: -- -o ./tests/adhoc-sol-files-report-workflow.md ./tests/adhoc-sol-files --skip-update-check
+      
+      - name: Check adhoc-sol-files-report.md vs adhoc-sol-files-report-workflow.md
+        run: |
+          cat ./tests/adhoc-sol-files-report-workflow.md
+          diff ./tests/adhoc-sol-files-report.md ./tests/adhoc-sol-files-report-workflow.md
+
+      # Verify foundry-nft-f23.md
+          
+      - name: Generate nft-workflow-report.md
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+          args: -- -o ./tests/nft-workflow-report.md --scope src/ --exclude lib/ ./tests/foundry-nft-f23 --skip-update-check
+     
+      - name: Check nft-workflow-report.md vs nft-report.md
+        run: |
+          cat ./tests/nft-workflow-report.md
+          diff ./tests/nft-report.md ./tests/nft-workflow-report.md
+
+
       # Verify report-config.md
 
       - name: Generate report-config-workflow.md

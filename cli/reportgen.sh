@@ -14,6 +14,13 @@ cargo run --  --scope src/ --exclude lib/ -o judgeops/current/report.judge.md  .
 # Create report-config.judge.md based on config file
 cargo run -- --config-file ./tests/aderyn.config.json --exclude lib/ -o judgeops/current/report-config.judge.md ./tests/contract-playground --skip-build --skip-update-check &
 
+# Adhoc sol files report.md 
+cargo run --  ./tests/adhoc-sol-files -o ./tests/adhoc-sol-files-report.md --skip-build --skip-update-check &
+
+# nft-report.md (Handle remappings)
+cd tests/foundry-nft-f23 && forge install && cd ../.. &&
+cargo run --  ./tests/foundry-nft-f23 --scope src/ --exclude lib/ -o ./tests/nft-report.md --skip-update-check &
+
 
 ##### JSON REPORTS ########
 
@@ -27,6 +34,5 @@ wait
 
 #### Other scripts #############
 
-cli/bot_archivegen.sh
 cli/sample_metricsdbgen.sh judgeops/samples/sample_db.json
 

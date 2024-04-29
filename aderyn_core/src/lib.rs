@@ -67,11 +67,9 @@ where
         .collect::<Vec<_>>();
     let mut report: Report = Report::default();
 
-    let issues_collection: Vec<Vec<(Issue, IssueSeverity)>> = detectors
+    let issues_collection: Vec<(Issue, IssueSeverity)> = detectors
         .par_iter_mut()
-        .map(|detector| {
-            let mut issues: Vec<(Issue, IssueSeverity)> = vec![];
-
+        .flat_map(|detector| {
             let mut issue: Issue = Issue {
                 title: detector.title(),
                 description: detector.description(),
@@ -90,22 +88,22 @@ where
                 }
             }
 
-            issue.instances = detectors_instances;
+            if detectors_instances.is_empty() {
+                return None;
+            }
 
-            issues.push((issue, detector.severity()));
-            issues
+            issue.instances = detectors_instances;
+            Some((issue, detector.severity()))
         })
         .collect();
 
-    for issues in issues_collection {
-        for (issue, severity) in issues.into_iter() {
-            match severity {
-                IssueSeverity::High => {
-                    report.highs.push(issue);
-                }
-                IssueSeverity::Low => {
-                    report.lows.push(issue);
-                }
+    for (issue, severity) in issues_collection {
+        match severity {
+            IssueSeverity::High => {
+                report.highs.push(issue);
+            }
+            IssueSeverity::Low => {
+                report.lows.push(issue);
             }
         }
     }

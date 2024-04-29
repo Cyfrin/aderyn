@@ -31,8 +31,20 @@ pub fn with_project_root_at(
     for (solidity_file, source) in solidity_files
         .sources
         .iter()
-        .filter(|(solidity_file, _)| passes_scope(scope, solidity_file, absolute_root_path_str))
-        .filter(|(solidity_file, _)| passes_exclude(exclude, solidity_file, absolute_root_path_str))
+        .filter(|(solidity_file, _)| {
+            passes_scope(
+                scope,
+                solidity_file.canonicalize().unwrap().as_path(),
+                absolute_root_path_str,
+            )
+        })
+        .filter(|(solidity_file, _)| {
+            passes_exclude(
+                exclude,
+                solidity_file.canonicalize().unwrap().as_path(),
+                absolute_root_path_str,
+            )
+        })
     {
         if let Ok(version) = Solc::detect_version(source) {
             match compilation_groups.entry(format!("{}", version)) {
@@ -48,6 +60,12 @@ pub fn with_project_root_at(
 
     // dbg!(&compilation_groups);
 
+    let mut remappings = vec![];
+    if let Some(custom_remappings) = read_remappings(root_path) {
+        remappings.extend(custom_remappings);
+        remappings.dedup();
+    }
+
     let mut workspace_contexts: Vec<WorkspaceContext> = vec![];
 
     for (version, file_paths) in &compilation_groups {
@@ -55,13 +73,21 @@ pub fn with_project_root_at(
         let solc_bin = solc.solc.to_str().unwrap();
 
         let command = Command::new(solc_bin)
+            .args(remappings.clone())
             .arg("--ast-compact-json")
             .args(file_paths)
-            .current_dir("/")
+            .current_dir(root_path)
             .stdout(Stdio::piped())
             .output();
 
         if let Ok(command) = command {
+            if !command.status.success() {
+                let msg = String::from_utf8(command.stderr).unwrap();
+                println!("stderr = {}", msg);
+                println!("cwd = {}", root_path.display());
+                dbg!(compilation_groups);
+                panic!("Error running solc command");
+            }
             let stdout = String::from_utf8(command.stdout).unwrap();
             let mut context = WorkspaceContext::default();
             // dbg!(&stdout)
@@ -72,21 +98,25 @@ pub fn with_project_root_at(
             for line in stdout.lines() {
                 if line.starts_with("======= ") {
                     let end_marker = line.find(" =======").unwrap();
-                    let filepath =
-                        &PathBuf::from("/".to_string() + &line["======= ".len()..end_marker]);
-                    if passes_scope(scope, filepath, absolute_root_path_str)
-                        && passes_exclude(exclude, filepath, absolute_root_path_str)
-                    {
+                    let filepath = &PathBuf::from(&line["======= ".len()..end_marker]);
+                    if passes_scope(
+                        scope,
+                        root_path.join(filepath).canonicalize().unwrap().as_path(),
+                        absolute_root_path_str,
+                    ) && passes_exclude(
+                        exclude,
+                        root_path.join(filepath).canonicalize().unwrap().as_path(),
+                        absolute_root_path_str,
+                    ) {
                         src_filepaths.push(filepath.to_string_lossy().to_string());
                         pick_next_line = true;
                     }
                 } else if pick_next_line {
                     let ast_content = line.to_string();
                     let mut source_unit: SourceUnit = serde_json::from_str(&ast_content).unwrap();
-                    let filepath = "/".to_string() + source_unit.absolute_path.as_ref().unwrap();
-                    source_unit.source = std::fs::read_to_string(&filepath).ok();
+                    let filepath = source_unit.absolute_path.as_ref().unwrap();
+                    source_unit.source = std::fs::read_to_string(&root_path.join(filepath)).ok();
                     // dbg!(&filepath);
-                    let filepath = &filepath[absolute_root_path_str.len() + 1..];
                     source_unit.absolute_path = Some(filepath.to_string());
                     // dbg!(&filepath);
 
@@ -153,4 +183,13 @@ fn passes_exclude(
     }
 
     true
+}
+
+// Return a list of remappings in the format ["a=b", "c=d", "e=f"]
+// where direct imports a,c,e map to b,d,f
+fn read_remappings(root_path: &Path) -> Option<Vec<String>> {
+    // Look for a file called `remappings` in the project root. If not present, assume project doesn't require remappings
+    let remappings_file = root_path.join("remappings").canonicalize().ok()?;
+    let remappings_content = std::fs::read_to_string(remappings_file).unwrap();
+    Some(remappings_content.lines().map(|x| x.to_owned()).collect())
 }
