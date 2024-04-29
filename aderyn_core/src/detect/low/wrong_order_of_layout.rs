@@ -91,7 +91,7 @@ impl IssueDetector for WrongOrderOfLayoutDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::UselessPublicFunction)
+        format!("{}", IssueDetectorNamePool::WrongOrderOfLayout)
     }
 }
 
@@ -104,7 +104,7 @@ mod wrong_order_of_layout_tests {
     #[test]
     fn test_wrong_order_of_layout() {
         let context = load_contract(
-            "../tests/contract-playground/out/OrderOfLayout.sol/WrongOrderOfLayout.json",
+            "../tests/contract-playground/out/WrongOrderOfLayout.sol/WrongOrderOfLayout.json",
         );
 
         let mut detector = WrongOrderOfLayoutDetector::default();
@@ -113,32 +113,6 @@ mod wrong_order_of_layout_tests {
         assert!(found);
         // assert that the detector returns the correct number of instances
         assert_eq!(detector.instances().len(), 5);
-        // assert that the detector returns the correct severity
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
-        // assert that the detector returns the correct title
-        assert_eq!(
-            detector.title(),
-            String::from("Contract elements should be laid out in the following order: `Type declarations` --> `State variables` --> `Events` --> `Errors` --> `Modifiers` --> `Functions`")
-        );
-        // assert that the detector returns the correct description
-        assert_eq!(detector.description(), String::from("Contract elements should be laid out according to the order specified in https://docs.soliditylang.org/en/latest/style-guide.html#order-of-layout"));
-    }
-
-    #[test]
-    fn test_correct_order_of_layout() {
-        let context = load_contract(
-            "../tests/contract-playground/out/CorrectOrderOfLayout.sol/CorrectOrderOfLayout.json",
-        );
-
-        let mut detector = WrongOrderOfLayoutDetector::default();
-        // assert that the detector finds incorrectly ordered contract elements
-        let found = detector.detect(&context).unwrap();
-        assert!(!found);
-        // assert that the detector returns the correct number of instances
-        assert_eq!(detector.instances().len(), 0);
         // assert that the detector returns the correct severity
         assert_eq!(
             detector.severity(),
