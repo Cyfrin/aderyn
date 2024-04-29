@@ -18,6 +18,7 @@ cargo run -- --config-file ./tests/aderyn.config.json --exclude lib/ -o judgeops
 cargo run --  ./tests/adhoc-sol-files -o ./tests/adhoc-sol-files-report.md --skip-build --skip-update-check &
 
 # nft-report.md (Handle remappings)
+cd tests/foundry-nft-f23 && forge build --ast && cd ../.. &&
 cargo run --  ./tests/foundry-nft-f23 --scope src/ --exclude lib/ -o ./tests/nft-report.md --skip-build --skip-update-check &
 
 
