@@ -21,30 +21,11 @@ fn version_req_below_0_8(version_req: &VersionReq) -> bool {
     if version_req.comparators.len() == 1 {
         let comparator = &version_req.comparators[0];
         match comparator.op {
-            Op::Tilde | Op::Caret => {
-                if comparator.major == 0 && comparator.minor < Some(8) {
-                    return true;
-                }
+            Op::Tilde | Op::Caret | Op::LessEq | Op::Greater | Op::GreaterEq | Op::Exact => {
+                return comparator.major == 0 && comparator.minor.is_some_and(|v| v < 8);
             }
             Op::Less => {
-                if comparator.major == 0 && comparator.minor <= Some(8) {
-                    return true;
-                }
-            }
-            Op::LessEq => {
-                if comparator.major == 0 && comparator.minor < Some(8) {
-                    return true;
-                }
-            }
-            Op::Greater | Op::GreaterEq => {
-                if comparator.major == 0 && comparator.minor < Some(8) {
-                    return true;
-                }
-            }
-            Op::Exact => {
-                if comparator.major == 0 && comparator.minor < Some(8) {
-                    return true;
-                }
+                return comparator.major == 0 && comparator.minor.is_some_and(|v| v <= 8);
             }
             _ => {}
         }
@@ -52,19 +33,10 @@ fn version_req_below_0_8(version_req: &VersionReq) -> bool {
         let comparator_2 = &version_req.comparators[1];
         match comparator_2.op {
             Op::Less => {
-                if comparator_2.major == 0 && comparator_2.minor <= Some(8) {
-                    return true;
-                }
+                return comparator_2.major == 0 && comparator_2.minor.is_some_and(|v| v <= 8);
             }
-            Op::LessEq => {
-                if comparator_2.major == 0 && comparator_2.minor < Some(8) {
-                    return true;
-                }
-            }
-            Op::Exact => {
-                if comparator_2.major == 0 && comparator_2.minor < Some(8) {
-                    return true;
-                }
+            Op::LessEq | Op::Exact => {
+                return comparator_2.major == 0 && comparator_2.minor.is_some_and(|v| v < 8);
             }
             _ => {}
         }
