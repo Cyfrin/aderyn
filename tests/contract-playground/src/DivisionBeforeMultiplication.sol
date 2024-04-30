@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
-contract ArithmeticOrder {
+contract DivisionBeforeMultiplication {
     uint public result;
 
     function calculateWrong(uint a, uint b, uint c, uint d) public {

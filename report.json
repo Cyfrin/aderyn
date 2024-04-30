@@ -26,7 +26,7 @@
     "inconsistent-type-names",
     "unprotected-initializer",
     "reverts-and-requires-in-loops",
-    "operation-order-detector"
+    "division-before-multiplication"
   ],
   "files_details": {
     "files_details": [
@@ -61,6 +61,10 @@
       {
         "file_path": "src/DeprecatedOZFunctions.sol",
         "n_sloc": 32
+      },
+      {
+        "file_path": "src/DivisionBeforeMultiplication.sol",
+        "n_sloc": 22
       },
       {
         "file_path": "src/EmptyBlocks.sol",
@@ -125,10 +129,6 @@
       {
         "file_path": "src/cloc/HeavilyCommentedContract.sol",
         "n_sloc": 21
-      },
-      {
-        "file_path": "src/divisionBeforeMultiplication.sol",
-        "n_sloc": 22
       },
       {
         "file_path": "src/eth2/DepositContract.sol",
@@ -517,6 +517,11 @@
             "src": "32:32"
           },
           {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 2,
+            "src": "32:24"
+          },
+          {
             "contract_path": "src/InconsistentUints.sol",
             "line_no": 1,
             "src": "0:24"
@@ -530,11 +535,6 @@
             "contract_path": "src/cloc/HeavilyCommentedContract.sol",
             "line_no": 6,
             "src": "46:32"
-          },
-          {
-            "contract_path": "src/divisionBeforeMultiplication.sol",
-            "line_no": 2,
-            "src": "32:24"
           },
           {
             "contract_path": "src/inheritance/IContractInheritance.sol",
@@ -611,6 +611,36 @@
             "src": "129:9"
           },
           {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 7,
+            "src": "136:14"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 11,
+            "src": "253:18"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 15,
+            "src": "364:11"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 19,
+            "src": "460:19"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 23,
+            "src": "570:16"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 27,
+            "src": "681:20"
+          },
+          {
             "contract_path": "src/StateVariables.sol",
             "line_no": 47,
             "src": "1764:18"
@@ -659,36 +689,6 @@
             "contract_path": "src/cloc/HeavilyCommentedContract.sol",
             "line_no": 38,
             "src": "646:4"
-          },
-          {
-            "contract_path": "src/divisionBeforeMultiplication.sol",
-            "line_no": 7,
-            "src": "123:14"
-          },
-          {
-            "contract_path": "src/divisionBeforeMultiplication.sol",
-            "line_no": 11,
-            "src": "240:18"
-          },
-          {
-            "contract_path": "src/divisionBeforeMultiplication.sol",
-            "line_no": 15,
-            "src": "351:11"
-          },
-          {
-            "contract_path": "src/divisionBeforeMultiplication.sol",
-            "line_no": 19,
-            "src": "447:19"
-          },
-          {
-            "contract_path": "src/divisionBeforeMultiplication.sol",
-            "line_no": 23,
-            "src": "557:16"
-          },
-          {
-            "contract_path": "src/divisionBeforeMultiplication.sol",
-            "line_no": 27,
-            "src": "668:20"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
@@ -918,6 +918,11 @@
             "src": "32:23"
           },
           {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 2,
+            "src": "32:24"
+          },
+          {
             "contract_path": "src/InconsistentUints.sol",
             "line_no": 1,
             "src": "0:24"
@@ -956,11 +961,6 @@
             "contract_path": "src/cloc/HeavilyCommentedContract.sol",
             "line_no": 6,
             "src": "46:32"
-          },
-          {
-            "contract_path": "src/divisionBeforeMultiplication.sol",
-            "line_no": 2,
-            "src": "32:24"
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
@@ -1286,27 +1286,27 @@
       },
       {
         "description": "Division operations followed directly by multiplication operations can lead to precision loss due to the way integer arithmetic is handled in Solidity.",
-        "detector_name": "operation-order-detector",
+        "detector_name": "division-before-multiplication",
         "instances": [
           {
-            "contract_path": "src/divisionBeforeMultiplication.sol",
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
             "line_no": 8,
-            "src": "204:5"
+            "src": "217:5"
           },
           {
-            "contract_path": "src/divisionBeforeMultiplication.sol",
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
             "line_no": 12,
-            "src": "314:5"
+            "src": "327:5"
           },
           {
-            "contract_path": "src/divisionBeforeMultiplication.sol",
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
             "line_no": 16,
-            "src": "414:5"
+            "src": "427:5"
           },
           {
-            "contract_path": "src/divisionBeforeMultiplication.sol",
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
             "line_no": 20,
-            "src": "521:5"
+            "src": "534:5"
           }
         ],
         "title": "Incorrect Order of Division and Multiplication"

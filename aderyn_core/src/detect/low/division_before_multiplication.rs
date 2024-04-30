@@ -13,12 +13,12 @@ use crate::{
 use eyre::Result;
 
 #[derive(Default)]
-pub struct OperationOrderDetector {
+pub struct DivisionBeforeMultiplicationDetector {
     // Keys are source file name, line number, and description
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-impl IssueDetector for OperationOrderDetector {
+impl IssueDetector for DivisionBeforeMultiplicationDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for op in context
             .binary_operations()
@@ -52,22 +52,22 @@ impl IssueDetector for OperationOrderDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::OperationOrderDetector)
+        format!("{}", IssueDetectorNamePool::DivisionBeforeMultiplication)
     }
 }
 
 #[cfg(test)]
-mod OperationOrderDetector_tests {
-    use super::OperationOrderDetector;
+mod division_before_multiplication_detector_tests {
+    use super::DivisionBeforeMultiplicationDetector;
     use crate::detect::detector::{detector_test_helpers::load_contract, IssueDetector};
 
     #[test]
     fn test_template_detector() {
         let context = load_contract(
-            "../tests/contract-playground/out/divisionBeforeMultiplication.sol/ArithmeticOrder.json",
+            "../tests/contract-playground/out/DivisionBeforeMultiplication.sol/DivisionBeforeMultiplication.json",
         );
 
-        let mut detector = OperationOrderDetector::default();
+        let mut detector = DivisionBeforeMultiplicationDetector::default();
         let found = detector.detect(&context).unwrap();
         assert!(found);
         assert_eq!(detector.instances().len(), 4);

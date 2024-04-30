@@ -25,7 +25,7 @@ pub use centralization_risk::CentralizationRiskDetector;
 pub use constants_instead_of_literals::ConstantsInsteadOfLiteralsDetector;
 pub use contracts_with_todos::ContractsWithTodosDetector;
 pub use deprecated_oz_functions::DeprecatedOZFunctionsDetector;
-pub use division_before_multiplication::OperationOrderDetector;
+pub use division_before_multiplication::DivisionBeforeMultiplicationDetector;
 pub use ecrecover::EcrecoverDetector;
 pub use empty_blocks::EmptyBlockDetector;
 pub use inconsistent_type_names::InconsistentTypeNamesDetector;

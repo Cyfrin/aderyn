@@ -12,14 +12,14 @@ use crate::{
         },
         low::{
             CentralizationRiskDetector, ConstantsInsteadOfLiteralsDetector,
-            ContractsWithTodosDetector, DeprecatedOZFunctionsDetector, EcrecoverDetector,
-            EmptyBlockDetector, InconsistentTypeNamesDetector, LargeLiteralValueDetector,
-            NonReentrantBeforeOthersDetector, OperationOrderDetector, PushZeroOpcodeDetector,
-            RequireWithStringDetector, RevertsAndRequiresInLoopsDetector,
-            SolmateSafeTransferLibDetector, UnindexedEventsDetector, UnsafeERC20FunctionsDetector,
-            UnsafeERC721MintDetector, UnspecificSolidityPragmaDetector,
-            UselessInternalFunctionDetector, UselessModifierDetector,
-            UselessPublicFunctionDetector, ZeroAddressCheckDetector,
+            ContractsWithTodosDetector, DeprecatedOZFunctionsDetector,
+            DivisionBeforeMultiplicationDetector, EcrecoverDetector, EmptyBlockDetector,
+            InconsistentTypeNamesDetector, LargeLiteralValueDetector,
+            NonReentrantBeforeOthersDetector, PushZeroOpcodeDetector, RequireWithStringDetector,
+            RevertsAndRequiresInLoopsDetector, SolmateSafeTransferLibDetector,
+            UnindexedEventsDetector, UnsafeERC20FunctionsDetector, UnsafeERC721MintDetector,
+            UnspecificSolidityPragmaDetector, UselessInternalFunctionDetector,
+            UselessModifierDetector, UselessPublicFunctionDetector, ZeroAddressCheckDetector,
         },
     },
 };
@@ -58,7 +58,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<InconsistentTypeNamesDetector>::default(),
         Box::<UnprotectedInitializerDetector>::default(),
         Box::<RevertsAndRequiresInLoopsDetector>::default(),
-        Box::<OperationOrderDetector>::default(),
+        Box::<DivisionBeforeMultiplicationDetector>::default(),
     ]
 }
 
@@ -96,7 +96,7 @@ pub(crate) enum IssueDetectorNamePool {
     InconsistentTypeNames,
     UnprotectedInitializer,
     RevertsAndRequiresInLoops,
-    OperationOrderDetector,
+    DivisionBeforeMultiplication,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -172,8 +172,8 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::RevertsAndRequiresInLoops => {
             Some(Box::<RevertsAndRequiresInLoopsDetector>::default())
         }
-        IssueDetectorNamePool::OperationOrderDetector => {
-            Some(Box::<OperationOrderDetector>::default())
+        IssueDetectorNamePool::DivisionBeforeMultiplication => {
+            Some(Box::<DivisionBeforeMultiplicationDetector>::default())
         }
         IssueDetectorNamePool::Undecided => None,
     }
