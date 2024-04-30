@@ -27,6 +27,7 @@
     "unprotected-initializer",
     "useless-error",
     "reverts-and-requires-in-loops",
+    "wrong-order-of-layout",
     "division-before-multiplication"
   ],
   "files_details": {
@@ -120,6 +121,10 @@
         "n_sloc": 8
       },
       {
+        "file_path": "src/WrongOrderOfLayout.sol",
+        "n_sloc": 13
+      },
+      {
         "file_path": "src/ZeroAddressCheck.sol",
         "n_sloc": 41
       },
@@ -174,8 +179,8 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 979,
-    "total_source_units": 35
+    "total_sloc": 992,
+    "total_source_units": 36
   },
   "high_issues": {
     "issues": [
@@ -358,7 +363,7 @@
   },
   "issue_count": {
     "high": 5,
-    "low": 23
+    "low": 24
   },
   "low_issues": {
     "issues": [
@@ -671,6 +676,11 @@
             "src": "2539:25"
           },
           {
+            "contract_path": "src/WrongOrderOfLayout.sol",
+            "line_no": 5,
+            "src": "109:6"
+          },
+          {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
             "line_no": 31,
             "src": "500:3"
@@ -954,6 +964,11 @@
           },
           {
             "contract_path": "src/UnsafeERC721Mint.sol",
+            "line_no": 2,
+            "src": "32:23"
+          },
+          {
+            "contract_path": "src/WrongOrderOfLayout.sol",
             "line_no": 2,
             "src": "32:23"
           },
@@ -1280,6 +1295,11 @@
             "contract_path": "src/UnusedError.sol",
             "line_no": 7,
             "src": "120:49"
+          },
+          {
+            "contract_path": "src/WrongOrderOfLayout.sol",
+            "line_no": 13,
+            "src": "272:21"
           }
         ],
         "title": "Unused Custom Error"
@@ -1300,6 +1320,63 @@
           }
         ],
         "title": "Loop contains `require`/`revert` statements"
+      },
+      {
+        "description": "Contract elements should be laid out according to the order specified in https://docs.soliditylang.org/en/latest/style-guide.html#order-of-layout",
+        "detector_name": "wrong-order-of-layout",
+        "instances": [
+          {
+            "contract_path": "src/Counter.sol",
+            "line_no": 26,
+            "src": "472:3"
+          },
+          {
+            "contract_path": "src/EmptyBlocks.sol",
+            "line_no": 71,
+            "src": "1024:19"
+          },
+          {
+            "contract_path": "src/InconsistentUints.sol",
+            "line_no": 10,
+            "src": "260:103"
+          },
+          {
+            "contract_path": "src/InternalFunctions.sol",
+            "line_no": 18,
+            "src": "413:9"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 45,
+            "src": "1724:25"
+          },
+          {
+            "contract_path": "src/StorageConditionals.sol",
+            "line_no": 15,
+            "src": "342:13"
+          },
+          {
+            "contract_path": "src/StorageConditionals.sol",
+            "line_no": 57,
+            "src": "1367:18"
+          },
+          {
+            "contract_path": "src/UnprotectedInitialize.sol",
+            "line_no": 13,
+            "src": "222:21"
+          },
+          {
+            "contract_path": "src/WrongOrderOfLayout.sol",
+            "line_no": 7,
+            "src": "193:41"
+          },
+          {
+            "contract_path": "src/WrongOrderOfLayout.sol",
+            "line_no": 15,
+            "src": "299:16"
+          }
+        ],
+        "title": "Contract elements should be laid out in the following order: `Type declarations` --> `State variables` --> `Events` --> `Errors` --> `Modifiers` --> `Functions`"
       },
       {
         "description": "Division operations followed directly by multiplication operations can lead to precision loss due to the way integer arithmetic is handled in Solidity.",

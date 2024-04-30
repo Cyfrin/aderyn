@@ -19,8 +19,8 @@ use crate::{
             RevertsAndRequiresInLoopsDetector, SolmateSafeTransferLibDetector,
             UnindexedEventsDetector, UnsafeERC20FunctionsDetector, UnsafeERC721MintDetector,
             UnspecificSolidityPragmaDetector, UselessErrorDetector,
-            UselessInternalFunctionDetector, UselessModifierDetector,WrongOrderOfLayoutDetector.
-            UselessPublicFunctionDetector, ZeroAddressCheckDetector,
+            UselessInternalFunctionDetector, UselessModifierDetector,
+            UselessPublicFunctionDetector, WrongOrderOfLayoutDetector, ZeroAddressCheckDetector,
         },
     },
 };
