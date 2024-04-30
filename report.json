@@ -25,7 +25,9 @@
     "contract-with-todos",
     "inconsistent-type-names",
     "unprotected-initializer",
-    "reverts-and-requires-in-loops"
+    "useless-error",
+    "reverts-and-requires-in-loops",
+    "division-before-multiplication"
   ],
   "files_details": {
     "files_details": [
@@ -60,6 +62,10 @@
       {
         "file_path": "src/DeprecatedOZFunctions.sol",
         "n_sloc": 32
+      },
+      {
+        "file_path": "src/DivisionBeforeMultiplication.sol",
+        "n_sloc": 22
       },
       {
         "file_path": "src/EmptyBlocks.sol",
@@ -108,6 +114,10 @@
       {
         "file_path": "src/UnsafeERC721Mint.sol",
         "n_sloc": 18
+      },
+      {
+        "file_path": "src/UnusedError.sol",
+        "n_sloc": 8
       },
       {
         "file_path": "src/ZeroAddressCheck.sol",
@@ -164,8 +174,8 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 949,
-    "total_source_units": 33
+    "total_sloc": 979,
+    "total_source_units": 35
   },
   "high_issues": {
     "issues": [
@@ -348,7 +358,7 @@
   },
   "issue_count": {
     "high": 5,
-    "low": 21
+    "low": 23
   },
   "low_issues": {
     "issues": [
@@ -512,6 +522,11 @@
             "src": "32:32"
           },
           {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 2,
+            "src": "32:24"
+          },
+          {
             "contract_path": "src/InconsistentUints.sol",
             "line_no": 1,
             "src": "0:24"
@@ -599,6 +614,36 @@
             "contract_path": "src/Counter.sol",
             "line_no": 7,
             "src": "129:9"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 7,
+            "src": "136:14"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 11,
+            "src": "253:18"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 15,
+            "src": "364:11"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 19,
+            "src": "460:19"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 23,
+            "src": "570:16"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 27,
+            "src": "681:20"
           },
           {
             "contract_path": "src/StateVariables.sol",
@@ -876,6 +921,11 @@
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 2,
             "src": "32:23"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 2,
+            "src": "32:24"
           },
           {
             "contract_path": "src/InconsistentUints.sol",
@@ -1223,6 +1273,18 @@
         "title": "Inconsistency in declaring uint256/uint (or) int256/int variables within a contract"
       },
       {
+        "description": "it is recommended that the definition be removed when custom error is unused",
+        "detector_name": "useless-error",
+        "instances": [
+          {
+            "contract_path": "src/UnusedError.sol",
+            "line_no": 7,
+            "src": "120:49"
+          }
+        ],
+        "title": "Unused Custom Error"
+      },
+      {
         "description": "Avoid `require` / `revert` statements in a loop because a single bad item can cause the whole transaction to fail. It's better to forgive on fail and return failed elements post processing of the loop",
         "detector_name": "reverts-and-requires-in-loops",
         "instances": [
@@ -1238,6 +1300,33 @@
           }
         ],
         "title": "Loop contains `require`/`revert` statements"
+      },
+      {
+        "description": "Division operations followed directly by multiplication operations can lead to precision loss due to the way integer arithmetic is handled in Solidity.",
+        "detector_name": "division-before-multiplication",
+        "instances": [
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 8,
+            "src": "217:5"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 12,
+            "src": "327:5"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 16,
+            "src": "427:5"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 20,
+            "src": "534:5"
+          }
+        ],
+        "title": "Incorrect Order of Division and Multiplication"
       }
     ]
   }
