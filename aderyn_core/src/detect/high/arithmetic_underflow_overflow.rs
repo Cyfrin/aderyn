@@ -90,10 +90,8 @@ impl IssueDetector for ArithmeticUnderflowOverflowDetector {
                 }
                 version_string.push_str(literal);
             }
-            // println!("verstr {}", version_string);
+
             let req = VersionReq::parse(&version_string)?;
-            // println!("check {}", version_req_below_0_8(&req));
-            // let ok = version_req_below_0_8(&req);
             version_req_below_0_8(&req).then(|| {
                 context
                     .assignments()

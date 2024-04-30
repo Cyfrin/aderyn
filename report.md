@@ -534,12 +534,6 @@ ERC20 functions may not behave as expected. For example: return values are not a
 
 Consider using a specific version of Solidity in your contracts instead of a wide version. For example, instead of `pragma solidity ^0.8.0;`, use `pragma solidity 0.8.0;`
 
-- Found in src/ArithmeticUnderflowOverflow.sol [Line: 2](tests/contract-playground/src/ArithmeticUnderflowOverflow.sol#L2)
-
-	```solidity
-	pragma solidity >=0.6.12 <0.8.0;
-	```
-
 - Found in src/ContractWithTodo.sol [Line: 2](tests/contract-playground/src/ContractWithTodo.sol#L2)
 
 	```solidity
@@ -940,12 +934,6 @@ Solc compiler version 0.8.20 switches the default target EVM version to Shanghai
 
 	```solidity
 	pragma solidity 0.8.20;
-	```
-
-- Found in src/ArithmeticUnderflowOverflow.sol [Line: 2](tests/contract-playground/src/ArithmeticUnderflowOverflow.sol#L2)
-
-	```solidity
-	pragma solidity >=0.6.12 <0.8.0;
 	```
 
 - Found in src/ContractWithTodo.sol [Line: 2](tests/contract-playground/src/ContractWithTodo.sol#L2)
