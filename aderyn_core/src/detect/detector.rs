@@ -6,9 +6,9 @@ use crate::{
     context::workspace_context::WorkspaceContext,
     detect::{
         high::{
-            ArbitraryTransferFromDetector, AvoidAbiEncodePackedDetector,
-            BlockTimestampDeadlineDetector, DelegateCallInLoopDetector,
-            UnprotectedInitializerDetector,
+            ArbitraryTransferFromDetector, ArithmeticUnderflowOverflowDetector,
+            AvoidAbiEncodePackedDetector, BlockTimestampDeadlineDetector,
+            DelegateCallInLoopDetector, UnprotectedInitializerDetector,
         },
         low::{
             CentralizationRiskDetector, ConstantsInsteadOfLiteralsDetector,
@@ -56,6 +56,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<ContractsWithTodosDetector>::default(),
         Box::<InconsistentTypeNamesDetector>::default(),
         Box::<UnprotectedInitializerDetector>::default(),
+        Box::<ArithmeticUnderflowOverflowDetector>::default(),
     ]
 }
 
@@ -92,6 +93,7 @@ pub(crate) enum IssueDetectorNamePool {
     ContractWithTodos,
     InconsistentTypeNames,
     UnprotectedInitializer,
+    ArithmeticUnderflowOverflow,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -163,6 +165,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         }
         IssueDetectorNamePool::UnprotectedInitializer => {
             Some(Box::<UnprotectedInitializerDetector>::default())
+        }
+        IssueDetectorNamePool::ArithmeticUnderflowOverflow => {
+            Some(Box::<ArithmeticUnderflowOverflowDetector>::default())
         }
         IssueDetectorNamePool::Undecided => None,
     }
