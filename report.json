@@ -25,8 +25,8 @@
     "contract-with-todos",
     "inconsistent-type-names",
     "unprotected-initializer",
-    "reverts-and-requires-in-loops",
-    "division-before-multiplication"
+    "useless-error",
+    "reverts-and-requires-in-loops"
   ],
   "files_details": {
     "files_details": [
@@ -115,6 +115,10 @@
         "n_sloc": 18
       },
       {
+        "file_path": "src/UnusedError.sol",
+        "n_sloc": 8
+      },
+      {
         "file_path": "src/ZeroAddressCheck.sol",
         "n_sloc": 41
       },
@@ -169,7 +173,7 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 971,
+    "total_sloc": 957,
     "total_source_units": 34
   },
   "high_issues": {
@@ -1266,6 +1270,18 @@
           }
         ],
         "title": "Inconsistency in declaring uint256/uint (or) int256/int variables within a contract"
+      },
+      {
+        "description": "it is recommended that the definition be removed when custom error is unused",
+        "detector_name": "useless-error",
+        "instances": [
+          {
+            "contract_path": "src/UnusedError.sol",
+            "line_no": 7,
+            "src": "120:49"
+          }
+        ],
+        "title": "Unused Custom Error"
       },
       {
         "description": "Avoid `require` / `revert` statements in a loop because a single bad item can cause the whole transaction to fail. It's better to forgive on fail and return failed elements post processing of the loop",
