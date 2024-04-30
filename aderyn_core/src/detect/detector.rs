@@ -15,10 +15,10 @@ use crate::{
             ContractsWithTodosDetector, DeprecatedOZFunctionsDetector, EcrecoverDetector,
             EmptyBlockDetector, InconsistentTypeNamesDetector, LargeLiteralValueDetector,
             NonReentrantBeforeOthersDetector, PushZeroOpcodeDetector, RequireWithStringDetector,
-            SolmateSafeTransferLibDetector, UnindexedEventsDetector, UnsafeERC20FunctionsDetector,
-            UnsafeERC721MintDetector, UnspecificSolidityPragmaDetector,
-            UselessInternalFunctionDetector, UselessModifierDetector,
-            UselessPublicFunctionDetector, ZeroAddressCheckDetector,
+            RevertsAndRequiresInLoopsDetector, SolmateSafeTransferLibDetector,
+            UnindexedEventsDetector, UnsafeERC20FunctionsDetector, UnsafeERC721MintDetector,
+            UnspecificSolidityPragmaDetector, UselessInternalFunctionDetector,
+            UselessModifierDetector, UselessPublicFunctionDetector, ZeroAddressCheckDetector,
         },
     },
 };
@@ -57,6 +57,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<InconsistentTypeNamesDetector>::default(),
         Box::<UnprotectedInitializerDetector>::default(),
         Box::<ArithmeticUnderflowOverflowDetector>::default(),
+        Box::<RevertsAndRequiresInLoopsDetector>::default(),
     ]
 }
 
@@ -94,6 +95,7 @@ pub(crate) enum IssueDetectorNamePool {
     InconsistentTypeNames,
     UnprotectedInitializer,
     ArithmeticUnderflowOverflow,
+    RevertsAndRequiresInLoops,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -168,6 +170,8 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         }
         IssueDetectorNamePool::ArithmeticUnderflowOverflow => {
             Some(Box::<ArithmeticUnderflowOverflowDetector>::default())
+        IssueDetectorNamePool::RevertsAndRequiresInLoops => {
+            Some(Box::<RevertsAndRequiresInLoopsDetector>::default())
         }
         IssueDetectorNamePool::Undecided => None,
     }
@@ -229,6 +233,50 @@ pub mod detector_test_helpers {
         context::workspace_context::WorkspaceContext, framework::foundry::read_foundry_output_file,
         read_file_to_string, visitor::ast_visitor::Node,
     };
+
+    pub fn load_multiple_contracts(filepaths: Vec<&str>) -> WorkspaceContext {
+        let mut context = WorkspaceContext::default();
+
+        for filepath in filepaths {
+            let path_buf_filepath = std::path::PathBuf::from(filepath);
+            let foundry_output =
+                read_foundry_output_file(path_buf_filepath.to_str().unwrap()).unwrap();
+            let mut ast = foundry_output.ast.clone();
+            // Get the path of the source file
+            let mut new_path = PathBuf::new();
+            for component in path_buf_filepath.components() {
+                if component.as_os_str() == "out" {
+                    break;
+                }
+                new_path.push(component);
+            }
+            new_path.push(ast.absolute_path.as_ref().unwrap());
+            match read_file_to_string(&new_path) {
+                Ok(content) => {
+                    println!(
+                        "Loaded Solidity source file: {}",
+                        new_path.to_str().unwrap()
+                    );
+
+                    ast.source = Some(content);
+                }
+                Err(err) => {
+                    eprintln!(
+                        "Error reading Solidity source file: {}",
+                        new_path.to_str().unwrap()
+                    );
+                    eprintln!("{:?}", err);
+                }
+            }
+            ast.accept(&mut context).unwrap_or_else(|err| {
+                // Exit with a non-zero exit code
+                eprintln!("Error loading Hardhat AST into WorkspaceContext");
+                eprintln!("{:?}", err);
+            });
+        }
+
+        context
+    }
 
     pub fn load_contract(filepath: &str) -> WorkspaceContext {
         let path_buf_filepath = std::path::PathBuf::from(filepath);
