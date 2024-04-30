@@ -12,8 +12,9 @@ use crate::{
         },
         low::{
             CentralizationRiskDetector, ConstantsInsteadOfLiteralsDetector,
-            ContractsWithTodosDetector, DeprecatedOZFunctionsDetector, EcrecoverDetector,
-            EmptyBlockDetector, InconsistentTypeNamesDetector, LargeLiteralValueDetector,
+            ContractsWithTodosDetector, DeprecatedOZFunctionsDetector,
+            DivisionBeforeMultiplicationDetector, EcrecoverDetector, EmptyBlockDetector,
+            InconsistentTypeNamesDetector, LargeLiteralValueDetector,
             NonReentrantBeforeOthersDetector, PushZeroOpcodeDetector, RequireWithStringDetector,
             RevertsAndRequiresInLoopsDetector, SolmateSafeTransferLibDetector,
             UnindexedEventsDetector, UnsafeERC20FunctionsDetector, UnsafeERC721MintDetector,
@@ -59,6 +60,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<UnprotectedInitializerDetector>::default(),
         Box::<UselessErrorDetector>::default(),
         Box::<RevertsAndRequiresInLoopsDetector>::default(),
+        Box::<DivisionBeforeMultiplicationDetector>::default(),
     ]
 }
 
@@ -97,6 +99,7 @@ pub(crate) enum IssueDetectorNamePool {
     InconsistentTypeNames,
     UnprotectedInitializer,
     RevertsAndRequiresInLoops,
+    DivisionBeforeMultiplication,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -173,6 +176,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
             Some(Box::<RevertsAndRequiresInLoopsDetector>::default())
         }
         IssueDetectorNamePool::UselessError => Some(Box::<UselessErrorDetector>::default()),
+        IssueDetectorNamePool::DivisionBeforeMultiplication => {
+            Some(Box::<DivisionBeforeMultiplicationDetector>::default())
+        }
         IssueDetectorNamePool::Undecided => None,
     }
 }

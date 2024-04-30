@@ -63,6 +63,10 @@
         "n_sloc": 32
       },
       {
+        "file_path": "src/DivisionBeforeMultiplication.sol",
+        "n_sloc": 22
+      },
+      {
         "file_path": "src/EmptyBlocks.sol",
         "n_sloc": 48
       },
@@ -517,6 +521,11 @@
             "src": "32:32"
           },
           {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 2,
+            "src": "32:24"
+          },
+          {
             "contract_path": "src/InconsistentUints.sol",
             "line_no": 1,
             "src": "0:24"
@@ -604,6 +613,36 @@
             "contract_path": "src/Counter.sol",
             "line_no": 7,
             "src": "129:9"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 7,
+            "src": "136:14"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 11,
+            "src": "253:18"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 15,
+            "src": "364:11"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 19,
+            "src": "460:19"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 23,
+            "src": "570:16"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 27,
+            "src": "681:20"
           },
           {
             "contract_path": "src/StateVariables.sol",
@@ -881,6 +920,11 @@
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 2,
             "src": "32:23"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 2,
+            "src": "32:24"
           },
           {
             "contract_path": "src/InconsistentUints.sol",
@@ -1255,6 +1299,33 @@
           }
         ],
         "title": "Loop contains `require`/`revert` statements"
+      },
+      {
+        "description": "Division operations followed directly by multiplication operations can lead to precision loss due to the way integer arithmetic is handled in Solidity.",
+        "detector_name": "division-before-multiplication",
+        "instances": [
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 8,
+            "src": "217:5"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 12,
+            "src": "327:5"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 16,
+            "src": "427:5"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 20,
+            "src": "534:5"
+          }
+        ],
+        "title": "Incorrect Order of Division and Multiplication"
       }
     ]
   }
