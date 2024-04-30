@@ -25,6 +25,7 @@
     "contract-with-todos",
     "inconsistent-type-names",
     "unprotected-initializer",
+    "arithmetic-underflow-overflow",
     "reverts-and-requires-in-loops"
   ],
   "files_details": {
@@ -36,6 +37,10 @@
       {
         "file_path": "src/ArbitraryTransferFrom.sol",
         "n_sloc": 37
+      },
+      {
+        "file_path": "src/ArithmeticUnderflowOverflow.sol",
+        "n_sloc": 16
       },
       {
         "file_path": "src/AssemblyExample.sol",
@@ -164,8 +169,8 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 949,
-    "total_source_units": 33
+    "total_sloc": 965,
+    "total_source_units": 34
   },
   "high_issues": {
     "issues": [
@@ -343,11 +348,73 @@
           }
         ],
         "title": "Unprotected initializer"
+      },
+      {
+        "description": "Use `SafeMath` library for arithmetic operations to avoid underflow and/or overflow in solidity compilers below `0.8.0`",
+        "detector_name": "arithmetic-underflow-overflow",
+        "instances": [
+          {
+            "contract_path": "src/ArithmeticUnderflowOverflow.sol",
+            "line_no": 8,
+            "src": "225:11"
+          },
+          {
+            "contract_path": "src/ArithmeticUnderflowOverflow.sol",
+            "line_no": 12,
+            "src": "344:11"
+          },
+          {
+            "contract_path": "src/ArithmeticUnderflowOverflow.sol",
+            "line_no": 16,
+            "src": "411:12"
+          },
+          {
+            "contract_path": "src/ArithmeticUnderflowOverflow.sol",
+            "line_no": 20,
+            "src": "479:12"
+          },
+          {
+            "contract_path": "src/ConstantsLiterals.sol",
+            "line_no": 28,
+            "src": "1068:8"
+          },
+          {
+            "contract_path": "src/Counter.sol",
+            "line_no": 23,
+            "src": "424:11"
+          },
+          {
+            "contract_path": "src/Counter.sol",
+            "line_no": 29,
+            "src": "539:13"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 61,
+            "src": "4752:34"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 70,
+            "src": "5041:31"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 71,
+            "src": "5108:10"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 132,
+            "src": "8068:18"
+          }
+        ],
+        "title": "`SafeMath` library should be imported and used to prevent underflow and overflow in solidity compilers below `0.8.0`"
       }
     ]
   },
   "issue_count": {
-    "high": 5,
+    "high": 6,
     "low": 21
   },
   "low_issues": {
@@ -584,6 +651,26 @@
             "contract_path": "src/ArbitraryTransferFrom.sol",
             "line_no": 28,
             "src": "772:5"
+          },
+          {
+            "contract_path": "src/ArithmeticUnderflowOverflow.sol",
+            "line_no": 7,
+            "src": "130:113"
+          },
+          {
+            "contract_path": "src/ArithmeticUnderflowOverflow.sol",
+            "line_no": 11,
+            "src": "249:113"
+          },
+          {
+            "contract_path": "src/ArithmeticUnderflowOverflow.sol",
+            "line_no": 15,
+            "src": "368:62"
+          },
+          {
+            "contract_path": "src/ArithmeticUnderflowOverflow.sol",
+            "line_no": 19,
+            "src": "436:62"
           },
           {
             "contract_path": "src/AssemblyExample.sol",

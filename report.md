@@ -1393,6 +1393,12 @@ Consider keeping the naming convention consistent in a given contract
 
 Avoid `require` / `revert` statements in a loop because a single bad item can cause the whole transaction to fail. It's better to forgive on fail and return failed elements post processing of the loop
 
+- Found in src/RevertsAndRequriesInLoops.sol [Line: 10](tests/contract-playground/src/RevertsAndRequriesInLoops.sol#L10)
+
+	```solidity
+	        for (uint256 id = 0; id < 10; ++id) {
+	```
+
 - Found in src/RevertsAndRequriesInLoops.sol [Line: 17](tests/contract-playground/src/RevertsAndRequriesInLoops.sol#L17)
 
 	```solidity
