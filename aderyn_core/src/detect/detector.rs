@@ -170,6 +170,7 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         }
         IssueDetectorNamePool::ArithmeticUnderflowOverflow => {
             Some(Box::<ArithmeticUnderflowOverflowDetector>::default())
+        }
         IssueDetectorNamePool::RevertsAndRequiresInLoops => {
             Some(Box::<RevertsAndRequiresInLoopsDetector>::default())
         }
