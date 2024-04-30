@@ -184,8 +184,8 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 992,
-    "total_source_units": 36
+    "total_sloc": 1008,
+    "total_source_units": 37
   },
   "high_issues": {
     "issues": [
@@ -404,6 +404,36 @@
             "src": "539:13"
           },
           {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 8,
+            "src": "209:21"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 12,
+            "src": "323:13"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 20,
+            "src": "530:17"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 24,
+            "src": "637:13"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 24,
+            "src": "637:21"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 28,
+            "src": "761:23"
+          },
+          {
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 61,
             "src": "4752:34"
@@ -429,7 +459,7 @@
     ]
   },
   "issue_count": {
-    "high": 5,
+    "high": 6,
     "low": 24
   },
   "low_issues": {
