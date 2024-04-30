@@ -20,6 +20,7 @@ pub(crate) mod useless_error;
 pub(crate) mod useless_internal_function;
 pub(crate) mod useless_modifier;
 pub(crate) mod useless_public_function;
+pub(crate) mod wrong_order_of_layout;
 pub(crate) mod zero_address_check;
 
 pub use centralization_risk::CentralizationRiskDetector;
@@ -44,4 +45,5 @@ pub use useless_error::UselessErrorDetector;
 pub use useless_internal_function::UselessInternalFunctionDetector;
 pub use useless_modifier::UselessModifierDetector;
 pub use useless_public_function::UselessPublicFunctionDetector;
+pub use wrong_order_of_layout::WrongOrderOfLayoutDetector;
 pub use zero_address_check::ZeroAddressCheckDetector;

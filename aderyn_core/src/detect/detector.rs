@@ -19,7 +19,7 @@ use crate::{
             RevertsAndRequiresInLoopsDetector, SolmateSafeTransferLibDetector,
             UnindexedEventsDetector, UnsafeERC20FunctionsDetector, UnsafeERC721MintDetector,
             UnspecificSolidityPragmaDetector, UselessErrorDetector,
-            UselessInternalFunctionDetector, UselessModifierDetector,
+            UselessInternalFunctionDetector, UselessModifierDetector,WrongOrderOfLayoutDetector.
             UselessPublicFunctionDetector, ZeroAddressCheckDetector,
         },
     },
@@ -60,6 +60,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<UnprotectedInitializerDetector>::default(),
         Box::<UselessErrorDetector>::default(),
         Box::<RevertsAndRequiresInLoopsDetector>::default(),
+        Box::<WrongOrderOfLayoutDetector>::default(),
         Box::<DivisionBeforeMultiplicationDetector>::default(),
     ]
 }
@@ -99,6 +100,7 @@ pub(crate) enum IssueDetectorNamePool {
     InconsistentTypeNames,
     UnprotectedInitializer,
     RevertsAndRequiresInLoops,
+    WrongOrderOfLayout,
     DivisionBeforeMultiplication,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
@@ -174,6 +176,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         }
         IssueDetectorNamePool::RevertsAndRequiresInLoops => {
             Some(Box::<RevertsAndRequiresInLoopsDetector>::default())
+        }
+        IssueDetectorNamePool::WrongOrderOfLayout => {
+            Some(Box::<WrongOrderOfLayoutDetector>::default())
         }
         IssueDetectorNamePool::UselessError => Some(Box::<UselessErrorDetector>::default()),
         IssueDetectorNamePool::DivisionBeforeMultiplication => {
