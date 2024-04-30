@@ -26,7 +26,8 @@
     "inconsistent-type-names",
     "unprotected-initializer",
     "useless-error",
-    "reverts-and-requires-in-loops"
+    "reverts-and-requires-in-loops",
+    "division-before-multiplication"
   ],
   "files_details": {
     "files_details": [
@@ -173,8 +174,8 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 957,
-    "total_source_units": 34
+    "total_sloc": 979,
+    "total_source_units": 35
   },
   "high_issues": {
     "issues": [
@@ -357,7 +358,7 @@
   },
   "issue_count": {
     "high": 5,
-    "low": 22
+    "low": 23
   },
   "low_issues": {
     "issues": [
