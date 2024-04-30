@@ -22,10 +22,10 @@ fn version_req_below_0_8(version_req: &VersionReq) -> bool {
         let comparator = &version_req.comparators[0];
         match comparator.op {
             Op::Tilde | Op::Caret | Op::LessEq | Op::Greater | Op::GreaterEq | Op::Exact => {
-                return comparator.major == 0 && comparator.minor.is_some_and(|v| v < 8);
+                return comparator.major == 0 && comparator.minor < Some(8);
             }
             Op::Less => {
-                return comparator.major == 0 && comparator.minor.is_some_and(|v| v <= 8);
+                return comparator.major == 0 && comparator.minor <= Some(8);
             }
             _ => {}
         }
@@ -33,10 +33,10 @@ fn version_req_below_0_8(version_req: &VersionReq) -> bool {
         let comparator_2 = &version_req.comparators[1];
         match comparator_2.op {
             Op::Less => {
-                return comparator_2.major == 0 && comparator_2.minor.is_some_and(|v| v <= 8);
+                return comparator_2.major == 0 && comparator_2.minor <= Some(8);
             }
             Op::LessEq | Op::Exact => {
-                return comparator_2.major == 0 && comparator_2.minor.is_some_and(|v| v < 8);
+                return comparator_2.major == 0 && comparator_2.minor < Some(8);
             }
             _ => {}
         }
