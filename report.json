@@ -43,7 +43,7 @@
       },
       {
         "file_path": "src/ArithmeticUnderflowOverflow.sol",
-        "n_sloc": 16
+        "n_sloc": 84
       },
       {
         "file_path": "src/AssemblyExample.sol",
@@ -184,7 +184,7 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 1008,
+    "total_sloc": 1076,
     "total_source_units": 37
   },
   "high_issues": {
@@ -370,23 +370,53 @@
         "instances": [
           {
             "contract_path": "src/ArithmeticUnderflowOverflow.sol",
-            "line_no": 8,
-            "src": "225:11"
+            "line_no": 9,
+            "src": "236:11"
           },
           {
             "contract_path": "src/ArithmeticUnderflowOverflow.sol",
-            "line_no": 12,
-            "src": "344:11"
+            "line_no": 14,
+            "src": "366:11"
           },
           {
             "contract_path": "src/ArithmeticUnderflowOverflow.sol",
-            "line_no": 16,
-            "src": "411:12"
+            "line_no": 29,
+            "src": "704:12"
           },
           {
             "contract_path": "src/ArithmeticUnderflowOverflow.sol",
-            "line_no": 20,
-            "src": "479:12"
+            "line_no": 34,
+            "src": "783:12"
+          },
+          {
+            "contract_path": "src/ArithmeticUnderflowOverflow.sol",
+            "line_no": 50,
+            "src": "1132:11"
+          },
+          {
+            "contract_path": "src/ArithmeticUnderflowOverflow.sol",
+            "line_no": 58,
+            "src": "1347:11"
+          },
+          {
+            "contract_path": "src/ArithmeticUnderflowOverflow.sol",
+            "line_no": 63,
+            "src": "1495:11"
+          },
+          {
+            "contract_path": "src/ArithmeticUnderflowOverflow.sol",
+            "line_no": 70,
+            "src": "1717:11"
+          },
+          {
+            "contract_path": "src/ArithmeticUnderflowOverflow.sol",
+            "line_no": 114,
+            "src": "2904:12"
+          },
+          {
+            "contract_path": "src/ArithmeticUnderflowOverflow.sol",
+            "line_no": 120,
+            "src": "3034:12"
           }
         ],
         "title": "`SafeMath` library should be imported and used to prevent underflow and overflow in solidity compilers below `0.8.0`"
@@ -639,23 +669,93 @@
           },
           {
             "contract_path": "src/ArithmeticUnderflowOverflow.sol",
-            "line_no": 7,
-            "src": "130:113"
+            "line_no": 8,
+            "src": "141:113"
           },
           {
             "contract_path": "src/ArithmeticUnderflowOverflow.sol",
-            "line_no": 11,
-            "src": "249:113"
+            "line_no": 13,
+            "src": "271:113"
           },
           {
             "contract_path": "src/ArithmeticUnderflowOverflow.sol",
-            "line_no": 15,
-            "src": "368:62"
+            "line_no": 18,
+            "src": "401:113"
           },
           {
             "contract_path": "src/ArithmeticUnderflowOverflow.sol",
-            "line_no": 19,
-            "src": "436:62"
+            "line_no": 23,
+            "src": "531:113"
+          },
+          {
+            "contract_path": "src/ArithmeticUnderflowOverflow.sol",
+            "line_no": 28,
+            "src": "661:62"
+          },
+          {
+            "contract_path": "src/ArithmeticUnderflowOverflow.sol",
+            "line_no": 33,
+            "src": "740:62"
+          },
+          {
+            "contract_path": "src/ArithmeticUnderflowOverflow.sol",
+            "line_no": 38,
+            "src": "819:60"
+          },
+          {
+            "contract_path": "src/ArithmeticUnderflowOverflow.sol",
+            "line_no": 43,
+            "src": "896:60"
+          },
+          {
+            "contract_path": "src/ArithmeticUnderflowOverflow.sol",
+            "line_no": 48,
+            "src": "974:176"
+          },
+          {
+            "contract_path": "src/ArithmeticUnderflowOverflow.sol",
+            "line_no": 54,
+            "src": "1168:197"
+          },
+          {
+            "contract_path": "src/ArithmeticUnderflowOverflow.sol",
+            "line_no": 62,
+            "src": "1383:203"
+          },
+          {
+            "contract_path": "src/ArithmeticUnderflowOverflow.sol",
+            "line_no": 69,
+            "src": "1604:224"
+          },
+          {
+            "contract_path": "src/ArithmeticUnderflowOverflow.sol",
+            "line_no": 78,
+            "src": "1846:249"
+          },
+          {
+            "contract_path": "src/ArithmeticUnderflowOverflow.sol",
+            "line_no": 87,
+            "src": "2113:271"
+          },
+          {
+            "contract_path": "src/ArithmeticUnderflowOverflow.sol",
+            "line_no": 98,
+            "src": "2402:168"
+          },
+          {
+            "contract_path": "src/ArithmeticUnderflowOverflow.sol",
+            "line_no": 104,
+            "src": "2588:190"
+          },
+          {
+            "contract_path": "src/ArithmeticUnderflowOverflow.sol",
+            "line_no": 112,
+            "src": "2796:127"
+          },
+          {
+            "contract_path": "src/ArithmeticUnderflowOverflow.sol",
+            "line_no": 118,
+            "src": "2941:112"
           },
           {
             "contract_path": "src/AssemblyExample.sol",
