@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.20;
+pragma solidity 0.8.19;
 
 abstract contract WrongOrderOfLayout {
-    function divide(int256 numerator, int256 denominator) public virtual returns (uint256);
+    function divide(int256 numerator, int256 denominator) external virtual returns (uint256);
 
     struct Allowed {
       bool isEven;

@@ -527,11 +527,6 @@
             "src": "32:32"
           },
           {
-            "contract_path": "src/DivisionBeforeMultiplication.sol",
-            "line_no": 2,
-            "src": "32:24"
-          },
-          {
             "contract_path": "src/InconsistentUints.sol",
             "line_no": 1,
             "src": "0:24"
@@ -621,36 +616,6 @@
             "src": "129:9"
           },
           {
-            "contract_path": "src/DivisionBeforeMultiplication.sol",
-            "line_no": 7,
-            "src": "136:14"
-          },
-          {
-            "contract_path": "src/DivisionBeforeMultiplication.sol",
-            "line_no": 11,
-            "src": "253:18"
-          },
-          {
-            "contract_path": "src/DivisionBeforeMultiplication.sol",
-            "line_no": 15,
-            "src": "364:11"
-          },
-          {
-            "contract_path": "src/DivisionBeforeMultiplication.sol",
-            "line_no": 19,
-            "src": "460:19"
-          },
-          {
-            "contract_path": "src/DivisionBeforeMultiplication.sol",
-            "line_no": 23,
-            "src": "570:16"
-          },
-          {
-            "contract_path": "src/DivisionBeforeMultiplication.sol",
-            "line_no": 27,
-            "src": "681:20"
-          },
-          {
             "contract_path": "src/StateVariables.sol",
             "line_no": 47,
             "src": "1764:18"
@@ -674,11 +639,6 @@
             "contract_path": "src/StateVariables.sol",
             "line_no": 71,
             "src": "2539:25"
-          },
-          {
-            "contract_path": "src/WrongOrderOfLayout.sol",
-            "line_no": 5,
-            "src": "109:6"
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
@@ -933,11 +893,6 @@
             "src": "32:23"
           },
           {
-            "contract_path": "src/DivisionBeforeMultiplication.sol",
-            "line_no": 2,
-            "src": "32:24"
-          },
-          {
             "contract_path": "src/InconsistentUints.sol",
             "line_no": 1,
             "src": "0:24"
@@ -964,11 +919,6 @@
           },
           {
             "contract_path": "src/UnsafeERC721Mint.sol",
-            "line_no": 2,
-            "src": "32:23"
-          },
-          {
-            "contract_path": "src/WrongOrderOfLayout.sol",
             "line_no": 2,
             "src": "32:23"
           },
@@ -1299,7 +1249,7 @@
           {
             "contract_path": "src/WrongOrderOfLayout.sol",
             "line_no": 13,
-            "src": "272:21"
+            "src": "274:21"
           }
         ],
         "title": "Unused Custom Error"
@@ -1368,12 +1318,12 @@
           {
             "contract_path": "src/WrongOrderOfLayout.sol",
             "line_no": 7,
-            "src": "193:41"
+            "src": "195:41"
           },
           {
             "contract_path": "src/WrongOrderOfLayout.sol",
             "line_no": 15,
-            "src": "299:16"
+            "src": "301:16"
           }
         ],
         "title": "Contract elements should be laid out in the following order: `Type declarations` --> `State variables` --> `Events` --> `Errors` --> `Modifiers` --> `Functions`"
@@ -1385,22 +1335,22 @@
           {
             "contract_path": "src/DivisionBeforeMultiplication.sol",
             "line_no": 8,
-            "src": "217:5"
+            "src": "218:5"
           },
           {
             "contract_path": "src/DivisionBeforeMultiplication.sol",
             "line_no": 12,
-            "src": "327:5"
+            "src": "330:5"
           },
           {
             "contract_path": "src/DivisionBeforeMultiplication.sol",
             "line_no": 16,
-            "src": "427:5"
+            "src": "432:5"
           },
           {
             "contract_path": "src/DivisionBeforeMultiplication.sol",
             "line_no": 20,
-            "src": "534:5"
+            "src": "541:5"
           }
         ],
         "title": "Incorrect Order of Division and Multiplication"

@@ -485,12 +485,6 @@ Consider using a specific version of Solidity in your contracts instead of a wid
 	pragma solidity >=0.8.19 <0.9.1;
 	```
 
-- Found in src/DivisionBeforeMultiplication.sol [Line: 2](tests/contract-playground/src/DivisionBeforeMultiplication.sol#L2)
-
-	```solidity
-	pragma solidity ^0.8.19;
-	```
-
 - Found in src/InconsistentUints.sol [Line: 1](tests/contract-playground/src/InconsistentUints.sol#L1)
 
 	```solidity
@@ -593,42 +587,6 @@ Instead of marking a function as `public`, consider marking it as `external` if 
 	    function setNumber(uint256 newNumber) public {
 	```
 
-- Found in src/DivisionBeforeMultiplication.sol [Line: 7](tests/contract-playground/src/DivisionBeforeMultiplication.sol#L7)
-
-	```solidity
-	    function calculateWrong(uint a, uint b, uint c, uint d) public {
-	```
-
-- Found in src/DivisionBeforeMultiplication.sol [Line: 11](tests/contract-playground/src/DivisionBeforeMultiplication.sol#L11)
-
-	```solidity
-	    function calculateAlsoWrong(uint a, uint b, uint c) public {
-	```
-
-- Found in src/DivisionBeforeMultiplication.sol [Line: 15](tests/contract-playground/src/DivisionBeforeMultiplication.sol#L15)
-
-	```solidity
-	    function calculateAl(uint a, uint b, uint c) public {
-	```
-
-- Found in src/DivisionBeforeMultiplication.sol [Line: 19](tests/contract-playground/src/DivisionBeforeMultiplication.sol#L19)
-
-	```solidity
-	    function calculateStillWrong(uint a, uint b, uint c) public {
-	```
-
-- Found in src/DivisionBeforeMultiplication.sol [Line: 23](tests/contract-playground/src/DivisionBeforeMultiplication.sol#L23)
-
-	```solidity
-	    function calculateCorrect(uint a, uint b, uint c) public {
-	```
-
-- Found in src/DivisionBeforeMultiplication.sol [Line: 27](tests/contract-playground/src/DivisionBeforeMultiplication.sol#L27)
-
-	```solidity
-	    function calculateAlsoCorrect(uint a, uint b, uint c, uint d) public {
-	```
-
 - Found in src/StateVariables.sol [Line: 47](tests/contract-playground/src/StateVariables.sol#L47)
 
 	```solidity
@@ -657,12 +615,6 @@ Instead of marking a function as `public`, consider marking it as `external` if 
 
 	```solidity
 	    function setNonEmptyAlteredNumbers(
-	```
-
-- Found in src/WrongOrderOfLayout.sol [Line: 5](tests/contract-playground/src/WrongOrderOfLayout.sol#L5)
-
-	```solidity
-	    function divide(int256 numerator, int256 denominator) public virtual returns (uint256);
 	```
 
 - Found in src/cloc/AnotherHeavilyCommentedContract.sol [Line: 31](tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol#L31)
@@ -947,12 +899,6 @@ Solc compiler version 0.8.20 switches the default target EVM version to Shanghai
 	pragma solidity 0.8.20;
 	```
 
-- Found in src/DivisionBeforeMultiplication.sol [Line: 2](tests/contract-playground/src/DivisionBeforeMultiplication.sol#L2)
-
-	```solidity
-	pragma solidity ^0.8.19;
-	```
-
 - Found in src/InconsistentUints.sol [Line: 1](tests/contract-playground/src/InconsistentUints.sol#L1)
 
 	```solidity
@@ -984,12 +930,6 @@ Solc compiler version 0.8.20 switches the default target EVM version to Shanghai
 	```
 
 - Found in src/UnsafeERC721Mint.sol [Line: 2](tests/contract-playground/src/UnsafeERC721Mint.sol#L2)
-
-	```solidity
-	pragma solidity 0.8.20;
-	```
-
-- Found in src/WrongOrderOfLayout.sol [Line: 2](tests/contract-playground/src/WrongOrderOfLayout.sol#L2)
 
 	```solidity
 	pragma solidity 0.8.20;
