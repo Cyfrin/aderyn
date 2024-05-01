@@ -49,10 +49,16 @@ pub fn with_project_root_at(
         if let Ok(version) = Solc::detect_version(source) {
             match compilation_groups.entry(format!("{}", version)) {
                 Entry::Occupied(mut o) => {
-                    o.get_mut().push(solidity_file.into());
+                    let s = solidity_file
+                        .strip_prefix(root_path.canonicalize().unwrap())
+                        .unwrap();
+                    o.get_mut().push(s.into());
                 }
                 Entry::Vacant(v) => {
-                    v.insert(vec![solidity_file.into()]);
+                    let s = solidity_file
+                        .strip_prefix(root_path.canonicalize().unwrap())
+                        .unwrap();
+                    v.insert(vec![s.into()]);
                 }
             };
         }
@@ -71,6 +77,7 @@ pub fn with_project_root_at(
     for (version, file_paths) in &compilation_groups {
         let solc = Solc::find_or_install_svm_version(version).unwrap();
         let solc_bin = solc.solc.to_str().unwrap();
+        dbg!(&solc_bin);
 
         let command = Command::new(solc_bin)
             .args(remappings.clone())
@@ -83,9 +90,9 @@ pub fn with_project_root_at(
         if let Ok(command) = command {
             if !command.status.success() {
                 let msg = String::from_utf8(command.stderr).unwrap();
-                println!("stderr = {}", msg);
+                println!("stderr = {}, files={:?}", msg, file_paths);
                 println!("cwd = {}", root_path.display());
-                dbg!(compilation_groups);
+                // dbg!(compilation_groups);
                 panic!("Error running solc command");
             }
             let stdout = String::from_utf8(command.stdout).unwrap();
