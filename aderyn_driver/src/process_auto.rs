@@ -77,23 +77,33 @@ pub fn with_project_root_at(
     for (version, file_paths) in &compilation_groups {
         let solc = Solc::find_or_install_svm_version(version).unwrap();
         let solc_bin = solc.solc.to_str().unwrap();
-        dbg!(&solc_bin);
+        println!("{}", &solc_bin);
 
         let command = Command::new(solc_bin)
             .args(remappings.clone())
+            .arg("--base-path")
+            .arg(root_path)
+            .arg("--allow-paths")
             .arg("--ast-compact-json")
             .args(file_paths)
             .current_dir(root_path)
-            .stdout(Stdio::piped())
             .output();
 
         if let Ok(command) = command {
             if !command.status.success() {
+                let stdout = String::from_utf8(command.stdout.clone()).unwrap();
                 let msg = String::from_utf8(command.stderr).unwrap();
-                println!("stderr = {}, files={:?}", msg, file_paths);
+                println!("stderr = {}, stdout={}", msg, stdout);
                 println!("cwd = {}", root_path.display());
-                // dbg!(compilation_groups);
-                panic!("Error running solc command");
+                // dbg!(&compilation_groups);
+                let args = &file_paths
+                    .iter()
+                    .map(|x| x.to_string_lossy())
+                    .collect::<Vec<_>>()
+                    .join(" ");
+
+                println!("{} with version {}", args, version);
+                println!("\n\n\n");
             }
             let stdout = String::from_utf8(command.stdout).unwrap();
             let mut context = WorkspaceContext::default();
