@@ -43,7 +43,7 @@
       },
       {
         "file_path": "src/ArithmeticUnderflowOverflow.sol",
-        "n_sloc": 84
+        "n_sloc": 96
       },
       {
         "file_path": "src/AssemblyExample.sol",
@@ -184,7 +184,7 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 1076,
+    "total_sloc": 1088,
     "total_source_units": 37
   },
   "high_issues": {
@@ -756,6 +756,16 @@
             "contract_path": "src/ArithmeticUnderflowOverflow.sol",
             "line_no": 118,
             "src": "2941:112"
+          },
+          {
+            "contract_path": "src/ArithmeticUnderflowOverflow.sol",
+            "line_no": 124,
+            "src": "3071:146"
+          },
+          {
+            "contract_path": "src/ArithmeticUnderflowOverflow.sol",
+            "line_no": 132,
+            "src": "3235:131"
           },
           {
             "contract_path": "src/AssemblyExample.sol",

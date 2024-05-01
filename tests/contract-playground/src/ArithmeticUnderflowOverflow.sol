@@ -119,4 +119,20 @@ contract ArithmeticUnderflowOverflow {
       require(counter > 0, "Counter underflow");
       counter -= 1;
     }
+
+    // good
+    function incrementCounter4() public {
+      if (counter == type(uint256).max) {
+        revert("Counter overflow");
+      }
+      counter++;
+    }
+
+    // good
+    function decrementCounter4() public {
+      if (counter == 0) {
+        revert("Counter underflow");
+      }
+      counter--;
+    }
 }
