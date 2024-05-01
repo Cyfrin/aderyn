@@ -28,7 +28,8 @@
     "useless-error",
     "reverts-and-requires-in-loops",
     "wrong-order-of-layout",
-    "division-before-multiplication"
+    "division-before-multiplication",
+    "missing-event"
   ],
   "files_details": {
     "files_details": [
@@ -87,6 +88,10 @@
       {
         "file_path": "src/KeccakContract.sol",
         "n_sloc": 21
+      },
+      {
+        "file_path": "src/MissingEvent.sol",
+        "n_sloc": 19
       },
       {
         "file_path": "src/OnceModifierExample.sol",
@@ -179,8 +184,8 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 992,
-    "total_source_units": 36
+    "total_sloc": 1011,
+    "total_source_units": 37
   },
   "high_issues": {
     "issues": [
@@ -363,7 +368,7 @@
   },
   "issue_count": {
     "high": 5,
-    "low": 24
+    "low": 25
   },
   "low_issues": {
     "issues": [
@@ -569,6 +574,16 @@
             "src": "267:15"
           },
           {
+            "contract_path": "src/MissingEvent.sol",
+            "line_no": 13,
+            "src": "388:14"
+          },
+          {
+            "contract_path": "src/MissingEvent.sol",
+            "line_no": 23,
+            "src": "667:17"
+          },
+          {
             "contract_path": "src/StateVariables.sol",
             "line_no": 58,
             "src": "2121:14"
@@ -649,6 +664,16 @@
             "contract_path": "src/DivisionBeforeMultiplication.sol",
             "line_no": 27,
             "src": "681:20"
+          },
+          {
+            "contract_path": "src/MissingEvent.sol",
+            "line_no": 16,
+            "src": "424:15"
+          },
+          {
+            "contract_path": "src/MissingEvent.sol",
+            "line_no": 22,
+            "src": "621:11"
           },
           {
             "contract_path": "src/StateVariables.sol",
@@ -944,6 +969,11 @@
           },
           {
             "contract_path": "src/KeccakContract.sol",
+            "line_no": 2,
+            "src": "32:23"
+          },
+          {
+            "contract_path": "src/MissingEvent.sol",
             "line_no": 2,
             "src": "32:23"
           },
@@ -1404,6 +1434,173 @@
           }
         ],
         "title": "Incorrect Order of Division and Multiplication"
+      },
+      {
+        "description": "Functions which modify state should emit an event.",
+        "detector_name": "missing-event",
+        "instances": [
+          {
+            "contract_path": "src/Counter.sol",
+            "line_no": 7,
+            "src": "129:9"
+          },
+          {
+            "contract_path": "src/Counter.sol",
+            "line_no": 21,
+            "src": "367:19"
+          },
+          {
+            "contract_path": "src/Counter.sol",
+            "line_no": 28,
+            "src": "495:22"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 7,
+            "src": "136:14"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 11,
+            "src": "253:18"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 15,
+            "src": "364:11"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 19,
+            "src": "460:19"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 23,
+            "src": "570:16"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 27,
+            "src": "681:20"
+          },
+          {
+            "contract_path": "src/InternalFunctions.sol",
+            "line_no": 23,
+            "src": "537:12"
+          },
+          {
+            "contract_path": "src/InternalFunctions.sol",
+            "line_no": 28,
+            "src": "693:12"
+          },
+          {
+            "contract_path": "src/MissingEvent.sol",
+            "line_no": 22,
+            "src": "621:11"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 47,
+            "src": "1764:18"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 52,
+            "src": "1915:20"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 57,
+            "src": "2072:14"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 61,
+            "src": "2157:22"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 71,
+            "src": "2539:25"
+          },
+          {
+            "contract_path": "src/UnprotectedInitialize.sol",
+            "line_no": 19,
+            "src": "354:22"
+          },
+          {
+            "contract_path": "src/UnprotectedInitialize.sol",
+            "line_no": 25,
+            "src": "522:20"
+          },
+          {
+            "contract_path": "src/UnprotectedInitialize.sol",
+            "line_no": 35,
+            "src": "820:33"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 12,
+            "src": "253:12"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 17,
+            "src": "383:12"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 22,
+            "src": "534:10"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 27,
+            "src": "671:10"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 32,
+            "src": "829:10"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 37,
+            "src": "990:10"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 42,
+            "src": "1130:4"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 46,
+            "src": "1207:4"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 50,
+            "src": "1286:4"
+          },
+          {
+            "contract_path": "src/nested/1/Nested.sol",
+            "line_no": 10,
+            "src": "265:17"
+          },
+          {
+            "contract_path": "src/nested/2/Nested.sol",
+            "line_no": 10,
+            "src": "272:17"
+          },
+          {
+            "contract_path": "src/parent_chain/ParentChainContract.sol",
+            "line_no": 15,
+            "src": "422:9"
+          }
+        ],
+        "title": "Functions which modify state should emit an event."
       }
     ]
   }
