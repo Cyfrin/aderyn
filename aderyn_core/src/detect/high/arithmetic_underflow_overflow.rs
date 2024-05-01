@@ -3,7 +3,10 @@ use std::{collections::BTreeMap, error::Error};
 use crate::{
     ast::NodeID,
     capture,
-    context::workspace_context::WorkspaceContext,
+    context::{
+        browser::{ExtractAssignments, ExtractBinaryOperations, ExtractPragmaDirectives},
+        workspace_context::WorkspaceContext,
+    },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
@@ -47,35 +50,40 @@ fn version_req_below_0_8(version_req: &VersionReq) -> bool {
 
 impl IssueDetector for ArithmeticUnderflowOverflowDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        for pragma_directive in context.pragma_directives() {
-            let mut version_string = String::new();
+        for source_unit in context.source_units() {
+            let pragma_directives = ExtractPragmaDirectives::from(source_unit).extracted;
+            for pragma_directive in pragma_directives.iter() {
+                let mut version_string = String::new();
+                for literal in &pragma_directive.literals {
+                    if literal == "solidity" {
+                        continue;
+                    }
+                    if version_string.is_empty() && literal.contains("0.") {
+                        version_string.push('=');
+                    }
+                    if version_string.len() > 5 && (literal == "<" || literal == "=") {
+                        version_string.push(',');
+                    }
+                    version_string.push_str(literal);
+                }
 
-            for literal in &pragma_directive.literals {
-                if literal == "solidity" {
-                    continue;
+                let req = VersionReq::parse(&version_string)?;
+                if version_req_below_0_8(&req) {
+                    let assignments = ExtractAssignments::from(source_unit).extracted;
+                    let binary_operations = ExtractBinaryOperations::from(source_unit).extracted;
+
+                    assignments
+                        .iter()
+                        .filter(|assignment| {
+                            assignment.operator == "+=" || assignment.operator == "-="
+                        })
+                        .for_each(|assignment| capture!(self, context, assignment));
+                    binary_operations
+                        .iter()
+                        .filter(|binary_op| binary_op.operator == "+" || binary_op.operator == "-")
+                        .for_each(|op| capture!(self, context, op));
                 }
-                if version_string.is_empty() && literal.contains("0.") {
-                    version_string.push('=');
-                }
-                if version_string.len() > 5 && (literal == "<" || literal == "=") {
-                    version_string.push(',');
-                }
-                version_string.push_str(literal);
             }
-
-            let req = VersionReq::parse(&version_string)?;
-            version_req_below_0_8(&req).then(|| {
-                context
-                    .assignments()
-                    .iter()
-                    .filter(|assignment| assignment.operator == "+=" || assignment.operator == "-=")
-                    .for_each(|assignment| capture!(self, context, assignment));
-                context
-                    .binary_operations()
-                    .iter()
-                    .filter(|binary_op| binary_op.operator == "+" || binary_op.operator == "-")
-                    .for_each(|op| capture!(self, context, op));
-            });
         }
 
         Ok(!self.found_instances.is_empty())
