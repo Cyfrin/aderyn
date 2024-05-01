@@ -19,12 +19,16 @@ use eyre::Result;
 
 #[derive(Default)]
 pub struct TemplateDetector {
-    // Keys are source file name and line number
+    // Keys are: [0] source file name, [1] line number, [2] character location of node.
+    // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
 impl IssueDetector for TemplateDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
+        // When you have found an instance of the issue,
+        // use the following macro to add it to `found_instances`:
+        //
         // capture!(self, context, item);
 
         Ok(!self.found_instances.is_empty())
