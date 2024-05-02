@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 32,
-    "total_sloc": 949
+    "total_source_units": 35,
+    "total_sloc": 992
   },
   "files_details": {
     "files_details": [
@@ -36,6 +36,10 @@
       {
         "file_path": "src/DeprecatedOZFunctions.sol",
         "n_sloc": 32
+      },
+      {
+        "file_path": "src/DivisionBeforeMultiplication.sol",
+        "n_sloc": 22
       },
       {
         "file_path": "src/EmptyBlocks.sol",
@@ -84,6 +88,14 @@
       {
         "file_path": "src/UnsafeERC721Mint.sol",
         "n_sloc": 18
+      },
+      {
+        "file_path": "src/UnusedError.sol",
+        "n_sloc": 8
+      },
+      {
+        "file_path": "src/WrongOrderOfLayout.sol",
+        "n_sloc": 13
       },
       {
         "file_path": "src/ZeroAddressCheck.sol",
@@ -137,7 +149,7 @@
   },
   "issue_count": {
     "high": 5,
-    "low": 21
+    "low": 24
   },
   "high_issues": {
     "issues": [
@@ -1191,6 +1203,23 @@
         ]
       },
       {
+        "title": "Unused Custom Error",
+        "description": "it is recommended that the definition be removed when custom error is unused",
+        "detector_name": "useless-error",
+        "instances": [
+          {
+            "contract_path": "src/UnusedError.sol",
+            "line_no": 7,
+            "src": "120:49"
+          },
+          {
+            "contract_path": "src/WrongOrderOfLayout.sol",
+            "line_no": 13,
+            "src": "274:21"
+          }
+        ]
+      },
+      {
         "title": "Loop contains `require`/`revert` statements",
         "description": "Avoid `require` / `revert` statements in a loop because a single bad item can cause the whole transaction to fail. It's better to forgive on fail and return failed elements post processing of the loop",
         "detector_name": "reverts-and-requires-in-loops",
@@ -1204,6 +1233,90 @@
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
             "line_no": 17,
             "src": "416:150"
+          }
+        ]
+      },
+      {
+        "title": "Contract elements should be laid out in the following order: `Type declarations` --> `State variables` --> `Events` --> `Errors` --> `Modifiers` --> `Functions`",
+        "description": "Contract elements should be laid out according to the order specified in https://docs.soliditylang.org/en/latest/style-guide.html#order-of-layout",
+        "detector_name": "wrong-order-of-layout",
+        "instances": [
+          {
+            "contract_path": "src/Counter.sol",
+            "line_no": 26,
+            "src": "472:3"
+          },
+          {
+            "contract_path": "src/EmptyBlocks.sol",
+            "line_no": 71,
+            "src": "1024:19"
+          },
+          {
+            "contract_path": "src/InconsistentUints.sol",
+            "line_no": 10,
+            "src": "260:103"
+          },
+          {
+            "contract_path": "src/InternalFunctions.sol",
+            "line_no": 18,
+            "src": "413:9"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 45,
+            "src": "1724:25"
+          },
+          {
+            "contract_path": "src/StorageConditionals.sol",
+            "line_no": 15,
+            "src": "342:13"
+          },
+          {
+            "contract_path": "src/StorageConditionals.sol",
+            "line_no": 57,
+            "src": "1367:18"
+          },
+          {
+            "contract_path": "src/UnprotectedInitialize.sol",
+            "line_no": 13,
+            "src": "222:21"
+          },
+          {
+            "contract_path": "src/WrongOrderOfLayout.sol",
+            "line_no": 7,
+            "src": "195:41"
+          },
+          {
+            "contract_path": "src/WrongOrderOfLayout.sol",
+            "line_no": 15,
+            "src": "301:16"
+          }
+        ]
+      },
+      {
+        "title": "Incorrect Order of Division and Multiplication",
+        "description": "Division operations followed directly by multiplication operations can lead to precision loss due to the way integer arithmetic is handled in Solidity.",
+        "detector_name": "division-before-multiplication",
+        "instances": [
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 8,
+            "src": "218:5"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 12,
+            "src": "330:5"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 16,
+            "src": "432:5"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 20,
+            "src": "541:5"
           }
         ]
       }
@@ -1235,6 +1348,9 @@
     "contract-with-todos",
     "inconsistent-type-names",
     "unprotected-initializer",
-    "reverts-and-requires-in-loops"
+    "useless-error",
+    "reverts-and-requires-in-loops",
+    "wrong-order-of-layout",
+    "division-before-multiplication"
   ]
 }
