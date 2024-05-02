@@ -135,14 +135,14 @@ impl IssueDetector for WrongOrderOfLayoutDetector {
 
 #[cfg(test)]
 mod wrong_order_of_layout_tests {
-    use crate::detect::detector::{detector_test_helpers::load_contract, IssueDetector};
+    use crate::detect::detector::IssueDetector;
 
     use super::WrongOrderOfLayoutDetector;
 
     #[test]
     fn test_wrong_order_of_layout() {
-        let context = load_contract(
-            "../tests/contract-playground/out/WrongOrderOfLayout.sol/WrongOrderOfLayout.json",
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/WrongOrderOfLayout.sol",
         );
 
         let mut detector = WrongOrderOfLayoutDetector::default();
