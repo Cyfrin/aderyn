@@ -67,7 +67,7 @@ fn read_remappings(root_path: &Path) -> Option<Vec<String>> {
     let remappings_file = root_path
         .join("remappings")
         .canonicalize()
-        .unwrap_or(root_path.join("remappings.txt").canonicalize().unwrap());
+        .unwrap_or(root_path.join("remappings.txt").canonicalize().ok()?);
     let remappings_content = std::fs::read_to_string(remappings_file).unwrap();
     Some(remappings_content.lines().map(|x| x.to_owned()).collect())
 }
