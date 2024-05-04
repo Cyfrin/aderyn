@@ -64,10 +64,8 @@ fn passes_exclude(
 // where direct imports a,c,e map to b,d,f
 fn read_remappings(root_path: &Path) -> Option<Vec<String>> {
     // Look for a file called `remappings` in the project root. If not present, assume project doesn't require remappings
-    let remappings_file = root_path
-        .join("remappings")
-        .canonicalize()
-        .unwrap_or(root_path.join("remappings.txt").canonicalize().ok()?);
+    let remappings_file = root_path.join("remappings").canonicalize().ok()?;
+    // .unwrap_or(root_path.join("remappings.txt").canonicalize().ok()?);
     let remappings_content = std::fs::read_to_string(remappings_file).unwrap();
     Some(remappings_content.lines().map(|x| x.to_owned()).collect())
 }
