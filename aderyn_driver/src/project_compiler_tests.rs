@@ -86,7 +86,7 @@ mod project_compiler_tests {
 
             // Print the command that will be run in the next step
             println!("Running the following command: ");
-            print_running_command(solc_bin, &remappings, &files);
+            print_running_command(solc_bin, &remappings, &files, &root);
 
             // Make sure the solc binary is available
             assert!(solc.solc.exists());
@@ -94,7 +94,12 @@ mod project_compiler_tests {
             let command = Command::new(solc.solc)
                 .args(remappings.clone())
                 .arg("--ast-compact-json")
-                .args(files)
+                .args(
+                    files
+                        .iter()
+                        .map(|x| x.strip_prefix(root.clone()).unwrap())
+                        .collect::<Vec<_>>(),
+                )
                 .current_dir(root.clone())
                 .stdout(Stdio::piped())
                 .output();
@@ -119,7 +124,12 @@ mod project_compiler_tests {
         }
     }
 
-    fn print_running_command(solc_bin: &str, remappings: &Vec<String>, files: &Vec<PathBuf>) {
+    fn print_running_command(
+        solc_bin: &str,
+        remappings: &Vec<String>,
+        files: &Vec<PathBuf>,
+        root: &PathBuf,
+    ) {
         let mut command = String::new();
         command.push_str(solc_bin);
         command.push_str(" --ast-compact-json ");
@@ -127,7 +137,13 @@ mod project_compiler_tests {
             command.push_str(&format!("{} ", remap));
         }
         for file in files {
-            command.push_str(&format!("{} ", file.to_string_lossy().to_string()));
+            command.push_str(&format!(
+                "{} ",
+                file.strip_prefix(root.clone())
+                    .unwrap()
+                    .to_string_lossy()
+                    .to_string()
+            ));
         }
         println!("{}", command);
     }
