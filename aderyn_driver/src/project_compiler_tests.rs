@@ -117,6 +117,7 @@ mod project_compiler_tests {
                         .map(|x| x.strip_prefix(root.clone()).unwrap())
                         .collect::<Vec<_>>(),
                 )
+                .args(solc.args.clone()) // --allowed-paths <root> for older versions of sol
                 .current_dir(root.clone())
                 .stdout(Stdio::piped())
                 .output();
