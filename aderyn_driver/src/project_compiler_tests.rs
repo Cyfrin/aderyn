@@ -108,7 +108,7 @@ mod project_compiler_tests {
             // Make sure the solc binary is available
             assert!(solc.solc.exists());
 
-            let command = Command::new(solc.solc)
+            let command_result = Command::new(solc.solc)
                 .args(remappings.clone())
                 .arg("--ast-compact-json")
                 .args(
@@ -121,11 +121,11 @@ mod project_compiler_tests {
                 .stdout(Stdio::piped())
                 .output();
 
-            match command {
-                Ok(command) => {
-                    let stdout = String::from_utf8(command.stdout).unwrap();
-                    if !command.status.success() {
-                        let msg = String::from_utf8(command.stderr).unwrap();
+            match command_result {
+                Ok(output) => {
+                    let stdout = String::from_utf8(output.stdout).unwrap();
+                    if !output.status.success() {
+                        let msg = String::from_utf8(output.stderr).unwrap();
                         println!("stderr = {}", msg);
                         println!("stdout = {}", stdout);
                         println!("cwd = {}", root.display());
