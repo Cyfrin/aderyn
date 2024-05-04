@@ -11,7 +11,7 @@ mod project_compiler_tests {
 
     #[test]
     fn test_grouping_files_to_compile() {
-        let project_root_str = "/Users/tilakmadichetti/Documents/OpenSource/ccip/contracts";
+        let project_root_str = "../tests/ccip/contracts";
         let scope = &Some(vec!["src/v0.8/".to_string()]);
         let exclude = &Some(vec![
             "tests/".to_string(),
@@ -20,6 +20,7 @@ mod project_compiler_tests {
             "lib/".to_string(),
             "node_modules/".to_string(),
             "mocks/".to_string(),
+            "vendor/".to_string(),
         ]);
 
         // let scope: &Option<_> = &None;
