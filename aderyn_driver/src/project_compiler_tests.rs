@@ -1,5 +1,5 @@
 #[cfg(test)]
-mod project_compiler_tests {
+mod project_compiler_grouping_tests {
     use std::{
         collections::BTreeMap,
         path::PathBuf,
@@ -10,7 +10,29 @@ mod project_compiler_tests {
     use foundry_compilers::{utils, CompilerInput, Graph, Project, ProjectPathsConfig};
 
     #[test]
-    fn test_grouping_files_to_compile() {
+    fn foundry_nft_f23() {
+        let project_root_str = "../tests/foundry-nft-f23";
+        let scope = &Some(vec!["src/".to_string()]);
+        let exclude = &Some(vec!["lib/".to_string()]);
+        test_grouping_files_to_compile(project_root_str, scope, exclude);
+    }
+
+    #[test]
+    fn adhoc_solidity_files() {
+        let project_root_str = "../tests/adhoc-sol-files";
+        test_grouping_files_to_compile(project_root_str, &None, &None);
+    }
+
+    #[test]
+    fn contract_playground() {
+        let project_root_str = "../tests/contract-playground";
+        let scope = &Some(vec!["src/".to_string()]);
+        let exclude = &Some(vec!["lib/".to_string()]);
+        test_grouping_files_to_compile(project_root_str, scope, exclude);
+    }
+
+    #[test]
+    fn ccip() {
         let project_root_str = "../tests/ccip/contracts";
         let scope = &Some(vec!["src/v0.8/".to_string()]);
         let exclude = &Some(vec![
@@ -22,10 +44,14 @@ mod project_compiler_tests {
             "mocks/".to_string(),
             "vendor/".to_string(),
         ]);
+        test_grouping_files_to_compile(project_root_str, scope, exclude);
+    }
 
-        // let scope: &Option<_> = &None;
-        // let exclude: &Option<_> = &None;
-
+    fn test_grouping_files_to_compile(
+        project_root_str: &str,
+        scope: &Option<Vec<String>>,
+        exclude: &Option<Vec<String>>,
+    ) {
         let root = utils::canonicalize(project_root_str).unwrap();
 
         let compiler_input = CompilerInput::new(&root).unwrap();
@@ -131,7 +157,7 @@ mod project_compiler_tests {
                         println!("stderr = {}", msg);
                         println!("stdout = {}", stdout);
                         println!("cwd = {}", root.display());
-                        // panic!("Error running solc command");
+                        panic!("Error running solc command");
                     }
                     // TODO: Create workspace context from stdout
                 }
