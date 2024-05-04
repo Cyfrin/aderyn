@@ -75,35 +75,47 @@ mod project_compiler_tests {
             // println!("{} - \n{:?}\n\n", version, paths);
             println!("Compiling {} files with Solc {}", value.1.len(), value.0);
             let solc_bin = solc.solc.to_str().unwrap();
-            println!("{solc_bin}");
-
             let files = value.1.keys().cloned().collect::<Vec<_>>();
 
-            print_running_command(&remappings, &files);
+            // Print the command that will be run in the next step
+            println!("Running the following command: ");
+            print_running_command(solc_bin, &remappings, &files);
 
-            let command = Command::new(solc_bin)
+            // Make sure the solc binary is available
+            assert!(solc.solc.exists());
+
+            let command = Command::new(solc.solc)
                 .args(remappings.clone())
                 .arg("--ast-compact-json")
                 .args(files)
                 .current_dir(root.clone())
                 .stdout(Stdio::piped())
                 .output();
-            if let Ok(command) = command {
-                if !command.status.success() {
-                    let msg = String::from_utf8(command.stderr).unwrap();
-                    println!("stderr = {}", msg);
-                    println!("cwd = {}", root.display());
+
+            match command {
+                Ok(command) => {
+                    let stdout = String::from_utf8(command.stdout).unwrap();
+                    if !command.status.success() {
+                        let msg = String::from_utf8(command.stderr).unwrap();
+                        println!("stderr = {}", msg);
+                        println!("stdout = {}", stdout);
+                        println!("cwd = {}", root.display());
+                        panic!("Error running solc command");
+                    }
+                    // TODO: Create workspace context from stdout
+                }
+                Err(e) => {
+                    println!("{:?}", e);
                     panic!("Error running solc command");
                 }
-                let _stdout = String::from_utf8(command.stdout).unwrap();
-                // println!("{}", _stdout);
             }
         }
     }
 
-    fn print_running_command(remappings: &Vec<String>, files: &Vec<PathBuf>) {
+    fn print_running_command(solc_bin: &str, remappings: &Vec<String>, files: &Vec<PathBuf>) {
         let mut command = String::new();
-        command.push_str("solc --ast-compact-json ");
+        command.push_str(solc_bin);
+        command.push_str(" --ast-compact-json ");
         for remap in remappings {
             command.push_str(&format!("{} ", remap));
         }
