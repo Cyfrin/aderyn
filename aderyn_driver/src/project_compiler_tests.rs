@@ -7,7 +7,7 @@ mod project_compiler_grouping_tests {
     };
 
     use crate::{passes_exclude, passes_scope, read_remappings};
-    use foundry_compilers::{utils, CompilerInput, Graph, Project, ProjectPathsConfig};
+    use foundry_compilers::{utils, CompilerInput, Graph, Project, ProjectPathsConfig, Solc};
 
     #[test]
     fn foundry_nft_f23() {
@@ -191,5 +191,68 @@ mod project_compiler_grouping_tests {
             ));
         }
         println!("{}", command);
+    }
+
+    #[test]
+    fn directly_solc_and_check_for_ccip() {
+        let solc = Solc::find_or_install_svm_version("0.8.16").unwrap();
+        let root = utils::canonicalize("../tests/ccip/contracts").unwrap();
+
+        let mut remappings = vec![];
+        if let Some(custom_remappings) = read_remappings(&root) {
+            remappings.extend(custom_remappings);
+            remappings.dedup();
+        }
+        println!("Remappings {:?}", remappings);
+        println!("Root {:?}", root);
+
+        let command_result = Command::new(solc.solc)
+            .args(remappings.clone())
+            .arg("--ast-compact-json")
+            .args([
+                "src/v0.8/automation/AutomationForwarder.sol",
+                "src/v0.8/automation/Chainable.sol",
+                "src/v0.8/automation/ExecutionPrevention.sol",
+                "src/v0.8/automation/UpkeepFormat.sol",
+                "src/v0.8/automation/interfaces/AutomationCompatibleInterface.sol",
+                "src/v0.8/automation/interfaces/IAutomationForwarder.sol",
+            ])
+            .current_dir(root.clone())
+            .stdout(Stdio::piped())
+            .output()
+            .expect("failed to execute process");
+
+        println!("{:?}", command_result);
+
+        assert!(command_result.status.success());
+    }
+
+    #[test]
+    fn directly_solc_and_check_for_foundry_nft_f23() {
+        let solc = Solc::find_or_install_svm_version("0.8.25").unwrap();
+        let root = utils::canonicalize("../tests/foundry-nft-f23").unwrap();
+
+        let mut remappings = vec![];
+        if let Some(custom_remappings) = read_remappings(&root) {
+            remappings.extend(custom_remappings);
+            remappings.dedup();
+        }
+        println!("Remappings {:?}", remappings);
+        println!("Root {:?}", root);
+
+        let command_result = Command::new(solc.solc)
+            .args(remappings.clone())
+            .arg("--ast-compact-json")
+            .args([
+                "src/BasicNFT.sol",
+                "src/inner-core-modules/ICM.sol",
+                "src/Initializer.sol",
+            ])
+            .current_dir(root.clone())
+            .stdout(Stdio::piped())
+            .output()
+            .expect("failed to execute process");
+
+        assert!(command_result.status.success());
     }
 }
