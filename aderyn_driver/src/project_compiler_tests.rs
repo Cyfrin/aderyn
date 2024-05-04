@@ -19,6 +19,7 @@ mod project_compiler_tests {
             "testhelpers/".to_string(),
             "lib/".to_string(),
             "node_modules/".to_string(),
+            "mocks/".to_string(),
         ]);
 
         // let scope: &Option<_> = &None;
