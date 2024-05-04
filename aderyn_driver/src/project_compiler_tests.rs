@@ -82,7 +82,24 @@ mod project_compiler_tests {
             // println!("{} - \n{:?}\n\n", version, paths);
             println!("Compiling {} files with Solc {}", value.1.len(), value.0);
             let solc_bin = solc.solc.to_str().unwrap();
-            let files = value.1.keys().cloned().collect::<Vec<_>>();
+            let files = value
+                .1
+                .into_keys()
+                .filter(|solidity_file| {
+                    passes_scope(
+                        scope,
+                        solidity_file.canonicalize().unwrap().as_path(),
+                        &root.to_string_lossy().to_string(),
+                    )
+                })
+                .filter(|solidity_file| {
+                    passes_exclude(
+                        exclude,
+                        solidity_file.canonicalize().unwrap().as_path(),
+                        &root.to_string_lossy().to_string(),
+                    )
+                })
+                .collect();
 
             // Print the command that will be run in the next step
             println!("Running the following command: ");
