@@ -62,17 +62,8 @@ mod project_compiler_grouping_tests {
 
         // Optimization - First try offline resolution, only if it fails, retry online resolution without cloning Sources first
         let graph = Graph::resolve_sources(&project.paths, sources).unwrap();
-        let versions = {
-            if let Ok((v, _)) = graph.into_sources_by_version(true) {
-                v
-            } else {
-                let solidity_files = get_compiler_input(&root);
-                let sources = get_relevant_sources(&root, solidity_files, scope, exclude);
-                let graph = Graph::resolve_sources(&project.paths, sources).unwrap();
-                let (v, _) = graph.into_sources_by_version(false).unwrap();
-                v
-            }
-        };
+        let (versions, _) = graph.into_sources_by_version(false).unwrap();
+
         let sources_by_version = versions.get(&project).unwrap();
         for (solc, value) in sources_by_version {
             println!("Compiling {} files with Solc {}", value.1.len(), value.0);
