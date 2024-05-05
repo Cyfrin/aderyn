@@ -146,13 +146,13 @@ jobs:
 
       # Verify ccip-functions-report.md
           
-      - name: Generate nft-workflow-report.md
+      - name: Generate ccip-functions-report-workflow.md
         uses: actions-rs/cargo@v1
         with:
           command: run
           args: run -- -o tests/ccip-functions-report-workflow.md tests/ccip-contracts/contracts --scope src/v0.8/functions/ --exclude "tests/,test/,testhelpers/,lib/,node_modules/,mocks/,vendor/" --skip-update-check
     
-      - name: Check nft-workflow-report.md vs nft-report.md
+      - name: Check ccip-functions-report-workflow.md vs ccip-functions-report.md
         run: |
           cat ./tests/ccip-functions-report-workflow.md
           diff ./tests/ccip-functions-report.md ./tests/ccip-functions-report-workflow.md
