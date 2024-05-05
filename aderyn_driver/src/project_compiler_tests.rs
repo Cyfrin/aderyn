@@ -35,7 +35,7 @@ mod project_compiler_grouping_tests {
     }
 
     #[test]
-    fn ccip() {
+    fn ccip_develop() {
         let project_root_str = "../tests/ccip/contracts";
         let scope = &Some(vec!["src/v0.8/".to_string()]);
         let exclude = &Some(vec![
@@ -217,8 +217,6 @@ mod project_compiler_grouping_tests {
             remappings.extend(custom_remappings);
             remappings.dedup();
         }
-        println!("Remappings {:?}", remappings);
-        println!("Root {:?}", root);
 
         let command_result = Command::new(solc.solc)
             .args(remappings.clone())
@@ -249,8 +247,6 @@ mod project_compiler_grouping_tests {
             remappings.extend(custom_remappings);
             remappings.dedup();
         }
-        println!("Remappings {:?}", remappings);
-        println!("Root {:?}", root);
 
         let command_result = Command::new(solc.solc)
             .args(remappings.clone())
