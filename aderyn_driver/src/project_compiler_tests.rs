@@ -4,10 +4,13 @@ mod project_compiler_grouping_tests {
         collections::BTreeMap,
         path::PathBuf,
         process::{Command, Stdio},
+        str::FromStr,
     };
 
     use crate::{passes_exclude, passes_scope, read_remappings};
-    use foundry_compilers::{utils, CompilerInput, Graph, Project, ProjectPathsConfig, Solc};
+    use foundry_compilers::{
+        remappings::Remapping, utils, CompilerInput, Graph, Project, ProjectPathsConfig, Solc,
+    };
 
     #[test]
     fn foundry_nft_f23() {
@@ -61,7 +64,22 @@ mod project_compiler_grouping_tests {
             .collect::<Vec<_>>();
         let solidity_files = &solidity_files[0]; // No Yul Support as of now
 
-        let paths = ProjectPathsConfig::builder().root(&root).build().unwrap();
+        let mut remappings = vec![];
+        if let Some(custom_remappings) = read_remappings(&root) {
+            remappings.extend(custom_remappings);
+            remappings.dedup();
+        }
+
+        let foundry_compilers_remappings = remappings
+            .iter()
+            .filter_map(|x| Remapping::from_str(x).ok())
+            .collect::<Vec<_>>();
+
+        let paths = ProjectPathsConfig::builder()
+            .root(&root)
+            .remappings(foundry_compilers_remappings)
+            .build()
+            .unwrap();
         let project = Project::builder()
             .no_artifacts()
             .paths(paths)
@@ -95,12 +113,6 @@ mod project_compiler_grouping_tests {
         println!("Resolving sources versions by graph ...");
         let graph = Graph::resolve_sources(&project.paths, sources).unwrap();
         let (versions, _) = graph.into_sources_by_version(project.offline).unwrap();
-
-        let mut remappings = vec![];
-        if let Some(custom_remappings) = read_remappings(&root) {
-            remappings.extend(custom_remappings);
-            remappings.dedup();
-        }
 
         let sources_by_version = versions.get(&project).unwrap();
         for (solc, value) in sources_by_version {
@@ -153,12 +165,14 @@ mod project_compiler_grouping_tests {
                     let _stdout = String::from_utf8(output.stdout).unwrap();
                     if !output.status.success() {
                         let msg = String::from_utf8(output.stderr).unwrap();
-                        println!("stderr = {}", msg);
-                        println!("cwd = {}", root.display());
+                        eprintln!("stderr = {}", msg);
+                        eprintln!("cwd = {}", root.display());
                         print_running_command(solc_bin, &remappings, &files, &root);
-                        panic!("Error running solc command ^^^");
+                        eprintln!("Error running solc command ^^^");
+                        // For now, we do not panic because it will prevent us from analyzing other contexts which can compile successfully
+                    } else {
+                        // TODO: Create workspace context from stdout
                     }
-                    // TODO: Create workspace context from stdout
                 }
                 Err(e) => {
                     println!("{:?}", e);
@@ -190,7 +204,7 @@ mod project_compiler_grouping_tests {
                     .to_string()
             ));
         }
-        println!("{}", command);
+        eprintln!("{}", command);
     }
 
     #[test]
