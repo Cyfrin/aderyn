@@ -191,6 +191,8 @@ mod project_compiler_grouping_tests {
             .output()
             .expect("failed to execute process");
 
+        println!("{:?}", String::from_utf8(command_result.stderr));
+
         assert!(command_result.status.success());
     }
 }
