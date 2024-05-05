@@ -60,7 +60,6 @@ mod project_compiler_grouping_tests {
         let (remappings, foundry_compilers_remappings) = get_remappings(&root);
         let project = get_project(&root, foundry_compilers_remappings);
 
-        // Optimization - First try offline resolution, only if it fails, retry online resolution without cloning Sources first
         let graph = Graph::resolve_sources(&project.paths, sources).unwrap();
         let (versions, _) = graph.into_sources_by_version(false).unwrap();
 
