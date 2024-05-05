@@ -32,19 +32,9 @@ pub fn with_project_root_at(
     let (remappings, foundry_compilers_remappings) = get_remappings(&root);
     let project = get_project(&root, foundry_compilers_remappings);
 
-    // Optimization - First try offline resolution, only if it fails, retry online resolution without cloning Sources first
     let graph = Graph::resolve_sources(&project.paths, sources).unwrap();
-    let versions = {
-        if let Ok((v, _)) = graph.into_sources_by_version(true) {
-            v
-        } else {
-            let solidity_files = get_compiler_input(&root);
-            let sources = get_relevant_sources(&root, solidity_files, scope, exclude);
-            let graph = Graph::resolve_sources(&project.paths, sources).unwrap();
-            let (v, _) = graph.into_sources_by_version(false).unwrap();
-            v
-        }
-    };
+    let (versions, _) = graph.into_sources_by_version(false).unwrap();
+
     let sources_by_version = versions.get(&project).unwrap();
 
     for (solc, value) in sources_by_version {
