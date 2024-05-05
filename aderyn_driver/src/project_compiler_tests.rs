@@ -1,16 +1,12 @@
 #[cfg(test)]
 mod project_compiler_grouping_tests {
     use std::{
-        collections::BTreeMap,
         path::PathBuf,
         process::{Command, Stdio},
-        str::FromStr,
     };
 
-    use crate::{passes_exclude, passes_scope, read_remappings};
-    use foundry_compilers::{
-        remappings::Remapping, utils, CompilerInput, Graph, Project, ProjectPathsConfig, Solc,
-    };
+    use crate::{fchelpers::*, read_remappings};
+    use foundry_compilers::{utils, Graph, Solc};
 
     #[test]
     fn foundry_nft_f23() {
@@ -57,93 +53,32 @@ mod project_compiler_grouping_tests {
     ) {
         let root = utils::canonicalize(project_root_str).unwrap();
 
-        let compiler_input = CompilerInput::new(&root).unwrap();
-        let solidity_files = compiler_input
-            .into_iter()
-            .filter(|c| c.language == *"Solidity")
-            .collect::<Vec<_>>();
-        let solidity_files = &solidity_files[0]; // No Yul Support as of now
-
-        let mut remappings = vec![];
-        if let Some(custom_remappings) = read_remappings(&root) {
-            remappings.extend(custom_remappings);
-            remappings.dedup();
-        }
-
-        let foundry_compilers_remappings = remappings
-            .iter()
-            .filter_map(|x| Remapping::from_str(x).ok())
-            .collect::<Vec<_>>();
-
-        let paths = ProjectPathsConfig::builder()
-            .root(&root)
-            .remappings(foundry_compilers_remappings)
-            .build()
-            .unwrap();
-        let project = Project::builder()
-            .no_artifacts()
-            .paths(paths)
-            .ephemeral()
-            .build()
-            .unwrap();
-
-        println!("Collecting sources in scope");
-        let sources = solidity_files
-            .sources
-            .iter()
-            .filter(|(solidity_file, _)| {
-                passes_scope(
-                    scope,
-                    solidity_file.canonicalize().unwrap().as_path(),
-                    &root.to_string_lossy().to_string(),
-                )
-            })
-            .filter(|(solidity_file, _)| {
-                passes_exclude(
-                    exclude,
-                    solidity_file.canonicalize().unwrap().as_path(),
-                    &root.to_string_lossy().to_string(),
-                )
-            })
-            .map(|(x, y)| (x.to_owned(), y.to_owned()))
-            .collect::<BTreeMap<_, _>>();
-
-        // println!("Sources: {:?}", sources.keys().cloned());
+        let solidity_files = get_compiler_input(&root);
+        let sources = get_relevant_sources(&root, solidity_files, scope, exclude);
 
         println!("Resolving sources versions by graph ...");
-        let graph = Graph::resolve_sources(&project.paths, sources).unwrap();
-        let (versions, _) = graph.into_sources_by_version(project.offline).unwrap();
+        let (remappings, foundry_compilers_remappings) = get_remappings(&root);
+        let project = get_project(&root, foundry_compilers_remappings);
 
+        // Optimization - First try offline resolution, only if it fails, retry online resolution without cloning Sources first
+        let graph = Graph::resolve_sources(&project.paths, sources).unwrap();
+        let versions = {
+            if let Ok((v, _)) = graph.into_sources_by_version(true) {
+                v
+            } else {
+                let solidity_files = get_compiler_input(&root);
+                let sources = get_relevant_sources(&root, solidity_files, scope, exclude);
+                let graph = Graph::resolve_sources(&project.paths, sources).unwrap();
+                let (v, _) = graph.into_sources_by_version(false).unwrap();
+                v
+            }
+        };
         let sources_by_version = versions.get(&project).unwrap();
         for (solc, value) in sources_by_version {
-            // let version = value.0;
-            // let paths = value.1.keys().map(|x| x.display()).collect::<Vec<_>>();
-            // println!("{} - \n{:?}\n\n", version, paths);
             println!("Compiling {} files with Solc {}", value.1.len(), value.0);
-            let solc_bin = solc.solc.to_str().unwrap();
-            let files: Vec<_> = value
-                .1
-                .into_keys()
-                .filter(|solidity_file| {
-                    passes_scope(
-                        scope,
-                        solidity_file.canonicalize().unwrap().as_path(),
-                        &root.to_string_lossy().to_string(),
-                    )
-                })
-                .filter(|solidity_file| {
-                    passes_exclude(
-                        exclude,
-                        solidity_file.canonicalize().unwrap().as_path(),
-                        &root.to_string_lossy().to_string(),
-                    )
-                })
-                .collect();
+            let pathbufs = value.1.into_keys().collect::<Vec<_>>();
+            let files = get_relevant_pathbufs(&root, &pathbufs, scope, exclude);
 
-            // println!("Running the following command: ");
-            // print_running_command(solc_bin, &remappings, &files, &root);
-
-            // Make sure the solc binary is available
             assert!(solc.solc.exists());
 
             let command_result = Command::new(solc.solc.clone())
@@ -167,7 +102,12 @@ mod project_compiler_grouping_tests {
                         let msg = String::from_utf8(output.stderr).unwrap();
                         eprintln!("stderr = {}", msg);
                         eprintln!("cwd = {}", root.display());
-                        print_running_command(solc_bin, &remappings, &files, &root);
+                        print_running_command(
+                            solc.solc.to_string_lossy().as_ref(),
+                            &remappings,
+                            &files,
+                            &root,
+                        );
                         eprintln!("Error running solc command ^^^");
                         // For now, we do not panic because it will prevent us from analyzing other contexts which can compile successfully
                     } else {
