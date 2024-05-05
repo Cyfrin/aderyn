@@ -150,7 +150,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: run -- -o tests/ccip-functions-report-workflow.md tests/ccip-contracts/contracts --scope src/v0.8/functions/ --exclude "tests/,test/,testhelpers/,lib/,node_modules/,mocks/,vendor/" --skip-update-check
+          args: -- -o tests/ccip-functions-report-workflow.md tests/ccip-contracts/contracts --scope src/v0.8/functions/ --exclude "tests/,test/,testhelpers/,lib/,node_modules/,mocks/,vendor/" --skip-update-check
     
       - name: Check ccip-functions-report-workflow.md vs ccip-functions-report.md
         run: |
