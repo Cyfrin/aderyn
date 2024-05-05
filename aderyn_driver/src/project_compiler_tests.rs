@@ -182,7 +182,7 @@ mod project_compiler_grouping_tests {
             .args(remappings.clone())
             .arg("--ast-compact-json")
             .args([
-                "src/BasicNFT.sol",
+                "src/BasicNft.sol",
                 "src/inner-core-modules/ICM.sol",
                 "src/Initializer.sol",
             ])
