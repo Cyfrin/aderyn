@@ -47,18 +47,9 @@ jobs:
         run: |
           git submodule update --init --recursive
 
-      - name: Change directory into ccip contracts where there is pnpm.lock
-        run: |
-          cd tests/ccip-contracts/contracts
-
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
-
       - name: Install pnpm dependencies for ccip contracts and come out
         run: |
+          cd tests/ccip-contracts/contracts
           pnpm install
           cd ../../../
 
