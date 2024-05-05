@@ -109,7 +109,7 @@ mod project_compiler_grouping_tests {
             // println!("{} - \n{:?}\n\n", version, paths);
             println!("Compiling {} files with Solc {}", value.1.len(), value.0);
             let solc_bin = solc.solc.to_str().unwrap();
-            let files = value
+            let files: Vec<_> = value
                 .1
                 .into_keys()
                 .filter(|solidity_file| {
@@ -128,14 +128,13 @@ mod project_compiler_grouping_tests {
                 })
                 .collect();
 
-            // Print the command that will be run in the next step
-            println!("Running the following command: ");
-            print_running_command(solc_bin, &remappings, &files, &root);
+            // println!("Running the following command: ");
+            // print_running_command(solc_bin, &remappings, &files, &root);
 
             // Make sure the solc binary is available
             assert!(solc.solc.exists());
 
-            let command_result = Command::new(solc.solc)
+            let command_result = Command::new(solc.solc.clone())
                 .args(remappings.clone())
                 .arg("--ast-compact-json")
                 .args(
@@ -151,13 +150,13 @@ mod project_compiler_grouping_tests {
 
             match command_result {
                 Ok(output) => {
-                    let stdout = String::from_utf8(output.stdout).unwrap();
+                    let _stdout = String::from_utf8(output.stdout).unwrap();
                     if !output.status.success() {
                         let msg = String::from_utf8(output.stderr).unwrap();
                         println!("stderr = {}", msg);
-                        println!("stdout = {}", stdout);
                         println!("cwd = {}", root.display());
-                        panic!("Error running solc command");
+                        print_running_command(solc_bin, &remappings, &files, &root);
+                        panic!("Error running solc command ^^^");
                     }
                     // TODO: Create workspace context from stdout
                 }
@@ -169,6 +168,7 @@ mod project_compiler_grouping_tests {
         }
     }
 
+    #[allow(dead_code)]
     fn print_running_command(
         solc_bin: &str,
         remappings: &Vec<String>,
@@ -221,8 +221,6 @@ mod project_compiler_grouping_tests {
             .stdout(Stdio::piped())
             .output()
             .expect("failed to execute process");
-
-        println!("{:?}", command_result);
 
         assert!(command_result.status.success());
     }
