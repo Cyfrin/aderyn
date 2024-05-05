@@ -49,7 +49,9 @@ jobs:
 
       - name: Install pnpm dependencies for ccip contracts and come out
         run: |
-          cd tests/ccip-contracts/contracts
+          cd tests/ccip-contracts/
+          pnpm install
+          cd contracts/
           pnpm install
           cd ../../../
 
