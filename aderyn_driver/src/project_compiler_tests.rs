@@ -36,7 +36,7 @@ mod project_compiler_grouping_tests {
 
     #[test]
     fn ccip_develop() {
-        let project_root_str = "../tests/ccip/contracts";
+        let project_root_str = "../tests/ccip-contracts/contracts";
         let scope = &Some(vec!["src/v0.8/".to_string()]);
         let exclude = &Some(vec![
             "tests/".to_string(),
@@ -210,7 +210,7 @@ mod project_compiler_grouping_tests {
     #[test]
     fn directly_solc_and_check_for_ccip() {
         let solc = Solc::find_or_install_svm_version("0.8.16").unwrap();
-        let root = utils::canonicalize("../tests/ccip/contracts").unwrap();
+        let root = utils::canonicalize("../tests/ccip-contracts/contracts").unwrap();
 
         let mut remappings = vec![];
         if let Some(custom_remappings) = read_remappings(&root) {
