@@ -23,7 +23,10 @@ impl IssueDetector for LargeLiteralValueDetector {
             .filter(|x| x.kind == LiteralKind::Number)
         {
             if let Some(value) = numeric_literal.value.clone() {
-                if value.ends_with("0000") {
+                // Strip any underscore separators
+                let value_no_underscores = value.replace("_", "");
+                if value_no_underscores.ends_with("0000") && !value_no_underscores.starts_with("0x")
+                {
                     capture!(self, context, numeric_literal);
                 }
             }
@@ -71,7 +74,7 @@ mod large_literal_values {
         let found = detector.detect(&context).unwrap();
         assert!(found);
         // assert that the detector finds the correct number of instances
-        assert_eq!(detector.instances().len(), 20);
+        assert_eq!(detector.instances().len(), 22);
         // assert that the detector returns the correct severity
         assert_eq!(
             detector.severity(),
