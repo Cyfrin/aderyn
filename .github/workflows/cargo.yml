@@ -37,9 +37,27 @@ jobs:
           toolchain: stable
           override: true
 
+      - uses: actions/checkout@v3
+
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 8
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+
       - name: Install git submodules
         run: |
           git submodule update --init --recursive
+
+      - name: Install pnpm dependencies for ccip contracts
+        run: |
+          cd tests/ccip-contracts/contracts
+          pnpm install
+          cd ../../../
 
       - name: Run cargo build
         run: |
