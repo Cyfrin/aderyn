@@ -43,7 +43,6 @@ pub fn load_solidity_source_unit(filepath: &str) -> WorkspaceContext {
     if let Ok(command) = command {
         let stdout = String::from_utf8(command.stdout).unwrap();
         let stderr = String::from_utf8(command.stderr).unwrap();
-        // println!("stdout = {}", stdout);
         println!("stderr = {}", stderr);
 
         let mut pick_next_line = false;

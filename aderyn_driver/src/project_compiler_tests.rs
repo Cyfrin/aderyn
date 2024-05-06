@@ -5,7 +5,7 @@ mod project_compiler_grouping_tests {
         process::{Command, Stdio},
     };
 
-    use crate::{fchelpers::*, read_remappings};
+    use crate::{foundry_compiler_helpers::*, read_remappings};
     use foundry_compilers::{utils, Graph, Solc};
 
     #[test]
