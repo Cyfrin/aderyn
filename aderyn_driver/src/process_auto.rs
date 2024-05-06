@@ -8,7 +8,7 @@ use aderyn_core::{
 };
 
 use foundry_compilers::{utils, Graph};
-use rayon::iter::{IntoParallelIterator, IntoParallelRefIterator, ParallelIterator};
+use rayon::iter::{IntoParallelIterator, ParallelIterator};
 
 use crate::{
     get_compiler_input, get_project, get_relevant_pathbufs, get_relevant_sources, get_remappings,
