@@ -50,6 +50,7 @@ pub trait RegistersNewDetector {
     fn register(&self, detector_name: String, assigned_severity: IssueSeverity);
 }
 
+#[allow(dead_code)]
 pub trait UnregistersDetector {
     fn unregister_detector(&self, detector_name: String);
 }
