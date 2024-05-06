@@ -74,7 +74,7 @@
       },
       {
         "file_path": "src/HugeConstants.sol",
-        "n_sloc": 26
+        "n_sloc": 36
       },
       {
         "file_path": "src/InconsistentUints.sol",
@@ -179,7 +179,7 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 992,
+    "total_sloc": 1002,
     "total_source_units": 36
   },
   "high_issues": {
@@ -1187,6 +1187,16 @@
             "contract_path": "src/HugeConstants.sol",
             "line_no": 25,
             "src": "1352:5"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 31,
+            "src": "1585:29"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 32,
+            "src": "1673:6"
           }
         ],
         "title": "Large literal values multiples of 10000 can be replaced with scientific notation"
