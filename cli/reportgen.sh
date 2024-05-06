@@ -21,6 +21,8 @@ cargo run --  ./tests/adhoc-sol-files -o ./tests/adhoc-sol-files-report.md --ski
 cd tests/foundry-nft-f23 && forge install && cd ../.. &&
 cargo run --  ./tests/foundry-nft-f23 --scope src/ --exclude lib/ -o ./tests/nft-report.md --skip-update-check &
 
+# ccip-functions-report.md (Handle remappings)
+cargo run -- tests/ccip-contracts/contracts --scope src/v0.8/functions/ --exclude "tests/,test/,testhelpers/,lib/,node_modules/,mocks/,vendor/" -o tests/ccip-functions-report.md
 
 ##### JSON REPORTS ########
 
