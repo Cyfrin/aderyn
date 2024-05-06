@@ -83,7 +83,7 @@ pub fn with_project_root_at(
                 }
             }
 
-            return None;
+            None
         })
         .collect()
 }
