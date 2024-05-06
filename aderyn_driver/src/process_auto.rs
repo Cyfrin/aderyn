@@ -8,6 +8,7 @@ use aderyn_core::{
 };
 
 use foundry_compilers::{utils, Graph};
+use rayon::iter::{IntoParallelIterator, ParallelIterator};
 
 use crate::{
     get_compiler_input, get_project, get_relevant_pathbufs, get_relevant_sources, get_remappings,
@@ -21,8 +22,6 @@ pub fn with_project_root_at(
     scope: &Option<Vec<String>>,
     exclude: &Option<Vec<String>>,
 ) -> Vec<WorkspaceContext> {
-    let mut workspace_contexts = vec![];
-
     let root = utils::canonicalize(root_path).unwrap();
 
     let solidity_files = get_compiler_input(&root);
@@ -37,52 +36,56 @@ pub fn with_project_root_at(
 
     let sources_by_version = versions.get(&project).unwrap();
 
-    for (solc, value) in sources_by_version {
-        println!("Compiling {} files with Solc {}", value.1.len(), value.0);
+    sources_by_version
+        .into_par_iter()
+        .filter_map(|(solc, value)| {
+            println!("Compiling {} files with Solc {}", value.1.len(), value.0);
+            let pathbufs = value.1.into_keys().collect::<Vec<_>>();
+            let files = get_relevant_pathbufs(&root, &pathbufs, scope, exclude);
 
-        let pathbufs = value.1.into_keys().collect::<Vec<_>>();
-        let files = get_relevant_pathbufs(&root, &pathbufs, scope, exclude);
+            assert!(solc.solc.exists());
 
-        assert!(solc.solc.exists());
+            let command_result = Command::new(solc.solc.clone())
+                .args(remappings.clone())
+                .arg("--ast-compact-json")
+                .args(
+                    files
+                        .iter()
+                        .map(|x| x.strip_prefix(root.clone()).unwrap())
+                        .collect::<Vec<_>>(),
+                )
+                .args(solc.args.clone()) // --allowed-paths <root> for older versions of sol
+                .current_dir(root.clone())
+                .stdout(Stdio::piped())
+                .stderr(Stdio::piped())
+                .spawn();
 
-        let command_result = Command::new(solc.solc.clone())
-            .args(remappings.clone())
-            .arg("--ast-compact-json")
-            .args(
-                files
-                    .iter()
-                    .map(|x| x.strip_prefix(root.clone()).unwrap())
-                    .collect::<Vec<_>>(),
-            )
-            .args(solc.args.clone()) // --allowed-paths <root> for older versions of sol
-            .current_dir(root.clone())
-            .stdout(Stdio::piped())
-            .output();
-
-        match command_result {
-            Ok(output) => {
-                let stdout = String::from_utf8(output.stdout).unwrap();
-                if !output.status.success() {
-                    let msg = String::from_utf8(output.stderr).unwrap();
-                    eprintln!("stderr = {}", msg);
-                    eprintln!("cwd = {}", root.display());
-                    // print_running_command(solc_bin, &remappings, &files, &root);
-                    eprintln!("Error running solc command ^^^");
-                    // For now, we do not panic because it will prevent us from analyzing other contexts which can compile successfully
-                } else {
-                    let context =
-                        create_workspace_context_from_stdout(stdout, scope, exclude, root_path);
-                    workspace_contexts.push(context);
+            match command_result {
+                Ok(child) => {
+                    let output = child.wait_with_output().unwrap();
+                    let stdout = String::from_utf8(output.stdout).unwrap();
+                    if !output.status.success() {
+                        let msg = String::from_utf8(output.stderr).unwrap();
+                        eprintln!("stderr = {}", msg);
+                        eprintln!("cwd = {}", root.display());
+                        // print_running_command(solc_bin, &remappings, &files, &root);
+                        eprintln!("Error running solc command ^^^");
+                        // For now, we do not panic because it will prevent us from analyzing other contexts which can compile successfully
+                    } else {
+                        let context =
+                            create_workspace_context_from_stdout(stdout, scope, exclude, root_path);
+                        return Some(context);
+                    }
+                }
+                Err(e) => {
+                    println!("{:?}", e);
+                    panic!("Error running solc command");
                 }
             }
-            Err(e) => {
-                println!("{:?}", e);
-                panic!("Error running solc command");
-            }
-        }
-    }
 
-    workspace_contexts
+            None
+        })
+        .collect()
 }
 
 fn create_workspace_context_from_stdout(
