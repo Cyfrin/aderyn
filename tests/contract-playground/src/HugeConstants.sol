@@ -38,4 +38,6 @@ contract HugeConstants {
     uint256 constant public HUGE_NUMBER_30_HEX_GOOD = 0x1_000_000_000_000_000_000_000;
     uint256 constant public HUGE_NUMBER_31_HEX_GOOD = 0x10_000;
     uint256 constant public HUGE_NUMBER_32_HEX_GOOD = 0x100_0;
+
+    uint256 constant public HUGE_NUMBER_33_HEX = 1e0000;
 }
