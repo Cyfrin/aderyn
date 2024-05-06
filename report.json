@@ -118,7 +118,7 @@
       },
       {
         "file_path": "src/UnusedError.sol",
-        "n_sloc": 8
+        "n_sloc": 19
       },
       {
         "file_path": "src/WrongOrderOfLayout.sol",
@@ -179,7 +179,7 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 1002,
+    "total_sloc": 1013,
     "total_source_units": 36
   },
   "high_issues": {
@@ -1253,8 +1253,13 @@
         "instances": [
           {
             "contract_path": "src/UnusedError.sol",
-            "line_no": 7,
-            "src": "120:49"
+            "line_no": 5,
+            "src": "84:27"
+          },
+          {
+            "contract_path": "src/UnusedError.sol",
+            "line_no": 13,
+            "src": "258:36"
           },
           {
             "contract_path": "src/WrongOrderOfLayout.sol",
