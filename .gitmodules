@@ -19,3 +19,6 @@
 [submodule "tests/foundry-nft-f23/lib/openzeppelin-contracts"]
 	path = tests/foundry-nft-f23/lib/openzeppelin-contracts
 	url = https://github.com/OpenZeppelin/openzeppelin-contracts
+[submodule "tests/ccip-contracts"]
+	path = tests/ccip-contracts
+	url = https://github.com/smartcontractkit/ccip

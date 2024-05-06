@@ -37,9 +37,23 @@ jobs:
           toolchain: stable
           override: true
 
+      - uses: actions/checkout@v3
+
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 8
+
       - name: Install git submodules
         run: |
           git submodule update --init --recursive
+
+      - name: Install pnpm dependencies for ccip contracts and come out
+        run: |
+          cd tests/ccip-contracts/
+          pnpm install
+          cd contracts/
+          pnpm install
+          cd ../../../
 
       - name: Run cargo build
         run: |
@@ -72,9 +86,23 @@ jobs:
           toolchain: stable
           override: true
 
+      - uses: actions/checkout@v3
+
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 8
+
       - name: Install git submodules
         run: |
           git submodule update --init --recursive
+
+      - name: Install pnpm dependencies for ccip contracts and come out
+        run: |
+          cd tests/ccip-contracts/
+          pnpm install
+          cd contracts/
+          pnpm install
+          cd ../../../
 
       # Verify report.md
 
@@ -114,6 +142,20 @@ jobs:
         run: |
           cat ./tests/nft-workflow-report.md
           diff ./tests/nft-report.md ./tests/nft-workflow-report.md
+
+
+      # Verify ccip-functions-report.md
+          
+      - name: Generate ccip-functions-report-workflow.md
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+          args: -- -o tests/ccip-functions-report-workflow.md tests/ccip-contracts/contracts --scope src/v0.8/functions/ --exclude "tests/,test/,testhelpers/,lib/,node_modules/,mocks/,vendor/" --skip-update-check
+    
+      - name: Check ccip-functions-report-workflow.md vs ccip-functions-report.md
+        run: |
+          cat ./tests/ccip-functions-report-workflow.md
+          diff ./tests/ccip-functions-report.md ./tests/ccip-functions-report-workflow.md
 
 
       # Verify report-config.md
