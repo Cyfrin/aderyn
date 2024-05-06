@@ -24,10 +24,10 @@ impl IssueDetector for LargeLiteralValueDetector {
         {
             if let Some(value) = numeric_literal.value.clone() {
                 // Strip any underscore separators
-                let value_no_underscores = value.replace("_", "");
+                let value_no_underscores = value.replace('_', "");
                 let is_huge = value_no_underscores.ends_with("0000");
                 let is_hex = value_no_underscores.starts_with("0x");
-                let is_exp = value_no_underscores.contains("e");
+                let is_exp = value_no_underscores.contains('e');
                 if is_huge && !is_hex && !is_exp {
                     capture!(self, context, numeric_literal);
                 }
