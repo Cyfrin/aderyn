@@ -9,7 +9,6 @@ pub mod visitor;
 use detect::detector::IssueDetector;
 use eyre::Result;
 use rayon::iter::{IntoParallelIterator, IntoParallelRefMutIterator, ParallelIterator};
-use std::collections::BTreeMap;
 use std::error::Error;
 use std::fs::{remove_file, File};
 use std::io::{self};
@@ -70,15 +69,6 @@ where
     let issues_collection: Vec<(Issue, IssueSeverity)> = detectors
         .par_iter_mut()
         .flat_map(|detector| {
-            let mut issue: Issue = Issue {
-                title: detector.title(),
-                description: detector.description(),
-                detector_name: detector.name(),
-                instances: Default::default(),
-            };
-
-            let mut detectors_instances = BTreeMap::new();
-
             let collection_of_instances = contexts
                 .into_par_iter()
                 .flat_map(|context| {
@@ -93,16 +83,22 @@ where
                 })
                 .collect::<Vec<_>>();
 
-            for instances in collection_of_instances {
-                detectors_instances.extend(instances);
-            }
+            let collection_of_issues = collection_of_instances
+                .into_par_iter()
+                .map(|instances| {
+                    (
+                        Issue {
+                            title: detector.title(),
+                            description: detector.description(),
+                            detector_name: detector.name(),
+                            instances,
+                        },
+                        detector.severity(),
+                    )
+                })
+                .collect::<Vec<_>>();
 
-            if detectors_instances.is_empty() {
-                return None;
-            }
-
-            issue.instances = detectors_instances;
-            Some((issue, detector.severity()))
+            collection_of_issues
         })
         .collect();
 
