@@ -8,7 +8,7 @@ pub mod visitor;
 
 use detect::detector::IssueDetector;
 use eyre::Result;
-use rayon::iter::{IntoParallelRefMutIterator, ParallelIterator};
+use rayon::iter::{IntoParallelIterator, IntoParallelRefMutIterator, ParallelIterator};
 use std::collections::BTreeMap;
 use std::error::Error;
 use std::fs::{remove_file, File};
@@ -79,13 +79,22 @@ where
 
             let mut detectors_instances = BTreeMap::new();
 
-            for context in contexts {
-                if let Ok(found) = detector.detect(context) {
-                    if found {
-                        let instances = detector.instances();
-                        detectors_instances.extend(instances);
+            let collection_of_instances = contexts
+                .into_par_iter()
+                .flat_map(|context| {
+                    let mut d = detector.skeletal_clone();
+                    if let Ok(found) = d.detect(context) {
+                        if found {
+                            let instances = d.instances();
+                            return Some(instances);
+                        }
                     }
-                }
+                    None
+                })
+                .collect::<Vec<_>>();
+
+            for instances in collection_of_instances {
+                detectors_instances.extend(instances);
             }
 
             if detectors_instances.is_empty() {
