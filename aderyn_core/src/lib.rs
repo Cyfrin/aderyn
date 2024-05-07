@@ -15,36 +15,13 @@ use std::io::{self};
 use std::path::{Path, PathBuf};
 
 use crate::context::workspace_context::WorkspaceContext;
-use crate::detect::detector::{get_all_issue_detectors, IssueSeverity};
+use crate::detect::detector::IssueSeverity;
 
 use crate::report::printer::ReportPrinter;
 use crate::report::reporter::Report;
 use crate::report::Issue;
 
-pub fn run_with_printer<T>(
-    context: &WorkspaceContext,
-    output_file_path: String,
-    reporter: T,
-    root_rel_path: PathBuf,
-    no_snippets: bool,
-    stdout: bool,
-) -> Result<(), Box<dyn Error>>
-where
-    T: ReportPrinter<()>,
-{
-    let detectors = get_all_issue_detectors();
-    run_with_printer_and_given_detectors(
-        context,
-        output_file_path,
-        reporter,
-        root_rel_path,
-        no_snippets,
-        stdout,
-        detectors,
-    )
-}
-
-pub fn run_with_printer_and_given_detectors<T>(
+pub fn run<T>(
     context: &WorkspaceContext,
     output_file_path: String,
     reporter: T,

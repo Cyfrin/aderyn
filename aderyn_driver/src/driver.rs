@@ -1,10 +1,10 @@
 use crate::{process_foundry, process_hardhat, virtual_foundry};
 use aderyn_core::{
     context::workspace_context::WorkspaceContext,
-    detect::detector::IssueDetector,
+    detect::detector::{get_all_issue_detectors, IssueDetector},
     fscloc,
     report::{json_printer::JsonPrinter, markdown_printer::MarkdownReportPrinter},
-    run_with_printer, run_with_printer_and_given_detectors,
+    run,
 };
 use std::{fs::read_dir, path::PathBuf};
 
@@ -26,44 +26,7 @@ enum Framework {
 }
 
 pub fn drive(args: Args) {
-    let output = args.output.clone();
-    let cx_wrapper = make_context(&args);
-    let root_rel_path = PathBuf::from(&args.root);
-    let context = &cx_wrapper.context;
-
-    if args.output.ends_with(".json") {
-        // Load the workspace context into the run function, which runs the detectors
-        run_with_printer(
-            context,
-            output,
-            JsonPrinter,
-            root_rel_path,
-            args.no_snippets,
-            args.stdout,
-        )
-        .unwrap_or_else(|err| {
-            // Exit with a non-zero exit code
-            eprintln!("Error running aderyn");
-            eprintln!("{:?}", err);
-            std::process::exit(1);
-        });
-    } else {
-        // Load the workspace context into the run function, which runs the detectors
-        run_with_printer(
-            context,
-            output,
-            MarkdownReportPrinter,
-            root_rel_path,
-            args.no_snippets,
-            args.stdout,
-        )
-        .unwrap_or_else(|err| {
-            // Exit with a non-zero exit code
-            eprintln!("Error running aderyn");
-            eprintln!("{:?}", err);
-            std::process::exit(1);
-        });
-    }
+    drive_with(args, get_all_issue_detectors());
 }
 
 pub fn drive_with(args: Args, detectors: Vec<Box<dyn IssueDetector>>) {
@@ -74,7 +37,7 @@ pub fn drive_with(args: Args, detectors: Vec<Box<dyn IssueDetector>>) {
 
     if args.output.ends_with(".json") {
         // Load the workspace context into the run function, which runs the detectors
-        run_with_printer_and_given_detectors(
+        run(
             context,
             output,
             JsonPrinter,
@@ -91,7 +54,7 @@ pub fn drive_with(args: Args, detectors: Vec<Box<dyn IssueDetector>>) {
         });
     } else {
         // Load the workspace context into the run function, which runs the detectors
-        run_with_printer_and_given_detectors(
+        run(
             context,
             output,
             MarkdownReportPrinter,
