@@ -1,7 +1,7 @@
 {
   "files_summary": {
     "total_source_units": 36,
-    "total_sloc": 992
+    "total_sloc": 1013
   },
   "files_details": {
     "files_details": [
@@ -47,7 +47,7 @@
       },
       {
         "file_path": "src/HugeConstants.sol",
-        "n_sloc": 26
+        "n_sloc": 36
       },
       {
         "file_path": "src/InconsistentUints.sol",
@@ -91,7 +91,7 @@
       },
       {
         "file_path": "src/UnusedError.sol",
-        "n_sloc": 8
+        "n_sloc": 19
       },
       {
         "file_path": "src/WrongOrderOfLayout.sol",
@@ -1157,6 +1157,16 @@
             "contract_path": "src/HugeConstants.sol",
             "line_no": 25,
             "src": "1352:5"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 31,
+            "src": "1585:29"
+          },
+          {
+            "contract_path": "src/HugeConstants.sol",
+            "line_no": 32,
+            "src": "1673:6"
           }
         ]
       },
@@ -1213,8 +1223,13 @@
         "instances": [
           {
             "contract_path": "src/UnusedError.sol",
-            "line_no": 7,
-            "src": "120:49"
+            "line_no": 5,
+            "src": "84:27"
+          },
+          {
+            "contract_path": "src/UnusedError.sol",
+            "line_no": 13,
+            "src": "258:36"
           },
           {
             "contract_path": "src/WrongOrderOfLayout.sol",
