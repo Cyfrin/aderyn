@@ -209,6 +209,12 @@ impl Display for IssueSeverity {
     }
 }
 
+impl dyn IssueDetector {
+    pub fn skeletal_clone(&self) -> Box<dyn IssueDetector> {
+        request_issue_detector_by_name(self.name().as_str()).unwrap()
+    }
+}
+
 pub trait IssueDetector: Send + Sync + 'static {
     fn detect(&mut self, _context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         Ok(true)
