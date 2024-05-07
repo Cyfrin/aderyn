@@ -89,7 +89,7 @@ where
                             return Some(instances);
                         }
                     }
-                    return None;
+                    None
                 })
                 .collect::<Vec<_>>();
 
