@@ -144,21 +144,18 @@ fn has_binary_operation_checks(
     contract: Option<&ASTNode>,
     identifier_reference_declaration_id: &NodeID,
 ) -> bool {
-    if let Some(contract) = contract {
-        if let ASTNode::ContractDefinition(contract) = contract {
-            return ExtractBinaryOperations::from(contract)
-                .extracted
-                .iter()
-                .any(|binary_operation| {
-                    ExtractIdentifiers::from(binary_operation)
-                        .extracted
-                        .into_iter()
-                        .any(|identifier| {
-                            identifier.referenced_declaration
-                                == *identifier_reference_declaration_id
-                        })
-                });
-        }
+    if let Some(ASTNode::ContractDefinition(contract)) = contract {
+        return ExtractBinaryOperations::from(contract)
+            .extracted
+            .iter()
+            .any(|binary_operation| {
+                ExtractIdentifiers::from(binary_operation)
+                    .extracted
+                    .into_iter()
+                    .any(|identifier| {
+                        identifier.referenced_declaration == *identifier_reference_declaration_id
+                    })
+            });
     }
     false
 }
