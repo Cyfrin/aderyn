@@ -1,7 +1,7 @@
-use std::collections::{BTreeMap, HashMap};
+use std::collections::BTreeMap;
 use std::error::Error;
 
-use crate::ast::{Expression, FunctionCallKind, NodeID, TypeDescriptions, TypeName};
+use crate::ast::{Expression, FunctionCallKind, NodeID};
 
 use crate::capture;
 use crate::detect::detector::IssueDetectorNamePool;
@@ -40,7 +40,7 @@ impl IssueDetector for UnsafeCastingDetector {
 
                             if casting_from_type.contains("uint") {
                                 if let Some(casting_from_type_index) =
-                                    UINT_CASTING_MAP.get(&casting_from_type)
+                                    UINT_CASTING_MAP.get(casting_from_type)
                                 {
                                     // if casting from a larger uint to a smaller uint
                                     if casting_to_type.contains("uint")
@@ -54,7 +54,7 @@ impl IssueDetector for UnsafeCastingDetector {
                                 && !casting_from_type.contains("uint")
                             {
                                 if let Some(casting_from_type_index) =
-                                    INT_CASTING_MAP.get(&casting_from_type)
+                                    INT_CASTING_MAP.get(casting_from_type)
                                 {
                                     // if casting from a larger int to a smaller int
                                     if casting_to_type.contains("int")
@@ -69,7 +69,7 @@ impl IssueDetector for UnsafeCastingDetector {
                                 && !casting_from_type.contains("bytes ")
                             {
                                 if let Some(casting_from_type_index) =
-                                    BYTES32_CASTING_MAP.get(&casting_from_type)
+                                    BYTES32_CASTING_MAP.get(casting_from_type)
                                 {
                                     // if casting from a larger bytes32 to a smaller bytes32
                                     if casting_to_type.contains("bytes")
