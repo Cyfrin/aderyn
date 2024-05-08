@@ -68,12 +68,12 @@ impl IssueDetector for TxOriginAccesControl {
 }
 
 #[cfg(test)]
-mod template_detector_tests {
+mod tx_origin_detector_tests {
     use super::TxOriginAccesControl;
     use crate::detect::detector::{detector_test_helpers::load_contract, IssueDetector};
 
     #[test]
-    fn test_template_detector() {
+    fn test_tx_origin_detector() {
         let context = load_contract(
             "../tests/contract-playground/out/TxOriginAccessControl.sol/OriginControlledTransfer.json",
         );
