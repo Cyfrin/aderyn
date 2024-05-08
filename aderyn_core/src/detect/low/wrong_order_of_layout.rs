@@ -4,7 +4,7 @@ use crate::{
     ast::{NodeID, NodeType},
     capture,
     context::{
-        browser::{GetImmediateChildren, GetPreviousSibling, SortNodeReferencesToSequence},
+        browser::{GetImmediateChildren, SortNodeReferencesToSequence},
         workspace_context::WorkspaceContext,
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
@@ -17,92 +17,50 @@ pub struct WrongOrderOfLayoutDetector {
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
+static CORRECT_LAYOUT_ORDER: [NodeType; 8] = [
+    NodeType::InheritanceSpecifier,
+    NodeType::UsingForDirective,
+    NodeType::StructDefinition,
+    NodeType::VariableDeclaration,
+    NodeType::EventDefinition,
+    NodeType::ErrorDefinition,
+    NodeType::ModifierDefinition,
+    NodeType::FunctionDefinition,
+];
+
 impl IssueDetector for WrongOrderOfLayoutDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for contract_defs in context.contract_definitions() {
             if let Some(children) = contract_defs.children(context) {
                 if let Some(sorted) = children.sort_by_src_position(context) {
-                    for &sorted_child_node in sorted.iter() {
-                        if sorted_child_node.node_type() == NodeType::StructDefinition
-                            && sorted_child_node
-                                .previous_sibling(context)
-                                .is_some_and(|n| {
-                                    n.node_type() != NodeType::InheritanceSpecifier
-                                        && n.node_type() != NodeType::UsingForDirective
-                                        && n.node_type() != NodeType::StructDefinition
-                                })
+                    for curr_idx in 1..sorted.len() {
+                        let curr_node = sorted[curr_idx];
+                        let curr_node_type = curr_node.node_type();
+
+                        let prev_sibling = sorted[curr_idx - 1];
+                        let prev_sibling_type = prev_sibling.node_type();
+
+                        if let Some(curr_node_layout_idx) = CORRECT_LAYOUT_ORDER
+                            .iter()
+                            .position(|x| *x == curr_node_type)
                         {
-                            capture!(self, context, sorted_child_node);
-                        }
-                        if sorted_child_node.node_type() == NodeType::VariableDeclaration
-                            && sorted_child_node
-                                .previous_sibling(context)
-                                .is_some_and(|n| {
-                                    n.node_type() != NodeType::InheritanceSpecifier
-                                        && n.node_type() != NodeType::UsingForDirective
-                                        && n.node_type() != NodeType::StructDefinition
-                                        && n.node_type() != NodeType::VariableDeclaration
-                                })
-                        {
-                            capture!(self, context, sorted_child_node);
-                        }
-                        if sorted_child_node.node_type() == NodeType::EventDefinition
-                            && sorted_child_node
-                                .previous_sibling(context)
-                                .is_some_and(|n| {
-                                    n.node_type() != NodeType::InheritanceSpecifier
-                                        && n.node_type() != NodeType::UsingForDirective
-                                        && n.node_type() != NodeType::StructDefinition
-                                        && n.node_type() != NodeType::VariableDeclaration
-                                        && n.node_type() != NodeType::EventDefinition
-                                })
-                        {
-                            capture!(self, context, sorted_child_node);
-                        }
-                        if sorted_child_node.node_type() == NodeType::ErrorDefinition
-                            && sorted_child_node
-                                .previous_sibling(context)
-                                .is_some_and(|n| {
-                                    n.node_type() != NodeType::InheritanceSpecifier
-                                        && n.node_type() != NodeType::UsingForDirective
-                                        && n.node_type() != NodeType::StructDefinition
-                                        && n.node_type() != NodeType::VariableDeclaration
-                                        && n.node_type() != NodeType::EventDefinition
-                                        && n.node_type() != NodeType::ErrorDefinition
-                                })
-                        {
-                            capture!(self, context, sorted_child_node);
-                        }
-                        if sorted_child_node.node_type() == NodeType::ModifierDefinition
-                            && sorted_child_node
-                                .previous_sibling(context)
-                                .is_some_and(|n| {
-                                    n.node_type() != NodeType::InheritanceSpecifier
-                                        && n.node_type() != NodeType::UsingForDirective
-                                        && n.node_type() != NodeType::StructDefinition
-                                        && n.node_type() != NodeType::VariableDeclaration
-                                        && n.node_type() != NodeType::EventDefinition
-                                        && n.node_type() != NodeType::ErrorDefinition
-                                        && n.node_type() != NodeType::ModifierDefinition
-                                })
-                        {
-                            capture!(self, context, sorted_child_node);
-                        }
-                        if sorted_child_node.node_type() == NodeType::FunctionDefinition
-                            && sorted_child_node
-                                .previous_sibling(context)
-                                .is_some_and(|n| {
-                                    n.node_type() != NodeType::InheritanceSpecifier
-                                        && n.node_type() != NodeType::UsingForDirective
-                                        && n.node_type() != NodeType::StructDefinition
-                                        && n.node_type() != NodeType::VariableDeclaration
-                                        && n.node_type() != NodeType::EventDefinition
-                                        && n.node_type() != NodeType::ErrorDefinition
-                                        && n.node_type() != NodeType::ModifierDefinition
-                                        && n.node_type() != NodeType::FunctionDefinition
-                                })
-                        {
-                            capture!(self, context, sorted_child_node);
+                            let is_misplaced = &CORRECT_LAYOUT_ORDER[0..=curr_node_layout_idx]
+                                .iter()
+                                .all(|node_type| *node_type != prev_sibling_type);
+
+                            if *is_misplaced
+                                && matches!(
+                                    curr_node_type,
+                                    NodeType::StructDefinition
+                                        | NodeType::VariableDeclaration
+                                        | NodeType::EventDefinition
+                                        | NodeType::ErrorDefinition
+                                        | NodeType::ModifierDefinition
+                                        | NodeType::FunctionDefinition
+                                )
+                            {
+                                capture!(self, context, curr_node);
+                            }
                         }
                     }
                 }
