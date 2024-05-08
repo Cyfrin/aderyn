@@ -10,7 +10,8 @@ use eyre::Result;
 
 #[derive(Default)]
 pub struct LargeLiteralValueDetector {
-    // Keys are source file name and line number
+    // Keys are: [0] source file name, [1] line number, [2] character location of node.
+    // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
@@ -22,7 +23,12 @@ impl IssueDetector for LargeLiteralValueDetector {
             .filter(|x| x.kind == LiteralKind::Number)
         {
             if let Some(value) = numeric_literal.value.clone() {
-                if value.ends_with("0000") {
+                // Strip any underscore separators
+                let value_no_underscores = value.replace('_', "");
+                let is_huge = value_no_underscores.ends_with("0000");
+                let is_hex = value_no_underscores.starts_with("0x");
+                let is_exp = value_no_underscores.contains('e');
+                if is_huge && !is_hex && !is_exp {
                     capture!(self, context, numeric_literal);
                 }
             }
@@ -70,7 +76,7 @@ mod large_literal_values {
         let found = detector.detect(&context).unwrap();
         assert!(found);
         // assert that the detector finds the correct number of instances
-        assert_eq!(detector.instances().len(), 20);
+        assert_eq!(detector.instances().len(), 22);
         // assert that the detector returns the correct severity
         assert_eq!(
             detector.severity(),

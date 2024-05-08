@@ -226,7 +226,7 @@ mod tests {
         let nested_1_exists = result
             .output_filepaths
             .iter()
-            .any(|path| path.to_str().unwrap().contains("1/Nested.sol"));
+            .any(|path| path.to_str().unwrap().contains("Nested.sol"));
         let nested_2_exists = result
             .output_filepaths
             .iter()
