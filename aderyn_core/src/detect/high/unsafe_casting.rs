@@ -1,9 +1,13 @@
 use std::collections::BTreeMap;
 use std::error::Error;
 
-use crate::ast::{Expression, FunctionCallKind, NodeID};
+use crate::ast::{Expression, FunctionCallKind, NodeID, NodeType};
 
 use crate::capture;
+use crate::context::browser::{
+    ExtractBinaryOperations, ExtractIdentifiers, GetClosestAncestorOfTypeX,
+};
+use crate::context::workspace_context::ASTNode;
 use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
     context::workspace_context::WorkspaceContext,
@@ -32,6 +36,13 @@ impl IssueDetector for UnsafeCastingDetector {
                         .as_ref()
                         .unwrap();
 
+                    let identifier_id = match &function_call.arguments[0] {
+                        Expression::Identifier(identifier) => identifier.referenced_declaration,
+                        _ => {
+                            return;
+                        }
+                    };
+
                     if let Expression::ElementaryTypeNameExpression(to_expression) =
                         &*function_call.expression
                     {
@@ -47,7 +58,16 @@ impl IssueDetector for UnsafeCastingDetector {
                                         && casting_from_type_index
                                             > UINT_CASTING_MAP.get(casting_to_type).unwrap()
                                     {
-                                        capture!(self, context, function_call);
+                                        // Check if there are any binary operations that involve the identifier
+                                        if !has_binary_operation_checks(
+                                            function_call.closest_ancestor_of_type(
+                                                context,
+                                                NodeType::ContractDefinition,
+                                            ),
+                                            &identifier_id,
+                                        ) {
+                                            capture!(self, context, function_call);
+                                        }
                                     }
                                 }
                             } else if casting_from_type.contains("int")
@@ -62,7 +82,16 @@ impl IssueDetector for UnsafeCastingDetector {
                                         && casting_from_type_index
                                             > INT_CASTING_MAP.get(casting_to_type).unwrap()
                                     {
-                                        capture!(self, context, function_call);
+                                        // Check if there are any binary operations that involve the identifier
+                                        if !has_binary_operation_checks(
+                                            function_call.closest_ancestor_of_type(
+                                                context,
+                                                NodeType::ContractDefinition,
+                                            ),
+                                            &identifier_id,
+                                        ) {
+                                            capture!(self, context, function_call);
+                                        }
                                     }
                                 }
                             } else if casting_from_type.contains("bytes")
@@ -109,6 +138,29 @@ impl IssueDetector for UnsafeCastingDetector {
     fn name(&self) -> String {
         format!("{}", IssueDetectorNamePool::UnsafeCastingDetector)
     }
+}
+
+fn has_binary_operation_checks(
+    contract: Option<&ASTNode>,
+    identifier_reference_declaration_id: &NodeID,
+) -> bool {
+    if let Some(contract) = contract {
+        if let ASTNode::ContractDefinition(contract) = contract {
+            return ExtractBinaryOperations::from(contract)
+                .extracted
+                .iter()
+                .any(|binary_operation| {
+                    ExtractIdentifiers::from(binary_operation)
+                        .extracted
+                        .into_iter()
+                        .any(|identifier| {
+                            identifier.referenced_declaration
+                                == *identifier_reference_declaration_id
+                        })
+                });
+        }
+    }
+    false
 }
 
 static UINT_CASTING_MAP: phf::Map<&'static str, usize> = phf_map! {

@@ -1,11 +1,31 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity 0.8.19;
 
+import {SafeCast} from "../lib/openzeppelin-contracts/contracts/utils/math/SafeCast.sol";
+
 contract Casting {
+    using SafeCast for uint256;
+    using SafeCast for int256;
 
     uint8 public uint8Value = 0x12;
     int8 public int8Value = -0x12;
     bytes1 public bytes1Value = 0x12;
+
+    // All good
+    function safeCastingExamples() external pure returns (uint128 b, int128 d, uint128 x, int128 y) {
+        uint256 a = 0x1234567890abcdef;
+        if (a > type(uint128).max) {
+            revert("Value too large for uint128");
+        }
+        b = uint128(a);
+
+        int256 c = -0x1234567890abcdef;
+        require(c >= type(int128).min && c <= type(int128).max, "Value does not fit in int128");
+        d = int128(c);
+
+        x = a.toUint128();
+        y = c.toInt128();
+    }
 
     function unsafeUintCasting() external {
         uint unspecificUint = 0x1234567890abcdef;
