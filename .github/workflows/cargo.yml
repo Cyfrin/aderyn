@@ -63,6 +63,12 @@ jobs:
           toolchain: stable
           override: true
 
+      - name: Install 
+        run: |
+          cd tests/contract-playrgound/
+          forge install
+          cd ../../
+
       # Verify report.md
 
       - name: Generate report-workflow.md
