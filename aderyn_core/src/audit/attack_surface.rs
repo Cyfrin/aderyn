@@ -144,13 +144,8 @@ mod attack_surface_detector_tests {
 
         let mut detector = AttackSurfaceDetector::default();
         let found = detector.detect(&context).unwrap();
-        detector.print(&context);
         // assert that the detector found an issue
         assert!(found);
-        // assert the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from("Attack Surface - External Contract Calls")
-        );
+        assert!(detector.found_instances.len() == 8);
     }
 }
