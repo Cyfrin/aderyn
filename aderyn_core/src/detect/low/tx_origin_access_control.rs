@@ -75,13 +75,13 @@ mod template_detector_tests {
     #[test]
     fn test_template_detector() {
         let context = load_contract(
-            "../tests/contract-playground/out/TxOriginAccesControl.sol/OriginControlledTransfer.json",
+            "../tests/contract-playground/out/TxOriginAccessControl.sol/OriginControlledTransfer.json",
         );
 
         let mut detector = TxOriginAccesControl::default();
         let found = detector.detect(&context).unwrap();
         assert!(found);
-        assert_eq!(detector.instances().len(), 1);
+        assert_eq!(detector.instances().len(), 2);
         assert_eq!(
             detector.severity(),
             crate::detect::detector::IssueSeverity::Low
