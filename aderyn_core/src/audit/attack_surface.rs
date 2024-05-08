@@ -2,7 +2,7 @@ use prettytable::{format, row, Table};
 
 use super::auditor::AuditorDetector;
 use crate::{
-    ast::{ElementaryTypeName, Expression, FunctionCallKind, NodeID, TypeName},
+    ast::{Expression, FunctionCallKind, NodeID, TypeName},
     context::{
         browser::Peek,
         workspace_context::{ASTNode, WorkspaceContext},
@@ -91,7 +91,7 @@ impl AuditorDetector for AttackSurfaceDetector {
     fn print(&self, context: &WorkspaceContext) {
         let mut table = Table::new();
 
-        println!("");
+        println!();
         println!("{}:", self.title());
         table.set_titles(row!["Contract", "Function", "Code", "Address Source"]);
 

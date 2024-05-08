@@ -129,6 +129,10 @@
         "n_sloc": 41
       },
       {
+        "file_path": "src/auditor_mode/ExternalCalls.sol",
+        "n_sloc": 65
+      },
+      {
         "file_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
         "n_sloc": 32
       },
@@ -179,8 +183,8 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 1013,
-    "total_source_units": 36
+    "total_sloc": 1078,
+    "total_source_units": 37
   },
   "high_issues": {
     "issues": [
