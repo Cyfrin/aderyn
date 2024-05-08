@@ -65,7 +65,7 @@ jobs:
 
       - name: Install 
         run: |
-          cd tests/contract-playrgound/
+          cd ./tests/contract-playground/
           forge install
           cd ../../
 
