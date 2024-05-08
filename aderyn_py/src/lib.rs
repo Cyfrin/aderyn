@@ -17,6 +17,7 @@ fn main() {
             exclude: None,            // TODO support this later
             stdout: false,            // TODO support this later
             skip_update_check: false, // TODO support this later
+            auditor_mode: false,      // TODO support this later
         };
         driver::drive(args);
     }
