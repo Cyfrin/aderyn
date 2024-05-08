@@ -28,7 +28,8 @@
     "useless-error",
     "reverts-and-requires-in-loops",
     "wrong-order-of-layout",
-    "division-before-multiplication"
+    "division-before-multiplication",
+    "unsafe-casting-detector"
   ],
   "files_details": {
     "files_details": [
@@ -43,6 +44,10 @@
       {
         "file_path": "src/AssemblyExample.sol",
         "n_sloc": 9
+      },
+      {
+        "file_path": "src/Casting.sol",
+        "n_sloc": 111
       },
       {
         "file_path": "src/ConstantsLiterals.sol",
@@ -183,8 +188,8 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 1078,
-    "total_source_units": 37
+    "total_sloc": 1189,
+    "total_source_units": 38
   },
   "high_issues": {
     "issues": [
@@ -362,11 +367,503 @@
           }
         ],
         "title": "Unprotected initializer"
+      },
+      {
+        "description": "Downcasting int/uints in Solidity can be unsafe due to the potential for data loss and unintended behavior.When downcasting a larger integer type to a smaller one (e.g., uint256 to uint128), the value may exceed the range of the target type,leading to truncation and loss of significant digits. Use OpenZeppelin's SafeCast library to safely downcast integers.",
+        "detector_name": "unsafe-casting-detector",
+        "instances": [
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 15,
+            "src": "409:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 16,
+            "src": "441:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 17,
+            "src": "473:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 18,
+            "src": "505:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 19,
+            "src": "537:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 20,
+            "src": "569:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 21,
+            "src": "601:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 22,
+            "src": "633:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 23,
+            "src": "665:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 24,
+            "src": "697:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 25,
+            "src": "729:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 26,
+            "src": "761:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 27,
+            "src": "793:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 28,
+            "src": "825:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 29,
+            "src": "857:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 30,
+            "src": "889:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 31,
+            "src": "921:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 32,
+            "src": "953:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 33,
+            "src": "985:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 34,
+            "src": "1016:9"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 35,
+            "src": "1046:9"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 36,
+            "src": "1076:9"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 37,
+            "src": "1106:9"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 38,
+            "src": "1136:9"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 39,
+            "src": "1166:9"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 40,
+            "src": "1197:9"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 41,
+            "src": "1228:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 42,
+            "src": "1260:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 43,
+            "src": "1292:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 44,
+            "src": "1324:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 45,
+            "src": "1357:9"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 53,
+            "src": "1586:9"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 54,
+            "src": "1616:9"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 55,
+            "src": "1646:9"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 56,
+            "src": "1676:9"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 57,
+            "src": "1706:9"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 58,
+            "src": "1736:9"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 59,
+            "src": "1766:9"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 60,
+            "src": "1796:9"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 61,
+            "src": "1826:9"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 62,
+            "src": "1856:9"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 63,
+            "src": "1886:9"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 64,
+            "src": "1916:9"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 65,
+            "src": "1946:9"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 66,
+            "src": "1976:9"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 67,
+            "src": "2006:9"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 68,
+            "src": "2036:9"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 69,
+            "src": "2066:9"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 70,
+            "src": "2096:9"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 71,
+            "src": "2126:9"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 72,
+            "src": "2155:8"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 73,
+            "src": "2183:8"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 74,
+            "src": "2211:8"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 75,
+            "src": "2239:8"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 76,
+            "src": "2267:8"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 77,
+            "src": "2295:8"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 78,
+            "src": "2324:8"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 79,
+            "src": "2353:9"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 80,
+            "src": "2383:9"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 81,
+            "src": "2413:9"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 82,
+            "src": "2443:9"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 83,
+            "src": "2474:8"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 91,
+            "src": "2770:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 92,
+            "src": "2802:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 93,
+            "src": "2834:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 94,
+            "src": "2866:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 95,
+            "src": "2898:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 96,
+            "src": "2930:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 97,
+            "src": "2962:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 98,
+            "src": "2994:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 99,
+            "src": "3026:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 100,
+            "src": "3058:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 101,
+            "src": "3090:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 102,
+            "src": "3122:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 103,
+            "src": "3154:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 104,
+            "src": "3186:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 105,
+            "src": "3218:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 106,
+            "src": "3250:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 107,
+            "src": "3282:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 108,
+            "src": "3314:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 109,
+            "src": "3346:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 110,
+            "src": "3378:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 111,
+            "src": "3410:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 112,
+            "src": "3442:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 113,
+            "src": "3473:9"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 114,
+            "src": "3503:9"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 115,
+            "src": "3533:9"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 116,
+            "src": "3564:9"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 117,
+            "src": "3595:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 118,
+            "src": "3627:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 119,
+            "src": "3659:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 120,
+            "src": "3691:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 121,
+            "src": "3725:10"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 82,
+            "src": "5672:21"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 86,
+            "src": "5833:21"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 107,
+            "src": "6855:22"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 108,
+            "src": "6977:21"
+          }
+        ],
+        "title": "Unsafe Casting"
       }
     ]
   },
   "issue_count": {
-    "high": 5,
+    "high": 6,
     "low": 24
   },
   "low_issues": {
@@ -686,6 +1183,16 @@
         "description": "If the same constant literal value is used multiple times, create a constant state variable and reference it throughout the contract.",
         "detector_name": "constants-instead-of-literals",
         "instances": [
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 11,
+            "src": "265:18"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 49,
+            "src": "1447:18"
+          },
           {
             "contract_path": "src/ConstantsLiterals.sol",
             "line_no": 25,
@@ -1238,6 +1745,11 @@
         "description": "Consider keeping the naming convention consistent in a given contract",
         "detector_name": "inconsistent-type-names",
         "instances": [
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 4,
+            "src": "70:7"
+          },
           {
             "contract_path": "src/InconsistentUints.sol",
             "line_no": 3,
