@@ -74,9 +74,10 @@ impl AuditorDetector for AttackSurfaceDetector {
     fn print(&self, context: &WorkspaceContext) {
         let mut table = Table::new();
 
+        println!("{}:", self.title());
         table.set_titles(row!["Contract", "Function", "Code", "Address Source"]);
 
-        for (key, attack_surface_context) in &self.found_instances {
+        for (_, attack_surface_context) in &self.found_instances {
             let ast_node = context.nodes.get(&attack_surface_context.id).unwrap();
             if let ASTNode::MemberAccess(member_access) = ast_node {
                 let member_access_context =

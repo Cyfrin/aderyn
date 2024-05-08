@@ -7,6 +7,7 @@ pub mod fscloc;
 pub mod report;
 pub mod visitor;
 
+use audit::auditor::get_auditor_detectors;
 use detect::detector::{self, IssueDetector};
 use eyre::Result;
 use rayon::iter::{IntoParallelRefMutIterator, ParallelIterator};
@@ -46,10 +47,16 @@ where
             detectors,
         );
     }
-    run_auditor_mode()
+    run_auditor_mode(context)
 }
 
-fn run_auditor_mode() -> Result<(), Box<dyn Error>> {
+fn run_auditor_mode(context: &WorkspaceContext) -> Result<(), Box<dyn Error>> {
+    get_auditor_detectors().par_iter_mut().for_each(|detector| {
+        let found = detector.detect(context).unwrap();
+        if found {
+            detector.print(context);
+        }
+    });
     Ok(())
 }
 
