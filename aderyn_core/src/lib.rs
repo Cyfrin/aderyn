@@ -1,4 +1,5 @@
 pub mod ast;
+pub mod audit;
 pub mod context;
 pub mod detect;
 pub mod framework;
@@ -6,6 +7,7 @@ pub mod fscloc;
 pub mod report;
 pub mod visitor;
 
+use audit::auditor::get_auditor_detectors;
 use detect::detector::IssueDetector;
 use eyre::Result;
 use rayon::iter::{IntoParallelRefMutIterator, ParallelIterator};
@@ -21,7 +23,45 @@ use crate::report::printer::ReportPrinter;
 use crate::report::reporter::Report;
 use crate::report::Issue;
 
+#[allow(clippy::too_many_arguments)]
 pub fn run<T>(
+    context: &WorkspaceContext,
+    output_file_path: String,
+    reporter: T,
+    root_rel_path: PathBuf,
+    no_snippets: bool,
+    stdout: bool,
+    auditor_mode: bool,
+    detectors: Vec<Box<dyn IssueDetector>>,
+) -> Result<(), Box<dyn Error>>
+where
+    T: ReportPrinter<()>,
+{
+    if !auditor_mode {
+        return run_detector_mode(
+            context,
+            output_file_path,
+            reporter,
+            root_rel_path,
+            no_snippets,
+            stdout,
+            detectors,
+        );
+    }
+    run_auditor_mode(context)
+}
+
+fn run_auditor_mode(context: &WorkspaceContext) -> Result<(), Box<dyn Error>> {
+    get_auditor_detectors().par_iter_mut().for_each(|detector| {
+        let found = detector.detect(context).unwrap();
+        if found {
+            detector.print(context);
+        }
+    });
+    Ok(())
+}
+
+fn run_detector_mode<T>(
     context: &WorkspaceContext,
     output_file_path: String,
     reporter: T,
