@@ -28,7 +28,8 @@
     "useless-error",
     "reverts-and-requires-in-loops",
     "wrong-order-of-layout",
-    "division-before-multiplication"
+    "division-before-multiplication",
+    "tx-origin-acces-control"
   ],
   "files_details": {
     "files_details": [
@@ -109,6 +110,10 @@
         "n_sloc": 8
       },
       {
+        "file_path": "src/TxOriginAccessControl.sol",
+        "n_sloc": 24
+      },
+      {
         "file_path": "src/UnprotectedInitialize.sol",
         "n_sloc": 25
       },
@@ -179,8 +184,8 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 1013,
-    "total_source_units": 36
+    "total_sloc": 1037,
+    "total_source_units": 37
   },
   "high_issues": {
     "issues": [
@@ -363,7 +368,7 @@
   },
   "issue_count": {
     "high": 5,
-    "low": 24
+    "low": 25
   },
   "low_issues": {
     "issues": [
@@ -400,6 +405,16 @@
             "contract_path": "src/InternalFunctions.sol",
             "line_no": 12,
             "src": "250:9"
+          },
+          {
+            "contract_path": "src/TxOriginAccessControl.sol",
+            "line_no": 18,
+            "src": "454:9"
+          },
+          {
+            "contract_path": "src/TxOriginAccessControl.sol",
+            "line_no": 22,
+            "src": "578:9"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
@@ -503,6 +518,16 @@
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 47,
             "src": "1598:18"
+          },
+          {
+            "contract_path": "src/TxOriginAccessControl.sol",
+            "line_no": 23,
+            "src": "598:18"
+          },
+          {
+            "contract_path": "src/TxOriginAccessControl.sol",
+            "line_no": 29,
+            "src": "832:17"
           }
         ],
         "title": "Unsafe ERC20 Operations should not be used"
@@ -567,6 +592,11 @@
             "contract_path": "src/StateVariables.sol",
             "line_no": 58,
             "src": "2121:14"
+          },
+          {
+            "contract_path": "src/TxOriginAccessControl.sol",
+            "line_no": 19,
+            "src": "474:17"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
@@ -639,6 +669,21 @@
             "contract_path": "src/StateVariables.sol",
             "line_no": 71,
             "src": "2539:25"
+          },
+          {
+            "contract_path": "src/TxOriginAccessControl.sol",
+            "line_no": 18,
+            "src": "409:11"
+          },
+          {
+            "contract_path": "src/TxOriginAccessControl.sol",
+            "line_no": 22,
+            "src": "513:15"
+          },
+          {
+            "contract_path": "src/TxOriginAccessControl.sol",
+            "line_no": 27,
+            "src": "702:8"
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
@@ -759,6 +804,11 @@
         "description": "Index event fields make the field more quickly accessible to off-chain tools that parse events. However, note that each index field costs extra gas during emission, so it's not necessarily best to index the maximum allowed per event (three fields). Each event should use three indexed fields if there are three or more fields, and gas usage is not particularly of concern for the events in question. If there are fewer than three fields, all of the fields should be indexed.",
         "detector_name": "unindexed-events",
         "instances": [
+          {
+            "contract_path": "src/TxOriginAccessControl.sol",
+            "line_no": 7,
+            "src": "134:85"
+          },
           {
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 19,
@@ -1240,6 +1290,11 @@
             "src": "35:34"
           },
           {
+            "contract_path": "src/TxOriginAccessControl.sol",
+            "line_no": 4,
+            "src": "66:24"
+          },
+          {
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 58,
             "src": "4547:15"
@@ -1326,6 +1381,11 @@
             "src": "1367:18"
           },
           {
+            "contract_path": "src/TxOriginAccessControl.sol",
+            "line_no": 13,
+            "src": "299:9"
+          },
+          {
             "contract_path": "src/UnprotectedInitialize.sol",
             "line_no": 13,
             "src": "222:21"
@@ -1369,6 +1429,23 @@
           }
         ],
         "title": "Incorrect Order of Division and Multiplication"
+      },
+      {
+        "description": "Using tx.origin for authentication allows attackers to impersonate legitimate users, leading to unauthorized actions.",
+        "detector_name": "tx-origin-acces-control",
+        "instances": [
+          {
+            "contract_path": "src/TxOriginAccessControl.sol",
+            "line_no": 14,
+            "src": "329:9"
+          },
+          {
+            "contract_path": "src/TxOriginAccessControl.sol",
+            "line_no": 28,
+            "src": "775:9"
+          }
+        ],
+        "title": "Insecure tx.origin Authentication"
       }
     ]
   }
