@@ -2,9 +2,7 @@ use prettytable::{format, row, Table};
 
 use super::auditor::AuditorDetector;
 use crate::{
-    ast::{
-        Expression, NodeID,
-    },
+    ast::{Expression, NodeID},
     context::{
         browser::Peek,
         workspace_context::{ASTNode, WorkspaceContext},
@@ -27,8 +25,6 @@ pub struct AttackSurfaceContext {
 pub struct AttackSurfaceDetector {
     found_instances: BTreeMap<(String, usize, String), AttackSurfaceContext>,
 }
-
-
 
 impl AuditorDetector for AttackSurfaceDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
@@ -71,7 +67,7 @@ impl AuditorDetector for AttackSurfaceDetector {
         println!("{}:", self.title());
         table.set_titles(row!["Contract", "Function", "Code", "Address Source"]);
 
-        for (_, attack_surface_context) in &self.found_instances {
+        for attack_surface_context in self.found_instances.values() {
             let ast_node = context.nodes.get(&attack_surface_context.id).unwrap();
             if let ASTNode::MemberAccess(member_access) = ast_node {
                 let member_access_context =

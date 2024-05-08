@@ -8,7 +8,7 @@ pub mod report;
 pub mod visitor;
 
 use audit::auditor::get_auditor_detectors;
-use detect::detector::{IssueDetector};
+use detect::detector::IssueDetector;
 use eyre::Result;
 use rayon::iter::{IntoParallelRefMutIterator, ParallelIterator};
 use std::error::Error;
@@ -23,6 +23,7 @@ use crate::report::printer::ReportPrinter;
 use crate::report::reporter::Report;
 use crate::report::Issue;
 
+#[allow(clippy::too_many_arguments)]
 pub fn run<T>(
     context: &WorkspaceContext,
     output_file_path: String,

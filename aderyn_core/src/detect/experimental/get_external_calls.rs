@@ -1,7 +1,7 @@
 use std::collections::BTreeMap;
 use std::error::Error;
 
-use crate::ast::{NodeID};
+use crate::ast::NodeID;
 
 use crate::capture;
 
