@@ -18,6 +18,7 @@ pub struct Args {
     pub skip_cloc: bool,
     pub skip_update_check: bool,
     pub stdout: bool,
+    pub auditor_mode: bool,
 }
 
 enum Framework {
@@ -44,6 +45,7 @@ pub fn drive_with(args: Args, detectors: Vec<Box<dyn IssueDetector>>) {
             root_rel_path,
             args.no_snippets,
             args.stdout,
+            args.auditor_mode,
             detectors,
         )
         .unwrap_or_else(|err| {
@@ -61,6 +63,7 @@ pub fn drive_with(args: Args, detectors: Vec<Box<dyn IssueDetector>>) {
             root_rel_path,
             args.no_snippets,
             args.stdout,
+            args.auditor_mode,
             detectors,
         )
         .unwrap_or_else(|err| {

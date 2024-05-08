@@ -6,7 +6,7 @@ pub mod fscloc;
 pub mod report;
 pub mod visitor;
 
-use detect::detector::IssueDetector;
+use detect::detector::{self, IssueDetector};
 use eyre::Result;
 use rayon::iter::{IntoParallelRefMutIterator, ParallelIterator};
 use std::error::Error;
@@ -22,6 +22,37 @@ use crate::report::reporter::Report;
 use crate::report::Issue;
 
 pub fn run<T>(
+    context: &WorkspaceContext,
+    output_file_path: String,
+    reporter: T,
+    root_rel_path: PathBuf,
+    no_snippets: bool,
+    stdout: bool,
+    auditor_mode: bool,
+    detectors: Vec<Box<dyn IssueDetector>>,
+) -> Result<(), Box<dyn Error>>
+where
+    T: ReportPrinter<()>,
+{
+    if !auditor_mode {
+        return run_detector_mode(
+            context,
+            output_file_path,
+            reporter,
+            root_rel_path,
+            no_snippets,
+            stdout,
+            detectors,
+        );
+    }
+    run_auditor_mode()
+}
+
+fn run_auditor_mode() -> Result<(), Box<dyn Error>> {
+    Ok(())
+}
+
+fn run_detector_mode<T>(
     context: &WorkspaceContext,
     output_file_path: String,
     reporter: T,
