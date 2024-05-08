@@ -2,7 +2,7 @@ use prettytable::{format, row, Table};
 
 use super::auditor::AuditorDetector;
 use crate::{
-    ast::{Expression, NodeID},
+    ast::{ElementaryTypeName, Expression, FunctionCallKind, NodeID, TypeName},
     context::{
         browser::Peek,
         workspace_context::{ASTNode, WorkspaceContext},
@@ -34,6 +34,7 @@ impl AuditorDetector for AttackSurfaceDetector {
                 address_source: AddressSource::Havoc,
             };
 
+            // someAddress.call();
             if let Expression::Identifier(identifier) = &*member_access.expression {
                 let referenced_declaration = context.nodes.get(&identifier.referenced_declaration);
                 if let Some(ASTNode::VariableDeclaration(variable_declaration)) =
@@ -44,11 +45,37 @@ impl AuditorDetector for AttackSurfaceDetector {
                     }
                 }
             }
-            // if let Expression::FunctionCall(function_call) = &*member_access.expression {
-            //     if function_call.kind == FunctionCallKind::TypeConversion {
-            //         // it probably address(something)
-            //     }
-            // }
+            // address(someContract).call();
+            if let Expression::FunctionCall(function_call) = &*member_access.expression {
+                if function_call.kind == FunctionCallKind::TypeConversion {
+                    if let Expression::ElementaryTypeNameExpression(
+                        elementary_type_name_expression,
+                    ) = &*function_call.expression
+                    {
+                        if let TypeName::ElementaryTypeName(elementary_type_name) =
+                            &elementary_type_name_expression.type_name
+                        {
+                            if elementary_type_name.name == "address" {
+                                if let Expression::Identifier(identifier) =
+                                    &function_call.arguments[0]
+                                {
+                                    let referenced_declaration =
+                                        context.nodes.get(&identifier.referenced_declaration);
+                                    if let Some(ASTNode::VariableDeclaration(
+                                        variable_declaration,
+                                    )) = referenced_declaration
+                                    {
+                                        if variable_declaration.state_variable {
+                                            attack_surface_context.address_source =
+                                                AddressSource::Storage;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
             self.found_instances.insert(
                 context.get_node_sort_key(&member_access.into()),
                 attack_surface_context,
@@ -58,12 +85,13 @@ impl AuditorDetector for AttackSurfaceDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Attack Surface - External Contract Calls")
+        String::from("Attack Surface - External Contract `call` and `delegatecall` Instances")
     }
 
     fn print(&self, context: &WorkspaceContext) {
         let mut table = Table::new();
 
+        println!("");
         println!("{}:", self.title());
         table.set_titles(row!["Contract", "Function", "Code", "Address Source"]);
 
