@@ -3,8 +3,7 @@ use prettytable::{format, row, Table};
 use super::auditor::AuditorDetector;
 use crate::{
     ast::{
-        ContractDefinition, Expression, FunctionCall, FunctionCallKind, FunctionDefinition,
-        Identifier, MemberAccess, NodeID, NodeType,
+        Expression, NodeID,
     },
     context::{
         browser::Peek,
@@ -24,17 +23,12 @@ pub struct AttackSurfaceContext {
     address_source: AddressSource,
 }
 
+#[derive(Default)]
 pub struct AttackSurfaceDetector {
     found_instances: BTreeMap<(String, usize, String), AttackSurfaceContext>,
 }
 
-impl Default for AttackSurfaceDetector {
-    fn default() -> Self {
-        Self {
-            found_instances: BTreeMap::new(),
-        }
-    }
-}
+
 
 impl AuditorDetector for AttackSurfaceDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {

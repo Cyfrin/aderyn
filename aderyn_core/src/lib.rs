@@ -8,7 +8,7 @@ pub mod report;
 pub mod visitor;
 
 use audit::auditor::get_auditor_detectors;
-use detect::detector::{self, IssueDetector};
+use detect::detector::{IssueDetector};
 use eyre::Result;
 use rayon::iter::{IntoParallelRefMutIterator, ParallelIterator};
 use std::error::Error;

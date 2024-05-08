@@ -1,10 +1,10 @@
 use std::collections::BTreeMap;
 use std::error::Error;
 
-use crate::ast::{NodeID, TypeName};
+use crate::ast::{NodeID};
 
 use crate::capture;
-use crate::detect::detector::IssueDetectorNamePool;
+
 use crate::detect::helpers::get_calls_and_delegate_calls;
 use crate::{
     context::workspace_context::WorkspaceContext,
@@ -45,7 +45,7 @@ impl IssueDetector for ExternalCallsDetector {
     }
 
     fn name(&self) -> String {
-        format!("high-issue-template")
+        "high-issue-template".to_string()
     }
 }
 

@@ -5,7 +5,7 @@ use crate::{
 };
 
 pub fn get_auditor_detectors() -> Vec<Box<dyn AuditorDetector>> {
-    vec![Box::new(AttackSurfaceDetector::default())]
+    vec![Box::<AttackSurfaceDetector>::default()]
 }
 
 pub trait AuditorDetector: Send + Sync + 'static {
