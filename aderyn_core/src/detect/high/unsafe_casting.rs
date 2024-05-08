@@ -1,7 +1,7 @@
 use std::collections::{BTreeMap, HashMap};
 use std::error::Error;
 
-use crate::ast::{FunctionCallKind, NodeID, TypeDescriptions, TypeName};
+use crate::ast::{Expression, FunctionCallKind, NodeID, TypeDescriptions, TypeName};
 
 use crate::capture;
 use crate::detect::detector::IssueDetectorNamePool;
@@ -11,6 +11,105 @@ use crate::{
 };
 use eyre::Result;
 use phf::phf_map;
+
+#[derive(Default)]
+pub struct UnsafeCastingDetector {
+    // Keys are: [0] source file name, [1] line number, [2] character location of node.
+    // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
+    found_instances: BTreeMap<(String, usize, String), NodeID>,
+}
+
+impl IssueDetector for UnsafeCastingDetector {
+    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
+        context
+            .function_calls()
+            .into_iter()
+            .for_each(|function_call| {
+                if function_call.kind == FunctionCallKind::TypeConversion {
+                    let casting_to_type = function_call
+                        .type_descriptions
+                        .type_string
+                        .as_ref()
+                        .unwrap();
+
+                    if let Expression::ElementaryTypeNameExpression(to_expression) =
+                        &*function_call.expression
+                    {
+                        if let Some(argument_types) = &to_expression.argument_types {
+                            let casting_from_type = argument_types[0].type_string.as_ref().unwrap();
+
+                            if casting_from_type.contains("uint") {
+                                if let Some(casting_from_type_index) =
+                                    UINT_CASTING_MAP.get(&casting_from_type)
+                                {
+                                    // if casting from a larger uint to a smaller uint
+                                    if casting_to_type.contains("uint")
+                                        && casting_from_type_index
+                                            > UINT_CASTING_MAP.get(casting_to_type).unwrap()
+                                    {
+                                        capture!(self, context, function_call);
+                                    }
+                                }
+                            } else if casting_from_type.contains("int")
+                                && !casting_from_type.contains("uint")
+                            {
+                                if let Some(casting_from_type_index) =
+                                    INT_CASTING_MAP.get(&casting_from_type)
+                                {
+                                    // if casting from a larger int to a smaller int
+                                    if casting_to_type.contains("int")
+                                        && !casting_to_type.contains("uint")
+                                        && casting_from_type_index
+                                            > INT_CASTING_MAP.get(casting_to_type).unwrap()
+                                    {
+                                        capture!(self, context, function_call);
+                                    }
+                                }
+                            } else if casting_from_type.contains("bytes")
+                                && !casting_from_type.contains("bytes ")
+                            {
+                                if let Some(casting_from_type_index) =
+                                    BYTES32_CASTING_MAP.get(&casting_from_type)
+                                {
+                                    // if casting from a larger bytes32 to a smaller bytes32
+                                    if casting_to_type.contains("bytes")
+                                        && !casting_to_type.contains("bytes ")
+                                        && casting_from_type_index
+                                            > BYTES32_CASTING_MAP.get(casting_to_type).unwrap()
+                                    {
+                                        capture!(self, context, function_call);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        Ok(!self.found_instances.is_empty())
+    }
+
+    fn severity(&self) -> IssueSeverity {
+        IssueSeverity::High
+    }
+
+    fn title(&self) -> String {
+        String::from("Unsafe Casting")
+    }
+
+    fn description(&self) -> String {
+        String::from("Downcasting int/uints in Solidity can be unsafe due to the potential for data loss and unintended behavior.\
+        When downcasting a larger integer type to a smaller one (e.g., uint256 to uint128), the value may exceed the range of the target type,\
+        leading to truncation and loss of significant digits. Use OpenZeppelin's SafeCast library to safely downcast integers.")
+    }
+
+    fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
+        self.found_instances.clone()
+    }
+
+    fn name(&self) -> String {
+        format!("{}", IssueDetectorNamePool::UnsafeCastingDetector)
+    }
+}
 
 static UINT_CASTING_MAP: phf::Map<&'static str, usize> = phf_map! {
     "uint8" => 0,
@@ -117,68 +216,6 @@ static BYTES32_CASTING_MAP: phf::Map<&'static str, usize> = phf_map! {
     "bytes32" => 31,
 };
 
-#[derive(Default)]
-pub struct UnsafeCastingDetector {
-    // Keys are: [0] source file name, [1] line number, [2] character location of node.
-    // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
-    found_instances: BTreeMap<(String, usize, String), NodeID>,
-}
-
-impl IssueDetector for UnsafeCastingDetector {
-    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        context
-            .function_calls()
-            .into_iter()
-            .for_each(|function_call| {
-                if function_call.kind == FunctionCallKind::TypeConversion {
-                    let casting_into_type = function_call
-                        .type_descriptions
-                        .type_string
-                        .as_ref()
-                        .unwrap();
-
-                    let casting_from_type = function_call.argument_types.as_ref().unwrap()[0]
-                        .type_string
-                        .as_ref()
-                        .unwrap();
-
-                    if casting_from_type.contains("uint") {
-                        // TODO:
-                        // - Account for casting into the same signature type uint to uint
-                        // - Account for casting into a both a larger and smaller signature type uint -> int and int -> uint
-                        // - Account for casting into a both a larger and smaller signature type uint -> bytes32
-                        // - do the same for the others
-                    } else if casting_from_type.contains("int") {
-                    } else if casting_from_type.contains("bytes32") {
-                    }
-                }
-            });
-        Ok(!self.found_instances.is_empty())
-    }
-
-    fn severity(&self) -> IssueSeverity {
-        IssueSeverity::High
-    }
-
-    fn title(&self) -> String {
-        String::from("Unsafe Casting")
-    }
-
-    fn description(&self) -> String {
-        String::from("Downcasting int/uints in Solidity can be unsafe due to the potential for data loss and unintended behavior.\
-        When downcasting a larger integer type to a smaller one (e.g., uint256 to uint128), the value may exceed the range of the target type,\
-        leading to truncation and loss of significant digits. Use OZ SafeCast library to safely downcast integers.")
-    }
-
-    fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
-        self.found_instances.clone()
-    }
-
-    fn name(&self) -> String {
-        format!("high-issue-template")
-    }
-}
-
 #[cfg(test)]
 mod unsafe_casting_detector_tests {
     use crate::detect::{
@@ -188,27 +225,18 @@ mod unsafe_casting_detector_tests {
 
     #[test]
     fn test_unsafe_casting_detector() {
-        let context = load_contract(
-            "../tests/contract-playground/out/ArbitraryTransferFrom.sol/ArbitraryTransferFrom.json",
-        );
+        let context = load_contract("../tests/contract-playground/out/Casting.sol/Casting.json");
 
         let mut detector = UnsafeCastingDetector::default();
         let found = detector.detect(&context).unwrap();
         // assert that the detector found an issue
         assert!(found);
         // assert that the detector found the correct number of instances
-        assert_eq!(detector.instances().len(), 1);
+        assert_eq!(detector.instances().len(), 93);
         // assert the severity is high
         assert_eq!(
             detector.severity(),
             crate::detect::detector::IssueSeverity::High
-        );
-        // assert the title is correct
-        assert_eq!(detector.title(), String::from("High Issue Title"));
-        // assert the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from("Description of the high issue.")
         );
     }
 }
