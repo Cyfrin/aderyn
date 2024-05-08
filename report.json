@@ -26,7 +26,8 @@
     "inconsistent-type-names",
     "unprotected-initializer",
     "reverts-and-requires-in-loops",
-    "operation-order-detector"
+    "operation-order-detector",
+    "tx-origin-acces-control"
   ],
   "files_details": {
     "files_details": [
@@ -103,6 +104,10 @@
         "n_sloc": 8
       },
       {
+        "file_path": "src/TxOriginAccesControl.sol",
+        "n_sloc": 32
+      },
+      {
         "file_path": "src/UnprotectedInitialize.sol",
         "n_sloc": 25
       },
@@ -169,8 +174,8 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 971,
-    "total_source_units": 34
+    "total_sloc": 1003,
+    "total_source_units": 35
   },
   "high_issues": {
     "issues": [
@@ -353,7 +358,7 @@
   },
   "issue_count": {
     "high": 5,
-    "low": 22
+    "low": 23
   },
   "low_issues": {
     "issues": [
@@ -390,6 +395,16 @@
             "contract_path": "src/InternalFunctions.sol",
             "line_no": 12,
             "src": "250:9"
+          },
+          {
+            "contract_path": "src/TxOriginAccesControl.sol",
+            "line_no": 18,
+            "src": "454:9"
+          },
+          {
+            "contract_path": "src/TxOriginAccesControl.sol",
+            "line_no": 22,
+            "src": "578:9"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
@@ -493,6 +508,26 @@
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 47,
             "src": "1598:18"
+          },
+          {
+            "contract_path": "src/TxOriginAccesControl.sol",
+            "line_no": 23,
+            "src": "598:18"
+          },
+          {
+            "contract_path": "src/TxOriginAccesControl.sol",
+            "line_no": 29,
+            "src": "832:17"
+          },
+          {
+            "contract_path": "src/TxOriginAccesControl.sol",
+            "line_no": 33,
+            "src": "1009:17"
+          },
+          {
+            "contract_path": "src/TxOriginAccesControl.sol",
+            "line_no": 37,
+            "src": "1186:17"
           }
         ],
         "title": "Unsafe ERC20 Operations should not be used"
@@ -562,6 +597,11 @@
             "contract_path": "src/StateVariables.sol",
             "line_no": 58,
             "src": "2121:14"
+          },
+          {
+            "contract_path": "src/TxOriginAccesControl.sol",
+            "line_no": 19,
+            "src": "474:17"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
@@ -634,6 +674,31 @@
             "contract_path": "src/StateVariables.sol",
             "line_no": 71,
             "src": "2539:25"
+          },
+          {
+            "contract_path": "src/TxOriginAccesControl.sol",
+            "line_no": 18,
+            "src": "409:11"
+          },
+          {
+            "contract_path": "src/TxOriginAccesControl.sol",
+            "line_no": 22,
+            "src": "513:15"
+          },
+          {
+            "contract_path": "src/TxOriginAccesControl.sol",
+            "line_no": 27,
+            "src": "702:8"
+          },
+          {
+            "contract_path": "src/TxOriginAccesControl.sol",
+            "line_no": 31,
+            "src": "878:9"
+          },
+          {
+            "contract_path": "src/TxOriginAccesControl.sol",
+            "line_no": 35,
+            "src": "1055:9"
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
@@ -784,6 +849,11 @@
         "description": "Index event fields make the field more quickly accessible to off-chain tools that parse events. However, note that each index field costs extra gas during emission, so it's not necessarily best to index the maximum allowed per event (three fields). Each event should use three indexed fields if there are three or more fields, and gas usage is not particularly of concern for the events in question. If there are fewer than three fields, all of the fields should be indexed.",
         "detector_name": "unindexed-events",
         "instances": [
+          {
+            "contract_path": "src/TxOriginAccesControl.sol",
+            "line_no": 7,
+            "src": "134:85"
+          },
           {
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 19,
@@ -1260,6 +1330,11 @@
             "src": "35:34"
           },
           {
+            "contract_path": "src/TxOriginAccesControl.sol",
+            "line_no": 4,
+            "src": "66:24"
+          },
+          {
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 58,
             "src": "4547:15"
@@ -1310,6 +1385,33 @@
           }
         ],
         "title": "Incorrect Order of Division and Multiplication"
+      },
+      {
+        "description": "Malicious contracts can impersonate users to perform actions relying on the tx.origin.",
+        "detector_name": "tx-origin-acces-control",
+        "instances": [
+          {
+            "contract_path": "src/TxOriginAccesControl.sol",
+            "line_no": 14,
+            "src": "329:9"
+          },
+          {
+            "contract_path": "src/TxOriginAccesControl.sol",
+            "line_no": 28,
+            "src": "775:9"
+          },
+          {
+            "contract_path": "src/TxOriginAccesControl.sol",
+            "line_no": 32,
+            "src": "952:9"
+          },
+          {
+            "contract_path": "src/TxOriginAccesControl.sol",
+            "line_no": 36,
+            "src": "1129:9"
+          }
+        ],
+        "title": "Tx.origin access control"
       }
     ]
   }
