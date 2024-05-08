@@ -1,11 +1,11 @@
 use std::error::Error;
 
-use crate::context::workspace_context::WorkspaceContext;
+use crate::{
+    audit::attack_surface::AttackSurfaceDetector, context::workspace_context::WorkspaceContext,
+};
 
 pub fn get_auditor_detectors() -> Vec<Box<dyn AuditorDetector>> {
-    vec![Box::new(
-        super::attack_surface::AttackSurfaceDetector::default(),
-    )]
+    vec![Box::new(AttackSurfaceDetector::default())]
 }
 
 pub trait AuditorDetector: Send + Sync + 'static {
