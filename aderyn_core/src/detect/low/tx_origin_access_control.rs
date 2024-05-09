@@ -21,21 +21,46 @@ pub struct TxOriginAccesControl {
 
 impl IssueDetector for TxOriginAccesControl {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        let requires = context
+        // Filtra identificadores que coincidan con "require" o "IfStatement"
+        let keywords = ["require", "IfStatement"];
+        let relevant_identifiers: Vec<_> = context
             .identifiers()
             .into_iter()
-            .filter(|&id| id.name == "require");
+            .filter(|&id| keywords.contains(&id.name.as_str()))
+            .collect();
 
-        for require in requires {
-            if let Some(ASTNode::FunctionCall(fc)) = require.parent(context) {
-                let member_accesses = ExtractMemberAccesses::from(fc).extracted;
-                for member_access in &member_accesses {
-                    if member_access.member_name == "origin" {
-                        if let Expression::Identifier(identifier) =
-                            member_access.expression.as_ref()
-                        {
-                            if identifier.name == "tx" {
-                                capture!(self, context, member_access);
+        for identifier in &relevant_identifiers {
+            if identifier.name == "require" {
+                if let Some(ASTNode::FunctionCall(fc)) = identifier.parent(context) {
+                    let member_accesses = ExtractMemberAccesses::from(fc).extracted;
+                    for member_access in &member_accesses {
+                        if member_access.member_name == "origin" {
+                            if let Expression::Identifier(identifier) =
+                                member_access.expression.as_ref()
+                            {
+                                if identifier.name == "tx" {
+                                    capture!(self, context, member_access);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        for identifier in &relevant_identifiers {
+            if identifier.name == "IfStatement" {
+                if let Some(ASTNode::IfStatement(if_stmt)) = identifier.parent(context) {
+                    // Evalúa la condición para encontrar `tx.origin`
+                    let member_accesses = ExtractMemberAccesses::from(if_stmt).extracted;
+                    for member_access in &member_accesses {
+                        if member_access.member_name == "origin" {
+                            if let Expression::Identifier(identifier) =
+                                member_access.expression.as_ref()
+                            {
+                                if identifier.name == "tx" {
+                                    capture!(self, context, member_access);
+                                }
                             }
                         }
                     }

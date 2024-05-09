@@ -6,12 +6,16 @@ contract OriginControlledTransfer {
 
     event TransferMade(address indexed sender, address indexed receiver, uint256 amount);
 
+    error OwnerIsNotCaller();
+
     constructor() {
         _owner = payable(msg.sender);
     }
 
     modifier onlyOwner() {
-        require(tx.origin == _owner, "Caller is not the owner");
+        if (tx.origin != _owner) {
+            revert OwnerIsNotCaller(); 
+        }
         _;
     }
 
@@ -25,8 +29,17 @@ contract OriginControlledTransfer {
     }
 
     function safeSend(address payable receiver, uint amount) public {
-        require(tx.origin == _owner, "Caller is not the owner");
+        if (tx.origin != _owner) {
+            revert OwnerIsNotCaller();
+        }
         receiver.transfer(amount);
     }
+    function safeSend2(address payable receiver, uint amount) public {
+        require(tx.origin == _owner, "Caller is not the owner");
+        receiver.transfer(amount);
+
+
+    }
+
     receive() external payable {}
 }
