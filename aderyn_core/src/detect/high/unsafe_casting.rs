@@ -32,7 +32,7 @@ impl IssueDetector for UnsafeCastingDetector {
                     None => continue,
                 };
 
-                let first_arg = function_call.arguments.get(0);
+                let first_arg = function_call.arguments.first();
                 let identifier_id = match first_arg {
                     Some(Expression::Identifier(identifier)) => identifier.referenced_declaration,
                     _ => continue,
@@ -43,7 +43,7 @@ impl IssueDetector for UnsafeCastingDetector {
                 {
                     if let Some(argument_types) = &to_expression.argument_types {
                         let casting_from_type = match argument_types
-                            .get(0)
+                            .first()
                             .and_then(|arg| arg.type_string.as_ref())
                         {
                             Some(t) => t,
