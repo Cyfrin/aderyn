@@ -160,7 +160,7 @@ fn create_sarif_results(report: &Report, context: &WorkspaceContext) -> Vec<Sari
         };
         sarif_results.push(sarif_result);
     }
-    vec![]
+    sarif_results
 }
 
 fn create_sarif_locations(issue: &Issue, context: &WorkspaceContext) -> Vec<Location> {
