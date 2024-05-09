@@ -1,0 +1,15 @@
+{
+  "runs": [
+    {
+      "results": [],
+      "tool": {
+        "driver": {
+          "informationUri": "https://github.com/Cyfrin/aderyn",
+          "name": "Aderyn",
+          "organization": "Cyfrin"
+        }
+      }
+    }
+  ],
+  "version": "2.1.0"
+}
