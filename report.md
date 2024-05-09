@@ -673,6 +673,12 @@ Instead of marking a function as `public`, consider marking it as `external` if 
 	    function safeSend(address payable receiver, uint amount) public {
 	```
 
+- Found in src/TxOriginAccessControl.sol [Line: 37](tests/contract-playground/src/TxOriginAccessControl.sol#L37)
+
+	```solidity
+	    function safeSend2(address payable receiver, uint amount) public {
+	```
+
 - Found in src/cloc/AnotherHeavilyCommentedContract.sol [Line: 31](tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol#L31)
 
 	```solidity

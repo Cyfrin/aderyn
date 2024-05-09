@@ -111,7 +111,7 @@
       },
       {
         "file_path": "src/TxOriginAccessControl.sol",
-        "n_sloc": 24
+        "n_sloc": 33
       },
       {
         "file_path": "src/UnprotectedInitialize.sol",
@@ -184,7 +184,7 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 1037,
+    "total_sloc": 1046,
     "total_source_units": 37
   },
   "high_issues": {
@@ -408,13 +408,13 @@
           },
           {
             "contract_path": "src/TxOriginAccessControl.sol",
-            "line_no": 18,
-            "src": "454:9"
+            "line_no": 22,
+            "src": "505:9"
           },
           {
             "contract_path": "src/TxOriginAccessControl.sol",
-            "line_no": 22,
-            "src": "578:9"
+            "line_no": 26,
+            "src": "629:9"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
@@ -521,13 +521,18 @@
           },
           {
             "contract_path": "src/TxOriginAccessControl.sol",
-            "line_no": 23,
-            "src": "598:18"
+            "line_no": 27,
+            "src": "649:18"
           },
           {
             "contract_path": "src/TxOriginAccessControl.sol",
-            "line_no": 29,
-            "src": "832:17"
+            "line_no": 35,
+            "src": "902:17"
+          },
+          {
+            "contract_path": "src/TxOriginAccessControl.sol",
+            "line_no": 39,
+            "src": "1079:17"
           }
         ],
         "title": "Unsafe ERC20 Operations should not be used"
@@ -595,8 +600,8 @@
           },
           {
             "contract_path": "src/TxOriginAccessControl.sol",
-            "line_no": 19,
-            "src": "474:17"
+            "line_no": 23,
+            "src": "525:17"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
@@ -672,18 +677,23 @@
           },
           {
             "contract_path": "src/TxOriginAccessControl.sol",
-            "line_no": 18,
-            "src": "409:11"
-          },
-          {
-            "contract_path": "src/TxOriginAccessControl.sol",
             "line_no": 22,
-            "src": "513:15"
+            "src": "460:11"
           },
           {
             "contract_path": "src/TxOriginAccessControl.sol",
-            "line_no": 27,
-            "src": "702:8"
+            "line_no": 26,
+            "src": "564:15"
+          },
+          {
+            "contract_path": "src/TxOriginAccessControl.sol",
+            "line_no": 31,
+            "src": "753:8"
+          },
+          {
+            "contract_path": "src/TxOriginAccessControl.sol",
+            "line_no": 37,
+            "src": "948:9"
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
@@ -1382,8 +1392,8 @@
           },
           {
             "contract_path": "src/TxOriginAccessControl.sol",
-            "line_no": 13,
-            "src": "299:9"
+            "line_no": 15,
+            "src": "330:9"
           },
           {
             "contract_path": "src/UnprotectedInitialize.sol",
@@ -1436,13 +1446,8 @@
         "instances": [
           {
             "contract_path": "src/TxOriginAccessControl.sol",
-            "line_no": 14,
-            "src": "329:9"
-          },
-          {
-            "contract_path": "src/TxOriginAccessControl.sol",
-            "line_no": 28,
-            "src": "775:9"
+            "line_no": 38,
+            "src": "1022:9"
           }
         ],
         "title": "Insecure tx.origin Authentication"
