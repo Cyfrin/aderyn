@@ -1,7 +1,7 @@
 use std::collections::BTreeMap;
 use std::error::Error;
 
-use crate::ast::{Expression, FunctionCallKind, NodeID, NodeType};
+use crate::ast::{Expression, FunctionCall, FunctionCallKind, NodeID, NodeType};
 
 use crate::capture;
 use crate::context::browser::{
@@ -25,95 +25,58 @@ pub struct UnsafeCastingDetector {
 
 impl IssueDetector for UnsafeCastingDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        context
-            .function_calls()
-            .into_iter()
-            .for_each(|function_call| {
-                if function_call.kind == FunctionCallKind::TypeConversion {
-                    let casting_to_type = function_call
-                        .type_descriptions
-                        .type_string
-                        .as_ref()
-                        .unwrap();
+        for function_call in context.function_calls() {
+            if function_call.kind == FunctionCallKind::TypeConversion {
+                let casting_to_type = match function_call.type_descriptions.type_string.as_ref() {
+                    Some(t) => t,
+                    None => continue,
+                };
 
-                    let identifier_id = match &function_call.arguments[0] {
-                        Expression::Identifier(identifier) => identifier.referenced_declaration,
-                        _ => {
-                            return;
-                        }
-                    };
+                let first_arg = function_call.arguments.get(0);
+                let identifier_id = match first_arg {
+                    Some(Expression::Identifier(identifier)) => identifier.referenced_declaration,
+                    _ => continue,
+                };
 
-                    if let Expression::ElementaryTypeNameExpression(to_expression) =
-                        &*function_call.expression
-                    {
-                        if let Some(argument_types) = &to_expression.argument_types {
-                            let casting_from_type = argument_types[0].type_string.as_ref().unwrap();
+                if let Expression::ElementaryTypeNameExpression(to_expression) =
+                    &*function_call.expression
+                {
+                    if let Some(argument_types) = &to_expression.argument_types {
+                        let casting_from_type = match argument_types
+                            .get(0)
+                            .and_then(|arg| arg.type_string.as_ref())
+                        {
+                            Some(t) => t,
+                            None => continue,
+                        };
 
-                            if casting_from_type.contains("uint") {
-                                if let Some(casting_from_type_index) =
-                                    UINT_CASTING_MAP.get(casting_from_type)
-                                {
-                                    // if casting from a larger uint to a smaller uint
-                                    if casting_to_type.contains("uint")
-                                        && casting_from_type_index
-                                            > UINT_CASTING_MAP.get(casting_to_type).unwrap()
-                                    {
-                                        // Check if there are any binary operations that involve the identifier
-                                        if !has_binary_operation_checks(
-                                            function_call.closest_ancestor_of_type(
-                                                context,
-                                                NodeType::ContractDefinition,
-                                            ),
-                                            &identifier_id,
-                                        ) {
-                                            capture!(self, context, function_call);
-                                        }
-                                    }
-                                }
-                            } else if casting_from_type.contains("int")
-                                && !casting_from_type.contains("uint")
-                            {
-                                if let Some(casting_from_type_index) =
-                                    INT_CASTING_MAP.get(casting_from_type)
-                                {
-                                    // if casting from a larger int to a smaller int
-                                    if casting_to_type.contains("int")
-                                        && !casting_to_type.contains("uint")
-                                        && casting_from_type_index
-                                            > INT_CASTING_MAP.get(casting_to_type).unwrap()
-                                    {
-                                        // Check if there are any binary operations that involve the identifier
-                                        if !has_binary_operation_checks(
-                                            function_call.closest_ancestor_of_type(
-                                                context,
-                                                NodeType::ContractDefinition,
-                                            ),
-                                            &identifier_id,
-                                        ) {
-                                            capture!(self, context, function_call);
-                                        }
-                                    }
-                                }
-                            } else if casting_from_type.contains("bytes")
-                                && !casting_from_type.contains("bytes ")
-                            {
-                                if let Some(casting_from_type_index) =
-                                    BYTES32_CASTING_MAP.get(casting_from_type)
-                                {
-                                    // if casting from a larger bytes32 to a smaller bytes32
-                                    if casting_to_type.contains("bytes")
-                                        && !casting_to_type.contains("bytes ")
-                                        && casting_from_type_index
-                                            > BYTES32_CASTING_MAP.get(casting_to_type).unwrap()
-                                    {
-                                        capture!(self, context, function_call);
-                                    }
-                                }
-                            }
-                        }
+                        let casting_map = if casting_from_type.contains("uint") {
+                            &UINT_CASTING_MAP
+                        } else if casting_from_type.contains("int")
+                            && !casting_from_type.contains("uint")
+                        {
+                            &INT_CASTING_MAP
+                        } else if casting_from_type.contains("bytes")
+                            && !casting_from_type.contains("bytes ")
+                        {
+                            &BYTES32_CASTING_MAP
+                        } else {
+                            continue;
+                        };
+
+                        handle_casting(
+                            self,
+                            context,
+                            function_call,
+                            casting_from_type,
+                            casting_to_type,
+                            casting_map,
+                            identifier_id,
+                        );
                     }
                 }
-            });
+            }
+        }
         Ok(!self.found_instances.is_empty())
     }
 
@@ -137,6 +100,34 @@ impl IssueDetector for UnsafeCastingDetector {
 
     fn name(&self) -> String {
         format!("{}", IssueDetectorNamePool::UnsafeCastingDetector)
+    }
+}
+
+fn handle_casting(
+    detector: &mut UnsafeCastingDetector,
+    context: &WorkspaceContext,
+    function_call: &FunctionCall,
+    casting_from_type: &str,
+    casting_to_type: &str,
+    casting_map: &phf::Map<&'static str, usize>,
+    identifier_id: NodeID,
+) {
+    if let Some(casting_from_type_index) = casting_map.get(casting_from_type) {
+        // More precise checks for type casting
+        let is_valid_cast = match casting_map.get(casting_to_type) {
+            Some(casting_to_type_index) => casting_from_type_index > casting_to_type_index,
+            None => false,
+        };
+
+        if is_valid_cast {
+            // Check if there are any binary operations that involve the identifier
+            if !has_binary_operation_checks(
+                function_call.closest_ancestor_of_type(context, NodeType::ContractDefinition),
+                &identifier_id,
+            ) {
+                capture!(detector, context, function_call);
+            }
+        }
     }
 }
 
