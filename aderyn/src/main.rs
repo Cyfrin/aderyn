@@ -34,6 +34,10 @@ pub struct CommandLineArgs {
     #[arg(short, long, default_value = "report.md")]
     output: String,
 
+    /// Path relative to project root, inside which solidity contracts will be analyzed
+    #[clap(short, long, use_value_delimiter = true)]
+    src: Option<Vec<String>>,
+
     /// List of path strings to include, delimited by comma (no spaces).
     /// Any solidity file path not containing these strings will be ignored
     #[clap(short, long, use_value_delimiter = true)]
@@ -112,6 +116,7 @@ fn main() {
     let args: Args = Args {
         root: cmd_args.root,
         output: cmd_args.output,
+        src: cmd_args.src,
         scope: cmd_args.scope,
         exclude: cmd_args.exclude,
         no_snippets: cmd_args.no_snippets,
@@ -214,6 +219,7 @@ fn main() {
                 let new_args: Args = Args {
                     root: args.root,
                     output: args.output,
+                    src: args.src,
                     scope: scope_lines,
                     exclude: args.exclude,
                     no_snippets: args.no_snippets,

@@ -12,7 +12,7 @@ use rayon::iter::{IntoParallelIterator, ParallelIterator};
 
 use crate::{
     get_compiler_input, get_project, get_relevant_pathbufs, get_relevant_sources, get_remappings,
-    passes_exclude, passes_scope,
+    passes_exclude, passes_scope, passes_src,
 };
 
 use crate::ensure_valid_root_path;
@@ -21,11 +21,20 @@ pub fn with_project_root_at(
     root_path: &Path,
     scope: &Option<Vec<String>>,
     exclude: &Option<Vec<String>>,
+    src: &Option<Vec<String>>,
 ) -> Vec<WorkspaceContext> {
     let root = utils::canonicalize(root_path).unwrap();
+    let src = src.clone().and_then(|sources| {
+        Some(
+            sources
+                .into_iter()
+                .map(|source| utils::canonicalize(root.join(source)).unwrap())
+                .collect::<Vec<_>>(),
+        )
+    });
 
     let solidity_files = get_compiler_input(&root);
-    let sources = get_relevant_sources(&root, solidity_files, scope, exclude);
+    let sources = get_relevant_sources(&root, solidity_files, &src, scope, exclude);
 
     println!("Resolving sources versions by graph ...");
     let (remappings, foundry_compilers_remappings) = get_remappings(&root);
@@ -41,7 +50,7 @@ pub fn with_project_root_at(
         .filter_map(|(solc, value)| {
             println!("Compiling {} files with Solc {}", value.1.len(), value.0);
             let pathbufs = value.1.into_keys().collect::<Vec<_>>();
-            let files = get_relevant_pathbufs(&root, &pathbufs, scope, exclude);
+            let files = get_relevant_pathbufs(&root, &pathbufs, &src, scope, exclude);
 
             assert!(solc.solc.exists());
 
@@ -72,8 +81,9 @@ pub fn with_project_root_at(
                         eprintln!("Error running solc command ^^^");
                         // For now, we do not panic because it will prevent us from analyzing other contexts which can compile successfully
                     } else {
-                        let context =
-                            create_workspace_context_from_stdout(stdout, scope, exclude, root_path);
+                        let context = create_workspace_context_from_stdout(
+                            stdout, &src, scope, exclude, root_path,
+                        );
                         return Some(context);
                     }
                 }
@@ -90,6 +100,7 @@ pub fn with_project_root_at(
 
 fn create_workspace_context_from_stdout(
     stdout: String,
+    src: &Option<Vec<PathBuf>>,
     scope: &Option<Vec<String>>,
     exclude: &Option<Vec<String>>,
     root_path: &Path,
@@ -116,6 +127,9 @@ fn create_workspace_context_from_stdout(
                 exclude,
                 root_path.join(filepath).canonicalize().unwrap().as_path(),
                 absolute_root_path_str,
+            ) && passes_src(
+                &src,
+                root_path.join(filepath).canonicalize().unwrap().as_path(),
             ) {
                 src_filepaths.push(filepath.to_string_lossy().to_string());
                 pick_next_line = true;

@@ -8,7 +8,7 @@ use foundry_compilers::{
     artifacts::Source, remappings::Remapping, CompilerInput, Project, ProjectPathsConfig,
 };
 
-use crate::{passes_exclude, passes_scope, read_remappings};
+use crate::{passes_exclude, passes_scope, passes_src, read_remappings};
 
 /// CompilerInput is a module that allows us to locate all solidity files in a root
 pub fn get_compiler_input(root: &Path) -> CompilerInput {
@@ -54,12 +54,16 @@ pub fn get_project(root: &Path, remappings: Vec<Remapping>) -> Project {
 pub fn get_relevant_sources(
     root: &Path,
     solidity_files: CompilerInput,
+    src: &Option<Vec<PathBuf>>,
     scope: &Option<Vec<String>>,
     exclude: &Option<Vec<String>>,
 ) -> BTreeMap<PathBuf, Source> {
     solidity_files
         .sources
         .iter()
+        .filter(|(solidity_file, _)| {
+            passes_src(src, solidity_file.canonicalize().unwrap().as_path())
+        })
         .filter(|(solidity_file, _)| {
             passes_scope(
                 scope,
@@ -81,11 +85,13 @@ pub fn get_relevant_sources(
 pub fn get_relevant_pathbufs(
     root: &Path,
     pathbufs: &[PathBuf],
+    src: &Option<Vec<PathBuf>>,
     scope: &Option<Vec<String>>,
     exclude: &Option<Vec<String>>,
 ) -> Vec<PathBuf> {
     pathbufs
         .iter()
+        .filter(|solidity_file| passes_src(src, solidity_file.canonicalize().unwrap().as_path()))
         .filter(|solidity_file| {
             passes_scope(
                 scope,
