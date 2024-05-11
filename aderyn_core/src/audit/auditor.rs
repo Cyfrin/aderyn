@@ -28,6 +28,8 @@ pub trait AuditorDetector: Send + Sync + 'static {
     }
 
     fn instances(&self) -> Vec<AuditorInstance>;
+
+    fn skeletal_clone(&self) -> Box<dyn AuditorDetector>;
 }
 
 pub trait AuditorPrinter {

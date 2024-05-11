@@ -57,6 +57,10 @@ impl AuditorDetector for AttackSurfaceDetector {
     fn instances(&self) -> Vec<AuditorInstance> {
         self.found_instances.clone()
     }
+
+    fn skeletal_clone(&self) -> Box<dyn AuditorDetector> {
+        Box::<AttackSurfaceDetector>::default()
+    }
 }
 
 fn transform_surface_points(

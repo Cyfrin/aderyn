@@ -59,17 +59,27 @@ fn run_auditor_mode(contexts: &[WorkspaceContext]) -> Result<(), Box<dyn Error>>
             let mut instances: Vec<AuditorInstance> = vec![];
 
             for context in contexts {
-                // let found: bool = detector.detect(context);
-                // if found {
-                instances.extend(detector.instances());
-                // }
+                let mut d = detector.skeletal_clone();
+                if let Ok(found) = d.detect(context) {
+                    if found {
+                        instances.extend(d.instances());
+                    }
+                }
             }
+
+            instances.dedup_by(|a, b| {
+                a.contract_name == b.contract_name
+                    && a.function_name == b.function_name
+                    && a.source_code == b.source_code
+                    && a.address_source == b.address_source
+            });
 
             Some((detector.title(), instances))
         })
         .collect::<Vec<_>>();
 
     for (detector_name, instances) in auditors_with_instances {
+        println!("Findings by {}", detector_name);
         BasicAuditorPrinter::print(&instances, &detector_name);
     }
 
