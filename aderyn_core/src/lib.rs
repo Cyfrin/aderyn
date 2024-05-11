@@ -37,27 +37,30 @@ pub fn run<T>(
 where
     T: ReportPrinter<()>,
 {
-    // if !auditor_mode {
-    return run_detector_mode(
-        contexts,
-        output_file_path,
-        reporter,
-        root_rel_path,
-        no_snippets,
-        stdout,
-        detectors,
-    );
-    // }
-    // run_auditor_mode(context)
+    if !auditor_mode {
+        return run_detector_mode(
+            contexts,
+            output_file_path,
+            reporter,
+            root_rel_path,
+            no_snippets,
+            stdout,
+            detectors,
+        );
+    }
+    run_auditor_mode(contexts)
 }
 
-fn run_auditor_mode(context: &WorkspaceContext) -> Result<(), Box<dyn Error>> {
-    get_auditor_detectors().par_iter_mut().for_each(|detector| {
-        let found = detector.detect(context).unwrap();
-        if found {
-            detector.print(context);
-        }
-    });
+fn run_auditor_mode(contexts: &[WorkspaceContext]) -> Result<(), Box<dyn Error>> {
+    for (idx, context) in contexts.iter().enumerate() {
+        println!("Context {idx} ... ");
+        get_auditor_detectors().par_iter_mut().for_each(|detector| {
+            let found = detector.detect(context).unwrap();
+            if found {
+                detector.print(context);
+            }
+        });
+    }
     Ok(())
 }
 
