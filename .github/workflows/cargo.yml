@@ -110,7 +110,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: -- -o report-workflow.md  --scope src/ --exclude lib/ ./tests/contract-playground/ --skip-update-check
+          args: -- -o report-workflow.md  --src src/ ./tests/contract-playground/ --skip-update-check
 
       - name: Check report.md vs report-workflow.md
         run: |
@@ -136,7 +136,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: -- -o ./tests/nft-workflow-report.md --scope src/ --exclude lib/ ./tests/foundry-nft-f23 --skip-update-check
+          args: -- -o ./tests/nft-workflow-report.md --src src/ ./tests/foundry-nft-f23 --skip-update-check
      
       - name: Check nft-workflow-report.md vs nft-report.md
         run: |
@@ -150,7 +150,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: -- -o tests/ccip-functions-report-workflow.md tests/ccip-contracts/contracts --scope src/v0.8/functions/ --exclude "tests/,test/,testhelpers/,lib/,node_modules/,mocks/,vendor/" --skip-update-check
+          args: -- -o tests/ccip-functions-report-workflow.md tests/ccip-contracts/contracts --src src/v0.8/functions/  --skip-update-check
     
       - name: Check ccip-functions-report-workflow.md vs ccip-functions-report.md
         run: |
