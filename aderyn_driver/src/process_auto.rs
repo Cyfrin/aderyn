@@ -24,13 +24,11 @@ pub fn with_project_root_at(
     src: &Option<Vec<String>>,
 ) -> Vec<WorkspaceContext> {
     let root = utils::canonicalize(root_path).unwrap();
-    let src = src.clone().and_then(|sources| {
-        Some(
-            sources
-                .into_iter()
-                .map(|source| utils::canonicalize(root.join(source)).unwrap())
-                .collect::<Vec<_>>(),
-        )
+    let src = src.clone().map(|sources| {
+        sources
+            .into_iter()
+            .map(|source| utils::canonicalize(root.join(source)).unwrap())
+            .collect::<Vec<_>>()
     });
 
     let solidity_files = get_compiler_input(&root);
@@ -128,7 +126,7 @@ fn create_workspace_context_from_stdout(
                 root_path.join(filepath).canonicalize().unwrap().as_path(),
                 absolute_root_path_str,
             ) && passes_src(
-                &src,
+                src,
                 root_path.join(filepath).canonicalize().unwrap().as_path(),
             ) {
                 src_filepaths.push(filepath.to_string_lossy().to_string());
