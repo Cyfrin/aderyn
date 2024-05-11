@@ -1,4 +1,5 @@
 pub mod ast;
+pub mod audit;
 pub mod context;
 pub mod detect;
 pub mod framework;
@@ -6,6 +7,7 @@ pub mod fscloc;
 pub mod report;
 pub mod visitor;
 
+use audit::auditor::get_auditor_detectors;
 use detect::detector::IssueDetector;
 use eyre::Result;
 use rayon::iter::{IntoParallelIterator, IntoParallelRefMutIterator, ParallelIterator};
@@ -16,25 +18,27 @@ use std::io::{self};
 use std::path::{Path, PathBuf};
 
 use crate::context::workspace_context::WorkspaceContext;
-use crate::detect::detector::{get_all_issue_detectors, IssueSeverity};
+use crate::detect::detector::IssueSeverity;
 
 use crate::report::printer::ReportPrinter;
 use crate::report::reporter::Report;
 use crate::report::Issue;
 
-pub fn run_with_printer<T>(
+pub fn run<T>(
     contexts: &[WorkspaceContext],
     output_file_path: String,
     reporter: T,
     root_rel_path: PathBuf,
     no_snippets: bool,
     stdout: bool,
+    auditor_mode: bool,
+    detectors: Vec<Box<dyn IssueDetector>>,
 ) -> Result<(), Box<dyn Error>>
 where
     T: ReportPrinter<()>,
 {
-    let detectors = get_all_issue_detectors();
-    run_with_printer_and_given_detectors(
+    // if !auditor_mode {
+    return run_detector_mode(
         contexts,
         output_file_path,
         reporter,
@@ -42,10 +46,22 @@ where
         no_snippets,
         stdout,
         detectors,
-    )
+    );
+    // }
+    // run_auditor_mode(context)
 }
 
-pub fn run_with_printer_and_given_detectors<T>(
+fn run_auditor_mode(context: &WorkspaceContext) -> Result<(), Box<dyn Error>> {
+    get_auditor_detectors().par_iter_mut().for_each(|detector| {
+        let found = detector.detect(context).unwrap();
+        if found {
+            detector.print(context);
+        }
+    });
+    Ok(())
+}
+
+fn run_detector_mode<T>(
     contexts: &[WorkspaceContext],
     output_file_path: String,
     reporter: T,

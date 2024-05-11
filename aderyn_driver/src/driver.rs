@@ -1,10 +1,10 @@
 use crate::{ensure_valid_root_path, process_auto};
 use aderyn_core::{
     context::workspace_context::WorkspaceContext,
-    detect::detector::IssueDetector,
+    detect::detector::{get_all_issue_detectors, IssueDetector},
     fscloc,
     report::{json_printer::JsonPrinter, markdown_printer::MarkdownReportPrinter},
-    run_with_printer, run_with_printer_and_given_detectors,
+    run,
 };
 use std::path::PathBuf;
 
@@ -19,46 +19,11 @@ pub struct Args {
     pub skip_cloc: bool,
     pub skip_update_check: bool,
     pub stdout: bool,
+    pub auditor_mode: bool,
 }
 
 pub fn drive(args: Args) {
-    let output = args.output.clone();
-    let cx_wrapper = make_context(&args);
-    let root_rel_path = PathBuf::from(&args.root);
-
-    if args.output.ends_with(".json") {
-        // Load the workspace context into the run function, which runs the detectors
-        run_with_printer(
-            &cx_wrapper.contexts,
-            output,
-            JsonPrinter,
-            root_rel_path,
-            args.no_snippets,
-            args.stdout,
-        )
-        .unwrap_or_else(|err| {
-            // Exit with a non-zero exit code
-            eprintln!("Error running aderyn");
-            eprintln!("{:?}", err);
-            std::process::exit(1);
-        });
-    } else {
-        // Load the workspace context into the run function, which runs the detectors
-        run_with_printer(
-            &cx_wrapper.contexts,
-            output,
-            MarkdownReportPrinter,
-            root_rel_path,
-            args.no_snippets,
-            args.stdout,
-        )
-        .unwrap_or_else(|err| {
-            // Exit with a non-zero exit code
-            eprintln!("Error running aderyn");
-            eprintln!("{:?}", err);
-            std::process::exit(1);
-        });
-    }
+    drive_with(args, get_all_issue_detectors());
 }
 
 pub fn drive_with(args: Args, detectors: Vec<Box<dyn IssueDetector>>) {
@@ -68,13 +33,14 @@ pub fn drive_with(args: Args, detectors: Vec<Box<dyn IssueDetector>>) {
 
     if args.output.ends_with(".json") {
         // Load the workspace context into the run function, which runs the detectors
-        run_with_printer_and_given_detectors(
+        run(
             &cx_wrapper.contexts,
             output,
             JsonPrinter,
             root_rel_path,
             args.no_snippets,
             args.stdout,
+            args.auditor_mode,
             detectors,
         )
         .unwrap_or_else(|err| {
@@ -85,13 +51,14 @@ pub fn drive_with(args: Args, detectors: Vec<Box<dyn IssueDetector>>) {
         });
     } else {
         // Load the workspace context into the run function, which runs the detectors
-        run_with_printer_and_given_detectors(
+        run(
             &cx_wrapper.contexts,
             output,
             MarkdownReportPrinter,
             root_rel_path,
             args.no_snippets,
             args.stdout,
+            args.auditor_mode,
             detectors,
         )
         .unwrap_or_else(|err| {

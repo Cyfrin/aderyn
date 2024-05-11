@@ -75,6 +75,10 @@ pub struct CommandLineArgs {
     /// Watch for file changes and continuously generate report
     #[arg(short, long)]
     watch: bool,
+
+    /// Run in Auditor mode, which only outputs manual audit helpers
+    #[arg(long)]
+    auditor_mode: bool,
 }
 
 #[derive(Debug, Subcommand)]
@@ -115,6 +119,7 @@ fn main() {
         skip_cloc: cmd_args.skip_cloc,
         skip_update_check: cmd_args.skip_update_check,
         stdout: cmd_args.stdout,
+        auditor_mode: cmd_args.auditor_mode,
     };
 
     let aderyn_config_path = match cmd_args.config_file {
@@ -216,6 +221,7 @@ fn main() {
                     skip_cloc: args.skip_cloc,
                     skip_update_check: args.skip_update_check,
                     stdout: args.stdout,
+                    auditor_mode: args.auditor_mode,
                 };
                 if cmd_args.watch {
                     println!("INFO: Aderyn is entering watch mode !");
