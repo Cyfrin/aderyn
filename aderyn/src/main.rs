@@ -35,7 +35,7 @@ pub struct CommandLineArgs {
     output: String,
 
     /// Path relative to project root, inside which solidity contracts will be analyzed
-    #[clap(short, long, use_value_delimiter = true)]
+    #[clap(long, use_value_delimiter = true)]
     src: Option<Vec<String>>,
 
     /// List of path strings to include, delimited by comma (no spaces).
