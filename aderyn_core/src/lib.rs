@@ -24,6 +24,7 @@ use crate::report::printer::ReportPrinter;
 use crate::report::reporter::Report;
 use crate::report::Issue;
 
+#[allow(clippy::too_many_arguments)]
 pub fn run<T>(
     contexts: &[WorkspaceContext],
     output_file_path: String,
@@ -64,6 +65,7 @@ fn run_auditor_mode(contexts: &[WorkspaceContext]) -> Result<(), Box<dyn Error>>
     Ok(())
 }
 
+#[allow(clippy::too_many_arguments)]
 fn run_detector_mode<T>(
     contexts: &[WorkspaceContext],
     output_file_path: String,
