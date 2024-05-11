@@ -21,6 +21,7 @@ pub struct Args {
     pub skip_update_check: bool,
     pub stdout: bool,
     pub auditor_mode: bool,
+    pub icf: bool,
 }
 
 pub fn drive(args: Args) {
