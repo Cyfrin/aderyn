@@ -132,15 +132,13 @@ impl AuditorDetector for AttackSurfaceDetector {
 
 #[cfg(test)]
 mod attack_surface_detector_tests {
-    use crate::{
-        audit::{attack_surface::AttackSurfaceDetector, auditor::AuditorDetector},
-        detect::detector::detector_test_helpers::load_contract,
-    };
+    use crate::audit::{attack_surface::AttackSurfaceDetector, auditor::AuditorDetector};
 
     #[test]
     fn test_attack_surface_detector() {
-        let context =
-            load_contract("../tests/contract-playground/out/ExternalCalls.sol/ExternalCalls.json");
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/auditor_mode/ExternalCalls.sol",
+        );
 
         let mut detector = AttackSurfaceDetector::default();
         let found = detector.detect(&context).unwrap();
