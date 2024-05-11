@@ -7,20 +7,24 @@ use crate::{
     },
     detect::helpers::get_calls_and_delegate_calls,
 };
-use std::{collections::BTreeMap, error::Error};
+use std::{
+    collections::BTreeMap,
+    error::Error,
+    fmt::{self, Display},
+};
 
 pub enum AddressSource {
     Storage,
     Havoc,
 }
 
-impl ToString for AddressSource {
-    fn to_string(&self) -> String {
+impl Display for AddressSource {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let s = match self {
             Self::Havoc => "Havoc",
             Self::Storage => "Storage",
         };
-        s.to_string()
+        write!(f, "{}", s)
     }
 }
 
