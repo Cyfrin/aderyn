@@ -7,3 +7,8 @@ bytecode_hash = "none"
 [profile.sample]
 out = "sample_out"
 bytecode_hash = "none"
+
+[profile.uniswap]
+src = "src/uniswap"
+out = "out"
+bytecode_hash = "none"

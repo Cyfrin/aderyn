@@ -23,6 +23,10 @@ impl IssueDetector for UselessErrorDetector {
             //  extract the ids directly from the expression of the function call
             if let Expression::Identifier(identifier) = &*revert_stmt.error_call.expression {
                 used_errors.insert(identifier.referenced_declaration);
+            } else if let Expression::MemberAccess(member_access) =
+                &*revert_stmt.error_call.expression
+            {
+                used_errors.insert(member_access.referenced_declaration.unwrap());
             }
         }
 
@@ -74,7 +78,7 @@ mod useless_error_tests {
         let found = detector.detect(&context).unwrap();
         assert!(found);
         // Assert that the detector returns the correct number of instances
-        assert_eq!(detector.instances().len(), 1);
+        assert_eq!(detector.instances().len(), 2);
         // Assert that the detector returns the correct severity
         assert_eq!(
             detector.severity(),

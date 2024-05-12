@@ -34,6 +34,10 @@ pub struct CommandLineArgs {
     #[arg(short, long, default_value = "report.md")]
     output: String,
 
+    /// Path relative to project root, inside which solidity contracts will be analyzed
+    #[clap(long, use_value_delimiter = true)]
+    src: Option<Vec<String>>,
+
     /// List of path strings to include, delimited by comma (no spaces).
     /// Any solidity file path not containing these strings will be ignored
     #[clap(short, long, use_value_delimiter = true)]
@@ -75,6 +79,10 @@ pub struct CommandLineArgs {
     /// Watch for file changes and continuously generate report
     #[arg(short, long)]
     watch: bool,
+
+    /// Run in Auditor mode, which only outputs manual audit helpers
+    #[arg(long)]
+    auditor_mode: bool,
 }
 
 #[derive(Debug, Subcommand)]
@@ -108,6 +116,7 @@ fn main() {
     let args: Args = Args {
         root: cmd_args.root,
         output: cmd_args.output,
+        src: cmd_args.src,
         scope: cmd_args.scope,
         exclude: cmd_args.exclude,
         no_snippets: cmd_args.no_snippets,
@@ -115,6 +124,7 @@ fn main() {
         skip_cloc: cmd_args.skip_cloc,
         skip_update_check: cmd_args.skip_update_check,
         stdout: cmd_args.stdout,
+        auditor_mode: cmd_args.auditor_mode,
     };
 
     let aderyn_config_path = match cmd_args.config_file {
@@ -209,6 +219,7 @@ fn main() {
                 let new_args: Args = Args {
                     root: args.root,
                     output: args.output,
+                    src: args.src,
                     scope: scope_lines,
                     exclude: args.exclude,
                     no_snippets: args.no_snippets,
@@ -216,6 +227,7 @@ fn main() {
                     skip_cloc: args.skip_cloc,
                     skip_update_check: args.skip_update_check,
                     stdout: args.stdout,
+                    auditor_mode: args.auditor_mode,
                 };
                 if cmd_args.watch {
                     println!("INFO: Aderyn is entering watch mode !");

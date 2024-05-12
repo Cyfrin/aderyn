@@ -1,4 +1,5 @@
 pub mod ast;
+pub mod audit;
 pub mod context;
 pub mod detect;
 pub mod framework;
@@ -6,6 +7,7 @@ pub mod fscloc;
 pub mod report;
 pub mod visitor;
 
+use audit::auditor::{get_auditor_detectors, AuditorInstance, AuditorPrinter, BasicAuditorPrinter};
 use detect::detector::IssueDetector;
 use eyre::Result;
 use rayon::iter::{IntoParallelIterator, IntoParallelRefMutIterator, ParallelIterator};
@@ -16,36 +18,76 @@ use std::io::{self};
 use std::path::{Path, PathBuf};
 
 use crate::context::workspace_context::WorkspaceContext;
-use crate::detect::detector::{get_all_issue_detectors, IssueSeverity};
+use crate::detect::detector::IssueSeverity;
 
 use crate::report::printer::ReportPrinter;
 use crate::report::reporter::Report;
 use crate::report::Issue;
 
-pub fn run_with_printer<T>(
+#[allow(clippy::too_many_arguments)]
+pub fn run<T>(
     contexts: &[WorkspaceContext],
     output_file_path: String,
     reporter: T,
     root_rel_path: PathBuf,
     no_snippets: bool,
     stdout: bool,
+    auditor_mode: bool,
+    detectors: Vec<Box<dyn IssueDetector>>,
 ) -> Result<(), Box<dyn Error>>
 where
     T: ReportPrinter<()>,
 {
-    let detectors = get_all_issue_detectors();
-    run_with_printer_and_given_detectors(
-        contexts,
-        output_file_path,
-        reporter,
-        root_rel_path,
-        no_snippets,
-        stdout,
-        detectors,
-    )
+    if !auditor_mode {
+        return run_detector_mode(
+            contexts,
+            output_file_path,
+            reporter,
+            root_rel_path,
+            no_snippets,
+            stdout,
+            detectors,
+        );
+    }
+    run_auditor_mode(contexts)
 }
 
-pub fn run_with_printer_and_given_detectors<T>(
+fn run_auditor_mode(contexts: &[WorkspaceContext]) -> Result<(), Box<dyn Error>> {
+    let auditors_with_instances = get_auditor_detectors()
+        .par_iter_mut()
+        .flat_map(|detector| {
+            let mut instances: Vec<AuditorInstance> = vec![];
+
+            for context in contexts {
+                let mut d = detector.skeletal_clone();
+                if let Ok(found) = d.detect(context) {
+                    if found {
+                        instances.extend(d.instances());
+                    }
+                }
+            }
+
+            instances.dedup_by(|a, b| {
+                a.contract_name == b.contract_name
+                    && a.function_name == b.function_name
+                    && a.source_code == b.source_code
+                    && a.address_source == b.address_source
+            });
+
+            Some((detector.title(), instances))
+        })
+        .collect::<Vec<_>>();
+
+    for (detector_name, instances) in auditors_with_instances {
+        println!("Findings by {}", detector_name);
+        BasicAuditorPrinter::print(&instances, &detector_name);
+    }
+
+    Ok(())
+}
+
+#[allow(clippy::too_many_arguments)]
+fn run_detector_mode<T>(
     contexts: &[WorkspaceContext],
     output_file_path: String,
     reporter: T,

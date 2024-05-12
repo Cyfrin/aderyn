@@ -27,5 +27,17 @@ contract HugeConstants {
     uint256 constant public HUGE_NUMBER_21_GOOD = 1000;
     uint256 constant public HUGE_NUMBER_22_GOOD = 100;
     uint256 constant public HUGE_NUMBER_23_GOOD = 1e20;
-    
+
+    uint256 constant public HUGE_NUMBER_24_UNDERSCORES = 1_000_000_000_000_000_000_000;
+    uint256 constant public HUGE_NUMBER_25_UNDERSCORES = 10_000;
+    uint256 constant public HUGE_NUMBER_26_UNDERSCORES_GOOD = 1_000;
+
+    uint256 constant public HUGE_NUMBER_27_HEX_GOOD = 0x1000000000000000000000;
+    uint256 constant public HUGE_NUMBER_28_HEX_GOOD = 0x10000;
+    uint256 constant public HUGE_NUMBER_29_HEX_GOOD = 0x1000;
+    uint256 constant public HUGE_NUMBER_30_HEX_GOOD = 0x1_000_000_000_000_000_000_000;
+    uint256 constant public HUGE_NUMBER_31_HEX_GOOD = 0x10_000;
+    uint256 constant public HUGE_NUMBER_32_HEX_GOOD = 0x100_0;
+
+    uint256 constant public HUGE_NUMBER_33_HEX = 1e0000;
 }
