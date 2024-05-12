@@ -24,7 +24,7 @@ pub struct Args {
     pub skip_update_check: bool,
     pub stdout: bool,
     pub auditor_mode: bool,
-    pub legacy: bool,
+    pub icf: bool,
 }
 
 pub fn drive(args: Args) {
@@ -92,7 +92,7 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
     println!("Src - {:?}, Exclude - {:?}", src, exclude);
 
     let mut contexts: Vec<WorkspaceContext> = {
-        if args.legacy {
+        if !args.icf {
             vec![process_foundry::with_project_root_at(
                 &root_path,
                 &scope,
