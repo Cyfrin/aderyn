@@ -1,5 +1,6 @@
 use crate::{
     ensure_valid_root_path, foundry_config_helpers::derive_from_foundry_toml, process_auto,
+    process_foundry,
 };
 use aderyn_core::{
     context::workspace_context::WorkspaceContext,
@@ -23,6 +24,7 @@ pub struct Args {
     pub skip_update_check: bool,
     pub stdout: bool,
     pub auditor_mode: bool,
+    pub legacy: bool,
 }
 
 pub fn drive(args: Args) {
@@ -89,8 +91,18 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
 
     println!("Src - {:?}, Exclude - {:?}", src, exclude);
 
-    let mut contexts: Vec<WorkspaceContext> =
-        process_auto::with_project_root_at(&root_path, &scope, &exclude, &src, &remappings);
+    let mut contexts: Vec<WorkspaceContext> = {
+        if args.legacy {
+            vec![process_foundry::with_project_root_at(
+                &root_path,
+                &scope,
+                &exclude,
+                args.skip_build,
+            )]
+        } else {
+            process_auto::with_project_root_at(&root_path, &scope, &exclude, &src, &remappings)
+        }
+    };
 
     if !args.skip_cloc {
         for context in contexts.iter_mut() {

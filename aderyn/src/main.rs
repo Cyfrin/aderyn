@@ -83,6 +83,10 @@ pub struct CommandLineArgs {
     /// Run in Auditor mode, which only outputs manual audit helpers
     #[arg(long)]
     auditor_mode: bool,
+
+    /// Use the older version of aderyn
+    #[arg(long)]
+    legacy: bool,
 }
 
 #[derive(Debug, Subcommand)]
@@ -125,6 +129,7 @@ fn main() {
         skip_update_check: cmd_args.skip_update_check,
         stdout: cmd_args.stdout,
         auditor_mode: cmd_args.auditor_mode,
+        legacy: cmd_args.legacy,
     };
 
     let aderyn_config_path = match cmd_args.config_file {
@@ -228,6 +233,7 @@ fn main() {
                     skip_update_check: args.skip_update_check,
                     stdout: args.stdout,
                     auditor_mode: args.auditor_mode,
+                    legacy: args.legacy,
                 };
                 if cmd_args.watch {
                     println!("INFO: Aderyn is entering watch mode !");

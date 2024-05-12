@@ -16,7 +16,7 @@ pub fn with_project_root_at(
     scope: &Option<Vec<String>>,
     exclude: &Option<Vec<String>>,
     skip_build: bool,
-) -> (String, WorkspaceContext) {
+) -> WorkspaceContext {
     let mut context = WorkspaceContext::default();
 
     println!("Framework detected: Foundry mode engaged.");
@@ -110,7 +110,7 @@ pub fn with_project_root_at(
     });
 
     context.src_filepaths = intermediate_paths.into_iter().collect();
-    (src_path, context)
+    context
 }
 
 #[cfg(test)]
@@ -120,7 +120,7 @@ mod process_foundry_tests {
     #[test]
     fn test_process_foundry() {
         let root_path = PathBuf::from("../tests/contract-playground");
-        let (_, context) = super::with_project_root_at(&root_path, &None, &None, false);
+        let context = super::with_project_root_at(&root_path, &None, &None, false);
         assert!(context.src_filepaths.len() > 10);
     }
 
@@ -132,7 +132,7 @@ mod process_foundry_tests {
             "Counter.sol".to_string(),
         ]);
 
-        let (_, context) = super::with_project_root_at(&root_path, &scope, &None, false);
+        let context = super::with_project_root_at(&root_path, &scope, &None, false);
         let contains_string = context
             .src_filepaths
             .iter()
@@ -147,7 +147,7 @@ mod process_foundry_tests {
         let exclude: Option<Vec<String>> =
             Some(vec!["AnotherHeavilyCommentedContract.sol".to_string()]);
 
-        let (_, context) = super::with_project_root_at(&root_path, &None, &exclude, false);
+        let context = super::with_project_root_at(&root_path, &None, &exclude, false);
         let contains_string = context
             .src_filepaths
             .iter()
@@ -161,7 +161,7 @@ mod process_foundry_tests {
         let scope = Some(vec!["Inheritance".to_string()]);
         let exclude = Some(vec!["IContractInheritance.sol".to_string()]);
 
-        let (_, context) = super::with_project_root_at(&root_path, &scope, &exclude, false);
+        let context = super::with_project_root_at(&root_path, &scope, &exclude, false);
         let contains_scope = context
             .src_filepaths
             .iter()
@@ -179,7 +179,7 @@ mod process_foundry_tests {
         let scope = Some(vec!["uniswap".to_string()]);
         let exclude = Some(vec!["UniswapV2Swapper.sol".to_string()]);
 
-        let (_, context) = super::with_project_root_at(&root_path, &scope, &exclude, false);
+        let context = super::with_project_root_at(&root_path, &scope, &exclude, false);
         let contains_scope = context
             .src_filepaths
             .iter()
