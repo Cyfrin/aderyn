@@ -2,6 +2,7 @@ use std::path::Path;
 
 use foundry_config::Config;
 
+#[allow(clippy::type_complexity)]
 pub fn derive_from_foundry_toml(
     root: &Path,
     scope: &Option<Vec<String>>,

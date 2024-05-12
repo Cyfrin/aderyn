@@ -108,6 +108,7 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
     WorkspaceContextWrapper { contexts }
 }
 
+#[allow(clippy::type_complexity)]
 fn calculate_scope_exclude_and_src(
     args: &Args,
 ) -> Result<
