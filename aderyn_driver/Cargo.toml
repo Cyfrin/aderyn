@@ -15,6 +15,7 @@ foundry-compilers = { git = "https://github.com/Cyfrin/foundry-compilers", featu
 serde_json = { version = "1.0.96", features = ["preserve_order"] }
 serde = { version = "1.0.160", features = ["derive"] }
 serde_repr = "0.1.12"
+foundry-config = { path = "../foundry/crates/config"  }
 
 [dev-dependencies]
 criterion = "0.5.1"
