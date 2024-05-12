@@ -52,6 +52,7 @@ where
     run_auditor_mode(contexts)
 }
 
+<<<<<<< HEAD
 fn run_auditor_mode(contexts: &[WorkspaceContext]) -> Result<(), Box<dyn Error>> {
     let auditors_with_instances = get_auditor_detectors()
         .par_iter_mut()
@@ -75,11 +76,25 @@ fn run_auditor_mode(contexts: &[WorkspaceContext]) -> Result<(), Box<dyn Error>>
             });
 
             Some((detector.title(), instances))
+=======
+fn run_auditor_mode(context: &WorkspaceContext) -> Result<(), Box<dyn Error>> {
+    let auditors_with_instances = get_auditor_detectors()
+        .par_iter_mut()
+        .flat_map(|detector| {
+            let found = detector.detect(context).unwrap();
+            if found {
+                return Some((detector.title(), detector.instances()));
+            }
+            None
+>>>>>>> dev
         })
         .collect::<Vec<_>>();
 
     for (detector_name, instances) in auditors_with_instances {
+<<<<<<< HEAD
         println!("Findings by {}", detector_name);
+=======
+>>>>>>> dev
         BasicAuditorPrinter::print(&instances, &detector_name);
     }
 
