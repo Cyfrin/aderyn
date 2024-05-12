@@ -37,6 +37,14 @@ pub fn get_remappings(root: &Path) -> (Vec<String>, Vec<Remapping>) {
     (remappings, foundry_compilers_remappings)
 }
 
+/// Get FC remappings
+pub fn get_fc_remappings(remappings: &[String]) -> Vec<Remapping> {
+    remappings
+        .iter()
+        .filter_map(|x| Remapping::from_str(x).ok())
+        .collect::<Vec<_>>()
+}
+
 pub fn get_project(root: &Path, remappings: Vec<Remapping>) -> Project {
     let paths = ProjectPathsConfig::builder()
         .root(root)
