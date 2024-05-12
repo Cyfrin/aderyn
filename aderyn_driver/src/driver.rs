@@ -12,6 +12,7 @@ use std::path::PathBuf;
 pub struct Args {
     pub root: String,
     pub output: String,
+    pub src: Option<Vec<String>>,
     pub exclude: Option<Vec<String>>,
     pub scope: Option<Vec<String>>,
     pub no_snippets: bool,
@@ -82,7 +83,8 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
     let root_path = PathBuf::from(&args.root);
     let absolute_root_path = &ensure_valid_root_path(&root_path);
 
-    let mut contexts = process_auto::with_project_root_at(&root_path, &args.scope, &args.exclude);
+    let mut contexts =
+        process_auto::with_project_root_at(&root_path, &args.scope, &args.exclude, &args.src);
 
     if !args.skip_cloc {
         for context in contexts.iter_mut() {

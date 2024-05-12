@@ -20,6 +20,13 @@ fn ensure_valid_root_path(root_path: &Path) -> PathBuf {
     root_path.canonicalize().unwrap()
 }
 
+fn passes_src(src: &Option<Vec<PathBuf>>, solidity_file: &Path) -> bool {
+    if let Some(sources) = src {
+        return sources.iter().any(|s| solidity_file.starts_with(s));
+    }
+    true
+}
+
 fn passes_scope(
     scope: &Option<Vec<String>>,
     solidity_file: &Path,
