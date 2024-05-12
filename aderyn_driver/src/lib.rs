@@ -1,5 +1,6 @@
 pub mod driver;
 pub(crate) mod foundry_compiler_helpers;
+pub(crate) mod foundry_config_helpers;
 pub(crate) mod process_auto;
 pub(crate) mod project_compiler_tests;
 use std::path::Path;
@@ -18,6 +19,13 @@ fn ensure_valid_root_path(root_path: &Path) -> PathBuf {
         std::process::exit(1);
     }
     root_path.canonicalize().unwrap()
+}
+
+fn passes_src(src: &Option<Vec<PathBuf>>, solidity_file: &Path) -> bool {
+    if let Some(sources) = src {
+        return sources.iter().any(|s| solidity_file.starts_with(s));
+    }
+    true
 }
 
 fn passes_scope(

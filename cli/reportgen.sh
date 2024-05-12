@@ -22,7 +22,10 @@ cd tests/foundry-nft-f23 && forge install && cd ../.. &&
 cargo run --  ./tests/foundry-nft-f23 --scope src/ --exclude lib/ -o ./tests/nft-report.md --skip-update-check &
 
 # ccip-functions-report.md (Handle remappings)
-cargo run -- tests/ccip-contracts/contracts --scope src/v0.8/functions/ --exclude "tests/,test/,testhelpers/,lib/,node_modules/,mocks/,vendor/" -o tests/ccip-functions-report.md
+cargo run -- tests/ccip-contracts/contracts --src src/v0.8/functions/ --exclude "tests/,test/,mocks/" -o tests/ccip-functions-report.md
+
+# Extract src, scope and exclude from foundry profile in case of foundry project
+FOUNDRY_PROFILE=uniswap cargo run tests/contract-playground/ -o tests/uniswap_profile.md
 
 ##### JSON REPORTS ########
 

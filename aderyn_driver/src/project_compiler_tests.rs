@@ -3,6 +3,7 @@ mod project_compiler_grouping_tests {
     use std::{
         path::PathBuf,
         process::{Command, Stdio},
+        str::FromStr,
     };
 
     use crate::{foundry_compiler_helpers::*, read_remappings};
@@ -11,50 +12,40 @@ mod project_compiler_grouping_tests {
     #[test]
     fn foundry_nft_f23() {
         let project_root_str = "../tests/foundry-nft-f23";
-        let scope = &Some(vec!["src/".to_string()]);
-        let exclude = &Some(vec!["lib/".to_string()]);
-        test_grouping_files_to_compile(project_root_str, scope, exclude);
+        let src = &Some(vec![PathBuf::from_str("src/").unwrap()]);
+        test_grouping_files_to_compile(project_root_str, &src, &None, &None);
     }
 
     #[test]
     fn adhoc_solidity_files() {
         let project_root_str = "../tests/adhoc-sol-files";
-        test_grouping_files_to_compile(project_root_str, &None, &None);
+        test_grouping_files_to_compile(project_root_str, &None, &None, &None);
     }
 
     #[test]
     fn contract_playground() {
         let project_root_str = "../tests/contract-playground";
-        let scope = &Some(vec!["src/".to_string()]);
-        let exclude = &Some(vec!["lib/".to_string()]);
-        test_grouping_files_to_compile(project_root_str, scope, exclude);
+        let src = &Some(vec![PathBuf::from_str("src/").unwrap()]);
+        test_grouping_files_to_compile(project_root_str, &src, &None, &None);
     }
 
     #[test]
     fn ccip_develop() {
         let project_root_str = "../tests/ccip-contracts/contracts";
-        let scope = &Some(vec!["src/v0.8/".to_string()]);
-        let exclude = &Some(vec![
-            "tests/".to_string(),
-            "test/".to_string(),
-            "testhelpers/".to_string(),
-            "lib/".to_string(),
-            "node_modules/".to_string(),
-            "mocks/".to_string(),
-            "vendor/".to_string(),
-        ]);
-        test_grouping_files_to_compile(project_root_str, scope, exclude);
+        let src = &Some(vec![PathBuf::from_str("src/v0.8/").unwrap()]);
+        test_grouping_files_to_compile(project_root_str, &src, &None, &None);
     }
 
     fn test_grouping_files_to_compile(
         project_root_str: &str,
+        src: &Option<Vec<PathBuf>>,
         scope: &Option<Vec<String>>,
         exclude: &Option<Vec<String>>,
     ) {
         let root = utils::canonicalize(project_root_str).unwrap();
 
         let solidity_files = get_compiler_input(&root);
-        let sources = get_relevant_sources(&root, solidity_files, scope, exclude);
+        let sources = get_relevant_sources(&root, solidity_files, &src, scope, exclude);
 
         println!("Resolving sources versions by graph ...");
         let (remappings, foundry_compilers_remappings) = get_remappings(&root);
@@ -67,7 +58,7 @@ mod project_compiler_grouping_tests {
         for (solc, value) in sources_by_version {
             println!("Compiling {} files with Solc {}", value.1.len(), value.0);
             let pathbufs = value.1.into_keys().collect::<Vec<_>>();
-            let files = get_relevant_pathbufs(&root, &pathbufs, scope, exclude);
+            let files = get_relevant_pathbufs(&root, &pathbufs, &src, scope, exclude);
 
             assert!(solc.solc.exists());
 
