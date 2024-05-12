@@ -301,7 +301,7 @@ jobs:
       - name: Run cargo fmt
         uses: actions-rs/cargo@v1
         with:
-          command: fmt
+          command: +nightly fmt
           args: --all -- --check
 
       - name: Run cargo clippy
