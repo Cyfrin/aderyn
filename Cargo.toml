@@ -11,4 +11,5 @@ resolver="1"
 
 exclude = [
     "bot_ci_cd",
+    "foundry",
 ]

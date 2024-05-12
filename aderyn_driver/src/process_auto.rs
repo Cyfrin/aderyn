@@ -11,8 +11,8 @@ use foundry_compilers::{utils, Graph};
 use rayon::iter::{IntoParallelIterator, ParallelIterator};
 
 use crate::{
-    get_compiler_input, get_project, get_relevant_pathbufs, get_relevant_sources, get_remappings,
-    passes_exclude, passes_scope, passes_src,
+    get_compiler_input, get_fc_remappings, get_project, get_relevant_pathbufs,
+    get_relevant_sources, get_remappings, passes_exclude, passes_scope, passes_src,
 };
 
 use crate::ensure_valid_root_path;
@@ -22,6 +22,7 @@ pub fn with_project_root_at(
     scope: &Option<Vec<String>>,
     exclude: &Option<Vec<String>>,
     src: &Option<Vec<String>>,
+    remappings: &Option<Vec<String>>,
 ) -> Vec<WorkspaceContext> {
     let root = utils::canonicalize(root_path).unwrap();
     let src = src.clone().map(|sources| {
@@ -35,7 +36,12 @@ pub fn with_project_root_at(
     let sources = get_relevant_sources(&root, solidity_files, &src, scope, exclude);
 
     println!("Resolving sources versions by graph ...");
-    let (remappings, foundry_compilers_remappings) = get_remappings(&root);
+    let (remappings, foundry_compilers_remappings) = {
+        match remappings {
+            None => get_remappings(&root),
+            Some(remappings) => (remappings.clone(), get_fc_remappings(remappings)),
+        }
+    };
     let project = get_project(&root, foundry_compilers_remappings);
 
     let graph = Graph::resolve_sources(&project.paths, sources).unwrap();
