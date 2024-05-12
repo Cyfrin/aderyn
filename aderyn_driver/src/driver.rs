@@ -85,12 +85,12 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
     let root_path = PathBuf::from(&args.root);
     let absolute_root_path = &ensure_valid_root_path(&root_path);
 
-    let (scope, exclude, src) = calculate_scope_exclude_and_src(args).unwrap();
+    let (scope, exclude, src, remappings) = calculate_scope_exclude_and_src(args).unwrap();
 
     println!("Src - {:?}, Exclude - {:?}", src, exclude);
 
     let mut contexts: Vec<WorkspaceContext> =
-        process_auto::with_project_root_at(&root_path, &scope, &exclude, &src);
+        process_auto::with_project_root_at(&root_path, &scope, &exclude, &src, &remappings);
 
     if !args.skip_cloc {
         for context in contexts.iter_mut() {
@@ -116,6 +116,7 @@ fn calculate_scope_exclude_and_src(
         Option<Vec<String>>, // Scope
         Option<Vec<String>>, // Exclude
         Option<Vec<String>>, // Src
+        Option<Vec<String>>, // Remappings
     ),
     Box<dyn Error>,
 > {
@@ -132,5 +133,10 @@ fn calculate_scope_exclude_and_src(
             ));
         }
     }
-    Ok((args.scope.clone(), args.exclude.clone(), args.src.clone()))
+    Ok((
+        args.scope.clone(),
+        args.exclude.clone(),
+        args.src.clone(),
+        None,
+    ))
 }
