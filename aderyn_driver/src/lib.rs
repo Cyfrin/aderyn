@@ -11,6 +11,7 @@ pub use aderyn_core::context;
 pub use aderyn_core::detect as detection_modules;
 pub use aderyn_core::detect::detector;
 pub use foundry_compiler_helpers::*;
+use foundry_compilers::utils;
 pub use process_auto::with_project_root_at;
 
 fn ensure_valid_root_path(root_path: &Path) -> PathBuf {
@@ -18,7 +19,7 @@ fn ensure_valid_root_path(root_path: &Path) -> PathBuf {
         eprintln!("{} does not exist!", root_path.to_string_lossy());
         std::process::exit(1);
     }
-    root_path.canonicalize().unwrap()
+    utils::canonicalize(root_path).unwrap()
 }
 
 fn passes_src(src: &Option<Vec<PathBuf>>, solidity_file: &Path) -> bool {

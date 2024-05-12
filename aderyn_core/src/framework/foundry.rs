@@ -1,9 +1,10 @@
 use crate::ast::*;
 use eyre::Result;
+use foundry_compilers::utils;
 use serde::{Deserialize, Serialize};
 
 use std::error::Error;
-use std::fs::{canonicalize, read_dir, read_to_string, File};
+use std::fs::{read_dir, read_to_string, File};
 use std::io::BufReader;
 use std::path::PathBuf;
 use std::process::Stdio;
@@ -41,7 +42,7 @@ pub fn load_foundry(
     foundry_root: &PathBuf,
     skip_build: bool,
 ) -> Result<LoadedFoundry, Box<dyn Error>> {
-    let foundry_root_absolute = canonicalize(foundry_root).unwrap_or_else(|err| {
+    let foundry_root_absolute = utils::canonicalize(foundry_root).unwrap_or_else(|err| {
         // Exit with a non-zero exit code
         eprintln!("Error getting absolute path of Foundry root directory");
         // print err
