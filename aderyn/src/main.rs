@@ -252,7 +252,7 @@ fn main() {
                             driver::drive_with(new_args.clone(), subscriptions);
                         },
                         &new_args,
-                        2,
+                        Duration::from_secs(2),
                     );
                 } else {
                     driver::drive_with(new_args, subscriptions);
@@ -275,7 +275,7 @@ fn main() {
                     driver::drive(args.clone());
                 },
                 &args,
-                2,
+                Duration::from_secs(2),
             );
         }
     }
@@ -292,7 +292,7 @@ fn main() {
     }
 }
 
-fn dynamically_debounce_and_run<F>(driver_func: F, args: &Args, timeout_secs: u64)
+fn dynamically_debounce_and_run<F>(driver_func: F, args: &Args, timeout: Duration)
 where
     F: Fn(),
 {
@@ -300,7 +300,7 @@ where
     let (tx, rx) = std::sync::mpsc::channel();
 
     // no specific tickrate, max debounce time 2 seconds
-    let mut debouncer = new_debouncer(Duration::from_secs(timeout_secs), None, tx).unwrap();
+    let mut debouncer = new_debouncer(timeout, None, tx).unwrap();
 
     debouncer
         .watcher()
