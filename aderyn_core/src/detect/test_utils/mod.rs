@@ -1,6 +1,7 @@
 mod load_contract;
 mod load_source_unit;
 
+use foundry_compilers::utils;
 use once_cell::sync::Lazy;
 use std::path::PathBuf;
 
@@ -36,5 +37,5 @@ fn ensure_valid_solidity_file(filepath: &str) -> PathBuf {
         std::process::exit(1);
     }
 
-    filepath.canonicalize().unwrap()
+    utils::canonicalize(filepath).unwrap()
 }

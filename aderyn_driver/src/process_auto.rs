@@ -125,15 +125,21 @@ fn create_workspace_context_from_stdout(
             let filepath = &PathBuf::from(&line["======= ".len()..end_marker]);
             if passes_scope(
                 scope,
-                root_path.join(filepath).canonicalize().unwrap().as_path(),
+                utils::canonicalize(root_path.join(filepath))
+                    .unwrap()
+                    .as_path(),
                 absolute_root_path_str,
             ) && passes_exclude(
                 exclude,
-                root_path.join(filepath).canonicalize().unwrap().as_path(),
+                utils::canonicalize(root_path.join(filepath))
+                    .unwrap()
+                    .as_path(),
                 absolute_root_path_str,
             ) && passes_src(
                 src,
-                root_path.join(filepath).canonicalize().unwrap().as_path(),
+                utils::canonicalize(root_path.join(filepath))
+                    .unwrap()
+                    .as_path(),
             ) {
                 src_filepaths.push(filepath.to_string_lossy().to_string());
                 pick_next_line = true;

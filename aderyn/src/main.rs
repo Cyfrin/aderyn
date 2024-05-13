@@ -23,6 +23,8 @@ use notify_debouncer_full::{
     notify::{RecursiveMode, Watcher},
 };
 
+use foundry_compilers::utils;
+
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 pub struct CommandLineArgs {
@@ -185,7 +187,7 @@ fn main() {
                     scope_file_path.pop();
                     scope_file_path.push(PathBuf::from(scope_file));
 
-                    let canonicalized_scope_file_path = std::fs::canonicalize(&scope_file_path);
+                    let canonicalized_scope_file_path = utils::canonicalize(&scope_file_path);
                     match canonicalized_scope_file_path {
                         Ok(ok_scope_file_path) => {
                             assert!(ok_scope_file_path.exists());

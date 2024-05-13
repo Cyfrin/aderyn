@@ -27,6 +27,7 @@ version = "0.0.26"
 dependencies = [
  "aderyn_driver",
  "clap",
+ "foundry-compilers 0.3.20",
  "notify-debouncer-full",
  "reqwest",
  "semver 1.0.23",
