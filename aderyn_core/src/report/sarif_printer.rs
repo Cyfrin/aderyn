@@ -18,6 +18,8 @@ use super::{
 
 #[derive(Serialize)]
 pub struct SarifContent {
+    #[serde(rename = "$schema")]
+    schema: String,
     version: String,
     runs: Vec<Run>,
 }
@@ -46,7 +48,7 @@ impl ReportPrinter<()> for SarifPrinter {
                     dotted_quad_file_version: None,
                     download_uri: None,
                     full_description: None,
-                    full_name: None,
+                    full_name: Some("Cyfrin - Aderyn".to_string()),
                     global_message_strings: None,
                     guid: None,
                     information_uri: Some("https://github.com/Cyfrin/aderyn".to_string()),
@@ -61,12 +63,12 @@ impl ReportPrinter<()> for SarifPrinter {
                     properties: None,
                     release_date_utc: None,
                     rules: None,
-                    semantic_version: None,
+                    semantic_version: Some(env!("CARGO_PKG_VERSION").to_string()),
                     short_description: None,
                     supported_taxonomies: None,
                     taxa: None,
                     translation_metadata: None,
-                    version: None,
+                    version: Some(env!("CARGO_PKG_VERSION").to_string()),
                 },
                 extensions: None,
                 properties: None,
@@ -101,6 +103,7 @@ impl ReportPrinter<()> for SarifPrinter {
         }];
 
         let sarif_report = SarifContent {
+            schema: "http://json.schemastore.org/sarif-2.1.0-rtm.6".to_string(),
             version: "2.1.0".to_string(),
             runs,
         };

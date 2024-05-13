@@ -33,6 +33,11 @@ cargo run -- ./tests/contract-playground -o report.json --skip-update-check &
 # Create report-config.json based on config file
 cargo run -- --config-file ./tests/aderyn.config.json -o report-config.json ./tests/contract-playground/ --skip-update-check &
 
+##### SARIF REPORTS ########
+
+# Basic report.sarif
+cargo run -- ./tests/contract-playground -o report.sarif --skip-update-check &
+
 wait
 
 #### Other scripts #############
