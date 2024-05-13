@@ -3,7 +3,10 @@ use aderyn_core::{
     context::workspace_context::WorkspaceContext,
     detect::detector::{get_all_issue_detectors, IssueDetector},
     fscloc,
-    report::{json_printer::JsonPrinter, markdown_printer::MarkdownReportPrinter},
+    report::{
+        json_printer::JsonPrinter, markdown_printer::MarkdownReportPrinter,
+        sarif_printer::SarifPrinter,
+    },
     run,
 };
 use std::{fs::read_dir, path::PathBuf};
@@ -18,6 +21,7 @@ pub struct Args {
     pub skip_cloc: bool,
     pub skip_update_check: bool,
     pub stdout: bool,
+    pub auditor_mode: bool,
 }
 
 enum Framework {
@@ -44,6 +48,24 @@ pub fn drive_with(args: Args, detectors: Vec<Box<dyn IssueDetector>>) {
             root_rel_path,
             args.no_snippets,
             args.stdout,
+            args.auditor_mode,
+            detectors,
+        )
+        .unwrap_or_else(|err| {
+            // Exit with a non-zero exit code
+            eprintln!("Error running aderyn");
+            eprintln!("{:?}", err);
+            std::process::exit(1);
+        });
+    } else if args.output.ends_with(".sarif") {
+        run(
+            context,
+            output,
+            SarifPrinter,
+            root_rel_path,
+            args.no_snippets,
+            args.stdout,
+            args.auditor_mode,
             detectors,
         )
         .unwrap_or_else(|err| {
@@ -61,6 +83,7 @@ pub fn drive_with(args: Args, detectors: Vec<Box<dyn IssueDetector>>) {
             root_rel_path,
             args.no_snippets,
             args.stdout,
+            args.auditor_mode,
             detectors,
         )
         .unwrap_or_else(|err| {

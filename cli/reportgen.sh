@@ -10,33 +10,25 @@ cd ../../
 #### MARKDOWN REPORTS ######
 
 # Basic report.md 
-cargo run -- ./tests/contract-playground --skip-update-check &
+cargo run -- ./tests/contract-playground -o ./reports/report.md --skip-update-check &
 
 # Basic report.profile.md 
-FOUNDRY_PROFILE=sample cargo run -- -o report.sample_profile.md ./tests/contract-playground --skip-update-check &
+FOUNDRY_PROFILE=sample cargo run -- -o ./reports/report.sample_profile.md ./tests/contract-playground --skip-update-check &
 
 # Create report-config.md based on config file
-cargo run -- --config-file ./tests/aderyn.config.json -o report-config.md ./tests/contract-playground/ --skip-update-check  &
-
-# Create report.judge.md 
-cargo run -- ./tests/contract-playground -o judgeops/current/report.judge.md --skip-update-check &
-
-# Create report-config.judge.md based on config file
-cargo run -- --config-file ./tests/aderyn.config.json ./tests/contract-playground -o judgeops/current/report-config.judge.md --skip-update-check &
-
+cargo run -- --config-file ./tests/aderyn.config.json -o ./reports/report-config.md ./tests/contract-playground/ --skip-update-check  &
 
 ##### JSON REPORTS ########
 
 # Basic report.json
-cargo run -- ./tests/contract-playground -o report.json --skip-update-check &
+cargo run -- ./tests/contract-playground -o ./reports/report.json --skip-update-check &
 
 # Create report-config.json based on config file
-cargo run -- --config-file ./tests/aderyn.config.json -o report-config.json ./tests/contract-playground/ --skip-update-check &
+cargo run -- --config-file ./tests/aderyn.config.json -o ./reports/report-config.json ./tests/contract-playground/ --skip-update-check &
+
+##### SARIF REPORTS ########
+
+# Basic report.sarif
+cargo run -- ./tests/contract-playground -o ./reports/report.sarif --skip-update-check &
 
 wait
-
-#### Other scripts #############
-
-cli/bot_archivegen.sh
-cli/sample_metricsdbgen.sh judgeops/samples/sample_db.json
-
