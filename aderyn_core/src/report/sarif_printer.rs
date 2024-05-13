@@ -7,14 +7,11 @@ use crate::context::workspace_context::WorkspaceContext;
 use serde::Serialize;
 use serde_json::Value;
 use serde_sarif::sarif::{
-    ArtifactLocation, Location, Message, PhysicalLocation, Region, ReportingDescriptor,
-    Result as SarifResult, Run, Sarif, Tool, ToolComponent,
+    ArtifactLocation, Location, Message, PhysicalLocation, Region, Result as SarifResult, Run,
+    Tool, ToolComponent,
 };
 
-use super::{
-    printer::ReportPrinter, reporter::Report, FilesDetails, FilesSummary, HighIssues, Issue,
-    LowIssues,
-};
+use super::{printer::ReportPrinter, reporter::Report, Issue};
 
 #[derive(Serialize)]
 pub struct SarifContent {
@@ -36,7 +33,7 @@ impl ReportPrinter<()> for SarifPrinter {
         _: Option<String>,
         _: bool,
         stdout: bool,
-        detectors_used: &[(String, String)],
+        _detectors_used: &[(String, String)],
     ) -> Result<()> {
         let runs = vec![Run {
             tool: Tool {
@@ -168,7 +165,7 @@ fn create_sarif_results(report: &Report, context: &WorkspaceContext) -> Vec<Sari
 
 fn create_sarif_locations(issue: &Issue, context: &WorkspaceContext) -> Vec<Location> {
     let mut locations: Vec<Location> = Vec::new();
-    for ((filename, line_number, source_location), value) in issue.instances.iter() {
+    for ((filename, _line_number, _source_location), value) in issue.instances.iter() {
         if let Some(offset_len) = context.get_offset_and_length_of_node(*value) {
             let location = Location {
                 physical_location: Some(PhysicalLocation {
