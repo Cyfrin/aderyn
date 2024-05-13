@@ -12,6 +12,7 @@ pub use aderyn_core::context;
 pub use aderyn_core::detect as detection_modules;
 pub use aderyn_core::detect::detector;
 pub use foundry_compiler_helpers::*;
+use foundry_compilers::utils;
 pub use process_auto::with_project_root_at;
 
 fn ensure_valid_root_path(root_path: &Path) -> PathBuf {
@@ -19,7 +20,7 @@ fn ensure_valid_root_path(root_path: &Path) -> PathBuf {
         eprintln!("{} does not exist!", root_path.to_string_lossy());
         std::process::exit(1);
     }
-    root_path.canonicalize().unwrap()
+    utils::canonicalize(root_path).unwrap()
 }
 
 fn passes_src(src: &Option<Vec<PathBuf>>, solidity_file: &Path) -> bool {
@@ -34,13 +35,12 @@ fn passes_scope(
     solidity_file: &Path,
     absolute_root_path_str: &str,
 ) -> bool {
-    let sol_path_string = solidity_file.to_string_lossy().to_string();
-    let pos = sol_path_string.find(absolute_root_path_str).unwrap();
-    let window = &sol_path_string[pos + absolute_root_path_str.len()..];
+    let window = solidity_file.strip_prefix(absolute_root_path_str).unwrap();
+    let window_string = window.to_string_lossy().to_string();
 
     if let Some(scope) = scope {
         for include in scope {
-            if window.contains(include) {
+            if window_string.contains(include) {
                 return true;
             }
         }
@@ -55,13 +55,12 @@ fn passes_exclude(
     solidity_file: &Path,
     absolute_root_path_str: &str,
 ) -> bool {
-    let sol_path_string = solidity_file.to_string_lossy().to_string();
-    let pos = sol_path_string.find(absolute_root_path_str).unwrap();
-    let window = &sol_path_string[pos + absolute_root_path_str.len()..];
+    let window = solidity_file.strip_prefix(absolute_root_path_str).unwrap();
+    let window_string = window.to_string_lossy().to_string();
 
     if let Some(exclude) = exclude {
         for dont_include in exclude {
-            if window.contains(dont_include) {
+            if window_string.contains(dont_include) {
                 return false;
             }
         }

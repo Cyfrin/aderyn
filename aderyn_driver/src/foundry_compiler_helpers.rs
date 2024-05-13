@@ -5,7 +5,7 @@ use std::{
 };
 
 use foundry_compilers::{
-    artifacts::Source, remappings::Remapping, CompilerInput, Project, ProjectPathsConfig,
+    artifacts::Source, remappings::Remapping, utils, CompilerInput, Project, ProjectPathsConfig,
 };
 
 use crate::{passes_exclude, passes_scope, passes_src, read_remappings};
@@ -70,19 +70,19 @@ pub fn get_relevant_sources(
         .sources
         .iter()
         .filter(|(solidity_file, _)| {
-            passes_src(src, solidity_file.canonicalize().unwrap().as_path())
+            passes_src(src, utils::canonicalize(solidity_file).unwrap().as_path())
         })
         .filter(|(solidity_file, _)| {
             passes_scope(
                 scope,
-                solidity_file.canonicalize().unwrap().as_path(),
+                utils::canonicalize(solidity_file).unwrap().as_path(),
                 root.to_string_lossy().as_ref(),
             )
         })
         .filter(|(solidity_file, _)| {
             passes_exclude(
                 exclude,
-                solidity_file.canonicalize().unwrap().as_path(),
+                utils::canonicalize(solidity_file).unwrap().as_path(),
                 root.to_string_lossy().as_ref(),
             )
         })
@@ -99,18 +99,20 @@ pub fn get_relevant_pathbufs(
 ) -> Vec<PathBuf> {
     pathbufs
         .iter()
-        .filter(|solidity_file| passes_src(src, solidity_file.canonicalize().unwrap().as_path()))
+        .filter(|solidity_file| {
+            passes_src(src, utils::canonicalize(solidity_file).unwrap().as_path())
+        })
         .filter(|solidity_file| {
             passes_scope(
                 scope,
-                solidity_file.canonicalize().unwrap().as_path(),
+                utils::canonicalize(solidity_file).unwrap().as_path(),
                 root.to_string_lossy().as_ref(),
             )
         })
         .filter(|solidity_file| {
             passes_exclude(
                 exclude,
-                solidity_file.canonicalize().unwrap().as_path(),
+                utils::canonicalize(solidity_file).unwrap().as_path(),
                 root.to_string_lossy().as_ref(),
             )
         })
