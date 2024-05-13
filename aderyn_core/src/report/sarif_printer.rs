@@ -1,4 +1,5 @@
 use std::{
+    collections::HashSet,
     io::{self, Result, Write},
     path::PathBuf,
 };
@@ -166,47 +167,54 @@ fn create_sarif_results(report: &Report, contexts: &[WorkspaceContext]) -> Vec<S
 fn create_sarif_locations(issue: &Issue, contexts: &[WorkspaceContext]) -> Vec<Location> {
     let mut locations: Vec<Location> = Vec::new();
 
+    let mut offset_lens = HashSet::new();
+
     for context in contexts {
         for ((filename, _line_number, _source_location), value) in issue.instances.iter() {
             if let Some(offset_len) = context.get_offset_and_length_of_node(*value) {
-                let location = Location {
-                    physical_location: Some(PhysicalLocation {
-                        address: None,
-                        artifact_location: Some(ArtifactLocation {
-                            uri: Some(filename.clone()),
-                            uri_base_id: None,
-                            description: None,
-                            index: None,
-                            properties: None,
-                        }),
-                        context_region: None,
-                        properties: None,
-                        region: Some(Region {
-                            char_offset: Some(offset_len.0.try_into().unwrap()),
-                            char_length: Some(offset_len.1.try_into().unwrap()),
-
-                            byte_length: None,
-                            byte_offset: None,
-                            end_column: None,
-                            end_line: None,
-                            message: None,
-                            properties: None,
-                            snippet: None,
-                            source_language: None,
-                            start_column: None,
-                            start_line: None,
-                        }),
-                    }),
-                    properties: None,
-                    annotations: None,
-                    id: None,
-                    logical_locations: None,
-                    relationships: None,
-                    message: None,
-                };
-                locations.push(location);
+                offset_lens.insert((offset_len, filename));
             }
         }
     }
+
+    for (offset_len, filename) in offset_lens {
+        let location = Location {
+            physical_location: Some(PhysicalLocation {
+                address: None,
+                artifact_location: Some(ArtifactLocation {
+                    uri: Some(filename.clone()),
+                    uri_base_id: None,
+                    description: None,
+                    index: None,
+                    properties: None,
+                }),
+                context_region: None,
+                properties: None,
+                region: Some(Region {
+                    char_offset: Some(offset_len.0.try_into().unwrap()),
+                    char_length: Some(offset_len.1.try_into().unwrap()),
+
+                    byte_length: None,
+                    byte_offset: None,
+                    end_column: None,
+                    end_line: None,
+                    message: None,
+                    properties: None,
+                    snippet: None,
+                    source_language: None,
+                    start_column: None,
+                    start_line: None,
+                }),
+            }),
+            properties: None,
+            annotations: None,
+            id: None,
+            logical_locations: None,
+            relationships: None,
+            message: None,
+        };
+        locations.push(location);
+    }
+
     locations
 }
