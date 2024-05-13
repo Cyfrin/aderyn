@@ -34,13 +34,12 @@ fn passes_scope(
     solidity_file: &Path,
     absolute_root_path_str: &str,
 ) -> bool {
-    let sol_path_string = solidity_file.to_string_lossy().to_string();
-    let pos = sol_path_string.find(absolute_root_path_str).unwrap();
-    let window = &sol_path_string[pos + absolute_root_path_str.len()..];
+    let window = solidity_file.strip_prefix(absolute_root_path_str).unwrap();
+    let window_string = window.to_string_lossy().to_string();
 
     if let Some(scope) = scope {
         for include in scope {
-            if window.contains(include) {
+            if window_string.contains(include) {
                 return true;
             }
         }
@@ -55,13 +54,12 @@ fn passes_exclude(
     solidity_file: &Path,
     absolute_root_path_str: &str,
 ) -> bool {
-    let sol_path_string = solidity_file.to_string_lossy().to_string();
-    let pos = sol_path_string.find(absolute_root_path_str).unwrap();
-    let window = &sol_path_string[pos + absolute_root_path_str.len()..];
+    let window = solidity_file.strip_prefix(absolute_root_path_str).unwrap();
+    let window_string = window.to_string_lossy().to_string();
 
     if let Some(exclude) = exclude {
         for dont_include in exclude {
-            if window.contains(dont_include) {
+            if window_string.contains(dont_include) {
                 return false;
             }
         }
