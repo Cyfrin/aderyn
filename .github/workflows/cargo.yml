@@ -154,6 +154,17 @@ jobs:
           cat report3.md
           diff report-config.md report3.md
 
+      - name: Generate sarif report
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+          args: -- -o ci-report.sarif ./tests/contract-playground/ --skip-update-check
+
+      - name: Check sarif report
+        run: |
+          cat ci-report.sarif
+          diff report.sarif ci-report.sarif
+
   judgeopsreports: 
   
     name: Check judge.md report creation
