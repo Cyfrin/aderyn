@@ -5,7 +5,7 @@ use serde::Deserialize;
 use serde_json::Value;
 use std::{
     path::{Path, PathBuf},
-    time::{self, Duration},
+    time::Duration,
 };
 use strum::IntoEnumIterator;
 
@@ -241,7 +241,7 @@ fn main() {
 
                     driver::drive_with(new_args.clone(), subscriptions);
 
-                    dynamically_debounce_and_run(
+                    debounce_and_run(
                         || {
                             // Run it once, for the first time
                             let mut subscriptions: Vec<Box<dyn IssueDetector>> = vec![];
@@ -252,7 +252,7 @@ fn main() {
                             driver::drive_with(new_args.clone(), subscriptions);
                         },
                         &new_args,
-                        Duration::from_secs(2),
+                        Duration::from_millis(50),
                     );
                 } else {
                     driver::drive_with(new_args, subscriptions);
@@ -270,12 +270,12 @@ fn main() {
         if cmd_args.watch {
             println!("INFO: Aderyn is entering watch mode !");
 
-            dynamically_debounce_and_run(
+            debounce_and_run(
                 || {
                     driver::drive(args.clone());
                 },
                 &args,
-                Duration::from_secs(2),
+                Duration::from_millis(50),
             );
         }
     }
@@ -292,7 +292,7 @@ fn main() {
     }
 }
 
-fn dynamically_debounce_and_run<F>(driver_func: F, args: &Args, timeout: Duration)
+fn debounce_and_run<F>(driver_func: F, args: &Args, timeout: Duration)
 where
     F: Fn() + Copy + Send,
 {
@@ -314,12 +314,7 @@ where
     for result in rx {
         match result {
             Ok(_) => {
-                let start = time::Instant::now();
                 driver_func();
-                let duration = start.elapsed();
-                debouncer.stop();
-                dynamically_debounce_and_run(driver_func, args, duration);
-                break;
             }
             Err(errors) => errors.iter().for_each(|error| println!("{error:?}")),
         }
