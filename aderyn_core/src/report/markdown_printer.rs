@@ -22,20 +22,13 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
         output_rel_path: Option<String>,
         no_snippets: bool,
         _: bool,
-        detectors_used: &[(String, String)],
+        _: &[(String, String)],
     ) -> Result<()> {
         self.print_title_and_disclaimer(&mut writer)?;
         self.print_table_of_contents(&mut writer, report)?;
         self.print_contract_summary(&mut writer, report, context)?;
 
         let output_rel_path = output_rel_path.unwrap();
-        let is_for_judge = output_rel_path.clone().ends_with(".judge.md");
-        if is_for_judge {
-            writeln!(writer, "## Detectors Used\n")?;
-            for detector in detectors_used {
-                writeln!(writer, "{}:{}\n", detector.0, detector.1)?;
-            }
-        }
 
         let all_issues = vec![
             (report.high_issues().issues, "# High Issues\n", "H"),
@@ -211,13 +204,6 @@ impl MarkdownReportPrinter {
             "## {}-{}: {}\n\n{}\n", // <a name> is the anchor for the issue title
             params.severity, params.number, params.issue_body.title, params.issue_body.description
         )?;
-        if params.output_rel_path.ends_with(".judge.md") {
-            writeln!(
-                writer,
-                "### Responsible : {}\n",
-                params.issue_body.detector_name.clone()
-            )?;
-        }
         let mut line_nos_printed: HashSet<(String, usize)> = HashSet::new();
         for instance in &params.issue_body.instances {
             // If this line number has already been printed for this issue, skip it
