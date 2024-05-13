@@ -1387,6 +1387,1995 @@
             "text": "Downcasting int/uints in Solidity can be unsafe due to the potential for data loss and unintended behavior.When downcasting a larger integer type to a smaller one (e.g., uint256 to uint128), the value may exceed the range of the target type,leading to truncation and loss of significant digits. Use OpenZeppelin's SafeCast library to safely downcast integers."
           },
           "ruleId": "unsafe-casting-detector"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/AdminContract.sol"
+                },
+                "region": {
+                  "charLength": 7,
+                  "charOffset": 270
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/AdminContract.sol"
+                },
+                "region": {
+                  "charLength": 9,
+                  "charOffset": 376
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/AdminContract.sol"
+                },
+                "region": {
+                  "charLength": 9,
+                  "charOffset": 505
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DeprecatedOZFunctions.sol"
+                },
+                "region": {
+                  "charLength": 13,
+                  "charOffset": 295
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/EmptyBlocks.sol"
+                },
+                "region": {
+                  "charLength": 7,
+                  "charOffset": 188
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/InternalFunctions.sol"
+                },
+                "region": {
+                  "charLength": 9,
+                  "charOffset": 250
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/parent_chain/ParentChainContract.sol"
+                },
+                "region": {
+                  "charLength": 7,
+                  "charOffset": 282
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/parent_chain/ParentChainContract.sol"
+                },
+                "region": {
+                  "charLength": 9,
+                  "charOffset": 725
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/parent_chain/ParentChainContract.sol"
+                },
+                "region": {
+                  "charLength": 9,
+                  "charOffset": 854
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Contracts have owners with privileged rights to perform admin tasks and need to be trusted to not perform malicious updates or drain funds."
+          },
+          "ruleId": "centralization-risk"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/T11sTranferer.sol"
+                },
+                "region": {
+                  "charLength": 84,
+                  "charOffset": 57
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "There is a subtle difference between the implementation of solmate's SafeTransferLib and OZ's SafeERC20: OZ's SafeERC20 checks if the token is a contract or not, solmate's SafeTransferLib does not.\nhttps://github.com/transmissions11/solmate/blob/main/src/utils/SafeTransferLib.sol#L9 \n`@dev Note that none of the functions in this library check that a token has code at all! That responsibility is delegated to the caller`\n"
+          },
+          "ruleId": "solmate-safe-transfer-lib"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/inheritance/ExtendedInheritance.sol"
+                },
+                "region": {
+                  "charLength": 9,
+                  "charOffset": 705
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "The `ecrecover` function is susceptible to signature malleability. This means that the same message can be signed in multiple ways, allowing an attacker to change the message signature without invalidating it. This can lead to unexpected behavior in smart contracts, such as the loss of funds or the ability to bypass access control. Consider using OpenZeppelin's ECDSA library instead of the built-in function."
+          },
+          "ruleId": "ecrecover"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DeprecatedOZFunctions.sol"
+                },
+                "region": {
+                  "charLength": 10,
+                  "charOffset": 737
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DeprecatedOZFunctions.sol"
+                },
+                "region": {
+                  "charLength": 17,
+                  "charOffset": 898
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Openzeppelin has deprecated several functions and replaced with newer versions. Please consult https://docs.openzeppelin.com/"
+          },
+          "ruleId": "deprecated-oz-functions"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ArbitraryTransferFrom.sol"
+                },
+                "region": {
+                  "charLength": 20,
+                  "charOffset": 370
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ArbitraryTransferFrom.sol"
+                },
+                "region": {
+                  "charLength": 20,
+                  "charOffset": 864
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ArbitraryTransferFrom.sol"
+                },
+                "region": {
+                  "charLength": 20,
+                  "charOffset": 1517
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DeprecatedOZFunctions.sol"
+                },
+                "region": {
+                  "charLength": 13,
+                  "charOffset": 1062
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DeprecatedOZFunctions.sol"
+                },
+                "region": {
+                  "charLength": 13,
+                  "charOffset": 1272
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DeprecatedOZFunctions.sol"
+                },
+                "region": {
+                  "charLength": 13,
+                  "charOffset": 1322
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DeprecatedOZFunctions.sol"
+                },
+                "region": {
+                  "charLength": 13,
+                  "charOffset": 1424
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DeprecatedOZFunctions.sol"
+                },
+                "region": {
+                  "charLength": 18,
+                  "charOffset": 1598
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "ERC20 functions may not behave as expected. For example: return values are not always meaningful. It is recommended to use OpenZeppelin's SafeERC20 library."
+          },
+          "ruleId": "unsafe-erc20-functions"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractWithTodo.sol"
+                },
+                "region": {
+                  "charLength": 23,
+                  "charOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Counter.sol"
+                },
+                "region": {
+                  "charLength": 24,
+                  "charOffset": 39
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CrazyPragma.sol"
+                },
+                "region": {
+                  "charLength": 32,
+                  "charOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/InconsistentUints.sol"
+                },
+                "region": {
+                  "charLength": 24,
+                  "charOffset": 0
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "charLength": 24,
+                  "charOffset": 46
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/HeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "charLength": 32,
+                  "charOffset": 46
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/inheritance/IContractInheritance.sol"
+                },
+                "region": {
+                  "charLength": 24,
+                  "charOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/inheritance/InheritanceBase.sol"
+                },
+                "region": {
+                  "charLength": 23,
+                  "charOffset": 32
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Consider using a specific version of Solidity in your contracts instead of a wide version. For example, instead of `pragma solidity ^0.8.0;`, use `pragma solidity 0.8.0;`"
+          },
+          "ruleId": "unspecific-solidity-pragma"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ArbitraryTransferFrom.sol"
+                },
+                "region": {
+                  "charLength": 15,
+                  "charOffset": 267
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariables.sol"
+                },
+                "region": {
+                  "charLength": 14,
+                  "charOffset": 2121
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ZeroAddressCheck.sol"
+                },
+                "region": {
+                  "charLength": 14,
+                  "charOffset": 1171
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ZeroAddressCheck.sol"
+                },
+                "region": {
+                  "charLength": 16,
+                  "charOffset": 1248
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ZeroAddressCheck.sol"
+                },
+                "region": {
+                  "charLength": 23,
+                  "charOffset": 1327
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV2Swapper.sol"
+                },
+                "region": {
+                  "charLength": 17,
+                  "charOffset": 365
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Check for `address(0)` when assigning values to address state variables."
+          },
+          "ruleId": "zero-address-check"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ArbitraryTransferFrom.sol"
+                },
+                "region": {
+                  "charLength": 152,
+                  "charOffset": 763
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/AssemblyExample.sol"
+                },
+                "region": {
+                  "charLength": 229,
+                  "charOffset": 104
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractWithTodo.sol"
+                },
+                "region": {
+                  "charLength": 152,
+                  "charOffset": 328
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Counter.sol"
+                },
+                "region": {
+                  "charLength": 80,
+                  "charOffset": 120
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariables.sol"
+                },
+                "region": {
+                  "charLength": 145,
+                  "charOffset": 1755
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariables.sol"
+                },
+                "region": {
+                  "charLength": 151,
+                  "charOffset": 1906
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariables.sol"
+                },
+                "region": {
+                  "charLength": 79,
+                  "charOffset": 2063
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariables.sol"
+                },
+                "region": {
+                  "charLength": 376,
+                  "charOffset": 2148
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariables.sol"
+                },
+                "region": {
+                  "charLength": 406,
+                  "charOffset": 2530
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "charLength": 131,
+                  "charOffset": 491
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "charLength": 95,
+                  "charOffset": 628
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "charLength": 1016,
+                  "charOffset": 729
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/HeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "charLength": 131,
+                  "charOffset": 500
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/HeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "charLength": 804,
+                  "charOffset": 637
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/parent_chain/ParentChainContract.sol"
+                },
+                "region": {
+                  "charLength": 61,
+                  "charOffset": 346
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/parent_chain/ParentChainContract.sol"
+                },
+                "region": {
+                  "charLength": 225,
+                  "charOffset": 413
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Instead of marking a function as `public`, consider marking it as `external` if it is not used internally."
+          },
+          "ruleId": "useless-public-function"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 18,
+                  "charOffset": 483
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 18,
+                  "charOffset": 646
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 18,
+                  "charOffset": 921
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 18,
+                  "charOffset": 2103
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ConstantsLiterals.sol"
+                },
+                "region": {
+                  "charLength": 3,
+                  "charOffset": 958
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ConstantsLiterals.sol"
+                },
+                "region": {
+                  "charLength": 3,
+                  "charOffset": 992
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ConstantsLiterals.sol"
+                },
+                "region": {
+                  "charLength": 4,
+                  "charOffset": 1032
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ConstantsLiterals.sol"
+                },
+                "region": {
+                  "charLength": 4,
+                  "charOffset": 1068
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ConstantsLiterals.sol"
+                },
+                "region": {
+                  "charLength": 42,
+                  "charOffset": 1117
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ConstantsLiterals.sol"
+                },
+                "region": {
+                  "charLength": 42,
+                  "charOffset": 1192
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ConstantsLiterals.sol"
+                },
+                "region": {
+                  "charLength": 66,
+                  "charOffset": 1275
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ConstantsLiterals.sol"
+                },
+                "region": {
+                  "charLength": 66,
+                  "charOffset": 1374
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/RevertsAndRequriesInLoops.sol"
+                },
+                "region": {
+                  "charLength": 2,
+                  "charOffset": 253
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/RevertsAndRequriesInLoops.sol"
+                },
+                "region": {
+                  "charLength": 2,
+                  "charOffset": 442
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/RevertsAndRequriesInLoops.sol"
+                },
+                "region": {
+                  "charLength": 2,
+                  "charOffset": 706
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/RevertsAndRequriesInLoops.sol"
+                },
+                "region": {
+                  "charLength": 2,
+                  "charOffset": 745
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/eth2/DepositContract.sol"
+                },
+                "region": {
+                  "charLength": 2,
+                  "charOffset": 7252
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/eth2/DepositContract.sol"
+                },
+                "region": {
+                  "charLength": 2,
+                  "charOffset": 7293
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "If the same constant literal value is used multiple times, create a constant state variable and reference it throughout the contract."
+          },
+          "ruleId": "constants-instead-of-literals"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/eth2/DepositContract.sol"
+                },
+                "region": {
+                  "charLength": 107,
+                  "charOffset": 2641
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/inheritance/ExtendedInheritance.sol"
+                },
+                "region": {
+                  "charLength": 45,
+                  "charOffset": 144
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/inheritance/InheritanceBase.sol"
+                },
+                "region": {
+                  "charLength": 28,
+                  "charOffset": 150
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Index event fields make the field more quickly accessible to off-chain tools that parse events. However, note that each index field costs extra gas during emission, so it's not necessarily best to index the maximum allowed per event (three fields). Each event should use three indexed fields if there are three or more fields, and gas usage is not particularly of concern for the events in question. If there are fewer than three fields, all of the fields should be indexed."
+          },
+          "ruleId": "unindexed-events"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DeprecatedOZFunctions.sol"
+                },
+                "region": {
+                  "charLength": 7,
+                  "charOffset": 1264
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DeprecatedOZFunctions.sol"
+                },
+                "region": {
+                  "charLength": 6,
+                  "charOffset": 1389
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/RevertsAndRequriesInLoops.sol"
+                },
+                "region": {
+                  "charLength": 6,
+                  "charOffset": 503
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ZeroAddressCheck.sol"
+                },
+                "region": {
+                  "charLength": 6,
+                  "charOffset": 329
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ZeroAddressCheck.sol"
+                },
+                "region": {
+                  "charLength": 6,
+                  "charOffset": 608
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ZeroAddressCheck.sol"
+                },
+                "region": {
+                  "charLength": 6,
+                  "charOffset": 1074
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "charLength": 7,
+                  "charOffset": 589
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "charLength": 7,
+                  "charOffset": 1403
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/HeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "charLength": 7,
+                  "charOffset": 598
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/HeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "charLength": 7,
+                  "charOffset": 1408
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Use descriptive reason strings or custom errors for revert paths."
+          },
+          "ruleId": "require-with-string"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/AdminContract.sol"
+                },
+                "region": {
+                  "charLength": 12,
+                  "charOffset": 386
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/parent_chain/ParentChainContract.sol"
+                },
+                "region": {
+                  "charLength": 12,
+                  "charOffset": 735
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "This is a best-practice to protect against reentrancy in other modifiers."
+          },
+          "ruleId": "non-reentrant-before-others"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UnsafeERC721Mint.sol"
+                },
+                "region": {
+                  "charLength": 5,
+                  "charOffset": 410
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Using `ERC721::_mint()` can mint ERC721 tokens to addresses which don't support ERC721 tokens. Use `_safeMint()` instead of `_mint()` for ERC721."
+          },
+          "ruleId": "unsafe-oz-erc721-mint"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/AdminContract.sol"
+                },
+                "region": {
+                  "charLength": 23,
+                  "charOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractWithTodo.sol"
+                },
+                "region": {
+                  "charLength": 23,
+                  "charOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Counter.sol"
+                },
+                "region": {
+                  "charLength": 24,
+                  "charOffset": 39
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CrazyPragma.sol"
+                },
+                "region": {
+                  "charLength": 32,
+                  "charOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DeprecatedOZFunctions.sol"
+                },
+                "region": {
+                  "charLength": 23,
+                  "charOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/InconsistentUints.sol"
+                },
+                "region": {
+                  "charLength": 24,
+                  "charOffset": 0
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/KeccakContract.sol"
+                },
+                "region": {
+                  "charLength": 23,
+                  "charOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariables.sol"
+                },
+                "region": {
+                  "charLength": 23,
+                  "charOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StorageConditionals.sol"
+                },
+                "region": {
+                  "charLength": 23,
+                  "charOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/T11sTranferer.sol"
+                },
+                "region": {
+                  "charLength": 23,
+                  "charOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UnsafeERC721Mint.sol"
+                },
+                "region": {
+                  "charLength": 23,
+                  "charOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "charLength": 24,
+                  "charOffset": 46
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/HeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "charLength": 32,
+                  "charOffset": 46
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/eth2/DepositContract.sol"
+                },
+                "region": {
+                  "charLength": 23,
+                  "charOffset": 2302
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/inheritance/ExtendedInheritance.sol"
+                },
+                "region": {
+                  "charLength": 23,
+                  "charOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/inheritance/IContractInheritance.sol"
+                },
+                "region": {
+                  "charLength": 24,
+                  "charOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/inheritance/InheritanceBase.sol"
+                },
+                "region": {
+                  "charLength": 23,
+                  "charOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/nested/1/Nested.sol"
+                },
+                "region": {
+                  "charLength": 23,
+                  "charOffset": 180
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/nested/2/Nested.sol"
+                },
+                "region": {
+                  "charLength": 23,
+                  "charOffset": 180
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/parent_chain/ParentChainContract.sol"
+                },
+                "region": {
+                  "charLength": 23,
+                  "charOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV2Swapper.sol"
+                },
+                "region": {
+                  "charLength": 23,
+                  "charOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV3Swapper.sol"
+                },
+                "region": {
+                  "charLength": 23,
+                  "charOffset": 32
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Solc compiler version 0.8.20 switches the default target EVM version to Shanghai, which means that the generated bytecode will include PUSH0 opcodes. Be sure to select the appropriate EVM version in case you intend to deploy on a chain other than mainnet like L2 chains that may not support PUSH0, otherwise deployment of your contracts will fail."
+          },
+          "ruleId": "push-zero-opcode"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/InternalFunctions.sol"
+                },
+                "region": {
+                  "charLength": 118,
+                  "charOffset": 404
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/OnceModifierExample.sol"
+                },
+                "region": {
+                  "charLength": 38,
+                  "charOffset": 94
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UnprotectedInitialize.sol"
+                },
+                "region": {
+                  "charLength": 114,
+                  "charOffset": 213
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": ""
+          },
+          "ruleId": "useless-modifier"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/AdminContract.sol"
+                },
+                "region": {
+                  "charLength": 108,
+                  "charOffset": 448
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractWithTodo.sol"
+                },
+                "region": {
+                  "charLength": 144,
+                  "charOffset": 120
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractWithTodo.sol"
+                },
+                "region": {
+                  "charLength": 152,
+                  "charOffset": 328
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/EmptyBlocks.sol"
+                },
+                "region": {
+                  "charLength": 12,
+                  "charOffset": 503
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/EmptyBlocks.sol"
+                },
+                "region": {
+                  "charLength": 12,
+                  "charOffset": 599
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/EmptyBlocks.sol"
+                },
+                "region": {
+                  "charLength": 12,
+                  "charOffset": 739
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/EmptyBlocks.sol"
+                },
+                "region": {
+                  "charLength": 41,
+                  "charOffset": 879
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/EmptyBlocks.sol"
+                },
+                "region": {
+                  "charLength": 81,
+                  "charOffset": 937
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/EmptyBlocks.sol"
+                },
+                "region": {
+                  "charLength": 134,
+                  "charOffset": 1059
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/EmptyBlocks.sol"
+                },
+                "region": {
+                  "charLength": 178,
+                  "charOffset": 1210
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/OnceModifierExample.sol"
+                },
+                "region": {
+                  "charLength": 53,
+                  "charOffset": 138
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/parent_chain/ParentChainContract.sol"
+                },
+                "region": {
+                  "charLength": 61,
+                  "charOffset": 346
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/parent_chain/ParentChainContract.sol"
+                },
+                "region": {
+                  "charLength": 108,
+                  "charOffset": 797
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/parent_chain/ParentChainContract.sol"
+                },
+                "region": {
+                  "charLength": 59,
+                  "charOffset": 937
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/parent_chain/ParentChainContract.sol"
+                },
+                "region": {
+                  "charLength": 85,
+                  "charOffset": 1002
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Consider removing empty blocks."
+          },
+          "ruleId": "empty-block"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/HugeConstants.sol"
+                },
+                "region": {
+                  "charLength": 24,
+                  "charOffset": 182
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/HugeConstants.sol"
+                },
+                "region": {
+                  "charLength": 23,
+                  "charOffset": 252
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/HugeConstants.sol"
+                },
+                "region": {
+                  "charLength": 22,
+                  "charOffset": 321
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/HugeConstants.sol"
+                },
+                "region": {
+                  "charLength": 21,
+                  "charOffset": 389
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/HugeConstants.sol"
+                },
+                "region": {
+                  "charLength": 20,
+                  "charOffset": 456
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/HugeConstants.sol"
+                },
+                "region": {
+                  "charLength": 19,
+                  "charOffset": 522
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/HugeConstants.sol"
+                },
+                "region": {
+                  "charLength": 18,
+                  "charOffset": 587
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/HugeConstants.sol"
+                },
+                "region": {
+                  "charLength": 17,
+                  "charOffset": 651
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/HugeConstants.sol"
+                },
+                "region": {
+                  "charLength": 16,
+                  "charOffset": 714
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/HugeConstants.sol"
+                },
+                "region": {
+                  "charLength": 15,
+                  "charOffset": 777
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/HugeConstants.sol"
+                },
+                "region": {
+                  "charLength": 14,
+                  "charOffset": 839
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/HugeConstants.sol"
+                },
+                "region": {
+                  "charLength": 13,
+                  "charOffset": 900
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/HugeConstants.sol"
+                },
+                "region": {
+                  "charLength": 12,
+                  "charOffset": 960
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/HugeConstants.sol"
+                },
+                "region": {
+                  "charLength": 11,
+                  "charOffset": 1019
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/HugeConstants.sol"
+                },
+                "region": {
+                  "charLength": 10,
+                  "charOffset": 1077
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/HugeConstants.sol"
+                },
+                "region": {
+                  "charLength": 9,
+                  "charOffset": 1134
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/HugeConstants.sol"
+                },
+                "region": {
+                  "charLength": 8,
+                  "charOffset": 1190
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/HugeConstants.sol"
+                },
+                "region": {
+                  "charLength": 7,
+                  "charOffset": 1245
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/HugeConstants.sol"
+                },
+                "region": {
+                  "charLength": 6,
+                  "charOffset": 1299
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/HugeConstants.sol"
+                },
+                "region": {
+                  "charLength": 5,
+                  "charOffset": 1352
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/HugeConstants.sol"
+                },
+                "region": {
+                  "charLength": 29,
+                  "charOffset": 1585
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/HugeConstants.sol"
+                },
+                "region": {
+                  "charLength": 6,
+                  "charOffset": 1673
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Use `e` notation, for example: `1e18`, instead of its full numeric value."
+          },
+          "ruleId": "large-numeric-literal"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/InternalFunctions.sol"
+                },
+                "region": {
+                  "charLength": 150,
+                  "charOffset": 684
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Instead of separating the logic into a separate function, consider inlining the logic into the calling function. This can reduce the number of function calls and improve readability."
+          },
+          "ruleId": "useless-internal-function"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractWithTodo.sol"
+                },
+                "region": {
+                  "charLength": 425,
+                  "charOffset": 57
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Counter.sol"
+                },
+                "region": {
+                  "charLength": 496,
+                  "charOffset": 65
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Contract contains comments with TODOS"
+          },
+          "ruleId": "contract-with-todos"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 4249,
+                  "charOffset": 152
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/InconsistentUints.sol"
+                },
+                "region": {
+                  "charLength": 638,
+                  "charOffset": 26
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/eth2/DepositContract.sol"
+                },
+                "region": {
+                  "charLength": 4748,
+                  "charOffset": 4538
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Consider keeping the naming convention consistent in a given contract"
+          },
+          "ruleId": "inconsistent-type-names"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UnusedError.sol"
+                },
+                "region": {
+                  "charLength": 27,
+                  "charOffset": 84
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UnusedError.sol"
+                },
+                "region": {
+                  "charLength": 36,
+                  "charOffset": 258
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WrongOrderOfLayout.sol"
+                },
+                "region": {
+                  "charLength": 21,
+                  "charOffset": 274
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "it is recommended that the definition be removed when custom error is unused"
+          },
+          "ruleId": "useless-error"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/RevertsAndRequriesInLoops.sol"
+                },
+                "region": {
+                  "charLength": 129,
+                  "charOffset": 227
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/RevertsAndRequriesInLoops.sol"
+                },
+                "region": {
+                  "charLength": 150,
+                  "charOffset": 416
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Avoid `require` / `revert` statements in a loop because a single bad item can cause the whole transaction to fail. It's better to forgive on fail and return failed elements post processing of the loop"
+          },
+          "ruleId": "reverts-and-requires-in-loops"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DivisionBeforeMultiplication.sol"
+                },
+                "region": {
+                  "charLength": 5,
+                  "charOffset": 218
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DivisionBeforeMultiplication.sol"
+                },
+                "region": {
+                  "charLength": 5,
+                  "charOffset": 330
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DivisionBeforeMultiplication.sol"
+                },
+                "region": {
+                  "charLength": 5,
+                  "charOffset": 432
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DivisionBeforeMultiplication.sol"
+                },
+                "region": {
+                  "charLength": 5,
+                  "charOffset": 541
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Division operations followed directly by multiplication operations can lead to precision loss due to the way integer arithmetic is handled in Solidity."
+          },
+          "ruleId": "division-before-multiplication"
         }
       ],
       "tool": {

@@ -160,6 +160,47 @@ fn create_sarif_results(report: &Report, context: &WorkspaceContext) -> Vec<Sari
         };
         sarif_results.push(sarif_result);
     }
+    for low in report.lows.iter() {
+        let sarif_result = SarifResult {
+            rule_id: Some(low.detector_name.clone()),
+            message: Message {
+                text: Some(low.description.clone()),
+                arguments: None,
+                id: None,
+                markdown: None,
+                properties: None,
+            },
+            level: Some(Value::String("note".to_string())),
+            locations: Some(create_sarif_locations(low, context)),
+            rule_index: None,
+            analysis_target: None,
+            code_flows: None,
+            correlation_guid: None,
+            fixes: None,
+            graph_traversals: None,
+            hosted_viewer_uri: None,
+            kind: None,
+            partial_fingerprints: None,
+            properties: None,
+            rank: None,
+            related_locations: None,
+            web_request: None,
+            web_response: None,
+            attachments: None,
+            baseline_state: None,
+            fingerprints: None,
+            graphs: None,
+            guid: None,
+            occurrence_count: None,
+            provenance: None,
+            rule: None,
+            stacks: None,
+            suppressions: None,
+            taxa: None,
+            work_item_uris: None,
+        };
+        sarif_results.push(sarif_result);
+    }
     sarif_results
 }
 
