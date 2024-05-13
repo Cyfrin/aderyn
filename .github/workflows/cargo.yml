@@ -158,7 +158,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: -- --sarif -o ci-report.sarif ./tests/contract-playground/ --skip-update-check
+          args: -- -o ci-report.sarif ./tests/contract-playground/ --skip-update-check
 
       - name: Check sarif report
         run: |
