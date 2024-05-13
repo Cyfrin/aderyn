@@ -5,7 +5,7 @@ use serde::Deserialize;
 use serde_json::Value;
 use std::{
     path::{Path, PathBuf},
-    time::Duration,
+    time::{self, Duration},
 };
 use strum::IntoEnumIterator;
 
@@ -294,7 +294,7 @@ fn main() {
 
 fn dynamically_debounce_and_run<F>(driver_func: F, args: &Args, timeout: Duration)
 where
-    F: Fn(),
+    F: Fn() + Copy + Send,
 {
     // setup debouncer
     let (tx, rx) = std::sync::mpsc::channel();
@@ -314,9 +314,12 @@ where
     for result in rx {
         match result {
             Ok(_) => {
-                // TODO: Measure the time taken for below function
-                driver_func()
-                // Then stop this debouncer, call this function again with new timeout value
+                let start = time::Instant::now();
+                driver_func();
+                let duration = start.elapsed();
+                debouncer.stop();
+                dynamically_debounce_and_run(driver_func, args, duration);
+                break;
             }
             Err(errors) => errors.iter().for_each(|error| println!("{error:?}")),
         }
