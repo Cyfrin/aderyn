@@ -57,7 +57,7 @@ pub fn drive_with(args: Args, detectors: Vec<Box<dyn IssueDetector>>) {
         });
     } else if args.output.ends_with(".sarif") {
         run(
-            context,
+            &cx_wrapper.contexts,
             output,
             SarifPrinter,
             root_rel_path,

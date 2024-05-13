@@ -28,7 +28,7 @@ impl ReportPrinter<()> for SarifPrinter {
         &self,
         writer: W,
         report: &Report,
-        context: &WorkspaceContext,
+        contexts: &[WorkspaceContext],
         _: PathBuf,
         _: Option<String>,
         _: bool,
@@ -70,7 +70,7 @@ impl ReportPrinter<()> for SarifPrinter {
                 extensions: None,
                 properties: None,
             },
-            results: Some(create_sarif_results(report, context)),
+            results: Some(create_sarif_results(report, contexts)),
             column_kind: None,
             addresses: None,
             artifacts: None,
@@ -117,7 +117,7 @@ impl ReportPrinter<()> for SarifPrinter {
     }
 }
 
-fn create_sarif_results(report: &Report, context: &WorkspaceContext) -> Vec<SarifResult> {
+fn create_sarif_results(report: &Report, contexts: &[WorkspaceContext]) -> Vec<SarifResult> {
     let mut sarif_results: Vec<SarifResult> = Vec::new();
     for high in report.highs.iter() {
         let sarif_result = SarifResult {
@@ -130,7 +130,7 @@ fn create_sarif_results(report: &Report, context: &WorkspaceContext) -> Vec<Sari
                 properties: None,
             },
             level: Some(Value::String("warning".to_string())),
-            locations: Some(create_sarif_locations(high, context)),
+            locations: Some(create_sarif_locations(high, contexts)),
             rule_index: None,
             analysis_target: None,
             code_flows: None,
@@ -163,47 +163,51 @@ fn create_sarif_results(report: &Report, context: &WorkspaceContext) -> Vec<Sari
     sarif_results
 }
 
-fn create_sarif_locations(issue: &Issue, context: &WorkspaceContext) -> Vec<Location> {
+fn create_sarif_locations(issue: &Issue, contexts: &[WorkspaceContext]) -> Vec<Location> {
     let mut locations: Vec<Location> = Vec::new();
-    for ((filename, _line_number, _source_location), value) in issue.instances.iter() {
-        if let Some(offset_len) = context.get_offset_and_length_of_node(*value) {
-            let location = Location {
-                physical_location: Some(PhysicalLocation {
-                    address: None,
-                    artifact_location: Some(ArtifactLocation {
-                        uri: Some(filename.clone()),
-                        uri_base_id: None,
-                        description: None,
-                        index: None,
-                        properties: None,
-                    }),
-                    context_region: None,
-                    properties: None,
-                    region: Some(Region {
-                        char_offset: Some(offset_len.0.try_into().unwrap()),
-                        char_length: Some(offset_len.1.try_into().unwrap()),
 
-                        byte_length: None,
-                        byte_offset: None,
-                        end_column: None,
-                        end_line: None,
-                        message: None,
+    for context in contexts {
+        for ((filename, _line_number, _source_location), value) in issue.instances.iter() {
+            if let Some(offset_len) = context.get_offset_and_length_of_node(*value) {
+                let location = Location {
+                    physical_location: Some(PhysicalLocation {
+                        address: None,
+                        artifact_location: Some(ArtifactLocation {
+                            uri: Some(filename.clone()),
+                            uri_base_id: None,
+                            description: None,
+                            index: None,
+                            properties: None,
+                        }),
+                        context_region: None,
                         properties: None,
-                        snippet: None,
-                        source_language: None,
-                        start_column: None,
-                        start_line: None,
+                        region: Some(Region {
+                            char_offset: Some(offset_len.0.try_into().unwrap()),
+                            char_length: Some(offset_len.1.try_into().unwrap()),
+
+                            byte_length: None,
+                            byte_offset: None,
+                            end_column: None,
+                            end_line: None,
+                            message: None,
+                            properties: None,
+                            snippet: None,
+                            source_language: None,
+                            start_column: None,
+                            start_line: None,
+                        }),
                     }),
-                }),
-                properties: None,
-                annotations: None,
-                id: None,
-                logical_locations: None,
-                relationships: None,
-                message: None,
-            };
-            locations.push(location);
+                    properties: None,
+                    annotations: None,
+                    id: None,
+                    logical_locations: None,
+                    relationships: None,
+                    message: None,
+                };
+                locations.push(location);
+            }
         }
     }
+    locations.dedup();
     locations
 }
