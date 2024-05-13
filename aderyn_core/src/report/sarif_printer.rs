@@ -208,6 +208,5 @@ fn create_sarif_locations(issue: &Issue, contexts: &[WorkspaceContext]) -> Vec<L
             }
         }
     }
-    locations.dedup();
     locations
 }
