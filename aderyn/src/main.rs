@@ -239,21 +239,7 @@ fn main() {
                 };
                 if cmd_args.watch {
                     println!("INFO: Aderyn is entering watch mode !");
-                    // setup debouncer
-                    let (tx, rx) = std::sync::mpsc::channel();
 
-                    // no specific tickrate, max debounce time 2 seconds
-                    let mut debouncer = new_debouncer(Duration::from_secs(2), None, tx).unwrap();
-
-                    debouncer
-                        .watcher()
-                        .watch(
-                            PathBuf::from(new_args.root.clone()).as_path(),
-                            RecursiveMode::Recursive,
-                        )
-                        .unwrap();
-
-                    // Run it once, for the first time
                     let mut subscriptions: Vec<Box<dyn IssueDetector>> = vec![];
                     for detector in &detector_names {
                         subscriptions.push(get_issue_detector_by_name(detector));
@@ -261,21 +247,19 @@ fn main() {
 
                     driver::drive_with(new_args.clone(), subscriptions);
 
-                    // Then run again only if file events are observed
-                    for result in rx {
-                        match result {
-                            Ok(_) => {
-                                let mut subscriptions: Vec<Box<dyn IssueDetector>> = vec![];
-                                for detector in &detector_names {
-                                    subscriptions.push(get_issue_detector_by_name(detector));
-                                }
-
-                                driver::drive_with(new_args.clone(), subscriptions);
+                    debounce_and_run(
+                        || {
+                            // Run it once, for the first time
+                            let mut subscriptions: Vec<Box<dyn IssueDetector>> = vec![];
+                            for detector in &detector_names {
+                                subscriptions.push(get_issue_detector_by_name(detector));
                             }
-                            Err(errors) => errors.iter().for_each(|error| println!("{error:?}")),
-                        }
-                        println!();
-                    }
+
+                            driver::drive_with(new_args.clone(), subscriptions);
+                        },
+                        &new_args,
+                        Duration::from_millis(50),
+                    );
                 } else {
                     driver::drive_with(new_args, subscriptions);
                 }
@@ -291,29 +275,14 @@ fn main() {
         // Then run only if file change events are observed
         if cmd_args.watch {
             println!("INFO: Aderyn is entering watch mode !");
-            // setup debouncer
-            let (tx, rx) = std::sync::mpsc::channel();
 
-            // no specific tickrate, max debounce time 2 seconds
-            let mut debouncer = new_debouncer(Duration::from_secs(2), None, tx).unwrap();
-
-            debouncer
-                .watcher()
-                .watch(
-                    PathBuf::from(args.root.clone()).as_path(),
-                    RecursiveMode::Recursive,
-                )
-                .unwrap();
-
-            for result in rx {
-                match result {
-                    Ok(_) => {
-                        driver::drive(args.clone());
-                    }
-                    Err(errors) => errors.iter().for_each(|error| println!("{error:?}")),
-                }
-                println!();
-            }
+            debounce_and_run(
+                || {
+                    driver::drive(args.clone());
+                },
+                &args,
+                Duration::from_millis(50),
+            );
         }
     }
 
@@ -326,6 +295,36 @@ fn main() {
                 );
             }
         }
+    }
+}
+
+fn debounce_and_run<F>(driver_func: F, args: &Args, timeout: Duration)
+where
+    F: Fn() + Copy + Send,
+{
+    // setup debouncer
+    let (tx, rx) = std::sync::mpsc::channel();
+
+    // no specific tickrate, max debounce time 2 seconds
+    let mut debouncer = new_debouncer(timeout, None, tx).unwrap();
+
+    debouncer
+        .watcher()
+        .watch(
+            PathBuf::from(args.root.clone()).as_path(),
+            RecursiveMode::Recursive,
+        )
+        .unwrap();
+
+    // Then run again only if file events are observed
+    for result in rx {
+        match result {
+            Ok(_) => {
+                driver_func();
+            }
+            Err(errors) => errors.iter().for_each(|error| println!("{error:?}")),
+        }
+        println!();
     }
 }
 
