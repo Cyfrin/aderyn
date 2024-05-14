@@ -1,4 +1,4 @@
-use prettytable::{format, row, Table};
+use prettytable::{format, row, Row, Table};
 
 use super::auditor::AuditorDetector;
 use crate::{
@@ -13,6 +13,7 @@ use std::{
     collections::BTreeMap,
     error::Error,
     fmt::{self, Display},
+    slice::Iter,
 };
 
 pub enum AddressSource {
@@ -64,25 +65,22 @@ impl AuditorDetector for AttackSurfaceDetector {
         String::from("Attack Surface - External Contract `call` and `delegatecall` Instances")
     }
 
-    fn print(&self, _: &WorkspaceContext) {
-        let mut table = Table::new();
+    fn table_titles(&self) -> Row {
+        row!["Contract", "Function", "Code", "Address Source"]
+    }
 
-        println!();
-        println!("{}:", self.title());
-        table.set_titles(row!["Contract", "Function", "Code", "Address Source"]);
-
-        self.found_instances.iter().for_each(|instance| {
-            table.add_row(row![
-                instance.contract_name,
-                instance.function_name,
-                instance.source_code,
-                instance.address_source
-            ]);
-        });
-
-        // Set the format of the table
-        table.set_format(*format::consts::FORMAT_NO_LINESEP_WITH_TITLE);
-        table.printstd();
+    fn table_rows(&self) -> Vec<Row> {
+        self.found_instances
+            .iter()
+            .map(|instance| {
+                row![
+                    instance.contract_name,
+                    instance.function_name,
+                    instance.source_code,
+                    instance.address_source
+                ]
+            })
+            .collect()
     }
 }
 

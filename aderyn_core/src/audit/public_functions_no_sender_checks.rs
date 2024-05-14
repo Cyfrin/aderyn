@@ -1,3 +1,5 @@
+use prettytable::{row, Row, Table};
+
 use super::auditor::AuditorDetector;
 use crate::{
     ast::{
@@ -19,6 +21,7 @@ use std::{
     collections::BTreeMap,
     error::Error,
     fmt::{self, Display},
+    slice::Iter,
 };
 
 #[derive(Clone)]
@@ -78,8 +81,21 @@ impl AuditorDetector for PublicFunctionsNoSenderChecks {
         String::from("Attack Surface - External Contract `call` and `delegatecall` Instances")
     }
 
-    fn print(&self, context: &WorkspaceContext) {
-        // TODO
+    fn table_titles(&self) -> Row {
+        row!["Contract", "Function", "Code"]
+    }
+
+    fn table_rows(&self) -> Vec<Row> {
+        self.found_instances
+            .iter()
+            .map(|instance| {
+                row![
+                    instance.contract_name,
+                    instance.function_name,
+                    instance.source_code
+                ]
+            })
+            .collect()
     }
 }
 
