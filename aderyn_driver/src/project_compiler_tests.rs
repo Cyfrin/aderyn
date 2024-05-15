@@ -13,7 +13,7 @@ mod project_compiler_grouping_tests {
     fn foundry_nft_f23() {
         let project_root_str = "../tests/foundry-nft-f23";
         let src = &Some(vec![PathBuf::from_str("src/").unwrap()]);
-        test_grouping_files_to_compile(project_root_str, &src, &None, &None);
+        test_grouping_files_to_compile(project_root_str, src, &None, &None);
     }
 
     #[test]
@@ -26,14 +26,14 @@ mod project_compiler_grouping_tests {
     fn contract_playground() {
         let project_root_str = "../tests/contract-playground";
         let src = &Some(vec![PathBuf::from_str("src/").unwrap()]);
-        test_grouping_files_to_compile(project_root_str, &src, &None, &None);
+        test_grouping_files_to_compile(project_root_str, src, &None, &None);
     }
 
     #[test]
     fn ccip_develop() {
         let project_root_str = "../tests/ccip-contracts/contracts";
         let src = &Some(vec![PathBuf::from_str("src/v0.8/").unwrap()]);
-        test_grouping_files_to_compile(project_root_str, &src, &None, &None);
+        test_grouping_files_to_compile(project_root_str, src, &None, &None);
     }
 
     fn test_grouping_files_to_compile(
@@ -45,7 +45,7 @@ mod project_compiler_grouping_tests {
         let root = utils::canonicalize(project_root_str).unwrap();
 
         let solidity_files = get_compiler_input(&root);
-        let sources = get_relevant_sources(&root, solidity_files, &src, scope, exclude);
+        let sources = get_relevant_sources(&root, solidity_files, src, scope, exclude);
 
         println!("Resolving sources versions by graph ...");
         let (remappings, foundry_compilers_remappings) = get_remappings(&root);
@@ -58,7 +58,7 @@ mod project_compiler_grouping_tests {
         for (solc, value) in sources_by_version {
             println!("Compiling {} files with Solc {}", value.1.len(), value.0);
             let pathbufs = value.1.into_keys().collect::<Vec<_>>();
-            let files = get_relevant_pathbufs(&root, &pathbufs, &src, scope, exclude);
+            let files = get_relevant_pathbufs(&root, &pathbufs, src, scope, exclude);
 
             assert!(solc.solc.exists());
 
@@ -119,10 +119,7 @@ mod project_compiler_grouping_tests {
         for file in files {
             command.push_str(&format!(
                 "{} ",
-                file.strip_prefix(root.clone())
-                    .unwrap()
-                    .to_string_lossy()
-                    .to_string()
+                file.strip_prefix(root.clone()).unwrap().to_string_lossy()
             ));
         }
         eprintln!("{}", command);
