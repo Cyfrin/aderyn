@@ -3,11 +3,18 @@ use std::error::Error;
 use prettytable::{format, Row, Table};
 
 use crate::{
-    audit::attack_surface::AttackSurfaceDetector, context::workspace_context::WorkspaceContext,
+    audit::{
+        calls_and_delegate_calls::CallsAndDelegateCallsDetector,
+        public_functions_no_sender_checks::PublicFunctionsNoSenderChecks,
+    },
+    context::workspace_context::WorkspaceContext,
 };
 
 pub fn get_auditor_detectors() -> Vec<Box<dyn AuditorDetector>> {
-    vec![Box::<AttackSurfaceDetector>::default()]
+    vec![
+        Box::<CallsAndDelegateCallsDetector>::default(),
+        Box::<PublicFunctionsNoSenderChecks>::default(),
+    ]
 }
 
 pub trait AuditorDetector: Send + Sync + 'static {

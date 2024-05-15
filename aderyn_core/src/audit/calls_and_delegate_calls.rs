@@ -21,7 +21,7 @@ pub enum AddressSource {
 }
 
 #[derive(Clone)]
-pub struct AttackSurfaceInstance {
+pub struct CallsAndDelegateCallsInstance {
     pub contract_name: String,
     pub function_name: String,
     pub source_code: String,
@@ -39,11 +39,11 @@ impl Display for AddressSource {
 }
 
 #[derive(Default)]
-pub struct AttackSurfaceDetector {
-    found_instances: Vec<AttackSurfaceInstance>,
+pub struct CallsAndDelegateCallsDetector {
+    found_instances: Vec<CallsAndDelegateCallsInstance>,
 }
 
-impl AuditorDetector for AttackSurfaceDetector {
+impl AuditorDetector for CallsAndDelegateCallsDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         let mut surface_points: BTreeMap<NodeID, AddressSource> = BTreeMap::new();
 
@@ -61,7 +61,7 @@ impl AuditorDetector for AttackSurfaceDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Attack Surface - External Contract `call` and `delegatecall` Instances")
+        String::from("External Contract `call` and `delegatecall` Instances")
     }
 
     fn table_titles(&self) -> Row {
@@ -86,7 +86,7 @@ impl AuditorDetector for AttackSurfaceDetector {
 fn transform_surface_points(
     context: &WorkspaceContext,
     surface_points: &BTreeMap<NodeID, AddressSource>,
-) -> Vec<AttackSurfaceInstance> {
+) -> Vec<CallsAndDelegateCallsInstance> {
     let mut auditor_instances = vec![];
 
     for (id, address_storage) in surface_points {
@@ -98,7 +98,7 @@ fn transform_surface_points(
                     if let Some(source_code) = ast_node.peek(context) {
                         let contract_name = contract.name.to_string();
                         let function_name = function.name.to_string();
-                        auditor_instances.push(AttackSurfaceInstance {
+                        auditor_instances.push(CallsAndDelegateCallsInstance {
                             contract_name,
                             function_name,
                             source_code,
@@ -165,7 +165,9 @@ fn find_address_source_if_function_call(
 #[cfg(test)]
 mod attack_surface_detector_tests {
     use crate::{
-        audit::{attack_surface::AttackSurfaceDetector, auditor::AuditorDetector},
+        audit::{
+            auditor::AuditorDetector, calls_and_delegate_calls::CallsAndDelegateCallsDetector,
+        },
         detect::detector::detector_test_helpers::load_contract,
     };
 
@@ -174,7 +176,7 @@ mod attack_surface_detector_tests {
         let context =
             load_contract("../tests/contract-playground/out/ExternalCalls.sol/ExternalCalls.json");
 
-        let mut detector = AttackSurfaceDetector::default();
+        let mut detector = CallsAndDelegateCallsDetector::default();
         let found = detector.detect(&context).unwrap();
         // assert that the detector found an issue
         assert!(found);

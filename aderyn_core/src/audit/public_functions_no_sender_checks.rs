@@ -2,7 +2,7 @@ use prettytable::{row, Row};
 
 use super::auditor::AuditorDetector;
 use crate::{
-    ast::NodeType,
+    ast::{FunctionKind, NodeType},
     context::{
         browser::{ExtractModifierInvocations, Peek},
         workspace_context::{ASTNode, WorkspaceContext},
@@ -11,18 +11,36 @@ use crate::{
         get_implemented_external_and_public_functions, has_msg_sender_binary_operation,
     },
 };
-use std::error::Error;
+use std::{cmp::Ordering, collections::BTreeSet, error::Error};
 
-#[derive(Clone)]
+#[derive(Clone, Eq, PartialEq)]
 pub struct NoChecksInstance {
     pub contract_name: String,
     pub function_name: String,
-    pub source_code: String,
+    pub function_kind: FunctionKind,
+}
+
+impl Ord for NoChecksInstance {
+    fn cmp(&self, other: &Self) -> Ordering {
+        let by_contract = self.contract_name.cmp(&other.contract_name);
+        if by_contract == Ordering::Equal {
+            self.function_name.cmp(&other.function_name)
+        } else {
+            by_contract
+        }
+    }
+}
+
+impl PartialOrd for NoChecksInstance {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        Some(self.cmp(other))
+    }
 }
 
 #[derive(Default)]
 pub struct PublicFunctionsNoSenderChecks {
-    found_instances: Vec<NoChecksInstance>,
+    // contract_name, function_name
+    found_instances: BTreeSet<NoChecksInstance>,
 }
 
 impl AuditorDetector for PublicFunctionsNoSenderChecks {
@@ -53,10 +71,10 @@ impl AuditorDetector for PublicFunctionsNoSenderChecks {
                 .unwrap()
             {
                 let contract_name = contract_definition.name.clone();
-                self.found_instances.push(NoChecksInstance {
+                self.found_instances.insert(NoChecksInstance {
                     contract_name,
                     function_name: function_definition.name.clone(),
-                    source_code: function_definition.peek(context).unwrap(),
+                    function_kind: function_definition.kind.clone(),
                 });
             }
         });
@@ -67,11 +85,11 @@ impl AuditorDetector for PublicFunctionsNoSenderChecks {
     }
 
     fn title(&self) -> String {
-        String::from("Attack Surface - External Contract `call` and `delegatecall` Instances")
+        String::from("Public and External Functions Without `msg.sender` Checks")
     }
 
     fn table_titles(&self) -> Row {
-        row!["Contract", "Function", "Code"]
+        row!["Contract", "Function Name", "Function Kind"]
     }
 
     fn table_rows(&self) -> Vec<Row> {
@@ -80,8 +98,8 @@ impl AuditorDetector for PublicFunctionsNoSenderChecks {
             .map(|instance| {
                 row![
                     instance.contract_name,
+                    instance.function_kind,
                     instance.function_name,
-                    instance.source_code
                 ]
             })
             .collect()
@@ -111,6 +129,6 @@ mod attack_surface_detector_tests {
         let found = detector.detect(&context).unwrap();
         // assert that the detector found an issue
         assert!(found);
-        assert!(detector.found_instances.len() == 3);
+        assert!(detector.found_instances.len() == 5);
     }
 }

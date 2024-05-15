@@ -40,12 +40,16 @@ contract AccessControlExamples is AccessControl {
     }
 
     // Do not capture
+    // False positive - but this is OK, it will force the auditor to check
+    // that the `hasRole` return value is used correctly
     function onlyRoleManualRequireCheck() public view {
         require(hasRole(ROLE, msg.sender), "Caller is not the owner");
         // Function body
     }
 
     // Do not capture
+    // False positive - but this is OK, it will force the auditor to check
+    // that the `hasRole` return value is used correctly
     function onlyRoleManualIfRevertCheck() public view {
         if (!hasRole(ROLE, msg.sender)) {
             revert("Caller is not the owner");
