@@ -1,4 +1,4 @@
-use prettytable::{format, row, Row, Table};
+use prettytable::{row, Row};
 
 use super::auditor::AuditorDetector;
 use crate::{
@@ -13,7 +13,6 @@ use std::{
     collections::BTreeMap,
     error::Error,
     fmt::{self, Display},
-    slice::Iter,
 };
 
 pub enum AddressSource {

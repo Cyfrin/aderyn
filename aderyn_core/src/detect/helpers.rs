@@ -1,8 +1,8 @@
 use crate::{
-    ast::{Expression, FunctionDefinition, Identifier, MemberAccess, NodeID, Visibility},
+    ast::{Expression, FunctionDefinition, MemberAccess, NodeID, Visibility},
     context::{
         browser::{ExtractBinaryOperations, ExtractMemberAccesses},
-        workspace_context::{ASTNode, WorkspaceContext},
+        workspace_context::{WorkspaceContext},
     },
 };
 
@@ -64,7 +64,7 @@ pub fn has_msg_sender_binary_operation(function_definition: &FunctionDefinition)
                 .any(|member_access| {
                     member_access.member_name == "sender"
                         && if let Expression::Identifier(identifier) =
-                            &*member_access.expression.as_ref()
+                            member_access.expression.as_ref()
                         {
                             identifier.name == "msg"
                         } else {

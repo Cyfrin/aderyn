@@ -1,27 +1,23 @@
-use prettytable::{row, Row, Table};
+use prettytable::{row, Row};
 
 use super::auditor::AuditorDetector;
 use crate::{
     ast::{
-        Expression, FunctionCallKind, FunctionDefinition, MemberAccess, NodeID, NodeType, TypeName,
+        NodeType,
     },
-    capture,
     context::{
         browser::{
-            ExtractBinaryOperations, ExtractModifierInvocations, GetClosestAncestorOfTypeX, Peek,
+            ExtractModifierInvocations, Peek,
         },
         workspace_context::{ASTNode, WorkspaceContext},
     },
     detect::helpers::{
-        get_calls_and_delegate_calls, get_implemented_external_and_public_functions,
+        get_implemented_external_and_public_functions,
         has_msg_sender_binary_operation,
     },
 };
 use std::{
-    collections::BTreeMap,
     error::Error,
-    fmt::{self, Display},
-    slice::Iter,
 };
 
 #[derive(Clone)]

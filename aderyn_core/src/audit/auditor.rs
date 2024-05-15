@@ -1,6 +1,6 @@
-use std::{error::Error, slice::Iter};
+use std::{error::Error};
 
-use prettytable::{format, row, Row, Table};
+use prettytable::{format, Row, Table};
 
 use crate::{
     audit::attack_surface::AttackSurfaceDetector, context::workspace_context::WorkspaceContext,
