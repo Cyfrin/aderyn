@@ -1,5 +1,4 @@
 use std::{
-    collections::HashSet,
     io::{self, Result, Write},
     path::PathBuf,
 };
@@ -29,7 +28,7 @@ impl ReportPrinter<()> for SarifPrinter {
         &self,
         writer: W,
         report: &Report,
-        contexts: &[WorkspaceContext],
+        _: &[WorkspaceContext],
         _: PathBuf,
         _: Option<String>,
         _: bool,
@@ -71,7 +70,7 @@ impl ReportPrinter<()> for SarifPrinter {
                 extensions: None,
                 properties: None,
             },
-            results: Some(create_sarif_results(report, contexts)),
+            results: Some(create_sarif_results(report)),
             column_kind: None,
             addresses: None,
             artifacts: None,
@@ -118,7 +117,7 @@ impl ReportPrinter<()> for SarifPrinter {
     }
 }
 
-fn create_sarif_results(report: &Report, contexts: &[WorkspaceContext]) -> Vec<SarifResult> {
+fn create_sarif_results(report: &Report) -> Vec<SarifResult> {
     let mut sarif_results: Vec<SarifResult> = Vec::new();
     for high in report.highs.iter() {
         let sarif_result = SarifResult {
@@ -131,7 +130,7 @@ fn create_sarif_results(report: &Report, contexts: &[WorkspaceContext]) -> Vec<S
                 properties: None,
             },
             level: Some(Value::String("warning".to_string())),
-            locations: Some(create_sarif_locations(high, contexts)),
+            locations: Some(create_sarif_locations(high)),
             rule_index: None,
             analysis_target: None,
             code_flows: None,
@@ -164,20 +163,13 @@ fn create_sarif_results(report: &Report, contexts: &[WorkspaceContext]) -> Vec<S
     sarif_results
 }
 
-fn create_sarif_locations(issue: &Issue, contexts: &[WorkspaceContext]) -> Vec<Location> {
+fn create_sarif_locations(issue: &Issue) -> Vec<Location> {
     let mut locations: Vec<Location> = Vec::new();
 
-    let mut offset_lens = HashSet::new();
-
-    for context in contexts {
-        for ((filename, _line_number, _source_location), value) in issue.instances.iter() {
-            if let Some(offset_len) = context.get_offset_and_length_of_node(*value) {
-                offset_lens.insert((offset_len, filename));
-            }
-        }
-    }
-
-    for (offset_len, filename) in offset_lens {
+    for ((filename, _line_number, source_location), _) in issue.instances.iter() {
+        let split_source_location = source_location.split(':').collect::<Vec<&str>>();
+        let offset = split_source_location[0].parse::<i64>().unwrap();
+        let length = split_source_location[1].parse::<i64>().unwrap();
         let location = Location {
             physical_location: Some(PhysicalLocation {
                 address: None,
@@ -191,8 +183,8 @@ fn create_sarif_locations(issue: &Issue, contexts: &[WorkspaceContext]) -> Vec<L
                 context_region: None,
                 properties: None,
                 region: Some(Region {
-                    char_offset: Some(offset_len.0.try_into().unwrap()),
-                    char_length: Some(offset_len.1.try_into().unwrap()),
+                    char_offset: Some(offset),
+                    char_length: Some(length),
 
                     byte_length: None,
                     byte_offset: None,

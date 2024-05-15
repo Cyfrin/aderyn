@@ -17,17 +17,6 @@
                   "charOffset": 488
                 }
               }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/inheritance/ExtendedInheritance.sol"
-                },
-                "region": {
-                  "charLength": 2,
-                  "charOffset": 154
-                }
-              }
             }
           ],
           "message": {
@@ -66,30 +55,8 @@
                   "uri": "src/KeccakContract.sol"
                 },
                 "region": {
-                  "charLength": 22,
-                  "charOffset": 1085
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/KeccakContract.sol"
-                },
-                "region": {
                   "charLength": 16,
                   "charOffset": 887
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/KeccakContract.sol"
-                },
-                "region": {
-                  "charLength": 7,
-                  "charOffset": 1193
                 }
               }
             }
@@ -105,22 +72,22 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV3Swapper.sol"
+                  "uri": "src/uniswap/UniswapV2Swapper.sol"
                 },
                 "region": {
-                  "charLength": 322,
-                  "charOffset": 2312
+                  "charLength": 83,
+                  "charOffset": 670
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV3Swapper.sol"
+                  "uri": "src/uniswap/UniswapV2Swapper.sol"
                 },
                 "region": {
-                  "charLength": 131,
-                  "charOffset": 1668
+                  "charLength": 83,
+                  "charOffset": 763
                 }
               }
             },
@@ -152,107 +119,8 @@
                   "uri": "src/uniswap/UniswapV2Swapper.sol"
                 },
                 "region": {
-                  "charLength": 0,
-                  "charOffset": 155
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV3Swapper.sol"
-                },
-                "region": {
-                  "charLength": 12,
-                  "charOffset": 2544
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV3Swapper.sol"
-                },
-                "region": {
-                  "charLength": 321,
-                  "charOffset": 1293
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV2Swapper.sol"
-                },
-                "region": {
-                  "charLength": 109,
-                  "charOffset": 1492
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV2Swapper.sol"
-                },
-                "region": {
-                  "charLength": 15,
-                  "charOffset": 792
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV3Swapper.sol"
-                },
-                "region": {
-                  "charLength": 237,
-                  "charOffset": 2852
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV2Swapper.sol"
-                },
-                "region": {
-                  "charLength": 99,
-                  "charOffset": 1383
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV3Swapper.sol"
-                },
-                "region": {
-                  "charLength": 236,
-                  "charOffset": 1828
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV3Swapper.sol"
-                },
-                "region": {
-                  "charLength": 132,
-                  "charOffset": 2690
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV2Swapper.sol"
-                },
-                "region": {
-                  "charLength": 66,
-                  "charOffset": 876
+                  "charLength": 80,
+                  "charOffset": 1026
                 }
               }
             },
@@ -264,50 +132,6 @@
                 "region": {
                   "charLength": 67,
                   "charOffset": 1116
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV3Swapper.sol"
-                },
-                "region": {
-                  "charLength": 45,
-                  "charOffset": 2847
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV2Swapper.sol"
-                },
-                "region": {
-                  "charLength": 83,
-                  "charOffset": 670
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV2Swapper.sol"
-                },
-                "region": {
-                  "charLength": 83,
-                  "charOffset": 763
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV3Swapper.sol"
-                },
-                "region": {
-                  "charLength": 144,
-                  "charOffset": 2132
                 }
               }
             },
@@ -328,19 +152,8 @@
                   "uri": "src/uniswap/UniswapV2Swapper.sol"
                 },
                 "region": {
-                  "charLength": 6,
-                  "charOffset": 1074
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV3Swapper.sol"
-                },
-                "region": {
-                  "charLength": 49,
-                  "charOffset": 2652
+                  "charLength": 99,
+                  "charOffset": 1383
                 }
               }
             },
@@ -350,30 +163,8 @@
                   "uri": "src/uniswap/UniswapV2Swapper.sol"
                 },
                 "region": {
-                  "charLength": 80,
-                  "charOffset": 1026
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV2Swapper.sol"
-                },
-                "region": {
-                  "charLength": 17,
-                  "charOffset": 1000
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV3Swapper.sol"
-                },
-                "region": {
-                  "charLength": 83,
-                  "charOffset": 3358
+                  "charLength": 109,
+                  "charOffset": 1492
                 }
               }
             },
@@ -391,11 +182,11 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV2Swapper.sol"
+                  "uri": "src/uniswap/UniswapV3Swapper.sol"
                 },
                 "region": {
-                  "charLength": 15,
-                  "charOffset": 1335
+                  "charLength": 321,
+                  "charOffset": 1293
                 }
               }
             },
@@ -405,8 +196,63 @@
                   "uri": "src/uniswap/UniswapV3Swapper.sol"
                 },
                 "region": {
-                  "charLength": 49,
-                  "charOffset": 2335
+                  "charLength": 131,
+                  "charOffset": 1668
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV3Swapper.sol"
+                },
+                "region": {
+                  "charLength": 236,
+                  "charOffset": 1828
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV3Swapper.sol"
+                },
+                "region": {
+                  "charLength": 144,
+                  "charOffset": 2132
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV3Swapper.sol"
+                },
+                "region": {
+                  "charLength": 322,
+                  "charOffset": 2312
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV3Swapper.sol"
+                },
+                "region": {
+                  "charLength": 132,
+                  "charOffset": 2690
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV3Swapper.sol"
+                },
+                "region": {
+                  "charLength": 237,
+                  "charOffset": 2852
                 }
               }
             }
@@ -425,30 +271,8 @@
                   "uri": "src/ArbitraryTransferFrom.sol"
                 },
                 "region": {
-                  "charLength": 53,
-                  "charOffset": 634
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ArbitraryTransferFrom.sol"
-                },
-                "region": {
-                  "charLength": 1,
-                  "charOffset": 478
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/DeprecatedOZFunctions.sol"
-                },
-                "region": {
-                  "charLength": 35,
-                  "charOffset": 1598
+                  "charLength": 38,
+                  "charOffset": 370
                 }
               }
             },
@@ -466,22 +290,11 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/DeprecatedOZFunctions.sol"
-                },
-                "region": {
-                  "charLength": 305,
-                  "charOffset": 579
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/ArbitraryTransferFrom.sol"
                 },
                 "region": {
-                  "charLength": 0,
-                  "charOffset": 515
+                  "charLength": 53,
+                  "charOffset": 634
                 }
               }
             },
@@ -502,61 +315,6 @@
                   "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
-                  "charLength": 17,
-                  "charOffset": 116
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/DeprecatedOZFunctions.sol"
-                },
-                "region": {
-                  "charLength": 10,
-                  "charOffset": 1344
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ArbitraryTransferFrom.sol"
-                },
-                "region": {
-                  "charLength": 15,
-                  "charOffset": 639
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ArbitraryTransferFrom.sol"
-                },
-                "region": {
-                  "charLength": 2,
-                  "charOffset": 248
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ArbitraryTransferFrom.sol"
-                },
-                "region": {
-                  "charLength": 38,
-                  "charOffset": 370
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/DeprecatedOZFunctions.sol"
-                },
-                "region": {
                   "charLength": 39,
                   "charOffset": 579
                 }
@@ -565,33 +323,11 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/ArbitraryTransferFrom.sol"
+                  "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
-                  "charLength": 14,
-                  "charOffset": 469
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ArbitraryTransferFrom.sol"
-                },
-                "region": {
-                  "charLength": 8,
-                  "charOffset": 244
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ArbitraryTransferFrom.sol"
-                },
-                "region": {
-                  "charLength": 425,
-                  "charOffset": 57
+                  "charLength": 35,
+                  "charOffset": 1598
                 }
               }
             }
@@ -610,8 +346,8 @@
                   "uri": "src/UnprotectedInitialize.sol"
                 },
                 "region": {
-                  "charLength": 137,
-                  "charOffset": 811
+                  "charLength": 33,
+                  "charOffset": 820
                 }
               }
             }
@@ -630,8 +366,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 36,
-                  "charOffset": 589
+                  "charLength": 10,
+                  "charOffset": 1065
                 }
               }
             },
@@ -653,128 +389,7 @@
                 },
                 "region": {
                   "charLength": 10,
-                  "charOffset": 3618
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 7,
-                  "charOffset": 851
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 7,
-                  "charOffset": 1970
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 38,
-                  "charOffset": 2598
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 10,
-                  "charOffset": 1916
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 99,
-                  "charOffset": 1437
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 181,
-                  "charOffset": 1537
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 5,
-                  "charOffset": 65
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 9,
-                  "charOffset": 2272
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 10,
-                  "charOffset": 1225
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 10,
-                  "charOffset": 4034
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 10,
-                  "charOffset": 1513
+                  "charOffset": 1129
                 }
               }
             },
@@ -786,974 +401,6 @@
                 "region": {
                   "charLength": 10,
                   "charOffset": 1161
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 9,
-                  "charOffset": 4159
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 24,
-                  "charOffset": 2001
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 9,
-                  "charOffset": 1762
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 8,
-                  "charOffset": 2839
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 10,
-                  "charOffset": 3490
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 10,
-                  "charOffset": 3650
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 0,
-                  "charOffset": 1807
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 47,
-                  "charOffset": 592
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 11,
-                  "charOffset": 513
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 10,
-                  "charOffset": 4066
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 45,
-                  "charOffset": 1031
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 9,
-                  "charOffset": 3009
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 16,
-                  "charOffset": 912
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 15,
-                  "charOffset": 5015
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 6,
-                  "charOffset": 5074
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 1,
-                  "charOffset": 621
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 10,
-                  "charOffset": 1065
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 10,
-                  "charOffset": 4347
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 2,
-                  "charOffset": 352
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 18,
-                  "charOffset": 901
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 9,
-                  "charOffset": 2692
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 9,
-                  "charOffset": 2302
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 9,
-                  "charOffset": 1702
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 16,
-                  "charOffset": 4566
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 9,
-                  "charOffset": 1732
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 10,
-                  "charOffset": 1641
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 9,
-                  "charOffset": 2512
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 10,
-                  "charOffset": 1289
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 10,
-                  "charOffset": 1353
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 6,
-                  "charOffset": 965
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 5,
-                  "charOffset": 234
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 2,
-                  "charOffset": 603
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 24,
-                  "charOffset": 1631
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 24,
-                  "charOffset": 2465
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 11,
-                  "charOffset": 1814
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 41,
-                  "charOffset": 233
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 1,
-                  "charOffset": 382
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 6,
-                  "charOffset": 65
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 9,
-                  "charOffset": 3039
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 10,
-                  "charOffset": 4315
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 97,
-                  "charOffset": 1960
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 9,
-                  "charOffset": 2242
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 6,
-                  "charOffset": 485
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 9,
-                  "charOffset": 2752
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 10,
-                  "charOffset": 3554
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 9,
-                  "charOffset": 1853
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 9,
-                  "charOffset": 2452
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 10,
-                  "charOffset": 4381
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 43,
-                  "charOffset": 646
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 7,
-                  "charOffset": 3462
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 14,
-                  "charOffset": 3653
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 19,
-                  "charOffset": 1400
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 1,
-                  "charOffset": 857
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 0,
-                  "charOffset": 2719
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 10,
-                  "charOffset": 3714
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 0,
-                  "charOffset": 546
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 49,
-                  "charOffset": 420
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 25,
-                  "charOffset": 3264
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 9,
-                  "charOffset": 2422
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 9,
-                  "charOffset": 4129
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 8,
-                  "charOffset": 2980
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 10,
-                  "charOffset": 1481
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 9,
-                  "charOffset": 2013
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 52,
-                  "charOffset": 273
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 10,
-                  "charOffset": 3874
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 9,
-                  "charOffset": 3069
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 9,
-                  "charOffset": 2722
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 52,
-                  "charOffset": 1842
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 9,
-                  "charOffset": 2482
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 9,
-                  "charOffset": 2662
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 17,
-                  "charOffset": 1031
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 0,
-                  "charOffset": 681
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 10,
-                  "charOffset": 3938
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 190,
-                  "charOffset": 554
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 9,
-                  "charOffset": 4220
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 9,
-                  "charOffset": 1672
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 9,
-                  "charOffset": 4189
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 10,
-                  "charOffset": 4002
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 10,
-                  "charOffset": 4251
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 9,
-                  "charOffset": 3099
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 34,
-                  "charOffset": 1268
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 10,
-                  "charOffset": 3586
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 10,
-                  "charOffset": 1545
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 1,
-                  "charOffset": 754
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 26,
-                  "charOffset": 2363
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 36,
-                  "charOffset": 1080
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 6,
-                  "charOffset": 421
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 1,
-                  "charOffset": 4752
                 }
               }
             },
@@ -1775,7 +422,7 @@
                 },
                 "region": {
                   "charLength": 10,
-                  "charOffset": 1417
+                  "charOffset": 1225
                 }
               }
             },
@@ -1785,8 +432,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 37,
-                  "charOffset": 2574
+                  "charLength": 10,
+                  "charOffset": 1257
                 }
               }
             },
@@ -1796,8 +443,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 57,
-                  "charOffset": 560
+                  "charLength": 10,
+                  "charOffset": 1289
                 }
               }
             },
@@ -1818,151 +465,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 1,
-                  "charOffset": 920
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
                   "charLength": 10,
-                  "charOffset": 3778
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 10,
-                  "charOffset": 3746
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 8,
-                  "charOffset": 2811
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 10,
-                  "charOffset": 4283
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 9,
-                  "charOffset": 2782
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 36,
-                  "charOffset": 724
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 8,
-                  "charOffset": 2867
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 143,
-                  "charOffset": 681
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 23,
-                  "charOffset": 32
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 10,
-                  "charOffset": 1577
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 10,
-                  "charOffset": 1980
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 10,
-                  "charOffset": 1884
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 9,
-                  "charOffset": 2392
+                  "charOffset": 1353
                 }
               }
             },
@@ -1984,29 +488,7 @@
                 },
                 "region": {
                   "charLength": 10,
-                  "charOffset": 3458
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 22,
-                  "charOffset": 887
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 0,
-                  "charOffset": 1438
+                  "charOffset": 1417
                 }
               }
             },
@@ -2017,7 +499,73 @@
                 },
                 "region": {
                   "charLength": 10,
-                  "charOffset": 3426
+                  "charOffset": 1449
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 10,
+                  "charOffset": 1481
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 10,
+                  "charOffset": 1513
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 10,
+                  "charOffset": 1545
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 10,
+                  "charOffset": 1577
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 10,
+                  "charOffset": 1609
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 10,
+                  "charOffset": 1641
                 }
               }
             },
@@ -2028,7 +576,7 @@
                 },
                 "region": {
                   "charLength": 9,
-                  "charOffset": 2332
+                  "charOffset": 1672
                 }
               }
             },
@@ -2038,8 +586,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 11,
-                  "charOffset": 1664
+                  "charLength": 9,
+                  "charOffset": 1702
                 }
               }
             },
@@ -2049,8 +597,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 14,
-                  "charOffset": 1722
+                  "charLength": 9,
+                  "charOffset": 1732
                 }
               }
             },
@@ -2060,19 +608,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 22,
-                  "charOffset": 521
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 27,
-                  "charOffset": 4801
+                  "charLength": 9,
+                  "charOffset": 1762
                 }
               }
             },
@@ -2094,7 +631,7 @@
                 },
                 "region": {
                   "charLength": 9,
-                  "charOffset": 2572
+                  "charOffset": 1822
                 }
               }
             },
@@ -2104,8 +641,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 64,
-                  "charOffset": 686
+                  "charLength": 9,
+                  "charOffset": 1853
                 }
               }
             },
@@ -2115,8 +652,19 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 3,
-                  "charOffset": 1416
+                  "charLength": 10,
+                  "charOffset": 1884
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 10,
+                  "charOffset": 1916
                 }
               }
             },
@@ -2137,19 +685,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 8,
-                  "charOffset": 2923
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
                   "charLength": 10,
-                  "charOffset": 3906
+                  "charOffset": 1980
                 }
               }
             },
@@ -2159,8 +696,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 7,
-                  "charOffset": 2128
+                  "charLength": 9,
+                  "charOffset": 2013
                 }
               }
             },
@@ -2170,8 +707,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 1257
+                  "charLength": 9,
+                  "charOffset": 2242
                 }
               }
             },
@@ -2181,8 +718,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 36,
-                  "charOffset": 1226
+                  "charLength": 9,
+                  "charOffset": 2272
                 }
               }
             },
@@ -2192,8 +729,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 14,
-                  "charOffset": 1571
+                  "charLength": 9,
+                  "charOffset": 2302
                 }
               }
             },
@@ -2203,19 +740,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 16,
-                  "charOffset": 1851
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 5,
-                  "charOffset": 718
+                  "charLength": 9,
+                  "charOffset": 2332
                 }
               }
             },
@@ -2236,8 +762,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 3810
+                  "charLength": 9,
+                  "charOffset": 2392
                 }
               }
             },
@@ -2247,8 +773,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 3682
+                  "charLength": 9,
+                  "charOffset": 2422
                 }
               }
             },
@@ -2258,8 +784,30 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 8,
-                  "charOffset": 2951
+                  "charLength": 9,
+                  "charOffset": 2452
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 9,
+                  "charOffset": 2482
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 9,
+                  "charOffset": 2512
                 }
               }
             },
@@ -2280,8 +828,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 0,
-                  "charOffset": 1037
+                  "charLength": 9,
+                  "charOffset": 2572
                 }
               }
             },
@@ -2291,8 +839,107 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 3970
+                  "charLength": 9,
+                  "charOffset": 2602
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 9,
+                  "charOffset": 2632
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 9,
+                  "charOffset": 2662
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 9,
+                  "charOffset": 2692
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 9,
+                  "charOffset": 2722
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 9,
+                  "charOffset": 2752
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 9,
+                  "charOffset": 2782
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 8,
+                  "charOffset": 2811
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 8,
+                  "charOffset": 2839
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 8,
+                  "charOffset": 2867
                 }
               }
             },
@@ -2314,6 +961,83 @@
                 },
                 "region": {
                   "charLength": 8,
+                  "charOffset": 2923
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 8,
+                  "charOffset": 2951
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 8,
+                  "charOffset": 2980
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 9,
+                  "charOffset": 3009
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 9,
+                  "charOffset": 3039
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 9,
+                  "charOffset": 3069
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 9,
+                  "charOffset": 3099
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 8,
                   "charOffset": 3130
                 }
               }
@@ -2324,19 +1048,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 0,
-                  "charOffset": 1183
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 9,
-                  "charOffset": 2602
+                  "charLength": 10,
+                  "charOffset": 3426
                 }
               }
             },
@@ -2347,18 +1060,7 @@
                 },
                 "region": {
                   "charLength": 10,
-                  "charOffset": 1609
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 9,
-                  "charOffset": 2632
+                  "charOffset": 3458
                 }
               }
             },
@@ -2369,29 +1071,7 @@
                 },
                 "region": {
                   "charLength": 10,
-                  "charOffset": 3842
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 10,
-                  "charOffset": 1129
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "charLength": 9,
-                  "charOffset": 1822
+                  "charOffset": 3490
                 }
               }
             },
@@ -2413,7 +1093,7 @@
                 },
                 "region": {
                   "charLength": 10,
-                  "charOffset": 4098
+                  "charOffset": 3554
                 }
               }
             },
@@ -2424,7 +1104,7 @@
                 },
                 "region": {
                   "charLength": 10,
-                  "charOffset": 1449
+                  "charOffset": 3586
                 }
               }
             },
@@ -2434,8 +1114,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 143,
-                  "charOffset": 1183
+                  "charLength": 10,
+                  "charOffset": 3618
                 }
               }
             },
@@ -2445,8 +1125,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 30,
-                  "charOffset": 294
+                  "charLength": 10,
+                  "charOffset": 3650
                 }
               }
             },
@@ -2456,8 +1136,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 6,
-                  "charOffset": 287
+                  "charLength": 10,
+                  "charOffset": 3682
                 }
               }
             },
@@ -2467,8 +1147,239 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 3,
-                  "charOffset": 587
+                  "charLength": 10,
+                  "charOffset": 3714
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 10,
+                  "charOffset": 3746
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 10,
+                  "charOffset": 3778
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 10,
+                  "charOffset": 3810
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 10,
+                  "charOffset": 3842
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 10,
+                  "charOffset": 3874
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 10,
+                  "charOffset": 3906
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 10,
+                  "charOffset": 3938
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 10,
+                  "charOffset": 3970
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 10,
+                  "charOffset": 4002
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 10,
+                  "charOffset": 4034
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 10,
+                  "charOffset": 4066
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 10,
+                  "charOffset": 4098
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 9,
+                  "charOffset": 4129
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 9,
+                  "charOffset": 4159
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 9,
+                  "charOffset": 4189
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 9,
+                  "charOffset": 4220
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 10,
+                  "charOffset": 4251
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 10,
+                  "charOffset": 4283
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 10,
+                  "charOffset": 4315
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 10,
+                  "charOffset": 4347
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 10,
+                  "charOffset": 4381
                 }
               }
             }
