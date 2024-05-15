@@ -52,21 +52,24 @@ where
 }
 
 fn run_auditor_mode(context: &WorkspaceContext) -> Result<(), Box<dyn Error>> {
-    let auditors_with_instances = get_auditor_detectors()
+    let audit_detectors_with_output = get_auditor_detectors()
         .par_iter_mut()
         .flat_map(|detector| {
             let found = detector.detect(context).unwrap();
             if found {
-                return Some((detector.title(), detector.instances()));
+                return Some((
+                    detector.title(),
+                    detector.table_titles(),
+                    detector.table_rows(),
+                ));
             }
             None
         })
         .collect::<Vec<_>>();
 
-    for (detector_name, instances) in auditors_with_instances {
-        BasicAuditorPrinter::print(&instances, &detector_name);
+    for (title, table_titles, table_rows) in audit_detectors_with_output {
+        BasicAuditorPrinter::print(&title, table_titles, table_rows);
     }
-
     Ok(())
 }
 
