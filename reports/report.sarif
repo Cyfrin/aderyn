@@ -32,8 +32,8 @@
                   "uri": "src/KeccakContract.sol"
                 },
                 "region": {
-                  "charLength": 16,
-                  "charOffset": 587
+                  "charLength": 63,
+                  "charOffset": 1685
                 }
               }
             },
@@ -43,8 +43,8 @@
                   "uri": "src/KeccakContract.sol"
                 },
                 "region": {
-                  "charLength": 16,
-                  "charOffset": 734
+                  "charLength": 57,
+                  "charOffset": 2111
                 }
               }
             },
@@ -314,8 +314,8 @@
                   "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
-                  "charLength": 39,
-                  "charOffset": 579
+                  "charLength": 1,
+                  "charOffset": 772
                 }
               }
             },
@@ -325,8 +325,8 @@
                   "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
-                  "charLength": 35,
-                  "charOffset": 1598
+                  "charLength": 60,
+                  "charOffset": 416
                 }
               }
             }
@@ -1381,6 +1381,39 @@
                   "charOffset": 4381
                 }
               }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/eth2/DepositContract.sol"
+                },
+                "region": {
+                  "charLength": 99,
+                  "charOffset": 517
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/eth2/DepositContract.sol"
+                },
+                "region": {
+                  "charLength": 0,
+                  "charOffset": 905
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/eth2/DepositContract.sol"
+                },
+                "region": {
+                  "charLength": 22,
+                  "charOffset": 6855
+                }
+              }
             }
           ],
           "message": {
@@ -1408,8 +1441,8 @@
                   "uri": "src/AdminContract.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 376
+                  "charLength": 5,
+                  "charOffset": 210
                 }
               }
             },
@@ -1419,8 +1452,8 @@
                   "uri": "src/AdminContract.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 505
+                  "charLength": 6,
+                  "charOffset": 273
                 }
               }
             },
@@ -1441,8 +1474,8 @@
                   "uri": "src/EmptyBlocks.sol"
                 },
                 "region": {
-                  "charLength": 7,
-                  "charOffset": 188
+                  "charLength": 0,
+                  "charOffset": 888
                 }
               }
             },
@@ -1452,8 +1485,52 @@
                   "uri": "src/InternalFunctions.sol"
                 },
                 "region": {
+                  "charLength": 33,
+                  "charOffset": 877
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
+                },
+                "region": {
+                  "charLength": 7,
+                  "charOffset": 322
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
+                },
+                "region": {
                   "charLength": 9,
-                  "charOffset": 250
+                  "charOffset": 396
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
+                },
+                "region": {
+                  "charLength": 13,
+                  "charOffset": 975
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
+                },
+                "region": {
+                  "charLength": 14,
+                  "charOffset": 1108
                 }
               }
             },
@@ -1542,37 +1619,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/DeprecatedOZFunctions.sol"
-                },
-                "region": {
-                  "charLength": 10,
-                  "charOffset": 737
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/DeprecatedOZFunctions.sol"
-                },
-                "region": {
-                  "charLength": 17,
-                  "charOffset": 898
-                }
-              }
-            }
-          ],
-          "message": {
-            "text": "Openzeppelin has deprecated several functions and replaced with newer versions. Please consult https://docs.openzeppelin.com/"
-          },
-          "ruleId": "deprecated-oz-functions"
-        },
-        {
-          "level": "note",
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/ArbitraryTransferFrom.sol"
                 },
                 "region": {
@@ -1653,8 +1699,8 @@
                   "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
-                  "charLength": 18,
-                  "charOffset": 1598
+                  "charLength": 21,
+                  "charOffset": 389
                 }
               }
             }
@@ -1778,17 +1824,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/StateVariables.sol"
-                },
-                "region": {
-                  "charLength": 14,
-                  "charOffset": 2121
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/ZeroAddressCheck.sol"
                 },
                 "region": {
@@ -1889,8 +1924,8 @@
                   "uri": "src/StateVariables.sol"
                 },
                 "region": {
-                  "charLength": 145,
-                  "charOffset": 1755
+                  "charLength": 6,
+                  "charOffset": 603
                 }
               }
             },
@@ -1900,8 +1935,8 @@
                   "uri": "src/StateVariables.sol"
                 },
                 "region": {
-                  "charLength": 151,
-                  "charOffset": 1906
+                  "charLength": 11,
+                  "charOffset": 875
                 }
               }
             },
@@ -1933,8 +1968,74 @@
                   "uri": "src/StateVariables.sol"
                 },
                 "region": {
-                  "charLength": 406,
-                  "charOffset": 2530
+                  "charLength": 16,
+                  "charOffset": 116
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
+                },
+                "region": {
+                  "charLength": 150,
+                  "charOffset": 466
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
+                },
+                "region": {
+                  "charLength": 178,
+                  "charOffset": 644
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
+                },
+                "region": {
+                  "charLength": 153,
+                  "charOffset": 1315
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
+                },
+                "region": {
+                  "charLength": 182,
+                  "charOffset": 1628
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
+                },
+                "region": {
+                  "charLength": 141,
+                  "charOffset": 2005
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
+                },
+                "region": {
+                  "charLength": 176,
+                  "charOffset": 2174
                 }
               }
             },
@@ -2398,8 +2499,8 @@
                   "uri": "src/AdminContract.sol"
                 },
                 "region": {
-                  "charLength": 12,
-                  "charOffset": 386
+                  "charLength": 1,
+                  "charOffset": 222
                 }
               }
             },
@@ -2493,8 +2594,8 @@
                   "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
-                  "charLength": 23,
-                  "charOffset": 32
+                  "charLength": 1,
+                  "charOffset": 553
                 }
               }
             },
@@ -2515,8 +2616,8 @@
                   "uri": "src/KeccakContract.sol"
                 },
                 "region": {
-                  "charLength": 23,
-                  "charOffset": 32
+                  "charLength": 58,
+                  "charOffset": 547
                 }
               }
             },
@@ -2537,8 +2638,8 @@
                   "uri": "src/StorageConditionals.sol"
                 },
                 "region": {
-                  "charLength": 23,
-                  "charOffset": 32
+                  "charLength": 38,
+                  "charOffset": 115
                 }
               }
             },
@@ -2548,8 +2649,8 @@
                   "uri": "src/T11sTranferer.sol"
                 },
                 "region": {
-                  "charLength": 23,
-                  "charOffset": 32
+                  "charLength": 4,
+                  "charOffset": 1171
                 }
               }
             },
@@ -2700,8 +2801,8 @@
                   "uri": "src/InternalFunctions.sol"
                 },
                 "region": {
-                  "charLength": 118,
-                  "charOffset": 404
+                  "charLength": 45,
+                  "charOffset": 475
                 }
               }
             },
@@ -2739,17 +2840,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/AdminContract.sol"
-                },
-                "region": {
-                  "charLength": 108,
-                  "charOffset": 448
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/ContractWithTodo.sol"
                 },
                 "region": {
@@ -2772,77 +2862,55 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/EmptyBlocks.sol"
+                  "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
-                  "charLength": 12,
-                  "charOffset": 503
+                  "charLength": 126,
+                  "charOffset": 812
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/EmptyBlocks.sol"
+                  "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
-                  "charLength": 12,
-                  "charOffset": 599
+                  "charLength": 118,
+                  "charOffset": 980
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/EmptyBlocks.sol"
+                  "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
-                  "charLength": 12,
-                  "charOffset": 739
+                  "charLength": 320,
+                  "charOffset": 1140
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/EmptyBlocks.sol"
+                  "uri": "src/DivisionBeforeMultiplication.sol"
                 },
                 "region": {
-                  "charLength": 41,
-                  "charOffset": 879
+                  "charLength": 113,
+                  "charOffset": 126
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/EmptyBlocks.sol"
+                  "uri": "src/DivisionBeforeMultiplication.sol"
                 },
                 "region": {
-                  "charLength": 81,
-                  "charOffset": 937
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/EmptyBlocks.sol"
-                },
-                "region": {
-                  "charLength": 134,
-                  "charOffset": 1059
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/EmptyBlocks.sol"
-                },
-                "region": {
-                  "charLength": 178,
-                  "charOffset": 1210
+                  "charLength": 107,
+                  "charOffset": 245
                 }
               }
             },
@@ -2854,6 +2922,61 @@
                 "region": {
                   "charLength": 53,
                   "charOffset": 138
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
+                },
+                "region": {
+                  "charLength": 80,
+                  "charOffset": 358
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
+                },
+                "region": {
+                  "charLength": 94,
+                  "charOffset": 843
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
+                },
+                "region": {
+                  "charLength": 84,
+                  "charOffset": 1071
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
+                },
+                "region": {
+                  "charLength": 85,
+                  "charOffset": 1831
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
+                },
+                "region": {
+                  "charLength": 94,
+                  "charOffset": 2371
                 }
               }
             },
@@ -3167,8 +3290,8 @@
                   "uri": "src/InternalFunctions.sol"
                 },
                 "region": {
-                  "charLength": 150,
-                  "charOffset": 684
+                  "charLength": 1,
+                  "charOffset": 1128
                 }
               }
             }
@@ -3260,8 +3383,8 @@
                   "uri": "src/UnusedError.sol"
                 },
                 "region": {
-                  "charLength": 27,
-                  "charOffset": 84
+                  "charLength": 79,
+                  "charOffset": 2063
                 }
               }
             },
@@ -3271,8 +3394,8 @@
                   "uri": "src/UnusedError.sol"
                 },
                 "region": {
-                  "charLength": 36,
-                  "charOffset": 258
+                  "charLength": 27,
+                  "charOffset": 2428
                 }
               }
             },
@@ -3315,6 +3438,17 @@
                 "region": {
                   "charLength": 150,
                   "charOffset": 416
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/eth2/DepositContract.sol"
+                },
+                "region": {
+                  "charLength": 178,
+                  "charOffset": 5010
                 }
               }
             }

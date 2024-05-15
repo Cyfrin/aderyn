@@ -137,6 +137,10 @@
         "n_sloc": 65
       },
       {
+        "file_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
+        "n_sloc": 45
+      },
+      {
         "file_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
         "n_sloc": 32
       },
@@ -187,8 +191,8 @@
     ]
   },
   "files_summary": {
-    "total_sloc": 1204,
-    "total_source_units": 38
+    "total_sloc": 1249,
+    "total_source_units": 39
   },
   "high_issues": {
     "issues": [
@@ -835,6 +839,21 @@
             "contract_path": "src/Casting.sol",
             "line_no": 141,
             "src": "4381:10"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 82,
+            "src": "5672:21"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 86,
+            "src": "5833:21"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 107,
+            "src": "6855:22"
           }
         ],
         "title": "Unsafe Casting"
@@ -843,7 +862,7 @@
   },
   "issue_count": {
     "high": 6,
-    "low": 23
+    "low": 22
   },
   "low_issues": {
     "issues": [
@@ -880,6 +899,26 @@
             "contract_path": "src/InternalFunctions.sol",
             "line_no": 12,
             "src": "250:9"
+          },
+          {
+            "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
+            "line_no": 9,
+            "src": "322:7"
+          },
+          {
+            "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
+            "line_no": 11,
+            "src": "396:9"
+          },
+          {
+            "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
+            "line_no": 35,
+            "src": "975:13"
+          },
+          {
+            "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
+            "line_no": 38,
+            "src": "1108:14"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
@@ -922,23 +961,6 @@
           }
         ],
         "title": "`ecrecover` is susceptible to signature malleability"
-      },
-      {
-        "description": "Openzeppelin has deprecated several functions and replaced with newer versions. Please consult https://docs.openzeppelin.com/",
-        "detector_name": "deprecated-oz-functions",
-        "instances": [
-          {
-            "contract_path": "src/DeprecatedOZFunctions.sol",
-            "line_no": 22,
-            "src": "737:10"
-          },
-          {
-            "contract_path": "src/DeprecatedOZFunctions.sol",
-            "line_no": 27,
-            "src": "898:17"
-          }
-        ],
-        "title": "Deprecated OpenZeppelin functions should not be used"
       },
       {
         "description": "ERC20 functions may not behave as expected. For example: return values are not always meaningful. It is recommended to use OpenZeppelin's SafeERC20 library.",
@@ -1119,6 +1141,36 @@
             "contract_path": "src/StateVariables.sol",
             "line_no": 71,
             "src": "2539:25"
+          },
+          {
+            "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
+            "line_no": 16,
+            "src": "475:27"
+          },
+          {
+            "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
+            "line_no": 22,
+            "src": "653:28"
+          },
+          {
+            "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
+            "line_no": 45,
+            "src": "1324:26"
+          },
+          {
+            "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
+            "line_no": 53,
+            "src": "1637:27"
+          },
+          {
+            "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
+            "line_no": 71,
+            "src": "2014:20"
+          },
+          {
+            "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
+            "line_no": 77,
+            "src": "2183:28"
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
@@ -1507,11 +1559,6 @@
         "detector_name": "empty-block",
         "instances": [
           {
-            "contract_path": "src/AdminContract.sol",
-            "line_no": 14,
-            "src": "457:23"
-          },
-          {
             "contract_path": "src/ContractWithTodo.sol",
             "line_no": 7,
             "src": "129:10"
@@ -1522,44 +1569,59 @@
             "src": "337:15"
           },
           {
-            "contract_path": "src/EmptyBlocks.sol",
-            "line_no": 30,
-            "src": "503:12"
+            "contract_path": "src/DeprecatedOZFunctions.sol",
+            "line_no": 26,
+            "src": "821:11"
           },
           {
-            "contract_path": "src/EmptyBlocks.sol",
-            "line_no": 38,
-            "src": "599:12"
+            "contract_path": "src/DeprecatedOZFunctions.sol",
+            "line_no": 31,
+            "src": "989:7"
           },
           {
-            "contract_path": "src/EmptyBlocks.sol",
-            "line_no": 49,
-            "src": "739:12"
+            "contract_path": "src/DeprecatedOZFunctions.sol",
+            "line_no": 36,
+            "src": "1149:26"
           },
           {
-            "contract_path": "src/EmptyBlocks.sol",
-            "line_no": 63,
-            "src": "888:13"
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 7,
+            "src": "135:14"
           },
           {
-            "contract_path": "src/EmptyBlocks.sol",
-            "line_no": 67,
-            "src": "946:24"
-          },
-          {
-            "contract_path": "src/EmptyBlocks.sol",
-            "line_no": 73,
-            "src": "1068:30"
-          },
-          {
-            "contract_path": "src/EmptyBlocks.sol",
-            "line_no": 81,
-            "src": "1219:41"
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 11,
+            "src": "254:18"
           },
           {
             "contract_path": "src/OnceModifierExample.sol",
             "line_no": 10,
             "src": "147:7"
+          },
+          {
+            "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
+            "line_no": 11,
+            "src": "367:17"
+          },
+          {
+            "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
+            "line_no": 30,
+            "src": "852:25"
+          },
+          {
+            "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
+            "line_no": 38,
+            "src": "1080:16"
+          },
+          {
+            "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
+            "line_no": 61,
+            "src": "1840:17"
+          },
+          {
+            "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
+            "line_no": 85,
+            "src": "2380:25"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
@@ -1787,6 +1849,11 @@
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
             "line_no": 17,
             "src": "416:150"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 70,
+            "src": "5010:178"
           }
         ],
         "title": "Loop contains `require`/`revert` statements"
