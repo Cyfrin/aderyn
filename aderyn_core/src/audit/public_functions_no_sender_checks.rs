@@ -4,7 +4,7 @@ use super::auditor::AuditorDetector;
 use crate::{
     ast::{FunctionKind, NodeType},
     context::{
-        browser::{ExtractModifierInvocations, Peek},
+        browser::ExtractModifierInvocations,
         workspace_context::{ASTNode, WorkspaceContext},
     },
     detect::helpers::{
