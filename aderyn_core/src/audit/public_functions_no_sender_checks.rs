@@ -2,23 +2,16 @@ use prettytable::{row, Row};
 
 use super::auditor::AuditorDetector;
 use crate::{
-    ast::{
-        NodeType,
-    },
+    ast::NodeType,
     context::{
-        browser::{
-            ExtractModifierInvocations, Peek,
-        },
+        browser::{ExtractModifierInvocations, Peek},
         workspace_context::{ASTNode, WorkspaceContext},
     },
     detect::helpers::{
-        get_implemented_external_and_public_functions,
-        has_msg_sender_binary_operation,
+        get_implemented_external_and_public_functions, has_msg_sender_binary_operation,
     },
 };
-use std::{
-    error::Error,
-};
+use std::error::Error;
 
 #[derive(Clone)]
 pub struct NoChecksInstance {

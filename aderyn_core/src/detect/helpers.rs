@@ -2,7 +2,7 @@ use crate::{
     ast::{Expression, FunctionDefinition, MemberAccess, NodeID, Visibility},
     context::{
         browser::{ExtractBinaryOperations, ExtractMemberAccesses},
-        workspace_context::{WorkspaceContext},
+        workspace_context::WorkspaceContext,
     },
 };
 
