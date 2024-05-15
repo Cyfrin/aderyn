@@ -1,4 +1,6 @@
-use super::auditor::{AuditorDetector, AuditorInstance};
+use prettytable::{row, Row};
+
+use super::auditor::AuditorDetector;
 use crate::{
     ast::{Expression, FunctionCallKind, MemberAccess, NodeID, NodeType, TypeName},
     context::{
@@ -18,6 +20,14 @@ pub enum AddressSource {
     Havoc,
 }
 
+#[derive(Clone)]
+pub struct AttackSurfaceInstance {
+    pub contract_name: String,
+    pub function_name: String,
+    pub source_code: String,
+    pub address_source: String,
+}
+
 impl Display for AddressSource {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let s = match self {
@@ -30,7 +40,7 @@ impl Display for AddressSource {
 
 #[derive(Default)]
 pub struct AttackSurfaceDetector {
-    found_instances: Vec<AuditorInstance>,
+    found_instances: Vec<AttackSurfaceInstance>,
 }
 
 impl AuditorDetector for AttackSurfaceDetector {
@@ -51,18 +61,32 @@ impl AuditorDetector for AttackSurfaceDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Attack Surface - External Contract `call` and `delegatecall` Instances")
+        String::from("External Contract `call` and `delegatecall` Instances")
     }
 
-    fn instances(&self) -> Vec<AuditorInstance> {
-        self.found_instances.clone()
+    fn table_titles(&self) -> Row {
+        row!["Contract", "Function", "Code", "Address Source"]
+    }
+
+    fn table_rows(&self) -> Vec<Row> {
+        self.found_instances
+            .iter()
+            .map(|instance| {
+                row![
+                    instance.contract_name,
+                    instance.function_name,
+                    instance.source_code,
+                    instance.address_source
+                ]
+            })
+            .collect()
     }
 }
 
 fn transform_surface_points(
     context: &WorkspaceContext,
     surface_points: &BTreeMap<NodeID, AddressSource>,
-) -> Vec<AuditorInstance> {
+) -> Vec<AttackSurfaceInstance> {
     let mut auditor_instances = vec![];
 
     for (id, address_storage) in surface_points {
@@ -74,7 +98,7 @@ fn transform_surface_points(
                     if let Some(source_code) = ast_node.peek(context) {
                         let contract_name = contract.name.to_string();
                         let function_name = function.name.to_string();
-                        auditor_instances.push(AuditorInstance {
+                        auditor_instances.push(AttackSurfaceInstance {
                             contract_name,
                             function_name,
                             source_code,
