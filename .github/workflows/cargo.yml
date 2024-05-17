@@ -17,9 +17,9 @@ jobs:
           toolchain: stable
           override: true
 
-      - name: Install git submodules
+      - name: Run make
         run: |
-          git submodule update --init --recursive
+          make
 
       - name: Run cargo check
         uses: actions-rs/cargo@v1
@@ -84,17 +84,9 @@ jobs:
         with:
           version: 8
 
-      - name: Install git submodules
+      - name: Run make
         run: |
-          git submodule update --init --recursive
-
-      - name: Install pnpm dependencies for ccip contracts and come out
-        run: |
-          cd tests/ccip-contracts/
-          pnpm install
-          cd contracts/
-          pnpm install
-          cd ../../../
+          make
 
       # Verify report.md
 
@@ -232,9 +224,9 @@ jobs:
           override: true
           components: rustfmt, clippy
 
-      - name: Install git submodules
+      - name: Run make
         run: |
-          git submodule update --init --recursive
+          make
 
       - name: Run cargo fmt
         uses: actions-rs/cargo@v1
