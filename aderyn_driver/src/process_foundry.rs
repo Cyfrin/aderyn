@@ -179,7 +179,7 @@ mod process_foundry_tests {
         let scope = Some(vec!["uniswap".to_string()]);
         let exclude = Some(vec!["UniswapV2Swapper.sol".to_string()]);
 
-        let context = super::with_project_root_at(&root_path, &scope, &exclude, false);
+        let context = super::with_project_root_at(&root_path, &scope, &exclude, true);
         let contains_scope = context
             .src_filepaths
             .iter()
