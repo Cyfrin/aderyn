@@ -43,6 +43,7 @@ pub fn load_foundry(
     skip_build: bool,
 ) -> Result<LoadedFoundry, Box<dyn Error>> {
     println!("BEFORE CANON: {}", foundry_root.display());
+    println!("skip_build: {}", skip_build);
     let foundry_root_absolute = utils::canonicalize(foundry_root).unwrap_or_else(|err| {
         // Exit with a non-zero exit code
         eprintln!("Error getting absolute path of Foundry root directory");
