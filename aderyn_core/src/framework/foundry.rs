@@ -51,7 +51,13 @@ pub fn load_foundry(
         eprintln!("{:?}", err);
         std::process::exit(1);
     });
+
     println!("AFTER CANON: {}", foundry_root_absolute.display());
+    std::process::Command::new("ls")
+        .arg("-la")
+        .current_dir("/home/runner/work/aderyn/tests/contract-playground/")
+        .stdout(Stdio::inherit()) // This will stream the stdout
+        .stderr(Stdio::inherit());
 
     if !skip_build {
         println!(
