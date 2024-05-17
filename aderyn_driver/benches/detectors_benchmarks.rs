@@ -15,7 +15,7 @@ fn bench_individual_detectors_on_contract_playground(c: &mut Criterion) {
         c.bench_function(detector.name().as_str(), |b| {
             b.iter(|| {
                 for context in &contexts {
-                    let _ = detector.detect(&context).unwrap();
+                    let _ = detector.detect(context).unwrap();
                 }
             })
         });
