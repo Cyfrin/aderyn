@@ -47,21 +47,9 @@ jobs:
         with:
           version: 8
 
-      - name: Install git submodules
+      - name: Run make
         run: |
-          git submodule update --init --recursive
-
-      - name: Install pnpm dependencies for ccip contracts and come out
-        run: |
-          cd tests/ccip-contracts/
-          pnpm install
-          cd contracts/
-          pnpm install
-          cd ../../../
-
-      - name: Run cargo build
-        run: |
-          cargo build
+          make
 
       - name: Run cargo test by_loading_contract_directly
         run: |
