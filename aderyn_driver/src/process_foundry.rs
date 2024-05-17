@@ -119,20 +119,26 @@ mod process_foundry_tests {
 
     #[test]
     fn test_process_foundry() {
-        let root_path = PathBuf::from("../tests/contract-playground");
-        let context = super::with_project_root_at(&root_path, &None, &None, true);
+        let root_path = PathBuf::from(format!(
+            "{}/../tests/contract-playground",
+            env!("CARGO_MANIFEST_DIR")
+        ));
+        let context = super::with_project_root_at(&root_path, &None, &None, false);
         assert!(context.src_filepaths.len() > 10);
     }
 
     #[test]
     fn test_process_foundry_scope() {
-        let root_path = PathBuf::from("../tests/contract-playground");
+        let root_path = PathBuf::from(format!(
+            "{}/../tests/contract-playground",
+            env!("CARGO_MANIFEST_DIR")
+        ));
         let scope: Option<Vec<String>> = Some(vec![
             "AnotherHeavilyCommentedContract.sol".to_string(),
             "Counter.sol".to_string(),
         ]);
 
-        let context = super::with_project_root_at(&root_path, &scope, &None, true);
+        let context = super::with_project_root_at(&root_path, &scope, &None, false);
         let contains_string = context
             .src_filepaths
             .iter()
@@ -143,11 +149,14 @@ mod process_foundry_tests {
 
     #[test]
     fn test_process_foundry_exclude() {
-        let root_path = PathBuf::from("../tests/contract-playground");
+        let root_path = PathBuf::from(format!(
+            "{}/../tests/contract-playground",
+            env!("CARGO_MANIFEST_DIR")
+        ));
         let exclude: Option<Vec<String>> =
             Some(vec!["AnotherHeavilyCommentedContract.sol".to_string()]);
 
-        let context = super::with_project_root_at(&root_path, &None, &exclude, true);
+        let context = super::with_project_root_at(&root_path, &None, &exclude, false);
         let contains_string = context
             .src_filepaths
             .iter()
@@ -157,11 +166,14 @@ mod process_foundry_tests {
 
     #[test]
     fn test_process_foundry_scope_and_exclude() {
-        let root_path = PathBuf::from("../tests/contract-playground");
+        let root_path = PathBuf::from(format!(
+            "{}/../tests/contract-playground",
+            env!("CARGO_MANIFEST_DIR")
+        ));
         let scope = Some(vec!["Inheritance".to_string()]);
         let exclude = Some(vec!["IContractInheritance.sol".to_string()]);
 
-        let context = super::with_project_root_at(&root_path, &scope, &exclude, true);
+        let context = super::with_project_root_at(&root_path, &scope, &exclude, false);
         let contains_scope = context
             .src_filepaths
             .iter()
@@ -175,11 +187,14 @@ mod process_foundry_tests {
 
     #[test]
     fn test_process_foundry_directory_scope_and_exclude() {
-        let root_path = PathBuf::from("../tests/contract-playground");
+        let root_path = PathBuf::from(format!(
+            "{}/../tests/contract-playground",
+            env!("CARGO_MANIFEST_DIR")
+        ));
         let scope = Some(vec!["uniswap".to_string()]);
         let exclude = Some(vec!["UniswapV2Swapper.sol".to_string()]);
 
-        let context = super::with_project_root_at(&root_path, &scope, &exclude, true);
+        let context = super::with_project_root_at(&root_path, &scope, &exclude, false);
         let contains_scope = context
             .src_filepaths
             .iter()
