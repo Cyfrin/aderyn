@@ -42,8 +42,6 @@ pub fn load_foundry(
     foundry_root: &PathBuf,
     skip_build: bool,
 ) -> Result<LoadedFoundry, Box<dyn Error>> {
-    println!("BEFORE CANON: {}", foundry_root.display());
-    println!("skip_build: {}", skip_build);
     let foundry_root_absolute = utils::canonicalize(foundry_root).unwrap_or_else(|err| {
         // Exit with a non-zero exit code
         eprintln!("Error getting absolute path of Foundry root directory");
@@ -51,13 +49,6 @@ pub fn load_foundry(
         eprintln!("{:?}", err);
         std::process::exit(1);
     });
-
-    println!("AFTER CANON: {}", foundry_root_absolute.display());
-    std::process::Command::new("ls")
-        .arg("-la")
-        .current_dir("/home/runner/work/aderyn/tests/contract-playground/")
-        .stdout(Stdio::inherit()) // This will stream the stdout
-        .stderr(Stdio::inherit());
 
     if !skip_build {
         println!(
