@@ -42,6 +42,7 @@ pub fn load_foundry(
     foundry_root: &PathBuf,
     skip_build: bool,
 ) -> Result<LoadedFoundry, Box<dyn Error>> {
+    println!("{}", foundry_root.display());
     let foundry_root_absolute = utils::canonicalize(foundry_root).unwrap_or_else(|err| {
         // Exit with a non-zero exit code
         eprintln!("Error getting absolute path of Foundry root directory");
@@ -49,6 +50,7 @@ pub fn load_foundry(
         eprintln!("{:?}", err);
         std::process::exit(1);
     });
+    println!("{}", foundry_root_absolute.display());
 
     if !skip_build {
         println!(
