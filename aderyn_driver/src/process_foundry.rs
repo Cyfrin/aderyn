@@ -120,7 +120,7 @@ mod process_foundry_tests {
     #[test]
     fn test_process_foundry() {
         let root_path = PathBuf::from("../tests/contract-playground");
-        let context = super::with_project_root_at(&root_path, &None, &None, false);
+        let context = super::with_project_root_at(&root_path, &None, &None, true);
         assert!(context.src_filepaths.len() > 10);
     }
 
@@ -132,7 +132,7 @@ mod process_foundry_tests {
             "Counter.sol".to_string(),
         ]);
 
-        let context = super::with_project_root_at(&root_path, &scope, &None, false);
+        let context = super::with_project_root_at(&root_path, &scope, &None, true);
         let contains_string = context
             .src_filepaths
             .iter()
@@ -147,7 +147,7 @@ mod process_foundry_tests {
         let exclude: Option<Vec<String>> =
             Some(vec!["AnotherHeavilyCommentedContract.sol".to_string()]);
 
-        let context = super::with_project_root_at(&root_path, &None, &exclude, false);
+        let context = super::with_project_root_at(&root_path, &None, &exclude, true);
         let contains_string = context
             .src_filepaths
             .iter()
@@ -161,7 +161,7 @@ mod process_foundry_tests {
         let scope = Some(vec!["Inheritance".to_string()]);
         let exclude = Some(vec!["IContractInheritance.sol".to_string()]);
 
-        let context = super::with_project_root_at(&root_path, &scope, &exclude, false);
+        let context = super::with_project_root_at(&root_path, &scope, &exclude, true);
         let contains_scope = context
             .src_filepaths
             .iter()
