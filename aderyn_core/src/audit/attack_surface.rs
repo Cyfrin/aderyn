@@ -1,4 +1,6 @@
-use super::auditor::{AuditorDetector, AuditorInstance};
+use prettytable::{row, Row};
+
+use super::auditor::AuditorDetector;
 use crate::{
     ast::{Expression, FunctionCallKind, MemberAccess, NodeID, NodeType, TypeName},
     context::{
@@ -8,7 +10,7 @@ use crate::{
     detect::helpers::get_calls_and_delegate_calls,
 };
 use std::{
-    collections::BTreeMap,
+    collections::{BTreeMap, BTreeSet},
     error::Error,
     fmt::{self, Display},
 };
@@ -16,6 +18,43 @@ use std::{
 pub enum AddressSource {
     Storage,
     Havoc,
+}
+
+#[derive(Clone, Eq, PartialEq)]
+pub struct AttackSurfaceInstance {
+    pub contract_name: String,
+    pub function_name: String,
+    pub source_code: String,
+    pub address_source: String,
+}
+
+use std::cmp::{Ord, Ordering, PartialOrd};
+
+impl Ord for AttackSurfaceInstance {
+    fn cmp(&self, other: &Self) -> Ordering {
+        let by_contract = self.contract_name.cmp(&other.contract_name);
+        if by_contract != Ordering::Equal {
+            return by_contract;
+        }
+
+        let by_function = self.function_name.cmp(&other.function_name);
+        if by_function != Ordering::Equal {
+            return by_function;
+        }
+
+        let by_source = self.source_code.cmp(&other.source_code);
+        if by_source != Ordering::Equal {
+            return by_source;
+        }
+
+        self.address_source.cmp(&other.address_source)
+    }
+}
+
+impl PartialOrd for AttackSurfaceInstance {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        Some(self.cmp(other))
+    }
 }
 
 impl Display for AddressSource {
@@ -30,7 +69,7 @@ impl Display for AddressSource {
 
 #[derive(Default)]
 pub struct AttackSurfaceDetector {
-    found_instances: Vec<AuditorInstance>,
+    found_instances: BTreeSet<AttackSurfaceInstance>,
 }
 
 impl AuditorDetector for AttackSurfaceDetector {
@@ -51,11 +90,25 @@ impl AuditorDetector for AttackSurfaceDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Attack Surface - External Contract `call` and `delegatecall` Instances")
+        String::from("External Contract `call` and `delegatecall` Instances")
     }
 
-    fn instances(&self) -> Vec<AuditorInstance> {
-        self.found_instances.clone()
+    fn table_titles(&self) -> Row {
+        row!["Contract", "Function", "Code", "Address Source"]
+    }
+
+    fn table_rows(&self) -> Vec<Row> {
+        self.found_instances
+            .iter()
+            .map(|instance| {
+                row![
+                    instance.contract_name,
+                    instance.function_name,
+                    instance.source_code,
+                    instance.address_source
+                ]
+            })
+            .collect()
     }
 
     fn skeletal_clone(&self) -> Box<dyn AuditorDetector> {
@@ -66,8 +119,8 @@ impl AuditorDetector for AttackSurfaceDetector {
 fn transform_surface_points(
     context: &WorkspaceContext,
     surface_points: &BTreeMap<NodeID, AddressSource>,
-) -> Vec<AuditorInstance> {
-    let mut auditor_instances = vec![];
+) -> BTreeSet<AttackSurfaceInstance> {
+    let mut auditor_instances: BTreeSet<AttackSurfaceInstance> = BTreeSet::new();
 
     for (id, address_storage) in surface_points {
         if let Some(ast_node) = context.nodes.get(id) {
@@ -78,12 +131,12 @@ fn transform_surface_points(
                     if let Some(source_code) = ast_node.peek(context) {
                         let contract_name = contract.name.to_string();
                         let function_name = function.name.to_string();
-                        auditor_instances.push(AuditorInstance {
+                        auditor_instances.insert(AttackSurfaceInstance {
                             contract_name,
                             function_name,
                             source_code,
                             address_source: address_storage.to_string(),
-                        })
+                        });
                     }
                 }
             }
