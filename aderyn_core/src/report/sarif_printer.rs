@@ -207,7 +207,7 @@ fn create_sarif_results(report: &Report) -> Vec<SarifResult> {
 fn create_sarif_locations(issue: &Issue) -> Vec<Location> {
     let mut locations: Vec<Location> = Vec::new();
     for ((filename, _line_number, source_location), _value) in issue.instances.iter() {
-        if let Some(offset_len) = source_location.split_once(':') {
+        if let Some((offset, len)) = source_location.split_once(':') {
             let location = Location {
                 physical_location: Some(PhysicalLocation {
                     address: None,
@@ -221,8 +221,8 @@ fn create_sarif_locations(issue: &Issue) -> Vec<Location> {
                     context_region: None,
                     properties: None,
                     region: Some(Region {
-                        char_offset: Some(offset_len.0.parse().unwrap()),
-                        char_length: Some(offset_len.1.parse().unwrap()),
+                        char_offset: Some(offset.parse().unwrap()),
+                        char_length: Some(len.parse().unwrap()),
 
                         byte_length: None,
                         byte_offset: None,
