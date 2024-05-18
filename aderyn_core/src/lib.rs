@@ -53,10 +53,20 @@ where
 }
 
 fn run_auditor_mode(contexts: &[WorkspaceContext]) -> Result<(), Box<dyn Error>> {
-    let auditors_with_instances = get_auditor_detectors()
+    let audit_detectors_with_output = get_auditor_detectors()
         .par_iter_mut()
         .flat_map(|detector| {
-            let mut instances: Vec<AuditorInstance> = vec![];
+            let found = detector.detect(context).unwrap();
+            if found {
+                return Some((
+                    detector.title(),
+                    detector.table_titles(),
+                    detector.table_rows(),
+                ));
+            }
+
+            /**
+             * let mut instances: Vec<AuditorInstance> = vec![];
 
             for context in contexts {
                 let mut d = detector.skeletal_clone();
@@ -65,8 +75,7 @@ fn run_auditor_mode(contexts: &[WorkspaceContext]) -> Result<(), Box<dyn Error>>
                         instances.extend(d.instances());
                     }
                 }
-            }
-
+             */
             instances.dedup_by(|a, b| {
                 a.contract_name == b.contract_name
                     && a.function_name == b.function_name
@@ -78,11 +87,9 @@ fn run_auditor_mode(contexts: &[WorkspaceContext]) -> Result<(), Box<dyn Error>>
         })
         .collect::<Vec<_>>();
 
-    for (detector_name, instances) in auditors_with_instances {
-        println!("Findings by {}", detector_name);
-        BasicAuditorPrinter::print(&instances, &detector_name);
+    for (title, table_titles, table_rows) in audit_detectors_with_output {
+        BasicAuditorPrinter::print(&title, table_titles, table_rows);
     }
-
     Ok(())
 }
 
