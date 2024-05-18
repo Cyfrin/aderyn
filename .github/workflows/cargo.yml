@@ -31,6 +31,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
+      - name: foundry-toolchain
+        uses: foundry-rs/foundry-toolchain@v1.2.0
+
       - name: Checkout sources
         uses: actions/checkout@v2
 
@@ -114,7 +117,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: -- -o ./reports/report-workflow.md  --src src/ ./tests/contract-playground/ --skip-update-check
+          args: -- -o ./reports/report-workflow.md  --src src/ ./tests/contract-playground/ --skip-update-check --icf
 
       - name: Check report.md vs report-workflow.md
         run: |
@@ -129,7 +132,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: -- -o ./reports/uniswap_profile-workflow.md ./tests/contract-playground/ --skip-update-check
+          args: -- -o ./reports/uniswap_profile-workflow.md ./tests/contract-playground/ --skip-update-check --icf
 
       - name: Check uniswap_profile.md vs uniswap_profile-workflow.md
         run: |
@@ -142,7 +145,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: -- -o ./reports/adhoc-sol-files-report-workflow.md ./tests/adhoc-sol-files --skip-update-check
+          args: -- -o ./reports/adhoc-sol-files-report-workflow.md ./tests/adhoc-sol-files --skip-update-check --icf
       
       - name: Check adhoc-sol-files-report.md vs adhoc-sol-files-report-workflow.md
         run: |
@@ -155,7 +158,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: -- -o ./reports/nft-workflow-report.md --src src/ ./tests/foundry-nft-f23 --skip-update-check
+          args: -- -o ./reports/nft-workflow-report.md --src src/ ./tests/foundry-nft-f23 --skip-update-check --icf
      
       - name: Check nft-workflow-report.md vs nft-report.md
         run: |
@@ -169,7 +172,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: -- -o reports/ccip-functions-report-workflow.md tests/ccip-contracts/contracts --src src/v0.8/functions/ --exclude "tests/,test/,mocks/"  --skip-update-check
+          args: -- -o reports/ccip-functions-report-workflow.md tests/ccip-contracts/contracts --src src/v0.8/functions/ --exclude "tests/,test/,mocks/"  --skip-update-check --icf
     
       - name: Check ccip-functions-report-workflow.md vs ccip-functions-report.md
         run: |
@@ -183,7 +186,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: -- --config-file ./tests/aderyn.config.json --exclude lib/ -o ./reports/report-config-workflow.md ./tests/contract-playground/ --skip-update-check
+          args: -- --config-file ./tests/aderyn.config.json --exclude lib/ -o ./reports/report-config-workflow.md ./tests/contract-playground/ --skip-update-check --icf
 
       - name: Check report-config.md vs report-config-workflow.md
         run: |
@@ -196,7 +199,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: -- -o ./reports/report-workflow.json --scope src/ --exclude lib/ ./tests/contract-playground/ --skip-update-check
+          args: -- -o ./reports/report-workflow.json --scope src/ --exclude lib/ ./tests/contract-playground/ --skip-update-check --icf
 
       - name: Check report.json vs report-workflow.json
         run: |
@@ -209,7 +212,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: -- --config-file ./tests/aderyn.config.json --exclude lib/  -o ./reports/report-config-workflow.json ./tests/contract-playground/ --skip-update-check
+          args: -- --config-file ./tests/aderyn.config.json --exclude lib/  -o ./reports/report-config-workflow.json ./tests/contract-playground/ --skip-update-check --icf
 
       - name: Check report-config.json vs report-config-workflow.json
         run: |
@@ -222,7 +225,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: -- -o ./reports/ci-report.sarif ./tests/contract-playground/ --skip-update-check
+          args: -- -o ./reports/ci-report.sarif ./tests/contract-playground/ --skip-update-check --icf
 
       - name: Check sarif report
         run: |
