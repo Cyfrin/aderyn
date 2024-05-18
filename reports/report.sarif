@@ -13,8 +13,8 @@
                   "uri": "src/inheritance/ExtendedInheritance.sol"
                 },
                 "region": {
-                  "charLength": 2,
-                  "charOffset": 154
+                  "charLength": 19,
+                  "charOffset": 488
                 }
               }
             }
@@ -33,8 +33,8 @@
                   "uri": "src/KeccakContract.sol"
                 },
                 "region": {
-                  "charLength": 22,
-                  "charOffset": 1085
+                  "charLength": 16,
+                  "charOffset": 587
                 }
               }
             },
@@ -44,8 +44,19 @@
                   "uri": "src/KeccakContract.sol"
                 },
                 "region": {
-                  "charLength": 7,
-                  "charOffset": 1193
+                  "charLength": 16,
+                  "charOffset": 734
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/KeccakContract.sol"
+                },
+                "region": {
+                  "charLength": 16,
+                  "charOffset": 887
                 }
               }
             }
@@ -64,8 +75,8 @@
                   "uri": "src/uniswap/UniswapV2Swapper.sol"
                 },
                 "region": {
-                  "charLength": 15,
-                  "charOffset": 792
+                  "charLength": 83,
+                  "charOffset": 670
                 }
               }
             },
@@ -73,109 +84,175 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/uniswap/UniswapV2Swapper.sol"
-                },
-                "region": {
-                  "charLength": 66,
-                  "charOffset": 876
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV2Swapper.sol"
-                },
-                "region": {
-                  "charLength": 17,
-                  "charOffset": 1000
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV2Swapper.sol"
-                },
-                "region": {
-                  "charLength": 6,
-                  "charOffset": 1074
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV2Swapper.sol"
-                },
-                "region": {
-                  "charLength": 15,
-                  "charOffset": 1335
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV2Swapper.sol"
-                },
-                "region": {
-                  "charLength": 0,
-                  "charOffset": 155
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV3Swapper.sol"
-                },
-                "region": {
-                  "charLength": 49,
-                  "charOffset": 2335
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV3Swapper.sol"
-                },
-                "region": {
-                  "charLength": 12,
-                  "charOffset": 2544
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV3Swapper.sol"
-                },
-                "region": {
-                  "charLength": 49,
-                  "charOffset": 2652
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV3Swapper.sol"
-                },
-                "region": {
-                  "charLength": 45,
-                  "charOffset": 2847
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV3Swapper.sol"
                 },
                 "region": {
                   "charLength": 83,
-                  "charOffset": 3358
+                  "charOffset": 763
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV2Swapper.sol"
+                },
+                "region": {
+                  "charLength": 70,
+                  "charOffset": 856
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV2Swapper.sol"
+                },
+                "region": {
+                  "charLength": 80,
+                  "charOffset": 936
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV2Swapper.sol"
+                },
+                "region": {
+                  "charLength": 80,
+                  "charOffset": 1026
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV2Swapper.sol"
+                },
+                "region": {
+                  "charLength": 67,
+                  "charOffset": 1116
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV2Swapper.sol"
+                },
+                "region": {
+                  "charLength": 112,
+                  "charOffset": 1261
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV2Swapper.sol"
+                },
+                "region": {
+                  "charLength": 99,
+                  "charOffset": 1383
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV2Swapper.sol"
+                },
+                "region": {
+                  "charLength": 109,
+                  "charOffset": 1492
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV3Swapper.sol"
+                },
+                "region": {
+                  "charLength": 143,
+                  "charOffset": 1115
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV3Swapper.sol"
+                },
+                "region": {
+                  "charLength": 321,
+                  "charOffset": 1293
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV3Swapper.sol"
+                },
+                "region": {
+                  "charLength": 131,
+                  "charOffset": 1668
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV3Swapper.sol"
+                },
+                "region": {
+                  "charLength": 236,
+                  "charOffset": 1828
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV3Swapper.sol"
+                },
+                "region": {
+                  "charLength": 144,
+                  "charOffset": 2132
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV3Swapper.sol"
+                },
+                "region": {
+                  "charLength": 322,
+                  "charOffset": 2312
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV3Swapper.sol"
+                },
+                "region": {
+                  "charLength": 132,
+                  "charOffset": 2690
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV3Swapper.sol"
+                },
+                "region": {
+                  "charLength": 237,
+                  "charOffset": 2852
                 }
               }
             }
@@ -238,8 +315,19 @@
                   "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 1344
+                  "charLength": 39,
+                  "charOffset": 579
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DeprecatedOZFunctions.sol"
+                },
+                "region": {
+                  "charLength": 35,
+                  "charOffset": 1598
                 }
               }
             }
@@ -258,8 +346,8 @@
                   "uri": "src/UnprotectedInitialize.sol"
                 },
                 "region": {
-                  "charLength": 137,
-                  "charOffset": 811
+                  "charLength": 33,
+                  "charOffset": 820
                 }
               }
             }
@@ -1310,8 +1398,8 @@
                   "uri": "src/AdminContract.sol"
                 },
                 "region": {
-                  "charLength": 6,
-                  "charOffset": 210
+                  "charLength": 7,
+                  "charOffset": 270
                 }
               }
             },
@@ -1321,8 +1409,8 @@
                   "uri": "src/AdminContract.sol"
                 },
                 "region": {
-                  "charLength": 58,
-                  "charOffset": 231
+                  "charLength": 9,
+                  "charOffset": 376
                 }
               }
             },
@@ -1332,8 +1420,8 @@
                   "uri": "src/AdminContract.sol"
                 },
                 "region": {
-                  "charLength": 6,
-                  "charOffset": 401
+                  "charLength": 9,
+                  "charOffset": 505
                 }
               }
             },
@@ -1343,8 +1431,8 @@
                   "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 1106
+                  "charLength": 13,
+                  "charOffset": 295
                 }
               }
             },
@@ -1376,8 +1464,8 @@
                   "uri": "src/parent_chain/ParentChainContract.sol"
                 },
                 "region": {
-                  "charLength": 61,
-                  "charOffset": 393
+                  "charLength": 7,
+                  "charOffset": 282
                 }
               }
             },
@@ -1387,8 +1475,19 @@
                   "uri": "src/parent_chain/ParentChainContract.sol"
                 },
                 "region": {
-                  "charLength": 4,
-                  "charOffset": 347
+                  "charLength": 9,
+                  "charOffset": 725
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/parent_chain/ParentChainContract.sol"
+                },
+                "region": {
+                  "charLength": 9,
+                  "charOffset": 854
                 }
               }
             }
@@ -1400,7 +1499,19 @@
         },
         {
           "level": "note",
-          "locations": [],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/T11sTranferer.sol"
+                },
+                "region": {
+                  "charLength": 84,
+                  "charOffset": 57
+                }
+              }
+            }
+          ],
           "message": {
             "text": "There is a subtle difference between the implementation of solmate's SafeTransferLib and OZ's SafeERC20: OZ's SafeERC20 checks if the token is a contract or not, solmate's SafeTransferLib does not.\nhttps://github.com/transmissions11/solmate/blob/main/src/utils/SafeTransferLib.sol#L9 \n`@dev Note that none of the functions in this library check that a token has code at all! That responsibility is delegated to the caller`\n"
           },
@@ -1415,8 +1526,8 @@
                   "uri": "src/inheritance/ExtendedInheritance.sol"
                 },
                 "region": {
-                  "charLength": 11,
-                  "charOffset": 265
+                  "charLength": 9,
+                  "charOffset": 705
                 }
               }
             }
@@ -1435,8 +1546,8 @@
                   "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
-                  "charLength": 4,
-                  "charOffset": 1424
+                  "charLength": 10,
+                  "charOffset": 737
                 }
               }
             },
@@ -1446,8 +1557,8 @@
                   "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 1538
+                  "charLength": 17,
+                  "charOffset": 898
                 }
               }
             }
@@ -1499,30 +1610,8 @@
                   "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
-                  "charLength": 165,
-                  "charOffset": 162
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/DeprecatedOZFunctions.sol"
-                },
-                "region": {
-                  "charLength": 29,
-                  "charOffset": 275
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/DeprecatedOZFunctions.sol"
-                },
-                "region": {
-                  "charLength": 8,
-                  "charOffset": 430
+                  "charLength": 13,
+                  "charOffset": 1062
                 }
               }
             },
@@ -1533,7 +1622,7 @@
                 },
                 "region": {
                   "charLength": 13,
-                  "charOffset": 519
+                  "charOffset": 1272
                 }
               }
             },
@@ -1543,8 +1632,30 @@
                   "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
-                  "charLength": 30,
-                  "charOffset": 634
+                  "charLength": 13,
+                  "charOffset": 1322
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DeprecatedOZFunctions.sol"
+                },
+                "region": {
+                  "charLength": 13,
+                  "charOffset": 1424
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DeprecatedOZFunctions.sol"
+                },
+                "region": {
+                  "charLength": 18,
+                  "charOffset": 1598
                 }
               }
             }
@@ -1563,8 +1674,8 @@
                   "uri": "src/ContractWithTodo.sol"
                 },
                 "region": {
-                  "charLength": 12,
-                  "charOffset": 435
+                  "charLength": 23,
+                  "charOffset": 32
                 }
               }
             },
@@ -1574,8 +1685,8 @@
                   "uri": "src/Counter.sol"
                 },
                 "region": {
-                  "charLength": 59,
-                  "charOffset": 486
+                  "charLength": 24,
+                  "charOffset": 39
                 }
               }
             },
@@ -1585,8 +1696,8 @@
                   "uri": "src/CrazyPragma.sol"
                 },
                 "region": {
-                  "charLength": 24,
-                  "charOffset": 983
+                  "charLength": 32,
+                  "charOffset": 32
                 }
               }
             },
@@ -1596,8 +1707,8 @@
                   "uri": "src/InconsistentUints.sol"
                 },
                 "region": {
-                  "charLength": 23,
-                  "charOffset": 32
+                  "charLength": 24,
+                  "charOffset": 0
                 }
               }
             },
@@ -1607,8 +1718,19 @@
                   "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
                 },
                 "region": {
-                  "charLength": 42,
-                  "charOffset": 1329
+                  "charLength": 24,
+                  "charOffset": 46
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/HeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "charLength": 32,
+                  "charOffset": 46
                 }
               }
             },
@@ -1618,8 +1740,8 @@
                   "uri": "src/inheritance/IContractInheritance.sol"
                 },
                 "region": {
-                  "charLength": 1,
-                  "charOffset": 682
+                  "charLength": 24,
+                  "charOffset": 32
                 }
               }
             },
@@ -1629,8 +1751,8 @@
                   "uri": "src/inheritance/InheritanceBase.sol"
                 },
                 "region": {
-                  "charLength": 4,
-                  "charOffset": 712
+                  "charLength": 23,
+                  "charOffset": 32
                 }
               }
             }
@@ -1660,8 +1782,8 @@
                   "uri": "src/StateVariables.sol"
                 },
                 "region": {
-                  "charLength": 21,
-                  "charOffset": 1841
+                  "charLength": 14,
+                  "charOffset": 2121
                 }
               }
             },
@@ -1704,8 +1826,8 @@
                   "uri": "src/uniswap/UniswapV2Swapper.sol"
                 },
                 "region": {
-                  "charLength": 7,
-                  "charOffset": 585
+                  "charLength": 17,
+                  "charOffset": 365
                 }
               }
             }
@@ -1724,8 +1846,8 @@
                   "uri": "src/ArbitraryTransferFrom.sol"
                 },
                 "region": {
-                  "charLength": 152,
-                  "charOffset": 763
+                  "charLength": 5,
+                  "charOffset": 772
                 }
               }
             },
@@ -1735,8 +1857,8 @@
                   "uri": "src/AssemblyExample.sol"
                 },
                 "region": {
-                  "charLength": 229,
-                  "charOffset": 104
+                  "charLength": 1,
+                  "charOffset": 113
                 }
               }
             },
@@ -1746,8 +1868,8 @@
                   "uri": "src/ContractWithTodo.sol"
                 },
                 "region": {
-                  "charLength": 6,
-                  "charOffset": 531
+                  "charLength": 15,
+                  "charOffset": 337
                 }
               }
             },
@@ -1757,8 +1879,19 @@
                   "uri": "src/Counter.sol"
                 },
                 "region": {
-                  "charLength": 7,
-                  "charOffset": 661
+                  "charLength": 9,
+                  "charOffset": 129
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariables.sol"
+                },
+                "region": {
+                  "charLength": 18,
+                  "charOffset": 1764
                 }
               }
             },
@@ -1769,7 +1902,7 @@
                 },
                 "region": {
                   "charLength": 20,
-                  "charOffset": 1811
+                  "charOffset": 1915
                 }
               }
             },
@@ -1779,8 +1912,30 @@
                   "uri": "src/StateVariables.sol"
                 },
                 "region": {
-                  "charLength": 6,
-                  "charOffset": 1980
+                  "charLength": 14,
+                  "charOffset": 2072
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariables.sol"
+                },
+                "region": {
+                  "charLength": 22,
+                  "charOffset": 2157
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariables.sol"
+                },
+                "region": {
+                  "charLength": 25,
+                  "charOffset": 2539
                 }
               }
             },
@@ -1790,8 +1945,8 @@
                   "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
                 },
                 "region": {
-                  "charLength": 1431,
-                  "charOffset": 140
+                  "charLength": 3,
+                  "charOffset": 500
                 }
               }
             },
@@ -1801,8 +1956,19 @@
                   "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
                 },
                 "region": {
-                  "charLength": 18,
-                  "charOffset": 646
+                  "charLength": 5,
+                  "charOffset": 637
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "charLength": 4,
+                  "charOffset": 738
                 }
               }
             },
@@ -1812,8 +1978,19 @@
                   "uri": "src/cloc/HeavilyCommentedContract.sol"
                 },
                 "region": {
-                  "charLength": 1,
-                  "charOffset": 3722
+                  "charLength": 3,
+                  "charOffset": 509
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/HeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "charLength": 4,
+                  "charOffset": 646
                 }
               }
             },
@@ -1823,8 +2000,8 @@
                   "uri": "src/parent_chain/ParentChainContract.sol"
                 },
                 "region": {
-                  "charLength": 414,
-                  "charOffset": 141
+                  "charLength": 9,
+                  "charOffset": 355
                 }
               }
             },
@@ -1834,8 +2011,8 @@
                   "uri": "src/parent_chain/ParentChainContract.sol"
                 },
                 "region": {
-                  "charLength": 35,
-                  "charOffset": 97
+                  "charLength": 9,
+                  "charOffset": 422
                 }
               }
             }
@@ -1986,8 +2163,41 @@
                   "uri": "src/RevertsAndRequriesInLoops.sol"
                 },
                 "region": {
-                  "charLength": 3,
-                  "charOffset": 844
+                  "charLength": 2,
+                  "charOffset": 253
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/RevertsAndRequriesInLoops.sol"
+                },
+                "region": {
+                  "charLength": 2,
+                  "charOffset": 442
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/RevertsAndRequriesInLoops.sol"
+                },
+                "region": {
+                  "charLength": 2,
+                  "charOffset": 706
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/RevertsAndRequriesInLoops.sol"
+                },
+                "region": {
+                  "charLength": 2,
+                  "charOffset": 745
                 }
               }
             },
@@ -1997,8 +2207,8 @@
                   "uri": "src/eth2/DepositContract.sol"
                 },
                 "region": {
-                  "charLength": 1,
-                  "charOffset": 782
+                  "charLength": 2,
+                  "charOffset": 7252
                 }
               }
             },
@@ -2008,8 +2218,8 @@
                   "uri": "src/eth2/DepositContract.sol"
                 },
                 "region": {
-                  "charLength": 19,
-                  "charOffset": 776
+                  "charLength": 2,
+                  "charOffset": 7293
                 }
               }
             }
@@ -2028,8 +2238,8 @@
                   "uri": "src/eth2/DepositContract.sol"
                 },
                 "region": {
-                  "charLength": 7,
-                  "charOffset": 4066
+                  "charLength": 107,
+                  "charOffset": 2641
                 }
               }
             },
@@ -2039,8 +2249,8 @@
                   "uri": "src/inheritance/ExtendedInheritance.sol"
                 },
                 "region": {
-                  "charLength": 69,
-                  "charOffset": 435
+                  "charLength": 45,
+                  "charOffset": 144
                 }
               }
             },
@@ -2050,8 +2260,8 @@
                   "uri": "src/inheritance/InheritanceBase.sol"
                 },
                 "region": {
-                  "charLength": 30,
-                  "charOffset": 730
+                  "charLength": 28,
+                  "charOffset": 150
                 }
               }
             }
@@ -2070,8 +2280,8 @@
                   "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
-                  "charLength": 4,
-                  "charOffset": 300
+                  "charLength": 7,
+                  "charOffset": 1264
                 }
               }
             },
@@ -2081,8 +2291,19 @@
                   "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
-                  "charLength": 18,
-                  "charOffset": 483
+                  "charLength": 6,
+                  "charOffset": 1389
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/RevertsAndRequriesInLoops.sol"
+                },
+                "region": {
+                  "charLength": 6,
+                  "charOffset": 503
                 }
               }
             },
@@ -2125,8 +2346,19 @@
                   "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
                 },
                 "region": {
-                  "charLength": 1,
-                  "charOffset": 515
+                  "charLength": 7,
+                  "charOffset": 589
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "charLength": 7,
+                  "charOffset": 1403
                 }
               }
             },
@@ -2136,8 +2368,8 @@
                   "uri": "src/cloc/HeavilyCommentedContract.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 3670
+                  "charLength": 7,
+                  "charOffset": 598
                 }
               }
             },
@@ -2147,8 +2379,8 @@
                   "uri": "src/cloc/HeavilyCommentedContract.sol"
                 },
                 "region": {
-                  "charLength": 1,
-                  "charOffset": 3946
+                  "charLength": 7,
+                  "charOffset": 1408
                 }
               }
             }
@@ -2168,7 +2400,7 @@
                 },
                 "region": {
                   "charLength": 12,
-                  "charOffset": 309
+                  "charOffset": 386
                 }
               }
             },
@@ -2178,8 +2410,8 @@
                   "uri": "src/parent_chain/ParentChainContract.sol"
                 },
                 "region": {
-                  "charLength": 17,
-                  "charOffset": 265
+                  "charLength": 12,
+                  "charOffset": 735
                 }
               }
             }
@@ -2191,7 +2423,19 @@
         },
         {
           "level": "note",
-          "locations": [],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UnsafeERC721Mint.sol"
+                },
+                "region": {
+                  "charLength": 5,
+                  "charOffset": 410
+                }
+              }
+            }
+          ],
           "message": {
             "text": "Using `ERC721::_mint()` can mint ERC721 tokens to addresses which don't support ERC721 tokens. Use `_safeMint()` instead of `_mint()` for ERC721."
           },
@@ -2217,8 +2461,8 @@
                   "uri": "src/ContractWithTodo.sol"
                 },
                 "region": {
-                  "charLength": 12,
-                  "charOffset": 435
+                  "charLength": 23,
+                  "charOffset": 32
                 }
               }
             },
@@ -2228,8 +2472,8 @@
                   "uri": "src/Counter.sol"
                 },
                 "region": {
-                  "charLength": 59,
-                  "charOffset": 486
+                  "charLength": 24,
+                  "charOffset": 39
                 }
               }
             },
@@ -2239,8 +2483,8 @@
                   "uri": "src/CrazyPragma.sol"
                 },
                 "region": {
-                  "charLength": 24,
-                  "charOffset": 983
+                  "charLength": 32,
+                  "charOffset": 32
                 }
               }
             },
@@ -2248,17 +2492,6 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/DeprecatedOZFunctions.sol"
-                },
-                "region": {
-                  "charLength": 117,
-                  "charOffset": 921
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/InconsistentUints.sol"
                 },
                 "region": {
                   "charLength": 23,
@@ -2269,11 +2502,22 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/InconsistentUints.sol"
+                },
+                "region": {
+                  "charLength": 24,
+                  "charOffset": 0
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/KeccakContract.sol"
                 },
                 "region": {
-                  "charLength": 4,
-                  "charOffset": 712
+                  "charLength": 23,
+                  "charOffset": 32
                 }
               }
             },
@@ -2283,8 +2527,8 @@
                   "uri": "src/StateVariables.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 1321
+                  "charLength": 23,
+                  "charOffset": 32
                 }
               }
             },
@@ -2294,8 +2538,8 @@
                   "uri": "src/StorageConditionals.sol"
                 },
                 "region": {
-                  "charLength": 21,
-                  "charOffset": 2158
+                  "charLength": 23,
+                  "charOffset": 32
                 }
               }
             },
@@ -2305,8 +2549,8 @@
                   "uri": "src/T11sTranferer.sol"
                 },
                 "region": {
-                  "charLength": 1,
-                  "charOffset": 2957
+                  "charLength": 23,
+                  "charOffset": 32
                 }
               }
             },
@@ -2316,8 +2560,8 @@
                   "uri": "src/UnsafeERC721Mint.sol"
                 },
                 "region": {
-                  "charLength": 2,
-                  "charOffset": 3075
+                  "charLength": 23,
+                  "charOffset": 32
                 }
               }
             },
@@ -2327,8 +2571,19 @@
                   "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
                 },
                 "region": {
-                  "charLength": 42,
-                  "charOffset": 1329
+                  "charLength": 24,
+                  "charOffset": 46
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/HeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "charLength": 32,
+                  "charOffset": 46
                 }
               }
             },
@@ -2338,8 +2593,8 @@
                   "uri": "src/eth2/DepositContract.sol"
                 },
                 "region": {
-                  "charLength": 7,
-                  "charOffset": 4002
+                  "charLength": 23,
+                  "charOffset": 2302
                 }
               }
             },
@@ -2349,8 +2604,8 @@
                   "uri": "src/inheritance/ExtendedInheritance.sol"
                 },
                 "region": {
-                  "charLength": 2,
-                  "charOffset": 422
+                  "charLength": 23,
+                  "charOffset": 32
                 }
               }
             },
@@ -2360,8 +2615,8 @@
                   "uri": "src/inheritance/IContractInheritance.sol"
                 },
                 "region": {
-                  "charLength": 1,
-                  "charOffset": 682
+                  "charLength": 24,
+                  "charOffset": 32
                 }
               }
             },
@@ -2371,8 +2626,30 @@
                   "uri": "src/inheritance/InheritanceBase.sol"
                 },
                 "region": {
-                  "charLength": 4,
-                  "charOffset": 712
+                  "charLength": 23,
+                  "charOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/nested/1/Nested.sol"
+                },
+                "region": {
+                  "charLength": 23,
+                  "charOffset": 180
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/nested/2/Nested.sol"
+                },
+                "region": {
+                  "charLength": 23,
+                  "charOffset": 180
                 }
               }
             },
@@ -2382,8 +2659,8 @@
                   "uri": "src/parent_chain/ParentChainContract.sol"
                 },
                 "region": {
-                  "charLength": 0,
-                  "charOffset": 393
+                  "charLength": 23,
+                  "charOffset": 32
                 }
               }
             },
@@ -2393,8 +2670,8 @@
                   "uri": "src/uniswap/UniswapV2Swapper.sol"
                 },
                 "region": {
-                  "charLength": 24,
-                  "charOffset": 463
+                  "charLength": 23,
+                  "charOffset": 32
                 }
               }
             },
@@ -2404,8 +2681,8 @@
                   "uri": "src/uniswap/UniswapV3Swapper.sol"
                 },
                 "region": {
-                  "charLength": 7,
-                  "charOffset": 1446
+                  "charLength": 23,
+                  "charOffset": 32
                 }
               }
             }
@@ -2424,8 +2701,8 @@
                   "uri": "src/InternalFunctions.sol"
                 },
                 "region": {
-                  "charLength": 118,
-                  "charOffset": 404
+                  "charLength": 9,
+                  "charOffset": 413
                 }
               }
             },
@@ -2435,8 +2712,8 @@
                   "uri": "src/OnceModifierExample.sol"
                 },
                 "region": {
-                  "charLength": 38,
-                  "charOffset": 94
+                  "charLength": 8,
+                  "charOffset": 103
                 }
               }
             },
@@ -2446,8 +2723,8 @@
                   "uri": "src/UnprotectedInitialize.sol"
                 },
                 "region": {
-                  "charLength": 114,
-                  "charOffset": 213
+                  "charLength": 21,
+                  "charOffset": 222
                 }
               }
             }
@@ -2466,8 +2743,8 @@
                   "uri": "src/AdminContract.sol"
                 },
                 "region": {
-                  "charLength": 55,
-                  "charOffset": 360
+                  "charLength": 23,
+                  "charOffset": 457
                 }
               }
             },
@@ -2477,8 +2754,8 @@
                   "uri": "src/ContractWithTodo.sol"
                 },
                 "region": {
-                  "charLength": 0,
-                  "charOffset": 486
+                  "charLength": 10,
+                  "charOffset": 129
                 }
               }
             },
@@ -2488,8 +2765,8 @@
                   "uri": "src/ContractWithTodo.sol"
                 },
                 "region": {
-                  "charLength": 6,
-                  "charOffset": 531
+                  "charLength": 15,
+                  "charOffset": 337
                 }
               }
             },
@@ -2532,41 +2809,41 @@
                   "uri": "src/EmptyBlocks.sol"
                 },
                 "region": {
+                  "charLength": 13,
+                  "charOffset": 888
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/EmptyBlocks.sol"
+                },
+                "region": {
+                  "charLength": 24,
+                  "charOffset": 946
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/EmptyBlocks.sol"
+                },
+                "region": {
+                  "charLength": 30,
+                  "charOffset": 1068
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/EmptyBlocks.sol"
+                },
+                "region": {
                   "charLength": 41,
-                  "charOffset": 879
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/EmptyBlocks.sol"
-                },
-                "region": {
-                  "charLength": 81,
-                  "charOffset": 937
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/EmptyBlocks.sol"
-                },
-                "region": {
-                  "charLength": 134,
-                  "charOffset": 1059
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/EmptyBlocks.sol"
-                },
-                "region": {
-                  "charLength": 178,
-                  "charOffset": 1210
+                  "charOffset": 1219
                 }
               }
             },
@@ -2576,30 +2853,8 @@
                   "uri": "src/OnceModifierExample.sol"
                 },
                 "region": {
-                  "charLength": 53,
-                  "charOffset": 138
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/parent_chain/ParentChainContract.sol"
-                },
-                "region": {
-                  "charLength": 414,
-                  "charOffset": 141
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/parent_chain/ParentChainContract.sol"
-                },
-                "region": {
                   "charLength": 7,
-                  "charOffset": 432
+                  "charOffset": 147
                 }
               }
             },
@@ -2609,8 +2864,41 @@
                   "uri": "src/parent_chain/ParentChainContract.sol"
                 },
                 "region": {
-                  "charLength": 1,
-                  "charOffset": 459
+                  "charLength": 9,
+                  "charOffset": 355
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/parent_chain/ParentChainContract.sol"
+                },
+                "region": {
+                  "charLength": 23,
+                  "charOffset": 806
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/parent_chain/ParentChainContract.sol"
+                },
+                "region": {
+                  "charLength": 8,
+                  "charOffset": 946
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/parent_chain/ParentChainContract.sol"
+                },
+                "region": {
+                  "charLength": 23,
+                  "charOffset": 1011
                 }
               }
             }
@@ -2880,8 +3168,8 @@
                   "uri": "src/InternalFunctions.sol"
                 },
                 "region": {
-                  "charLength": 150,
-                  "charOffset": 684
+                  "charLength": 12,
+                  "charOffset": 693
                 }
               }
             }
@@ -2900,8 +3188,8 @@
                   "uri": "src/ContractWithTodo.sol"
                 },
                 "region": {
-                  "charLength": 42,
-                  "charOffset": 496
+                  "charLength": 8,
+                  "charOffset": 66
                 }
               }
             },
@@ -2912,7 +3200,7 @@
                 },
                 "region": {
                   "charLength": 7,
-                  "charOffset": 983
+                  "charOffset": 74
                 }
               }
             }
@@ -2931,8 +3219,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 4249,
-                  "charOffset": 152
+                  "charLength": 7,
+                  "charOffset": 161
                 }
               }
             },
@@ -2942,8 +3230,8 @@
                   "uri": "src/InconsistentUints.sol"
                 },
                 "region": {
-                  "charLength": 12,
-                  "charOffset": 435
+                  "charLength": 34,
+                  "charOffset": 35
                 }
               }
             },
@@ -2953,8 +3241,8 @@
                   "uri": "src/eth2/DepositContract.sol"
                 },
                 "region": {
-                  "charLength": 138,
-                  "charOffset": 260
+                  "charLength": 15,
+                  "charOffset": 4547
                 }
               }
             }
@@ -3015,8 +3303,8 @@
                   "uri": "src/RevertsAndRequriesInLoops.sol"
                 },
                 "region": {
-                  "charLength": 70,
-                  "charOffset": 624
+                  "charLength": 129,
+                  "charOffset": 227
                 }
               }
             },
@@ -3026,8 +3314,8 @@
                   "uri": "src/RevertsAndRequriesInLoops.sol"
                 },
                 "region": {
-                  "charLength": 24,
-                  "charOffset": 983
+                  "charLength": 150,
+                  "charOffset": 416
                 }
               }
             }
