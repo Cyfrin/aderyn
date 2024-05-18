@@ -7,7 +7,7 @@ pub mod fscloc;
 pub mod report;
 pub mod visitor;
 
-use audit::auditor::{get_auditor_detectors, AuditorInstance, AuditorPrinter, BasicAuditorPrinter};
+use audit::auditor::{get_auditor_detectors, AuditorPrinter, BasicAuditorPrinter};
 use detect::detector::IssueDetector;
 use eyre::Result;
 use rayon::iter::{IntoParallelIterator, IntoParallelRefMutIterator, ParallelIterator};
@@ -56,34 +56,18 @@ fn run_auditor_mode(contexts: &[WorkspaceContext]) -> Result<(), Box<dyn Error>>
     let audit_detectors_with_output = get_auditor_detectors()
         .par_iter_mut()
         .flat_map(|detector| {
-            let found = detector.detect(context).unwrap();
-            if found {
-                return Some((
-                    detector.title(),
-                    detector.table_titles(),
-                    detector.table_rows(),
-                ));
-            }
-
-            /**
-             * let mut instances: Vec<AuditorInstance> = vec![];
+            let mut instances = vec![];
 
             for context in contexts {
                 let mut d = detector.skeletal_clone();
                 if let Ok(found) = d.detect(context) {
                     if found {
-                        instances.extend(d.instances());
+                        instances.push((d.title(), d.table_titles(), d.table_rows()));
                     }
                 }
-             */
-            instances.dedup_by(|a, b| {
-                a.contract_name == b.contract_name
-                    && a.function_name == b.function_name
-                    && a.source_code == b.source_code
-                    && a.address_source == b.address_source
-            });
+            }
 
-            Some((detector.title(), instances))
+            return instances;
         })
         .collect::<Vec<_>>();
 
