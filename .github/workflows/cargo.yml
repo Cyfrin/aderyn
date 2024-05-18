@@ -320,6 +320,19 @@ jobs:
           cat ./reports/report-config-workflow.json
           diff ./reports/report-config.json ./reports/report-config-workflow.json
 
+      # Verify sarif report
+
+      - name: Generate sarif report
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+          args: -- -o ./reports/ci-report.sarif ./tests/contract-playground/ --skip-update-check
+
+      - name: Check sarif report
+        run: |
+          cat ./reports/ci-report.sarif
+          diff ./reports/report.sarif ./reports/ci-report.sarif
+
 
   lints:
     name: Lints
