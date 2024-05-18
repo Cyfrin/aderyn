@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 38,
-    "total_sloc": 1204
+    "total_source_units": 39,
+    "total_sloc": 1249
   },
   "files_details": {
     "files_details": [
@@ -108,6 +108,10 @@
       {
         "file_path": "src/auditor_mode/ExternalCalls.sol",
         "n_sloc": 65
+      },
+      {
+        "file_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
+        "n_sloc": 45
       },
       {
         "file_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
@@ -852,6 +856,26 @@
             "src": "250:9"
           },
           {
+            "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
+            "line_no": 9,
+            "src": "322:7"
+          },
+          {
+            "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
+            "line_no": 11,
+            "src": "396:9"
+          },
+          {
+            "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
+            "line_no": 35,
+            "src": "975:13"
+          },
+          {
+            "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
+            "line_no": 38,
+            "src": "1108:14"
+          },
+          {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
             "line_no": 7,
             "src": "282:7"
@@ -1089,6 +1113,36 @@
             "contract_path": "src/StateVariables.sol",
             "line_no": 71,
             "src": "2539:25"
+          },
+          {
+            "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
+            "line_no": 16,
+            "src": "475:27"
+          },
+          {
+            "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
+            "line_no": 22,
+            "src": "653:28"
+          },
+          {
+            "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
+            "line_no": 45,
+            "src": "1324:26"
+          },
+          {
+            "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
+            "line_no": 53,
+            "src": "1637:27"
+          },
+          {
+            "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
+            "line_no": 71,
+            "src": "2014:20"
+          },
+          {
+            "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
+            "line_no": 77,
+            "src": "2183:28"
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
@@ -1530,6 +1584,31 @@
             "contract_path": "src/OnceModifierExample.sol",
             "line_no": 10,
             "src": "147:7"
+          },
+          {
+            "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
+            "line_no": 11,
+            "src": "367:17"
+          },
+          {
+            "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
+            "line_no": 30,
+            "src": "852:25"
+          },
+          {
+            "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
+            "line_no": 38,
+            "src": "1080:16"
+          },
+          {
+            "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
+            "line_no": 61,
+            "src": "1840:17"
+          },
+          {
+            "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
+            "line_no": 85,
+            "src": "2380:25"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
