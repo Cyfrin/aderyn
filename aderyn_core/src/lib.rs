@@ -55,19 +55,21 @@ where
 fn run_auditor_mode(contexts: &[WorkspaceContext]) -> Result<(), Box<dyn Error>> {
     let audit_detectors_with_output = get_auditor_detectors()
         .par_iter_mut()
-        .flat_map(|detector| {
+        .map(|detector| {
             let mut instances = vec![];
 
             for context in contexts {
                 let mut d = detector.skeletal_clone();
                 if let Ok(found) = d.detect(context) {
                     if found {
-                        instances.push((d.title(), d.table_titles(), d.table_rows()));
+                        instances.extend(d.table_rows());
                     }
                 }
             }
 
-            return instances;
+            instances.dedup();
+
+            return (detector.title(), detector.table_titles(), instances);
         })
         .collect::<Vec<_>>();
 
