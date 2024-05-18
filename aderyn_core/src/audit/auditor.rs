@@ -4,7 +4,7 @@ use prettytable::{format, Row, Table};
 
 use crate::{
     audit::{
-        calls_and_delegate_calls::CallsAndDelegateCallsDetector,
+        attack_surface::AttackSurfaceDetector,
         public_functions_no_sender_checks::PublicFunctionsNoSenderChecks,
     },
     context::workspace_context::WorkspaceContext,
@@ -12,7 +12,7 @@ use crate::{
 
 pub fn get_auditor_detectors() -> Vec<Box<dyn AuditorDetector>> {
     vec![
-        Box::<CallsAndDelegateCallsDetector>::default(),
+        Box::<AttackSurfaceDetector>::default(),
         Box::<PublicFunctionsNoSenderChecks>::default(),
     ]
 }

@@ -10,7 +10,7 @@ use crate::{
     detect::helpers::get_calls_and_delegate_calls,
 };
 use std::{
-    collections::BTreeMap,
+    collections::{BTreeMap, BTreeSet},
     error::Error,
     fmt::{self, Display},
 };
@@ -20,12 +20,41 @@ pub enum AddressSource {
     Havoc,
 }
 
-#[derive(Clone)]
-pub struct CallsAndDelegateCallsInstance {
+#[derive(Clone, Eq, PartialEq)]
+pub struct AttackSurfaceInstance {
     pub contract_name: String,
     pub function_name: String,
     pub source_code: String,
     pub address_source: String,
+}
+
+use std::cmp::{Ord, Ordering, PartialOrd};
+
+impl Ord for AttackSurfaceInstance {
+    fn cmp(&self, other: &Self) -> Ordering {
+        let by_contract = self.contract_name.cmp(&other.contract_name);
+        if by_contract != Ordering::Equal {
+            return by_contract;
+        }
+
+        let by_function = self.function_name.cmp(&other.function_name);
+        if by_function != Ordering::Equal {
+            return by_function;
+        }
+
+        let by_source = self.source_code.cmp(&other.source_code);
+        if by_source != Ordering::Equal {
+            return by_source;
+        }
+
+        self.address_source.cmp(&other.address_source)
+    }
+}
+
+impl PartialOrd for AttackSurfaceInstance {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        Some(self.cmp(other))
+    }
 }
 
 impl Display for AddressSource {
@@ -39,11 +68,11 @@ impl Display for AddressSource {
 }
 
 #[derive(Default)]
-pub struct CallsAndDelegateCallsDetector {
-    found_instances: Vec<CallsAndDelegateCallsInstance>,
+pub struct AttackSurfaceDetector {
+    found_instances: BTreeSet<AttackSurfaceInstance>,
 }
 
-impl AuditorDetector for CallsAndDelegateCallsDetector {
+impl AuditorDetector for AttackSurfaceDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         let mut surface_points: BTreeMap<NodeID, AddressSource> = BTreeMap::new();
 
@@ -86,8 +115,8 @@ impl AuditorDetector for CallsAndDelegateCallsDetector {
 fn transform_surface_points(
     context: &WorkspaceContext,
     surface_points: &BTreeMap<NodeID, AddressSource>,
-) -> Vec<CallsAndDelegateCallsInstance> {
-    let mut auditor_instances = vec![];
+) -> BTreeSet<AttackSurfaceInstance> {
+    let mut auditor_instances: BTreeSet<AttackSurfaceInstance> = BTreeSet::new();
 
     for (id, address_storage) in surface_points {
         if let Some(ast_node) = context.nodes.get(id) {
@@ -98,12 +127,12 @@ fn transform_surface_points(
                     if let Some(source_code) = ast_node.peek(context) {
                         let contract_name = contract.name.to_string();
                         let function_name = function.name.to_string();
-                        auditor_instances.push(CallsAndDelegateCallsInstance {
+                        auditor_instances.insert(AttackSurfaceInstance {
                             contract_name,
                             function_name,
                             source_code,
                             address_source: address_storage.to_string(),
-                        })
+                        });
                     }
                 }
             }
@@ -165,9 +194,7 @@ fn find_address_source_if_function_call(
 #[cfg(test)]
 mod attack_surface_detector_tests {
     use crate::{
-        audit::{
-            auditor::AuditorDetector, calls_and_delegate_calls::CallsAndDelegateCallsDetector,
-        },
+        audit::{attack_surface::AttackSurfaceDetector, auditor::AuditorDetector},
         detect::detector::detector_test_helpers::load_contract,
     };
 
@@ -176,7 +203,7 @@ mod attack_surface_detector_tests {
         let context =
             load_contract("../tests/contract-playground/out/ExternalCalls.sol/ExternalCalls.json");
 
-        let mut detector = CallsAndDelegateCallsDetector::default();
+        let mut detector = AttackSurfaceDetector::default();
         let found = detector.detect(&context).unwrap();
         // assert that the detector found an issue
         assert!(found);
