@@ -281,6 +281,46 @@ jobs:
           cat ./reports/report-workflow.md
           diff ./reports/report.md ./reports/report-workflow.md
 
+      # Verify report-config.md
+
+      - name: Generate report-config-workflow.md
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+          args: -- --config-file ./tests/aderyn.config.json -o ./reports/report-config-workflow.md ./tests/contract-playground/ --skip-update-check
+
+      - name: Check report-config.md vs report-config-workflow.md
+        run: |
+          cat ./reports/report-config-workflow.md
+          diff ./reports/report-config.md ./reports/report-config-workflow.md
+
+     # Verify report.json 
+
+      - name: Generate report-workflow.json
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+          args: -- -o ./reports/report-workflow.json ./tests/contract-playground/ --skip-update-check
+
+      - name: Check report.json vs report-workflow.json
+        run: |
+          cat ./reports/report-workflow.json
+          diff ./reports/report.json ./reports/report-workflow.json
+
+      # Verify report-config.json
+
+      - name: Generate report-config-workflow.json
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+          args: -- --config-file ./tests/aderyn.config.json -o ./reports/report-config-workflow.json ./tests/contract-playground/ --skip-update-check
+
+      - name: Check report-config.json vs report-config-workflow.json
+        run: |
+          cat ./reports/report-config-workflow.json
+          diff ./reports/report-config.json ./reports/report-config-workflow.json
+
+
   lints:
     name: Lints
     runs-on: ubuntu-latest
