@@ -10,7 +10,9 @@ pub mod visitor;
 use audit::auditor::{get_auditor_detectors, AuditorPrinter, BasicAuditorPrinter};
 use detect::detector::IssueDetector;
 use eyre::Result;
+use prettytable::Row;
 use rayon::iter::{IntoParallelIterator, IntoParallelRefMutIterator, ParallelIterator};
+use std::collections::btree_map::Entry;
 use std::collections::BTreeMap;
 use std::error::Error;
 use std::fs::{remove_file, File};
@@ -55,25 +57,30 @@ where
 fn run_auditor_mode(contexts: &[WorkspaceContext]) -> Result<(), Box<dyn Error>> {
     let audit_detectors_with_output = get_auditor_detectors()
         .par_iter_mut()
-        .map(|detector| {
-            let mut instances = vec![];
+        .flat_map(|detector| {
+            // Keys -> detector's title
+            // Value -> (table titles, table rows)
+            let mut grouped_instances: BTreeMap<String, (Row, Vec<Row>)> = BTreeMap::new();
 
             for context in contexts {
                 let mut d = detector.skeletal_clone();
                 if let Ok(found) = d.detect(context) {
                     if found {
-                        instances.extend(d.table_rows());
+                        match grouped_instances.entry(d.title()) {
+                            Entry::Occupied(o) => o.into_mut().1.extend(d.table_rows()),
+                            Entry::Vacant(v) => {
+                                v.insert((d.table_titles(), d.table_rows()));
+                            }
+                        };
                     }
                 }
             }
 
-            instances.dedup();
-
-            return (detector.title(), detector.table_titles(), instances);
+            grouped_instances
         })
         .collect::<Vec<_>>();
 
-    for (title, table_titles, table_rows) in audit_detectors_with_output {
+    for (title, (table_titles, table_rows)) in audit_detectors_with_output {
         BasicAuditorPrinter::print(&title, table_titles, table_rows);
     }
     Ok(())
