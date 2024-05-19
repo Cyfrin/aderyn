@@ -79,8 +79,6 @@ impl AuditorDetector for PublicFunctionsNoSenderChecksDetector {
             }
         });
 
-        println!("Number of instances: {}", self.found_instances.len());
-
         Ok(!self.found_instances.is_empty())
     }
 
