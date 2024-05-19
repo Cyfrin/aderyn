@@ -110,29 +110,26 @@ impl AuditorDetector for PublicFunctionsNoSenderChecksDetector {
     }
 }
 
-// #[cfg(test)]
-// mod public_functions_no_sender_checks {
-//     use crate::{
-//         audit::{
-//             auditor::AuditorDetector,
-//             public_functions_no_sender_checks::PublicFunctionsNoSenderChecks,
-//         },
-//         detect::detector::detector_test_helpers::load_multiple_contracts,
-//     };
+#[cfg(test)]
+mod public_functions_no_sender_checks {
+    use crate::{
+        audit::{
+            auditor::AuditorDetector,
+            public_functions_no_sender::PublicFunctionsNoSenderChecksDetector,
+        },
+        detect::test_utils::load_solidity_source_unit,
+    };
 
-//     #[test]
-//     fn test_attack_surface_detector() {
-//         let context =
-//             load_multiple_contracts(vec![
-//                 "../tests/contract-playground/out/PublicFunctionsWithoutSenderCheck.sol/OwnableExamples.json",
-//                 "../tests/contract-playground/out/PublicFunctionsWithoutSenderCheck.sol/AccessControlExamples.json",
-//                 "../tests/contract-playground/out/PublicFunctionsWithoutSenderCheck.sol/ManualCheckExamples.json",]
-//                 );
+    #[test]
+    fn test_public_functions_no_sender_checks() {
+        let context = load_solidity_source_unit(
+            "../tests/contract-playground/src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
+        );
 
-//         let mut detector = PublicFunctionsNoSenderChecks::default();
-//         let found = detector.detect(&context).unwrap();
-//         // assert that the detector found an issue
-//         assert!(found);
-//         assert!(detector.found_instances.len() == 5);
-//     }
-// }
+        let mut detector = PublicFunctionsNoSenderChecksDetector::default();
+        let found = detector.detect(&context).unwrap();
+        // assert that the detector found an issue
+        assert!(found);
+        assert!(detector.found_instances.len() == 5);
+    }
+}
