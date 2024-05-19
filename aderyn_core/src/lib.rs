@@ -80,9 +80,16 @@ fn run_auditor_mode(contexts: &[WorkspaceContext]) -> Result<(), Box<dyn Error>>
         })
         .collect::<Vec<_>>();
 
+    let num_instances = audit_detectors_with_output.len();
+
     for (title, (table_titles, table_rows)) in audit_detectors_with_output {
         BasicAuditorPrinter::print(&title, table_titles, table_rows);
     }
+
+    if num_instances > 0 {
+        println!("Number of instances: {}", num_instances);
+    }
+
     Ok(())
 }
 
