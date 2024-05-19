@@ -334,6 +334,44 @@ jobs:
           diff ./reports_legacy/report.sarif ./reports_legacy/ci-report.sarif
 
 
+  reprots_vs_legacy_reports:
+    name: Reports vs Legacy Reports
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+
+      - name: Checkout sources
+        uses: actions/checkout@v2
+
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+
+      - uses: actions/checkout@v3
+
+      # Diff report.json
+      - name: Diff report.json
+        run: |
+          diff ./reports/report.json ./reports_legacy/report.json
+
+      # Diff report-config.json
+      - name: Diff report-config.json
+        run: |
+          diff ./reports/report-config.json ./reports_legacy/report-config.json
+
+      # Diff uniswap_profile.md
+      - name: Diff uniswap_profile.md
+        run: |
+          diff ./reports/uniswap_profile.md ./reports_legacy/uniswap_profile.md
+
+      # Diff report.sarif
+      - name: Diff report.sarif
+        run: |
+          diff ./reports/report.sarif ./reports_legacy/report.sarif
+
   lints:
     name: Lints
     runs-on: ubuntu-latest
