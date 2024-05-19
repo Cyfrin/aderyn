@@ -274,12 +274,12 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: -- -o ./reports/report-workflow.md ./tests/contract-playground/ --skip-update-check
+          args: -- -o ./reports_legacy/report-workflow.md ./tests/contract-playground/ --skip-update-check
 
       - name: Check report.md vs report-workflow.md
         run: |
-          cat ./reports/report-workflow.md
-          diff ./reports/report.md ./reports/report-workflow.md
+          cat ./reports_legacy/report-workflow.md
+          diff ./reports_legacy/report.md ./reports_legacy/report-workflow.md
 
       # Verify report-config.md
 
@@ -287,12 +287,12 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: -- --config-file ./tests/aderyn.config.json -o ./reports/report-config-workflow.md ./tests/contract-playground/ --skip-update-check
+          args: -- --config-file ./tests/aderyn.config.json -o ./reports_legacy/report-config-workflow.md ./tests/contract-playground/ --skip-update-check
 
       - name: Check report-config.md vs report-config-workflow.md
         run: |
-          cat ./reports/report-config-workflow.md
-          diff ./reports/report-config.md ./reports/report-config-workflow.md
+          cat ./reports_legacy/report-config-workflow.md
+          diff ./reports_legacy/report-config.md ./reports_legacy/report-config-workflow.md
 
      # Verify report.json 
 
@@ -300,12 +300,12 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: -- -o ./reports/report-workflow.json ./tests/contract-playground/ --skip-update-check
+          args: -- -o ./reports_legacy/report-workflow.json ./tests/contract-playground/ --skip-update-check
 
       - name: Check report.json vs report-workflow.json
         run: |
-          cat ./reports/report-workflow.json
-          diff ./reports/report.json ./reports/report-workflow.json
+          cat ./reports_legacy/report-workflow.json
+          diff ./reports_legacy/report.json ./reports_legacy/report-workflow.json
 
       # Verify report-config.json
 
@@ -313,12 +313,12 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: -- --config-file ./tests/aderyn.config.json -o ./reports/report-config-workflow.json ./tests/contract-playground/ --skip-update-check
+          args: -- --config-file ./tests/aderyn.config.json -o ./reports_legacy/report-config-workflow.json ./tests/contract-playground/ --skip-update-check
 
       - name: Check report-config.json vs report-config-workflow.json
         run: |
-          cat ./reports/report-config-workflow.json
-          diff ./reports/report-config.json ./reports/report-config-workflow.json
+          cat ./reports_legacy/report-config-workflow.json
+          diff ./reports_legacy/report-config.json ./reports_legacy/report-config-workflow.json
 
       # Verify sarif report
 
@@ -326,12 +326,12 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: -- -o ./reports/ci-report.sarif ./tests/contract-playground/ --skip-update-check
+          args: -- -o ./reports_legacy/ci-report.sarif ./tests/contract-playground/ --skip-update-check
 
       - name: Check sarif report
         run: |
-          cat ./reports/ci-report.sarif
-          diff ./reports/report.sarif ./reports/ci-report.sarif
+          cat ./reports_legacy/ci-report.sarif
+          diff ./reports_legacy/report.sarif ./reports_legacy/ci-report.sarif
 
 
   lints:
