@@ -340,6 +340,18 @@ jobs:
     continue-on-error: true
     steps:
 
+      - name: Checkout sources
+        uses: actions/checkout@v2
+
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+
+      - uses: actions/checkout@v3
+
       # Diff report.json
       - name: Diff report.json
         run: |
