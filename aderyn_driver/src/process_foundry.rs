@@ -10,7 +10,6 @@ use std::{
     path::{Path, PathBuf},
 };
 
-#[allow(dead_code)]
 pub fn with_project_root_at(
     root_path: &PathBuf,
     scope: &Option<Vec<String>>,

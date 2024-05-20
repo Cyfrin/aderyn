@@ -103,7 +103,6 @@ mod project_compiler_grouping_tests {
         }
     }
 
-    #[allow(dead_code)]
     fn print_running_command(
         solc_bin: &str,
         remappings: &Vec<String>,

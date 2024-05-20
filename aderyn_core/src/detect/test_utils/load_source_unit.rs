@@ -79,7 +79,6 @@ pub fn load_solidity_source_unit(filepath: &str) -> WorkspaceContext {
 #[cfg(test)]
 /// This function is dangerous to use because we force all the sol files into 1 Workspace Context.
 /// As a result, we may override Node IDs. Therefore, this function is only available in cfg(test)
-#[allow(dead_code)]
 pub fn load_multiple_solidity_source_units_into_single_context(
     filepaths: &[&str],
 ) -> WorkspaceContext {
