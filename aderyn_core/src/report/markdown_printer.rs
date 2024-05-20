@@ -219,6 +219,11 @@ impl MarkdownReportPrinter {
             params.severity, params.number, params.issue_body.title, params.issue_body.description
         )?;
         let mut line_nos_printed: HashSet<(String, usize)> = HashSet::new();
+        writeln!(
+            writer,
+            "<details><summary>{} Found Instances</summary>\n\n",
+            &params.issue_body.instances.len()
+        )?;
         for instance in &params.issue_body.instances {
             // If this line number has already been printed for this issue, skip it
             // This occurs when multiple instances of the same issue are found on the same line.
@@ -292,6 +297,7 @@ impl MarkdownReportPrinter {
                 line_preview,
             )?;
         }
+        writeln!(writer, "</details>\n")?;
         line_nos_printed.clear();
         writeln!(writer, "\n")?; // Add an extra newline for spacing
         Ok(())
