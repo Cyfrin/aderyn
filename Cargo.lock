@@ -27,7 +27,7 @@ version = "0.0.27"
 dependencies = [
  "aderyn_driver",
  "clap",
- "foundry-compilers 0.3.20",
+ "cyfrin-foundry-compilers",
  "notify-debouncer-full",
  "reqwest",
  "semver 1.0.23",
@@ -42,8 +42,8 @@ version = "0.0.27"
 dependencies = [
  "crossbeam",
  "crossbeam-channel",
+ "cyfrin-foundry-compilers",
  "eyre",
- "foundry-compilers 0.3.20",
  "ignore",
  "once_cell",
  "phf",
@@ -65,7 +65,7 @@ version = "0.0.27"
 dependencies = [
  "aderyn_core",
  "criterion",
- "foundry-compilers 0.3.20",
+ "cyfrin-foundry-compilers",
  "foundry-config",
  "rayon",
  "serde",
@@ -836,6 +836,39 @@ dependencies = [
 ]
 
 [[package]]
+name = "cyfrin-foundry-compilers"
+version = "0.3.20-aderyn"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5ad21f39d59f196d1e2eb90b55a6d72bf46a272ac57a69fa47d8c38b5446ed57"
+dependencies = [
+ "alloy-json-abi",
+ "alloy-primitives",
+ "cfg-if",
+ "dirs",
+ "dunce",
+ "home",
+ "itertools 0.12.1",
+ "md-5",
+ "memmap2",
+ "once_cell",
+ "path-slash",
+ "rayon",
+ "regex",
+ "semver 1.0.23",
+ "serde",
+ "serde_json",
+ "sha2",
+ "solang-parser",
+ "svm-rs",
+ "svm-rs-builds",
+ "thiserror",
+ "tokio",
+ "tracing",
+ "walkdir",
+ "yansi",
+]
+
+[[package]]
 name = "darling"
 version = "0.14.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1237,45 +1270,13 @@ dependencies = [
  "alloy-chains",
  "alloy-json-abi",
  "alloy-primitives",
- "foundry-compilers 0.4.3",
+ "foundry-compilers",
  "reqwest",
  "semver 1.0.23",
  "serde",
  "serde_json",
  "thiserror",
  "tracing",
-]
-
-[[package]]
-name = "foundry-compilers"
-version = "0.3.20"
-source = "git+https://github.com/Cyfrin/foundry-compilers?branch=aderyn/icf#095d71a9e2582c6a47b3dbf3cdbafbb298ef5d47"
-dependencies = [
- "alloy-json-abi",
- "alloy-primitives",
- "cfg-if",
- "dirs",
- "dunce",
- "home",
- "itertools 0.12.1",
- "md-5",
- "memmap2",
- "once_cell",
- "path-slash",
- "rayon",
- "regex",
- "semver 1.0.23",
- "serde",
- "serde_json",
- "sha2",
- "solang-parser",
- "svm-rs",
- "svm-rs-builds",
- "thiserror",
- "tokio",
- "tracing",
- "walkdir",
- "yansi",
 ]
 
 [[package]]
@@ -1324,7 +1325,7 @@ dependencies = [
  "eyre",
  "figment",
  "foundry-block-explorers",
- "foundry-compilers 0.4.3",
+ "foundry-compilers",
  "globset",
  "number_prefix",
  "once_cell",

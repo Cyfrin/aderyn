@@ -23,7 +23,7 @@ use notify_debouncer_full::{
     notify::{RecursiveMode, Watcher},
 };
 
-use foundry_compilers::utils;
+use cyfrin_foundry_compilers::utils;
 
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]

@@ -1,6 +1,6 @@
 use crate::ast::*;
 use eyre::Result;
-use foundry_compilers::utils;
+use cyfrin_foundry_compilers::utils;
 use serde::{Deserialize, Serialize};
 
 use std::error::Error;
