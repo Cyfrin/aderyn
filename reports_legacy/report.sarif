@@ -3385,8 +3385,8 @@
           "informationUri": "https://github.com/Cyfrin/aderyn",
           "name": "Aderyn",
           "organization": "Cyfrin",
-          "semanticVersion": "0.0.26",
-          "version": "0.0.26"
+          "semanticVersion": "0.0.27",
+          "version": "0.0.27"
         }
       }
     }
