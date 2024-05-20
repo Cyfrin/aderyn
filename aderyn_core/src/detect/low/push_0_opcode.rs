@@ -102,12 +102,15 @@ impl IssueDetector for PushZeroOpcodeDetector {
 
 #[cfg(test)]
 mod unspecific_solidity_pragma_tests {
-    use crate::detect::detector::{detector_test_helpers::load_contract, IssueDetector};
+    use serial_test::serial;
+
+    use crate::detect::detector::IssueDetector;
 
     #[test]
-    fn test_push_0_opcode_detector_on_0_8_20() {
-        let context = load_contract(
-            "../tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",
+    #[serial]
+    fn test_push_0_opcode_detector_on_0_8_20_by_loading_contract_directly() {
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/inheritance/ExtendedInheritance.sol",
         );
 
         let mut detector = super::PushZeroOpcodeDetector::default();
@@ -136,9 +139,11 @@ mod unspecific_solidity_pragma_tests {
     }
 
     #[test]
-    fn test_push_0_opcode_detector_on_range() {
-        let context =
-            load_contract("../tests/contract-playground/out/CrazyPragma.sol/CrazyPragma.json");
+    #[serial]
+    fn test_push_0_opcode_detector_on_range_by_loading_contract_directly() {
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/CrazyPragma.sol",
+        );
 
         let mut detector = super::PushZeroOpcodeDetector::default();
         let found = detector.detect(&context).unwrap();
@@ -166,9 +171,10 @@ mod unspecific_solidity_pragma_tests {
     }
 
     #[test]
-    fn test_push_0_opcode_detector_on_0_8_19() {
-        let context = load_contract(
-            "../tests/contract-playground/out/ArbitraryTransferFrom.sol/ArbitraryTransferFrom.json",
+    #[serial]
+    fn test_push_0_opcode_detector_on_0_8_19_by_loading_contract_directly() {
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/ArbitraryTransferFrom.sol",
         );
 
         let mut detector = super::PushZeroOpcodeDetector::default();
@@ -180,9 +186,11 @@ mod unspecific_solidity_pragma_tests {
     }
 
     #[test]
-    fn test_push_0_opcode_detector_on_caret_0_8_13() {
-        let context =
-            load_contract("../tests/contract-playground/out/Counter.sol/Counter.0.8.25.json");
+    #[serial]
+    fn test_push_0_opcode_detector_on_caret_0_8_13_by_loading_contract_directly() {
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/Counter.sol",
+        );
 
         let mut detector = super::PushZeroOpcodeDetector::default();
         let found = detector.detect(&context).unwrap();
@@ -193,9 +201,10 @@ mod unspecific_solidity_pragma_tests {
     }
 
     #[test]
-    fn test_push_0_opcode_detector_on_greter_equal_0_8_0() {
-        let context = load_contract(
-            "../tests/contract-playground/out/IContractInheritance.sol/IContractInheritance.json",
+    #[serial]
+    fn test_push_0_opcode_detector_on_greter_equal_0_8_0_by_loading_contract_directly() {
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/inheritance/IContractInheritance.sol",
         );
 
         let mut detector = super::PushZeroOpcodeDetector::default();

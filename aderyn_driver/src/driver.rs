@@ -1,4 +1,7 @@
-use crate::{process_foundry, process_hardhat, virtual_foundry};
+use crate::{
+    ensure_valid_root_path, foundry_config_helpers::derive_from_foundry_toml, process_auto,
+    process_foundry,
+};
 use aderyn_core::{
     context::workspace_context::WorkspaceContext,
     detect::detector::{get_all_issue_detectors, IssueDetector},
@@ -9,11 +12,17 @@ use aderyn_core::{
     },
     run,
 };
-use std::{fs::read_dir, path::PathBuf};
+use std::{
+    error::Error,
+    fs::read_dir,
+    path::{Path, PathBuf},
+};
 
+#[derive(Clone)]
 pub struct Args {
     pub root: String,
     pub output: String,
+    pub src: Option<Vec<String>>,
     pub exclude: Option<Vec<String>>,
     pub scope: Option<Vec<String>>,
     pub no_snippets: bool,
@@ -22,11 +31,7 @@ pub struct Args {
     pub skip_update_check: bool,
     pub stdout: bool,
     pub auditor_mode: bool,
-}
-
-enum Framework {
-    Foundry,
-    Hardhat,
+    pub icf: bool,
 }
 
 pub fn drive(args: Args) {
@@ -37,12 +42,11 @@ pub fn drive_with(args: Args, detectors: Vec<Box<dyn IssueDetector>>) {
     let output = args.output.clone();
     let cx_wrapper = make_context(&args);
     let root_rel_path = PathBuf::from(&args.root);
-    let context = &cx_wrapper.context;
 
     if args.output.ends_with(".json") {
         // Load the workspace context into the run function, which runs the detectors
         run(
-            context,
+            &cx_wrapper.contexts,
             output,
             JsonPrinter,
             root_rel_path,
@@ -59,7 +63,7 @@ pub fn drive_with(args: Args, detectors: Vec<Box<dyn IssueDetector>>) {
         });
     } else if args.output.ends_with(".sarif") {
         run(
-            context,
+            &cx_wrapper.contexts,
             output,
             SarifPrinter,
             root_rel_path,
@@ -77,7 +81,7 @@ pub fn drive_with(args: Args, detectors: Vec<Box<dyn IssueDetector>>) {
     } else {
         // Load the workspace context into the run function, which runs the detectors
         run(
-            context,
+            &cx_wrapper.contexts,
             output,
             MarkdownReportPrinter,
             root_rel_path,
@@ -96,18 +100,7 @@ pub fn drive_with(args: Args, detectors: Vec<Box<dyn IssueDetector>>) {
 }
 
 pub struct WorkspaceContextWrapper {
-    pub context: WorkspaceContext,
-    is_single_file: bool,
-    safe_space: PathBuf,
-}
-
-// when the variable goes out of scope, workspace will be deleted !
-impl Drop for WorkspaceContextWrapper {
-    fn drop(&mut self) {
-        if self.is_single_file {
-            virtual_foundry::delete_safe_space(&self.safe_space);
-        }
-    }
+    pub contexts: Vec<WorkspaceContext>,
 }
 
 fn make_context(args: &Args) -> WorkspaceContextWrapper {
@@ -115,68 +108,91 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
         eprintln!("Warning: output file lacks the \".md\" or \".json\" extension in its filename.");
     }
 
-    let is_single_file = args.root.ends_with(".sol") && PathBuf::from(&args.root).is_file();
-    let mut safe_space = PathBuf::new();
+    let root_path = PathBuf::from(&args.root);
+    let absolute_root_path = &ensure_valid_root_path(&root_path);
 
-    let (src_path, mut context) = {
-        if is_single_file {
-            safe_space = virtual_foundry::build_isolated_workspace_for_file(&args.root);
-            process_foundry::with_project_root_at(
-                &safe_space,
-                &args.scope,
-                &args.exclude,
-                args.skip_build,
-            )
+    let (scope, exclude, src, remappings) = calculate_scope_exclude_and_src(args).unwrap();
+
+    println!("Src - {:?}, Exclude - {:?}", src, exclude);
+
+    let mut contexts: Vec<WorkspaceContext> = {
+        if args.icf {
+            process_auto::with_project_root_at(&root_path, &scope, &exclude, &src, &remappings)
         } else {
-            println!("Detecting framework...");
-            let root_path = PathBuf::from(&args.root);
-            let framework = detect_framework(root_path.clone()).unwrap_or_else(|| {
+            if !is_foundry(&PathBuf::from(&args.root)) {
                 // Exit with a non-zero exit code
-                eprintln!("Error detecting framework");
-                eprintln!("Neither foundry.toml nor hardhat.config.json was found in the project directory!");
+                eprintln!("foundry.toml wasn't found in the project directory!");
                 eprintln!();
-                eprintln!("NOTE: \nIf Foundry is detected in the project root, Aderyn will first run `forge build --ast` to ensure that the contract compiles correctly and the latest artifacts are available.");
-                eprintln!("If Hardhat is detected, Aderyn does not auto-compile. Make sure to run `hardhat compile` BEFORE running Aderyn.");
+                eprintln!("NOTE: \nAderyn will first run `forge build --ast` to ensure that the contract compiles correctly and the latest artifacts are available.");
+                eprintln!("If you are using Hardhat, consider shifting to `--icf` mode");
                 std::process::exit(1);
-            });
+            };
 
-            // This whole block loads the solidity files and ASTs into the workspace context
-            match framework {
-                Framework::Foundry => process_foundry::with_project_root_at(
-                    &root_path,
-                    &args.scope,
-                    &args.exclude,
-                    args.skip_build,
-                ),
-                Framework::Hardhat => {
-                    process_hardhat::with_project_root_at(&root_path, &args.scope, &args.exclude)
-                }
-            }
+            vec![process_foundry::with_project_root_at(
+                &root_path,
+                &scope,
+                &exclude,
+                args.skip_build,
+            )]
         }
     };
 
     if !args.skip_cloc {
+        for context in contexts.iter_mut() {
+            let stats = fscloc::engine::count_lines_of_code(
+                absolute_root_path.as_path(),
+                &context.src_filepaths,
+            );
+            let stats = stats.lock().unwrap().to_owned();
+            // dbg!(&stats);
+            context.set_sloc_stats(stats);
+        }
         // Using the source path, calculate the sloc
-        let stats =
-            fscloc::engine::count_lines_of_code(&PathBuf::from(src_path), &context.src_filepaths);
-        let stats = stats.lock().unwrap().to_owned();
-        context.set_sloc_stats(stats);
     }
 
-    WorkspaceContextWrapper {
-        context,
-        is_single_file,
-        safe_space,
-    }
+    WorkspaceContextWrapper { contexts }
 }
 
-fn detect_framework(path: PathBuf) -> Option<Framework> {
+#[allow(clippy::type_complexity)]
+fn calculate_scope_exclude_and_src(
+    args: &Args,
+) -> Result<
+    (
+        Option<Vec<String>>, // Scope
+        Option<Vec<String>>, // Exclude
+        Option<Vec<String>>, // Src
+        Option<Vec<String>>, // Remappings
+    ),
+    Box<dyn Error>,
+> {
+    let root_path = PathBuf::from(&args.root);
+    for entry in std::fs::read_dir(&root_path)? {
+        let entry = entry?;
+        if entry.file_name() == "foundry.toml" {
+            // If it is a foundry project, we auto fill scope, exclude, src from foundry.toml
+            return Ok(derive_from_foundry_toml(
+                &root_path,
+                &args.scope,
+                &args.exclude,
+                &args.src,
+            ));
+        }
+    }
+    Ok((
+        args.scope.clone(),
+        args.exclude.clone(),
+        args.src.clone(),
+        None,
+    ))
+}
+
+fn is_foundry(path: &Path) -> bool {
     // Canonicalize the path
     let canonical_path = path.canonicalize().expect("Failed to canonicalize path");
 
     // Check if the directory exists
     if !canonical_path.is_dir() {
-        return None;
+        return false;
     }
 
     // Read the contents of the directory
@@ -184,14 +200,10 @@ fn detect_framework(path: PathBuf) -> Option<Framework> {
 
     for entry in entries.flatten() {
         let filename = entry.file_name();
-        match filename.to_str() {
-            Some("foundry.toml") => return Some(Framework::Foundry),
-            Some("hardhat.config.js") | Some("hardhat.config.ts") => {
-                return Some(Framework::Hardhat)
-            }
-            _ => {}
+        if matches!(filename.to_str(), Some("foundry.toml")) {
+            return true;
         }
     }
 
-    None
+    false
 }

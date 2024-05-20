@@ -53,15 +53,15 @@ impl IssueDetector for PeekOverDemonstrator {
 
 #[cfg(test)]
 mod peek_over_demonstrator_tests {
-    use crate::detect::{
-        detector::{detector_test_helpers::load_contract, IssueDetector},
-        experimental::peek_over::PeekOverDemonstrator,
-    };
+    use crate::detect::{detector::IssueDetector, experimental::peek_over::PeekOverDemonstrator};
+
+    use serial_test::serial;
 
     #[test]
+    #[serial]
     fn test_peek_over() {
-        let context = load_contract(
-            "../tests/contract-playground/out/StorageConditionals.sol/StorageConditionals.json",
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/StorageConditionals.sol",
         );
 
         let mut detector = PeekOverDemonstrator::default();

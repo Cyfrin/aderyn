@@ -39,18 +39,33 @@ impl ReportPrinter<()> for JsonPrinter {
         &self,
         writer: W,
         report: &Report,
-        context: &WorkspaceContext,
+        contexts: &[WorkspaceContext],
         _: PathBuf,
         _: Option<String>,
         _: bool,
         stdout: bool,
         detectors_used: &[(String, String)],
     ) -> Result<()> {
+        let mut all_files_details = FilesDetails::default();
+        for context in contexts {
+            all_files_details = all_files_details + &context.files_details();
+        }
+
+        all_files_details
+            .files_details
+            .sort_by(|a, b| a.file_path.cmp(&b.file_path));
+
+        let mut all_files_summary = FilesSummary::default();
+        for details in &all_files_details.files_details {
+            all_files_summary.total_sloc += details.n_sloc;
+            all_files_summary.total_source_units += 1;
+        }
+
         let detectors_used_names: Vec<_> = detectors_used.iter().map(|x| x.0.clone()).collect();
 
         let content = JsonContent {
-            files_summary: context.files_summary(),
-            files_details: context.files_details(),
+            files_summary: all_files_summary,
+            files_details: all_files_details,
             issue_count: report.issue_count(),
             high_issues: report.high_issues(),
             low_issues: report.low_issues(),

@@ -63,14 +63,15 @@ impl IssueDetector for UselessErrorDetector {
 
 #[cfg(test)]
 mod useless_error_tests {
-    use crate::detect::detector::{detector_test_helpers::load_contract, IssueDetector};
+    use crate::detect::detector::IssueDetector;
 
     use super::UselessErrorDetector;
 
     #[test]
     fn test_unused_error_detection() {
-        let context =
-            load_contract("../tests/contract-playground/out/UnusedError.sol/UnusedError.json");
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/UnusedError.sol",
+        );
 
         let mut detector = UselessErrorDetector::default();
         // Assert that the detector finds the unused error

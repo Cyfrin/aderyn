@@ -1,9 +1,10 @@
 use crate::ast::*;
 use eyre::Result;
+use foundry_compilers::utils;
 use serde::{Deserialize, Serialize};
 
 use std::error::Error;
-use std::fs::{canonicalize, read_dir, read_to_string, File};
+use std::fs::{read_dir, read_to_string, File};
 use std::io::BufReader;
 use std::path::PathBuf;
 use std::process::Stdio;
@@ -41,7 +42,7 @@ pub fn load_foundry(
     foundry_root: &PathBuf,
     skip_build: bool,
 ) -> Result<LoadedFoundry, Box<dyn Error>> {
-    let foundry_root_absolute = canonicalize(foundry_root).unwrap_or_else(|err| {
+    let foundry_root_absolute = utils::canonicalize(foundry_root).unwrap_or_else(|err| {
         // Exit with a non-zero exit code
         eprintln!("Error getting absolute path of Foundry root directory");
         // print err
@@ -208,30 +209,4 @@ fn get_matching_output_files(
         })
         .cloned()
         .collect()
-}
-
-#[cfg(test)]
-mod tests {
-
-    use super::*;
-
-    #[test]
-    fn test_nested_contracts_with_same_name() {
-        let cargo_root = PathBuf::from(std::env::var("CARGO_MANIFEST_DIR").unwrap());
-        let tests_contract_playground_path = cargo_root
-            .join("../tests/contract-playground/")
-            .canonicalize()
-            .unwrap();
-        let result = load_foundry(&tests_contract_playground_path, false).unwrap();
-        let nested_1_exists = result
-            .output_filepaths
-            .iter()
-            .any(|path| path.to_str().unwrap().contains("Nested.sol"));
-        let nested_2_exists = result
-            .output_filepaths
-            .iter()
-            .any(|path| path.to_str().unwrap().contains("2/Nested.sol"));
-        assert!(nested_1_exists);
-        assert!(nested_2_exists);
-    }
 }

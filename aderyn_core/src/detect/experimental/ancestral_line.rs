@@ -75,14 +75,16 @@ impl IssueDetector for AncestralLineDemonstrator {
 #[cfg(test)]
 mod ancestral_line_demo_tests {
     use crate::detect::{
-        detector::{detector_test_helpers::load_contract, IssueDetector},
-        experimental::ancestral_line::AncestralLineDemonstrator,
+        detector::IssueDetector, experimental::ancestral_line::AncestralLineDemonstrator,
     };
 
+    use serial_test::serial;
+
     #[test]
+    #[serial]
     fn test_ancestral_line_demo() {
-        let context = load_contract(
-            "../tests/contract-playground/out/ParentChainContract.sol/ParentChainContract.json",
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/parent_chain/ParentChainContract.sol",
         );
 
         let mut detector = AncestralLineDemonstrator::default();
