@@ -152,4 +152,37 @@ mod block_timestamp_deadline_detector_tests {
             )
         );
     }
+
+    #[test]
+    #[serial]
+    fn test_block_timestamp_deadline_uniswap_v3_detector_by_loading_contract_directly() {
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/uniswap/UniswapV3Swapper.sol",
+        );
+
+        let mut detector = BlockTimestampDeadlineDetector::default();
+        let found = detector.detect(&context).unwrap();
+        // assert that the detector found
+        assert!(found);
+        // assert that the number of instances found is correct
+        assert_eq!(detector.instances().len(), 8);
+        // assert that the severity is High
+        assert_eq!(
+            detector.severity(),
+            crate::detect::detector::IssueSeverity::High
+        );
+        // assert that the title is correct
+        assert_eq!(
+            detector.title(),
+            String::from("Using `block.timestamp` for swap deadline offers no protection")
+        );
+        // assert that the description is correct
+        assert_eq!(
+            detector.description(),
+            String::from(
+                "In the PoS model, proposers know well in advance if they will propose one or consecutive blocks ahead of time. In such a scenario, a malicious validator can hold back the transaction and execute it at a more favourable block number.\
+        Consider allowing function caller to specify swap deadline input parameter."
+            )
+        );
+    }
 }
