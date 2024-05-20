@@ -6,15 +6,19 @@ use aderyn_driver::{
 };
 
 use criterion::{criterion_group, criterion_main, Criterion};
+use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
 
 fn bench_individual_detectors_on_contract_playground(c: &mut Criterion) {
     let root_path = PathBuf::from("../tests/contract-playground");
-    let (_, context) = aderyn_driver::with_project_root_at(&root_path, &None, &None, true);
+    let contexts = aderyn_driver::with_project_root_at(&root_path, &None, &None, &None, &None);
 
-    for mut detector in get_all_issue_detectors() {
+    for detector in get_all_issue_detectors() {
         c.bench_function(detector.name().as_str(), |b| {
             b.iter(|| {
-                let _ = detector.detect(&context).unwrap();
+                contexts.par_iter().for_each(|context| {
+                    let mut d = detector.skeletal_clone();
+                    let _ = d.detect(&context).unwrap();
+                })
             })
         });
     }
@@ -34,8 +38,10 @@ fn bench_aderyn_on_contract_playground(c: &mut Criterion) {
                 skip_update_check: true,
                 exclude: None,
                 scope: None,
+                src: None,
                 stdout: false,
                 auditor_mode: false,
+                icf: true,
             });
         });
     });

@@ -52,14 +52,15 @@ impl IssueDetector for UnspecificSolidityPragmaDetector {
 #[cfg(test)]
 mod unspecific_solidity_pragma_tests {
     use crate::detect::{
-        detector::{detector_test_helpers::load_contract, IssueDetector},
-        low::unspecific_solidity_pragma::UnspecificSolidityPragmaDetector,
+        detector::IssueDetector, low::unspecific_solidity_pragma::UnspecificSolidityPragmaDetector,
     };
+    use serial_test::serial;
 
     #[test]
-    fn test_unspecific_solidity_pragma_detector() {
-        let context = load_contract(
-            "../tests/contract-playground/out/IContractInheritance.sol/IContractInheritance.json",
+    #[serial]
+    fn test_unspecific_solidity_pragma_detector_by_loading_contract_directly() {
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/inheritance/IContractInheritance.sol",
         );
 
         let mut detector = UnspecificSolidityPragmaDetector::default();

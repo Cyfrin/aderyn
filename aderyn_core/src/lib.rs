@@ -10,7 +10,10 @@ pub mod visitor;
 use audit::auditor::{get_auditor_detectors, AuditorPrinter, BasicAuditorPrinter};
 use detect::detector::IssueDetector;
 use eyre::Result;
-use rayon::iter::{IntoParallelRefMutIterator, ParallelIterator};
+use prettytable::Row;
+use rayon::iter::{IntoParallelIterator, IntoParallelRefMutIterator, ParallelIterator};
+use std::collections::btree_map::Entry;
+use std::collections::BTreeMap;
 use std::error::Error;
 use std::fs::{remove_file, File};
 use std::io::{self};
@@ -25,7 +28,7 @@ use crate::report::Issue;
 
 #[allow(clippy::too_many_arguments)]
 pub fn run<T>(
-    context: &WorkspaceContext,
+    contexts: &[WorkspaceContext],
     output_file_path: String,
     reporter: T,
     root_rel_path: PathBuf,
@@ -39,7 +42,7 @@ where
 {
     if !auditor_mode {
         return run_detector_mode(
-            context,
+            contexts,
             output_file_path,
             reporter,
             root_rel_path,
@@ -48,33 +51,49 @@ where
             detectors,
         );
     }
-    run_auditor_mode(context)
+    run_auditor_mode(contexts)
 }
 
-fn run_auditor_mode(context: &WorkspaceContext) -> Result<(), Box<dyn Error>> {
+fn run_auditor_mode(contexts: &[WorkspaceContext]) -> Result<(), Box<dyn Error>> {
     let audit_detectors_with_output = get_auditor_detectors()
         .par_iter_mut()
         .flat_map(|detector| {
-            let found = detector.detect(context).unwrap();
-            if found {
-                return Some((
-                    detector.title(),
-                    detector.table_titles(),
-                    detector.table_rows(),
-                ));
+            // Keys -> detector's title
+            // Value -> (table titles, table rows)
+            let mut grouped_instances: BTreeMap<String, (Row, Vec<Row>)> = BTreeMap::new();
+
+            for context in contexts {
+                let mut d = detector.skeletal_clone();
+                if let Ok(found) = d.detect(context) {
+                    if found {
+                        match grouped_instances.entry(d.title()) {
+                            Entry::Occupied(o) => o.into_mut().1.extend(d.table_rows()),
+                            Entry::Vacant(v) => {
+                                v.insert((d.table_titles(), d.table_rows()));
+                            }
+                        };
+                    }
+                }
             }
-            None
+
+            grouped_instances
         })
         .collect::<Vec<_>>();
 
-    for (title, table_titles, table_rows) in audit_detectors_with_output {
+    for (title, (table_titles, table_rows)) in audit_detectors_with_output {
+        let num_instances = table_rows.len();
         BasicAuditorPrinter::print(&title, table_titles, table_rows);
+        if num_instances > 0 {
+            println!("Number of instances: {}", num_instances);
+        }
     }
+
     Ok(())
 }
 
+#[allow(clippy::too_many_arguments)]
 fn run_detector_mode<T>(
-    context: &WorkspaceContext,
+    contexts: &[WorkspaceContext],
     output_file_path: String,
     reporter: T,
     root_rel_path: PathBuf,
@@ -95,25 +114,46 @@ where
         .collect::<Vec<_>>();
     let mut report: Report = Report::default();
 
-    let issues: Vec<Option<(Issue, IssueSeverity)>> = detectors
+    let issues_collection: Vec<(Issue, IssueSeverity)> = detectors
         .par_iter_mut()
-        .map(|detector| {
-            if let Ok(found) = detector.detect(context) {
-                if found {
-                    let issue: Issue = Issue {
-                        title: detector.title(),
-                        description: detector.description(),
-                        detector_name: detector.name(),
-                        instances: detector.instances(),
-                    };
-                    return Some((issue, detector.severity()));
-                }
+        .flat_map(|detector| {
+            let mut issue: Issue = Issue {
+                title: detector.title(),
+                description: detector.description(),
+                detector_name: detector.name(),
+                instances: Default::default(),
+            };
+
+            let mut detectors_instances = BTreeMap::new();
+
+            let collection_of_instances = contexts
+                .into_par_iter()
+                .flat_map(|context| {
+                    let mut d = detector.skeletal_clone();
+                    if let Ok(found) = d.detect(context) {
+                        if found {
+                            let instances = d.instances();
+                            return Some(instances);
+                        }
+                    }
+                    None
+                })
+                .collect::<Vec<_>>();
+
+            for instances in collection_of_instances {
+                detectors_instances.extend(instances);
             }
-            None
+
+            if detectors_instances.is_empty() {
+                return None;
+            }
+
+            issue.instances = detectors_instances;
+            Some((issue, detector.severity()))
         })
         .collect();
 
-    for (issue, severity) in issues.into_iter().flatten() {
+    for (issue, severity) in issues_collection {
         match severity {
             IssueSeverity::High => {
                 report.highs.push(issue);
@@ -131,7 +171,7 @@ where
         reporter.print_report(
             get_writer(&output_file_path)?,
             &report,
-            context,
+            contexts,
             root_rel_path,
             Some(output_file_path.clone()),
             no_snippets,
@@ -143,7 +183,7 @@ where
         reporter.print_report(
             io::stdout(),
             &report,
-            context,
+            contexts,
             root_rel_path,
             Some(output_file_path.clone()),
             no_snippets,

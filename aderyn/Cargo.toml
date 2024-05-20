@@ -15,5 +15,8 @@ clap = { version = "4.4.6", features = ["derive"] }
 reqwest = { version = "0.12.2", default-features = false, features = ["blocking", "json", "rustls-tls"] }
 semver = "1.0.22"
 serde = { version = "1.0.160", features = ["derive"] }
-serde_json = "1.0.96"
+serde_json = { version = "1.0.96", features = ["preserve_order"] }
 strum = { version = "0.26", features = ["derive"] }
+notify-debouncer-full = "0.3.1"
+foundry-compilers = { git = "https://github.com/Cyfrin/foundry-compilers", features = ["svm-solc"], branch = "aderyn/icf" }
+

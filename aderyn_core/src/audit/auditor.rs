@@ -15,6 +15,8 @@ pub trait AuditorDetector: Send + Sync + 'static {
 
     fn title(&self) -> String;
 
+    fn skeletal_clone(&self) -> Box<dyn AuditorDetector>;
+
     fn table_titles(&self) -> Row;
 
     fn table_rows(&self) -> Vec<Row>;

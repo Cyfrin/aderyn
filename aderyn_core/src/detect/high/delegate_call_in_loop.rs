@@ -67,14 +67,17 @@ impl IssueDetector for DelegateCallInLoopDetector {
 
 #[cfg(test)]
 mod delegate_call_in_loop_detector_tests {
-    use crate::detect::detector::{detector_test_helpers::load_contract, IssueDetector};
+    use serial_test::serial;
+
+    use crate::detect::detector::IssueDetector;
 
     use super::DelegateCallInLoopDetector;
 
     #[test]
-    fn test_delegate_call_in_loop_detector() {
-        let context = load_contract(
-            "../tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",
+    #[serial]
+    fn test_delegate_call_in_loop_detector_by_loading_contract_directly() {
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/inheritance/ExtendedInheritance.sol",
         );
 
         let mut detector = DelegateCallInLoopDetector::default();

@@ -58,15 +58,16 @@ impl IssueDetector for NonReentrantBeforeOthersDetector {
 
 #[cfg(test)]
 mod non_reentrant_before_others_tests {
-    use crate::detect::{
-        detector::{detector_test_helpers::load_contract, IssueDetector},
-        low::NonReentrantBeforeOthersDetector,
-    };
+    use serial_test::serial;
+
+    use crate::detect::{detector::IssueDetector, low::NonReentrantBeforeOthersDetector};
 
     #[test]
-    fn test_non_reentrant_before_others() {
-        let context =
-            load_contract("../tests/contract-playground/out/AdminContract.sol/AdminContract.json");
+    #[serial]
+    fn test_non_reentrant_before_others_by_loading_contract_directly() {
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/AdminContract.sol",
+        );
 
         let mut detector = NonReentrantBeforeOthersDetector::default();
         let found = detector.detect(&context).unwrap();

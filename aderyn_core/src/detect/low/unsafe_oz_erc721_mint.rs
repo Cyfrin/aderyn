@@ -77,15 +77,14 @@ impl IssueDetector for UnsafeERC721MintDetector {
 
 #[cfg(test)]
 mod unsafe_erc721_mint_tests {
-    use crate::detect::{
-        detector::{detector_test_helpers::load_contract, IssueDetector},
-        low::UnsafeERC721MintDetector,
-    };
+    use crate::detect::{detector::IssueDetector, low::UnsafeERC721MintDetector};
+    use serial_test::serial;
 
     #[test]
-    fn test_unsafe_erc721_mint_detector() {
-        let context = load_contract(
-            "../tests/contract-playground/out/UnsafeERC721Mint.sol/UnsafeERC721Mint.json",
+    #[serial]
+    fn test_unsafe_erc721_mint_detector_by_loading_contract_directly() {
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/UnsafeERC721Mint.sol",
         );
 
         let mut detector = UnsafeERC721MintDetector::default();

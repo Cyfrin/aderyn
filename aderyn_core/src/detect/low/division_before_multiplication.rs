@@ -59,12 +59,12 @@ impl IssueDetector for DivisionBeforeMultiplicationDetector {
 #[cfg(test)]
 mod division_before_multiplication_detector_tests {
     use super::DivisionBeforeMultiplicationDetector;
-    use crate::detect::detector::{detector_test_helpers::load_contract, IssueDetector};
+    use crate::detect::detector::IssueDetector;
 
     #[test]
     fn test_template_detector() {
-        let context = load_contract(
-            "../tests/contract-playground/out/DivisionBeforeMultiplication.sol/DivisionBeforeMultiplication.json",
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/DivisionBeforeMultiplication.sol",
         );
 
         let mut detector = DivisionBeforeMultiplicationDetector::default();

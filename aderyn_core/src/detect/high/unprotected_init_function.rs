@@ -58,14 +58,17 @@ impl IssueDetector for UnprotectedInitializerDetector {
 
 #[cfg(test)]
 mod unprotected_initializer {
-    use crate::detect::detector::{detector_test_helpers::load_contract, IssueDetector};
+    use serial_test::serial;
+
+    use crate::detect::detector::IssueDetector;
 
     use super::UnprotectedInitializerDetector;
 
     #[test]
-    fn test_unprotected_initializer() {
-        let context = load_contract(
-            "../tests/contract-playground/out/UnprotectedInitialize.sol/InitializedContract.json",
+    #[serial]
+    fn test_unprotected_initializer_by_loading_contract_directly() {
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/UnprotectedInitialize.sol",
         );
 
         let mut detector = UnprotectedInitializerDetector::default();

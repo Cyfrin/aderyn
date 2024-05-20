@@ -258,14 +258,13 @@ static BYTES32_CASTING_MAP: phf::Map<&'static str, usize> = phf_map! {
 
 #[cfg(test)]
 mod unsafe_casting_detector_tests {
-    use crate::detect::{
-        detector::{detector_test_helpers::load_contract, IssueDetector},
-        high::UnsafeCastingDetector,
-    };
+    use crate::detect::{detector::IssueDetector, high::UnsafeCastingDetector};
 
     #[test]
     fn test_unsafe_casting_detector() {
-        let context = load_contract("../tests/contract-playground/out/Casting.sol/Casting.json");
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/Casting.sol",
+        );
 
         let mut detector = UnsafeCastingDetector::default();
         let found = detector.detect(&context).unwrap();
