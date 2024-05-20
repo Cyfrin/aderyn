@@ -17,7 +17,7 @@ use aderyn_driver::{
     driver::{self, Args},
 };
 
-use clap::{Parser, Subcommand};
+use clap::{ArgGroup, Parser, Subcommand};
 use notify_debouncer_full::{
     new_debouncer,
     notify::{RecursiveMode, Watcher},
@@ -27,6 +27,7 @@ use foundry_compilers::utils;
 
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
+#[command(group(ArgGroup::new("icf_dependent").requires("icf")))]
 pub struct CommandLineArgs {
     /// Foundry or Hardhat project root directory (or path to single solidity file)
     #[arg(default_value = ".")]
@@ -35,10 +36,6 @@ pub struct CommandLineArgs {
     /// Desired file path for the final report (will overwrite existing one)
     #[arg(short, long, default_value = "report.md")]
     output: String,
-
-    /// Path relative to project root, inside which solidity contracts will be analyzed
-    #[clap(long, use_value_delimiter = true)]
-    src: Option<Vec<String>>,
 
     /// List of path strings to include, delimited by comma (no spaces).
     /// Any solidity file path not containing these strings will be ignored
@@ -78,17 +75,21 @@ pub struct CommandLineArgs {
     #[arg(long)]
     skip_update_check: bool,
 
-    /// Watch for file changes and continuously generate report
-    #[arg(short, long)]
-    watch: bool,
-
     /// Run in Auditor mode, which only outputs manual audit helpers
     #[arg(long)]
     auditor_mode: bool,
 
     /// Use the newer version of aderyn (in beta)
-    #[arg(long)]
+    #[arg(long, name = "icf")]
     icf: bool,
+
+    /// Path relative to project root, inside which solidity contracts will be analyzed
+    #[clap(long, use_value_delimiter = true, group = "icf_dependent")]
+    src: Option<Vec<String>>,
+
+    /// Watch for file changes and continuously generate report
+    #[arg(short, long, group = "icf_dependent")]
+    watch: bool,
 }
 
 #[derive(Debug, Subcommand)]
