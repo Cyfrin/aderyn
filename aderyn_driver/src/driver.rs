@@ -12,7 +12,11 @@ use aderyn_core::{
     },
     run,
 };
-use std::{error::Error, path::PathBuf};
+use std::{
+    error::Error,
+    fs::read_dir,
+    path::{Path, PathBuf},
+};
 
 #[derive(Clone)]
 pub struct Args {
@@ -112,15 +116,24 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
     println!("Src - {:?}, Exclude - {:?}", src, exclude);
 
     let mut contexts: Vec<WorkspaceContext> = {
-        if !args.icf {
+        if args.icf {
+            process_auto::with_project_root_at(&root_path, &scope, &exclude, &src, &remappings)
+        } else {
+            if !is_foundry(&PathBuf::from(&args.root)) {
+                // Exit with a non-zero exit code
+                eprintln!("foundry.toml wasn't found in the project directory!");
+                eprintln!();
+                eprintln!("NOTE: \nAderyn will first run `forge build --ast` to ensure that the contract compiles correctly and the latest artifacts are available.");
+                eprintln!("If you are using Hardhat, consider shifting to `--icf` mode");
+                std::process::exit(1);
+            };
+
             vec![process_foundry::with_project_root_at(
                 &root_path,
                 &scope,
                 &exclude,
                 args.skip_build,
             )]
-        } else {
-            process_auto::with_project_root_at(&root_path, &scope, &exclude, &src, &remappings)
         }
     };
 
@@ -171,4 +184,26 @@ fn calculate_scope_exclude_and_src(
         args.src.clone(),
         None,
     ))
+}
+
+fn is_foundry(path: &Path) -> bool {
+    // Canonicalize the path
+    let canonical_path = path.canonicalize().expect("Failed to canonicalize path");
+
+    // Check if the directory exists
+    if !canonical_path.is_dir() {
+        return false;
+    }
+
+    // Read the contents of the directory
+    let entries = read_dir(&canonical_path).expect("Failed to read directory");
+
+    for entry in entries.flatten() {
+        let filename = entry.file_name();
+        if matches!(filename.to_str(), Some("foundry.toml")) {
+            return true;
+        }
+    }
+
+    false
 }
