@@ -1,4 +1,4 @@
-use foundry_compilers::{artifacts::Source, CompilerInput, Solc};
+use cyfrin_foundry_compilers::{artifacts::Source, CompilerInput, Solc};
 
 use std::{
     process::{Command, Stdio},

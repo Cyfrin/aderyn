@@ -7,7 +7,7 @@ mod project_compiler_grouping_tests {
     };
 
     use crate::{foundry_compiler_helpers::*, read_remappings};
-    use foundry_compilers::{utils, Graph, Solc};
+    use cyfrin_foundry_compilers::{utils, Graph, Solc};
 
     #[test]
     fn foundry_nft_f23() {
