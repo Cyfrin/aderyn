@@ -61,8 +61,8 @@ mod template_detector_tests {
 
     #[test]
     fn test_template_detector() {
-        let context = crate::detect::test_utils::load_contract(
-            "../tests/contract-playground/out/ArbitraryTransferFrom.sol/ArbitraryTransferFrom.json",
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/ArbitraryTransferFrom.sol",
         );
 
         let mut detector = TemplateDetector::default();

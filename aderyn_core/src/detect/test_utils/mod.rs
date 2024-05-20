@@ -1,12 +1,8 @@
-mod load_contract;
 mod load_source_unit;
 
 use foundry_compilers::utils;
 use once_cell::sync::Lazy;
 use std::path::PathBuf;
-
-// Traditional way of reading AST from foundry's output json file
-pub use load_contract::load_contract;
 
 // Using `solc` to read AST given a source unit (i.e Solidity file)
 pub use load_source_unit::load_solidity_source_unit;
