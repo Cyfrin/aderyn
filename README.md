@@ -173,7 +173,11 @@ If it is a Solidity file path, then Aderyn will create a temporary Foundry proje
 Help us build Aderyn 🦜 Please see our [contribution guidelines](./CONTRIBUTING.md).
 Aderyn is an open-source software licensed under the [MIT License](./LICENSE).
 
-To build Aderyn locally, [install Rust](https://www.rust-lang.org/tools/install), clone this repo, and use [`cargo`](https://doc.rust-lang.org/cargo/getting-started/first-steps.html) commands to build, test and run locally
+To build Aderyn locally:
+1. [Install Rust](https://www.rust-lang.org/tools/install),
+2. Clone this repo and `cd aderyn/`,
+3. `make`,
+4. Use [`cargo`](https://doc.rust-lang.org/cargo/getting-started/first-steps.html) commands to build, test and run locally.
 
 ## Credits
 
