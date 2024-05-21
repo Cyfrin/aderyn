@@ -189,16 +189,15 @@ mod zero_address_check_tests {
     use crate::{
         ast::NodeType,
         context::{browser::GetClosestAncestorOfTypeX, workspace_context::ASTNode},
-        detect::{
-            detector::{detector_test_helpers::load_contract, IssueDetector},
-            low::ZeroAddressCheckDetector,
-        },
+        detect::{detector::IssueDetector, low::ZeroAddressCheckDetector},
     };
+    use serial_test::serial;
 
     #[test]
-    fn test_deprecated_oz_functions_detector() {
-        let context = load_contract(
-            "../tests/contract-playground/out/ZeroAddressCheck.sol/ZeroAddressCheck.json",
+    #[serial]
+    fn test_deprecated_oz_functions_detector_by_loading_contract_directly() {
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/ZeroAddressCheck.sol",
         );
 
         let mut detector = ZeroAddressCheckDetector::default();

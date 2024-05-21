@@ -2,6 +2,7 @@ use std::{collections::BTreeMap, error::Error};
 
 use crate::{
     ast::NodeID,
+    capture,
     context::{
         browser::{
             GetImmediateChildren, GetNextSibling, GetPreviousSibling, SortNodeReferencesToSequence,
@@ -27,6 +28,7 @@ impl IssueDetector for SiblingDemonstrator {
                     assert!(sorted.len() >= 2);
                     assert!(sorted[1].previous_sibling(context).unwrap() == sorted[0]);
                     assert!(sorted[0].next_sibling(context).unwrap() == sorted[1]);
+                    capture!(self, context, sorted[1]);
                 }
             }
         }
@@ -57,18 +59,20 @@ impl IssueDetector for SiblingDemonstrator {
 
 #[cfg(test)]
 mod sibling_demo_tests {
-    use crate::detect::{
-        detector::{detector_test_helpers::load_contract, IssueDetector},
-        experimental::sibling::SiblingDemonstrator,
-    };
+
+    use crate::detect::{detector::IssueDetector, experimental::sibling::SiblingDemonstrator};
+
+    use serial_test::serial;
 
     #[test]
+    #[serial]
     fn test_siblings() {
-        let context = load_contract(
-            "../tests/contract-playground/out/StorageConditionals.sol/StorageConditionals.json",
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/StorageConditionals.sol",
         );
 
         let mut detector = SiblingDemonstrator::default();
         let _ = detector.detect(&context).unwrap();
+        assert_eq!(detector.instances().len(), 1);
     }
 }

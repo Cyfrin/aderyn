@@ -13,3 +13,12 @@
 [submodule "bot/foundry_workspace/lib/forge-std"]
 	path = bot/foundry_workspace/lib/forge-std
 	url = https://github.com/foundry-rs/forge-std
+[submodule "tests/foundry-nft-f23/lib/forge-std"]
+	path = tests/foundry-nft-f23/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
+[submodule "tests/foundry-nft-f23/lib/openzeppelin-contracts"]
+	path = tests/foundry-nft-f23/lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts
+[submodule "tests/ccip-contracts"]
+	path = tests/ccip-contracts
+	url = https://github.com/smartcontractkit/ccip

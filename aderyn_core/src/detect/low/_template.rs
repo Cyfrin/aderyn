@@ -57,15 +57,12 @@ impl IssueDetector for TemplateDetector {
 
 #[cfg(test)]
 mod template_detector_tests {
-    use crate::detect::{
-        detector::{detector_test_helpers::load_contract, IssueDetector},
-        low::template_detector::TemplateDetector,
-    };
+    use crate::detect::{detector::IssueDetector, low::template_detector::TemplateDetector};
 
     #[test]
     fn test_template_detector() {
-        let context = load_contract(
-            "../tests/contract-playground/out/ArbitraryTransferFrom.sol/ArbitraryTransferFrom.json",
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/ArbitraryTransferFrom.sol",
         );
 
         let mut detector = TemplateDetector::default();

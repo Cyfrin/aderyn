@@ -10,6 +10,7 @@ fn main() {
         let args = driver::Args {
             root,
             output,
+            src: None,                // TODO support this later
             no_snippets: false,       // TODO support this later
             skip_build: false,        // TODO support this later
             skip_cloc: false,         // TODO support this later
@@ -18,6 +19,7 @@ fn main() {
             stdout: false,            // TODO support this later
             skip_update_check: false, // TODO support this later
             auditor_mode: false,      // TODO support this later
+            icf: false,               // TODO support this later
         };
         driver::drive(args);
     }

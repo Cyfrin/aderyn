@@ -1,6 +1,6 @@
 [package]
 name = "aderyn_core"
-version = "0.0.26"
+version = "0.0.27"
 edition = "2021"
 authors = ["Alex Roan <alex@cyfrin.io>"]
 description = "Rust based Solidity AST analyzer backend"
@@ -11,18 +11,20 @@ license = "MIT"
 [dependencies]
 crossbeam = "0.8.2"
 crossbeam-channel = "0.5.9"
-eyre = "0.6.8"
+eyre = "0.6.12"
 ignore = "0.4.21"
 phf = {version = "0.11.2", features = ["macros"]}
 prettytable = "0.10.0"
 rayon = "1.8.0"
 semver = "1.0.20"
 serde = { version = "1.0.160", features = ["derive"] }
+serde_json = { version = "1.0.96", features = ["preserve_order"] }
 serde-sarif = "0.4.2"
-serde_json = "1.0.96"
 serde_repr = "0.1.12"
 strum = { version = "0.26", features = ["derive"] }
 toml = "0.8.2"
+cyfrin-foundry-compilers = { version = "0.3.20-aderyn", features = ["svm-solc"]  }
 
 [dev-dependencies]
 serial_test = "3.0.0"
+once_cell = "1.19.0"

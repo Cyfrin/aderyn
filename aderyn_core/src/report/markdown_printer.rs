@@ -7,7 +7,8 @@ use std::{
 };
 
 use super::{
-    printer::ReportPrinter, reporter::Report, util::carve_shortest_path, Issue, IssueBody,
+    printer::ReportPrinter, reporter::Report, util::carve_shortest_path, FilesDetails,
+    FilesSummary, Issue, IssueBody,
 };
 
 pub struct MarkdownReportPrinter;
@@ -17,7 +18,7 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
         &self,
         mut writer: W,
         report: &Report,
-        context: &WorkspaceContext,
+        contexts: &[WorkspaceContext],
         root_path: PathBuf,
         output_rel_path: Option<String>,
         no_snippets: bool,
@@ -26,7 +27,7 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
     ) -> Result<()> {
         self.print_title_and_disclaimer(&mut writer)?;
         self.print_table_of_contents(&mut writer, report)?;
-        self.print_contract_summary(&mut writer, report, context)?;
+        self.print_contract_summary(&mut writer, report, contexts)?;
 
         let output_rel_path = output_rel_path.unwrap();
 
@@ -85,14 +86,24 @@ impl MarkdownReportPrinter {
         &self,
         mut writer: W,
         report: &Report,
-        context: &WorkspaceContext,
+        contexts: &[WorkspaceContext],
     ) -> Result<()> {
+        let mut all_files_details = FilesDetails::default();
+        for context in contexts {
+            all_files_details = all_files_details + &context.files_details();
+        }
+
+        let mut all_files_summary = FilesSummary::default();
+        for details in &all_files_details.files_details {
+            all_files_summary.total_sloc += details.n_sloc;
+            all_files_summary.total_source_units += 1;
+        }
+
         writeln!(writer, "# Summary\n")?;
 
         // Files Summary
         {
             writeln!(writer, "## Files Summary\n")?;
-            let files_summary = context.files_summary();
 
             // Start the markdown table
             writeln!(writer, "| Key | Value |")?;
@@ -100,9 +111,9 @@ impl MarkdownReportPrinter {
             writeln!(
                 writer,
                 "| .sol Files | {} |",
-                files_summary.total_source_units
+                all_files_summary.total_source_units
             )?;
-            writeln!(writer, "| Total nSLOC | {} |", files_summary.total_sloc)?;
+            writeln!(writer, "| Total nSLOC | {} |", all_files_summary.total_sloc)?;
 
             writeln!(writer, "\n")?; // Add an extra newline for spacing
         }
@@ -115,7 +126,10 @@ impl MarkdownReportPrinter {
             writeln!(writer, "| Filepath | nSLOC |")?;
             writeln!(writer, "| --- | --- |")?;
 
-            let files_details = context.files_details();
+            let mut files_details = all_files_details;
+            files_details
+                .files_details
+                .sort_by(|a, b| a.file_path.cmp(&b.file_path));
 
             files_details.files_details.iter().for_each(|detail| {
                 writeln!(writer, "| {} | {} |", detail.file_path, detail.n_sloc).unwrap();
@@ -124,7 +138,7 @@ impl MarkdownReportPrinter {
             writeln!(
                 writer,
                 "| **Total** | **{}** |",
-                context.files_summary().total_sloc
+                all_files_summary.total_sloc
             )?;
             writeln!(writer, "\n")?; // Add an extra newline for spacing
         }
@@ -205,6 +219,11 @@ impl MarkdownReportPrinter {
             params.severity, params.number, params.issue_body.title, params.issue_body.description
         )?;
         let mut line_nos_printed: HashSet<(String, usize)> = HashSet::new();
+        writeln!(
+            writer,
+            "<details><summary>{} Found Instances</summary>\n\n",
+            &params.issue_body.instances.len()
+        )?;
         for instance in &params.issue_body.instances {
             // If this line number has already been printed for this issue, skip it
             // This occurs when multiple instances of the same issue are found on the same line.
@@ -219,6 +238,9 @@ impl MarkdownReportPrinter {
                 if is_file {
                     String::from(params.root_path.to_str().unwrap())
                 } else {
+                    // dbg!(&instance.contract_path.clone());
+                    // String::from("/".to_string() + &instance.contract_path.clone())
+
                     String::from(
                         params
                             .root_path
@@ -248,6 +270,9 @@ impl MarkdownReportPrinter {
                 continue;
             }
 
+            // dbg!(&params.root_path);
+            // dbg!(&instance.contract_path.clone());
+            // dbg!(&path);
             let line = std::fs::read_to_string(&path).unwrap();
 
             let line_preview = line
@@ -272,6 +297,7 @@ impl MarkdownReportPrinter {
                 line_preview,
             )?;
         }
+        writeln!(writer, "</details>\n")?;
         line_nos_printed.clear();
         writeln!(writer, "\n")?; // Add an extra newline for spacing
         Ok(())

@@ -1,4 +1,7 @@
-use std::collections::{BTreeMap, HashSet};
+use std::{
+    collections::{BTreeMap, HashSet},
+    ops::Add,
+};
 
 use serde::Serialize;
 
@@ -22,18 +25,34 @@ pub struct Issue {
     pub instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Default)]
 pub struct FilesSummary {
     total_source_units: usize,
     total_sloc: usize,
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Default)]
 pub struct FilesDetails {
     files_details: Vec<FilesDetail>,
 }
 
-#[derive(Serialize)]
+impl Add<&FilesDetails> for FilesDetails {
+    type Output = FilesDetails;
+    fn add(mut self, rhs: &FilesDetails) -> Self::Output {
+        for fd in &rhs.files_details {
+            if self
+                .files_details
+                .iter()
+                .all(|x| x.file_path != fd.file_path)
+            {
+                self.files_details.push(fd.clone());
+            }
+        }
+        self
+    }
+}
+
+#[derive(Serialize, Clone)]
 pub struct FilesDetail {
     file_path: String,
     n_sloc: usize,
@@ -45,7 +64,7 @@ pub struct IssueCount {
     low: usize,
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Debug)]
 pub struct IssueInstance {
     contract_path: String,
     line_no: usize,
@@ -95,13 +114,6 @@ pub fn extract_issue_bodies(issues: &[Issue]) -> Vec<IssueBody> {
 }
 
 impl WorkspaceContext {
-    pub fn files_summary(&self) -> FilesSummary {
-        FilesSummary {
-            total_source_units: self.src_filepaths.len(),
-            total_sloc: self.sloc_stats.iter().fold(0, |acc, x| acc + *x.1),
-        }
-    }
-
     pub fn files_details(&self) -> FilesDetails {
         let sloc_stats = &self.sloc_stats;
 
