@@ -21,6 +21,7 @@ pub fn derive_from_foundry_toml(
 
     let remappings = config
         .get_all_remappings()
+        .iter()
         .map(|x| x.to_string())
         .collect::<Vec<_>>();
 
