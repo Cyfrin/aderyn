@@ -13,6 +13,7 @@ use clap::{ArgGroup, Parser, Subcommand};
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 #[command(group(ArgGroup::new("icf_dependent").requires("icf")))]
+#[command(group(ArgGroup::new("stdout_dependent").requires("stdout")))]
 pub struct CommandLineArgs {
     /// Foundry or Hardhat project root directory (or path to single solidity file)
     #[arg(default_value = ".")]
@@ -37,7 +38,7 @@ pub struct CommandLineArgs {
     no_snippets: bool,
 
     /// Print the output to stdout instead of a file
-    #[arg(long)]
+    #[arg(long, name = "stdout")]
     stdout: bool,
 
     /// Print every detector available
@@ -69,7 +70,7 @@ pub struct CommandLineArgs {
     src: Option<Vec<String>>,
 
     /// Watch for file changes and continuously generate report
-    #[arg(short, long, group = "icf_dependent")]
+    #[arg(short, long, group = "icf_dependent", group = "stdout_dependent")]
     watch: bool,
 }
 
