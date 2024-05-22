@@ -1341,6 +1341,11 @@
             "src": "589:7"
           },
           {
+            "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
+            "line_no": 56,
+            "src": "1403:7"
+          },
+          {
             "contract_path": "src/cloc/HeavilyCommentedContract.sol",
             "line_no": 35,
             "src": "598:7"
