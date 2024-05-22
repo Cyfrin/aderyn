@@ -87,7 +87,7 @@ impl AuditorDetector for PublicFunctionsNoSenderChecksDetector {
     }
 
     fn table_titles(&self) -> Row {
-        row!["Contract", "Function Name", "Function Kind"]
+        row!["Contract", "Function Kind", "Function Name"]
     }
 
     fn table_rows(&self) -> Vec<Row> {
