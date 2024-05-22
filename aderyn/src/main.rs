@@ -132,7 +132,7 @@ fn main() {
         skip_update_check: cmd_args.skip_update_check,
         stdout: cmd_args.stdout,
         auditor_mode: cmd_args.auditor_mode,
-        icf: cmd_args.icf,
+        icf: cmd_args.icf || cmd_args.auditor_mode, // If auditor mode engaged, engage ICF
     };
 
     let aderyn_config_path = match cmd_args.config_file {
