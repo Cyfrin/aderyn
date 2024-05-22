@@ -19,10 +19,10 @@ use crate::ensure_valid_root_path;
 
 pub fn with_project_root_at(
     root_path: &Path,
-    scope: &Option<Vec<String>>,
-    exclude: &Option<Vec<String>>,
     src: &Option<Vec<String>>,
+    exclude: &Option<Vec<String>>,
     remappings: &Option<Vec<String>>,
+    scope: &Option<Vec<String>>,
 ) -> Vec<WorkspaceContext> {
     let root = utils::canonicalize(root_path).unwrap();
     let src = src.clone().map(|sources| {

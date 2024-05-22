@@ -111,13 +111,14 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
     let root_path = PathBuf::from(&args.root);
     let absolute_root_path = &ensure_valid_root_path(&root_path);
 
-    let (scope, exclude, src, remappings) = calculate_scope_exclude_and_src(args).unwrap();
+    let (src, exclude, remappings) = construct_src_exclude_remappings(args).unwrap();
+    let scope = args.scope.clone();
 
     println!("Src - {:?}, Exclude - {:?}", src, exclude);
 
     let mut contexts: Vec<WorkspaceContext> = {
         if args.icf {
-            process_auto::with_project_root_at(&root_path, &scope, &exclude, &src, &remappings)
+            process_auto::with_project_root_at(&root_path, &src, &exclude, &remappings, &scope)
         } else {
             if !is_foundry(&PathBuf::from(&args.root)) {
                 // Exit with a non-zero exit code
@@ -154,13 +155,12 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
 }
 
 #[allow(clippy::type_complexity)]
-fn calculate_scope_exclude_and_src(
+fn construct_src_exclude_remappings(
     args: &Args,
 ) -> Result<
     (
-        Option<Vec<String>>, // Scope
-        Option<Vec<String>>, // Exclude
         Option<Vec<String>>, // Src
+        Option<Vec<String>>, // Exclude
         Option<Vec<String>>, // Remappings
     ),
     Box<dyn Error>,
@@ -172,18 +172,12 @@ fn calculate_scope_exclude_and_src(
             // If it is a foundry project, we auto fill scope, exclude, src from foundry.toml
             return Ok(derive_from_foundry_toml(
                 &root_path,
-                &args.scope,
-                &args.exclude,
                 &args.src,
+                &args.exclude,
             ));
         }
     }
-    Ok((
-        args.scope.clone(),
-        args.exclude.clone(),
-        args.src.clone(),
-        None,
-    ))
+    Ok((args.src.clone(), args.exclude.clone(), None))
 }
 
 fn is_foundry(path: &Path) -> bool {
