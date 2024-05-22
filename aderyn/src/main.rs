@@ -102,7 +102,7 @@ fn main() {
         return;
     }
 
-    let args: Args = Args {
+    let mut args: Args = Args {
         root: cmd_args.root,
         output: cmd_args.output,
         src: cmd_args.src,
@@ -117,11 +117,12 @@ fn main() {
         icf: cmd_args.icf || cmd_args.auditor_mode, // If auditor mode engaged, engage ICF
     };
 
-    // Run it once, for the first time
-    driver::drive(args.clone());
-
-    // Then run only if file change events are observed
+    // Run watcher is watch mode is engaged
     if cmd_args.watch {
+        // Default to JSON
+        args.output = "report.json".to_string();
+        // Run it once, for the first time
+        driver::drive(args.clone());
         println!("INFO: Aderyn is entering watch mode !");
 
         debounce_and_run(
@@ -131,8 +132,12 @@ fn main() {
             &args,
             Duration::from_millis(50),
         );
+    } else {
+        // Run it once
+        driver::drive(args.clone());
     }
 
+    // Check for updates
     if !cmd_args.skip_update_check {
         if let Ok(yes) = aderyn_is_currently_running_newest_version() {
             if !yes {
