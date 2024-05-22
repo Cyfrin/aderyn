@@ -18,6 +18,7 @@ use aderyn_driver::{
 };
 
 use clap::{ArgGroup, Parser, Subcommand};
+
 use notify_debouncer_full::{
     new_debouncer,
     notify::{RecursiveMode, Watcher},
@@ -54,10 +55,6 @@ pub struct CommandLineArgs {
     /// Print the output to stdout instead of a file
     #[arg(long)]
     stdout: bool,
-
-    /// Path to aderyn.config.json
-    #[arg(short, long)]
-    config_file: Option<String>,
 
     /// Print every detector available
     #[clap(subcommand, name = "registry")]
@@ -135,156 +132,20 @@ fn main() {
         icf: cmd_args.icf || cmd_args.auditor_mode, // If auditor mode engaged, engage ICF
     };
 
-    let aderyn_config_path = match cmd_args.config_file {
-        Some(f) => PathBuf::from(f),
-        None => {
-            let mut project_config_json = PathBuf::from(&args.root);
-            project_config_json.push("aderyn.config.json");
-            project_config_json
-        }
-    };
+    // Run it once, for the first time
+    driver::drive(args.clone());
 
-    if aderyn_config_path.exists() && aderyn_config_path.is_file() {
-        let config_contents = std::fs::read_to_string(&aderyn_config_path).unwrap();
-        let aderyn_config: Result<AderynConfig, _> = serde_json::from_str(&config_contents);
-        match aderyn_config {
-            Ok(config) => {
-                let all_detector_names = get_all_detectors_names();
-                let mut detector_names = Vec::new();
-                let mut subscriptions: Vec<Box<dyn IssueDetector>> = vec![];
-                let mut scope_lines: Option<Vec<String>> = args.scope.clone();
-                match config.detectors {
-                    Some(config_detectors) => {
-                        for detector_name in &config_detectors {
-                            detector_names.push(detector_name.clone());
-                            if !all_detector_names.contains(&detector_name.to_string()) {
-                                println!(
-                                            "Couldn't recognize detector with name {} in aderyn.config.json",
-                                            detector_name
-                                        );
-                                return;
-                            }
-                            let det = get_issue_detector_by_name(detector_name);
-                            subscriptions.push(det);
-                        }
-                    }
-                    None => {
-                        subscriptions.extend(get_all_issue_detectors());
-                        detector_names.extend(all_detector_names);
-                    }
-                }
+    // Then run only if file change events are observed
+    if cmd_args.watch {
+        println!("INFO: Aderyn is entering watch mode !");
 
-                let mut altered_by_scope_in_config = false;
-
-                if let Some(scope_in_config) = config.scope {
-                    let mut found_scope_lines = vec![];
-                    for scope_line in scope_in_config {
-                        found_scope_lines.push(scope_line.to_string());
-                    }
-                    if scope_lines.is_none() {
-                        // CLI should override aderyn.config.json if present
-                        scope_lines = Some(found_scope_lines);
-                        altered_by_scope_in_config = true
-                    }
-                }
-
-                if let Some(scope_file) = config.scope_file {
-                    let mut scope_file_path = aderyn_config_path.clone();
-                    scope_file_path.pop();
-                    scope_file_path.push(PathBuf::from(scope_file));
-
-                    let canonicalized_scope_file_path = utils::canonicalize(&scope_file_path);
-                    match canonicalized_scope_file_path {
-                        Ok(ok_scope_file_path) => {
-                            assert!(ok_scope_file_path.exists());
-                            let scope_lines_in_file =
-                                std::fs::read_to_string(ok_scope_file_path).unwrap();
-                            let mut found_scope_lines = vec![];
-                            for scope_line in scope_lines_in_file.lines() {
-                                found_scope_lines.push(scope_line.to_string());
-                            }
-                            if scope_lines.is_none() || altered_by_scope_in_config {
-                                // CLI should override aderyn.config.json if present
-                                if scope_lines.is_none() {
-                                    scope_lines = Some(found_scope_lines);
-                                } else {
-                                    let mut added_to_existing = scope_lines.unwrap();
-                                    added_to_existing.extend(found_scope_lines);
-                                    scope_lines = Some(added_to_existing);
-                                }
-                            }
-                        }
-                        Err(_e) => {
-                            println!(
-                                "Scope file doesn't exist at {:?}",
-                                Path::new(&scope_file_path).as_os_str()
-                            );
-                            return;
-                        }
-                    }
-                }
-
-                let new_args: Args = Args {
-                    root: args.root,
-                    output: args.output,
-                    src: args.src,
-                    scope: scope_lines,
-                    exclude: args.exclude,
-                    no_snippets: args.no_snippets,
-                    skip_build: args.skip_build,
-                    skip_cloc: args.skip_cloc,
-                    skip_update_check: args.skip_update_check,
-                    stdout: args.stdout,
-                    auditor_mode: args.auditor_mode,
-                    icf: args.icf,
-                };
-                if cmd_args.watch {
-                    println!("INFO: Aderyn is entering watch mode !");
-
-                    let mut subscriptions: Vec<Box<dyn IssueDetector>> = vec![];
-                    for detector in &detector_names {
-                        subscriptions.push(get_issue_detector_by_name(detector));
-                    }
-
-                    driver::drive_with(new_args.clone(), subscriptions);
-
-                    debounce_and_run(
-                        || {
-                            // Run it once, for the first time
-                            let mut subscriptions: Vec<Box<dyn IssueDetector>> = vec![];
-                            for detector in &detector_names {
-                                subscriptions.push(get_issue_detector_by_name(detector));
-                            }
-
-                            driver::drive_with(new_args.clone(), subscriptions);
-                        },
-                        &new_args,
-                        Duration::from_millis(50),
-                    );
-                } else {
-                    driver::drive_with(new_args, subscriptions);
-                }
-            }
-            Err(_e) => {
-                println!("aderyn.config.json wasn't formatted properly! {:?}", _e);
-            }
-        }
-    } else {
-        // Run it once, for the first time
-        driver::drive(args.clone());
-
-        // Then run only if file change events are observed
-        if cmd_args.watch {
-            println!("INFO: Aderyn is entering watch mode !");
-
-            debounce_and_run(
-                || {
-                    driver::drive(args.clone());
-                },
-                &args,
-                Duration::from_millis(50),
-            );
-        }
+        debounce_and_run(
+            || {
+                driver::drive(args.clone());
+            },
+            &args,
+            Duration::from_millis(50),
+        );
     }
 
     if !cmd_args.skip_update_check {
@@ -327,21 +188,6 @@ where
         }
         println!();
     }
-}
-
-#[derive(Deserialize, Clone)]
-struct AderynConfig {
-    /// Detector names separated by commas
-    #[serde(rename = "use_detectors")]
-    detectors: Option<Vec<String>>,
-
-    /// Path to scope file relative to config file
-    #[serde(rename = "scope_file")]
-    scope_file: Option<String>,
-
-    /// List scope as array
-    #[serde(rename = "scope")]
-    scope: Option<Vec<String>>,
 }
 
 fn print_detail_view(detector_name: &str) {

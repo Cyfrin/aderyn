@@ -5,9 +5,6 @@
 # Basic report.md 
 cargo run --  --scope src/ --exclude lib/ ./tests/contract-playground -o ./reports/report.md --skip-update-check --icf &
 
-# Create report-config.md based on config file
-cargo run -- --config-file ./tests/aderyn.config.json --exclude lib/ -o ./reports/report-config.md ./tests/contract-playground/ --skip-update-check --icf &
-
 # Adhoc sol files report.md 
 cargo run --  ./tests/adhoc-sol-files -o ./reports/adhoc-sol-files-report.md --skip-update-check --icf &
 
@@ -26,9 +23,6 @@ FOUNDRY_PROFILE=uniswap cargo run tests/contract-playground/ -o ./reports/uniswa
 
 # Basic report.json
 cargo run -- --scope src/ --exclude lib/ -o ./reports/report.json ./tests/contract-playground --skip-update-check --icf &
-
-# Create report-config.json based on config file
-cargo run -- --config-file ./tests/aderyn.config.json --exclude lib/ -o ./reports/report-config.json ./tests/contract-playground/ --skip-update-check --icf &
 
 ##### SARIF REPORTS ########
 
