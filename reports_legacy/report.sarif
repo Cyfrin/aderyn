@@ -1382,6 +1382,39 @@
                   "charOffset": 4381
                 }
               }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/eth2/DepositContract.sol"
+                },
+                "region": {
+                  "charLength": 21,
+                  "charOffset": 5672
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/eth2/DepositContract.sol"
+                },
+                "region": {
+                  "charLength": 21,
+                  "charOffset": 5833
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/eth2/DepositContract.sol"
+                },
+                "region": {
+                  "charLength": 22,
+                  "charOffset": 6855
+                }
+              }
             }
           ],
           "message": {
@@ -1455,6 +1488,50 @@
                 "region": {
                   "charLength": 9,
                   "charOffset": 250
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
+                },
+                "region": {
+                  "charLength": 7,
+                  "charOffset": 322
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
+                },
+                "region": {
+                  "charLength": 9,
+                  "charOffset": 396
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
+                },
+                "region": {
+                  "charLength": 13,
+                  "charOffset": 975
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
+                },
+                "region": {
+                  "charLength": 14,
+                  "charOffset": 1108
                 }
               }
             },
@@ -1536,37 +1613,6 @@
             "text": "The `ecrecover` function is susceptible to signature malleability. This means that the same message can be signed in multiple ways, allowing an attacker to change the message signature without invalidating it. This can lead to unexpected behavior in smart contracts, such as the loss of funds or the ability to bypass access control. Consider using OpenZeppelin's ECDSA library instead of the built-in function."
           },
           "ruleId": "ecrecover"
-        },
-        {
-          "level": "note",
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/DeprecatedOZFunctions.sol"
-                },
-                "region": {
-                  "charLength": 10,
-                  "charOffset": 737
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/DeprecatedOZFunctions.sol"
-                },
-                "region": {
-                  "charLength": 17,
-                  "charOffset": 898
-                }
-              }
-            }
-          ],
-          "message": {
-            "text": "Openzeppelin has deprecated several functions and replaced with newer versions. Please consult https://docs.openzeppelin.com/"
-          },
-          "ruleId": "deprecated-oz-functions"
         },
         {
           "level": "note",
@@ -1936,6 +1982,72 @@
                 "region": {
                   "charLength": 25,
                   "charOffset": 2539
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
+                },
+                "region": {
+                  "charLength": 27,
+                  "charOffset": 475
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
+                },
+                "region": {
+                  "charLength": 28,
+                  "charOffset": 653
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
+                },
+                "region": {
+                  "charLength": 26,
+                  "charOffset": 1324
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
+                },
+                "region": {
+                  "charLength": 27,
+                  "charOffset": 1637
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
+                },
+                "region": {
+                  "charLength": 20,
+                  "charOffset": 2014
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
+                },
+                "region": {
+                  "charLength": 28,
+                  "charOffset": 2183
                 }
               }
             },
@@ -2740,17 +2852,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/AdminContract.sol"
-                },
-                "region": {
-                  "charLength": 23,
-                  "charOffset": 457
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/ContractWithTodo.sol"
                 },
                 "region": {
@@ -2773,77 +2874,55 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/EmptyBlocks.sol"
+                  "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
-                  "charLength": 12,
-                  "charOffset": 503
+                  "charLength": 11,
+                  "charOffset": 821
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/EmptyBlocks.sol"
+                  "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
-                  "charLength": 12,
-                  "charOffset": 599
+                  "charLength": 7,
+                  "charOffset": 989
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/EmptyBlocks.sol"
+                  "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
-                  "charLength": 12,
-                  "charOffset": 739
+                  "charLength": 26,
+                  "charOffset": 1149
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/EmptyBlocks.sol"
+                  "uri": "src/DivisionBeforeMultiplication.sol"
                 },
                 "region": {
-                  "charLength": 13,
-                  "charOffset": 888
+                  "charLength": 14,
+                  "charOffset": 135
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/EmptyBlocks.sol"
+                  "uri": "src/DivisionBeforeMultiplication.sol"
                 },
                 "region": {
-                  "charLength": 24,
-                  "charOffset": 946
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/EmptyBlocks.sol"
-                },
-                "region": {
-                  "charLength": 30,
-                  "charOffset": 1068
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/EmptyBlocks.sol"
-                },
-                "region": {
-                  "charLength": 41,
-                  "charOffset": 1219
+                  "charLength": 18,
+                  "charOffset": 254
                 }
               }
             },
@@ -2855,6 +2934,61 @@
                 "region": {
                   "charLength": 7,
                   "charOffset": 147
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
+                },
+                "region": {
+                  "charLength": 17,
+                  "charOffset": 367
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
+                },
+                "region": {
+                  "charLength": 25,
+                  "charOffset": 852
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
+                },
+                "region": {
+                  "charLength": 16,
+                  "charOffset": 1080
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
+                },
+                "region": {
+                  "charLength": 17,
+                  "charOffset": 1840
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
+                },
+                "region": {
+                  "charLength": 25,
+                  "charOffset": 2380
                 }
               }
             },
@@ -3316,6 +3450,17 @@
                 "region": {
                   "charLength": 150,
                   "charOffset": 416
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/eth2/DepositContract.sol"
+                },
+                "region": {
+                  "charLength": 178,
+                  "charOffset": 5010
                 }
               }
             }
