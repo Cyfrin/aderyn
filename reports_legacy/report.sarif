@@ -1382,39 +1382,6 @@
                   "charOffset": 4381
                 }
               }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/eth2/DepositContract.sol"
-                },
-                "region": {
-                  "charLength": 21,
-                  "charOffset": 5672
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/eth2/DepositContract.sol"
-                },
-                "region": {
-                  "charLength": 21,
-                  "charOffset": 5833
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/eth2/DepositContract.sol"
-                },
-                "region": {
-                  "charLength": 22,
-                  "charOffset": 6855
-                }
-              }
             }
           ],
           "message": {
@@ -1613,6 +1580,37 @@
             "text": "The `ecrecover` function is susceptible to signature malleability. This means that the same message can be signed in multiple ways, allowing an attacker to change the message signature without invalidating it. This can lead to unexpected behavior in smart contracts, such as the loss of funds or the ability to bypass access control. Consider using OpenZeppelin's ECDSA library instead of the built-in function."
           },
           "ruleId": "ecrecover"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DeprecatedOZFunctions.sol"
+                },
+                "region": {
+                  "charLength": 10,
+                  "charOffset": 737
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DeprecatedOZFunctions.sol"
+                },
+                "region": {
+                  "charLength": 17,
+                  "charOffset": 898
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Openzeppelin has deprecated several functions and replaced with newer versions. Please consult https://docs.openzeppelin.com/"
+          },
+          "ruleId": "deprecated-oz-functions"
         },
         {
           "level": "note",
@@ -2852,6 +2850,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/AdminContract.sol"
+                },
+                "region": {
+                  "charLength": 23,
+                  "charOffset": 457
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/ContractWithTodo.sol"
                 },
                 "region": {
@@ -2874,55 +2883,77 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/DeprecatedOZFunctions.sol"
+                  "uri": "src/EmptyBlocks.sol"
                 },
                 "region": {
-                  "charLength": 11,
-                  "charOffset": 821
+                  "charLength": 12,
+                  "charOffset": 503
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/DeprecatedOZFunctions.sol"
+                  "uri": "src/EmptyBlocks.sol"
                 },
                 "region": {
-                  "charLength": 7,
-                  "charOffset": 989
+                  "charLength": 12,
+                  "charOffset": 599
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/DeprecatedOZFunctions.sol"
+                  "uri": "src/EmptyBlocks.sol"
                 },
                 "region": {
-                  "charLength": 26,
-                  "charOffset": 1149
+                  "charLength": 12,
+                  "charOffset": 739
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/DivisionBeforeMultiplication.sol"
+                  "uri": "src/EmptyBlocks.sol"
                 },
                 "region": {
-                  "charLength": 14,
-                  "charOffset": 135
+                  "charLength": 13,
+                  "charOffset": 888
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/DivisionBeforeMultiplication.sol"
+                  "uri": "src/EmptyBlocks.sol"
                 },
                 "region": {
-                  "charLength": 18,
-                  "charOffset": 254
+                  "charLength": 24,
+                  "charOffset": 946
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/EmptyBlocks.sol"
+                },
+                "region": {
+                  "charLength": 30,
+                  "charOffset": 1068
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/EmptyBlocks.sol"
+                },
+                "region": {
+                  "charLength": 41,
+                  "charOffset": 1219
                 }
               }
             },
@@ -3450,17 +3481,6 @@
                 "region": {
                   "charLength": 150,
                   "charOffset": 416
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/eth2/DepositContract.sol"
-                },
-                "region": {
-                  "charLength": 178,
-                  "charOffset": 5010
                 }
               }
             }
