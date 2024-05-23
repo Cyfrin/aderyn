@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod project_compiler_grouping_tests {
     use std::{
-        path::PathBuf,
+        path::{Path, PathBuf},
         process::{Command, Stdio},
         str::FromStr,
     };
@@ -107,7 +107,7 @@ mod project_compiler_grouping_tests {
         solc_bin: &str,
         remappings: &Vec<String>,
         files: &Vec<PathBuf>,
-        root: &PathBuf,
+        root: &Path,
     ) {
         let mut command = String::new();
         command.push_str(solc_bin);
@@ -118,7 +118,9 @@ mod project_compiler_grouping_tests {
         for file in files {
             command.push_str(&format!(
                 "{} ",
-                file.strip_prefix(root.clone()).unwrap().to_string_lossy()
+                file.strip_prefix(root)
+                    .unwrap()
+                    .to_string_lossy()
             ));
         }
         eprintln!("{}", command);
