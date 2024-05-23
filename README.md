@@ -30,7 +30,7 @@
 [![Stargazers][stars-shield]][stars-url] [![Forks][forks-shield]][forks-url]
 [![Contributors][contributors-shield]][contributors-url]
 [![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
+[![AGPL-3.0 License][license-shield]][license-url]
 
 </div>
 
@@ -171,7 +171,7 @@ If it is a Solidity file path, then Aderyn will create a temporary Foundry proje
 ## Contributing & License
 
 Help us build Aderyn 🦜 Please see our [contribution guidelines](./CONTRIBUTING.md).
-Aderyn is an open-source software licensed under the [MIT License](./LICENSE).
+Aderyn is an open-source software licensed under the [AGPL-3.0 License](./LICENSE).
 
 To build Aderyn locally:
 1. [Install Rust](https://www.rust-lang.org/tools/install),
@@ -202,5 +202,5 @@ This project exists thanks to all the people who [contribute](/CONTRIBUTING.md).
 [issues-shield]: https://img.shields.io/github/issues/cyfrin/aderyn
 [issues-url]: https://github.com/cyfrin/aderyn/issues
 [license-shield]: https://img.shields.io/github/license/cyfrin/aderyn?logoColor=%23fff&color=blue
-[license-url]: https://github.com/cyfrin/aderyn/blob/master/LICENSE.txt
+[license-url]: https://github.com/cyfrin/aderyn/blob/master/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
