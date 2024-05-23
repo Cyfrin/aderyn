@@ -16,6 +16,7 @@ serde_json = { version = "1.0.96", features = ["preserve_order"] }
 serde = { version = "1.0.160", features = ["derive"] }
 serde_repr = "0.1.12"
 foundry-config = { version = "0.2.0" }
+toml = "0.8.13"
 
 [dev-dependencies]
 criterion = "0.5.1"

@@ -17,7 +17,7 @@ fn bench_individual_detectors_on_contract_playground(c: &mut Criterion) {
             b.iter(|| {
                 contexts.par_iter().for_each(|context| {
                     let mut d = detector.skeletal_clone();
-                    let _ = d.detect(&context).unwrap();
+                    let _ = d.detect(context).unwrap();
                 })
             })
         });

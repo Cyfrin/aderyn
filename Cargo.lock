@@ -71,6 +71,7 @@ dependencies = [
  "serde",
  "serde_json",
  "serde_repr",
+ "toml 0.8.13",
 ]
 
 [[package]]

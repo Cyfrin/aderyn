@@ -1,6 +1,6 @@
 use crate::{
-    ensure_valid_root_path, foundry_config_helpers::derive_from_foundry_toml, process_auto,
-    process_foundry,
+    config_helpers::{append_from_aderyn_toml, derive_from_foundry_toml},
+    ensure_valid_root_path, process_auto, process_foundry,
 };
 use aderyn_core::{
     context::workspace_context::WorkspaceContext,
@@ -111,10 +111,11 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
     let root_path = PathBuf::from(&args.root);
     let absolute_root_path = &ensure_valid_root_path(&root_path);
 
-    let (src, exclude, remappings) = construct_src_exclude_remappings(args).unwrap();
-    let scope = args.scope.clone();
-
-    println!("Src - {:?}, Exclude - {:?}", src, exclude);
+    let (src, exclude, remappings, scope) = construct_src_exclude_remappings_scope(args).unwrap();
+    println!(
+        "Src - {:?}, Scope - {:?}, Exclude - {:?}",
+        src, scope, exclude
+    );
 
     let mut contexts: Vec<WorkspaceContext> = {
         if args.icf {
@@ -155,29 +156,44 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
 }
 
 #[allow(clippy::type_complexity)]
-fn construct_src_exclude_remappings(
+fn construct_src_exclude_remappings_scope(
     args: &Args,
 ) -> Result<
     (
-        Option<Vec<String>>, // Src
-        Option<Vec<String>>, // Exclude
-        Option<Vec<String>>, // Remappings
+        Option<Vec<String>>,
+        Option<Vec<String>>,
+        Option<Vec<String>>,
+        Option<Vec<String>>,
     ),
     Box<dyn Error>,
 > {
     let root_path = PathBuf::from(&args.root);
-    for entry in std::fs::read_dir(&root_path)? {
-        let entry = entry?;
-        if entry.file_name() == "foundry.toml" {
-            // If it is a foundry project, we auto fill scope, exclude, src from foundry.toml
-            return Ok(derive_from_foundry_toml(
-                &root_path,
-                &args.src,
-                &args.exclude,
-            ));
-        }
+    let foundry_path = root_path.join("foundry.toml");
+    let aderyn_path = root_path.join("aderyn.toml");
+
+    let mut local_src = args.src.clone();
+    let mut local_exclude = args.exclude.clone();
+    let mut local_remappings = None;
+    let mut local_scope = args.scope.clone();
+
+    // Process foundry.toml if it exists
+    if foundry_path.exists() {
+        (local_src, local_exclude, local_remappings) =
+            derive_from_foundry_toml(&root_path, &args.src, &args.exclude);
     }
-    Ok((args.src.clone(), args.exclude.clone(), None))
+
+    // Process aderyn.toml if it exists
+    if aderyn_path.exists() {
+        (local_src, local_exclude, local_remappings, local_scope) = append_from_aderyn_toml(
+            &root_path,
+            &local_src,
+            &local_exclude,
+            &local_remappings,
+            &local_scope,
+        );
+    }
+
+    Ok((local_src, local_exclude, local_remappings, local_scope))
 }
 
 fn is_foundry(path: &Path) -> bool {
