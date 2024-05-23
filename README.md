@@ -202,5 +202,5 @@ This project exists thanks to all the people who [contribute](/CONTRIBUTING.md).
 [issues-shield]: https://img.shields.io/github/issues/cyfrin/aderyn
 [issues-url]: https://github.com/cyfrin/aderyn/issues
 [license-shield]: https://img.shields.io/github/license/cyfrin/aderyn?logoColor=%23fff&color=blue
-[license-url]: https://github.com/cyfrin/aderyn/blob/master/LICENSE.txt
+[license-url]: https://github.com/cyfrin/aderyn/blob/master/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
