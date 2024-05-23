@@ -118,9 +118,7 @@ mod project_compiler_grouping_tests {
         for file in files {
             command.push_str(&format!(
                 "{} ",
-                file.strip_prefix(root)
-                    .unwrap()
-                    .to_string_lossy()
+                file.strip_prefix(root).unwrap().to_string_lossy()
             ));
         }
         eprintln!("{}", command);
