@@ -1,0 +1,6 @@
+createMerkleLL.t.sol
+├── when the campaign name is too long
+│  └── it should revert
+└── when the campaign name is not too long
+   ├── it should create the campaign
+   └── it should emit a {CreateMerkleLL} event

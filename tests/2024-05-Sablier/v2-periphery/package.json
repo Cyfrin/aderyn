@@ -1,0 +1,77 @@
+{
+  "name": "@sablier/v2-periphery",
+  "description": "Peripheral smart contracts for interacting with Sablier V2",
+  "version": "1.1.1",
+  "author": {
+    "name": "Sablier Labs Ltd",
+    "url": "https://sablier.com"
+  },
+  "bugs": {
+    "url": "https://github.com/sablier-labs/v2-periphery/issues"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "5.0.2",
+    "@prb/math": "github:PaulRBerg/prb-math#16419e5686504e15f973ebe73c3a75bd618d6ca4",
+    "@sablier/v2-core": "github:sablier-labs/v2-core#staging"
+  },
+  "devDependencies": {
+    "@sphinx-labs/plugins": "^0.31.9",
+    "forge-std": "github:foundry-rs/forge-std#v1.8.1",
+    "prettier": "^2.8.8",
+    "solady": "0.0.129",
+    "solhint": "^4.0.0"
+  },
+  "files": [
+    "artifacts",
+    "precompiles",
+    "src",
+    "test/utils",
+    "CHANGELOG.md"
+  ],
+  "homepage": "https://github.com/sablier-labs/v2-periphery#readme",
+  "keywords": [
+    "airdrops",
+    "airstreams",
+    "asset-distribution",
+    "asset-streaming",
+    "blockchain",
+    "cryptoasset-streaming",
+    "cryptoassets",
+    "ethereum",
+    "foundry",
+    "money-streaming",
+    "real-time-finance",
+    "sablier",
+    "sablier-v2",
+    "smart-contracts",
+    "solidity",
+    "token-distribution",
+    "token-streaming",
+    "token-vesting",
+    "vesting",
+    "web3"
+  ],
+  "peerDependencies": {
+    "@sablier/v2-core": "github:sablier-labs/v2-core"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": "github:sablier-labs/v2-periphery",
+  "scripts": {
+    "build": "forge build",
+    "build:optimized": "FOUNDRY_PROFILE=optimized forge build",
+    "clean": "rm -rf artifacts broadcast cache docs out-optimized out",
+    "gas:report": "forge test --gas-report --no-match-test \"test(Fuzz)?_RevertWhen_\\w{1,}?\"",
+    "gas:snapshot": "forge snapshot --no-match-test \"test(Fuzz)?_RevertWhen_\\w{1,}?\"",
+    "gas:snapshot:optimized": "bun run build:optimized && FOUNDRY_PROFILE=test-optimized forge snapshot --no-match-test \"test(Fork)?(Fuzz)?_RevertWhen_\\w{1,}?\"",
+    "lint": "bun run lint:sol && bun run prettier:check",
+    "lint:sol": "forge fmt --check && bun solhint \"{precompiles,script,src,test}/**/*.sol\"",
+    "prepack": "bun install && bash ./shell/prepare-artifacts.sh",
+    "prettier:check": "prettier --check \"**/*.{json,md,yml}\"",
+    "prettier:write": "prettier --write \"**/*.{json,md,yml}\"",
+    "test": "forge test",
+    "test:lite": "FOUNDRY_PROFILE=lite forge test",
+    "test:optimized": "bun run build:optimized && FOUNDRY_PROFILE=test-optimized forge test"
+  }
+}

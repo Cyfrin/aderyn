@@ -1,0 +1,10 @@
+name: "Close stale issues and PRs"
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 3 * * 0" # at 3:00am UTC every Sunday
+
+jobs:
+  stale:
+    uses: "sablier-labs/reusable-workflows/.github/workflows/stale.yml@main"

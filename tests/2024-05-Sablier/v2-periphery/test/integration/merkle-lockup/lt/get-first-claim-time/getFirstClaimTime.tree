@@ -1,0 +1,5 @@
+getFirstClaimTime.t.sol
+├── when the first claim has not been made
+│   └── it should return 0
+└── when the first claim has been made
+    └── it should return the time of the first claim

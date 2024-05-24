@@ -1,0 +1,6 @@
+createWithTimestampsLD.t.sol
+├── when the batch size is zero
+│  └── it should revert
+└── when the batch size is not zero
+   ├── it should create a batch of streams with timestamps
+   └── it should perform the ERC-20 transfers

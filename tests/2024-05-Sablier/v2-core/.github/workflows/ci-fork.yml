@@ -1,0 +1,24 @@
+name: "CI Fork tests"
+
+on:
+    schedule:
+      - cron: "0 3 * * 1,3,5" # at 3:00 AM UTC on Monday, Wednesday and Friday
+
+jobs:
+  lint:
+    uses: "sablier-labs/reusable-workflows/.github/workflows/forge-lint.yml@main"
+
+  build:
+    uses: "sablier-labs/reusable-workflows/.github/workflows/forge-build.yml@main"
+
+  test-fork:
+      needs: ["lint", "build"]
+      secrets:
+        RPC_URL_MAINNET: ${{ secrets.RPC_URL_MAINNET }}
+      uses: "sablier-labs/reusable-workflows/.github/workflows/forge-test.yml@main"
+      with:
+        foundry-fuzz-runs: 100
+        foundry-profile: "test-optimized"
+        fuzz-seed: true
+        match-path: "test/fork/**/*.sol"
+        name: "Fork tests"

@@ -1,0 +1,72 @@
+[profile.default]
+  auto_detect_solc = false
+  block_timestamp = 1_714_518_000 # May 1, 2024 at 00:00 GMT
+  bytecode_hash = "none"
+  evm_version = "paris"
+  extra_output = ["storageLayout"]
+  fs_permissions = [
+    { access = "read", path = "./out" },
+    { access = "read", path = "./out-optimized" },
+    { access = "read", path = "package.json"},
+    { access = "read-write", path = "./cache" },
+  ]
+  gas_reports = [
+    "SablierV2BatchLockup",
+    "SablierV2MerkleLL",
+    "SablierV2MerkleLockupFactory",
+    "SablierV2MerkleLT",
+  ]
+  optimizer = true
+  optimizer_runs = 10_000
+  out = "out"
+  script = "script"
+  sender = "0x1804c8AB1F12E6bbf3894d4083f33e07309d1f38"
+  solc = "0.8.23"
+  src = "src"
+  test = "test"
+
+[profile.default.fuzz]
+  max_test_rejects = 1_000_000 # Number of times `vm.assume` can fail
+  runs = 20
+
+# Speed up compilation and tests during development
+[profile.lite]
+  optimizer = false
+
+# Compile only the production code with IR
+[profile.optimized]
+  out = "out-optimized"
+  test = "src"
+  via_ir = true
+
+# Test the optimized contracts without re-compiling them
+[profile.test-optimized]
+  src = "test"
+
+[doc]
+  ignore = ["**/*.t.sol"]
+  out = "docs"
+  repository = "https://github.com/sablier-labs/v2-periphery"
+
+[fmt]
+  bracket_spacing = true
+  int_types = "long"
+  line_length = 120
+  multiline_func_header = "all"
+  number_underscore = "thousands"
+  quote_style = "double"
+  tab_width = 4
+  wrap_comments = true
+
+[rpc_endpoints]
+  arbitrum = "https://arbitrum-mainnet.infura.io/v3/${API_KEY_INFURA}"
+  avalanche = "https://avalanche-mainnet.infura.io/v3/${API_KEY_INFURA}"
+  base = "https://mainnet.base.org"
+  bnb = "https://bsc-dataseed.binance.org"
+  ethereum = "${RPC_URL_MAINNET}"
+  gnosis = "https://rpc.gnosischain.com"
+  localhost = "http://localhost:8545"
+  mainnet = "${RPC_URL_MAINNET}"
+  optimism = "https://optimism-mainnet.infura.io/v3/${API_KEY_INFURA}"
+  polygon = "https://polygon-mainnet.infura.io/v3/${API_KEY_INFURA}"
+  sepolia = "https://sepolia.infura.io/v3/${API_KEY_INFURA}"

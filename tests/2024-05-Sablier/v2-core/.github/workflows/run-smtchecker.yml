@@ -1,0 +1,22 @@
+name: "Run SMTChecker"
+
+on: "workflow_dispatch"
+
+jobs:
+  run-smtchecker:
+    runs-on: "macos-latest"
+    steps:
+      - name: "Check out the repo"
+        uses: "actions/checkout@v4"
+
+      - name: "Install Foundry"
+        uses: "foundry-rs/foundry-toolchain@v1"
+
+      - name: "Run SMTChecker and pipe the output to a file"
+        run: "FOUNDRY_PROFILE=smt forge build > smtchecker-report.txt"
+
+      - name: "Store the report as an artifact"
+        uses: "actions/upload-artifact@v4"
+        with:
+          name: smtchecker-report
+          path: "smtchecker-report.txt"

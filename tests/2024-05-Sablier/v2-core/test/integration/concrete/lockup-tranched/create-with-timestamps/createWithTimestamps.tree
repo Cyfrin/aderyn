@@ -1,0 +1,56 @@
+createWithTimestamps.t.sol
+├── when delegate called
+│  └── it should revert
+└── when not delegate called
+   ├── when the recipient is the zero address
+   │  └── it should revert
+   └── when the recipient is not the zero address
+      ├── when the deposit amount is zero
+      │  └── it should revert
+      └── when the deposit amount is not zero
+         ├── when the start time is zero
+         │  └── it should revert
+         └── when the start time is not zero
+            ├── when the tranche count is zero
+            │  └── it should revert
+            └── when the tranche count is not zero
+               ├── when the tranche count is too high
+               │  └── it should revert
+               └── when the tranche count is not too high
+                  ├── when the tranche amounts sum overflows
+                  │  └── it should revert
+                  └── when the tranche amounts sum does not overflow
+                     ├── when the start time is greater than the first tranche timestamp
+                     │  └── it should revert
+                     ├── when the start time is equal to the first tranche timestamp
+                     │  └── it should revert
+                     └── when the start time is less than the first tranche timestamp
+                        ├── when the tranche timestamps are not ordered
+                        │  └── it should revert
+                        └── when the tranche timestamps are ordered
+                           ├── when the end time is not in the future
+                           │  └── it should revert
+                           └── when the end time is in the future
+                              ├── when the deposit amount is not equal to the tranche amounts sum
+                              │  └── it should revert
+                              └── when the deposit amount is equal to the tranche amounts sum
+                                 ├── when the broker fee is too high
+                                 │  └── it should revert
+                                 └── when the broker fee is not too high
+                                    ├── when the asset is not a contract
+                                    │  └── it should revert
+                                    └── when the asset is a contract
+                                       ├── when the asset misses the ERC-20 return value
+                                       │  ├── it should create the stream
+                                       │  ├── it should bump the next stream ID
+                                       │  ├── it should mint the NFT
+                                       │  ├── it should emit a {MetadataUpdate} event
+                                       │  ├── it should perform the ERC-20 transfers
+                                       │  └── it should emit a {CreateLockupTranchedStream} event
+                                       └── when the asset does not miss the ERC-20 return value
+                                          ├── it should create the stream
+                                          ├── it should bump the next stream ID
+                                          ├── it should mint the NFT
+                                          ├── it should emit a {MetadataUpdate} event
+                                          ├── it should perform the ERC-20 transfers
+                                          └── it should emit a {CreateLockupTranchedStream} event

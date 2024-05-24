@@ -1,0 +1,5 @@
+isStream.t.sol
+├── given the ID references a null stream
+│  └── it should return false
+└── given the ID does not reference a null stream
+   └── it should return true

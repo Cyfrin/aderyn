@@ -1,0 +1,9 @@
+withdrawableAmountOf.t.sol
+└── given the stream's status is "STREAMING"
+   ├── given the start time is in the present
+   │  └── it should return zero
+   └── given the start time is in the past
+      ├── given there are no previous withdrawals
+      │  └── it should return the correct withdrawable amount
+      └── given there are previous withdrawals
+         └── it should return the correct withdrawable amount

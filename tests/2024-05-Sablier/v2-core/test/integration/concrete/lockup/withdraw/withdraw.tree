@@ -1,0 +1,103 @@
+withdraw.t.sol
+├── when delegate called
+│  └── it should revert
+└── when not delegate called
+    ├── given the ID references a null stream
+    │  └── it should revert
+    └── given the ID does not reference a null stream
+       ├── given the stream's status is "DEPLETED"
+       │  └── it should revert
+       └── given the stream's status is not "DEPLETED"
+          ├── when the provided address is zero
+          │  └── it should revert
+          └── when the provided address is not zero
+             ├── when the withdraw amount is zero
+             │  └── it should revert
+             └── when the withdraw amount is not zero
+                ├── when the withdraw amount overdraws
+                │  └── it should revert
+                └── when the withdraw amount does not overdraw
+                   ├── when the withdrawal address is not the stream recipient
+                   │  ├── when the caller is unknown
+                   │  │  └── it should revert
+                   │  ├── when the caller is the sender
+                   │  │  └── it should revert
+                   │  ├── when the caller is a former recipient
+                   │  │  └── it should revert
+                   │  ├── when the caller is an approved third party
+                   │  │  ├── it should make the withdrawal
+                   │  │  └── it should update the withdrawn amount
+                   │  └── when the caller is the recipient
+                   │     ├── given the sender is not a contract
+                   │     │  ├── it should make the withdrawal
+                   │     │  └── it should update the withdrawn amount
+                   │     └── given the sender is a contract
+                   │        ├── given the sender does not implement the hook
+                   │        │  ├── it should make the withdrawal
+                   │        │  ├── it should update the withdrawn amount
+                   │        │  ├── it should call the sender hook
+                   │        │  └── it should ignore the revert
+                   │        └── given the sender implements the hook
+                   │           ├── when the sender reverts
+                   │           │  ├── it should make the withdrawal
+                   │           │  ├── it should update the withdrawn amount
+                   │           │  ├── it should call the sender hook
+                   │           │  └── it should ignore the revert
+                   │           └── when the sender does not revert
+                   │              ├── when there is reentrancy
+                   │              │  ├── it should make multiple withdrawals
+                   │              │  ├── it should update the withdrawn amounts
+                   │              │  └── it should call the sender hooks
+                   │              └── when there is no reentrancy
+                   │                 ├── it should make the withdrawal
+                   │                 ├── it should update the withdrawn amount
+                   │                 ├── it should call the sender hook
+                   │                 ├── it should emit a {MetadataUpdate} event
+                   │                 └── it should emit a {WithdrawFromLockupStream} event
+                   └── when the withdrawal address is the stream recipient
+                      ├── when the caller is unknown
+                      │  ├── it should make the withdrawal
+                      │  └── it should update the withdrawn amount
+                      ├── when the caller is the recipient
+                      │  ├── it should make the withdrawal
+                      │  └── it should update the withdrawn amount
+                      └── when the caller is the sender
+                         ├── given the end time is not in the future
+                         │  ├── it should make the withdrawal
+                         │  ├── it should mark the stream as depleted
+                         │  └── it should make the stream not cancelable
+                         └── given the end time is in the future
+                            ├── given the stream has been canceled
+                            │  ├── it should make the withdrawal
+                            │  ├── it should mark the stream as depleted
+                            │  ├── it should update the withdrawn amount
+                            │  ├── it should call the recipient hook
+                            │  ├── it should emit a {MetadataUpdate} event
+                            │  └── it should emit a {WithdrawFromLockupStream} event
+                            └── given the stream has not been canceled
+                               ├── given the recipient is not a contract
+                               │  └── it should make the withdrawal
+                               │  └── it should update the withdrawn amount
+                               └── given the recipient is a contract
+                                  ├── given the recipient does not implement the hook
+                                  │  ├── it should make the withdrawal
+                                  │  ├── it should update the withdrawn amount
+                                  │  ├── it should call the recipient hook
+                                  │  └── it should ignore the revert
+                                  └── given the recipient implements the hook
+                                     ├── when the recipient reverts
+                                     │  ├── it should make the withdrawal
+                                     │  ├── it should update the withdrawn amount
+                                     │  ├── it should call the recipient hook
+                                     │  └── it should ignore the revert
+                                     └── when the recipient does not revert
+                                        ├── when there is reentrancy
+                                        │  ├── it should make multiple withdrawals
+                                        │  ├── it should update the withdrawn amounts
+                                        │  └── it should call the recipient hooks
+                                        └── when there is no reentrancy
+                                           ├── it should make the withdrawal
+                                           ├── it should update the withdrawn amount
+                                           ├── it should call the recipient hook
+                                           ├── it should emit a {MetadataUpdate} event
+                                           └── it should emit a {WithdrawFromLockupStream} event

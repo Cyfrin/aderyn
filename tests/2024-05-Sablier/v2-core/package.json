@@ -1,0 +1,78 @@
+{
+  "name": "@sablier/v2-core",
+  "description": "Core smart contracts of the Sablier V2 token distribution protocol",
+  "license": "BUSL-1.1",
+  "version": "1.1.2",
+  "author": {
+    "name": "Sablier Labs Ltd",
+    "url": "https://sablier.com"
+  },
+  "bugs": {
+    "url": "https://github.com/sablier-labs/v2-core/issues"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "5.0.2",
+    "@prb/math": "github:PaulRBerg/prb-math#16419e5"
+  },
+  "devDependencies": {
+    "@sphinx-labs/plugins": "^0.31.9",
+    "forge-std": "github:foundry-rs/forge-std#v1.8.1",
+    "prettier": "^2.8.8",
+    "solady": "0.0.129",
+    "solarray": "github:evmcheb/solarray#a547630",
+    "solhint": "^4.0.0"
+  },
+  "files": [
+    "artifacts",
+    "precompiles",
+    "src",
+    "test/utils",
+    "CHANGELOG.md",
+    "LICENSE-GPL.md"
+  ],
+  "homepage": "https://github.com/sablier-labs/v2-core#readme",
+  "keywords": [
+    "asset-distribution",
+    "asset-streaming",
+    "blockchain",
+    "cryptoasset-streaming",
+    "cryptoassets",
+    "ethereum",
+    "foundry",
+    "money-streaming",
+    "real-time-finance",
+    "sablier",
+    "sablier-v2",
+    "smart-contracts",
+    "solidity",
+    "token-distribution",
+    "token-streaming",
+    "token-vesting",
+    "vesting",
+    "web3"
+  ],
+  "peerDependencies": {
+    "@prb/math": "4.0.x"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": "github.com/sablier-labs/v2-core",
+  "scripts": {
+    "build": "forge build",
+    "build:optimized": "FOUNDRY_PROFILE=optimized forge build",
+    "build:smt": "FOUNDRY_PROFILE=smt forge build",
+    "clean": "rm -rf artifacts broadcast cache docs out out-optimized out-svg",
+    "gas:report": "forge test --gas-report --mp \"./test/integration/**/*.sol\" --nmt \"test(Fuzz)?_RevertWhen_\\w{1,}?\"",
+    "gas:snapshot": "forge snapshot --mp \"./test/integration/**/*.sol\" --nmt \"test(Fuzz)?_RevertWhen_\\w{1,}?\"",
+    "gas:snapshot:optimized": "bun run build:optimized && FOUNDRY_PROFILE=test-optimized forge snapshot --mp \"./test/integration/**/*.sol\" --nmt \"test(Fork)?(Fuzz)?_RevertWhen_\\w{1,}?\"",
+    "lint": "bun run lint:sol && bun run prettier:check",
+    "lint:sol": "forge fmt --check && bun solhint \"{precompiles,script,src,test}/**/*.sol\"",
+    "prepack": "bun install && bash ./shell/prepare-artifacts.sh",
+    "prettier:check": "prettier --check \"**/*.{json,md,svg,yml}\"",
+    "prettier:write": "prettier --write \"**/*.{json,md,svg,yml}\"",
+    "test": "forge test",
+    "test:lite": "FOUNDRY_PROFILE=lite forge test",
+    "test:optimized": "bun run build:optimized && FOUNDRY_PROFILE=test-optimized forge test"
+  }
+}

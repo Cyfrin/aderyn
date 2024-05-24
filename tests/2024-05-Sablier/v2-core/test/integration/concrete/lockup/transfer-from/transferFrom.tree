@@ -1,0 +1,7 @@
+transferFrom.t.sol
+├── given the stream is not transferable
+│  └── it should revert
+└── given the stream is transferable
+   ├── it should transfer the NFT
+   ├── it should emit a {Transfer} event
+   └── it should emit a {MetadataUpdate} event

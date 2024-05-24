@@ -1,0 +1,41 @@
+name: "Generate SVG"
+
+on:
+  workflow_dispatch:
+    inputs:
+      progress:
+        description: "The streamed amount as a numerical percentage with 4 implied decimals."
+        required: true
+      status:
+        description: "The status of the stream, as a string."
+        required: true
+      streamed:
+        description: "The abbreviated streamed amount, as a string."
+        required: true
+      duration:
+        description: "The total duration of the stream in days, as a number."
+        required: true
+
+jobs:
+  generate-svg:
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: "Check out the repo"
+        uses: "actions/checkout@v4"
+
+      - name: "Install Foundry"
+        uses: "foundry-rs/foundry-toolchain@v1"
+
+      - name: "Generate an NFT SVG using the user-provided parameters"
+        run: >-
+          forge script script/GenerateSVG.s.sol
+          --sig "run(uint256,string,string,uint256)"
+          "${{ inputs.progress }}",
+          "${{ inputs.status }}"
+          "${{ inputs.streamed }}"
+          "${{ inputs.duration }}"
+
+      - name: "Add workflow summary"
+        run: |
+          echo "## Result" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Done" >> $GITHUB_STEP_SUMMARY

@@ -1,0 +1,23 @@
+# directories
+.github/workflows
+broadcast
+cache
+coverage
+docs
+node_modules
+out-optimized
+out
+script
+src
+test
+
+# files
+*.env
+*.log
+.DS_Store
+.pnp.*
+bun.lockb
+lcov.info
+package-lock.json
+pnpm-lock.yaml
+yarn.lock

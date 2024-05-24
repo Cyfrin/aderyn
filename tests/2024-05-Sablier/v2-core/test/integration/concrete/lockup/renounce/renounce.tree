@@ -1,0 +1,40 @@
+renounce.t.sol
+├── when delegate called
+│  └── it should revert
+└── when not delegate called
+   ├── given the ID references a null stream
+   │  └── it should revert
+   └──  given the ID does not reference a null stream
+      ├── given the stream is cold
+      │  ├── given the stream's status is "DEPLETED"
+      │  │  └── it should revert
+      │  ├── given the stream's status is "CANCELED"
+      │  │  └── it should revert
+      │  └── given the stream's status is "SETTLED"
+      │     └── it should revert
+      └── given the stream is warm
+         ├── when the caller is not the sender
+         │  └── it should revert
+         └── when the caller is the sender
+            ├── given the recipient is not a contract
+            │  └── it should renounce the stream
+            └── given the recipient is a contract
+               ├── given the recipient does not implement the hook
+               │  ├── it should renounce the stream
+               │  ├── it should call the recipient hook
+               │  └── it should ignore the revert
+               └── given the recipient implements the hook
+                  ├── when the recipient reverts
+                  │  ├── it should renounce the stream
+                  │  ├── it should call the recipient hook
+                  │  └── it should ignore the revert
+                  └── when the recipient does not revert
+                     ├── when there is reentrancy
+                     │  ├── it should renounce the stream
+                     │  ├── it should call the recipient hook
+                     │  └── it should ignore the revert
+                     └── when there is no reentrancy
+                        ├── it should renounce the stream
+                        ├── it should call the recipient hook
+                        ├── it should emit a {RenounceLockupStream} event
+                        └── it should emit a {MetadataUpdate} event

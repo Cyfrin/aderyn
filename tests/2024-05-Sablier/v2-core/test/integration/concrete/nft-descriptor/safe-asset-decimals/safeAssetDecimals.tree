@@ -1,0 +1,8 @@
+safeAssetDecimals.t.sol
+├── when the asset's decimals are not defined
+│  ├── when the asset is an EOA
+│  │  └── it should return 0
+│  └── when the asset is not an ERC-20 contract
+│     └── it should return 0
+└── when the asset's decimals are defined
+   └── it should return the correct decimal value

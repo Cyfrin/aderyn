@@ -1,0 +1,30 @@
+withdrawMultiple.t.sol
+├── when delegate called
+│  └── it should revert
+└── when not delegate called
+   ├── when the inputs are not equal
+   │  └── it should revert
+   └── when the input array counts are equal
+      ├── when the array counts are zero
+      │  └── it should do nothing
+      └── when the array counts are not zero
+         ├── given the stream IDs array references only null streams
+         │  └── it should revert
+         ├── given the stream IDs array references some null streams
+         │  └── it should revert
+         └── given the stream IDs array references only non-null streams
+            ├── given all streams' statuses are "DEPLETED"
+            │  └── it should revert
+            ├── given some streams' statuses are "DEPLETED"
+            │  └── it should revert
+            └── given no stream's status is "DEPLETED"
+               ├── when some amounts are zero
+               │  └── it should revert
+               └── when none of the amounts are zero
+                  ├── when some amounts overdraw
+                  │  └── it should revert
+                  └── when no amount overdraws
+                     ├── it should make the withdrawals
+                     ├── it should update the statuses
+                     ├── it should update the withdrawn amounts
+                     └── it should emit multiple {WithdrawFromLockupStream} events

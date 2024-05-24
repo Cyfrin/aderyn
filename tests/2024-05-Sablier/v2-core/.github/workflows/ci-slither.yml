@@ -1,0 +1,12 @@
+name: "CI Slither"
+
+on:
+  schedule:
+    - cron: "0 3 * * 0" # at 3:00am UTC every Sunday
+
+jobs:
+  lint:
+    uses: "sablier-labs/reusable-workflows/.github/workflows/forge-lint.yml@main"
+
+  slither-analyze:
+    uses: "sablier-labs/reusable-workflows/.github/workflows/slither-analyze.yml@main"

@@ -1,0 +1,10 @@
+hasExpired.t.sol
+├── when the expiration is zero
+│  └── it should return false
+└── when the expiration is not zero
+   ├── when the expiration is less than the block timestamp
+   │  └── it should return false
+   ├── when the expiration is equal to the block timestamp
+   │  └── it should return true
+   └──  when the expiration is greater than the block timestamp
+      └── it should return true

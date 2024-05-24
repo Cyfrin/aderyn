@@ -1,0 +1,5 @@
+tokenURI.t.sol
+├── given the NFT does not exist
+│  └── it should revert
+└── given the NFT exists
+   └── it should return the correct token URI

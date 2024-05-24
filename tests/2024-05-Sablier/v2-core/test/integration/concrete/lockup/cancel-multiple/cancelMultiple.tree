@@ -1,0 +1,37 @@
+cancelMultiple.t.sol
+├── when delegate called
+│  └── it should revert
+└── when not delegate called
+   ├── when the array count is zero
+   │  └── it should do nothing
+   └── when the array count is not zero
+      ├── given the stream IDs array references only null streams
+      │  └── it should revert
+      ├── given the stream IDs array references some null streams
+      │  └── it should revert
+      └── given the stream IDs array references only streams that are not null
+         ├── given all streams are cold
+         │  └── it should revert
+         ├── given some streams are cold
+         │  └── it should revert
+         └── given all streams are warm
+            ├── when the caller is unauthorized for all streams
+            │  ├── when the caller is a malicious third party
+            │  │  └── it should revert
+            │  └── when the caller is the recipient
+            │     └── it should revert
+            ├── when the caller is unauthorized for some streams
+            │  ├── when the caller is a malicious third party
+            │  │  └── it should revert
+            │  └── when the caller is the recipient
+            │     └── it should revert
+            └── when the caller is authorized for all streams
+               ├── given all streams are not cancelable
+               │  └── it should revert
+               ├── given some streams are not cancelable
+               │  └── it should revert
+               └── given all streams are cancelable
+                  ├── it should cancel the streams
+                  ├── it should refund the sender
+                  ├── it should update the refunded amounts
+                  └── it should emit {CancelLockupStream} events

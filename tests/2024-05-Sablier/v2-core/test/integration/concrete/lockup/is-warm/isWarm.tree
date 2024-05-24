@@ -1,0 +1,14 @@
+isWarm.t.sol
+├── given the ID references a null stream
+│  └── it should revert
+└── given the ID does not reference a null stream
+   ├── given the stream's status is pending
+   │  └── it should return true
+   ├── given the stream's status is streaming
+   │  └── it should return true
+   ├── given the stream's status is settled
+   │  └── it should return false
+   ├── given the stream's status is canceled
+   │  └── it should return false
+   └── given the stream's status is depleted
+      └── it should return false

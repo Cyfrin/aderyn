@@ -1,0 +1,17 @@
+statusOf.t.sol
+├── given the ID references a null stream
+│  └── it should revert
+└── given the ID does not reference a null stream
+   ├── given assets have been fully withdrawn
+   │  └── it should return DEPLETED
+   └── given assets have not been fully withdrawn
+      ├── given the stream has been canceled
+      │  └── it should return CANCELED
+      └── given the stream has not been canceled
+         ├── given the start time is in the future
+         │  └── it should return PENDING
+         └── given the start time is not in the future
+            ├── given the refundable amount is zero
+            │  └── it should return SETTLED
+            └── given the refundable amount is not zero
+               └── it should return STREAMING

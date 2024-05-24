@@ -1,0 +1,8 @@
+mapSymbol.t.sol
+├── given the NFT contract is unknown
+│   └── it should revert
+└── given the NFT contract is known
+    ├── when the NFT contract is LockupDynamic
+    │   └── it should map the ERC-721 symbol to Lockup Dynamic
+    └── when the NFT contract is LockupLinear
+        └── it should map the ERC-721 symbol to Lockup Linear

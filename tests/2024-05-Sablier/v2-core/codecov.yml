@@ -1,0 +1,12 @@
+codecov:
+  require_ci_to_pass: false
+comment: false
+coverage:
+  status:
+    patch: off
+ignore:
+  - "precompiles"
+  - "script"
+  - "src/libraries/NFTSVG.sol"
+  - "src/libraries/SVGElements.sol"
+  - "test"

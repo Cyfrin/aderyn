@@ -1,0 +1,22 @@
+createWithDurations.t.sol
+├── when delegate called
+│  └── it should revert
+└── when not delegate called
+   ├── when the loop calculations overflow the block gas limit
+   │  └── it should revert
+   └── when the loop calculations do not overflow the block gas limit
+       ├── when at least one of the durations at index one or greater is zero
+       │  └── it should revert
+       └── when none of the durations is zero
+          ├── when the tranche timestamp calculations overflow uint256
+          │  ├── when the start time is not less than the first tranche timestamp
+          │  │  └── it should revert
+          │  └── when the tranche timestamps are not ordered
+          │     └── it should revert
+          └── when the tranche timestamp calculations do not overflow uint256
+             ├── it should create the stream
+             ├── it should bump the next stream ID
+             ├── it should mint the NFT
+             ├── it should emit a {MetadataUpdate} event
+             ├── it should perform the ERC-20 transfers
+             └── it should emit a {CreateLockupTranchedStream} event

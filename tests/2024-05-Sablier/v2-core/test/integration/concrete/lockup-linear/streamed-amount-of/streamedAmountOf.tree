@@ -1,0 +1,8 @@
+streamedAmountOf.t.sol
+└── given the stream's status is "STREAMING"
+   ├── given the cliff time is in the past
+   │  └── it should return zero
+   ├── given the cliff time is in the present
+   │  └── it should return the correct streamed amount
+   └── given the cliff time is in the future
+      └── it should return the correct streamed amount

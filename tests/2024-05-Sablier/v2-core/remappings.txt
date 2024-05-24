@@ -1,0 +1,6 @@
+@openzeppelin/contracts/=node_modules/@openzeppelin/contracts/
+@prb/math/=node_modules/@prb/math/
+@sphinx-labs/contracts/=node_modules/@sphinx-labs/contracts/contracts/foundry/
+forge-std/=node_modules/forge-std/
+solady/=node_modules/solady/
+solarray/=node_modules/solarray/

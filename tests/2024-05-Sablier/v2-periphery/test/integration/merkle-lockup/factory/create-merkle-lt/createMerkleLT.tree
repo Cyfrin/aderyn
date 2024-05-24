@@ -1,0 +1,12 @@
+createMerkleLL.t.sol
+├── when the total percentage does not equal 100%
+│  ├── when the total percentage is less than 100%
+│  │  └── it should revert
+│  └── when the total percentage is greater than 100%
+│     └── it should revert
+└── when the total percentage equals 100%
+   ├── when the campaign name is too long
+   │  └── it should revert
+   └── when the campaign name is not too long
+      ├── it should create the campaign
+      └── it should emit a {CreateMerkleLT} event

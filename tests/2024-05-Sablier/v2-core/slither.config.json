@@ -1,0 +1,12 @@
+{
+  "detectors_to_exclude": "naming-convention,reentrancy-events,solc-version,timestamp",
+  "filter_paths": "(node_modules/,test/)",
+  "solc_remaps": [
+    "@openzeppelin/contracts/=node_modules/@openzeppelin/contracts/",
+    "@prb/math/=node_modules/@prb-math/",
+    "@sphinx-labs/contracts/=node_modules/@sphinx-labs/contracts/contracts/foundry/",
+    "forge-std/=node_modules/forge-std/",
+    "solady/=node_modules/solady/",
+    "solarray/=node_modules/solarray/"
+  ]
+}

@@ -1,0 +1,21 @@
+refundableAmountOf.t.sol
+├── given the ID references a null stream
+│  └── it should revert
+└── given the ID does not reference a null stream
+   ├── given the stream is not cancelable
+   │  └── it should return zero
+   └── given the stream is cancelable
+      ├── given the stream has been canceled
+      │  ├── given the stream's status is "CANCELED"
+      │  │  └── it should return zero
+      │  └── given the stream's status is "DEPLETED"
+      │     └── it should return zero
+      └── given the stream has not been canceled
+         ├── given the stream's status is "PENDING"
+         │  └── it should return the deposited amount
+         ├── given the stream's status is "STREAMING"
+         │  └── it should return the correct refundable amount
+         ├── given the stream's status is "SETTLED"
+         │  └── it should return zero
+         └── given the stream's status is "DEPLETED"
+            └── it should return zero

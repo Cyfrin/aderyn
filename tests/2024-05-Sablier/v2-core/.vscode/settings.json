@@ -1,0 +1,17 @@
+{
+  "[solidity]": {
+    "editor.defaultFormatter": "NomicFoundation.hardhat-solidity"
+  },
+  "[toml]": {
+    "editor.defaultFormatter": "tamasfe.even-better-toml"
+  },
+  "files.associations": {
+    ".gas-snapshot": "julia"
+  },
+  "editor.formatOnSave": true,
+  "prettier.documentSelectors": ["**/*.svg"],
+  "search.exclude": {
+    "**/node_modules": true
+  },
+  "solidity.formatter": "forge"
+}

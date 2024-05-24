@@ -1,0 +1,55 @@
+name: "CI"
+
+concurrency:
+  cancel-in-progress: true
+  group: ${{github.workflow}}-${{github.ref}}
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  lint:
+    uses: "sablier-labs/reusable-workflows/.github/workflows/forge-lint.yml@main"
+
+  build:
+    uses: "sablier-labs/reusable-workflows/.github/workflows/forge-build.yml@main"
+
+  test-integration:
+    needs: ["lint", "build"]
+    uses: "sablier-labs/reusable-workflows/.github/workflows/forge-test.yml@main"
+    with:
+      foundry-fuzz-runs: 5000
+      foundry-profile: "test-optimized"
+      match-path: "test/integration/**/*.sol"
+      name: "Integration tests"
+
+  test-utils:
+    needs: ["lint", "build"]
+    uses: "sablier-labs/reusable-workflows/.github/workflows/forge-test.yml@main"
+    with:
+      foundry-profile: "test-optimized"
+      match-path: "test/utils/**/*.sol"
+      name: "Utils tests"
+
+  test-fork:
+    needs: ["lint", "build"]
+    secrets:
+      RPC_URL_MAINNET: ${{ secrets.RPC_URL_MAINNET }}
+    uses: "sablier-labs/reusable-workflows/.github/workflows/forge-test.yml@main"
+    with:
+      foundry-fuzz-runs: 20
+      foundry-profile: "test-optimized"
+      match-path: "test/fork/**/*.sol"
+      name: "Fork tests"
+
+  coverage:
+    needs: ["lint", "build"]
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+    uses: "sablier-labs/reusable-workflows/.github/workflows/forge-coverage.yml@main"
+    with:
+      match-path: "test/integration/**/*.sol"

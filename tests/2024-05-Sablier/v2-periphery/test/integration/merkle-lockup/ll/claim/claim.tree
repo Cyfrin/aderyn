@@ -1,0 +1,20 @@
+claim.t.sol
+├── given the campaign has expired
+│  └── it should revert
+└── given the campaign has not expired
+   ├── given the recipient has claimed
+   │  └── it should revert
+   └── given the recipient has not claimed
+      ├── given the claim is not included in the Merkle tree
+      │  ├── when the index is not valid
+      │  │  └── it should revert
+      │  ├── when the recipient address is not valid
+      │  │  └── it should revert
+      │  ├── when the amount is not valid
+      │  │  └── it should revert
+      │  └── when the Merkle proof is not valid
+      │     └── it should revert
+      └── given the claim is included in the Merkle tree
+         ├── it should mark the index as claimed
+         ├── it should create a stream
+         └── it should emit a {Claim} event

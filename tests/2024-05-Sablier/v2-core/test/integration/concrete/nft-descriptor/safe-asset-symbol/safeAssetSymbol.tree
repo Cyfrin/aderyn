@@ -1,0 +1,11 @@
+safeAssetSymbol.t.sol
+├── when the asset is not an ERC-20 contract
+│  └── it should return a hard-coded value
+└── when the asset is an ERC-20 contract
+   ├── given the symbol is returned as bytes32
+   │  └── it should return a hard-coded value
+   └── given the symbol is returned as string
+      ├── given the symbol is longer than 30 characters
+      │  └── it should return a hard-coded values
+      └── given the symbol is not longer than 30 characters
+         └── it should return the correct symbol value
