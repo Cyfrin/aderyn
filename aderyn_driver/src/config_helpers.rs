@@ -32,7 +32,7 @@ fn load_aderyn_config(root: &Path) -> Result<AderynConfig, String> {
 
 #[allow(clippy::type_complexity)]
 pub fn derive_from_aderyn_toml(
-    root: &PathBuf,
+    root: &Path,
     src: &Option<Vec<String>>,
     exclude: &Option<Vec<String>>,
     remappings: &Option<Vec<String>>,
@@ -46,8 +46,7 @@ pub fn derive_from_aderyn_toml(
 ) {
     let config = load_aderyn_config(root).unwrap();
 
-    // If the root is the default ".", and the aderyn.toml has a root, use the aderyn.toml root
-    let mut local_root: PathBuf = root.clone();
+    let mut local_root: PathBuf = root.to_path_buf();
     if let Some(config_root) = &config.root {
         // append the config_root to the local_root
         local_root.push(config_root);
