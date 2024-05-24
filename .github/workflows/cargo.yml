@@ -17,9 +17,9 @@ jobs:
           toolchain: stable
           override: true
 
-      - name: Make
+      - name: Install git submodules
         run: |
-          make
+          git submodule update --init --recursive
 
       - name: Run cargo check
         uses: actions-rs/cargo@v1
@@ -99,9 +99,9 @@ jobs:
         with:
           version: 8
 
-      - name: Make
+      - name: Install git submodules
         run: |
-          make
+          git submodule update --init --recursive
 
       - name: Install pnpm dependencies for ccip contracts and come out
         run: |
@@ -349,9 +349,9 @@ jobs:
           components: rustfmt, clippy
           override: true
 
-      - name: Make
+      - name: Install git submodules
         run: |
-          make
+          git submodule update --init --recursive
 
       - name: Run cargo fmt
         uses: actions-rs/cargo@v1
@@ -400,9 +400,9 @@ jobs:
         with:
           targets: "${{ matrix.target }}"
 
-      - name: Make
+      - name: Install git submodules
         run: |
-          make
+          git submodule update --init --recursive
 
       - name: Setup Cache
         uses: Swatinem/rust-cache@v2
