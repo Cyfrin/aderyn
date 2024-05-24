@@ -1,5 +1,5 @@
 use crate::{
-    config_helpers::{append_from_aderyn_toml, derive_from_foundry_toml},
+    config_helpers::{append_from_foundry_toml, derive_from_aderyn_toml},
     ensure_valid_root_path, process_auto, process_foundry,
 };
 use aderyn_core::{
@@ -176,21 +176,21 @@ fn construct_src_exclude_remappings_scope(
     let mut local_remappings = None;
     let mut local_scope = args.scope.clone();
 
-    // Process foundry.toml if it exists
-    if foundry_path.exists() {
-        (local_src, local_exclude, local_remappings) =
-            derive_from_foundry_toml(&root_path, &args.src, &args.exclude);
-    }
-
     // Process aderyn.toml if it exists
     if aderyn_path.exists() {
-        (local_src, local_exclude, local_remappings, local_scope) = append_from_aderyn_toml(
+        (local_src, local_exclude, local_remappings, local_scope) = derive_from_aderyn_toml(
             &root_path,
             &local_src,
             &local_exclude,
             &local_remappings,
             &local_scope,
         );
+    }
+
+    // Process foundry.toml if it exists
+    if foundry_path.exists() {
+        (local_src, local_exclude, local_remappings) =
+            append_from_foundry_toml(&root_path, &args.src, &args.exclude, &local_remappings);
     }
 
     Ok((local_src, local_exclude, local_remappings, local_scope))

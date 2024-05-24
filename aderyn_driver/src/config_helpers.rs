@@ -3,58 +3,7 @@ use std::{fs, path::Path};
 use foundry_config::Config;
 use serde::Deserialize;
 
-/// Derive the src, remappings, and exclude from the foundry.toml file.
-/// If the src and exclude are provided, they will be used instead of the foundry.toml.
-/// Otherwise, the foundry.toml will be used.
-#[allow(clippy::type_complexity)]
-pub fn derive_from_foundry_toml(
-    root: &Path,
-    src: &Option<Vec<String>>,
-    exclude: &Option<Vec<String>>,
-) -> (
-    Option<Vec<String>>, // Src
-    Option<Vec<String>>, // Exclude
-    Option<Vec<String>>, // Remappings
-) {
-    let config = Config::load_with_root(root);
-
-    // src
-    let src = match src {
-        Some(src) => src.clone(),
-        None => {
-            vec![config.src.to_string_lossy().to_string()]
-        }
-    };
-
-    // exclude
-    let script = format!("{}/", config.script.to_string_lossy());
-    let test = format!("{}/", config.test.to_string_lossy());
-    let libs = config
-        .libs
-        .iter()
-        .map(|x| format!("{}/", x.to_string_lossy()))
-        .collect::<Vec<_>>();
-    let exclude = match exclude {
-        Some(exclude) => exclude.clone(),
-        None => {
-            let mut exclude = vec![];
-            exclude.push(test);
-            exclude.push(script);
-            exclude.extend(libs);
-            exclude
-        }
-    };
-
-    // remappings
-    let remappings = config
-        .get_all_remappings()
-        .iter()
-        .map(|x| x.to_string())
-        .collect::<Vec<_>>();
-
-    (Some(src), Some(exclude), Some(remappings))
-}
-
+/// aderyn.toml structure
 #[derive(Deserialize, Clone)]
 pub struct AderynConfig {
     pub src: Option<String>,
@@ -63,6 +12,7 @@ pub struct AderynConfig {
     pub scope: Option<Vec<String>>,
 }
 
+/// Load the aderyn.toml file and deserialize it to AderynConfig
 fn load_aderyn_config(root: &Path) -> Result<AderynConfig, String> {
     let config_path = root.join("aderyn.toml");
     // Read the file
@@ -77,7 +27,7 @@ fn load_aderyn_config(root: &Path) -> Result<AderynConfig, String> {
 }
 
 #[allow(clippy::type_complexity)]
-pub fn append_from_aderyn_toml(
+pub fn derive_from_aderyn_toml(
     root: &Path,
     src: &Option<Vec<String>>,
     exclude: &Option<Vec<String>>,
@@ -116,7 +66,6 @@ pub fn append_from_aderyn_toml(
             local_exclude = Some(config_exclude.clone());
         }
     }
-    println!("EXCLUDEY EXCLUDEY: {:?}", local_exclude);
 
     // If config.remappings is some, append each value to remappings if it is not already present
     let mut local_remappings = remappings.clone();
@@ -152,4 +101,73 @@ pub fn append_from_aderyn_toml(
     );
 
     (local_src, local_exclude, local_remappings, local_scope)
+}
+
+/// Append the src, remappings, and exclude from the foundry.toml file.
+/// If the src and exclude are provided, they will be used instead of the foundry.toml.
+/// Otherwise, the foundry.toml will be used.
+#[allow(clippy::type_complexity)]
+pub fn append_from_foundry_toml(
+    root: &Path,
+    src: &Option<Vec<String>>,
+    exclude: &Option<Vec<String>>,
+    remappings: &Option<Vec<String>>,
+) -> (
+    Option<Vec<String>>, // Src
+    Option<Vec<String>>, // Exclude
+    Option<Vec<String>>, // Remappings
+) {
+    let config = Config::load_with_root(root);
+
+    // src
+    let mut local_src = src.clone();
+    match local_src {
+        Some(_) => (),
+        None => {
+            local_src = Some(vec![config.src.to_string_lossy().to_string()]);
+        }
+    }
+
+    // exclude
+    let mut local_exclude = exclude.clone();
+    let script = format!("{}/", config.script.to_string_lossy());
+    let test = format!("{}/", config.test.to_string_lossy());
+    let libs = config
+        .libs
+        .iter()
+        .map(|x| format!("{}/", x.to_string_lossy()))
+        .collect::<Vec<_>>();
+    if let Some(local_exclude) = &mut local_exclude {
+        local_exclude.push(test);
+        local_exclude.push(script);
+        local_exclude.extend(libs);
+    } else {
+        let mut exclude = vec![];
+        exclude.push(test);
+        exclude.push(script);
+        exclude.extend(libs);
+        local_exclude = Some(exclude);
+    }
+
+    // remappings
+    let mut local_remappings = remappings.clone();
+    if let Some(local_remappings) = &mut local_remappings {
+        local_remappings.extend(
+            config
+                .get_all_remappings()
+                .iter()
+                .map(|x| x.to_string())
+                .collect::<Vec<_>>(),
+        );
+    } else {
+        local_remappings = Some(
+            config
+                .get_all_remappings()
+                .iter()
+                .map(|x| x.to_string())
+                .collect::<Vec<_>>(),
+        );
+    }
+
+    (local_src, local_exclude, local_remappings)
 }
