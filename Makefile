@@ -2,6 +2,7 @@
 # Pre-requisites
 # 	- Foundry
 # 	- pnpm
+#	- yarn
 #	- cargo-clippy
 ##################
 
@@ -12,7 +13,7 @@ setup:
 	cd tests/ccip-contracts/contracts/;\
 	pnpm install
 	cd tests/2024-05-Sablier/v2-core/;\
-	pnpm install && forge build
+	yarn install && forge build
 	
 
 # Check for tests to pass
