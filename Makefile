@@ -11,6 +11,9 @@ setup:
 	git submodule update --init --recursive
 	cd tests/ccip-contracts/contracts/;\
 	pnpm install
+	cd tests/2024-05-Sablier/v2-core/;\
+	pnpm install && forge build
+	
 
 # Check for tests to pass
 .PHONY: test
