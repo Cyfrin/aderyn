@@ -1,4 +1,7 @@
-use std::{fs, path::Path};
+use std::{
+    fs,
+    path::{Path, PathBuf},
+};
 
 use foundry_config::Config;
 use serde::Deserialize;
@@ -6,6 +9,7 @@ use serde::Deserialize;
 /// aderyn.toml structure
 #[derive(Deserialize, Clone)]
 pub struct AderynConfig {
+    pub root: Option<String>,
     pub src: Option<String>,
     pub exclude: Option<Vec<String>>,
     pub remappings: Option<Vec<String>>,
@@ -28,18 +32,26 @@ fn load_aderyn_config(root: &Path) -> Result<AderynConfig, String> {
 
 #[allow(clippy::type_complexity)]
 pub fn derive_from_aderyn_toml(
-    root: &Path,
+    root: &PathBuf,
     src: &Option<Vec<String>>,
     exclude: &Option<Vec<String>>,
     remappings: &Option<Vec<String>>,
     scope: &Option<Vec<String>>,
 ) -> (
+    PathBuf,             // Root
     Option<Vec<String>>, // Src
     Option<Vec<String>>, // Exclude
     Option<Vec<String>>, // Remappings
     Option<Vec<String>>, // Scope
 ) {
     let config = load_aderyn_config(root).unwrap();
+
+    // If the root is the default ".", and the aderyn.toml has a root, use the aderyn.toml root
+    let mut local_root: PathBuf = root.clone();
+    if let Some(config_root) = &config.root {
+        // append the config_root to the local_root
+        local_root.push(config_root);
+    }
 
     // If config.src is some, append src if it is not already present
     let mut local_src: Option<Vec<String>> = src.clone();
@@ -95,12 +107,13 @@ pub fn derive_from_aderyn_toml(
         }
     }
 
-    println!(
-        "{:#?}",
-        (&local_src, &local_exclude, &local_remappings, &local_scope)
-    );
-
-    (local_src, local_exclude, local_remappings, local_scope)
+    (
+        local_root,
+        local_src,
+        local_exclude,
+        local_remappings,
+        local_scope,
+    )
 }
 
 /// Append the src, remappings, and exclude from the foundry.toml file.

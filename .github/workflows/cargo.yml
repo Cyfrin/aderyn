@@ -139,6 +139,21 @@ jobs:
           cat reports/uniswap_profile-workflow.md
           diff reports/uniswap_profile.md reports/uniswap_profile-workflow.md
 
+      # Verify sablier.md
+
+      - name: Generate sablier.md
+        env:
+          FOUNDRY_PROFILE: uniswap
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+          args: -- -o ./reports/sablier.md ./tests/2024-05-Sablier --skip-update-check --icf
+
+      - name: Check sablier.md vs sablier-aderyn-toml-nested-root.md
+        run: |
+          cat reports/sablier.md
+          diff reports/sablier-aderyn-toml-nested-root.md reports/sablier.md
+
       # Verify adhoc-sol-files-workflow-report.md
           
       - name: Generate adhoc-sol-files-workflow-report.md

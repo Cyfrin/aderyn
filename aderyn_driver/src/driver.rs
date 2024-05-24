@@ -41,7 +41,7 @@ pub fn drive(args: Args) {
 pub fn drive_with(args: Args, detectors: Vec<Box<dyn IssueDetector>>) {
     let output = args.output.clone();
     let cx_wrapper = make_context(&args);
-    let root_rel_path = PathBuf::from(&args.root);
+    let root_rel_path = cx_wrapper.root_path;
 
     if args.output.ends_with(".json") {
         // Load the workspace context into the run function, which runs the detectors
@@ -101,6 +101,7 @@ pub fn drive_with(args: Args, detectors: Vec<Box<dyn IssueDetector>>) {
 
 pub struct WorkspaceContextWrapper {
     pub contexts: Vec<WorkspaceContext>,
+    pub root_path: PathBuf,
 }
 
 fn make_context(args: &Args) -> WorkspaceContextWrapper {
@@ -108,13 +109,12 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
         eprintln!("Warning: output file lacks the \".md\" or \".json\" extension in its filename.");
     }
 
-    let root_path = PathBuf::from(&args.root);
-    let absolute_root_path = &ensure_valid_root_path(&root_path);
+    let (root_path, src, exclude, remappings, scope) = obtain_config_values(args).unwrap();
 
-    let (src, exclude, remappings, scope) = construct_src_exclude_remappings_scope(args).unwrap();
+    let absolute_root_path = &ensure_valid_root_path(&root_path);
     println!(
-        "Src - {:?}, Scope - {:?}, Exclude - {:?}",
-        src, scope, exclude
+        "Root: {:?}, Src: {:?}, Scope: {:?}, Exclude: {:?}",
+        absolute_root_path, src, scope, exclude
     );
 
     let mut contexts: Vec<WorkspaceContext> = {
@@ -152,14 +152,19 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
         // Using the source path, calculate the sloc
     }
 
-    WorkspaceContextWrapper { contexts }
+    WorkspaceContextWrapper {
+        contexts,
+        root_path,
+    }
 }
 
+/// Supplement the arguments with values from aderyn.toml and foundry.toml
 #[allow(clippy::type_complexity)]
-fn construct_src_exclude_remappings_scope(
+fn obtain_config_values(
     args: &Args,
 ) -> Result<
     (
+        PathBuf,
         Option<Vec<String>>,
         Option<Vec<String>>,
         Option<Vec<String>>,
@@ -167,18 +172,23 @@ fn construct_src_exclude_remappings_scope(
     ),
     Box<dyn Error>,
 > {
-    let root_path = PathBuf::from(&args.root);
-    let foundry_path = root_path.join("foundry.toml");
-    let aderyn_path = root_path.join("aderyn.toml");
+    let mut root_path = PathBuf::from(&args.root);
 
     let mut local_src = args.src.clone();
     let mut local_exclude = args.exclude.clone();
     let mut local_remappings = None;
     let mut local_scope = args.scope.clone();
 
+    let aderyn_path = root_path.join("aderyn.toml");
     // Process aderyn.toml if it exists
     if aderyn_path.exists() {
-        (local_src, local_exclude, local_remappings, local_scope) = derive_from_aderyn_toml(
+        (
+            root_path,
+            local_src,
+            local_exclude,
+            local_remappings,
+            local_scope,
+        ) = derive_from_aderyn_toml(
             &root_path,
             &local_src,
             &local_exclude,
@@ -187,13 +197,20 @@ fn construct_src_exclude_remappings_scope(
         );
     }
 
+    let foundry_path = root_path.join("foundry.toml");
     // Process foundry.toml if it exists
     if foundry_path.exists() {
         (local_src, local_exclude, local_remappings) =
-            append_from_foundry_toml(&root_path, &args.src, &args.exclude, &local_remappings);
+            append_from_foundry_toml(&root_path, &local_src, &local_exclude, &local_remappings);
     }
 
-    Ok((local_src, local_exclude, local_remappings, local_scope))
+    Ok((
+        root_path,
+        local_src,
+        local_exclude,
+        local_remappings,
+        local_scope,
+    ))
 }
 
 fn is_foundry(path: &Path) -> bool {

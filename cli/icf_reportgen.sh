@@ -8,6 +8,9 @@ cargo run --  --scope src/ --exclude lib/ ./tests/contract-playground -o ./repor
 # Adhoc sol files report.md 
 cargo run --  ./tests/adhoc-sol-files -o ./reports/adhoc-sol-files-report.md --skip-update-check --icf &
 
+# Aderyn.toml with nested root
+cargo run -- ./tests/2024-05-Sablier -o ./reports/sablier-aderyn-toml-nested-root.md --skip-update-check --icf &
+
 # nft-report.md (Handle remappings)
 cd tests/foundry-nft-f23 && forge install && cd ../.. &&
 cargo run --  ./tests/foundry-nft-f23 --scope src/ --exclude lib/ -o ./reports/nft-report.md --skip-update-check --icf &
