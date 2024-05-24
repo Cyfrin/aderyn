@@ -22,3 +22,6 @@
 [submodule "tests/ccip-contracts"]
 	path = tests/ccip-contracts
 	url = https://github.com/smartcontractkit/ccip
+[submodule "tests/2024-05-Sablier"]
+	path = tests/2024-05-Sablier
+	url = git@github.com:Cyfrin/2024-05-Sablier.git
