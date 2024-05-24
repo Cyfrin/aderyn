@@ -99,9 +99,9 @@ jobs:
         with:
           version: 8
 
-      - name: Install git submodules
+      - name: Make
         run: |
-          git submodule update --init --recursive
+          make
 
       - name: Install pnpm dependencies for ccip contracts and come out
         run: |
