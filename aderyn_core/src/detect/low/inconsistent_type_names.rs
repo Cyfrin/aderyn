@@ -1,9 +1,12 @@
 use std::{collections::BTreeMap, error::Error, ops::Add};
 
 use crate::{
-    ast::{NodeID, TypeName},
+    ast::{NodeID, TypeName, VariableDeclaration},
     capture,
-    context::{browser::ExtractVariableDeclarations, workspace_context::WorkspaceContext},
+    context::{
+        browser::ExtractVariableDeclarations,
+        workspace_context::{ASTNode, WorkspaceContext},
+    },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
@@ -17,70 +20,81 @@ pub struct InconsistentTypeNamesDetector {
 
 #[derive(Debug, Default)]
 struct TypeNameCounter {
-    int_count: usize,
-    int256_count: usize,
-    uint_count: usize,
-    uint256_count: usize,
-}
-
-impl TypeNameCounter {
-    fn is_consistent(&self) -> bool {
-        (self.int256_count * self.int_count == 0) && (self.uint256_count * self.uint_count == 0)
-    }
+    int_count: Vec<ASTNode>,
+    int256_count: Vec<ASTNode>,
+    uint_count: Vec<ASTNode>,
+    uint256_count: Vec<ASTNode>,
 }
 
 impl Add<&TypeNameCounter> for TypeNameCounter {
     type Output = TypeNameCounter;
 
-    fn add(self, rhs: &TypeNameCounter) -> Self::Output {
+    fn add(mut self, rhs: &TypeNameCounter) -> Self::Output {
+        self.int256_count.append(&mut rhs.int256_count.clone());
+        self.int_count.append(&mut rhs.int_count.clone());
+        self.uint256_count.append(&mut rhs.uint256_count.clone());
+        self.uint_count.append(&mut rhs.uint_count.clone());
         TypeNameCounter {
-            int256_count: self.int256_count + rhs.int256_count,
-            int_count: self.int_count + rhs.int_count,
-            uint256_count: self.uint256_count + rhs.uint256_count,
-            uint_count: self.uint_count + rhs.uint_count,
+            int256_count: self.int256_count,
+            int_count: self.int_count,
+            uint256_count: self.uint256_count,
+            uint_count: self.uint_count,
         }
     }
 }
 
-fn count_names_in_type_name(type_name: &TypeName) -> TypeNameCounter {
+impl TypeNameCounter {
+    fn is_int_consistent(&self) -> bool {
+        self.int256_count.len() * self.int_count.len() == 0
+    }
+
+    fn is_uint_consistent(&self) -> bool {
+        self.uint256_count.len() * self.uint_count.len() == 0
+    }
+}
+
+fn count_names_in_type_name(
+    variable_declaration: &VariableDeclaration,
+    type_name: &TypeName,
+) -> TypeNameCounter {
     let mut counter = TypeNameCounter::default();
     match type_name {
         TypeName::ElementaryTypeName(e) => {
             if e.name == "uint" {
-                counter.uint_count += 1;
+                counter.uint_count.push(variable_declaration.into());
             } else if e.name == "uint256" {
-                counter.uint256_count += 1;
+                counter.uint256_count.push(variable_declaration.into());
             } else if e.name == "int" {
-                counter.int_count += 1;
+                counter.int_count.push(variable_declaration.into());
             } else if e.name == "int256" {
-                counter.int256_count += 1;
+                counter.int256_count.push(variable_declaration.into());
             }
         }
         TypeName::FunctionTypeName(_) => (),
         TypeName::ArrayTypeName(e) => {
             let base = &*e.base_type;
-            let tc = count_names_in_type_name(base);
+            let tc = count_names_in_type_name(variable_declaration, base);
             counter = counter + &tc;
         }
         TypeName::Mapping(e) => {
             let key_type = &*e.key_type;
-            let tc_keys = count_names_in_type_name(key_type);
+            let tc_keys = count_names_in_type_name(variable_declaration, key_type);
             counter = counter + &tc_keys;
 
             let value_type = &*e.value_type;
-            let tc_value = count_names_in_type_name(value_type);
+            let tc_value = count_names_in_type_name(variable_declaration, value_type);
             counter = counter + &tc_value;
         }
         TypeName::UserDefinedTypeName(_) => {}
         TypeName::String(name) => {
             if name == "uint" {
-                counter.uint_count += 1;
+                counter.uint_count.push(variable_declaration.into());
             } else if name == "uint256" {
-                counter.uint256_count += 1;
+                counter.uint256_count.push(variable_declaration.into());
             } else if name == "int" {
-                counter.int_count += 1;
+                counter.int_count.push(variable_declaration.into());
             } else if name == "int256" {
-                counter.int256_count += 1;
+                counter.int256_count.push(variable_declaration.into());
             }
         }
     };
@@ -97,15 +111,20 @@ impl IssueDetector for InconsistentTypeNamesDetector {
             for variable_declaration in extracted_variable_declarations.iter() {
                 if let Some(type_name) = &variable_declaration.type_name {
                     // println!("{:?}, {:?}", variable_declaration.name, type_name);
-                    let counter = count_names_in_type_name(type_name);
+                    let counter = count_names_in_type_name(variable_declaration, type_name);
                     contract_counter = contract_counter + &counter;
                 }
             }
 
-            if !contract_counter.is_consistent() {
-                for variable_declaration in extracted_variable_declarations.iter() {
-                    // Use the capture! macro to handle the capture logic
-                    capture!(self, context, variable_declaration);
+            if !contract_counter.is_int_consistent() {
+                for node in contract_counter.int_count.iter() {
+                    capture!(self, context, node);
+                }
+            }
+
+            if !contract_counter.is_uint_consistent() {
+                for node in contract_counter.uint_count.iter() {
+                    capture!(self, context, node);
                 }
             }
         }
@@ -115,12 +134,12 @@ impl IssueDetector for InconsistentTypeNamesDetector {
 
     fn title(&self) -> String {
         String::from(
-            "Inconsistency in declaring uint256/uint (or) int256/int variables within a contract",
+            "Inconsistency in declaring uint256/uint (or) int256/int variables within a contract. Use explicit size declarations (uint256 or int256).",
         )
     }
 
     fn description(&self) -> String {
-        String::from("Consider keeping the naming convention consistent in a given contract")
+        String::from("Consider keeping the naming convention consistent in a given contract. Explicit size declarations are preferred (uint256, int256) over implicit ones (uint, int) to avoid confusion.")
     }
 
     fn severity(&self) -> IssueSeverity {
@@ -157,7 +176,28 @@ mod inconsistent_type_names {
         assert!(found);
         println!("{:#?}", detector.instances());
 
-        assert_eq!(detector.instances().len(), 10);
+        assert_eq!(detector.instances().len(), 7);
+        // assert that the detector returns the correct severity
+        assert_eq!(
+            detector.severity(),
+            crate::detect::detector::IssueSeverity::Low
+        );
+    }
+
+    #[test]
+    #[serial]
+    fn test_inconsistent_type_names_with_casting_sol() {
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/Casting.sol",
+        );
+
+        let mut detector = InconsistentTypeNamesDetector::default();
+        // assert that the detector finds the public Function
+        let found = detector.detect(&context).unwrap();
+        assert!(found);
+        println!("{:#?}", detector.instances());
+
+        assert_eq!(detector.instances().len(), 2);
         // assert that the detector returns the correct severity
         assert_eq!(
             detector.severity(),
