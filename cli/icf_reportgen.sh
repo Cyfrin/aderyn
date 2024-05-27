@@ -5,11 +5,11 @@
 # Basic report.md 
 cargo run --  --scope src/ --exclude lib/ ./tests/contract-playground -o ./reports/report.md --skip-update-check --icf &
 
-# Create report-config.md based on config file
-cargo run -- --config-file ./tests/aderyn.config.json --exclude lib/ -o ./reports/report-config.md ./tests/contract-playground/ --skip-update-check --icf &
-
 # Adhoc sol files report.md 
 cargo run --  ./tests/adhoc-sol-files -o ./reports/adhoc-sol-files-report.md --skip-update-check --icf &
+
+# Aderyn.toml with nested root
+cargo run -- ./tests/2024-05-Sablier -o ./reports/sablier-aderyn-toml-nested-root.md --skip-update-check --icf &
 
 # nft-report.md (Handle remappings)
 cd tests/foundry-nft-f23 && forge install && cd ../.. &&
@@ -26,9 +26,6 @@ FOUNDRY_PROFILE=uniswap cargo run tests/contract-playground/ -o ./reports/uniswa
 
 # Basic report.json
 cargo run -- --scope src/ --exclude lib/ -o ./reports/report.json ./tests/contract-playground --skip-update-check --icf &
-
-# Create report-config.json based on config file
-cargo run -- --config-file ./tests/aderyn.config.json --exclude lib/ -o ./reports/report-config.json ./tests/contract-playground/ --skip-update-check --icf &
 
 ##### SARIF REPORTS ########
 

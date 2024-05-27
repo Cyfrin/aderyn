@@ -1,0 +1,6 @@
+# src = ""
+exclude = ["lib/"]
+# remappings = []
+# scope = [
+#     "AdminContract.sol"
+# ]
