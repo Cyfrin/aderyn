@@ -359,13 +359,61 @@ Contract contains comments with TODOS
 
 Consider keeping the naming convention consistent in a given contract
 
-<details><summary>1 Found Instances</summary>
+<details><summary>10 Found Instances</summary>
 
 
-- Found in InconsistentUints.sol [Line: 3](../tests/adhoc-sol-files/InconsistentUints.sol#L3)
+- Found in InconsistentUints.sol [Line: 5](../tests/adhoc-sol-files/InconsistentUints.sol#L5)
 
 	```solidity
-	contract InconsistentStateVariablesContract {
+	    uint public uintVariable; // 1
+	```
+
+- Found in InconsistentUints.sol [Line: 6](../tests/adhoc-sol-files/InconsistentUints.sol#L6)
+
+	```solidity
+	    uint256 public uint256Variable; // 1
+	```
+
+- Found in InconsistentUints.sol [Line: 7](../tests/adhoc-sol-files/InconsistentUints.sol#L7)
+
+	```solidity
+	    int public intVariable; // 1
+	```
+
+- Found in InconsistentUints.sol [Line: 8](../tests/adhoc-sol-files/InconsistentUints.sol#L8)
+
+	```solidity
+	    int256 public int256Variable; // 1 
+	```
+
+- Found in InconsistentUints.sol [Line: 11](../tests/adhoc-sol-files/InconsistentUints.sol#L11)
+
+	```solidity
+	        uint personUint; // 2
+	```
+
+- Found in InconsistentUints.sol [Line: 12](../tests/adhoc-sol-files/InconsistentUints.sol#L12)
+
+	```solidity
+	        mapping (uint => uint256) personMap; // 3 2
+	```
+
+- Found in InconsistentUints.sol [Line: 15](../tests/adhoc-sol-files/InconsistentUints.sol#L15)
+
+	```solidity
+	    uint[] public uintArray; // 4
+	```
+
+- Found in InconsistentUints.sol [Line: 16](../tests/adhoc-sol-files/InconsistentUints.sol#L16)
+
+	```solidity
+	    mapping(uint256 => uint other) u2uMapping; // 5 3
+	```
+
+- Found in InconsistentUints.sol [Line: 19](../tests/adhoc-sol-files/InconsistentUints.sol#L19)
+
+	```solidity
+	    constructor(uint _uintInitial, uint256 _uint256Initial) { // 6 4
 	```
 
 </details>

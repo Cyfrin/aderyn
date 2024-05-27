@@ -91,11 +91,10 @@ impl IssueDetector for InconsistentTypeNamesDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for contract in context.contract_definitions() {
             let mut contract_counter = TypeNameCounter::default();
+            let extracted_variable_declarations =
+                ExtractVariableDeclarations::from(contract).extracted;
 
-            for variable_declaration in ExtractVariableDeclarations::from(contract)
-                .extracted
-                .into_iter()
-            {
+            for variable_declaration in extracted_variable_declarations.iter() {
                 if let Some(type_name) = &variable_declaration.type_name {
                     // println!("{:?}, {:?}", variable_declaration.name, type_name);
                     let counter = count_names_in_type_name(type_name);
@@ -104,8 +103,10 @@ impl IssueDetector for InconsistentTypeNamesDetector {
             }
 
             if !contract_counter.is_consistent() {
-                // println!("{:?}", contract_counter); <-- Will print the count of each types
-                capture!(self, context, contract);
+                for variable_declaration in extracted_variable_declarations.iter() {
+                    // Use the capture! macro to handle the capture logic
+                    capture!(self, context, variable_declaration);
+                }
             }
         }
 
@@ -154,9 +155,9 @@ mod inconsistent_type_names {
         // assert that the detector finds the public Function
         let found = detector.detect(&context).unwrap();
         assert!(found);
-        println!("{:?}", detector.instances());
+        println!("{:#?}", detector.instances());
 
-        assert_eq!(detector.instances().len(), 1);
+        assert_eq!(detector.instances().len(), 10);
         // assert that the detector returns the correct severity
         assert_eq!(
             detector.severity(),
