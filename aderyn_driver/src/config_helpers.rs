@@ -163,6 +163,7 @@ fn interpret_foundry_config(
 ) {
     // src
     let mut local_src = src.clone();
+    // Only use foundry src if src is not provided
     match local_src {
         Some(_) => (),
         None => {
