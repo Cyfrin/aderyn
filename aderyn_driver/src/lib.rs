@@ -1,6 +1,6 @@
+pub(crate) mod config_helpers;
 pub mod driver;
 pub(crate) mod foundry_compiler_helpers;
-pub(crate) mod foundry_config_helpers;
 pub(crate) mod process_auto;
 pub(crate) mod process_foundry;
 pub(crate) mod project_compiler_tests;
