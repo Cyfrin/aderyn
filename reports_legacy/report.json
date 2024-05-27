@@ -1779,24 +1779,94 @@
         ]
       },
       {
-        "title": "Inconsistency in declaring uint256/uint (or) int256/int variables within a contract",
-        "description": "Consider keeping the naming convention consistent in a given contract",
+        "title": "Inconsistency in declaring uint256/uint (or) int256/int variables within a contract. Use explicit size declarations (uint256 or int256).",
+        "description": "Consider keeping the naming convention consistent in a given contract. Explicit size declarations are preferred (uint256, int256) over implicit ones (uint, int) to avoid confusion.",
         "detector_name": "inconsistent-type-names",
         "instances": [
           {
             "contract_path": "src/Casting.sol",
-            "line_no": 6,
-            "src": "161:7"
+            "line_no": 31,
+            "src": "904:14"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 69,
+            "src": "2086:13"
           },
           {
             "contract_path": "src/InconsistentUints.sol",
-            "line_no": 3,
-            "src": "35:34"
+            "line_no": 5,
+            "src": "122:12"
+          },
+          {
+            "contract_path": "src/InconsistentUints.sol",
+            "line_no": 7,
+            "src": "197:11"
+          },
+          {
+            "contract_path": "src/InconsistentUints.sol",
+            "line_no": 11,
+            "src": "289:10"
+          },
+          {
+            "contract_path": "src/InconsistentUints.sol",
+            "line_no": 12,
+            "src": "340:9"
+          },
+          {
+            "contract_path": "src/InconsistentUints.sol",
+            "line_no": 15,
+            "src": "383:9"
+          },
+          {
+            "contract_path": "src/InconsistentUints.sol",
+            "line_no": 16,
+            "src": "434:10"
+          },
+          {
+            "contract_path": "src/InconsistentUints.sol",
+            "line_no": 19,
+            "src": "528:12"
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 58,
-            "src": "4547:15"
+            "line_no": 59,
+            "src": "4611:27"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 61,
+            "src": "4732:17"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 70,
+            "src": "5020:6"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 76,
+            "src": "5307:4"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 77,
+            "src": "5347:6"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 103,
+            "src": "6636:14"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 133,
+            "src": "8101:4"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 134,
+            "src": "8141:6"
           }
         ]
       },
