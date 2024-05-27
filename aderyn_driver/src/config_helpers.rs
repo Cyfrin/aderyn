@@ -45,7 +45,24 @@ pub fn derive_from_aderyn_toml(
     Option<Vec<String>>, // Scope
 ) {
     let config = load_aderyn_config(root).unwrap();
+    interpret_aderyn_config(config, root, src, exclude, remappings, scope)
+}
 
+#[allow(clippy::type_complexity)]
+fn interpret_aderyn_config(
+    config: AderynConfig,
+    root: &Path,
+    src: &Option<Vec<String>>,
+    exclude: &Option<Vec<String>>,
+    remappings: &Option<Vec<String>>,
+    scope: &Option<Vec<String>>,
+) -> (
+    PathBuf,             // Root
+    Option<Vec<String>>, // Src
+    Option<Vec<String>>, // Exclude
+    Option<Vec<String>>, // Remappings
+    Option<Vec<String>>, // Scope
+) {
     let mut local_root: PathBuf = root.to_path_buf();
     if let Some(config_root) = &config.root {
         // append the config_root to the local_root
@@ -130,7 +147,20 @@ pub fn append_from_foundry_toml(
     Option<Vec<String>>, // Remappings
 ) {
     let config = Config::load_with_root(root);
+    interpret_foundry_config(config, src, exclude, remappings)
+}
 
+#[allow(clippy::type_complexity)]
+fn interpret_foundry_config(
+    config: Config,
+    src: &Option<Vec<String>>,
+    exclude: &Option<Vec<String>>,
+    remappings: &Option<Vec<String>>,
+) -> (
+    Option<Vec<String>>, // Src
+    Option<Vec<String>>, // Exclude
+    Option<Vec<String>>, // Remappings
+) {
     // src
     let mut local_src = src.clone();
     match local_src {
@@ -182,4 +212,112 @@ pub fn append_from_foundry_toml(
     }
 
     (local_src, local_exclude, local_remappings)
+}
+
+#[cfg(test)]
+mod tests {
+    use std::path::PathBuf;
+
+    use foundry_config::{ethers_solc::remappings::RelativeRemapping, Config};
+
+    #[test]
+    fn test_interpret_aderyn_config_correctly_appends_and_replaces() {
+        let config = super::AderynConfig {
+            root: Some("CONFIG_ROOT".to_string()),
+            src: Some("CONFIG_SRC".to_string()),
+            exclude: Some(vec!["CONFIG_EXCLUDE".to_string()]),
+            remappings: Some(vec!["CONFIG_REMAPPINGS".to_string()]),
+            scope: Some(vec!["CONFIG_SCOPE".to_string()]),
+        };
+
+        let root = std::path::Path::new("ARG_ROOT");
+        let src = Some(vec!["ARG_SRC".to_string()]);
+        let exclude = Some(vec![
+            "ARG_EXCLUDE_1".to_string(),
+            "ARG_EXCLUDE_2".to_string(),
+        ]);
+        let remappings = Some(vec![
+            "ARG_REMAPPINGS_1".to_string(),
+            "ARG_REMAPPINGS_2".to_string(),
+        ]);
+        let scope = Some(vec!["ARG_SCOPE_1".to_string(), "ARG_SCOPE_2".to_string()]);
+        let result =
+            super::interpret_aderyn_config(config, root, &src, &exclude, &remappings, &scope);
+        assert_eq!(result.0, std::path::Path::new("ARG_ROOT/CONFIG_ROOT"));
+        assert_eq!(
+            result.1,
+            Some(vec!["ARG_SRC".to_string(), "CONFIG_SRC".to_string()])
+        );
+        assert_eq!(
+            result.2,
+            Some(vec![
+                "ARG_EXCLUDE_1".to_string(),
+                "ARG_EXCLUDE_2".to_string(),
+                "CONFIG_EXCLUDE".to_string()
+            ])
+        );
+        assert_eq!(
+            result.3,
+            Some(vec![
+                "ARG_REMAPPINGS_1".to_string(),
+                "ARG_REMAPPINGS_2".to_string(),
+                "CONFIG_REMAPPINGS".to_string()
+            ])
+        );
+        assert_eq!(
+            result.4,
+            Some(vec![
+                "ARG_SCOPE_1".to_string(),
+                "ARG_SCOPE_2".to_string(),
+                "CONFIG_SCOPE".to_string()
+            ])
+        );
+    }
+
+    #[test]
+    fn test_interpret_foundry_config_correctly_appends_and_replaces() {
+        let mut config = Config::default();
+        config.src = PathBuf::from("CONFIG_SRC");
+        config.script = PathBuf::from("CONFIG_SCRIPT".to_string());
+        config.test = PathBuf::from("CONFIG_TEST".to_string());
+        config.libs = vec![PathBuf::from("CONFIG_LIBS".to_string())];
+
+        let rel_remap = RelativeRemapping {
+            context: Some("REL_REMAPPING_CONTEXT".to_string()),
+            name: "REL_REMAPPING_NAME".to_string(),
+            path: PathBuf::from("REL_REMAPPING_PATH".to_string()).into(),
+        };
+        config.remappings = vec![rel_remap];
+
+        let src = Some(vec!["ADERYN_SRC".to_string()]);
+        let exclude: Option<Vec<String>> = Some(vec![
+            "ADERYN_EXCLUDE_1".to_string(),
+            "ADERYN_EXCLUDE_2".to_string(),
+        ]);
+        let remappings = Some(vec![
+            "ADERYN_REMAPPINGS_1".to_string(),
+            "ADERYN_REMAPPINGS_2".to_string(),
+        ]);
+
+        let result = super::interpret_foundry_config(config, &src, &exclude, &remappings);
+        assert_eq!(result.0, Some(vec!["ADERYN_SRC".to_string()]));
+        assert_eq!(
+            result.1,
+            Some(vec![
+                "ADERYN_EXCLUDE_1".to_string(),
+                "ADERYN_EXCLUDE_2".to_string(),
+                "CONFIG_TEST/".to_string(),
+                "CONFIG_SCRIPT/".to_string(),
+                "CONFIG_LIBS/".to_string(),
+            ])
+        );
+        assert_eq!(
+            result.2,
+            Some(vec![
+                "ADERYN_REMAPPINGS_1".to_string(),
+                "ADERYN_REMAPPINGS_2".to_string(),
+                "REL_REMAPPING_CONTEXT:REL_REMAPPING_NAME/=REL_REMAPPING_PATH/".to_string()
+            ])
+        );
+    }
 }
