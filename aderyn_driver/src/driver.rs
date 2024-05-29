@@ -23,8 +23,8 @@ pub struct Args {
     pub root: String,
     pub output: String,
     pub src: Option<Vec<String>>,
-    pub exclude: Option<Vec<String>>,
-    pub scope: Option<Vec<String>>,
+    pub path_excludes: Option<Vec<String>>,
+    pub path_includes: Option<Vec<String>>,
     pub no_snippets: bool,
     pub skip_build: bool,
     pub skip_cloc: bool,
@@ -109,17 +109,17 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
         eprintln!("Warning: output file lacks the \".md\" or \".json\" extension in its filename.");
     }
 
-    let (root_path, src, exclude, remappings, scope) = obtain_config_values(args).unwrap();
+    let (root_path, src, exclude, remappings, include) = obtain_config_values(args).unwrap();
 
     let absolute_root_path = &ensure_valid_root_path(&root_path);
     println!(
-        "Root: {:?}, Src: {:?}, Scope: {:?}, Exclude: {:?}",
-        absolute_root_path, src, scope, exclude
+        "Root: {:?}, Src: {:?}, Include: {:?}, Exclude: {:?}",
+        absolute_root_path, src, include, exclude
     );
 
     let mut contexts: Vec<WorkspaceContext> = {
         if args.icf {
-            process_auto::with_project_root_at(&root_path, &src, &exclude, &remappings, &scope)
+            process_auto::with_project_root_at(&root_path, &src, &exclude, &remappings, &include)
         } else {
             if !is_foundry(&PathBuf::from(&args.root)) {
                 // Exit with a non-zero exit code
@@ -132,7 +132,7 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
 
             vec![process_foundry::with_project_root_at(
                 &root_path,
-                &scope,
+                &include,
                 &exclude,
                 args.skip_build,
             )]
@@ -175,9 +175,9 @@ fn obtain_config_values(
     let mut root_path = PathBuf::from(&args.root);
 
     let mut local_src = args.src.clone();
-    let mut local_exclude = args.exclude.clone();
+    let mut local_exclude = args.path_excludes.clone();
     let mut local_remappings = None;
-    let mut local_scope = args.scope.clone();
+    let mut local_include = args.path_includes.clone();
 
     let aderyn_path = root_path.join("aderyn.toml");
     // Process aderyn.toml if it exists
@@ -187,13 +187,13 @@ fn obtain_config_values(
             local_src,
             local_exclude,
             local_remappings,
-            local_scope,
+            local_include,
         ) = derive_from_aderyn_toml(
             &root_path,
             &local_src,
             &local_exclude,
             &local_remappings,
-            &local_scope,
+            &local_include,
         );
     }
 
@@ -209,7 +209,7 @@ fn obtain_config_values(
         local_src,
         local_exclude,
         local_remappings,
-        local_scope,
+        local_include,
     ))
 }
 

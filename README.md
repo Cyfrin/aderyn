@@ -125,8 +125,8 @@ Usage: `aderyn [OPTIONS] <ROOT>`
 
 Options:
   - `-o`, `--output <OUTPUT>`: Desired file path for the final report (will overwrite the existing one) [default: report.md]
-  - `-s`, `--scope <SCOPE>`: List of path strings to include, delimited by comma (no spaces). Any solidity file path not containing these strings will be ignored
-  - `-e`, `--exclude <EXCLUDE>`: List of path strings to exclude, delimited by comma (no spaces). Any solidity file path containing these strings will be ignored
+  - `-i`, `--path-includes <PATH_INCLUDES>`: List of path strings to include, delimited by comma (no spaces). Any solidity file path not containing these strings will be ignored
+  - `-x`, `--path-excludes <PATH_EXCLUDES>`: List of path strings to exclude, delimited by comma (no spaces). Any solidity file path containing these strings will be ignored
   - `-n`, `--no-snippets`: Do not include code snippets in the report (reduces report size in large repos)
   - `-h`, `--help`: Print help
   - `-V`, `--version`: Print version
