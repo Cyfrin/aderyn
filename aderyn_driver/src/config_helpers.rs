@@ -13,7 +13,7 @@ pub struct AderynConfig {
     pub src: Option<String>,
     pub exclude: Option<Vec<String>>,
     pub remappings: Option<Vec<String>>,
-    pub scope: Option<Vec<String>>,
+    pub include: Option<Vec<String>>,
 }
 
 /// Load the aderyn.toml file and deserialize it to AderynConfig
@@ -36,7 +36,7 @@ pub fn derive_from_aderyn_toml(
     src: &Option<Vec<String>>,
     exclude: &Option<Vec<String>>,
     remappings: &Option<Vec<String>>,
-    scope: &Option<Vec<String>>,
+    include: &Option<Vec<String>>,
 ) -> (
     PathBuf,             // Root
     Option<Vec<String>>, // Src
@@ -45,7 +45,7 @@ pub fn derive_from_aderyn_toml(
     Option<Vec<String>>, // Scope
 ) {
     let config = load_aderyn_config(root).unwrap();
-    interpret_aderyn_config(config, root, src, exclude, remappings, scope)
+    interpret_aderyn_config(config, root, src, exclude, remappings, include)
 }
 
 #[allow(clippy::type_complexity)]
@@ -55,7 +55,7 @@ fn interpret_aderyn_config(
     src: &Option<Vec<String>>,
     exclude: &Option<Vec<String>>,
     remappings: &Option<Vec<String>>,
-    scope: &Option<Vec<String>>,
+    include: &Option<Vec<String>>,
 ) -> (
     PathBuf,             // Root
     Option<Vec<String>>, // Src
@@ -109,17 +109,17 @@ fn interpret_aderyn_config(
         }
     }
 
-    // If config.scope is some, append each value to scope if it is not already present
-    let mut local_scope = scope.clone();
-    if let Some(config_scope) = &config.scope {
-        if let Some(local_scope) = &mut local_scope {
+    // If config.include is some, append each value to include if it is not already present
+    let mut local_include = include.clone();
+    if let Some(config_scope) = &config.include {
+        if let Some(local_include) = &mut local_include {
             for item in config_scope {
-                if !local_scope.contains(item) {
-                    local_scope.push(item.clone());
+                if !local_include.contains(item) {
+                    local_include.push(item.clone());
                 }
             }
         } else {
-            local_scope = Some(config_scope.clone());
+            local_include = Some(config_scope.clone());
         }
     }
 
@@ -128,7 +128,7 @@ fn interpret_aderyn_config(
         local_src,
         local_exclude,
         local_remappings,
-        local_scope,
+        local_include,
     )
 }
 
@@ -228,7 +228,7 @@ mod tests {
             src: Some("CONFIG_SRC".to_string()),
             exclude: Some(vec!["CONFIG_EXCLUDE".to_string()]),
             remappings: Some(vec!["CONFIG_REMAPPINGS".to_string()]),
-            scope: Some(vec!["CONFIG_SCOPE".to_string()]),
+            include: Some(vec!["CONFIG_SCOPE".to_string()]),
         };
 
         let root = std::path::Path::new("ARG_ROOT");
@@ -241,9 +241,9 @@ mod tests {
             "ARG_REMAPPINGS_1".to_string(),
             "ARG_REMAPPINGS_2".to_string(),
         ]);
-        let scope = Some(vec!["ARG_SCOPE_1".to_string(), "ARG_SCOPE_2".to_string()]);
+        let include = Some(vec!["ARG_SCOPE_1".to_string(), "ARG_SCOPE_2".to_string()]);
         let result =
-            super::interpret_aderyn_config(config, root, &src, &exclude, &remappings, &scope);
+            super::interpret_aderyn_config(config, root, &src, &exclude, &remappings, &include);
         assert_eq!(result.0, std::path::Path::new("ARG_ROOT/CONFIG_ROOT"));
         assert_eq!(
             result.1,
