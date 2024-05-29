@@ -12,16 +12,27 @@ use clap::{ArgGroup, Parser, Subcommand};
 
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
-#[command(group(ArgGroup::new("icf_dependent").requires("icf")))]
 #[command(group(ArgGroup::new("stdout_dependent").requires("stdout")))]
 pub struct CommandLineArgs {
+    /// Print every detector available
+    #[clap(subcommand, name = "registry")]
+    registry: Option<RegistryCommand>,
+
     /// Foundry or Hardhat project root directory (or path to single solidity file)
     #[arg(default_value = ".")]
     root: String,
 
-    /// Desired file path for the final report (will overwrite existing one)
-    #[arg(short, long, default_value = "report.md")]
-    output: String,
+    /// Path to the source contracts. If not provided, the ROOT directory will be used.
+    ///
+    /// For example, in a foundry repo:
+    ///
+    ///     --src=src/
+    ///
+    /// In a hardhat repo:
+    ///
+    ///    --src=contracts/
+    #[clap(short, long, use_value_delimiter = true)]
+    src: Option<Vec<String>>,
 
     /// List of path strings to include, delimited by comma (no spaces).
     /// Any solidity file path not containing these strings will be ignored
@@ -33,6 +44,14 @@ pub struct CommandLineArgs {
     #[clap(short = 'x', long, use_value_delimiter = true)]
     path_excludes: Option<Vec<String>>,
 
+    /// Desired file path for the final report (will overwrite existing one)
+    #[arg(short, long, default_value = "report.md")]
+    output: String,
+
+    /// Watch for file changes and continuously generate report
+    #[arg(short, long, group = "stdout_dependent")]
+    watch: bool,
+
     /// Do not include code snippets in the report (reduces report size in large repos)
     #[arg(short, long)]
     no_snippets: bool,
@@ -40,10 +59,6 @@ pub struct CommandLineArgs {
     /// Print the output to stdout instead of a file
     #[arg(long, name = "stdout")]
     stdout: bool,
-
-    /// Print every detector available
-    #[clap(subcommand, name = "registry")]
-    registry: Option<RegistryCommand>,
 
     /// Skip contract build step
     #[arg(long)]
@@ -60,26 +75,6 @@ pub struct CommandLineArgs {
     /// Run in Auditor mode, which only outputs manual audit helpers
     #[arg(long)]
     auditor_mode: bool,
-
-    /// Use the newer version of aderyn (in beta)
-    #[arg(long, name = "icf")]
-    icf: bool,
-
-    /// Path to the source contracts. If not provided, the ROOT directory will be used.
-    ///
-    /// For example, in a foundry repo:
-    ///
-    ///     --src=src/
-    ///
-    /// In a hardhat repo:
-    ///
-    ///    --src=contracts/
-    #[clap(short, long, use_value_delimiter = true, group = "icf_dependent")]
-    src: Option<Vec<String>>,
-
-    /// Watch for file changes and continuously generate report
-    #[arg(short, long, group = "icf_dependent", group = "stdout_dependent")]
-    watch: bool,
 }
 
 #[derive(Debug, Subcommand)]
@@ -122,7 +117,6 @@ fn main() {
         skip_update_check: cmd_args.skip_update_check,
         stdout: cmd_args.stdout,
         auditor_mode: cmd_args.auditor_mode,
-        icf: cmd_args.icf || cmd_args.auditor_mode, // If auditor mode engaged, engage ICF
     };
 
     // Run watcher is watch mode is engaged
