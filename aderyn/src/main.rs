@@ -53,7 +53,7 @@ pub struct CommandLineArgs {
     watch: bool,
 
     /// Do not include code snippets in the report (reduces report size in large repos)
-    #[arg(short, long)]
+    #[arg(long)]
     no_snippets: bool,
 
     /// Print the output to stdout instead of a file
