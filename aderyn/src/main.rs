@@ -25,13 +25,13 @@ pub struct CommandLineArgs {
 
     /// List of path strings to include, delimited by comma (no spaces).
     /// Any solidity file path not containing these strings will be ignored
-    #[clap(short, long, use_value_delimiter = true)]
-    scope: Option<Vec<String>>,
+    #[clap(short = 'i', long, use_value_delimiter = true)]
+    path_includes: Option<Vec<String>>,
 
     /// List of path strings to exclude, delimited by comma (no spaces).
     /// Any solidity file path containing these strings will be ignored
-    #[clap(short, long, use_value_delimiter = true)]
-    exclude: Option<Vec<String>>,
+    #[clap(short = 'x', long, use_value_delimiter = true)]
+    path_excludes: Option<Vec<String>>,
 
     /// Do not include code snippets in the report (reduces report size in large repos)
     #[arg(short, long)]
@@ -65,8 +65,16 @@ pub struct CommandLineArgs {
     #[arg(long, name = "icf")]
     icf: bool,
 
-    /// Path relative to project root, inside which solidity contracts will be analyzed
-    #[clap(long, use_value_delimiter = true, group = "icf_dependent")]
+    /// Path to the source contracts. If not provided, the ROOT directory will be used.
+    ///
+    /// For example, in a foundry repo:
+    ///
+    ///     --src=src/
+    ///
+    /// In a hardhat repo:
+    ///
+    ///    --src=contracts/
+    #[clap(short, long, use_value_delimiter = true, group = "icf_dependent")]
     src: Option<Vec<String>>,
 
     /// Watch for file changes and continuously generate report
@@ -106,8 +114,8 @@ fn main() {
         root: cmd_args.root,
         output: cmd_args.output,
         src: cmd_args.src,
-        scope: cmd_args.scope,
-        exclude: cmd_args.exclude,
+        path_includes: cmd_args.path_includes,
+        path_excludes: cmd_args.path_excludes,
         no_snippets: cmd_args.no_snippets,
         skip_build: cmd_args.skip_build,
         skip_cloc: cmd_args.skip_cloc,
