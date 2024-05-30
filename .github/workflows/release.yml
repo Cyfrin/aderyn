@@ -32,15 +32,29 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: Set Environment Variable (Windows)
+        if: matrix.runner == 'windows-latest'
+        shell: pwsh
+        run: |
+          $binCommit = git rev-parse --short HEAD
+          Write-Host "Git commit hash: $binCommit"
+          "BIN_COMMIT=$binCommit" | Out-File -Append $env:GITHUB_ENV
+
+      - name: Set Environment Variable (Non-Windows)
+        if: matrix.runner != 'windows-latest'
+        shell: bash
+        run: |
+          echo "BIN_COMMIT=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
+      - name: Use Environment Variable
+        run: |
+          echo "The BIN_COMMIT is $BIN_COMMIT"
   
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
         with:
           targets: "${{ matrix.target }}"
-
-      - name: Install git submodules
-        run: |
-          git submodule update --init --recursive
 
       - name: Setup Cache
         uses: Swatinem/rust-cache@v2
@@ -60,18 +74,21 @@ jobs:
           BIN_OUTPUT="target/${{ matrix.target }}/release/${PROJECT_NAME}${BIN_SUFFIX}"
   
           # Define a better name for the final binary
-          BIN_RELEASE="${PROJECT_NAME}-${{ matrix.name }}${BIN_SUFFIX}"
-          BIN_RELEASE_VERSIONED="${PROJECT_NAME}-${{ github.ref_name }}-${{ matrix.name }}${BIN_SUFFIX}"
+          echo "BIN_COMMIT: $BIN_COMMIT"
+          echo "PROJECT_NAME: $PROJECT_NAME"
+          echo "BIN_SUFFIX: $BIN_SUFFIX"
+          BIN_RELEASE_VERSIONED="${PROJECT_NAME}-${{ matrix.name }}-${BIN_COMMIT}${BIN_SUFFIX}"
+          echo "BIN_RELEASE_VERSIONED: $BIN_RELEASE_VERSIONED"
   
           # Move the built binary where you want it
           ls -la
-          mv "${BIN_OUTPUT}" "./${BIN_RELEASE}"
+          mv "${BIN_OUTPUT}" "./${BIN_RELEASE_VERSIONED}"
 
           # Export BIN_RELEASE to GITHUB_ENV
-          echo "BIN_RELEASE=${BIN_RELEASE}" >> $GITHUB_ENV
+          echo "BIN_RELEASE_VERSIONED=${BIN_RELEASE_VERSIONED}" >> $GITHUB_ENV
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ env.BIN_RELEASE }}
-          path: ${{ env.BIN_RELEASE }}
+          name: ${{ env.BIN_RELEASE_VERSIONED }}
+          path: ${{ env.BIN_RELEASE_VERSIONED }}
