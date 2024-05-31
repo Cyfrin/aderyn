@@ -38,6 +38,7 @@ jobs:
       PROJECT_NAME: aderyn
     # Set the job to run on the platform specified by the matrix below
     runs-on: ${{ matrix.runner }}
+    needs: bin_commit
   
     # Define the build matrix for cross-compilation
     strategy:
@@ -84,10 +85,10 @@ jobs:
           BIN_OUTPUT="target/${{ matrix.target }}/release/${PROJECT_NAME}${BIN_SUFFIX}"
   
           # Define a better name for the final binary
-          echo "BIN_COMMIT: $BIN_COMMIT"
+          echo "BIN_COMMIT: ${{ needs.bin_commit.outputs.bin_commit }}"
           echo "PROJECT_NAME: $PROJECT_NAME"
           echo "BIN_SUFFIX: $BIN_SUFFIX"
-          BIN_RELEASE_VERSIONED="${PROJECT_NAME}-${{ matrix.name }}-${BIN_COMMIT}${BIN_SUFFIX}"
+          BIN_RELEASE_VERSIONED="${PROJECT_NAME}-${{ matrix.name }}-${{ needs.bin_commit.outputs.bin_commit }}${BIN_SUFFIX}"
           echo "BIN_RELEASE_VERSIONED: $BIN_RELEASE_VERSIONED"
   
           # Move the built binary where you want it
