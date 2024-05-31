@@ -4,28 +4,30 @@ name: Release
 
 jobs:
   bin_commit:
-    name: Get BIN_COMMIT
+    name: Get BIN COMMIT
     runs-on: ubuntu-latest
+    outputs:
+      bin_commit: ${{ steps.set_env.outputs.bin_commit }}  # Declare output variable
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
       - name: Set Environment Variable
-        shell: bash
-        run: |
-          echo "BIN_COMMIT=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-  
+        id: set_env  # ID used to reference output
+        run: echo "::set-output name=bin_commit::$(git rev-parse --short HEAD)"
+
   create_release:
     name: Create Release
     runs-on: ubuntu-latest
+    needs: bin_commit  # Ensure this job runs after bin_commit
     steps:
       - name: Create Release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ env.BIN_COMMIT }}
-          release_name: Release ${{ env.BIN_COMMIT }}
+          tag_name: ${{ needs.bin_commit.outputs.bin_commit }}
+          release_name: Release ${{ needs.bin_commit.outputs.bin_commit }}
           draft: true
           prerelease: true
 
