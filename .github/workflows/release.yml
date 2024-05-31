@@ -97,6 +97,16 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Download All Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          path: artifacts/
+
+      - name: Compress Artifacts
+        run: |
+          mkdir compressed
+          tar -czvf compressed/all_binaries.tar.gz -C artifacts/ .
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -108,19 +118,12 @@ jobs:
           draft: false
           prerelease: false
 
-      - name: Download All Artifacts
-        uses: actions/download-artifact@v2
-
-      - name: Upload All Release Assets
-        run: |
-          for file in *; do
-            if [ -f "$file" ]; then
-              echo "Uploading $file"
-              curl -X POST \
-                -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-                -H "Content-Type: application/octet-stream" \
-                --data-binary @"$file" \
-                "${{ steps.create_release.outputs.upload_url }}?name=$(basename $file)"
-            fi
-          done
-        shell: bash
+      - name: Upload Compressed Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./compressed/all_binaries.tar.gz
+          asset_name: all_binaries.tar.gz
+          asset_content_type: application/gzip
