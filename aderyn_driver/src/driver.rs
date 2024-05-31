@@ -1,6 +1,6 @@
 use crate::{
     config_helpers::{append_from_foundry_toml, derive_from_aderyn_toml},
-    ensure_valid_root_path, process_auto, process_foundry,
+    ensure_valid_root_path, process_auto,
 };
 use aderyn_core::{
     context::workspace_context::WorkspaceContext,
@@ -12,11 +12,7 @@ use aderyn_core::{
     },
     run,
 };
-use std::{
-    error::Error,
-    fs::read_dir,
-    path::{Path, PathBuf},
-};
+use std::{error::Error, path::PathBuf};
 
 #[derive(Clone)]
 pub struct Args {
@@ -31,7 +27,6 @@ pub struct Args {
     pub skip_update_check: bool,
     pub stdout: bool,
     pub auditor_mode: bool,
-    pub icf: bool,
 }
 
 pub fn drive(args: Args) {
@@ -117,27 +112,8 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
         absolute_root_path, src, include, exclude
     );
 
-    let mut contexts: Vec<WorkspaceContext> = {
-        if args.icf {
-            process_auto::with_project_root_at(&root_path, &src, &exclude, &remappings, &include)
-        } else {
-            if !is_foundry(&PathBuf::from(&args.root)) {
-                // Exit with a non-zero exit code
-                eprintln!("foundry.toml wasn't found in the project directory!");
-                eprintln!();
-                eprintln!("NOTE: \nAderyn will first run `forge build --ast` to ensure that the contract compiles correctly and the latest artifacts are available.");
-                eprintln!("If you are using Hardhat, consider shifting to `--icf` mode");
-                std::process::exit(1);
-            };
-
-            vec![process_foundry::with_project_root_at(
-                &root_path,
-                &include,
-                &exclude,
-                args.skip_build,
-            )]
-        }
-    };
+    let mut contexts: Vec<WorkspaceContext> =
+        process_auto::with_project_root_at(&root_path, &src, &exclude, &remappings, &include);
 
     if !args.skip_cloc {
         for context in contexts.iter_mut() {
@@ -211,26 +187,4 @@ fn obtain_config_values(
         local_remappings,
         local_include,
     ))
-}
-
-fn is_foundry(path: &Path) -> bool {
-    // Canonicalize the path
-    let canonical_path = path.canonicalize().expect("Failed to canonicalize path");
-
-    // Check if the directory exists
-    if !canonical_path.is_dir() {
-        return false;
-    }
-
-    // Read the contents of the directory
-    let entries = read_dir(&canonical_path).expect("Failed to read directory");
-
-    for entry in entries.flatten() {
-        let filename = entry.file_name();
-        if matches!(filename.to_str(), Some("foundry.toml")) {
-            return true;
-        }
-    }
-
-    false
 }
