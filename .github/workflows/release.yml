@@ -36,9 +36,6 @@ jobs:
         run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
         shell: bash
 
-      - name: Debug Output Tag Name
-        run: echo "Current TAG_NAME: ${{ env.TAG_NAME }}"
-
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
         with:
@@ -58,14 +55,10 @@ jobs:
             BIN_SUFFIX=".exe"
           fi
           BIN_OUTPUT="target/${{ matrix.target }}/release/${PROJECT_NAME}${BIN_SUFFIX}"
-          BIN_RELEASE_VERSIONED="${PROJECT_NAME}-${{ matrix.name }}-${{ env.TAG_NAME }}${BIN_SUFFIX}"
+          BIN_RELEASE_VERSIONED="${PROJECT_NAME}-${{ matrix.name }}${BIN_SUFFIX}"
           echo "BIN_RELEASE_VERSIONED: $BIN_RELEASE_VERSIONED"
           mv "${BIN_OUTPUT}" "./${BIN_RELEASE_VERSIONED}"
           echo "BIN_RELEASE_VERSIONED=${BIN_RELEASE_VERSIONED}" >> $GITHUB_ENV
-          
-      - name: Output Tag Name
-        run: echo "tag_name=${{ env.TAG_NAME }}" >> $GITHUB_ENV
-        if: success()
       
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
