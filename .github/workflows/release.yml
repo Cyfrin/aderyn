@@ -81,7 +81,7 @@ jobs:
       - name: Compress Artifacts
         run: |
           mkdir compressed
-          tar -czvf compressed/all_binaries.tar.gz -C artifacts/ .
+          tar -czvf compressed/aderyn.tar.gz -C artifacts/ .
 
       - name: Create Release
         id: create_release
@@ -100,6 +100,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./compressed/all_binaries.tar.gz
-          asset_name: all_binaries.tar.gz
+          asset_path: ./compressed/aderyn.tar.gz
+          asset_name: aderyn.tar.gz
           asset_content_type: application/gzip
