@@ -7,23 +7,23 @@ jobs:
     name: Get BIN COMMIT
     runs-on: ubuntu-latest
     outputs:
-      bin_commit: ${{ steps.set_env.outputs.bin_commit }}  # Declare output variable
+      bin_commit: ${{ steps.set_env.outputs.bin_commit }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
       - name: Set Environment Variable
-        id: set_env  # ID used to reference output
+        id: set_env
         run: echo "::set-output name=bin_commit::$(git rev-parse --short HEAD)"
 
   create_release:
     name: Create Release
     runs-on: ubuntu-latest
     outputs:
-      upload_url: ${{ steps.create_release.outputs.upload_url }}
-    needs: bin_commit  # Ensure this job runs after bin_commit
+      upload_url: ${{ steps.get_upload_url.outputs.upload_url }}
+    needs: bin_commit
     steps:
       - name: Create Release
+        id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -32,8 +32,15 @@ jobs:
           release_name: Release ${{ needs.bin_commit.outputs.bin_commit }}
           draft: true
           prerelease: true
-      - name: Set Upload URL Output
-        run: echo "::set-output name=upload_url::$(echo ${{ steps.create_release.outputs.upload_url }})"
+
+      - name: Get Upload URL
+        id: get_upload_url
+        run: |
+          UPLOAD_URL=$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ needs.bin_commit.outputs.bin_commit }}" \
+            | jq -r .upload_url)
+          echo "::set-output name=upload_url::$UPLOAD_URL"
 
   build:
     name: Build
