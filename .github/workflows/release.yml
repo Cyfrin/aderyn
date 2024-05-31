@@ -1,4 +1,7 @@
-on: [push, pull_request, workflow_dispatch]
+on:
+  push:
+    tags:
+      - 'v*'
 
 name: Release
 
@@ -8,10 +11,7 @@ jobs:
     env:
       # The project name specified in your Cargo.toml
       PROJECT_NAME: aderyn
-    # Set the job to run on the platform specified by the matrix below
     runs-on: ${{ matrix.runner }}
-  
-    # Define the build matrix for cross-compilation
     strategy:
       matrix:
         include:
@@ -27,30 +27,26 @@ jobs:
           - name: macos-arm64
             runner: macos-latest
             target: aarch64-apple-darwin
-  
-    # The steps to run for each matrix item
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: Extract Tag Name
+        run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
 
       - name: Set Environment Variable (Windows)
         if: matrix.runner == 'windows-latest'
         shell: pwsh
         run: |
-          $binCommit = git rev-parse --short HEAD
-          Write-Host "Git commit hash: $binCommit"
-          "BIN_COMMIT=$binCommit" | Out-File -Append $env:GITHUB_ENV
+          "TAG_NAME=${GITHUB_REF#refs/tags/}" | Out-File -Append $env:GITHUB_ENV
 
       - name: Set Environment Variable (Non-Windows)
         if: matrix.runner != 'windows-latest'
         shell: bash
         run: |
-          echo "BIN_COMMIT=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+          echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
 
-      - name: Use Environment Variable
-        run: |
-          echo "The BIN_COMMIT is $BIN_COMMIT"
-  
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
         with:
@@ -70,22 +66,12 @@ jobs:
             BIN_SUFFIX=".exe"
           fi
   
-          # The built binary output location
           BIN_OUTPUT="target/${{ matrix.target }}/release/${PROJECT_NAME}${BIN_SUFFIX}"
-  
-          # Define a better name for the final binary
-          echo "BIN_COMMIT: $BIN_COMMIT"
-          echo "PROJECT_NAME: $PROJECT_NAME"
-          echo "BIN_SUFFIX: $BIN_SUFFIX"
-          BIN_RELEASE_VERSIONED="${PROJECT_NAME}-${{ matrix.name }}-${BIN_COMMIT}${BIN_SUFFIX}"
+          BIN_RELEASE_VERSIONED="${PROJECT_NAME}-${{ matrix.name }}-${{ env.TAG_NAME }}${BIN_SUFFIX}"
           echo "BIN_RELEASE_VERSIONED: $BIN_RELEASE_VERSIONED"
-  
-          # Move the built binary where you want it
-          ls -la
           mv "${BIN_OUTPUT}" "./${BIN_RELEASE_VERSIONED}"
-
-          # Export BIN_RELEASE to GITHUB_ENV
           echo "BIN_RELEASE_VERSIONED=${BIN_RELEASE_VERSIONED}" >> $GITHUB_ENV
+
       
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
@@ -113,8 +99,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: "release-${{ github.run_id }}"
-          release_name: "Release ${{ github.run_id }}"
+          tag_name: ${{ env.TAG_NAME }}
+          release_name: "Release ${{ env.TAG_NAME }}"
           draft: false
           prerelease: false
 
