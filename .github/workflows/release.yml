@@ -61,17 +61,6 @@ jobs:
   
       - name: Build Binary
         run: cargo build --verbose --locked --release --target ${{ matrix.target }}
-      
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
 
       - name: Create Binary
         shell: bash
@@ -98,6 +87,17 @@ jobs:
           # Export BIN_RELEASE to GITHUB_ENV
           echo "BIN_RELEASE_VERSIONED=${BIN_RELEASE_VERSIONED}" >> $GITHUB_ENV
 
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.BIN_COMMIT }}
+          release_name: Release ${{ env.BIN_COMMIT }}
+          draft: true
+          prerelease: true
+      
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
