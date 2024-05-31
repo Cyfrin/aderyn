@@ -40,7 +40,8 @@ jobs:
         if: matrix.runner == 'windows-latest'
         shell: pwsh
         run: |
-          "TAG_NAME=${GITHUB_REF#refs/tags/}" | Out-File -Append $env:GITHUB_ENV
+          $env:TAG_NAME = "${GITHUB_REF#refs/tags/}"
+          echo "TAG_NAME=$env:TAG_NAME" | Out-File -Append $env:GITHUB_ENV
 
       - name: Set Environment Variable (Non-Windows)
         if: matrix.runner != 'windows-latest'
