@@ -19,6 +19,8 @@ jobs:
   create_release:
     name: Create Release
     runs-on: ubuntu-latest
+    outputs:
+      upload_url: ${{ steps.create_release.outputs.upload_url }}
     needs: bin_commit  # Ensure this job runs after bin_commit
     steps:
       - name: Create Release
@@ -30,6 +32,8 @@ jobs:
           release_name: Release ${{ needs.bin_commit.outputs.bin_commit }}
           draft: true
           prerelease: true
+      - name: Set Upload URL Output
+        run: echo "::set-output name=upload_url::$(echo ${{ steps.create_release.outputs.upload_url }})"
 
   build:
     name: Build
@@ -38,7 +42,7 @@ jobs:
       PROJECT_NAME: aderyn
     # Set the job to run on the platform specified by the matrix below
     runs-on: ${{ matrix.runner }}
-    needs: bin_commit
+    needs: create_release  # Ensure this job runs after create_release
   
     # Define the build matrix for cross-compilation
     strategy:
@@ -109,7 +113,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          upload_url: ${{ needs.create_release.outputs.upload_url }}
           asset_path: ${{ env.BIN_RELEASE_VERSIONED }}
           asset_name: ${{ env.BIN_RELEASE_VERSIONED }}
           asset_content_type: application/octet-stream
