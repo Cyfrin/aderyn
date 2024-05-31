@@ -1,46 +1,17 @@
-on:
-  push:
-    tags:
-      - 'v*'
+on: [push, pull_request, workflow_dispatch]
 
 name: Release
 
 jobs:
-  create_release:
-    name: Create Release
-    runs-on: ubuntu-latest
-    outputs:
-      upload_url: ${{ steps.get_upload_url.outputs.upload_url }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: true
-          prerelease: true
-
-      - name: Get Upload URL
-        id: get_upload_url
-        run: |
-          UPLOAD_URL=$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            "https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ github.ref }}" \
-            | jq -r .upload_url)
-          echo "::set-output name=upload_url::$UPLOAD_URL"
-
   build:
     name: Build
     env:
+      # The project name specified in your Cargo.toml
       PROJECT_NAME: aderyn
+    # Set the job to run on the platform specified by the matrix below
     runs-on: ${{ matrix.runner }}
-    needs: create_release
+  
+    # Define the build matrix for cross-compilation
     strategy:
       matrix:
         include:
@@ -56,38 +27,89 @@ jobs:
           - name: macos-arm64
             runner: macos-latest
             target: aarch64-apple-darwin
+  
+    # The steps to run for each matrix item
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
 
-      - uses: dtolnay/rust-toolchain@stable
+      - name: Set Environment Variable (Windows)
+        if: matrix.runner == 'windows-latest'
+        shell: pwsh
+        run: |
+          $binCommit = git rev-parse --short HEAD
+          Write-Host "Git commit hash: $binCommit"
+          "BIN_COMMIT=$binCommit" | Out-File -Append $env:GITHUB_ENV
+
+      - name: Set Environment Variable (Non-Windows)
+        if: matrix.runner != 'windows-latest'
+        shell: bash
+        run: |
+          echo "BIN_COMMIT=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
+      - name: Use Environment Variable
+        run: |
+          echo "The BIN_COMMIT is $BIN_COMMIT"
+  
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
         with:
           targets: "${{ matrix.target }}"
 
-      - uses: Swatinem/rust-cache@v2
+      - name: Setup Cache
+        uses: Swatinem/rust-cache@v2
   
-      - run: cargo build --verbose --locked --release --target ${{ matrix.target }}
+      - name: Build Binary
+        run: cargo build --verbose --locked --release --target ${{ matrix.target }}
 
-      - shell: bash
+      - name: Create Binary
+        shell: bash
         run: |
           BIN_SUFFIX=""
           if [[ "${{ matrix.runner }}" == "windows-latest" ]]; then
             BIN_SUFFIX=".exe"
           fi
+  
+          # The built binary output location
           BIN_OUTPUT="target/${{ matrix.target }}/release/${PROJECT_NAME}${BIN_SUFFIX}"
-          BIN_RELEASE_VERSIONED="${PROJECT_NAME}-${{ matrix.name }}-${{ github.ref }}${BIN_SUFFIX}"
+  
+          # Define a better name for the final binary
+          echo "BIN_COMMIT: $BIN_COMMIT"
+          echo "PROJECT_NAME: $PROJECT_NAME"
+          echo "BIN_SUFFIX: $BIN_SUFFIX"
+          BIN_RELEASE_VERSIONED="${PROJECT_NAME}-${{ matrix.name }}-${BIN_COMMIT}${BIN_SUFFIX}"
+          echo "BIN_RELEASE_VERSIONED: $BIN_RELEASE_VERSIONED"
+  
+          # Move the built binary where you want it
+          ls -la
           mv "${BIN_OUTPUT}" "./${BIN_RELEASE_VERSIONED}"
+
+          # Export BIN_RELEASE to GITHUB_ENV
           echo "BIN_RELEASE_VERSIONED=${BIN_RELEASE_VERSIONED}" >> $GITHUB_ENV
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.BIN_COMMIT }}-${{ matrix.name }}
+          release_name: Release ${{ env.BIN_COMMIT }}-${{ matrix.name }}
+          draft: true
+          prerelease: true
       
-      - uses: actions/upload-artifact@v2
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
         with:
           name: ${{ env.BIN_RELEASE_VERSIONED }}
           path: ${{ env.BIN_RELEASE_VERSIONED }}
 
-      - uses: actions/upload-release-asset@v1
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ needs.create_release.outputs.upload_url }}
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ${{ env.BIN_RELEASE_VERSIONED }}
           asset_name: ${{ env.BIN_RELEASE_VERSIONED }}
           asset_content_type: application/octet-stream
