@@ -61,8 +61,19 @@ jobs:
   
       - name: Build Binary
         run: cargo build --verbose --locked --release --target ${{ matrix.target }}
-  
-      - name: Release Binary
+      
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+      - name: Create Binary
         shell: bash
         run: |
           BIN_SUFFIX=""
@@ -92,3 +103,13 @@ jobs:
         with:
           name: ${{ env.BIN_RELEASE_VERSIONED }}
           path: ${{ env.BIN_RELEASE_VERSIONED }}
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ env.BIN_RELEASE_VERSIONED }}
+          asset_name: ${{ env.BIN_RELEASE_VERSIONED }}
+          asset_content_type: application/octet-stream
