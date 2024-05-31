@@ -1,35 +1,28 @@
-on: [push, pull_request, workflow_dispatch]
+on:
+  push:
+    tags:
+      - 'v*'
 
 name: Release
 
 jobs:
-  bin_commit:
-    name: Get BIN COMMIT
-    runs-on: ubuntu-latest
-    outputs:
-      bin_commit: ${{ steps.set_env.outputs.bin_commit }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Set Environment Variable
-        id: set_env
-        run: echo "::set-output name=bin_commit::$(git rev-parse --short HEAD)"
-
   create_release:
     name: Create Release
     runs-on: ubuntu-latest
     outputs:
       upload_url: ${{ steps.get_upload_url.outputs.upload_url }}
-    needs: bin_commit
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ needs.bin_commit.outputs.bin_commit }}
-          release_name: Release ${{ needs.bin_commit.outputs.bin_commit }}
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
           draft: true
           prerelease: true
 
@@ -38,20 +31,16 @@ jobs:
         run: |
           UPLOAD_URL=$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             -H "Accept: application/vnd.github.v3+json" \
-            "https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ needs.bin_commit.outputs.bin_commit }}" \
+            "https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ github.ref }}" \
             | jq -r .upload_url)
           echo "::set-output name=upload_url::$UPLOAD_URL"
 
   build:
     name: Build
     env:
-      # The project name specified in your Cargo.toml
       PROJECT_NAME: aderyn
-    # Set the job to run on the platform specified by the matrix below
     runs-on: ${{ matrix.runner }}
-    needs: create_release  # Ensure this job runs after create_release
-  
-    # Define the build matrix for cross-compilation
+    needs: create_release
     strategy:
       matrix:
         include:
@@ -67,56 +56,34 @@ jobs:
           - name: macos-arm64
             runner: macos-latest
             target: aarch64-apple-darwin
-  
-    # The steps to run for each matrix item
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-  
-      - name: Install Rust
-        uses: dtolnay/rust-toolchain@stable
+      - uses: actions/checkout@v3
+
+      - uses: dtolnay/rust-toolchain@stable
         with:
           targets: "${{ matrix.target }}"
 
-      - name: Setup Cache
-        uses: Swatinem/rust-cache@v2
+      - uses: Swatinem/rust-cache@v2
   
-      - name: Build Binary
-        run: cargo build --verbose --locked --release --target ${{ matrix.target }}
+      - run: cargo build --verbose --locked --release --target ${{ matrix.target }}
 
-      - name: Create Binary
-        shell: bash
+      - shell: bash
         run: |
           BIN_SUFFIX=""
           if [[ "${{ matrix.runner }}" == "windows-latest" ]]; then
             BIN_SUFFIX=".exe"
           fi
-  
-          # The built binary output location
           BIN_OUTPUT="target/${{ matrix.target }}/release/${PROJECT_NAME}${BIN_SUFFIX}"
-  
-          # Define a better name for the final binary
-          echo "BIN_COMMIT: ${{ needs.bin_commit.outputs.bin_commit }}"
-          echo "PROJECT_NAME: $PROJECT_NAME"
-          echo "BIN_SUFFIX: $BIN_SUFFIX"
-          BIN_RELEASE_VERSIONED="${PROJECT_NAME}-${{ matrix.name }}-${{ needs.bin_commit.outputs.bin_commit }}${BIN_SUFFIX}"
-          echo "BIN_RELEASE_VERSIONED: $BIN_RELEASE_VERSIONED"
-  
-          # Move the built binary where you want it
-          ls -la
+          BIN_RELEASE_VERSIONED="${PROJECT_NAME}-${{ matrix.name }}-${{ github.ref }}${BIN_SUFFIX}"
           mv "${BIN_OUTPUT}" "./${BIN_RELEASE_VERSIONED}"
-
-          # Export BIN_RELEASE to GITHUB_ENV
           echo "BIN_RELEASE_VERSIONED=${BIN_RELEASE_VERSIONED}" >> $GITHUB_ENV
       
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v2
         with:
           name: ${{ env.BIN_RELEASE_VERSIONED }}
           path: ${{ env.BIN_RELEASE_VERSIONED }}
 
-      - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
+      - uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
