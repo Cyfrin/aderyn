@@ -3,6 +3,32 @@ on: [push, pull_request, workflow_dispatch]
 name: Release
 
 jobs:
+  bin_commit:
+    name: Get BIN_COMMIT
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set Environment Variable
+        shell: bash
+        run: |
+          echo "BIN_COMMIT=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+  
+  create_release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.BIN_COMMIT }}
+          release_name: Release ${{ env.BIN_COMMIT }}
+          draft: true
+          prerelease: true
+
   build:
     name: Build
     env:
@@ -32,24 +58,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
-      - name: Set Environment Variable (Windows)
-        if: matrix.runner == 'windows-latest'
-        shell: pwsh
-        run: |
-          $binCommit = git rev-parse --short HEAD
-          Write-Host "Git commit hash: $binCommit"
-          "BIN_COMMIT=$binCommit" | Out-File -Append $env:GITHUB_ENV
-
-      - name: Set Environment Variable (Non-Windows)
-        if: matrix.runner != 'windows-latest'
-        shell: bash
-        run: |
-          echo "BIN_COMMIT=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-
-      - name: Use Environment Variable
-        run: |
-          echo "The BIN_COMMIT is $BIN_COMMIT"
   
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
@@ -86,17 +94,6 @@ jobs:
 
           # Export BIN_RELEASE to GITHUB_ENV
           echo "BIN_RELEASE_VERSIONED=${BIN_RELEASE_VERSIONED}" >> $GITHUB_ENV
-
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ env.BIN_COMMIT }}
-          release_name: Release ${{ env.BIN_COMMIT }}
-          draft: true
-          prerelease: true
       
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
