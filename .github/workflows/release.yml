@@ -86,17 +86,6 @@ jobs:
 
           # Export BIN_RELEASE to GITHUB_ENV
           echo "BIN_RELEASE_VERSIONED=${BIN_RELEASE_VERSIONED}" >> $GITHUB_ENV
-
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ env.BIN_COMMIT }}-${{ matrix.name }}
-          release_name: Release ${{ env.BIN_COMMIT }}-${{ matrix.name }}
-          draft: true
-          prerelease: true
       
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
@@ -104,12 +93,34 @@ jobs:
           name: ${{ env.BIN_RELEASE_VERSIONED }}
           path: ${{ env.BIN_RELEASE_VERSIONED }}
 
-      - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
+  create_release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ env.BIN_RELEASE_VERSIONED }}
-          asset_name: ${{ env.BIN_RELEASE_VERSIONED }}
-          asset_content_type: application/octet-stream
+          tag_name: "release-${{ github.run_id }}"
+          release_name: "Release ${{ github.run_id }}"
+          draft: false
+          prerelease: false
+
+      - name: Download All Artifacts
+        uses: actions/download-artifact@v2
+
+      - name: Upload All Release Assets
+        run: |
+          for file in *; do
+            if [ -f "$file" ]; then
+              echo "Uploading $file"
+              curl -X POST \
+                -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                -H "Content-Type: application/octet-stream" \
+                --data-binary @"$file" \
+                "${{ steps.create_release.outputs.upload_url }}?name=$(basename $file)"
+            fi
+          done
+        shell: bash
