@@ -9,7 +9,6 @@ jobs:
   build:
     name: Build
     env:
-      # The project name specified in your Cargo.toml
       PROJECT_NAME: aderyn
     runs-on: ${{ matrix.runner }}
     strategy:
@@ -33,21 +32,12 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Extract Tag Name
-        id: extract_tag_name  # Assigning an ID to this step
-        run: echo "::set-output name=tag_name::${GITHUB_REF#refs/tags/}"
-
-      - name: Set Environment Variable (Windows)
-        if: matrix.runner == 'windows-latest'
-        shell: pwsh
-        run: |
-          $env:TAG_NAME = "${GITHUB_REF#refs/tags/}"
-          echo "TAG_NAME=$env:TAG_NAME" | Out-File -Append $env:GITHUB_ENV
-
-      - name: Set Environment Variable (Non-Windows)
-        if: matrix.runner != 'windows-latest'
+        id: extract_tag_name
+        run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
         shell: bash
-        run: |
-          echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
+      - name: Debug Output Tag Name
+        run: echo "Current TAG_NAME: ${{ env.TAG_NAME }}"
 
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
@@ -67,7 +57,6 @@ jobs:
           if [[ "${{ matrix.runner }}" == "windows-latest" ]]; then
             BIN_SUFFIX=".exe"
           fi
-  
           BIN_OUTPUT="target/${{ matrix.target }}/release/${PROJECT_NAME}${BIN_SUFFIX}"
           BIN_RELEASE_VERSIONED="${PROJECT_NAME}-${{ matrix.name }}-${{ env.TAG_NAME }}${BIN_SUFFIX}"
           echo "BIN_RELEASE_VERSIONED: $BIN_RELEASE_VERSIONED"
@@ -85,7 +74,7 @@ jobs:
           path: ${{ env.BIN_RELEASE_VERSIONED }}
 
     outputs:
-      tag_name: ${{ steps.extract_tag_name.outputs.tag_name }}
+      tag_name: ${{ env.TAG_NAME }}
 
   create_release:
     needs: build
