@@ -31,9 +31,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - name: foundry-toolchain
-        uses: foundry-rs/foundry-toolchain@v1.2.0
-
       - name: Checkout sources
         uses: actions/checkout@v2
 
@@ -82,8 +79,6 @@ jobs:
     name: Check Reports
     runs-on: ubuntu-latest
     steps:
-      - name: foundry-toolchain
-        uses: foundry-rs/foundry-toolchain@v1.2.0
 
       - name: Checkout sources
         uses: actions/checkout@v2
