@@ -119,7 +119,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: -- -o ./reports/report-workflow.md  --src src/ ./tests/contract-playground/ --skip-update-check --icf
+          args: -- -o ./reports/report-workflow.md  --src src/ ./tests/contract-playground/ --skip-update-check
 
       - name: Check report.md vs report-workflow.md
         run: |
@@ -134,7 +134,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: -- -o ./reports/uniswap_profile-workflow.md ./tests/contract-playground/ --skip-update-check --icf
+          args: -- -o ./reports/uniswap_profile-workflow.md ./tests/contract-playground/ --skip-update-check
 
       - name: Check uniswap_profile.md vs uniswap_profile-workflow.md
         run: |
@@ -149,7 +149,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: -- -o ./reports/sablier.md ./tests/2024-05-Sablier --skip-update-check --icf
+          args: -- -o ./reports/sablier.md ./tests/2024-05-Sablier --skip-update-check
 
       - name: Check sablier.md vs sablier-aderyn-toml-nested-root.md
         run: |
@@ -162,7 +162,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: -- -o ./reports/adhoc-sol-files-report-workflow.md ./tests/adhoc-sol-files --skip-update-check --icf
+          args: -- -o ./reports/adhoc-sol-files-report-workflow.md ./tests/adhoc-sol-files --skip-update-check
       
       - name: Check adhoc-sol-files-report.md vs adhoc-sol-files-report-workflow.md
         run: |
@@ -175,7 +175,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: -- -o ./reports/nft-workflow-report.md --src src/ ./tests/foundry-nft-f23 --skip-update-check --icf
+          args: -- -o ./reports/nft-workflow-report.md --src src/ ./tests/foundry-nft-f23 --skip-update-check
      
       - name: Check nft-workflow-report.md vs nft-report.md
         run: |
@@ -189,7 +189,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: -- -o reports/ccip-functions-report-workflow.md tests/ccip-contracts/contracts --src src/v0.8/functions/ -x "tests/,test/,mocks/"  --skip-update-check --icf
+          args: -- -o reports/ccip-functions-report-workflow.md tests/ccip-contracts/contracts --src src/v0.8/functions/ -x "tests/,test/,mocks/"  --skip-update-check
     
       - name: Check ccip-functions-report-workflow.md vs ccip-functions-report.md
         run: |
@@ -202,7 +202,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: -- -o ./reports/report-workflow.json -i src/ -x lib/ ./tests/contract-playground/ --skip-update-check --icf
+          args: -- -o ./reports/report-workflow.json -i src/ -x lib/ ./tests/contract-playground/ --skip-update-check
 
       - name: Check report.json vs report-workflow.json
         run: |
@@ -215,126 +215,12 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: -- -o ./reports/ci-report.sarif ./tests/contract-playground/ --skip-update-check --icf
+          args: -- -o ./reports/ci-report.sarif ./tests/contract-playground/ --skip-update-check
 
       - name: Check sarif report
         run: |
           cat ./reports/ci-report.sarif
           diff ./reports/report.sarif ./reports/ci-report.sarif
-
-  legacy_reports:
-    name: Check Reports (Legacy)
-    runs-on: ubuntu-latest
-    steps:
-
-      - name: foundry-toolchain
-        uses: foundry-rs/foundry-toolchain@v1.2.0
-
-      - name: Checkout sources
-        uses: actions/checkout@v2
-
-      - name: Install stable toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
-
-      - uses: actions/checkout@v3
-
-      - uses: pnpm/action-setup@v3
-        with:
-          version: 8
-
-      - name: Make
-        run: |
-          make
-
-      - name: Install pnpm dependencies for ccip contracts and come out
-        run: |
-          cd tests/ccip-contracts/
-          pnpm install
-          cd contracts/
-          pnpm install
-          cd ../../../
-
-      # Verify report.md
-
-      - name: Generate report-workflow.md
-        uses: actions-rs/cargo@v1
-        with:
-          command: run
-          args: -- -o ./reports_legacy/report-workflow.md ./tests/contract-playground/ --skip-update-check
-
-      - name: Check report.md vs report-workflow.md
-        run: |
-          cat ./reports_legacy/report-workflow.md
-          diff ./reports_legacy/report.md ./reports_legacy/report-workflow.md
-
-     # Verify report.json 
-
-      - name: Generate report-workflow.json
-        uses: actions-rs/cargo@v1
-        with:
-          command: run
-          args: -- -o ./reports_legacy/report-workflow.json ./tests/contract-playground/ --skip-update-check
-
-      - name: Check report.json vs report-workflow.json
-        run: |
-          cat ./reports_legacy/report-workflow.json
-          diff ./reports_legacy/report.json ./reports_legacy/report-workflow.json
-
-      # Verify sarif report
-
-      - name: Generate sarif report
-        uses: actions-rs/cargo@v1
-        with:
-          command: run
-          args: -- -o ./reports_legacy/ci-report.sarif ./tests/contract-playground/ --skip-update-check
-
-      - name: Check sarif report
-        run: |
-          cat ./reports_legacy/ci-report.sarif
-          diff ./reports_legacy/report.sarif ./reports_legacy/ci-report.sarif
-
-
-  reprots_vs_legacy_reports:
-    name: Reports vs Legacy Reports
-    runs-on: ubuntu-latest
-    continue-on-error: true
-    steps:
-
-      - name: Checkout sources
-        uses: actions/checkout@v2
-
-      - name: Install stable toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
-
-      - uses: actions/checkout@v3
-
-      # Diff report.json
-      - name: Diff report.json
-        run: |
-          diff ./reports/report.json ./reports_legacy/report.json
-
-      # Diff report-config.json
-      - name: Diff report-config.json
-        run: |
-          diff ./reports/report-config.json ./reports_legacy/report-config.json
-
-      # Diff uniswap_profile.md
-      - name: Diff uniswap_profile.md
-        run: |
-          diff ./reports/uniswap_profile.md ./reports_legacy/uniswap_profile.md
-
-      # Diff report.sarif
-      - name: Diff report.sarif
-        run: |
-          diff ./reports/report.sarif ./reports_legacy/report.sarif
 
   lints:
     name: Lints
@@ -366,76 +252,3 @@ jobs:
         with:
           command: clippy
           args: -- -D warnings
-
-  build:
-    name: Build
-    env:
-      # The project name specified in your Cargo.toml
-      PROJECT_NAME: aderyn
-    # Set the job to run on the platform specified by the matrix below
-    runs-on: ${{ matrix.runner }}
-  
-    # Define the build matrix for cross-compilation
-    strategy:
-      matrix:
-        include:
-          - name: linux-amd64
-            runner: ubuntu-latest
-            target: x86_64-unknown-linux-gnu
-          - name: win-amd64
-            runner: windows-latest
-            target: x86_64-pc-windows-msvc
-          - name: macos-amd64
-            runner: macos-latest
-            target: x86_64-apple-darwin
-          - name: macos-arm64
-            runner: macos-latest
-            target: aarch64-apple-darwin
-  
-    # The steps to run for each matrix item
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-  
-      - name: Install Rust
-        uses: dtolnay/rust-toolchain@stable
-        with:
-          targets: "${{ matrix.target }}"
-
-      - name: Install git submodules
-        run: |
-          git submodule update --init --recursive
-
-      - name: Setup Cache
-        uses: Swatinem/rust-cache@v2
-  
-      - name: Build Binary
-        run: cargo build --verbose --locked --release --target ${{ matrix.target }}
-  
-      - name: Release Binary
-        shell: bash
-        run: |
-          BIN_SUFFIX=""
-          if [[ "${{ matrix.runner }}" == "windows-latest" ]]; then
-            BIN_SUFFIX=".exe"
-          fi
-  
-          # The built binary output location
-          BIN_OUTPUT="target/${{ matrix.target }}/release/${PROJECT_NAME}${BIN_SUFFIX}"
-  
-          # Define a better name for the final binary
-          BIN_RELEASE="${PROJECT_NAME}-${{ matrix.name }}${BIN_SUFFIX}"
-          BIN_RELEASE_VERSIONED="${PROJECT_NAME}-${{ github.ref_name }}-${{ matrix.name }}${BIN_SUFFIX}"
-  
-          # Move the built binary where you want it
-          ls -la
-          mv "${BIN_OUTPUT}" "./${BIN_RELEASE}"
-
-          # Export BIN_RELEASE to GITHUB_ENV
-          echo "BIN_RELEASE=${BIN_RELEASE}" >> $GITHUB_ENV
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ env.BIN_RELEASE }}
-          path: ${{ env.BIN_RELEASE }}

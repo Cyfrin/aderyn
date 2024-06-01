@@ -1,6 +1,6 @@
 [package]
 name = "aderyn_core"
-version = "0.0.28"
+version = "0.1.0"
 edition = "2021"
 authors = ["Alex Roan <alex@cyfrin.io>"]
 description = "Rust based Solidity AST analyzer backend"
@@ -9,7 +9,6 @@ license = "MIT"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-crossbeam = "0.8.2"
 crossbeam-channel = "0.5.9"
 eyre = "0.6.12"
 ignore = "0.4.21"
