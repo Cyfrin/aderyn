@@ -58,7 +58,7 @@ pub struct CommandLineArgs {
 
     /// Only use the high detectors
     #[arg(long)]
-    only_highs: bool,
+    highs_only: bool,
 
     /// Print the output to stdout instead of a file
     #[arg(long, name = "stdout")]
@@ -128,9 +128,9 @@ fn main() {
         // Default to JSON
         args.output = "report.json".to_string();
         // Run it once, for the first time
-        if cmd_args.only_highs {
+        if cmd_args.highs_only {
             // Run it once
-            driver::drive_only_highs(args.clone());
+            driver::drive_highs_only(args.clone());
         } else {
             // Run it once
             driver::drive(args.clone());
@@ -139,9 +139,9 @@ fn main() {
 
         debounce_and_run(
             || {
-                if cmd_args.only_highs {
+                if cmd_args.highs_only {
                     // Run it once
-                    driver::drive_only_highs(args.clone());
+                    driver::drive_highs_only(args.clone());
                 } else {
                     // Run it once
                     driver::drive(args.clone());
@@ -151,9 +151,9 @@ fn main() {
             Duration::from_millis(50),
         );
     } else {
-        if cmd_args.only_highs {
+        if cmd_args.highs_only {
             // Run it once
-            driver::drive_only_highs(args.clone());
+            driver::drive_highs_only(args.clone());
         } else {
             // Run it once
             driver::drive(args.clone());

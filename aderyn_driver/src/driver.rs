@@ -33,7 +33,7 @@ pub fn drive(args: Args) {
     drive_with(args, get_all_issue_detectors());
 }
 
-pub fn drive_only_highs(args: Args) {
+pub fn drive_highs_only(args: Args) {
     let highs = get_all_issue_detectors()
         .into_iter()
         .filter(|d| d.severity() == IssueSeverity::High)
