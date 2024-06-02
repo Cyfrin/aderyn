@@ -181,7 +181,7 @@ fn is_demarcation_line(
     exclude: &Option<Vec<String>>,
     root_path: &Path,
     src: &Option<Vec<PathBuf>>,
-    absolute_root_path_str: &String,
+    absolute_root_path_str: &str,
 ) -> (bool, Option<String>) {
     if line.starts_with("======= ") {
         let end_marker = line.find(" =======").unwrap();
@@ -208,5 +208,5 @@ fn is_demarcation_line(
         }
         return (true, None);
     }
-    return (false, None);
+    (false, None)
 }
