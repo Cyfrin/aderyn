@@ -136,7 +136,7 @@ fn main() {
             driver::drive(args.clone());
         }
         println!("INFO: Aderyn is entering watch mode !");
-
+        // Now run it every time there is a file change
         debounce_and_run(
             || {
                 if cmd_args.highs_only {
@@ -151,6 +151,7 @@ fn main() {
             Duration::from_millis(50),
         );
     } else {
+        #[allow(clippy::collapsible_else_if)]
         if cmd_args.highs_only {
             // Run it once
             driver::drive_highs_only(args.clone());
