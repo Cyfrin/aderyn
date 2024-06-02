@@ -116,24 +116,41 @@ fn create_workspace_context_from_stdout(
     let mut context = WorkspaceContext::default();
     // dbg!(&stdout)
 
-    let mut pick_next_line = false;
+    // let mut pick_next_line = false;
     let mut src_filepaths = vec![];
 
-    for line in stdout.lines() {
+    let lines = stdout.lines().collect::<Vec<_>>();
+
+    let mut idx = 0;
+    let mut keep_picking = false;
+    let mut ast_content = String::new();
+
+    while idx < lines.len() {
+        let line = lines[idx];
+
         let (separation, filename) =
             is_demarcation_line(line, scope, exclude, root_path, src, absolute_root_path_str);
 
         if separation {
+            if !ast_content.is_empty() {
+                absorb_ast_content_into_context(&ast_content, root_path, &mut context);
+            }
+            ast_content = String::new();
+            keep_picking = false;
+
             if let Some(filepath) = filename {
                 src_filepaths.push(filepath);
-                pick_next_line = true;
+                keep_picking = true;
             }
-        } else if pick_next_line {
-            let ast_content = line.to_string();
-            absorb_ast_content_into_context(&ast_content, root_path, &mut context);
-
-            pick_next_line = false;
+        } else if keep_picking {
+            ast_content.push_str(line);
         }
+
+        idx += 1;
+    }
+
+    if !ast_content.is_empty() {
+        absorb_ast_content_into_context(&ast_content, root_path, &mut context);
     }
 
     context.src_filepaths = src_filepaths;
@@ -148,9 +165,7 @@ fn absorb_ast_content_into_context(
     let mut source_unit: SourceUnit = serde_json::from_str(ast_content).unwrap();
     let filepath = source_unit.absolute_path.as_ref().unwrap();
     source_unit.source = std::fs::read_to_string(root_path.join(filepath)).ok();
-    // dbg!(&filepath);
     source_unit.absolute_path = Some(filepath.to_string());
-    // dbg!(&filepath);
 
     source_unit.accept(context).unwrap_or_else(|err| {
         // Exit with a non-zero exit code
@@ -191,7 +206,7 @@ fn is_demarcation_line(
         ) {
             return (true, Some(filepath.to_string_lossy().to_string()));
         }
-        return (false, Some(filepath.to_string_lossy().to_string()));
+        return (true, None);
     }
     return (false, None);
 }
