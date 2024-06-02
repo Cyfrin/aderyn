@@ -56,6 +56,10 @@ pub struct CommandLineArgs {
     #[arg(long)]
     no_snippets: bool,
 
+    /// Only use the high detectors
+    #[arg(long)]
+    only_highs: bool,
+
     /// Print the output to stdout instead of a file
     #[arg(long, name = "stdout")]
     stdout: bool,
@@ -124,19 +128,36 @@ fn main() {
         // Default to JSON
         args.output = "report.json".to_string();
         // Run it once, for the first time
-        driver::drive(args.clone());
+        if cmd_args.only_highs {
+            // Run it once
+            driver::drive_only_highs(args.clone());
+        } else {
+            // Run it once
+            driver::drive(args.clone());
+        }
         println!("INFO: Aderyn is entering watch mode !");
 
         debounce_and_run(
             || {
-                driver::drive(args.clone());
+                if cmd_args.only_highs {
+                    // Run it once
+                    driver::drive_only_highs(args.clone());
+                } else {
+                    // Run it once
+                    driver::drive(args.clone());
+                }
             },
             &args,
             Duration::from_millis(50),
         );
     } else {
-        // Run it once
-        driver::drive(args.clone());
+        if cmd_args.only_highs {
+            // Run it once
+            driver::drive_only_highs(args.clone());
+        } else {
+            // Run it once
+            driver::drive(args.clone());
+        }
     }
 
     // Check for updates

@@ -4,7 +4,7 @@ use crate::{
 };
 use aderyn_core::{
     context::workspace_context::WorkspaceContext,
-    detect::detector::{get_all_issue_detectors, IssueDetector},
+    detect::detector::{get_all_issue_detectors, IssueDetector, IssueSeverity},
     fscloc,
     report::{
         json_printer::JsonPrinter, markdown_printer::MarkdownReportPrinter,
@@ -33,6 +33,13 @@ pub fn drive(args: Args) {
     drive_with(args, get_all_issue_detectors());
 }
 
+pub fn drive_only_highs(args: Args) {
+    let highs = get_all_issue_detectors()
+        .into_iter()
+        .filter(|d| d.severity() == IssueSeverity::High)
+        .collect::<Vec<_>>();
+    drive_with(args, highs);
+}
 pub fn drive_with(args: Args, detectors: Vec<Box<dyn IssueDetector>>) {
     let output = args.output.clone();
     let cx_wrapper = make_context(&args);
