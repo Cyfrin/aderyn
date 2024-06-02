@@ -120,52 +120,78 @@ fn create_workspace_context_from_stdout(
     let mut src_filepaths = vec![];
 
     for line in stdout.lines() {
-        if line.starts_with("======= ") {
-            let end_marker = line.find(" =======").unwrap();
-            let filepath = &PathBuf::from(&line["======= ".len()..end_marker]);
-            if passes_scope(
-                scope,
-                utils::canonicalize(root_path.join(filepath))
-                    .unwrap()
-                    .as_path(),
-                absolute_root_path_str,
-            ) && passes_exclude(
-                exclude,
-                utils::canonicalize(root_path.join(filepath))
-                    .unwrap()
-                    .as_path(),
-                absolute_root_path_str,
-            ) && passes_src(
-                src,
-                utils::canonicalize(root_path.join(filepath))
-                    .unwrap()
-                    .as_path(),
-            ) {
-                src_filepaths.push(filepath.to_string_lossy().to_string());
+        let (separation, filename) =
+            is_demarcation_line(line, scope, exclude, root_path, src, absolute_root_path_str);
+
+        if separation {
+            if let Some(filepath) = filename {
+                src_filepaths.push(filepath);
                 pick_next_line = true;
             }
         } else if pick_next_line {
             let ast_content = line.to_string();
-            let mut source_unit: SourceUnit = serde_json::from_str(&ast_content).unwrap();
-            let filepath = source_unit.absolute_path.as_ref().unwrap();
-            source_unit.source = std::fs::read_to_string(root_path.join(filepath)).ok();
-            // dbg!(&filepath);
-            source_unit.absolute_path = Some(filepath.to_string());
-            // dbg!(&filepath);
-
-            source_unit.accept(&mut context).unwrap_or_else(|err| {
-                // Exit with a non-zero exit code
-                eprintln!("Error loading AST into WorkspaceContext");
-                eprintln!("{:?}", err);
-                std::process::exit(1);
-            });
+            absorb_ast_content_into_context(&ast_content, root_path, &mut context);
 
             pick_next_line = false;
         }
     }
 
-    // println!("{:#?}", context);
-    // println!("New context !");
     context.src_filepaths = src_filepaths;
     context
+}
+
+fn absorb_ast_content_into_context(
+    ast_content: &str,
+    root_path: &Path,
+    context: &mut WorkspaceContext,
+) {
+    let mut source_unit: SourceUnit = serde_json::from_str(ast_content).unwrap();
+    let filepath = source_unit.absolute_path.as_ref().unwrap();
+    source_unit.source = std::fs::read_to_string(root_path.join(filepath)).ok();
+    // dbg!(&filepath);
+    source_unit.absolute_path = Some(filepath.to_string());
+    // dbg!(&filepath);
+
+    source_unit.accept(context).unwrap_or_else(|err| {
+        // Exit with a non-zero exit code
+        eprintln!("Error loading AST into WorkspaceContext");
+        eprintln!("{:?}", err);
+        std::process::exit(1);
+    });
+}
+
+fn is_demarcation_line(
+    line: &str,
+    scope: &Option<Vec<String>>,
+    exclude: &Option<Vec<String>>,
+    root_path: &Path,
+    src: &Option<Vec<PathBuf>>,
+    absolute_root_path_str: &String,
+) -> (bool, Option<String>) {
+    if line.starts_with("======= ") {
+        let end_marker = line.find(" =======").unwrap();
+        let filepath = &PathBuf::from(&line["======= ".len()..end_marker]);
+        if passes_scope(
+            scope,
+            utils::canonicalize(root_path.join(filepath))
+                .unwrap()
+                .as_path(),
+            absolute_root_path_str,
+        ) && passes_exclude(
+            exclude,
+            utils::canonicalize(root_path.join(filepath))
+                .unwrap()
+                .as_path(),
+            absolute_root_path_str,
+        ) && passes_src(
+            src,
+            utils::canonicalize(root_path.join(filepath))
+                .unwrap()
+                .as_path(),
+        ) {
+            return (true, Some(filepath.to_string_lossy().to_string()));
+        }
+        return (false, Some(filepath.to_string_lossy().to_string()));
+    }
+    return (false, None);
 }
