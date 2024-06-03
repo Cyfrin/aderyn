@@ -3,12 +3,16 @@ use std::{collections::BTreeMap, error::Error};
 use crate::{
     ast::{FunctionKind, NodeID, Visibility},
     capture,
-    context::workspace_context::WorkspaceContext,
+    context::{
+        browser::GetClosestAncestorOfTypeX,
+        workspace_context::{ASTNode, WorkspaceContext},
+    },
     detect::{
         detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
         helpers::count_identifiers_that_reference_an_id,
     },
 };
+use cyfrin_foundry_compilers::artifacts::ContractKind;
 use eyre::Result;
 
 #[derive(Default)]
@@ -31,6 +35,15 @@ impl IssueDetector for UselessPublicFunctionDetector {
                 });
 
         for unreferenced_public_function in unreferenced_public_functions {
+            if let Some(ASTNode::ContractDefinition(parent_contract)) = unreferenced_public_function
+                .closest_ancestor_of_type(context, crate::ast::NodeType::ContractDefinition)
+            {
+                if let Some(is_abstract) = parent_contract.is_abstract {
+                    if is_abstract {
+                        continue;
+                    }
+                }
+            }
             capture!(self, context, unreferenced_public_function);
         }
 
