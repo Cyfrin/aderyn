@@ -115,6 +115,11 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
     let mut contexts: Vec<WorkspaceContext> =
         process_auto::with_project_root_at(&root_path, &src, &exclude, &remappings, &include);
 
+    if contexts.iter().all(|c| c.src_filepaths.is_empty()) {
+        eprintln!("No solidity files found in given scope!");
+        std::process::exit(1);
+    }
+
     if !args.skip_cloc {
         for context in contexts.iter_mut() {
             let stats = fscloc::engine::count_lines_of_code(
