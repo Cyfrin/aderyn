@@ -12,7 +12,6 @@ use crate::{
         helpers::count_identifiers_that_reference_an_id,
     },
 };
-use cyfrin_foundry_compilers::artifacts::ContractKind;
 use eyre::Result;
 
 #[derive(Default)]
