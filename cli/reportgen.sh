@@ -27,6 +27,10 @@ FOUNDRY_PROFILE=uniswap cargo run tests/contract-playground/ -o ./reports/uniswa
 # Basic report.json
 cargo run -- -i src/ -x lib/ -o ./reports/report.json ./tests/contract-playground --skip-update-check &
 
+# Adhoc sol files Highs only JSON report
+cargo run --  ./tests/adhoc-sol-files -o ./reports/adhoc-sol-files-highs-only-report.json --skip-update-check --highs-only &
+
+
 ##### SARIF REPORTS ########
 
 # Basic report.sarif

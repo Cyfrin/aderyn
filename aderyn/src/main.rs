@@ -121,44 +121,29 @@ fn main() {
         skip_update_check: cmd_args.skip_update_check,
         stdout: cmd_args.stdout,
         auditor_mode: cmd_args.auditor_mode,
+        highs_only: cmd_args.highs_only,
     };
 
     // Run watcher is watch mode is engaged
     if cmd_args.watch {
         // Default to JSON
         args.output = "report.json".to_string();
+
         // Run it once, for the first time
-        if cmd_args.highs_only {
-            // Run it once
-            driver::drive_highs_only(args.clone());
-        } else {
-            // Run it once
-            driver::drive(args.clone());
-        }
+        driver::drive(args.clone());
+
         println!("INFO: Aderyn is entering watch mode !");
         // Now run it every time there is a file change
         debounce_and_run(
             || {
-                if cmd_args.highs_only {
-                    // Run it once
-                    driver::drive_highs_only(args.clone());
-                } else {
-                    // Run it once
-                    driver::drive(args.clone());
-                }
+                // Run it once
+                driver::drive(args.clone());
             },
             &args,
             Duration::from_millis(50),
         );
     } else {
-        #[allow(clippy::collapsible_else_if)]
-        if cmd_args.highs_only {
-            // Run it once
-            driver::drive_highs_only(args.clone());
-        } else {
-            // Run it once
-            driver::drive(args.clone());
-        }
+        driver::drive(args.clone());
     }
 
     // Check for updates

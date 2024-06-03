@@ -27,20 +27,32 @@ pub struct Args {
     pub skip_update_check: bool,
     pub stdout: bool,
     pub auditor_mode: bool,
+    pub highs_only: bool,
 }
 
 pub fn drive(args: Args) {
-    drive_with(args, get_all_issue_detectors());
+    let detectors = if args.highs_only {
+        get_all_issue_detectors()
+            .into_iter()
+            .filter(|d| d.severity() == IssueSeverity::High)
+            .collect::<Vec<_>>()
+    } else {
+        get_all_issue_detectors()
+    };
+    drive_with(args, detectors);
 }
 
-pub fn drive_highs_only(args: Args) {
-    let highs = get_all_issue_detectors()
-        .into_iter()
-        .filter(|d| d.severity() == IssueSeverity::High)
-        .collect::<Vec<_>>();
-    drive_with(args, highs);
-}
-pub fn drive_with(args: Args, detectors: Vec<Box<dyn IssueDetector>>) {
+pub fn drive_with(args: Args, detectors_list: Vec<Box<dyn IssueDetector>>) {
+    // Filter the detectors from the given list to respect the `highs_only` option in `args`
+    let detectors = if args.highs_only {
+        detectors_list
+            .into_iter()
+            .filter(|d| d.severity() == IssueSeverity::High)
+            .collect()
+    } else {
+        detectors_list
+    };
+
     let output = args.output.clone();
     let cx_wrapper = make_context(&args);
     let root_rel_path = cx_wrapper.root_path;
