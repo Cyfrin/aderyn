@@ -1,4 +1,7 @@
-use std::{collections::BTreeMap, error::Error};
+use std::{
+    collections::{BTreeMap, HashMap},
+    error::Error,
+};
 
 use crate::{
     ast::NodeID,
@@ -17,15 +20,21 @@ pub struct UselessModifierDetector {
 
 impl IssueDetector for UselessModifierDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        for modifier in context.modifier_definitions() {
-            let mut count = 0;
-            for inv in context.modifier_invocations() {
-                if let Some(id) = inv.modifier_name.referenced_declaration {
-                    if id == modifier.id {
-                        count += 1;
+        let mut invocations: HashMap<i64, usize> = HashMap::new();
+
+        for inv in context.modifier_invocations() {
+            if let Some(id) = inv.modifier_name.referenced_declaration {
+                match invocations.entry(id) {
+                    std::collections::hash_map::Entry::Occupied(mut o) => *o.get_mut() += 1,
+                    std::collections::hash_map::Entry::Vacant(v) => {
+                        v.insert(1);
                     }
-                }
+                };
             }
+        }
+
+        for modifier in context.modifier_definitions() {
+            let count = *invocations.get(&modifier.id).unwrap_or(&0);
             if count == 1 {
                 capture!(self, context, modifier);
             }
