@@ -48,7 +48,7 @@ Built using **Rust**, Aderyn integrates seamlessly into small and **enterprise-l
 You can read the [Cyfrin official documentation](https://docs.cyfrin.io) for an in-depth look at Aderyn's functionalities.
 
 ## Features
-* [Foundry](https://book.getfoundry.sh/) support
+* Supports any development framework (Foundry/Hardhat/Truffle/etc)
 * Modular [detectors](./aderyn_core/src/detect/)
 * AST Traversal
 * Markdown reports
@@ -59,7 +59,6 @@ You can read the [Cyfrin official documentation](https://docs.cyfrin.io) for an 
 Before installing Aderyn, ensure you have the following:
 * Rust: Aderyn is built in Rust. Before running, you must install Rust and Cargo (Rust's package manager). If you still need to install Rust, follow the instructions on the [official Rust website](https://www.rust-lang.org/learn/get-started).
 
-Aderyn currently only supports Foundry-based projects. If you're using Hardhat, please take a look at the [contribution guidelines]() and [issues]() for information on how to contribute.
 **Suggested VSCode extensions:**
 [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=dustypomerleau.rust-syntax) - Rust language support for Visual Studio Code
 [Rust Syntax](https://marketplace.visualstudio.com/items?itemName=dustypomerleau.rust-syntax) - Improved Rust syntax highlighting
@@ -124,9 +123,12 @@ Usage: `aderyn [OPTIONS] <ROOT>`
 `<ROOT>`: The path to the root of the codebase to be analyzed. Defaults to the current directory.
 
 Options:
-  - `-o`, `--output <OUTPUT>`: Desired file path for the final report (will overwrite the existing one) [default: report.md]
+  - `-s`, `--src`: Path to the source contracts. If not provided, or if aderyn can't find famous files to read (like `foundry.toml`, which it automatically searches for) the ROOT directory will be used.
+    - In foundry projects, this is usually the `src/` folder unless stated otherwise in `foundry.toml`.
+    - In Hardhat projects, this is usually the `contracts/` folder unless stated otherwise in the config.
   - `-i`, `--path-includes <PATH_INCLUDES>`: List of path strings to include, delimited by comma (no spaces). Any solidity file path not containing these strings will be ignored
   - `-x`, `--path-excludes <PATH_EXCLUDES>`: List of path strings to exclude, delimited by comma (no spaces). Any solidity file path containing these strings will be ignored
+  - `-o`, `--output <OUTPUT>`: Desired file path for the final report (will overwrite the existing one) [default: report.md]
   - `-n`, `--no-snippets`: Do not include code snippets in the report (reduces report size in large repos)
   - `-h`, `--help`: Print help
   - `-V`, `--version`: Print version
