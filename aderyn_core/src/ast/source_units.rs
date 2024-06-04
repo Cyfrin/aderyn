@@ -8,6 +8,7 @@ use std::{collections::HashMap, io};
 #[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(untagged)]
 pub enum SourceUnitNode {
+    FunctionDefinition(FunctionDefinition),
     PragmaDirective(PragmaDirective),
     ImportDirective(ImportDirective),
     ContractDefinition(ContractDefinition),
@@ -33,6 +34,7 @@ impl SourceUnitNode {
             SourceUnitNode::UserDefinedValueTypeDefinition(user_defined_value_type_definition) => {
                 Some(user_defined_value_type_definition.id)
             }
+            SourceUnitNode::FunctionDefinition(function_defn) => Some(function_defn.id),
         }
     }
 }
@@ -56,6 +58,7 @@ impl Node for SourceUnitNode {
             SourceUnitNode::UserDefinedValueTypeDefinition(user_defined_value_type_definition) => {
                 user_defined_value_type_definition.accept(visitor)
             }
+            SourceUnitNode::FunctionDefinition(function_defn) => function_defn.accept(visitor),
         }
     }
     fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
