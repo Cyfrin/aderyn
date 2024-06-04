@@ -72,7 +72,7 @@ impl IssueDetector for UselessPublicFunctionDetector {
 
 #[cfg(test)]
 mod useless_public_function_tests {
-    use crate::{context, detect::detector::IssueDetector};
+    use crate::detect::detector::IssueDetector;
 
     use super::UselessPublicFunctionDetector;
     use serial_test::serial;
