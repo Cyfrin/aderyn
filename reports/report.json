@@ -1,10 +1,14 @@
 {
   "files_summary": {
-    "total_source_units": 39,
-    "total_sloc": 1249
+    "total_source_units": 40,
+    "total_sloc": 1260
   },
   "files_details": {
     "files_details": [
+      {
+        "file_path": "src/AbstractContract.sol",
+        "n_sloc": 11
+      },
       {
         "file_path": "src/AdminContract.sol",
         "n_sloc": 11

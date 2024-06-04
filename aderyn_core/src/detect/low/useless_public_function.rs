@@ -3,7 +3,10 @@ use std::{collections::BTreeMap, error::Error};
 use crate::{
     ast::{FunctionKind, NodeID, Visibility},
     capture,
-    context::workspace_context::WorkspaceContext,
+    context::{
+        browser::GetClosestAncestorOfTypeX,
+        workspace_context::{ASTNode, WorkspaceContext},
+    },
     detect::{
         detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
         helpers::count_identifiers_that_reference_an_id,
@@ -31,6 +34,15 @@ impl IssueDetector for UselessPublicFunctionDetector {
                 });
 
         for unreferenced_public_function in unreferenced_public_functions {
+            if let Some(ASTNode::ContractDefinition(parent_contract)) = unreferenced_public_function
+                .closest_ancestor_of_type(context, crate::ast::NodeType::ContractDefinition)
+            {
+                if let Some(is_abstract) = parent_contract.is_abstract {
+                    if is_abstract {
+                        continue;
+                    }
+                }
+            }
             capture!(self, context, unreferenced_public_function);
         }
 
@@ -90,5 +102,20 @@ mod useless_public_function_tests {
         );
         // assert that the detector returns the correct description
         assert_eq!(detector.description(), String::from("Instead of marking a function as `public`, consider marking it as `external` if it is not used internally."));
+    }
+
+    #[test]
+    #[serial]
+    fn test_useless_public_functions_does_not_capture_abstract_contract_functions() {
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/AbstractContract.sol",
+        );
+
+        let mut detector = UselessPublicFunctionDetector::default();
+        // assert that the detector finds the public Function
+        let found = detector.detect(&context).unwrap();
+        assert!(!found);
+        // assert that the detector returns the correct number of instances
+        assert_eq!(detector.instances().len(), 0);
     }
 }
