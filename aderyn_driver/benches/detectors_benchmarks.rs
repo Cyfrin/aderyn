@@ -41,6 +41,7 @@ fn bench_aderyn_on_contract_playground(c: &mut Criterion) {
                 src: None,
                 stdout: false,
                 auditor_mode: false,
+                highs_only: false,
             });
         });
     });
