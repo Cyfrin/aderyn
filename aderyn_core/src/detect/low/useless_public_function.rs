@@ -72,7 +72,7 @@ impl IssueDetector for UselessPublicFunctionDetector {
 
 #[cfg(test)]
 mod useless_public_function_tests {
-    use crate::detect::detector::IssueDetector;
+    use crate::{context, detect::detector::IssueDetector};
 
     use super::UselessPublicFunctionDetector;
     use serial_test::serial;
@@ -102,5 +102,20 @@ mod useless_public_function_tests {
         );
         // assert that the detector returns the correct description
         assert_eq!(detector.description(), String::from("Instead of marking a function as `public`, consider marking it as `external` if it is not used internally."));
+    }
+
+    #[test]
+    #[serial]
+    fn test_useless_public_functions_does_not_capture_abstract_contract_functions() {
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/AbstractContract.sol",
+        );
+
+        let mut detector = UselessPublicFunctionDetector::default();
+        // assert that the detector finds the public Function
+        let found = detector.detect(&context).unwrap();
+        assert!(!found);
+        // assert that the detector returns the correct number of instances
+        assert_eq!(detector.instances().len(), 0);
     }
 }
