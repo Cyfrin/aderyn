@@ -43,16 +43,6 @@ pub fn drive(args: Args) {
 }
 
 pub fn drive_with(args: Args, detectors_list: Vec<Box<dyn IssueDetector>>) {
-    // Filter the detectors from the given list to respect the `highs_only` option in `args`
-    let detectors = if args.highs_only {
-        detectors_list
-            .into_iter()
-            .filter(|d| d.severity() == IssueSeverity::High)
-            .collect()
-    } else {
-        detectors_list
-    };
-
     let output = args.output.clone();
     let cx_wrapper = make_context(&args);
     let root_rel_path = cx_wrapper.root_path;
@@ -67,7 +57,7 @@ pub fn drive_with(args: Args, detectors_list: Vec<Box<dyn IssueDetector>>) {
             args.no_snippets,
             args.stdout,
             args.auditor_mode,
-            detectors,
+            detectors_list,
         )
         .unwrap_or_else(|err| {
             // Exit with a non-zero exit code
@@ -84,7 +74,7 @@ pub fn drive_with(args: Args, detectors_list: Vec<Box<dyn IssueDetector>>) {
             args.no_snippets,
             args.stdout,
             args.auditor_mode,
-            detectors,
+            detectors_list,
         )
         .unwrap_or_else(|err| {
             // Exit with a non-zero exit code
@@ -102,7 +92,7 @@ pub fn drive_with(args: Args, detectors_list: Vec<Box<dyn IssueDetector>>) {
             args.no_snippets,
             args.stdout,
             args.auditor_mode,
-            detectors,
+            detectors_list,
         )
         .unwrap_or_else(|err| {
             // Exit with a non-zero exit code
