@@ -209,6 +209,19 @@ jobs:
           cat ./reports/report-workflow.json
           diff ./reports/report.json ./reports/report-workflow.json
 
+      # Verify adhoc sol files (Highs Only) report.json 
+
+      - name: Generate report-workflow.json
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+          args: -- -o ./reports/adhoc-sol-files-highs-only-report-workflow.json ./tests/adhoc-sol-files --skip-update-check --highs-only
+
+      - name: Check report.json vs report-workflow.json
+        run: |
+          cat ./reports/adhoc-sol-files-highs-only-report-workflow.json
+          diff ./reports/adhoc-sol-files-highs-only-report.json ./reports/adhoc-sol-files-highs-only-report-workflow.json
+
       # Verify sarif report
 
       - name: Generate sarif report
