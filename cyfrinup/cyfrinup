@@ -1,0 +1,126 @@
+#!/usr/bin/env bash
+set -e
+
+# -----------------------------------------------------------
+# Forked from Foundry.
+# https://github.com/foundry-rs/foundry/tree/master/foundryup
+# -----------------------------------------------------------
+
+CYFRIN_DIR="$HOME/.cyfrin"
+CYFRIN_BIN_DIR="$CYFRIN_DIR/bin"
+
+main() {
+  need_cmd git
+  need_cmd curl
+
+  if check_cmd npm; then
+    if ! [[ "$(npm list -g cyfrinup)" =~ "empty" ]]; then
+      err "internal error: cyfrinup from npm already exists! It is not officially supported! \nRemove it and try again.";
+    fi
+  fi
+
+  if check_cmd yarn; then
+    if [[ "$(yarn global list)" =~ "cyfrinup" ]]; then
+      err "internal error: cyfrinup from yarn already exists! It is not officially supported! \nRemove it and try again.";
+    fi
+  fi
+
+  if [[ $(which cyfrinup) =~ "cargo" ]]; then
+    err "internal error: cyfrinup already installed via cargo. It is not officially supported!\nRemove it and try again."
+  fi
+
+  say "installing latest cyfrin tools"
+
+  PLATFORM="$(uname -s)"
+  case $PLATFORM in
+    Linux)
+      PLATFORM="linux"
+      ;;
+    Darwin)
+      PLATFORM="darwin"
+      ;;
+    *)
+      err "unsupported platform: $PLATFORM"
+      ;;
+  esac
+
+  ARCHITECTURE="$(uname -m)"
+  if [ "${ARCHITECTURE}" = "x86_64" ]; then
+    # Redirect stderr to /dev/null to avoid printing errors if non Rosetta.
+    if [ "$(sysctl -n sysctl.proc_translated 2>/dev/null)" = "1" ]; then
+      ARCHITECTURE="arm64" # Rosetta.
+    else
+      ARCHITECTURE="amd64" # Intel.
+    fi
+  elif [ "${ARCHITECTURE}" = "arm64" ] ||[ "${ARCHITECTURE}" = "aarch64" ] ; then
+    ARCHITECTURE="arm64" # Arm.
+  else
+    ARCHITECTURE="amd64" # Amd.
+  fi
+
+  ###########################################################################################
+  # Install / Update aderyn                                                                          #
+  ###########################################################################################
+
+  # Compute the URL of the release tarball in the Huff repository.
+  RELEASE_URL="https://github.com/Cyfrin/aderyn/releases/latest/download/aderyn.tar.gz"
+  
+  # TODO: for @alexroan -
+  # In your releases make sure to release amd64 as well as arm64. 
+  # We already have $PLATFORM and $ARCHITECTURE in place figured out : ) !!
+  # After that please update BIN_TARBALL_URL  and also in the curl command make 
+  # sure to account for unzipping github asset file into the bin directory
+
+  #Example - BIN_TARBALL_URL="${RELEASE_URL}aderyn_${PLATFORM}_${ARCHITECTURE}.tar.gz"
+  BIN_TARBALL_URL="${RELEASE_URL}"
+
+  # Download the binaries tarball and unpack it into the .cyfrinup bin directory.
+  say "downloading latest aderyn"
+  ensure curl -# -L $BIN_TARBALL_URL -o "$CYFRIN_BIN_DIR/aderyn"
+
+  # Download the man tarball and unpack it into the .cyfrinup man directory.
+  say "installed aderyn"
+  chmod +x "$CYFRIN_BIN_DIR/aderyn"
+  say "done"
+
+}
+
+usage() {
+  cat 1>&2 <<EOF
+The installer for Cyfrin security tools.
+USAGE:
+    cyfrinup
+EOF
+}
+
+say() {
+  printf 'cyfrinup: %s\n' "$1"
+}
+
+warn() {
+  say "warning: ${1}" >&2
+}
+
+err() {
+  say "$1" >&2
+  exit 1
+}
+
+need_cmd() {
+  if ! check_cmd "$1"; then
+    err "need '$1' (command not found)"
+  fi
+}
+
+check_cmd() {
+  command -v "$1" > /dev/null 2>&1
+}
+
+# Run a command that should never fail. If the command fails execution
+# will immediately terminate with an error showing the failing
+# command.
+ensure() {
+  if ! "$@"; then err "command failed: $*"; fi
+}
+
+main "$@" || exit 1
