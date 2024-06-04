@@ -1,13 +1,17 @@
 {
   "files_summary": {
-    "total_source_units": 18,
-    "total_sloc": 206
+    "total_source_units": 19,
+    "total_sloc": 214
   },
   "files_details": {
     "files_details": [
       {
         "file_path": "Counter.sol",
         "n_sloc": 20
+      },
+      {
+        "file_path": "Helper.sol",
+        "n_sloc": 8
       },
       {
         "file_path": "InconsistentUints.sol",
