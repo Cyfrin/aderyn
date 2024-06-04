@@ -28,18 +28,9 @@ pub struct LtInsteadOfLeDetector {
 
 impl IssueDetector for LtInsteadOfLeDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        for function_definition in context.function_definitions() {
-            let binary_operations: Vec<BinaryOperation> =
-                ExtractBinaryOperations::from(function_definition)
-                    .extracted
-                    .into_iter()
-                    .filter(|x| (x.operator == "<="))
-                    .collect();
-
-            for binary_operation in binary_operations {
-                if binary_operation.operator == "<=" {
-                    capture!(self, context, binary_operation);
-                }
+        for binary_operation in context.binary_operations() {
+            if binary_operation.operator == "<=" {
+                capture!(self, context, binary_operation);
             }
         }
         Ok(!self.found_instances.is_empty())
