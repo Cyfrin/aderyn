@@ -11,7 +11,7 @@ echo Installing cyfrinup...
 CYFRIN_DIR="$HOME/.cyfrin"
 CYFRIN_BIN_DIR="$CYFRIN_DIR/bin"
 
-CYFRINUP_URL="https://<cyfrin url>/path/to/cyfrinup.sh"
+CYFRINUP_URL="https://raw.githubusercontent.com/Cyfrin/aderyn/feature/cyfrinup/cyfrinup/cyfrinup"
 BIN_PATH="$CYFRIN_BIN_DIR/cyfrinup"
 
 # Create the .cyfrin bin directory and huffup binary if it doesn't exist.
@@ -42,11 +42,6 @@ esac
 if [[ ":$PATH:" != *":${CYFRIN_BIN_DIR}:"* ]]; then
     # Add the cyfrinup directory to the path and ensure the old PATH variables remain.
     echo >> $PROFILE && echo "export PATH=\"\$PATH:$CYFRIN_BIN_DIR\"" >> $PROFILE
-fi
-
-# Warn MacOS users that they may need to manually install libusb via Homebrew:
-if [[ "$OSTYPE" =~ ^darwin && ! -f /usr/local/opt/libusb/lib/libusb-1.0.0.dylib ]]; then
-    echo && echo "warning: libusb not found. You may need to install it manually on MacOS via Homebrew (brew install libusb)."
 fi
 
 echo && echo "Detected your preferred shell is ${PREF_SHELL} and added cyfrinup to PATH. Run 'source ${PROFILE}' or start a new terminal session to use cyfrin."

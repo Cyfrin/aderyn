@@ -76,7 +76,7 @@ main() {
 
   # Download the binaries tarball and unpack it into the .cyfrinup bin directory.
   say "downloading latest aderyn"
-  ensure curl -# -L $BIN_TARBALL_URL -o "$CYFRIN_BIN_DIR/aderyn"
+  ensure curl -# -L $BIN_TARBALL_URL -o "$CYFRIN_BIN_DIR/aderyn.tar.gz"
 
   # Download the man tarball and unpack it into the .cyfrinup man directory.
   say "installed aderyn"
