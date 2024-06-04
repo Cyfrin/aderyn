@@ -61,6 +61,7 @@ jobs:
           echo "BIN_RELEASE_VERSIONED=${BIN_RELEASE_VERSIONED}" >> $GITHUB_ENV
 
       - name: Compress Binary
+        shell: bash
         run: |
           mkdir -p compressed
           tar -czvf compressed/${{ env.BIN_RELEASE_VERSIONED }}.tar.gz ${{ env.BIN_RELEASE_VERSIONED }}
