@@ -50,17 +50,14 @@ jobs:
       - name: Install Dependencies
         if: matrix.target == 'aarch64-unknown-linux-gnu'
         run: |
-          sudo apt-get update && sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu python3-dev
-          PYTHON_VERSION=$(python3 --version | awk '{print $2}')
-          PYTHON_VERSION_SHORT=$(echo $PYTHON_VERSION | cut -d. -f1,2)
+          sudo apt-get update && sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
           mkdir -p .cargo
           echo '[target.aarch64-unknown-linux-gnu]' > .cargo/config.toml
           echo 'linker = "aarch64-linux-gnu-gcc"' >> .cargo/config.toml
-          echo "rustflags = [\"-C\", \"link-arg=-L/usr/lib/python${PYTHON_VERSION_SHORT}/config-${PYTHON_VERSION_SHORT}-aarch64-linux-gnu\"]" >> .cargo/config.toml
           rustup target add ${{ matrix.target }}
 
       - name: Build Binary
-        run: cargo build --verbose --locked --release --target ${{ matrix.target }}
+        run: cargo build --verbose --locked --release --package aderyn --target ${{ matrix.target }}
 
       - name: Create Binary
         shell: bash
