@@ -84,7 +84,10 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           path: artifacts/
-
+      - name: la -la artifacts
+        run: |
+          ls -la artifacts/
+  
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
