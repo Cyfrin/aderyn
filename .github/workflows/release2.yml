@@ -17,6 +17,9 @@ jobs:
           - name: linux-amd64
             runner: ubuntu-latest
             target: x86_64-unknown-linux-gnu
+          - name: linux-arm64
+            runner: Linux-20.04
+            target: aarch64-unknown-linux-gnu
           - name: win-amd64
             runner: windows-latest
             target: x86_64-pc-windows-msvc
@@ -104,6 +107,16 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: artifacts/aderyn-linux-amd64.tar.gz/aderyn-linux-amd64.tar.gz
           asset_name: aderyn-linux-amd64.tar.gz
+          asset_content_type: application/gzip
+      
+      - name: Upload Compressed Linux arm64 Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: artifacts/aderyn-linux-arm64.tar.gz/aderyn-linux-arm64.tar.gz
+          asset_name: aderyn-linux-arm64.tar.gz
           asset_content_type: application/gzip
       
       - name: Upload Compressed Windows amd64 Asset
