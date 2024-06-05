@@ -49,7 +49,12 @@ jobs:
   
       - name: Install Dependencies
         if: matrix.target == 'aarch64-unknown-linux-gnu'
-        run: sudo apt-get update && sudo apt-get install -y gcc-aarch64-linux-gnu
+        run: |
+          sudo apt-get update && sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
+          mkdir -p .cargo
+          echo '[target.aarch64-unknown-linux-gnu]' > .cargo/config.toml
+          echo 'linker = "aarch64-linux-gnu-gcc"' >> .cargo/config.toml
+          rustup target add ${{ matrix.target }}
 
       - name: Build Binary
         run: cargo build --verbose --locked --release --target ${{ matrix.target }}
