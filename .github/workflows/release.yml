@@ -124,7 +124,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: artifacts/aderyn-aarch64-unknown-linux-gnu.tar.gz/aderyn-aarch64-unknown-linux-gnu.tar.gz
+          asset_path: artifacts/aderyn-linux-arm64.tar.gz/aderyn-linux-arm64.tar.gz
           asset_name: aderyn-linux-arm64.tar.gz
           asset_content_type: application/gzip
       
