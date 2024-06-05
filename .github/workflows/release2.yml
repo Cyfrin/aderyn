@@ -84,9 +84,6 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           path: artifacts/
-      - name: la -la artifacts
-        run: |
-          ls -la artifacts/aderyn-macos-arm64.tar.gz/
   
       - name: Create Release
         id: create_release
@@ -99,35 +96,35 @@ jobs:
           draft: true
           prerelease: true
 
-      # - name: Upload Compressed Linux amd64 Asset
-      #   uses: actions/upload-release-asset@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     upload_url: ${{ steps.create_release.outputs.upload_url }}
-      #     asset_path: ./compressed/aderyn-linux-amd64.tar.gz
-      #     asset_name: aderyn-linux-amd64.tar.gz
-      #     asset_content_type: application/gzip
+      - name: Upload Compressed Linux amd64 Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: artifacts/aderyn-linux-amd64.tar.gz/aderyn-linux-amd64.tar.gz
+          asset_name: aderyn-linux-amd64.tar.gz
+          asset_content_type: application/gzip
       
-      # - name: Upload Compressed Windows amd64 Asset
-      #   uses: actions/upload-release-asset@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     upload_url: ${{ steps.create_release.outputs.upload_url }}
-      #     asset_path: ./compressed/aderyn-win-amd64.exe.tar.gz
-      #     asset_name: aderyn-win-amd64.exe.tar.gz
-      #     asset_content_type: application/gzip
+      - name: Upload Compressed Windows amd64 Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: artifacts/aderyn-win-amd64.exe.tar.gz/aderyn-win-amd64.exe.tar.gz
+          asset_name: aderyn-win-amd64.exe.tar.gz
+          asset_content_type: application/gzip
       
-      # - name: Upload Compressed MacOS amd64 Asset
-      #   uses: actions/upload-release-asset@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     upload_url: ${{ steps.create_release.outputs.upload_url }}
-      #     asset_path: ./compressed/aderyn-macos-amd64.tar.gz
-      #     asset_name: aderyn-macos-amd64.tar.gz
-      #     asset_content_type: application/gzip
+      - name: Upload Compressed MacOS amd64 Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: artifacts/aderyn-macos-amd64.tar.gz/aderyn-macos-amd64.tar.gz
+          asset_name: aderyn-macos-amd64.tar.gz
+          asset_content_type: application/gzip
 
       - name: Upload Compressed MacOS arm64 Asset
         uses: actions/upload-release-asset@v1
