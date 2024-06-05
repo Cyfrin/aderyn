@@ -37,7 +37,7 @@ main() {
       PLATFORM="linux"
       ;;
     Darwin)
-      PLATFORM="darwin"
+      PLATFORM="macos"
       ;;
     *)
       err "unsupported platform: $PLATFORM"
@@ -62,27 +62,34 @@ main() {
   # Install / Update aderyn                                                                          #
   ###########################################################################################
 
-  # Compute the URL of the release tarball in the Huff repository.
-  RELEASE_URL="https://github.com/Cyfrin/aderyn/releases/latest/download/aderyn.tar.gz"
-  
-  # TODO: for @alexroan -
-  # In your releases make sure to release amd64 as well as arm64. 
-  # We already have $PLATFORM and $ARCHITECTURE in place figured out : ) !!
-  # After that please update BIN_TARBALL_URL  and also in the curl command make 
-  # sure to account for unzipping github asset file into the bin directory
+  OWNER="Cyfrin"
+  REPO="aderyn"
+
+  # Get the latest release details
+  RELEASE_INFO=$(curl -s https://api.github.com/repos/$OWNER/$REPO/releases/latest)
+
+  # Extract the asset download URL for a specific asset (e.g., aderyn-linux-amd64.tar.gz)
+  ASSET_URL=$(echo $RELEASE_INFO | jq -r ".assets[] | select(.name == \"aderyn-${PLATFORM}-${ARCHITECTURE}.tar.gz\") | .browser_download_url")
+
+  # Check if the asset URL was found
+  if [ -z "$ASSET_URL" ]; then
+    echo "Asset not found!"
+    exit 1
+  fi
 
   #Example - BIN_TARBALL_URL="${RELEASE_URL}aderyn_${PLATFORM}_${ARCHITECTURE}.tar.gz"
-  BIN_TARBALL_URL="${RELEASE_URL}"
+  BIN_TARBALL_URL="${ASSET_URL}"
 
   # Download the binaries tarball and unpack it into the .cyfrinup bin directory.
   say "downloading latest aderyn"
-  ensure curl -# -L $BIN_TARBALL_URL -o "$CYFRIN_BIN_DIR/aderyn.tar.gz"
+  ensure curl -# -L $BIN_TARBALL_URL | tar -xzC $CYFRIN_BIN_DIR
+  ASSET_NAME="aderyn-${PLATFORM}-${ARCHITECTURE}"
+  mv $CYFRIN_BIN_DIR/$ASSET_NAME $CYFRIN_BIN_DIR/aderyn
 
   # Download the man tarball and unpack it into the .cyfrinup man directory.
   say "installed aderyn"
   chmod +x "$CYFRIN_BIN_DIR/aderyn"
   say "done"
-
 }
 
 usage() {
