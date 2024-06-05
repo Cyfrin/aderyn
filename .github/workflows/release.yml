@@ -50,7 +50,7 @@ jobs:
       - name: Install Dependencies
         if: matrix.target == 'aarch64-unknown-linux-gnu'
         run: |
-          sudo apt-get update && sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
+          sudo apt-get update && sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu python3-dev:arm64
           mkdir -p .cargo
           echo '[target.aarch64-unknown-linux-gnu]' > .cargo/config.toml
           echo 'linker = "aarch64-linux-gnu-gcc"' >> .cargo/config.toml
