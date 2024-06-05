@@ -86,7 +86,7 @@ jobs:
           path: artifacts/
       - name: la -la artifacts
         run: |
-          ls -la artifacts/
+          ls -la artifacts/aderyn-macos-arm64.tar.gz/
   
       - name: Create Release
         id: create_release
@@ -135,6 +135,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: aderyn-macos-arm64.tar.gz
+          asset_path: artifacts/aderyn-macos-arm64.tar.gz/aderyn-macos-arm64.tar.gz
           asset_name: aderyn-macos-arm64.tar.gz
           asset_content_type: application/gzip
