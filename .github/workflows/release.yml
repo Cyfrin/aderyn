@@ -17,6 +17,9 @@ jobs:
           - name: linux-amd64
             runner: ubuntu-latest
             target: x86_64-unknown-linux-gnu
+          - name: linux-arm64
+            runner: ubuntu-latest
+            target: aarch64-unknown-linux-gnu
           - name: win-amd64
             runner: windows-latest
             target: x86_64-pc-windows-msvc
@@ -44,8 +47,17 @@ jobs:
       - name: Setup Cache
         uses: Swatinem/rust-cache@v2
   
+      - name: Install Dependencies
+        if: matrix.target == 'aarch64-unknown-linux-gnu'
+        run: |
+          sudo apt-get update && sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
+          mkdir -p .cargo
+          echo '[target.aarch64-unknown-linux-gnu]' > .cargo/config.toml
+          echo 'linker = "aarch64-linux-gnu-gcc"' >> .cargo/config.toml
+          rustup target add ${{ matrix.target }}
+
       - name: Build Binary
-        run: cargo build --verbose --locked --release --target ${{ matrix.target }}
+        run: cargo build --verbose --locked --release --package aderyn --target ${{ matrix.target }}
 
       - name: Create Binary
         shell: bash
@@ -59,12 +71,19 @@ jobs:
           echo "BIN_RELEASE_VERSIONED: $BIN_RELEASE_VERSIONED"
           mv "${BIN_OUTPUT}" "./${BIN_RELEASE_VERSIONED}"
           echo "BIN_RELEASE_VERSIONED=${BIN_RELEASE_VERSIONED}" >> $GITHUB_ENV
-      
+
+      - name: Compress Binary
+        shell: bash
+        run: |
+          mkdir -p compressed
+          tar -czvf compressed/${{ env.BIN_RELEASE_VERSIONED }}.tar.gz ${{ env.BIN_RELEASE_VERSIONED }}
+          echo "COMPRESSED_BINARY=compressed/${{ env.BIN_RELEASE_VERSIONED }}.tar.gz" >> $GITHUB_ENV
+
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ env.BIN_RELEASE_VERSIONED }}
-          path: ${{ env.BIN_RELEASE_VERSIONED }}
+          name: ${{ env.BIN_RELEASE_VERSIONED }}.tar.gz
+          path: ${{ env.COMPRESSED_BINARY }}
 
     outputs:
       tag_name: ${{ env.TAG_NAME }}
@@ -77,12 +96,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           path: artifacts/
-
-      - name: Compress Artifacts
-        run: |
-          mkdir compressed
-          tar -czvf compressed/aderyn.tar.gz -C artifacts/ .
-
+  
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -91,15 +105,55 @@ jobs:
         with:
           tag_name: ${{ needs.build.outputs.tag_name }}
           release_name: "Release ${{ needs.build.outputs.tag_name }}"
-          draft: false
-          prerelease: false
+          draft: true
+          prerelease: true
 
-      - name: Upload Compressed Release Asset
+      - name: Upload Compressed Linux amd64 Asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./compressed/aderyn.tar.gz
-          asset_name: aderyn.tar.gz
+          asset_path: artifacts/aderyn-linux-amd64.tar.gz/aderyn-linux-amd64.tar.gz
+          asset_name: aderyn-linux-amd64.tar.gz
+          asset_content_type: application/gzip
+      
+      - name: Upload Compressed Linux arm64 Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: artifacts/aderyn-linux-arm64.tar.gz/aderyn-linux-arm64.tar.gz
+          asset_name: aderyn-linux-arm64.tar.gz
+          asset_content_type: application/gzip
+      
+      - name: Upload Compressed Windows amd64 Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: artifacts/aderyn-win-amd64.exe.tar.gz/aderyn-win-amd64.exe.tar.gz
+          asset_name: aderyn-win-amd64.exe.tar.gz
+          asset_content_type: application/gzip
+      
+      - name: Upload Compressed MacOS amd64 Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: artifacts/aderyn-macos-amd64.tar.gz/aderyn-macos-amd64.tar.gz
+          asset_name: aderyn-macos-amd64.tar.gz
+          asset_content_type: application/gzip
+
+      - name: Upload Compressed MacOS arm64 Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: artifacts/aderyn-macos-arm64.tar.gz/aderyn-macos-arm64.tar.gz
+          asset_name: aderyn-macos-arm64.tar.gz
           asset_content_type: application/gzip
