@@ -55,42 +55,14 @@ You can read the [Cyfrin official documentation](https://docs.cyfrin.io) for an 
 
 ## Installation
 
-### Prerequisites
-Before installing Aderyn, ensure you have the following:
-* Rust: Aderyn is built in Rust. Before running, you must install Rust and Cargo (Rust's package manager). If you still need to install Rust, follow the instructions on the [official Rust website](https://www.rust-lang.org/learn/get-started).
+> **NOTE**: If you previously installed aderyn using Cargo, please run `cargo uninstall aderyn`. This method of installation has been deprecated.
 
-**Suggested VSCode extensions:**
-[rust-analyzer](https://marketplace.visualstudio.com/items?itemName=dustypomerleau.rust-syntax) - Rust language support for Visual Studio Code
-[Rust Syntax](https://marketplace.visualstudio.com/items?itemName=dustypomerleau.rust-syntax) - Improved Rust syntax highlighting
+1. Download the installer
+`curl -L https://raw.githubusercontent.com/Cyfrin/aderyn/master/cyfrinup/install | bash`
+2. Restart your terminal (or use the `source ...` prompt)
+3. Run `cyfrinup`
 
-### Installing Aderyn
-**Step 1: Install Aderyn using cargo**
-
-Aderyn is currently installed using Cargo, Rust's package manager. Open your command line interface and run the following command:
-```sh
-cargo install aderyn
-```
-This command downloads and installs the Aderyn package.
-
-**Step 2: Verify installation**
-
-After the installation, you can verify that Aderyn is correctly installed by checking its version. In your command line, execute:
-```sh
-aderyn --version
-```
-This command should return the installed version of Aderyn, confirming that the installation was successful.
-
-**Step 3: Update PATH (if necessary)**
-
-If you cannot run the aderyn after installation, you may need to add Cargo's bin directory to your PATH. The exact instructions can vary based on your operating system. Typically, it involves adding ~/.cargo/bin to your PATH in your shell profile script (like .bashrc or .zshrc).
-
-**Step 4: Future Updates**
-
-To update Aderyn to the latest version, you can run the install command again:
-```sh
-cargo install aderyn
-```
-Cargo will replace the existing version with the latest one.
+Verify your installation using `aderyn --version`.
 
 ## Quick Start
 Once Aderyn is installed on your system, you can run it against your Foundry-based codebase to find vulnerabilities in your code.
