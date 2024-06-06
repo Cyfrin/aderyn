@@ -11,7 +11,7 @@ echo Installing cyfrinup...
 CYFRIN_DIR="$HOME/.cyfrin"
 CYFRIN_BIN_DIR="$CYFRIN_DIR/bin"
 
-CYFRINUP_URL="https://raw.githubusercontent.com/Cyfrin/aderyn/feature/cyfrinup/cyfrinup/cyfrinup"
+CYFRINUP_URL="https://raw.githubusercontent.com/Cyfrin/aderyn/master/cyfrinup/cyfrinup"
 BIN_PATH="$CYFRIN_BIN_DIR/cyfrinup"
 
 # Create the .cyfrin bin directory and huffup binary if it doesn't exist.
