@@ -21,15 +21,15 @@ impl Display for ContractKind {
 #[derive(Clone, Debug, Eq, Serialize, PartialEq, Hash)]
 #[serde(untagged)]
 pub enum ContractDefinitionNode {
-    UsingForDirective(UsingForDirective),     //
-    StructDefinition(StructDefinition),       //
-    EnumDefinition(EnumDefinition),           //
-    VariableDeclaration(VariableDeclaration), //
+    UsingForDirective(UsingForDirective),
+    StructDefinition(StructDefinition),
+    EnumDefinition(EnumDefinition),
+    VariableDeclaration(VariableDeclaration),
     EventDefinition(EventDefinition),
-    FunctionDefinition(FunctionDefinition), //
-    ModifierDefinition(ModifierDefinition), //
-    ErrorDefinition(ErrorDefinition),       //
-    UserDefinedValueTypeDefinition(UserDefinedValueTypeDefinition), //
+    FunctionDefinition(FunctionDefinition),
+    ModifierDefinition(ModifierDefinition),
+    ErrorDefinition(ErrorDefinition),
+    UserDefinedValueTypeDefinition(UserDefinedValueTypeDefinition),
 }
 
 impl<'de> Deserialize<'de> for ContractDefinitionNode {

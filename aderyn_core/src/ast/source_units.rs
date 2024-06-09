@@ -5,21 +5,6 @@ use eyre::Result;
 use serde::{Deserialize, Serialize};
 use std::{collections::HashMap, io};
 
-// #[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-// #[serde(untagged)]
-// pub enum SourceUnitNode {
-//     PragmaDirective(PragmaDirective),
-//     ImportDirective(ImportDirective),
-//     UsingForDirective(UsingForDirective),
-//     VariableDeclaration(VariableDeclaration),
-//     EnumDefinition(EnumDefinition),
-//     ErrorDefinition(ErrorDefinition),
-//     FunctionDefinition(FunctionDefinition),
-//     StructDefinition(StructDefinition),
-//     UserDefinedValueTypeDefinition(UserDefinedValueTypeDefinition),
-//     ContractDefinition(ContractDefinition),
-// }
-
 #[derive(Clone, Debug, Eq, Serialize, PartialEq, Hash)]
 #[serde(untagged)]
 pub enum SourceUnitNode {
