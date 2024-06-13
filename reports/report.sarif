@@ -1931,6 +1931,28 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/LtInsteadOfLe.sol"
+                },
+                "region": {
+                  "charLength": 8,
+                  "charOffset": 102
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LtInsteadOfLe.sol"
+                },
+                "region": {
+                  "charLength": 15,
+                  "charOffset": 184
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/StateVariables.sol"
                 },
                 "region": {
@@ -2624,6 +2646,17 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/KeccakContract.sol"
+                },
+                "region": {
+                  "charLength": 23,
+                  "charOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LtInsteadOfLe.sol"
                 },
                 "region": {
                   "charLength": 23,
@@ -3696,6 +3729,59 @@
             "text": "Division operations followed directly by multiplication operations can lead to precision loss due to the way integer arithmetic is handled in Solidity."
           },
           "ruleId": "division-before-multiplication"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 21,
+                  "charOffset": 707
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LtInsteadOfLe.sol"
+                },
+                "region": {
+                  "charLength": 6,
+                  "charOffset": 246
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StorageConditionals.sol"
+                },
+                "region": {
+                  "charLength": 33,
+                  "charOffset": 1610
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/eth2/DepositContract.sol"
+                },
+                "region": {
+                  "charLength": 34,
+                  "charOffset": 6689
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": ""
+          },
+          "ruleId": "lt-instead-of-le-detector"
         }
       ],
       "tool": {
