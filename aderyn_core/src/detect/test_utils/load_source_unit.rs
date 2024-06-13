@@ -61,6 +61,7 @@ pub fn load_solidity_source_unit(filepath: &str) -> WorkspaceContext {
         }
 
         let mut source_unit: SourceUnit = serde_json::from_str(&ast_content).unwrap();
+
         let mut context = WorkspaceContext::default();
         source_unit.source = Some(solidity_content);
         source_unit.accept(&mut context).unwrap_or_else(|err| {
