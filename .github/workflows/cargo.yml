@@ -97,6 +97,11 @@ jobs:
 
       - uses: actions/checkout@v3
 
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: 'npm'
+
       - uses: pnpm/action-setup@v3
         with:
           version: 8
@@ -195,6 +200,20 @@ jobs:
         run: |
           cat ./reports/ccip-functions-report-workflow.md
           diff ./reports/ccip-functions-report.md ./reports/ccip-functions-report-workflow.md
+
+      
+      # Verify prb-math-report.md (new solidity features)
+          
+      - name: Generate ccip-functions-report-workflow.md
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+          args: -- ./tests/prb-math -o ./reports/prb-math-report-workflow.md --skip-update-check
+    
+      - name: Check prb-math-report.md vs prb-math-report-workflow.md
+        run: |
+          cat ./reports/prb-math-report-workflow.md
+          diff ./reports/prb-math-report.md ./reports/prb-math-report-workflow.md
 
       # Verify report.json 
 
