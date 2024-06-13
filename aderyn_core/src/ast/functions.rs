@@ -11,6 +11,7 @@ pub enum FunctionKind {
     Function,
     Receive,
     Fallback,
+    FreeFunction,
 }
 
 impl Display for FunctionKind {

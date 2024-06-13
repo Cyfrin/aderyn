@@ -17,7 +17,7 @@ fn bench_individual_detectors_on_contract_playground(c: &mut Criterion) {
             b.iter(|| {
                 contexts.par_iter().for_each(|context| {
                     let mut d = detector.skeletal_clone();
-                    let _ = d.detect(&context).unwrap();
+                    let _ = d.detect(context).unwrap();
                 })
             })
         });
@@ -36,12 +36,12 @@ fn bench_aderyn_on_contract_playground(c: &mut Criterion) {
                 skip_build: true,
                 skip_cloc: true,
                 skip_update_check: true,
-                exclude: None,
-                scope: None,
+                path_excludes: None,
+                path_includes: None,
                 src: None,
                 stdout: false,
                 auditor_mode: false,
-                icf: true,
+                highs_only: false,
             });
         });
     });

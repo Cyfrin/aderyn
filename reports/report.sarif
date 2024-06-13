@@ -3384,8 +3384,19 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 7,
-                  "charOffset": 161
+                  "charLength": 14,
+                  "charOffset": 904
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Casting.sol"
+                },
+                "region": {
+                  "charLength": 13,
+                  "charOffset": 2086
                 }
               }
             },
@@ -3395,8 +3406,74 @@
                   "uri": "src/InconsistentUints.sol"
                 },
                 "region": {
-                  "charLength": 34,
-                  "charOffset": 35
+                  "charLength": 12,
+                  "charOffset": 122
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/InconsistentUints.sol"
+                },
+                "region": {
+                  "charLength": 11,
+                  "charOffset": 197
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/InconsistentUints.sol"
+                },
+                "region": {
+                  "charLength": 10,
+                  "charOffset": 289
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/InconsistentUints.sol"
+                },
+                "region": {
+                  "charLength": 9,
+                  "charOffset": 340
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/InconsistentUints.sol"
+                },
+                "region": {
+                  "charLength": 9,
+                  "charOffset": 383
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/InconsistentUints.sol"
+                },
+                "region": {
+                  "charLength": 10,
+                  "charOffset": 434
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/InconsistentUints.sol"
+                },
+                "region": {
+                  "charLength": 12,
+                  "charOffset": 528
                 }
               }
             },
@@ -3406,14 +3483,91 @@
                   "uri": "src/eth2/DepositContract.sol"
                 },
                 "region": {
-                  "charLength": 15,
-                  "charOffset": 4547
+                  "charLength": 27,
+                  "charOffset": 4611
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/eth2/DepositContract.sol"
+                },
+                "region": {
+                  "charLength": 17,
+                  "charOffset": 4732
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/eth2/DepositContract.sol"
+                },
+                "region": {
+                  "charLength": 6,
+                  "charOffset": 5020
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/eth2/DepositContract.sol"
+                },
+                "region": {
+                  "charLength": 4,
+                  "charOffset": 5307
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/eth2/DepositContract.sol"
+                },
+                "region": {
+                  "charLength": 6,
+                  "charOffset": 5347
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/eth2/DepositContract.sol"
+                },
+                "region": {
+                  "charLength": 14,
+                  "charOffset": 6636
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/eth2/DepositContract.sol"
+                },
+                "region": {
+                  "charLength": 4,
+                  "charOffset": 8101
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/eth2/DepositContract.sol"
+                },
+                "region": {
+                  "charLength": 6,
+                  "charOffset": 8141
                 }
               }
             }
           ],
           "message": {
-            "text": "Consider keeping the naming convention consistent in a given contract"
+            "text": "Consider keeping the naming convention consistent in a given contract. Explicit size declarations are preferred (uint256, int256) over implicit ones (uint, int) to avoid confusion."
           },
           "ruleId": "inconsistent-type-names"
         },
@@ -3550,8 +3704,8 @@
           "informationUri": "https://github.com/Cyfrin/aderyn",
           "name": "Aderyn",
           "organization": "Cyfrin",
-          "semanticVersion": "0.0.28",
-          "version": "0.0.28"
+          "semanticVersion": "0.1.2",
+          "version": "0.1.2"
         }
       }
     }

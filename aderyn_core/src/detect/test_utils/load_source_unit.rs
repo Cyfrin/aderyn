@@ -61,6 +61,7 @@ pub fn load_solidity_source_unit(filepath: &str) -> WorkspaceContext {
         }
 
         let mut source_unit: SourceUnit = serde_json::from_str(&ast_content).unwrap();
+
         let mut context = WorkspaceContext::default();
         source_unit.source = Some(solidity_content);
         source_unit.accept(&mut context).unwrap_or_else(|err| {
@@ -79,6 +80,7 @@ pub fn load_solidity_source_unit(filepath: &str) -> WorkspaceContext {
 #[cfg(test)]
 /// This function is dangerous to use because we force all the sol files into 1 Workspace Context.
 /// As a result, we may override Node IDs. Therefore, this function is only available in cfg(test)
+#[allow(dead_code)]
 pub fn load_multiple_solidity_source_units_into_single_context(
     filepaths: &[&str],
 ) -> WorkspaceContext {

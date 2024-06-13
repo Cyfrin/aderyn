@@ -1,10 +1,10 @@
 use crate::{
-    ensure_valid_root_path, foundry_config_helpers::derive_from_foundry_toml, process_auto,
-    process_foundry,
+    config_helpers::{append_from_foundry_toml, derive_from_aderyn_toml},
+    ensure_valid_root_path, process_auto,
 };
 use aderyn_core::{
     context::workspace_context::WorkspaceContext,
-    detect::detector::{get_all_issue_detectors, IssueDetector},
+    detect::detector::{get_all_issue_detectors, IssueDetector, IssueSeverity},
     fscloc,
     report::{
         json_printer::JsonPrinter, markdown_printer::MarkdownReportPrinter,
@@ -12,36 +12,40 @@ use aderyn_core::{
     },
     run,
 };
-use std::{
-    error::Error,
-    fs::read_dir,
-    path::{Path, PathBuf},
-};
+use std::{error::Error, path::PathBuf};
 
 #[derive(Clone)]
 pub struct Args {
     pub root: String,
     pub output: String,
     pub src: Option<Vec<String>>,
-    pub exclude: Option<Vec<String>>,
-    pub scope: Option<Vec<String>>,
+    pub path_excludes: Option<Vec<String>>,
+    pub path_includes: Option<Vec<String>>,
     pub no_snippets: bool,
     pub skip_build: bool,
     pub skip_cloc: bool,
     pub skip_update_check: bool,
     pub stdout: bool,
     pub auditor_mode: bool,
-    pub icf: bool,
+    pub highs_only: bool,
 }
 
 pub fn drive(args: Args) {
-    drive_with(args, get_all_issue_detectors());
+    let detectors = if args.highs_only {
+        get_all_issue_detectors()
+            .into_iter()
+            .filter(|d| d.severity() == IssueSeverity::High)
+            .collect::<Vec<_>>()
+    } else {
+        get_all_issue_detectors()
+    };
+    drive_with(args, detectors);
 }
 
-pub fn drive_with(args: Args, detectors: Vec<Box<dyn IssueDetector>>) {
+pub fn drive_with(args: Args, detectors_list: Vec<Box<dyn IssueDetector>>) {
     let output = args.output.clone();
     let cx_wrapper = make_context(&args);
-    let root_rel_path = PathBuf::from(&args.root);
+    let root_rel_path = cx_wrapper.root_path;
 
     if args.output.ends_with(".json") {
         // Load the workspace context into the run function, which runs the detectors
@@ -53,7 +57,7 @@ pub fn drive_with(args: Args, detectors: Vec<Box<dyn IssueDetector>>) {
             args.no_snippets,
             args.stdout,
             args.auditor_mode,
-            detectors,
+            detectors_list,
         )
         .unwrap_or_else(|err| {
             // Exit with a non-zero exit code
@@ -70,7 +74,7 @@ pub fn drive_with(args: Args, detectors: Vec<Box<dyn IssueDetector>>) {
             args.no_snippets,
             args.stdout,
             args.auditor_mode,
-            detectors,
+            detectors_list,
         )
         .unwrap_or_else(|err| {
             // Exit with a non-zero exit code
@@ -88,7 +92,7 @@ pub fn drive_with(args: Args, detectors: Vec<Box<dyn IssueDetector>>) {
             args.no_snippets,
             args.stdout,
             args.auditor_mode,
-            detectors,
+            detectors_list,
         )
         .unwrap_or_else(|err| {
             // Exit with a non-zero exit code
@@ -101,6 +105,7 @@ pub fn drive_with(args: Args, detectors: Vec<Box<dyn IssueDetector>>) {
 
 pub struct WorkspaceContextWrapper {
     pub contexts: Vec<WorkspaceContext>,
+    pub root_path: PathBuf,
 }
 
 fn make_context(args: &Args) -> WorkspaceContextWrapper {
@@ -108,34 +113,16 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
         eprintln!("Warning: output file lacks the \".md\" or \".json\" extension in its filename.");
     }
 
-    let root_path = PathBuf::from(&args.root);
+    let (root_path, src, exclude, remappings, include) = obtain_config_values(args).unwrap();
+
     let absolute_root_path = &ensure_valid_root_path(&root_path);
+    println!(
+        "Root: {:?}, Src: {:?}, Include: {:?}, Exclude: {:?}",
+        absolute_root_path, src, include, exclude
+    );
 
-    let (scope, exclude, src, remappings) = calculate_scope_exclude_and_src(args).unwrap();
-
-    println!("Src - {:?}, Exclude - {:?}", src, exclude);
-
-    let mut contexts: Vec<WorkspaceContext> = {
-        if args.icf {
-            process_auto::with_project_root_at(&root_path, &scope, &exclude, &src, &remappings)
-        } else {
-            if !is_foundry(&PathBuf::from(&args.root)) {
-                // Exit with a non-zero exit code
-                eprintln!("foundry.toml wasn't found in the project directory!");
-                eprintln!();
-                eprintln!("NOTE: \nAderyn will first run `forge build --ast` to ensure that the contract compiles correctly and the latest artifacts are available.");
-                eprintln!("If you are using Hardhat, consider shifting to `--icf` mode");
-                std::process::exit(1);
-            };
-
-            vec![process_foundry::with_project_root_at(
-                &root_path,
-                &scope,
-                &exclude,
-                args.skip_build,
-            )]
-        }
-    };
+    let mut contexts: Vec<WorkspaceContext> =
+        process_auto::with_project_root_at(&root_path, &src, &exclude, &remappings, &include);
 
     if !args.skip_cloc {
         for context in contexts.iter_mut() {
@@ -150,60 +137,63 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
         // Using the source path, calculate the sloc
     }
 
-    WorkspaceContextWrapper { contexts }
+    WorkspaceContextWrapper {
+        contexts,
+        root_path,
+    }
 }
 
+/// Supplement the arguments with values from aderyn.toml and foundry.toml
 #[allow(clippy::type_complexity)]
-fn calculate_scope_exclude_and_src(
+fn obtain_config_values(
     args: &Args,
 ) -> Result<
     (
-        Option<Vec<String>>, // Scope
-        Option<Vec<String>>, // Exclude
-        Option<Vec<String>>, // Src
-        Option<Vec<String>>, // Remappings
+        PathBuf,
+        Option<Vec<String>>,
+        Option<Vec<String>>,
+        Option<Vec<String>>,
+        Option<Vec<String>>,
     ),
     Box<dyn Error>,
 > {
-    let root_path = PathBuf::from(&args.root);
-    for entry in std::fs::read_dir(&root_path)? {
-        let entry = entry?;
-        if entry.file_name() == "foundry.toml" {
-            // If it is a foundry project, we auto fill scope, exclude, src from foundry.toml
-            return Ok(derive_from_foundry_toml(
-                &root_path,
-                &args.scope,
-                &args.exclude,
-                &args.src,
-            ));
-        }
+    let mut root_path = PathBuf::from(&args.root);
+
+    let mut local_src = args.src.clone();
+    let mut local_exclude = args.path_excludes.clone();
+    let mut local_remappings = None;
+    let mut local_include = args.path_includes.clone();
+
+    let aderyn_path = root_path.join("aderyn.toml");
+    // Process aderyn.toml if it exists
+    if aderyn_path.exists() {
+        (
+            root_path,
+            local_src,
+            local_exclude,
+            local_remappings,
+            local_include,
+        ) = derive_from_aderyn_toml(
+            &root_path,
+            &local_src,
+            &local_exclude,
+            &local_remappings,
+            &local_include,
+        );
     }
+
+    let foundry_path = root_path.join("foundry.toml");
+    // Process foundry.toml if it exists
+    if foundry_path.exists() {
+        (local_src, local_exclude, local_remappings) =
+            append_from_foundry_toml(&root_path, &local_src, &local_exclude, &local_remappings);
+    }
+
     Ok((
-        args.scope.clone(),
-        args.exclude.clone(),
-        args.src.clone(),
-        None,
+        root_path,
+        local_src,
+        local_exclude,
+        local_remappings,
+        local_include,
     ))
-}
-
-fn is_foundry(path: &Path) -> bool {
-    // Canonicalize the path
-    let canonical_path = path.canonicalize().expect("Failed to canonicalize path");
-
-    // Check if the directory exists
-    if !canonical_path.is_dir() {
-        return false;
-    }
-
-    // Read the contents of the directory
-    let entries = read_dir(&canonical_path).expect("Failed to read directory");
-
-    for entry in entries.flatten() {
-        let filename = entry.file_name();
-        if matches!(filename.to_str(), Some("foundry.toml")) {
-            return true;
-        }
-    }
-
-    false
 }

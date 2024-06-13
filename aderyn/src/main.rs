@@ -1,67 +1,68 @@
 #![allow(clippy::borrowed_box)]
 
-use semver::Version;
-use serde::Deserialize;
-use serde_json::Value;
-use std::{
-    path::{Path, PathBuf},
-    time::Duration,
+use aderyn::{
+    aderyn_is_currently_running_newest_version, debounce_and_run, print_all_detectors_view,
+    print_detail_view,
 };
-use strum::IntoEnumIterator;
+use std::time::Duration;
 
-use aderyn_driver::{
-    detector::{
-        get_all_detectors_names, get_all_issue_detectors, get_issue_detector_by_name,
-        IssueDetector, IssueSeverity,
-    },
-    driver::{self, Args},
-};
+use aderyn_driver::driver::{self, Args};
 
 use clap::{ArgGroup, Parser, Subcommand};
-use notify_debouncer_full::{
-    new_debouncer,
-    notify::{RecursiveMode, Watcher},
-};
-
-use cyfrin_foundry_compilers::utils;
 
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
-#[command(group(ArgGroup::new("icf_dependent").requires("icf")))]
+#[command(group(ArgGroup::new("stdout_dependent").requires("stdout")))]
 pub struct CommandLineArgs {
+    /// Print every detector available
+    #[clap(subcommand, name = "registry")]
+    registry: Option<RegistryCommand>,
+
     /// Foundry or Hardhat project root directory (or path to single solidity file)
     #[arg(default_value = ".")]
     root: String,
+
+    /// Path to the source contracts. If not provided, the ROOT directory will be used.
+    ///
+    /// For example, in a foundry repo:
+    ///
+    ///     --src=src/
+    ///
+    /// In a hardhat repo:
+    ///
+    ///    --src=contracts/
+    #[clap(short, long, use_value_delimiter = true)]
+    src: Option<Vec<String>>,
+
+    /// List of path strings to include, delimited by comma (no spaces).
+    /// Any solidity file path not containing these strings will be ignored
+    #[clap(short = 'i', long, use_value_delimiter = true)]
+    path_includes: Option<Vec<String>>,
+
+    /// List of path strings to exclude, delimited by comma (no spaces).
+    /// Any solidity file path containing these strings will be ignored
+    #[clap(short = 'x', long, use_value_delimiter = true)]
+    path_excludes: Option<Vec<String>>,
 
     /// Desired file path for the final report (will overwrite existing one)
     #[arg(short, long, default_value = "report.md")]
     output: String,
 
-    /// List of path strings to include, delimited by comma (no spaces).
-    /// Any solidity file path not containing these strings will be ignored
-    #[clap(short, long, use_value_delimiter = true)]
-    scope: Option<Vec<String>>,
-
-    /// List of path strings to exclude, delimited by comma (no spaces).
-    /// Any solidity file path containing these strings will be ignored
-    #[clap(short, long, use_value_delimiter = true)]
-    exclude: Option<Vec<String>>,
+    /// Watch for file changes and continuously generate report
+    #[arg(short, long, group = "stdout_dependent")]
+    watch: bool,
 
     /// Do not include code snippets in the report (reduces report size in large repos)
-    #[arg(short, long)]
+    #[arg(long)]
     no_snippets: bool,
 
-    /// Print the output to stdout instead of a file
+    /// Only use the high detectors
     #[arg(long)]
+    highs_only: bool,
+
+    /// Print the output to stdout instead of a file
+    #[arg(long, name = "stdout")]
     stdout: bool,
-
-    /// Path to aderyn.config.json
-    #[arg(short, long)]
-    config_file: Option<String>,
-
-    /// Print every detector available
-    #[clap(subcommand, name = "registry")]
-    registry: Option<RegistryCommand>,
 
     /// Skip contract build step
     #[arg(long)]
@@ -78,18 +79,6 @@ pub struct CommandLineArgs {
     /// Run in Auditor mode, which only outputs manual audit helpers
     #[arg(long)]
     auditor_mode: bool,
-
-    /// Use the newer version of aderyn (in beta)
-    #[arg(long, name = "icf")]
-    icf: bool,
-
-    /// Path relative to project root, inside which solidity contracts will be analyzed
-    #[clap(long, use_value_delimiter = true, group = "icf_dependent")]
-    src: Option<Vec<String>>,
-
-    /// Watch for file changes and continuously generate report
-    #[arg(short, long, group = "icf_dependent")]
-    watch: bool,
 }
 
 #[derive(Debug, Subcommand)]
@@ -120,173 +109,44 @@ fn main() {
         return;
     }
 
-    let args: Args = Args {
+    let mut args: Args = Args {
         root: cmd_args.root,
         output: cmd_args.output,
         src: cmd_args.src,
-        scope: cmd_args.scope,
-        exclude: cmd_args.exclude,
+        path_includes: cmd_args.path_includes,
+        path_excludes: cmd_args.path_excludes,
         no_snippets: cmd_args.no_snippets,
         skip_build: cmd_args.skip_build,
         skip_cloc: cmd_args.skip_cloc,
         skip_update_check: cmd_args.skip_update_check,
         stdout: cmd_args.stdout,
         auditor_mode: cmd_args.auditor_mode,
-        icf: cmd_args.icf || cmd_args.auditor_mode, // If auditor mode engaged, engage ICF
+        highs_only: cmd_args.highs_only,
     };
 
-    let aderyn_config_path = match cmd_args.config_file {
-        Some(f) => PathBuf::from(f),
-        None => {
-            let mut project_config_json = PathBuf::from(&args.root);
-            project_config_json.push("aderyn.config.json");
-            project_config_json
-        }
-    };
+    // Run watcher is watch mode is engaged
+    if cmd_args.watch {
+        // Default to JSON
+        args.output = "report.json".to_string();
 
-    if aderyn_config_path.exists() && aderyn_config_path.is_file() {
-        let config_contents = std::fs::read_to_string(&aderyn_config_path).unwrap();
-        let aderyn_config: Result<AderynConfig, _> = serde_json::from_str(&config_contents);
-        match aderyn_config {
-            Ok(config) => {
-                let all_detector_names = get_all_detectors_names();
-                let mut detector_names = Vec::new();
-                let mut subscriptions: Vec<Box<dyn IssueDetector>> = vec![];
-                let mut scope_lines: Option<Vec<String>> = args.scope.clone();
-                match config.detectors {
-                    Some(config_detectors) => {
-                        for detector_name in &config_detectors {
-                            detector_names.push(detector_name.clone());
-                            if !all_detector_names.contains(&detector_name.to_string()) {
-                                println!(
-                                            "Couldn't recognize detector with name {} in aderyn.config.json",
-                                            detector_name
-                                        );
-                                return;
-                            }
-                            let det = get_issue_detector_by_name(detector_name);
-                            subscriptions.push(det);
-                        }
-                    }
-                    None => {
-                        subscriptions.extend(get_all_issue_detectors());
-                        detector_names.extend(all_detector_names);
-                    }
-                }
-
-                let mut altered_by_scope_in_config = false;
-
-                if let Some(scope_in_config) = config.scope {
-                    let mut found_scope_lines = vec![];
-                    for scope_line in scope_in_config {
-                        found_scope_lines.push(scope_line.to_string());
-                    }
-                    if scope_lines.is_none() {
-                        // CLI should override aderyn.config.json if present
-                        scope_lines = Some(found_scope_lines);
-                        altered_by_scope_in_config = true
-                    }
-                }
-
-                if let Some(scope_file) = config.scope_file {
-                    let mut scope_file_path = aderyn_config_path.clone();
-                    scope_file_path.pop();
-                    scope_file_path.push(PathBuf::from(scope_file));
-
-                    let canonicalized_scope_file_path = utils::canonicalize(&scope_file_path);
-                    match canonicalized_scope_file_path {
-                        Ok(ok_scope_file_path) => {
-                            assert!(ok_scope_file_path.exists());
-                            let scope_lines_in_file =
-                                std::fs::read_to_string(ok_scope_file_path).unwrap();
-                            let mut found_scope_lines = vec![];
-                            for scope_line in scope_lines_in_file.lines() {
-                                found_scope_lines.push(scope_line.to_string());
-                            }
-                            if scope_lines.is_none() || altered_by_scope_in_config {
-                                // CLI should override aderyn.config.json if present
-                                if scope_lines.is_none() {
-                                    scope_lines = Some(found_scope_lines);
-                                } else {
-                                    let mut added_to_existing = scope_lines.unwrap();
-                                    added_to_existing.extend(found_scope_lines);
-                                    scope_lines = Some(added_to_existing);
-                                }
-                            }
-                        }
-                        Err(_e) => {
-                            println!(
-                                "Scope file doesn't exist at {:?}",
-                                Path::new(&scope_file_path).as_os_str()
-                            );
-                            return;
-                        }
-                    }
-                }
-
-                let new_args: Args = Args {
-                    root: args.root,
-                    output: args.output,
-                    src: args.src,
-                    scope: scope_lines,
-                    exclude: args.exclude,
-                    no_snippets: args.no_snippets,
-                    skip_build: args.skip_build,
-                    skip_cloc: args.skip_cloc,
-                    skip_update_check: args.skip_update_check,
-                    stdout: args.stdout,
-                    auditor_mode: args.auditor_mode,
-                    icf: args.icf,
-                };
-                if cmd_args.watch {
-                    println!("INFO: Aderyn is entering watch mode !");
-
-                    let mut subscriptions: Vec<Box<dyn IssueDetector>> = vec![];
-                    for detector in &detector_names {
-                        subscriptions.push(get_issue_detector_by_name(detector));
-                    }
-
-                    driver::drive_with(new_args.clone(), subscriptions);
-
-                    debounce_and_run(
-                        || {
-                            // Run it once, for the first time
-                            let mut subscriptions: Vec<Box<dyn IssueDetector>> = vec![];
-                            for detector in &detector_names {
-                                subscriptions.push(get_issue_detector_by_name(detector));
-                            }
-
-                            driver::drive_with(new_args.clone(), subscriptions);
-                        },
-                        &new_args,
-                        Duration::from_millis(50),
-                    );
-                } else {
-                    driver::drive_with(new_args, subscriptions);
-                }
-            }
-            Err(_e) => {
-                println!("aderyn.config.json wasn't formatted properly! {:?}", _e);
-            }
-        }
-    } else {
         // Run it once, for the first time
         driver::drive(args.clone());
 
-        // Then run only if file change events are observed
-        if cmd_args.watch {
-            println!("INFO: Aderyn is entering watch mode !");
-
-            debounce_and_run(
-                || {
-                    driver::drive(args.clone());
-                },
-                &args,
-                Duration::from_millis(50),
-            );
-        }
+        println!("INFO: Aderyn is entering watch mode !");
+        // Now run it every time there is a file change
+        debounce_and_run(
+            || {
+                // Run it once
+                driver::drive(args.clone());
+            },
+            &args,
+            Duration::from_millis(50),
+        );
+    } else {
+        driver::drive(args.clone());
     }
 
+    // Check for updates
     if !cmd_args.skip_update_check {
         if let Ok(yes) = aderyn_is_currently_running_newest_version() {
             if !yes {
@@ -296,147 +156,5 @@ fn main() {
                 );
             }
         }
-    }
-}
-
-fn debounce_and_run<F>(driver_func: F, args: &Args, timeout: Duration)
-where
-    F: Fn() + Copy + Send,
-{
-    // setup debouncer
-    let (tx, rx) = std::sync::mpsc::channel();
-
-    // no specific tickrate, max debounce time 2 seconds
-    let mut debouncer = new_debouncer(timeout, None, tx).unwrap();
-
-    debouncer
-        .watcher()
-        .watch(
-            PathBuf::from(args.root.clone()).as_path(),
-            RecursiveMode::Recursive,
-        )
-        .unwrap();
-
-    // Then run again only if file events are observed
-    for result in rx {
-        match result {
-            Ok(_) => {
-                driver_func();
-            }
-            Err(errors) => errors.iter().for_each(|error| println!("{error:?}")),
-        }
-        println!();
-    }
-}
-
-#[derive(Deserialize, Clone)]
-struct AderynConfig {
-    /// Detector names separated by commas
-    #[serde(rename = "use_detectors")]
-    detectors: Option<Vec<String>>,
-
-    /// Path to scope file relative to config file
-    #[serde(rename = "scope_file")]
-    scope_file: Option<String>,
-
-    /// List scope as array
-    #[serde(rename = "scope")]
-    scope: Option<Vec<String>>,
-}
-
-fn print_detail_view(detector_name: &str) {
-    let all_detector_names = get_all_detectors_names();
-    if !all_detector_names.contains(&detector_name.to_string()) {
-        println!("Couldn't recognize detector with name {}", detector_name);
-        return;
-    }
-    let detector = get_issue_detector_by_name(detector_name);
-    println!("\nDetector {}", detector_name);
-    println!();
-    println!("Title");
-    println!("{}", detector.title());
-    println!();
-    println!("Severity");
-    println!("{}", detector.severity());
-    println!();
-    println!("Description");
-    println!("{}", detector.description());
-    println!();
-}
-
-fn print_all_detectors_view() {
-    let all_detector_names = get_all_detectors_names();
-    println!("\nDetector Registry");
-    println!();
-    println!("{}   Title (Rating)", right_pad("Name", 30));
-    println!();
-    for severity in IssueSeverity::iter() {
-        print_detectors_view_with_severity(severity, &all_detector_names);
-        println!();
-    }
-    println!();
-}
-
-fn print_detectors_view_with_severity(severity: IssueSeverity, detectors_names: &[String]) {
-    let concerned_detectors = detectors_names
-        .iter()
-        .filter(|name| {
-            let detector = get_issue_detector_by_name(name);
-            detector.severity() == severity
-        })
-        .collect::<Vec<_>>();
-
-    if concerned_detectors.is_empty() {
-        return;
-    }
-
-    println!("{}\n", severity);
-    for name in concerned_detectors {
-        let detector = get_issue_detector_by_name(name);
-        println!("{} - {}", right_pad(name, 30), detector.title(),);
-    }
-    println!();
-}
-
-fn right_pad(s: &str, by: usize) -> String {
-    if s.len() > by {
-        return s.to_string();
-    }
-    let extra_spaces = by - s.len();
-    let spaces = " ".repeat(extra_spaces);
-    let mut new_string = s.to_string();
-    new_string.push_str(&spaces);
-    new_string
-}
-
-static APP_USER_AGENT: &str = concat!(env!("CARGO_PKG_NAME"), "/", env!("CARGO_PKG_VERSION"));
-
-fn aderyn_is_currently_running_newest_version() -> Result<bool, reqwest::Error> {
-    let client = reqwest::blocking::Client::builder()
-        .user_agent(APP_USER_AGENT)
-        .build()?;
-
-    let latest_version_checker = client
-        .get("https://crates.io/api/v1/crates?q=aderyn&per_page=1")
-        .send()?;
-
-    let data = latest_version_checker.json::<Value>()?;
-
-    let newest_version = data["crates"][0]["newest_version"].to_string();
-    let newest_version = &newest_version[1..newest_version.len() - 1];
-
-    let newest = Version::parse(newest_version).unwrap();
-    let current = Version::parse(env!("CARGO_PKG_VERSION")).unwrap();
-
-    Ok(current >= newest)
-}
-
-#[cfg(test)]
-mod latest_version_checker_tests {
-    use super::*;
-
-    #[test]
-    fn can_get_latest_version_from_crate_registry() {
-        assert!(aderyn_is_currently_running_newest_version().is_ok())
     }
 }
