@@ -6,8 +6,6 @@ use crate::ast::NodeID;
 use crate::capture;
 use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
-    ast::BinaryOperation,
-    context::browser::ExtractBinaryOperations,
     context::workspace_context::WorkspaceContext,
     detect::detector::{IssueDetector, IssueSeverity},
 };
