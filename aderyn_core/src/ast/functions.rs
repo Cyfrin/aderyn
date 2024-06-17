@@ -120,7 +120,37 @@ pub struct FunctionDefinition {
     pub documentation: Option<Documentation>,
     pub function_selector: Option<String>,
     pub implemented: bool,
-    pub kind: FunctionKind,
+    /// The kind of function this node defines. Only valid for Solidity versions 0.5.x and
+    /// above.
+    ///
+    /// For cross-version compatibility use [`FunctionDefinition::kind()`].
+    kind: Option<FunctionKind>,
+    #[serde(default)]
+    /// For cross-version compatibility use [`FunctionDefinition::state_mutability()`].
+    state_mutability: Option<StateMutability>,
+    #[serde(default, rename = "virtual")]
+    pub is_virtual: bool,
+    /// Whether or not this function is the constructor. Only valid for Solidity versions below
+    /// 0.5.x.
+    ///
+    /// After 0.5.x you must use `kind`. For cross-version compatibility use
+    /// [`FunctionDefinition::kind()`].
+    #[serde(default)]
+    pub is_constructor: bool,
+    /// Whether or not this function is constant (view or pure). Only valid for Solidity
+    /// versions below 0.5.x.
+    ///
+    /// After 0.5.x you must use `state_mutability`. For cross-version compatibility use
+    /// [`FunctionDefinition::state_mutability()`].
+    #[serde(default)]
+    pub is_declared_const: bool,
+    /// Whether or not this function is payable. Only valid for Solidity versions below
+    /// 0.5.x.
+    ///
+    /// After 0.5.x you must use `state_mutability`. For cross-version compatibility use
+    /// [`FunctionDefinition::state_mutability()`].
+    #[serde(default)]
+    pub is_payable: bool,
     pub modifiers: Vec<ModifierInvocation>,
     pub name: String,
     pub name_location: Option<String>,
@@ -128,7 +158,6 @@ pub struct FunctionDefinition {
     pub parameters: ParameterList,
     pub return_parameters: ParameterList,
     pub scope: NodeID,
-    pub state_mutability: StateMutability,
     pub super_function: Option<NodeID>,
     pub r#virtual: Option<bool>,
     pub visibility: Visibility,
@@ -176,6 +205,33 @@ impl Node for FunctionDefinition {
 }
 
 impl FunctionDefinition {
+    /// The kind of function this node defines.
+    pub fn kind(&self) -> &FunctionKind {
+        if let Some(kind) = &self.kind {
+            kind
+        } else if self.is_constructor {
+            &FunctionKind::Constructor
+        } else {
+            &FunctionKind::Function
+        }
+    }
+
+    /// The state mutability of the function.
+    ///
+    /// Note: Before Solidity 0.5.x, this is an approximation, as there was no distinction between
+    /// `view` and `pure`.
+    pub fn state_mutability(&self) -> &StateMutability {
+        if let Some(state_mutability) = &self.state_mutability {
+            state_mutability
+        } else if self.is_declared_const {
+            &StateMutability::View
+        } else if self.is_payable {
+            &StateMutability::Payable
+        } else {
+            &StateMutability::NonPayable
+        }
+    }
+
     pub fn get_assigned_return_variables(&self, expression: &Expression) -> Vec<NodeID> {
         let mut ids = vec![];
 
@@ -226,7 +282,7 @@ impl FunctionDefinition {
 
 impl Display for FunctionDefinition {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_fmt(format_args!("{}", self.kind))?;
+        f.write_fmt(format_args!("{}", self.kind()))?;
 
         if !self.name.is_empty() {
             f.write_fmt(format_args!(" {}", self.name))?;
@@ -234,8 +290,10 @@ impl Display for FunctionDefinition {
 
         f.write_fmt(format_args!("{} {}", self.parameters, self.visibility))?;
 
-        if self.state_mutability != StateMutability::NonPayable {
-            f.write_fmt(format_args!(" {}", self.state_mutability))?;
+        if let Some(state_mutability) = &self.state_mutability {
+            if *state_mutability != StateMutability::NonPayable {
+                f.write_fmt(format_args!(" {}", state_mutability))?;
+            }
         }
 
         if let Some(true) = self.r#virtual {

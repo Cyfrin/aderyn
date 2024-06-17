@@ -74,7 +74,7 @@ impl AuditorDetector for PublicFunctionsNoSenderChecksDetector {
                 self.found_instances.insert(NoChecksInstance {
                     contract_name,
                     function_name: function_definition.name.clone(),
-                    function_kind: function_definition.kind.clone(),
+                    function_kind: function_definition.kind().clone(),
                 });
             }
         });

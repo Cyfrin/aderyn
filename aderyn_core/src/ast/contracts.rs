@@ -518,12 +518,13 @@ impl ContractDefinition {
                 ContractDefinitionNode::FunctionDefinition(function_definition) => format!(
                     "{} {} in the `{}` {}",
                     function_definition.visibility,
-                    if let FunctionKind::Constructor = function_definition.kind {
+                    if let FunctionKind::Constructor = function_definition.kind() {
                         "constructor".to_string()
                     } else {
                         format!(
                             "`{}` {}",
-                            function_definition.name, function_definition.kind
+                            function_definition.name,
+                            function_definition.kind()
                         )
                     },
                     self.name,
