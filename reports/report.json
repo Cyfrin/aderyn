@@ -1269,6 +1269,16 @@
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
             "line_no": 27,
             "src": "745:2"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 113,
+            "src": "7252:2"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 113,
+            "src": "7293:2"
           }
         ]
       },

@@ -2310,6 +2310,28 @@
                   "charOffset": 745
                 }
               }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/eth2/DepositContract.sol"
+                },
+                "region": {
+                  "charLength": 2,
+                  "charOffset": 7252
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/eth2/DepositContract.sol"
+                },
+                "region": {
+                  "charLength": 2,
+                  "charOffset": 7293
+                }
+              }
             }
           ],
           "message": {
