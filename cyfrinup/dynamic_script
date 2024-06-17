@@ -1,0 +1,148 @@
+#!/usr/bin/env bash
+set -e
+
+# -----------------------------------------------------------
+# Forked from Foundry.
+# https://github.com/foundry-rs/foundry/tree/master/foundryup
+# -----------------------------------------------------------
+
+CYFRIN_DIR="$HOME/.cyfrin"
+CYFRIN_BIN_DIR="$CYFRIN_DIR/bin"
+
+main() {
+  need_cmd git
+  need_cmd curl
+
+  if check_cmd npm; then
+    if ! [[ "$(npm list -g cyfrinup)" =~ "empty" ]]; then
+      err "internal error: cyfrinup from npm already exists! It is not officially supported! \nRemove it and try again.";
+    fi
+  fi
+
+  if check_cmd yarn; then
+    if [[ "$(yarn global list)" =~ "cyfrinup" ]]; then
+      err "internal error: cyfrinup from yarn already exists! It is not officially supported! \nRemove it and try again.";
+    fi
+  fi
+
+  if [[ $(which cyfrinup) =~ "cargo" ]]; then
+    err "internal error: cyfrinup already installed via cargo. It is not officially supported!\nRemove it and try again."
+  fi
+
+  say "installing latest cyfrin tools"
+
+  PLATFORM="$(uname -s)"
+  case $PLATFORM in
+    Linux)
+      PLATFORM="linux"
+      ;;
+    Darwin)
+      PLATFORM="macos"
+      ;;
+    MINGW* | MSYS* | CYGWIN* | Windows_NT)
+      PLATFORM="win"
+      TEMP_DIR=$(mktemp -d)
+      ;;
+    *)
+      err "unsupported platform: $PLATFORM"
+      ;;
+  esac
+
+  ARCHITECTURE="$(uname -m)"
+  if [ "${ARCHITECTURE}" = "x86_64" ]; then
+    # Redirect stderr to /dev/null to avoid printing errors if non Rosetta.
+    if [ "$(sysctl -n sysctl.proc_translated 2>/dev/null)" = "1" ]; then
+      ARCHITECTURE="arm64" # Rosetta.
+    else
+      ARCHITECTURE="amd64" # Intel.
+    fi
+  elif [ "${ARCHITECTURE}" = "arm64" ] ||[ "${ARCHITECTURE}" = "aarch64" ] ; then
+    ARCHITECTURE="arm64" # Arm.
+  else
+    ARCHITECTURE="amd64" # Amd.
+  fi
+
+  ###########################################################################################
+  # Install / Update aderyn                                                                          #
+  ###########################################################################################
+
+  OWNER="Cyfrin"
+  REPO="aderyn"
+
+  # Get the latest release details
+  RELEASE_INFO=$(curl -s https://api.github.com/repos/$OWNER/$REPO/releases/latest)
+
+  # Extract the asset download URL for a specific asset (e.g., aderyn-linux-amd64.tar.gz)
+  ASSET_NAME="aderyn-${PLATFORM}-${ARCHITECTURE}"
+  if [ "$PLATFORM" = "win" ]; then
+    ASSET_NAME="${ASSET_NAME}.exe"
+  fi
+
+  ASSET_URL=$(echo "$RELEASE_INFO" | grep '"browser_download_url":' | grep "${ASSET_NAME}.tar.gz" | awk -F '"' '{print $4}')
+
+  # Check if the asset URL was found
+  if [ -z "$ASSET_URL" ]; then
+    echo "Asset not found!"
+    exit 1
+  fi
+
+  #Example - BIN_TARBALL_URL="${RELEASE_URL}aderyn_${PLATFORM}_${ARCHITECTURE}.tar.gz"
+  BIN_TARBALL_URL="${ASSET_URL}"
+
+  # Download the binaries tarball and unpack it into the .cyfrinup bin directory.
+  say "downloading latest aderyn"
+  if [ "$PLATFORM" = "win" ]; then
+    ensure curl -L -o "$TEMP_DIR/aderyn.tar.gz" "$BIN_TARBALL_URL"
+    tar -xzf "$TEMP_DIR/aderyn.tar.gz" -C "$CYFRIN_BIN_DIR"
+    rm "$TEMP_DIR/aderyn.tar.gz"
+  else
+    ensure curl -# -L "$BIN_TARBALL_URL" | tar -xzC "$CYFRIN_BIN_DIR"
+  fi
+
+  mv $CYFRIN_BIN_DIR/$ASSET_NAME $CYFRIN_BIN_DIR/aderyn
+
+  # Download the man tarball and unpack it into the .cyfrinup man directory.
+  say "installed aderyn"
+  chmod +x "$CYFRIN_BIN_DIR/aderyn"
+  say "done"
+}
+
+usage() {
+  cat 1>&2 <<EOF
+The installer for Cyfrin security tools.
+USAGE:
+    cyfrinup
+EOF
+}
+
+say() {
+  printf 'cyfrinup: %s\n' "$1"
+}
+
+warn() {
+  say "warning: ${1}" >&2
+}
+
+err() {
+  say "$1" >&2
+  exit 1
+}
+
+need_cmd() {
+  if ! check_cmd "$1"; then
+    err "need '$1' (command not found)"
+  fi
+}
+
+check_cmd() {
+  command -v "$1" > /dev/null 2>&1
+}
+
+# Run a command that should never fail. If the command fails execution
+# will immediately terminate with an error showing the failing
+# command.
+ensure() {
+  if ! "$@"; then err "command failed: $*"; fi
+}
+
+main "$@" || exit 1
