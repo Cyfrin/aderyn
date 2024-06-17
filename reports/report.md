@@ -1363,7 +1363,7 @@ Instead of marking a function as `public`, consider marking it as `external` if 
 
 If the same constant literal value is used multiple times, create a constant state variable and reference it throughout the contract.
 
-<details><summary>18 Found Instances</summary>
+<details><summary>16 Found Instances</summary>
 
 
 - Found in src/Casting.sol [Line: 16](../tests/contract-playground/src/Casting.sol#L16)
@@ -1460,12 +1460,6 @@ If the same constant literal value is used multiple times, create a constant sta
 
 	```solidity
 	        for (uint256 id = 0; id < 10; ++id) {
-	```
-
-- Found in src/eth2/DepositContract.sol [Line: 113](../tests/contract-playground/src/eth2/DepositContract.sol#L113)
-
-	```solidity
-	            abi.encodePacked(sha256(abi.encodePacked(signature[:64])), sha256(abi.encodePacked(signature[64:], bytes32(0))))
 	```
 
 </details>
