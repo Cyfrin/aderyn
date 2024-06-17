@@ -52,6 +52,7 @@ pub enum NodeType {
     RevertStatement,
     ForStatement,
     WhileStatement,
+    DoWhileStatement,
     ModifierDefinition,
     ModifierInvocation,
     EnumDefinition,

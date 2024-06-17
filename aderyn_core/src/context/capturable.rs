@@ -47,6 +47,10 @@ pub enum Capturable {
     VariableDeclaration(VariableDeclaration),
     VariableDeclarationStatement(VariableDeclarationStatement),
     WhileStatement(WhileStatement),
+    DoWhileStatement(DoWhileStatement),
+    BreakStatement(Break),
+    ContinueStatement(Continue),
+    PlaceholderStatement(PlaceholderStatement),
 }
 
 impl Capturable {
@@ -95,6 +99,10 @@ impl Capturable {
             Self::VariableDeclaration(n) => context.get_node_sort_key(&n.into()),
             Self::VariableDeclarationStatement(n) => context.get_node_sort_key(&n.into()),
             Self::WhileStatement(n) => context.get_node_sort_key(&n.into()),
+            Self::DoWhileStatement(n) => context.get_node_sort_key(&n.into()),
+            Self::BreakStatement(n) => context.get_node_sort_key(&n.into()),
+            Self::ContinueStatement(n) => context.get_node_sort_key(&n.into()),
+            Self::PlaceholderStatement(n) => context.get_node_sort_key(&n.into()),
         }
     }
 
@@ -143,6 +151,10 @@ impl Capturable {
             Self::VariableDeclaration(n) => Some(n.id),
             Self::VariableDeclarationStatement(n) => Some(n.id),
             Self::WhileStatement(n) => Some(n.id),
+            Self::DoWhileStatement(n) => Some(n.id),
+            Self::BreakStatement(n) => Some(n.id),
+            Self::ContinueStatement(n) => Some(n.id),
+            Self::PlaceholderStatement(n) => Some(n.id),
         }
     }
 }
@@ -650,6 +662,54 @@ impl From<WhileStatement> for Capturable {
 impl From<&WhileStatement> for Capturable {
     fn from(value: &WhileStatement) -> Self {
         Self::WhileStatement(value.clone())
+    }
+}
+
+impl From<DoWhileStatement> for Capturable {
+    fn from(value: DoWhileStatement) -> Self {
+        Self::DoWhileStatement(value)
+    }
+}
+
+impl From<&DoWhileStatement> for Capturable {
+    fn from(value: &DoWhileStatement) -> Self {
+        Self::DoWhileStatement(value.clone())
+    }
+}
+
+impl From<Break> for Capturable {
+    fn from(value: Break) -> Self {
+        Self::BreakStatement(value)
+    }
+}
+
+impl From<&Break> for Capturable {
+    fn from(value: &Break) -> Self {
+        Self::BreakStatement(value.clone())
+    }
+}
+
+impl From<Continue> for Capturable {
+    fn from(value: Continue) -> Self {
+        Self::ContinueStatement(value)
+    }
+}
+
+impl From<&Continue> for Capturable {
+    fn from(value: &Continue) -> Self {
+        Self::ContinueStatement(value.clone())
+    }
+}
+
+impl From<PlaceholderStatement> for Capturable {
+    fn from(value: PlaceholderStatement) -> Self {
+        Self::PlaceholderStatement(value)
+    }
+}
+
+impl From<&PlaceholderStatement> for Capturable {
+    fn from(value: &PlaceholderStatement) -> Self {
+        Self::PlaceholderStatement(value.clone())
     }
 }
 
