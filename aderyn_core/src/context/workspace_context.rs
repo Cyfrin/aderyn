@@ -60,6 +60,10 @@ pub enum ASTNode {
     VariableDeclaration(VariableDeclaration),
     VariableDeclarationStatement(VariableDeclarationStatement),
     WhileStatement(WhileStatement),
+    DoWhileStatement(DoWhileStatement),
+    BreakStatement(Break),
+    ContinueStatement(Continue),
+    PlaceholderStatement(PlaceholderStatement),
 }
 
 impl ASTNode {
@@ -116,6 +120,10 @@ impl ASTNode {
             ASTNode::VariableDeclaration(_) => NodeType::VariableDeclaration,
             ASTNode::VariableDeclarationStatement(_) => NodeType::VariableDeclarationStatement,
             ASTNode::WhileStatement(_) => NodeType::WhileStatement,
+            ASTNode::DoWhileStatement(_) => NodeType::DoWhileStatement,
+            ASTNode::BreakStatement(_) => NodeType::Break,
+            ASTNode::ContinueStatement(_) => NodeType::Continue,
+            ASTNode::PlaceholderStatement(_) => NodeType::PlaceholderStatement,
         }
     }
 
@@ -172,6 +180,10 @@ impl ASTNode {
             ASTNode::VariableDeclaration(n) => Some(n.id),
             ASTNode::VariableDeclarationStatement(n) => Some(n.id),
             ASTNode::WhileStatement(n) => Some(n.id),
+            ASTNode::DoWhileStatement(n) => Some(n.id),
+            ASTNode::BreakStatement(n) => Some(n.id),
+            ASTNode::ContinueStatement(n) => Some(n.id),
+            ASTNode::PlaceholderStatement(n) => Some(n.id),
         }
     }
 }
@@ -230,6 +242,10 @@ impl Node for ASTNode {
             ASTNode::VariableDeclaration(n) => n.accept(visitor),
             ASTNode::VariableDeclarationStatement(n) => n.accept(visitor),
             ASTNode::WhileStatement(n) => n.accept(visitor),
+            ASTNode::DoWhileStatement(n) => n.accept(visitor),
+            ASTNode::BreakStatement(n) => n.accept(visitor),
+            ASTNode::ContinueStatement(n) => n.accept(visitor),
+            ASTNode::PlaceholderStatement(n) => n.accept(visitor),
         }
     }
 
@@ -286,6 +302,10 @@ impl Node for ASTNode {
             ASTNode::VariableDeclaration(n) => n.accept_metadata(visitor),
             ASTNode::VariableDeclarationStatement(n) => n.accept_metadata(visitor),
             ASTNode::WhileStatement(n) => n.accept_metadata(visitor),
+            ASTNode::DoWhileStatement(n) => n.accept_metadata(visitor),
+            ASTNode::BreakStatement(n) => n.accept_metadata(visitor),
+            ASTNode::ContinueStatement(n) => n.accept_metadata(visitor),
+            ASTNode::PlaceholderStatement(n) => n.accept_metadata(visitor),
         }
     }
 
@@ -601,6 +621,30 @@ impl From<WhileStatement> for ASTNode {
     }
 }
 
+impl From<DoWhileStatement> for ASTNode {
+    fn from(value: DoWhileStatement) -> Self {
+        ASTNode::DoWhileStatement(value)
+    }
+}
+
+impl From<Break> for ASTNode {
+    fn from(value: Break) -> Self {
+        ASTNode::BreakStatement(value)
+    }
+}
+
+impl From<Continue> for ASTNode {
+    fn from(value: Continue) -> Self {
+        ASTNode::ContinueStatement(value)
+    }
+}
+
+impl From<PlaceholderStatement> for ASTNode {
+    fn from(value: PlaceholderStatement) -> Self {
+        ASTNode::PlaceholderStatement(value)
+    }
+}
+
 impl From<&ArrayTypeName> for ASTNode {
     fn from(value: &ArrayTypeName) -> Self {
         ASTNode::ArrayTypeName(value.clone())
@@ -907,6 +951,30 @@ impl From<&WhileStatement> for ASTNode {
     }
 }
 
+impl From<&DoWhileStatement> for ASTNode {
+    fn from(value: &DoWhileStatement) -> Self {
+        ASTNode::DoWhileStatement(value.clone())
+    }
+}
+
+impl From<&Break> for ASTNode {
+    fn from(value: &Break) -> Self {
+        ASTNode::BreakStatement(value.clone())
+    }
+}
+
+impl From<&Continue> for ASTNode {
+    fn from(value: &Continue) -> Self {
+        ASTNode::ContinueStatement(value.clone())
+    }
+}
+
+impl From<&PlaceholderStatement> for ASTNode {
+    fn from(value: &PlaceholderStatement) -> Self {
+        ASTNode::PlaceholderStatement(value.clone())
+    }
+}
+
 impl ASTNode {
     pub fn src(&self) -> Option<&str> {
         match self {
@@ -961,6 +1029,10 @@ impl ASTNode {
             ASTNode::VariableDeclaration(node) => Some(&node.src),
             ASTNode::VariableDeclarationStatement(node) => Some(&node.src),
             ASTNode::WhileStatement(node) => Some(&node.src),
+            ASTNode::DoWhileStatement(node) => Some(&node.src),
+            ASTNode::BreakStatement(node) => Some(&node.src),
+            ASTNode::ContinueStatement(node) => Some(&node.src),
+            ASTNode::PlaceholderStatement(node) => Some(&node.src),
         }
     }
 }
@@ -1041,6 +1113,10 @@ pub struct WorkspaceContext {
     pub(crate) variable_declaration_statements_context:
         HashMap<VariableDeclarationStatement, NodeContext>,
     pub(crate) while_statements_context: HashMap<WhileStatement, NodeContext>,
+    pub(crate) do_while_statements_context: HashMap<DoWhileStatement, NodeContext>,
+    pub(crate) break_statements_context: HashMap<Break, NodeContext>,
+    pub(crate) continue_statements_context: HashMap<Continue, NodeContext>,
+    pub(crate) placeholder_statements_context: HashMap<PlaceholderStatement, NodeContext>,
 }
 
 impl WorkspaceContext {
@@ -1210,6 +1286,22 @@ impl WorkspaceContext {
     }
     pub fn while_statements(&self) -> Vec<&WhileStatement> {
         self.while_statements_context.keys().collect()
+    }
+
+    pub fn do_while_statements(&self) -> Vec<&DoWhileStatement> {
+        self.do_while_statements_context.keys().collect()
+    }
+
+    pub fn break_statements(&self) -> Vec<&Break> {
+        self.break_statements_context.keys().collect()
+    }
+
+    pub fn continue_statements(&self) -> Vec<&Continue> {
+        self.continue_statements_context.keys().collect()
+    }
+
+    pub fn placeholder_statements(&self) -> Vec<&PlaceholderStatement> {
+        self.placeholder_statements_context.keys().collect()
     }
 
     pub fn get_parent(&self, node_id: NodeID) -> Option<&ASTNode> {
@@ -1479,6 +1571,22 @@ impl WorkspaceContext {
                 .map(|context| context.source_unit_id),
             ASTNode::WhileStatement(node) => self
                 .while_statements_context
+                .get(node)
+                .map(|context| context.source_unit_id),
+            ASTNode::DoWhileStatement(node) => self
+                .do_while_statements_context
+                .get(node)
+                .map(|context| context.source_unit_id),
+            ASTNode::BreakStatement(node) => self
+                .break_statements_context
+                .get(node)
+                .map(|context| context.source_unit_id),
+            ASTNode::ContinueStatement(node) => self
+                .continue_statements_context
+                .get(node)
+                .map(|context| context.source_unit_id),
+            ASTNode::PlaceholderStatement(node) => self
+                .placeholder_statements_context
                 .get(node)
                 .map(|context| context.source_unit_id),
         };
@@ -2351,6 +2459,66 @@ impl ASTConstVisitor for WorkspaceContext {
         self.nodes
             .insert(node.id, ASTNode::WhileStatement(node.clone()));
         self.while_statements_context.insert(
+            node.clone(),
+            NodeContext {
+                source_unit_id: self.last_source_unit_id,
+                contract_definition_id: self.last_contract_definition_id,
+                function_definition_id: self.last_function_definition_id,
+                modifier_definition_id: self.last_modifier_definition_id,
+            },
+        );
+        Ok(true)
+    }
+
+    fn visit_do_while_statement(&mut self, node: &DoWhileStatement) -> Result<bool> {
+        self.nodes
+            .insert(node.id, ASTNode::DoWhileStatement(node.clone()));
+        self.do_while_statements_context.insert(
+            node.clone(),
+            NodeContext {
+                source_unit_id: self.last_source_unit_id,
+                contract_definition_id: self.last_contract_definition_id,
+                function_definition_id: self.last_function_definition_id,
+                modifier_definition_id: self.last_modifier_definition_id,
+            },
+        );
+        Ok(true)
+    }
+
+    fn visit_break_statement(&mut self, node: &Break) -> Result<bool> {
+        self.nodes
+            .insert(node.id, ASTNode::BreakStatement(node.clone()));
+        self.break_statements_context.insert(
+            node.clone(),
+            NodeContext {
+                source_unit_id: self.last_source_unit_id,
+                contract_definition_id: self.last_contract_definition_id,
+                function_definition_id: self.last_function_definition_id,
+                modifier_definition_id: self.last_modifier_definition_id,
+            },
+        );
+        Ok(true)
+    }
+
+    fn visit_continue_statement(&mut self, node: &Continue) -> Result<bool> {
+        self.nodes
+            .insert(node.id, ASTNode::ContinueStatement(node.clone()));
+        self.continue_statements_context.insert(
+            node.clone(),
+            NodeContext {
+                source_unit_id: self.last_source_unit_id,
+                contract_definition_id: self.last_contract_definition_id,
+                function_definition_id: self.last_function_definition_id,
+                modifier_definition_id: self.last_modifier_definition_id,
+            },
+        );
+        Ok(true)
+    }
+
+    fn visit_placeholder_statement(&mut self, node: &PlaceholderStatement) -> Result<bool> {
+        self.nodes
+            .insert(node.id, ASTNode::PlaceholderStatement(node.clone()));
+        self.placeholder_statements_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
