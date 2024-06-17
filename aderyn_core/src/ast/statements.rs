@@ -341,7 +341,7 @@ impl Display for IfStatement {
 pub struct ForStatement {
     pub initialization_expression: Option<Box<Statement>>,
     pub condition: Option<Expression>,
-    pub loop_expression: Option<Box<Statement>>,
+    pub loop_expression: Option<Box<ExpressionStatement>>,
     pub body: BlockOrStatement,
     pub src: String,
     pub id: NodeID,
@@ -379,7 +379,7 @@ impl Node for ForStatement {
             }
         }
         if let Some(loop_expr) = &self.loop_expression {
-            if let Some(loop_id) = loop_expr.get_node_id() {
+            if let Some(loop_id) = loop_expr.expression.get_node_id() {
                 visitor.visit_immediate_children(self.id, vec![loop_id])?;
             }
         }
