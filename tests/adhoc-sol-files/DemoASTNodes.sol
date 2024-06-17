@@ -9,7 +9,7 @@ contract DemoNewASTNodes {
         _;
     }
 
-    function useBreakAndContinueStatement() internal pure returns(uint256 sum) {
+    function useBreakAndContinueStatement(address x) internal pure iHaveAPlaceholder(x) returns(uint256 sum) {
 
         for (uint256 i = 0; i < 10000000; ++i) {
             if (i == 3) {
