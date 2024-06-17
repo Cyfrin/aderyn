@@ -85,16 +85,57 @@ pub enum ModifierInvocationKind {
 #[serde(rename_all = "camelCase")]
 pub struct ModifierInvocation {
     pub arguments: Option<Vec<Expression>>,
-    pub modifier_name: IdentifierPath,
+    pub modifier_name: IdentifierOrIdentifierPath,
     pub src: String,
     pub id: NodeID,
     pub kind: Option<ModifierInvocationKind>,
 }
 
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(tag = "nodeType")]
+pub enum IdentifierOrIdentifierPath {
+    Identifier(Identifier),
+    IdentifierPath(IdentifierPath),
+}
+
+impl IdentifierOrIdentifierPath {
+    pub fn get_node_id(&self) -> NodeID {
+        match self {
+            IdentifierOrIdentifierPath::Identifier(n) => n.id,
+            IdentifierOrIdentifierPath::IdentifierPath(n) => n.id,
+        }
+    }
+
+    pub fn name(&self) -> String {
+        match self {
+            IdentifierOrIdentifierPath::Identifier(identifier) => identifier.name.clone(),
+            IdentifierOrIdentifierPath::IdentifierPath(identifier_path) => {
+                identifier_path.name.clone()
+            }
+        }
+    }
+
+    pub fn referenced_declaration(&self) -> Option<NodeID> {
+        match self {
+            IdentifierOrIdentifierPath::Identifier(identifier) => {
+                Some(identifier.referenced_declaration)
+            }
+            IdentifierOrIdentifierPath::IdentifierPath(identifier_path) => {
+                identifier_path.referenced_declaration
+            }
+        }
+    }
+}
+
 impl Node for ModifierInvocation {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         if visitor.visit_modifier_invocation(self)? {
-            self.modifier_name.accept(visitor)?;
+            match &self.modifier_name {
+                IdentifierOrIdentifierPath::Identifier(identifier) => identifier.accept(visitor)?,
+                IdentifierOrIdentifierPath::IdentifierPath(identifier_path) => {
+                    identifier_path.accept(visitor)?
+                }
+            };
             if self.arguments.is_some() {
                 list_accept(self.arguments.as_ref().unwrap(), visitor)?;
             }
@@ -103,7 +144,7 @@ impl Node for ModifierInvocation {
         visitor.end_visit_modifier_invocation(self)
     }
     fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_immediate_children(self.id, vec![self.modifier_name.id])?;
+        visitor.visit_immediate_children(self.id, vec![self.modifier_name.get_node_id()])?;
         if let Some(arguments) = &self.arguments {
             let mut argument_ids = vec![];
             for arg in arguments {
@@ -123,7 +164,7 @@ impl Node for ModifierInvocation {
 
 impl Display for ModifierInvocation {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_fmt(format_args!("{}", self.modifier_name))?;
+        f.write_fmt(format_args!("{:?}", self.modifier_name))?;
 
         if let Some(arguments) = self.arguments.as_ref() {
             f.write_str("(")?;

@@ -37,9 +37,9 @@ impl IssueDetector for CentralizationRiskDetector {
         }
 
         for modifier_invocation in context.modifier_invocations().iter().filter(|&&mi| {
-            mi.modifier_name.name == "onlyOwner"
-                || mi.modifier_name.name == "requiresAuth"
-                || mi.modifier_name.name.contains("onlyRole")
+            mi.modifier_name.name() == "onlyOwner"
+                || mi.modifier_name.name() == "requiresAuth"
+                || mi.modifier_name.name().contains("onlyRole")
         }) {
             capture!(self, context, modifier_invocation);
         }
