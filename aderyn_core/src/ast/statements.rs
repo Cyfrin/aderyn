@@ -113,22 +113,6 @@ impl Display for Statement {
 
 #[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
-pub struct PlaceholderStatement {
-    pub id: NodeID,
-    pub src: String,
-    pub documentation: Option<String>,
-}
-
-impl Node for PlaceholderStatement {
-    // TODO (all accept methods)
-
-    fn accept_id(&self, _visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        Ok(())
-    }
-}
-
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
 pub struct ExpressionStatement {
     pub expression: Expression,
 }
@@ -668,6 +652,78 @@ impl Node for InlineAssembly {
         }
         visitor.end_visit_inline_assembly(self)
     }
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
+        Ok(())
+    }
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(rename_all = "camelCase")]
+pub struct Break {
+    pub id: NodeID,
+    pub src: String,
+    pub documentation: Option<String>,
+}
+
+impl Node for Break {
+    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_break_statement(self)?;
+        visitor.end_visit_break_statement(self)
+    }
+
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
+        Ok(())
+    }
+}
+
+impl Display for Break {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.write_str("break;")
+    }
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(rename_all = "camelCase")]
+pub struct Continue {
+    pub id: NodeID,
+    pub src: String,
+    pub documentation: Option<String>,
+}
+
+impl Node for Continue {
+    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_continue_statement(self)?;
+        visitor.end_visit_continue_statement(self)
+    }
+
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
+        Ok(())
+    }
+}
+
+impl Display for Continue {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.write_str("continue;")
+    }
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(rename_all = "camelCase")]
+pub struct PlaceholderStatement {
+    pub id: NodeID,
+    pub src: String,
+    pub documentation: Option<String>,
+}
+
+impl Node for PlaceholderStatement {
+    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_placeholder_statement(self)?;
+        visitor.end_visit_placeholder_statement(self)
+    }
+
     fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         visitor.visit_node_id(Some(self.id))?;
         Ok(())
