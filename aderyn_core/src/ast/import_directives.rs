@@ -6,7 +6,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct SymbolAlias {
-    pub foreign: Expression,
+    pub foreign: Identifier,
     pub local: Option<String>,
     pub name_location: Option<String>,
 }
@@ -39,9 +39,7 @@ impl Node for ImportDirective {
     fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         let mut symbol_alias_ids = vec![];
         for symbol_alias in &self.symbol_aliases {
-            if let Some(expr_id) = symbol_alias.foreign.get_node_id() {
-                symbol_alias_ids.push(expr_id);
-            }
+            symbol_alias_ids.push(symbol_alias.foreign.id);
         }
         visitor.visit_immediate_children(self.id, symbol_alias_ids)?;
         Ok(())
