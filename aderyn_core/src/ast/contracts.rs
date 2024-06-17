@@ -2,7 +2,7 @@ use super::*;
 use crate::visitor::ast_visitor::*;
 use eyre::Result;
 use serde::{Deserialize, Serialize};
-use std::fmt::Display;
+use std::{collections::BTreeMap, fmt::Display};
 
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq, PartialOrd, Eq, Ord, Hash)]
 #[serde(rename_all = "lowercase")]
@@ -201,8 +201,12 @@ pub struct ContractDefinition {
     #[serde(rename = "abstract")]
     pub is_abstract: Option<bool>,
     pub base_contracts: Vec<InheritanceSpecifier>,
+    pub canonical_name: Option<String>,
     pub contract_dependencies: Vec<NodeID>,
     pub used_errors: Option<Vec<NodeID>>,
+    pub used_events: Option<Vec<usize>>,
+    #[serde(default, rename = "internalFunctionIDs")]
+    pub internal_function_ids: BTreeMap<String, usize>,
     pub nodes: Vec<ContractDefinitionNode>,
     pub scope: NodeID,
     pub fully_implemented: Option<bool>,

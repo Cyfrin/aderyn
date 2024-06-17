@@ -703,7 +703,7 @@ impl Display for FunctionCallOptions {
 #[serde(rename_all = "camelCase")]
 pub struct IndexAccess {
     pub base_expression: Box<Expression>,
-    pub index_expression: Box<Expression>,
+    pub index_expression: Option<Box<Expression>>,
     pub argument_types: Option<Vec<TypeDescriptions>>,
     pub is_constant: bool,
     pub is_l_value: bool,
@@ -718,7 +718,9 @@ impl Node for IndexAccess {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         if visitor.visit_index_access(self)? {
             self.base_expression.accept(visitor)?;
-            self.index_expression.accept(visitor)?;
+            if let Some(index_expression) = &self.index_expression {
+                index_expression.accept(visitor)?;
+            }
         }
         self.accept_metadata(visitor)?;
         visitor.end_visit_index_access(self)
@@ -727,8 +729,10 @@ impl Node for IndexAccess {
         if let Some(base_expr_id) = self.base_expression.get_node_id() {
             visitor.visit_immediate_children(self.id, vec![base_expr_id])?;
         }
-        if let Some(index_expr_id) = self.index_expression.get_node_id() {
-            visitor.visit_immediate_children(self.id, vec![index_expr_id])?;
+        if let Some(index_expression) = &self.index_expression {
+            if let Some(index_expr_id) = index_expression.get_node_id() {
+                visitor.visit_immediate_children(self.id, vec![index_expr_id])?;
+            }
         }
         Ok(())
     }
@@ -740,16 +744,23 @@ impl Node for IndexAccess {
 
 impl IndexAccess {
     pub fn contains_operation(&self, operator: &str) -> bool {
-        self.index_expression.contains_operation(operator)
+        if let Some(index_expression) = &self.index_expression {
+            index_expression.contains_operation(operator);
+        }
+        false
     }
 }
 
 impl Display for IndexAccess {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_fmt(format_args!(
-            "{}[{}]",
-            self.base_expression, self.index_expression
-        ))
+        if let Some(index_expression) = &self.index_expression {
+            f.write_fmt(format_args!(
+                "{}[{}]",
+                self.base_expression, index_expression
+            ))
+        } else {
+            f.write_fmt(format_args!("{}[]", self.base_expression))
+        }
     }
 }
 

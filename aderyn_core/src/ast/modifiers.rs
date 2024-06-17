@@ -8,6 +8,7 @@ use std::fmt::Display;
 #[serde(rename_all = "camelCase")]
 pub struct ModifierDefinition {
     pub body: Block,
+    pub base_modifiers: Option<Vec<usize>>,
     pub overrides: Option<OverrideSpecifier>,
     pub documentation: Option<Documentation>,
     pub name: String,
