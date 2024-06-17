@@ -19,19 +19,21 @@ impl IssueDetector for CentralizationRiskDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for contract_definition in context.contract_definitions().iter() {
             for bc in contract_definition.base_contracts.iter() {
-                if matches!(
-                    bc.base_name.name.as_str(),
-                    "Owned"
-                        | "Ownable"
-                        | "Ownable2Step"
-                        | "AccessControl"
-                        | "AccessControlCrossChain"
-                        | "AccessControlEnumerable"
-                        | "Auth"
-                        | "RolesAuthority"
-                        | "MultiRolesAuthority"
-                ) {
-                    capture!(self, context, bc);
+                if let Some(base_name) = bc.base_name.name() {
+                    if matches!(
+                        base_name.as_str(),
+                        "Owned"
+                            | "Ownable"
+                            | "Ownable2Step"
+                            | "AccessControl"
+                            | "AccessControlCrossChain"
+                            | "AccessControlEnumerable"
+                            | "Auth"
+                            | "RolesAuthority"
+                            | "MultiRolesAuthority"
+                    ) {
+                        capture!(self, context, bc);
+                    }
                 }
             }
         }
