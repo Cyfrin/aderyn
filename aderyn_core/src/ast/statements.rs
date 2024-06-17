@@ -71,10 +71,11 @@ impl Node for Statement {
             }
             Statement::InlineAssembly(inline_assembly) => inline_assembly.accept(visitor),
             Statement::Block(block) => block.accept(visitor),
-            _ => {
-                // TODO:
-                // handle accept calls for break, continue, do-while, placeholders, etc
-                Ok(())
+            Statement::Break(break_statement) => break_statement.accept(visitor),
+            Statement::Continue(continue_statement) => continue_statement.accept(visitor),
+            Statement::DoWhileStatement(do_while_statement) => do_while_statement.accept(visitor),
+            Statement::PlaceholderStatement(placeholder_statement) => {
+                placeholder_statement.accept(visitor)
             }
         }
     }
