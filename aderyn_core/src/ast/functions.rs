@@ -66,7 +66,7 @@ impl Display for ParameterList {
 #[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct OverrideSpecifier {
-    pub overrides: Vec<IdentifierPath>,
+    pub overrides: Vec<UserDefinedTypeNameOrIdentifierPath>,
     pub src: String,
     pub id: NodeID,
 }
@@ -74,13 +74,26 @@ pub struct OverrideSpecifier {
 impl Node for OverrideSpecifier {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         if visitor.visit_override_specifier(self)? {
-            list_accept(&self.overrides, visitor)?;
+            for overrider in &self.overrides {
+                match overrider {
+                    UserDefinedTypeNameOrIdentifierPath::UserDefinedTypeName(type_name) => {
+                        type_name.accept(visitor)?
+                    }
+                    UserDefinedTypeNameOrIdentifierPath::IdentifierPath(identifier_path) => {
+                        identifier_path.accept(visitor)?
+                    }
+                }
+            }
         }
         self.accept_metadata(visitor)?;
         visitor.end_visit_override_specifier(self)
     }
     fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        let overrides_ids = &self.overrides.iter().map(|x| x.id).collect::<Vec<_>>();
+        let overrides_ids = &self
+            .overrides
+            .iter()
+            .filter_map(|x| x.get_node_id())
+            .collect::<Vec<_>>();
         visitor.visit_immediate_children(self.id, overrides_ids.clone())?;
         Ok(())
     }
@@ -102,7 +115,7 @@ impl Display for OverrideSpecifier {
                     f.write_str(", ")?;
                 }
 
-                f.write_fmt(format_args!("{identifier_path}"))?;
+                f.write_fmt(format_args!("{:?}", identifier_path))?;
             }
 
             f.write_str(")")?;
