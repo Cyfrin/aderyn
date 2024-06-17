@@ -378,6 +378,13 @@ pub trait ASTConstVisitor {
         self.end_visit_node(node)
     }
 
+    fn visit_do_while_statement(&mut self, node: &DoWhileStatement) -> Result<bool> {
+        self.visit_node(node)
+    }
+    fn end_do_visit_while_statement(&mut self, node: &DoWhileStatement) -> Result<()> {
+        self.end_visit_node(node)
+    }
+
     fn visit_yul_block(&mut self, node: &YulBlock) -> Result<bool> {
         self.visit_node(node)
     }

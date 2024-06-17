@@ -60,6 +60,7 @@ pub enum ASTNode {
     VariableDeclaration(VariableDeclaration),
     VariableDeclarationStatement(VariableDeclarationStatement),
     WhileStatement(WhileStatement),
+    DoWhileStatement(DoWhileStatement),
 }
 
 impl ASTNode {
@@ -116,6 +117,7 @@ impl ASTNode {
             ASTNode::VariableDeclaration(_) => NodeType::VariableDeclaration,
             ASTNode::VariableDeclarationStatement(_) => NodeType::VariableDeclarationStatement,
             ASTNode::WhileStatement(_) => NodeType::WhileStatement,
+            ASTNode::DoWhileStatement(_) => NodeType::DoWhileStatement,
         }
     }
 
@@ -172,6 +174,7 @@ impl ASTNode {
             ASTNode::VariableDeclaration(n) => Some(n.id),
             ASTNode::VariableDeclarationStatement(n) => Some(n.id),
             ASTNode::WhileStatement(n) => Some(n.id),
+            ASTNode::DoWhileStatement(n) => Some(n.id),
         }
     }
 }
@@ -230,6 +233,7 @@ impl Node for ASTNode {
             ASTNode::VariableDeclaration(n) => n.accept(visitor),
             ASTNode::VariableDeclarationStatement(n) => n.accept(visitor),
             ASTNode::WhileStatement(n) => n.accept(visitor),
+            ASTNode::DoWhileStatement(n) => n.accept(visitor),
         }
     }
 
@@ -286,6 +290,7 @@ impl Node for ASTNode {
             ASTNode::VariableDeclaration(n) => n.accept_metadata(visitor),
             ASTNode::VariableDeclarationStatement(n) => n.accept_metadata(visitor),
             ASTNode::WhileStatement(n) => n.accept_metadata(visitor),
+            ASTNode::DoWhileStatement(n) => n.accept_metadata(visitor),
         }
     }
 
@@ -601,6 +606,12 @@ impl From<WhileStatement> for ASTNode {
     }
 }
 
+impl From<DoWhileStatement> for ASTNode {
+    fn from(value: DoWhileStatement) -> Self {
+        ASTNode::DoWhileStatement(value)
+    }
+}
+
 impl From<&ArrayTypeName> for ASTNode {
     fn from(value: &ArrayTypeName) -> Self {
         ASTNode::ArrayTypeName(value.clone())
@@ -907,6 +918,12 @@ impl From<&WhileStatement> for ASTNode {
     }
 }
 
+impl From<&DoWhileStatement> for ASTNode {
+    fn from(value: &DoWhileStatement) -> Self {
+        ASTNode::DoWhileStatement(value.clone())
+    }
+}
+
 impl ASTNode {
     pub fn src(&self) -> Option<&str> {
         match self {
@@ -961,6 +978,7 @@ impl ASTNode {
             ASTNode::VariableDeclaration(node) => Some(&node.src),
             ASTNode::VariableDeclarationStatement(node) => Some(&node.src),
             ASTNode::WhileStatement(node) => Some(&node.src),
+            ASTNode::DoWhileStatement(node) => Some(&node.src),
         }
     }
 }
@@ -1041,6 +1059,7 @@ pub struct WorkspaceContext {
     pub(crate) variable_declaration_statements_context:
         HashMap<VariableDeclarationStatement, NodeContext>,
     pub(crate) while_statements_context: HashMap<WhileStatement, NodeContext>,
+    pub(crate) do_while_statements_context: HashMap<DoWhileStatement, NodeContext>,
 }
 
 impl WorkspaceContext {
@@ -1210,6 +1229,10 @@ impl WorkspaceContext {
     }
     pub fn while_statements(&self) -> Vec<&WhileStatement> {
         self.while_statements_context.keys().collect()
+    }
+
+    pub fn do_while_statements(&self) -> Vec<&DoWhileStatement> {
+        self.do_while_statements_context.keys().collect()
     }
 
     pub fn get_parent(&self, node_id: NodeID) -> Option<&ASTNode> {
@@ -1479,6 +1502,10 @@ impl WorkspaceContext {
                 .map(|context| context.source_unit_id),
             ASTNode::WhileStatement(node) => self
                 .while_statements_context
+                .get(node)
+                .map(|context| context.source_unit_id),
+            ASTNode::DoWhileStatement(node) => self
+                .do_while_statements_context
                 .get(node)
                 .map(|context| context.source_unit_id),
         };
@@ -2351,6 +2378,21 @@ impl ASTConstVisitor for WorkspaceContext {
         self.nodes
             .insert(node.id, ASTNode::WhileStatement(node.clone()));
         self.while_statements_context.insert(
+            node.clone(),
+            NodeContext {
+                source_unit_id: self.last_source_unit_id,
+                contract_definition_id: self.last_contract_definition_id,
+                function_definition_id: self.last_function_definition_id,
+                modifier_definition_id: self.last_modifier_definition_id,
+            },
+        );
+        Ok(true)
+    }
+
+    fn visit_do_while_statement(&mut self, node: &DoWhileStatement) -> Result<bool> {
+        self.nodes
+            .insert(node.id, ASTNode::DoWhileStatement(node.clone()));
+        self.do_while_statements_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
