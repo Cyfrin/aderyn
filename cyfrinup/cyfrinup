@@ -2,12 +2,12 @@
 set -e
 
 # TODO: Adjust this after merge 
-DYNAMIC_SCRIPT_URL="https://raw.githubusercontent.com/Cyfrin/aderyn/??/cyfrinup/dynamic_script"
+DYNAMIC_SCRIPT_URL="https://raw.githubusercontent.com/Cyfrin/aderyn/feature/support-dynamic-feature-loading/cyfrinup/dynamic_script"
 
 # Keep it minimal
 main() {
   need_cmd curl
-  ensure curl -# -L "" | bash
+  ensure curl -L "$DYNAMIC_SCRIPT_URL" | bash
 }
 
 need_cmd() {
