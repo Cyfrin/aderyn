@@ -1,12 +1,11 @@
 use super::*;
 use crate::visitor::ast_visitor::*;
-use eyre::eyre;
 use eyre::Result;
 use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Write};
 
 #[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(untagged)]
+#[serde(tag = "nodeType")]
 pub enum Expression {
     Literal(Literal),
     Identifier(Identifier),
@@ -22,13 +21,6 @@ pub enum Expression {
     ElementaryTypeNameExpression(ElementaryTypeNameExpression),
     TupleExpression(TupleExpression),
     NewExpression(NewExpression),
-
-    #[serde(rename_all = "camelCase")]
-    UnhandledExpression {
-        node_type: NodeType,
-        src: Option<String>,
-        id: Option<NodeID>,
-    },
 }
 
 impl Node for Expression {
@@ -52,12 +44,6 @@ impl Node for Expression {
             }
             Expression::TupleExpression(tuple_expression) => tuple_expression.accept(visitor),
             Expression::NewExpression(new_expression) => new_expression.accept(visitor),
-            Expression::UnhandledExpression { .. } => {
-                // TODO: this may cause reference errors later.
-                // Known unhandled expressions:
-                // - Foreign identifiers
-                Ok(())
-            }
         }
     }
 
@@ -89,11 +75,6 @@ impl Expression {
 
             Expression::TupleExpression(tuple_expression) => Some(tuple_expression.id),
             Expression::NewExpression(new_expression) => Some(new_expression.id),
-            Expression::UnhandledExpression {
-                id,
-                src: _src,
-                node_type: _node_type,
-            } => *id,
         }
     }
 
@@ -231,7 +212,6 @@ impl Expression {
             Expression::NewExpression(NewExpression {
                 type_descriptions, ..
             }) => Some(type_descriptions),
-            Expression::UnhandledExpression { .. } => None,
         }
     }
 
@@ -253,8 +233,6 @@ impl Expression {
             }) => src.as_str(),
             Expression::TupleExpression(TupleExpression { src, .. }) => src.as_str(),
             Expression::NewExpression(NewExpression { src, .. }) => src.as_str(),
-            Expression::UnhandledExpression { src: Some(src), .. } => src.as_str(),
-            _ => return Err(eyre!("not found")),
         })
     }
 }
@@ -276,7 +254,6 @@ impl Display for Expression {
             Expression::ElementaryTypeNameExpression(expr) => expr.fmt(f)?,
             Expression::TupleExpression(expr) => expr.fmt(f)?,
             Expression::NewExpression(expr) => expr.fmt(f)?,
-            _ => {}
         }
 
         Ok(())
