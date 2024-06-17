@@ -1,13 +1,17 @@
 {
   "files_summary": {
-    "total_source_units": 19,
-    "total_sloc": 214
+    "total_source_units": 20,
+    "total_sloc": 245
   },
   "files_details": {
     "files_details": [
       {
         "file_path": "Counter.sol",
         "n_sloc": 20
+      },
+      {
+        "file_path": "DemoASTNodes.sol",
+        "n_sloc": 31
       },
       {
         "file_path": "Helper.sol",
