@@ -32,7 +32,7 @@ impl IssueDetector for ZeroAddressCheckDetector {
             .iter()
             .filter_map(|&var_decl| {
                 if !var_decl.constant
-                    && matches!(var_decl.mutability, Some(Mutability::Mutable))
+                    && matches!(var_decl.mutability(), Mutability::Mutable)
                     && var_decl.state_variable
                     && (var_decl
                         .type_descriptions
