@@ -48,3 +48,65 @@ impl Display for Block {
         f.write_str("}")
     }
 }
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(rename_all = "camelCase")]
+pub struct Break {
+    pub id: NodeID,
+    pub src: String,
+    pub documentation: Option<String>,
+}
+
+impl Node for Break {
+    fn accept(&self, _visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        // TODO
+        Ok(())
+    }
+
+    fn accept_metadata(&self, _visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        // TODO
+        Ok(())
+    }
+
+    fn accept_id(&self, _visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        // TODO
+        Ok(())
+    }
+}
+
+impl Display for Break {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.write_str("break;")
+    }
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(rename_all = "camelCase")]
+pub struct Continue {
+    pub id: NodeID,
+    pub src: String,
+    pub documentation: Option<String>,
+}
+
+impl Node for Continue {
+    fn accept(&self, _visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        // TODO
+        Ok(())
+    }
+
+    fn accept_metadata(&self, _visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        // TODO
+        Ok(())
+    }
+
+    fn accept_id(&self, _visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        // TODO
+        Ok(())
+    }
+}
+
+impl Display for Continue {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.write_str("continue;")
+    }
+}
