@@ -168,7 +168,9 @@ fn absorb_ast_content_into_context(
         Ok(source_unit) => source_unit,
         Err(err) => {
             let path = err.path().to_string();
-            println!("Faieled to deserialize at path {:?}", path);
+            println!("Failed to deserialize at path {}", path);
+            println!("Full Error {}", err);
+            println!("Debug {:?}", err);
             std::process::exit(-1);
         }
     };
