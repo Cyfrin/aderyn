@@ -64,15 +64,17 @@ impl IssueDetector for UnsafeCastingDetector {
                             continue;
                         };
 
-                        handle_casting(
-                            self,
-                            context,
-                            function_call,
-                            casting_from_type,
-                            casting_to_type,
-                            casting_map,
-                            identifier_id,
-                        );
+                        if let Some(identifier_id) = identifier_id {
+                            handle_casting(
+                                self,
+                                context,
+                                function_call,
+                                casting_from_type,
+                                casting_to_type,
+                                casting_map,
+                                identifier_id,
+                            );
+                        }
                     }
                 }
             }
@@ -144,7 +146,8 @@ fn has_binary_operation_checks(
                     .extracted
                     .into_iter()
                     .any(|identifier| {
-                        identifier.referenced_declaration == *identifier_reference_declaration_id
+                        identifier.referenced_declaration
+                            == Some(*identifier_reference_declaration_id)
                     })
             });
     }

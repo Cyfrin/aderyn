@@ -22,7 +22,9 @@ impl IssueDetector for UselessErrorDetector {
         for revert_stmt in context.revert_statements() {
             //  extract the ids directly from the expression of the function call
             if let Expression::Identifier(identifier) = &*revert_stmt.error_call.expression {
-                used_errors.insert(identifier.referenced_declaration);
+                if let Some(id_ref) = identifier.referenced_declaration {
+                    used_errors.insert(id_ref);
+                }
             } else if let Expression::MemberAccess(member_access) =
                 &*revert_stmt.error_call.expression
             {

@@ -92,54 +92,54 @@ impl Expression {
         }
     }
 
-    pub fn referenced_declarations(&self) -> Vec<NodeID> {
-        let mut result = vec![];
+    // pub fn referenced_declarations(&self) -> Vec<NodeID> {
+    //     let mut result = vec![];
 
-        match self {
-            Expression::Identifier(identifier) => {
-                result.push(identifier.referenced_declaration);
-            }
+    //     match self {
+    //         Expression::Identifier(identifier) => {
+    //             result.push(identifier.referenced_declaration);
+    //         }
 
-            Expression::Assignment(assignment) => {
-                result.extend(assignment.left_hand_side.referenced_declarations());
-                result.extend(assignment.right_hand_side.referenced_declarations());
-            }
+    //         Expression::Assignment(assignment) => {
+    //             result.extend(assignment.left_hand_side.referenced_declarations());
+    //             result.extend(assignment.right_hand_side.referenced_declarations());
+    //         }
 
-            Expression::IndexAccess(index_access) => {
-                result.extend(index_access.base_expression.referenced_declarations());
-            }
+    //         Expression::IndexAccess(index_access) => {
+    //             result.extend(index_access.base_expression.referenced_declarations());
+    //         }
 
-            Expression::IndexRangeAccess(index_range_access) => {
-                result.extend(index_range_access.base_expression.referenced_declarations());
-            }
+    //         Expression::IndexRangeAccess(index_range_access) => {
+    //             result.extend(index_range_access.base_expression.referenced_declarations());
+    //         }
 
-            Expression::MemberAccess(member_access) => {
-                result.extend(member_access.expression.referenced_declarations());
+    //         Expression::MemberAccess(member_access) => {
+    //             result.extend(member_access.expression.referenced_declarations());
 
-                if let Some(referenced_declaration) = member_access.referenced_declaration {
-                    result.push(referenced_declaration);
-                }
-            }
+    //             if let Some(referenced_declaration) = member_access.referenced_declaration {
+    //                 result.push(referenced_declaration);
+    //             }
+    //         }
 
-            Expression::TupleExpression(tuple_expression) => {
-                for component in tuple_expression.components.iter().flatten() {
-                    result.extend(component.referenced_declarations());
-                }
-            }
+    //         Expression::TupleExpression(tuple_expression) => {
+    //             for component in tuple_expression.components.iter().flatten() {
+    //                 result.extend(component.referenced_declarations());
+    //             }
+    //         }
 
-            Expression::FunctionCall(function_call) => {
-                result.extend(function_call.expression.referenced_declarations());
+    //         Expression::FunctionCall(function_call) => {
+    //             result.extend(function_call.expression.referenced_declarations());
 
-                for argument in function_call.arguments.iter() {
-                    result.extend(argument.referenced_declarations());
-                }
-            }
+    //             for argument in function_call.arguments.iter() {
+    //                 result.extend(argument.referenced_declarations());
+    //             }
+    //         }
 
-            _ => {}
-        }
+    //         _ => {}
+    //     }
 
-        result
-    }
+    //     result
+    // }
 
     pub fn contains_operation(&self, operator: &str) -> bool {
         match self {

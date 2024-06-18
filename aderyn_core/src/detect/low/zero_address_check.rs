@@ -104,21 +104,19 @@ impl IssueDetector for ZeroAddressCheckDetector {
                 .filter(|x| {
                     let left_hand_side = x.left_hand_side.as_ref();
                     if let Expression::Identifier(left_identifier) = left_hand_side {
-                        if self
-                            .mutable_address_state_variables
-                            .contains_key(&left_identifier.referenced_declaration)
-                        {
-                            return true;
+                        if let Some(id_ref) = left_identifier.referenced_declaration {
+                            if self.mutable_address_state_variables.contains_key(&id_ref) {
+                                return true;
+                            }
                         }
                         false
                     } else {
                         let left_identifiers = ExtractIdentifiers::from(left_hand_side);
                         for identifier in left_identifiers.extracted {
-                            if self
-                                .mutable_address_state_variables
-                                .contains_key(&identifier.referenced_declaration)
-                            {
-                                return true;
+                            if let Some(id_ref) = identifier.referenced_declaration {
+                                if self.mutable_address_state_variables.contains_key(&id_ref) {
+                                    return true;
+                                }
                             }
                         }
                         false
@@ -136,7 +134,7 @@ impl IssueDetector for ZeroAddressCheckDetector {
                             .parameters
                             .parameters
                             .iter()
-                            .any(|x| x.id == right_identifier.referenced_declaration)
+                            .any(|x| Some(x.id) == right_identifier.referenced_declaration)
                     {
                         capture!(self, context, assignment);
                     }
@@ -149,7 +147,7 @@ impl IssueDetector for ZeroAddressCheckDetector {
                                 .parameters
                                 .parameters
                                 .iter()
-                                .any(|x| x.id == right_identifier.referenced_declaration)
+                                .any(|x| Some(x.id) == right_identifier.referenced_declaration)
                         {
                             capture!(self, context, assignment);
                         }

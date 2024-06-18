@@ -439,73 +439,73 @@ impl ContractDefinition {
 
         false
     }
+    /*
+        pub fn get_assigned_state_variables(
+            &self,
+            source_units: &[SourceUnit],
+            _definition_node: &ContractDefinitionNode,
+            expression: &Expression,
+        ) -> Vec<NodeID> {
+            let mut ids = vec![];
 
-    pub fn get_assigned_state_variables(
-        &self,
-        source_units: &[SourceUnit],
-        _definition_node: &ContractDefinitionNode,
-        expression: &Expression,
-    ) -> Vec<NodeID> {
-        let mut ids = vec![];
-
-        match expression {
-            Expression::Identifier(identifier) => {
-                if self.hierarchy_contains_state_variable(
-                    source_units,
-                    identifier.referenced_declaration,
-                ) {
-                    ids.push(identifier.referenced_declaration);
+            match expression {
+                Expression::Identifier(identifier) => {
+                    if self.hierarchy_contains_state_variable(
+                        source_units,
+                        identifier.referenced_declaration,
+                    ) {
+                        ids.push(identifier.referenced_declaration);
+                    }
                 }
-            }
 
-            Expression::Assignment(assignment) => {
-                ids.extend(self.get_assigned_state_variables(
-                    source_units,
-                    _definition_node,
-                    assignment.left_hand_side.as_ref(),
-                ));
-            }
-
-            Expression::IndexAccess(index_access) => {
-                ids.extend(self.get_assigned_state_variables(
-                    source_units,
-                    _definition_node,
-                    index_access.base_expression.as_ref(),
-                ));
-            }
-
-            Expression::IndexRangeAccess(index_range_access) => {
-                ids.extend(self.get_assigned_state_variables(
-                    source_units,
-                    _definition_node,
-                    index_range_access.base_expression.as_ref(),
-                ));
-            }
-
-            Expression::MemberAccess(member_access) => {
-                ids.extend(self.get_assigned_state_variables(
-                    source_units,
-                    _definition_node,
-                    member_access.expression.as_ref(),
-                ));
-            }
-
-            Expression::TupleExpression(tuple_expression) => {
-                for component in tuple_expression.components.iter().flatten() {
+                Expression::Assignment(assignment) => {
                     ids.extend(self.get_assigned_state_variables(
                         source_units,
                         _definition_node,
-                        component,
+                        assignment.left_hand_side.as_ref(),
                     ));
                 }
+
+                Expression::IndexAccess(index_access) => {
+                    ids.extend(self.get_assigned_state_variables(
+                        source_units,
+                        _definition_node,
+                        index_access.base_expression.as_ref(),
+                    ));
+                }
+
+                Expression::IndexRangeAccess(index_range_access) => {
+                    ids.extend(self.get_assigned_state_variables(
+                        source_units,
+                        _definition_node,
+                        index_range_access.base_expression.as_ref(),
+                    ));
+                }
+
+                Expression::MemberAccess(member_access) => {
+                    ids.extend(self.get_assigned_state_variables(
+                        source_units,
+                        _definition_node,
+                        member_access.expression.as_ref(),
+                    ));
+                }
+
+                Expression::TupleExpression(tuple_expression) => {
+                    for component in tuple_expression.components.iter().flatten() {
+                        ids.extend(self.get_assigned_state_variables(
+                            source_units,
+                            _definition_node,
+                            component,
+                        ));
+                    }
+                }
+
+                _ => (),
             }
 
-            _ => (),
+            ids
         }
-
-        ids
-    }
-
+    */
     pub fn definition_node_location(
         &self,
         source_line: usize,

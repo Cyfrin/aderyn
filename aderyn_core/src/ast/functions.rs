@@ -174,7 +174,7 @@ impl Node for FunctionDefinition {
         Ok(())
     }
 }
-
+/*
 impl FunctionDefinition {
     pub fn get_assigned_return_variables(&self, expression: &Expression) -> Vec<NodeID> {
         let mut ids = vec![];
@@ -223,7 +223,7 @@ impl FunctionDefinition {
         ids
     }
 }
-
+*/
 impl Display for FunctionDefinition {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.write_fmt(format_args!("{}", self.kind))?;
