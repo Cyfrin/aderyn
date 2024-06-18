@@ -162,7 +162,16 @@ fn absorb_ast_content_into_context(
     root_path: &Path,
     context: &mut WorkspaceContext,
 ) {
-    let mut source_unit: SourceUnit = serde_json::from_str(ast_content).unwrap();
+    let source_unit_deserializer = &mut serde_json::Deserializer::from_str(ast_content);
+    let result: Result<SourceUnit, _> = serde_path_to_error::deserialize(source_unit_deserializer);
+    let mut source_unit: SourceUnit = match result {
+        Ok(source_unit) => source_unit,
+        Err(err) => {
+            let path = err.path().to_string();
+            println!("Faieled to deserialize at path {:?}", path);
+            std::process::exit(-1);
+        }
+    };
     let filepath = source_unit.absolute_path.as_ref().unwrap();
     source_unit.source = std::fs::read_to_string(root_path.join(filepath)).ok();
     source_unit.absolute_path = Some(filepath.to_string());
