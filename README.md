@@ -64,6 +64,38 @@ Before installing Aderyn, ensure you have the following:
 [Rust Syntax](https://marketplace.visualstudio.com/items?itemName=dustypomerleau.rust-syntax) - Improved Rust syntax highlighting
 
 ### Installing Aderyn
+
+You can install Aderyn using Cargo, Rust's package manager, or with `cyfrinup`, the Cyfrin CLI tool.
+
+#### Using Cyfrinup
+
+**Step 1: Install Cyfrinup**
+
+Cyfrinup is a CLI tool that simplifies the installation and management of Cyfrin tools. To install Cyfrinup, run the following command in your terminal:
+
+```sh
+curl -L https://raw.githubusercontent.com/Cyfrin/aderyn/dev/cyfrinup/install | bash
+```
+
+**Step 2: Install Aderyn using Cyfrinup**
+
+After installing Cyfrinup, you can use it to install Aderyn. Run the following command in your terminal:
+
+```sh
+cyfrinup
+```
+
+**Step 3: Future Updates**
+
+To update Aderyn to the latest version, you can run the cyfrinup:
+```sh
+cyfrinup
+```
+Cyfrinup will replace the existing version with the latest one.
+
+
+#### Using Cargo
+
 **Step 1: Install Aderyn using cargo**
 
 Aderyn is currently installed using Cargo, Rust's package manager. Open your command line interface and run the following command:
