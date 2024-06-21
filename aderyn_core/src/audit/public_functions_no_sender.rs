@@ -53,10 +53,10 @@ impl AuditorDetector for PublicFunctionsNoSenderChecksDetector {
                         .extracted
                         .iter()
                         .any(|modifier| {
-                            modifier.modifier_name.name == "onlyOwner"
-                                || modifier.modifier_name.name == "onlyAdmin"
-                                || modifier.modifier_name.name == "onlyRole"
-                                || modifier.modifier_name.name == "requiresAuth"
+                            modifier.modifier_name.name() == "onlyOwner"
+                                || modifier.modifier_name.name() == "onlyAdmin"
+                                || modifier.modifier_name.name() == "onlyRole"
+                                || modifier.modifier_name.name() == "requiresAuth"
                         });
                 // Check if the function has a `msg.sender` BinaryOperation check
                 let has_msg_sender_binary_operation =
@@ -74,7 +74,7 @@ impl AuditorDetector for PublicFunctionsNoSenderChecksDetector {
                 self.found_instances.insert(NoChecksInstance {
                     contract_name,
                     function_name: function_definition.name.clone(),
-                    function_kind: function_definition.kind.clone(),
+                    function_kind: function_definition.kind().clone(),
                 });
             }
         });

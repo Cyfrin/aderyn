@@ -128,7 +128,7 @@ impl Display for ContractDefinitionNode {
 #[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct InheritanceSpecifier {
-    pub base_name: IdentifierPath,
+    pub base_name: UserDefinedTypeNameOrIdentifierPath,
     pub arguments: Option<Vec<Expression>>,
     pub src: String,
     pub id: NodeID,
@@ -137,7 +137,14 @@ pub struct InheritanceSpecifier {
 impl Node for InheritanceSpecifier {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         if visitor.visit_inheritance_specifier(self)? {
-            self.base_name.accept(visitor)?;
+            match &self.base_name {
+                UserDefinedTypeNameOrIdentifierPath::UserDefinedTypeName(type_name) => {
+                    type_name.accept(visitor)?
+                }
+                UserDefinedTypeNameOrIdentifierPath::IdentifierPath(identifier_path) => {
+                    identifier_path.accept(visitor)?;
+                }
+            };
             if self.arguments.is_some() {
                 list_accept(self.arguments.as_ref().unwrap(), visitor)?;
             }
@@ -146,7 +153,9 @@ impl Node for InheritanceSpecifier {
         visitor.end_visit_inheritance_specifier(self)
     }
     fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_immediate_children(self.id, vec![self.base_name.id])?;
+        if let Some(base_name_id) = self.base_name.get_node_id() {
+            visitor.visit_immediate_children(self.id, vec![base_name_id])?;
+        }
         let mut argument_ids: Vec<NodeID> = vec![];
         if let Some(arguments) = &self.arguments {
             for expression in arguments {
@@ -167,7 +176,7 @@ impl Node for InheritanceSpecifier {
 
 impl Display for InheritanceSpecifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_fmt(format_args!("{}", self.base_name))?;
+        f.write_fmt(format_args!("{:?}", self.base_name))?;
 
         if let Some(arguments) = self.arguments.as_ref() {
             f.write_str("(")?;
@@ -517,12 +526,13 @@ impl ContractDefinition {
                 ContractDefinitionNode::FunctionDefinition(function_definition) => format!(
                     "{} {} in the `{}` {}",
                     function_definition.visibility,
-                    if let FunctionKind::Constructor = function_definition.kind {
+                    if let FunctionKind::Constructor = function_definition.kind() {
                         "constructor".to_string()
                     } else {
                         format!(
                             "`{}` {}",
-                            function_definition.name, function_definition.kind
+                            function_definition.name,
+                            function_definition.kind()
                         )
                     },
                     self.name,
