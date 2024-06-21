@@ -107,6 +107,7 @@ pub struct UserDefinedTypeName {
     pub referenced_declaration: NodeID,
     pub name: Option<String>,
     pub type_descriptions: TypeDescriptions,
+    pub contract_scope: Option<String>,
 }
 
 impl Node for UserDefinedTypeName {
