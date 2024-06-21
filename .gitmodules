@@ -25,3 +25,6 @@
 [submodule "tests/2024-05-Sablier"]
 	path = tests/2024-05-Sablier
 	url = https://github.com/alexroan/2024-05-Sablier.git
+[submodule "tests/prb-math"]
+	path = tests/prb-math
+	url = https://github.com/PaulRBerg/prb-math

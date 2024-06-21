@@ -97,6 +97,11 @@ jobs:
 
       - uses: actions/checkout@v3
 
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: 'npm'
+
       - uses: pnpm/action-setup@v3
         with:
           version: 8
@@ -196,6 +201,20 @@ jobs:
           cat ./reports/ccip-functions-report-workflow.md
           diff ./reports/ccip-functions-report.md ./reports/ccip-functions-report-workflow.md
 
+      
+      # Verify prb-math-report.md (new solidity features)
+          
+      - name: Generate ccip-functions-report-workflow.md
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+          args: -- ./tests/prb-math -o ./reports/prb-math-report-workflow.md --skip-update-check
+    
+      - name: Check prb-math-report.md vs prb-math-report-workflow.md
+        run: |
+          cat ./reports/prb-math-report-workflow.md
+          diff ./reports/prb-math-report.md ./reports/prb-math-report-workflow.md
+
       # Verify report.json 
 
       - name: Generate report-workflow.json
@@ -208,6 +227,19 @@ jobs:
         run: |
           cat ./reports/report-workflow.json
           diff ./reports/report.json ./reports/report-workflow.json
+
+      # Verify adhoc sol files (Highs Only) report.json 
+
+      - name: Generate report-workflow.json
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+          args: -- -o ./reports/adhoc-sol-files-highs-only-report-workflow.json ./tests/adhoc-sol-files --skip-update-check --highs-only
+
+      - name: Check report.json vs report-workflow.json
+        run: |
+          cat ./reports/adhoc-sol-files-highs-only-report-workflow.json
+          diff ./reports/adhoc-sol-files-highs-only-report.json ./reports/adhoc-sol-files-highs-only-report-workflow.json
 
       # Verify sarif report
 

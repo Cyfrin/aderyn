@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+set -e
+
+# TODO: Adjust this after merge 
+DYNAMIC_SCRIPT_URL="https://raw.githubusercontent.com/Cyfrin/aderyn/feature/support-dynamic-feature-loading/cyfrinup/dynamic_script"
+
+# Keep it minimal
+main() {
+  need_cmd curl
+  ensure curl -L "$DYNAMIC_SCRIPT_URL" | bash
+}
+
+need_cmd() {
+  if ! check_cmd "$1"; then
+    err "need '$1' (command not found)"
+  fi
+}
+
+check_cmd() {
+  command -v "$1" > /dev/null 2>&1
+}
+
+# Run a command that should never fail. If the command fails execution
+# will immediately terminate with an error showing the failing
+# command.
+ensure() {
+  if ! "$@"; then err "command failed: $*"; fi
+}
+
+main "$@" || exit 1

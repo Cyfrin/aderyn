@@ -18,8 +18,8 @@ impl Display for ContractKind {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(untagged)]
+#[derive(Clone, Debug, Eq, Serialize, Deserialize, PartialEq, Hash)]
+#[serde(tag = "nodeType")]
 pub enum ContractDefinitionNode {
     UsingForDirective(UsingForDirective),
     StructDefinition(StructDefinition),

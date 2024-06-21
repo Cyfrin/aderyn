@@ -4,7 +4,7 @@ use crate::{
 };
 use aderyn_core::{
     context::workspace_context::WorkspaceContext,
-    detect::detector::{get_all_issue_detectors, IssueDetector},
+    detect::detector::{get_all_issue_detectors, IssueDetector, IssueSeverity},
     fscloc,
     report::{
         json_printer::JsonPrinter, markdown_printer::MarkdownReportPrinter,
@@ -27,13 +27,22 @@ pub struct Args {
     pub skip_update_check: bool,
     pub stdout: bool,
     pub auditor_mode: bool,
+    pub highs_only: bool,
 }
 
 pub fn drive(args: Args) {
-    drive_with(args, get_all_issue_detectors());
+    let detectors = if args.highs_only {
+        get_all_issue_detectors()
+            .into_iter()
+            .filter(|d| d.severity() == IssueSeverity::High)
+            .collect::<Vec<_>>()
+    } else {
+        get_all_issue_detectors()
+    };
+    drive_with(args, detectors);
 }
 
-pub fn drive_with(args: Args, detectors: Vec<Box<dyn IssueDetector>>) {
+pub fn drive_with(args: Args, detectors_list: Vec<Box<dyn IssueDetector>>) {
     let output = args.output.clone();
     let cx_wrapper = make_context(&args);
     let root_rel_path = cx_wrapper.root_path;
@@ -48,7 +57,7 @@ pub fn drive_with(args: Args, detectors: Vec<Box<dyn IssueDetector>>) {
             args.no_snippets,
             args.stdout,
             args.auditor_mode,
-            detectors,
+            detectors_list,
         )
         .unwrap_or_else(|err| {
             // Exit with a non-zero exit code
@@ -65,7 +74,7 @@ pub fn drive_with(args: Args, detectors: Vec<Box<dyn IssueDetector>>) {
             args.no_snippets,
             args.stdout,
             args.auditor_mode,
-            detectors,
+            detectors_list,
         )
         .unwrap_or_else(|err| {
             // Exit with a non-zero exit code
@@ -83,7 +92,7 @@ pub fn drive_with(args: Args, detectors: Vec<Box<dyn IssueDetector>>) {
             args.no_snippets,
             args.stdout,
             args.auditor_mode,
-            detectors,
+            detectors_list,
         )
         .unwrap_or_else(|err| {
             // Exit with a non-zero exit code

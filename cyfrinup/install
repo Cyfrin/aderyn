@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+set -e
+
+# -----------------------------------------------------------
+# Forked from Foundry.
+# https://github.com/foundry-rs/foundry/tree/master/foundryup
+# -----------------------------------------------------------
+
+echo Installing cyfrinup...
+
+CYFRIN_DIR="$HOME/.cyfrin"
+CYFRIN_BIN_DIR="$CYFRIN_DIR/bin"
+
+CYFRINUP_URL="https://raw.githubusercontent.com/Cyfrin/aderyn/master/cyfrinup/cyfrinup"
+BIN_PATH="$CYFRIN_BIN_DIR/cyfrinup"
+
+# Create the .cyfrin bin directory and huffup binary if it doesn't exist.
+mkdir -p $CYFRIN_BIN_DIR
+curl -# -L $CYFRINUP_URL -o $BIN_PATH
+chmod +x $BIN_PATH
+
+# Store the correct profile file (i.e. .profile for bash or .zshrc for ZSH).
+case $SHELL in
+*/zsh)
+    PROFILE=$HOME/.zshrc
+    PREF_SHELL=zsh
+    ;;
+*/bash)
+    PROFILE=$HOME/.bashrc
+    PREF_SHELL=bash
+    ;;
+*/fish)
+    PROFILE=$HOME/.config/fish/config.fish
+    PREF_SHELL=fish
+    ;;
+*)
+    echo "cyfrinup: could not detect shell, manually add ${CYFRIN_BIN_DIR} to your PATH."
+    exit 1
+esac
+
+# Only add cyfrinup if it isn't already in PATH.
+if [[ ":$PATH:" != *":${CYFRIN_BIN_DIR}:"* ]]; then
+    # Add the cyfrinup directory to the path and ensure the old PATH variables remain.
+    echo >> $PROFILE && echo "export PATH=\"\$PATH:$CYFRIN_BIN_DIR\"" >> $PROFILE
+fi
+
+echo && echo "Detected your preferred shell is ${PREF_SHELL} and added cyfrinup to PATH. Run 'source ${PROFILE}' or start a new terminal session to use cyfrin."
+echo "Then, simply run 'cyfrinup' to install Cyfrin tool suite"

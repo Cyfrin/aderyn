@@ -21,11 +21,17 @@ cargo run -- tests/ccip-contracts/contracts --src src/v0.8/functions/ -x "tests/
 # Extract src, scope and exclude from foundry profile in case of foundry project
 FOUNDRY_PROFILE=uniswap cargo run tests/contract-playground/ -o ./reports/uniswap_profile.md &
 
+# PRB Math (uses new solidity features)
+cargo run -- tests/prb-math -o reports/prb-math-report.md --skip-update-check &
 
 ##### JSON REPORTS ########
 
 # Basic report.json
 cargo run -- -i src/ -x lib/ -o ./reports/report.json ./tests/contract-playground --skip-update-check &
+
+# Adhoc sol files Highs only JSON report
+cargo run --  ./tests/adhoc-sol-files -o ./reports/adhoc-sol-files-highs-only-report.json --skip-update-check --highs-only &
+
 
 ##### SARIF REPORTS ########
 
