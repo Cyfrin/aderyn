@@ -116,7 +116,9 @@ impl Expression {
 
         match self {
             Expression::Identifier(identifier) => {
-                result.push(identifier.referenced_declaration);
+                if let Some(reference_id) = identifier.referenced_declaration {
+                    result.push(reference_id);
+                }
             }
 
             Expression::Assignment(assignment) => {

@@ -13,8 +13,10 @@ pub fn count_identifiers_that_reference_an_id(
 ) -> i32 {
     let mut count = 0;
     context.identifiers().iter().for_each(|&identifier| {
-        if identifier.referenced_declaration == function_id {
-            count += 1;
+        if let Some(reference_id) = identifier.referenced_declaration {
+            if reference_id == function_id {
+                count += 1;
+            }
         }
     });
     count
