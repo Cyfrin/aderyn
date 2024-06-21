@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 40,
-    "total_sloc": 1260
+    "total_source_units": 41,
+    "total_sloc": 1269
   },
   "files_details": {
     "files_details": [
@@ -68,6 +68,10 @@
       {
         "file_path": "src/KeccakContract.sol",
         "n_sloc": 21
+      },
+      {
+        "file_path": "src/LtInsteadOfLe.sol",
+        "n_sloc": 9
       },
       {
         "file_path": "src/OnceModifierExample.sol",
@@ -169,7 +173,7 @@
   },
   "issue_count": {
     "high": 6,
-    "low": 23
+    "low": 24
   },
   "high_issues": {
     "issues": [
@@ -1094,6 +1098,16 @@
             "src": "129:9"
           },
           {
+            "contract_path": "src/LtInsteadOfLe.sol",
+            "line_no": 5,
+            "src": "102:8"
+          },
+          {
+            "contract_path": "src/LtInsteadOfLe.sol",
+            "line_no": 9,
+            "src": "184:15"
+          },
+          {
             "contract_path": "src/StateVariables.sol",
             "line_no": 47,
             "src": "1764:18"
@@ -1427,6 +1441,11 @@
           },
           {
             "contract_path": "src/KeccakContract.sol",
+            "line_no": 2,
+            "src": "32:23"
+          },
+          {
+            "contract_path": "src/LtInsteadOfLe.sol",
             "line_no": 2,
             "src": "32:23"
           },
@@ -1939,6 +1958,33 @@
             "src": "541:5"
           }
         ]
+      },
+      {
+        "title": "Use < instead of <=",
+        "description": "",
+        "detector_name": "lt-instead-of-le-detector",
+        "instances": [
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 23,
+            "src": "707:21"
+          },
+          {
+            "contract_path": "src/LtInsteadOfLe.sol",
+            "line_no": 10,
+            "src": "246:6"
+          },
+          {
+            "contract_path": "src/StorageConditionals.sol",
+            "line_no": 65,
+            "src": "1610:33"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 104,
+            "src": "6689:34"
+          }
+        ]
       }
     ]
   },
@@ -1971,6 +2017,7 @@
     "useless-error",
     "reverts-and-requires-in-loops",
     "division-before-multiplication",
+    "lt-instead-of-le-detector",
     "unsafe-casting-detector"
   ]
 }
