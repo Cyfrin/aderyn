@@ -459,11 +459,10 @@ impl ContractDefinition {
 
         match expression {
             Expression::Identifier(identifier) => {
-                if self.hierarchy_contains_state_variable(
-                    source_units,
-                    identifier.referenced_declaration,
-                ) {
-                    ids.push(identifier.referenced_declaration);
+                if let Some(reference_id) = identifier.referenced_declaration {
+                    if self.hierarchy_contains_state_variable(source_units, reference_id) {
+                        ids.push(reference_id);
+                    }
                 }
             }
 
