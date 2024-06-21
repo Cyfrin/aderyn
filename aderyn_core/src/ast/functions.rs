@@ -181,13 +181,15 @@ impl FunctionDefinition {
 
         match expression {
             Expression::Identifier(identifier) => {
-                if self
-                    .return_parameters
-                    .parameters
-                    .iter()
-                    .any(|p| p.id == identifier.referenced_declaration)
-                {
-                    ids.push(identifier.referenced_declaration);
+                if let Some(reference_id) = identifier.referenced_declaration {
+                    if self
+                        .return_parameters
+                        .parameters
+                        .iter()
+                        .any(|p| p.id == reference_id)
+                    {
+                        ids.push(reference_id);
+                    }
                 }
             }
 
