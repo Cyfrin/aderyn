@@ -70,13 +70,14 @@ impl IssueDetector for ZeroAddressCheckDetector {
             for x in binary_operations {
                 let l = x.left_expression.as_ref();
                 if let Expression::Identifier(left_identifier) = l {
-                    identifier_reference_declaration_ids_in_binary_checks
-                        .insert(left_identifier.referenced_declaration);
+                    if let Some(reference_id) = left_identifier.referenced_declaration {
+                        identifier_reference_declaration_ids_in_binary_checks.insert(reference_id);
+                    }
                 } else {
                     ExtractIdentifiers::from(l)
                         .extracted
                         .into_iter()
-                        .map(|f| f.referenced_declaration)
+                        .filter_map(|f| f.referenced_declaration)
                         .for_each(|f| {
                             identifier_reference_declaration_ids_in_binary_checks.insert(f);
                         });
@@ -84,13 +85,14 @@ impl IssueDetector for ZeroAddressCheckDetector {
 
                 let r = x.right_expression.as_ref();
                 if let Expression::Identifier(right_identifier) = r {
-                    identifier_reference_declaration_ids_in_binary_checks
-                        .insert(right_identifier.referenced_declaration);
+                    if let Some(reference_id) = right_identifier.referenced_declaration {
+                        identifier_reference_declaration_ids_in_binary_checks.insert(reference_id);
+                    }
                 } else {
                     ExtractIdentifiers::from(r)
                         .extracted
                         .into_iter()
-                        .map(|f| f.referenced_declaration)
+                        .filter_map(|f| f.referenced_declaration)
                         .for_each(|f| {
                             identifier_reference_declaration_ids_in_binary_checks.insert(f);
                         });
@@ -104,24 +106,22 @@ impl IssueDetector for ZeroAddressCheckDetector {
                 .filter(|x| {
                     let left_hand_side = x.left_hand_side.as_ref();
                     if let Expression::Identifier(left_identifier) = left_hand_side {
-                        if self
-                            .mutable_address_state_variables
-                            .contains_key(&left_identifier.referenced_declaration)
-                        {
-                            return true;
-                        }
-                        false
+                        left_identifier
+                            .referenced_declaration
+                            .is_some_and(|reference_id| {
+                                self.mutable_address_state_variables
+                                    .contains_key(&reference_id)
+                            })
                     } else {
-                        let left_identifiers = ExtractIdentifiers::from(left_hand_side);
-                        for identifier in left_identifiers.extracted {
-                            if self
-                                .mutable_address_state_variables
-                                .contains_key(&identifier.referenced_declaration)
-                            {
-                                return true;
-                            }
-                        }
-                        false
+                        let left_identifiers = ExtractIdentifiers::from(left_hand_side).extracted;
+                        left_identifiers.into_iter().any(|identifier| {
+                            identifier
+                                .referenced_declaration
+                                .is_some_and(|reference_id| {
+                                    self.mutable_address_state_variables
+                                        .contains_key(&reference_id)
+                                })
+                        })
                     }
                 })
                 .collect();
@@ -130,28 +130,32 @@ impl IssueDetector for ZeroAddressCheckDetector {
             // and is also in the Function.parameters, then add the assignment to the found_instances
             for assignment in assignments {
                 if let Expression::Identifier(right_identifier) = &*assignment.right_hand_side {
-                    if !identifier_reference_declaration_ids_in_binary_checks
-                        .contains(&right_identifier.referenced_declaration)
-                        && function_definition
-                            .parameters
-                            .parameters
-                            .iter()
-                            .any(|x| x.id == right_identifier.referenced_declaration)
-                    {
-                        capture!(self, context, assignment);
-                    }
-                } else {
-                    let right_identifiers = ExtractIdentifiers::from(&*assignment.right_hand_side);
-                    for right_identifier in right_identifiers.extracted {
+                    if let Some(reference_id) = right_identifier.referenced_declaration {
                         if !identifier_reference_declaration_ids_in_binary_checks
-                            .contains(&right_identifier.referenced_declaration)
+                            .contains(&reference_id)
                             && function_definition
                                 .parameters
                                 .parameters
                                 .iter()
-                                .any(|x| x.id == right_identifier.referenced_declaration)
+                                .any(|x| x.id == reference_id)
                         {
                             capture!(self, context, assignment);
+                        }
+                    }
+                } else {
+                    let right_identifiers = ExtractIdentifiers::from(&*assignment.right_hand_side);
+                    for right_identifier in right_identifiers.extracted {
+                        if let Some(reference_id) = right_identifier.referenced_declaration {
+                            if !identifier_reference_declaration_ids_in_binary_checks
+                                .contains(&reference_id)
+                                && function_definition
+                                    .parameters
+                                    .parameters
+                                    .iter()
+                                    .any(|x| x.id == reference_id)
+                            {
+                                capture!(self, context, assignment);
+                            }
                         }
                     }
                 }

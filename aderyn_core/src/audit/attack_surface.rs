@@ -151,10 +151,13 @@ fn find_address_source_if_direct_call(
     member_access: &MemberAccess,
 ) -> Option<AddressSource> {
     if let Expression::Identifier(identifier) = &*member_access.expression {
-        let referenced_declaration = context.nodes.get(&identifier.referenced_declaration);
-        if let Some(ASTNode::VariableDeclaration(variable_declaration)) = referenced_declaration {
-            if variable_declaration.state_variable {
-                return Some(AddressSource::Storage);
+        if let Some(reference_id) = identifier.referenced_declaration {
+            if let Some(ASTNode::VariableDeclaration(variable_declaration)) =
+                context.nodes.get(&reference_id)
+            {
+                if variable_declaration.state_variable {
+                    return Some(AddressSource::Storage);
+                }
             }
         }
         return Some(AddressSource::Havoc);
@@ -176,13 +179,13 @@ fn find_address_source_if_function_call(
                 {
                     if elementary_type_name.name == "address" {
                         if let Expression::Identifier(identifier) = &function_call.arguments[0] {
-                            let referenced_declaration =
-                                context.nodes.get(&identifier.referenced_declaration);
-                            if let Some(ASTNode::VariableDeclaration(variable_declaration)) =
-                                referenced_declaration
-                            {
-                                if variable_declaration.state_variable {
-                                    return Some(AddressSource::Storage);
+                            if let Some(reference_id) = identifier.referenced_declaration {
+                                if let Some(ASTNode::VariableDeclaration(variable_declaration)) =
+                                    context.nodes.get(&reference_id)
+                                {
+                                    if variable_declaration.state_variable {
+                                        return Some(AddressSource::Storage);
+                                    }
                                 }
                             }
                         }
