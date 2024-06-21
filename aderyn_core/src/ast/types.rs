@@ -20,7 +20,10 @@ pub enum TypeName {
     Mapping(Mapping),
     UserDefinedTypeName(UserDefinedTypeName),
     ElementaryTypeName(ElementaryTypeName),
-    String(String),
+    /// A string representing the type name.
+    ///
+    /// This variant applies to older compiler versions.
+    Raw(String),
 }
 
 impl Node for TypeName {
@@ -35,10 +38,7 @@ impl Node for TypeName {
             TypeName::ElementaryTypeName(elementary_type_name) => {
                 elementary_type_name.accept(visitor)
             }
-            TypeName::String(_) => {
-                // TODO This does not exist.
-                panic!()
-            }
+            TypeName::Raw(_) => Ok(()),
         }
     }
 }
@@ -50,7 +50,7 @@ impl Display for TypeName {
             TypeName::UserDefinedTypeName(user_defined_type_name) => user_defined_type_name.fmt(f),
             TypeName::ArrayTypeName(array_type_name) => array_type_name.fmt(f),
             TypeName::Mapping(mapping) => mapping.fmt(f),
-            TypeName::String(string) => string.fmt(f),
+            TypeName::Raw(string) => string.fmt(f),
             _ => unimplemented!(),
         }
     }
