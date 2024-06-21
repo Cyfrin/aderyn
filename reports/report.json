@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 42,
-    "total_sloc": 1268
+    "total_source_units": 41,
+    "total_sloc": 1267
   },
   "files_details": {
     "files_details": [
@@ -147,11 +147,7 @@
       },
       {
         "file_path": "src/multiple_constants/C1.sol",
-        "n_sloc": 4
-      },
-      {
-        "file_path": "src/multiple_constants/C2.sol",
-        "n_sloc": 4
+        "n_sloc": 7
       },
       {
         "file_path": "src/nested/1/Nested.sol",
@@ -1494,11 +1490,6 @@
             "src": "0:23"
           },
           {
-            "contract_path": "src/multiple_constants/C2.sol",
-            "line_no": 1,
-            "src": "0:23"
-          },
-          {
             "contract_path": "src/nested/1/Nested.sol",
             "line_no": 5,
             "src": "180:23"
@@ -1969,9 +1960,9 @@
             "src": "67:2"
           },
           {
-            "contract_path": "src/multiple_constants/C2.sol",
-            "line_no": 4,
-            "src": "67:2"
+            "contract_path": "src/multiple_constants/C1.sol",
+            "line_no": 8,
+            "src": "122:2"
           }
         ]
       }

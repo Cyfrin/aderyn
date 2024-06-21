@@ -78,16 +78,15 @@ impl IssueDetector for ConstantDefinedMultipleTimesDetector {
 #[cfg(test)]
 mod constants_with_multiple_definitions {
     use crate::detect::{
-        detector::{detector_test_helpers::load_multiple_contracts, IssueDetector},
+        detector::IssueDetector,
         low::const_multiple_definitions::ConstantDefinedMultipleTimesDetector,
+        test_utils::load_solidity_source_unit,
     };
 
     #[test]
     fn test_constants_with_multiple_definitions() {
-        let context = load_multiple_contracts(vec![
-            "../tests/contract-playground/out/C1.sol/C1.json",
-            "../tests/contract-playground/out/C2.sol/C2.json",
-        ]);
+        let context =
+            load_solidity_source_unit("../tests/contract-playground/src/multiple_constants/C1.sol");
 
         let mut detector = ConstantDefinedMultipleTimesDetector::default();
         let found = detector.detect(&context).unwrap();

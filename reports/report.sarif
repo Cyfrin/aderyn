@@ -2755,17 +2755,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/multiple_constants/C2.sol"
-                },
-                "region": {
-                  "charLength": 23,
-                  "charOffset": 0
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/nested/1/Nested.sol"
                 },
                 "region": {
@@ -3736,11 +3725,11 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/multiple_constants/C2.sol"
+                  "uri": "src/multiple_constants/C1.sol"
                 },
                 "region": {
                   "charLength": 2,
-                  "charOffset": 67
+                  "charOffset": 122
                 }
               }
             }
