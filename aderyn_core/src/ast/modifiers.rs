@@ -117,9 +117,7 @@ impl IdentifierOrIdentifierPath {
 
     pub fn referenced_declaration(&self) -> Option<NodeID> {
         match self {
-            IdentifierOrIdentifierPath::Identifier(identifier) => {
-                Some(identifier.referenced_declaration)
-            }
+            IdentifierOrIdentifierPath::Identifier(identifier) => identifier.referenced_declaration,
             IdentifierOrIdentifierPath::IdentifierPath(identifier_path) => {
                 identifier_path.referenced_declaration
             }
