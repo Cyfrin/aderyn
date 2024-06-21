@@ -12,6 +12,7 @@ pub struct EventDefinition {
     pub name: String,
     pub name_location: Option<String>,
     pub parameters: ParameterList,
+    pub event_selector: Option<String>,
     pub src: String,
     pub id: NodeID,
 }
