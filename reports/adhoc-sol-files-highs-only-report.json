@@ -1,0 +1,121 @@
+{
+  "files_summary": {
+    "total_source_units": 20,
+    "total_sloc": 245
+  },
+  "files_details": {
+    "files_details": [
+      {
+        "file_path": "Counter.sol",
+        "n_sloc": 20
+      },
+      {
+        "file_path": "DemoASTNodes.sol",
+        "n_sloc": 31
+      },
+      {
+        "file_path": "Helper.sol",
+        "n_sloc": 8
+      },
+      {
+        "file_path": "InconsistentUints.sol",
+        "n_sloc": 17
+      },
+      {
+        "file_path": "InternalFunctions.sol",
+        "n_sloc": 22
+      },
+      {
+        "file_path": "OnceModifierExample.sol",
+        "n_sloc": 8
+      },
+      {
+        "file_path": "StateVariables.sol",
+        "n_sloc": 58
+      },
+      {
+        "file_path": "inheritance/ExtendedInheritance.sol",
+        "n_sloc": 17
+      },
+      {
+        "file_path": "inheritance/IContractInheritance.sol",
+        "n_sloc": 4
+      },
+      {
+        "file_path": "inheritance/InheritanceBase.sol",
+        "n_sloc": 8
+      },
+      {
+        "file_path": "multiple-versions/0.4/A.sol",
+        "n_sloc": 5
+      },
+      {
+        "file_path": "multiple-versions/0.4/B.sol",
+        "n_sloc": 5
+      },
+      {
+        "file_path": "multiple-versions/0.5/A.sol",
+        "n_sloc": 5
+      },
+      {
+        "file_path": "multiple-versions/0.5/B.sol",
+        "n_sloc": 7
+      },
+      {
+        "file_path": "multiple-versions/0.6/A.sol",
+        "n_sloc": 5
+      },
+      {
+        "file_path": "multiple-versions/0.6/B.sol",
+        "n_sloc": 5
+      },
+      {
+        "file_path": "multiple-versions/0.7/A.sol",
+        "n_sloc": 5
+      },
+      {
+        "file_path": "multiple-versions/0.7/B.sol",
+        "n_sloc": 5
+      },
+      {
+        "file_path": "multiple-versions/0.8/A.sol",
+        "n_sloc": 5
+      },
+      {
+        "file_path": "multiple-versions/0.8/B.sol",
+        "n_sloc": 5
+      }
+    ]
+  },
+  "issue_count": {
+    "high": 1,
+    "low": 0
+  },
+  "high_issues": {
+    "issues": [
+      {
+        "title": "Using `delegatecall` in loop",
+        "description": "When calling `delegatecall` the same `msg.value` amount will be accredited multiple times.",
+        "detector_name": "delegate-call-in-loop",
+        "instances": [
+          {
+            "contract_path": "inheritance/ExtendedInheritance.sol",
+            "line_no": 16,
+            "src": "488:19"
+          }
+        ]
+      }
+    ]
+  },
+  "low_issues": {
+    "issues": []
+  },
+  "detectors_used": [
+    "delegate-call-in-loop",
+    "avoid-abi-encode-packed",
+    "block-timestamp-deadline",
+    "arbitrary-transfer-from",
+    "unprotected-initializer",
+    "unsafe-casting-detector"
+  ]
+}
