@@ -11,7 +11,7 @@ pub struct Identifier {
     pub argument_types: Option<Vec<TypeDescriptions>>,
     pub name: String,
     pub overloaded_declarations: Vec<NodeID>,
-    pub referenced_declaration: NodeID,
+    pub referenced_declaration: Option<NodeID>,
     pub type_descriptions: TypeDescriptions,
     pub src: String,
     pub id: NodeID,

@@ -86,7 +86,7 @@ fn count_names_in_type_name(
             counter = counter + &tc_value;
         }
         TypeName::UserDefinedTypeName(_) => {}
-        TypeName::String(name) => {
+        TypeName::Raw(name) => {
             if name == "uint" {
                 counter.uint_count.push(variable_declaration.into());
             } else if name == "uint256" {
