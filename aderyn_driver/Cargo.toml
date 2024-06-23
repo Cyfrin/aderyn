@@ -20,7 +20,6 @@ toml = "0.8.13"
 
 [dev-dependencies]
 criterion = "0.5.1"
-tempdir = "0.3.7"
 
 [[bench]]
 name = "detectors_benchmarks"
