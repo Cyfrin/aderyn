@@ -6,7 +6,7 @@ mod project_compiler_grouping_tests {
         str::FromStr,
     };
 
-    use crate::{foundry_compiler_helpers::*, read_remappings};
+    use crate::{foundry_compiler_helpers::*, process_auto, read_remappings};
     use cyfrin_foundry_compilers::{utils, Graph, Solc};
 
     #[test]
@@ -181,5 +181,19 @@ mod project_compiler_grouping_tests {
         println!("{:?}", String::from_utf8(command_result.stderr));
 
         assert!(command_result.status.success());
+    }
+
+    #[test]
+    fn test_no_files_found_in_scope_id_detected_by_context_src_filepaths() {
+        let contexts = process_auto::with_project_root_at(
+            &PathBuf::from("../tests/contract-playground")
+                .canonicalize()
+                .unwrap(),
+            &None,
+            &None,
+            &None,
+            &Some(vec!["NonExistentFile.sol".to_string()]),
+        );
+        assert!(contexts.iter().all(|c| c.src_filepaths.is_empty()));
     }
 }
