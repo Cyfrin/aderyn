@@ -8,6 +8,7 @@ mod project_compiler_grouping_tests {
 
     use crate::{foundry_compiler_helpers::*, process_auto, read_remappings};
     use cyfrin_foundry_compilers::{utils, Graph, Solc};
+    use foundry_config::ethers_solc::CompilerInput;
 
     #[test]
     fn foundry_nft_f23() {
@@ -195,5 +196,15 @@ mod project_compiler_grouping_tests {
             &Some(vec!["NonExistentFile.sol".to_string()]),
         );
         assert!(contexts.iter().all(|c| c.src_filepaths.is_empty()));
+    }
+
+    #[test]
+    fn test_compiler_input_returns_empty_vector_when_no_solidity_files_present() {
+        let compiler_input = CompilerInput::new("../tests/no-sol-files").unwrap();
+        let solidity_files = compiler_input
+            .into_iter()
+            .filter(|c| c.language == *"Solidity")
+            .collect::<Vec<_>>();
+        assert!(solidity_files.is_empty());
     }
 }
