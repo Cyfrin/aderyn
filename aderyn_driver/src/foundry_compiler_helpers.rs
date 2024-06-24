@@ -1,6 +1,7 @@
 use std::{
     collections::BTreeMap,
     path::{Path, PathBuf},
+    process::exit,
     str::FromStr,
 };
 
@@ -17,6 +18,10 @@ pub fn get_compiler_input(root: &Path) -> CompilerInput {
         .into_iter()
         .filter(|c| c.language == *"Solidity")
         .collect::<Vec<_>>();
+    if solidity_files.is_empty() {
+        eprintln!("No solidity files found in {}!", root.to_string_lossy());
+        exit(1);
+    }
     let solidity_files = &solidity_files[0]; // No Yul Support as of now
     solidity_files.to_owned()
 }
