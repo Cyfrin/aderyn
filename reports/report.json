@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 40,
-    "total_sloc": 1260
+    "total_source_units": 41,
+    "total_sloc": 1322
   },
   "files_details": {
     "files_details": [
@@ -88,6 +88,10 @@
       {
         "file_path": "src/T11sTranferer.sol",
         "n_sloc": 8
+      },
+      {
+        "file_path": "src/TestERC20.sol",
+        "n_sloc": 62
       },
       {
         "file_path": "src/UnprotectedInitialize.sol",
@@ -1287,6 +1291,16 @@
         "description": "Index event fields make the field more quickly accessible to off-chain tools that parse events. However, note that each index field costs extra gas during emission, so it's not necessarily best to index the maximum allowed per event (three fields). Each event should use three indexed fields if there are three or more fields, and gas usage is not particularly of concern for the events in question. If there are fewer than three fields, all of the fields should be indexed.",
         "detector_name": "unindexed-events",
         "instances": [
+          {
+            "contract_path": "src/TestERC20.sol",
+            "line_no": 14,
+            "src": "338:70"
+          },
+          {
+            "contract_path": "src/TestERC20.sol",
+            "line_no": 15,
+            "src": "413:70"
+          },
           {
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 19,

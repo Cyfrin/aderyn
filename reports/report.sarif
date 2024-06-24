@@ -2345,6 +2345,28 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/TestERC20.sol"
+                },
+                "region": {
+                  "charLength": 70,
+                  "charOffset": 338
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TestERC20.sol"
+                },
+                "region": {
+                  "charLength": 70,
+                  "charOffset": 413
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/eth2/DepositContract.sol"
                 },
                 "region": {
