@@ -1,7 +1,7 @@
 use crate::context::workspace_context::WorkspaceContext;
 
 use std::{
-    collections::HashSet,
+    collections::{HashMap, HashSet},
     io::{Result, Write},
     path::{Path, PathBuf},
 };
@@ -29,6 +29,20 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
         self.print_table_of_contents(&mut writer, report)?;
         self.print_contract_summary(&mut writer, report, contexts)?;
 
+        let source_units = contexts
+            .iter()
+            .flat_map(|context| context.source_units())
+            .map(|source_unit| {
+                (
+                    root_path
+                        .join(PathBuf::from(source_unit.absolute_path.as_ref().unwrap()))
+                        .to_string_lossy()
+                        .to_string(),
+                    source_unit.source.as_ref().unwrap(),
+                )
+            })
+            .collect::<HashMap<_, _>>();
+
         let output_rel_path = output_rel_path.unwrap();
 
         let all_issues = vec![
@@ -53,6 +67,7 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
                             output_rel_path: output_rel_path.clone(),
                             no_snippets,
                         },
+                        &source_units,
                     )?;
                 }
             }
@@ -210,7 +225,12 @@ impl MarkdownReportPrinter {
         Ok(())
     }
 
-    fn print_issue<W: Write>(&self, mut writer: W, params: PrintIssueParams) -> Result<()> {
+    fn print_issue<W: Write>(
+        &self,
+        mut writer: W,
+        params: PrintIssueParams,
+        file_data: &HashMap<String, &String>,
+    ) -> Result<()> {
         let is_file = params.root_path.is_file();
 
         writeln!(
@@ -270,10 +290,7 @@ impl MarkdownReportPrinter {
                 continue;
             }
 
-            // dbg!(&params.root_path);
-            // dbg!(&instance.contract_path.clone());
-            // dbg!(&path);
-            let line = std::fs::read_to_string(&path).unwrap();
+            let line = file_data.get(&path).unwrap();
 
             let line_preview = line
                 .split('\n')
