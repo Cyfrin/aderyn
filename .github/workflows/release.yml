@@ -24,7 +24,7 @@ jobs:
             runner: windows-latest
             target: x86_64-pc-windows-msvc
           - name: macos-amd64
-            runner: macos-latest
+            runner: macos-latest-large
             target: x86_64-apple-darwin
           - name: macos-arm64
             runner: macos-latest
