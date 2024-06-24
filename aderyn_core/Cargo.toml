@@ -22,7 +22,7 @@ serde-sarif = "0.4.2"
 serde_repr = "0.1.12"
 strum = { version = "0.26", features = ["derive"] }
 toml = "0.8.2"
-cyfrin-foundry-compilers = { version = "0.3.20-aderyn", features = ["svm-solc"]  }
+foundry-compilers = { version = "0.8.0", features = ["svm-solc"]  }
 
 [dev-dependencies]
 serial_test = "3.0.0"
