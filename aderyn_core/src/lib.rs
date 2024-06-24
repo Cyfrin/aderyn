@@ -2,7 +2,6 @@ pub mod ast;
 pub mod audit;
 pub mod context;
 pub mod detect;
-pub mod framework;
 pub mod fscloc;
 pub mod report;
 pub mod visitor;
