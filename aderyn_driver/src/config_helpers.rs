@@ -3,7 +3,7 @@ use std::{
     path::{Path, PathBuf},
 };
 
-use foundry_config::Config;
+use cyfrin_foundry_config::Config;
 use serde::Deserialize;
 
 /// aderyn.toml structure
@@ -211,7 +211,6 @@ fn interpret_foundry_config(
         local_remappings.extend(
             config
                 .get_all_remappings()
-                .iter()
                 .map(|x| x.to_string())
                 .collect::<Vec<_>>(),
         );
@@ -219,7 +218,6 @@ fn interpret_foundry_config(
         local_remappings = Some(
             config
                 .get_all_remappings()
-                .iter()
                 .map(|x| x.to_string())
                 .collect::<Vec<_>>(),
         );
@@ -232,7 +230,8 @@ fn interpret_foundry_config(
 mod tests {
     use std::path::PathBuf;
 
-    use foundry_config::{ethers_solc::remappings::RelativeRemapping, Config};
+    use cyfrin_foundry_config::Config;
+    use foundry_compilers::artifacts::RelativeRemapping;
 
     #[test]
     fn test_interpret_aderyn_config_correctly_appends_and_replaces() {

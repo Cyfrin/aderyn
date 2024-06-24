@@ -1,6 +1,6 @@
 mod load_source_unit;
 
-use cyfrin_foundry_compilers::utils;
+use foundry_compilers::utils;
 use once_cell::sync::Lazy;
 use std::path::PathBuf;
 

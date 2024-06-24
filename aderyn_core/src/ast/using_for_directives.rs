@@ -1,6 +1,6 @@
 use super::*;
 use crate::visitor::ast_visitor::*;
-// use cyfrin_foundry_compilers::artifacts::serde_helpers;
+// use foundry_compilers::artifacts::serde_helpers;
 use eyre::Result;
 use serde::{Deserialize, Serialize};
 use std::fmt::Display;
