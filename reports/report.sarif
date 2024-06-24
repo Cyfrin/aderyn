@@ -13,8 +13,8 @@
                   "uri": "src/inheritance/ExtendedInheritance.sol"
                 },
                 "region": {
-                  "charLength": 19,
-                  "charOffset": 488
+                  "byteLength": 19,
+                  "byteOffset": 488
                 }
               }
             }
@@ -33,8 +33,8 @@
                   "uri": "src/KeccakContract.sol"
                 },
                 "region": {
-                  "charLength": 16,
-                  "charOffset": 587
+                  "byteLength": 16,
+                  "byteOffset": 587
                 }
               }
             },
@@ -44,8 +44,8 @@
                   "uri": "src/KeccakContract.sol"
                 },
                 "region": {
-                  "charLength": 16,
-                  "charOffset": 734
+                  "byteLength": 16,
+                  "byteOffset": 734
                 }
               }
             },
@@ -55,8 +55,8 @@
                   "uri": "src/KeccakContract.sol"
                 },
                 "region": {
-                  "charLength": 16,
-                  "charOffset": 887
+                  "byteLength": 16,
+                  "byteOffset": 887
                 }
               }
             }
@@ -75,8 +75,8 @@
                   "uri": "src/uniswap/UniswapV2Swapper.sol"
                 },
                 "region": {
-                  "charLength": 83,
-                  "charOffset": 670
+                  "byteLength": 83,
+                  "byteOffset": 670
                 }
               }
             },
@@ -86,8 +86,8 @@
                   "uri": "src/uniswap/UniswapV2Swapper.sol"
                 },
                 "region": {
-                  "charLength": 83,
-                  "charOffset": 763
+                  "byteLength": 83,
+                  "byteOffset": 763
                 }
               }
             },
@@ -97,8 +97,8 @@
                   "uri": "src/uniswap/UniswapV2Swapper.sol"
                 },
                 "region": {
-                  "charLength": 70,
-                  "charOffset": 856
+                  "byteLength": 70,
+                  "byteOffset": 856
                 }
               }
             },
@@ -108,8 +108,8 @@
                   "uri": "src/uniswap/UniswapV2Swapper.sol"
                 },
                 "region": {
-                  "charLength": 80,
-                  "charOffset": 936
+                  "byteLength": 80,
+                  "byteOffset": 936
                 }
               }
             },
@@ -119,8 +119,8 @@
                   "uri": "src/uniswap/UniswapV2Swapper.sol"
                 },
                 "region": {
-                  "charLength": 80,
-                  "charOffset": 1026
+                  "byteLength": 80,
+                  "byteOffset": 1026
                 }
               }
             },
@@ -130,8 +130,8 @@
                   "uri": "src/uniswap/UniswapV2Swapper.sol"
                 },
                 "region": {
-                  "charLength": 67,
-                  "charOffset": 1116
+                  "byteLength": 67,
+                  "byteOffset": 1116
                 }
               }
             },
@@ -141,8 +141,8 @@
                   "uri": "src/uniswap/UniswapV2Swapper.sol"
                 },
                 "region": {
-                  "charLength": 112,
-                  "charOffset": 1261
+                  "byteLength": 112,
+                  "byteOffset": 1261
                 }
               }
             },
@@ -152,8 +152,8 @@
                   "uri": "src/uniswap/UniswapV2Swapper.sol"
                 },
                 "region": {
-                  "charLength": 99,
-                  "charOffset": 1383
+                  "byteLength": 99,
+                  "byteOffset": 1383
                 }
               }
             },
@@ -163,8 +163,8 @@
                   "uri": "src/uniswap/UniswapV2Swapper.sol"
                 },
                 "region": {
-                  "charLength": 109,
-                  "charOffset": 1492
+                  "byteLength": 109,
+                  "byteOffset": 1492
                 }
               }
             },
@@ -174,8 +174,8 @@
                   "uri": "src/uniswap/UniswapV3Swapper.sol"
                 },
                 "region": {
-                  "charLength": 143,
-                  "charOffset": 1115
+                  "byteLength": 143,
+                  "byteOffset": 1115
                 }
               }
             },
@@ -185,8 +185,8 @@
                   "uri": "src/uniswap/UniswapV3Swapper.sol"
                 },
                 "region": {
-                  "charLength": 321,
-                  "charOffset": 1293
+                  "byteLength": 321,
+                  "byteOffset": 1293
                 }
               }
             },
@@ -196,8 +196,8 @@
                   "uri": "src/uniswap/UniswapV3Swapper.sol"
                 },
                 "region": {
-                  "charLength": 131,
-                  "charOffset": 1668
+                  "byteLength": 131,
+                  "byteOffset": 1668
                 }
               }
             },
@@ -207,8 +207,8 @@
                   "uri": "src/uniswap/UniswapV3Swapper.sol"
                 },
                 "region": {
-                  "charLength": 236,
-                  "charOffset": 1828
+                  "byteLength": 236,
+                  "byteOffset": 1828
                 }
               }
             },
@@ -218,8 +218,8 @@
                   "uri": "src/uniswap/UniswapV3Swapper.sol"
                 },
                 "region": {
-                  "charLength": 144,
-                  "charOffset": 2132
+                  "byteLength": 144,
+                  "byteOffset": 2132
                 }
               }
             },
@@ -229,8 +229,8 @@
                   "uri": "src/uniswap/UniswapV3Swapper.sol"
                 },
                 "region": {
-                  "charLength": 322,
-                  "charOffset": 2312
+                  "byteLength": 322,
+                  "byteOffset": 2312
                 }
               }
             },
@@ -240,8 +240,8 @@
                   "uri": "src/uniswap/UniswapV3Swapper.sol"
                 },
                 "region": {
-                  "charLength": 132,
-                  "charOffset": 2690
+                  "byteLength": 132,
+                  "byteOffset": 2690
                 }
               }
             },
@@ -251,8 +251,8 @@
                   "uri": "src/uniswap/UniswapV3Swapper.sol"
                 },
                 "region": {
-                  "charLength": 237,
-                  "charOffset": 2852
+                  "byteLength": 237,
+                  "byteOffset": 2852
                 }
               }
             }
@@ -271,8 +271,8 @@
                   "uri": "src/ArbitraryTransferFrom.sol"
                 },
                 "region": {
-                  "charLength": 38,
-                  "charOffset": 370
+                  "byteLength": 38,
+                  "byteOffset": 370
                 }
               }
             },
@@ -282,8 +282,8 @@
                   "uri": "src/ArbitraryTransferFrom.sol"
                 },
                 "region": {
-                  "charLength": 42,
-                  "charOffset": 496
+                  "byteLength": 42,
+                  "byteOffset": 496
                 }
               }
             },
@@ -293,8 +293,8 @@
                   "uri": "src/ArbitraryTransferFrom.sol"
                 },
                 "region": {
-                  "charLength": 53,
-                  "charOffset": 634
+                  "byteLength": 53,
+                  "byteOffset": 634
                 }
               }
             },
@@ -304,8 +304,8 @@
                   "uri": "src/ArbitraryTransferFrom.sol"
                 },
                 "region": {
-                  "charLength": 44,
-                  "charOffset": 864
+                  "byteLength": 44,
+                  "byteOffset": 864
                 }
               }
             },
@@ -315,8 +315,8 @@
                   "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
-                  "charLength": 39,
-                  "charOffset": 579
+                  "byteLength": 39,
+                  "byteOffset": 579
                 }
               }
             },
@@ -326,8 +326,8 @@
                   "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
-                  "charLength": 35,
-                  "charOffset": 1598
+                  "byteLength": 35,
+                  "byteOffset": 1598
                 }
               }
             }
@@ -346,8 +346,8 @@
                   "uri": "src/UnprotectedInitialize.sol"
                 },
                 "region": {
-                  "charLength": 33,
-                  "charOffset": 820
+                  "byteLength": 33,
+                  "byteOffset": 820
                 }
               }
             }
@@ -366,8 +366,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 1065
+                  "byteLength": 10,
+                  "byteOffset": 1065
                 }
               }
             },
@@ -377,8 +377,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 1097
+                  "byteLength": 10,
+                  "byteOffset": 1097
                 }
               }
             },
@@ -388,8 +388,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 1129
+                  "byteLength": 10,
+                  "byteOffset": 1129
                 }
               }
             },
@@ -399,8 +399,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 1161
+                  "byteLength": 10,
+                  "byteOffset": 1161
                 }
               }
             },
@@ -410,8 +410,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 1193
+                  "byteLength": 10,
+                  "byteOffset": 1193
                 }
               }
             },
@@ -421,8 +421,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 1225
+                  "byteLength": 10,
+                  "byteOffset": 1225
                 }
               }
             },
@@ -432,8 +432,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 1257
+                  "byteLength": 10,
+                  "byteOffset": 1257
                 }
               }
             },
@@ -443,8 +443,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 1289
+                  "byteLength": 10,
+                  "byteOffset": 1289
                 }
               }
             },
@@ -454,8 +454,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 1321
+                  "byteLength": 10,
+                  "byteOffset": 1321
                 }
               }
             },
@@ -465,8 +465,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 1353
+                  "byteLength": 10,
+                  "byteOffset": 1353
                 }
               }
             },
@@ -476,8 +476,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 1385
+                  "byteLength": 10,
+                  "byteOffset": 1385
                 }
               }
             },
@@ -487,8 +487,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 1417
+                  "byteLength": 10,
+                  "byteOffset": 1417
                 }
               }
             },
@@ -498,8 +498,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 1449
+                  "byteLength": 10,
+                  "byteOffset": 1449
                 }
               }
             },
@@ -509,8 +509,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 1481
+                  "byteLength": 10,
+                  "byteOffset": 1481
                 }
               }
             },
@@ -520,8 +520,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 1513
+                  "byteLength": 10,
+                  "byteOffset": 1513
                 }
               }
             },
@@ -531,8 +531,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 1545
+                  "byteLength": 10,
+                  "byteOffset": 1545
                 }
               }
             },
@@ -542,8 +542,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 1577
+                  "byteLength": 10,
+                  "byteOffset": 1577
                 }
               }
             },
@@ -553,8 +553,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 1609
+                  "byteLength": 10,
+                  "byteOffset": 1609
                 }
               }
             },
@@ -564,8 +564,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 1641
+                  "byteLength": 10,
+                  "byteOffset": 1641
                 }
               }
             },
@@ -575,8 +575,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 1672
+                  "byteLength": 9,
+                  "byteOffset": 1672
                 }
               }
             },
@@ -586,8 +586,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 1702
+                  "byteLength": 9,
+                  "byteOffset": 1702
                 }
               }
             },
@@ -597,8 +597,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 1732
+                  "byteLength": 9,
+                  "byteOffset": 1732
                 }
               }
             },
@@ -608,8 +608,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 1762
+                  "byteLength": 9,
+                  "byteOffset": 1762
                 }
               }
             },
@@ -619,8 +619,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 1792
+                  "byteLength": 9,
+                  "byteOffset": 1792
                 }
               }
             },
@@ -630,8 +630,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 1822
+                  "byteLength": 9,
+                  "byteOffset": 1822
                 }
               }
             },
@@ -641,8 +641,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 1853
+                  "byteLength": 9,
+                  "byteOffset": 1853
                 }
               }
             },
@@ -652,8 +652,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 1884
+                  "byteLength": 10,
+                  "byteOffset": 1884
                 }
               }
             },
@@ -663,8 +663,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 1916
+                  "byteLength": 10,
+                  "byteOffset": 1916
                 }
               }
             },
@@ -674,8 +674,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 1948
+                  "byteLength": 10,
+                  "byteOffset": 1948
                 }
               }
             },
@@ -685,8 +685,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 1980
+                  "byteLength": 10,
+                  "byteOffset": 1980
                 }
               }
             },
@@ -696,8 +696,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 2013
+                  "byteLength": 9,
+                  "byteOffset": 2013
                 }
               }
             },
@@ -707,8 +707,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 2242
+                  "byteLength": 9,
+                  "byteOffset": 2242
                 }
               }
             },
@@ -718,8 +718,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 2272
+                  "byteLength": 9,
+                  "byteOffset": 2272
                 }
               }
             },
@@ -729,8 +729,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 2302
+                  "byteLength": 9,
+                  "byteOffset": 2302
                 }
               }
             },
@@ -740,8 +740,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 2332
+                  "byteLength": 9,
+                  "byteOffset": 2332
                 }
               }
             },
@@ -751,8 +751,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 2362
+                  "byteLength": 9,
+                  "byteOffset": 2362
                 }
               }
             },
@@ -762,8 +762,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 2392
+                  "byteLength": 9,
+                  "byteOffset": 2392
                 }
               }
             },
@@ -773,8 +773,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 2422
+                  "byteLength": 9,
+                  "byteOffset": 2422
                 }
               }
             },
@@ -784,8 +784,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 2452
+                  "byteLength": 9,
+                  "byteOffset": 2452
                 }
               }
             },
@@ -795,8 +795,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 2482
+                  "byteLength": 9,
+                  "byteOffset": 2482
                 }
               }
             },
@@ -806,8 +806,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 2512
+                  "byteLength": 9,
+                  "byteOffset": 2512
                 }
               }
             },
@@ -817,8 +817,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 2542
+                  "byteLength": 9,
+                  "byteOffset": 2542
                 }
               }
             },
@@ -828,8 +828,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 2572
+                  "byteLength": 9,
+                  "byteOffset": 2572
                 }
               }
             },
@@ -839,8 +839,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 2602
+                  "byteLength": 9,
+                  "byteOffset": 2602
                 }
               }
             },
@@ -850,8 +850,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 2632
+                  "byteLength": 9,
+                  "byteOffset": 2632
                 }
               }
             },
@@ -861,8 +861,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 2662
+                  "byteLength": 9,
+                  "byteOffset": 2662
                 }
               }
             },
@@ -872,8 +872,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 2692
+                  "byteLength": 9,
+                  "byteOffset": 2692
                 }
               }
             },
@@ -883,8 +883,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 2722
+                  "byteLength": 9,
+                  "byteOffset": 2722
                 }
               }
             },
@@ -894,8 +894,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 2752
+                  "byteLength": 9,
+                  "byteOffset": 2752
                 }
               }
             },
@@ -905,8 +905,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 2782
+                  "byteLength": 9,
+                  "byteOffset": 2782
                 }
               }
             },
@@ -916,8 +916,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 8,
-                  "charOffset": 2811
+                  "byteLength": 8,
+                  "byteOffset": 2811
                 }
               }
             },
@@ -927,8 +927,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 8,
-                  "charOffset": 2839
+                  "byteLength": 8,
+                  "byteOffset": 2839
                 }
               }
             },
@@ -938,8 +938,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 8,
-                  "charOffset": 2867
+                  "byteLength": 8,
+                  "byteOffset": 2867
                 }
               }
             },
@@ -949,8 +949,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 8,
-                  "charOffset": 2895
+                  "byteLength": 8,
+                  "byteOffset": 2895
                 }
               }
             },
@@ -960,8 +960,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 8,
-                  "charOffset": 2923
+                  "byteLength": 8,
+                  "byteOffset": 2923
                 }
               }
             },
@@ -971,8 +971,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 8,
-                  "charOffset": 2951
+                  "byteLength": 8,
+                  "byteOffset": 2951
                 }
               }
             },
@@ -982,8 +982,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 8,
-                  "charOffset": 2980
+                  "byteLength": 8,
+                  "byteOffset": 2980
                 }
               }
             },
@@ -993,8 +993,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 3009
+                  "byteLength": 9,
+                  "byteOffset": 3009
                 }
               }
             },
@@ -1004,8 +1004,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 3039
+                  "byteLength": 9,
+                  "byteOffset": 3039
                 }
               }
             },
@@ -1015,8 +1015,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 3069
+                  "byteLength": 9,
+                  "byteOffset": 3069
                 }
               }
             },
@@ -1026,8 +1026,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 3099
+                  "byteLength": 9,
+                  "byteOffset": 3099
                 }
               }
             },
@@ -1037,8 +1037,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 8,
-                  "charOffset": 3130
+                  "byteLength": 8,
+                  "byteOffset": 3130
                 }
               }
             },
@@ -1048,8 +1048,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 3426
+                  "byteLength": 10,
+                  "byteOffset": 3426
                 }
               }
             },
@@ -1059,8 +1059,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 3458
+                  "byteLength": 10,
+                  "byteOffset": 3458
                 }
               }
             },
@@ -1070,8 +1070,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 3490
+                  "byteLength": 10,
+                  "byteOffset": 3490
                 }
               }
             },
@@ -1081,8 +1081,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 3522
+                  "byteLength": 10,
+                  "byteOffset": 3522
                 }
               }
             },
@@ -1092,8 +1092,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 3554
+                  "byteLength": 10,
+                  "byteOffset": 3554
                 }
               }
             },
@@ -1103,8 +1103,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 3586
+                  "byteLength": 10,
+                  "byteOffset": 3586
                 }
               }
             },
@@ -1114,8 +1114,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 3618
+                  "byteLength": 10,
+                  "byteOffset": 3618
                 }
               }
             },
@@ -1125,8 +1125,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 3650
+                  "byteLength": 10,
+                  "byteOffset": 3650
                 }
               }
             },
@@ -1136,8 +1136,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 3682
+                  "byteLength": 10,
+                  "byteOffset": 3682
                 }
               }
             },
@@ -1147,8 +1147,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 3714
+                  "byteLength": 10,
+                  "byteOffset": 3714
                 }
               }
             },
@@ -1158,8 +1158,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 3746
+                  "byteLength": 10,
+                  "byteOffset": 3746
                 }
               }
             },
@@ -1169,8 +1169,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 3778
+                  "byteLength": 10,
+                  "byteOffset": 3778
                 }
               }
             },
@@ -1180,8 +1180,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 3810
+                  "byteLength": 10,
+                  "byteOffset": 3810
                 }
               }
             },
@@ -1191,8 +1191,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 3842
+                  "byteLength": 10,
+                  "byteOffset": 3842
                 }
               }
             },
@@ -1202,8 +1202,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 3874
+                  "byteLength": 10,
+                  "byteOffset": 3874
                 }
               }
             },
@@ -1213,8 +1213,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 3906
+                  "byteLength": 10,
+                  "byteOffset": 3906
                 }
               }
             },
@@ -1224,8 +1224,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 3938
+                  "byteLength": 10,
+                  "byteOffset": 3938
                 }
               }
             },
@@ -1235,8 +1235,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 3970
+                  "byteLength": 10,
+                  "byteOffset": 3970
                 }
               }
             },
@@ -1246,8 +1246,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 4002
+                  "byteLength": 10,
+                  "byteOffset": 4002
                 }
               }
             },
@@ -1257,8 +1257,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 4034
+                  "byteLength": 10,
+                  "byteOffset": 4034
                 }
               }
             },
@@ -1268,8 +1268,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 4066
+                  "byteLength": 10,
+                  "byteOffset": 4066
                 }
               }
             },
@@ -1279,8 +1279,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 4098
+                  "byteLength": 10,
+                  "byteOffset": 4098
                 }
               }
             },
@@ -1290,8 +1290,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 4129
+                  "byteLength": 9,
+                  "byteOffset": 4129
                 }
               }
             },
@@ -1301,8 +1301,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 4159
+                  "byteLength": 9,
+                  "byteOffset": 4159
                 }
               }
             },
@@ -1312,8 +1312,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 4189
+                  "byteLength": 9,
+                  "byteOffset": 4189
                 }
               }
             },
@@ -1323,8 +1323,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 4220
+                  "byteLength": 9,
+                  "byteOffset": 4220
                 }
               }
             },
@@ -1334,8 +1334,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 4251
+                  "byteLength": 10,
+                  "byteOffset": 4251
                 }
               }
             },
@@ -1345,8 +1345,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 4283
+                  "byteLength": 10,
+                  "byteOffset": 4283
                 }
               }
             },
@@ -1356,8 +1356,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 4315
+                  "byteLength": 10,
+                  "byteOffset": 4315
                 }
               }
             },
@@ -1367,8 +1367,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 4347
+                  "byteLength": 10,
+                  "byteOffset": 4347
                 }
               }
             },
@@ -1378,8 +1378,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 4381
+                  "byteLength": 10,
+                  "byteOffset": 4381
                 }
               }
             }
@@ -1398,8 +1398,8 @@
                   "uri": "src/AdminContract.sol"
                 },
                 "region": {
-                  "charLength": 7,
-                  "charOffset": 270
+                  "byteLength": 7,
+                  "byteOffset": 270
                 }
               }
             },
@@ -1409,8 +1409,8 @@
                   "uri": "src/AdminContract.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 376
+                  "byteLength": 9,
+                  "byteOffset": 376
                 }
               }
             },
@@ -1420,8 +1420,8 @@
                   "uri": "src/AdminContract.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 505
+                  "byteLength": 9,
+                  "byteOffset": 505
                 }
               }
             },
@@ -1431,8 +1431,8 @@
                   "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
-                  "charLength": 13,
-                  "charOffset": 295
+                  "byteLength": 13,
+                  "byteOffset": 295
                 }
               }
             },
@@ -1442,8 +1442,8 @@
                   "uri": "src/EmptyBlocks.sol"
                 },
                 "region": {
-                  "charLength": 7,
-                  "charOffset": 188
+                  "byteLength": 7,
+                  "byteOffset": 188
                 }
               }
             },
@@ -1453,8 +1453,8 @@
                   "uri": "src/InternalFunctions.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 250
+                  "byteLength": 9,
+                  "byteOffset": 250
                 }
               }
             },
@@ -1464,8 +1464,8 @@
                   "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
                 },
                 "region": {
-                  "charLength": 7,
-                  "charOffset": 322
+                  "byteLength": 7,
+                  "byteOffset": 322
                 }
               }
             },
@@ -1475,8 +1475,8 @@
                   "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 396
+                  "byteLength": 9,
+                  "byteOffset": 396
                 }
               }
             },
@@ -1486,8 +1486,8 @@
                   "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
                 },
                 "region": {
-                  "charLength": 13,
-                  "charOffset": 975
+                  "byteLength": 13,
+                  "byteOffset": 975
                 }
               }
             },
@@ -1497,8 +1497,8 @@
                   "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
                 },
                 "region": {
-                  "charLength": 14,
-                  "charOffset": 1108
+                  "byteLength": 14,
+                  "byteOffset": 1108
                 }
               }
             },
@@ -1508,8 +1508,8 @@
                   "uri": "src/parent_chain/ParentChainContract.sol"
                 },
                 "region": {
-                  "charLength": 7,
-                  "charOffset": 282
+                  "byteLength": 7,
+                  "byteOffset": 282
                 }
               }
             },
@@ -1519,8 +1519,8 @@
                   "uri": "src/parent_chain/ParentChainContract.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 725
+                  "byteLength": 9,
+                  "byteOffset": 725
                 }
               }
             },
@@ -1530,8 +1530,8 @@
                   "uri": "src/parent_chain/ParentChainContract.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 854
+                  "byteLength": 9,
+                  "byteOffset": 854
                 }
               }
             }
@@ -1550,8 +1550,8 @@
                   "uri": "src/T11sTranferer.sol"
                 },
                 "region": {
-                  "charLength": 84,
-                  "charOffset": 57
+                  "byteLength": 84,
+                  "byteOffset": 57
                 }
               }
             }
@@ -1570,8 +1570,8 @@
                   "uri": "src/inheritance/ExtendedInheritance.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 705
+                  "byteLength": 9,
+                  "byteOffset": 705
                 }
               }
             }
@@ -1590,8 +1590,8 @@
                   "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 737
+                  "byteLength": 10,
+                  "byteOffset": 737
                 }
               }
             },
@@ -1601,8 +1601,8 @@
                   "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
-                  "charLength": 17,
-                  "charOffset": 898
+                  "byteLength": 17,
+                  "byteOffset": 898
                 }
               }
             }
@@ -1621,8 +1621,8 @@
                   "uri": "src/ArbitraryTransferFrom.sol"
                 },
                 "region": {
-                  "charLength": 20,
-                  "charOffset": 370
+                  "byteLength": 20,
+                  "byteOffset": 370
                 }
               }
             },
@@ -1632,8 +1632,8 @@
                   "uri": "src/ArbitraryTransferFrom.sol"
                 },
                 "region": {
-                  "charLength": 20,
-                  "charOffset": 864
+                  "byteLength": 20,
+                  "byteOffset": 864
                 }
               }
             },
@@ -1643,8 +1643,8 @@
                   "uri": "src/ArbitraryTransferFrom.sol"
                 },
                 "region": {
-                  "charLength": 20,
-                  "charOffset": 1517
+                  "byteLength": 20,
+                  "byteOffset": 1517
                 }
               }
             },
@@ -1654,8 +1654,8 @@
                   "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
-                  "charLength": 13,
-                  "charOffset": 1062
+                  "byteLength": 13,
+                  "byteOffset": 1062
                 }
               }
             },
@@ -1665,8 +1665,8 @@
                   "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
-                  "charLength": 13,
-                  "charOffset": 1272
+                  "byteLength": 13,
+                  "byteOffset": 1272
                 }
               }
             },
@@ -1676,8 +1676,8 @@
                   "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
-                  "charLength": 13,
-                  "charOffset": 1322
+                  "byteLength": 13,
+                  "byteOffset": 1322
                 }
               }
             },
@@ -1687,8 +1687,8 @@
                   "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
-                  "charLength": 13,
-                  "charOffset": 1424
+                  "byteLength": 13,
+                  "byteOffset": 1424
                 }
               }
             },
@@ -1698,8 +1698,8 @@
                   "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
-                  "charLength": 18,
-                  "charOffset": 1598
+                  "byteLength": 18,
+                  "byteOffset": 1598
                 }
               }
             }
@@ -1718,8 +1718,8 @@
                   "uri": "src/ContractWithTodo.sol"
                 },
                 "region": {
-                  "charLength": 23,
-                  "charOffset": 32
+                  "byteLength": 23,
+                  "byteOffset": 32
                 }
               }
             },
@@ -1729,8 +1729,8 @@
                   "uri": "src/Counter.sol"
                 },
                 "region": {
-                  "charLength": 24,
-                  "charOffset": 39
+                  "byteLength": 24,
+                  "byteOffset": 39
                 }
               }
             },
@@ -1740,8 +1740,8 @@
                   "uri": "src/CrazyPragma.sol"
                 },
                 "region": {
-                  "charLength": 32,
-                  "charOffset": 32
+                  "byteLength": 32,
+                  "byteOffset": 32
                 }
               }
             },
@@ -1751,8 +1751,8 @@
                   "uri": "src/InconsistentUints.sol"
                 },
                 "region": {
-                  "charLength": 24,
-                  "charOffset": 0
+                  "byteLength": 24,
+                  "byteOffset": 0
                 }
               }
             },
@@ -1762,8 +1762,8 @@
                   "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
                 },
                 "region": {
-                  "charLength": 24,
-                  "charOffset": 46
+                  "byteLength": 24,
+                  "byteOffset": 46
                 }
               }
             },
@@ -1773,8 +1773,8 @@
                   "uri": "src/cloc/HeavilyCommentedContract.sol"
                 },
                 "region": {
-                  "charLength": 32,
-                  "charOffset": 46
+                  "byteLength": 32,
+                  "byteOffset": 46
                 }
               }
             },
@@ -1784,8 +1784,8 @@
                   "uri": "src/inheritance/IContractInheritance.sol"
                 },
                 "region": {
-                  "charLength": 24,
-                  "charOffset": 32
+                  "byteLength": 24,
+                  "byteOffset": 32
                 }
               }
             },
@@ -1795,8 +1795,8 @@
                   "uri": "src/inheritance/InheritanceBase.sol"
                 },
                 "region": {
-                  "charLength": 23,
-                  "charOffset": 32
+                  "byteLength": 23,
+                  "byteOffset": 32
                 }
               }
             }
@@ -1815,8 +1815,8 @@
                   "uri": "src/ArbitraryTransferFrom.sol"
                 },
                 "region": {
-                  "charLength": 15,
-                  "charOffset": 267
+                  "byteLength": 15,
+                  "byteOffset": 267
                 }
               }
             },
@@ -1826,8 +1826,8 @@
                   "uri": "src/StateVariables.sol"
                 },
                 "region": {
-                  "charLength": 14,
-                  "charOffset": 2121
+                  "byteLength": 14,
+                  "byteOffset": 2121
                 }
               }
             },
@@ -1837,8 +1837,8 @@
                   "uri": "src/ZeroAddressCheck.sol"
                 },
                 "region": {
-                  "charLength": 14,
-                  "charOffset": 1171
+                  "byteLength": 14,
+                  "byteOffset": 1171
                 }
               }
             },
@@ -1848,8 +1848,8 @@
                   "uri": "src/ZeroAddressCheck.sol"
                 },
                 "region": {
-                  "charLength": 16,
-                  "charOffset": 1248
+                  "byteLength": 16,
+                  "byteOffset": 1248
                 }
               }
             },
@@ -1859,8 +1859,8 @@
                   "uri": "src/ZeroAddressCheck.sol"
                 },
                 "region": {
-                  "charLength": 23,
-                  "charOffset": 1327
+                  "byteLength": 23,
+                  "byteOffset": 1327
                 }
               }
             },
@@ -1870,8 +1870,8 @@
                   "uri": "src/uniswap/UniswapV2Swapper.sol"
                 },
                 "region": {
-                  "charLength": 17,
-                  "charOffset": 365
+                  "byteLength": 17,
+                  "byteOffset": 365
                 }
               }
             }
@@ -1890,8 +1890,8 @@
                   "uri": "src/ArbitraryTransferFrom.sol"
                 },
                 "region": {
-                  "charLength": 5,
-                  "charOffset": 772
+                  "byteLength": 5,
+                  "byteOffset": 772
                 }
               }
             },
@@ -1901,8 +1901,8 @@
                   "uri": "src/AssemblyExample.sol"
                 },
                 "region": {
-                  "charLength": 1,
-                  "charOffset": 113
+                  "byteLength": 1,
+                  "byteOffset": 113
                 }
               }
             },
@@ -1912,8 +1912,8 @@
                   "uri": "src/ContractWithTodo.sol"
                 },
                 "region": {
-                  "charLength": 15,
-                  "charOffset": 337
+                  "byteLength": 15,
+                  "byteOffset": 337
                 }
               }
             },
@@ -1923,8 +1923,8 @@
                   "uri": "src/Counter.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 129
+                  "byteLength": 9,
+                  "byteOffset": 129
                 }
               }
             },
@@ -1934,8 +1934,8 @@
                   "uri": "src/StateVariables.sol"
                 },
                 "region": {
-                  "charLength": 18,
-                  "charOffset": 1764
+                  "byteLength": 18,
+                  "byteOffset": 1764
                 }
               }
             },
@@ -1945,8 +1945,8 @@
                   "uri": "src/StateVariables.sol"
                 },
                 "region": {
-                  "charLength": 20,
-                  "charOffset": 1915
+                  "byteLength": 20,
+                  "byteOffset": 1915
                 }
               }
             },
@@ -1956,8 +1956,8 @@
                   "uri": "src/StateVariables.sol"
                 },
                 "region": {
-                  "charLength": 14,
-                  "charOffset": 2072
+                  "byteLength": 14,
+                  "byteOffset": 2072
                 }
               }
             },
@@ -1967,8 +1967,8 @@
                   "uri": "src/StateVariables.sol"
                 },
                 "region": {
-                  "charLength": 22,
-                  "charOffset": 2157
+                  "byteLength": 22,
+                  "byteOffset": 2157
                 }
               }
             },
@@ -1978,8 +1978,8 @@
                   "uri": "src/StateVariables.sol"
                 },
                 "region": {
-                  "charLength": 25,
-                  "charOffset": 2539
+                  "byteLength": 25,
+                  "byteOffset": 2539
                 }
               }
             },
@@ -1989,8 +1989,8 @@
                   "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
                 },
                 "region": {
-                  "charLength": 27,
-                  "charOffset": 475
+                  "byteLength": 27,
+                  "byteOffset": 475
                 }
               }
             },
@@ -2000,8 +2000,8 @@
                   "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
                 },
                 "region": {
-                  "charLength": 28,
-                  "charOffset": 653
+                  "byteLength": 28,
+                  "byteOffset": 653
                 }
               }
             },
@@ -2011,8 +2011,8 @@
                   "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
                 },
                 "region": {
-                  "charLength": 26,
-                  "charOffset": 1324
+                  "byteLength": 26,
+                  "byteOffset": 1324
                 }
               }
             },
@@ -2022,8 +2022,8 @@
                   "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
                 },
                 "region": {
-                  "charLength": 27,
-                  "charOffset": 1637
+                  "byteLength": 27,
+                  "byteOffset": 1637
                 }
               }
             },
@@ -2033,8 +2033,8 @@
                   "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
                 },
                 "region": {
-                  "charLength": 20,
-                  "charOffset": 2014
+                  "byteLength": 20,
+                  "byteOffset": 2014
                 }
               }
             },
@@ -2044,8 +2044,8 @@
                   "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
                 },
                 "region": {
-                  "charLength": 28,
-                  "charOffset": 2183
+                  "byteLength": 28,
+                  "byteOffset": 2183
                 }
               }
             },
@@ -2055,8 +2055,8 @@
                   "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
                 },
                 "region": {
-                  "charLength": 3,
-                  "charOffset": 500
+                  "byteLength": 3,
+                  "byteOffset": 500
                 }
               }
             },
@@ -2066,8 +2066,8 @@
                   "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
                 },
                 "region": {
-                  "charLength": 5,
-                  "charOffset": 637
+                  "byteLength": 5,
+                  "byteOffset": 637
                 }
               }
             },
@@ -2077,8 +2077,8 @@
                   "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
                 },
                 "region": {
-                  "charLength": 4,
-                  "charOffset": 738
+                  "byteLength": 4,
+                  "byteOffset": 738
                 }
               }
             },
@@ -2088,8 +2088,8 @@
                   "uri": "src/cloc/HeavilyCommentedContract.sol"
                 },
                 "region": {
-                  "charLength": 3,
-                  "charOffset": 509
+                  "byteLength": 3,
+                  "byteOffset": 509
                 }
               }
             },
@@ -2099,8 +2099,8 @@
                   "uri": "src/cloc/HeavilyCommentedContract.sol"
                 },
                 "region": {
-                  "charLength": 4,
-                  "charOffset": 646
+                  "byteLength": 4,
+                  "byteOffset": 646
                 }
               }
             },
@@ -2110,8 +2110,8 @@
                   "uri": "src/parent_chain/ParentChainContract.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 355
+                  "byteLength": 9,
+                  "byteOffset": 355
                 }
               }
             },
@@ -2121,8 +2121,8 @@
                   "uri": "src/parent_chain/ParentChainContract.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 422
+                  "byteLength": 9,
+                  "byteOffset": 422
                 }
               }
             }
@@ -2141,8 +2141,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 18,
-                  "charOffset": 483
+                  "byteLength": 18,
+                  "byteOffset": 483
                 }
               }
             },
@@ -2152,8 +2152,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 18,
-                  "charOffset": 646
+                  "byteLength": 18,
+                  "byteOffset": 646
                 }
               }
             },
@@ -2163,8 +2163,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 18,
-                  "charOffset": 921
+                  "byteLength": 18,
+                  "byteOffset": 921
                 }
               }
             },
@@ -2174,8 +2174,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 18,
-                  "charOffset": 2103
+                  "byteLength": 18,
+                  "byteOffset": 2103
                 }
               }
             },
@@ -2185,8 +2185,8 @@
                   "uri": "src/ConstantsLiterals.sol"
                 },
                 "region": {
-                  "charLength": 3,
-                  "charOffset": 958
+                  "byteLength": 3,
+                  "byteOffset": 958
                 }
               }
             },
@@ -2196,8 +2196,8 @@
                   "uri": "src/ConstantsLiterals.sol"
                 },
                 "region": {
-                  "charLength": 3,
-                  "charOffset": 992
+                  "byteLength": 3,
+                  "byteOffset": 992
                 }
               }
             },
@@ -2207,8 +2207,8 @@
                   "uri": "src/ConstantsLiterals.sol"
                 },
                 "region": {
-                  "charLength": 4,
-                  "charOffset": 1032
+                  "byteLength": 4,
+                  "byteOffset": 1032
                 }
               }
             },
@@ -2218,8 +2218,8 @@
                   "uri": "src/ConstantsLiterals.sol"
                 },
                 "region": {
-                  "charLength": 4,
-                  "charOffset": 1068
+                  "byteLength": 4,
+                  "byteOffset": 1068
                 }
               }
             },
@@ -2229,8 +2229,8 @@
                   "uri": "src/ConstantsLiterals.sol"
                 },
                 "region": {
-                  "charLength": 42,
-                  "charOffset": 1117
+                  "byteLength": 42,
+                  "byteOffset": 1117
                 }
               }
             },
@@ -2240,8 +2240,8 @@
                   "uri": "src/ConstantsLiterals.sol"
                 },
                 "region": {
-                  "charLength": 42,
-                  "charOffset": 1192
+                  "byteLength": 42,
+                  "byteOffset": 1192
                 }
               }
             },
@@ -2251,8 +2251,8 @@
                   "uri": "src/ConstantsLiterals.sol"
                 },
                 "region": {
-                  "charLength": 66,
-                  "charOffset": 1275
+                  "byteLength": 66,
+                  "byteOffset": 1275
                 }
               }
             },
@@ -2262,8 +2262,8 @@
                   "uri": "src/ConstantsLiterals.sol"
                 },
                 "region": {
-                  "charLength": 66,
-                  "charOffset": 1374
+                  "byteLength": 66,
+                  "byteOffset": 1374
                 }
               }
             },
@@ -2273,8 +2273,8 @@
                   "uri": "src/RevertsAndRequriesInLoops.sol"
                 },
                 "region": {
-                  "charLength": 2,
-                  "charOffset": 253
+                  "byteLength": 2,
+                  "byteOffset": 253
                 }
               }
             },
@@ -2284,8 +2284,8 @@
                   "uri": "src/RevertsAndRequriesInLoops.sol"
                 },
                 "region": {
-                  "charLength": 2,
-                  "charOffset": 442
+                  "byteLength": 2,
+                  "byteOffset": 442
                 }
               }
             },
@@ -2295,8 +2295,8 @@
                   "uri": "src/RevertsAndRequriesInLoops.sol"
                 },
                 "region": {
-                  "charLength": 2,
-                  "charOffset": 706
+                  "byteLength": 2,
+                  "byteOffset": 706
                 }
               }
             },
@@ -2306,8 +2306,8 @@
                   "uri": "src/RevertsAndRequriesInLoops.sol"
                 },
                 "region": {
-                  "charLength": 2,
-                  "charOffset": 745
+                  "byteLength": 2,
+                  "byteOffset": 745
                 }
               }
             },
@@ -2317,8 +2317,8 @@
                   "uri": "src/eth2/DepositContract.sol"
                 },
                 "region": {
-                  "charLength": 2,
-                  "charOffset": 7252
+                  "byteLength": 2,
+                  "byteOffset": 7252
                 }
               }
             },
@@ -2328,8 +2328,8 @@
                   "uri": "src/eth2/DepositContract.sol"
                 },
                 "region": {
-                  "charLength": 2,
-                  "charOffset": 7293
+                  "byteLength": 2,
+                  "byteOffset": 7293
                 }
               }
             }
@@ -2348,8 +2348,8 @@
                   "uri": "src/TestERC20.sol"
                 },
                 "region": {
-                  "charLength": 70,
-                  "charOffset": 338
+                  "byteLength": 70,
+                  "byteOffset": 338
                 }
               }
             },
@@ -2359,8 +2359,8 @@
                   "uri": "src/TestERC20.sol"
                 },
                 "region": {
-                  "charLength": 70,
-                  "charOffset": 413
+                  "byteLength": 70,
+                  "byteOffset": 413
                 }
               }
             },
@@ -2370,8 +2370,8 @@
                   "uri": "src/eth2/DepositContract.sol"
                 },
                 "region": {
-                  "charLength": 107,
-                  "charOffset": 2641
+                  "byteLength": 107,
+                  "byteOffset": 2641
                 }
               }
             },
@@ -2381,8 +2381,8 @@
                   "uri": "src/inheritance/ExtendedInheritance.sol"
                 },
                 "region": {
-                  "charLength": 45,
-                  "charOffset": 144
+                  "byteLength": 45,
+                  "byteOffset": 144
                 }
               }
             },
@@ -2392,8 +2392,8 @@
                   "uri": "src/inheritance/InheritanceBase.sol"
                 },
                 "region": {
-                  "charLength": 28,
-                  "charOffset": 150
+                  "byteLength": 28,
+                  "byteOffset": 150
                 }
               }
             }
@@ -2412,8 +2412,8 @@
                   "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
-                  "charLength": 7,
-                  "charOffset": 1264
+                  "byteLength": 7,
+                  "byteOffset": 1264
                 }
               }
             },
@@ -2423,8 +2423,8 @@
                   "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
-                  "charLength": 6,
-                  "charOffset": 1389
+                  "byteLength": 6,
+                  "byteOffset": 1389
                 }
               }
             },
@@ -2434,8 +2434,8 @@
                   "uri": "src/RevertsAndRequriesInLoops.sol"
                 },
                 "region": {
-                  "charLength": 6,
-                  "charOffset": 503
+                  "byteLength": 6,
+                  "byteOffset": 503
                 }
               }
             },
@@ -2445,8 +2445,8 @@
                   "uri": "src/ZeroAddressCheck.sol"
                 },
                 "region": {
-                  "charLength": 6,
-                  "charOffset": 329
+                  "byteLength": 6,
+                  "byteOffset": 329
                 }
               }
             },
@@ -2456,8 +2456,8 @@
                   "uri": "src/ZeroAddressCheck.sol"
                 },
                 "region": {
-                  "charLength": 6,
-                  "charOffset": 608
+                  "byteLength": 6,
+                  "byteOffset": 608
                 }
               }
             },
@@ -2467,8 +2467,8 @@
                   "uri": "src/ZeroAddressCheck.sol"
                 },
                 "region": {
-                  "charLength": 6,
-                  "charOffset": 1074
+                  "byteLength": 6,
+                  "byteOffset": 1074
                 }
               }
             },
@@ -2478,8 +2478,8 @@
                   "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
                 },
                 "region": {
-                  "charLength": 7,
-                  "charOffset": 589
+                  "byteLength": 7,
+                  "byteOffset": 589
                 }
               }
             },
@@ -2489,8 +2489,8 @@
                   "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
                 },
                 "region": {
-                  "charLength": 7,
-                  "charOffset": 1403
+                  "byteLength": 7,
+                  "byteOffset": 1403
                 }
               }
             },
@@ -2500,8 +2500,8 @@
                   "uri": "src/cloc/HeavilyCommentedContract.sol"
                 },
                 "region": {
-                  "charLength": 7,
-                  "charOffset": 598
+                  "byteLength": 7,
+                  "byteOffset": 598
                 }
               }
             },
@@ -2511,8 +2511,8 @@
                   "uri": "src/cloc/HeavilyCommentedContract.sol"
                 },
                 "region": {
-                  "charLength": 7,
-                  "charOffset": 1408
+                  "byteLength": 7,
+                  "byteOffset": 1408
                 }
               }
             }
@@ -2531,8 +2531,8 @@
                   "uri": "src/AdminContract.sol"
                 },
                 "region": {
-                  "charLength": 12,
-                  "charOffset": 386
+                  "byteLength": 12,
+                  "byteOffset": 386
                 }
               }
             },
@@ -2542,8 +2542,8 @@
                   "uri": "src/parent_chain/ParentChainContract.sol"
                 },
                 "region": {
-                  "charLength": 12,
-                  "charOffset": 735
+                  "byteLength": 12,
+                  "byteOffset": 735
                 }
               }
             }
@@ -2562,8 +2562,8 @@
                   "uri": "src/UnsafeERC721Mint.sol"
                 },
                 "region": {
-                  "charLength": 5,
-                  "charOffset": 410
+                  "byteLength": 5,
+                  "byteOffset": 410
                 }
               }
             }
@@ -2582,8 +2582,8 @@
                   "uri": "src/AdminContract.sol"
                 },
                 "region": {
-                  "charLength": 23,
-                  "charOffset": 32
+                  "byteLength": 23,
+                  "byteOffset": 32
                 }
               }
             },
@@ -2593,8 +2593,8 @@
                   "uri": "src/ContractWithTodo.sol"
                 },
                 "region": {
-                  "charLength": 23,
-                  "charOffset": 32
+                  "byteLength": 23,
+                  "byteOffset": 32
                 }
               }
             },
@@ -2604,8 +2604,8 @@
                   "uri": "src/Counter.sol"
                 },
                 "region": {
-                  "charLength": 24,
-                  "charOffset": 39
+                  "byteLength": 24,
+                  "byteOffset": 39
                 }
               }
             },
@@ -2615,8 +2615,8 @@
                   "uri": "src/CrazyPragma.sol"
                 },
                 "region": {
-                  "charLength": 32,
-                  "charOffset": 32
+                  "byteLength": 32,
+                  "byteOffset": 32
                 }
               }
             },
@@ -2626,8 +2626,8 @@
                   "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
-                  "charLength": 23,
-                  "charOffset": 32
+                  "byteLength": 23,
+                  "byteOffset": 32
                 }
               }
             },
@@ -2637,8 +2637,8 @@
                   "uri": "src/InconsistentUints.sol"
                 },
                 "region": {
-                  "charLength": 24,
-                  "charOffset": 0
+                  "byteLength": 24,
+                  "byteOffset": 0
                 }
               }
             },
@@ -2648,8 +2648,8 @@
                   "uri": "src/KeccakContract.sol"
                 },
                 "region": {
-                  "charLength": 23,
-                  "charOffset": 32
+                  "byteLength": 23,
+                  "byteOffset": 32
                 }
               }
             },
@@ -2659,8 +2659,8 @@
                   "uri": "src/StateVariables.sol"
                 },
                 "region": {
-                  "charLength": 23,
-                  "charOffset": 32
+                  "byteLength": 23,
+                  "byteOffset": 32
                 }
               }
             },
@@ -2670,8 +2670,8 @@
                   "uri": "src/StorageConditionals.sol"
                 },
                 "region": {
-                  "charLength": 23,
-                  "charOffset": 32
+                  "byteLength": 23,
+                  "byteOffset": 32
                 }
               }
             },
@@ -2681,8 +2681,8 @@
                   "uri": "src/T11sTranferer.sol"
                 },
                 "region": {
-                  "charLength": 23,
-                  "charOffset": 32
+                  "byteLength": 23,
+                  "byteOffset": 32
                 }
               }
             },
@@ -2692,8 +2692,8 @@
                   "uri": "src/UnsafeERC721Mint.sol"
                 },
                 "region": {
-                  "charLength": 23,
-                  "charOffset": 32
+                  "byteLength": 23,
+                  "byteOffset": 32
                 }
               }
             },
@@ -2703,8 +2703,8 @@
                   "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
                 },
                 "region": {
-                  "charLength": 24,
-                  "charOffset": 46
+                  "byteLength": 24,
+                  "byteOffset": 46
                 }
               }
             },
@@ -2714,8 +2714,8 @@
                   "uri": "src/cloc/HeavilyCommentedContract.sol"
                 },
                 "region": {
-                  "charLength": 32,
-                  "charOffset": 46
+                  "byteLength": 32,
+                  "byteOffset": 46
                 }
               }
             },
@@ -2725,8 +2725,8 @@
                   "uri": "src/eth2/DepositContract.sol"
                 },
                 "region": {
-                  "charLength": 23,
-                  "charOffset": 2302
+                  "byteLength": 23,
+                  "byteOffset": 2302
                 }
               }
             },
@@ -2736,8 +2736,8 @@
                   "uri": "src/inheritance/ExtendedInheritance.sol"
                 },
                 "region": {
-                  "charLength": 23,
-                  "charOffset": 32
+                  "byteLength": 23,
+                  "byteOffset": 32
                 }
               }
             },
@@ -2747,8 +2747,8 @@
                   "uri": "src/inheritance/IContractInheritance.sol"
                 },
                 "region": {
-                  "charLength": 24,
-                  "charOffset": 32
+                  "byteLength": 24,
+                  "byteOffset": 32
                 }
               }
             },
@@ -2758,8 +2758,8 @@
                   "uri": "src/inheritance/InheritanceBase.sol"
                 },
                 "region": {
-                  "charLength": 23,
-                  "charOffset": 32
+                  "byteLength": 23,
+                  "byteOffset": 32
                 }
               }
             },
@@ -2769,8 +2769,8 @@
                   "uri": "src/nested/1/Nested.sol"
                 },
                 "region": {
-                  "charLength": 23,
-                  "charOffset": 180
+                  "byteLength": 23,
+                  "byteOffset": 180
                 }
               }
             },
@@ -2780,8 +2780,8 @@
                   "uri": "src/nested/2/Nested.sol"
                 },
                 "region": {
-                  "charLength": 23,
-                  "charOffset": 180
+                  "byteLength": 23,
+                  "byteOffset": 180
                 }
               }
             },
@@ -2791,8 +2791,8 @@
                   "uri": "src/parent_chain/ParentChainContract.sol"
                 },
                 "region": {
-                  "charLength": 23,
-                  "charOffset": 32
+                  "byteLength": 23,
+                  "byteOffset": 32
                 }
               }
             },
@@ -2802,8 +2802,8 @@
                   "uri": "src/uniswap/UniswapV2Swapper.sol"
                 },
                 "region": {
-                  "charLength": 23,
-                  "charOffset": 32
+                  "byteLength": 23,
+                  "byteOffset": 32
                 }
               }
             },
@@ -2813,8 +2813,8 @@
                   "uri": "src/uniswap/UniswapV3Swapper.sol"
                 },
                 "region": {
-                  "charLength": 23,
-                  "charOffset": 32
+                  "byteLength": 23,
+                  "byteOffset": 32
                 }
               }
             }
@@ -2833,8 +2833,8 @@
                   "uri": "src/InternalFunctions.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 413
+                  "byteLength": 9,
+                  "byteOffset": 413
                 }
               }
             },
@@ -2844,8 +2844,8 @@
                   "uri": "src/OnceModifierExample.sol"
                 },
                 "region": {
-                  "charLength": 8,
-                  "charOffset": 103
+                  "byteLength": 8,
+                  "byteOffset": 103
                 }
               }
             },
@@ -2855,8 +2855,8 @@
                   "uri": "src/UnprotectedInitialize.sol"
                 },
                 "region": {
-                  "charLength": 21,
-                  "charOffset": 222
+                  "byteLength": 21,
+                  "byteOffset": 222
                 }
               }
             }
@@ -2875,8 +2875,8 @@
                   "uri": "src/AdminContract.sol"
                 },
                 "region": {
-                  "charLength": 23,
-                  "charOffset": 457
+                  "byteLength": 23,
+                  "byteOffset": 457
                 }
               }
             },
@@ -2886,8 +2886,8 @@
                   "uri": "src/ContractWithTodo.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 129
+                  "byteLength": 10,
+                  "byteOffset": 129
                 }
               }
             },
@@ -2897,8 +2897,8 @@
                   "uri": "src/ContractWithTodo.sol"
                 },
                 "region": {
-                  "charLength": 15,
-                  "charOffset": 337
+                  "byteLength": 15,
+                  "byteOffset": 337
                 }
               }
             },
@@ -2908,8 +2908,8 @@
                   "uri": "src/EmptyBlocks.sol"
                 },
                 "region": {
-                  "charLength": 12,
-                  "charOffset": 503
+                  "byteLength": 12,
+                  "byteOffset": 503
                 }
               }
             },
@@ -2919,8 +2919,8 @@
                   "uri": "src/EmptyBlocks.sol"
                 },
                 "region": {
-                  "charLength": 12,
-                  "charOffset": 599
+                  "byteLength": 12,
+                  "byteOffset": 599
                 }
               }
             },
@@ -2930,8 +2930,8 @@
                   "uri": "src/EmptyBlocks.sol"
                 },
                 "region": {
-                  "charLength": 12,
-                  "charOffset": 739
+                  "byteLength": 12,
+                  "byteOffset": 739
                 }
               }
             },
@@ -2941,8 +2941,8 @@
                   "uri": "src/EmptyBlocks.sol"
                 },
                 "region": {
-                  "charLength": 13,
-                  "charOffset": 888
+                  "byteLength": 13,
+                  "byteOffset": 888
                 }
               }
             },
@@ -2952,8 +2952,8 @@
                   "uri": "src/EmptyBlocks.sol"
                 },
                 "region": {
-                  "charLength": 24,
-                  "charOffset": 946
+                  "byteLength": 24,
+                  "byteOffset": 946
                 }
               }
             },
@@ -2963,8 +2963,8 @@
                   "uri": "src/EmptyBlocks.sol"
                 },
                 "region": {
-                  "charLength": 30,
-                  "charOffset": 1068
+                  "byteLength": 30,
+                  "byteOffset": 1068
                 }
               }
             },
@@ -2974,8 +2974,8 @@
                   "uri": "src/EmptyBlocks.sol"
                 },
                 "region": {
-                  "charLength": 41,
-                  "charOffset": 1219
+                  "byteLength": 41,
+                  "byteOffset": 1219
                 }
               }
             },
@@ -2985,8 +2985,8 @@
                   "uri": "src/OnceModifierExample.sol"
                 },
                 "region": {
-                  "charLength": 7,
-                  "charOffset": 147
+                  "byteLength": 7,
+                  "byteOffset": 147
                 }
               }
             },
@@ -2996,8 +2996,8 @@
                   "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
                 },
                 "region": {
-                  "charLength": 17,
-                  "charOffset": 367
+                  "byteLength": 17,
+                  "byteOffset": 367
                 }
               }
             },
@@ -3007,8 +3007,8 @@
                   "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
                 },
                 "region": {
-                  "charLength": 25,
-                  "charOffset": 852
+                  "byteLength": 25,
+                  "byteOffset": 852
                 }
               }
             },
@@ -3018,8 +3018,8 @@
                   "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
                 },
                 "region": {
-                  "charLength": 16,
-                  "charOffset": 1080
+                  "byteLength": 16,
+                  "byteOffset": 1080
                 }
               }
             },
@@ -3029,8 +3029,8 @@
                   "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
                 },
                 "region": {
-                  "charLength": 17,
-                  "charOffset": 1840
+                  "byteLength": 17,
+                  "byteOffset": 1840
                 }
               }
             },
@@ -3040,8 +3040,8 @@
                   "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
                 },
                 "region": {
-                  "charLength": 25,
-                  "charOffset": 2380
+                  "byteLength": 25,
+                  "byteOffset": 2380
                 }
               }
             },
@@ -3051,8 +3051,8 @@
                   "uri": "src/parent_chain/ParentChainContract.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 355
+                  "byteLength": 9,
+                  "byteOffset": 355
                 }
               }
             },
@@ -3062,8 +3062,8 @@
                   "uri": "src/parent_chain/ParentChainContract.sol"
                 },
                 "region": {
-                  "charLength": 23,
-                  "charOffset": 806
+                  "byteLength": 23,
+                  "byteOffset": 806
                 }
               }
             },
@@ -3073,8 +3073,8 @@
                   "uri": "src/parent_chain/ParentChainContract.sol"
                 },
                 "region": {
-                  "charLength": 8,
-                  "charOffset": 946
+                  "byteLength": 8,
+                  "byteOffset": 946
                 }
               }
             },
@@ -3084,8 +3084,8 @@
                   "uri": "src/parent_chain/ParentChainContract.sol"
                 },
                 "region": {
-                  "charLength": 23,
-                  "charOffset": 1011
+                  "byteLength": 23,
+                  "byteOffset": 1011
                 }
               }
             }
@@ -3104,8 +3104,8 @@
                   "uri": "src/HugeConstants.sol"
                 },
                 "region": {
-                  "charLength": 24,
-                  "charOffset": 182
+                  "byteLength": 24,
+                  "byteOffset": 182
                 }
               }
             },
@@ -3115,8 +3115,8 @@
                   "uri": "src/HugeConstants.sol"
                 },
                 "region": {
-                  "charLength": 23,
-                  "charOffset": 252
+                  "byteLength": 23,
+                  "byteOffset": 252
                 }
               }
             },
@@ -3126,8 +3126,8 @@
                   "uri": "src/HugeConstants.sol"
                 },
                 "region": {
-                  "charLength": 22,
-                  "charOffset": 321
+                  "byteLength": 22,
+                  "byteOffset": 321
                 }
               }
             },
@@ -3137,8 +3137,8 @@
                   "uri": "src/HugeConstants.sol"
                 },
                 "region": {
-                  "charLength": 21,
-                  "charOffset": 389
+                  "byteLength": 21,
+                  "byteOffset": 389
                 }
               }
             },
@@ -3148,8 +3148,8 @@
                   "uri": "src/HugeConstants.sol"
                 },
                 "region": {
-                  "charLength": 20,
-                  "charOffset": 456
+                  "byteLength": 20,
+                  "byteOffset": 456
                 }
               }
             },
@@ -3159,8 +3159,8 @@
                   "uri": "src/HugeConstants.sol"
                 },
                 "region": {
-                  "charLength": 19,
-                  "charOffset": 522
+                  "byteLength": 19,
+                  "byteOffset": 522
                 }
               }
             },
@@ -3170,8 +3170,8 @@
                   "uri": "src/HugeConstants.sol"
                 },
                 "region": {
-                  "charLength": 18,
-                  "charOffset": 587
+                  "byteLength": 18,
+                  "byteOffset": 587
                 }
               }
             },
@@ -3181,8 +3181,8 @@
                   "uri": "src/HugeConstants.sol"
                 },
                 "region": {
-                  "charLength": 17,
-                  "charOffset": 651
+                  "byteLength": 17,
+                  "byteOffset": 651
                 }
               }
             },
@@ -3192,8 +3192,8 @@
                   "uri": "src/HugeConstants.sol"
                 },
                 "region": {
-                  "charLength": 16,
-                  "charOffset": 714
+                  "byteLength": 16,
+                  "byteOffset": 714
                 }
               }
             },
@@ -3203,8 +3203,8 @@
                   "uri": "src/HugeConstants.sol"
                 },
                 "region": {
-                  "charLength": 15,
-                  "charOffset": 777
+                  "byteLength": 15,
+                  "byteOffset": 777
                 }
               }
             },
@@ -3214,8 +3214,8 @@
                   "uri": "src/HugeConstants.sol"
                 },
                 "region": {
-                  "charLength": 14,
-                  "charOffset": 839
+                  "byteLength": 14,
+                  "byteOffset": 839
                 }
               }
             },
@@ -3225,8 +3225,8 @@
                   "uri": "src/HugeConstants.sol"
                 },
                 "region": {
-                  "charLength": 13,
-                  "charOffset": 900
+                  "byteLength": 13,
+                  "byteOffset": 900
                 }
               }
             },
@@ -3236,8 +3236,8 @@
                   "uri": "src/HugeConstants.sol"
                 },
                 "region": {
-                  "charLength": 12,
-                  "charOffset": 960
+                  "byteLength": 12,
+                  "byteOffset": 960
                 }
               }
             },
@@ -3247,8 +3247,8 @@
                   "uri": "src/HugeConstants.sol"
                 },
                 "region": {
-                  "charLength": 11,
-                  "charOffset": 1019
+                  "byteLength": 11,
+                  "byteOffset": 1019
                 }
               }
             },
@@ -3258,8 +3258,8 @@
                   "uri": "src/HugeConstants.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 1077
+                  "byteLength": 10,
+                  "byteOffset": 1077
                 }
               }
             },
@@ -3269,8 +3269,8 @@
                   "uri": "src/HugeConstants.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 1134
+                  "byteLength": 9,
+                  "byteOffset": 1134
                 }
               }
             },
@@ -3280,8 +3280,8 @@
                   "uri": "src/HugeConstants.sol"
                 },
                 "region": {
-                  "charLength": 8,
-                  "charOffset": 1190
+                  "byteLength": 8,
+                  "byteOffset": 1190
                 }
               }
             },
@@ -3291,8 +3291,8 @@
                   "uri": "src/HugeConstants.sol"
                 },
                 "region": {
-                  "charLength": 7,
-                  "charOffset": 1245
+                  "byteLength": 7,
+                  "byteOffset": 1245
                 }
               }
             },
@@ -3302,8 +3302,8 @@
                   "uri": "src/HugeConstants.sol"
                 },
                 "region": {
-                  "charLength": 6,
-                  "charOffset": 1299
+                  "byteLength": 6,
+                  "byteOffset": 1299
                 }
               }
             },
@@ -3313,8 +3313,8 @@
                   "uri": "src/HugeConstants.sol"
                 },
                 "region": {
-                  "charLength": 5,
-                  "charOffset": 1352
+                  "byteLength": 5,
+                  "byteOffset": 1352
                 }
               }
             },
@@ -3324,8 +3324,8 @@
                   "uri": "src/HugeConstants.sol"
                 },
                 "region": {
-                  "charLength": 29,
-                  "charOffset": 1585
+                  "byteLength": 29,
+                  "byteOffset": 1585
                 }
               }
             },
@@ -3335,8 +3335,8 @@
                   "uri": "src/HugeConstants.sol"
                 },
                 "region": {
-                  "charLength": 6,
-                  "charOffset": 1673
+                  "byteLength": 6,
+                  "byteOffset": 1673
                 }
               }
             }
@@ -3355,8 +3355,8 @@
                   "uri": "src/InternalFunctions.sol"
                 },
                 "region": {
-                  "charLength": 12,
-                  "charOffset": 693
+                  "byteLength": 12,
+                  "byteOffset": 693
                 }
               }
             }
@@ -3375,8 +3375,8 @@
                   "uri": "src/ContractWithTodo.sol"
                 },
                 "region": {
-                  "charLength": 8,
-                  "charOffset": 66
+                  "byteLength": 8,
+                  "byteOffset": 66
                 }
               }
             },
@@ -3386,8 +3386,8 @@
                   "uri": "src/Counter.sol"
                 },
                 "region": {
-                  "charLength": 7,
-                  "charOffset": 74
+                  "byteLength": 7,
+                  "byteOffset": 74
                 }
               }
             }
@@ -3406,8 +3406,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 14,
-                  "charOffset": 904
+                  "byteLength": 14,
+                  "byteOffset": 904
                 }
               }
             },
@@ -3417,8 +3417,8 @@
                   "uri": "src/Casting.sol"
                 },
                 "region": {
-                  "charLength": 13,
-                  "charOffset": 2086
+                  "byteLength": 13,
+                  "byteOffset": 2086
                 }
               }
             },
@@ -3428,8 +3428,8 @@
                   "uri": "src/InconsistentUints.sol"
                 },
                 "region": {
-                  "charLength": 12,
-                  "charOffset": 122
+                  "byteLength": 12,
+                  "byteOffset": 122
                 }
               }
             },
@@ -3439,8 +3439,8 @@
                   "uri": "src/InconsistentUints.sol"
                 },
                 "region": {
-                  "charLength": 11,
-                  "charOffset": 197
+                  "byteLength": 11,
+                  "byteOffset": 197
                 }
               }
             },
@@ -3450,8 +3450,8 @@
                   "uri": "src/InconsistentUints.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 289
+                  "byteLength": 10,
+                  "byteOffset": 289
                 }
               }
             },
@@ -3461,8 +3461,8 @@
                   "uri": "src/InconsistentUints.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 340
+                  "byteLength": 9,
+                  "byteOffset": 340
                 }
               }
             },
@@ -3472,8 +3472,8 @@
                   "uri": "src/InconsistentUints.sol"
                 },
                 "region": {
-                  "charLength": 9,
-                  "charOffset": 383
+                  "byteLength": 9,
+                  "byteOffset": 383
                 }
               }
             },
@@ -3483,8 +3483,8 @@
                   "uri": "src/InconsistentUints.sol"
                 },
                 "region": {
-                  "charLength": 10,
-                  "charOffset": 434
+                  "byteLength": 10,
+                  "byteOffset": 434
                 }
               }
             },
@@ -3494,8 +3494,8 @@
                   "uri": "src/InconsistentUints.sol"
                 },
                 "region": {
-                  "charLength": 12,
-                  "charOffset": 528
+                  "byteLength": 12,
+                  "byteOffset": 528
                 }
               }
             },
@@ -3505,8 +3505,8 @@
                   "uri": "src/eth2/DepositContract.sol"
                 },
                 "region": {
-                  "charLength": 27,
-                  "charOffset": 4611
+                  "byteLength": 27,
+                  "byteOffset": 4611
                 }
               }
             },
@@ -3516,8 +3516,8 @@
                   "uri": "src/eth2/DepositContract.sol"
                 },
                 "region": {
-                  "charLength": 17,
-                  "charOffset": 4732
+                  "byteLength": 17,
+                  "byteOffset": 4732
                 }
               }
             },
@@ -3527,8 +3527,8 @@
                   "uri": "src/eth2/DepositContract.sol"
                 },
                 "region": {
-                  "charLength": 6,
-                  "charOffset": 5020
+                  "byteLength": 6,
+                  "byteOffset": 5020
                 }
               }
             },
@@ -3538,8 +3538,8 @@
                   "uri": "src/eth2/DepositContract.sol"
                 },
                 "region": {
-                  "charLength": 4,
-                  "charOffset": 5307
+                  "byteLength": 4,
+                  "byteOffset": 5307
                 }
               }
             },
@@ -3549,8 +3549,8 @@
                   "uri": "src/eth2/DepositContract.sol"
                 },
                 "region": {
-                  "charLength": 6,
-                  "charOffset": 5347
+                  "byteLength": 6,
+                  "byteOffset": 5347
                 }
               }
             },
@@ -3560,8 +3560,8 @@
                   "uri": "src/eth2/DepositContract.sol"
                 },
                 "region": {
-                  "charLength": 14,
-                  "charOffset": 6636
+                  "byteLength": 14,
+                  "byteOffset": 6636
                 }
               }
             },
@@ -3571,8 +3571,8 @@
                   "uri": "src/eth2/DepositContract.sol"
                 },
                 "region": {
-                  "charLength": 4,
-                  "charOffset": 8101
+                  "byteLength": 4,
+                  "byteOffset": 8101
                 }
               }
             },
@@ -3582,8 +3582,8 @@
                   "uri": "src/eth2/DepositContract.sol"
                 },
                 "region": {
-                  "charLength": 6,
-                  "charOffset": 8141
+                  "byteLength": 6,
+                  "byteOffset": 8141
                 }
               }
             }
@@ -3602,8 +3602,8 @@
                   "uri": "src/UnusedError.sol"
                 },
                 "region": {
-                  "charLength": 27,
-                  "charOffset": 84
+                  "byteLength": 27,
+                  "byteOffset": 84
                 }
               }
             },
@@ -3613,8 +3613,8 @@
                   "uri": "src/UnusedError.sol"
                 },
                 "region": {
-                  "charLength": 36,
-                  "charOffset": 258
+                  "byteLength": 36,
+                  "byteOffset": 258
                 }
               }
             },
@@ -3624,8 +3624,8 @@
                   "uri": "src/WrongOrderOfLayout.sol"
                 },
                 "region": {
-                  "charLength": 21,
-                  "charOffset": 274
+                  "byteLength": 21,
+                  "byteOffset": 274
                 }
               }
             }
@@ -3644,8 +3644,8 @@
                   "uri": "src/RevertsAndRequriesInLoops.sol"
                 },
                 "region": {
-                  "charLength": 129,
-                  "charOffset": 227
+                  "byteLength": 129,
+                  "byteOffset": 227
                 }
               }
             },
@@ -3655,8 +3655,8 @@
                   "uri": "src/RevertsAndRequriesInLoops.sol"
                 },
                 "region": {
-                  "charLength": 150,
-                  "charOffset": 416
+                  "byteLength": 150,
+                  "byteOffset": 416
                 }
               }
             }
@@ -3675,8 +3675,8 @@
                   "uri": "src/DivisionBeforeMultiplication.sol"
                 },
                 "region": {
-                  "charLength": 5,
-                  "charOffset": 218
+                  "byteLength": 5,
+                  "byteOffset": 218
                 }
               }
             },
@@ -3686,8 +3686,8 @@
                   "uri": "src/DivisionBeforeMultiplication.sol"
                 },
                 "region": {
-                  "charLength": 5,
-                  "charOffset": 330
+                  "byteLength": 5,
+                  "byteOffset": 330
                 }
               }
             },
@@ -3697,8 +3697,8 @@
                   "uri": "src/DivisionBeforeMultiplication.sol"
                 },
                 "region": {
-                  "charLength": 5,
-                  "charOffset": 432
+                  "byteLength": 5,
+                  "byteOffset": 432
                 }
               }
             },
@@ -3708,8 +3708,8 @@
                   "uri": "src/DivisionBeforeMultiplication.sol"
                 },
                 "region": {
-                  "charLength": 5,
-                  "charOffset": 541
+                  "byteLength": 5,
+                  "byteOffset": 541
                 }
               }
             }
