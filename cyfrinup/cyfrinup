@@ -2,7 +2,7 @@
 set -e
 
 # TODO: Adjust this after merge 
-DYNAMIC_SCRIPT_URL="https://raw.githubusercontent.com/Cyfrin/aderyn/feature/support-dynamic-feature-loading/cyfrinup/dynamic_script"
+DYNAMIC_SCRIPT_URL="https://raw.githubusercontent.com/Cyfrin/aderyn/master/cyfrinup/dynamic_script"
 
 # Keep it minimal
 main() {
