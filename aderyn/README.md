@@ -55,16 +55,61 @@ You can read the [Cyfrin official documentation](https://docs.cyfrin.io) for an 
 
 ## Installation
 
-### Prerequisites
-Before installing Aderyn, ensure you have the following:
-* Rust: Aderyn is built in Rust. Before running, you must install Rust and Cargo (Rust's package manager). If you still need to install Rust, follow the instructions on the [official Rust website](https://www.rust-lang.org/learn/get-started).
-
 **Suggested VSCode extensions:**
 [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=dustypomerleau.rust-syntax) - Rust language support for Visual Studio Code
 [Rust Syntax](https://marketplace.visualstudio.com/items?itemName=dustypomerleau.rust-syntax) - Improved Rust syntax highlighting
 
 ### Installing Aderyn
-**Step 1: Install Aderyn using cargo**
+
+You can install Aderyn using Cargo, Rust's package manager, or with `cyfrinup`, the Cyfrin CLI tool.
+
+#### Using Cyfrinup
+
+> Note: If you previously installed aderyn using cargo, run `cargo uninstall aderyn` before using `cyfrinup` to avoid conflicts.
+
+**Step 1: Install Cyfrinup**
+
+Cyfrinup is a CLI tool that simplifies the installation and management of Cyfrin tools. To install Cyfrinup, run the following command in your terminal:
+
+```sh
+curl -L https://raw.githubusercontent.com/Cyfrin/aderyn/dev/cyfrinup/install | bash
+```
+
+**Step 2: Update Path**
+
+The installer will prompt you to run a `source` command. Either run this command, or reload your terminal.
+
+**Step 3: Install Aderyn using Cyfrinup**
+
+After installing Cyfrinup, you can use it to install Aderyn. Run the following command in your terminal:
+
+```sh
+cyfrinup
+```
+
+**Step 4: Verify installation**
+
+```sh
+aderyn --version
+```
+
+**Future Updates**
+
+To update Aderyn to the latest version, you can run the cyfrinup:
+```sh
+cyfrinup
+```
+Cyfrinup will replace the existing version with the latest one.
+
+
+#### Using Cargo
+
+**Step 1: Install Rust**
+
+Before installing Aderyn, ensure you have the following:
+* Rust: Aderyn is built in Rust. Before running, you must install Rust and Cargo (Rust's package manager). If you still need to install Rust, follow the instructions on the [official Rust website](https://www.rust-lang.org/learn/get-started).
+
+**Step 2: Install Aderyn using cargo**
 
 Aderyn is currently installed using Cargo, Rust's package manager. Open your command line interface and run the following command:
 ```sh
@@ -72,7 +117,7 @@ cargo install aderyn
 ```
 This command downloads and installs the Aderyn package.
 
-**Step 2: Verify installation**
+**Step 3: Verify installation**
 
 After the installation, you can verify that Aderyn is correctly installed by checking its version. In your command line, execute:
 ```sh
@@ -80,11 +125,11 @@ aderyn --version
 ```
 This command should return the installed version of Aderyn, confirming that the installation was successful.
 
-**Step 3: Update PATH (if necessary)**
+**Step 4: Update PATH (if necessary)**
 
 If you cannot run the aderyn after installation, you may need to add Cargo's bin directory to your PATH. The exact instructions can vary based on your operating system. Typically, it involves adding ~/.cargo/bin to your PATH in your shell profile script (like .bashrc or .zshrc).
 
-**Step 4: Future Updates**
+**Step 5: Future Updates**
 
 To update Aderyn to the latest version, you can run the install command again:
 ```sh
@@ -107,7 +152,6 @@ We usually use several smart contracts and tests to try new detectors. Build the
 ```sh
 forge build
 ```
-Building your project by running forge build --ast will save you time the first time you run Aderyn.
 Once your smart contracts have been successfully compiled, run Aderyn using the following command:
 ```sh
 aderyn [OPTIONS] path/to/your/project
