@@ -1072,6 +1072,90 @@ impl ASTConstVisitor for ExtractWhileStatements {
     }
 }
 
+// ExtractDoWhileStatements extracts all DoWhileStatement nodes from a given node.
+#[derive(Default)]
+pub struct ExtractDoWhileStatements {
+    pub extracted: Vec<DoWhileStatement>,
+}
+
+impl ExtractDoWhileStatements {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
+        let mut extractor: ExtractDoWhileStatements = Self::default();
+        node.accept(&mut extractor).unwrap_or_default();
+        extractor
+    }
+}
+
+impl ASTConstVisitor for ExtractDoWhileStatements {
+    fn visit_do_while_statement(&mut self, node: &DoWhileStatement) -> Result<bool> {
+        self.extracted.push(node.clone());
+        Ok(true)
+    }
+}
+
+// ExtractBreakStatements extracts all Break nodes from a given node.
+#[derive(Default)]
+pub struct ExtractBreakStatements {
+    pub extracted: Vec<Break>,
+}
+
+impl ExtractBreakStatements {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
+        let mut extractor: ExtractBreakStatements = Self::default();
+        node.accept(&mut extractor).unwrap_or_default();
+        extractor
+    }
+}
+
+impl ASTConstVisitor for ExtractBreakStatements {
+    fn visit_break_statement(&mut self, node: &Break) -> Result<bool> {
+        self.extracted.push(node.clone());
+        Ok(true)
+    }
+}
+
+// ExtractContinueStatements extracts all Continue nodes from a given node.
+#[derive(Default)]
+pub struct ExtractContinueStatements {
+    pub extracted: Vec<Continue>,
+}
+
+impl ExtractContinueStatements {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
+        let mut extractor: ExtractContinueStatements = Self::default();
+        node.accept(&mut extractor).unwrap_or_default();
+        extractor
+    }
+}
+
+impl ASTConstVisitor for ExtractContinueStatements {
+    fn visit_continue_statement(&mut self, node: &Continue) -> Result<bool> {
+        self.extracted.push(node.clone());
+        Ok(true)
+    }
+}
+
+// ExtractPlaceholderStatements extracts all PlaceholderStatement nodes from a given node.
+#[derive(Default)]
+pub struct ExtractPlaceholderStatements {
+    pub extracted: Vec<PlaceholderStatement>,
+}
+
+impl ExtractPlaceholderStatements {
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
+        let mut extractor: ExtractPlaceholderStatements = Self::default();
+        node.accept(&mut extractor).unwrap_or_default();
+        extractor
+    }
+}
+
+impl ASTConstVisitor for ExtractPlaceholderStatements {
+    fn visit_placeholder_statement(&mut self, node: &PlaceholderStatement) -> Result<bool> {
+        self.extracted.push(node.clone());
+        Ok(true)
+    }
+}
+
 /////////// EXTRACTION UTILS FOR CRATE - LEVEL ACCESS //////////////////
 
 // ExtractImmediateChildren is an extractor that extracts immediate children from a node
