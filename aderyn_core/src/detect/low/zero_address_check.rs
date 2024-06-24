@@ -39,13 +39,13 @@ impl IssueDetector for ZeroAddressCheckDetector {
                         .type_string
                         .as_deref()
                         .unwrap_or("")
-                        .contains("address")
+                        == "address"
                         || var_decl
                             .type_descriptions
                             .type_string
                             .as_deref()
                             .unwrap_or("")
-                            .contains("contract"))
+                            .contains("contract "))
                 {
                     Some((var_decl.id, (*var_decl).clone())) // Deref and clone the VariableDeclaration.
                 } else {
@@ -199,7 +199,19 @@ mod zero_address_check_tests {
 
     #[test]
     #[serial]
-    fn test_deprecated_oz_functions_detector_by_loading_contract_directly() {
+    fn test_zero_address_check_using_mapping_with_address_in_it() {
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/TestERC20.sol",
+        );
+        let mut detector = ZeroAddressCheckDetector::default();
+        let found = detector.detect(&context).unwrap();
+        // assert that nothing was found
+        assert!(!found);
+    }
+
+    #[test]
+    #[serial]
+    fn test_zero_address_check_detector_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/ZeroAddressCheck.sol",
         );
