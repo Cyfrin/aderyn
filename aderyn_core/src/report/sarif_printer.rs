@@ -221,11 +221,10 @@ fn create_sarif_locations(issue: &Issue) -> Vec<Location> {
                     context_region: None,
                     properties: None,
                     region: Some(Region {
-                        char_offset: Some(offset.parse().unwrap()),
-                        char_length: Some(len.parse().unwrap()),
-
-                        byte_length: None,
-                        byte_offset: None,
+                        char_offset: None,
+                        char_length: None,
+                        byte_length: Some(len.parse().unwrap()),
+                        byte_offset: Some(offset.parse().unwrap()),
                         end_column: None,
                         end_line: None,
                         message: None,
