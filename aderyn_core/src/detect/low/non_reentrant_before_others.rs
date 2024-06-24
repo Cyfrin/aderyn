@@ -22,7 +22,7 @@ impl IssueDetector for NonReentrantBeforeOthersDetector {
                 for (index, modifier) in definition.modifiers.iter().enumerate() {
                     if modifier
                         .modifier_name
-                        .name
+                        .name()
                         .to_lowercase()
                         .contains("nonreentrant")
                         && index != 0

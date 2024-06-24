@@ -18,10 +18,26 @@ pub struct UsingForDirective {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Hash)]
-#[serde(untagged)]
+#[serde(tag = "nodeType")]
 pub enum UserDefinedTypeNameOrIdentifierPath {
     UserDefinedTypeName(UserDefinedTypeName),
     IdentifierPath(IdentifierPath),
+}
+
+impl UserDefinedTypeNameOrIdentifierPath {
+    pub fn name(&self) -> Option<String> {
+        match self {
+            UserDefinedTypeNameOrIdentifierPath::UserDefinedTypeName(node) => node.name.clone(),
+            UserDefinedTypeNameOrIdentifierPath::IdentifierPath(node) => Some(node.name.clone()),
+        }
+    }
+
+    pub fn get_node_id(&self) -> Option<NodeID> {
+        match self {
+            UserDefinedTypeNameOrIdentifierPath::UserDefinedTypeName(_) => None,
+            UserDefinedTypeNameOrIdentifierPath::IdentifierPath(node) => Some(node.id),
+        }
+    }
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Hash)]

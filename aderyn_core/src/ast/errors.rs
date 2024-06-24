@@ -8,6 +8,7 @@ use std::fmt::Display;
 #[serde(rename_all = "camelCase")]
 pub struct ErrorDefinition {
     pub documentation: Option<Documentation>,
+    pub error_selector: Option<String>,
     pub name: String,
     pub name_location: Option<String>,
     pub parameters: ParameterList,

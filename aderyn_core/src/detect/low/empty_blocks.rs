@@ -25,11 +25,11 @@ impl IssueDetector for EmptyBlockDetector {
                 &empty_block.closest_ancestor_of_type(context, NodeType::FunctionDefinition)
             {
                 // It's okay to have empty block if it's a constructor, receive, or fallback
-                if f.kind == FunctionKind::Function {
+                if *f.kind() == FunctionKind::Function {
                     capture!(self, context, f);
-                } else if f.kind == FunctionKind::Constructor
-                    || f.kind == FunctionKind::Receive
-                    || f.kind == FunctionKind::Fallback
+                } else if *f.kind() == FunctionKind::Constructor
+                    || *f.kind() == FunctionKind::Receive
+                    || *f.kind() == FunctionKind::Fallback
                 {
                     // It's not okay to have empty block nested somewhere inside constructor
                     if let Some(block_chain) = empty_block.ancestral_line(context) {
