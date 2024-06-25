@@ -35,7 +35,7 @@ impl ReportPrinter<()> for SarifPrinter {
         _: bool,
         stdout: bool,
         _detectors_used: &[(String, String)],
-        file_contents: &HashMap<String, &String>,
+        _file_contents: &HashMap<String, &String>,
     ) -> Result<()> {
         let runs = vec![Run {
             tool: Tool {
