@@ -7,12 +7,13 @@ pub mod report;
 pub mod visitor;
 
 use audit::auditor::{get_auditor_detectors, AuditorPrinter, BasicAuditorPrinter};
+use cyfrin_foundry_compilers::utils::canonicalize;
 use detect::detector::IssueDetector;
 use eyre::Result;
 use prettytable::Row;
 use rayon::iter::{IntoParallelIterator, IntoParallelRefMutIterator, ParallelIterator};
 use std::collections::btree_map::Entry;
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, HashMap};
 use std::error::Error;
 use std::fs::{remove_file, File};
 use std::io::{self};
@@ -103,6 +104,11 @@ fn run_detector_mode<T>(
 where
     T: ReportPrinter<()>,
 {
+    let mut ignore_lines = HashMap::new();
+    for context in contexts {
+        ignore_lines.extend(context.ignore_lines_stats.clone());
+    }
+
     println!("Get Detectors");
 
     println!("Running {} detectors", detectors.len());
@@ -147,7 +153,21 @@ where
                 return None;
             }
 
-            issue.instances = detectors_instances;
+            issue.instances = detectors_instances
+                .into_iter()
+                .filter(|(instance, _)| {
+                    !ignore_lines
+                        .get(
+                            &canonicalize(&root_rel_path.join(&instance.0))
+                                .unwrap()
+                                .to_string_lossy()
+                                .to_string(),
+                        )
+                        .unwrap()
+                        .as_ref()
+                        .is_some_and(|lines_to_ignore| lines_to_ignore.contains(&instance.1))
+                })
+                .collect();
             Some((issue, detector.severity()))
         })
         .collect();
