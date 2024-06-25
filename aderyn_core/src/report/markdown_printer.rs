@@ -34,10 +34,7 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
             .flat_map(|context| context.source_units())
             .map(|source_unit| {
                 (
-                    root_path
-                        .join(PathBuf::from(source_unit.absolute_path.as_ref().unwrap()))
-                        .to_string_lossy()
-                        .to_string(),
+                    source_unit.absolute_path.as_ref().unwrap().to_owned(),
                     source_unit.source.as_ref().unwrap(),
                 )
             })
@@ -46,8 +43,16 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
         let output_rel_path = output_rel_path.unwrap();
 
         let all_issues = vec![
-            (report.high_issues().issues, "# High Issues\n", "H"),
-            (report.low_issues().issues, "# Low Issues\n", "L"),
+            (
+                report.high_issues(&source_units).issues,
+                "# High Issues\n",
+                "H",
+            ),
+            (
+                report.low_issues(&source_units).issues,
+                "# Low Issues\n",
+                "L",
+            ),
         ];
 
         for (issues, heading, severity) in all_issues {
@@ -290,7 +295,7 @@ impl MarkdownReportPrinter {
                 continue;
             }
 
-            let line = file_data.get(&path).unwrap();
+            let line = file_data.get(&instance.contract_path).unwrap();
 
             let line_preview = line
                 .split('\n')
