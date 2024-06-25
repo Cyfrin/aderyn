@@ -24,32 +24,22 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
         no_snippets: bool,
         _: bool,
         _: &[(String, String)],
+        file_contents: &HashMap<String, &String>,
     ) -> Result<()> {
         self.print_title_and_disclaimer(&mut writer)?;
         self.print_table_of_contents(&mut writer, report)?;
         self.print_contract_summary(&mut writer, report, contexts)?;
 
-        let source_units = contexts
-            .iter()
-            .flat_map(|context| context.source_units())
-            .map(|source_unit| {
-                (
-                    source_unit.absolute_path.as_ref().unwrap().to_owned(),
-                    source_unit.source.as_ref().unwrap(),
-                )
-            })
-            .collect::<HashMap<_, _>>();
-
         let output_rel_path = output_rel_path.unwrap();
 
         let all_issues = vec![
             (
-                report.high_issues(&source_units).issues,
+                report.high_issues(&file_contents).issues,
                 "# High Issues\n",
                 "H",
             ),
             (
-                report.low_issues(&source_units).issues,
+                report.low_issues(&file_contents).issues,
                 "# Low Issues\n",
                 "L",
             ),
@@ -72,7 +62,7 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
                             output_rel_path: output_rel_path.clone(),
                             no_snippets,
                         },
-                        &source_units,
+                        &file_contents,
                     )?;
                 }
             }

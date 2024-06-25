@@ -46,6 +46,7 @@ impl ReportPrinter<()> for JsonPrinter {
         _: bool,
         stdout: bool,
         detectors_used: &[(String, String)],
+        file_contents: &HashMap<String, &String>,
     ) -> Result<()> {
         let mut all_files_details = FilesDetails::default();
         for context in contexts {
@@ -62,25 +63,14 @@ impl ReportPrinter<()> for JsonPrinter {
             all_files_summary.total_source_units += 1;
         }
 
-        let source_units = contexts
-            .iter()
-            .flat_map(|context| context.source_units())
-            .map(|source_unit| {
-                (
-                    source_unit.absolute_path.as_ref().unwrap().to_owned(),
-                    source_unit.source.as_ref().unwrap(),
-                )
-            })
-            .collect::<HashMap<_, _>>();
-
         let detectors_used_names: Vec<_> = detectors_used.iter().map(|x| x.0.clone()).collect();
 
         let content = JsonContent {
             files_summary: all_files_summary,
             files_details: all_files_details,
             issue_count: report.issue_count(),
-            high_issues: report.high_issues(&source_units),
-            low_issues: report.low_issues(&source_units),
+            high_issues: report.high_issues(&file_contents),
+            low_issues: report.low_issues(&file_contents),
             detectors_used: detectors_used_names,
         };
         let value = serde_json::to_value(content).unwrap();
