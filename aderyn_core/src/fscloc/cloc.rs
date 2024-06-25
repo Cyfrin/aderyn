@@ -1,10 +1,11 @@
 use crate::fscloc::token::{tokenize, TokenType};
 
-use super::insight::TokenInsight;
+use super::{insight::TokenInsight, token::TokenDescriptor};
 
 #[derive(Debug)]
 pub struct Stats {
     pub code: usize,
+    pub lines_to_ignore: Option<Vec<usize>>,
 }
 
 #[derive(Debug, PartialEq)]
@@ -34,7 +35,10 @@ pub struct TokenInsightGroup {
 
 pub fn get_stats(r_content: &str) -> Stats {
     if r_content.is_empty() {
-        return Stats { code: 0 };
+        return Stats {
+            code: 0,
+            lines_to_ignore: None,
+        };
     }
 
     let token_descriptors = tokenize(r_content);
@@ -118,7 +122,10 @@ pub fn get_stats(r_content: &str) -> Stats {
     let len = groups.len();
 
     if len == 0 {
-        return Stats { code: 0 };
+        return Stats {
+            code: 0,
+            lines_to_ignore: None,
+        };
     }
 
     let mut prev = &groups[0];
@@ -141,5 +148,30 @@ pub fn get_stats(r_content: &str) -> Stats {
         prev = curr;
     }
 
-    Stats { code: code_lines }
+    let line_numbers_to_ignore = get_lines_to_ignore(&token_descriptors);
+
+    Stats {
+        code: code_lines,
+        lines_to_ignore: Some(line_numbers_to_ignore),
+    }
+}
+
+fn get_lines_to_ignore(token_descriptors: &Vec<TokenDescriptor>) -> Vec<usize> {
+    let mut line_numbers_to_ignore = vec![];
+    for token in token_descriptors {
+        if matches!(
+            token.token_type,
+            TokenType::CodeSingleQuotes
+                | TokenType::CodeDoubleQuotes
+                | TokenType::CodeOutsideQuotes
+        ) {
+            continue;
+        }
+        if token.content.contains("aderyn-disable-line") {
+            line_numbers_to_ignore.push(token.end_line);
+        } else if token.content.contains("aderyn-disable-next-line") {
+            line_numbers_to_ignore.push(token.end_line + 1);
+        }
+    }
+    line_numbers_to_ignore
 }
