@@ -169,7 +169,8 @@ fn get_lines_to_ignore(token_descriptors: &Vec<TokenDescriptor>) -> Vec<usize> {
         }
         if token.content.contains("aderyn-disable-line") {
             line_numbers_to_ignore.push(token.end_line);
-        } else if token.content.contains("aderyn-disable-next-line") {
+        }
+        if token.content.contains("aderyn-disable-next-line") {
             line_numbers_to_ignore.push(token.end_line + 1);
         }
     }
