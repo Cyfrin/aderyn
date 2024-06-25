@@ -848,9 +848,9 @@ dependencies = [
 
 [[package]]
 name = "cyfrin-foundry-config"
-version = "0.2.0"
+version = "0.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6c463d0a7aaf654a528d12844e9b3928700131166021bfb6c33ba65dbe9a0c12"
+checksum = "f2d346bfcec191b67c675af3d4b48073bd2a09eed46f0874544d602453bc378a"
 dependencies = [
  "Inflector",
  "alloy-chains",
