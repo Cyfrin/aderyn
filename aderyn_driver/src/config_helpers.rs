@@ -230,7 +230,6 @@ fn interpret_foundry_config(
 mod tests {
     use std::path::PathBuf;
 
-    // use cyfrin_foundry_compilers::remappings::RelativeRemapping;
     use cyfrin_foundry_config::{Config, RelativeRemapping};
 
     #[test]
