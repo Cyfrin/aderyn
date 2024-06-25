@@ -158,7 +158,7 @@ where
                 .filter(|(instance, _)| {
                     !ignore_lines
                         .get(
-                            &canonicalize(&root_rel_path.join(&instance.0))
+                            &canonicalize(root_rel_path.join(&instance.0))
                                 .unwrap()
                                 .to_string_lossy()
                                 .to_string(),
