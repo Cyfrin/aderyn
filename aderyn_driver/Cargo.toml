@@ -11,7 +11,7 @@ license = "MIT"
 [dependencies]
 aderyn_core = { path  = "../aderyn_core", version = "0.1.4" }
 rayon = "1.8.0"
-foundry-compilers = { version = "0.8.0", features = ["svm-solc"]   }
+cyfrin-foundry-compilers = { version = "0.3.20-aderyn", features = ["svm-solc"]   }
 serde_json = { version = "1.0.96", features = ["preserve_order"] }
 serde = { version = "1.0.160", features = ["derive"] }
 serde_repr = "0.1.12"

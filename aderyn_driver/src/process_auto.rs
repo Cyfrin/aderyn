@@ -7,7 +7,7 @@ use aderyn_core::{
     ast::SourceUnit, context::workspace_context::WorkspaceContext, visitor::ast_visitor::Node,
 };
 
-use foundry_compilers::{utils, Graph};
+use cyfrin_foundry_compilers::{utils, Graph};
 use rayon::iter::{IntoParallelIterator, ParallelIterator};
 
 use crate::{

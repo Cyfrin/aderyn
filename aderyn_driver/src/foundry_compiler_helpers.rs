@@ -5,9 +5,8 @@ use std::{
     str::FromStr,
 };
 
-use foundry_compilers::{
-    artifacts::{Remapping, Source},
-    utils, CompilerInput, Project, ProjectPathsConfig,
+use cyfrin_foundry_compilers::{
+    artifacts::Source, remappings::Remapping, utils, CompilerInput, Project, ProjectPathsConfig,
 };
 
 use crate::{passes_exclude, passes_scope, passes_src, read_remappings};

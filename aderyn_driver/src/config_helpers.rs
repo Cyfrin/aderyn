@@ -230,8 +230,8 @@ fn interpret_foundry_config(
 mod tests {
     use std::path::PathBuf;
 
+    use cyfrin_foundry_compilers::remappings::RelativeRemapping;
     use cyfrin_foundry_config::Config;
-    use foundry_compilers::artifacts::RelativeRemapping;
 
     #[test]
     fn test_interpret_aderyn_config_correctly_appends_and_replaces() {

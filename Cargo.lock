@@ -27,7 +27,7 @@ version = "0.1.4"
 dependencies = [
  "aderyn_driver",
  "clap",
- "foundry-compilers",
+ "cyfrin-foundry-compilers",
  "notify-debouncer-full",
  "reqwest",
  "semver 1.0.23",
@@ -41,8 +41,8 @@ name = "aderyn_core"
 version = "0.1.4"
 dependencies = [
  "crossbeam-channel",
+ "cyfrin-foundry-compilers",
  "eyre",
- "foundry-compilers",
  "ignore",
  "once_cell",
  "phf",
@@ -64,8 +64,8 @@ version = "0.1.4"
 dependencies = [
  "aderyn_core",
  "criterion",
+ "cyfrin-foundry-compilers",
  "cyfrin-foundry-config",
- "foundry-compilers",
  "rayon",
  "serde",
  "serde_json",
@@ -811,6 +811,39 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5efa2b3d7902f4b634a20cae3c9c4e6209dc4779feb6863329607560143efa70"
 dependencies = [
  "memchr",
+]
+
+[[package]]
+name = "cyfrin-foundry-compilers"
+version = "0.3.20-aderyn"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5ad21f39d59f196d1e2eb90b55a6d72bf46a272ac57a69fa47d8c38b5446ed57"
+dependencies = [
+ "alloy-json-abi",
+ "alloy-primitives",
+ "cfg-if",
+ "dirs",
+ "dunce",
+ "home",
+ "itertools 0.12.1",
+ "md-5",
+ "memmap2",
+ "once_cell",
+ "path-slash",
+ "rayon",
+ "regex",
+ "semver 1.0.23",
+ "serde",
+ "serde_json",
+ "sha2",
+ "solang-parser",
+ "svm-rs",
+ "svm-rs-builds",
+ "thiserror",
+ "tokio",
+ "tracing",
+ "walkdir",
+ "yansi",
 ]
 
 [[package]]
@@ -1824,6 +1857,15 @@ name = "itertools"
 version = "0.11.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b1c173a5686ce8bfa551b3563d0c2170bf24ca44da99c7ca4bfdab5418c3fe57"
+dependencies = [
+ "either",
+]
+
+[[package]]
+name = "itertools"
+version = "0.12.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ba291022dbbd398a455acf126c1e341954079855bc60dfdda641363bd6922569"
 dependencies = [
  "either",
 ]
