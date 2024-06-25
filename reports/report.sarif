@@ -130,19 +130,8 @@
                   "uri": "src/uniswap/UniswapV2Swapper.sol"
                 },
                 "region": {
-                  "byteLength": 67,
-                  "byteOffset": 1116
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV2Swapper.sol"
-                },
-                "region": {
                   "byteLength": 112,
-                  "byteOffset": 1261
+                  "byteOffset": 1284
                 }
               }
             },
@@ -153,7 +142,7 @@
                 },
                 "region": {
                   "byteLength": 99,
-                  "byteOffset": 1383
+                  "byteOffset": 1406
                 }
               }
             },
@@ -164,7 +153,7 @@
                 },
                 "region": {
                   "byteLength": 109,
-                  "byteOffset": 1492
+                  "byteOffset": 1515
                 }
               }
             },
@@ -2253,17 +2242,6 @@
                 "region": {
                   "byteLength": 66,
                   "byteOffset": 1275
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ConstantsLiterals.sol"
-                },
-                "region": {
-                  "byteLength": 66,
-                  "byteOffset": 1374
                 }
               }
             },

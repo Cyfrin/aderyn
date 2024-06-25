@@ -243,23 +243,18 @@
           },
           {
             "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 28,
-            "src": "1116:67"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
             "line_no": 31,
-            "src": "1261:112"
+            "src": "1284:112"
           },
           {
             "contract_path": "src/uniswap/UniswapV2Swapper.sol",
             "line_no": 32,
-            "src": "1383:99"
+            "src": "1406:99"
           },
           {
             "contract_path": "src/uniswap/UniswapV2Swapper.sol",
             "line_no": 33,
-            "src": "1492:109"
+            "src": "1515:109"
           },
           {
             "contract_path": "src/uniswap/UniswapV3Swapper.sol",
@@ -1248,11 +1243,6 @@
             "contract_path": "src/ConstantsLiterals.sol",
             "line_no": 31,
             "src": "1275:66"
-          },
-          {
-            "contract_path": "src/ConstantsLiterals.sol",
-            "line_no": 32,
-            "src": "1374:66"
           },
           {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
