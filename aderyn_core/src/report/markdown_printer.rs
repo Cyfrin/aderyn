@@ -34,12 +34,12 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
 
         let all_issues = vec![
             (
-                report.high_issues(&file_contents).issues,
+                report.high_issues(file_contents).issues,
                 "# High Issues\n",
                 "H",
             ),
             (
-                report.low_issues(&file_contents).issues,
+                report.low_issues(file_contents).issues,
                 "# Low Issues\n",
                 "L",
             ),
@@ -62,7 +62,7 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
                             output_rel_path: output_rel_path.clone(),
                             no_snippets,
                         },
-                        &file_contents,
+                        file_contents,
                     )?;
                 }
             }

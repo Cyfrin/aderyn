@@ -69,8 +69,8 @@ impl ReportPrinter<()> for JsonPrinter {
             files_summary: all_files_summary,
             files_details: all_files_details,
             issue_count: report.issue_count(),
-            high_issues: report.high_issues(&file_contents),
-            low_issues: report.low_issues(&file_contents),
+            high_issues: report.high_issues(file_contents),
+            low_issues: report.low_issues(file_contents),
             detectors_used: detectors_used_names,
         };
         let value = serde_json::to_value(content).unwrap();
