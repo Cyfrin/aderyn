@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use super::{extract_issue_bodies, HighIssues, Issue, IssueCount, LowIssues};
 
 #[derive(Default, PartialEq)]
@@ -14,15 +16,15 @@ impl Report {
         }
     }
 
-    pub fn high_issues(&self) -> HighIssues {
+    pub fn high_issues(&self, file_contents: &HashMap<String, &String>) -> HighIssues {
         HighIssues {
-            issues: extract_issue_bodies(&self.highs),
+            issues: extract_issue_bodies(&self.highs, file_contents),
         }
     }
 
-    pub fn low_issues(&self) -> LowIssues {
+    pub fn low_issues(&self, file_contents: &HashMap<String, &String>) -> LowIssues {
         LowIssues {
-            issues: extract_issue_bodies(&self.lows),
+            issues: extract_issue_bodies(&self.lows, file_contents),
         }
     }
 }

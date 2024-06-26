@@ -1,5 +1,5 @@
 use std::{
-    collections::{BTreeMap, HashSet},
+    collections::{BTreeMap, HashMap, HashSet},
     ops::Add,
 };
 
@@ -69,6 +69,7 @@ pub struct IssueInstance {
     contract_path: String,
     line_no: usize,
     src: String,
+    src_char: String,
 }
 
 #[derive(Serialize)]
@@ -89,17 +90,43 @@ pub struct LowIssues {
     issues: Vec<IssueBody>,
 }
 
-pub fn extract_issue_bodies(issues: &[Issue]) -> Vec<IssueBody> {
+pub fn extract_issue_bodies(
+    issues: &[Issue],
+    file_contents: &HashMap<String, &String>,
+) -> Vec<IssueBody> {
     issues
         .iter()
         .map(|cr| {
             let instances = cr
                 .instances
                 .keys()
-                .map(|(contract_path, line_no, src_location)| IssueInstance {
-                    contract_path: contract_path.clone(),
-                    line_no: *line_no,
-                    src: src_location.clone(),
+                .map(|(contract_path, line_no, src_location)| {
+                    // Calculate character based offset & length position here
+                    let (byte_offset_str, byte_len_str) = src_location.split_once(':').unwrap();
+                    let byte_offset: usize = byte_offset_str.parse().unwrap();
+                    let byte_length: usize = byte_len_str.parse().unwrap();
+                    let content = *file_contents.get(contract_path).unwrap();
+                    let mut char_offset = 0;
+                    for (byte_offset_so_far, _) in content.char_indices() {
+                        if byte_offset_so_far == byte_offset {
+                            break;
+                        }
+                        char_offset += 1;
+                    }
+                    let mut char_len = 0;
+                    for (byte_offset_so_far, _) in content.as_str()[byte_offset..].char_indices() {
+                        if byte_offset_so_far == byte_length {
+                            break;
+                        }
+                        char_len += 1;
+                    }
+
+                    IssueInstance {
+                        contract_path: contract_path.clone(),
+                        line_no: *line_no,
+                        src: src_location.clone(),
+                        src_char: format!("{}:{}", char_offset, char_len),
+                    }
                 })
                 .collect();
 
