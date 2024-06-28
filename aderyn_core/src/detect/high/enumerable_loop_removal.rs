@@ -64,7 +64,7 @@ impl IssueDetector for EnumerableLoopRemovalDetector {
 
     fn description(&self) -> String {
         String::from("If the order of an EnumerableSet is required, removing items in a loop using `at` and `remove` corrupts this order.
-        Consider using a different data structure or removing items by collecting them during the loop, then removing after the loop.")
+Consider using a different data structure or removing items by collecting them during the loop, then removing after the loop.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
