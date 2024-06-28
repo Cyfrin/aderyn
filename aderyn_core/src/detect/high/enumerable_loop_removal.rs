@@ -1,7 +1,7 @@
 use std::collections::BTreeMap;
 use std::error::Error;
 
-use crate::ast::{NodeID, NodeType, TypeName};
+use crate::ast::{NodeID, NodeType};
 
 use crate::capture;
 use crate::context::browser::ExtractMemberAccesses;
