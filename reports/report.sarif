@@ -1390,6 +1390,48 @@
           "ruleId": "unsafe-casting-detector"
         },
         {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/EnumerableSetIteration.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 1094
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/EnumerableSetIteration.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 1322
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/EnumerableSetIteration.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 1538
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "If the order of an EnumerableSet is required, removing items in a loop using `at` and `remove` corrupts this order.\n        Consider using a different data structure or removing items by collecting them during the loop, then removing after the loop."
+          },
+          "ruleId": "enumerable-loop-removal"
+        },
+        {
           "level": "note",
           "locations": [
             {
@@ -1925,6 +1967,39 @@
                 "region": {
                   "byteLength": 9,
                   "byteOffset": 129
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/EnumerableSetIteration.sol"
+                },
+                "region": {
+                  "byteLength": 19,
+                  "byteOffset": 939
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/EnumerableSetIteration.sol"
+                },
+                "region": {
+                  "byteLength": 19,
+                  "byteOffset": 1167
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/EnumerableSetIteration.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 1395
                 }
               }
             },

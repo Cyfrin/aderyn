@@ -12,12 +12,6 @@ use crate::{
 };
 use eyre::Result;
 
-// HOW TO USE THIS TEMPLATE:
-// 1. Copy this file and rename it to the snake_case version of the issue you are detecting.
-// 2. Rename the EnumerableLoopRemovalDetector struct and impl to your new issue name.
-// 3. Add this file and detector struct to the mod.rs file in the same directory.
-// 4. Implement the detect function to find instances of the issue.
-
 #[derive(Default)]
 pub struct EnumerableLoopRemovalDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
@@ -31,7 +25,7 @@ impl IssueDetector for EnumerableLoopRemovalDetector {
         // for each one
         // Find the closest ancestor of a loop
         // if it exists, extract all `at` member accesses on the enumerableset
-        // If the at memberaccess is before the remove memberaccess, add to found_instances
+        // If an `at` memberaccess also exists in the loop, add the remove to found_instances
 
         context
             .member_accesses()
@@ -65,11 +59,12 @@ impl IssueDetector for EnumerableLoopRemovalDetector {
     }
 
     fn title(&self) -> String {
-        String::from("High Issue Title")
+        String::from("EnumerableSet.remove in loop corrupts the set order.")
     }
 
     fn description(&self) -> String {
-        String::from("Description of the high issue.")
+        String::from("If the order of an EnumerableSet is required, removing items in a loop using `at` and `remove` corrupts this order.
+        Consider using a different data structure or removing items by collecting them during the loop, then removing after the loop.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -77,7 +72,7 @@ impl IssueDetector for EnumerableLoopRemovalDetector {
     }
 
     fn name(&self) -> String {
-        format!("high-issue-template")
+        format!("{}", IssueDetectorNamePool::EnumerableLoopRemoval)
     }
 }
 
@@ -101,13 +96,6 @@ mod enuemrable_loop_removal_tests {
         assert_eq!(
             detector.severity(),
             crate::detect::detector::IssueSeverity::High
-        );
-        // assert the title is correct
-        assert_eq!(detector.title(), String::from("High Issue Title"));
-        // assert the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from("Description of the high issue.")
         );
     }
 }
