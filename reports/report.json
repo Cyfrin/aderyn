@@ -951,7 +951,7 @@
       },
       {
         "title": "EnumerableSet.remove in loop corrupts the set order.",
-        "description": "If the order of an EnumerableSet is required, removing items in a loop using `at` and `remove` corrupts this order.\n        Consider using a different data structure or removing items by collecting them during the loop, then removing after the loop.",
+        "description": "If the order of an EnumerableSet is required, removing items in a loop using `at` and `remove` corrupts this order.\nConsider using a different data structure or removing items by collecting them during the loop, then removing after the loop.",
         "detector_name": "enumerable-loop-removal",
         "instances": [
           {

@@ -1427,7 +1427,7 @@
             }
           ],
           "message": {
-            "text": "If the order of an EnumerableSet is required, removing items in a loop using `at` and `remove` corrupts this order.\n        Consider using a different data structure or removing items by collecting them during the loop, then removing after the loop."
+            "text": "If the order of an EnumerableSet is required, removing items in a loop using `at` and `remove` corrupts this order.\nConsider using a different data structure or removing items by collecting them during the loop, then removing after the loop."
           },
           "ruleId": "enumerable-loop-removal"
         },

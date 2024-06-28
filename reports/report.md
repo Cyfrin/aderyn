@@ -906,7 +906,7 @@ Downcasting int/uints in Solidity can be unsafe due to the potential for data lo
 ## H-7: EnumerableSet.remove in loop corrupts the set order.
 
 If the order of an EnumerableSet is required, removing items in a loop using `at` and `remove` corrupts this order.
-        Consider using a different data structure or removing items by collecting them during the loop, then removing after the loop.
+Consider using a different data structure or removing items by collecting them during the loop, then removing after the loop.
 
 <details><summary>3 Found Instances</summary>
 
