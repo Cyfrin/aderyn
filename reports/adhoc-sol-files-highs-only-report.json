@@ -117,6 +117,7 @@
     "block-timestamp-deadline",
     "arbitrary-transfer-from",
     "unprotected-initializer",
-    "unsafe-casting-detector"
+    "unsafe-casting-detector",
+    "enumerable-loop-removal"
   ]
 }
