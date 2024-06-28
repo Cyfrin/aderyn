@@ -957,20 +957,20 @@
           {
             "contract_path": "src/EnumerableSetIteration.sol",
             "line_no": 31,
-            "src": "1094:17",
-            "src_char": "1094:17"
+            "src": "1096:17",
+            "src_char": "1096:17"
           },
           {
             "contract_path": "src/EnumerableSetIteration.sol",
             "line_no": 39,
-            "src": "1322:17",
-            "src_char": "1322:17"
+            "src": "1326:17",
+            "src_char": "1326:17"
           },
           {
             "contract_path": "src/EnumerableSetIteration.sol",
             "line_no": 47,
-            "src": "1538:14",
-            "src_char": "1538:14"
+            "src": "1544:14",
+            "src_char": "1544:14"
           }
         ]
       }
@@ -1289,24 +1289,6 @@
             "line_no": 7,
             "src": "129:9",
             "src_char": "129:9"
-          },
-          {
-            "contract_path": "src/EnumerableSetIteration.sol",
-            "line_no": 28,
-            "src": "939:19",
-            "src_char": "939:19"
-          },
-          {
-            "contract_path": "src/EnumerableSetIteration.sol",
-            "line_no": 36,
-            "src": "1167:19",
-            "src_char": "1167:19"
-          },
-          {
-            "contract_path": "src/EnumerableSetIteration.sol",
-            "line_no": 44,
-            "src": "1395:16",
-            "src_char": "1395:16"
           },
           {
             "contract_path": "src/StateVariables.sol",

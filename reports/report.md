@@ -1253,7 +1253,7 @@ Check for `address(0)` when assigning values to address state variables.
 
 Instead of marking a function as `public`, consider marking it as `external` if it is not used internally.
 
-<details><summary>25 Found Instances</summary>
+<details><summary>22 Found Instances</summary>
 
 
 - Found in src/ArbitraryTransferFrom.sol [Line: 28](../tests/contract-playground/src/ArbitraryTransferFrom.sol#L28)
@@ -1278,24 +1278,6 @@ Instead of marking a function as `public`, consider marking it as `external` if 
 
 	```solidity
 	    function setNumber(uint256 newNumber) public {
-	```
-
-- Found in src/EnumerableSetIteration.sol [Line: 28](../tests/contract-playground/src/EnumerableSetIteration.sol#L28)
-
-	```solidity
-	    function badBytes32Iteration() public {
-	```
-
-- Found in src/EnumerableSetIteration.sol [Line: 36](../tests/contract-playground/src/EnumerableSetIteration.sol#L36)
-
-	```solidity
-	    function badAddressIteration() public {
-	```
-
-- Found in src/EnumerableSetIteration.sol [Line: 44](../tests/contract-playground/src/EnumerableSetIteration.sol#L44)
-
-	```solidity
-	    function badUintIteration() public {
 	```
 
 - Found in src/StateVariables.sol [Line: 47](../tests/contract-playground/src/StateVariables.sol#L47)
