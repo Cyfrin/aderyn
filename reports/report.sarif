@@ -1399,7 +1399,7 @@
                 },
                 "region": {
                   "byteLength": 17,
-                  "byteOffset": 1096
+                  "byteOffset": 1105
                 }
               }
             },
@@ -1410,7 +1410,29 @@
                 },
                 "region": {
                   "byteLength": 17,
-                  "byteOffset": 1326
+                  "byteOffset": 1350
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/EnumerableSetIteration.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 1586
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/EnumerableSetIteration.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 1865
                 }
               }
             },
@@ -1421,7 +1443,7 @@
                 },
                 "region": {
                   "byteLength": 14,
-                  "byteOffset": 1544
+                  "byteOffset": 2083
                 }
               }
             }
