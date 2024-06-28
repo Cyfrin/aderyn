@@ -25,7 +25,7 @@ contract EnumerableSetIteration {
     }
 
     // Bad
-    function badBytes32Iteration() public {
+    function badBytes32Iteration() external {
         for (uint256 i = 0; i < bytes32Set.length(); i++) {
             bytes32 thisBytes32 = bytes32Set.at(i);
             bytes32Set.remove(thisBytes32);
@@ -33,7 +33,7 @@ contract EnumerableSetIteration {
     }
 
     // Bad
-    function badAddressIteration() public {
+    function badAddressIteration() external {
         for (uint256 i = 0; i < addressSet.length(); i++) {
             address thisAddress = addressSet.at(i);
             addressSet.remove(thisAddress);
@@ -41,7 +41,7 @@ contract EnumerableSetIteration {
     }
 
     // Bad
-    function badUintIteration() public {
+    function badUintIteration() external {
         for (uint256 i = 0; i < uintSet.length(); i++) {
             uint256 thisUint = uintSet.at(i);
             uintSet.remove(thisUint);
