@@ -42,17 +42,15 @@ impl IssueDetector for EnumerableLoopRemovalDetector {
                                 member_access
                                     .closest_ancestor_of_type(context, NodeType::DoWhileStatement),
                             ];
-                            for parent_loop in parent_loops {
-                                if let Some(parent_loop) = parent_loop {
-                                    ExtractMemberAccesses::from(parent_loop)
-                                        .extracted
-                                        .into_iter()
-                                        .for_each(|at_member_access| {
-                                            if at_member_access.member_name == "at" {
-                                                capture!(self, context, member_access);
-                                            }
-                                        });
-                                }
+                            for parent_loop in parent_loops.into_iter().flatten() {
+                                ExtractMemberAccesses::from(parent_loop)
+                                    .extracted
+                                    .into_iter()
+                                    .for_each(|at_member_access| {
+                                        if at_member_access.member_name == "at" {
+                                            capture!(self, context, member_access);
+                                        }
+                                    });
                             }
                         }
                     }
