@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 41,
-    "total_sloc": 1322
+    "total_source_units": 42,
+    "total_sloc": 1361
   },
   "files_details": {
     "files_details": [
@@ -52,6 +52,10 @@
       {
         "file_path": "src/EmptyBlocks.sol",
         "n_sloc": 48
+      },
+      {
+        "file_path": "src/EnumerableSetIteration.sol",
+        "n_sloc": 39
       },
       {
         "file_path": "src/HugeConstants.sol",
@@ -172,7 +176,7 @@
     ]
   },
   "issue_count": {
-    "high": 6,
+    "high": 7,
     "low": 23
   },
   "high_issues": {
@@ -185,7 +189,8 @@
           {
             "contract_path": "src/inheritance/ExtendedInheritance.sol",
             "line_no": 16,
-            "src": "488:19"
+            "src": "488:19",
+            "src_char": "488:19"
           }
         ]
       },
@@ -197,17 +202,20 @@
           {
             "contract_path": "src/KeccakContract.sol",
             "line_no": 18,
-            "src": "587:16"
+            "src": "587:16",
+            "src_char": "587:16"
           },
           {
             "contract_path": "src/KeccakContract.sol",
             "line_no": 22,
-            "src": "734:16"
+            "src": "734:16",
+            "src_char": "734:16"
           },
           {
             "contract_path": "src/KeccakContract.sol",
             "line_no": 26,
-            "src": "887:16"
+            "src": "887:16",
+            "src_char": "887:16"
           }
         ]
       },
@@ -219,82 +227,98 @@
           {
             "contract_path": "src/uniswap/UniswapV2Swapper.sol",
             "line_no": 23,
-            "src": "670:83"
+            "src": "670:83",
+            "src_char": "670:83"
           },
           {
             "contract_path": "src/uniswap/UniswapV2Swapper.sol",
             "line_no": 24,
-            "src": "763:83"
+            "src": "763:83",
+            "src_char": "763:83"
           },
           {
             "contract_path": "src/uniswap/UniswapV2Swapper.sol",
             "line_no": 25,
-            "src": "856:70"
+            "src": "856:70",
+            "src_char": "856:70"
           },
           {
             "contract_path": "src/uniswap/UniswapV2Swapper.sol",
             "line_no": 26,
-            "src": "936:80"
+            "src": "936:80",
+            "src_char": "936:80"
           },
           {
             "contract_path": "src/uniswap/UniswapV2Swapper.sol",
             "line_no": 27,
-            "src": "1026:80"
+            "src": "1026:80",
+            "src_char": "1026:80"
           },
           {
             "contract_path": "src/uniswap/UniswapV2Swapper.sol",
             "line_no": 31,
-            "src": "1284:112"
+            "src": "1284:112",
+            "src_char": "1284:112"
           },
           {
             "contract_path": "src/uniswap/UniswapV2Swapper.sol",
             "line_no": 32,
-            "src": "1406:99"
+            "src": "1406:99",
+            "src_char": "1406:99"
           },
           {
             "contract_path": "src/uniswap/UniswapV2Swapper.sol",
             "line_no": 33,
-            "src": "1515:109"
+            "src": "1515:109",
+            "src_char": "1515:109"
           },
           {
             "contract_path": "src/uniswap/UniswapV3Swapper.sol",
             "line_no": 52,
-            "src": "1115:143"
+            "src": "1115:143",
+            "src_char": "1115:143"
           },
           {
             "contract_path": "src/uniswap/UniswapV3Swapper.sol",
             "line_no": 55,
-            "src": "1293:321"
+            "src": "1293:321",
+            "src_char": "1293:321"
           },
           {
             "contract_path": "src/uniswap/UniswapV3Swapper.sol",
             "line_no": 66,
-            "src": "1668:131"
+            "src": "1668:131",
+            "src_char": "1668:131"
           },
           {
             "contract_path": "src/uniswap/UniswapV3Swapper.sol",
             "line_no": 69,
-            "src": "1828:236"
+            "src": "1828:236",
+            "src_char": "1828:236"
           },
           {
             "contract_path": "src/uniswap/UniswapV3Swapper.sol",
             "line_no": 77,
-            "src": "2132:144"
+            "src": "2132:144",
+            "src_char": "2132:144"
           },
           {
             "contract_path": "src/uniswap/UniswapV3Swapper.sol",
             "line_no": 80,
-            "src": "2312:322"
+            "src": "2312:322",
+            "src_char": "2312:322"
           },
           {
             "contract_path": "src/uniswap/UniswapV3Swapper.sol",
             "line_no": 91,
-            "src": "2690:132"
+            "src": "2690:132",
+            "src_char": "2690:132"
           },
           {
             "contract_path": "src/uniswap/UniswapV3Swapper.sol",
             "line_no": 94,
-            "src": "2852:237"
+            "src": "2852:237",
+            "src_char": "2852:237"
           }
         ]
       },
@@ -306,32 +330,38 @@
           {
             "contract_path": "src/ArbitraryTransferFrom.sol",
             "line_no": 16,
-            "src": "370:38"
+            "src": "370:38",
+            "src_char": "370:38"
           },
           {
             "contract_path": "src/ArbitraryTransferFrom.sol",
             "line_no": 20,
-            "src": "496:42"
+            "src": "496:42",
+            "src_char": "496:42"
           },
           {
             "contract_path": "src/ArbitraryTransferFrom.sol",
             "line_no": 24,
-            "src": "634:53"
+            "src": "634:53",
+            "src_char": "634:53"
           },
           {
             "contract_path": "src/ArbitraryTransferFrom.sol",
             "line_no": 30,
-            "src": "864:44"
+            "src": "864:44",
+            "src_char": "864:44"
           },
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 17,
-            "src": "579:39"
+            "src": "579:39",
+            "src_char": "579:39"
           },
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 47,
-            "src": "1598:35"
+            "src": "1598:35",
+            "src_char": "1598:35"
           }
         ]
       },
@@ -343,7 +373,8 @@
           {
             "contract_path": "src/UnprotectedInitialize.sol",
             "line_no": 35,
-            "src": "820:33"
+            "src": "820:33",
+            "src_char": "820:33"
           }
         ]
       },
@@ -355,467 +386,585 @@
           {
             "contract_path": "src/Casting.sol",
             "line_no": 35,
-            "src": "1065:10"
+            "src": "1065:10",
+            "src_char": "1065:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 36,
-            "src": "1097:10"
+            "src": "1097:10",
+            "src_char": "1097:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 37,
-            "src": "1129:10"
+            "src": "1129:10",
+            "src_char": "1129:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 38,
-            "src": "1161:10"
+            "src": "1161:10",
+            "src_char": "1161:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 39,
-            "src": "1193:10"
+            "src": "1193:10",
+            "src_char": "1193:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 40,
-            "src": "1225:10"
+            "src": "1225:10",
+            "src_char": "1225:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 41,
-            "src": "1257:10"
+            "src": "1257:10",
+            "src_char": "1257:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 42,
-            "src": "1289:10"
+            "src": "1289:10",
+            "src_char": "1289:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 43,
-            "src": "1321:10"
+            "src": "1321:10",
+            "src_char": "1321:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 44,
-            "src": "1353:10"
+            "src": "1353:10",
+            "src_char": "1353:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 45,
-            "src": "1385:10"
+            "src": "1385:10",
+            "src_char": "1385:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 46,
-            "src": "1417:10"
+            "src": "1417:10",
+            "src_char": "1417:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 47,
-            "src": "1449:10"
+            "src": "1449:10",
+            "src_char": "1449:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 48,
-            "src": "1481:10"
+            "src": "1481:10",
+            "src_char": "1481:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 49,
-            "src": "1513:10"
+            "src": "1513:10",
+            "src_char": "1513:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 50,
-            "src": "1545:10"
+            "src": "1545:10",
+            "src_char": "1545:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 51,
-            "src": "1577:10"
+            "src": "1577:10",
+            "src_char": "1577:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 52,
-            "src": "1609:10"
+            "src": "1609:10",
+            "src_char": "1609:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 53,
-            "src": "1641:10"
+            "src": "1641:10",
+            "src_char": "1641:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 54,
-            "src": "1672:9"
+            "src": "1672:9",
+            "src_char": "1672:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 55,
-            "src": "1702:9"
+            "src": "1702:9",
+            "src_char": "1702:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 56,
-            "src": "1732:9"
+            "src": "1732:9",
+            "src_char": "1732:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 57,
-            "src": "1762:9"
+            "src": "1762:9",
+            "src_char": "1762:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 58,
-            "src": "1792:9"
+            "src": "1792:9",
+            "src_char": "1792:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 59,
-            "src": "1822:9"
+            "src": "1822:9",
+            "src_char": "1822:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 60,
-            "src": "1853:9"
+            "src": "1853:9",
+            "src_char": "1853:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 61,
-            "src": "1884:10"
+            "src": "1884:10",
+            "src_char": "1884:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 62,
-            "src": "1916:10"
+            "src": "1916:10",
+            "src_char": "1916:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 63,
-            "src": "1948:10"
+            "src": "1948:10",
+            "src_char": "1948:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 64,
-            "src": "1980:10"
+            "src": "1980:10",
+            "src_char": "1980:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 65,
-            "src": "2013:9"
+            "src": "2013:9",
+            "src_char": "2013:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 73,
-            "src": "2242:9"
+            "src": "2242:9",
+            "src_char": "2242:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 74,
-            "src": "2272:9"
+            "src": "2272:9",
+            "src_char": "2272:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 75,
-            "src": "2302:9"
+            "src": "2302:9",
+            "src_char": "2302:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 76,
-            "src": "2332:9"
+            "src": "2332:9",
+            "src_char": "2332:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 77,
-            "src": "2362:9"
+            "src": "2362:9",
+            "src_char": "2362:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 78,
-            "src": "2392:9"
+            "src": "2392:9",
+            "src_char": "2392:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 79,
-            "src": "2422:9"
+            "src": "2422:9",
+            "src_char": "2422:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 80,
-            "src": "2452:9"
+            "src": "2452:9",
+            "src_char": "2452:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 81,
-            "src": "2482:9"
+            "src": "2482:9",
+            "src_char": "2482:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 82,
-            "src": "2512:9"
+            "src": "2512:9",
+            "src_char": "2512:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 83,
-            "src": "2542:9"
+            "src": "2542:9",
+            "src_char": "2542:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 84,
-            "src": "2572:9"
+            "src": "2572:9",
+            "src_char": "2572:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 85,
-            "src": "2602:9"
+            "src": "2602:9",
+            "src_char": "2602:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 86,
-            "src": "2632:9"
+            "src": "2632:9",
+            "src_char": "2632:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 87,
-            "src": "2662:9"
+            "src": "2662:9",
+            "src_char": "2662:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 88,
-            "src": "2692:9"
+            "src": "2692:9",
+            "src_char": "2692:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 89,
-            "src": "2722:9"
+            "src": "2722:9",
+            "src_char": "2722:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 90,
-            "src": "2752:9"
+            "src": "2752:9",
+            "src_char": "2752:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 91,
-            "src": "2782:9"
+            "src": "2782:9",
+            "src_char": "2782:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 92,
-            "src": "2811:8"
+            "src": "2811:8",
+            "src_char": "2811:8"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 93,
-            "src": "2839:8"
+            "src": "2839:8",
+            "src_char": "2839:8"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 94,
-            "src": "2867:8"
+            "src": "2867:8",
+            "src_char": "2867:8"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 95,
-            "src": "2895:8"
+            "src": "2895:8",
+            "src_char": "2895:8"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 96,
-            "src": "2923:8"
+            "src": "2923:8",
+            "src_char": "2923:8"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 97,
-            "src": "2951:8"
+            "src": "2951:8",
+            "src_char": "2951:8"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 98,
-            "src": "2980:8"
+            "src": "2980:8",
+            "src_char": "2980:8"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 99,
-            "src": "3009:9"
+            "src": "3009:9",
+            "src_char": "3009:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 100,
-            "src": "3039:9"
+            "src": "3039:9",
+            "src_char": "3039:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 101,
-            "src": "3069:9"
+            "src": "3069:9",
+            "src_char": "3069:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 102,
-            "src": "3099:9"
+            "src": "3099:9",
+            "src_char": "3099:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 103,
-            "src": "3130:8"
+            "src": "3130:8",
+            "src_char": "3130:8"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 111,
-            "src": "3426:10"
+            "src": "3426:10",
+            "src_char": "3426:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 112,
-            "src": "3458:10"
+            "src": "3458:10",
+            "src_char": "3458:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 113,
-            "src": "3490:10"
+            "src": "3490:10",
+            "src_char": "3490:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 114,
-            "src": "3522:10"
+            "src": "3522:10",
+            "src_char": "3522:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 115,
-            "src": "3554:10"
+            "src": "3554:10",
+            "src_char": "3554:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 116,
-            "src": "3586:10"
+            "src": "3586:10",
+            "src_char": "3586:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 117,
-            "src": "3618:10"
+            "src": "3618:10",
+            "src_char": "3618:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 118,
-            "src": "3650:10"
+            "src": "3650:10",
+            "src_char": "3650:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 119,
-            "src": "3682:10"
+            "src": "3682:10",
+            "src_char": "3682:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 120,
-            "src": "3714:10"
+            "src": "3714:10",
+            "src_char": "3714:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 121,
-            "src": "3746:10"
+            "src": "3746:10",
+            "src_char": "3746:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 122,
-            "src": "3778:10"
+            "src": "3778:10",
+            "src_char": "3778:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 123,
-            "src": "3810:10"
+            "src": "3810:10",
+            "src_char": "3810:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 124,
-            "src": "3842:10"
+            "src": "3842:10",
+            "src_char": "3842:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 125,
-            "src": "3874:10"
+            "src": "3874:10",
+            "src_char": "3874:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 126,
-            "src": "3906:10"
+            "src": "3906:10",
+            "src_char": "3906:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 127,
-            "src": "3938:10"
+            "src": "3938:10",
+            "src_char": "3938:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 128,
-            "src": "3970:10"
+            "src": "3970:10",
+            "src_char": "3970:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 129,
-            "src": "4002:10"
+            "src": "4002:10",
+            "src_char": "4002:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 130,
-            "src": "4034:10"
+            "src": "4034:10",
+            "src_char": "4034:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 131,
-            "src": "4066:10"
+            "src": "4066:10",
+            "src_char": "4066:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 132,
-            "src": "4098:10"
+            "src": "4098:10",
+            "src_char": "4098:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 133,
-            "src": "4129:9"
+            "src": "4129:9",
+            "src_char": "4129:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 134,
-            "src": "4159:9"
+            "src": "4159:9",
+            "src_char": "4159:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 135,
-            "src": "4189:9"
+            "src": "4189:9",
+            "src_char": "4189:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 136,
-            "src": "4220:9"
+            "src": "4220:9",
+            "src_char": "4220:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 137,
-            "src": "4251:10"
+            "src": "4251:10",
+            "src_char": "4251:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 138,
-            "src": "4283:10"
+            "src": "4283:10",
+            "src_char": "4283:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 139,
-            "src": "4315:10"
+            "src": "4315:10",
+            "src_char": "4315:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 140,
-            "src": "4347:10"
+            "src": "4347:10",
+            "src_char": "4347:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 141,
-            "src": "4381:10"
+            "src": "4381:10",
+            "src_char": "4381:10"
+          }
+        ]
+      },
+      {
+        "title": "EnumerableSet.remove in loop corrupts the set order.",
+        "description": "If the order of an EnumerableSet is required, removing items in a loop using `at` and `remove` corrupts this order.\nConsider using a different data structure or removing items by collecting them during the loop, then removing after the loop.",
+        "detector_name": "enumerable-loop-removal",
+        "instances": [
+          {
+            "contract_path": "src/EnumerableSetIteration.sol",
+            "line_no": 31,
+            "src": "1096:17",
+            "src_char": "1096:17"
+          },
+          {
+            "contract_path": "src/EnumerableSetIteration.sol",
+            "line_no": 39,
+            "src": "1326:17",
+            "src_char": "1326:17"
+          },
+          {
+            "contract_path": "src/EnumerableSetIteration.sol",
+            "line_no": 47,
+            "src": "1544:14",
+            "src_char": "1544:14"
           }
         ]
       }
@@ -831,67 +980,80 @@
           {
             "contract_path": "src/AdminContract.sol",
             "line_no": 7,
-            "src": "270:7"
+            "src": "270:7",
+            "src_char": "270:7"
           },
           {
             "contract_path": "src/AdminContract.sol",
             "line_no": 10,
-            "src": "376:9"
+            "src": "376:9",
+            "src_char": "376:9"
           },
           {
             "contract_path": "src/AdminContract.sol",
             "line_no": 14,
-            "src": "505:9"
+            "src": "505:9",
+            "src_char": "505:9"
           },
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 7,
-            "src": "295:13"
+            "src": "295:13",
+            "src_char": "295:13"
           },
           {
             "contract_path": "src/EmptyBlocks.sol",
             "line_no": 6,
-            "src": "188:7"
+            "src": "188:7",
+            "src_char": "188:7"
           },
           {
             "contract_path": "src/InternalFunctions.sol",
             "line_no": 12,
-            "src": "250:9"
+            "src": "250:9",
+            "src_char": "250:9"
           },
           {
             "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
             "line_no": 9,
-            "src": "322:7"
+            "src": "322:7",
+            "src_char": "322:7"
           },
           {
             "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
             "line_no": 11,
-            "src": "396:9"
+            "src": "396:9",
+            "src_char": "396:9"
           },
           {
             "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
             "line_no": 35,
-            "src": "975:13"
+            "src": "975:13",
+            "src_char": "975:13"
           },
           {
             "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
             "line_no": 38,
-            "src": "1108:14"
+            "src": "1108:14",
+            "src_char": "1108:14"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
             "line_no": 7,
-            "src": "282:7"
+            "src": "282:7",
+            "src_char": "282:7"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
             "line_no": 28,
-            "src": "725:9"
+            "src": "725:9",
+            "src_char": "725:9"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
             "line_no": 32,
-            "src": "854:9"
+            "src": "854:9",
+            "src_char": "854:9"
           }
         ]
       },
@@ -903,7 +1065,8 @@
           {
             "contract_path": "src/T11sTranferer.sol",
             "line_no": 4,
-            "src": "57:84"
+            "src": "57:84",
+            "src_char": "57:84"
           }
         ]
       },
@@ -915,7 +1078,8 @@
           {
             "contract_path": "src/inheritance/ExtendedInheritance.sol",
             "line_no": 21,
-            "src": "705:9"
+            "src": "705:9",
+            "src_char": "705:9"
           }
         ]
       },
@@ -927,12 +1091,14 @@
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 22,
-            "src": "737:10"
+            "src": "737:10",
+            "src_char": "737:10"
           },
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 27,
-            "src": "898:17"
+            "src": "898:17",
+            "src_char": "898:17"
           }
         ]
       },
@@ -944,42 +1110,50 @@
           {
             "contract_path": "src/ArbitraryTransferFrom.sol",
             "line_no": 16,
-            "src": "370:20"
+            "src": "370:20",
+            "src_char": "370:20"
           },
           {
             "contract_path": "src/ArbitraryTransferFrom.sol",
             "line_no": 30,
-            "src": "864:20"
+            "src": "864:20",
+            "src_char": "864:20"
           },
           {
             "contract_path": "src/ArbitraryTransferFrom.sol",
             "line_no": 50,
-            "src": "1517:20"
+            "src": "1517:20",
+            "src_char": "1517:20"
           },
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 32,
-            "src": "1062:13"
+            "src": "1062:13",
+            "src_char": "1062:13"
           },
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 37,
-            "src": "1272:13"
+            "src": "1272:13",
+            "src_char": "1272:13"
           },
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 38,
-            "src": "1322:13"
+            "src": "1322:13",
+            "src_char": "1322:13"
           },
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 42,
-            "src": "1424:13"
+            "src": "1424:13",
+            "src_char": "1424:13"
           },
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 47,
-            "src": "1598:18"
+            "src": "1598:18",
+            "src_char": "1598:18"
           }
         ]
       },
@@ -991,42 +1165,50 @@
           {
             "contract_path": "src/ContractWithTodo.sol",
             "line_no": 2,
-            "src": "32:23"
+            "src": "32:23",
+            "src_char": "32:23"
           },
           {
             "contract_path": "src/Counter.sol",
             "line_no": 2,
-            "src": "39:24"
+            "src": "39:24",
+            "src_char": "39:24"
           },
           {
             "contract_path": "src/CrazyPragma.sol",
             "line_no": 2,
-            "src": "32:32"
+            "src": "32:32",
+            "src_char": "32:32"
           },
           {
             "contract_path": "src/InconsistentUints.sol",
             "line_no": 1,
-            "src": "0:24"
+            "src": "0:24",
+            "src_char": "0:24"
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
             "line_no": 6,
-            "src": "46:24"
+            "src": "46:24",
+            "src_char": "46:24"
           },
           {
             "contract_path": "src/cloc/HeavilyCommentedContract.sol",
             "line_no": 6,
-            "src": "46:32"
+            "src": "46:32",
+            "src_char": "46:32"
           },
           {
             "contract_path": "src/inheritance/IContractInheritance.sol",
             "line_no": 2,
-            "src": "32:24"
+            "src": "32:24",
+            "src_char": "32:24"
           },
           {
             "contract_path": "src/inheritance/InheritanceBase.sol",
             "line_no": 2,
-            "src": "32:23"
+            "src": "32:23",
+            "src_char": "32:23"
           }
         ]
       },
@@ -1038,32 +1220,38 @@
           {
             "contract_path": "src/ArbitraryTransferFrom.sol",
             "line_no": 12,
-            "src": "267:15"
+            "src": "267:15",
+            "src_char": "267:15"
           },
           {
             "contract_path": "src/StateVariables.sol",
             "line_no": 58,
-            "src": "2121:14"
+            "src": "2121:14",
+            "src_char": "2121:14"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
             "line_no": 43,
-            "src": "1171:14"
+            "src": "1171:14",
+            "src_char": "1171:14"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
             "line_no": 47,
-            "src": "1248:16"
+            "src": "1248:16",
+            "src_char": "1248:16"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
             "line_no": 51,
-            "src": "1327:23"
+            "src": "1327:23",
+            "src_char": "1327:23"
           },
           {
             "contract_path": "src/uniswap/UniswapV2Swapper.sol",
             "line_no": 11,
-            "src": "365:17"
+            "src": "365:17",
+            "src_char": "365:17"
           }
         ]
       },
@@ -1075,112 +1263,134 @@
           {
             "contract_path": "src/ArbitraryTransferFrom.sol",
             "line_no": 28,
-            "src": "772:5"
+            "src": "772:5",
+            "src_char": "772:5"
           },
           {
             "contract_path": "src/AssemblyExample.sol",
             "line_no": 6,
-            "src": "113:1"
+            "src": "113:1",
+            "src_char": "113:1"
           },
           {
             "contract_path": "src/ContractWithTodo.sol",
             "line_no": 13,
-            "src": "337:15"
+            "src": "337:15",
+            "src_char": "337:15"
           },
           {
             "contract_path": "src/Counter.sol",
             "line_no": 7,
-            "src": "129:9"
+            "src": "129:9",
+            "src_char": "129:9"
           },
           {
             "contract_path": "src/StateVariables.sol",
             "line_no": 47,
-            "src": "1764:18"
+            "src": "1764:18",
+            "src_char": "1764:18"
           },
           {
             "contract_path": "src/StateVariables.sol",
             "line_no": 52,
-            "src": "1915:20"
+            "src": "1915:20",
+            "src_char": "1915:20"
           },
           {
             "contract_path": "src/StateVariables.sol",
             "line_no": 57,
-            "src": "2072:14"
+            "src": "2072:14",
+            "src_char": "2072:14"
           },
           {
             "contract_path": "src/StateVariables.sol",
             "line_no": 61,
-            "src": "2157:22"
+            "src": "2157:22",
+            "src_char": "2157:22"
           },
           {
             "contract_path": "src/StateVariables.sol",
             "line_no": 71,
-            "src": "2539:25"
+            "src": "2539:25",
+            "src_char": "2539:25"
           },
           {
             "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
             "line_no": 16,
-            "src": "475:27"
+            "src": "475:27",
+            "src_char": "475:27"
           },
           {
             "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
             "line_no": 22,
-            "src": "653:28"
+            "src": "653:28",
+            "src_char": "653:28"
           },
           {
             "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
             "line_no": 45,
-            "src": "1324:26"
+            "src": "1324:26",
+            "src_char": "1324:26"
           },
           {
             "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
             "line_no": 53,
-            "src": "1637:27"
+            "src": "1637:27",
+            "src_char": "1637:27"
           },
           {
             "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
             "line_no": 71,
-            "src": "2014:20"
+            "src": "2014:20",
+            "src_char": "2014:20"
           },
           {
             "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
             "line_no": 77,
-            "src": "2183:28"
+            "src": "2183:28",
+            "src_char": "2183:28"
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
             "line_no": 31,
-            "src": "500:3"
+            "src": "500:3",
+            "src_char": "500:3"
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
             "line_no": 38,
-            "src": "637:5"
+            "src": "637:5",
+            "src_char": "637:5"
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
             "line_no": 42,
-            "src": "738:4"
+            "src": "738:4",
+            "src_char": "735:4"
           },
           {
             "contract_path": "src/cloc/HeavilyCommentedContract.sol",
             "line_no": 31,
-            "src": "509:3"
+            "src": "509:3",
+            "src_char": "509:3"
           },
           {
             "contract_path": "src/cloc/HeavilyCommentedContract.sol",
             "line_no": 38,
-            "src": "646:4"
+            "src": "646:4",
+            "src_char": "646:4"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
             "line_no": 11,
-            "src": "355:9"
+            "src": "355:9",
+            "src_char": "355:9"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
             "line_no": 15,
-            "src": "422:9"
+            "src": "422:9",
+            "src_char": "422:9"
           }
         ]
       },
@@ -1192,87 +1402,104 @@
           {
             "contract_path": "src/Casting.sol",
             "line_no": 16,
-            "src": "483:18"
+            "src": "483:18",
+            "src_char": "483:18"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 22,
-            "src": "646:18"
+            "src": "646:18",
+            "src_char": "646:18"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 31,
-            "src": "921:18"
+            "src": "921:18",
+            "src_char": "921:18"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 69,
-            "src": "2103:18"
+            "src": "2103:18",
+            "src_char": "2103:18"
           },
           {
             "contract_path": "src/ConstantsLiterals.sol",
             "line_no": 25,
-            "src": "958:3"
+            "src": "958:3",
+            "src_char": "958:3"
           },
           {
             "contract_path": "src/ConstantsLiterals.sol",
             "line_no": 26,
-            "src": "992:3"
+            "src": "992:3",
+            "src_char": "992:3"
           },
           {
             "contract_path": "src/ConstantsLiterals.sol",
             "line_no": 27,
-            "src": "1032:4"
+            "src": "1032:4",
+            "src_char": "1032:4"
           },
           {
             "contract_path": "src/ConstantsLiterals.sol",
             "line_no": 28,
-            "src": "1068:4"
+            "src": "1068:4",
+            "src_char": "1068:4"
           },
           {
             "contract_path": "src/ConstantsLiterals.sol",
             "line_no": 29,
-            "src": "1117:42"
+            "src": "1117:42",
+            "src_char": "1117:42"
           },
           {
             "contract_path": "src/ConstantsLiterals.sol",
             "line_no": 30,
-            "src": "1192:42"
+            "src": "1192:42",
+            "src_char": "1192:42"
           },
           {
             "contract_path": "src/ConstantsLiterals.sol",
             "line_no": 31,
-            "src": "1275:66"
+            "src": "1275:66",
+            "src_char": "1275:66"
           },
           {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
             "line_no": 10,
-            "src": "253:2"
+            "src": "253:2",
+            "src_char": "253:2"
           },
           {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
             "line_no": 17,
-            "src": "442:2"
+            "src": "442:2",
+            "src_char": "442:2"
           },
           {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
             "line_no": 26,
-            "src": "706:2"
+            "src": "706:2",
+            "src_char": "706:2"
           },
           {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
             "line_no": 27,
-            "src": "745:2"
+            "src": "745:2",
+            "src_char": "745:2"
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 113,
-            "src": "7252:2"
+            "src": "7252:2",
+            "src_char": "5764:2"
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 113,
-            "src": "7293:2"
+            "src": "7293:2",
+            "src_char": "5805:2"
           }
         ]
       },
@@ -1284,27 +1511,32 @@
           {
             "contract_path": "src/TestERC20.sol",
             "line_no": 14,
-            "src": "338:70"
+            "src": "338:70",
+            "src_char": "338:70"
           },
           {
             "contract_path": "src/TestERC20.sol",
             "line_no": 15,
-            "src": "413:70"
+            "src": "413:70",
+            "src_char": "413:70"
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 19,
-            "src": "2641:107"
+            "src": "2641:107",
+            "src_char": "1153:107"
           },
           {
             "contract_path": "src/inheritance/ExtendedInheritance.sol",
             "line_no": 7,
-            "src": "144:45"
+            "src": "144:45",
+            "src_char": "144:45"
           },
           {
             "contract_path": "src/inheritance/InheritanceBase.sol",
             "line_no": 7,
-            "src": "150:28"
+            "src": "150:28",
+            "src_char": "150:28"
           }
         ]
       },
@@ -1316,52 +1548,62 @@
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 37,
-            "src": "1264:7"
+            "src": "1264:7",
+            "src_char": "1264:7"
           },
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 40,
-            "src": "1389:6"
+            "src": "1389:6",
+            "src_char": "1389:6"
           },
           {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
             "line_no": 19,
-            "src": "503:6"
+            "src": "503:6",
+            "src_char": "503:6"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
             "line_no": 13,
-            "src": "329:6"
+            "src": "329:6",
+            "src_char": "329:6"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
             "line_no": 23,
-            "src": "608:6"
+            "src": "608:6",
+            "src_char": "608:6"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
             "line_no": 38,
-            "src": "1074:6"
+            "src": "1074:6",
+            "src_char": "1074:6"
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
             "line_no": 35,
-            "src": "589:7"
+            "src": "589:7",
+            "src_char": "589:7"
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
             "line_no": 56,
-            "src": "1403:7"
+            "src": "1403:7",
+            "src_char": "1400:7"
           },
           {
             "contract_path": "src/cloc/HeavilyCommentedContract.sol",
             "line_no": 35,
-            "src": "598:7"
+            "src": "598:7",
+            "src_char": "598:7"
           },
           {
             "contract_path": "src/cloc/HeavilyCommentedContract.sol",
             "line_no": 53,
-            "src": "1408:7"
+            "src": "1408:7",
+            "src_char": "1408:7"
           }
         ]
       },
@@ -1373,12 +1615,14 @@
           {
             "contract_path": "src/AdminContract.sol",
             "line_no": 10,
-            "src": "386:12"
+            "src": "386:12",
+            "src_char": "386:12"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
             "line_no": 28,
-            "src": "735:12"
+            "src": "735:12",
+            "src_char": "735:12"
           }
         ]
       },
@@ -1390,7 +1634,8 @@
           {
             "contract_path": "src/UnsafeERC721Mint.sol",
             "line_no": 12,
-            "src": "410:5"
+            "src": "410:5",
+            "src_char": "410:5"
           }
         ]
       },
@@ -1402,112 +1647,134 @@
           {
             "contract_path": "src/AdminContract.sol",
             "line_no": 2,
-            "src": "32:23"
+            "src": "32:23",
+            "src_char": "32:23"
           },
           {
             "contract_path": "src/ContractWithTodo.sol",
             "line_no": 2,
-            "src": "32:23"
+            "src": "32:23",
+            "src_char": "32:23"
           },
           {
             "contract_path": "src/Counter.sol",
             "line_no": 2,
-            "src": "39:24"
+            "src": "39:24",
+            "src_char": "39:24"
           },
           {
             "contract_path": "src/CrazyPragma.sol",
             "line_no": 2,
-            "src": "32:32"
+            "src": "32:32",
+            "src_char": "32:32"
           },
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 2,
-            "src": "32:23"
+            "src": "32:23",
+            "src_char": "32:23"
           },
           {
             "contract_path": "src/InconsistentUints.sol",
             "line_no": 1,
-            "src": "0:24"
+            "src": "0:24",
+            "src_char": "0:24"
           },
           {
             "contract_path": "src/KeccakContract.sol",
             "line_no": 2,
-            "src": "32:23"
+            "src": "32:23",
+            "src_char": "32:23"
           },
           {
             "contract_path": "src/StateVariables.sol",
             "line_no": 2,
-            "src": "32:23"
+            "src": "32:23",
+            "src_char": "32:23"
           },
           {
             "contract_path": "src/StorageConditionals.sol",
             "line_no": 2,
-            "src": "32:23"
+            "src": "32:23",
+            "src_char": "32:23"
           },
           {
             "contract_path": "src/T11sTranferer.sol",
             "line_no": 2,
-            "src": "32:23"
+            "src": "32:23",
+            "src_char": "32:23"
           },
           {
             "contract_path": "src/UnsafeERC721Mint.sol",
             "line_no": 2,
-            "src": "32:23"
+            "src": "32:23",
+            "src_char": "32:23"
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
             "line_no": 6,
-            "src": "46:24"
+            "src": "46:24",
+            "src_char": "46:24"
           },
           {
             "contract_path": "src/cloc/HeavilyCommentedContract.sol",
             "line_no": 6,
-            "src": "46:32"
+            "src": "46:32",
+            "src_char": "46:32"
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 12,
-            "src": "2302:23"
+            "src": "2302:23",
+            "src_char": "814:23"
           },
           {
             "contract_path": "src/inheritance/ExtendedInheritance.sol",
             "line_no": 2,
-            "src": "32:23"
+            "src": "32:23",
+            "src_char": "32:23"
           },
           {
             "contract_path": "src/inheritance/IContractInheritance.sol",
             "line_no": 2,
-            "src": "32:24"
+            "src": "32:24",
+            "src_char": "32:24"
           },
           {
             "contract_path": "src/inheritance/InheritanceBase.sol",
             "line_no": 2,
-            "src": "32:23"
+            "src": "32:23",
+            "src_char": "32:23"
           },
           {
             "contract_path": "src/nested/1/Nested.sol",
             "line_no": 5,
-            "src": "180:23"
+            "src": "180:23",
+            "src_char": "180:23"
           },
           {
             "contract_path": "src/nested/2/Nested.sol",
             "line_no": 5,
-            "src": "180:23"
+            "src": "180:23",
+            "src_char": "180:23"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
             "line_no": 2,
-            "src": "32:23"
+            "src": "32:23",
+            "src_char": "32:23"
           },
           {
             "contract_path": "src/uniswap/UniswapV2Swapper.sol",
             "line_no": 2,
-            "src": "32:23"
+            "src": "32:23",
+            "src_char": "32:23"
           },
           {
             "contract_path": "src/uniswap/UniswapV3Swapper.sol",
             "line_no": 2,
-            "src": "32:23"
+            "src": "32:23",
+            "src_char": "32:23"
           }
         ]
       },
@@ -1519,17 +1786,20 @@
           {
             "contract_path": "src/InternalFunctions.sol",
             "line_no": 18,
-            "src": "413:9"
+            "src": "413:9",
+            "src_char": "413:9"
           },
           {
             "contract_path": "src/OnceModifierExample.sol",
             "line_no": 6,
-            "src": "103:8"
+            "src": "103:8",
+            "src_char": "103:8"
           },
           {
             "contract_path": "src/UnprotectedInitialize.sol",
             "line_no": 13,
-            "src": "222:21"
+            "src": "222:21",
+            "src_char": "222:21"
           }
         ]
       },
@@ -1541,102 +1811,122 @@
           {
             "contract_path": "src/AdminContract.sol",
             "line_no": 14,
-            "src": "457:23"
+            "src": "457:23",
+            "src_char": "457:23"
           },
           {
             "contract_path": "src/ContractWithTodo.sol",
             "line_no": 7,
-            "src": "129:10"
+            "src": "129:10",
+            "src_char": "129:10"
           },
           {
             "contract_path": "src/ContractWithTodo.sol",
             "line_no": 13,
-            "src": "337:15"
+            "src": "337:15",
+            "src_char": "337:15"
           },
           {
             "contract_path": "src/EmptyBlocks.sol",
             "line_no": 30,
-            "src": "503:12"
+            "src": "503:12",
+            "src_char": "503:12"
           },
           {
             "contract_path": "src/EmptyBlocks.sol",
             "line_no": 38,
-            "src": "599:12"
+            "src": "599:12",
+            "src_char": "599:12"
           },
           {
             "contract_path": "src/EmptyBlocks.sol",
             "line_no": 49,
-            "src": "739:12"
+            "src": "739:12",
+            "src_char": "739:12"
           },
           {
             "contract_path": "src/EmptyBlocks.sol",
             "line_no": 63,
-            "src": "888:13"
+            "src": "888:13",
+            "src_char": "888:13"
           },
           {
             "contract_path": "src/EmptyBlocks.sol",
             "line_no": 67,
-            "src": "946:24"
+            "src": "946:24",
+            "src_char": "946:24"
           },
           {
             "contract_path": "src/EmptyBlocks.sol",
             "line_no": 73,
-            "src": "1068:30"
+            "src": "1068:30",
+            "src_char": "1068:30"
           },
           {
             "contract_path": "src/EmptyBlocks.sol",
             "line_no": 81,
-            "src": "1219:41"
+            "src": "1219:41",
+            "src_char": "1219:41"
           },
           {
             "contract_path": "src/OnceModifierExample.sol",
             "line_no": 10,
-            "src": "147:7"
+            "src": "147:7",
+            "src_char": "147:7"
           },
           {
             "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
             "line_no": 11,
-            "src": "367:17"
+            "src": "367:17",
+            "src_char": "367:17"
           },
           {
             "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
             "line_no": 30,
-            "src": "852:25"
+            "src": "852:25",
+            "src_char": "852:25"
           },
           {
             "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
             "line_no": 38,
-            "src": "1080:16"
+            "src": "1080:16",
+            "src_char": "1080:16"
           },
           {
             "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
             "line_no": 61,
-            "src": "1840:17"
+            "src": "1840:17",
+            "src_char": "1840:17"
           },
           {
             "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
             "line_no": 85,
-            "src": "2380:25"
+            "src": "2380:25",
+            "src_char": "2380:25"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
             "line_no": 11,
-            "src": "355:9"
+            "src": "355:9",
+            "src_char": "355:9"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
             "line_no": 32,
-            "src": "806:23"
+            "src": "806:23",
+            "src_char": "806:23"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
             "line_no": 40,
-            "src": "946:8"
+            "src": "946:8",
+            "src_char": "946:8"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
             "line_no": 44,
-            "src": "1011:23"
+            "src": "1011:23",
+            "src_char": "1011:23"
           }
         ]
       },
@@ -1648,112 +1938,134 @@
           {
             "contract_path": "src/HugeConstants.sol",
             "line_no": 6,
-            "src": "182:24"
+            "src": "182:24",
+            "src_char": "182:24"
           },
           {
             "contract_path": "src/HugeConstants.sol",
             "line_no": 7,
-            "src": "252:23"
+            "src": "252:23",
+            "src_char": "252:23"
           },
           {
             "contract_path": "src/HugeConstants.sol",
             "line_no": 8,
-            "src": "321:22"
+            "src": "321:22",
+            "src_char": "321:22"
           },
           {
             "contract_path": "src/HugeConstants.sol",
             "line_no": 9,
-            "src": "389:21"
+            "src": "389:21",
+            "src_char": "389:21"
           },
           {
             "contract_path": "src/HugeConstants.sol",
             "line_no": 10,
-            "src": "456:20"
+            "src": "456:20",
+            "src_char": "456:20"
           },
           {
             "contract_path": "src/HugeConstants.sol",
             "line_no": 11,
-            "src": "522:19"
+            "src": "522:19",
+            "src_char": "522:19"
           },
           {
             "contract_path": "src/HugeConstants.sol",
             "line_no": 12,
-            "src": "587:18"
+            "src": "587:18",
+            "src_char": "587:18"
           },
           {
             "contract_path": "src/HugeConstants.sol",
             "line_no": 13,
-            "src": "651:17"
+            "src": "651:17",
+            "src_char": "651:17"
           },
           {
             "contract_path": "src/HugeConstants.sol",
             "line_no": 14,
-            "src": "714:16"
+            "src": "714:16",
+            "src_char": "714:16"
           },
           {
             "contract_path": "src/HugeConstants.sol",
             "line_no": 15,
-            "src": "777:15"
+            "src": "777:15",
+            "src_char": "777:15"
           },
           {
             "contract_path": "src/HugeConstants.sol",
             "line_no": 16,
-            "src": "839:14"
+            "src": "839:14",
+            "src_char": "839:14"
           },
           {
             "contract_path": "src/HugeConstants.sol",
             "line_no": 17,
-            "src": "900:13"
+            "src": "900:13",
+            "src_char": "900:13"
           },
           {
             "contract_path": "src/HugeConstants.sol",
             "line_no": 18,
-            "src": "960:12"
+            "src": "960:12",
+            "src_char": "960:12"
           },
           {
             "contract_path": "src/HugeConstants.sol",
             "line_no": 19,
-            "src": "1019:11"
+            "src": "1019:11",
+            "src_char": "1019:11"
           },
           {
             "contract_path": "src/HugeConstants.sol",
             "line_no": 20,
-            "src": "1077:10"
+            "src": "1077:10",
+            "src_char": "1077:10"
           },
           {
             "contract_path": "src/HugeConstants.sol",
             "line_no": 21,
-            "src": "1134:9"
+            "src": "1134:9",
+            "src_char": "1134:9"
           },
           {
             "contract_path": "src/HugeConstants.sol",
             "line_no": 22,
-            "src": "1190:8"
+            "src": "1190:8",
+            "src_char": "1190:8"
           },
           {
             "contract_path": "src/HugeConstants.sol",
             "line_no": 23,
-            "src": "1245:7"
+            "src": "1245:7",
+            "src_char": "1245:7"
           },
           {
             "contract_path": "src/HugeConstants.sol",
             "line_no": 24,
-            "src": "1299:6"
+            "src": "1299:6",
+            "src_char": "1299:6"
           },
           {
             "contract_path": "src/HugeConstants.sol",
             "line_no": 25,
-            "src": "1352:5"
+            "src": "1352:5",
+            "src_char": "1352:5"
           },
           {
             "contract_path": "src/HugeConstants.sol",
             "line_no": 31,
-            "src": "1585:29"
+            "src": "1585:29",
+            "src_char": "1585:29"
           },
           {
             "contract_path": "src/HugeConstants.sol",
             "line_no": 32,
-            "src": "1673:6"
+            "src": "1673:6",
+            "src_char": "1673:6"
           }
         ]
       },
@@ -1765,7 +2077,8 @@
           {
             "contract_path": "src/InternalFunctions.sol",
             "line_no": 28,
-            "src": "693:12"
+            "src": "693:12",
+            "src_char": "693:12"
           }
         ]
       },
@@ -1777,12 +2090,14 @@
           {
             "contract_path": "src/ContractWithTodo.sol",
             "line_no": 4,
-            "src": "66:8"
+            "src": "66:8",
+            "src_char": "66:8"
           },
           {
             "contract_path": "src/Counter.sol",
             "line_no": 4,
-            "src": "74:7"
+            "src": "74:7",
+            "src_char": "74:7"
           }
         ]
       },
@@ -1794,87 +2109,104 @@
           {
             "contract_path": "src/Casting.sol",
             "line_no": 31,
-            "src": "904:14"
+            "src": "904:14",
+            "src_char": "904:14"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 69,
-            "src": "2086:13"
+            "src": "2086:13",
+            "src_char": "2086:13"
           },
           {
             "contract_path": "src/InconsistentUints.sol",
             "line_no": 5,
-            "src": "122:12"
+            "src": "122:12",
+            "src_char": "122:12"
           },
           {
             "contract_path": "src/InconsistentUints.sol",
             "line_no": 7,
-            "src": "197:11"
+            "src": "197:11",
+            "src_char": "197:11"
           },
           {
             "contract_path": "src/InconsistentUints.sol",
             "line_no": 11,
-            "src": "289:10"
+            "src": "289:10",
+            "src_char": "289:10"
           },
           {
             "contract_path": "src/InconsistentUints.sol",
             "line_no": 12,
-            "src": "340:9"
+            "src": "340:9",
+            "src_char": "340:9"
           },
           {
             "contract_path": "src/InconsistentUints.sol",
             "line_no": 15,
-            "src": "383:9"
+            "src": "383:9",
+            "src_char": "383:9"
           },
           {
             "contract_path": "src/InconsistentUints.sol",
             "line_no": 16,
-            "src": "434:10"
+            "src": "434:10",
+            "src_char": "434:10"
           },
           {
             "contract_path": "src/InconsistentUints.sol",
             "line_no": 19,
-            "src": "528:12"
+            "src": "528:12",
+            "src_char": "528:12"
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 59,
-            "src": "4611:27"
+            "src": "4611:27",
+            "src_char": "3123:27"
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 61,
-            "src": "4732:17"
+            "src": "4732:17",
+            "src_char": "3244:17"
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 70,
-            "src": "5020:6"
+            "src": "5020:6",
+            "src_char": "3532:6"
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 76,
-            "src": "5307:4"
+            "src": "5307:4",
+            "src_char": "3819:4"
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 77,
-            "src": "5347:6"
+            "src": "5347:6",
+            "src_char": "3859:6"
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 103,
-            "src": "6636:14"
+            "src": "6636:14",
+            "src_char": "5148:14"
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 133,
-            "src": "8101:4"
+            "src": "8101:4",
+            "src_char": "6613:4"
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 134,
-            "src": "8141:6"
+            "src": "8141:6",
+            "src_char": "6653:6"
           }
         ]
       },
@@ -1886,17 +2218,20 @@
           {
             "contract_path": "src/UnusedError.sol",
             "line_no": 5,
-            "src": "84:27"
+            "src": "84:27",
+            "src_char": "84:27"
           },
           {
             "contract_path": "src/UnusedError.sol",
             "line_no": 13,
-            "src": "258:36"
+            "src": "258:36",
+            "src_char": "258:36"
           },
           {
             "contract_path": "src/WrongOrderOfLayout.sol",
             "line_no": 13,
-            "src": "274:21"
+            "src": "274:21",
+            "src_char": "274:21"
           }
         ]
       },
@@ -1908,12 +2243,14 @@
           {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
             "line_no": 10,
-            "src": "227:129"
+            "src": "227:129",
+            "src_char": "227:129"
           },
           {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
             "line_no": 17,
-            "src": "416:150"
+            "src": "416:150",
+            "src_char": "416:150"
           }
         ]
       },
@@ -1925,22 +2262,26 @@
           {
             "contract_path": "src/DivisionBeforeMultiplication.sol",
             "line_no": 8,
-            "src": "218:5"
+            "src": "218:5",
+            "src_char": "218:5"
           },
           {
             "contract_path": "src/DivisionBeforeMultiplication.sol",
             "line_no": 12,
-            "src": "330:5"
+            "src": "330:5",
+            "src_char": "330:5"
           },
           {
             "contract_path": "src/DivisionBeforeMultiplication.sol",
             "line_no": 16,
-            "src": "432:5"
+            "src": "432:5",
+            "src_char": "432:5"
           },
           {
             "contract_path": "src/DivisionBeforeMultiplication.sol",
             "line_no": 20,
-            "src": "541:5"
+            "src": "541:5",
+            "src_char": "541:5"
           }
         ]
       }
@@ -1975,6 +2316,7 @@
     "useless-error",
     "reverts-and-requires-in-loops",
     "division-before-multiplication",
-    "unsafe-casting-detector"
+    "unsafe-casting-detector",
+    "enumerable-loop-removal"
   ]
 }

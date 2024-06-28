@@ -1379,6 +1379,48 @@
           "ruleId": "unsafe-casting-detector"
         },
         {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/EnumerableSetIteration.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 1096
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/EnumerableSetIteration.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 1326
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/EnumerableSetIteration.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 1544
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "If the order of an EnumerableSet is required, removing items in a loop using `at` and `remove` corrupts this order.\nConsider using a different data structure or removing items by collecting them during the loop, then removing after the loop."
+          },
+          "ruleId": "enumerable-loop-removal"
+        },
+        {
           "level": "note",
           "locations": [
             {
@@ -3704,8 +3746,8 @@
           "informationUri": "https://github.com/Cyfrin/aderyn",
           "name": "Aderyn",
           "organization": "Cyfrin",
-          "semanticVersion": "0.1.4",
-          "version": "0.1.4"
+          "semanticVersion": "0.1.5",
+          "version": "0.1.5"
         }
       }
     }

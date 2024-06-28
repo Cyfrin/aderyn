@@ -101,7 +101,8 @@
           {
             "contract_path": "inheritance/ExtendedInheritance.sol",
             "line_no": 16,
-            "src": "488:19"
+            "src": "488:19",
+            "src_char": "488:19"
           }
         ]
       }
@@ -116,6 +117,7 @@
     "block-timestamp-deadline",
     "arbitrary-transfer-from",
     "unprotected-initializer",
-    "unsafe-casting-detector"
+    "unsafe-casting-detector",
+    "enumerable-loop-removal"
   ]
 }
