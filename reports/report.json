@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 41,
-    "total_sloc": 1322
+    "total_source_units": 42,
+    "total_sloc": 1361
   },
   "files_details": {
     "files_details": [
@@ -52,6 +52,10 @@
       {
         "file_path": "src/EmptyBlocks.sol",
         "n_sloc": 48
+      },
+      {
+        "file_path": "src/EnumerableSetIteration.sol",
+        "n_sloc": 39
       },
       {
         "file_path": "src/HugeConstants.sol",
@@ -172,7 +176,7 @@
     ]
   },
   "issue_count": {
-    "high": 6,
+    "high": 7,
     "low": 23
   },
   "high_issues": {
@@ -942,6 +946,31 @@
             "line_no": 141,
             "src": "4381:10",
             "src_char": "4381:10"
+          }
+        ]
+      },
+      {
+        "title": "EnumerableSet.remove in loop corrupts the set order.",
+        "description": "If the order of an EnumerableSet is required, removing items in a loop using `at` and `remove` corrupts this order.\nConsider using a different data structure or removing items by collecting them during the loop, then removing after the loop.",
+        "detector_name": "enumerable-loop-removal",
+        "instances": [
+          {
+            "contract_path": "src/EnumerableSetIteration.sol",
+            "line_no": 31,
+            "src": "1096:17",
+            "src_char": "1096:17"
+          },
+          {
+            "contract_path": "src/EnumerableSetIteration.sol",
+            "line_no": 39,
+            "src": "1326:17",
+            "src_char": "1326:17"
+          },
+          {
+            "contract_path": "src/EnumerableSetIteration.sol",
+            "line_no": 47,
+            "src": "1544:14",
+            "src_char": "1544:14"
           }
         ]
       }
@@ -2299,6 +2328,7 @@
     "useless-error",
     "reverts-and-requires-in-loops",
     "division-before-multiplication",
-    "unsafe-casting-detector"
+    "unsafe-casting-detector",
+    "enumerable-loop-removal"
   ]
 }
