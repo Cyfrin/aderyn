@@ -30,30 +30,29 @@ impl IssueDetector for EnumerableLoopRemovalDetector {
         context
             .member_accesses()
             .into_iter()
+            .filter(|member_access| {
+                member_access.member_name == "remove"
+                    && member_access
+                        .type_descriptions
+                        .type_string
+                        .as_ref()
+                        .is_some_and(|type_string| type_string.contains("EnumerableSet"))
+            })
             .for_each(|member_access| {
-                if member_access.member_name == "remove" {
-                    if let Some(type_string) = &member_access.type_descriptions.type_string {
-                        if type_string.contains("EnumerableSet") {
-                            let parent_loops = [
-                                member_access
-                                    .closest_ancestor_of_type(context, NodeType::ForStatement),
-                                member_access
-                                    .closest_ancestor_of_type(context, NodeType::WhileStatement),
-                                member_access
-                                    .closest_ancestor_of_type(context, NodeType::DoWhileStatement),
-                            ];
-                            for parent_loop in parent_loops.into_iter().flatten() {
-                                ExtractMemberAccesses::from(parent_loop)
-                                    .extracted
-                                    .into_iter()
-                                    .for_each(|at_member_access| {
-                                        if at_member_access.member_name == "at" {
-                                            capture!(self, context, member_access);
-                                        }
-                                    });
+                let parent_loops = [
+                    member_access.closest_ancestor_of_type(context, NodeType::ForStatement),
+                    member_access.closest_ancestor_of_type(context, NodeType::WhileStatement),
+                    member_access.closest_ancestor_of_type(context, NodeType::DoWhileStatement),
+                ];
+                for parent_loop in parent_loops.into_iter().flatten() {
+                    ExtractMemberAccesses::from(parent_loop)
+                        .extracted
+                        .into_iter()
+                        .for_each(|at_member_access| {
+                            if at_member_access.member_name == "at" {
+                                capture!(self, context, member_access);
                             }
-                        }
-                    }
+                        });
                 }
             });
 
