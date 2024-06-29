@@ -103,8 +103,8 @@ pub fn extract_issue_bodies(
                 .map(|(contract_path, line_no, src_location)| {
                     // Calculate character based offset & length position here
                     let (byte_offset_str, byte_len_str) = src_location.split_once(':').unwrap();
-                    let byte_offset: usize = byte_offset_str.parse().unwrap();
-                    let byte_length: usize = byte_len_str.parse().unwrap();
+                    let byte_offset: usize = byte_offset_str.parse().unwrap_or_default();
+                    let byte_length: usize = byte_len_str.parse().unwrap_or_default();
                     let content = *file_contents.get(contract_path).unwrap();
                     let mut char_offset = 0;
                     for (byte_offset_so_far, _) in content.char_indices() {
