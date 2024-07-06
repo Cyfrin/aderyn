@@ -1,6 +1,4 @@
 use crate::ast::*;
-use crate::visitor::ast_visitor::*;
-use eyre::Result;
 
 impl FunctionDefinition {
     /// The kind of function this node defines.

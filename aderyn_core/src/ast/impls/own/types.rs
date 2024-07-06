@@ -1,6 +1,4 @@
 use crate::ast::*;
-use crate::visitor::ast_visitor::*;
-use eyre::Result;
 use std::hash::{Hash, Hasher};
 
 impl PartialEq for ElementaryTypeName {

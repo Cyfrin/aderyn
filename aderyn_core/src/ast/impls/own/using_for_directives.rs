@@ -1,6 +1,4 @@
 use crate::ast::*;
-use crate::visitor::ast_visitor::*;
-use eyre::Result;
 
 impl UserDefinedTypeNameOrIdentifierPath {
     pub fn name(&self) -> Option<String> {

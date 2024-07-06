@@ -1,7 +1,6 @@
 use crate::ast::*;
 use crate::visitor::ast_visitor::*;
 use eyre::Result;
-use std::hash::{Hash, Hasher};
 
 impl Node for Identifier {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {

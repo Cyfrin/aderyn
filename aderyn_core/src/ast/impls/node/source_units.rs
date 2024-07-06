@@ -1,8 +1,6 @@
 use crate::ast::*;
 use crate::visitor::ast_visitor::*;
-use eyre::eyre;
 use eyre::Result;
-use std::io;
 
 impl Node for SourceUnitNode {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {

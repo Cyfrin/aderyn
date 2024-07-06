@@ -1,6 +1,4 @@
 use crate::ast::*;
-use crate::visitor::ast_visitor::*;
-use eyre::Result;
 
 impl Statement {
     pub fn get_node_id(&self) -> Option<NodeID> {

@@ -1,6 +1,4 @@
 use crate::ast::*;
-use crate::visitor::ast_visitor::*;
-use eyre::Result;
 
 impl VariableDeclaration {
     /// Returns the mutability of the variable that was declared.
