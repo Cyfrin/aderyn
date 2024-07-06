@@ -568,3 +568,159 @@ pub struct SourceUnit {
     #[serde(skip_serializing)]
     pub source: Option<String>,
 }
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(tag = "nodeType")]
+pub enum Statement {
+    Block(Block),
+    Break(Break),
+    Continue(Continue),
+    DoWhileStatement(DoWhileStatement),
+    PlaceholderStatement(PlaceholderStatement),
+    VariableDeclarationStatement(VariableDeclarationStatement),
+    IfStatement(IfStatement),
+    ForStatement(ForStatement),
+    WhileStatement(WhileStatement),
+    EmitStatement(EmitStatement),
+    TryStatement(TryStatement),
+    UncheckedBlock(Block),
+    Return(Return),
+    RevertStatement(RevertStatement),
+    ExpressionStatement(ExpressionStatement),
+    InlineAssembly(InlineAssembly),
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(rename_all = "camelCase")]
+pub struct ExpressionStatement {
+    pub expression: Expression,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(rename_all = "camelCase")]
+pub struct VariableDeclarationStatement {
+    pub assignments: Vec<Option<NodeID>>,
+    pub declarations: Vec<Option<VariableDeclaration>>,
+    pub initial_value: Option<Expression>,
+    pub src: String,
+    pub id: NodeID,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(untagged)]
+pub enum BlockOrStatement {
+    Block(Box<Block>),
+    Statement(Box<Statement>),
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(rename_all = "camelCase")]
+pub struct IfStatement {
+    pub condition: Expression,
+    pub true_body: BlockOrStatement,
+    pub false_body: Option<BlockOrStatement>,
+    pub src: String,
+    pub id: NodeID,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(rename_all = "camelCase")]
+pub struct ForStatement {
+    pub initialization_expression: Option<Box<Statement>>,
+    pub condition: Option<Expression>,
+    pub loop_expression: Option<Box<ExpressionStatement>>,
+    pub body: BlockOrStatement,
+    pub src: String,
+    pub id: NodeID,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(rename_all = "camelCase")]
+pub struct DoWhileStatement {
+    pub id: NodeID,
+    pub src: String,
+    pub documentation: Option<String>,
+    pub body: Block,
+    pub condition: Expression,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(rename_all = "camelCase")]
+pub struct EmitStatement {
+    pub event_call: Expression,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(rename_all = "camelCase")]
+pub struct TryStatement {
+    pub clauses: Vec<TryCatchClause>,
+    pub external_call: FunctionCall,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(rename_all = "camelCase")]
+pub struct RevertStatement {
+    pub error_call: FunctionCall,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(rename_all = "camelCase")]
+pub struct TryCatchClause {
+    pub block: Block,
+    pub error_name: Option<String>,
+    pub parameters: Option<ParameterList>,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(rename_all = "camelCase")]
+pub struct Return {
+    pub function_return_parameters: NodeID,
+    pub expression: Option<Expression>,
+    pub src: String,
+    pub id: NodeID,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(rename_all = "camelCase")]
+pub struct InlineAssembly {
+    #[serde(rename = "AST")]
+    pub ast: Option<YulBlock>,
+    pub evm_version: Option<String>,
+    pub external_references: Vec<ExternalReference>,
+    pub operations: Option<String>,
+    pub src: String,
+    pub id: NodeID,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(rename_all = "camelCase")]
+pub struct Break {
+    pub id: NodeID,
+    pub src: String,
+    pub documentation: Option<String>,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(rename_all = "camelCase")]
+pub struct Continue {
+    pub id: NodeID,
+    pub src: String,
+    pub documentation: Option<String>,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(rename_all = "camelCase")]
+pub struct PlaceholderStatement {
+    pub id: NodeID,
+    pub src: String,
+    pub documentation: Option<String>,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(rename_all = "camelCase")]
+pub struct WhileStatement {
+    pub condition: Expression,
+    pub body: BlockOrStatement,
+    pub src: String,
+    pub id: NodeID,
+}

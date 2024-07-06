@@ -1,29 +1,8 @@
-use super::*;
+use crate::ast::*;
 use crate::visitor::ast_visitor::*;
 use eyre::Result;
-use serde::{Deserialize, Serialize};
-use std::fmt::Display;
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(tag = "nodeType")]
-pub enum Statement {
-    Block(Block),
-    Break(Break),
-    Continue(Continue),
-    DoWhileStatement(DoWhileStatement),
-    PlaceholderStatement(PlaceholderStatement),
-    VariableDeclarationStatement(VariableDeclarationStatement),
-    IfStatement(IfStatement),
-    ForStatement(ForStatement),
-    WhileStatement(WhileStatement),
-    EmitStatement(EmitStatement),
-    TryStatement(TryStatement),
-    UncheckedBlock(Block),
-    Return(Return),
-    RevertStatement(RevertStatement),
-    ExpressionStatement(ExpressionStatement),
-    InlineAssembly(InlineAssembly),
-}
+use std::fmt::Display;
 
 impl Statement {
     pub fn get_node_id(&self) -> Option<NodeID> {
@@ -112,12 +91,6 @@ impl Display for Statement {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct ExpressionStatement {
-    pub expression: Expression,
-}
-
 impl Node for ExpressionStatement {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         if visitor.visit_expression_statement(self)? {
@@ -131,16 +104,6 @@ impl Display for ExpressionStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.write_fmt(format_args!("{}", self.expression))
     }
-}
-
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct VariableDeclarationStatement {
-    pub assignments: Vec<Option<NodeID>>,
-    pub declarations: Vec<Option<VariableDeclaration>>,
-    pub initial_value: Option<Expression>,
-    pub src: String,
-    pub id: NodeID,
 }
 
 impl Node for VariableDeclarationStatement {
@@ -211,13 +174,6 @@ impl Display for VariableDeclarationStatement {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(untagged)]
-pub enum BlockOrStatement {
-    Block(Box<Block>),
-    Statement(Box<Statement>),
-}
-
 impl BlockOrStatement {
     pub fn get_node_id(&self) -> Option<NodeID> {
         match self {
@@ -282,16 +238,6 @@ impl Display for BlockOrStatement {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct IfStatement {
-    pub condition: Expression,
-    pub true_body: BlockOrStatement,
-    pub false_body: Option<BlockOrStatement>,
-    pub src: String,
-    pub id: NodeID,
-}
-
 impl Node for IfStatement {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         if visitor.visit_if_statement(self)? {
@@ -334,17 +280,6 @@ impl Display for IfStatement {
 
         Ok(())
     }
-}
-
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct ForStatement {
-    pub initialization_expression: Option<Box<Statement>>,
-    pub condition: Option<Expression>,
-    pub loop_expression: Option<Box<ExpressionStatement>>,
-    pub body: BlockOrStatement,
-    pub src: String,
-    pub id: NodeID,
 }
 
 impl Node for ForStatement {
@@ -418,15 +353,6 @@ impl Display for ForStatement {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct WhileStatement {
-    pub condition: Expression,
-    pub body: BlockOrStatement,
-    pub src: String,
-    pub id: NodeID,
-}
-
 impl Node for WhileStatement {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         if visitor.visit_while_statement(self)? {
@@ -460,16 +386,6 @@ impl Display for WhileStatement {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct DoWhileStatement {
-    pub id: NodeID,
-    pub src: String,
-    pub documentation: Option<String>,
-    pub body: Block,
-    pub condition: Expression,
-}
-
 impl Node for DoWhileStatement {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         if visitor.visit_do_while_statement(self)? {
@@ -500,12 +416,6 @@ impl Display for DoWhileStatement {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct EmitStatement {
-    pub event_call: Expression,
-}
-
 impl Node for EmitStatement {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         if visitor.visit_emit_statement(self)? {
@@ -519,13 +429,6 @@ impl Display for EmitStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.write_fmt(format_args!("emit {}", self.event_call))
     }
-}
-
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct TryStatement {
-    pub clauses: Vec<TryCatchClause>,
-    pub external_call: FunctionCall,
 }
 
 impl Node for TryStatement {
@@ -544,12 +447,6 @@ impl Display for TryStatement {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct RevertStatement {
-    pub error_call: FunctionCall,
-}
-
 impl Node for RevertStatement {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         if visitor.visit_revert_statement(self)? {
@@ -563,14 +460,6 @@ impl Display for RevertStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.write_fmt(format_args!("revert {}", self.error_call))
     }
-}
-
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct TryCatchClause {
-    pub block: Block,
-    pub error_name: Option<String>,
-    pub parameters: Option<ParameterList>,
 }
 
 impl Node for TryCatchClause {
@@ -589,15 +478,6 @@ impl Display for TryCatchClause {
     fn fmt(&self, _: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         unimplemented!()
     }
-}
-
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct Return {
-    pub function_return_parameters: NodeID,
-    pub expression: Option<Expression>,
-    pub src: String,
-    pub id: NodeID,
 }
 
 impl Node for Return {
@@ -634,18 +514,6 @@ impl Display for Return {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct InlineAssembly {
-    #[serde(rename = "AST")]
-    pub ast: Option<YulBlock>,
-    pub evm_version: Option<String>,
-    pub external_references: Vec<ExternalReference>,
-    pub operations: Option<String>,
-    pub src: String,
-    pub id: NodeID,
-}
-
 impl Node for InlineAssembly {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         if visitor.visit_inline_assembly(self)? && self.ast.is_some() {
@@ -657,14 +525,6 @@ impl Node for InlineAssembly {
         visitor.visit_node_id(Some(self.id))?;
         Ok(())
     }
-}
-
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct Break {
-    pub id: NodeID,
-    pub src: String,
-    pub documentation: Option<String>,
 }
 
 impl Node for Break {
@@ -685,14 +545,6 @@ impl Display for Break {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct Continue {
-    pub id: NodeID,
-    pub src: String,
-    pub documentation: Option<String>,
-}
-
 impl Node for Continue {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         visitor.visit_continue_statement(self)?;
@@ -709,14 +561,6 @@ impl Display for Continue {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.write_str("continue;")
     }
-}
-
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct PlaceholderStatement {
-    pub id: NodeID,
-    pub src: String,
-    pub documentation: Option<String>,
 }
 
 impl Node for PlaceholderStatement {
