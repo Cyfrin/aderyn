@@ -1,3 +1,4 @@
+pub mod ast;
 pub mod ast_nodes;
 pub mod impls;
 pub mod macros;
@@ -7,6 +8,7 @@ pub mod yul;
 
 pub use self::{impls::*, magic::*, node_type::*, yul::*};
 
+pub use ast::ASTNode;
 pub use ast_nodes::*;
 pub use NodeID;
 
