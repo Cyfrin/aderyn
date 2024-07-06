@@ -1,9 +1,7 @@
 pub mod ast_nodes;
 pub mod impls;
-pub mod literals;
 pub mod macros;
 pub mod magic;
-pub mod modifiers;
 pub mod node_type;
 pub mod pragma_directives;
 pub mod source_units;
@@ -16,9 +14,9 @@ pub mod variables;
 pub mod yul;
 
 pub use self::{
-    impls::*, literals::*, magic::*, modifiers::*, node_type::*, pragma_directives::*,
-    source_units::*, statements::*, structures::*, types::*, user_defined_value_types::*,
-    using_for_directives::*, variables::*, yul::*,
+    impls::*, magic::*, node_type::*, pragma_directives::*, source_units::*, statements::*,
+    structures::*, types::*, user_defined_value_types::*, using_for_directives::*, variables::*,
+    yul::*,
 };
 
 pub use ast_nodes::*;

@@ -464,3 +464,71 @@ pub struct ImportDirective {
     pub src: String,
     pub id: NodeID,
 }
+
+#[derive(Clone, Debug, Deserialize, Serialize, PartialEq, PartialOrd, Eq, Ord, Hash)]
+#[serde(rename_all = "camelCase")]
+pub enum LiteralKind {
+    Bool,
+    Number,
+    String,
+    HexString,
+    Address,
+    UnicodeString,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(rename_all = "camelCase")]
+pub struct Literal {
+    pub hex_value: Option<String>,
+    pub value: Option<String>,
+    pub subdenomination: Option<String>,
+    pub kind: LiteralKind,
+    pub argument_types: Option<Vec<TypeDescriptions>>,
+    pub is_constant: bool,
+    pub is_l_value: bool,
+    pub is_pure: bool,
+    pub l_value_requested: bool,
+    pub type_descriptions: TypeDescriptions,
+    pub src: String,
+    pub id: NodeID,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(rename_all = "camelCase")]
+pub struct ModifierDefinition {
+    pub body: Block,
+    pub base_modifiers: Option<Vec<usize>>,
+    pub overrides: Option<OverrideSpecifier>,
+    pub documentation: Option<Documentation>,
+    pub name: String,
+    pub name_location: Option<String>,
+    pub parameters: ParameterList,
+    pub r#virtual: Option<bool>,
+    pub visibility: Visibility,
+    pub src: String,
+    pub id: NodeID,
+}
+
+#[derive(Clone, Debug, Deserialize, Serialize, PartialEq, PartialOrd, Eq, Ord, Hash)]
+#[serde(rename_all = "camelCase")]
+pub enum ModifierInvocationKind {
+    ModifierInvocation,
+    BaseConstructorSpecifier,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(rename_all = "camelCase")]
+pub struct ModifierInvocation {
+    pub arguments: Option<Vec<Expression>>,
+    pub modifier_name: IdentifierOrIdentifierPath,
+    pub src: String,
+    pub id: NodeID,
+    pub kind: Option<ModifierInvocationKind>,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(tag = "nodeType")]
+pub enum IdentifierOrIdentifierPath {
+    Identifier(Identifier),
+    IdentifierPath(IdentifierPath),
+}

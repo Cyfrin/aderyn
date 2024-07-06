@@ -1,24 +1,7 @@
-use super::*;
+use crate::ast::*;
 use crate::visitor::ast_visitor::*;
 use eyre::Result;
-use serde::{Deserialize, Serialize};
 use std::fmt::Display;
-
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct ModifierDefinition {
-    pub body: Block,
-    pub base_modifiers: Option<Vec<usize>>,
-    pub overrides: Option<OverrideSpecifier>,
-    pub documentation: Option<Documentation>,
-    pub name: String,
-    pub name_location: Option<String>,
-    pub parameters: ParameterList,
-    pub r#virtual: Option<bool>,
-    pub visibility: Visibility,
-    pub src: String,
-    pub id: NodeID,
-}
 
 impl Node for ModifierDefinition {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
@@ -72,30 +55,6 @@ impl Display for ModifierDefinition {
 
         f.write_fmt(format_args!(" {}", self.body))
     }
-}
-
-#[derive(Clone, Debug, Deserialize, Serialize, PartialEq, PartialOrd, Eq, Ord, Hash)]
-#[serde(rename_all = "camelCase")]
-pub enum ModifierInvocationKind {
-    ModifierInvocation,
-    BaseConstructorSpecifier,
-}
-
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct ModifierInvocation {
-    pub arguments: Option<Vec<Expression>>,
-    pub modifier_name: IdentifierOrIdentifierPath,
-    pub src: String,
-    pub id: NodeID,
-    pub kind: Option<ModifierInvocationKind>,
-}
-
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(tag = "nodeType")]
-pub enum IdentifierOrIdentifierPath {
-    Identifier(Identifier),
-    IdentifierPath(IdentifierPath),
 }
 
 impl IdentifierOrIdentifierPath {

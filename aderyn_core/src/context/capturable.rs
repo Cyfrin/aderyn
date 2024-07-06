@@ -478,8 +478,8 @@ impl From<&ModifierDefinition> for Capturable {
     }
 }
 
-impl From<&&modifiers::ModifierInvocation> for Capturable {
-    fn from(value: &&modifiers::ModifierInvocation) -> Self {
+impl From<&&ModifierInvocation> for Capturable {
+    fn from(value: &&ModifierInvocation) -> Self {
         #[allow(suspicious_double_ref_op)]
         Self::ModifierInvocation(value.clone().clone())
     }
