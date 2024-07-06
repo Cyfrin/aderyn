@@ -1,3 +1,4 @@
+#[allow(clippy::module_inception)]
 pub mod ast;
 pub mod ast_nodes;
 pub mod impls;
