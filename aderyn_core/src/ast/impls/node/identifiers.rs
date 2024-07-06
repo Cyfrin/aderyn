@@ -45,12 +45,6 @@ impl Hash for Identifier {
     }
 }
 
-impl Display for Identifier {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str(self.name.as_str())
-    }
-}
-
 impl Node for IdentifierPath {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         visitor.visit_identifier_path(self)?;
@@ -81,11 +75,5 @@ impl Hash for IdentifierPath {
         self.referenced_declaration.hash(state);
         self.src.hash(state);
         self.id.hash(state);
-    }
-}
-
-impl Display for IdentifierPath {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str(self.name.as_str())
     }
 }

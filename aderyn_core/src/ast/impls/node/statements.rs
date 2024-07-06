@@ -70,39 +70,12 @@ impl Statement {
     }
 }
 
-impl Display for Statement {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            Statement::VariableDeclarationStatement(stmt) => stmt.fmt(f),
-            Statement::IfStatement(stmt) => stmt.fmt(f),
-            Statement::ForStatement(stmt) => stmt.fmt(f),
-            Statement::WhileStatement(stmt) => stmt.fmt(f),
-            Statement::EmitStatement(stmt) => stmt.fmt(f),
-            Statement::TryStatement(stmt) => stmt.fmt(f),
-            Statement::RevertStatement(stmt) => stmt.fmt(f),
-            Statement::UncheckedBlock(stmt) => stmt.fmt(f),
-            Statement::Return(stmt) => stmt.fmt(f),
-            Statement::ExpressionStatement(stmt) => stmt.fmt(f),
-            Statement::InlineAssembly(..) => {
-                f.write_str("assembly { /* WARNING: not implemented */ }")
-            }
-            _ => f.write_str("unrecognized!"),
-        }
-    }
-}
-
 impl Node for ExpressionStatement {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         if visitor.visit_expression_statement(self)? {
             self.expression.accept(visitor)?;
         }
         visitor.end_visit_expression_statement(self)
-    }
-}
-
-impl Display for ExpressionStatement {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_fmt(format_args!("{}", self.expression))
     }
 }
 
@@ -138,38 +111,6 @@ impl Node for VariableDeclarationStatement {
     }
     fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         visitor.visit_node_id(Some(self.id))?;
-        Ok(())
-    }
-}
-
-impl Display for VariableDeclarationStatement {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        if self.declarations.len() == 1 {
-            if let Some(declaration) = self.declarations[0].as_ref() {
-                f.write_fmt(format_args!("{declaration}"))?;
-            } else {
-                f.write_str("()")?;
-            }
-        } else {
-            f.write_str("(")?;
-
-            for (i, declaration) in self.declarations.iter().enumerate() {
-                if i > 0 {
-                    f.write_str(", ")?;
-                }
-
-                if let Some(declaration) = declaration {
-                    f.write_fmt(format_args!("{declaration}"))?;
-                }
-            }
-
-            f.write_str(")")?;
-        }
-
-        if let Some(initial_value) = self.initial_value.as_ref() {
-            f.write_fmt(format_args!(" = {initial_value}"))?;
-        }
-
         Ok(())
     }
 }
@@ -229,15 +170,6 @@ impl BlockOrStatement {
     }
 }
 
-impl Display for BlockOrStatement {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            BlockOrStatement::Block(block) => block.fmt(f),
-            BlockOrStatement::Statement(statement) => statement.fmt(f),
-        }
-    }
-}
-
 impl Node for IfStatement {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         if visitor.visit_if_statement(self)? {
@@ -266,18 +198,6 @@ impl Node for IfStatement {
     }
     fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         visitor.visit_node_id(Some(self.id))?;
-        Ok(())
-    }
-}
-
-impl Display for IfStatement {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_fmt(format_args!("if ({}) {}", self.condition, self.true_body))?;
-
-        if let Some(false_body) = self.false_body.as_ref() {
-            f.write_fmt(format_args!("\nelse {false_body}"))?;
-        }
-
         Ok(())
     }
 }
@@ -329,30 +249,6 @@ impl Node for ForStatement {
     }
 }
 
-impl Display for ForStatement {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str("for (")?;
-
-        if let Some(initialization_expression) = self.initialization_expression.as_ref() {
-            f.write_fmt(format_args!("{initialization_expression}"))?;
-        }
-
-        f.write_str("; ")?;
-
-        if let Some(condition) = self.condition.as_ref() {
-            f.write_fmt(format_args!("{condition}"))?;
-        }
-
-        f.write_str("; ")?;
-
-        if let Some(loop_expression) = self.loop_expression.as_ref() {
-            f.write_fmt(format_args!("{loop_expression}"))?;
-        }
-
-        f.write_fmt(format_args!(") {}", self.body))
-    }
-}
-
 impl Node for WhileStatement {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         if visitor.visit_while_statement(self)? {
@@ -380,12 +276,6 @@ impl Node for WhileStatement {
     }
 }
 
-impl Display for WhileStatement {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_fmt(format_args!("while ({}) {}", self.condition, self.body))
-    }
-}
-
 impl Node for DoWhileStatement {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         if visitor.visit_do_while_statement(self)? {
@@ -410,24 +300,12 @@ impl Node for DoWhileStatement {
     }
 }
 
-impl Display for DoWhileStatement {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_fmt(format_args!("do {} while({});", self.body, self.condition))
-    }
-}
-
 impl Node for EmitStatement {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         if visitor.visit_emit_statement(self)? {
             self.event_call.accept(visitor)?;
         }
         visitor.end_visit_emit_statement(self)
-    }
-}
-
-impl Display for EmitStatement {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_fmt(format_args!("emit {}", self.event_call))
     }
 }
 
@@ -441,24 +319,12 @@ impl Node for TryStatement {
     }
 }
 
-impl Display for TryStatement {
-    fn fmt(&self, _: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        unimplemented!()
-    }
-}
-
 impl Node for RevertStatement {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         if visitor.visit_revert_statement(self)? {
             self.error_call.accept(visitor)?;
         }
         visitor.end_visit_revert_statement(self)
-    }
-}
-
-impl Display for RevertStatement {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_fmt(format_args!("revert {}", self.error_call))
     }
 }
 
@@ -471,12 +337,6 @@ impl Node for TryCatchClause {
             self.block.accept(visitor)?;
         }
         visitor.end_visit_try_catch_clause(self)
-    }
-}
-
-impl Display for TryCatchClause {
-    fn fmt(&self, _: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        unimplemented!()
     }
 }
 
@@ -498,18 +358,6 @@ impl Node for Return {
     }
     fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         visitor.visit_node_id(Some(self.id))?;
-        Ok(())
-    }
-}
-
-impl Display for Return {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str("return")?;
-
-        if let Some(expression) = self.expression.as_ref() {
-            f.write_fmt(format_args!(" {expression}"))?;
-        }
-
         Ok(())
     }
 }
@@ -539,12 +387,6 @@ impl Node for Break {
     }
 }
 
-impl Display for Break {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str("break;")
-    }
-}
-
 impl Node for Continue {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         visitor.visit_continue_statement(self)?;
@@ -554,12 +396,6 @@ impl Node for Continue {
     fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         visitor.visit_node_id(Some(self.id))?;
         Ok(())
-    }
-}
-
-impl Display for Continue {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str("continue;")
     }
 }
 

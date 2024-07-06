@@ -14,12 +14,6 @@ impl Node for EnumValue {
     }
 }
 
-impl Display for EnumValue {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str(self.name.as_str())
-    }
-}
-
 impl Node for EnumDefinition {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         if visitor.visit_enum_definition(self)? {
@@ -41,17 +35,5 @@ impl Node for EnumDefinition {
     fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         visitor.visit_node_id(Some(self.id))?;
         Ok(())
-    }
-}
-
-impl Display for EnumDefinition {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_fmt(format_args!("enum {} {{\n", self.name))?;
-
-        for member in self.members.iter() {
-            f.write_fmt(format_args!("\t{member},"))?;
-        }
-
-        f.write_str("}")
     }
 }
