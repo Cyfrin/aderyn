@@ -1,24 +1,8 @@
-use super::*;
+use crate::ast::*;
 use crate::visitor::ast_visitor::*;
 use eyre::eyre;
 use eyre::Result;
-use serde::{Deserialize, Serialize};
-use std::{collections::HashMap, io};
-
-#[derive(Clone, Debug, Eq, Deserialize, Serialize, PartialEq, Hash)]
-#[serde(tag = "nodeType")]
-pub enum SourceUnitNode {
-    FunctionDefinition(FunctionDefinition),
-    StructDefinition(StructDefinition),
-    ErrorDefinition(ErrorDefinition),
-    EnumDefinition(EnumDefinition),
-    VariableDeclaration(VariableDeclaration),
-    ImportDirective(ImportDirective),
-    PragmaDirective(PragmaDirective),
-    UserDefinedValueTypeDefinition(UserDefinedValueTypeDefinition),
-    UsingForDirective(UsingForDirective),
-    ContractDefinition(ContractDefinition),
-}
+use std::io;
 
 impl SourceUnitNode {
     pub fn get_node_id(&self) -> Option<NodeID> {
@@ -70,19 +54,6 @@ impl Node for SourceUnitNode {
         visitor.visit_node_id(self.get_node_id())?;
         Ok(())
     }
-}
-
-#[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
-#[serde(rename_all = "camelCase")]
-pub struct SourceUnit {
-    pub license: Option<String>,
-    pub nodes: Vec<SourceUnitNode>,
-    pub exported_symbols: Option<HashMap<String, Vec<NodeID>>>,
-    pub absolute_path: Option<String>,
-    pub id: NodeID,
-
-    #[serde(skip_serializing)]
-    pub source: Option<String>,
 }
 
 impl Node for SourceUnit {

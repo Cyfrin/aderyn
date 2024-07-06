@@ -1,4 +1,4 @@
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, HashMap};
 
 use super::macros::ast_node;
 use super::*;
@@ -531,4 +531,40 @@ pub struct ModifierInvocation {
 pub enum IdentifierOrIdentifierPath {
     Identifier(Identifier),
     IdentifierPath(IdentifierPath),
+}
+
+#[derive(Default, Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(rename_all = "camelCase")]
+pub struct PragmaDirective {
+    pub literals: Vec<String>,
+    pub src: String,
+    pub id: NodeID,
+}
+
+#[derive(Clone, Debug, Eq, Deserialize, Serialize, PartialEq, Hash)]
+#[serde(tag = "nodeType")]
+pub enum SourceUnitNode {
+    FunctionDefinition(FunctionDefinition),
+    StructDefinition(StructDefinition),
+    ErrorDefinition(ErrorDefinition),
+    EnumDefinition(EnumDefinition),
+    VariableDeclaration(VariableDeclaration),
+    ImportDirective(ImportDirective),
+    PragmaDirective(PragmaDirective),
+    UserDefinedValueTypeDefinition(UserDefinedValueTypeDefinition),
+    UsingForDirective(UsingForDirective),
+    ContractDefinition(ContractDefinition),
+}
+
+#[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
+#[serde(rename_all = "camelCase")]
+pub struct SourceUnit {
+    pub license: Option<String>,
+    pub nodes: Vec<SourceUnitNode>,
+    pub exported_symbols: Option<HashMap<String, Vec<NodeID>>>,
+    pub absolute_path: Option<String>,
+    pub id: NodeID,
+
+    #[serde(skip_serializing)]
+    pub source: Option<String>,
 }
