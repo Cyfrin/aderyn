@@ -1,27 +1,7 @@
-use super::*;
+use crate::ast::*;
 use crate::visitor::ast_visitor::*;
 use eyre::Result;
-use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Write};
-
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(tag = "nodeType")]
-pub enum Expression {
-    Literal(Literal),
-    Identifier(Identifier),
-    UnaryOperation(UnaryOperation),
-    BinaryOperation(BinaryOperation),
-    Conditional(Conditional),
-    Assignment(Assignment),
-    FunctionCall(FunctionCall),
-    FunctionCallOptions(FunctionCallOptions),
-    IndexAccess(IndexAccess),
-    IndexRangeAccess(IndexRangeAccess),
-    MemberAccess(MemberAccess),
-    ElementaryTypeNameExpression(ElementaryTypeNameExpression),
-    TupleExpression(TupleExpression),
-    NewExpression(NewExpression),
-}
 
 impl Node for Expression {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
@@ -262,22 +242,6 @@ impl Display for Expression {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct UnaryOperation {
-    pub prefix: bool,
-    pub sub_expression: Box<Expression>,
-    pub operator: String,
-    pub argument_types: Option<Vec<TypeDescriptions>>,
-    pub is_constant: bool,
-    pub is_l_value: bool,
-    pub is_pure: bool,
-    pub l_value_requested: bool,
-    pub type_descriptions: TypeDescriptions,
-    pub src: String,
-    pub id: NodeID,
-}
-
 impl Node for UnaryOperation {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         if visitor.visit_unary_operation(self)? {
@@ -312,23 +276,6 @@ impl Display for UnaryOperation {
             self.operator.as_str()
         ))
     }
-}
-
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct BinaryOperation {
-    pub common_type: TypeDescriptions,
-    pub left_expression: Box<Expression>,
-    pub right_expression: Box<Expression>,
-    pub operator: String,
-    pub argument_types: Option<Vec<TypeDescriptions>>,
-    pub is_constant: bool,
-    pub is_l_value: bool,
-    pub is_pure: bool,
-    pub l_value_requested: bool,
-    pub type_descriptions: TypeDescriptions,
-    pub src: String,
-    pub id: NodeID,
 }
 
 impl Node for BinaryOperation {
@@ -370,22 +317,6 @@ impl Display for BinaryOperation {
             self.left_expression, self.operator, self.right_expression
         ))
     }
-}
-
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct Conditional {
-    pub condition: Box<Expression>,
-    pub true_expression: Box<Expression>,
-    pub false_expression: Box<Expression>,
-    pub argument_types: Option<Vec<TypeDescriptions>>,
-    pub is_constant: bool,
-    pub is_l_value: bool,
-    pub is_pure: bool,
-    pub l_value_requested: bool,
-    pub type_descriptions: TypeDescriptions,
-    pub src: String,
-    pub id: NodeID,
 }
 
 impl Node for Conditional {
@@ -433,22 +364,6 @@ impl Display for Conditional {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct Assignment {
-    pub left_hand_side: Box<Expression>,
-    pub right_hand_side: Box<Expression>,
-    pub operator: String,
-    pub argument_types: Option<Vec<TypeDescriptions>>,
-    pub is_constant: bool,
-    pub is_l_value: bool,
-    pub is_pure: bool,
-    pub l_value_requested: bool,
-    pub type_descriptions: TypeDescriptions,
-    pub src: String,
-    pub id: NodeID,
-}
-
 impl Node for Assignment {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         if visitor.visit_assignment(self)? {
@@ -486,32 +401,6 @@ impl Display for Assignment {
             self.left_hand_side, self.operator, self.right_hand_side
         ))
     }
-}
-
-#[derive(Clone, Debug, Deserialize, Serialize, PartialEq, PartialOrd, Eq, Ord, Hash)]
-#[serde(rename_all = "camelCase")]
-pub enum FunctionCallKind {
-    FunctionCall,
-    TypeConversion,
-    StructConstructorCall,
-}
-
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct FunctionCall {
-    pub kind: FunctionCallKind,
-    pub try_call: Option<bool>,
-    pub names: Vec<String>,
-    pub arguments: Vec<Expression>,
-    pub expression: Box<Expression>,
-    pub argument_types: Option<Vec<TypeDescriptions>>,
-    pub is_constant: bool,
-    pub is_l_value: bool,
-    pub is_pure: bool,
-    pub l_value_requested: bool,
-    pub type_descriptions: TypeDescriptions,
-    pub src: String,
-    pub id: NodeID,
 }
 
 impl Node for FunctionCall {
@@ -569,23 +458,6 @@ impl Display for FunctionCall {
 
         f.write_str(")")
     }
-}
-
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct FunctionCallOptions {
-    pub names: Vec<String>,
-    pub options: Vec<Expression>,
-    pub arguments: Option<Vec<Expression>>,
-    pub argument_types: Option<Vec<TypeDescriptions>>,
-    pub expression: Box<Expression>,
-    pub is_constant: bool,
-    pub is_l_value: bool,
-    pub is_pure: bool,
-    pub l_value_requested: bool,
-    pub type_descriptions: TypeDescriptions,
-    pub src: String,
-    pub id: NodeID,
 }
 
 impl Node for FunctionCallOptions {
@@ -678,21 +550,6 @@ impl Display for FunctionCallOptions {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct IndexAccess {
-    pub base_expression: Box<Expression>,
-    pub index_expression: Option<Box<Expression>>,
-    pub argument_types: Option<Vec<TypeDescriptions>>,
-    pub is_constant: bool,
-    pub is_l_value: bool,
-    pub is_pure: bool,
-    pub l_value_requested: bool,
-    pub type_descriptions: TypeDescriptions,
-    pub src: String,
-    pub id: NodeID,
-}
-
 impl Node for IndexAccess {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         if visitor.visit_index_access(self)? {
@@ -741,21 +598,6 @@ impl Display for IndexAccess {
             f.write_fmt(format_args!("{}[]", self.base_expression))
         }
     }
-}
-
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct IndexRangeAccess {
-    pub base_expression: Box<Expression>,
-    pub start_expression: Option<Box<Expression>>,
-    pub end_expression: Option<Box<Expression>>,
-    pub is_constant: bool,
-    pub is_l_value: bool,
-    pub is_pure: bool,
-    pub l_value_requested: bool,
-    pub type_descriptions: TypeDescriptions,
-    pub src: String,
-    pub id: NodeID,
 }
 
 impl Node for IndexRangeAccess {
@@ -823,22 +665,6 @@ impl Display for IndexRangeAccess {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct MemberAccess {
-    pub member_name: String,
-    pub expression: Box<Expression>,
-    pub referenced_declaration: Option<NodeID>,
-    pub argument_types: Option<Vec<TypeDescriptions>>,
-    pub is_constant: bool,
-    pub is_l_value: bool,
-    pub is_pure: bool,
-    pub l_value_requested: bool,
-    pub type_descriptions: TypeDescriptions,
-    pub src: String,
-    pub id: NodeID,
-}
-
 impl Node for MemberAccess {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         if visitor.visit_member_access(self)? {
@@ -871,20 +697,6 @@ impl Display for MemberAccess {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct ElementaryTypeNameExpression {
-    pub type_name: TypeName,
-    pub argument_types: Option<Vec<TypeDescriptions>>,
-    pub is_constant: bool,
-    pub is_l_value: bool,
-    pub is_pure: bool,
-    pub l_value_requested: bool,
-    pub type_descriptions: TypeDescriptions,
-    pub src: String,
-    pub id: NodeID,
-}
-
 impl Node for ElementaryTypeNameExpression {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         visitor.visit_elementary_type_name_expression(self)?;
@@ -900,21 +712,6 @@ impl Display for ElementaryTypeNameExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.write_fmt(format_args!("{}", self.type_name))
     }
-}
-
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct TupleExpression {
-    pub components: Vec<Option<Expression>>,
-    pub argument_types: Option<Vec<TypeDescriptions>>,
-    pub is_inline_array: bool,
-    pub is_constant: bool,
-    pub is_l_value: bool,
-    pub is_pure: bool,
-    pub l_value_requested: bool,
-    pub type_descriptions: TypeDescriptions,
-    pub src: String,
-    pub id: NodeID,
 }
 
 impl Node for TupleExpression {
@@ -977,20 +774,6 @@ impl Display for TupleExpression {
 
         f.write_str(")")
     }
-}
-
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct NewExpression {
-    pub argument_types: Option<Vec<TypeDescriptions>>,
-    pub type_descriptions: TypeDescriptions,
-    pub type_name: TypeName,
-    pub is_constant: bool,
-    pub is_l_value: bool,
-    pub is_pure: bool,
-    pub l_value_requested: bool,
-    pub src: String,
-    pub id: NodeID,
 }
 
 impl Node for NewExpression {

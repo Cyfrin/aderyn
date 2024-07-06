@@ -1,29 +1,6 @@
-use super::*;
+use crate::ast::*;
 use crate::visitor::ast_visitor::*;
 use eyre::Result;
-use serde::{Deserialize, Serialize};
-
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct SymbolAlias {
-    pub foreign: Identifier,
-    pub local: Option<String>,
-    pub name_location: Option<String>,
-}
-
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct ImportDirective {
-    pub file: String,
-    pub source_unit: NodeID,
-    pub scope: NodeID,
-    pub absolute_path: Option<String>,
-    pub unit_alias: String,
-    pub name_location: Option<String>,
-    pub symbol_aliases: Vec<SymbolAlias>,
-    pub src: String,
-    pub id: NodeID,
-}
 
 impl Node for ImportDirective {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {

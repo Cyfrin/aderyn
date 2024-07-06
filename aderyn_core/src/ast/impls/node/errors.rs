@@ -1,20 +1,7 @@
-use super::*;
+use crate::ast::*;
 use crate::visitor::ast_visitor::*;
 use eyre::Result;
-use serde::{Deserialize, Serialize};
 use std::fmt::Display;
-
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct ErrorDefinition {
-    pub documentation: Option<Documentation>,
-    pub error_selector: Option<String>,
-    pub name: String,
-    pub name_location: Option<String>,
-    pub parameters: ParameterList,
-    pub src: String,
-    pub id: NodeID,
-}
 
 impl Node for ErrorDefinition {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {

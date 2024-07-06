@@ -1,31 +1,12 @@
-use super::*;
+use crate::ast::*;
 use crate::visitor::ast_visitor::*;
 use eyre::Result;
-use serde::{Deserialize, Serialize};
 use std::fmt::Display;
-
-#[derive(Clone, Debug, Deserialize, Serialize, PartialEq, PartialOrd, Eq, Ord, Hash)]
-#[serde(rename_all = "camelCase")]
-pub enum FunctionKind {
-    Constructor,
-    Function,
-    Receive,
-    Fallback,
-    FreeFunction,
-}
 
 impl Display for FunctionKind {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.write_fmt(format_args!("{}", format!("{self:?}").to_lowercase()))
     }
-}
-
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct ParameterList {
-    pub parameters: Vec<VariableDeclaration>,
-    pub src: String,
-    pub id: NodeID,
 }
 
 impl Node for ParameterList {
@@ -61,14 +42,6 @@ impl Display for ParameterList {
 
         f.write_str(")")
     }
-}
-
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct OverrideSpecifier {
-    pub overrides: Vec<UserDefinedTypeNameOrIdentifierPath>,
-    pub src: String,
-    pub id: NodeID,
 }
 
 impl Node for OverrideSpecifier {
@@ -123,59 +96,6 @@ impl Display for OverrideSpecifier {
 
         Ok(())
     }
-}
-
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct FunctionDefinition {
-    pub base_functions: Option<Vec<NodeID>>,
-    pub body: Option<Block>,
-    pub documentation: Option<Documentation>,
-    pub function_selector: Option<String>,
-    pub implemented: bool,
-    /// The kind of function this node defines. Only valid for Solidity versions 0.5.x and
-    /// above.
-    ///
-    /// For cross-version compatibility use [`FunctionDefinition::kind()`].
-    kind: Option<FunctionKind>,
-    #[serde(default)]
-    /// For cross-version compatibility use [`FunctionDefinition::state_mutability()`].
-    state_mutability: Option<StateMutability>,
-    #[serde(default, rename = "virtual")]
-    pub is_virtual: bool,
-    /// Whether or not this function is the constructor. Only valid for Solidity versions below
-    /// 0.5.x.
-    ///
-    /// After 0.5.x you must use `kind`. For cross-version compatibility use
-    /// [`FunctionDefinition::kind()`].
-    #[serde(default)]
-    pub is_constructor: bool,
-    /// Whether or not this function is constant (view or pure). Only valid for Solidity
-    /// versions below 0.5.x.
-    ///
-    /// After 0.5.x you must use `state_mutability`. For cross-version compatibility use
-    /// [`FunctionDefinition::state_mutability()`].
-    #[serde(default)]
-    pub is_declared_const: bool,
-    /// Whether or not this function is payable. Only valid for Solidity versions below
-    /// 0.5.x.
-    ///
-    /// After 0.5.x you must use `state_mutability`. For cross-version compatibility use
-    /// [`FunctionDefinition::state_mutability()`].
-    #[serde(default)]
-    pub is_payable: bool,
-    pub modifiers: Vec<ModifierInvocation>,
-    pub name: String,
-    pub name_location: Option<String>,
-    pub overrides: Option<OverrideSpecifier>,
-    pub parameters: ParameterList,
-    pub return_parameters: ParameterList,
-    pub scope: NodeID,
-    pub super_function: Option<NodeID>,
-    pub r#virtual: Option<bool>,
-    pub visibility: Visibility,
-    pub src: String,
-    pub id: NodeID,
 }
 
 impl Node for FunctionDefinition {

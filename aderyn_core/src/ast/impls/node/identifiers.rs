@@ -1,21 +1,8 @@
-use super::*;
+use crate::ast::*;
 use crate::visitor::ast_visitor::*;
 use eyre::Result;
-use serde::{Deserialize, Serialize};
 use std::fmt::Display;
 use std::hash::{Hash, Hasher};
-
-#[derive(Clone, Debug, Deserialize, Eq, Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct Identifier {
-    pub argument_types: Option<Vec<TypeDescriptions>>,
-    pub name: String,
-    pub overloaded_declarations: Vec<NodeID>,
-    pub referenced_declaration: Option<NodeID>,
-    pub type_descriptions: TypeDescriptions,
-    pub src: String,
-    pub id: NodeID,
-}
 
 impl Node for Identifier {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
@@ -62,15 +49,6 @@ impl Display for Identifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.write_str(self.name.as_str())
     }
-}
-
-#[derive(Clone, Debug, Deserialize, Eq, Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct IdentifierPath {
-    pub name: String,
-    pub referenced_declaration: Option<NodeID>,
-    pub src: String,
-    pub id: NodeID,
 }
 
 impl Node for IdentifierPath {
