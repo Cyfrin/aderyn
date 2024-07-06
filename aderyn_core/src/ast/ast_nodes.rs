@@ -81,3 +81,23 @@ pub struct StructuredDocumentation {
     pub src: String,
     pub id: NodeID,
 }
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(rename_all = "camelCase")]
+pub struct EnumValue {
+    pub name: String,
+    pub name_location: Option<String>,
+    pub src: String,
+    pub id: NodeID,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(rename_all = "camelCase")]
+pub struct EnumDefinition {
+    pub name: String,
+    pub name_location: Option<String>,
+    pub members: Vec<EnumValue>,
+    pub canonical_name: Option<String>,
+    pub src: String,
+    pub id: NodeID,
+}

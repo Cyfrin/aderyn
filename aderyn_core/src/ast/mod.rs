@@ -1,5 +1,4 @@
 pub mod ast_nodes;
-pub mod enumerations;
 pub mod errors;
 pub mod events;
 pub mod expressions;
@@ -23,7 +22,7 @@ pub mod variables;
 pub mod yul;
 
 pub use self::{
-    enumerations::*, errors::*, events::*, expressions::*, functions::*, identifiers::*, impls::*,
+    errors::*, events::*, expressions::*, functions::*, identifiers::*, impls::*,
     import_directives::*, literals::*, magic::*, modifiers::*, node_type::*, pragma_directives::*,
     source_units::*, statements::*, structures::*, types::*, user_defined_value_types::*,
     using_for_directives::*, variables::*, yul::*,
