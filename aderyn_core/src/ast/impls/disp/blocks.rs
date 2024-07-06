@@ -1,4 +1,4 @@
-use crate::{ast::Block};
+use crate::ast::Block;
 use std::fmt::Display;
 
 impl Display for Block {
