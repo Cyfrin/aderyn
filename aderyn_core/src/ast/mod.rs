@@ -1,4 +1,4 @@
-pub mod contracts;
+pub mod ast_nodes;
 pub mod documentation;
 pub mod enumerations;
 pub mod errors;
@@ -14,7 +14,6 @@ pub mod magic;
 pub mod modifiers;
 pub mod node_type;
 pub mod pragma_directives;
-pub mod raw_nodes;
 pub mod source_units;
 pub mod statements;
 pub mod structures;
@@ -25,14 +24,13 @@ pub mod variables;
 pub mod yul;
 
 pub use self::{
-    contracts::*, documentation::*, enumerations::*, errors::*, events::*, expressions::*,
-    functions::*, identifiers::*, impls::*, import_directives::*, literals::*, magic::*,
-    modifiers::*, node_type::*, pragma_directives::*, source_units::*, statements::*,
-    structures::*, types::*, user_defined_value_types::*, using_for_directives::*, variables::*,
-    yul::*,
+    documentation::*, enumerations::*, errors::*, events::*, expressions::*, functions::*,
+    identifiers::*, impls::*, import_directives::*, literals::*, magic::*, modifiers::*,
+    node_type::*, pragma_directives::*, source_units::*, statements::*, structures::*, types::*,
+    user_defined_value_types::*, using_for_directives::*, variables::*, yul::*,
 };
 
-pub use raw_nodes::*;
+pub use ast_nodes::*;
 pub use NodeID;
 
 #[cfg(test)]

@@ -9,7 +9,7 @@ pub enum Capturable {
     BinaryOperation(BinaryOperation),
     Block(Block),
     Conditional(Conditional),
-    ContractDefinition(contracts::ContractDefinition),
+    ContractDefinition(ContractDefinition),
     ASTContractDefinition(ContractDefinition),
     ElementaryTypeNameExpression(ElementaryTypeNameExpression),
     EnumDefinition(EnumDefinition),
@@ -207,20 +207,20 @@ impl From<&Conditional> for Capturable {
     }
 }
 
-impl From<contracts::ContractDefinition> for Capturable {
-    fn from(value: contracts::ContractDefinition) -> Self {
+impl From<ContractDefinition> for Capturable {
+    fn from(value: ContractDefinition) -> Self {
         Self::ContractDefinition(value)
     }
 }
 
-impl From<&contracts::ContractDefinition> for Capturable {
-    fn from(value: &contracts::ContractDefinition) -> Self {
+impl From<&ContractDefinition> for Capturable {
+    fn from(value: &ContractDefinition) -> Self {
         Self::ContractDefinition(value.clone())
     }
 }
 
-impl From<&&contracts::ContractDefinition> for Capturable {
-    fn from(value: &&contracts::ContractDefinition) -> Self {
+impl From<&&ContractDefinition> for Capturable {
+    fn from(value: &&ContractDefinition) -> Self {
         #[allow(suspicious_double_ref_op)]
         Self::ContractDefinition(value.clone().clone())
     }

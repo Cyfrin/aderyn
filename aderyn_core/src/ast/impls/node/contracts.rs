@@ -1,35 +1,11 @@
-use super::*;
-use crate::visitor::ast_visitor::*;
+use crate::{ast::*, visitor::ast_visitor::*};
 use eyre::Result;
-use serde::{Deserialize, Serialize};
-use std::{collections::BTreeMap, fmt::Display};
-
-#[derive(Clone, Debug, Deserialize, Serialize, PartialEq, PartialOrd, Eq, Ord, Hash)]
-#[serde(rename_all = "lowercase")]
-pub enum ContractKind {
-    Contract,
-    Interface,
-    Library,
-}
+use std::fmt::Display;
 
 impl Display for ContractKind {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.write_fmt(format_args!("{}", format!("{self:?}").to_lowercase()))
     }
-}
-
-#[derive(Clone, Debug, Eq, Serialize, Deserialize, PartialEq, Hash)]
-#[serde(tag = "nodeType")]
-pub enum ContractDefinitionNode {
-    UsingForDirective(UsingForDirective),
-    StructDefinition(StructDefinition),
-    EnumDefinition(EnumDefinition),
-    VariableDeclaration(VariableDeclaration),
-    EventDefinition(EventDefinition),
-    FunctionDefinition(FunctionDefinition),
-    ModifierDefinition(ModifierDefinition),
-    ErrorDefinition(ErrorDefinition),
-    UserDefinedValueTypeDefinition(UserDefinedValueTypeDefinition),
 }
 
 impl Node for ContractDefinitionNode {
@@ -125,15 +101,6 @@ impl Display for ContractDefinitionNode {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct InheritanceSpecifier {
-    pub base_name: UserDefinedTypeNameOrIdentifierPath,
-    pub arguments: Option<Vec<Expression>>,
-    pub src: String,
-    pub id: NodeID,
-}
-
 impl Node for InheritanceSpecifier {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         if visitor.visit_inheritance_specifier(self)? {
@@ -197,31 +164,6 @@ impl Display for InheritanceSpecifier {
 
         Ok(())
     }
-}
-
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct ContractDefinition {
-    pub name: String,
-    pub name_location: Option<String>,
-    pub documentation: Option<Documentation>,
-    #[serde(rename = "contractKind")]
-    pub kind: ContractKind,
-    #[serde(rename = "abstract")]
-    pub is_abstract: Option<bool>,
-    pub base_contracts: Vec<InheritanceSpecifier>,
-    pub canonical_name: Option<String>,
-    pub contract_dependencies: Vec<NodeID>,
-    pub used_errors: Option<Vec<NodeID>>,
-    pub used_events: Option<Vec<usize>>,
-    #[serde(default, rename = "internalFunctionIDs")]
-    pub internal_function_ids: BTreeMap<String, usize>,
-    pub nodes: Vec<ContractDefinitionNode>,
-    pub scope: NodeID,
-    pub fully_implemented: Option<bool>,
-    pub linearized_base_contracts: Option<Vec<NodeID>>,
-    pub src: String,
-    pub id: NodeID,
 }
 
 impl Node for ContractDefinition {
