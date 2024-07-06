@@ -1,7 +1,6 @@
 use crate::ast::*;
 use crate::visitor::ast_visitor::*;
 use eyre::Result;
-use std::hash::{Hash, Hasher};
 
 impl Node for TypeName {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
@@ -27,43 +26,12 @@ impl Node for ElementaryTypeName {
     }
 }
 
-impl PartialEq for ElementaryTypeName {
-    fn eq(&self, other: &Self) -> bool {
-        self.state_mutability.eq(&other.state_mutability)
-            && self.type_descriptions.eq(&other.type_descriptions)
-    }
-}
-
-impl Hash for ElementaryTypeName {
-    fn hash<H: Hasher>(&self, state: &mut H) {
-        self.state_mutability.hash(state);
-        self.name.hash(state);
-        self.type_descriptions.hash(state);
-    }
-}
-
 impl Node for UserDefinedTypeName {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         if visitor.visit_user_defined_type_name(self)? && self.path_node.is_some() {
             self.path_node.as_ref().unwrap().accept(visitor)?;
         }
         visitor.end_visit_user_defined_type_name(self)
-    }
-}
-
-impl PartialEq for UserDefinedTypeName {
-    fn eq(&self, other: &Self) -> bool {
-        self.referenced_declaration
-            .eq(&other.referenced_declaration)
-    }
-}
-
-impl Hash for UserDefinedTypeName {
-    fn hash<H: Hasher>(&self, state: &mut H) {
-        self.path_node.hash(state);
-        self.referenced_declaration.hash(state);
-        self.name.hash(state);
-        self.type_descriptions.hash(state);
     }
 }
 

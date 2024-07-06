@@ -30,33 +30,6 @@ impl Node for ModifierDefinition {
     }
 }
 
-impl IdentifierOrIdentifierPath {
-    pub fn get_node_id(&self) -> NodeID {
-        match self {
-            IdentifierOrIdentifierPath::Identifier(n) => n.id,
-            IdentifierOrIdentifierPath::IdentifierPath(n) => n.id,
-        }
-    }
-
-    pub fn name(&self) -> String {
-        match self {
-            IdentifierOrIdentifierPath::Identifier(identifier) => identifier.name.clone(),
-            IdentifierOrIdentifierPath::IdentifierPath(identifier_path) => {
-                identifier_path.name.clone()
-            }
-        }
-    }
-
-    pub fn referenced_declaration(&self) -> Option<NodeID> {
-        match self {
-            IdentifierOrIdentifierPath::Identifier(identifier) => identifier.referenced_declaration,
-            IdentifierOrIdentifierPath::IdentifierPath(identifier_path) => {
-                identifier_path.referenced_declaration
-            }
-        }
-    }
-}
-
 impl Node for ModifierInvocation {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         if visitor.visit_modifier_invocation(self)? {
