@@ -1,16 +1,6 @@
-use super::*;
-use crate::visitor::ast_visitor::*;
+use crate::{ast::Block, visitor::ast_visitor::*};
 use eyre::Result;
-use serde::{Deserialize, Serialize};
 use std::fmt::Display;
-
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct Block {
-    pub statements: Vec<Statement>,
-    pub src: String,
-    pub id: NodeID,
-}
 
 impl Node for Block {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {

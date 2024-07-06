@@ -1,4 +1,3 @@
-pub mod blocks;
 pub mod contracts;
 pub mod documentation;
 pub mod enumerations;
@@ -7,12 +6,15 @@ pub mod events;
 pub mod expressions;
 pub mod functions;
 pub mod identifiers;
+pub mod impls;
 pub mod import_directives;
 pub mod literals;
+pub mod macros;
 pub mod magic;
 pub mod modifiers;
-pub mod node;
+pub mod node_type;
 pub mod pragma_directives;
+pub mod raw_nodes;
 pub mod source_units;
 pub mod statements;
 pub mod structures;
@@ -23,11 +25,15 @@ pub mod variables;
 pub mod yul;
 
 pub use self::{
-    blocks::*, contracts::*, documentation::*, enumerations::*, errors::*, events::*,
-    expressions::*, functions::*, identifiers::*, import_directives::*, literals::*, magic::*,
-    modifiers::*, node::*, pragma_directives::*, source_units::*, statements::*, structures::*,
-    types::*, user_defined_value_types::*, using_for_directives::*, variables::*, yul::*,
+    contracts::*, documentation::*, enumerations::*, errors::*, events::*, expressions::*,
+    functions::*, identifiers::*, impls::*, import_directives::*, literals::*, magic::*,
+    modifiers::*, node_type::*, pragma_directives::*, source_units::*, statements::*,
+    structures::*, types::*, user_defined_value_types::*, using_for_directives::*, variables::*,
+    yul::*,
 };
+
+pub use raw_nodes::*;
+pub use NodeID;
 
 #[cfg(test)]
 mod tests {
