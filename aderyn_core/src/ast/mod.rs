@@ -3,17 +3,9 @@ pub mod impls;
 pub mod macros;
 pub mod magic;
 pub mod node_type;
-pub mod structures;
-pub mod types;
-pub mod user_defined_value_types;
-pub mod using_for_directives;
-pub mod variables;
 pub mod yul;
 
-pub use self::{
-    impls::*, magic::*, node_type::*, structures::*, types::*, user_defined_value_types::*,
-    using_for_directives::*, variables::*, yul::*,
-};
+pub use self::{impls::*, magic::*, node_type::*, yul::*};
 
 pub use ast_nodes::*;
 pub use NodeID;

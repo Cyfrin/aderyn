@@ -724,3 +724,201 @@ pub struct WhileStatement {
     pub src: String,
     pub id: NodeID,
 }
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(rename_all = "camelCase")]
+pub struct StructDefinition {
+    pub name: String,
+    pub name_location: Option<String>,
+    pub visibility: Visibility,
+    pub members: Vec<VariableDeclaration>,
+    pub scope: NodeID,
+    pub canonical_name: Option<String>,
+    pub src: String,
+    pub id: NodeID,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(rename_all = "camelCase")]
+pub struct TypeDescriptions {
+    pub type_identifier: Option<String>,
+    pub type_string: Option<String>,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(untagged)]
+pub enum TypeName {
+    FunctionTypeName(FunctionTypeName),
+    ArrayTypeName(ArrayTypeName),
+    Mapping(Mapping),
+    UserDefinedTypeName(UserDefinedTypeName),
+    ElementaryTypeName(ElementaryTypeName),
+    /// A string representing the type name.
+    ///
+    /// This variant applies to older compiler versions.
+    Raw(String),
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ElementaryTypeName {
+    pub state_mutability: Option<StateMutability>,
+    pub name: String,
+    pub type_descriptions: TypeDescriptions,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct UserDefinedTypeName {
+    pub path_node: Option<IdentifierPath>,
+    pub referenced_declaration: NodeID,
+    pub name: Option<String>,
+    pub type_descriptions: TypeDescriptions,
+    pub contract_scope: Option<String>,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(rename_all = "camelCase")]
+pub struct FunctionTypeName {
+    pub visibility: Visibility,
+    pub state_mutability: StateMutability,
+    pub parameter_types: ParameterList,
+    pub return_parameter_types: ParameterList,
+    pub type_descriptions: TypeDescriptions,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(rename_all = "camelCase")]
+pub struct ArrayTypeName {
+    pub base_type: Box<TypeName>,
+    pub length: Box<Option<Expression>>,
+    pub type_descriptions: TypeDescriptions,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(rename_all = "camelCase")]
+pub struct Mapping {
+    pub key_type: Box<TypeName>,
+    pub value_type: Box<TypeName>,
+    pub type_descriptions: TypeDescriptions,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(rename_all = "camelCase")]
+pub struct UserDefinedValueTypeDefinition {
+    pub underlying_type: TypeName,
+    pub name: String,
+    pub name_location: Option<String>,
+    pub canonical_name: Option<String>,
+    pub src: String,
+    pub id: NodeID,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(rename_all = "camelCase")]
+pub struct UsingForDirective {
+    pub function_list: Option<Vec<UsingForFunctionItem>>,
+    #[serde(default)]
+    pub global: bool,
+    pub library_name: Option<UserDefinedTypeNameOrIdentifierPath>,
+    pub type_name: Option<TypeName>,
+    pub src: String,
+    pub id: NodeID,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Hash)]
+#[serde(tag = "nodeType")]
+pub enum UserDefinedTypeNameOrIdentifierPath {
+    UserDefinedTypeName(UserDefinedTypeName),
+    IdentifierPath(IdentifierPath),
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Hash)]
+#[serde(untagged)]
+pub enum UsingForFunctionItem {
+    Function(FunctionIdentifierPath),
+    OverloadedOperator(OverloadedOperator),
+}
+
+/// A wrapper around [IdentifierPath] for the [UsingForDirective].
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Hash)]
+pub struct FunctionIdentifierPath {
+    pub function: IdentifierPath,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Hash)]
+pub struct OverloadedOperator {
+    pub definition: IdentifierPath,
+    pub operator: String,
+}
+
+#[derive(Clone, Copy, Debug, Deserialize, Serialize, PartialEq, PartialOrd, Eq, Ord, Hash)]
+#[serde(rename_all = "lowercase")]
+pub enum Mutability {
+    Immutable,
+    Mutable,
+    Constant,
+}
+
+#[derive(Clone, Copy, Debug, Deserialize, Serialize, PartialEq, PartialOrd, Eq, Ord, Hash)]
+#[serde(rename_all = "lowercase")]
+pub enum StateMutability {
+    NonPayable,
+    Payable,
+    View,
+    Pure,
+}
+
+#[derive(Clone, Copy, Debug, Deserialize, Serialize, PartialEq, PartialOrd, Eq, Ord, Hash)]
+#[serde(rename_all = "lowercase")]
+pub enum Visibility {
+    Public,
+    Private,
+    Internal,
+    External,
+}
+
+#[derive(Clone, Copy, Debug, Deserialize, Serialize, PartialEq, PartialOrd, Eq, Ord, Hash)]
+#[serde(rename_all = "lowercase")]
+pub enum StorageLocation {
+    Default,
+    Memory,
+    Calldata,
+    Storage,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(rename_all = "camelCase")]
+pub struct VariableDeclaration {
+    pub base_functions: Option<Vec<NodeID>>,
+    /// Marks whether or not the variable is a constant before Solidity 0.7.x.
+    ///
+    /// After 0.7.x you must use `mutability`. For cross-version compatibility use
+    /// [`VariableDeclaration::mutability()`].
+    #[serde(default)]
+    pub constant: bool,
+    pub documentation: Option<Documentation>,
+    pub function_selector: Option<String>,
+    pub indexed: Option<bool>,
+    /// Marks the variable's mutability from Solidity 0.7.x onwards.
+    /// For cross-version compatibility use [`VariableDeclaration::mutability()`].
+    #[serde(default)]
+    pub mutability: Option<Mutability>,
+    pub name: String,
+    pub name_location: Option<String>,
+    pub overrides: Option<OverrideSpecifier>,
+    pub scope: NodeID,
+    /// Marks whether or not the variable is a state variable before Solidity 0.7.x.
+    ///
+    /// After 0.7.x you must use `mutability`. For cross-version compatibility use
+    /// [`VariableDeclaration::mutability()`].
+    #[serde(default)]
+    pub state_variable: bool,
+    pub storage_location: StorageLocation,
+    pub type_descriptions: TypeDescriptions,
+    pub type_name: Option<TypeName>,
+    pub value: Option<Expression>,
+    pub visibility: Visibility,
+    pub src: String,
+    pub id: NodeID,
+}

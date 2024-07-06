@@ -1,30 +1,8 @@
-use super::*;
+use crate::ast::*;
 use crate::visitor::ast_visitor::*;
 use eyre::Result;
-use serde::{Deserialize, Serialize};
 use std::fmt::Display;
 use std::hash::{Hash, Hasher};
-
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct TypeDescriptions {
-    pub type_identifier: Option<String>,
-    pub type_string: Option<String>,
-}
-
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(untagged)]
-pub enum TypeName {
-    FunctionTypeName(FunctionTypeName),
-    ArrayTypeName(ArrayTypeName),
-    Mapping(Mapping),
-    UserDefinedTypeName(UserDefinedTypeName),
-    ElementaryTypeName(ElementaryTypeName),
-    /// A string representing the type name.
-    ///
-    /// This variant applies to older compiler versions.
-    Raw(String),
-}
 
 impl Node for TypeName {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
@@ -54,14 +32,6 @@ impl Display for TypeName {
             _ => unimplemented!(),
         }
     }
-}
-
-#[derive(Clone, Debug, Deserialize, Eq, Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct ElementaryTypeName {
-    pub state_mutability: Option<StateMutability>,
-    pub name: String,
-    pub type_descriptions: TypeDescriptions,
 }
 
 impl Node for ElementaryTypeName {
@@ -100,16 +70,6 @@ impl Display for ElementaryTypeName {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct UserDefinedTypeName {
-    pub path_node: Option<IdentifierPath>,
-    pub referenced_declaration: NodeID,
-    pub name: Option<String>,
-    pub type_descriptions: TypeDescriptions,
-    pub contract_scope: Option<String>,
-}
-
 impl Node for UserDefinedTypeName {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         if visitor.visit_user_defined_type_name(self)? && self.path_node.is_some() {
@@ -145,16 +105,6 @@ impl Display for UserDefinedTypeName {
     }
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct FunctionTypeName {
-    pub visibility: Visibility,
-    pub state_mutability: StateMutability,
-    pub parameter_types: ParameterList,
-    pub return_parameter_types: ParameterList,
-    pub type_descriptions: TypeDescriptions,
-}
-
 impl Node for FunctionTypeName {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         if visitor.visit_function_type_name(self)? {
@@ -163,14 +113,6 @@ impl Node for FunctionTypeName {
         }
         visitor.end_visit_function_type_name(self)
     }
-}
-
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct ArrayTypeName {
-    pub base_type: Box<TypeName>,
-    pub length: Box<Option<Expression>>,
-    pub type_descriptions: TypeDescriptions,
 }
 
 impl Node for ArrayTypeName {
@@ -196,14 +138,6 @@ impl Display for ArrayTypeName {
 
         f.write_str("]")
     }
-}
-
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct Mapping {
-    pub key_type: Box<TypeName>,
-    pub value_type: Box<TypeName>,
-    pub type_descriptions: TypeDescriptions,
 }
 
 impl Node for Mapping {

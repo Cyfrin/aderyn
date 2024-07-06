@@ -1,28 +1,8 @@
-use super::*;
+use crate::ast::*;
 use crate::visitor::ast_visitor::*;
-// use cyfrin_foundry_compilers::artifacts::serde_helpers;
 use eyre::Result;
-use serde::{Deserialize, Serialize};
+
 use std::fmt::Display;
-
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct UsingForDirective {
-    pub function_list: Option<Vec<UsingForFunctionItem>>,
-    #[serde(default)]
-    pub global: bool,
-    pub library_name: Option<UserDefinedTypeNameOrIdentifierPath>,
-    pub type_name: Option<TypeName>,
-    pub src: String,
-    pub id: NodeID,
-}
-
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Hash)]
-#[serde(tag = "nodeType")]
-pub enum UserDefinedTypeNameOrIdentifierPath {
-    UserDefinedTypeName(UserDefinedTypeName),
-    IdentifierPath(IdentifierPath),
-}
 
 impl UserDefinedTypeNameOrIdentifierPath {
     pub fn name(&self) -> Option<String> {
@@ -38,25 +18,6 @@ impl UserDefinedTypeNameOrIdentifierPath {
             UserDefinedTypeNameOrIdentifierPath::IdentifierPath(node) => Some(node.id),
         }
     }
-}
-
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Hash)]
-#[serde(untagged)]
-pub enum UsingForFunctionItem {
-    Function(FunctionIdentifierPath),
-    OverloadedOperator(OverloadedOperator),
-}
-
-/// A wrapper around [IdentifierPath] for the [UsingForDirective].
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Hash)]
-pub struct FunctionIdentifierPath {
-    pub function: IdentifierPath,
-}
-
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Hash)]
-pub struct OverloadedOperator {
-    pub definition: IdentifierPath,
-    pub operator: String,
 }
 
 impl Node for UsingForDirective {

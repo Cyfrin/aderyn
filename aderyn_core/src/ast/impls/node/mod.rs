@@ -13,3 +13,8 @@ pub mod modifiers;
 pub mod pragma_directives;
 pub mod source_units;
 pub mod statements;
+pub mod structures;
+pub mod types;
+pub mod user_defined_value_types;
+pub mod using_for_directives;
+pub mod variables;
