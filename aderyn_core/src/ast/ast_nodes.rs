@@ -73,13 +73,12 @@ pub enum Documentation {
     Structured(Option<StructuredDocumentation>),
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct StructuredDocumentation {
-    pub text: String,
-    pub src: String,
-    pub id: NodeID,
-}
+ast_node!(
+    #[derive(Hash)]
+    struct StructuredDocumentation {
+        text: String,
+    }
+);
 
 ast_node!(
     #[derive(Hash)]
@@ -281,58 +280,57 @@ ast_node!(
     }
 );
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct FunctionDefinition {
-    pub base_functions: Option<Vec<NodeID>>,
-    pub body: Option<Block>,
-    pub documentation: Option<Documentation>,
-    pub function_selector: Option<String>,
-    pub implemented: bool,
-    /// The kind of function this node defines. Only valid for Solidity versions 0.5.x and
-    /// above.
-    ///
-    /// For cross-version compatibility use [`FunctionDefinition::kind()`].
-    pub kind: Option<FunctionKind>,
-    #[serde(default)]
-    /// For cross-version compatibility use [`FunctionDefinition::state_mutability()`].
-    pub state_mutability: Option<StateMutability>,
-    #[serde(default, rename = "virtual")]
-    pub is_virtual: bool,
-    /// Whether or not this function is the constructor. Only valid for Solidity versions below
-    /// 0.5.x.
-    ///
-    /// After 0.5.x you must use `kind`. For cross-version compatibility use
-    /// [`FunctionDefinition::kind()`].
-    #[serde(default)]
-    pub is_constructor: bool,
-    /// Whether or not this function is constant (view or pure). Only valid for Solidity
-    /// versions below 0.5.x.
-    ///
-    /// After 0.5.x you must use `state_mutability`. For cross-version compatibility use
-    /// [`FunctionDefinition::state_mutability()`].
-    #[serde(default)]
-    pub is_declared_const: bool,
-    /// Whether or not this function is payable. Only valid for Solidity versions below
-    /// 0.5.x.
-    ///
-    /// After 0.5.x you must use `state_mutability`. For cross-version compatibility use
-    /// [`FunctionDefinition::state_mutability()`].
-    #[serde(default)]
-    pub is_payable: bool,
-    pub modifiers: Vec<ModifierInvocation>,
-    pub name: String,
-    pub name_location: Option<String>,
-    pub overrides: Option<OverrideSpecifier>,
-    pub parameters: ParameterList,
-    pub return_parameters: ParameterList,
-    pub scope: NodeID,
-    pub super_function: Option<NodeID>,
-    pub r#virtual: Option<bool>,
-    pub visibility: Visibility,
-    pub src: String,
-    pub id: NodeID,
-}
+ast_node!(
+    #[derive(Hash)]
+    struct FunctionDefinition {
+        base_functions: Option<Vec<NodeID>>,
+        body: Option<Block>,
+        documentation: Option<Documentation>,
+        function_selector: Option<String>,
+        implemented: bool,
+        /// The kind of function this node defines. Only valid for Solidity versions 0.5.x and
+        /// above.
+        ///
+        /// For cross-version compatibility use [`FunctionDefinition::kind()`].
+        kind: Option<FunctionKind>,
+        #[serde(default)]
+        /// For cross-version compatibility use [`FunctionDefinition::state_mutability()`].
+        state_mutability: Option<StateMutability>,
+        #[serde(default, rename = "virtual")]
+        is_virtual: bool,
+        /// Whether or not this function is the constructor. Only valid for Solidity versions below
+        /// 0.5.x.
+        ///
+        /// After 0.5.x you must use `kind`. For cross-version compatibility use
+        /// [`FunctionDefinition::kind()`].
+        #[serde(default)]
+        is_constructor: bool,
+        /// Whether or not this function is constant (view or pure). Only valid for Solidity
+        /// versions below 0.5.x.
+        ///
+        /// After 0.5.x you must use `state_mutability`. For cross-version compatibility use
+        /// [`FunctionDefinition::state_mutability()`].
+        #[serde(default)]
+        is_declared_const: bool,
+        /// Whether or not this function is payable. Only valid for Solidity versions below
+        /// 0.5.x.
+        ///
+        /// After 0.5.x you must use `state_mutability`. For cross-version compatibility use
+        /// [`FunctionDefinition::state_mutability()`].
+        #[serde(default)]
+        is_payable: bool,
+        modifiers: Vec<ModifierInvocation>,
+        name: String,
+        name_location: Option<String>,
+        overrides: Option<OverrideSpecifier>,
+        parameters: ParameterList,
+        return_parameters: ParameterList,
+        scope: NodeID,
+        super_function: Option<NodeID>,
+        r#virtual: Option<bool>,
+        visibility: Visibility,
+    }
+);
 
 ast_node_no_partial_eq!(
     struct Identifier {
@@ -393,21 +391,20 @@ expr_node!(
     }
 );
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct ModifierDefinition {
-    pub body: Block,
-    pub base_modifiers: Option<Vec<usize>>,
-    pub overrides: Option<OverrideSpecifier>,
-    pub documentation: Option<Documentation>,
-    pub name: String,
-    pub name_location: Option<String>,
-    pub parameters: ParameterList,
-    pub r#virtual: Option<bool>,
-    pub visibility: Visibility,
-    pub src: String,
-    pub id: NodeID,
-}
+ast_node!(
+    #[derive(Hash)]
+    struct ModifierDefinition {
+        body: Block,
+        base_modifiers: Option<Vec<usize>>,
+        overrides: Option<OverrideSpecifier>,
+        documentation: Option<Documentation>,
+        name: String,
+        name_location: Option<String>,
+        parameters: ParameterList,
+        r#virtual: Option<bool>,
+        visibility: Visibility,
+    }
+);
 
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq, PartialOrd, Eq, Ord, Hash)]
 #[serde(rename_all = "camelCase")]
@@ -416,15 +413,14 @@ pub enum ModifierInvocationKind {
     BaseConstructorSpecifier,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct ModifierInvocation {
-    pub arguments: Option<Vec<Expression>>,
-    pub modifier_name: IdentifierOrIdentifierPath,
-    pub src: String,
-    pub id: NodeID,
-    pub kind: Option<ModifierInvocationKind>,
-}
+ast_node!(
+    #[derive(Hash)]
+    struct ModifierInvocation {
+        arguments: Option<Vec<Expression>>,
+        modifier_name: IdentifierOrIdentifierPath,
+        kind: Option<ModifierInvocationKind>,
+    }
+);
 
 #[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(tag = "nodeType")]
@@ -433,13 +429,12 @@ pub enum IdentifierOrIdentifierPath {
     IdentifierPath(IdentifierPath),
 }
 
-#[derive(Default, Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct PragmaDirective {
-    pub literals: Vec<String>,
-    pub src: String,
-    pub id: NodeID,
-}
+ast_node!(
+    #[derive(Hash)]
+    struct PragmaDirective {
+        literals: Vec<String>,
+    }
+);
 
 #[derive(Clone, Debug, Eq, Deserialize, Serialize, PartialEq, Hash)]
 #[serde(tag = "nodeType")]
@@ -496,15 +491,14 @@ pub struct ExpressionStatement {
     pub expression: Expression,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct VariableDeclarationStatement {
-    pub assignments: Vec<Option<NodeID>>,
-    pub declarations: Vec<Option<VariableDeclaration>>,
-    pub initial_value: Option<Expression>,
-    pub src: String,
-    pub id: NodeID,
-}
+ast_node!(
+    #[derive(Hash)]
+    struct VariableDeclarationStatement {
+        assignments: Vec<Option<NodeID>>,
+        declarations: Vec<Option<VariableDeclaration>>,
+        initial_value: Option<Expression>,
+    }
+);
 
 #[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(untagged)]
@@ -513,36 +507,33 @@ pub enum BlockOrStatement {
     Statement(Box<Statement>),
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct IfStatement {
-    pub condition: Expression,
-    pub true_body: BlockOrStatement,
-    pub false_body: Option<BlockOrStatement>,
-    pub src: String,
-    pub id: NodeID,
-}
+ast_node!(
+    #[derive(Hash)]
+    struct IfStatement {
+        condition: Expression,
+        true_body: BlockOrStatement,
+        false_body: Option<BlockOrStatement>,
+    }
+);
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct ForStatement {
-    pub initialization_expression: Option<Box<Statement>>,
-    pub condition: Option<Expression>,
-    pub loop_expression: Option<Box<ExpressionStatement>>,
-    pub body: BlockOrStatement,
-    pub src: String,
-    pub id: NodeID,
-}
+ast_node!(
+    #[derive(Hash)]
+    struct ForStatement {
+        initialization_expression: Option<Box<Statement>>,
+        condition: Option<Expression>,
+        loop_expression: Option<Box<ExpressionStatement>>,
+        body: BlockOrStatement,
+    }
+);
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct DoWhileStatement {
-    pub id: NodeID,
-    pub src: String,
-    pub documentation: Option<String>,
-    pub body: Block,
-    pub condition: Expression,
-}
+ast_node!(
+    #[derive(Hash)]
+    struct DoWhileStatement {
+        documentation: Option<String>,
+        body: Block,
+        condition: Expression,
+    }
+);
 
 #[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
@@ -579,63 +570,58 @@ ast_node!(
     }
 );
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct InlineAssembly {
-    #[serde(rename = "AST")]
-    pub ast: Option<YulBlock>,
-    pub evm_version: Option<String>,
-    pub external_references: Vec<ExternalReference>,
-    pub operations: Option<String>,
-    pub src: String,
-    pub id: NodeID,
-}
+ast_node!(
+    #[derive(Hash)]
+    struct InlineAssembly {
+        #[serde(rename = "AST")]
+        ast: Option<YulBlock>,
+        evm_version: Option<String>,
+        external_references: Vec<ExternalReference>,
+        operations: Option<String>,
+    }
+);
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct Break {
-    pub id: NodeID,
-    pub src: String,
-    pub documentation: Option<String>,
-}
+ast_node!(
+    #[derive(Hash)]
+    struct Break {
+        documentation: Option<String>,
+    }
+);
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct Continue {
-    pub id: NodeID,
-    pub src: String,
-    pub documentation: Option<String>,
-}
+ast_node!(
+    #[derive(Hash)]
+    struct Continue {
+        documentation: Option<String>,
+    }
+);
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct PlaceholderStatement {
-    pub id: NodeID,
-    pub src: String,
-    pub documentation: Option<String>,
-}
+ast_node!(
+    #[derive(Hash)]
+    struct PlaceholderStatement {
+        documentation: Option<String>,
+    }
+);
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct WhileStatement {
-    pub condition: Expression,
-    pub body: BlockOrStatement,
-    pub src: String,
-    pub id: NodeID,
-}
+ast_node!(
+    #[derive(Hash)]
+    struct WhileStatement {
+        condition: Expression,
+        body: BlockOrStatement,
+        documentation: Option<String>,
+    }
+);
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct StructDefinition {
-    pub name: String,
-    pub name_location: Option<String>,
-    pub visibility: Visibility,
-    pub members: Vec<VariableDeclaration>,
-    pub scope: NodeID,
-    pub canonical_name: Option<String>,
-    pub src: String,
-    pub id: NodeID,
-}
+ast_node!(
+    #[derive(Hash)]
+    struct StructDefinition {
+        name: String,
+        name_location: Option<String>,
+        visibility: Visibility,
+        members: Vec<VariableDeclaration>,
+        scope: NodeID,
+        canonical_name: Option<String>,
+    }
+);
 
 #[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
@@ -702,28 +688,26 @@ pub struct Mapping {
     pub type_descriptions: TypeDescriptions,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct UserDefinedValueTypeDefinition {
-    pub underlying_type: TypeName,
-    pub name: String,
-    pub name_location: Option<String>,
-    pub canonical_name: Option<String>,
-    pub src: String,
-    pub id: NodeID,
-}
+ast_node!(
+    #[derive(Hash)]
+    struct UserDefinedValueTypeDefinition {
+        underlying_type: TypeName,
+        name: String,
+        name_location: Option<String>,
+        canonical_name: Option<String>,
+    }
+);
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct UsingForDirective {
-    pub function_list: Option<Vec<UsingForFunctionItem>>,
-    #[serde(default)]
-    pub global: bool,
-    pub library_name: Option<UserDefinedTypeNameOrIdentifierPath>,
-    pub type_name: Option<TypeName>,
-    pub src: String,
-    pub id: NodeID,
-}
+ast_node!(
+    #[derive(Hash)]
+    struct UsingForDirective {
+        function_list: Option<Vec<UsingForFunctionItem>>,
+        #[serde(default)]
+        global: bool,
+        library_name: Option<UserDefinedTypeNameOrIdentifierPath>,
+        type_name: Option<TypeName>,
+    }
+);
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Hash)]
 #[serde(tag = "nodeType")]
