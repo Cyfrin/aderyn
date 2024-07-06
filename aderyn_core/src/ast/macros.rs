@@ -12,7 +12,31 @@ macro_rules! ast_node {
         }
     ) => {
         $(#[$struct_meta])*
-        #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Hash)]
+        #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+        #[serde(rename_all = "camelCase")]
+        pub struct $name {
+            pub id: $crate::ast::NodeID,
+            pub src: String,
+            $(
+                $(#[$field_meta])*
+                pub $field: $ty
+            ),*
+        }
+    };
+}
+
+macro_rules! ast_node_no_partial_eq {
+    (
+        $(#[$struct_meta:meta])*
+        struct $name:ident {
+            $(
+                $(#[$field_meta:meta])*
+                $field:ident: $ty:ty
+            ),* $(,)?
+        }
+    ) => {
+        $(#[$struct_meta])*
+        #[derive(Debug, Clone, Eq, Serialize, Deserialize)]
         #[serde(rename_all = "camelCase")]
         pub struct $name {
             pub id: $crate::ast::NodeID,
@@ -39,8 +63,7 @@ macro_rules! expr_node {
         ast_node!(
             $(#[$struct_meta])*
             struct $name {
-                #[serde(default, deserialize_with = "serde_helpers::default_for_null")]
-                argument_types: Vec<TypeDescriptions>,
+                argument_types: Option<Vec<TypeDescriptions>>,
                 #[serde(default)]
                 is_constant: bool,
                 #[serde(default)]
@@ -50,31 +73,6 @@ macro_rules! expr_node {
                 #[serde(default)]
                 l_value_requested: bool,
                 type_descriptions: TypeDescriptions,
-                $(
-                    $(#[$field_meta])*
-                    $field: $ty
-                ),*
-            }
-        );
-    }
-}
-
-/// A macro that expands to a struct with common statement node fields.
-macro_rules! stmt_node {
-    (
-        $(#[$struct_meta:meta])*
-        struct $name:ident {
-            $(
-                $(#[$field_meta:meta])*
-                $field:ident: $ty:ty
-            ),* $(,)*
-        }
-    ) => {
-        ast_node!(
-            $(#[$struct_meta])*
-            struct $name {
-                // TODO
-                documentation: Option<String>,
                 $(
                     $(#[$field_meta])*
                     $field: $ty
@@ -100,6 +98,6 @@ macro_rules! node_group {
 }
 
 pub(crate) use ast_node;
+pub(crate) use ast_node_no_partial_eq;
 pub(crate) use expr_node;
 pub(crate) use node_group;
-pub(crate) use stmt_node;
