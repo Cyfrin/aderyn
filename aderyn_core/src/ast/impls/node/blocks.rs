@@ -1,6 +1,5 @@
 use crate::{ast::Block, visitor::ast_visitor::*};
 use eyre::Result;
-use std::fmt::Display;
 
 impl Node for Block {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {

@@ -1,7 +1,6 @@
 use crate::ast::*;
 use crate::visitor::ast_visitor::*;
 use eyre::Result;
-use std::fmt::Display;
 use std::hash::{Hash, Hasher};
 
 impl Node for Identifier {

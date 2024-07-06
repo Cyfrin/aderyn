@@ -1,7 +1,4 @@
 use crate::ast::*;
-use crate::visitor::ast_visitor::ASTConstVisitor;
-use crate::visitor::ast_visitor::Node;
-use eyre::Result;
 use std::fmt::Display;
 
 impl Display for UserDefinedValueTypeDefinition {

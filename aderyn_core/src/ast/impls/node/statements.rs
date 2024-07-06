@@ -2,7 +2,6 @@ use crate::ast::*;
 use crate::visitor::ast_visitor::*;
 use eyre::Result;
 
-use std::fmt::Display;
 
 impl Statement {
     pub fn get_node_id(&self) -> Option<NodeID> {

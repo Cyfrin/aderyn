@@ -1,5 +1,4 @@
-use crate::{ast::*, visitor::ast_visitor::*};
-use eyre::Result;
+use crate::{ast::*};
 use std::fmt::Display;
 
 impl Display for Literal {

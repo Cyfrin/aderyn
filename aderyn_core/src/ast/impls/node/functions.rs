@@ -1,7 +1,6 @@
 use crate::ast::*;
 use crate::visitor::ast_visitor::*;
 use eyre::Result;
-use std::fmt::Display;
 
 impl Node for ParameterList {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {

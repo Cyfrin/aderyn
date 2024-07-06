@@ -1,5 +1,4 @@
-use crate::{ast::Block, visitor::ast_visitor::*};
-use eyre::Result;
+use crate::{ast::Block};
 use std::fmt::Display;
 
 impl Display for Block {
