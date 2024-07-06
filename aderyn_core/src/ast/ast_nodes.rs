@@ -485,11 +485,12 @@ pub enum Statement {
     InlineAssembly(InlineAssembly),
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct ExpressionStatement {
-    pub expression: Expression,
-}
+ast_node!(
+    #[derive(Hash)]
+    struct ExpressionStatement {
+        expression: Expression,
+    }
+);
 
 ast_node!(
     #[derive(Hash)]
@@ -535,33 +536,36 @@ ast_node!(
     }
 );
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct EmitStatement {
-    pub event_call: Expression,
-}
+ast_node!(
+    #[derive(Hash)]
+    struct EmitStatement {
+        event_call: Expression, // TODO: Change this to FunctionCall
+    }
+);
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct TryStatement {
-    pub clauses: Vec<TryCatchClause>,
-    pub external_call: FunctionCall,
-}
+ast_node!(
+    #[derive(Hash)]
+    struct TryStatement {
+        clauses: Vec<TryCatchClause>,
+        external_call: FunctionCall,
+    }
+);
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct RevertStatement {
-    pub error_call: FunctionCall,
-}
+ast_node!(
+    #[derive(Hash)]
+    struct RevertStatement {
+        error_call: FunctionCall,
+    }
+);
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct TryCatchClause {
-    pub block: Block,
-    pub error_name: Option<String>,
-    pub parameters: Option<ParameterList>,
-}
-
+ast_node!(
+    #[derive(Hash)]
+    struct TryCatchClause {
+        block: Block,
+        error_name: String,
+        parameters: Option<ParameterList>,
+    }
+);
 ast_node!(
     #[derive(Hash)]
     struct Return {
@@ -644,49 +648,52 @@ pub enum TypeName {
     Raw(String),
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct ElementaryTypeName {
-    pub state_mutability: Option<StateMutability>,
-    pub name: String,
-    pub type_descriptions: TypeDescriptions,
-}
+ast_node_no_partial_eq!(
+    struct ElementaryTypeName {
+        state_mutability: Option<StateMutability>,
+        name: String,
+        type_descriptions: TypeDescriptions,
+    }
+);
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct UserDefinedTypeName {
-    pub path_node: Option<IdentifierPath>,
-    pub referenced_declaration: NodeID,
-    pub name: Option<String>,
-    pub type_descriptions: TypeDescriptions,
-    pub contract_scope: Option<String>,
-}
+ast_node_no_partial_eq!(
+    struct UserDefinedTypeName {
+        path_node: Option<IdentifierPath>,
+        referenced_declaration: NodeID,
+        name: Option<String>,
+        type_descriptions: TypeDescriptions,
+        contract_scope: Option<String>,
+    }
+);
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct FunctionTypeName {
-    pub visibility: Visibility,
-    pub state_mutability: StateMutability,
-    pub parameter_types: ParameterList,
-    pub return_parameter_types: ParameterList,
-    pub type_descriptions: TypeDescriptions,
-}
+ast_node!(
+    #[derive(Hash)]
+    struct FunctionTypeName {
+        visibility: Visibility,
+        state_mutability: StateMutability,
+        parameter_types: ParameterList,
+        return_parameter_types: ParameterList,
+        type_descriptions: TypeDescriptions,
+    }
+);
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct ArrayTypeName {
-    pub base_type: Box<TypeName>,
-    pub length: Box<Option<Expression>>,
-    pub type_descriptions: TypeDescriptions,
-}
+ast_node!(
+    #[derive(Hash)]
+    struct ArrayTypeName {
+        base_type: Box<TypeName>,
+        length: Box<Option<Expression>>,
+        type_descriptions: TypeDescriptions,
+    }
+);
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(rename_all = "camelCase")]
-pub struct Mapping {
-    pub key_type: Box<TypeName>,
-    pub value_type: Box<TypeName>,
-    pub type_descriptions: TypeDescriptions,
-}
+ast_node!(
+    #[derive(Hash)]
+    struct Mapping {
+        key_type: Box<TypeName>,
+        value_type: Box<TypeName>,
+        type_descriptions: TypeDescriptions,
+    }
+);
 
 ast_node!(
     #[derive(Hash)]

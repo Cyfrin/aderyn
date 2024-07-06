@@ -17,7 +17,7 @@ impl Statement {
                 expression_statement.expression.get_node_id()
             }
             Statement::InlineAssembly(inline_assembly) => Some(inline_assembly.id),
-            Statement::TryStatement(_) => None,
+            Statement::TryStatement(try_statement) => Some(try_statement.id),
             Statement::Block(block) => Some(block.id),
             Statement::Break(break_statement) => Some(break_statement.id),
             Statement::Continue(continue_statement) => Some(continue_statement.id),
