@@ -4,6 +4,7 @@ macro_rules! generate_capturable_methods {
         #[derive(Clone)]
         pub enum Capturable {
             $($name($name),)*
+            ASTNode(ASTNode),
         }
 
         $(
@@ -19,6 +20,36 @@ macro_rules! generate_capturable_methods {
                 }
             }
         )*
+
+        impl From<ASTNode> for Capturable {
+            fn from(value: ASTNode) -> Self {
+                Self::ASTNode(value)
+            }
+        }
+
+        impl From<&ASTNode> for Capturable {
+            fn from(value: &ASTNode) -> Self {
+                Self::ASTNode(value.clone())
+            }
+        }
+
+
+        impl Capturable {
+            pub fn make_key(&self, context: &WorkspaceContext) -> (String, usize, String) {
+                match self {
+                    Self::ASTNode(node) => context.get_node_sort_key(node),
+                    $(Self::$name(n) => context.get_node_sort_key(&n.into()),)*
+                }
+            }
+            pub fn id(&self) -> Option<NodeID> {
+                match self {
+                    Self::ASTNode(ast_node) => ast_node.id(),
+                    $(Self::$name(n) => Some(n.id),)*
+                }
+            }
+        }
+
+
     };
 }
 
