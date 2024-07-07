@@ -1,6 +1,8 @@
 use crate::ast::*;
 use crate::WorkspaceContext;
 
+use super::macros::generate_get_source_unit;
+
 impl WorkspaceContext {
     pub fn array_type_names(&self) -> Vec<&ArrayTypeName> {
         self.array_type_names_context.keys().collect()
@@ -179,234 +181,59 @@ impl WorkspaceContext {
     }
 }
 
-impl WorkspaceContext {
-    pub fn get_source_unit_from_child_node(&self, node: &ASTNode) -> Option<&SourceUnit> {
-        let source_unit_id = match node {
-            ASTNode::ArrayTypeName(node) => self
-                .array_type_names_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::Assignment(node) => self
-                .assignments_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::BinaryOperation(node) => self
-                .binary_operations_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::Block(node) => self
-                .blocks_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::Conditional(node) => self
-                .conditionals_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::ContractDefinition(node) => self
-                .contract_definitions_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::ElementaryTypeName(node) => self
-                .elementary_type_names_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::ElementaryTypeNameExpression(node) => self
-                .elementary_type_name_expressions_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::EmitStatement(node) => self
-                .emit_statements_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::EnumDefinition(node) => self
-                .enum_definitions_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::EnumValue(node) => self
-                .enum_values_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::EventDefinition(node) => self
-                .event_definitions_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::ErrorDefinition(node) => self
-                .error_definitions_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::ExpressionStatement(node) => self
-                .expression_statements_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::FunctionCall(node) => self
-                .function_calls_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::FunctionCallOptions(node) => self
-                .function_call_options_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::FunctionDefinition(node) => self
-                .function_definitions_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::FunctionTypeName(node) => self
-                .function_type_names_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::ForStatement(node) => self
-                .for_statements_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::Identifier(node) => self
-                .identifiers_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::IdentifierPath(node) => self
-                .identifier_paths_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::IfStatement(node) => self
-                .if_statements_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::ImportDirective(node) => self
-                .import_directives_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::IndexAccess(node) => self
-                .index_accesses_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::IndexRangeAccess(node) => self
-                .index_range_accesses_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::InheritanceSpecifier(node) => self
-                .inheritance_specifiers_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::InlineAssembly(node) => self
-                .inline_assemblies_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::Literal(node) => self
-                .literals_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::MemberAccess(node) => self
-                .member_accesses_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::NewExpression(node) => self
-                .new_expressions_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::Mapping(node) => self
-                .mappings_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::ModifierDefinition(node) => self
-                .modifier_definitions_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::ModifierInvocation(node) => self
-                .modifier_invocations_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::OverrideSpecifier(node) => self
-                .override_specifiers_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::ParameterList(node) => self
-                .parameter_lists_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::PragmaDirective(node) => self
-                .pragma_directives_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::Return(node) => self
-                .returns_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::RevertStatement(node) => self
-                .revert_statements_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::SourceUnit(node) => Some(node.id),
-            ASTNode::StructDefinition(node) => self
-                .struct_definitions_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::StructuredDocumentation(node) => self
-                .structured_documentations_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::TryStatement(node) => self
-                .try_statements_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::TryCatchClause(node) => self
-                .try_catch_clauses_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::TupleExpression(node) => self
-                .tuple_expressions_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::UnaryOperation(node) => self
-                .unary_operations_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::UserDefinedTypeName(node) => self
-                .user_defined_type_names_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::UserDefinedValueTypeDefinition(node) => self
-                .user_defined_value_type_definitions_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::UsingForDirective(node) => self
-                .using_for_directives_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::VariableDeclaration(node) => self
-                .variable_declarations_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::VariableDeclarationStatement(node) => self
-                .variable_declaration_statements_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::WhileStatement(node) => self
-                .while_statements_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::DoWhileStatement(node) => self
-                .do_while_statements_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::Break(node) => self
-                .break_statements_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::Continue(node) => self
-                .continue_statements_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-            ASTNode::PlaceholderStatement(node) => self
-                .placeholder_statements_context
-                .get(node)
-                .map(|context| context.source_unit_id),
-        };
-
-        // iterate through self.source_units until the source unit with the id matching `source_unit_id` is found, then return its `absolute_path`
-
-        source_unit_id.and_then(|id| {
-            self.source_units_context
-                .iter()
-                .find(|source_unit| source_unit.id == id)
-        })
-    }
+generate_get_source_unit! {
+    ArrayTypeName => array_type_names_context,
+    Assignment => assignments_context,
+    BinaryOperation => binary_operations_context,
+    Block => blocks_context,
+    Conditional => conditionals_context,
+    ContractDefinition => contract_definitions_context,
+    ElementaryTypeName => elementary_type_names_context,
+    ElementaryTypeNameExpression => elementary_type_name_expressions_context,
+    EmitStatement => emit_statements_context,
+    EnumDefinition => enum_definitions_context,
+    EnumValue => enum_values_context,
+    EventDefinition => event_definitions_context,
+    ErrorDefinition => error_definitions_context,
+    ExpressionStatement => expression_statements_context,
+    FunctionCall => function_calls_context,
+    FunctionCallOptions => function_call_options_context,
+    FunctionDefinition => function_definitions_context,
+    FunctionTypeName => function_type_names_context,
+    ForStatement => for_statements_context,
+    Identifier => identifiers_context,
+    IdentifierPath => identifier_paths_context,
+    IfStatement => if_statements_context,
+    ImportDirective => import_directives_context,
+    IndexAccess => index_accesses_context,
+    IndexRangeAccess => index_range_accesses_context,
+    InheritanceSpecifier => inheritance_specifiers_context,
+    InlineAssembly => inline_assemblies_context,
+    Literal => literals_context,
+    MemberAccess => member_accesses_context,
+    NewExpression => new_expressions_context,
+    Mapping => mappings_context,
+    ModifierDefinition => modifier_definitions_context,
+    ModifierInvocation => modifier_invocations_context,
+    OverrideSpecifier => override_specifiers_context,
+    ParameterList => parameter_lists_context,
+    PragmaDirective => pragma_directives_context,
+    Return => returns_context,
+    RevertStatement => revert_statements_context,
+    StructDefinition => struct_definitions_context,
+    StructuredDocumentation => structured_documentations_context,
+    TryStatement => try_statements_context,
+    TryCatchClause => try_catch_clauses_context,
+    TupleExpression => tuple_expressions_context,
+    UnaryOperation => unary_operations_context,
+    UserDefinedTypeName => user_defined_type_names_context,
+    UserDefinedValueTypeDefinition => user_defined_value_type_definitions_context,
+    UsingForDirective => using_for_directives_context,
+    VariableDeclaration => variable_declarations_context,
+    VariableDeclarationStatement => variable_declaration_statements_context,
+    WhileStatement => while_statements_context,
+    DoWhileStatement => do_while_statements_context,
+    Break => break_statements_context,
+    Continue => continue_statements_context,
+    PlaceholderStatement => placeholder_statements_context,
 }
