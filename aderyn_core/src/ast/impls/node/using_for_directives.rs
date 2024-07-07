@@ -32,8 +32,5 @@ impl Node for UsingForDirective {
         }
         Ok(())
     }
-    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_node_id(Some(self.id))?;
-        Ok(())
-    }
+    macros::accept_id!();
 }

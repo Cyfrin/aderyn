@@ -74,10 +74,7 @@ impl Node for InheritanceSpecifier {
         visitor.visit_immediate_children(self.id, argument_ids)?;
         Ok(())
     }
-    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_node_id(Some(self.id))?;
-        Ok(())
-    }
+    macros::accept_id!();
 }
 
 impl Node for ContractDefinition {
@@ -110,8 +107,5 @@ impl Node for ContractDefinition {
         Ok(())
     }
 
-    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_node_id(Some(self.id))?;
-        Ok(())
-    }
+    macros::accept_id!();
 }

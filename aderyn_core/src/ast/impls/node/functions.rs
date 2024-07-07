@@ -15,10 +15,7 @@ impl Node for ParameterList {
         visitor.visit_immediate_children(self.id, parameters_ids.clone())?;
         Ok(())
     }
-    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_node_id(Some(self.id))?;
-        Ok(())
-    }
+    macros::accept_id!();
 }
 
 impl Node for OverrideSpecifier {
@@ -47,10 +44,7 @@ impl Node for OverrideSpecifier {
         visitor.visit_immediate_children(self.id, overrides_ids.clone())?;
         Ok(())
     }
-    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_node_id(Some(self.id))?;
-        Ok(())
-    }
+    macros::accept_id!();
 }
 
 impl Node for FunctionDefinition {
@@ -86,8 +80,5 @@ impl Node for FunctionDefinition {
         }
         Ok(())
     }
-    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_node_id(Some(self.id))?;
-        Ok(())
-    }
+    macros::accept_id!();
 }

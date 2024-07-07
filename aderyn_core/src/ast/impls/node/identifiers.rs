@@ -11,10 +11,7 @@ impl Node for Identifier {
     fn accept_metadata(&self, _visitor: &mut impl ASTConstVisitor) -> Result<()> {
         Ok(())
     }
-    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_node_id(Some(self.id))?;
-        Ok(())
-    }
+    macros::accept_id!();
 }
 
 impl Node for IdentifierPath {
@@ -26,8 +23,5 @@ impl Node for IdentifierPath {
     fn accept_metadata(&self, _visitor: &mut impl ASTConstVisitor) -> Result<()> {
         Ok(())
     }
-    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_node_id(Some(self.id))?;
-        Ok(())
-    }
+    macros::accept_id!();
 }

@@ -11,8 +11,5 @@ impl Node for UserDefinedValueTypeDefinition {
         visitor.end_visit_user_defined_value_type_definition(self)?;
         Ok(())
     }
-    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_node_id(Some(self.id))?;
-        Ok(())
-    }
+    macros::accept_id!();
 }

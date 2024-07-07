@@ -1,16 +1,14 @@
 use crate::ast::*;
 use crate::visitor::ast_visitor::*;
 use eyre::Result;
+use macros::accept_id;
 
 impl Node for EnumValue {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         visitor.visit_enum_value(self)?;
         visitor.end_visit_enum_value(self)
     }
-    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_node_id(Some(self.id))?;
-        Ok(())
-    }
+    macros::accept_id!();
 }
 
 impl Node for EnumDefinition {
@@ -31,8 +29,5 @@ impl Node for EnumDefinition {
         visitor.visit_immediate_children(self.id, member_ids.clone())?;
         Ok(())
     }
-    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_node_id(Some(self.id))?;
-        Ok(())
-    }
+    accept_id!();
 }

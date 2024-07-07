@@ -46,10 +46,7 @@ impl Node for UnaryOperation {
         }
         Ok(())
     }
-    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_node_id(Some(self.id))?;
-        Ok(())
-    }
+    macros::accept_id!();
 }
 
 impl Node for BinaryOperation {
@@ -70,10 +67,7 @@ impl Node for BinaryOperation {
         }
         Ok(())
     }
-    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_node_id(Some(self.id))?;
-        Ok(())
-    }
+    macros::accept_id!();
 }
 
 impl Node for Conditional {
@@ -98,10 +92,7 @@ impl Node for Conditional {
         }
         Ok(())
     }
-    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_node_id(Some(self.id))?;
-        Ok(())
-    }
+    macros::accept_id!();
 }
 
 impl Node for Assignment {
@@ -122,10 +113,7 @@ impl Node for Assignment {
         }
         Ok(())
     }
-    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_node_id(Some(self.id))?;
-        Ok(())
-    }
+    macros::accept_id!();
 }
 
 impl Node for FunctionCall {
@@ -150,10 +138,7 @@ impl Node for FunctionCall {
         visitor.visit_immediate_children(self.id, argument_ids)?;
         Ok(())
     }
-    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_node_id(Some(self.id))?;
-        Ok(())
-    }
+    macros::accept_id!();
 }
 
 impl Node for FunctionCallOptions {
@@ -182,10 +167,7 @@ impl Node for FunctionCallOptions {
         }
         Ok(())
     }
-    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_node_id(Some(self.id))?;
-        Ok(())
-    }
+    macros::accept_id!();
 }
 
 impl Node for IndexAccess {
@@ -210,10 +192,7 @@ impl Node for IndexAccess {
         }
         Ok(())
     }
-    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_node_id(Some(self.id))?;
-        Ok(())
-    }
+    macros::accept_id!();
 }
 
 impl Node for IndexRangeAccess {
@@ -243,10 +222,7 @@ impl Node for IndexRangeAccess {
         }
         Ok(())
     }
-    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_node_id(Some(self.id))?;
-        Ok(())
-    }
+    macros::accept_id!();
 }
 
 impl Node for MemberAccess {
@@ -263,10 +239,7 @@ impl Node for MemberAccess {
         }
         Ok(())
     }
-    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_node_id(Some(self.id))?;
-        Ok(())
-    }
+    macros::accept_id!();
 }
 
 impl Node for ElementaryTypeNameExpression {
@@ -274,10 +247,7 @@ impl Node for ElementaryTypeNameExpression {
         visitor.visit_elementary_type_name_expression(self)?;
         visitor.end_visit_elementary_type_name_expression(self)
     }
-    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_node_id(Some(self.id))?;
-        Ok(())
-    }
+    macros::accept_id!();
 }
 
 impl Node for TupleExpression {
@@ -302,10 +272,7 @@ impl Node for TupleExpression {
         visitor.visit_immediate_children(self.id, comp_ids)?;
         Ok(())
     }
-    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_node_id(Some(self.id))?;
-        Ok(())
-    }
+    macros::accept_id!();
 }
 
 impl Node for NewExpression {
@@ -315,8 +282,5 @@ impl Node for NewExpression {
         }
         visitor.end_visit_new_expression(self)
     }
-    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_node_id(Some(self.id))?;
-        Ok(())
-    }
+    macros::accept_id!();
 }

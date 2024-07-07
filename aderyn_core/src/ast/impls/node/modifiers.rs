@@ -24,10 +24,7 @@ impl Node for ModifierDefinition {
         visitor.visit_immediate_children(self.id, vec![self.parameters.id])?;
         Ok(())
     }
-    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_node_id(Some(self.id))?;
-        Ok(())
-    }
+    macros::accept_id!();
 }
 
 impl Node for ModifierInvocation {
@@ -59,8 +56,5 @@ impl Node for ModifierInvocation {
         }
         Ok(())
     }
-    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_node_id(Some(self.id))?;
-        Ok(())
-    }
+    macros::accept_id!();
 }

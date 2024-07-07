@@ -75,10 +75,7 @@ impl Node for VariableDeclarationStatement {
         }
         Ok(())
     }
-    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_node_id(Some(self.id))?;
-        Ok(())
-    }
+    macros::accept_id!();
 }
 
 impl Node for BlockOrStatement {
@@ -120,10 +117,7 @@ impl Node for IfStatement {
         }
         Ok(())
     }
-    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_node_id(Some(self.id))?;
-        Ok(())
-    }
+    macros::accept_id!();
 }
 
 impl Node for ForStatement {
@@ -167,10 +161,7 @@ impl Node for ForStatement {
         }
         Ok(())
     }
-    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_node_id(Some(self.id))?;
-        Ok(())
-    }
+    macros::accept_id!();
 }
 
 impl Node for WhileStatement {
@@ -194,10 +185,7 @@ impl Node for WhileStatement {
         Ok(())
     }
 
-    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_node_id(Some(self.id))?;
-        Ok(())
-    }
+    macros::accept_id!();
 }
 
 impl Node for DoWhileStatement {
@@ -218,10 +206,7 @@ impl Node for DoWhileStatement {
         Ok(())
     }
 
-    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_node_id(Some(self.id))?;
-        Ok(())
-    }
+    macros::accept_id!();
 }
 
 impl Node for EmitStatement {
@@ -293,10 +278,7 @@ impl Node for Return {
         }
         Ok(())
     }
-    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_node_id(Some(self.id))?;
-        Ok(())
-    }
+    macros::accept_id!();
 }
 
 impl Node for InlineAssembly {
@@ -306,10 +288,7 @@ impl Node for InlineAssembly {
         }
         visitor.end_visit_inline_assembly(self)
     }
-    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_node_id(Some(self.id))?;
-        Ok(())
-    }
+    macros::accept_id!();
 }
 
 impl Node for Break {
@@ -318,10 +297,7 @@ impl Node for Break {
         visitor.end_visit_break_statement(self)
     }
 
-    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_node_id(Some(self.id))?;
-        Ok(())
-    }
+    macros::accept_id!();
 }
 
 impl Node for Continue {
@@ -330,10 +306,7 @@ impl Node for Continue {
         visitor.end_visit_continue_statement(self)
     }
 
-    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_node_id(Some(self.id))?;
-        Ok(())
-    }
+    macros::accept_id!();
 }
 
 impl Node for PlaceholderStatement {
@@ -342,8 +315,5 @@ impl Node for PlaceholderStatement {
         visitor.end_visit_placeholder_statement(self)
     }
 
-    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_node_id(Some(self.id))?;
-        Ok(())
-    }
+    macros::accept_id!();
 }
