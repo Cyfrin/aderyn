@@ -31,6 +31,37 @@ macro_rules! generate_ast_methods {
                 }
             }
         )*
+
+        impl ASTNode {
+            pub fn node_type(&self) -> NodeType {
+                match self {
+                    $(ASTNode::$name(_) => NodeType::$name,)*
+                }
+            }
+            pub fn id(&self) -> Option<NodeID> {
+                match self {
+                    $(ASTNode::$name(n) => Some(n.id),)*
+                }
+            }
+        }
+
+        impl Node for ASTNode {
+            fn accept(&self, visitor: &mut impl ASTConstVisitor) -> eyre::Result<()> {
+                match self {
+                    $(ASTNode::$name(n) => n.accept(visitor),)*
+                }
+            }
+            fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> eyre::Result<()> {
+                match self {
+                    $(ASTNode::$name(n) => n.accept_metadata(visitor),)*
+                }
+            }
+            fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+                visitor.visit_node_id(self.id())?;
+                Ok(())
+            }
+        }
+
     };
 }
 
