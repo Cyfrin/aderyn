@@ -5,19 +5,59 @@ use super::*;
 
 use serde::{Deserialize, Serialize};
 
-ast_node!(
-    #[derive(Hash)]
-    struct Block {
-        statements: Vec<Statement>,
-    }
-);
+#[derive(Clone, Debug, Eq, Deserialize, Serialize, PartialEq, Hash)]
+#[serde(tag = "nodeType")]
+pub enum SourceUnitNode {
+    FunctionDefinition(FunctionDefinition),
+    StructDefinition(StructDefinition),
+    ErrorDefinition(ErrorDefinition),
+    EnumDefinition(EnumDefinition),
+    VariableDeclaration(VariableDeclaration),
+    ImportDirective(ImportDirective),
+    PragmaDirective(PragmaDirective),
+    UserDefinedValueTypeDefinition(UserDefinedValueTypeDefinition),
+    UsingForDirective(UsingForDirective),
+    ContractDefinition(ContractDefinition),
+}
 
-#[derive(Clone, Debug, Deserialize, Serialize, PartialEq, PartialOrd, Eq, Ord, Hash)]
-#[serde(rename_all = "lowercase")]
-pub enum ContractKind {
-    Contract,
-    Interface,
-    Library,
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(tag = "nodeType")]
+pub enum Expression {
+    Literal(Literal),
+    Identifier(Identifier),
+    UnaryOperation(UnaryOperation),
+    BinaryOperation(BinaryOperation),
+    Conditional(Conditional),
+    Assignment(Assignment),
+    FunctionCall(FunctionCall),
+    FunctionCallOptions(FunctionCallOptions),
+    IndexAccess(IndexAccess),
+    IndexRangeAccess(IndexRangeAccess),
+    MemberAccess(MemberAccess),
+    ElementaryTypeNameExpression(ElementaryTypeNameExpression),
+    TupleExpression(TupleExpression),
+    NewExpression(NewExpression),
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(tag = "nodeType")]
+pub enum Statement {
+    Block(Block),
+    Break(Break),
+    Continue(Continue),
+    DoWhileStatement(DoWhileStatement),
+    PlaceholderStatement(PlaceholderStatement),
+    VariableDeclarationStatement(VariableDeclarationStatement),
+    IfStatement(IfStatement),
+    ForStatement(ForStatement),
+    WhileStatement(WhileStatement),
+    EmitStatement(EmitStatement),
+    TryStatement(TryStatement),
+    UncheckedBlock(Block),
+    Return(Return),
+    RevertStatement(RevertStatement),
+    ExpressionStatement(ExpressionStatement),
+    InlineAssembly(InlineAssembly),
 }
 
 #[derive(Clone, Debug, Eq, Serialize, Deserialize, PartialEq, Hash)]
@@ -32,6 +72,42 @@ pub enum ContractDefinitionNode {
     ModifierDefinition(ModifierDefinition),
     ErrorDefinition(ErrorDefinition),
     UserDefinedValueTypeDefinition(UserDefinedValueTypeDefinition),
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(untagged)]
+pub enum TypeName {
+    FunctionTypeName(FunctionTypeName),
+    ArrayTypeName(ArrayTypeName),
+    Mapping(Mapping),
+    UserDefinedTypeName(UserDefinedTypeName),
+    ElementaryTypeName(ElementaryTypeName),
+    /// A string representing the type name.
+    ///
+    /// This variant applies to older compiler versions.
+    Raw(String),
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Hash)]
+#[serde(tag = "nodeType")]
+pub enum UserDefinedTypeNameOrIdentifierPath {
+    UserDefinedTypeName(UserDefinedTypeName),
+    IdentifierPath(IdentifierPath),
+}
+
+ast_node!(
+    #[derive(Hash)]
+    struct Block {
+        statements: Vec<Statement>,
+    }
+);
+
+#[derive(Clone, Debug, Deserialize, Serialize, PartialEq, PartialOrd, Eq, Ord, Hash)]
+#[serde(rename_all = "lowercase")]
+pub enum ContractKind {
+    Contract,
+    Interface,
+    Library,
 }
 
 ast_node!(
@@ -120,25 +196,6 @@ ast_node!(
         event_selector: Option<String>,
     }
 );
-
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(tag = "nodeType")]
-pub enum Expression {
-    Literal(Literal),
-    Identifier(Identifier),
-    UnaryOperation(UnaryOperation),
-    BinaryOperation(BinaryOperation),
-    Conditional(Conditional),
-    Assignment(Assignment),
-    FunctionCall(FunctionCall),
-    FunctionCallOptions(FunctionCallOptions),
-    IndexAccess(IndexAccess),
-    IndexRangeAccess(IndexRangeAccess),
-    MemberAccess(MemberAccess),
-    ElementaryTypeNameExpression(ElementaryTypeNameExpression),
-    TupleExpression(TupleExpression),
-    NewExpression(NewExpression),
-}
 
 expr_node!(
     #[derive(Hash)]
@@ -436,21 +493,6 @@ ast_node!(
     }
 );
 
-#[derive(Clone, Debug, Eq, Deserialize, Serialize, PartialEq, Hash)]
-#[serde(tag = "nodeType")]
-pub enum SourceUnitNode {
-    FunctionDefinition(FunctionDefinition),
-    StructDefinition(StructDefinition),
-    ErrorDefinition(ErrorDefinition),
-    EnumDefinition(EnumDefinition),
-    VariableDeclaration(VariableDeclaration),
-    ImportDirective(ImportDirective),
-    PragmaDirective(PragmaDirective),
-    UserDefinedValueTypeDefinition(UserDefinedValueTypeDefinition),
-    UsingForDirective(UsingForDirective),
-    ContractDefinition(ContractDefinition),
-}
-
 ast_node!(
     struct SourceUnit {
         license: Option<String>,
@@ -462,27 +504,6 @@ ast_node!(
         source: Option<String>,
     }
 );
-
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(tag = "nodeType")]
-pub enum Statement {
-    Block(Block),
-    Break(Break),
-    Continue(Continue),
-    DoWhileStatement(DoWhileStatement),
-    PlaceholderStatement(PlaceholderStatement),
-    VariableDeclarationStatement(VariableDeclarationStatement),
-    IfStatement(IfStatement),
-    ForStatement(ForStatement),
-    WhileStatement(WhileStatement),
-    EmitStatement(EmitStatement),
-    TryStatement(TryStatement),
-    UncheckedBlock(Block),
-    Return(Return),
-    RevertStatement(RevertStatement),
-    ExpressionStatement(ExpressionStatement),
-    InlineAssembly(InlineAssembly),
-}
 
 ast_node!(
     #[derive(Hash)]
@@ -633,20 +654,6 @@ pub struct TypeDescriptions {
     pub type_string: Option<String>,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(untagged)]
-pub enum TypeName {
-    FunctionTypeName(FunctionTypeName),
-    ArrayTypeName(ArrayTypeName),
-    Mapping(Mapping),
-    UserDefinedTypeName(UserDefinedTypeName),
-    ElementaryTypeName(ElementaryTypeName),
-    /// A string representing the type name.
-    ///
-    /// This variant applies to older compiler versions.
-    Raw(String),
-}
-
 ast_node_no_partial_eq!(
     struct ElementaryTypeName {
         state_mutability: Option<StateMutability>,
@@ -714,13 +721,6 @@ ast_node!(
         type_name: Option<TypeName>,
     }
 );
-
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Hash)]
-#[serde(tag = "nodeType")]
-pub enum UserDefinedTypeNameOrIdentifierPath {
-    UserDefinedTypeName(UserDefinedTypeName),
-    IdentifierPath(IdentifierPath),
-}
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Hash)]
 #[serde(untagged)]
