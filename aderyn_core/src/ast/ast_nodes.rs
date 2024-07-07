@@ -124,6 +124,26 @@ pub enum UserDefinedTypeNameOrIdentifierPath {
     IdentifierPath(IdentifierPath),
 }
 
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Hash)]
+#[serde(tag = "nodeType")]
+pub enum ExpressionOrVariableDeclarationStatement {
+    Expression(Expression),
+    VariableDeclarationStatement(VariableDeclarationStatement),
+}
+
+impl ExpressionOrVariableDeclarationStatement {
+    pub fn get_node_id(&self) -> Option<NodeID> {
+        match self {
+            ExpressionOrVariableDeclarationStatement::Expression(ref expression) => {
+                expression.get_node_id()
+            }
+            ExpressionOrVariableDeclarationStatement::VariableDeclarationStatement(
+                ref vd_stmnt,
+            ) => Some(vd_stmnt.id),
+        }
+    }
+}
+
 ast_node!(
     #[derive(Hash)]
     struct Block {
@@ -569,7 +589,7 @@ ast_node!(
 ast_node!(
     #[derive(Hash)]
     struct ForStatement {
-        initialization_expression: Option<Box<Statement>>,
+        initialization_expression: Option<Box<ExpressionOrVariableDeclarationStatement>>,
         condition: Option<Expression>,
         loop_expression: Option<Box<ExpressionStatement>>,
         body: BlockOrStatement,

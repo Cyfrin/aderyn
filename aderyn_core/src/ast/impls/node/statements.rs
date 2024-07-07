@@ -124,10 +124,16 @@ impl Node for ForStatement {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         if visitor.visit_for_statement(self)? {
             if self.initialization_expression.is_some() {
-                self.initialization_expression
-                    .as_ref()
-                    .unwrap()
-                    .accept(visitor)?;
+                match self.initialization_expression.as_ref().unwrap().as_ref() {
+                    ExpressionOrVariableDeclarationStatement::Expression(expr) => {
+                        expr.accept(visitor)?;
+                    }
+                    ExpressionOrVariableDeclarationStatement::VariableDeclarationStatement(
+                        vd_stmnt,
+                    ) => {
+                        vd_stmnt.accept(visitor)?;
+                    }
+                }
             }
             if self.condition.is_some() {
                 self.condition.as_ref().unwrap().accept(visitor)?;
