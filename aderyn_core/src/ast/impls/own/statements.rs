@@ -9,7 +9,7 @@ impl Statement {
             Statement::IfStatement(if_statement) => Some(if_statement.id),
             Statement::ForStatement(for_statement) => Some(for_statement.id),
             Statement::WhileStatement(while_statement) => Some(while_statement.id),
-            Statement::EmitStatement(emit_statement) => emit_statement.event_call.get_node_id(),
+            Statement::EmitStatement(emit_statement) => Some(emit_statement.id),
             Statement::UncheckedBlock(unchecked_statement) => Some(unchecked_statement.id),
             Statement::Return(return_statement) => Some(return_statement.id),
             Statement::RevertStatement(revert_statement) => Some(revert_statement.error_call.id),

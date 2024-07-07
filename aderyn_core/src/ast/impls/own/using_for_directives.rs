@@ -10,7 +10,7 @@ impl UserDefinedTypeNameOrIdentifierPath {
 
     pub fn get_node_id(&self) -> Option<NodeID> {
         match self {
-            UserDefinedTypeNameOrIdentifierPath::UserDefinedTypeName(_) => None,
+            UserDefinedTypeNameOrIdentifierPath::UserDefinedTypeName(node) => Some(node.id),
             UserDefinedTypeNameOrIdentifierPath::IdentifierPath(node) => Some(node.id),
         }
     }
