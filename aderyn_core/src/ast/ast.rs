@@ -1,6 +1,6 @@
 use crate::{
+    ast::macros::*,
     ast::*,
-    context::macros::generate_ast_methods,
     visitor::ast_visitor::{ASTConstVisitor, Node},
 };
 use eyre::Result;
