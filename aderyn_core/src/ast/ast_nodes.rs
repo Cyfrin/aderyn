@@ -127,15 +127,15 @@ pub enum UserDefinedTypeNameOrIdentifierPath {
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Hash)]
 #[serde(tag = "nodeType")]
 pub enum ExpressionOrVariableDeclarationStatement {
-    Expression(Expression),
+    ExpressionStatement(ExpressionStatement),
     VariableDeclarationStatement(VariableDeclarationStatement),
 }
 
 impl ExpressionOrVariableDeclarationStatement {
     pub fn get_node_id(&self) -> Option<NodeID> {
         match self {
-            ExpressionOrVariableDeclarationStatement::Expression(ref expression) => {
-                expression.get_node_id()
+            ExpressionOrVariableDeclarationStatement::ExpressionStatement(ref expression) => {
+                Some(expression.id)
             }
             ExpressionOrVariableDeclarationStatement::VariableDeclarationStatement(
                 ref vd_stmnt,

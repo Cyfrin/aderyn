@@ -86,7 +86,7 @@ impl Display for ForStatement {
         f.write_str("for (")?;
 
         if let Some(initialization_expression) = self.initialization_expression.as_ref() {
-            f.write_fmt(format_args!("{initialization_expression}"))?;
+            f.write_fmt(format_args!("{:?}", initialization_expression))?;
         }
 
         f.write_str("; ")?;

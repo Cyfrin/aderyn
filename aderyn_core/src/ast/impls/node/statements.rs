@@ -125,7 +125,7 @@ impl Node for ForStatement {
         if visitor.visit_for_statement(self)? {
             if self.initialization_expression.is_some() {
                 match self.initialization_expression.as_ref().unwrap().as_ref() {
-                    ExpressionOrVariableDeclarationStatement::Expression(expr) => {
+                    ExpressionOrVariableDeclarationStatement::ExpressionStatement(expr) => {
                         expr.accept(visitor)?;
                     }
                     ExpressionOrVariableDeclarationStatement::VariableDeclarationStatement(
