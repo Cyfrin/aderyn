@@ -31,3 +31,16 @@ impl Hash for UserDefinedTypeName {
         self.type_descriptions.hash(state);
     }
 }
+
+impl TypeName {
+    pub fn get_node_id(&self) -> Option<NodeID> {
+        match self {
+            TypeName::FunctionTypeName(node) => Some(node.id),
+            TypeName::ArrayTypeName(node) => Some(node.id),
+            TypeName::Mapping(node) => Some(node.id),
+            TypeName::UserDefinedTypeName(node) => Some(node.id),
+            TypeName::ElementaryTypeName(node) => Some(node.id),
+            TypeName::Raw(_) => None,
+        }
+    }
+}

@@ -160,6 +160,16 @@ macro_rules! generate_ast_methods {
     };
 }
 
+macro_rules! accept_id {
+    () => {
+        fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+            visitor.visit_node_id(Some(self.id))?;
+            Ok(())
+        }
+    };
+}
+
+pub(crate) use accept_id;
 pub(crate) use ast_node;
 pub(crate) use ast_node_no_partial_eq;
 pub(crate) use expr_node;

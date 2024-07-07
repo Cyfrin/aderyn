@@ -1,6 +1,7 @@
 use crate::ast::*;
 use crate::visitor::ast_visitor::*;
 use eyre::Result;
+use macros::accept_id;
 
 impl Node for TypeName {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
@@ -17,6 +18,10 @@ impl Node for TypeName {
             TypeName::Raw(_) => Ok(()),
         }
     }
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(self.get_node_id())?;
+        Ok(())
+    }
 }
 
 impl Node for ElementaryTypeName {
@@ -24,6 +29,7 @@ impl Node for ElementaryTypeName {
         visitor.visit_elementary_type_name(self)?;
         visitor.end_visit_elementary_type_name(self)
     }
+    accept_id!();
 }
 
 impl Node for UserDefinedTypeName {
@@ -33,6 +39,7 @@ impl Node for UserDefinedTypeName {
         }
         visitor.end_visit_user_defined_type_name(self)
     }
+    accept_id!();
 }
 
 impl Node for FunctionTypeName {
@@ -43,6 +50,7 @@ impl Node for FunctionTypeName {
         }
         visitor.end_visit_function_type_name(self)
     }
+    accept_id!();
 }
 
 impl Node for ArrayTypeName {
@@ -55,6 +63,7 @@ impl Node for ArrayTypeName {
         }
         visitor.end_visit_array_type_name(self)
     }
+    accept_id!();
 }
 
 impl Node for Mapping {
@@ -65,4 +74,5 @@ impl Node for Mapping {
         }
         visitor.end_visit_mapping(self)
     }
+    accept_id!();
 }

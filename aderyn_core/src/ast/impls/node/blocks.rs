@@ -1,4 +1,7 @@
-use crate::{ast::Block, visitor::ast_visitor::*};
+use crate::{
+    ast::{macros::accept_id, Block},
+    visitor::ast_visitor::*,
+};
 use eyre::Result;
 
 impl Node for Block {
@@ -20,8 +23,5 @@ impl Node for Block {
         Ok(())
     }
 
-    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_node_id(Some(self.id))?;
-        Ok(())
-    }
+    accept_id!();
 }

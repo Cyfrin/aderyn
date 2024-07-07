@@ -1,6 +1,7 @@
 use crate::ast::*;
 use crate::visitor::ast_visitor::*;
 use eyre::Result;
+use macros::accept_id;
 
 impl Node for Statement {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
@@ -228,8 +229,18 @@ impl Node for EmitStatement {
         if visitor.visit_emit_statement(self)? {
             self.event_call.accept(visitor)?;
         }
+        self.accept_metadata(visitor)?;
         visitor.end_visit_emit_statement(self)
     }
+
+    fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        if let Some(event_call_id) = self.event_call.get_node_id() {
+            visitor.visit_immediate_children(self.id, vec![event_call_id])?;
+        }
+        Ok(())
+    }
+
+    accept_id!();
 }
 
 impl Node for TryStatement {
@@ -240,6 +251,7 @@ impl Node for TryStatement {
         }
         visitor.end_visit_try_statement(self)
     }
+    accept_id!();
 }
 
 impl Node for RevertStatement {
@@ -249,6 +261,7 @@ impl Node for RevertStatement {
         }
         visitor.end_visit_revert_statement(self)
     }
+    accept_id!();
 }
 
 impl Node for TryCatchClause {
@@ -261,6 +274,7 @@ impl Node for TryCatchClause {
         }
         visitor.end_visit_try_catch_clause(self)
     }
+    accept_id!();
 }
 
 impl Node for Return {
