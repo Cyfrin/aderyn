@@ -35,7 +35,7 @@ macro_rules! generate_ast_methods {
 }
 
 macro_rules! generate_visit_methods_for_workspace_context_with_insert_node {
-    ($($method_name:ident => $node:ident => $map_name:ident),* $(,)*) => {
+    ($( $method_name:ident | $node:ident => $map_name:ident | ),* $(,)*) => {
         $(
             fn $method_name(&mut self, node: &$node) -> Result<bool> {
                 self.nodes
