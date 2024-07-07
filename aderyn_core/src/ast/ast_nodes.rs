@@ -451,18 +451,17 @@ pub enum SourceUnitNode {
     ContractDefinition(ContractDefinition),
 }
 
-#[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
-#[serde(rename_all = "camelCase")]
-pub struct SourceUnit {
-    pub license: Option<String>,
-    pub nodes: Vec<SourceUnitNode>,
-    pub exported_symbols: Option<HashMap<String, Vec<NodeID>>>,
-    pub absolute_path: Option<String>,
-    pub id: NodeID,
+ast_node!(
+    struct SourceUnit {
+        license: Option<String>,
+        nodes: Vec<SourceUnitNode>,
+        exported_symbols: Option<HashMap<String, Vec<NodeID>>>,
+        absolute_path: Option<String>,
 
-    #[serde(skip_serializing)]
-    pub source: Option<String>,
-}
+        #[serde(skip_serializing)]
+        source: Option<String>,
+    }
+);
 
 #[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(tag = "nodeType")]
