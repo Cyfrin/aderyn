@@ -74,8 +74,7 @@ pub enum ContractDefinitionNode {
     UserDefinedValueTypeDefinition(UserDefinedValueTypeDefinition),
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(untagged)]
+#[derive(Clone, Debug, Eq, Serialize, PartialEq, Hash)]
 pub enum TypeName {
     FunctionTypeName(FunctionTypeName),
     ArrayTypeName(ArrayTypeName),
@@ -86,6 +85,36 @@ pub enum TypeName {
     ///
     /// This variant applies to older compiler versions.
     Raw(String),
+}
+
+impl<'de> Deserialize<'de> for TypeName {
+    fn deserialize<D: serde::Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+        let json = serde_json::Value::deserialize(deserializer)?;
+        let node_type = json.get("nodeType");
+
+        if node_type.is_none() {
+            return Ok(TypeName::Raw(json.to_string()));
+        }
+
+        let type_name = node_type.unwrap().as_str().unwrap();
+
+        match type_name {
+            "FunctionTypeName" => Ok(TypeName::FunctionTypeName(
+                serde_json::from_value(json).unwrap(),
+            )),
+            "ArrayTypeName" => Ok(TypeName::ArrayTypeName(
+                serde_json::from_value(json).unwrap(),
+            )),
+            "Mapping" => Ok(TypeName::Mapping(serde_json::from_value(json).unwrap())),
+            "UserDefinedTypeName" => Ok(TypeName::UserDefinedTypeName(
+                serde_json::from_value(json).unwrap(),
+            )),
+            "ElementaryTypeName" => Ok(TypeName::ElementaryTypeName(
+                serde_json::from_value(json).unwrap(),
+            )),
+            _ => panic!("Unrecognized type name {type_name}"),
+        }
+    }
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Hash)]
