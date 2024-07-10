@@ -1,7 +1,7 @@
 {
   "files_summary": {
     "total_source_units": 42,
-    "total_sloc": 1361
+    "total_sloc": 1377
   },
   "files_details": {
     "files_details": [
@@ -55,7 +55,7 @@
       },
       {
         "file_path": "src/EnumerableSetIteration.sol",
-        "n_sloc": 39
+        "n_sloc": 55
       },
       {
         "file_path": "src/HugeConstants.sol",
@@ -957,20 +957,32 @@
           {
             "contract_path": "src/EnumerableSetIteration.sol",
             "line_no": 31,
-            "src": "1096:17",
-            "src_char": "1096:17"
+            "src": "1105:17",
+            "src_char": "1105:17"
           },
           {
             "contract_path": "src/EnumerableSetIteration.sol",
-            "line_no": 39,
-            "src": "1326:17",
-            "src_char": "1326:17"
+            "line_no": 40,
+            "src": "1350:17",
+            "src_char": "1350:17"
           },
           {
             "contract_path": "src/EnumerableSetIteration.sol",
-            "line_no": 47,
-            "src": "1544:14",
-            "src_char": "1544:14"
+            "line_no": 50,
+            "src": "1586:17",
+            "src_char": "1586:17"
+          },
+          {
+            "contract_path": "src/EnumerableSetIteration.sol",
+            "line_no": 59,
+            "src": "1865:17",
+            "src_char": "1865:17"
+          },
+          {
+            "contract_path": "src/EnumerableSetIteration.sol",
+            "line_no": 67,
+            "src": "2083:14",
+            "src_char": "2083:14"
           }
         ]
       }
