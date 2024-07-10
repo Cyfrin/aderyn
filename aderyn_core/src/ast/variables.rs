@@ -111,7 +111,7 @@ impl VariableDeclaration {
         } else if self.state_variable {
             &Mutability::Mutable
         } else {
-            unreachable!()
+            &Mutability::Immutable
         }
     }
 }

@@ -1661,62 +1661,37 @@ impl WorkspaceContext {
         let absolute_path = source_unit.absolute_path.as_ref().unwrap().clone();
         let source_line = node
             .src()
-            .map(|src| source_unit.source_line(src).unwrap_or(0)) // If `src` is `Some`, get the line number, else return 0
-            .unwrap_or(0); // If `src` is `None`, default to 0
+            .map(|src| source_unit.source_line(src).unwrap_or(0))
+            .unwrap_or(0);
 
-        // If the node is one of these, and it has a `name_location`, use that instead of the full `src`
         let src_location = match node {
-            ASTNode::ContractDefinition(node) => {
-                if let Some(name_location) = &node.name_location {
-                    if !name_location.contains("-1") {
-                        name_location
-                    } else {
-                        &node.src
-                    }
-                } else {
-                    &node.src
-                }
-            }
-            ASTNode::FunctionDefinition(node) => {
-                if let Some(name_location) = &node.name_location {
-                    if !name_location.contains("-1") {
-                        name_location
-                    } else {
-                        &node.src
-                    }
-                } else {
-                    &node.src
-                }
-            }
-            ASTNode::ModifierDefinition(node) => {
-                if let Some(name_location) = &node.name_location {
-                    if !name_location.contains("-1") {
-                        name_location
-                    } else {
-                        &node.src
-                    }
-                } else {
-                    &node.src
-                }
-            }
-            ASTNode::VariableDeclaration(node) => {
-                if let Some(name_location) = &node.name_location {
-                    if !name_location.contains("-1") {
-                        name_location
-                    } else {
-                        &node.src
-                    }
-                } else {
-                    &node.src
-                }
-            }
-            _ => node.src().unwrap_or(""),
+            ASTNode::ContractDefinition(contract_node) => contract_node
+                .name_location
+                .as_ref()
+                .filter(|loc| !loc.contains("-1"))
+                .map_or_else(|| contract_node.src.clone(), |loc| loc.clone()),
+            ASTNode::FunctionDefinition(function_node) => function_node
+                .name_location
+                .as_ref()
+                .filter(|loc| !loc.contains("-1"))
+                .map_or_else(|| function_node.src.clone(), |loc| loc.clone()),
+            ASTNode::ModifierDefinition(modifier_node) => modifier_node
+                .name_location
+                .as_ref()
+                .filter(|loc| !loc.contains("-1"))
+                .map_or_else(|| modifier_node.src.clone(), |loc| loc.clone()),
+            ASTNode::VariableDeclaration(variable_node) => variable_node
+                .name_location
+                .as_ref()
+                .filter(|loc| !loc.contains("-1"))
+                .map_or_else(|| variable_node.src.clone(), |loc| loc.clone()),
+            _ => node.src().unwrap_or("").to_string(),
         };
-        let chopped_location = match src_location.rfind(':') {
-            Some(index) => &src_location[..index],
-            None => src_location, // No colon found, return the original string
-        }
-        .to_string();
+
+        let chopped_location = src_location
+            .rfind(':')
+            .map(|index| src_location[..index].to_string())
+            .unwrap_or(src_location);
 
         (absolute_path, source_line, chopped_location)
     }
