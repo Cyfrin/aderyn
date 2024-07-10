@@ -79,7 +79,7 @@ pub struct VariableDeclaration {
     /// Marks the variable's mutability from Solidity 0.7.x onwards.
     /// For cross-version compatibility use [`VariableDeclaration::mutability()`].
     #[serde(default)]
-    mutability: Option<Mutability>,
+    pub mutability: Option<Mutability>,
     pub name: String,
     pub name_location: Option<String>,
     pub overrides: Option<OverrideSpecifier>,
@@ -97,23 +97,6 @@ pub struct VariableDeclaration {
     pub visibility: Visibility,
     pub src: String,
     pub id: NodeID,
-}
-
-impl VariableDeclaration {
-    /// Returns the mutability of the variable that was declared.
-    ///
-    /// This is a helper to check variable mutability across Solidity versions.
-    pub fn mutability(&self) -> &Mutability {
-        if let Some(mutability) = &self.mutability {
-            mutability
-        } else if self.constant {
-            &Mutability::Constant
-        } else if self.state_variable {
-            &Mutability::Mutable
-        } else {
-            unreachable!()
-        }
-    }
 }
 
 impl Node for VariableDeclaration {
