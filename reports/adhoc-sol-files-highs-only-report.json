@@ -1,13 +1,17 @@
 {
   "files_summary": {
-    "total_source_units": 19,
-    "total_sloc": 214
+    "total_source_units": 20,
+    "total_sloc": 245
   },
   "files_details": {
     "files_details": [
       {
         "file_path": "Counter.sol",
         "n_sloc": 20
+      },
+      {
+        "file_path": "DemoASTNodes.sol",
+        "n_sloc": 31
       },
       {
         "file_path": "Helper.sol",
@@ -97,7 +101,8 @@
           {
             "contract_path": "inheritance/ExtendedInheritance.sol",
             "line_no": 16,
-            "src": "488:19"
+            "src": "488:19",
+            "src_char": "488:19"
           }
         ]
       }
@@ -112,6 +117,7 @@
     "block-timestamp-deadline",
     "arbitrary-transfer-from",
     "unprotected-initializer",
-    "unsafe-casting-detector"
+    "unsafe-casting-detector",
+    "enumerable-loop-removal"
   ]
 }

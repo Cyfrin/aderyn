@@ -34,7 +34,13 @@ impl IssueDetector for UnsafeCastingDetector {
 
                 let first_arg = function_call.arguments.first();
                 let identifier_id = match first_arg {
-                    Some(Expression::Identifier(identifier)) => identifier.referenced_declaration,
+                    Some(Expression::Identifier(identifier)) => {
+                        if let Some(reference_id) = identifier.referenced_declaration {
+                            reference_id
+                        } else {
+                            continue;
+                        }
+                    }
                     _ => continue,
                 };
 
@@ -144,7 +150,11 @@ fn has_binary_operation_checks(
                     .extracted
                     .into_iter()
                     .any(|identifier| {
-                        identifier.referenced_declaration == *identifier_reference_declaration_id
+                        identifier
+                            .referenced_declaration
+                            .is_some_and(|reference_id| {
+                                *identifier_reference_declaration_id == reference_id
+                            })
                     })
             });
     }

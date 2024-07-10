@@ -743,7 +743,7 @@ Consider using a specific version of Solidity in your contracts instead of a wid
 
 Check for `address(0)` when assigning values to address state variables.
 
-<details><summary>10 Found Instances</summary>
+<details><summary>6 Found Instances</summary>
 
 
 - Found in src/v0.8/functions/dev/v1_X/FunctionsBilling.sol [Line: 78](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/FunctionsBilling.sol#L78)
@@ -758,34 +758,10 @@ Check for `address(0)` when assigning values to address state variables.
 	    s_linkToUsdFeed = AggregatorV3Interface(linkToUsdFeed);
 	```
 
-- Found in src/v0.8/functions/dev/v1_X/FunctionsSubscriptions.sol [Line: 133](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/FunctionsSubscriptions.sol#L133)
-
-	```solidity
-	    s_withdrawableTokens[msg.sender] += costWithoutCallbackJuels + callbackGasCostJuels;
-	```
-
-- Found in src/v0.8/functions/dev/v1_X/FunctionsSubscriptions.sol [Line: 136](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/FunctionsSubscriptions.sol#L136)
-
-	```solidity
-	    s_withdrawableTokens[address(this)] += adminFee;
-	```
-
 - Found in src/v0.8/functions/v1_0_0/FunctionsBilling.sol [Line: 73](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/FunctionsBilling.sol#L73)
 
 	```solidity
 	    s_linkToNativeFeed = AggregatorV3Interface(linkToNativeFeed);
-	```
-
-- Found in src/v0.8/functions/v1_0_0/FunctionsSubscriptions.sol [Line: 133](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/FunctionsSubscriptions.sol#L133)
-
-	```solidity
-	    s_withdrawableTokens[msg.sender] += costWithoutCallbackJuels + callbackGasCostJuels;
-	```
-
-- Found in src/v0.8/functions/v1_0_0/FunctionsSubscriptions.sol [Line: 136](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/FunctionsSubscriptions.sol#L136)
-
-	```solidity
-	    s_withdrawableTokens[address(this)] += adminFee;
 	```
 
 - Found in src/v0.8/functions/v1_1_0/FunctionsBilling.sol [Line: 85](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_1_0/FunctionsBilling.sol#L85)

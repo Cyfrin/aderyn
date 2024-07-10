@@ -1,4 +1,5 @@
 use std::{
+    collections::HashMap,
     io::{self, Result, Write},
     path::PathBuf,
 };
@@ -34,6 +35,7 @@ impl ReportPrinter<()> for SarifPrinter {
         _: bool,
         stdout: bool,
         _detectors_used: &[(String, String)],
+        _file_contents: &HashMap<String, &String>,
     ) -> Result<()> {
         let runs = vec![Run {
             tool: Tool {
@@ -221,11 +223,10 @@ fn create_sarif_locations(issue: &Issue) -> Vec<Location> {
                     context_region: None,
                     properties: None,
                     region: Some(Region {
-                        char_offset: Some(offset.parse().unwrap()),
-                        char_length: Some(len.parse().unwrap()),
-
-                        byte_length: None,
-                        byte_offset: None,
+                        char_offset: None,
+                        char_length: None,
+                        byte_length: Some(len.parse().unwrap()),
+                        byte_offset: Some(offset.parse().unwrap()),
                         end_column: None,
                         end_line: None,
                         message: None,

@@ -5,8 +5,13 @@ use serde::{Deserialize, Serialize};
 use std::fmt::Display;
 
 #[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(untagged)]
+#[serde(tag = "nodeType")]
 pub enum Statement {
+    Block(Block),
+    Break(Break),
+    Continue(Continue),
+    DoWhileStatement(DoWhileStatement),
+    PlaceholderStatement(PlaceholderStatement),
     VariableDeclarationStatement(VariableDeclarationStatement),
     IfStatement(IfStatement),
     ForStatement(ForStatement),
@@ -18,13 +23,6 @@ pub enum Statement {
     RevertStatement(RevertStatement),
     ExpressionStatement(ExpressionStatement),
     InlineAssembly(InlineAssembly),
-
-    #[serde(rename_all = "camelCase")]
-    UnhandledStatement {
-        node_type: NodeType,
-        src: Option<String>,
-        id: Option<NodeID>,
-    },
 }
 
 impl Statement {
@@ -44,12 +42,12 @@ impl Statement {
                 expression_statement.expression.get_node_id()
             }
             Statement::InlineAssembly(inline_assembly) => Some(inline_assembly.id),
-            Statement::UnhandledStatement {
-                id,
-                node_type: _node_type,
-                src: _src,
-            } => *id,
             Statement::TryStatement(_) => None,
+            Statement::Block(block) => Some(block.id),
+            Statement::Break(break_statement) => Some(break_statement.id),
+            Statement::Continue(continue_statement) => Some(continue_statement.id),
+            Statement::DoWhileStatement(do_while_statement) => Some(do_while_statement.id),
+            Statement::PlaceholderStatement(placeholder) => Some(placeholder.id),
         }
     }
 }
@@ -72,11 +70,12 @@ impl Node for Statement {
                 expression_statement.accept(visitor)
             }
             Statement::InlineAssembly(inline_assembly) => inline_assembly.accept(visitor),
-            Statement::UnhandledStatement { .. } => {
-                // TODO: This may cause referencing issues later
-                // Known unhandled statements:
-                // - break
-                Ok(())
+            Statement::Block(block) => block.accept(visitor),
+            Statement::Break(break_statement) => break_statement.accept(visitor),
+            Statement::Continue(continue_statement) => continue_statement.accept(visitor),
+            Statement::DoWhileStatement(do_while_statement) => do_while_statement.accept(visitor),
+            Statement::PlaceholderStatement(placeholder_statement) => {
+                placeholder_statement.accept(visitor)
             }
         }
     }
@@ -108,12 +107,7 @@ impl Display for Statement {
             Statement::InlineAssembly(..) => {
                 f.write_str("assembly { /* WARNING: not implemented */ }")
             }
-            Statement::UnhandledStatement { node_type, .. } => match node_type {
-                NodeType::PlaceholderStatement => f.write_str("_"),
-                NodeType::Break => f.write_str("break"),
-                NodeType::Continue => f.write_str("continue"),
-                _ => unimplemented!("{:?}", node_type),
-            },
+            _ => f.write_str("unrecognized!"),
         }
     }
 }
@@ -347,7 +341,7 @@ impl Display for IfStatement {
 pub struct ForStatement {
     pub initialization_expression: Option<Box<Statement>>,
     pub condition: Option<Expression>,
-    pub loop_expression: Option<Box<Statement>>,
+    pub loop_expression: Option<Box<ExpressionStatement>>,
     pub body: BlockOrStatement,
     pub src: String,
     pub id: NodeID,
@@ -385,7 +379,7 @@ impl Node for ForStatement {
             }
         }
         if let Some(loop_expr) = &self.loop_expression {
-            if let Some(loop_id) = loop_expr.get_node_id() {
+            if let Some(loop_id) = loop_expr.expression.get_node_id() {
                 visitor.visit_immediate_children(self.id, vec![loop_id])?;
             }
         }
@@ -463,6 +457,46 @@ impl Node for WhileStatement {
 impl Display for WhileStatement {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.write_fmt(format_args!("while ({}) {}", self.condition, self.body))
+    }
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(rename_all = "camelCase")]
+pub struct DoWhileStatement {
+    pub id: NodeID,
+    pub src: String,
+    pub documentation: Option<String>,
+    pub body: Block,
+    pub condition: Expression,
+}
+
+impl Node for DoWhileStatement {
+    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        if visitor.visit_do_while_statement(self)? {
+            self.condition.accept(visitor)?;
+            self.body.accept(visitor)?;
+        }
+        self.accept_metadata(visitor)?;
+        visitor.end_do_visit_while_statement(self)
+    }
+
+    fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        if let Some(cond_id) = self.condition.get_node_id() {
+            visitor.visit_immediate_children(self.id, vec![cond_id])?;
+        }
+        visitor.visit_immediate_children(self.id, vec![self.body.id])?;
+        Ok(())
+    }
+
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
+        Ok(())
+    }
+}
+
+impl Display for DoWhileStatement {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.write_fmt(format_args!("do {} while({});", self.body, self.condition))
     }
 }
 
@@ -619,6 +653,78 @@ impl Node for InlineAssembly {
         }
         visitor.end_visit_inline_assembly(self)
     }
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
+        Ok(())
+    }
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(rename_all = "camelCase")]
+pub struct Break {
+    pub id: NodeID,
+    pub src: String,
+    pub documentation: Option<String>,
+}
+
+impl Node for Break {
+    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_break_statement(self)?;
+        visitor.end_visit_break_statement(self)
+    }
+
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
+        Ok(())
+    }
+}
+
+impl Display for Break {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.write_str("break;")
+    }
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(rename_all = "camelCase")]
+pub struct Continue {
+    pub id: NodeID,
+    pub src: String,
+    pub documentation: Option<String>,
+}
+
+impl Node for Continue {
+    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_continue_statement(self)?;
+        visitor.end_visit_continue_statement(self)
+    }
+
+    fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_node_id(Some(self.id))?;
+        Ok(())
+    }
+}
+
+impl Display for Continue {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.write_str("continue;")
+    }
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
+#[serde(rename_all = "camelCase")]
+pub struct PlaceholderStatement {
+    pub id: NodeID,
+    pub src: String,
+    pub documentation: Option<String>,
+}
+
+impl Node for PlaceholderStatement {
+    fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        visitor.visit_placeholder_statement(self)?;
+        visitor.end_visit_placeholder_statement(self)
+    }
+
     fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         visitor.visit_node_id(Some(self.id))?;
         Ok(())

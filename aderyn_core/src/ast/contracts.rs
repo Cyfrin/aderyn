@@ -2,7 +2,7 @@ use super::*;
 use crate::visitor::ast_visitor::*;
 use eyre::Result;
 use serde::{Deserialize, Serialize};
-use std::fmt::Display;
+use std::{collections::BTreeMap, fmt::Display};
 
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq, PartialOrd, Eq, Ord, Hash)]
 #[serde(rename_all = "lowercase")]
@@ -18,8 +18,8 @@ impl Display for ContractKind {
     }
 }
 
-#[derive(Clone, Debug, Eq, Serialize, PartialEq, Hash)]
-#[serde(untagged)]
+#[derive(Clone, Debug, Eq, Serialize, Deserialize, PartialEq, Hash)]
+#[serde(tag = "nodeType")]
 pub enum ContractDefinitionNode {
     UsingForDirective(UsingForDirective),
     StructDefinition(StructDefinition),
@@ -30,45 +30,6 @@ pub enum ContractDefinitionNode {
     ModifierDefinition(ModifierDefinition),
     ErrorDefinition(ErrorDefinition),
     UserDefinedValueTypeDefinition(UserDefinedValueTypeDefinition),
-}
-
-impl<'de> Deserialize<'de> for ContractDefinitionNode {
-    fn deserialize<D: serde::Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
-        let json = serde_json::Value::deserialize(deserializer)?;
-        let node_type = json.get("nodeType").unwrap().as_str().unwrap();
-        match node_type {
-            "FunctionDefinition" => Ok(ContractDefinitionNode::FunctionDefinition(
-                serde_json::from_value(json).unwrap(),
-            )),
-            "StructDefinition" => Ok(ContractDefinitionNode::StructDefinition(
-                serde_json::from_value(json).unwrap(),
-            )),
-            "ErrorDefinition" => Ok(ContractDefinitionNode::ErrorDefinition(
-                serde_json::from_value(json).unwrap(),
-            )),
-            "EnumDefinition" => Ok(ContractDefinitionNode::EnumDefinition(
-                serde_json::from_value(json).unwrap(),
-            )),
-            "VariableDeclaration" => Ok(ContractDefinitionNode::VariableDeclaration(
-                serde_json::from_value(json).unwrap(),
-            )),
-            "UserDefinedValueTypeDefinition" => {
-                Ok(ContractDefinitionNode::UserDefinedValueTypeDefinition(
-                    serde_json::from_value(json).unwrap(),
-                ))
-            }
-            "UsingForDirective" => Ok(ContractDefinitionNode::UsingForDirective(
-                serde_json::from_value(json).unwrap(),
-            )),
-            "ModifierDefinition" => Ok(ContractDefinitionNode::ModifierDefinition(
-                serde_json::from_value(json).unwrap(),
-            )),
-            "EventDefinition" => Ok(ContractDefinitionNode::EventDefinition(
-                serde_json::from_value(json).unwrap(),
-            )),
-            _ => panic!("Invalid contract definition node type: {node_type}"),
-        }
-    }
 }
 
 impl Node for ContractDefinitionNode {
@@ -167,7 +128,7 @@ impl Display for ContractDefinitionNode {
 #[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct InheritanceSpecifier {
-    pub base_name: IdentifierPath,
+    pub base_name: UserDefinedTypeNameOrIdentifierPath,
     pub arguments: Option<Vec<Expression>>,
     pub src: String,
     pub id: NodeID,
@@ -176,7 +137,14 @@ pub struct InheritanceSpecifier {
 impl Node for InheritanceSpecifier {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         if visitor.visit_inheritance_specifier(self)? {
-            self.base_name.accept(visitor)?;
+            match &self.base_name {
+                UserDefinedTypeNameOrIdentifierPath::UserDefinedTypeName(type_name) => {
+                    type_name.accept(visitor)?
+                }
+                UserDefinedTypeNameOrIdentifierPath::IdentifierPath(identifier_path) => {
+                    identifier_path.accept(visitor)?;
+                }
+            };
             if self.arguments.is_some() {
                 list_accept(self.arguments.as_ref().unwrap(), visitor)?;
             }
@@ -185,7 +153,9 @@ impl Node for InheritanceSpecifier {
         visitor.end_visit_inheritance_specifier(self)
     }
     fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        visitor.visit_immediate_children(self.id, vec![self.base_name.id])?;
+        if let Some(base_name_id) = self.base_name.get_node_id() {
+            visitor.visit_immediate_children(self.id, vec![base_name_id])?;
+        }
         let mut argument_ids: Vec<NodeID> = vec![];
         if let Some(arguments) = &self.arguments {
             for expression in arguments {
@@ -206,7 +176,7 @@ impl Node for InheritanceSpecifier {
 
 impl Display for InheritanceSpecifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_fmt(format_args!("{}", self.base_name))?;
+        f.write_fmt(format_args!("{:?}", self.base_name))?;
 
         if let Some(arguments) = self.arguments.as_ref() {
             f.write_str("(")?;
@@ -240,8 +210,12 @@ pub struct ContractDefinition {
     #[serde(rename = "abstract")]
     pub is_abstract: Option<bool>,
     pub base_contracts: Vec<InheritanceSpecifier>,
+    pub canonical_name: Option<String>,
     pub contract_dependencies: Vec<NodeID>,
     pub used_errors: Option<Vec<NodeID>>,
+    pub used_events: Option<Vec<usize>>,
+    #[serde(default, rename = "internalFunctionIDs")]
+    pub internal_function_ids: BTreeMap<String, usize>,
     pub nodes: Vec<ContractDefinitionNode>,
     pub scope: NodeID,
     pub fully_implemented: Option<bool>,
@@ -485,11 +459,10 @@ impl ContractDefinition {
 
         match expression {
             Expression::Identifier(identifier) => {
-                if self.hierarchy_contains_state_variable(
-                    source_units,
-                    identifier.referenced_declaration,
-                ) {
-                    ids.push(identifier.referenced_declaration);
+                if let Some(reference_id) = identifier.referenced_declaration {
+                    if self.hierarchy_contains_state_variable(source_units, reference_id) {
+                        ids.push(reference_id);
+                    }
                 }
             }
 
@@ -553,12 +526,13 @@ impl ContractDefinition {
                 ContractDefinitionNode::FunctionDefinition(function_definition) => format!(
                     "{} {} in the `{}` {}",
                     function_definition.visibility,
-                    if let FunctionKind::Constructor = function_definition.kind {
+                    if let FunctionKind::Constructor = function_definition.kind() {
                         "constructor".to_string()
                     } else {
                         format!(
                             "`{}` {}",
-                            function_definition.name, function_definition.kind
+                            function_definition.name,
+                            function_definition.kind()
                         )
                     },
                     self.name,

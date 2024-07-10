@@ -2,7 +2,6 @@ pub mod ast;
 pub mod audit;
 pub mod context;
 pub mod detect;
-pub mod framework;
 pub mod fscloc;
 pub mod report;
 pub mod visitor;
@@ -13,7 +12,7 @@ use eyre::Result;
 use prettytable::Row;
 use rayon::iter::{IntoParallelIterator, IntoParallelRefMutIterator, ParallelIterator};
 use std::collections::btree_map::Entry;
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, HashMap};
 use std::error::Error;
 use std::fs::{remove_file, File};
 use std::io::{self};
@@ -167,6 +166,18 @@ where
     println!("Detectors run, processing found issues");
 
     println!("Found issues processed. Printing report");
+
+    let file_contents = contexts
+        .iter()
+        .flat_map(|context| context.source_units())
+        .map(|source_unit| {
+            (
+                source_unit.absolute_path.as_ref().unwrap().to_owned(),
+                source_unit.source.as_ref().unwrap(),
+            )
+        })
+        .collect::<HashMap<_, _>>();
+
     if !stdout {
         reporter.print_report(
             get_writer(&output_file_path)?,
@@ -177,6 +188,7 @@ where
             no_snippets,
             stdout,
             detectors_used,
+            &file_contents,
         )?;
         println!("Report printed to {}", output_file_path);
     } else {
@@ -189,6 +201,7 @@ where
             no_snippets,
             stdout,
             detectors_used,
+            &file_contents,
         )?;
     }
     Ok(())

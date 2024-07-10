@@ -23,7 +23,7 @@ impl IssueDetector for UselessModifierDetector {
         let mut invocations: HashMap<i64, usize> = HashMap::new();
 
         for inv in context.modifier_invocations() {
-            if let Some(id) = inv.modifier_name.referenced_declaration {
+            if let Some(id) = inv.modifier_name.referenced_declaration() {
                 match invocations.entry(id) {
                     std::collections::hash_map::Entry::Occupied(mut o) => *o.get_mut() += 1,
                     std::collections::hash_map::Entry::Vacant(v) => {

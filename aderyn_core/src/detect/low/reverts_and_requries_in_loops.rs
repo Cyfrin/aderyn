@@ -71,7 +71,7 @@ mod reevrts_and_requires_in_loops {
     };
 
     #[test]
-    fn test_reverts_and_requires_in_loops() {
+    fn test_reverts_and_requires_in_loops_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/RevertsAndRequriesInLoops.sol",
         );

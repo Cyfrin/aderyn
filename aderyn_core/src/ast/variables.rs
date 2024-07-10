@@ -67,15 +67,28 @@ impl Display for StorageLocation {
 #[serde(rename_all = "camelCase")]
 pub struct VariableDeclaration {
     pub base_functions: Option<Vec<NodeID>>,
+    /// Marks whether or not the variable is a constant before Solidity 0.7.x.
+    ///
+    /// After 0.7.x you must use `mutability`. For cross-version compatibility use
+    /// [`VariableDeclaration::mutability()`].
+    #[serde(default)]
     pub constant: bool,
     pub documentation: Option<Documentation>,
     pub function_selector: Option<String>,
     pub indexed: Option<bool>,
-    pub mutability: Option<Mutability>,
+    /// Marks the variable's mutability from Solidity 0.7.x onwards.
+    /// For cross-version compatibility use [`VariableDeclaration::mutability()`].
+    #[serde(default)]
+    mutability: Option<Mutability>,
     pub name: String,
     pub name_location: Option<String>,
     pub overrides: Option<OverrideSpecifier>,
     pub scope: NodeID,
+    /// Marks whether or not the variable is a state variable before Solidity 0.7.x.
+    ///
+    /// After 0.7.x you must use `mutability`. For cross-version compatibility use
+    /// [`VariableDeclaration::mutability()`].
+    #[serde(default)]
     pub state_variable: bool,
     pub storage_location: StorageLocation,
     pub type_descriptions: TypeDescriptions,
@@ -84,6 +97,23 @@ pub struct VariableDeclaration {
     pub visibility: Visibility,
     pub src: String,
     pub id: NodeID,
+}
+
+impl VariableDeclaration {
+    /// Returns the mutability of the variable that was declared.
+    ///
+    /// This is a helper to check variable mutability across Solidity versions.
+    pub fn mutability(&self) -> &Mutability {
+        if let Some(mutability) = &self.mutability {
+            mutability
+        } else if self.constant {
+            &Mutability::Constant
+        } else if self.state_variable {
+            &Mutability::Mutable
+        } else {
+            unreachable!()
+        }
+    }
 }
 
 impl Node for VariableDeclaration {

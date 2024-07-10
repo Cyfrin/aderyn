@@ -3,7 +3,7 @@ use std::{
     path::{Path, PathBuf},
 };
 
-use foundry_config::Config;
+use cyfrin_foundry_config::Config;
 use serde::Deserialize;
 
 /// aderyn.toml structure
@@ -24,10 +24,23 @@ fn load_aderyn_config(root: &Path) -> Result<AderynConfig, String> {
         .map_err(|err| format!("Error reading config file: {}", err))?;
 
     // Deserialize the TOML string to AderynConfig
-    let config: AderynConfig =
+    let mut config: AderynConfig =
         toml::from_str(&content).map_err(|err| format!("Error parsing config file: {}", err))?;
 
+    // Clear empty vectors
+    clear_empty_vectors(&mut config.exclude);
+    clear_empty_vectors(&mut config.remappings);
+    clear_empty_vectors(&mut config.include);
+
     Ok(config)
+}
+
+fn clear_empty_vectors<T>(vec: &mut Option<Vec<T>>) {
+    if let Some(v) = vec {
+        if v.is_empty() {
+            *vec = None;
+        }
+    }
 }
 
 #[allow(clippy::type_complexity)]
@@ -198,7 +211,6 @@ fn interpret_foundry_config(
         local_remappings.extend(
             config
                 .get_all_remappings()
-                .iter()
                 .map(|x| x.to_string())
                 .collect::<Vec<_>>(),
         );
@@ -206,7 +218,6 @@ fn interpret_foundry_config(
         local_remappings = Some(
             config
                 .get_all_remappings()
-                .iter()
                 .map(|x| x.to_string())
                 .collect::<Vec<_>>(),
         );
@@ -219,7 +230,7 @@ fn interpret_foundry_config(
 mod tests {
     use std::path::PathBuf;
 
-    use foundry_config::{ethers_solc::remappings::RelativeRemapping, Config};
+    use cyfrin_foundry_config::{Config, RelativeRemapping};
 
     #[test]
     fn test_interpret_aderyn_config_correctly_appends_and_replaces() {
@@ -320,5 +331,16 @@ mod tests {
                 "REL_REMAPPING_CONTEXT:REL_REMAPPING_NAME/=REL_REMAPPING_PATH/".to_string()
             ])
         );
+    }
+
+    #[test]
+    fn test_clear_empty_vectors() {
+        let mut vec_1 = Some(vec!["a".to_string(), "b".to_string()]);
+        super::clear_empty_vectors(&mut vec_1);
+        assert_eq!(vec_1, Some(vec!["a".to_string(), "b".to_string()]));
+
+        let mut vec_2: Option<Vec<String>> = Some(vec![]);
+        super::clear_empty_vectors(&mut vec_2);
+        assert_eq!(vec_2, None);
     }
 }

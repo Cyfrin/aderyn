@@ -12,6 +12,7 @@ pub enum LiteralKind {
     String,
     HexString,
     Address,
+    UnicodeString, // notok
 }
 
 #[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
