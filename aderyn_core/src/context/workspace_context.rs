@@ -1668,28 +1668,44 @@ impl WorkspaceContext {
         let src_location = match node {
             ASTNode::ContractDefinition(node) => {
                 if let Some(name_location) = &node.name_location {
-                    name_location
+                    if !name_location.contains("-1") {
+                        name_location
+                    } else {
+                        &node.src
+                    }
                 } else {
                     &node.src
                 }
             }
             ASTNode::FunctionDefinition(node) => {
                 if let Some(name_location) = &node.name_location {
-                    name_location
+                    if !name_location.contains("-1") {
+                        name_location
+                    } else {
+                        &node.src
+                    }
                 } else {
                     &node.src
                 }
             }
             ASTNode::ModifierDefinition(node) => {
                 if let Some(name_location) = &node.name_location {
-                    name_location
+                    if !name_location.contains("-1") {
+                        name_location
+                    } else {
+                        &node.src
+                    }
                 } else {
                     &node.src
                 }
             }
             ASTNode::VariableDeclaration(node) => {
                 if let Some(name_location) = &node.name_location {
-                    name_location
+                    if !name_location.contains("-1") {
+                        name_location
+                    } else {
+                        &node.src
+                    }
                 } else {
                     &node.src
                 }
