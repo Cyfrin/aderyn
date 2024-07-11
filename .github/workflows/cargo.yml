@@ -230,7 +230,7 @@ jobs:
       - name: Check 2024-07-templegold-report.md vs 2024-07-templegold-report-workflow.md
         run: |
           cat ./reports/2024-07-templegold-report-workflow.md
-          diff ./reports/2024-07-templegold-report.md ./reports/2024-07-templegold-report-workflow.md
+          diff ./reports/templegold-report.md ./reports/2024-07-templegold-report-workflow.md
 
 
       # Verify report.json 
