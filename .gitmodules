@@ -28,3 +28,6 @@
 [submodule "tests/prb-math"]
 	path = tests/prb-math
 	url = https://github.com/PaulRBerg/prb-math
+[submodule "tests/2024-07-templegold"]
+	path = tests/2024-07-templegold
+	url = git@github.com:Cyfrin/2024-07-templegold.git

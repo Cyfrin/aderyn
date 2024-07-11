@@ -24,6 +24,9 @@ FOUNDRY_PROFILE=uniswap cargo run tests/contract-playground/ -o ./reports/uniswa
 # PRB Math (uses new solidity features)
 cargo run -- tests/prb-math -o reports/prb-math-report.md --skip-update-check &
 
+# TempleGold
+cargo run -- tests/2024-07-templegold/protocol -o reports/templegold-report.md --skip-update-check &
+
 ##### JSON REPORTS ########
 
 # Basic report.json

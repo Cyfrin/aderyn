@@ -215,6 +215,19 @@ jobs:
           cat ./reports/prb-math-report-workflow.md
           diff ./reports/prb-math-report.md ./reports/prb-math-report-workflow.md
 
+          
+      - name: Generate 2024-07-templegold-report-workflow.md
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+          args: -- ./tests/2024-07-templegold -o ./reports/2024-07-templegold-report-workflow.md --skip-update-check
+    
+      - name: Check 2024-07-templegold-report.md vs 2024-07-templegold-report-workflow.md
+        run: |
+          cat ./reports/2024-07-templegold-report-workflow.md
+          diff ./reports/2024-07-templegold-report.md ./reports/2024-07-templegold-report-workflow.md
+
+
       # Verify report.json 
 
       - name: Generate report-workflow.json
