@@ -17,7 +17,7 @@ setup:
 	cd tests/prb-math/;\
 	npm install && forge build
 	cd tests/2024-07-templegold/;\
-	yarn && cd protocol && yarn && yarn compile
+	yarn
 
 # Check for tests to pass
 .PHONY: test

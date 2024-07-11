@@ -225,7 +225,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: -- ./tests/2024-07-templegold -o ./reports/2024-07-templegold-report-workflow.md --skip-update-check
+          args: -- ./tests/2024-07-templegold/protocol -o ./reports/2024-07-templegold-report-workflow.md --skip-update-check
     
       - name: Check 2024-07-templegold-report.md vs 2024-07-templegold-report-workflow.md
         run: |
