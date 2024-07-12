@@ -8,8 +8,10 @@ use crate::{
         high::{
             ArbitraryTransferFromDetector, AvoidAbiEncodePackedDetector,
             BlockTimestampDeadlineDetector, DelegateCallInLoopDetector,
-            ExperimentalEncoderDetector, StorageArrayEditWithMemoryDetector,
-            UnprotectedInitializerDetector, UnsafeCastingDetector,
+            EnumerableLoopRemovalDetector, ExperimentalEncoderDetector,
+            IncorrectShiftOrderDetector, MultipleConstructorsDetector,
+            StorageArrayEditWithMemoryDetector, UnprotectedInitializerDetector,
+            UnsafeCastingDetector,
         },
         low::{
             CentralizationRiskDetector, ConstantsInsteadOfLiteralsDetector,
@@ -31,8 +33,6 @@ use std::{
     fmt::{self, Display},
     str::FromStr,
 };
-
-use super::high::{EnumerableLoopRemovalDetector, IncorrectShiftOrderDetector};
 
 pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
     vec![
@@ -69,6 +69,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<ExperimentalEncoderDetector>::default(),
         Box::<IncorrectShiftOrderDetector>::default(),
         Box::<StorageArrayEditWithMemoryDetector>::default(),
+        Box::<MultipleConstructorsDetector>::default(),
     ]
 }
 
@@ -112,7 +113,8 @@ pub(crate) enum IssueDetectorNamePool {
     EnumerableLoopRemoval,
     ExperimentalEncoder,
     IncorrectShiftOrder,
-    StorageArrayEditWithMemoryDetector,
+    StorageArrayEditWithMemory,
+    MultipleConstructors,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -204,8 +206,11 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::IncorrectShiftOrder => {
             Some(Box::<IncorrectShiftOrderDetector>::default())
         }
-        IssueDetectorNamePool::StorageArrayEditWithMemoryDetector => {
+        IssueDetectorNamePool::StorageArrayEditWithMemory => {
             Some(Box::<StorageArrayEditWithMemoryDetector>::default())
+        }
+        IssueDetectorNamePool::MultipleConstructors => {
+            Some(Box::<MultipleConstructorsDetector>::default())
         }
         IssueDetectorNamePool::Undecided => None,
     }
