@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 45,
-    "total_sloc": 1414
+    "total_source_units": 46,
+    "total_sloc": 1424
   },
   "files_details": {
     "files_details": [
@@ -80,6 +80,10 @@
       {
         "file_path": "src/KeccakContract.sol",
         "n_sloc": 21
+      },
+      {
+        "file_path": "src/MultipleConstructorSchemes.sol",
+        "n_sloc": 10
       },
       {
         "file_path": "src/OnceModifierExample.sol",

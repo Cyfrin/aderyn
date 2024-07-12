@@ -80,7 +80,7 @@ impl IssueDetector for StorageArrayEditWithMemoryDetector {
     }
 
     fn name(&self) -> String {
-        IssueDetectorNamePool::StorageArrayEditWithMemoryDetector.to_string()
+        IssueDetectorNamePool::StorageArrayEditWithMemory.to_string()
     }
 }
 
