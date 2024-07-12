@@ -120,6 +120,7 @@
     "unsafe-casting-detector",
     "enumerable-loop-removal",
     "experimental-encoder",
-    "incorrect-shift-order"
+    "incorrect-shift-order",
+    "storage-array-edit-with-memory-detector"
   ]
 }

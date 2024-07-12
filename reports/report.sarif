@@ -1505,6 +1505,26 @@
           "ruleId": "incorrect-shift-order"
         },
         {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StorageParameters.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 241
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Storage reference is passed to a function with a memory parameter. This will not update the storage variable as expected. Consider using storage parameters instead."
+          },
+          "ruleId": "storage-array-edit-with-memory-detector"
+        },
+        {
           "level": "note",
           "locations": [
             {
@@ -3472,6 +3492,17 @@
                 "region": {
                   "byteLength": 12,
                   "byteOffset": 693
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StorageParameters.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 388
                 }
               }
             }
