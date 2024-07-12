@@ -1,10 +1,9 @@
 use std::collections::BTreeMap;
 use std::error::Error;
 
-use crate::ast::{NodeID, TypeName, YulExpression};
+use crate::ast::{NodeID, YulExpression};
 
 use crate::capture;
-use crate::context::workspace_context::ASTNode;
 use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
     context::workspace_context::WorkspaceContext,
@@ -26,10 +25,9 @@ impl IssueDetector for IncorrectShiftOrderDetector {
             if yul_function_call.function_name.name == "shl"
                 || yul_function_call.function_name.name == "shr"
             {
-                if let YulExpression::YulLiteral(yul_literal) = &yul_function_call.arguments[0] {
+                if let YulExpression::YulLiteral(_) = &yul_function_call.arguments[0] {
                     continue;
                 } else {
-                    // println!("{:#?}", yul_function_call);
                     capture!(self, context, yul_function_call);
                 }
             }

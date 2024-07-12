@@ -1474,6 +1474,37 @@
           "ruleId": "experimental-encoder"
         },
         {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectShift.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 192
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectShift.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 238
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Description of the high issue."
+          },
+          "ruleId": "incorrect-shift-order"
+        },
+        {
           "level": "note",
           "locations": [
             {

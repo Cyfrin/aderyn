@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 43,
-    "total_sloc": 1381
+    "total_source_units": 44,
+    "total_sloc": 1396
   },
   "files_details": {
     "files_details": [
@@ -68,6 +68,10 @@
       {
         "file_path": "src/InconsistentUints.sol",
         "n_sloc": 17
+      },
+      {
+        "file_path": "src/IncorrectShift.sol",
+        "n_sloc": 15
       },
       {
         "file_path": "src/InternalFunctions.sol",
@@ -180,7 +184,7 @@
     ]
   },
   "issue_count": {
-    "high": 8,
+    "high": 9,
     "low": 23
   },
   "high_issues": {
@@ -1000,6 +1004,25 @@
             "line_no": 2,
             "src": "23:33",
             "src_char": "23:33"
+          }
+        ]
+      },
+      {
+        "title": "Incorrect Assembly Shift Parameter Order",
+        "description": "Description of the high issue.",
+        "detector_name": "incorrect-shift-order",
+        "instances": [
+          {
+            "contract_path": "src/IncorrectShift.sol",
+            "line_no": 7,
+            "src": "192:15",
+            "src_char": "192:15"
+          },
+          {
+            "contract_path": "src/IncorrectShift.sol",
+            "line_no": 8,
+            "src": "238:15",
+            "src_char": "238:15"
           }
         ]
       }
@@ -2359,6 +2382,7 @@
     "division-before-multiplication",
     "unsafe-casting-detector",
     "enumerable-loop-removal",
-    "experimental-encoder"
+    "experimental-encoder",
+    "incorrect-shift-order"
   ]
 }
