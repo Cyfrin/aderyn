@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 43,
-    "total_sloc": 1381
+    "total_source_units": 44,
+    "total_sloc": 1397
   },
   "files_details": {
     "files_details": [
@@ -94,6 +94,10 @@
         "n_sloc": 59
       },
       {
+        "file_path": "src/StorageParameters.sol",
+        "n_sloc": 16
+      },
+      {
         "file_path": "src/T11sTranferer.sol",
         "n_sloc": 8
       },
@@ -180,7 +184,7 @@
     ]
   },
   "issue_count": {
-    "high": 8,
+    "high": 9,
     "low": 23
   },
   "high_issues": {
@@ -1000,6 +1004,19 @@
             "line_no": 2,
             "src": "23:33",
             "src_char": "23:33"
+          }
+        ]
+      },
+      {
+        "title": "Storage Array Edited with Memory",
+        "description": "Storage reference is passed to a function with a memory parameter. This will not update the storage variable as expected. Consider using storage parameters instead.",
+        "detector_name": "storage-array-edit-with-memory-detector",
+        "instances": [
+          {
+            "contract_path": "src/StorageParameters.sol",
+            "line_no": 11,
+            "src": "241:10",
+            "src_char": "241:10"
           }
         ]
       }
@@ -2120,6 +2137,12 @@
             "line_no": 28,
             "src": "693:12",
             "src_char": "693:12"
+          },
+          {
+            "contract_path": "src/StorageParameters.sol",
+            "line_no": 17,
+            "src": "388:11",
+            "src_char": "388:11"
           }
         ]
       },
@@ -2359,6 +2382,7 @@
     "division-before-multiplication",
     "unsafe-casting-detector",
     "enumerable-loop-removal",
-    "experimental-encoder"
+    "experimental-encoder",
+    "storage-array-edit-with-memory-detector"
   ]
 }
