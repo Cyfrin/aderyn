@@ -1,0 +1,55 @@
+{
+    "absolutePath": "/Users/alexroan/Documents/Cyfrin/aderyn/tests/contract-playground/src/ExperimentalEncoder.sol",
+    "exportedSymbols":
+    {
+      "ExperimentalEncoder":
+      [
+        3
+      ]
+    },
+    "id": 4,
+    "nodeType": "SourceUnit",
+    "nodes":
+    [
+      {
+        "id": 1,
+        "literals":
+        [
+          "solidity",
+          "0.6",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "45:22:0"
+      },
+      {
+        "id": 2,
+        "literals":
+        [
+          "experimental",
+          "ABIEncoderV2"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "68:33:0"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 3,
+        "linearizedBaseContracts":
+        [
+          3
+        ],
+        "name": "ExperimentalEncoder",
+        "nodeType": "ContractDefinition",
+        "nodes": [],
+        "scope": 4,
+        "src": "103:32:0"
+      }
+    ],
+    "src": "45:90:0"
+  }
