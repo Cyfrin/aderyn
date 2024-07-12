@@ -1545,6 +1545,37 @@
           "ruleId": "multiple-constructors"
         },
         {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/nested/2/Nested.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 214
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/reused_contract_name/ContractB.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 70
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "When compiling contracts with certain development frameworks (for example: Truffle), having contracts with the same name across different files can lead to one being overwritten."
+          },
+          "ruleId": "reused-contract-name"
+        },
+        {
           "level": "note",
           "locations": [
             {

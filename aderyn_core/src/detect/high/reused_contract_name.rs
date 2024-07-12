@@ -1,8 +1,7 @@
 use std::collections::{BTreeMap, HashSet};
 use std::error::Error;
-use std::hash::Hash;
 
-use crate::ast::{NodeID, TypeName};
+use crate::ast::NodeID;
 
 use crate::capture;
 use crate::detect::detector::IssueDetectorNamePool;
@@ -51,7 +50,7 @@ impl IssueDetector for ReusedContractNameDetector {
     }
 
     fn name(&self) -> String {
-        format!("high-issue-template")
+        IssueDetectorNamePool::ReusedContractName.to_string()
     }
 }
 
