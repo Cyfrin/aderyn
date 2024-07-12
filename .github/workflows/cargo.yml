@@ -71,14 +71,6 @@ jobs:
         run: |
           cargo build
 
-      - name: Run cargo test by_loading_contract_directly
-        run: |
-          cargo test by_loading_contract_directly
-
-      - name: Run cargo test by_loading_contract_directly with output
-        run: |
-          cargo test by_loading_contract_directly -- --nocapture
-
       - name: Run cargo test 
         run: |
           cargo test -- --nocapture
