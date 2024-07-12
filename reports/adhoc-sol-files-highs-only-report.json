@@ -121,6 +121,7 @@
     "enumerable-loop-removal",
     "experimental-encoder",
     "incorrect-shift-order",
-    "storage-array-edit-with-memory-detector"
+    "storage-array-edit-with-memory",
+    "multiple-constructors"
   ]
 }
