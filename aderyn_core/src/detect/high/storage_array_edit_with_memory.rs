@@ -45,16 +45,14 @@ impl IssueDetector for StorageArrayEditWithMemoryDetector {
                         let definition_ast = context
                             .nodes
                             .get(&identifier.referenced_declaration.unwrap());
-                        if let Some(definition_ast) = definition_ast {
-                            if let ASTNode::FunctionDefinition(definition) = definition_ast {
-                                let parameter = definition
-                                    .parameters
-                                    .parameters
-                                    .get(index)
-                                    .ok_or_else(|| eyre::eyre!("Parameter not found"))?;
-                                if parameter.storage_location != StorageLocation::Storage {
-                                    capture!(self, context, identifier);
-                                }
+                        if let Some(ASTNode::FunctionDefinition(definition)) = definition_ast {
+                            let parameter = definition
+                                .parameters
+                                .parameters
+                                .get(index)
+                                .ok_or_else(|| eyre::eyre!("Parameter not found"))?;
+                            if parameter.storage_location != StorageLocation::Storage {
+                                capture!(self, context, identifier);
                             }
                         }
                     }
