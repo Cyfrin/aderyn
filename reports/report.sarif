@@ -1454,6 +1454,26 @@
           "ruleId": "enumerable-loop-removal"
         },
         {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ExperimentalEncoder.sol"
+                },
+                "region": {
+                  "byteLength": 33,
+                  "byteOffset": 23
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Experimental encoders should not be used in production. There are multiple known compiler bugs that are caused by the experimental encoder. Upgrade your solidity version to remove the need for experimental features."
+          },
+          "ruleId": "experimental-encoder"
+        },
+        {
           "level": "note",
           "locations": [
             {
