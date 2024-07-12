@@ -4,7 +4,7 @@ pragma solidity 0.8.19;
 contract StorageParameters {
     uint[1] public storageArray;
 
-    function editArrays() public {
+    function editArrays() external {
         uint[1] memory memoryArray;
 
         editStorage(storageArray);

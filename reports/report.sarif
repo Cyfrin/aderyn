@@ -1474,6 +1474,26 @@
           "ruleId": "experimental-encoder"
         },
         {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StorageParameters.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 241
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Storage reference is passed to a function with a memory parameter. This will not update the storage variable as expected. Consider using storage parameters instead."
+          },
+          "ruleId": "storage-array-edit-with-memory-detector"
+        },
+        {
           "level": "note",
           "locations": [
             {
@@ -2064,17 +2084,6 @@
                 "region": {
                   "byteLength": 25,
                   "byteOffset": 2539
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StorageParameters.sol"
-                },
-                "region": {
-                  "byteLength": 10,
-                  "byteOffset": 137
                 }
               }
             },
@@ -3462,7 +3471,7 @@
                 },
                 "region": {
                   "byteLength": 11,
-                  "byteOffset": 386
+                  "byteOffset": 388
                 }
               }
             }

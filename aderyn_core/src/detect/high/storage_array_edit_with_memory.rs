@@ -5,6 +5,7 @@ use crate::ast::{NodeID, StorageLocation};
 
 use crate::capture;
 use crate::context::workspace_context::ASTNode;
+use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
     context::workspace_context::WorkspaceContext,
     detect::detector::{IssueDetector, IssueSeverity},
@@ -26,7 +27,6 @@ impl IssueDetector for StorageArrayEditWithMemoryDetector {
         //  get the refereddeclaration node of the identifier (a function)
         //  get parameter at that index and check if the storageLocation is not storage
         //  if not, capture it.
-        // capture!(self, context, item);
 
         for identifier in context
             .identifiers()
@@ -70,11 +70,11 @@ impl IssueDetector for StorageArrayEditWithMemoryDetector {
     }
 
     fn title(&self) -> String {
-        String::from("High Issue Title")
+        String::from("Storage Array Edited with Memory")
     }
 
     fn description(&self) -> String {
-        String::from("Description of the high issue.")
+        String::from("Storage reference is passed to a function with a memory parameter. This will not update the storage variable as expected. Consider using storage parameters instead.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -82,7 +82,7 @@ impl IssueDetector for StorageArrayEditWithMemoryDetector {
     }
 
     fn name(&self) -> String {
-        "high-issue-template".to_string()
+        IssueDetectorNamePool::StorageArrayEditWithMemoryDetector.to_string()
     }
 }
 
@@ -111,11 +111,14 @@ mod storage_array_edit_with_memory_tests {
             crate::detect::detector::IssueSeverity::High
         );
         // assert the title is correct
-        assert_eq!(detector.title(), String::from("High Issue Title"));
+        assert_eq!(
+            detector.title(),
+            String::from("Storage Array Edited with Memory")
+        );
         // assert the description is correct
         assert_eq!(
             detector.description(),
-            String::from("Description of the high issue.")
+            String::from("Storage reference is passed to a function with a memory parameter. This will not update the storage variable as expected. Consider using storage parameters instead.")
         );
     }
 }
