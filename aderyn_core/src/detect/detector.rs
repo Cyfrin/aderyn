@@ -31,7 +31,7 @@ use std::{
     str::FromStr,
 };
 
-use super::high::EnumerableLoopRemovalDetector;
+use super::high::{EnumerableLoopRemovalDetector, IncorrectShiftOrderDetector};
 
 pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
     vec![
@@ -66,6 +66,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<UnsafeCastingDetector>::default(),
         Box::<EnumerableLoopRemovalDetector>::default(),
         Box::<ExperimentalEncoderDetector>::default(),
+        Box::<IncorrectShiftOrderDetector>::default(),
     ]
 }
 
@@ -108,6 +109,7 @@ pub(crate) enum IssueDetectorNamePool {
     UnsafeCastingDetector,
     EnumerableLoopRemoval,
     ExperimentalEncoder,
+    IncorrectShiftOrder,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -195,6 +197,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         }
         IssueDetectorNamePool::ExperimentalEncoder => {
             Some(Box::<ExperimentalEncoderDetector>::default())
+        }
+        IssueDetectorNamePool::IncorrectShiftOrder => {
+            Some(Box::<IncorrectShiftOrderDetector>::default())
         }
         IssueDetectorNamePool::Undecided => None,
     }

@@ -64,6 +64,9 @@ pub enum ASTNode {
     BreakStatement(Break),
     ContinueStatement(Continue),
     PlaceholderStatement(PlaceholderStatement),
+    YulFunctionCall(YulFunctionCall),
+    YulIdentifier(YulIdentifier),
+    YulLiteral(YulLiteral),
 }
 
 impl ASTNode {
@@ -124,6 +127,9 @@ impl ASTNode {
             ASTNode::BreakStatement(_) => NodeType::Break,
             ASTNode::ContinueStatement(_) => NodeType::Continue,
             ASTNode::PlaceholderStatement(_) => NodeType::PlaceholderStatement,
+            ASTNode::YulFunctionCall(_) => NodeType::YulFunctionCall,
+            ASTNode::YulIdentifier(_) => NodeType::YulIdentifier,
+            ASTNode::YulLiteral(_) => NodeType::YulLiteral,
         }
     }
 
@@ -184,6 +190,9 @@ impl ASTNode {
             ASTNode::BreakStatement(n) => Some(n.id),
             ASTNode::ContinueStatement(n) => Some(n.id),
             ASTNode::PlaceholderStatement(n) => Some(n.id),
+            ASTNode::YulFunctionCall(_) => None,
+            ASTNode::YulIdentifier(_) => None,
+            ASTNode::YulLiteral(_) => None,
         }
     }
 }
@@ -246,6 +255,9 @@ impl Node for ASTNode {
             ASTNode::BreakStatement(n) => n.accept(visitor),
             ASTNode::ContinueStatement(n) => n.accept(visitor),
             ASTNode::PlaceholderStatement(n) => n.accept(visitor),
+            ASTNode::YulFunctionCall(n) => n.accept(visitor),
+            ASTNode::YulIdentifier(n) => n.accept(visitor),
+            ASTNode::YulLiteral(n) => n.accept(visitor),
         }
     }
 
@@ -306,6 +318,9 @@ impl Node for ASTNode {
             ASTNode::BreakStatement(n) => n.accept_metadata(visitor),
             ASTNode::ContinueStatement(n) => n.accept_metadata(visitor),
             ASTNode::PlaceholderStatement(n) => n.accept_metadata(visitor),
+            ASTNode::YulFunctionCall(n) => n.accept_metadata(visitor),
+            ASTNode::YulIdentifier(n) => n.accept_metadata(visitor),
+            ASTNode::YulLiteral(n) => n.accept_metadata(visitor),
         }
     }
 
@@ -975,6 +990,24 @@ impl From<&PlaceholderStatement> for ASTNode {
     }
 }
 
+impl From<&YulFunctionCall> for ASTNode {
+    fn from(value: &YulFunctionCall) -> Self {
+        ASTNode::YulFunctionCall(value.clone())
+    }
+}
+
+impl From<&YulIdentifier> for ASTNode {
+    fn from(value: &YulIdentifier) -> Self {
+        ASTNode::YulIdentifier(value.clone())
+    }
+}
+
+impl From<&YulLiteral> for ASTNode {
+    fn from(value: &YulLiteral) -> Self {
+        ASTNode::YulLiteral(value.clone())
+    }
+}
+
 impl ASTNode {
     pub fn src(&self) -> Option<&str> {
         match self {
@@ -1033,6 +1066,9 @@ impl ASTNode {
             ASTNode::BreakStatement(node) => Some(&node.src),
             ASTNode::ContinueStatement(node) => Some(&node.src),
             ASTNode::PlaceholderStatement(node) => Some(&node.src),
+            ASTNode::YulFunctionCall(node) => Some(&node.src),
+            ASTNode::YulIdentifier(node) => Some(&node.src),
+            ASTNode::YulLiteral(node) => Some(&node.src),
         }
     }
 }
@@ -1117,6 +1153,9 @@ pub struct WorkspaceContext {
     pub(crate) break_statements_context: HashMap<Break, NodeContext>,
     pub(crate) continue_statements_context: HashMap<Continue, NodeContext>,
     pub(crate) placeholder_statements_context: HashMap<PlaceholderStatement, NodeContext>,
+    pub(crate) yul_function_calls_context: HashMap<YulFunctionCall, NodeContext>,
+    pub(crate) yul_identifiers_context: HashMap<YulIdentifier, NodeContext>,
+    pub(crate) yul_literal_context: HashMap<YulLiteral, NodeContext>,
 }
 
 impl WorkspaceContext {
@@ -1302,6 +1341,18 @@ impl WorkspaceContext {
 
     pub fn placeholder_statements(&self) -> Vec<&PlaceholderStatement> {
         self.placeholder_statements_context.keys().collect()
+    }
+
+    pub fn yul_function_calls(&self) -> Vec<&YulFunctionCall> {
+        self.yul_function_calls_context.keys().collect()
+    }
+
+    pub fn yul_identifiers(&self) -> Vec<&YulIdentifier> {
+        self.yul_identifiers_context.keys().collect()
+    }
+
+    pub fn yul_literals(&self) -> Vec<&YulLiteral> {
+        self.yul_literal_context.keys().collect()
     }
 
     pub fn get_parent(&self, node_id: NodeID) -> Option<&ASTNode> {
@@ -1587,6 +1638,18 @@ impl WorkspaceContext {
                 .map(|context| context.source_unit_id),
             ASTNode::PlaceholderStatement(node) => self
                 .placeholder_statements_context
+                .get(node)
+                .map(|context| context.source_unit_id),
+            ASTNode::YulFunctionCall(node) => self
+                .yul_function_calls_context
+                .get(node)
+                .map(|context| context.source_unit_id),
+            ASTNode::YulIdentifier(node) => self
+                .yul_identifiers_context
+                .get(node)
+                .map(|context| context.source_unit_id),
+            ASTNode::YulLiteral(node) => self
+                .yul_literal_context
                 .get(node)
                 .map(|context| context.source_unit_id),
         };
@@ -2510,6 +2573,33 @@ impl ASTConstVisitor for WorkspaceContext {
         self.nodes
             .insert(node.id, ASTNode::PlaceholderStatement(node.clone()));
         self.placeholder_statements_context.insert(
+            node.clone(),
+            NodeContext {
+                source_unit_id: self.last_source_unit_id,
+                contract_definition_id: self.last_contract_definition_id,
+                function_definition_id: self.last_function_definition_id,
+                modifier_definition_id: self.last_modifier_definition_id,
+            },
+        );
+        Ok(true)
+    }
+
+    fn visit_yul_function_call(&mut self, node: &YulFunctionCall) -> Result<bool> {
+        self.yul_function_calls_context.insert(
+            node.clone(),
+            NodeContext {
+                source_unit_id: self.last_source_unit_id,
+                contract_definition_id: self.last_contract_definition_id,
+                function_definition_id: self.last_function_definition_id,
+                modifier_definition_id: self.last_modifier_definition_id,
+            },
+        );
+        Ok(true)
+    }
+
+    fn visit_yul_identifier(&mut self, node: &YulIdentifier) -> Result<bool> {
+        // No node ID in Yul
+        self.yul_identifiers_context.insert(
             node.clone(),
             NodeContext {
                 source_unit_id: self.last_source_unit_id,
