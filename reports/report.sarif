@@ -1522,7 +1522,27 @@
           "message": {
             "text": "Storage reference is passed to a function with a memory parameter. This will not update the storage variable as expected. Consider using storage parameters instead."
           },
-          "ruleId": "storage-array-edit-with-memory-detector"
+          "ruleId": "storage-array-edit-with-memory"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MultipleConstructorSchemes.sol"
+                },
+                "region": {
+                  "byteLength": 180,
+                  "byteOffset": 25
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "In some versions of Solidity, contracts compile with multiple constructors. The first constructor takes precedence. This can lead to unexpected behavior."
+          },
+          "ruleId": "multiple-constructors"
         },
         {
           "level": "note",

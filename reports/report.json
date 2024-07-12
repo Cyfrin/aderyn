@@ -192,7 +192,7 @@
     ]
   },
   "issue_count": {
-    "high": 10,
+    "high": 11,
     "low": 23
   },
   "high_issues": {
@@ -1037,13 +1037,26 @@
       {
         "title": "Storage Array Edited with Memory",
         "description": "Storage reference is passed to a function with a memory parameter. This will not update the storage variable as expected. Consider using storage parameters instead.",
-        "detector_name": "storage-array-edit-with-memory-detector",
+        "detector_name": "storage-array-edit-with-memory",
         "instances": [
           {
             "contract_path": "src/StorageParameters.sol",
             "line_no": 11,
             "src": "241:10",
             "src_char": "241:10"
+          }
+        ]
+      },
+      {
+        "title": "Contract Has Multiple Constructors",
+        "description": "In some versions of Solidity, contracts compile with multiple constructors. The first constructor takes precedence. This can lead to unexpected behavior.",
+        "detector_name": "multiple-constructors",
+        "instances": [
+          {
+            "contract_path": "src/MultipleConstructorSchemes.sol",
+            "line_no": 3,
+            "src": "25:180",
+            "src_char": "25:180"
           }
         ]
       }
@@ -2411,6 +2424,7 @@
     "enumerable-loop-removal",
     "experimental-encoder",
     "incorrect-shift-order",
-    "storage-array-edit-with-memory-detector"
+    "storage-array-edit-with-memory",
+    "multiple-constructors"
   ]
 }
