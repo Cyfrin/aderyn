@@ -159,40 +159,16 @@ When compiling contracts with certain development frameworks (for example: Truff
 	contract FunctionsCoordinator is OCR2Base, IFunctionsCoordinator, FunctionsBilling {
 	```
 
-- Found in src/v0.8/functions/dev/v1_X/Routable.sol [Line: 10](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/Routable.sol#L10)
+- Found in src/v0.8/functions/dev/v1_X/FunctionsRouter.sol [Line: 16](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/FunctionsRouter.sol#L16)
 
 	```solidity
-	abstract contract Routable is ITypeAndVersion {
+	contract FunctionsRouter is IFunctionsRouter, FunctionsSubscriptions, Pausable, ITypeAndVersion, ConfirmedOwner {
 	```
 
 - Found in src/v0.8/functions/dev/v1_X/accessControl/interfaces/ITermsOfServiceAllowList.sol [Line: 5](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/accessControl/interfaces/ITermsOfServiceAllowList.sol#L5)
 
 	```solidity
 	interface ITermsOfServiceAllowList {
-	```
-
-- Found in src/v0.8/functions/dev/v1_X/example/FunctionsClientExample.sol [Line: 9](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/example/FunctionsClientExample.sol#L9)
-
-	```solidity
-	contract FunctionsClientExample is FunctionsClient, ConfirmedOwner {
-	```
-
-- Found in src/v0.8/functions/dev/v1_X/interfaces/IFunctionsClient.sol [Line: 5](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/interfaces/IFunctionsClient.sol#L5)
-
-	```solidity
-	interface IFunctionsClient {
-	```
-
-- Found in src/v0.8/functions/dev/v1_X/interfaces/IFunctionsCoordinator.sol [Line: 7](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/interfaces/IFunctionsCoordinator.sol#L7)
-
-	```solidity
-	interface IFunctionsCoordinator {
-	```
-
-- Found in src/v0.8/functions/dev/v1_X/interfaces/IFunctionsRouter.sol [Line: 7](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/interfaces/IFunctionsRouter.sol#L7)
-
-	```solidity
-	interface IFunctionsRouter {
 	```
 
 - Found in src/v0.8/functions/dev/v1_X/interfaces/IOwnableFunctionsRouter.sol [Line: 8](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/interfaces/IOwnableFunctionsRouter.sol#L8)
@@ -213,10 +189,22 @@ When compiling contracts with certain development frameworks (for example: Truff
 	library FunctionsRequest {
 	```
 
+- Found in src/v0.8/functions/dev/v1_X/libraries/FunctionsResponse.sol [Line: 5](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/libraries/FunctionsResponse.sol#L5)
+
+	```solidity
+	library FunctionsResponse {
+	```
+
 - Found in src/v0.8/functions/dev/v1_X/ocr/OCR2Abstract.sol [Line: 6](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/ocr/OCR2Abstract.sol#L6)
 
 	```solidity
 	abstract contract OCR2Abstract is ITypeAndVersion {
+	```
+
+- Found in src/v0.8/functions/dev/v1_X/ocr/OCR2Base.sol [Line: 12](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/ocr/OCR2Base.sol#L12)
+
+	```solidity
+	abstract contract OCR2Base is ConfirmedOwner, OCR2Abstract {
 	```
 
 - Found in src/v0.8/functions/v1_0_0/FunctionsBilling.sol [Line: 15](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/FunctionsBilling.sol#L15)
@@ -231,22 +219,16 @@ When compiling contracts with certain development frameworks (for example: Truff
 	abstract contract FunctionsClient is IFunctionsClient {
 	```
 
-- Found in src/v0.8/functions/v1_0_0/FunctionsCoordinator.sol [Line: 13](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/FunctionsCoordinator.sol#L13)
-
-	```solidity
-	contract FunctionsCoordinator is OCR2Base, IFunctionsCoordinator, FunctionsBilling {
-	```
-
-- Found in src/v0.8/functions/v1_0_0/FunctionsRouter.sol [Line: 16](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/FunctionsRouter.sol#L16)
-
-	```solidity
-	contract FunctionsRouter is IFunctionsRouter, FunctionsSubscriptions, Pausable, ITypeAndVersion, ConfirmedOwner {
-	```
-
 - Found in src/v0.8/functions/v1_0_0/FunctionsSubscriptions.sol [Line: 15](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/FunctionsSubscriptions.sol#L15)
 
 	```solidity
 	abstract contract FunctionsSubscriptions is IFunctionsSubscriptions, IERC677Receiver {
+	```
+
+- Found in src/v0.8/functions/v1_0_0/Routable.sol [Line: 10](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/Routable.sol#L10)
+
+	```solidity
+	abstract contract Routable is ITypeAndVersion {
 	```
 
 - Found in src/v0.8/functions/v1_0_0/accessControl/TermsOfServiceAllowList.sol [Line: 14](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/accessControl/TermsOfServiceAllowList.sol#L14)
@@ -255,10 +237,10 @@ When compiling contracts with certain development frameworks (for example: Truff
 	contract TermsOfServiceAllowList is ITermsOfServiceAllowList, IAccessController, ITypeAndVersion, ConfirmedOwner {
 	```
 
-- Found in src/v0.8/functions/v1_0_0/accessControl/interfaces/ITermsOfServiceAllowList.sol [Line: 5](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/accessControl/interfaces/ITermsOfServiceAllowList.sol#L5)
+- Found in src/v0.8/functions/v1_0_0/example/FunctionsClientExample.sol [Line: 9](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/example/FunctionsClientExample.sol#L9)
 
 	```solidity
-	interface ITermsOfServiceAllowList {
+	contract FunctionsClientExample is FunctionsClient, ConfirmedOwner {
 	```
 
 - Found in src/v0.8/functions/v1_0_0/interfaces/IFunctionsBilling.sol [Line: 5](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/interfaces/IFunctionsBilling.sol#L5)
@@ -267,22 +249,28 @@ When compiling contracts with certain development frameworks (for example: Truff
 	interface IFunctionsBilling {
 	```
 
+- Found in src/v0.8/functions/v1_0_0/interfaces/IFunctionsClient.sol [Line: 5](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/interfaces/IFunctionsClient.sol#L5)
+
+	```solidity
+	interface IFunctionsClient {
+	```
+
+- Found in src/v0.8/functions/v1_0_0/interfaces/IFunctionsCoordinator.sol [Line: 7](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/interfaces/IFunctionsCoordinator.sol#L7)
+
+	```solidity
+	interface IFunctionsCoordinator {
+	```
+
+- Found in src/v0.8/functions/v1_0_0/interfaces/IFunctionsRouter.sol [Line: 7](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/interfaces/IFunctionsRouter.sol#L7)
+
+	```solidity
+	interface IFunctionsRouter {
+	```
+
 - Found in src/v0.8/functions/v1_0_0/interfaces/IFunctionsSubscriptions.sol [Line: 7](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/interfaces/IFunctionsSubscriptions.sol#L7)
 
 	```solidity
 	interface IFunctionsSubscriptions {
-	```
-
-- Found in src/v0.8/functions/v1_0_0/libraries/FunctionsResponse.sol [Line: 5](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/libraries/FunctionsResponse.sol#L5)
-
-	```solidity
-	library FunctionsResponse {
-	```
-
-- Found in src/v0.8/functions/v1_0_0/ocr/OCR2Abstract.sol [Line: 6](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/ocr/OCR2Abstract.sol#L6)
-
-	```solidity
-	abstract contract OCR2Abstract is ITypeAndVersion {
 	```
 
 - Found in src/v0.8/functions/v1_0_0/ocr/OCR2Base.sol [Line: 12](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/ocr/OCR2Base.sol#L12)
@@ -291,22 +279,22 @@ When compiling contracts with certain development frameworks (for example: Truff
 	abstract contract OCR2Base is ConfirmedOwner, OCR2Abstract {
 	```
 
-- Found in src/v0.8/functions/v1_1_0/FunctionsBilling.sol [Line: 17](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_1_0/FunctionsBilling.sol#L17)
-
-	```solidity
-	abstract contract FunctionsBilling is Routable, IFunctionsBilling {
-	```
-
 - Found in src/v0.8/functions/v1_1_0/FunctionsCoordinator.sol [Line: 13](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_1_0/FunctionsCoordinator.sol#L13)
 
 	```solidity
 	contract FunctionsCoordinator is OCR2Base, IFunctionsCoordinator, FunctionsBilling {
 	```
 
-- Found in src/v0.8/functions/v1_1_0/ocr/OCR2Base.sol [Line: 12](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_1_0/ocr/OCR2Base.sol#L12)
+- Found in src/v0.8/functions/v1_1_0/ocr/OCR2Abstract.sol [Line: 6](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_1_0/ocr/OCR2Abstract.sol#L6)
 
 	```solidity
-	abstract contract OCR2Base is ConfirmedOwner, OCR2Abstract {
+	abstract contract OCR2Abstract is ITypeAndVersion {
+	```
+
+- Found in src/v0.8/functions/v1_3_0/FunctionsBilling.sol [Line: 17](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_3_0/FunctionsBilling.sol#L17)
+
+	```solidity
+	abstract contract FunctionsBilling is Routable, IFunctionsBilling {
 	```
 
 - Found in src/v0.8/functions/v1_3_0/FunctionsClient.sol [Line: 11](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_3_0/FunctionsClient.sol#L11)
@@ -315,10 +303,22 @@ When compiling contracts with certain development frameworks (for example: Truff
 	abstract contract FunctionsClient is IFunctionsClient {
 	```
 
+- Found in src/v0.8/functions/v1_3_0/FunctionsCoordinator.sol [Line: 13](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_3_0/FunctionsCoordinator.sol#L13)
+
+	```solidity
+	contract FunctionsCoordinator is OCR2Base, IFunctionsCoordinator, FunctionsBilling {
+	```
+
 - Found in src/v0.8/functions/v1_3_0/accessControl/TermsOfServiceAllowList.sol [Line: 14](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_3_0/accessControl/TermsOfServiceAllowList.sol#L14)
 
 	```solidity
 	contract TermsOfServiceAllowList is ITermsOfServiceAllowList, IAccessController, ITypeAndVersion, ConfirmedOwner {
+	```
+
+- Found in src/v0.8/functions/v1_3_0/accessControl/interfaces/ITermsOfServiceAllowList.sol [Line: 5](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_3_0/accessControl/interfaces/ITermsOfServiceAllowList.sol#L5)
+
+	```solidity
+	interface ITermsOfServiceAllowList {
 	```
 
 - Found in src/v0.8/functions/v1_3_0/interfaces/IFunctionsBilling.sol [Line: 5](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_3_0/interfaces/IFunctionsBilling.sol#L5)

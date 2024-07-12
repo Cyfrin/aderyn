@@ -295,16 +295,16 @@ When compiling contracts with certain development frameworks (for example: Truff
 <details><summary>4 Found Instances</summary>
 
 
+- Found in contracts/amo/helpers/BalancerPoolHelper.sol [Line: 13](../tests/2024-07-templegold/protocol/contracts/amo/helpers/BalancerPoolHelper.sol#L13)
+
+	```solidity
+	interface IWeightPool2Tokens {
+	```
+
 - Found in contracts/amo/test/external/IBalancerHelpers.sol [Line: 5](../tests/2024-07-templegold/protocol/contracts/amo/test/external/IBalancerHelpers.sol#L5)
 
 	```solidity
 	interface IBalancerHelpers {
-	```
-
-- Found in contracts/amo/test/external/IWeightPool2Tokens.sol [Line: 5](../tests/2024-07-templegold/protocol/contracts/amo/test/external/IWeightPool2Tokens.sol#L5)
-
-	```solidity
-	interface IWeightPool2Tokens {
 	```
 
 - Found in contracts/templegold//AuctionBase.sol [Line: 11](../tests/2024-07-templegold/protocol/contracts/templegold/AuctionBase.sol#L11)

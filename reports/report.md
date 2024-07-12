@@ -1043,7 +1043,7 @@ When compiling contracts with certain development frameworks (for example: Truff
 	contract Nested {
 	```
 
-- Found in src/reused_contract_name/ContractA.sol [Line: 4](../tests/contract-playground/src/reused_contract_name/ContractA.sol#L4)
+- Found in src/reused_contract_name/ContractB.sol [Line: 4](../tests/contract-playground/src/reused_contract_name/ContractB.sol#L4)
 
 	```solidity
 	contract ReusedName {
