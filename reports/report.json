@@ -1,7 +1,7 @@
 {
   "files_summary": {
     "total_source_units": 44,
-    "total_sloc": 1396
+    "total_sloc": 1398
   },
   "files_details": {
     "files_details": [
@@ -71,7 +71,7 @@
       },
       {
         "file_path": "src/IncorrectShift.sol",
-        "n_sloc": 15
+        "n_sloc": 17
       },
       {
         "file_path": "src/InternalFunctions.sol",

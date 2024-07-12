@@ -14,6 +14,8 @@ contract IncorrectShift {
         assembly {
             shifted := shr(4, shifted) // GOOD
             shifted := shl(4, shifted) // GOOD
+            shifted := shr(8, shifted) // GOOD
+            shifted := shl(8, shifted) // GOOD
         }
     }
 }
