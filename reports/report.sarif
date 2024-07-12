@@ -1500,7 +1500,7 @@
             }
           ],
           "message": {
-            "text": "Description of the high issue."
+            "text": "Example: `shl(shifted, 4)` will shift the right constant `4` by `a` bits. The correct order is `shl(4, shifted)`."
           },
           "ruleId": "incorrect-shift-order"
         },

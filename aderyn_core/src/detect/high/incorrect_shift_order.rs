@@ -45,7 +45,7 @@ impl IssueDetector for IncorrectShiftOrderDetector {
     }
 
     fn description(&self) -> String {
-        String::from("Description of the high issue.")
+        String::from("Example: `shl(shifted, 4)` will shift the right constant `4` by `a` bits. The correct order is `shl(4, shifted)`.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -86,7 +86,7 @@ mod incorrect_shift_order_detector_tests {
         // assert the description is correct
         assert_eq!(
             detector.description(),
-            String::from("Description of the high issue.")
+            String::from("Example: `shl(shifted, 4)` will shift the right constant `4` by `a` bits. The correct order is `shl(4, shifted)`.")
         );
     }
 }

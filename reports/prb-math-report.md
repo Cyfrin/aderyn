@@ -123,7 +123,7 @@ Downcasting int/uints in Solidity can be unsafe due to the potential for data lo
 
 ## H-2: Incorrect Assembly Shift Parameter Order
 
-Description of the high issue.
+Example: `shl(shifted, 4)` will shift the right constant `4` by `a` bits. The correct order is `shl(4, shifted)`.
 
 <details><summary>7 Found Instances</summary>
 

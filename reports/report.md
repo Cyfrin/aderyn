@@ -968,7 +968,7 @@ Experimental encoders should not be used in production. There are multiple known
 
 ## H-9: Incorrect Assembly Shift Parameter Order
 
-Description of the high issue.
+Example: `shl(shifted, 4)` will shift the right constant `4` by `a` bits. The correct order is `shl(4, shifted)`.
 
 <details><summary>2 Found Instances</summary>
 
