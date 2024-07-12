@@ -118,6 +118,7 @@
     "arbitrary-transfer-from",
     "unprotected-initializer",
     "unsafe-casting-detector",
-    "enumerable-loop-removal"
+    "enumerable-loop-removal",
+    "experimental-encoder"
   ]
 }

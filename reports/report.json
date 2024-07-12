@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 42,
-    "total_sloc": 1377
+    "total_source_units": 43,
+    "total_sloc": 1381
   },
   "files_details": {
     "files_details": [
@@ -56,6 +56,10 @@
       {
         "file_path": "src/EnumerableSetIteration.sol",
         "n_sloc": 55
+      },
+      {
+        "file_path": "src/ExperimentalEncoder.sol",
+        "n_sloc": 4
       },
       {
         "file_path": "src/HugeConstants.sol",
@@ -176,7 +180,7 @@
     ]
   },
   "issue_count": {
-    "high": 7,
+    "high": 8,
     "low": 23
   },
   "high_issues": {
@@ -983,6 +987,19 @@
             "line_no": 67,
             "src": "2083:14",
             "src_char": "2083:14"
+          }
+        ]
+      },
+      {
+        "title": "Experimental ABI Encoder",
+        "description": "Experimental encoders should not be used in production. There are multiple known compiler bugs that are caused by the experimental encoder. Upgrade your solidity version to remove the need for experimental features.",
+        "detector_name": "experimental-encoder",
+        "instances": [
+          {
+            "contract_path": "src/ExperimentalEncoder.sol",
+            "line_no": 2,
+            "src": "23:33",
+            "src_char": "23:33"
           }
         ]
       }
@@ -2341,6 +2358,7 @@
     "reverts-and-requires-in-loops",
     "division-before-multiplication",
     "unsafe-casting-detector",
-    "enumerable-loop-removal"
+    "enumerable-loop-removal",
+    "experimental-encoder"
   ]
 }
