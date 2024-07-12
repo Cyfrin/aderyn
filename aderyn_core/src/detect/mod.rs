@@ -15,6 +15,11 @@ macro_rules! capture {
                 $context.get_node_sort_key_from_capturable(&$item.clone().into()),
                 id,
             );
+        } else {
+            $self.found_instances.insert(
+                $context.get_node_sort_key_from_capturable(&$item.clone().into()),
+                0,
+            );
         }
     };
 }

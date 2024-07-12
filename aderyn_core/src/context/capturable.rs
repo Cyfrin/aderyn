@@ -51,6 +51,9 @@ pub enum Capturable {
     BreakStatement(Break),
     ContinueStatement(Continue),
     PlaceholderStatement(PlaceholderStatement),
+    YulFunctionCall(YulFunctionCall),
+    YulIdentifier(YulIdentifier),
+    YulLiteral(YulLiteral),
 }
 
 impl Capturable {
@@ -103,6 +106,9 @@ impl Capturable {
             Self::BreakStatement(n) => context.get_node_sort_key(&n.into()),
             Self::ContinueStatement(n) => context.get_node_sort_key(&n.into()),
             Self::PlaceholderStatement(n) => context.get_node_sort_key(&n.into()),
+            Self::YulFunctionCall(n) => context.get_node_sort_key(&n.into()),
+            Self::YulIdentifier(n) => context.get_node_sort_key(&n.into()),
+            Self::YulLiteral(n) => context.get_node_sort_key(&n.into()),
         }
     }
 
@@ -155,6 +161,9 @@ impl Capturable {
             Self::BreakStatement(n) => Some(n.id),
             Self::ContinueStatement(n) => Some(n.id),
             Self::PlaceholderStatement(n) => Some(n.id),
+            Self::YulFunctionCall(_) => None,
+            Self::YulIdentifier(_) => None,
+            Self::YulLiteral(_) => None,
         }
     }
 }
@@ -710,6 +719,24 @@ impl From<PlaceholderStatement> for Capturable {
 impl From<&PlaceholderStatement> for Capturable {
     fn from(value: &PlaceholderStatement) -> Self {
         Self::PlaceholderStatement(value.clone())
+    }
+}
+
+impl From<YulFunctionCall> for Capturable {
+    fn from(value: YulFunctionCall) -> Self {
+        Self::YulFunctionCall(value)
+    }
+}
+
+impl From<&YulIdentifier> for Capturable {
+    fn from(value: &YulIdentifier) -> Self {
+        Self::YulIdentifier(value.clone())
+    }
+}
+
+impl From<YulLiteral> for Capturable {
+    fn from(value: YulLiteral) -> Self {
+        Self::YulLiteral(value)
     }
 }
 
