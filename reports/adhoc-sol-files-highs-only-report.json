@@ -119,6 +119,7 @@
     "unprotected-initializer",
     "unsafe-casting-detector",
     "enumerable-loop-removal",
-    "experimental-encoder"
+    "experimental-encoder",
+    "storage-array-edit-with-memory-detector"
   ]
 }
