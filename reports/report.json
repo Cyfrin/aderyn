@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 44,
-    "total_sloc": 1397
+    "total_source_units": 45,
+    "total_sloc": 1414
   },
   "files_details": {
     "files_details": [
@@ -67,6 +67,10 @@
       },
       {
         "file_path": "src/InconsistentUints.sol",
+        "n_sloc": 17
+      },
+      {
+        "file_path": "src/IncorrectShift.sol",
         "n_sloc": 17
       },
       {
@@ -184,7 +188,7 @@
     ]
   },
   "issue_count": {
-    "high": 9,
+    "high": 10,
     "low": 23
   },
   "high_issues": {
@@ -1004,6 +1008,25 @@
             "line_no": 2,
             "src": "23:33",
             "src_char": "23:33"
+          }
+        ]
+      },
+      {
+        "title": "Incorrect Assembly Shift Parameter Order",
+        "description": "Example: `shl(shifted, 4)` will shift the right constant `4` by `a` bits. The correct order is `shl(4, shifted)`.",
+        "detector_name": "incorrect-shift-order",
+        "instances": [
+          {
+            "contract_path": "src/IncorrectShift.sol",
+            "line_no": 7,
+            "src": "192:15",
+            "src_char": "192:15"
+          },
+          {
+            "contract_path": "src/IncorrectShift.sol",
+            "line_no": 8,
+            "src": "238:15",
+            "src_char": "238:15"
           }
         ]
       },
@@ -2383,6 +2406,7 @@
     "unsafe-casting-detector",
     "enumerable-loop-removal",
     "experimental-encoder",
+    "incorrect-shift-order",
     "storage-array-edit-with-memory-detector"
   ]
 }
