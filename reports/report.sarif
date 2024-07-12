@@ -2070,6 +2070,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/StorageParameters.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 137
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
                 },
                 "region": {
@@ -3441,6 +3452,17 @@
                 "region": {
                   "byteLength": 12,
                   "byteOffset": 693
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StorageParameters.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 386
                 }
               }
             }

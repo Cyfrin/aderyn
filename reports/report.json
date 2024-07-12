@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 43,
-    "total_sloc": 1381
+    "total_source_units": 44,
+    "total_sloc": 1397
   },
   "files_details": {
     "files_details": [
@@ -92,6 +92,10 @@
       {
         "file_path": "src/StorageConditionals.sol",
         "n_sloc": 59
+      },
+      {
+        "file_path": "src/StorageParameters.sol",
+        "n_sloc": 16
       },
       {
         "file_path": "src/T11sTranferer.sol",
@@ -1350,6 +1354,12 @@
             "src_char": "2539:25"
           },
           {
+            "contract_path": "src/StorageParameters.sol",
+            "line_no": 7,
+            "src": "137:10",
+            "src_char": "137:10"
+          },
+          {
             "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
             "line_no": 16,
             "src": "475:27",
@@ -2120,6 +2130,12 @@
             "line_no": 28,
             "src": "693:12",
             "src_char": "693:12"
+          },
+          {
+            "contract_path": "src/StorageParameters.sol",
+            "line_no": 17,
+            "src": "386:11",
+            "src_char": "386:11"
           }
         ]
       },

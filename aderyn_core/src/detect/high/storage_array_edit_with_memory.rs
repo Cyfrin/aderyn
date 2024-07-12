@@ -1,11 +1,10 @@
 use std::collections::BTreeMap;
 use std::error::Error;
 
-use crate::ast::{identifiers, NodeID, StorageLocation, TypeName};
+use crate::ast::{NodeID, StorageLocation};
 
 use crate::capture;
 use crate::context::workspace_context::ASTNode;
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
     context::workspace_context::WorkspaceContext,
     detect::detector::{IssueDetector, IssueSeverity},
@@ -38,7 +37,7 @@ impl IssueDetector for StorageArrayEditWithMemoryDetector {
                 .argument_types
                 .as_ref()
                 .unwrap()
-                .into_iter()
+                .iter()
                 .enumerate()
             {
                 if let Some(type_string) = &argument_type.type_string {
@@ -83,7 +82,7 @@ impl IssueDetector for StorageArrayEditWithMemoryDetector {
     }
 
     fn name(&self) -> String {
-        format!("high-issue-template")
+        "high-issue-template".to_string()
     }
 }
 
