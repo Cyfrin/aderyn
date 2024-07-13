@@ -1598,6 +1598,26 @@
           "ruleId": "reused-contract-name"
         },
         {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/nested_mappings/NestedMappings.sol"
+                },
+                "region": {
+                  "byteLength": 58,
+                  "byteOffset": 367
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Prior to updates in Solidity 0.5.0, public mappings with nested structs compiled, but produced incorrect values. Refrain from using these, or update to a more recent version of Solidity."
+          },
+          "ruleId": "nested-struct-in-mapping"
+        },
+        {
           "level": "note",
           "locations": [
             {
@@ -2005,6 +2025,28 @@
                 "region": {
                   "byteLength": 23,
                   "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/nested_mappings/LaterVersion.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 36
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/nested_mappings/NestedMappings.sol"
+                },
+                "region": {
+                  "byteLength": 24,
+                  "byteOffset": 36
                 }
               }
             }
@@ -2996,6 +3038,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/nested_mappings/LaterVersion.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 36
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/parent_chain/ParentChainContract.sol"
                 },
                 "region": {
@@ -3803,6 +3856,28 @@
                 "region": {
                   "byteLength": 6,
                   "byteOffset": 8141
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/nested_mappings/LaterVersion.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 184
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/nested_mappings/NestedMappings.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 168
                 }
               }
             }
