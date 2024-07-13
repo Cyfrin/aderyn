@@ -4,7 +4,10 @@ use crate::{
     ast::NodeID,
     capture,
     context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
+    detect::{
+        detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
+        helpers::pragma_directive_to_semver,
+    },
 };
 use eyre::Result;
 use semver::{Op, VersionReq};
@@ -56,21 +59,7 @@ fn version_req_allows_above_0_8_19(version_req: &VersionReq) -> bool {
 impl IssueDetector for PushZeroOpcodeDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for pragma_directive in context.pragma_directives() {
-            let mut version_string = String::new();
-
-            for literal in &pragma_directive.literals {
-                if literal == "solidity" {
-                    continue;
-                }
-                if version_string.is_empty() && literal.contains("0.") {
-                    version_string.push('=');
-                }
-                if version_string.len() > 5 && (literal == "<" || literal == "=") {
-                    version_string.push(',');
-                }
-                version_string.push_str(literal);
-            }
-            let req = VersionReq::parse(&version_string)?;
+            let req = pragma_directive_to_semver(pragma_directive)?;
             if version_req_allows_above_0_8_19(&req) {
                 capture!(self, context, pragma_directive);
             }

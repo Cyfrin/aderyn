@@ -1,5 +1,7 @@
+use semver::{Error, VersionReq};
+
 use crate::{
-    ast::{Expression, FunctionDefinition, MemberAccess, NodeID, Visibility},
+    ast::{Expression, FunctionDefinition, MemberAccess, NodeID, PragmaDirective, Visibility},
     context::{
         browser::{ExtractBinaryOperations, ExtractMemberAccesses},
         workspace_context::WorkspaceContext,
@@ -44,6 +46,24 @@ pub fn get_implemented_external_and_public_functions(
                 || function.visibility == Visibility::External)
                 && function.implemented
         })
+}
+
+pub fn pragma_directive_to_semver(pragma_directive: &PragmaDirective) -> Result<VersionReq, Error> {
+    let mut version_string = String::new();
+
+    for literal in &pragma_directive.literals {
+        if literal == "solidity" {
+            continue;
+        }
+        if version_string.is_empty() && literal.contains("0.") {
+            version_string.push('=');
+        }
+        if version_string.len() > 5 && (literal == "<" || literal == "=") {
+            version_string.push(',');
+        }
+        version_string.push_str(literal);
+    }
+    VersionReq::parse(&version_string)
 }
 
 // Check if a function definition has a `msg.sender` binary operation.
