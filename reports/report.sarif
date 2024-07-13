@@ -1561,6 +1561,28 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/nested/2/Nested.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 214
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/reused_contract_name/ContractA.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 70
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/reused_contract_name/ContractB.sol"
                 },
                 "region": {

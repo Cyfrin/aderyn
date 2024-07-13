@@ -1074,10 +1074,22 @@
         "detector_name": "reused-contract-name",
         "instances": [
           {
+            "contract_path": "src/nested/1/Nested.sol",
+            "line_no": 7,
+            "src": "214:6",
+            "src_char": "214:6"
+          },
+          {
             "contract_path": "src/nested/2/Nested.sol",
             "line_no": 7,
             "src": "214:6",
             "src_char": "214:6"
+          },
+          {
+            "contract_path": "src/reused_contract_name/ContractA.sol",
+            "line_no": 4,
+            "src": "70:10",
+            "src_char": "70:10"
           },
           {
             "contract_path": "src/reused_contract_name/ContractB.sol",

@@ -292,7 +292,7 @@ Downcasting int/uints in Solidity can be unsafe due to the potential for data lo
 
 When compiling contracts with certain development frameworks (for example: Truffle), having contracts with the same name across different files can lead to one being overwritten.
 
-<details><summary>4 Found Instances</summary>
+<details><summary>6 Found Instances</summary>
 
 
 - Found in contracts/amo/helpers/BalancerPoolHelper.sol [Line: 13](../tests/2024-07-templegold/protocol/contracts/amo/helpers/BalancerPoolHelper.sol#L13)
@@ -302,6 +302,18 @@ When compiling contracts with certain development frameworks (for example: Truff
 	```
 
 - Found in contracts/amo/test/external/IBalancerHelpers.sol [Line: 5](../tests/2024-07-templegold/protocol/contracts/amo/test/external/IBalancerHelpers.sol#L5)
+
+	```solidity
+	interface IBalancerHelpers {
+	```
+
+- Found in contracts/amo/test/external/IWeightPool2Tokens.sol [Line: 5](../tests/2024-07-templegold/protocol/contracts/amo/test/external/IWeightPool2Tokens.sol#L5)
+
+	```solidity
+	interface IWeightPool2Tokens {
+	```
+
+- Found in contracts/interfaces/external/balancer/IBalancerHelpers.sol [Line: 7](../tests/2024-07-templegold/protocol/contracts/interfaces/external/balancer/IBalancerHelpers.sol#L7)
 
 	```solidity
 	interface IBalancerHelpers {

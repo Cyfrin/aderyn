@@ -1,7 +1,7 @@
-use std::collections::{BTreeMap, HashSet};
+use std::collections::{BTreeMap, HashMap};
 use std::error::Error;
 
-use crate::ast::NodeID;
+use crate::ast::{ContractDefinition, NodeID};
 
 use crate::capture;
 use crate::detect::detector::IssueDetectorNamePool;
@@ -20,13 +20,23 @@ pub struct ReusedContractNameDetector {
 
 impl IssueDetector for ReusedContractNameDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        let mut contract_names_seen: HashSet<&str> = HashSet::new();
+        let mut contract_names: HashMap<&str, Vec<&ContractDefinition>> = HashMap::new();
 
         for contract in context.contract_definitions() {
-            if contract_names_seen.contains(&contract.name.as_str()) {
-                capture!(self, context, contract);
+            if contract_names.contains_key(&contract.name.as_str()) {
+                if let Some(entries) = contract_names.get_mut(&contract.name.as_str()) {
+                    entries.push(contract);
+                }
             } else {
-                contract_names_seen.insert(&contract.name);
+                contract_names.insert(&contract.name, vec![contract]);
+            }
+        }
+
+        for (&_, contracts) in &contract_names {
+            if contracts.len() > 1 {
+                for &contract in contracts {
+                    capture!(self, context, contract);
+                }
             }
         }
 
@@ -73,7 +83,7 @@ mod reused_contract_name_detector_tests {
         // assert that the detector found an issue
         assert!(found);
         // assert that the detector found the correct number of instances
-        assert_eq!(detector.instances().len(), 1);
+        assert_eq!(detector.instances().len(), 2);
         // assert the severity is high
         assert_eq!(
             detector.severity(),

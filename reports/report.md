@@ -1034,13 +1034,25 @@ In some versions of Solidity, contracts compile with multiple constructors. The 
 
 When compiling contracts with certain development frameworks (for example: Truffle), having contracts with the same name across different files can lead to one being overwritten.
 
-<details><summary>2 Found Instances</summary>
+<details><summary>4 Found Instances</summary>
 
+
+- Found in src/nested/1/Nested.sol [Line: 7](../tests/contract-playground/src/nested/1/Nested.sol#L7)
+
+	```solidity
+	contract Nested {
+	```
 
 - Found in src/nested/2/Nested.sol [Line: 7](../tests/contract-playground/src/nested/2/Nested.sol#L7)
 
 	```solidity
 	contract Nested {
+	```
+
+- Found in src/reused_contract_name/ContractA.sol [Line: 4](../tests/contract-playground/src/reused_contract_name/ContractA.sol#L4)
+
+	```solidity
+	contract ReusedName {
 	```
 
 - Found in src/reused_contract_name/ContractB.sol [Line: 4](../tests/contract-playground/src/reused_contract_name/ContractB.sol#L4)
