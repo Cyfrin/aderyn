@@ -26,7 +26,7 @@ impl IssueDetector for ReusedContractNameDetector {
         for contract in context.contract_definitions() {
             contract_names
                 .entry(&contract.name)
-                .or_insert_with(Vec::new)
+                .or_default()
                 .push(contract);
         }
 
