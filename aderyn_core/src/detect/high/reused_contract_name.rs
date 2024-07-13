@@ -22,23 +22,20 @@ impl IssueDetector for ReusedContractNameDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         let mut contract_names: HashMap<&str, Vec<&ContractDefinition>> = HashMap::new();
 
+        // Simplify the map filling process using the Entry API
         for contract in context.contract_definitions() {
-            if contract_names.contains_key(&contract.name.as_str()) {
-                if let Some(entries) = contract_names.get_mut(&contract.name.as_str()) {
-                    entries.push(contract);
-                }
-            } else {
-                contract_names.insert(&contract.name, vec![contract]);
-            }
+            contract_names
+                .entry(&contract.name)
+                .or_insert_with(Vec::new)
+                .push(contract);
         }
 
-        for (&_, contracts) in &contract_names {
-            if contracts.len() > 1 {
-                for &contract in contracts {
-                    capture!(self, context, contract);
-                }
-            }
-        }
+        // Process duplicate contracts
+        contract_names
+            .values() // Directly iterate over values
+            .filter(|contracts| contracts.len() > 1) // Filter for duplicates
+            .flatten() // Flatten the list of lists to a single list of contracts
+            .for_each(|contract| capture!(self, context, contract)); // Process each contract
 
         Ok(!self.found_instances.is_empty())
     }
