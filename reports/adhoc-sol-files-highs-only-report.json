@@ -122,6 +122,7 @@
     "experimental-encoder",
     "incorrect-shift-order",
     "storage-array-edit-with-memory",
-    "multiple-constructors"
+    "multiple-constructors",
+    "reused-contract-name"
   ]
 }

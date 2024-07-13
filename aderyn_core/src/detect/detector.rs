@@ -9,7 +9,7 @@ use crate::{
             ArbitraryTransferFromDetector, AvoidAbiEncodePackedDetector,
             BlockTimestampDeadlineDetector, DelegateCallInLoopDetector,
             EnumerableLoopRemovalDetector, ExperimentalEncoderDetector,
-            IncorrectShiftOrderDetector, MultipleConstructorsDetector,
+            IncorrectShiftOrderDetector, MultipleConstructorsDetector, ReusedContractNameDetector,
             StorageArrayEditWithMemoryDetector, UnprotectedInitializerDetector,
             UnsafeCastingDetector,
         },
@@ -70,6 +70,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<IncorrectShiftOrderDetector>::default(),
         Box::<StorageArrayEditWithMemoryDetector>::default(),
         Box::<MultipleConstructorsDetector>::default(),
+        Box::<ReusedContractNameDetector>::default(),
     ]
 }
 
@@ -115,6 +116,7 @@ pub(crate) enum IssueDetectorNamePool {
     IncorrectShiftOrder,
     StorageArrayEditWithMemory,
     MultipleConstructors,
+    ReusedContractName,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -211,6 +213,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         }
         IssueDetectorNamePool::MultipleConstructors => {
             Some(Box::<MultipleConstructorsDetector>::default())
+        }
+        IssueDetectorNamePool::ReusedContractName => {
+            Some(Box::<ReusedContractNameDetector>::default())
         }
         IssueDetectorNamePool::Undecided => None,
     }

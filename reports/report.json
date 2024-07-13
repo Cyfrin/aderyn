@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 46,
-    "total_sloc": 1424
+    "total_source_units": 48,
+    "total_sloc": 1438
   },
   "files_details": {
     "files_details": [
@@ -182,6 +182,14 @@
         "n_sloc": 29
       },
       {
+        "file_path": "src/reused_contract_name/ContractA.sol",
+        "n_sloc": 7
+      },
+      {
+        "file_path": "src/reused_contract_name/ContractB.sol",
+        "n_sloc": 7
+      },
+      {
         "file_path": "src/uniswap/UniswapV2Swapper.sol",
         "n_sloc": 50
       },
@@ -192,7 +200,7 @@
     ]
   },
   "issue_count": {
-    "high": 11,
+    "high": 12,
     "low": 23
   },
   "high_issues": {
@@ -1057,6 +1065,37 @@
             "line_no": 3,
             "src": "25:180",
             "src_char": "25:180"
+          }
+        ]
+      },
+      {
+        "title": "Contract Name Reused in Different Files",
+        "description": "When compiling contracts with certain development frameworks (for example: Truffle), having contracts with the same name across different files can lead to one being overwritten.",
+        "detector_name": "reused-contract-name",
+        "instances": [
+          {
+            "contract_path": "src/nested/1/Nested.sol",
+            "line_no": 7,
+            "src": "214:6",
+            "src_char": "214:6"
+          },
+          {
+            "contract_path": "src/nested/2/Nested.sol",
+            "line_no": 7,
+            "src": "214:6",
+            "src_char": "214:6"
+          },
+          {
+            "contract_path": "src/reused_contract_name/ContractA.sol",
+            "line_no": 4,
+            "src": "70:10",
+            "src_char": "70:10"
+          },
+          {
+            "contract_path": "src/reused_contract_name/ContractB.sol",
+            "line_no": 4,
+            "src": "70:10",
+            "src_char": "70:10"
           }
         ]
       }
@@ -2425,6 +2464,7 @@
     "experimental-encoder",
     "incorrect-shift-order",
     "storage-array-edit-with-memory",
-    "multiple-constructors"
+    "multiple-constructors",
+    "reused-contract-name"
   ]
 }

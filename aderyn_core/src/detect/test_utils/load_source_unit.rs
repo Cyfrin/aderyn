@@ -131,13 +131,16 @@ pub fn load_multiple_solidity_source_units_into_single_context(
                     let filepath = &line["======= ".len()..end_marker];
                     if file_arg.contains(filepath) {
                         pick_next_line = true;
+                    } else if pick_next_line {
+                        // This assumes that a new header line indicates the end of the relevant content.
+                        break;
                     }
                 } else if pick_next_line {
-                    ast_content = line.to_string();
-                    break;
+                    // Append the line to `ast_content` with a newline character to preserve the multiline format.
+                    ast_content.push_str(line);
+                    ast_content.push('\n');
                 }
             }
-
             let mut source_unit: SourceUnit = serde_json::from_str(&ast_content).unwrap();
             source_unit.source = Some(solidity_content);
             source_unit.accept(&mut context).unwrap_or_else(|err| {
