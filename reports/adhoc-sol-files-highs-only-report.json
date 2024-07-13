@@ -123,6 +123,7 @@
     "incorrect-shift-order",
     "storage-array-edit-with-memory",
     "multiple-constructors",
-    "reused-contract-name"
+    "reused-contract-name",
+    "nested-struct-in-mapping"
   ]
 }
