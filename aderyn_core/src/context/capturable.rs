@@ -66,3 +66,21 @@ impl From<&&ModifierInvocation> for Capturable {
         Self::ModifierInvocation(value.clone().clone())
     }
 }
+
+impl From<YulFunctionCall> for Capturable {
+    fn from(value: YulFunctionCall) -> Self {
+        Self::YulFunctionCall(value)
+    }
+}
+
+impl From<&YulIdentifier> for Capturable {
+    fn from(value: &YulIdentifier) -> Self {
+        Self::YulIdentifier(value.clone())
+    }
+}
+
+impl From<YulLiteral> for Capturable {
+    fn from(value: YulLiteral) -> Self {
+        Self::YulLiteral(value)
+    }
+}

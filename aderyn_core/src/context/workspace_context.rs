@@ -89,7 +89,7 @@ pub struct WorkspaceContext {
     pub(crate) placeholder_statements_context: HashMap<PlaceholderStatement, NodeContext>,
     pub(crate) yul_function_calls_context: HashMap<YulFunctionCall, NodeContext>,
     pub(crate) yul_identifiers_context: HashMap<YulIdentifier, NodeContext>,
-    pub(crate) yul_literal_context: HashMap<YulLiteral, NodeContext>,
+    pub(crate) yul_literals_context: HashMap<YulLiteral, NodeContext>,
 }
 
 impl WorkspaceContext {

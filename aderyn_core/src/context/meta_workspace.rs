@@ -179,6 +179,18 @@ impl WorkspaceContext {
     pub fn placeholder_statements(&self) -> Vec<&PlaceholderStatement> {
         self.placeholder_statements_context.keys().collect()
     }
+
+    pub fn yul_function_calls(&self) -> Vec<&YulFunctionCall> {
+        self.yul_function_calls_context.keys().collect()
+    }
+
+    pub fn yul_identifiers(&self) -> Vec<&YulIdentifier> {
+        self.yul_identifiers_context.keys().collect()
+    }
+
+    pub fn yul_literals(&self) -> Vec<&YulLiteral> {
+        self.yul_literals_context.keys().collect()
+    }
 }
 
 generate_get_source_unit! {
@@ -236,4 +248,25 @@ generate_get_source_unit! {
     Break => break_statements_context,
     Continue => continue_statements_context,
     PlaceholderStatement => placeholder_statements_context,
+    YulFunctionCall => yul_function_calls_context,
+    YulIdentifier => yul_identifiers_context,
+    YulLiteral => yul_literals_context,
+}
+
+impl From<&YulFunctionCall> for ASTNode {
+    fn from(value: &YulFunctionCall) -> Self {
+        ASTNode::YulFunctionCall(value.clone())
+    }
+}
+
+impl From<&YulIdentifier> for ASTNode {
+    fn from(value: &YulIdentifier) -> Self {
+        ASTNode::YulIdentifier(value.clone())
+    }
+}
+
+impl From<&YulLiteral> for ASTNode {
+    fn from(value: &YulLiteral) -> Self {
+        ASTNode::YulLiteral(value.clone())
+    }
 }

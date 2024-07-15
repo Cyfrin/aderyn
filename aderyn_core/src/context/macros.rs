@@ -4,6 +4,9 @@ macro_rules! generate_capturable_methods {
         #[derive(Clone)]
         pub enum Capturable {
             $($name($name),)*
+            YulFunctionCall(YulFunctionCall),
+            YulIdentifier(YulIdentifier),
+            YulLiteral(YulLiteral),
             ASTNode(ASTNode),
         }
 
@@ -38,12 +41,18 @@ macro_rules! generate_capturable_methods {
             pub fn make_key(&self, context: &WorkspaceContext) -> (String, usize, String) {
                 match self {
                     Self::ASTNode(node) => context.get_node_sort_key(node),
+                    Self::YulFunctionCall(n) => context.get_node_sort_key(&n.into()),
+                    Self::YulIdentifier(n) => context.get_node_sort_key(&n.into()),
+                    Self::YulLiteral(n) => context.get_node_sort_key(&n.into()),
                     $(Self::$name(n) => context.get_node_sort_key(&n.into()),)*
                 }
             }
             pub fn id(&self) -> Option<NodeID> {
                 match self {
                     Self::ASTNode(ast_node) => ast_node.id(),
+                    Self::YulFunctionCall(_) => None,
+                    Self::YulIdentifier(_) => None,
+                    Self::YulLiteral(_) => None,
                     $(Self::$name(n) => Some(n.id),)*
                 }
             }
