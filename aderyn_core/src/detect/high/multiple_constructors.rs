@@ -12,12 +12,6 @@ use crate::{
 };
 use eyre::Result;
 
-// HOW TO USE THIS TEMPLATE:
-// 1. Copy this file and rename it to the snake_case version of the issue you are detecting.
-// 2. Rename the MultipleConstructorsDetector struct and impl to your new issue name.
-// 3. Add this file and detector struct to the mod.rs file in the same directory.
-// 4. Implement the detect function to find instances of the issue.
-
 #[derive(Default)]
 pub struct MultipleConstructorsDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
