@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 50,
-    "total_sloc": 1458
+    "total_source_units": 51,
+    "total_sloc": 1473
   },
   "files_details": {
     "files_details": [
@@ -48,6 +48,10 @@
       {
         "file_path": "src/DivisionBeforeMultiplication.sol",
         "n_sloc": 22
+      },
+      {
+        "file_path": "src/DynamicArrayLengthAssignment.sol",
+        "n_sloc": 15
       },
       {
         "file_path": "src/EmptyBlocks.sol",
@@ -208,7 +212,7 @@
     ]
   },
   "issue_count": {
-    "high": 13,
+    "high": 14,
     "low": 23
   },
   "high_issues": {
@@ -1119,6 +1123,37 @@
             "src_char": "367:58"
           }
         ]
+      },
+      {
+        "title": "Array length value has a direct assignment.",
+        "description": "If the length of a dynamic array (storage variable) directly assigned to, it may allow access to other storage slots by tweaking it's value. This practice has been depracated in newer Solidity versions",
+        "detector_name": "dynamic-array-length-assignment",
+        "instances": [
+          {
+            "contract_path": "src/DynamicArrayLengthAssignment.sol",
+            "line_no": 13,
+            "src": "295:14",
+            "src_char": "295:14"
+          },
+          {
+            "contract_path": "src/DynamicArrayLengthAssignment.sol",
+            "line_no": 14,
+            "src": "325:18",
+            "src_char": "325:18"
+          },
+          {
+            "contract_path": "src/DynamicArrayLengthAssignment.sol",
+            "line_no": 15,
+            "src": "359:33",
+            "src_char": "359:33"
+          },
+          {
+            "contract_path": "src/DynamicArrayLengthAssignment.sol",
+            "line_no": 16,
+            "src": "408:15",
+            "src_char": "408:15"
+          }
+        ]
       }
     ]
   },
@@ -1634,6 +1669,18 @@
             "line_no": 32,
             "src": "1374:66",
             "src_char": "1374:66"
+          },
+          {
+            "contract_path": "src/DynamicArrayLengthAssignment.sol",
+            "line_no": 13,
+            "src": "312:3",
+            "src_char": "312:3"
+          },
+          {
+            "contract_path": "src/DynamicArrayLengthAssignment.sol",
+            "line_no": 14,
+            "src": "346:3",
+            "src_char": "346:3"
           },
           {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
@@ -2517,6 +2564,7 @@
     "storage-array-edit-with-memory",
     "multiple-constructors",
     "reused-contract-name",
-    "nested-struct-in-mapping"
+    "nested-struct-in-mapping",
+    "dynamic-array-length-assignment"
   ]
 }
