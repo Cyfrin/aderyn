@@ -22,16 +22,14 @@ impl IssueDetector for IncorrectShiftOrderDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         let yul_function_calls = context.yul_function_calls();
         for yul_function_call in yul_function_calls {
-            if yul_function_call.function_name.name == "shl"
-                || yul_function_call.function_name.name == "shr"
-            {
-                if yul_function_call
+            if (yul_function_call.function_name.name == "shl"
+                || yul_function_call.function_name.name == "shr")
+                && yul_function_call
                     .arguments
                     .get(1)
                     .is_some_and(|n| matches!(n, YulExpression::YulLiteral(_)))
-                {
-                    capture!(self, context, yul_function_call);
-                }
+            {
+                capture!(self, context, yul_function_call);
             }
         }
 
