@@ -1618,6 +1618,70 @@
           "ruleId": "nested-struct-in-mapping"
         },
         {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DynamicArrayLengthAssignment.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 295
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DynamicArrayLengthAssignment.sol"
+                },
+                "region": {
+                  "byteLength": 18,
+                  "byteOffset": 325
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DynamicArrayLengthAssignment.sol"
+                },
+                "region": {
+                  "byteLength": 33,
+                  "byteOffset": 359
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DynamicArrayLengthAssignment.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 408
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DynamicArrayLengthAssignment.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 439
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "If the length of a dynamic array (storage variable) directly assigned to, it may allow access to other storage slots by tweaking it's value. This practice has been depracated in newer Solidity versions"
+          },
+          "ruleId": "dynamic-array-length-assignment"
+        },
+        {
           "level": "note",
           "locations": [
             {
@@ -2514,6 +2578,39 @@
                 "region": {
                   "byteLength": 66,
                   "byteOffset": 1374
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DynamicArrayLengthAssignment.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 312
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DynamicArrayLengthAssignment.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 346
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DynamicArrayLengthAssignment.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 457
                 }
               }
             },
