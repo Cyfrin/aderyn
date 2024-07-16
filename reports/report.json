@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 50,
-    "total_sloc": 1458
+    "total_source_units": 52,
+    "total_sloc": 1480
   },
   "files_details": {
     "files_details": [
@@ -48,6 +48,10 @@
       {
         "file_path": "src/DivisionBeforeMultiplication.sol",
         "n_sloc": 22
+      },
+      {
+        "file_path": "src/DynamicArrayLengthAssignment.sol",
+        "n_sloc": 16
       },
       {
         "file_path": "src/EmptyBlocks.sol",
@@ -124,6 +128,10 @@
       {
         "file_path": "src/UnusedError.sol",
         "n_sloc": 19
+      },
+      {
+        "file_path": "src/UsingSelfdestruct.sol",
+        "n_sloc": 6
       },
       {
         "file_path": "src/WrongOrderOfLayout.sol",
@@ -208,7 +216,7 @@
     ]
   },
   "issue_count": {
-    "high": 13,
+    "high": 15,
     "low": 23
   },
   "high_issues": {
@@ -288,27 +296,21 @@
           },
           {
             "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 28,
-            "src": "1116:67",
-            "src_char": "1116:67"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
             "line_no": 31,
-            "src": "1261:112",
-            "src_char": "1261:112"
+            "src": "1278:112",
+            "src_char": "1278:112"
           },
           {
             "contract_path": "src/uniswap/UniswapV2Swapper.sol",
             "line_no": 32,
-            "src": "1383:99",
-            "src_char": "1383:99"
+            "src": "1400:99",
+            "src_char": "1400:99"
           },
           {
             "contract_path": "src/uniswap/UniswapV2Swapper.sol",
             "line_no": 33,
-            "src": "1492:109",
-            "src_char": "1492:109"
+            "src": "1509:109",
+            "src_char": "1509:109"
           },
           {
             "contract_path": "src/uniswap/UniswapV3Swapper.sol",
@@ -1119,6 +1121,56 @@
             "src_char": "367:58"
           }
         ]
+      },
+      {
+        "title": "Depracated EVM Instruction for `selfdestruct` should not be used.",
+        "description": "",
+        "detector_name": "selfdestruct-identifier",
+        "instances": [
+          {
+            "contract_path": "src/UsingSelfdestruct.sol",
+            "line_no": 7,
+            "src": "146:12",
+            "src_char": "146:12"
+          }
+        ]
+      },
+      {
+        "title": "Array length value has a direct assignment.",
+        "description": "If the length of a dynamic array (storage variable) directly assigned to, it may allow access to other storage slots by tweaking it's value. This practice has been depracated in newer Solidity versions",
+        "detector_name": "dynamic-array-length-assignment",
+        "instances": [
+          {
+            "contract_path": "src/DynamicArrayLengthAssignment.sol",
+            "line_no": 13,
+            "src": "295:14",
+            "src_char": "295:14"
+          },
+          {
+            "contract_path": "src/DynamicArrayLengthAssignment.sol",
+            "line_no": 14,
+            "src": "325:18",
+            "src_char": "325:18"
+          },
+          {
+            "contract_path": "src/DynamicArrayLengthAssignment.sol",
+            "line_no": 15,
+            "src": "359:33",
+            "src_char": "359:33"
+          },
+          {
+            "contract_path": "src/DynamicArrayLengthAssignment.sol",
+            "line_no": 16,
+            "src": "408:15",
+            "src_char": "408:15"
+          },
+          {
+            "contract_path": "src/DynamicArrayLengthAssignment.sol",
+            "line_no": 17,
+            "src": "439:14",
+            "src_char": "439:14"
+          }
+        ]
       }
     ]
   },
@@ -1337,6 +1389,12 @@
             "line_no": 1,
             "src": "0:24",
             "src_char": "0:24"
+          },
+          {
+            "contract_path": "src/UsingSelfdestruct.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
@@ -1630,10 +1688,22 @@
             "src_char": "1275:66"
           },
           {
-            "contract_path": "src/ConstantsLiterals.sol",
-            "line_no": 32,
-            "src": "1374:66",
-            "src_char": "1374:66"
+            "contract_path": "src/DynamicArrayLengthAssignment.sol",
+            "line_no": 13,
+            "src": "312:3",
+            "src_char": "312:3"
+          },
+          {
+            "contract_path": "src/DynamicArrayLengthAssignment.sol",
+            "line_no": 14,
+            "src": "346:3",
+            "src_char": "346:3"
+          },
+          {
+            "contract_path": "src/DynamicArrayLengthAssignment.sol",
+            "line_no": 17,
+            "src": "457:3",
+            "src_char": "457:3"
           },
           {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
@@ -2517,6 +2587,8 @@
     "storage-array-edit-with-memory",
     "multiple-constructors",
     "reused-contract-name",
-    "nested-struct-in-mapping"
+    "nested-struct-in-mapping",
+    "selfdestruct-identifier",
+    "dynamic-array-length-assignment"
   ]
 }

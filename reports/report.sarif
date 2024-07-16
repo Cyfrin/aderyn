@@ -130,19 +130,8 @@
                   "uri": "src/uniswap/UniswapV2Swapper.sol"
                 },
                 "region": {
-                  "byteLength": 67,
-                  "byteOffset": 1116
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV2Swapper.sol"
-                },
-                "region": {
                   "byteLength": 112,
-                  "byteOffset": 1261
+                  "byteOffset": 1278
                 }
               }
             },
@@ -153,7 +142,7 @@
                 },
                 "region": {
                   "byteLength": 99,
-                  "byteOffset": 1383
+                  "byteOffset": 1400
                 }
               }
             },
@@ -164,7 +153,7 @@
                 },
                 "region": {
                   "byteLength": 109,
-                  "byteOffset": 1492
+                  "byteOffset": 1509
                 }
               }
             },
@@ -1618,6 +1607,90 @@
           "ruleId": "nested-struct-in-mapping"
         },
         {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UsingSelfdestruct.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 146
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": ""
+          },
+          "ruleId": "selfdestruct-identifier"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DynamicArrayLengthAssignment.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 295
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DynamicArrayLengthAssignment.sol"
+                },
+                "region": {
+                  "byteLength": 18,
+                  "byteOffset": 325
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DynamicArrayLengthAssignment.sol"
+                },
+                "region": {
+                  "byteLength": 33,
+                  "byteOffset": 359
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DynamicArrayLengthAssignment.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 408
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DynamicArrayLengthAssignment.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 439
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "If the length of a dynamic array (storage variable) directly assigned to, it may allow access to other storage slots by tweaking it's value. This practice has been depracated in newer Solidity versions"
+          },
+          "ruleId": "dynamic-array-length-assignment"
+        },
+        {
           "level": "note",
           "locations": [
             {
@@ -1981,6 +2054,17 @@
                 "region": {
                   "byteLength": 24,
                   "byteOffset": 0
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UsingSelfdestruct.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
                 }
               }
             },
@@ -2509,11 +2593,33 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/ConstantsLiterals.sol"
+                  "uri": "src/DynamicArrayLengthAssignment.sol"
                 },
                 "region": {
-                  "byteLength": 66,
-                  "byteOffset": 1374
+                  "byteLength": 3,
+                  "byteOffset": 312
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DynamicArrayLengthAssignment.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 346
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DynamicArrayLengthAssignment.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 457
                 }
               }
             },

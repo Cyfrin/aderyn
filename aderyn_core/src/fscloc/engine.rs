@@ -3,7 +3,13 @@ use ignore::{DirEntry, WalkBuilder, WalkState::Continue};
 use rayon::prelude::*;
 use std::{collections::HashMap, path::Path, sync::Mutex};
 
-pub fn count_lines_of_code(src: &Path, src_filepaths: &[String]) -> Mutex<HashMap<String, usize>> {
+use super::cloc::Stats;
+
+pub fn count_lines_of_code_and_collect_line_numbers_to_ignore(
+    src: &Path,
+    src_filepaths: &[String],
+    skip_cloc: bool,
+) -> Mutex<HashMap<String, Stats>> {
     let walker = WalkBuilder::new(src);
     let (tx, rx) = crossbeam_channel::unbounded();
     walker.build_parallel().run(|| {
@@ -36,11 +42,11 @@ pub fn count_lines_of_code(src: &Path, src_filepaths: &[String]) -> Mutex<HashMa
     let receive = |target_file: DirEntry| {
         // println!("Processing: {:?}", target_file.path());
         let r_content = std::fs::read_to_string(target_file.path()).unwrap();
-        let stats = cloc::get_stats(&r_content);
+        let stats = cloc::get_stats(&r_content, skip_cloc);
         let key = String::from(target_file.path().to_string_lossy());
         let mut lock = lines_of_code.lock().unwrap();
         // println!("Inserting: {} - {}", key, stats.code);
-        lock.insert(key, stats.code);
+        lock.insert(key, stats);
     };
 
     rx.into_iter().par_bridge().for_each(receive);
