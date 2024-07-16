@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 46,
-    "total_sloc": 1424
+    "total_source_units": 50,
+    "total_sloc": 1458
   },
   "files_details": {
     "files_details": [
@@ -178,8 +178,24 @@
         "n_sloc": 7
       },
       {
+        "file_path": "src/nested_mappings/LaterVersion.sol",
+        "n_sloc": 10
+      },
+      {
+        "file_path": "src/nested_mappings/NestedMappings.sol",
+        "n_sloc": 10
+      },
+      {
         "file_path": "src/parent_chain/ParentChainContract.sol",
         "n_sloc": 29
+      },
+      {
+        "file_path": "src/reused_contract_name/ContractA.sol",
+        "n_sloc": 7
+      },
+      {
+        "file_path": "src/reused_contract_name/ContractB.sol",
+        "n_sloc": 7
       },
       {
         "file_path": "src/uniswap/UniswapV2Swapper.sol",
@@ -192,7 +208,7 @@
     ]
   },
   "issue_count": {
-    "high": 11,
+    "high": 13,
     "low": 23
   },
   "high_issues": {
@@ -1053,6 +1069,50 @@
             "src_char": "25:180"
           }
         ]
+      },
+      {
+        "title": "Contract Name Reused in Different Files",
+        "description": "When compiling contracts with certain development frameworks (for example: Truffle), having contracts with the same name across different files can lead to one being overwritten.",
+        "detector_name": "reused-contract-name",
+        "instances": [
+          {
+            "contract_path": "src/nested/1/Nested.sol",
+            "line_no": 7,
+            "src": "214:6",
+            "src_char": "214:6"
+          },
+          {
+            "contract_path": "src/nested/2/Nested.sol",
+            "line_no": 7,
+            "src": "214:6",
+            "src_char": "214:6"
+          },
+          {
+            "contract_path": "src/reused_contract_name/ContractA.sol",
+            "line_no": 4,
+            "src": "70:10",
+            "src_char": "70:10"
+          },
+          {
+            "contract_path": "src/reused_contract_name/ContractB.sol",
+            "line_no": 4,
+            "src": "70:10",
+            "src_char": "70:10"
+          }
+        ]
+      },
+      {
+        "title": "Nested Structs in Mappings pre-0.5.0",
+        "description": "Prior to updates in Solidity 0.5.0, public mappings with nested structs compiled, but produced incorrect values. Refrain from using these, or update to a more recent version of Solidity.",
+        "detector_name": "nested-struct-in-mapping",
+        "instances": [
+          {
+            "contract_path": "src/nested_mappings/NestedMappings.sol",
+            "line_no": 17,
+            "src": "367:58",
+            "src_char": "367:58"
+          }
+        ]
       }
     ]
   },
@@ -1295,6 +1355,18 @@
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/nested_mappings/LaterVersion.sol",
+            "line_no": 2,
+            "src": "36:23",
+            "src_char": "36:23"
+          },
+          {
+            "contract_path": "src/nested_mappings/NestedMappings.sol",
+            "line_no": 2,
+            "src": "36:24",
+            "src_char": "36:24"
           }
         ]
       },
@@ -1845,6 +1917,12 @@
             "src_char": "180:23"
           },
           {
+            "contract_path": "src/nested_mappings/LaterVersion.sol",
+            "line_no": 2,
+            "src": "36:23",
+            "src_char": "36:23"
+          },
+          {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
             "line_no": 2,
             "src": "32:23",
@@ -2299,6 +2377,18 @@
             "line_no": 134,
             "src": "8141:6",
             "src_char": "6653:6"
+          },
+          {
+            "contract_path": "src/nested_mappings/LaterVersion.sol",
+            "line_no": 8,
+            "src": "184:5",
+            "src_char": "184:5"
+          },
+          {
+            "contract_path": "src/nested_mappings/NestedMappings.sol",
+            "line_no": 8,
+            "src": "168:10",
+            "src_char": "168:10"
           }
         ]
       },
@@ -2413,6 +2503,8 @@
     "experimental-encoder",
     "incorrect-shift-order",
     "storage-array-edit-with-memory",
-    "multiple-constructors"
+    "multiple-constructors",
+    "reused-contract-name",
+    "nested-struct-in-mapping"
   ]
 }

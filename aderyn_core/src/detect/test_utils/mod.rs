@@ -5,6 +5,7 @@ use once_cell::sync::Lazy;
 use std::path::PathBuf;
 
 // Using `solc` to read AST given a source unit (i.e Solidity file)
+pub use load_source_unit::load_multiple_solidity_source_units_into_single_context;
 pub use load_source_unit::load_solidity_source_unit;
 
 pub(crate) fn take_loader_lock() -> impl Drop {
