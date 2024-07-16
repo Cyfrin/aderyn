@@ -62,3 +62,21 @@ generate_ast_methods!(
     Continue,
     PlaceholderStatement,
 );
+
+impl From<&YulFunctionCall> for ASTNode {
+    fn from(value: &YulFunctionCall) -> Self {
+        ASTNode::YulFunctionCall(value.clone())
+    }
+}
+
+impl From<&YulIdentifier> for ASTNode {
+    fn from(value: &YulIdentifier) -> Self {
+        ASTNode::YulIdentifier(value.clone())
+    }
+}
+
+impl From<&YulLiteral> for ASTNode {
+    fn from(value: &YulLiteral) -> Self {
+        ASTNode::YulLiteral(value.clone())
+    }
+}
