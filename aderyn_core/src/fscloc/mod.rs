@@ -11,7 +11,7 @@ pub struct CodeLines {
 }
 
 #[cfg(test)]
-mod tests {
+mod cloc_tests {
     use std::path::PathBuf;
 
     use crate::fscloc::engine;
@@ -25,6 +25,7 @@ mod tests {
         let sol = engine::count_lines_of_code_and_collect_line_numbers_to_ignore(
             PathBuf::from("../tests/contract-playground/src/cloc").as_path(),
             &src_filepaths,
+            false,
         );
         let result = sol.lock().unwrap();
         result
@@ -52,6 +53,7 @@ mod tests {
         let sol = engine::count_lines_of_code_and_collect_line_numbers_to_ignore(
             PathBuf::from("../tests/contract-playground/src/cloc").as_path(),
             &src_filepaths,
+            false,
         );
         let result = sol.lock().unwrap();
         assert_eq!(result.len(), 1);

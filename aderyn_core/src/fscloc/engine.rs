@@ -8,6 +8,7 @@ use super::cloc::Stats;
 pub fn count_lines_of_code_and_collect_line_numbers_to_ignore(
     src: &Path,
     src_filepaths: &[String],
+    skip_cloc: bool,
 ) -> Mutex<HashMap<String, Stats>> {
     let walker = WalkBuilder::new(src);
     let (tx, rx) = crossbeam_channel::unbounded();
@@ -41,7 +42,7 @@ pub fn count_lines_of_code_and_collect_line_numbers_to_ignore(
     let receive = |target_file: DirEntry| {
         // println!("Processing: {:?}", target_file.path());
         let r_content = std::fs::read_to_string(target_file.path()).unwrap();
-        let stats = cloc::get_stats(&r_content);
+        let stats = cloc::get_stats(&r_content, skip_cloc);
         let key = String::from(target_file.path().to_string_lossy());
         let mut lock = lines_of_code.lock().unwrap();
         // println!("Inserting: {} - {}", key, stats.code);
