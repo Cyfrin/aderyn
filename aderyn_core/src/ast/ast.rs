@@ -1,24 +1,29 @@
-use crate::ast::{ContractDefinition, *};
-
-use super::{
-    macros::generate_capturable_methods,
-    workspace_context::{ASTNode, WorkspaceContext},
+use crate::{
+    ast::macros::*,
+    ast::*,
+    visitor::ast_visitor::{ASTConstVisitor, Node},
 };
+use eyre::Result;
 
-generate_capturable_methods! {
+generate_ast_methods!(
+    ArrayTypeName,
     Assignment,
     BinaryOperation,
     Block,
     Conditional,
     ContractDefinition,
+    ElementaryTypeName,
     ElementaryTypeNameExpression,
+    EmitStatement,
     EnumDefinition,
     EnumValue,
     EventDefinition,
     ErrorDefinition,
+    ExpressionStatement,
     FunctionCall,
     FunctionCallOptions,
     FunctionDefinition,
+    FunctionTypeName,
     ForStatement,
     Identifier,
     IdentifierPath,
@@ -31,17 +36,22 @@ generate_capturable_methods! {
     Literal,
     MemberAccess,
     NewExpression,
+    Mapping,
     ModifierDefinition,
     ModifierInvocation,
     OverrideSpecifier,
     ParameterList,
     PragmaDirective,
     Return,
+    RevertStatement,
     SourceUnit,
     StructDefinition,
     StructuredDocumentation,
+    TryStatement,
+    TryCatchClause,
     TupleExpression,
     UnaryOperation,
+    UserDefinedTypeName,
     UserDefinedValueTypeDefinition,
     UsingForDirective,
     VariableDeclaration,
@@ -51,36 +61,22 @@ generate_capturable_methods! {
     Break,
     Continue,
     PlaceholderStatement,
-}
+);
 
-impl From<&&ContractDefinition> for Capturable {
-    fn from(value: &&ContractDefinition) -> Self {
-        #[allow(suspicious_double_ref_op)]
-        Self::ContractDefinition(value.clone().clone())
+impl From<&YulFunctionCall> for ASTNode {
+    fn from(value: &YulFunctionCall) -> Self {
+        ASTNode::YulFunctionCall(value.clone())
     }
 }
 
-impl From<&&ModifierInvocation> for Capturable {
-    fn from(value: &&ModifierInvocation) -> Self {
-        #[allow(suspicious_double_ref_op)]
-        Self::ModifierInvocation(value.clone().clone())
-    }
-}
-
-impl From<YulFunctionCall> for Capturable {
-    fn from(value: YulFunctionCall) -> Self {
-        Self::YulFunctionCall(value)
-    }
-}
-
-impl From<&YulIdentifier> for Capturable {
+impl From<&YulIdentifier> for ASTNode {
     fn from(value: &YulIdentifier) -> Self {
-        Self::YulIdentifier(value.clone())
+        ASTNode::YulIdentifier(value.clone())
     }
 }
 
-impl From<YulLiteral> for Capturable {
-    fn from(value: YulLiteral) -> Self {
-        Self::YulLiteral(value)
+impl From<&YulLiteral> for ASTNode {
+    fn from(value: &YulLiteral) -> Self {
+        ASTNode::YulLiteral(value.clone())
     }
 }
