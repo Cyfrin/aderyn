@@ -25,7 +25,11 @@ impl IssueDetector for IncorrectShiftOrderDetector {
             if yul_function_call.function_name.name == "shl"
                 || yul_function_call.function_name.name == "shr"
             {
-                if let YulExpression::YulLiteral(_) = &yul_function_call.arguments[1] {
+                if yul_function_call
+                    .arguments
+                    .get(1)
+                    .is_some_and(|n| matches!(n, YulExpression::YulLiteral(_)))
+                {
                     capture!(self, context, yul_function_call);
                 }
             }
