@@ -35,6 +35,8 @@ use std::{
     str::FromStr,
 };
 
+use super::high::SelfdestructIdentifierDetector;
+
 pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
     vec![
         Box::<DelegateCallInLoopDetector>::default(),
@@ -73,6 +75,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<MultipleConstructorsDetector>::default(),
         Box::<ReusedContractNameDetector>::default(),
         Box::<NestedStructInMappingDetector>::default(),
+        Box::<SelfdestructIdentifierDetector>::default(),
     ]
 }
 
@@ -120,6 +123,7 @@ pub(crate) enum IssueDetectorNamePool {
     MultipleConstructors,
     ReusedContractName,
     NestedStructInMapping,
+    SelfdestructIdentifier,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -222,6 +226,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         }
         IssueDetectorNamePool::NestedStructInMapping => {
             Some(Box::<NestedStructInMappingDetector>::default())
+        }
+        IssueDetectorNamePool::SelfdestructIdentifier => {
+            Some(Box::<SelfdestructIdentifierDetector>::default())
         }
         IssueDetectorNamePool::Undecided => None,
     }

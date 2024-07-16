@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 50,
-    "total_sloc": 1458
+    "total_source_units": 51,
+    "total_sloc": 1464
   },
   "files_details": {
     "files_details": [
@@ -126,6 +126,10 @@
         "n_sloc": 19
       },
       {
+        "file_path": "src/UsingSelfdestruct.sol",
+        "n_sloc": 6
+      },
+      {
         "file_path": "src/WrongOrderOfLayout.sol",
         "n_sloc": 13
       },
@@ -208,7 +212,7 @@
     ]
   },
   "issue_count": {
-    "high": 13,
+    "high": 14,
     "low": 23
   },
   "high_issues": {
@@ -1119,6 +1123,19 @@
             "src_char": "367:58"
           }
         ]
+      },
+      {
+        "title": "Depracated EVM Instruction for `selfdestruct` should not be used.",
+        "description": "",
+        "detector_name": "selfdestruct-identifier",
+        "instances": [
+          {
+            "contract_path": "src/UsingSelfdestruct.sol",
+            "line_no": 7,
+            "src": "146:12",
+            "src_char": "146:12"
+          }
+        ]
       }
     ]
   },
@@ -1337,6 +1354,12 @@
             "line_no": 1,
             "src": "0:24",
             "src_char": "0:24"
+          },
+          {
+            "contract_path": "src/UsingSelfdestruct.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
           },
           {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
@@ -2517,6 +2540,7 @@
     "storage-array-edit-with-memory",
     "multiple-constructors",
     "reused-contract-name",
-    "nested-struct-in-mapping"
+    "nested-struct-in-mapping",
+    "selfdestruct-identifier"
   ]
 }

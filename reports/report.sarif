@@ -1618,6 +1618,26 @@
           "ruleId": "nested-struct-in-mapping"
         },
         {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UsingSelfdestruct.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 146
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": ""
+          },
+          "ruleId": "selfdestruct-identifier"
+        },
+        {
           "level": "note",
           "locations": [
             {
@@ -1981,6 +2001,17 @@
                 "region": {
                   "byteLength": 24,
                   "byteOffset": 0
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UsingSelfdestruct.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
                 }
               }
             },
