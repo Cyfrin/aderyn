@@ -49,8 +49,8 @@ pub struct ExternalReferenceData {
     value_size: NodeID,
 }
 
-#[derive(Clone, Debug, Eq, Serialize, PartialEq, Hash)]
-#[serde(untagged)]
+#[derive(Clone, Debug, Eq, Serialize, Deserialize, PartialEq, Hash)]
+#[serde(tag = "nodeType")]
 pub enum YulExpression {
     YulLiteral(YulLiteral),
     YulIdentifier(YulIdentifier),
@@ -63,26 +63,6 @@ impl Node for YulExpression {
             YulExpression::YulLiteral(node) => node.accept(visitor),
             YulExpression::YulIdentifier(node) => node.accept(visitor),
             YulExpression::YulFunctionCall(node) => node.accept(visitor),
-        }
-    }
-}
-
-impl<'de> Deserialize<'de> for YulExpression {
-    fn deserialize<D: serde::Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
-        let json = serde_json::Value::deserialize(deserializer)?;
-        let node_type = json.get("nodeType").unwrap().as_str().unwrap();
-
-        match node_type {
-            "YulLiteral" => Ok(YulExpression::YulLiteral(
-                serde_json::from_value(json).unwrap(),
-            )),
-            "YulIdentifier" => Ok(YulExpression::YulIdentifier(
-                serde_json::from_value(json).unwrap(),
-            )),
-            "YulFunctionCall" => Ok(YulExpression::YulFunctionCall(
-                serde_json::from_value(json).unwrap(),
-            )),
-            _ => panic!("Invalid yul expression node type: {node_type}"),
         }
     }
 }
@@ -160,8 +140,8 @@ impl Node for YulBlock {
     }
 }
 
-#[derive(Clone, Debug, Eq, Serialize, PartialEq, Hash)]
-#[serde(untagged)]
+#[derive(Clone, Debug, Eq, Serialize, Deserialize, PartialEq, Hash)]
+#[serde(tag = "nodeType")]
 pub enum YulStatement {
     YulIf(YulIf),
     YulSwitch(YulSwitch),
@@ -190,42 +170,6 @@ impl Node for YulStatement {
             YulStatement::YulLeave => Ok(()),
             YulStatement::YulBreak => Ok(()),
             YulStatement::YulContinue => Ok(()),
-        }
-    }
-}
-
-impl<'de> Deserialize<'de> for YulStatement {
-    fn deserialize<D: serde::Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
-        let json = serde_json::Value::deserialize(deserializer)?;
-        let node_type = json.get("nodeType").unwrap().as_str().unwrap();
-
-        match node_type {
-            "YulIf" => Ok(YulStatement::YulIf(serde_json::from_value(json).unwrap())),
-            "YulSwitch" => Ok(YulStatement::YulSwitch(
-                serde_json::from_value(json).unwrap(),
-            )),
-            "YulForLoop" => Ok(YulStatement::YulForLoop(
-                serde_json::from_value(json).unwrap(),
-            )),
-            "YulAssignment" => Ok(YulStatement::YulAssignment(
-                serde_json::from_value(json).unwrap(),
-            )),
-            "YulVariableDeclaration" => Ok(YulStatement::YulVariableDeclaration(
-                serde_json::from_value(json).unwrap(),
-            )),
-            "YulExpressionStatement" => Ok(YulStatement::YulExpressionStatement(
-                serde_json::from_value(json).unwrap(),
-            )),
-            "YulFunctionDefinition" => Ok(YulStatement::YulFunctionDefinition(
-                serde_json::from_value(json).unwrap(),
-            )),
-            "YulBlock" => Ok(YulStatement::YulBlock(
-                serde_json::from_value(json).unwrap(),
-            )),
-            "YulLeave" => Ok(YulStatement::YulLeave),
-            "YulBreak" => Ok(YulStatement::YulBreak),
-            "YulContinue" => Ok(YulStatement::YulContinue),
-            _ => panic!("Invalid yul statement node type: {node_type}"),
         }
     }
 }
