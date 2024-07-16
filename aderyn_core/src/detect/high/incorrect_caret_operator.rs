@@ -1,9 +1,7 @@
 use std::collections::BTreeMap;
 use std::error::Error;
 
-use crate::ast::{
-    Expression, LiteralKind, Mutability, NodeID, StateMutability, VariableDeclaration,
-};
+use crate::ast::{Expression, LiteralKind, Mutability, NodeID};
 
 use crate::capture;
 use crate::context::workspace_context::ASTNode;
@@ -73,11 +71,11 @@ impl IssueDetector for IncorrectUseOfCaretOperatorDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Incorrect Assembly Shift Parameter Order")
+        String::from("Incorrect use of caret operator on a non hexadcimal constant")
     }
 
     fn description(&self) -> String {
-        String::from("Example: `shl(shifted, 4)` will shift the right constant `4` by `a` bits. The correct order is `shl(4, shifted)`.")
+        String::from("The caret operator is usually mistakenly thought of as an exponentiation operator but actually, it's a bitwise xor operator.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -116,12 +114,9 @@ mod incorrect_use_of_caret_operator_tests {
         // assert the title is correct
         assert_eq!(
             detector.title(),
-            String::from("Incorrect Assembly Shift Parameter Order")
+            String::from("Incorrect use of caret operator on a non hexadcimal constant")
         );
         // assert the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from("Example: `shl(shifted, 4)` will shift the right constant `4` by `a` bits. The correct order is `shl(4, shifted)`.")
-        );
+        assert_eq!(detector.description(), String::from("The caret operator is usually mistakenly thought of as an exponentiation operator but actually, it's a bitwise xor operator."));
     }
 }
