@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 51,
-    "total_sloc": 1464
+    "total_source_units": 53,
+    "total_sloc": 1497
   },
   "files_details": {
     "files_details": [
@@ -50,6 +50,10 @@
         "n_sloc": 22
       },
       {
+        "file_path": "src/DynamicArrayLengthAssignment.sol",
+        "n_sloc": 16
+      },
+      {
         "file_path": "src/EmptyBlocks.sol",
         "n_sloc": 48
       },
@@ -92,6 +96,10 @@
       {
         "file_path": "src/RevertsAndRequriesInLoops.sol",
         "n_sloc": 27
+      },
+      {
+        "file_path": "src/StateShadowing.sol",
+        "n_sloc": 17
       },
       {
         "file_path": "src/StateVariables.sol",
@@ -212,7 +220,7 @@
     ]
   },
   "issue_count": {
-    "high": 14,
+    "high": 15,
     "low": 23
   },
   "high_issues": {
@@ -1136,6 +1144,43 @@
             "src_char": "146:12"
           }
         ]
+      },
+      {
+        "title": "Array length value has a direct assignment.",
+        "description": "If the length of a dynamic array (storage variable) directly assigned to, it may allow access to other storage slots by tweaking it's value. This practice has been depracated in newer Solidity versions",
+        "detector_name": "dynamic-array-length-assignment",
+        "instances": [
+          {
+            "contract_path": "src/DynamicArrayLengthAssignment.sol",
+            "line_no": 13,
+            "src": "295:14",
+            "src_char": "295:14"
+          },
+          {
+            "contract_path": "src/DynamicArrayLengthAssignment.sol",
+            "line_no": 14,
+            "src": "325:18",
+            "src_char": "325:18"
+          },
+          {
+            "contract_path": "src/DynamicArrayLengthAssignment.sol",
+            "line_no": 15,
+            "src": "359:33",
+            "src_char": "359:33"
+          },
+          {
+            "contract_path": "src/DynamicArrayLengthAssignment.sol",
+            "line_no": 16,
+            "src": "408:15",
+            "src_char": "408:15"
+          },
+          {
+            "contract_path": "src/DynamicArrayLengthAssignment.sol",
+            "line_no": 17,
+            "src": "439:14",
+            "src_char": "439:14"
+          }
+        ]
       }
     ]
   },
@@ -1323,6 +1368,12 @@
             "line_no": 47,
             "src": "1598:18",
             "src_char": "1598:18"
+          },
+          {
+            "contract_path": "src/StateShadowing.sol",
+            "line_no": 22,
+            "src": "368:19",
+            "src_char": "368:19"
           }
         ]
       },
@@ -1659,6 +1710,24 @@
             "src_char": "1374:66"
           },
           {
+            "contract_path": "src/DynamicArrayLengthAssignment.sol",
+            "line_no": 13,
+            "src": "312:3",
+            "src_char": "312:3"
+          },
+          {
+            "contract_path": "src/DynamicArrayLengthAssignment.sol",
+            "line_no": 14,
+            "src": "346:3",
+            "src_char": "346:3"
+          },
+          {
+            "contract_path": "src/DynamicArrayLengthAssignment.sol",
+            "line_no": 17,
+            "src": "457:3",
+            "src_char": "457:3"
+          },
+          {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
             "line_no": 10,
             "src": "253:2",
@@ -1755,6 +1824,12 @@
             "line_no": 19,
             "src": "503:6",
             "src_char": "503:6"
+          },
+          {
+            "contract_path": "src/StateShadowing.sol",
+            "line_no": 8,
+            "src": "135:7",
+            "src_char": "135:7"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
@@ -1993,6 +2068,12 @@
             "line_no": 6,
             "src": "103:8",
             "src_char": "103:8"
+          },
+          {
+            "contract_path": "src/StateShadowing.sol",
+            "line_no": 7,
+            "src": "107:74",
+            "src_char": "107:74"
           },
           {
             "contract_path": "src/UnprotectedInitialize.sol",
@@ -2541,6 +2622,7 @@
     "multiple-constructors",
     "reused-contract-name",
     "nested-struct-in-mapping",
-    "selfdestruct-identifier"
+    "selfdestruct-identifier",
+    "dynamic-array-length-assignment"
   ]
 }
