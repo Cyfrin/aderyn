@@ -1388,7 +1388,7 @@
                 },
                 "region": {
                   "byteLength": 17,
-                  "byteOffset": 1096
+                  "byteOffset": 1105
                 }
               }
             },
@@ -1399,7 +1399,29 @@
                 },
                 "region": {
                   "byteLength": 17,
-                  "byteOffset": 1326
+                  "byteOffset": 1350
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/EnumerableSetIteration.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 1586
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/EnumerableSetIteration.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 1865
                 }
               }
             },
@@ -1410,7 +1432,7 @@
                 },
                 "region": {
                   "byteLength": 14,
-                  "byteOffset": 1544
+                  "byteOffset": 2083
                 }
               }
             }
@@ -1419,6 +1441,97 @@
             "text": "If the order of an EnumerableSet is required, removing items in a loop using `at` and `remove` corrupts this order.\nConsider using a different data structure or removing items by collecting them during the loop, then removing after the loop."
           },
           "ruleId": "enumerable-loop-removal"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ExperimentalEncoder.sol"
+                },
+                "region": {
+                  "byteLength": 33,
+                  "byteOffset": 23
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Experimental encoders should not be used in production. There are multiple known compiler bugs that are caused by the experimental encoder. Upgrade your solidity version to remove the need for experimental features."
+          },
+          "ruleId": "experimental-encoder"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectShift.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 192
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectShift.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 238
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Example: `shl(shifted, 4)` will shift the right constant `4` by `a` bits. The correct order is `shl(4, shifted)`."
+          },
+          "ruleId": "incorrect-shift-order"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StorageParameters.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 241
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Storage reference is passed to a function with a memory parameter. This will not update the storage variable as expected. Consider using storage parameters instead."
+          },
+          "ruleId": "storage-array-edit-with-memory"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MultipleConstructorSchemes.sol"
+                },
+                "region": {
+                  "byteLength": 180,
+                  "byteOffset": 25
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "In some versions of Solidity, contracts compile with multiple constructors. The first constructor takes precedence. This can lead to unexpected behavior."
+          },
+          "ruleId": "multiple-constructors"
         },
         {
           "level": "note",
@@ -3377,6 +3490,17 @@
                 "region": {
                   "byteLength": 12,
                   "byteOffset": 693
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StorageParameters.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 388
                 }
               }
             }

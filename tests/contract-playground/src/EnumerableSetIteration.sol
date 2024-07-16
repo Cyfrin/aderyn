@@ -25,11 +25,31 @@ contract EnumerableSetIteration {
     }
 
     // Bad
-    function badBytes32Iteration() external {
+    function badBytes32IterationInForLoop() external {
         for (uint256 i = 0; i < bytes32Set.length(); i++) {
             bytes32 thisBytes32 = bytes32Set.at(i);
             bytes32Set.remove(thisBytes32);
         }
+    }
+
+    // Bad
+    function badBytes32IterationInWhileLoop() external {
+        uint256 i = 0;
+        while(i < bytes32Set.length()) {
+            bytes32 thisBytes32 = bytes32Set.at(i);
+            bytes32Set.remove(thisBytes32);
+            i++;
+        }
+    }
+
+    // Bad
+    function badBytes32IterationInDoWhileLoop() external {
+        uint256 i = 0;
+        do {
+            bytes32 thisBytes32 = bytes32Set.at(i);
+            bytes32Set.remove(thisBytes32);
+            i++;
+        } while(i < bytes32Set.length());
     }
 
     // Bad

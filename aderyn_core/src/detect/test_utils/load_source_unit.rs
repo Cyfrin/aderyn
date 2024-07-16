@@ -35,7 +35,7 @@ pub fn load_solidity_source_unit(filepath: &str) -> WorkspaceContext {
         .unwrap();
 
     let command = Command::new(solc_bin)
-        .args(["--ast-compact-json", file_arg])
+        .args(["--pretty-json", "--ast-compact-json", file_arg])
         .current_dir("/")
         .stdout(Stdio::piped())
         .output();
@@ -53,13 +53,16 @@ pub fn load_solidity_source_unit(filepath: &str) -> WorkspaceContext {
                 let filepath = &line["======= ".len()..end_marker];
                 if file_arg.contains(filepath) {
                     pick_next_line = true;
+                } else if pick_next_line {
+                    // This assumes that a new header line indicates the end of the relevant content.
+                    break;
                 }
             } else if pick_next_line {
-                ast_content = line.to_string();
-                break;
+                // Append the line to `ast_content` with a newline character to preserve the multiline format.
+                ast_content.push_str(line);
+                ast_content.push('\n');
             }
         }
-
         let mut source_unit: SourceUnit = serde_json::from_str(&ast_content).unwrap();
 
         let mut context = WorkspaceContext::default();

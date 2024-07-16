@@ -90,6 +90,7 @@ impl<'de> Deserialize<'de> for YulExpression {
 #[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct YulLiteral {
+    pub src: String,
     pub kind: YulLiteralKind,
     pub value: Option<String>,
     pub hex_value: Option<String>,
@@ -116,6 +117,7 @@ pub enum YulLiteralKind {
 #[serde(rename_all = "camelCase")]
 pub struct YulIdentifier {
     pub name: String,
+    pub src: String,
 }
 
 impl Node for YulIdentifier {
@@ -128,6 +130,7 @@ impl Node for YulIdentifier {
 #[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
 #[serde(rename_all = "camelCase")]
 pub struct YulFunctionCall {
+    pub src: String,
     pub function_name: YulIdentifier,
     pub arguments: Vec<YulExpression>,
 }
