@@ -14,6 +14,7 @@ contract DynamicArrayLengthAssignment {
         myArray2[7].length = 200;
         myArray3[bytes("blah")][5].length = 100;
         myArray4.length = 900;
+        myArray.length += 200;
 
         // GOOD
         uint256 length = 9876 * ( myArray.length + 123456789 );

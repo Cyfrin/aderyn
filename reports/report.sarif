@@ -1663,6 +1663,17 @@
                   "byteOffset": 408
                 }
               }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DynamicArrayLengthAssignment.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 439
+                }
+              }
             }
           ],
           "message": {
@@ -2589,6 +2600,17 @@
                 "region": {
                   "byteLength": 3,
                   "byteOffset": 346
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DynamicArrayLengthAssignment.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 457
                 }
               }
             },

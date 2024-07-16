@@ -1,7 +1,7 @@
 use std::collections::BTreeMap;
 use std::error::Error;
 
-use crate::ast::{Expression, NodeID};
+use crate::ast::NodeID;
 
 use crate::capture;
 use crate::detect::detector::IssueDetectorNamePool;
@@ -20,23 +20,24 @@ pub struct DynamicArrayLengthAssignmentDetector {
 
 impl IssueDetector for DynamicArrayLengthAssignmentDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        for assignment in context.assignments() {
-            if let Expression::MemberAccess(member_access) = assignment.left_hand_side.as_ref() {
-                let assignment_to = member_access.expression.type_descriptions();
+        for member_access in context
+            .member_accesses()
+            .into_iter()
+            .filter(|member_acces| member_acces.l_value_requested)
+        {
+            let assignment_to = member_access.expression.type_descriptions();
 
-                let is_being_assigned_on_dynamic_array =
-                    assignment_to.is_some_and(|assignment_to| {
-                        assignment_to
-                            .type_string
-                            .as_ref()
-                            .is_some_and(|type_string| type_string.ends_with("[] storage ref"))
-                    });
+            let is_being_assigned_on_dynamic_array = assignment_to.is_some_and(|assignment_to| {
+                assignment_to
+                    .type_string
+                    .as_ref()
+                    .is_some_and(|type_string| type_string.ends_with("[] storage ref"))
+            });
 
-                let is_being_assigned_to_length_property = member_access.member_name == "length";
+            let is_being_assigned_to_length_property = member_access.member_name == "length";
 
-                if is_being_assigned_on_dynamic_array && is_being_assigned_to_length_property {
-                    capture!(self, context, member_access);
-                }
+            if is_being_assigned_on_dynamic_array && is_being_assigned_to_length_property {
+                capture!(self, context, member_access);
             }
         }
 
@@ -84,12 +85,12 @@ mod dynamic_array_length_assignment_tests {
         let mut detector = DynamicArrayLengthAssignmentDetector::default();
         let found = detector.detect(&context).unwrap();
 
-        println!("{:?}", detector.instances());
+        println!("{:#?}", detector.instances());
 
         // assert that the detector found an issue
         assert!(found);
         // assert that the detector found the correct number of instances
-        assert_eq!(detector.instances().len(), 4);
+        assert_eq!(detector.instances().len(), 5);
         // assert the severity is high
         assert_eq!(
             detector.severity(),

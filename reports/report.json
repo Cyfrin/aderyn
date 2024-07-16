@@ -1,7 +1,7 @@
 {
   "files_summary": {
     "total_source_units": 51,
-    "total_sloc": 1473
+    "total_sloc": 1474
   },
   "files_details": {
     "files_details": [
@@ -51,7 +51,7 @@
       },
       {
         "file_path": "src/DynamicArrayLengthAssignment.sol",
-        "n_sloc": 15
+        "n_sloc": 16
       },
       {
         "file_path": "src/EmptyBlocks.sol",
@@ -1152,6 +1152,12 @@
             "line_no": 16,
             "src": "408:15",
             "src_char": "408:15"
+          },
+          {
+            "contract_path": "src/DynamicArrayLengthAssignment.sol",
+            "line_no": 17,
+            "src": "439:14",
+            "src_char": "439:14"
           }
         ]
       }
@@ -1681,6 +1687,12 @@
             "line_no": 14,
             "src": "346:3",
             "src_char": "346:3"
+          },
+          {
+            "contract_path": "src/DynamicArrayLengthAssignment.sol",
+            "line_no": 17,
+            "src": "457:3",
+            "src_char": "457:3"
           },
           {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
