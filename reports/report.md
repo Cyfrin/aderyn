@@ -179,7 +179,7 @@ If all arguments are strings and or bytes, `bytes.concat()` should be used inste
 
 In the PoS model, proposers know well in advance if they will propose one or consecutive blocks ahead of time. In such a scenario, a malicious validator can hold back the transaction and execute it at a more favourable block number.Consider allowing function caller to specify swap deadline input parameter.
 
-<details><summary>17 Found Instances</summary>
+<details><summary>16 Found Instances</summary>
 
 
 - Found in src/uniswap/UniswapV2Swapper.sol [Line: 23](../tests/contract-playground/src/uniswap/UniswapV2Swapper.sol#L23)
@@ -210,12 +210,6 @@ In the PoS model, proposers know well in advance if they will propose one or con
 
 	```solidity
 	        router1.swapExactTokensForETH(amountIn, amountOutMin, path, to, block.timestamp);
-	```
-
-- Found in src/uniswap/UniswapV2Swapper.sol [Line: 28](../tests/contract-playground/src/uniswap/UniswapV2Swapper.sol#L28)
-
-	```solidity
-	        router1.swapETHForExactTokens(amountOut, path, to, block.timestamp);
 	```
 
 - Found in src/uniswap/UniswapV2Swapper.sol [Line: 31](../tests/contract-playground/src/uniswap/UniswapV2Swapper.sol#L31)
@@ -1628,7 +1622,7 @@ Instead of marking a function as `public`, consider marking it as `external` if 
 
 If the same constant literal value is used multiple times, create a constant state variable and reference it throughout the contract.
 
-<details><summary>21 Found Instances</summary>
+<details><summary>20 Found Instances</summary>
 
 
 - Found in src/Casting.sol [Line: 16](../tests/contract-playground/src/Casting.sol#L16)
@@ -1695,12 +1689,6 @@ If the same constant literal value is used multiple times, create a constant sta
 
 	```solidity
 	        bytes32 multipleUseOfBytes32 = 0x8a1b3dbe6301650442bfa765d4de23775fc9a4ec4329ebb5995ec7f1e3777dc4;
-	```
-
-- Found in src/ConstantsLiterals.sol [Line: 32](../tests/contract-playground/src/ConstantsLiterals.sol#L32)
-
-	```solidity
-	        multipleUseOfBytes32 = 0x8a1b3dbe6301650442bfa765d4de23775fc9a4ec4329ebb5995ec7f1e3777dc4;
 	```
 
 - Found in src/DynamicArrayLengthAssignment.sol [Line: 13](../tests/contract-playground/src/DynamicArrayLengthAssignment.sol#L13)
