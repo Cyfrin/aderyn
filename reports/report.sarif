@@ -1623,6 +1623,26 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/UsingSelfdestruct.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 146
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": ""
+          },
+          "ruleId": "selfdestruct-identifier"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/DynamicArrayLengthAssignment.sol"
                 },
                 "region": {
@@ -2045,6 +2065,17 @@
                 "region": {
                   "byteLength": 24,
                   "byteOffset": 0
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UsingSelfdestruct.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
                 }
               }
             },
