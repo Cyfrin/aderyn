@@ -25,7 +25,7 @@ contract UniswapV2Swapper {
         router1.swapExactETHForTokens(amountOutMin, path, to, block.timestamp);
         router1.swapTokensForExactETH(amountOut, amountInMax, path, to, block.timestamp);
         router1.swapExactTokensForETH(amountIn, amountOutMin, path, to, block.timestamp);
-        router1.swapETHForExactTokens(amountOut, path, to, block.timestamp);
+        router1.swapETHForExactTokens(amountOut, path, to, block.timestamp); // aderyn-ignore
 
         IUniswapV2Router02 router2 = IUniswapV2Router02(s_router);
         router2.swapExactTokensForTokensSupportingFeeOnTransferTokens(amountIn, amountOutMin, path, to, block.timestamp);
