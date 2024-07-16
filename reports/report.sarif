@@ -2014,17 +2014,6 @@
                   "byteOffset": 1598
                 }
               }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateShadowing.sol"
-                },
-                "region": {
-                  "byteLength": 19,
-                  "byteOffset": 368
-                }
-              }
             }
           ],
           "message": {
@@ -2831,17 +2820,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/StateShadowing.sol"
-                },
-                "region": {
-                  "byteLength": 7,
-                  "byteOffset": 135
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/ZeroAddressCheck.sol"
                 },
                 "region": {
@@ -3257,17 +3235,6 @@
                 "region": {
                   "byteLength": 8,
                   "byteOffset": 103
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateShadowing.sol"
-                },
-                "region": {
-                  "byteLength": 74,
-                  "byteOffset": 107
                 }
               }
             },
