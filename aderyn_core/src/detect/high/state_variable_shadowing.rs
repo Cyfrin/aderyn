@@ -7,13 +7,16 @@ use crate::ast::{
 };
 
 use crate::capture;
+use crate::context::browser::{ExtractPragmaDirectives, ExtractVariableDeclarations};
 use crate::context::workspace_context::ASTNode;
 use crate::detect::detector::IssueDetectorNamePool;
+use crate::detect::helpers::pragma_directive_to_semver;
 use crate::{
     context::workspace_context::WorkspaceContext,
     detect::detector::{IssueDetector, IssueSeverity},
 };
 use eyre::Result;
+use semver::VersionReq;
 
 // This detector catches an issue that is only present on contracts that can be compiled
 // with Solidity version < 0.6.0. In Solidity 0.6.0, the `override` keyword was introduced
@@ -30,31 +33,42 @@ pub struct StateVariableShadowingDetector {
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-fn gather_contract_definitions(
+fn are_duplicate_names_in_inherited_contracts(
     context: &WorkspaceContext,
-    mut results: HashSet<ContractDefinition>,
-    contract_definition: ContractDefinition,
-) -> HashSet<ContractDefinition> {
-    results.insert(contract_definition.clone());
+    variable_name: &str, // Use &str directly for comparison efficiency
+    contract_definition: &ContractDefinition, // Use reference to avoid cloning
+) -> bool {
+    // Check for duplicate variable names in the current contract
+    if ExtractVariableDeclarations::from(contract_definition)
+        .extracted
+        .iter()
+        .any(|vd| vd.state_variable && !vd.constant && vd.name == variable_name)
+    {
+        return true; // Return immediately if a duplicate is found
+    }
 
-    for base_contract in contract_definition.base_contracts {
-        let base_name = base_contract.base_name;
-        if let UserDefinedTypeNameOrIdentifierPath::UserDefinedTypeName(base_name) = base_name {
-            let contract_ast = context.nodes.get(&base_name.referenced_declaration);
-            if let Some(ASTNode::ContractDefinition(contract)) = contract_ast {
-                results = gather_contract_definitions(context, results, contract.clone());
+    // Recursively check base contracts
+    for base_contract in &contract_definition.base_contracts {
+        if let UserDefinedTypeNameOrIdentifierPath::UserDefinedTypeName(base_name) =
+            &base_contract.base_name
+        {
+            if let Some(ASTNode::ContractDefinition(contract)) =
+                context.nodes.get(&base_name.referenced_declaration)
+            {
+                if are_duplicate_names_in_inherited_contracts(context, variable_name, contract) {
+                    return true; // Return immediately if a duplicate is found
+                }
             }
         }
     }
 
-    return results;
+    false // Return false if no duplicates found
 }
 
 impl IssueDetector for StateVariableShadowingDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // capture!(self, context, item);
 
-        // TODO: add filter for solc version < 0.6.0
         let mut temp_map: HashMap<String, Vec<&VariableDeclaration>> = context
             .variable_declarations()
             .into_iter()
@@ -69,27 +83,27 @@ impl IssueDetector for StateVariableShadowingDetector {
         // Filter the map to only include entries with more than one variable
         temp_map = temp_map.into_iter().filter(|(_, v)| v.len() > 1).collect();
 
-        for (_, vars) in temp_map {
-            let mut contract_definitions: HashSet<ContractDefinition> = HashSet::new();
-            for var in vars.clone() {
-                let contract = context.get_closest_ancestor(var.id, NodeType::ContractDefinition);
-                if let Some(contract) = contract {
-                    if let ASTNode::ContractDefinition(contract) = contract {
-                        contract_definitions = gather_contract_definitions(
-                            context,
-                            contract_definitions,
-                            contract.clone(),
-                        );
-                    }
-                }
-            }
-
-            for var in vars {
-                let contract = context.get_closest_ancestor(var.id, NodeType::ContractDefinition);
-                if let Some(contract) = contract {
-                    if let ASTNode::ContractDefinition(contract) = contract {
-                        if contract_definitions.contains(contract) {
-                            capture!(self, context, var);
+        for (_, variables) in temp_map {
+            for variable in variables {
+                // Recurse up the inheritance tree
+                let contract_ast =
+                    context.get_closest_ancestor(variable.id, NodeType::ContractDefinition);
+                if let Some(ASTNode::ContractDefinition(contract)) = contract_ast {
+                    for base_contract in &contract.base_contracts {
+                        if let UserDefinedTypeNameOrIdentifierPath::UserDefinedTypeName(base_name) =
+                            &base_contract.base_name
+                        {
+                            if let Some(ASTNode::ContractDefinition(contract)) =
+                                context.nodes.get(&base_name.referenced_declaration)
+                            {
+                                if are_duplicate_names_in_inherited_contracts(
+                                    context,
+                                    &variable.name,
+                                    contract,
+                                ) {
+                                    capture!(self, context, variable);
+                                }
+                            }
                         }
                     }
                 }
@@ -116,7 +130,7 @@ impl IssueDetector for StateVariableShadowingDetector {
     }
 
     fn name(&self) -> String {
-        format!("high-issue-template")
+        IssueDetectorNamePool::StateVariableShadowing.to_string()
     }
 }
 
@@ -135,7 +149,7 @@ mod state_variable_shadowing_detector_tests {
         // assert that the detector found an issue
         assert!(found);
         // assert that the detector found the correct number of instances
-        assert_eq!(detector.instances().len(), 2);
+        assert_eq!(detector.instances().len(), 1);
         // assert the severity is high
         assert_eq!(
             detector.severity(),
