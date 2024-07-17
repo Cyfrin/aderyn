@@ -2431,7 +2431,7 @@ Avoid `require` / `revert` statements in a loop because a single bad item can ca
 
 Solidity does initialize variables by default when you declare them, however it's good practice to explicitly declare an initial value. For example, if you transfer money to an address we must make sure that the address has been initialized.
 
-<details><summary>11 Found Instances</summary>
+<details><summary>2 Found Instances</summary>
 
 
 - Found in src/v0.8/functions/dev/v1_X/FunctionsSubscriptions.sol [Line: 39](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/FunctionsSubscriptions.sol#L39)
@@ -2440,64 +2440,10 @@ Solidity does initialize variables by default when you declare them, however it'
 	  uint64 private s_currentSubscriptionId;
 	```
 
-- Found in src/v0.8/functions/dev/v1_X/accessControl/TermsOfServiceAllowList.sol [Line: 21](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/accessControl/TermsOfServiceAllowList.sol#L21)
-
-	```solidity
-	  EnumerableSet.AddressSet private s_allowedSenders;
-	```
-
-- Found in src/v0.8/functions/dev/v1_X/accessControl/TermsOfServiceAllowList.sol [Line: 22](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/accessControl/TermsOfServiceAllowList.sol#L22)
-
-	```solidity
-	  EnumerableSet.AddressSet private s_blockedSenders;
-	```
-
-- Found in src/v0.8/functions/dev/v1_X/ocr/OCR2Base.sol [Line: 32](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/ocr/OCR2Base.sol#L32)
-
-	```solidity
-	  ConfigInfo internal s_configInfo;
-	```
-
 - Found in src/v0.8/functions/v1_0_0/FunctionsSubscriptions.sol [Line: 39](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/FunctionsSubscriptions.sol#L39)
 
 	```solidity
 	  uint64 private s_currentSubscriptionId;
-	```
-
-- Found in src/v0.8/functions/v1_0_0/accessControl/TermsOfServiceAllowList.sol [Line: 21](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/accessControl/TermsOfServiceAllowList.sol#L21)
-
-	```solidity
-	  EnumerableSet.AddressSet private s_allowedSenders;
-	```
-
-- Found in src/v0.8/functions/v1_0_0/ocr/OCR2Base.sol [Line: 38](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/ocr/OCR2Base.sol#L38)
-
-	```solidity
-	  ConfigInfo internal s_configInfo;
-	```
-
-- Found in src/v0.8/functions/v1_1_0/ocr/OCR2Base.sol [Line: 32](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_1_0/ocr/OCR2Base.sol#L32)
-
-	```solidity
-	  ConfigInfo internal s_configInfo;
-	```
-
-- Found in src/v0.8/functions/v1_3_0/accessControl/TermsOfServiceAllowList.sol [Line: 22](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_3_0/accessControl/TermsOfServiceAllowList.sol#L22)
-
-	```solidity
-	  EnumerableSet.AddressSet private s_allowedSenders;
-	```
-
-- Found in src/v0.8/functions/v1_3_0/accessControl/TermsOfServiceAllowList.sol [Line: 23](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_3_0/accessControl/TermsOfServiceAllowList.sol#L23)
-
-	```solidity
-	  EnumerableSet.AddressSet private s_blockedSenders;
-	```
-
-- Found in src/v0.8/functions/v1_3_0/ocr/OCR2Base.sol [Line: 32](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_3_0/ocr/OCR2Base.sol#L32)
-
-	```solidity
-	  ConfigInfo internal s_configInfo;
 	```
 
 </details>

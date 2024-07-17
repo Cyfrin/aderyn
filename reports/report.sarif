@@ -4169,39 +4169,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/EnumerableSetIteration.sol"
-                },
-                "region": {
-                  "byteLength": 10,
-                  "byteOffset": 392
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/EnumerableSetIteration.sol"
-                },
-                "region": {
-                  "byteLength": 10,
-                  "byteOffset": 441
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/EnumerableSetIteration.sol"
-                },
-                "region": {
-                  "byteLength": 7,
-                  "byteOffset": 487
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/InconsistentUints.sol"
                 },
                 "region": {

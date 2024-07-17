@@ -2629,31 +2629,13 @@ Division operations followed directly by multiplication operations can lead to p
 
 Solidity does initialize variables by default when you declare them, however it's good practice to explicitly declare an initial value. For example, if you transfer money to an address we must make sure that the address has been initialized.
 
-<details><summary>16 Found Instances</summary>
+<details><summary>13 Found Instances</summary>
 
 
 - Found in src/AssemblyExample.sol [Line: 5](../tests/contract-playground/src/AssemblyExample.sol#L5)
 
 	```solidity
 	    uint b;
-	```
-
-- Found in src/EnumerableSetIteration.sol [Line: 11](../tests/contract-playground/src/EnumerableSetIteration.sol#L11)
-
-	```solidity
-	    EnumerableSet.Bytes32Set private bytes32Set;
-	```
-
-- Found in src/EnumerableSetIteration.sol [Line: 12](../tests/contract-playground/src/EnumerableSetIteration.sol#L12)
-
-	```solidity
-	    EnumerableSet.AddressSet private addressSet;
-	```
-
-- Found in src/EnumerableSetIteration.sol [Line: 13](../tests/contract-playground/src/EnumerableSetIteration.sol#L13)
-
-	```solidity
-	    EnumerableSet.UintSet private uintSet;
 	```
 
 - Found in src/InconsistentUints.sol [Line: 7](../tests/contract-playground/src/InconsistentUints.sol#L7)

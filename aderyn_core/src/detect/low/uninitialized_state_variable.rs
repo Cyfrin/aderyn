@@ -24,7 +24,7 @@ impl IssueDetector for UninitializedStateVariableDetector {
          * Plan (Maybe it can be improved)
          *  - Gather all the storage variables (VariableDeclarations)
          *  - Fitler out / Remove the ones where `value` property is not `None`
-         *  - Fitler out / Remove the ones that are arrays and mappings
+         *  - Fitler out / Remove the ones that are arrays, mappings and structs
          *  - Now, we're left with state variables that are not initialized at the same
          *    line where they are declared.
          *  - Gather all the `Assignments` and collect all the `referencedDeclarations` on
@@ -50,6 +50,12 @@ impl IssueDetector for UninitializedStateVariableDetector {
                     .type_string
                     .as_ref()
                     .is_some_and(|type_string| !type_string.ends_with("[]"))
+            })
+            .filter(|s| {
+                s.type_descriptions
+                    .type_string
+                    .as_ref()
+                    .is_some_and(|type_string| !type_string.starts_with("struct"))
             })
         {
             state_variable_ids.insert(var_decl.id);

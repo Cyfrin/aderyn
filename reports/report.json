@@ -2583,24 +2583,6 @@
             "src_char": "97:1"
           },
           {
-            "contract_path": "src/EnumerableSetIteration.sol",
-            "line_no": 11,
-            "src": "392:10",
-            "src_char": "392:10"
-          },
-          {
-            "contract_path": "src/EnumerableSetIteration.sol",
-            "line_no": 12,
-            "src": "441:10",
-            "src_char": "441:10"
-          },
-          {
-            "contract_path": "src/EnumerableSetIteration.sol",
-            "line_no": 13,
-            "src": "487:7",
-            "src_char": "487:7"
-          },
-          {
             "contract_path": "src/InconsistentUints.sol",
             "line_no": 7,
             "src": "197:11",
