@@ -1691,6 +1691,26 @@
           "ruleId": "dynamic-array-length-assignment"
         },
         {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/YulReturn.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 171
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Remove this, as this causes execution to halt. Nothing after that call will execute, including code following the assembly block."
+          },
+          "ruleId": "yul-return"
+        },
+        {
           "level": "note",
           "locations": [
             {
