@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 52,
-    "total_sloc": 1480
+    "total_source_units": 53,
+    "total_sloc": 1488
   },
   "files_details": {
     "files_details": [
@@ -138,6 +138,10 @@
         "n_sloc": 13
       },
       {
+        "file_path": "src/YulReturn.sol",
+        "n_sloc": 8
+      },
+      {
         "file_path": "src/ZeroAddressCheck.sol",
         "n_sloc": 41
       },
@@ -216,7 +220,7 @@
     ]
   },
   "issue_count": {
-    "high": 15,
+    "high": 16,
     "low": 23
   },
   "high_issues": {
@@ -1169,6 +1173,19 @@
             "line_no": 17,
             "src": "439:14",
             "src_char": "439:14"
+          }
+        ]
+      },
+      {
+        "title": "Yul block contains `return` function call.",
+        "description": "Remove this, as this causes execution to halt. Nothing after that call will execute, including code following the assembly block.",
+        "detector_name": "yul-return",
+        "instances": [
+          {
+            "contract_path": "src/YulReturn.sol",
+            "line_no": 8,
+            "src": "171:12",
+            "src_char": "171:12"
           }
         ]
       }
@@ -2589,6 +2606,7 @@
     "reused-contract-name",
     "nested-struct-in-mapping",
     "selfdestruct-identifier",
-    "dynamic-array-length-assignment"
+    "dynamic-array-length-assignment",
+    "yul-return"
   ]
 }
