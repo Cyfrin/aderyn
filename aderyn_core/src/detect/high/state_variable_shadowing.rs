@@ -6,14 +6,16 @@ use crate::ast::{
 };
 
 use crate::capture;
-use crate::context::browser::ExtractVariableDeclarations;
+use crate::context::browser::{ExtractPragmaDirectives, ExtractVariableDeclarations};
 use crate::context::workspace_context::ASTNode;
 use crate::detect::detector::IssueDetectorNamePool;
+use crate::detect::helpers::pragma_directive_to_semver;
 use crate::{
     context::workspace_context::WorkspaceContext,
     detect::detector::{IssueDetector, IssueSeverity},
 };
 use eyre::Result;
+use semver::VersionReq;
 
 // This detector catches an issue that is only present on contracts that can be compiled
 // with Solidity version < 0.6.0. In Solidity 0.6.0, the `override` keyword was introduced
@@ -62,12 +64,43 @@ fn are_duplicate_names_in_inherited_contracts(
     false // Return false if no duplicates found
 }
 
+fn source_unit_can_compile_below_0_6_0(context: &WorkspaceContext, child_node_id: NodeID) -> bool {
+    let source_unit_ast = context.get_closest_ancestor(child_node_id, NodeType::SourceUnit);
+
+    if let Some(ASTNode::SourceUnit(source_unit)) = source_unit_ast {
+        // Store the extracted directives in a variable to extend its lifetime
+        let extracted_directives = ExtractPragmaDirectives::from(source_unit).extracted;
+        let pragma_directive = extracted_directives.first();
+
+        if let Some(pragma_directive) = pragma_directive {
+            let version_req = pragma_directive_to_semver(pragma_directive);
+            if let Ok(version_req) = version_req {
+                return allows_below_0_6_0(&version_req);
+            }
+        }
+    }
+    false
+}
+
+fn allows_below_0_6_0(version_req: &VersionReq) -> bool {
+    if version_req.comparators.is_empty() {
+        return false; // Return false or handle as needed if there are no comparators
+    }
+
+    let comparator = &version_req.comparators[0];
+    comparator.major == 0 && comparator.minor.map_or(false, |m| m < 6)
+}
+
 impl IssueDetector for StateVariableShadowingDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         let mut temp_map: HashMap<String, Vec<&VariableDeclaration>> = context
             .variable_declarations()
             .into_iter()
-            .filter(|vd| vd.state_variable && !vd.constant)
+            .filter(|vd| {
+                vd.state_variable
+                    && !vd.constant
+                    && source_unit_can_compile_below_0_6_0(context, vd.id)
+            })
             .fold(HashMap::new(), |mut acc, var| {
                 acc.entry(var.name.clone()).or_default().push(var);
                 acc
