@@ -1691,6 +1691,70 @@
           "ruleId": "dynamic-array-length-assignment"
         },
         {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 517
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 547
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 21,
+                  "byteOffset": 585
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 13,
+                  "byteOffset": 629
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 706
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "The caret operator is usually mistakenly thought of as an exponentiation operator but actually, it's a bitwise xor operator."
+          },
+          "ruleId": "incorrect-caret-operator"
+        },
+        {
           "level": "note",
           "locations": [
             {
@@ -2265,6 +2329,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 465
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/StateVariables.sol"
                 },
                 "region": {
@@ -2620,6 +2695,28 @@
                 "region": {
                   "byteLength": 3,
                   "byteOffset": 457
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 561
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 604
                 }
               }
             },

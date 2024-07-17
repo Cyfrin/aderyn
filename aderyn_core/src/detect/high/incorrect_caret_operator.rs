@@ -25,8 +25,6 @@ impl IssueDetector for IncorrectUseOfCaretOperatorDetector {
         // look for binary expressions with ^ operator where at least one of the operands is a constant, and
         // # the constant is not in hex, because hex typically is used with bitwise xor and not exponentiation
 
-        println!("{:?}", context.binary_operations());
-
         for binary_operation in context
             .binary_operations()
             .into_iter()
