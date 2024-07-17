@@ -51,7 +51,7 @@ mod uninitialized_state_variable_tests {
     };
 
     #[test]
-    fn test_template_detector() {
+    fn test_uninitialized_state_variables() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/UninitializedStateVariable.sol",
         );

@@ -14,9 +14,9 @@ contract UninitializedStateVariable {
         numPages = 100; // Initialize the numPages, but not s_author
     }
 
-    function catch() external {
+    function tell() external {
         emit TellEveryone(s_author);
-        string public description = string.concat(s_author, s_publisher)
+        string memory description = string.concat(s_author, s_publisher);
         emit TellEveryone(description);
     }
 
