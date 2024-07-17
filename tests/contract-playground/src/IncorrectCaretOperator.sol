@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity 0.8.19;
 
+// Copied Heuristic from Slither:
+// look for binary expressions with ^ operator where at least one of the operands is a constant, and
+// # the constant is not in hex, because hex typically is used with bitwise xor and not exponentiation
+
 contract IncorrectCaretOperator {
 
     uint256 private s_first;
@@ -18,6 +22,6 @@ contract IncorrectCaretOperator {
         // GOOD
         uint256 r = 0x2 ^ s_first;
         uint256 k = 0x4 ^ 0x10;
-        uint256 p = s_third ^ s_first;
+        uint256 l = s_third ^ s_first;
     }
 }

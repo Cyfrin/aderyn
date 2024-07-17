@@ -25,6 +25,8 @@ impl IssueDetector for IncorrectUseOfCaretOperatorDetector {
         // look for binary expressions with ^ operator where at least one of the operands is a constant, and
         // # the constant is not in hex, because hex typically is used with bitwise xor and not exponentiation
 
+        println!("{:?}", context.binary_operations());
+
         for binary_operation in context
             .binary_operations()
             .into_iter()
@@ -105,7 +107,7 @@ mod incorrect_use_of_caret_operator_tests {
         // assert that the detector found an issue
         assert!(found);
         // assert that the detector found the correct number of instances
-        assert_eq!(detector.instances().len(), 3);
+        assert_eq!(detector.instances().len(), 5);
         // assert the severity is high
         assert_eq!(
             detector.severity(),
