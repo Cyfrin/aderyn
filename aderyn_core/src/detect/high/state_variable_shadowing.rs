@@ -1,22 +1,19 @@
-use std::collections::{BTreeMap, HashMap, HashSet};
+use std::collections::{BTreeMap, HashMap};
 use std::error::Error;
 
 use crate::ast::{
-    ContractDefinition, NodeID, NodeType, TypeName, UserDefinedTypeName,
-    UserDefinedTypeNameOrIdentifierPath, VariableDeclaration,
+    ContractDefinition, NodeID, NodeType, UserDefinedTypeNameOrIdentifierPath, VariableDeclaration,
 };
 
 use crate::capture;
-use crate::context::browser::{ExtractPragmaDirectives, ExtractVariableDeclarations};
+use crate::context::browser::ExtractVariableDeclarations;
 use crate::context::workspace_context::ASTNode;
 use crate::detect::detector::IssueDetectorNamePool;
-use crate::detect::helpers::pragma_directive_to_semver;
 use crate::{
     context::workspace_context::WorkspaceContext,
     detect::detector::{IssueDetector, IssueSeverity},
 };
 use eyre::Result;
-use semver::VersionReq;
 
 // This detector catches an issue that is only present on contracts that can be compiled
 // with Solidity version < 0.6.0. In Solidity 0.6.0, the `override` keyword was introduced
@@ -67,21 +64,17 @@ fn are_duplicate_names_in_inherited_contracts(
 
 impl IssueDetector for StateVariableShadowingDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        // capture!(self, context, item);
-
         let mut temp_map: HashMap<String, Vec<&VariableDeclaration>> = context
             .variable_declarations()
             .into_iter()
             .filter(|vd| vd.state_variable && !vd.constant)
             .fold(HashMap::new(), |mut acc, var| {
-                acc.entry(var.name.clone())
-                    .or_insert_with(Vec::new)
-                    .push(var);
+                acc.entry(var.name.clone()).or_default().push(var);
                 acc
             });
 
         // Filter the map to only include entries with more than one variable
-        temp_map = temp_map.into_iter().filter(|(_, v)| v.len() > 1).collect();
+        temp_map.retain(|_, v| v.len() > 1);
 
         for (_, variables) in temp_map {
             for variable in variables {
