@@ -29,6 +29,7 @@ contract ConstantsLiterals {
         address multipleUseOfAddress = 0x95222290DD7278Aa3Ddd389Cc1E1d165CC4BAfe5;
         multipleUseOfAddress = 0x95222290DD7278Aa3Ddd389Cc1E1d165CC4BAfe5;
         bytes32 multipleUseOfBytes32 = 0x8a1b3dbe6301650442bfa765d4de23775fc9a4ec4329ebb5995ec7f1e3777dc4;
+        // aderyn-ignore-next-line
         multipleUseOfBytes32 = 0x8a1b3dbe6301650442bfa765d4de23775fc9a4ec4329ebb5995ec7f1e3777dc4;
     }
 
