@@ -8,6 +8,16 @@ contract UninitializedStateVariable {
     string public s_publisher = "Blockchain Ltd."; // GOOD (because it's initialized here.)
     uint256 public numPages; // GOOD (because it's initialized in constructor)
 
+    // For arrays and mappings, it's okay to use them without initializing
+    uint256[] public arr; // GOOD
+    mapping(uint256 => uint256[]) private map; // GOOD
+
+    address destination; // BAD
+
+    function transfer() payable public {
+        payable(destination).transfer(msg.value); // `destination` does not have any assignments.
+    }
+
     event TellEveryone(string);
 
     constructor() {

@@ -38,7 +38,7 @@ pub use require_with_string::RequireWithStringDetector;
 pub use reverts_and_requries_in_loops::RevertsAndRequiresInLoopsDetector;
 pub use solmate_safe_transfer_lib::SolmateSafeTransferLibDetector;
 pub use unindexed_events::UnindexedEventsDetector;
-pub use uninitialized_state_variable::UninitializedStateVariable;
+pub use uninitialized_state_variable::UninitializedStateVariableDetector;
 pub use unsafe_erc20_functions::UnsafeERC20FunctionsDetector;
 pub use unsafe_oz_erc721_mint::UnsafeERC721MintDetector;
 pub use unspecific_solidity_pragma::UnspecificSolidityPragmaDetector;

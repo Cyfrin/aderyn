@@ -21,8 +21,9 @@ use crate::{
             InconsistentTypeNamesDetector, LargeLiteralValueDetector,
             NonReentrantBeforeOthersDetector, PushZeroOpcodeDetector, RequireWithStringDetector,
             RevertsAndRequiresInLoopsDetector, SolmateSafeTransferLibDetector,
-            UnindexedEventsDetector, UninitializedStateVariable, UnsafeERC20FunctionsDetector,
-            UnsafeERC721MintDetector, UnspecificSolidityPragmaDetector, UselessErrorDetector,
+            UnindexedEventsDetector, UninitializedStateVariableDetector,
+            UnsafeERC20FunctionsDetector, UnsafeERC721MintDetector,
+            UnspecificSolidityPragmaDetector, UselessErrorDetector,
             UselessInternalFunctionDetector, UselessModifierDetector,
             UselessPublicFunctionDetector, ZeroAddressCheckDetector,
         },
@@ -75,6 +76,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<NestedStructInMappingDetector>::default(),
         Box::<SelfdestructIdentifierDetector>::default(),
         Box::<DynamicArrayLengthAssignmentDetector>::default(),
+        Box::<UninitializedStateVariableDetector>::default(),
     ]
 }
 
@@ -235,7 +237,7 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
             Some(Box::<DynamicArrayLengthAssignmentDetector>::default())
         }
         IssueDetectorNamePool::UninitializedStateVariable => {
-            Some(Box::<UninitializedStateVariable>::default())
+            Some(Box::<UninitializedStateVariableDetector>::default())
         }
         IssueDetectorNamePool::Undecided => None,
     }
