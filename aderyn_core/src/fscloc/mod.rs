@@ -11,7 +11,7 @@ pub struct CodeLines {
 }
 
 #[cfg(test)]
-mod tests {
+mod cloc_tests {
     use std::path::PathBuf;
 
     use crate::fscloc::engine;
@@ -22,24 +22,27 @@ mod tests {
             "cloc/HeavilyCommentedContract.sol".to_string(),
             "cloc/AnotherHeavilyCommentedContract.sol".to_string(),
         ];
-        let sol = engine::count_lines_of_code(
+        let sol = engine::count_lines_of_code_and_collect_line_numbers_to_ignore(
             PathBuf::from("../tests/contract-playground/src/cloc").as_path(),
             &src_filepaths,
+            false,
         );
         let result = sol.lock().unwrap();
         result
             .iter()
-            .for_each(|element| println!("{} - {}", element.0, element.1));
+            .for_each(|element| println!("{} - {}", element.0, element.1.code));
         assert_eq!(
-            *result
+            result
                 .get("../tests/contract-playground/src/cloc/HeavilyCommentedContract.sol")
-                .unwrap(),
+                .unwrap()
+                .code,
             21
         );
         assert_eq!(
-            *result
+            result
                 .get("../tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol")
-                .unwrap(),
+                .unwrap()
+                .code,
             32
         );
     }
@@ -47,16 +50,18 @@ mod tests {
     #[test]
     fn test_print_loc_specific_file() {
         let src_filepaths = vec!["cloc/HeavilyCommentedContract.sol".to_string()];
-        let sol = engine::count_lines_of_code(
+        let sol = engine::count_lines_of_code_and_collect_line_numbers_to_ignore(
             PathBuf::from("../tests/contract-playground/src/cloc").as_path(),
             &src_filepaths,
+            false,
         );
         let result = sol.lock().unwrap();
         assert_eq!(result.len(), 1);
         assert_eq!(
-            *result
+            result
                 .get("../tests/contract-playground/src/cloc/HeavilyCommentedContract.sol")
-                .unwrap(),
+                .unwrap()
+                .code,
             21
         );
     }
