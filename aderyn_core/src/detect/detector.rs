@@ -11,8 +11,8 @@ use crate::{
             DynamicArrayLengthAssignmentDetector, EnumerableLoopRemovalDetector,
             ExperimentalEncoderDetector, IncorrectShiftOrderDetector, MultipleConstructorsDetector,
             NestedStructInMappingDetector, ReusedContractNameDetector,
-            StorageArrayEditWithMemoryDetector, UnprotectedInitializerDetector,
-            UnsafeCastingDetector,
+            SelfdestructIdentifierDetector, StorageArrayEditWithMemoryDetector,
+            UnprotectedInitializerDetector, UnsafeCastingDetector,
         },
         low::{
             CentralizationRiskDetector, ConstantsInsteadOfLiteralsDetector,
@@ -21,8 +21,8 @@ use crate::{
             InconsistentTypeNamesDetector, LargeLiteralValueDetector,
             NonReentrantBeforeOthersDetector, PushZeroOpcodeDetector, RequireWithStringDetector,
             RevertsAndRequiresInLoopsDetector, SolmateSafeTransferLibDetector,
-            UnindexedEventsDetector, UnsafeERC20FunctionsDetector, UnsafeERC721MintDetector,
-            UnspecificSolidityPragmaDetector, UselessErrorDetector,
+            UnindexedEventsDetector, UninitializedStateVariable, UnsafeERC20FunctionsDetector,
+            UnsafeERC721MintDetector, UnspecificSolidityPragmaDetector, UselessErrorDetector,
             UselessInternalFunctionDetector, UselessModifierDetector,
             UselessPublicFunctionDetector, ZeroAddressCheckDetector,
         },
@@ -34,8 +34,6 @@ use std::{
     fmt::{self, Display},
     str::FromStr,
 };
-
-use super::high::SelfdestructIdentifierDetector;
 
 pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
     vec![
@@ -126,6 +124,7 @@ pub(crate) enum IssueDetectorNamePool {
     NestedStructInMapping,
     SelfdestructIdentifier,
     DynamicArrayLengthAssignment,
+    UninitializedStateVariable,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -234,6 +233,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         }
         IssueDetectorNamePool::DynamicArrayLengthAssignment => {
             Some(Box::<DynamicArrayLengthAssignmentDetector>::default())
+        }
+        IssueDetectorNamePool::UninitializedStateVariable => {
+            Some(Box::<UninitializedStateVariable>::default())
         }
         IssueDetectorNamePool::Undecided => None,
     }
