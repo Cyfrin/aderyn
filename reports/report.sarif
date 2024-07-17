@@ -130,19 +130,8 @@
                   "uri": "src/uniswap/UniswapV2Swapper.sol"
                 },
                 "region": {
-                  "byteLength": 67,
-                  "byteOffset": 1116
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV2Swapper.sol"
-                },
-                "region": {
                   "byteLength": 112,
-                  "byteOffset": 1261
+                  "byteOffset": 1278
                 }
               }
             },
@@ -153,7 +142,7 @@
                 },
                 "region": {
                   "byteLength": 99,
-                  "byteOffset": 1383
+                  "byteOffset": 1400
                 }
               }
             },
@@ -164,7 +153,7 @@
                 },
                 "region": {
                   "byteLength": 109,
-                  "byteOffset": 1492
+                  "byteOffset": 1509
                 }
               }
             },
@@ -1623,6 +1612,26 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/UsingSelfdestruct.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 146
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": ""
+          },
+          "ruleId": "selfdestruct-identifier"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/DynamicArrayLengthAssignment.sol"
                 },
                 "region": {
@@ -1680,6 +1689,26 @@
             "text": "If the length of a dynamic array (storage variable) directly assigned to, it may allow access to other storage slots by tweaking it's value. This practice has been depracated in newer Solidity versions"
           },
           "ruleId": "dynamic-array-length-assignment"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/YulReturn.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 171
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Remove this, as this causes execution to halt. Nothing after that call will execute, including code following the assembly block."
+          },
+          "ruleId": "yul-return"
         },
         {
           "level": "note",
@@ -2045,6 +2074,17 @@
                 "region": {
                   "byteLength": 24,
                   "byteOffset": 0
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UsingSelfdestruct.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
                 }
               }
             },
@@ -2567,17 +2607,6 @@
                 "region": {
                   "byteLength": 66,
                   "byteOffset": 1275
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ConstantsLiterals.sol"
-                },
-                "region": {
-                  "byteLength": 66,
-                  "byteOffset": 1374
                 }
               }
             },

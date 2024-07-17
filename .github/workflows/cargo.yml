@@ -73,6 +73,10 @@ jobs:
 
       - name: Run cargo test 
         run: |
+          cargo test _by_loading_contract_directly
+
+      - name: Run cargo test 
+        run: |
           cargo test -- --nocapture
 
   reports:

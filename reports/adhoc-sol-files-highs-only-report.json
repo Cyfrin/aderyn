@@ -125,6 +125,8 @@
     "multiple-constructors",
     "reused-contract-name",
     "nested-struct-in-mapping",
-    "dynamic-array-length-assignment"
+    "selfdestruct-identifier",
+    "dynamic-array-length-assignment",
+    "yul-return"
   ]
 }
