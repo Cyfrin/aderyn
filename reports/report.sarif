@@ -1700,7 +1700,7 @@
                 },
                 "region": {
                   "byteLength": 8,
-                  "byteOffset": 517
+                  "byteOffset": 519
                 }
               }
             },
@@ -1711,7 +1711,7 @@
                 },
                 "region": {
                   "byteLength": 16,
-                  "byteOffset": 547
+                  "byteOffset": 549
                 }
               }
             },
@@ -1722,7 +1722,7 @@
                 },
                 "region": {
                   "byteLength": 21,
-                  "byteOffset": 585
+                  "byteOffset": 587
                 }
               }
             },
@@ -1733,7 +1733,7 @@
                 },
                 "region": {
                   "byteLength": 13,
-                  "byteOffset": 629
+                  "byteOffset": 631
                 }
               }
             },
@@ -1744,7 +1744,7 @@
                 },
                 "region": {
                   "byteLength": 12,
-                  "byteOffset": 706
+                  "byteOffset": 708
                 }
               }
             }
@@ -2329,17 +2329,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/IncorrectCaretOperator.sol"
-                },
-                "region": {
-                  "byteLength": 5,
-                  "byteOffset": 465
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/StateVariables.sol"
                 },
                 "region": {
@@ -2705,7 +2694,7 @@
                 },
                 "region": {
                   "byteLength": 2,
-                  "byteOffset": 561
+                  "byteOffset": 563
                 }
               }
             },
@@ -2716,7 +2705,7 @@
                 },
                 "region": {
                   "byteLength": 2,
-                  "byteOffset": 604
+                  "byteOffset": 606
                 }
               }
             },

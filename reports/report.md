@@ -1522,7 +1522,7 @@ Check for `address(0)` when assigning values to address state variables.
 
 Instead of marking a function as `public`, consider marking it as `external` if it is not used internally.
 
-<details><summary>23 Found Instances</summary>
+<details><summary>22 Found Instances</summary>
 
 
 - Found in src/ArbitraryTransferFrom.sol [Line: 28](../tests/contract-playground/src/ArbitraryTransferFrom.sol#L28)
@@ -1547,12 +1547,6 @@ Instead of marking a function as `public`, consider marking it as `external` if 
 
 	```solidity
 	    function setNumber(uint256 newNumber) public {
-	```
-
-- Found in src/IncorrectCaretOperator.sol [Line: 14](../tests/contract-playground/src/IncorrectCaretOperator.sol#L14)
-
-	```solidity
-	    function calc1() public {
 	```
 
 - Found in src/StateVariables.sol [Line: 47](../tests/contract-playground/src/StateVariables.sol#L47)

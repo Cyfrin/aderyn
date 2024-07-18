@@ -1184,32 +1184,32 @@
           {
             "contract_path": "src/IncorrectCaretOperator.sol",
             "line_no": 16,
-            "src": "517:8",
-            "src_char": "517:8"
+            "src": "519:8",
+            "src_char": "519:8"
           },
           {
             "contract_path": "src/IncorrectCaretOperator.sol",
             "line_no": 17,
-            "src": "547:16",
-            "src_char": "547:16"
+            "src": "549:16",
+            "src_char": "549:16"
           },
           {
             "contract_path": "src/IncorrectCaretOperator.sol",
             "line_no": 18,
-            "src": "585:21",
-            "src_char": "585:21"
+            "src": "587:21",
+            "src_char": "587:21"
           },
           {
             "contract_path": "src/IncorrectCaretOperator.sol",
             "line_no": 19,
-            "src": "629:13",
-            "src_char": "629:13"
+            "src": "631:13",
+            "src_char": "631:13"
           },
           {
             "contract_path": "src/IncorrectCaretOperator.sol",
             "line_no": 20,
-            "src": "706:12",
-            "src_char": "706:12"
+            "src": "708:12",
+            "src_char": "708:12"
           }
         ]
       }
@@ -1548,12 +1548,6 @@
             "src_char": "129:9"
           },
           {
-            "contract_path": "src/IncorrectCaretOperator.sol",
-            "line_no": 14,
-            "src": "465:5",
-            "src_char": "465:5"
-          },
-          {
             "contract_path": "src/StateVariables.sol",
             "line_no": 47,
             "src": "1764:18",
@@ -1755,14 +1749,14 @@
           {
             "contract_path": "src/IncorrectCaretOperator.sol",
             "line_no": 17,
-            "src": "561:2",
-            "src_char": "561:2"
+            "src": "563:2",
+            "src_char": "563:2"
           },
           {
             "contract_path": "src/IncorrectCaretOperator.sol",
             "line_no": 18,
-            "src": "604:2",
-            "src_char": "604:2"
+            "src": "606:2",
+            "src_char": "606:2"
           },
           {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
