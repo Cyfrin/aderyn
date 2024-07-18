@@ -126,6 +126,8 @@
     "reused-contract-name",
     "nested-struct-in-mapping",
     "selfdestruct-identifier",
-    "dynamic-array-length-assignment"
+    "dynamic-array-length-assignment",
+    "incorrect-caret-operator",
+    "yul-return"
   ]
 }
