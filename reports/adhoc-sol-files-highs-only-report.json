@@ -165,6 +165,7 @@
     "selfdestruct-identifier",
     "dynamic-array-length-assignment",
     "uninitialized-state-variable",
+    "incorrect-caret-operator",
     "yul-return"
   ]
 }

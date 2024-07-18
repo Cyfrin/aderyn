@@ -1729,6 +1729,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 355
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/StateVariables.sol"
                 },
                 "region": {
@@ -1808,6 +1819,70 @@
             "text": "Solidity does initialize variables by default when you declare them, however it's good practice to explicitly declare an initial value. For example, if you transfer money to an address we must make sure that the address has been initialized."
           },
           "ruleId": "uninitialized-state-variable"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 519
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 549
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 21,
+                  "byteOffset": 587
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 13,
+                  "byteOffset": 631
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 708
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "The caret operator is usually mistakenly thought of as an exponentiation operator but actually, it's a bitwise xor operator."
+          },
+          "ruleId": "incorrect-caret-operator"
         },
         {
           "level": "warning",
@@ -2781,6 +2856,28 @@
                 "region": {
                   "byteLength": 3,
                   "byteOffset": 457
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 563
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 606
                 }
               }
             },

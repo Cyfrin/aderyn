@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 54,
-    "total_sloc": 1517
+    "total_source_units": 55,
+    "total_sloc": 1533
   },
   "files_details": {
     "files_details": [
@@ -72,6 +72,10 @@
       {
         "file_path": "src/InconsistentUints.sol",
         "n_sloc": 17
+      },
+      {
+        "file_path": "src/IncorrectCaretOperator.sol",
+        "n_sloc": 16
       },
       {
         "file_path": "src/IncorrectShift.sol",
@@ -224,7 +228,7 @@
     ]
   },
   "issue_count": {
-    "high": 17,
+    "high": 18,
     "low": 23
   },
   "high_issues": {
@@ -1204,6 +1208,12 @@
             "src_char": "233:14"
           },
           {
+            "contract_path": "src/IncorrectCaretOperator.sol",
+            "line_no": 10,
+            "src": "355:7",
+            "src_char": "355:7"
+          },
+          {
             "contract_path": "src/StateVariables.sol",
             "line_no": 8,
             "src": "199:19",
@@ -1244,6 +1254,43 @@
             "line_no": 68,
             "src": "1971:5",
             "src_char": "1971:5"
+          }
+        ]
+      },
+      {
+        "title": "Incorrect use of caret operator on a non hexadcimal constant",
+        "description": "The caret operator is usually mistakenly thought of as an exponentiation operator but actually, it's a bitwise xor operator.",
+        "detector_name": "incorrect-caret-operator",
+        "instances": [
+          {
+            "contract_path": "src/IncorrectCaretOperator.sol",
+            "line_no": 16,
+            "src": "519:8",
+            "src_char": "519:8"
+          },
+          {
+            "contract_path": "src/IncorrectCaretOperator.sol",
+            "line_no": 17,
+            "src": "549:16",
+            "src_char": "549:16"
+          },
+          {
+            "contract_path": "src/IncorrectCaretOperator.sol",
+            "line_no": 18,
+            "src": "587:21",
+            "src_char": "587:21"
+          },
+          {
+            "contract_path": "src/IncorrectCaretOperator.sol",
+            "line_no": 19,
+            "src": "631:13",
+            "src_char": "631:13"
+          },
+          {
+            "contract_path": "src/IncorrectCaretOperator.sol",
+            "line_no": 20,
+            "src": "708:12",
+            "src_char": "708:12"
           }
         ]
       },
@@ -1804,6 +1851,18 @@
             "line_no": 17,
             "src": "457:3",
             "src_char": "457:3"
+          },
+          {
+            "contract_path": "src/IncorrectCaretOperator.sol",
+            "line_no": 17,
+            "src": "563:2",
+            "src_char": "563:2"
+          },
+          {
+            "contract_path": "src/IncorrectCaretOperator.sol",
+            "line_no": 18,
+            "src": "606:2",
+            "src_char": "606:2"
           },
           {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
@@ -2697,6 +2756,7 @@
     "selfdestruct-identifier",
     "dynamic-array-length-assignment",
     "uninitialized-state-variable",
+    "incorrect-caret-operator",
     "yul-return"
   ]
 }
