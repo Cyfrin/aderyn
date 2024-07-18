@@ -128,5 +128,6 @@
     "selfdestruct-identifier",
     "dynamic-array-length-assignment",
     "incorrect-caret-operator"
+    "yul-return"
   ]
 }

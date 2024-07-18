@@ -13,7 +13,7 @@ use crate::{
             IncorrectUseOfCaretOperatorDetector, MultipleConstructorsDetector,
             NestedStructInMappingDetector, ReusedContractNameDetector,
             StorageArrayEditWithMemoryDetector, UnprotectedInitializerDetector,
-            UnsafeCastingDetector,
+            UnsafeCastingDetector, YulReturnDetector,
         },
         low::{
             CentralizationRiskDetector, ConstantsInsteadOfLiteralsDetector,
@@ -79,6 +79,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<SelfdestructIdentifierDetector>::default(),
         Box::<DynamicArrayLengthAssignmentDetector>::default(),
         Box::<IncorrectUseOfCaretOperatorDetector>::default(),
+        Box::<YulReturnDetector>::default(),
     ]
 }
 
@@ -129,6 +130,7 @@ pub(crate) enum IssueDetectorNamePool {
     SelfdestructIdentifier,
     DynamicArrayLengthAssignment,
     IncorrectCaretOperator,
+    YulReturn,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -241,6 +243,7 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::IncorrectCaretOperator => {
             Some(Box::<IncorrectUseOfCaretOperatorDetector>::default())
         }
+        IssueDetectorNamePool::YulReturn => Some(Box::<YulReturnDetector>::default()),
         IssueDetectorNamePool::Undecided => None,
     }
 }
