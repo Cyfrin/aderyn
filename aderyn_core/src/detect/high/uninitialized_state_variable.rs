@@ -80,7 +80,7 @@ impl IssueDetector for UninitializedStateVariableDetector {
     }
 
     fn severity(&self) -> IssueSeverity {
-        IssueSeverity::Low
+        IssueSeverity::High
     }
 
     fn title(&self) -> String {
@@ -108,7 +108,7 @@ impl IssueDetector for UninitializedStateVariableDetector {
 mod uninitialized_state_variable_tests {
     use crate::detect::{
         detector::IssueDetector,
-        low::uninitialized_state_variable::UninitializedStateVariableDetector,
+        high::uninitialized_state_variable::UninitializedStateVariableDetector,
     };
 
     #[test]

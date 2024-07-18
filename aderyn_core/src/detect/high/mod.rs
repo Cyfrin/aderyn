@@ -11,6 +11,7 @@ pub(crate) mod nested_struct_in_mapping;
 pub(crate) mod reused_contract_name;
 pub(crate) mod selfdestruct;
 pub(crate) mod storage_array_edit_with_memory;
+pub(crate) mod uninitialized_state_variable;
 pub(crate) mod unprotected_init_function;
 pub(crate) mod unsafe_casting;
 
@@ -27,5 +28,6 @@ pub use nested_struct_in_mapping::NestedStructInMappingDetector;
 pub use reused_contract_name::ReusedContractNameDetector;
 pub use selfdestruct::SelfdestructIdentifierDetector;
 pub use storage_array_edit_with_memory::StorageArrayEditWithMemoryDetector;
+pub use uninitialized_state_variable::UninitializedStateVariableDetector;
 pub use unprotected_init_function::UnprotectedInitializerDetector;
 pub use unsafe_casting::UnsafeCastingDetector;

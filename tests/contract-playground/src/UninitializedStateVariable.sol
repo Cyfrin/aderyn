@@ -31,3 +31,14 @@ contract UninitializedStateVariable {
     }
 
 }
+
+
+contract UninitializedStateVariableBase {
+    uint256 public myVar; // initialized in extension, hence not captured
+}
+
+contract UninitializedStateVariableExtension is UninitializedStateVariableBase {
+    constructor() {
+        myVar = 4;
+    }
+}

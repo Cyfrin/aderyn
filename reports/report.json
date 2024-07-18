@@ -1,7 +1,7 @@
 {
   "files_summary": {
     "total_source_units": 53,
-    "total_sloc": 1501
+    "total_sloc": 1509
   },
   "files_details": {
     "files_details": [
@@ -119,7 +119,7 @@
       },
       {
         "file_path": "src/UninitializedStateVariable.sol",
-        "n_sloc": 21
+        "n_sloc": 29
       },
       {
         "file_path": "src/UnprotectedInitialize.sol",
@@ -220,8 +220,8 @@
     ]
   },
   "issue_count": {
-    "high": 15,
-    "low": 24
+    "high": 16,
+    "low": 23
   },
   "high_issues": {
     "issues": [
@@ -1173,6 +1173,91 @@
             "line_no": 17,
             "src": "439:14",
             "src_char": "439:14"
+          }
+        ]
+      },
+      {
+        "title": "Uninitialized State Variables",
+        "description": "Solidity does initialize variables by default when you declare them, however it's good practice to explicitly declare an initial value. For example, if you transfer money to an address we must make sure that the address has been initialized.",
+        "detector_name": "uninitialized-state-variable",
+        "instances": [
+          {
+            "contract_path": "src/AssemblyExample.sol",
+            "line_no": 5,
+            "src": "97:1",
+            "src_char": "97:1"
+          },
+          {
+            "contract_path": "src/InconsistentUints.sol",
+            "line_no": 7,
+            "src": "197:11",
+            "src_char": "197:11"
+          },
+          {
+            "contract_path": "src/InconsistentUints.sol",
+            "line_no": 8,
+            "src": "233:14",
+            "src_char": "233:14"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 8,
+            "src": "199:19",
+            "src_char": "199:19"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 9,
+            "src": "241:20",
+            "src_char": "241:20"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 10,
+            "src": "282:18",
+            "src_char": "282:18"
+          },
+          {
+            "contract_path": "src/StorageParameters.sol",
+            "line_no": 5,
+            "src": "109:12",
+            "src_char": "109:12"
+          },
+          {
+            "contract_path": "src/UninitializedStateVariable.sol",
+            "line_no": 7,
+            "src": "122:8",
+            "src_char": "122:8"
+          },
+          {
+            "contract_path": "src/UninitializedStateVariable.sol",
+            "line_no": 15,
+            "src": "529:11",
+            "src_char": "529:11"
+          },
+          {
+            "contract_path": "src/WrongOrderOfLayout.sol",
+            "line_no": 11,
+            "src": "257:10",
+            "src_char": "257:10"
+          },
+          {
+            "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
+            "line_no": 68,
+            "src": "1971:5",
+            "src_char": "1971:5"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 63,
+            "src": "4830:6",
+            "src_char": "3342:6"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 66,
+            "src": "4907:11",
+            "src_char": "3419:11"
           }
         ]
       }
@@ -2568,91 +2653,6 @@
             "line_no": 20,
             "src": "541:5",
             "src_char": "541:5"
-          }
-        ]
-      },
-      {
-        "title": "Uninitialized State Variables",
-        "description": "Solidity does initialize variables by default when you declare them, however it's good practice to explicitly declare an initial value. For example, if you transfer money to an address we must make sure that the address has been initialized.",
-        "detector_name": "uninitialized-state-variable",
-        "instances": [
-          {
-            "contract_path": "src/AssemblyExample.sol",
-            "line_no": 5,
-            "src": "97:1",
-            "src_char": "97:1"
-          },
-          {
-            "contract_path": "src/InconsistentUints.sol",
-            "line_no": 7,
-            "src": "197:11",
-            "src_char": "197:11"
-          },
-          {
-            "contract_path": "src/InconsistentUints.sol",
-            "line_no": 8,
-            "src": "233:14",
-            "src_char": "233:14"
-          },
-          {
-            "contract_path": "src/StateVariables.sol",
-            "line_no": 8,
-            "src": "199:19",
-            "src_char": "199:19"
-          },
-          {
-            "contract_path": "src/StateVariables.sol",
-            "line_no": 9,
-            "src": "241:20",
-            "src_char": "241:20"
-          },
-          {
-            "contract_path": "src/StateVariables.sol",
-            "line_no": 10,
-            "src": "282:18",
-            "src_char": "282:18"
-          },
-          {
-            "contract_path": "src/StorageParameters.sol",
-            "line_no": 5,
-            "src": "109:12",
-            "src_char": "109:12"
-          },
-          {
-            "contract_path": "src/UninitializedStateVariable.sol",
-            "line_no": 7,
-            "src": "122:8",
-            "src_char": "122:8"
-          },
-          {
-            "contract_path": "src/UninitializedStateVariable.sol",
-            "line_no": 15,
-            "src": "529:11",
-            "src_char": "529:11"
-          },
-          {
-            "contract_path": "src/WrongOrderOfLayout.sol",
-            "line_no": 11,
-            "src": "257:10",
-            "src_char": "257:10"
-          },
-          {
-            "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
-            "line_no": 68,
-            "src": "1971:5",
-            "src_char": "1971:5"
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 63,
-            "src": "4830:6",
-            "src_char": "3342:6"
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 66,
-            "src": "4907:11",
-            "src_char": "3419:11"
           }
         ]
       }
