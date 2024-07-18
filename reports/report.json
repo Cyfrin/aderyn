@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 53,
-    "total_sloc": 1488
+    "total_source_units": 54,
+    "total_sloc": 1532
   },
   "files_details": {
     "files_details": [
@@ -152,6 +152,10 @@
       {
         "file_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
         "n_sloc": 45
+      },
+      {
+        "file_path": "src/auditor_mode/send_ether_no_checks/Tower.sol",
+        "n_sloc": 44
       },
       {
         "file_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
@@ -1590,6 +1594,24 @@
             "src_char": "2183:28"
           },
           {
+            "contract_path": "src/auditor_mode/send_ether_no_checks/Tower.sol",
+            "line_no": 19,
+            "src": "497:16",
+            "src_char": "497:16"
+          },
+          {
+            "contract_path": "src/auditor_mode/send_ether_no_checks/Tower.sol",
+            "line_no": 44,
+            "src": "1147:16",
+            "src_char": "1147:16"
+          },
+          {
+            "contract_path": "src/auditor_mode/send_ether_no_checks/Tower.sol",
+            "line_no": 71,
+            "src": "1830:16",
+            "src_char": "1830:16"
+          },
+          {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
             "line_no": 31,
             "src": "500:3",
@@ -1839,6 +1861,30 @@
             "src_char": "1074:6"
           },
           {
+            "contract_path": "src/auditor_mode/send_ether_no_checks/Tower.sol",
+            "line_no": 10,
+            "src": "334:7",
+            "src_char": "334:7"
+          },
+          {
+            "contract_path": "src/auditor_mode/send_ether_no_checks/Tower.sol",
+            "line_no": 34,
+            "src": "992:6",
+            "src_char": "992:6"
+          },
+          {
+            "contract_path": "src/auditor_mode/send_ether_no_checks/Tower.sol",
+            "line_no": 61,
+            "src": "1675:6",
+            "src_char": "1675:6"
+          },
+          {
+            "contract_path": "src/auditor_mode/send_ether_no_checks/Tower.sol",
+            "line_no": 76,
+            "src": "1983:7",
+            "src_char": "1983:7"
+          },
+          {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
             "line_no": 35,
             "src": "589:7",
@@ -2063,6 +2109,24 @@
             "line_no": 13,
             "src": "222:21",
             "src_char": "222:21"
+          },
+          {
+            "contract_path": "src/auditor_mode/send_ether_no_checks/Tower.sol",
+            "line_no": 13,
+            "src": "392:22",
+            "src_char": "392:22"
+          },
+          {
+            "contract_path": "src/auditor_mode/send_ether_no_checks/Tower.sol",
+            "line_no": 38,
+            "src": "1032:22",
+            "src_char": "1032:22"
+          },
+          {
+            "contract_path": "src/auditor_mode/send_ether_no_checks/Tower.sol",
+            "line_no": 65,
+            "src": "1715:22",
+            "src_char": "1715:22"
           }
         ]
       },
@@ -2166,6 +2230,18 @@
             "line_no": 85,
             "src": "2380:25",
             "src_char": "2380:25"
+          },
+          {
+            "contract_path": "src/auditor_mode/send_ether_no_checks/Tower.sol",
+            "line_no": 19,
+            "src": "497:16",
+            "src_char": "497:16"
+          },
+          {
+            "contract_path": "src/auditor_mode/send_ether_no_checks/Tower.sol",
+            "line_no": 44,
+            "src": "1147:16",
+            "src_char": "1147:16"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
@@ -2348,6 +2424,30 @@
             "line_no": 17,
             "src": "388:11",
             "src_char": "388:11"
+          },
+          {
+            "contract_path": "src/auditor_mode/send_ether_no_checks/Tower.sol",
+            "line_no": 9,
+            "src": "295:17",
+            "src_char": "295:17"
+          },
+          {
+            "contract_path": "src/auditor_mode/send_ether_no_checks/Tower.sol",
+            "line_no": 31,
+            "src": "859:17",
+            "src_char": "859:17"
+          },
+          {
+            "contract_path": "src/auditor_mode/send_ether_no_checks/Tower.sol",
+            "line_no": 58,
+            "src": "1542:17",
+            "src_char": "1542:17"
+          },
+          {
+            "contract_path": "src/auditor_mode/send_ether_no_checks/Tower.sol",
+            "line_no": 75,
+            "src": "1943:18",
+            "src_char": "1943:18"
           }
         ]
       },

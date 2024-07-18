@@ -2406,6 +2406,39 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/auditor_mode/send_ether_no_checks/Tower.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 497
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/send_ether_no_checks/Tower.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 1147
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/send_ether_no_checks/Tower.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 1830
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
                 },
                 "region": {
@@ -2851,6 +2884,50 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/auditor_mode/send_ether_no_checks/Tower.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 334
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/send_ether_no_checks/Tower.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 992
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/send_ether_no_checks/Tower.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 1675
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/send_ether_no_checks/Tower.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 1983
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
                 },
                 "region": {
@@ -3246,6 +3323,39 @@
                   "byteOffset": 222
                 }
               }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/send_ether_no_checks/Tower.sol"
+                },
+                "region": {
+                  "byteLength": 22,
+                  "byteOffset": 392
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/send_ether_no_checks/Tower.sol"
+                },
+                "region": {
+                  "byteLength": 22,
+                  "byteOffset": 1032
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/send_ether_no_checks/Tower.sol"
+                },
+                "region": {
+                  "byteLength": 22,
+                  "byteOffset": 1715
+                }
+              }
             }
           ],
           "message": {
@@ -3429,6 +3539,28 @@
                 "region": {
                   "byteLength": 25,
                   "byteOffset": 2380
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/send_ether_no_checks/Tower.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 497
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/send_ether_no_checks/Tower.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 1147
                 }
               }
             },
@@ -3755,6 +3887,50 @@
                 "region": {
                   "byteLength": 11,
                   "byteOffset": 388
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/send_ether_no_checks/Tower.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 295
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/send_ether_no_checks/Tower.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 859
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/send_ether_no_checks/Tower.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 1542
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/send_ether_no_checks/Tower.sol"
+                },
+                "region": {
+                  "byteLength": 18,
+                  "byteOffset": 1943
                 }
               }
             }
