@@ -11,7 +11,7 @@ contract IncorrectCaretOperator {
     uint256 public constant s_second = 190;
     uint256 public constant s_third = 0x9;
 
-    function calc1() public {
+    function calc1() external {
         // BAD
         uint256 x = 3^40 - 1;
         uint256 z = s_second^89 + 13;
