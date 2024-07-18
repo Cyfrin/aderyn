@@ -25,6 +25,7 @@ impl Node for SourceUnitNode {
             SourceUnitNode::UsingForDirective(using_for_directive) => {
                 using_for_directive.accept(visitor)
             }
+            SourceUnitNode::EventDefinition(event_defintion) => event_defintion.accept(visitor),
         }
     }
     fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
