@@ -216,19 +216,6 @@ jobs:
           cat ./reports/prb-math-report-workflow.md
           diff ./reports/prb-math-report.md ./reports/prb-math-report-workflow.md
 
-          
-      - name: Generate 2024-07-templegold-report-workflow.md
-        uses: actions-rs/cargo@v1
-        with:
-          command: run
-          args: -- ./tests/2024-07-templegold/protocol -o ./reports/2024-07-templegold-report-workflow.md --skip-update-check
-    
-      - name: Check 2024-07-templegold-report.md vs 2024-07-templegold-report-workflow.md
-        run: |
-          cat ./reports/2024-07-templegold-report-workflow.md
-          diff ./reports/templegold-report.md ./reports/2024-07-templegold-report-workflow.md
-
-
       # Verify report.json 
 
       - name: Generate report-workflow.json
@@ -267,6 +254,50 @@ jobs:
         run: |
           cat ./reports/ci-report.sarif
           diff ./reports/report.sarif ./reports/ci-report.sarif
+
+
+  third-party-reports:
+    name: Check 3rd party Reports
+    runs-on: ubuntu-latest
+    steps:
+      - name: foundry-toolchain
+        uses: foundry-rs/foundry-toolchain@v1.2.0
+
+      - name: Checkout sources
+        uses: actions/checkout@v2
+
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 8
+
+      - name: Make
+        run: |
+          make
+
+      - name: Generate 2024-07-templegold-report-workflow.md
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+          args: -- ./tests/2024-07-templegold/protocol -o ./reports/2024-07-templegold-report-workflow.md --skip-update-check
+    
+      - name: Check 2024-07-templegold-report.md vs 2024-07-templegold-report-workflow.md
+        run: |
+          cat ./reports/2024-07-templegold-report-workflow.md
+          git diff ./reports/templegold-report.md ./reports/2024-07-templegold-report-workflow.md
 
   lints:
     name: Lints
