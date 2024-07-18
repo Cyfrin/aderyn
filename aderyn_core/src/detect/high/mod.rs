@@ -14,6 +14,7 @@ pub(crate) mod storage_array_edit_with_memory;
 pub(crate) mod uninitialized_state_variable;
 pub(crate) mod unprotected_init_function;
 pub(crate) mod unsafe_casting;
+pub(crate) mod yul_return;
 
 pub use arbitrary_transfer_from::ArbitraryTransferFromDetector;
 pub use avoid_abi_encode_packed::AvoidAbiEncodePackedDetector;
@@ -31,3 +32,4 @@ pub use storage_array_edit_with_memory::StorageArrayEditWithMemoryDetector;
 pub use uninitialized_state_variable::UninitializedStateVariableDetector;
 pub use unprotected_init_function::UnprotectedInitializerDetector;
 pub use unsafe_casting::UnsafeCastingDetector;
+pub use yul_return::YulReturnDetector;
