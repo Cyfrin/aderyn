@@ -53,14 +53,26 @@ fn are_duplicate_names_in_inherited_contracts(
 
     // Recursively check base contracts
     for base_contract in &contract_definition.base_contracts {
-        if let UserDefinedTypeNameOrIdentifierPath::UserDefinedTypeName(base_name) =
-            &base_contract.base_name
-        {
-            if let Some(ASTNode::ContractDefinition(contract)) =
-                context.nodes.get(&base_name.referenced_declaration)
-            {
-                if are_duplicate_names_in_inherited_contracts(context, variable_name, contract) {
-                    return true; // Return immediately if a duplicate is found
+        match &base_contract.base_name {
+            UserDefinedTypeNameOrIdentifierPath::UserDefinedTypeName(base_name) => {
+                if let Some(ASTNode::ContractDefinition(contract)) =
+                    context.nodes.get(&base_name.referenced_declaration)
+                {
+                    if are_duplicate_names_in_inherited_contracts(context, variable_name, contract)
+                    {
+                        return true; // Return immediately if a duplicate is found
+                    }
+                }
+            }
+            UserDefinedTypeNameOrIdentifierPath::IdentifierPath(identifier_path) => {
+                if let Some(ASTNode::ContractDefinition(contract)) = context
+                    .nodes
+                    .get(&(identifier_path.referenced_declaration as i64))
+                {
+                    if are_duplicate_names_in_inherited_contracts(context, variable_name, contract)
+                    {
+                        return true; // Return immediately if a duplicate is found
+                    }
                 }
             }
         }
