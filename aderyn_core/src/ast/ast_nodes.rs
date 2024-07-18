@@ -18,6 +18,7 @@ pub enum SourceUnitNode {
     UserDefinedValueTypeDefinition(UserDefinedValueTypeDefinition),
     UsingForDirective(UsingForDirective),
     ContractDefinition(ContractDefinition),
+    EventDefinition(EventDefinition),
 }
 
 #[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
