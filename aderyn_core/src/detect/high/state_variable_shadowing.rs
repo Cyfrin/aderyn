@@ -2,7 +2,8 @@ use std::collections::{BTreeMap, HashMap};
 use std::error::Error;
 
 use crate::ast::{
-    ContractDefinition, NodeID, NodeType, UserDefinedTypeNameOrIdentifierPath, VariableDeclaration,
+    ContractDefinition, Mutability, NodeID, NodeType, UserDefinedTypeNameOrIdentifierPath,
+    VariableDeclaration,
 };
 
 use crate::capture;
@@ -41,7 +42,11 @@ fn are_duplicate_names_in_inherited_contracts(
     if ExtractVariableDeclarations::from(contract_definition)
         .extracted
         .iter()
-        .any(|vd| vd.state_variable && !vd.constant && vd.name == variable_name)
+        .any(|vd| {
+            vd.state_variable
+                && !(vd.mutability() == Mutability::Constant)
+                && vd.name == variable_name
+        })
     {
         return true; // Return immediately if a duplicate is found
     }
