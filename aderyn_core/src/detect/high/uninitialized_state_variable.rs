@@ -130,7 +130,7 @@ mod uninitialized_state_variable_tests {
         // assert the severity is high
         assert_eq!(
             detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
+            crate::detect::detector::IssueSeverity::High
         );
         // assert the title is correct
         assert_eq!(

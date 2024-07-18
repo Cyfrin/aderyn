@@ -13,8 +13,6 @@ use crate::{
             NestedStructInMappingDetector, ReusedContractNameDetector,
             SelfdestructIdentifierDetector, StorageArrayEditWithMemoryDetector,
             UninitializedStateVariableDetector, UnprotectedInitializerDetector,
-            UnsafeCastingDetector,
-            StorageArrayEditWithMemoryDetector, UnprotectedInitializerDetector,
             UnsafeCastingDetector, YulReturnDetector,
         },
         low::{
