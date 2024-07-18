@@ -7,7 +7,9 @@ use crate::ast::{
 };
 
 use crate::capture;
-use crate::context::browser::{ExtractPragmaDirectives, ExtractVariableDeclarations};
+use crate::context::browser::{
+    ExtractPragmaDirectives, ExtractVariableDeclarations, GetClosestAncestorOfTypeX,
+};
 use crate::context::workspace_context::ASTNode;
 use crate::detect::detector::IssueDetectorNamePool;
 use crate::detect::helpers::pragma_directive_to_semver;
@@ -130,24 +132,40 @@ impl IssueDetector for StateVariableShadowingDetector {
             for variable in variables {
                 // Recurse up the inheritance tree
                 let contract_ast =
-                    context.get_closest_ancestor(variable.id, NodeType::ContractDefinition);
+                    variable.closest_ancestor_of_type(context, NodeType::ContractDefinition);
                 if let Some(ASTNode::ContractDefinition(contract)) = contract_ast {
                     for base_contract in &contract.base_contracts {
-                        if let UserDefinedTypeNameOrIdentifierPath::UserDefinedTypeName(base_name) =
-                            &base_contract.base_name
-                        {
-                            if let Some(ASTNode::ContractDefinition(contract)) =
-                                context.nodes.get(&base_name.referenced_declaration)
-                            {
-                                if are_duplicate_names_in_inherited_contracts(
-                                    context,
-                                    &variable.name,
-                                    contract,
-                                ) {
-                                    capture!(self, context, variable);
+                        match &base_contract.base_name {
+                            UserDefinedTypeNameOrIdentifierPath::UserDefinedTypeName(base_name) => {
+                                if let Some(ASTNode::ContractDefinition(contract)) =
+                                    context.nodes.get(&base_name.referenced_declaration)
+                                {
+                                    if are_duplicate_names_in_inherited_contracts(
+                                        context,
+                                        &variable.name,
+                                        contract,
+                                    ) {
+                                        capture!(self, context, variable);
+                                    }
                                 }
                             }
-                        }
+                            UserDefinedTypeNameOrIdentifierPath::IdentifierPath(
+                                identifier_path,
+                            ) => {
+                                if let Some(ASTNode::ContractDefinition(contract)) = context
+                                    .nodes
+                                    .get(&(identifier_path.referenced_declaration as i64))
+                                {
+                                    if are_duplicate_names_in_inherited_contracts(
+                                        context,
+                                        &variable.name,
+                                        contract,
+                                    ) {
+                                        capture!(self, context, variable);
+                                    }
+                                }
+                            }
+                        };
                     }
                 }
             }
