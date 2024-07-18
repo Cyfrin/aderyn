@@ -6,17 +6,17 @@ pragma solidity 0.8.19;
 // could potentially be called as a result
 contract Tower1 {
 
-    function visitEighthFloor() internal {
+    function visitEighthFloor1() internal {
         require(msg.sender == address(0x11));
     }
 
-    modifier passThroughNinthFloor() {
-        visitEighthFloor();
+    modifier passThroughNinthFloor1() {
+        visitEighthFloor1();
         _;
     }
 
     // Start Here
-    function enterTenthFloor() public passThroughNinthFloor() {
+    function enterTenthFloor1() public passThroughNinthFloor1() {
         
     }
 
@@ -28,20 +28,20 @@ contract Tower1 {
 // Here, the call to send native eth is not safe
 contract Tower2 {
 
-    function visitEighthFloor(address x) internal {
+    function visitEighthFloor2(address x) internal {
         (bool success,) = x.call{value: 10}("calldata");
         if (!success) {
             revert();
         }
     }
 
-    modifier passThroughNinthFloor(address x) {
-        visitEighthFloor(x);
+    modifier passThroughNinthFloor2(address x) {
+        visitEighthFloor2(x);
         _;
     }
 
     // Start Here
-    function enterTenthFloor(address x) public passThroughNinthFloor(x) {
+    function enterTenthFloor2(address x) public passThroughNinthFloor2(x) {
         
     }
 
@@ -55,24 +55,24 @@ contract Tower2 {
 // As a result the call to send native eth is safe
 contract Tower3 {
 
-    function visitEighthFloor(address x) internal {
+    function visitEighthFloor3(address x) internal {
         (bool success,) = x.call{value: 10}("calldata");
         if (!success) {
             revert();
         }
     }
 
-    modifier passThroughNinthFloor(address x) {
-        visitEighthFloor(x);
+    modifier passThroughNinthFloor3(address x) {
+        visitEighthFloor3(x);
         _;
     }
 
     // Start Here
-    function enterTenthFloor(address x) public passThroughNinthFloor(x) {
-        visitSeventhFloor();
+    function enterTenthFloor3(address x) public passThroughNinthFloor3(x) {
+        visitSeventhFloor3();
     }
 
-    function visitSeventhFloor() internal {
+    function visitSeventhFloor3() internal {
         require(msg.sender == address(0x11));
     }
 

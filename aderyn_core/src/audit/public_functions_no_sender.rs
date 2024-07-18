@@ -59,8 +59,9 @@ impl AuditorDetector for PublicFunctionsNoSenderChecksDetector {
                                 || modifier.modifier_name.name() == "requiresAuth"
                         });
                 // Check if the function has a `msg.sender` BinaryOperation check
-                let has_msg_sender_binary_operation =
-                    has_msg_sender_binary_operation(function_definition);
+                let has_msg_sender_binary_operation = has_msg_sender_binary_operation(
+                    &ASTNode::FunctionDefinition((*function_definition).clone()),
+                );
                 // TODO Check if the function has a hasRole identifier with msg.sender as an arg
                 does_not_have_an_owner_modifier && !has_msg_sender_binary_operation
             });

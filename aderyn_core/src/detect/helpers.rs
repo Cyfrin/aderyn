@@ -3,8 +3,8 @@ use semver::{Error, VersionReq};
 use crate::{
     ast::{Expression, FunctionDefinition, MemberAccess, NodeID, PragmaDirective, Visibility},
     context::{
-        browser::{ExtractBinaryOperations, ExtractMemberAccesses},
-        workspace_context::WorkspaceContext,
+        browser::{ExtractBinaryOperations, ExtractFunctionCallOptions, ExtractMemberAccesses},
+        workspace_context::{ASTNode, WorkspaceContext},
     },
 };
 
@@ -66,16 +66,16 @@ pub fn pragma_directive_to_semver(pragma_directive: &PragmaDirective) -> Result<
     VersionReq::parse(&version_string)
 }
 
-// Check if a function definition has a `msg.sender` binary operation.
+// Check if an ast_node has a `msg.sender` binary operation.
 // Examples:
 // ```
 // function foo() public {
 //     require(msg.sender == owner);
 // }
 // ```
-pub fn has_msg_sender_binary_operation(function_definition: &FunctionDefinition) -> bool {
+pub fn has_msg_sender_binary_operation(ast_node: &ASTNode) -> bool {
     // Directly return the evaluation of the condition
-    ExtractBinaryOperations::from(function_definition)
+    ExtractBinaryOperations::from(ast_node)
         .extracted
         .iter()
         .any(|binary_operation| {
@@ -93,4 +93,41 @@ pub fn has_msg_sender_binary_operation(function_definition: &FunctionDefinition)
                         }
                 })
         })
+}
+
+// Check if an ast_node sends native eth
+// Examples:
+// ```
+// function foo() public {
+//     address(0x1).call{value: 10}("...")
+// }
+// ```
+pub fn has_calls_that_sends_native_eth(ast_node: &ASTNode) -> bool {
+    // Check for address(..).call{value: 10}("...") pattern
+    let function_call_ops = ExtractFunctionCallOptions::from(ast_node).extracted;
+    for function_call in &function_call_ops {
+        let call_carries_value = function_call.options.iter().any(|c| {
+            if let Expression::Literal(literal) = c {
+                return literal.value.is_some();
+            }
+            false
+        });
+        if !call_carries_value {
+            continue;
+        }
+        if let Expression::MemberAccess(member_access) = function_call.expression.as_ref() {
+            let is_call = member_access.member_name == "call";
+            if !is_call {
+                continue;
+            }
+        }
+        return true;
+    }
+    // TODO:
+    // Add patterns for -
+
+    // payable(address(..)).transfer(100)
+    // payable(address(..)).send(100)
+
+    false
 }

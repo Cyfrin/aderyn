@@ -13,9 +13,9 @@ use crate::{
 
 pub fn get_auditor_detectors() -> Vec<Box<dyn AuditorDetector>> {
     vec![
-        Box::<SendEtherWithoutMsgSenderChecksDetector>::default(),
         Box::<AttackSurfaceDetector>::default(),
         Box::<PublicFunctionsNoSenderChecksDetector>::default(),
+        Box::<SendEtherWithoutMsgSenderChecksDetector>::default(),
     ]
 }
 
