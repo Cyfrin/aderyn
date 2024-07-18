@@ -49,7 +49,7 @@ impl IssueDetector for UninitializedStateVariableDetector {
                 s.type_descriptions
                     .type_string
                     .as_ref()
-                    .is_some_and(|type_string| !type_string.ends_with("[]"))
+                    .is_some_and(|type_string| !type_string.ends_with("]"))
             })
             .filter(|s| {
                 s.type_descriptions

@@ -1149,7 +1149,7 @@ If the length of a dynamic array (storage variable) directly assigned to, it may
 
 Solidity does initialize variables by default when you declare them, however it's good practice to explicitly declare an initial value. For example, if you transfer money to an address we must make sure that the address has been initialized.
 
-<details><summary>13 Found Instances</summary>
+<details><summary>10 Found Instances</summary>
 
 
 - Found in src/AssemblyExample.sol [Line: 5](../tests/contract-playground/src/AssemblyExample.sol#L5)
@@ -1188,12 +1188,6 @@ Solidity does initialize variables by default when you declare them, however it'
 	    uint256 public staticPublicNumber;
 	```
 
-- Found in src/StorageParameters.sol [Line: 5](../tests/contract-playground/src/StorageParameters.sol#L5)
-
-	```solidity
-	    uint[1] public storageArray;
-	```
-
 - Found in src/UninitializedStateVariable.sol [Line: 7](../tests/contract-playground/src/UninitializedStateVariable.sol#L7)
 
 	```solidity
@@ -1216,18 +1210,6 @@ Solidity does initialize variables by default when you declare them, however it'
 
 	```solidity
 	    address public owner;
-	```
-
-- Found in src/eth2/DepositContract.sol [Line: 63](../tests/contract-playground/src/eth2/DepositContract.sol#L63)
-
-	```solidity
-	    bytes32[DEPOSIT_CONTRACT_TREE_DEPTH] branch;
-	```
-
-- Found in src/eth2/DepositContract.sol [Line: 66](../tests/contract-playground/src/eth2/DepositContract.sol#L66)
-
-	```solidity
-	    bytes32[DEPOSIT_CONTRACT_TREE_DEPTH] zero_hashes;
 	```
 
 </details>

@@ -1222,12 +1222,6 @@
             "src_char": "282:18"
           },
           {
-            "contract_path": "src/StorageParameters.sol",
-            "line_no": 5,
-            "src": "109:12",
-            "src_char": "109:12"
-          },
-          {
             "contract_path": "src/UninitializedStateVariable.sol",
             "line_no": 7,
             "src": "122:8",
@@ -1250,18 +1244,6 @@
             "line_no": 68,
             "src": "1971:5",
             "src_char": "1971:5"
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 63,
-            "src": "4830:6",
-            "src_char": "3342:6"
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 66,
-            "src": "4907:11",
-            "src_char": "3419:11"
           }
         ]
       },
