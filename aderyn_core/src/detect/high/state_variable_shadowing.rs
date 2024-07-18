@@ -46,7 +46,7 @@ fn are_duplicate_names_in_inherited_contracts(
         .iter()
         .any(|vd| {
             vd.state_variable
-                && !(vd.mutability() == Some(&Mutability::Constant))
+                && vd.mutability() != Some(&Mutability::Constant)
                 && vd.name == variable_name
         })
     {
