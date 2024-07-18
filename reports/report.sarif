@@ -1740,6 +1740,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/StateShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 13,
+                  "byteOffset": 87
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/StateVariables.sol"
                 },
                 "region": {
@@ -1903,6 +1914,26 @@
             "text": "Remove this, as this causes execution to halt. Nothing after that call will execute, including code following the assembly block."
           },
           "ruleId": "yul-return"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 13,
+                  "byteOffset": 239
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Description of the high issue."
+          },
+          "ruleId": "state-variable-shadowing"
         },
         {
           "level": "note",
@@ -2215,6 +2246,17 @@
                 "region": {
                   "byteLength": 18,
                   "byteOffset": 1598
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 19,
+                  "byteOffset": 368
                 }
               }
             },
@@ -3067,6 +3109,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/StateShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 135
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/ZeroAddressCheck.sol"
                 },
                 "region": {
@@ -3482,6 +3535,17 @@
                 "region": {
                   "byteLength": 8,
                   "byteOffset": 103
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 74,
+                  "byteOffset": 107
                 }
               }
             },

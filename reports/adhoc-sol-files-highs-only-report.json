@@ -166,6 +166,7 @@
     "dynamic-array-length-assignment",
     "uninitialized-state-variable",
     "incorrect-caret-operator",
-    "yul-return"
+    "yul-return",
+    "state-variable-shadowing"
   ]
 }
