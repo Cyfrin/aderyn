@@ -5,6 +5,7 @@ use prettytable::{format, Row, Table};
 use crate::{
     audit::{
         attack_surface::AttackSurfaceDetector,
+        delegate_call_no_address_checks::DelegateCallNoChecksDetector,
         public_functions_no_sender::PublicFunctionsNoSenderChecksDetector,
         send_ether_no_checks::SendEtherWithoutMsgSenderChecksDetector,
     },
@@ -16,6 +17,7 @@ pub fn get_auditor_detectors() -> Vec<Box<dyn AuditorDetector>> {
         Box::<AttackSurfaceDetector>::default(),
         Box::<PublicFunctionsNoSenderChecksDetector>::default(),
         Box::<SendEtherWithoutMsgSenderChecksDetector>::default(),
+        Box::<DelegateCallNoChecksDetector>::default(),
     ]
 }
 
