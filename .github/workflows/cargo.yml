@@ -96,6 +96,10 @@ jobs:
         run: |
           cargo build
 
+      - name: Submodule init
+        run: |
+          git submodule update --init --recursive
+
       - uses: actions/checkout@v3
 
       - uses: actions/setup-node@v3
