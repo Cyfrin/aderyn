@@ -80,10 +80,12 @@ jobs:
           useLockFile: false
           working-directory: tests/prb-math/
 
+      - uses: Swatinem/rust-cache@v2
       - name: Run cargo test 
         run: |
           cargo test _by_loading_contract_directly
 
+      - uses: Swatinem/rust-cache@v2
       - name: Run cargo test 
         run: |
           cargo test -- --nocapture
