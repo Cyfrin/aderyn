@@ -43,12 +43,10 @@ jobs:
           profile: minimal
           toolchain: stable
           override: true
-
-      - name: Configure cache for rust build
-        uses: Swatinem/rust-cache@v2
-        
+          
       - uses: actions/checkout@v3
-
+      - uses: Swatinem/rust-cache@v2
+          
       - uses: pnpm/action-setup@v3
         with:
           version: 8
@@ -57,18 +55,6 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
-
-      - name: Make
-        run: |
-          make
-
-      - name: Install pnpm dependencies for ccip contracts and come out
-        run: |
-          cd tests/ccip-contracts/
-          pnpm install
-          cd contracts/
-          pnpm install
-          cd ../../../
 
       - name: Run cargo build
         run: |
