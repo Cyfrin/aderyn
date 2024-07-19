@@ -130,19 +130,8 @@
                   "uri": "src/uniswap/UniswapV2Swapper.sol"
                 },
                 "region": {
-                  "byteLength": 67,
-                  "byteOffset": 1116
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV2Swapper.sol"
-                },
-                "region": {
                   "byteLength": 112,
-                  "byteOffset": 1261
+                  "byteOffset": 1278
                 }
               }
             },
@@ -153,7 +142,7 @@
                 },
                 "region": {
                   "byteLength": 99,
-                  "byteOffset": 1383
+                  "byteOffset": 1400
                 }
               }
             },
@@ -164,7 +153,7 @@
                 },
                 "region": {
                   "byteLength": 109,
-                  "byteOffset": 1492
+                  "byteOffset": 1509
                 }
               }
             },
@@ -1454,6 +1443,358 @@
           "ruleId": "enumerable-loop-removal"
         },
         {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ExperimentalEncoder.sol"
+                },
+                "region": {
+                  "byteLength": 33,
+                  "byteOffset": 23
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Experimental encoders should not be used in production. There are multiple known compiler bugs that are caused by the experimental encoder. Upgrade your solidity version to remove the need for experimental features."
+          },
+          "ruleId": "experimental-encoder"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectShift.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 192
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectShift.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 238
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Example: `shl(shifted, 4)` will shift the right constant `4` by `a` bits. The correct order is `shl(4, shifted)`."
+          },
+          "ruleId": "incorrect-shift-order"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StorageParameters.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 241
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Storage reference is passed to a function with a memory parameter. This will not update the storage variable as expected. Consider using storage parameters instead."
+          },
+          "ruleId": "storage-array-edit-with-memory"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MultipleConstructorSchemes.sol"
+                },
+                "region": {
+                  "byteLength": 180,
+                  "byteOffset": 25
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "In some versions of Solidity, contracts compile with multiple constructors. The first constructor takes precedence. This can lead to unexpected behavior."
+          },
+          "ruleId": "multiple-constructors"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/nested/1/Nested.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 214
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/nested/2/Nested.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 214
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/reused_contract_name/ContractA.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 70
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/reused_contract_name/ContractB.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 70
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "When compiling contracts with certain development frameworks (for example: Truffle), having contracts with the same name across different files can lead to one being overwritten."
+          },
+          "ruleId": "reused-contract-name"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/nested_mappings/NestedMappings.sol"
+                },
+                "region": {
+                  "byteLength": 58,
+                  "byteOffset": 367
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Prior to updates in Solidity 0.5.0, public mappings with nested structs compiled, but produced incorrect values. Refrain from using these, or update to a more recent version of Solidity."
+          },
+          "ruleId": "nested-struct-in-mapping"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UsingSelfdestruct.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 146
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": ""
+          },
+          "ruleId": "selfdestruct-identifier"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DynamicArrayLengthAssignment.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 295
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DynamicArrayLengthAssignment.sol"
+                },
+                "region": {
+                  "byteLength": 18,
+                  "byteOffset": 325
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DynamicArrayLengthAssignment.sol"
+                },
+                "region": {
+                  "byteLength": 33,
+                  "byteOffset": 359
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DynamicArrayLengthAssignment.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 408
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DynamicArrayLengthAssignment.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 439
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "If the length of a dynamic array (storage variable) directly assigned to, it may allow access to other storage slots by tweaking it's value. This practice has been depracated in newer Solidity versions"
+          },
+          "ruleId": "dynamic-array-length-assignment"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 519
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 549
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 21,
+                  "byteOffset": 587
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 13,
+                  "byteOffset": 631
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 708
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "The caret operator is usually mistakenly thought of as an exponentiation operator but actually, it's a bitwise xor operator."
+          },
+          "ruleId": "incorrect-caret-operator"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/YulReturn.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 171
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Remove this, as this causes execution to halt. Nothing after that call will execute, including code following the assembly block."
+          },
+          "ruleId": "yul-return"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 13,
+                  "byteOffset": 239
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Description of the high issue."
+          },
+          "ruleId": "state-variable-shadowing"
+        },
+        {
           "level": "note",
           "locations": [
             {
@@ -1766,6 +2107,17 @@
                   "byteOffset": 1598
                 }
               }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 19,
+                  "byteOffset": 368
+                }
+              }
             }
           ],
           "message": {
@@ -1823,6 +2175,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/UsingSelfdestruct.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
                 },
                 "region": {
@@ -1861,6 +2224,28 @@
                 "region": {
                   "byteLength": 23,
                   "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/nested_mappings/LaterVersion.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 36
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/nested_mappings/NestedMappings.sol"
+                },
+                "region": {
+                  "byteLength": 24,
+                  "byteOffset": 36
                 }
               }
             }
@@ -2323,11 +2708,55 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/ConstantsLiterals.sol"
+                  "uri": "src/DynamicArrayLengthAssignment.sol"
                 },
                 "region": {
-                  "byteLength": 66,
-                  "byteOffset": 1374
+                  "byteLength": 3,
+                  "byteOffset": 312
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DynamicArrayLengthAssignment.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 346
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DynamicArrayLengthAssignment.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 457
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 563
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 606
                 }
               }
             },
@@ -2500,6 +2929,17 @@
                 "region": {
                   "byteLength": 6,
                   "byteOffset": 503
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 135
                 }
               }
             },
@@ -2852,6 +3292,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/nested_mappings/LaterVersion.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 36
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/parent_chain/ParentChainContract.sol"
                 },
                 "region": {
@@ -2910,6 +3361,17 @@
                 "region": {
                   "byteLength": 8,
                   "byteOffset": 103
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 74,
+                  "byteOffset": 107
                 }
               }
             },
@@ -3423,6 +3885,17 @@
                   "byteOffset": 693
                 }
               }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StorageParameters.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 388
+                }
+              }
             }
           ],
           "message": {
@@ -3648,6 +4121,28 @@
                 "region": {
                   "byteLength": 6,
                   "byteOffset": 8141
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/nested_mappings/LaterVersion.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 184
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/nested_mappings/NestedMappings.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 168
                 }
               }
             }

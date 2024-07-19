@@ -118,6 +118,17 @@
     "arbitrary-transfer-from",
     "unprotected-initializer",
     "unsafe-casting-detector",
-    "enumerable-loop-removal"
+    "enumerable-loop-removal",
+    "experimental-encoder",
+    "incorrect-shift-order",
+    "storage-array-edit-with-memory",
+    "multiple-constructors",
+    "reused-contract-name",
+    "nested-struct-in-mapping",
+    "selfdestruct-identifier",
+    "dynamic-array-length-assignment",
+    "incorrect-caret-operator",
+    "yul-return",
+    "state-variable-shadowing"
   ]
 }

@@ -8,7 +8,12 @@ use crate::{
         high::{
             ArbitraryTransferFromDetector, AvoidAbiEncodePackedDetector,
             BlockTimestampDeadlineDetector, DelegateCallInLoopDetector,
-            UnprotectedInitializerDetector, UnsafeCastingDetector,
+            DynamicArrayLengthAssignmentDetector, EnumerableLoopRemovalDetector,
+            ExperimentalEncoderDetector, IncorrectShiftOrderDetector,
+            IncorrectUseOfCaretOperatorDetector, MultipleConstructorsDetector,
+            NestedStructInMappingDetector, ReusedContractNameDetector,
+            StateVariableShadowingDetector, StorageArrayEditWithMemoryDetector,
+            UnprotectedInitializerDetector, UnsafeCastingDetector, YulReturnDetector,
         },
         low::{
             CentralizationRiskDetector, ConstantsInsteadOfLiteralsDetector,
@@ -31,7 +36,7 @@ use std::{
     str::FromStr,
 };
 
-use super::high::EnumerableLoopRemovalDetector;
+use super::high::SelfdestructIdentifierDetector;
 
 pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
     vec![
@@ -65,6 +70,17 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<DivisionBeforeMultiplicationDetector>::default(),
         Box::<UnsafeCastingDetector>::default(),
         Box::<EnumerableLoopRemovalDetector>::default(),
+        Box::<ExperimentalEncoderDetector>::default(),
+        Box::<IncorrectShiftOrderDetector>::default(),
+        Box::<StorageArrayEditWithMemoryDetector>::default(),
+        Box::<MultipleConstructorsDetector>::default(),
+        Box::<ReusedContractNameDetector>::default(),
+        Box::<NestedStructInMappingDetector>::default(),
+        Box::<SelfdestructIdentifierDetector>::default(),
+        Box::<DynamicArrayLengthAssignmentDetector>::default(),
+        Box::<IncorrectUseOfCaretOperatorDetector>::default(),
+        Box::<YulReturnDetector>::default(),
+        Box::<StateVariableShadowingDetector>::default(),
     ]
 }
 
@@ -106,6 +122,17 @@ pub(crate) enum IssueDetectorNamePool {
     DivisionBeforeMultiplication,
     UnsafeCastingDetector,
     EnumerableLoopRemoval,
+    ExperimentalEncoder,
+    IncorrectShiftOrder,
+    StorageArrayEditWithMemory,
+    MultipleConstructors,
+    ReusedContractName,
+    NestedStructInMapping,
+    SelfdestructIdentifier,
+    DynamicArrayLengthAssignment,
+    IncorrectCaretOperator,
+    YulReturn,
+    StateVariableShadowing,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -190,6 +217,37 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         }
         IssueDetectorNamePool::EnumerableLoopRemoval => {
             Some(Box::<EnumerableLoopRemovalDetector>::default())
+        }
+        IssueDetectorNamePool::ExperimentalEncoder => {
+            Some(Box::<ExperimentalEncoderDetector>::default())
+        }
+        IssueDetectorNamePool::IncorrectShiftOrder => {
+            Some(Box::<IncorrectShiftOrderDetector>::default())
+        }
+        IssueDetectorNamePool::StorageArrayEditWithMemory => {
+            Some(Box::<StorageArrayEditWithMemoryDetector>::default())
+        }
+        IssueDetectorNamePool::MultipleConstructors => {
+            Some(Box::<MultipleConstructorsDetector>::default())
+        }
+        IssueDetectorNamePool::ReusedContractName => {
+            Some(Box::<ReusedContractNameDetector>::default())
+        }
+        IssueDetectorNamePool::NestedStructInMapping => {
+            Some(Box::<NestedStructInMappingDetector>::default())
+        }
+        IssueDetectorNamePool::SelfdestructIdentifier => {
+            Some(Box::<SelfdestructIdentifierDetector>::default())
+        }
+        IssueDetectorNamePool::DynamicArrayLengthAssignment => {
+            Some(Box::<DynamicArrayLengthAssignmentDetector>::default())
+        }
+        IssueDetectorNamePool::IncorrectCaretOperator => {
+            Some(Box::<IncorrectUseOfCaretOperatorDetector>::default())
+        }
+        IssueDetectorNamePool::YulReturn => Some(Box::<YulReturnDetector>::default()),
+        IssueDetectorNamePool::StateVariableShadowing => {
+            Some(Box::<StateVariableShadowingDetector>::default())
         }
         IssueDetectorNamePool::Undecided => None,
     }

@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 42,
-    "total_sloc": 1377
+    "total_source_units": 55,
+    "total_sloc": 1521
   },
   "files_details": {
     "files_details": [
@@ -50,6 +50,10 @@
         "n_sloc": 22
       },
       {
+        "file_path": "src/DynamicArrayLengthAssignment.sol",
+        "n_sloc": 16
+      },
+      {
         "file_path": "src/EmptyBlocks.sol",
         "n_sloc": 48
       },
@@ -58,11 +62,23 @@
         "n_sloc": 55
       },
       {
+        "file_path": "src/ExperimentalEncoder.sol",
+        "n_sloc": 4
+      },
+      {
         "file_path": "src/HugeConstants.sol",
         "n_sloc": 36
       },
       {
         "file_path": "src/InconsistentUints.sol",
+        "n_sloc": 17
+      },
+      {
+        "file_path": "src/IncorrectCaretOperator.sol",
+        "n_sloc": 16
+      },
+      {
+        "file_path": "src/IncorrectShift.sol",
         "n_sloc": 17
       },
       {
@@ -74,6 +90,10 @@
         "n_sloc": 21
       },
       {
+        "file_path": "src/MultipleConstructorSchemes.sol",
+        "n_sloc": 10
+      },
+      {
         "file_path": "src/OnceModifierExample.sol",
         "n_sloc": 8
       },
@@ -82,12 +102,20 @@
         "n_sloc": 27
       },
       {
+        "file_path": "src/StateShadowing.sol",
+        "n_sloc": 17
+      },
+      {
         "file_path": "src/StateVariables.sol",
         "n_sloc": 58
       },
       {
         "file_path": "src/StorageConditionals.sol",
         "n_sloc": 59
+      },
+      {
+        "file_path": "src/StorageParameters.sol",
+        "n_sloc": 16
       },
       {
         "file_path": "src/T11sTranferer.sol",
@@ -110,8 +138,16 @@
         "n_sloc": 19
       },
       {
+        "file_path": "src/UsingSelfdestruct.sol",
+        "n_sloc": 6
+      },
+      {
         "file_path": "src/WrongOrderOfLayout.sol",
         "n_sloc": 13
+      },
+      {
+        "file_path": "src/YulReturn.sol",
+        "n_sloc": 8
       },
       {
         "file_path": "src/ZeroAddressCheck.sol",
@@ -162,8 +198,24 @@
         "n_sloc": 7
       },
       {
+        "file_path": "src/nested_mappings/LaterVersion.sol",
+        "n_sloc": 10
+      },
+      {
+        "file_path": "src/nested_mappings/NestedMappings.sol",
+        "n_sloc": 10
+      },
+      {
         "file_path": "src/parent_chain/ParentChainContract.sol",
         "n_sloc": 29
+      },
+      {
+        "file_path": "src/reused_contract_name/ContractA.sol",
+        "n_sloc": 7
+      },
+      {
+        "file_path": "src/reused_contract_name/ContractB.sol",
+        "n_sloc": 7
       },
       {
         "file_path": "src/uniswap/UniswapV2Swapper.sol",
@@ -176,7 +228,7 @@
     ]
   },
   "issue_count": {
-    "high": 7,
+    "high": 18,
     "low": 23
   },
   "high_issues": {
@@ -256,27 +308,21 @@
           },
           {
             "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 28,
-            "src": "1116:67",
-            "src_char": "1116:67"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
             "line_no": 31,
-            "src": "1261:112",
-            "src_char": "1261:112"
+            "src": "1278:112",
+            "src_char": "1278:112"
           },
           {
             "contract_path": "src/uniswap/UniswapV2Swapper.sol",
             "line_no": 32,
-            "src": "1383:99",
-            "src_char": "1383:99"
+            "src": "1400:99",
+            "src_char": "1400:99"
           },
           {
             "contract_path": "src/uniswap/UniswapV2Swapper.sol",
             "line_no": 33,
-            "src": "1492:109",
-            "src_char": "1492:109"
+            "src": "1509:109",
+            "src_char": "1509:109"
           },
           {
             "contract_path": "src/uniswap/UniswapV3Swapper.sol",
@@ -985,6 +1031,221 @@
             "src_char": "2083:14"
           }
         ]
+      },
+      {
+        "title": "Experimental ABI Encoder",
+        "description": "Experimental encoders should not be used in production. There are multiple known compiler bugs that are caused by the experimental encoder. Upgrade your solidity version to remove the need for experimental features.",
+        "detector_name": "experimental-encoder",
+        "instances": [
+          {
+            "contract_path": "src/ExperimentalEncoder.sol",
+            "line_no": 2,
+            "src": "23:33",
+            "src_char": "23:33"
+          }
+        ]
+      },
+      {
+        "title": "Incorrect Assembly Shift Parameter Order",
+        "description": "Example: `shl(shifted, 4)` will shift the right constant `4` by `a` bits. The correct order is `shl(4, shifted)`.",
+        "detector_name": "incorrect-shift-order",
+        "instances": [
+          {
+            "contract_path": "src/IncorrectShift.sol",
+            "line_no": 7,
+            "src": "192:15",
+            "src_char": "192:15"
+          },
+          {
+            "contract_path": "src/IncorrectShift.sol",
+            "line_no": 8,
+            "src": "238:15",
+            "src_char": "238:15"
+          }
+        ]
+      },
+      {
+        "title": "Storage Array Edited with Memory",
+        "description": "Storage reference is passed to a function with a memory parameter. This will not update the storage variable as expected. Consider using storage parameters instead.",
+        "detector_name": "storage-array-edit-with-memory",
+        "instances": [
+          {
+            "contract_path": "src/StorageParameters.sol",
+            "line_no": 11,
+            "src": "241:10",
+            "src_char": "241:10"
+          }
+        ]
+      },
+      {
+        "title": "Contract Has Multiple Constructors",
+        "description": "In some versions of Solidity, contracts compile with multiple constructors. The first constructor takes precedence. This can lead to unexpected behavior.",
+        "detector_name": "multiple-constructors",
+        "instances": [
+          {
+            "contract_path": "src/MultipleConstructorSchemes.sol",
+            "line_no": 3,
+            "src": "25:180",
+            "src_char": "25:180"
+          }
+        ]
+      },
+      {
+        "title": "Contract Name Reused in Different Files",
+        "description": "When compiling contracts with certain development frameworks (for example: Truffle), having contracts with the same name across different files can lead to one being overwritten.",
+        "detector_name": "reused-contract-name",
+        "instances": [
+          {
+            "contract_path": "src/nested/1/Nested.sol",
+            "line_no": 7,
+            "src": "214:6",
+            "src_char": "214:6"
+          },
+          {
+            "contract_path": "src/nested/2/Nested.sol",
+            "line_no": 7,
+            "src": "214:6",
+            "src_char": "214:6"
+          },
+          {
+            "contract_path": "src/reused_contract_name/ContractA.sol",
+            "line_no": 4,
+            "src": "70:10",
+            "src_char": "70:10"
+          },
+          {
+            "contract_path": "src/reused_contract_name/ContractB.sol",
+            "line_no": 4,
+            "src": "70:10",
+            "src_char": "70:10"
+          }
+        ]
+      },
+      {
+        "title": "Nested Structs in Mappings pre-0.5.0",
+        "description": "Prior to updates in Solidity 0.5.0, public mappings with nested structs compiled, but produced incorrect values. Refrain from using these, or update to a more recent version of Solidity.",
+        "detector_name": "nested-struct-in-mapping",
+        "instances": [
+          {
+            "contract_path": "src/nested_mappings/NestedMappings.sol",
+            "line_no": 17,
+            "src": "367:58",
+            "src_char": "367:58"
+          }
+        ]
+      },
+      {
+        "title": "Depracated EVM Instruction for `selfdestruct` should not be used.",
+        "description": "",
+        "detector_name": "selfdestruct-identifier",
+        "instances": [
+          {
+            "contract_path": "src/UsingSelfdestruct.sol",
+            "line_no": 7,
+            "src": "146:12",
+            "src_char": "146:12"
+          }
+        ]
+      },
+      {
+        "title": "Array length value has a direct assignment.",
+        "description": "If the length of a dynamic array (storage variable) directly assigned to, it may allow access to other storage slots by tweaking it's value. This practice has been depracated in newer Solidity versions",
+        "detector_name": "dynamic-array-length-assignment",
+        "instances": [
+          {
+            "contract_path": "src/DynamicArrayLengthAssignment.sol",
+            "line_no": 13,
+            "src": "295:14",
+            "src_char": "295:14"
+          },
+          {
+            "contract_path": "src/DynamicArrayLengthAssignment.sol",
+            "line_no": 14,
+            "src": "325:18",
+            "src_char": "325:18"
+          },
+          {
+            "contract_path": "src/DynamicArrayLengthAssignment.sol",
+            "line_no": 15,
+            "src": "359:33",
+            "src_char": "359:33"
+          },
+          {
+            "contract_path": "src/DynamicArrayLengthAssignment.sol",
+            "line_no": 16,
+            "src": "408:15",
+            "src_char": "408:15"
+          },
+          {
+            "contract_path": "src/DynamicArrayLengthAssignment.sol",
+            "line_no": 17,
+            "src": "439:14",
+            "src_char": "439:14"
+          }
+        ]
+      },
+      {
+        "title": "Incorrect use of caret operator on a non hexadcimal constant",
+        "description": "The caret operator is usually mistakenly thought of as an exponentiation operator but actually, it's a bitwise xor operator.",
+        "detector_name": "incorrect-caret-operator",
+        "instances": [
+          {
+            "contract_path": "src/IncorrectCaretOperator.sol",
+            "line_no": 16,
+            "src": "519:8",
+            "src_char": "519:8"
+          },
+          {
+            "contract_path": "src/IncorrectCaretOperator.sol",
+            "line_no": 17,
+            "src": "549:16",
+            "src_char": "549:16"
+          },
+          {
+            "contract_path": "src/IncorrectCaretOperator.sol",
+            "line_no": 18,
+            "src": "587:21",
+            "src_char": "587:21"
+          },
+          {
+            "contract_path": "src/IncorrectCaretOperator.sol",
+            "line_no": 19,
+            "src": "631:13",
+            "src_char": "631:13"
+          },
+          {
+            "contract_path": "src/IncorrectCaretOperator.sol",
+            "line_no": 20,
+            "src": "708:12",
+            "src_char": "708:12"
+          }
+        ]
+      },
+      {
+        "title": "Yul block contains `return` function call.",
+        "description": "Remove this, as this causes execution to halt. Nothing after that call will execute, including code following the assembly block.",
+        "detector_name": "yul-return",
+        "instances": [
+          {
+            "contract_path": "src/YulReturn.sol",
+            "line_no": 8,
+            "src": "171:12",
+            "src_char": "171:12"
+          }
+        ]
+      },
+      {
+        "title": "High Issue Title",
+        "description": "Description of the high issue.",
+        "detector_name": "state-variable-shadowing",
+        "instances": [
+          {
+            "contract_path": "src/StateShadowing.sol",
+            "line_no": 15,
+            "src": "239:13",
+            "src_char": "239:13"
+          }
+        ]
       }
     ]
   },
@@ -1172,6 +1433,12 @@
             "line_no": 47,
             "src": "1598:18",
             "src_char": "1598:18"
+          },
+          {
+            "contract_path": "src/StateShadowing.sol",
+            "line_no": 22,
+            "src": "368:19",
+            "src_char": "368:19"
           }
         ]
       },
@@ -1205,6 +1472,12 @@
             "src_char": "0:24"
           },
           {
+            "contract_path": "src/UsingSelfdestruct.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
             "line_no": 6,
             "src": "46:24",
@@ -1227,6 +1500,18 @@
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/nested_mappings/LaterVersion.sol",
+            "line_no": 2,
+            "src": "36:23",
+            "src_char": "36:23"
+          },
+          {
+            "contract_path": "src/nested_mappings/NestedMappings.sol",
+            "line_no": 2,
+            "src": "36:24",
+            "src_char": "36:24"
           }
         ]
       },
@@ -1484,10 +1769,34 @@
             "src_char": "1275:66"
           },
           {
-            "contract_path": "src/ConstantsLiterals.sol",
-            "line_no": 32,
-            "src": "1374:66",
-            "src_char": "1374:66"
+            "contract_path": "src/DynamicArrayLengthAssignment.sol",
+            "line_no": 13,
+            "src": "312:3",
+            "src_char": "312:3"
+          },
+          {
+            "contract_path": "src/DynamicArrayLengthAssignment.sol",
+            "line_no": 14,
+            "src": "346:3",
+            "src_char": "346:3"
+          },
+          {
+            "contract_path": "src/DynamicArrayLengthAssignment.sol",
+            "line_no": 17,
+            "src": "457:3",
+            "src_char": "457:3"
+          },
+          {
+            "contract_path": "src/IncorrectCaretOperator.sol",
+            "line_no": 17,
+            "src": "563:2",
+            "src_char": "563:2"
+          },
+          {
+            "contract_path": "src/IncorrectCaretOperator.sol",
+            "line_no": 18,
+            "src": "606:2",
+            "src_char": "606:2"
           },
           {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
@@ -1586,6 +1895,12 @@
             "line_no": 19,
             "src": "503:6",
             "src_char": "503:6"
+          },
+          {
+            "contract_path": "src/StateShadowing.sol",
+            "line_no": 8,
+            "src": "135:7",
+            "src_char": "135:7"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
@@ -1783,6 +2098,12 @@
             "src_char": "180:23"
           },
           {
+            "contract_path": "src/nested_mappings/LaterVersion.sol",
+            "line_no": 2,
+            "src": "36:23",
+            "src_char": "36:23"
+          },
+          {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
             "line_no": 2,
             "src": "32:23",
@@ -1818,6 +2139,12 @@
             "line_no": 6,
             "src": "103:8",
             "src_char": "103:8"
+          },
+          {
+            "contract_path": "src/StateShadowing.sol",
+            "line_no": 7,
+            "src": "107:74",
+            "src_char": "107:74"
           },
           {
             "contract_path": "src/UnprotectedInitialize.sol",
@@ -2103,6 +2430,12 @@
             "line_no": 28,
             "src": "693:12",
             "src_char": "693:12"
+          },
+          {
+            "contract_path": "src/StorageParameters.sol",
+            "line_no": 17,
+            "src": "388:11",
+            "src_char": "388:11"
           }
         ]
       },
@@ -2231,6 +2564,18 @@
             "line_no": 134,
             "src": "8141:6",
             "src_char": "6653:6"
+          },
+          {
+            "contract_path": "src/nested_mappings/LaterVersion.sol",
+            "line_no": 8,
+            "src": "184:5",
+            "src_char": "184:5"
+          },
+          {
+            "contract_path": "src/nested_mappings/NestedMappings.sol",
+            "line_no": 8,
+            "src": "168:10",
+            "src_char": "168:10"
           }
         ]
       },
@@ -2341,6 +2686,17 @@
     "reverts-and-requires-in-loops",
     "division-before-multiplication",
     "unsafe-casting-detector",
-    "enumerable-loop-removal"
+    "enumerable-loop-removal",
+    "experimental-encoder",
+    "incorrect-shift-order",
+    "storage-array-edit-with-memory",
+    "multiple-constructors",
+    "reused-contract-name",
+    "nested-struct-in-mapping",
+    "selfdestruct-identifier",
+    "dynamic-array-length-assignment",
+    "incorrect-caret-operator",
+    "yul-return",
+    "state-variable-shadowing"
   ]
 }

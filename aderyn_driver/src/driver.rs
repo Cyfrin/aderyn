@@ -12,7 +12,7 @@ use aderyn_core::{
     },
     run,
 };
-use std::{error::Error, path::PathBuf};
+use std::{collections::HashMap, error::Error, path::PathBuf};
 
 #[derive(Clone)]
 pub struct Args {
@@ -129,18 +129,31 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
         std::process::exit(1);
     }
 
-    if !args.skip_cloc {
-        for context in contexts.iter_mut() {
-            let stats = fscloc::engine::count_lines_of_code(
-                absolute_root_path.as_path(),
-                &context.src_filepaths,
-            );
-            let stats = stats.lock().unwrap().to_owned();
-            // dbg!(&stats);
-            context.set_sloc_stats(stats);
-        }
-        // Using the source path, calculate the sloc
+    for context in contexts.iter_mut() {
+        let stats = fscloc::engine::count_lines_of_code_and_collect_line_numbers_to_ignore(
+            absolute_root_path.as_path(),
+            &context.src_filepaths,
+            args.skip_cloc,
+        );
+        let sloc_stats = stats
+            .lock()
+            .unwrap()
+            .iter()
+            .map(|(key, value)| (key.to_owned(), value.code))
+            .collect::<HashMap<_, _>>();
+
+        let ignore_line_stats = stats
+            .lock()
+            .unwrap()
+            .iter()
+            .map(|(key, value)| (key.to_owned(), value.lines_to_ignore.clone()))
+            .collect::<HashMap<_, _>>();
+
+        // dbg!(&stats);
+        context.set_sloc_stats(sloc_stats);
+        context.set_ignore_lines_stats(ignore_line_stats);
     }
+    // Using the source path, calculate the sloc
 
     WorkspaceContextWrapper {
         contexts,
