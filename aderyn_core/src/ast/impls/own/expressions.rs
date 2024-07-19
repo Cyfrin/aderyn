@@ -102,16 +102,14 @@ impl Expression {
                     function_call_ops
                         .options
                         .iter()
-                        .map(|opt| opt.referenced_declarations())
-                        .flatten(),
+                        .flat_map(|opt| opt.referenced_declarations()),
                 );
 
                 if let Some(arguments) = function_call_ops.arguments.as_ref() {
                     result.extend(
                         arguments
                             .iter()
-                            .map(|opt| opt.referenced_declarations())
-                            .flatten(),
+                            .flat_map(|opt| opt.referenced_declarations()),
                     );
                 }
 
