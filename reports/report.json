@@ -232,7 +232,7 @@
     ]
   },
   "issue_count": {
-    "high": 18,
+    "high": 19,
     "low": 23
   },
   "high_issues": {
@@ -1248,6 +1248,19 @@
             "line_no": 15,
             "src": "239:13",
             "src_char": "239:13"
+          }
+        ]
+      },
+      {
+        "title": "Sending native Eth is not protected from these functions.",
+        "description": "Description of the high issue.",
+        "detector_name": "send-ether-no-checks",
+        "instances": [
+          {
+            "contract_path": "src/auditor_mode/send_ether_no_checks/Tower.sol",
+            "line_no": 44,
+            "src": "1147:16",
+            "src_char": "1147:16"
           }
         ]
       }
@@ -2797,6 +2810,7 @@
     "dynamic-array-length-assignment",
     "incorrect-caret-operator",
     "yul-return",
-    "state-variable-shadowing"
+    "state-variable-shadowing",
+    "send-ether-no-checks"
   ]
 }

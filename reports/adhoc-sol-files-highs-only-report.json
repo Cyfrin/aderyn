@@ -129,6 +129,7 @@
     "dynamic-array-length-assignment",
     "incorrect-caret-operator",
     "yul-return",
-    "state-variable-shadowing"
+    "state-variable-shadowing",
+    "send-ether-no-checks"
   ]
 }

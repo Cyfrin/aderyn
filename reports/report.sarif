@@ -1795,6 +1795,26 @@
           "ruleId": "state-variable-shadowing"
         },
         {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/send_ether_no_checks/Tower.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 1147
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Description of the high issue."
+          },
+          "ruleId": "send-ether-no-checks"
+        },
+        {
           "level": "note",
           "locations": [
             {
