@@ -57,8 +57,11 @@ jobs:
 
       - name: Run cargo build
         run: |
-          git submodule update --init --recursive
           cargo build
+
+      - name: Make
+        run: |
+          make
 
       - name: Run cargo test 
         run: |
