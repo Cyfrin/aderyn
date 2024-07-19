@@ -111,20 +111,21 @@ jobs:
         with:
           version: 8
 
-      - uses: bahmutov/npm-install@v1
-        with:
-          useLockFile: false
-          working-directory: tests/2024-05-Sablier/v2-core
+      # NOTE - (Don't remove this code because we may need it in the future)
+      # - uses: bahmutov/npm-install@v1
+      #   with:
+      #     useLockFile: false
+      #     working-directory: tests/2024-05-Sablier/v2-core
 
-      - uses: bahmutov/npm-install@v1
-        with:
-          useLockFile: false
-          working-directory: tests/2024-07-templegold/
+      # - uses: bahmutov/npm-install@v1
+      #   with:
+      #     useLockFile: false
+      #     working-directory: tests/2024-07-templegold/
 
-      - uses: bahmutov/npm-install@v1
-        with:
-          useLockFile: false
-          working-directory: tests/prb-math/
+      # - uses: bahmutov/npm-install@v1
+      #   with:
+      #     useLockFile: false
+      #     working-directory: tests/prb-math/
 
       # Verify report.md
       - uses: Swatinem/rust-cache@v2
