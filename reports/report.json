@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 56,
-    "total_sloc": 1579
+    "total_source_units": 57,
+    "total_sloc": 1596
   },
   "files_details": {
     "files_details": [
@@ -100,6 +100,10 @@
       {
         "file_path": "src/RevertsAndRequriesInLoops.sol",
         "n_sloc": 27
+      },
+      {
+        "file_path": "src/StateShadowing.sol",
+        "n_sloc": 17
       },
       {
         "file_path": "src/StateVariables.sol",
@@ -232,7 +236,7 @@
     ]
   },
   "issue_count": {
-    "high": 17,
+    "high": 18,
     "low": 23
   },
   "high_issues": {
@@ -1237,6 +1241,19 @@
             "src_char": "171:12"
           }
         ]
+      },
+      {
+        "title": "High Issue Title",
+        "description": "Description of the high issue.",
+        "detector_name": "state-variable-shadowing",
+        "instances": [
+          {
+            "contract_path": "src/StateShadowing.sol",
+            "line_no": 15,
+            "src": "239:13",
+            "src_char": "239:13"
+          }
+        ]
       }
     ]
   },
@@ -1424,6 +1441,12 @@
             "line_no": 47,
             "src": "1598:18",
             "src_char": "1598:18"
+          },
+          {
+            "contract_path": "src/StateShadowing.sol",
+            "line_no": 22,
+            "src": "368:19",
+            "src_char": "368:19"
           }
         ]
       },
@@ -1924,6 +1947,12 @@
             "src_char": "503:6"
           },
           {
+            "contract_path": "src/StateShadowing.sol",
+            "line_no": 8,
+            "src": "135:7",
+            "src_char": "135:7"
+          },
+          {
             "contract_path": "src/ZeroAddressCheck.sol",
             "line_no": 13,
             "src": "329:6",
@@ -2196,6 +2225,12 @@
             "line_no": 6,
             "src": "103:8",
             "src_char": "103:8"
+          },
+          {
+            "contract_path": "src/StateShadowing.sol",
+            "line_no": 7,
+            "src": "107:74",
+            "src_char": "107:74"
           },
           {
             "contract_path": "src/UnprotectedInitialize.sol",
@@ -2807,6 +2842,7 @@
     "selfdestruct-identifier",
     "dynamic-array-length-assignment",
     "incorrect-caret-operator",
-    "yul-return"
+    "yul-return",
+    "state-variable-shadowing"
   ]
 }
