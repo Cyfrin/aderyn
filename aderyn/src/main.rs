@@ -1,5 +1,12 @@
 #![allow(clippy::borrowed_box)]
 
+#[cfg(not(target_env = "msvc"))]
+use tikv_jemallocator::Jemalloc;
+
+#[cfg(not(target_env = "msvc"))]
+#[global_allocator]
+static GLOBAL: Jemalloc = Jemalloc;
+
 use aderyn::{
     aderyn_is_currently_running_newest_version, debounce_and_run, print_all_detectors_view,
     print_detail_view,
