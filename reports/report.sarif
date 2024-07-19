@@ -1696,6 +1696,70 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 519
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 549
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 21,
+                  "byteOffset": 587
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 13,
+                  "byteOffset": 631
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 708
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "The caret operator is usually mistakenly thought of as an exponentiation operator but actually, it's a bitwise xor operator."
+          },
+          "ruleId": "incorrect-caret-operator"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/YulReturn.sol"
                 },
                 "region": {
@@ -2084,6 +2148,17 @@
                 },
                 "region": {
                   "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/delegate_call_no_checks/DelegateCallWithoutAddressChecks.sol"
+                },
+                "region": {
+                  "byteLength": 21,
                   "byteOffset": 32
                 }
               }
@@ -2679,6 +2754,28 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 563
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 606
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/RevertsAndRequriesInLoops.sol"
                 },
                 "region": {
@@ -2717,6 +2814,39 @@
                 "region": {
                   "byteLength": 2,
                   "byteOffset": 745
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/delegate_call_no_checks/DelegateCallWithoutAddressChecks.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 718
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/delegate_call_no_checks/DelegateCallWithoutAddressChecks.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 771
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/delegate_call_no_checks/DelegateCallWithoutAddressChecks.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 838
                 }
               }
             },
@@ -2878,6 +3008,17 @@
                 "region": {
                   "byteLength": 6,
                   "byteOffset": 1074
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/delegate_call_no_checks/DelegateCallWithoutAddressChecks.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 948
                 }
               }
             },
@@ -3153,6 +3294,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/auditor_mode/delegate_call_no_checks/DelegateCallWithoutAddressChecks.sol"
+                },
+                "region": {
+                  "byteLength": 21,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
                 },
                 "region": {
@@ -3321,6 +3473,17 @@
                 "region": {
                   "byteLength": 21,
                   "byteOffset": 222
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/delegate_call_no_checks/DelegateCallWithoutAddressChecks.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 678
                 }
               }
             },
