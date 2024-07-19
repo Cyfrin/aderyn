@@ -84,8 +84,41 @@ impl Expression {
                     result.extend(argument.referenced_declarations());
                 }
             }
+            Expression::Literal(_) => {} // Literal by definition, does not "reference" any declaration!
+            Expression::UnaryOperation(unary_op) => {
+                result.extend(unary_op.sub_expression.referenced_declarations());
+            }
+            Expression::BinaryOperation(binary_op) => {
+                result.extend(binary_op.left_expression.referenced_declarations());
+                result.extend(binary_op.right_expression.referenced_declarations());
+            }
+            Expression::Conditional(conditional) => {
+                result.extend(conditional.true_expression.referenced_declarations());
+                result.extend(conditional.false_expression.referenced_declarations());
+                result.extend(conditional.condition.referenced_declarations());
+            }
+            Expression::FunctionCallOptions(function_call_ops) => {
+                result.extend(
+                    function_call_ops
+                        .options
+                        .iter()
+                        .map(|opt| opt.referenced_declarations())
+                        .flatten(),
+                );
 
-            _ => {}
+                if let Some(arguments) = function_call_ops.arguments.as_ref() {
+                    result.extend(
+                        arguments
+                            .iter()
+                            .map(|opt| opt.referenced_declarations())
+                            .flatten(),
+                    );
+                }
+
+                result.extend(&function_call_ops.expression.referenced_declarations());
+            }
+            Expression::ElementaryTypeNameExpression(_) => (), // TODO: Ignore `TypeName` references for now
+            Expression::NewExpression(_) => (), // TODO: Ignore `TypeName` references for now
         }
 
         result
