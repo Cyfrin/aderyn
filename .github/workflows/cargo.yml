@@ -45,8 +45,11 @@ jobs:
           override: true
           
       - uses: Swatinem/rust-cache@v2
-          
 
+      - name: Run cargo build
+        run: |
+          cargo build
+          
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
         with:
@@ -57,10 +60,6 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
-
-      - name: Run cargo build
-        run: |
-          cargo build
 
       - name: Submodule init
         run: |
