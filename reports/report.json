@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 54,
-    "total_sloc": 1532
+    "total_source_units": 56,
+    "total_sloc": 1565
   },
   "files_details": {
     "files_details": [
@@ -74,6 +74,10 @@
         "n_sloc": 17
       },
       {
+        "file_path": "src/IncorrectCaretOperator.sol",
+        "n_sloc": 16
+      },
+      {
         "file_path": "src/IncorrectShift.sol",
         "n_sloc": 17
       },
@@ -96,6 +100,10 @@
       {
         "file_path": "src/RevertsAndRequriesInLoops.sol",
         "n_sloc": 27
+      },
+      {
+        "file_path": "src/StateShadowing.sol",
+        "n_sloc": 17
       },
       {
         "file_path": "src/StateVariables.sol",
@@ -224,7 +232,7 @@
     ]
   },
   "issue_count": {
-    "high": 16,
+    "high": 18,
     "low": 23
   },
   "high_issues": {
@@ -1181,6 +1189,43 @@
         ]
       },
       {
+        "title": "Incorrect use of caret operator on a non hexadcimal constant",
+        "description": "The caret operator is usually mistakenly thought of as an exponentiation operator but actually, it's a bitwise xor operator.",
+        "detector_name": "incorrect-caret-operator",
+        "instances": [
+          {
+            "contract_path": "src/IncorrectCaretOperator.sol",
+            "line_no": 16,
+            "src": "519:8",
+            "src_char": "519:8"
+          },
+          {
+            "contract_path": "src/IncorrectCaretOperator.sol",
+            "line_no": 17,
+            "src": "549:16",
+            "src_char": "549:16"
+          },
+          {
+            "contract_path": "src/IncorrectCaretOperator.sol",
+            "line_no": 18,
+            "src": "587:21",
+            "src_char": "587:21"
+          },
+          {
+            "contract_path": "src/IncorrectCaretOperator.sol",
+            "line_no": 19,
+            "src": "631:13",
+            "src_char": "631:13"
+          },
+          {
+            "contract_path": "src/IncorrectCaretOperator.sol",
+            "line_no": 20,
+            "src": "708:12",
+            "src_char": "708:12"
+          }
+        ]
+      },
+      {
         "title": "Yul block contains `return` function call.",
         "description": "Remove this, as this causes execution to halt. Nothing after that call will execute, including code following the assembly block.",
         "detector_name": "yul-return",
@@ -1190,6 +1235,19 @@
             "line_no": 8,
             "src": "171:12",
             "src_char": "171:12"
+          }
+        ]
+      },
+      {
+        "title": "High Issue Title",
+        "description": "Description of the high issue.",
+        "detector_name": "state-variable-shadowing",
+        "instances": [
+          {
+            "contract_path": "src/StateShadowing.sol",
+            "line_no": 15,
+            "src": "239:13",
+            "src_char": "239:13"
           }
         ]
       }
@@ -1379,6 +1437,12 @@
             "line_no": 47,
             "src": "1598:18",
             "src_char": "1598:18"
+          },
+          {
+            "contract_path": "src/StateShadowing.sol",
+            "line_no": 22,
+            "src": "368:19",
+            "src_char": "368:19"
           }
         ]
       },
@@ -1745,6 +1809,18 @@
             "src_char": "457:3"
           },
           {
+            "contract_path": "src/IncorrectCaretOperator.sol",
+            "line_no": 17,
+            "src": "563:2",
+            "src_char": "563:2"
+          },
+          {
+            "contract_path": "src/IncorrectCaretOperator.sol",
+            "line_no": 18,
+            "src": "606:2",
+            "src_char": "606:2"
+          },
+          {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
             "line_no": 10,
             "src": "253:2",
@@ -1841,6 +1917,12 @@
             "line_no": 19,
             "src": "503:6",
             "src_char": "503:6"
+          },
+          {
+            "contract_path": "src/StateShadowing.sol",
+            "line_no": 8,
+            "src": "135:7",
+            "src_char": "135:7"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
@@ -2103,6 +2185,12 @@
             "line_no": 6,
             "src": "103:8",
             "src_char": "103:8"
+          },
+          {
+            "contract_path": "src/StateShadowing.sol",
+            "line_no": 7,
+            "src": "107:74",
+            "src_char": "107:74"
           },
           {
             "contract_path": "src/UnprotectedInitialize.sol",
@@ -2707,6 +2795,8 @@
     "nested-struct-in-mapping",
     "selfdestruct-identifier",
     "dynamic-array-length-assignment",
-    "yul-return"
+    "incorrect-caret-operator",
+    "yul-return",
+    "state-variable-shadowing"
   ]
 }

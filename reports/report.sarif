@@ -1696,6 +1696,70 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 519
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 549
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 21,
+                  "byteOffset": 587
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 13,
+                  "byteOffset": 631
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 708
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "The caret operator is usually mistakenly thought of as an exponentiation operator but actually, it's a bitwise xor operator."
+          },
+          "ruleId": "incorrect-caret-operator"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/YulReturn.sol"
                 },
                 "region": {
@@ -1709,6 +1773,26 @@
             "text": "Remove this, as this causes execution to halt. Nothing after that call will execute, including code following the assembly block."
           },
           "ruleId": "yul-return"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 13,
+                  "byteOffset": 239
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Description of the high issue."
+          },
+          "ruleId": "state-variable-shadowing"
         },
         {
           "level": "note",
@@ -2021,6 +2105,17 @@
                 "region": {
                   "byteLength": 18,
                   "byteOffset": 1598
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 19,
+                  "byteOffset": 368
                 }
               }
             }
@@ -2679,6 +2774,28 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 563
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 606
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/RevertsAndRequriesInLoops.sol"
                 },
                 "region": {
@@ -2845,6 +2962,17 @@
                 "region": {
                   "byteLength": 6,
                   "byteOffset": 503
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 135
                 }
               }
             },
@@ -3310,6 +3438,17 @@
                 "region": {
                   "byteLength": 8,
                   "byteOffset": 103
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 74,
+                  "byteOffset": 107
                 }
               }
             },

@@ -9,10 +9,11 @@ use crate::{
             ArbitraryTransferFromDetector, AvoidAbiEncodePackedDetector,
             BlockTimestampDeadlineDetector, DelegateCallInLoopDetector,
             DynamicArrayLengthAssignmentDetector, EnumerableLoopRemovalDetector,
-            ExperimentalEncoderDetector, IncorrectShiftOrderDetector, MultipleConstructorsDetector,
+            ExperimentalEncoderDetector, IncorrectShiftOrderDetector,
+            IncorrectUseOfCaretOperatorDetector, MultipleConstructorsDetector,
             NestedStructInMappingDetector, ReusedContractNameDetector,
-            StorageArrayEditWithMemoryDetector, UnprotectedInitializerDetector,
-            UnsafeCastingDetector, YulReturnDetector,
+            StateVariableShadowingDetector, StorageArrayEditWithMemoryDetector,
+            UnprotectedInitializerDetector, UnsafeCastingDetector, YulReturnDetector,
         },
         low::{
             CentralizationRiskDetector, ConstantsInsteadOfLiteralsDetector,
@@ -77,7 +78,9 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<NestedStructInMappingDetector>::default(),
         Box::<SelfdestructIdentifierDetector>::default(),
         Box::<DynamicArrayLengthAssignmentDetector>::default(),
+        Box::<IncorrectUseOfCaretOperatorDetector>::default(),
         Box::<YulReturnDetector>::default(),
+        Box::<StateVariableShadowingDetector>::default(),
     ]
 }
 
@@ -127,7 +130,9 @@ pub(crate) enum IssueDetectorNamePool {
     NestedStructInMapping,
     SelfdestructIdentifier,
     DynamicArrayLengthAssignment,
+    IncorrectCaretOperator,
     YulReturn,
+    StateVariableShadowing,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -237,7 +242,13 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::DynamicArrayLengthAssignment => {
             Some(Box::<DynamicArrayLengthAssignmentDetector>::default())
         }
+        IssueDetectorNamePool::IncorrectCaretOperator => {
+            Some(Box::<IncorrectUseOfCaretOperatorDetector>::default())
+        }
         IssueDetectorNamePool::YulReturn => Some(Box::<YulReturnDetector>::default()),
+        IssueDetectorNamePool::StateVariableShadowing => {
+            Some(Box::<StateVariableShadowingDetector>::default())
+        }
         IssueDetectorNamePool::Undecided => None,
     }
 }
