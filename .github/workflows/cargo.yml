@@ -59,6 +59,10 @@ jobs:
         run: |
           cargo build
 
+      - name: Submodule init
+        run: |
+          git submodule update --init --recursive
+
       - uses: bahmutov/npm-install@v1
         with:
           working-directory: tests/2024-05-Sablier/v2-core
