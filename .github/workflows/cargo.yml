@@ -151,7 +151,7 @@ jobs:
 
       # Verify sablier.md
 
-      - uses: Swatinem/rust-cache@v2
+      
       - name: Generate sablier.md
         env:
           FOUNDRY_PROFILE: uniswap
@@ -165,7 +165,7 @@ jobs:
 
       # Verify adhoc-sol-files-workflow-report.md
           
-      - uses: Swatinem/rust-cache@v2
+      
       - name: Generate adhoc-sol-files-workflow-report.md
         run: |
           cargo run -- -o ./reports/adhoc-sol-files-report-workflow.md ./tests/adhoc-sol-files --skip-update-check
@@ -177,7 +177,7 @@ jobs:
 
       # Verify foundry-nft-f23.md
           
-      - uses: Swatinem/rust-cache@v2
+      
       - name: Generate nft-workflow-report.md
         run: |
           cargo run -- -o ./reports/nft-workflow-report.md --src src/ ./tests/foundry-nft-f23 --skip-update-check
@@ -189,7 +189,7 @@ jobs:
 
 
       # Verify ccip-functions-report.md
-      - uses: Swatinem/rust-cache@v2
+      
       - name: Generate ccip-functions-report-workflow.md
         run: |
           cargo run -- -o reports/ccip-functions-report-workflow.md tests/ccip-contracts/contracts --src src/v0.8/functions/ -x "tests/,test/,mocks/"  --skip-update-check
@@ -201,7 +201,7 @@ jobs:
 
       
       # Verify prb-math-report.md (new solidity features)
-      - uses: Swatinem/rust-cache@v2
+      
       - name: Generate ccip-functions-report-workflow.md
         run: |  
           cargo run -- ./tests/prb-math -o ./reports/prb-math-report-workflow.md --skip-update-check
@@ -211,7 +211,7 @@ jobs:
           cat ./reports/prb-math-report-workflow.md
           diff ./reports/prb-math-report.md ./reports/prb-math-report-workflow.md
      
-      - uses: Swatinem/rust-cache@v2
+      
       - name: Generate 2024-07-templegold-report-workflow.md
         run: |
           cargo run -- ./tests/2024-07-templegold/protocol -o ./reports/2024-07-templegold-report-workflow.md --skip-update-check
@@ -223,7 +223,7 @@ jobs:
 
 
       # Verify report.json 
-      - uses: Swatinem/rust-cache@v2
+      
       - name: Generate report-workflow.json
         run: |
           cargo run -- -o ./reports/report-workflow.json -i src/ -x lib/ ./tests/contract-playground/ --skip-update-check
@@ -235,7 +235,7 @@ jobs:
 
       # Verify adhoc sol files (Highs Only) report.json 
 
-      - uses: Swatinem/rust-cache@v2
+      
       - name: Generate report-workflow.json
         run: |
           cargo run -- -o ./reports/adhoc-sol-files-highs-only-report-workflow.json ./tests/adhoc-sol-files --skip-update-check --highs-only
@@ -248,10 +248,8 @@ jobs:
       # Verify sarif report
 
       - name: Generate sarif report
-        uses: actions-rs/cargo@v1
-        with:
-          command: run
-          args: -- -o ./reports/ci-report.sarif ./tests/contract-playground/ --skip-update-check
+        run: |
+          cargo run -- -o ./reports/ci-report.sarif ./tests/contract-playground/ --skip-update-check
 
       - name: Check sarif report
         run: |
