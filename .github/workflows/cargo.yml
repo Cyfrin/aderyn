@@ -59,6 +59,18 @@ jobs:
         run: |
           cargo build
 
+      - uses: bahmutov/npm-install@v1
+        with:
+          working-directory: tests/2024-05-Sablier/v2-core
+
+      - uses: bahmutov/npm-install@v1
+        with:
+          working-directory: tests/2024-07-templegold/
+
+      - uses: bahmutov/npm-install@v1
+        with:
+          working-directory: tests/prb-math/
+
       - name: Make
         run: |
           make
