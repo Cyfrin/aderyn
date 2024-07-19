@@ -38,22 +38,18 @@ impl AuditorDetector for DelegateCallNoChecksDetector {
                 has_delegate_call_on_non_state_variable_address: false,
                 context,
             };
-            let investigator = SimpleInvestigator::for_node(func, context)?;
+            let investigator: SimpleInvestigator = SimpleInvestigator::for_node(func, context)?;
             investigator.investigate(context, &mut tracker)?;
 
-            dbg!(&func.name);
-            dbg!(tracker.has_address_checks);
-            dbg!(tracker.has_delegate_call_on_non_state_variable_address);
-
-            // if tracker.has_delegate_call_on_non_state_variable_address
-            //     && !tracker.has_address_checks
-            // {
-            self.found_instances
-                .push(DelegateCallNoChecksInstance::encode_from(
-                    func.name.to_owned(),
-                    context.get_node_sort_key_pure(&func.into()),
-                ));
-            // }
+            if tracker.has_delegate_call_on_non_state_variable_address
+                && !tracker.has_address_checks
+            {
+                self.found_instances
+                    .push(DelegateCallNoChecksInstance::encode_from(
+                        func.name.to_owned(),
+                        context.get_node_sort_key_pure(&func.into()),
+                    ));
+            }
         }
         Ok(!self.found_instances.is_empty())
     }
@@ -95,7 +91,7 @@ impl<'a> ASTConstVisitor for DelegateCallNoAddressChecksTracker<'a> {
         if !self.has_delegate_call_on_non_state_variable_address
             && helpers::has_delegate_calls_on_non_state_variables(&node.into(), self.context)
         {
-            self.has_address_checks = true;
+            self.has_delegate_call_on_non_state_variable_address = true;
         }
         eyre::Ok(true)
     }
@@ -109,7 +105,7 @@ impl<'a> ASTConstVisitor for DelegateCallNoAddressChecksTracker<'a> {
         if !self.has_delegate_call_on_non_state_variable_address
             && helpers::has_delegate_calls_on_non_state_variables(&node.into(), self.context)
         {
-            self.has_address_checks = true;
+            self.has_delegate_call_on_non_state_variable_address = true;
         }
         eyre::Ok(true)
     }
@@ -133,5 +129,6 @@ mod delegate_call_no_address_checks {
         println!("{:#?}", detector.found_instances);
 
         assert!(found);
+        assert!(detector.found_instances.len() == 1);
     }
 }

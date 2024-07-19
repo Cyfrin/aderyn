@@ -1,12 +1,7 @@
-use std::convert::identity;
-
 use semver::{Error, VersionReq};
 
 use crate::{
-    ast::{
-        Expression, FunctionDefinition, MemberAccess, Mutability, NodeID, PragmaDirective,
-        Visibility,
-    },
+    ast::{Expression, FunctionDefinition, MemberAccess, NodeID, PragmaDirective, Visibility},
     context::{
         browser::{ExtractBinaryOperations, ExtractFunctionCallOptions, ExtractMemberAccesses},
         workspace_context::{ASTNode, WorkspaceContext},

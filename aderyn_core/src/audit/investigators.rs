@@ -55,6 +55,8 @@ pub struct SimpleInvestigator {
     /// Dependents can either browse this graph directly or use the [`SimpleInvestigator::investigate`] method
     /// for easier user (but that comes at the cost of reduced transparency)
     pub graph: SIGraph,
+
+    pub start_node_id: NodeID,
 }
 
 pub type SIGraph = HashMap<NodeID, Vec<NodeID>>;
@@ -150,7 +152,10 @@ impl SimpleInvestigator {
         Self::dfs_to_create_graph(node.id, &mut graph, &mut visited, context)
             .map_err(|_| Error::SimpleInvestigatorDFSFailure)?;
 
-        let investigator = SimpleInvestigator { graph };
+        let investigator = SimpleInvestigator {
+            graph,
+            start_node_id: node.id,
+        };
         Ok(investigator)
     }
 
@@ -176,6 +181,11 @@ impl SimpleInvestigator {
                 Self::make_relevant_visit_call(*node_id, context, visitor)?;
                 investigated.insert(node_id);
             }
+        }
+
+        if !investigated.contains(&self.start_node_id) {
+            Self::make_relevant_visit_call(self.start_node_id, context, visitor)?;
+            investigated.insert(&self.start_node_id);
         }
 
         Ok(())
