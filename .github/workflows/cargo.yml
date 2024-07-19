@@ -138,7 +138,6 @@ jobs:
           diff ./reports/report.md ./reports/report-workflow.md
 
       # Verify uniswap_profile.md
-      - uses: Swatinem/rust-cache@v2
       - name: Generate uniswap_profile-workflow.md
         env:
             FOUNDRY_PROFILE: uniswap
