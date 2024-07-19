@@ -45,7 +45,6 @@ jobs:
           override: true
           
       - uses: Swatinem/rust-cache@v2
-
       - name: Run cargo build
         run: |
           cargo build
@@ -92,6 +91,11 @@ jobs:
           toolchain: stable
           override: true
 
+      - uses: Swatinem/rust-cache@v2
+      - name: Run cargo build
+        run: |
+          cargo build
+
       - uses: actions/checkout@v3
 
       - uses: actions/setup-node@v3
@@ -103,19 +107,24 @@ jobs:
         with:
           version: 8
 
-      - name: Make
-        run: |
-          make
+      - uses: bahmutov/npm-install@v1
+        with:
+          useLockFile: false
+          working-directory: tests/2024-05-Sablier/v2-core
 
-      - name: Install pnpm dependencies for ccip contracts and come out
-        run: |
-          cd tests/ccip-contracts/
-          pnpm install
-          cd contracts/
-          pnpm install
-          cd ../../../
+      - uses: bahmutov/npm-install@v1
+        with:
+          useLockFile: false
+          working-directory: tests/2024-07-templegold/
+
+      - uses: bahmutov/npm-install@v1
+        with:
+          useLockFile: false
+          working-directory: tests/prb-math/
 
       # Verify report.md
+
+      - uses: Swatinem/rust-cache@v2
 
       - name: Generate report-workflow.md
         uses: actions-rs/cargo@v1
