@@ -20,6 +20,7 @@ impl SourceUnitNode {
             }
             SourceUnitNode::FunctionDefinition(function_defn) => Some(function_defn.id),
             SourceUnitNode::UsingForDirective(using_for_directive) => Some(using_for_directive.id),
+            SourceUnitNode::EventDefinition(event_definition) => Some(event_definition.id),
         }
     }
 }
