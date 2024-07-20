@@ -8,6 +8,8 @@ use crate::{
     },
 };
 
+use super::traits::Reverseable;
+
 pub struct WorkspaceCallGraph {
     pub forward_graph: CallGraph,
 }
@@ -20,7 +22,7 @@ pub type CallGraph = HashMap<NodeID, Vec<NodeID>>;
 impl WorkspaceCallGraph {
     /// Formula to create [`WorkspaceCallGraph`] for global preprocessing .
     pub fn from_context(context: &WorkspaceContext) -> super::Result<WorkspaceCallGraph> {
-        let mut graph: HashMap<NodeID, Vec<NodeID>> = HashMap::new();
+        let mut graph: CallGraph = HashMap::new();
         let mut visited: HashSet<NodeID> = HashSet::new();
 
         let funcs = context
@@ -55,20 +57,6 @@ fn dfs_to_create_graph(
     visited: &mut HashSet<NodeID>,
     context: &WorkspaceContext,
 ) -> super::Result<()> {
-    fn create_connection_if_not_exsits(from_id: NodeID, to_id: NodeID, graph: &mut CallGraph) {
-        match graph.entry(from_id) {
-            hash_map::Entry::Occupied(mut o) => {
-                // Performance Tip: Maybe later use binary search (it requires keeping ascending order while inserting tho)
-                if !o.get().contains(&to_id) {
-                    o.get_mut().push(to_id);
-                }
-            }
-            hash_map::Entry::Vacant(v) => {
-                v.insert(vec![to_id]);
-            }
-        }
-    }
-
     if visited.contains(&id) {
         return Ok(());
     }
@@ -116,4 +104,30 @@ fn dfs_to_create_graph(
     // can't find the node that means, the file was not in scope and hence it is not
     // available in the context although references to it exist.
     Ok(())
+}
+
+fn create_connection_if_not_exsits(from_id: NodeID, to_id: NodeID, graph: &mut CallGraph) {
+    match graph.entry(from_id) {
+        hash_map::Entry::Occupied(mut o) => {
+            // Performance Tip: Maybe later use binary search (it requires keeping ascending order while inserting tho)
+            if !o.get().contains(&to_id) {
+                o.get_mut().push(to_id);
+            }
+        }
+        hash_map::Entry::Vacant(v) => {
+            v.insert(vec![to_id]);
+        }
+    }
+}
+
+impl Reverseable for CallGraph {
+    fn reverse(&self) -> Self {
+        let mut reversed_callgraph = CallGraph::default();
+        for (from_id, tos) in self {
+            for to_id in tos {
+                create_connection_if_not_exsits(*to_id, *from_id, &mut reversed_callgraph);
+            }
+        }
+        reversed_callgraph
+    }
 }
