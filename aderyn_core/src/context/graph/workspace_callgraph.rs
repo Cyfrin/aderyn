@@ -10,6 +10,7 @@ use crate::{
 
 use super::traits::Reverseable;
 
+#[derive(Debug)]
 pub struct WorkspaceCallGraph {
     pub forward_graph: CallGraph,
 }

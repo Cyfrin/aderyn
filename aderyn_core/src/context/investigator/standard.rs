@@ -118,11 +118,22 @@ impl StandardInvestigator {
 
     /// Visit the entry points and all the plausible function definitions and modifier definitions that
     /// EVM may encounter during execution.
-    pub fn investigate<T>(&self, context: &WorkspaceContext, visitor: &T)
+    pub fn investigate<T>(&self, context: &WorkspaceContext, visitor: &T) -> super::Result<()>
     where
         T: StandardInvestigatorVisitor,
     {
-        todo!()
+        self._investigate(
+            context,
+            context
+                .forward_callgraph
+                .as_ref()
+                .ok_or(super::Error::ForwardCallgraphNotAvailable)?,
+            context
+                .reverse_callgraph
+                .as_ref()
+                .ok_or(super::Error::BackwardCallgraphNotAvailable)?,
+            visitor,
+        )
     }
 
     /// Responsible for informing the trackers.

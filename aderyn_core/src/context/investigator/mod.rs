@@ -16,6 +16,8 @@ pub enum Error {
     Custom(String),
 
     // region: -- standard::* errors
+    ForwardCallgraphNotAvailable,
+    BackwardCallgraphNotAvailable,
     UnidentifiedEntryPointNode(ASTNode),
     InvalidEntryPointId(NodeID),
     EntryPointVisitError,
