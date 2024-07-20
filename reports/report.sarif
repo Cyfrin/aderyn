@@ -2946,6 +2946,50 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/Tower.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 336
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Tower.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 998
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Tower.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 1687
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Tower.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 1997
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/ZeroAddressCheck.sol"
                 },
                 "region": {
@@ -3378,6 +3422,39 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/Tower.sol"
+                },
+                "region": {
+                  "byteLength": 22,
+                  "byteOffset": 394
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Tower.sol"
+                },
+                "region": {
+                  "byteLength": 22,
+                  "byteOffset": 1038
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Tower.sol"
+                },
+                "region": {
+                  "byteLength": 22,
+                  "byteOffset": 1727
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/UnprotectedInitialize.sol"
                 },
                 "region": {
@@ -3513,6 +3590,28 @@
                 "region": {
                   "byteLength": 7,
                   "byteOffset": 147
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Tower.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 499
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Tower.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 1153
                 }
               }
             },
@@ -3894,6 +3993,50 @@
                 "region": {
                   "byteLength": 11,
                   "byteOffset": 388
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Tower.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 297
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Tower.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 865
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Tower.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 1554
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Tower.sol"
+                },
+                "region": {
+                  "byteLength": 18,
+                  "byteOffset": 1957
                 }
               }
             }

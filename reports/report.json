@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 55,
-    "total_sloc": 1521
+    "total_source_units": 56,
+    "total_sloc": 1565
   },
   "files_details": {
     "files_details": [
@@ -124,6 +124,10 @@
       {
         "file_path": "src/TestERC20.sol",
         "n_sloc": 62
+      },
+      {
+        "file_path": "src/Tower.sol",
+        "n_sloc": 44
       },
       {
         "file_path": "src/UnprotectedInitialize.sol",
@@ -1903,6 +1907,30 @@
             "src_char": "135:7"
           },
           {
+            "contract_path": "src/Tower.sol",
+            "line_no": 10,
+            "src": "336:7",
+            "src_char": "336:7"
+          },
+          {
+            "contract_path": "src/Tower.sol",
+            "line_no": 34,
+            "src": "998:6",
+            "src_char": "998:6"
+          },
+          {
+            "contract_path": "src/Tower.sol",
+            "line_no": 61,
+            "src": "1687:6",
+            "src_char": "1687:6"
+          },
+          {
+            "contract_path": "src/Tower.sol",
+            "line_no": 76,
+            "src": "1997:7",
+            "src_char": "1997:7"
+          },
+          {
             "contract_path": "src/ZeroAddressCheck.sol",
             "line_no": 13,
             "src": "329:6",
@@ -2147,6 +2175,24 @@
             "src_char": "107:74"
           },
           {
+            "contract_path": "src/Tower.sol",
+            "line_no": 13,
+            "src": "394:22",
+            "src_char": "394:22"
+          },
+          {
+            "contract_path": "src/Tower.sol",
+            "line_no": 38,
+            "src": "1038:22",
+            "src_char": "1038:22"
+          },
+          {
+            "contract_path": "src/Tower.sol",
+            "line_no": 65,
+            "src": "1727:22",
+            "src_char": "1727:22"
+          },
+          {
             "contract_path": "src/UnprotectedInitialize.sol",
             "line_no": 13,
             "src": "222:21",
@@ -2224,6 +2270,18 @@
             "line_no": 10,
             "src": "147:7",
             "src_char": "147:7"
+          },
+          {
+            "contract_path": "src/Tower.sol",
+            "line_no": 19,
+            "src": "499:16",
+            "src_char": "499:16"
+          },
+          {
+            "contract_path": "src/Tower.sol",
+            "line_no": 44,
+            "src": "1153:16",
+            "src_char": "1153:16"
           },
           {
             "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
@@ -2436,6 +2494,30 @@
             "line_no": 17,
             "src": "388:11",
             "src_char": "388:11"
+          },
+          {
+            "contract_path": "src/Tower.sol",
+            "line_no": 9,
+            "src": "297:17",
+            "src_char": "297:17"
+          },
+          {
+            "contract_path": "src/Tower.sol",
+            "line_no": 31,
+            "src": "865:17",
+            "src_char": "865:17"
+          },
+          {
+            "contract_path": "src/Tower.sol",
+            "line_no": 58,
+            "src": "1554:17",
+            "src_char": "1554:17"
+          },
+          {
+            "contract_path": "src/Tower.sol",
+            "line_no": 75,
+            "src": "1957:18",
+            "src_char": "1957:18"
           }
         ]
       },

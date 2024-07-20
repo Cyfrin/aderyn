@@ -2,7 +2,7 @@
 pragma solidity 0.8.19;
 
 // Goal of this contract is to test if we can establish a link between 
-// the public function `enterTenthFloor` and the fact that `require(msg.sender == 0x011)` 
+// the external function `enterTenthFloor` and the fact that `require(msg.sender == 0x011)` 
 // could potentially be called as a result
 contract Tower1 {
 
@@ -16,14 +16,14 @@ contract Tower1 {
     }
 
     // Start Here
-    function enterTenthFloor1() public passThroughNinthFloor1() {
+    function enterTenthFloor1() external passThroughNinthFloor1() {
         
     }
 
 }
 
 // Goal of this contract is to test if we can establish a link between 
-// the public function `enterTenthFloor` and the fact that `x.call{value: 10}("calldata");` 
+// the external function `enterTenthFloor` and the fact that `x.call{value: 10}("calldata");` 
 // could potentially be called as a result.
 // Here, the call to send native eth is not safe
 contract Tower2 {
@@ -41,7 +41,7 @@ contract Tower2 {
     }
 
     // Start Here
-    function enterTenthFloor2(address x) public passThroughNinthFloor2(x) {
+    function enterTenthFloor2(address x) external passThroughNinthFloor2(x) {
         
     }
 
@@ -50,8 +50,8 @@ contract Tower2 {
 
 
 // Goal of this contract is to test if we can establish a link between 
-// the public function `enterTenthFloor` <-> `x.call{value: 10}("calldata");` 
-// and public function `enterTenthFloor` <-> `require(msg.sender == 0x11);` 
+// the external function `enterTenthFloor` <-> `x.call{value: 10}("calldata");` 
+// and external function `enterTenthFloor` <-> `require(msg.sender == 0x11);` 
 // As a result the call to send native eth is safe
 contract Tower3 {
 
@@ -68,7 +68,7 @@ contract Tower3 {
     }
 
     // Start Here
-    function enterTenthFloor3(address x) public passThroughNinthFloor3(x) {
+    function enterTenthFloor3(address x) external passThroughNinthFloor3(x) {
         visitSeventhFloor3();
     }
 
