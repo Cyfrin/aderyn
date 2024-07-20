@@ -216,7 +216,7 @@ impl StandardInvestigator {
         visited.insert(node_id);
         self.make_relevant_visit_call(context, node_id, visitor, current_investigation_direction)?;
 
-        if let Some(pointing_to) = callgraph.forward_graph.get(&node_id) {
+        if let Some(pointing_to) = callgraph.graph.get(&node_id) {
             for destination in pointing_to {
                 self.dfs_and_visit_subgraph(
                     *destination,

@@ -12,7 +12,7 @@ use super::traits::Reverseable;
 
 #[derive(Debug)]
 pub struct WorkspaceCallGraph {
-    pub forward_graph: CallGraph,
+    pub graph: CallGraph,
 }
 
 /**
@@ -44,9 +44,7 @@ impl WorkspaceCallGraph {
                 .map_err(|_| super::Error::WorkspaceCallGraphDFSError)?;
         }
 
-        Ok(WorkspaceCallGraph {
-            forward_graph: graph,
-        })
+        Ok(WorkspaceCallGraph { graph })
     }
 }
 

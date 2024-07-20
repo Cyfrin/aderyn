@@ -5,13 +5,26 @@ use std::{
     sync::Arc,
 };
 
-use crate::visitor::ast_visitor::Node;
-use crate::{ast::SourceUnit, context::workspace_context::WorkspaceContext};
+use crate::{
+    ast::SourceUnit,
+    context::{graph::traits::Reverseable, workspace_context::WorkspaceContext},
+};
+use crate::{context::graph::WorkspaceCallGraph, visitor::ast_visitor::Node};
 
 use super::ensure_valid_solidity_file;
 
 #[cfg(test)]
+pub fn load_solidity_source_unit_with_callgraphs(filepath: &str) -> WorkspaceContext {
+    _load_solidity_source_unit(filepath, true)
+}
+
+#[cfg(test)]
 pub fn load_solidity_source_unit(filepath: &str) -> WorkspaceContext {
+    _load_solidity_source_unit(filepath, false)
+}
+
+#[cfg(test)]
+fn _load_solidity_source_unit(filepath: &str, should_load_callgraphs: bool) -> WorkspaceContext {
     let solidity_file = &ensure_valid_solidity_file(filepath);
     let solidity_content = std::fs::read_to_string(solidity_file).unwrap();
 
@@ -81,11 +94,24 @@ pub fn load_solidity_source_unit(filepath: &str) -> WorkspaceContext {
             absorb_ast_content_into_context(&ast_content, solidity_content.clone(), &mut context);
         }
 
+        if should_load_callgraphs {
+            load_callgraphs(&mut context);
+        }
+
         context
     } else {
         eprintln!("Error running solc command");
         std::process::exit(1);
     }
+}
+
+fn load_callgraphs(context: &mut WorkspaceContext) {
+    let forward_callgraph = WorkspaceCallGraph::from_context(context).unwrap();
+    let reverse_callgraph = WorkspaceCallGraph {
+        graph: forward_callgraph.graph.reverse(),
+    };
+    context.forward_callgraph = Some(forward_callgraph);
+    context.reverse_callgraph = Some(reverse_callgraph);
 }
 
 fn absorb_ast_content_into_context(
