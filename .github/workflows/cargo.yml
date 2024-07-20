@@ -35,7 +35,7 @@ jobs:
         uses: foundry-rs/foundry-toolchain@v1.2.0
 
       - name: Checkout sources
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Install stable toolchain
         uses: actions-rs/toolchain@v1
@@ -43,38 +43,33 @@ jobs:
           profile: minimal
           toolchain: stable
           override: true
-
-      - uses: actions/checkout@v3
-
-      - uses: pnpm/action-setup@v3
+          
+      - uses: Swatinem/rust-cache@v2
+      - name: Run cargo build
+        run: |
+          cargo build
+          
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
         with:
           version: 8
+          run_install: false
       
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
 
-      - name: Make
+      - name: Submodule init
         run: |
-          make
+          git submodule update --init --recursive
 
-      - name: Install pnpm dependencies for ccip contracts and come out
-        run: |
-          cd tests/ccip-contracts/
-          pnpm install
-          cd contracts/
-          pnpm install
-          cd ../../../
-
-      - name: Run cargo build
-        run: |
-          cargo build
-
+      - uses: Swatinem/rust-cache@v2
       - name: Run cargo test 
         run: |
           cargo test _by_loading_contract_directly
 
+      - uses: Swatinem/rust-cache@v2
       - name: Run cargo test 
         run: |
           cargo test -- --nocapture
@@ -96,6 +91,15 @@ jobs:
           toolchain: stable
           override: true
 
+      - uses: Swatinem/rust-cache@v2
+      - name: Run cargo build
+        run: |
+          cargo build
+
+      - name: Submodule init
+        run: |
+          git submodule update --init --recursive
+
       - uses: actions/checkout@v3
 
       - uses: actions/setup-node@v3
@@ -107,25 +111,11 @@ jobs:
         with:
           version: 8
 
-      - name: Make
-        run: |
-          make
-
-      - name: Install pnpm dependencies for ccip contracts and come out
-        run: |
-          cd tests/ccip-contracts/
-          pnpm install
-          cd contracts/
-          pnpm install
-          cd ../../../
-
       # Verify report.md
-
-      - name: Generate report-workflow.md
-        uses: actions-rs/cargo@v1
-        with:
-          command: run
-          args: -- -o ./reports/report-workflow.md  --src src/ ./tests/contract-playground/ --skip-update-check
+      - uses: Swatinem/rust-cache@v2
+      - name: Generate report-workflow.m
+        run: |
+          cargo run -- -o ./reports/report-workflow.md  --src src/ ./tests/contract-playground/ --skip-update-check
 
       - name: Check report.md vs report-workflow.md
         run: |
@@ -133,29 +123,42 @@ jobs:
           diff ./reports/report.md ./reports/report-workflow.md
 
       # Verify uniswap_profile.md
-
       - name: Generate uniswap_profile-workflow.md
         env:
-          FOUNDRY_PROFILE: uniswap
-        uses: actions-rs/cargo@v1
-        with:
-          command: run
-          args: -- -o ./reports/uniswap_profile-workflow.md ./tests/contract-playground/ --skip-update-check
+            FOUNDRY_PROFILE: uniswap
+        run: |
+          cargo run -- -o ./reports/uniswap_profile-workflow.md ./tests/contract-playground/ --skip-update-check
 
       - name: Check uniswap_profile.md vs uniswap_profile-workflow.md
         run: |
           cat reports/uniswap_profile-workflow.md
           diff reports/uniswap_profile.md reports/uniswap_profile-workflow.md
 
+      # Install javascript dependencies
+
+      - uses: bahmutov/npm-install@v1
+        with:
+          useLockFile: false
+          working-directory: tests/2024-05-Sablier/v2-core
+
+      - uses: bahmutov/npm-install@v1
+        with:
+          useLockFile: false
+          working-directory: tests/2024-07-templegold/
+
+      - uses: bahmutov/npm-install@v1
+        with:
+          useLockFile: false
+          working-directory: tests/prb-math/
+
       # Verify sablier.md
 
+      
       - name: Generate sablier.md
         env:
           FOUNDRY_PROFILE: uniswap
-        uses: actions-rs/cargo@v1
-        with:
-          command: run
-          args: -- -o ./reports/sablier.md ./tests/2024-05-Sablier --skip-update-check
+        run: |
+          cargo run -- -o ./reports/sablier.md ./tests/2024-05-Sablier --skip-update-check
 
       - name: Check sablier.md vs sablier-aderyn-toml-nested-root.md
         run: |
@@ -164,11 +167,10 @@ jobs:
 
       # Verify adhoc-sol-files-workflow-report.md
           
+      
       - name: Generate adhoc-sol-files-workflow-report.md
-        uses: actions-rs/cargo@v1
-        with:
-          command: run
-          args: -- -o ./reports/adhoc-sol-files-report-workflow.md ./tests/adhoc-sol-files --skip-update-check
+        run: |
+          cargo run -- -o ./reports/adhoc-sol-files-report-workflow.md ./tests/adhoc-sol-files --skip-update-check
       
       - name: Check adhoc-sol-files-report.md vs adhoc-sol-files-report-workflow.md
         run: |
@@ -177,11 +179,10 @@ jobs:
 
       # Verify foundry-nft-f23.md
           
+      
       - name: Generate nft-workflow-report.md
-        uses: actions-rs/cargo@v1
-        with:
-          command: run
-          args: -- -o ./reports/nft-workflow-report.md --src src/ ./tests/foundry-nft-f23 --skip-update-check
+        run: |
+          cargo run -- -o ./reports/nft-workflow-report.md --src src/ ./tests/foundry-nft-f23 --skip-update-check
      
       - name: Check nft-workflow-report.md vs nft-report.md
         run: |
@@ -190,12 +191,10 @@ jobs:
 
 
       # Verify ccip-functions-report.md
-          
+      
       - name: Generate ccip-functions-report-workflow.md
-        uses: actions-rs/cargo@v1
-        with:
-          command: run
-          args: -- -o reports/ccip-functions-report-workflow.md tests/ccip-contracts/contracts --src src/v0.8/functions/ -x "tests/,test/,mocks/"  --skip-update-check
+        run: |
+          cargo run -- -o reports/ccip-functions-report-workflow.md tests/ccip-contracts/contracts --src src/v0.8/functions/ -x "tests/,test/,mocks/"  --skip-update-check
     
       - name: Check ccip-functions-report-workflow.md vs ccip-functions-report.md
         run: |
@@ -204,25 +203,31 @@ jobs:
 
       
       # Verify prb-math-report.md (new solidity features)
-          
+      
       - name: Generate ccip-functions-report-workflow.md
-        uses: actions-rs/cargo@v1
-        with:
-          command: run
-          args: -- ./tests/prb-math -o ./reports/prb-math-report-workflow.md --skip-update-check
+        run: |  
+          cargo run -- ./tests/prb-math -o ./reports/prb-math-report-workflow.md --skip-update-check
     
       - name: Check prb-math-report.md vs prb-math-report-workflow.md
         run: |
           cat ./reports/prb-math-report-workflow.md
           diff ./reports/prb-math-report.md ./reports/prb-math-report-workflow.md
+     
+      
+      - name: Generate 2024-07-templegold-report-workflow.md
+        run: |
+          cargo run -- ./tests/2024-07-templegold/protocol -o ./reports/2024-07-templegold-report-workflow.md --skip-update-check
+    
+      - name: Check 2024-07-templegold-report.md vs 2024-07-templegold-report-workflow.md
+        run: |
+          cat ./reports/2024-07-templegold-report-workflow.md
+          diff ./reports/templegold-report.md ./reports/2024-07-templegold-report-workflow.md
 
       # Verify report.json 
-
+      
       - name: Generate report-workflow.json
-        uses: actions-rs/cargo@v1
-        with:
-          command: run
-          args: -- -o ./reports/report-workflow.json -i src/ -x lib/ ./tests/contract-playground/ --skip-update-check
+        run: |
+          cargo run -- -o ./reports/report-workflow.json -i src/ -x lib/ ./tests/contract-playground/ --skip-update-check
 
       - name: Check report.json vs report-workflow.json
         run: |
@@ -231,11 +236,10 @@ jobs:
 
       # Verify adhoc sol files (Highs Only) report.json 
 
+      
       - name: Generate report-workflow.json
-        uses: actions-rs/cargo@v1
-        with:
-          command: run
-          args: -- -o ./reports/adhoc-sol-files-highs-only-report-workflow.json ./tests/adhoc-sol-files --skip-update-check --highs-only
+        run: |
+          cargo run -- -o ./reports/adhoc-sol-files-highs-only-report-workflow.json ./tests/adhoc-sol-files --skip-update-check --highs-only
 
       - name: Check report.json vs report-workflow.json
         run: |
@@ -245,59 +249,13 @@ jobs:
       # Verify sarif report
 
       - name: Generate sarif report
-        uses: actions-rs/cargo@v1
-        with:
-          command: run
-          args: -- -o ./reports/ci-report.sarif ./tests/contract-playground/ --skip-update-check
+        run: |
+          cargo run -- -o ./reports/ci-report.sarif ./tests/contract-playground/ --skip-update-check
 
       - name: Check sarif report
         run: |
           cat ./reports/ci-report.sarif
           diff ./reports/report.sarif ./reports/ci-report.sarif
-
-
-  third-party-reports:
-    name: Check 3rd party Reports
-    runs-on: ubuntu-latest
-    steps:
-      - name: foundry-toolchain
-        uses: foundry-rs/foundry-toolchain@v1.2.0
-
-      - name: Checkout sources
-        uses: actions/checkout@v2
-
-      - name: Install stable toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
-
-      - uses: actions/checkout@v3
-
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 20
-          cache: 'npm'
-
-      - uses: pnpm/action-setup@v3
-        with:
-          version: 8
-
-      - name: Make
-        run: |
-          make
-
-      - name: Generate 2024-07-templegold-report-workflow.md
-        uses: actions-rs/cargo@v1
-        with:
-          command: run
-          args: -- ./tests/2024-07-templegold/protocol -o ./reports/2024-07-templegold-report-workflow.md --skip-update-check
-    
-      - name: Check 2024-07-templegold-report.md vs 2024-07-templegold-report-workflow.md
-        run: |
-          cat ./reports/2024-07-templegold-report-workflow.md
-          git diff ./reports/templegold-report.md ./reports/2024-07-templegold-report-workflow.md
 
   lints:
     name: Lints
