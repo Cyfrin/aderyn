@@ -14,7 +14,7 @@ pub trait StandardInvestigatorVisitor {
     /// downstream functions and modifiers, but also the entry points that have invoked it.
     fn visit_entry_point(&mut self, node: &ASTNode) -> eyre::Result<()>;
 
-    /// Meant to be invoked while traversing [`WorkspaceContext::callgraph`]
+    /// Meant to be invoked while traversing [`crate::context::workspace_context::WorkspaceContext::forward_callgraph`]
     fn visit_downstream_function_definition(
         &mut self,
         _node: &FunctionDefinition,
@@ -22,7 +22,7 @@ pub trait StandardInvestigatorVisitor {
         Ok(())
     }
 
-    /// Meant to be invoked while traversing [`WorkspaceContext::reverse_callgraph`]
+    /// Meant to be invoked while traversing [`crate::context::workspace_context::WorkspaceContext::reverse_callgraph`]
     fn visit_upstream_function_definition(
         &mut self,
         _node: &FunctionDefinition,
@@ -30,7 +30,7 @@ pub trait StandardInvestigatorVisitor {
         Ok(())
     }
 
-    /// Meant to be invoked while traversing [`WorkspaceContext::callgraph`]
+    /// Meant to be invoked while traversing [`crate::context::workspace_context::WorkspaceContext::forward_callgraph`]
     fn visit_downstream_modifier_definition(
         &mut self,
         _node: &ModifierDefinition,
@@ -38,7 +38,7 @@ pub trait StandardInvestigatorVisitor {
         Ok(())
     }
 
-    /// Meant to be invoked while traversing [`WorkspaceContext::reverse_callgraph`]
+    /// Meant to be invoked while traversing [`crate::context::workspace_context::WorkspaceContext::reverse_callgraph`]
     fn visit_upstream_modifier_definition(
         &mut self,
         _node: &ModifierDefinition,
