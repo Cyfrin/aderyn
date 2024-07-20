@@ -64,10 +64,12 @@ fn dfs_to_create_graph(
 
     // Only deal with `id`s that are in scope right now
     if let Some(from_node) = context.nodes.get(&id) {
-        assert!(
-            from_node.node_type() == NodeType::FunctionDefinition
-                || from_node.node_type() == NodeType::ModifierDefinition,
-        );
+        // referenced_declarations from previous calls in the recursion stack need to be vetted
+        if from_node.node_type() != NodeType::FunctionDefinition
+            && from_node.node_type() != NodeType::ModifierDefinition
+        {
+            return Ok(());
+        }
 
         // connections to FunctionDefinition
         let function_calls = ExtractFunctionCalls::from(from_node).extracted;
