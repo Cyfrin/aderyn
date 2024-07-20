@@ -90,12 +90,22 @@ impl StandardInvestigator {
 
         // Construct backward surface points
         for &node in nodes {
-            let parent_surface_point = node
-                .closest_ancestor_of_type(context, NodeType::FunctionDefinition)
-                .or_else(|| node.closest_ancestor_of_type(context, NodeType::ModifierDefinition));
-            if let Some(parent_surface_point) = parent_surface_point {
-                if let Some(parent_surface_point_id) = parent_surface_point.id() {
-                    backward_surface_points.push(parent_surface_point_id);
+            if node.node_type() == NodeType::FunctionDefinition
+                || node.node_type() == NodeType::ModifierDefinition
+            {
+                if let Some(id) = node.id() {
+                    backward_surface_points.push(id);
+                }
+            } else {
+                let parent_surface_point = node
+                    .closest_ancestor_of_type(context, NodeType::FunctionDefinition)
+                    .or_else(|| {
+                        node.closest_ancestor_of_type(context, NodeType::ModifierDefinition)
+                    });
+                if let Some(parent_surface_point) = parent_surface_point {
+                    if let Some(parent_surface_point_id) = parent_surface_point.id() {
+                        backward_surface_points.push(parent_surface_point_id);
+                    }
                 }
             }
         }
