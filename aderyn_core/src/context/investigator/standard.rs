@@ -128,7 +128,7 @@ impl StandardInvestigator {
 
     /// Visit the entry points and all the plausible function definitions and modifier definitions that
     /// EVM may encounter during execution.
-    pub fn investigate<T>(&self, context: &WorkspaceContext, visitor: &T) -> super::Result<()>
+    pub fn investigate<T>(&self, context: &WorkspaceContext, visitor: &mut T) -> super::Result<()>
     where
         T: StandardInvestigatorVisitor,
     {
@@ -155,7 +155,7 @@ impl StandardInvestigator {
         context: &WorkspaceContext,
         forward_callgraph: &WorkspaceCallGraph,
         reverse_callgraph: &WorkspaceCallGraph,
-        visitor: &T,
+        visitor: &mut T,
     ) -> super::Result<()>
     where
         T: StandardInvestigatorVisitor,
@@ -213,7 +213,7 @@ impl StandardInvestigator {
         visited: &mut HashSet<NodeID>,
         context: &WorkspaceContext,
         callgraph: &WorkspaceCallGraph,
-        visitor: &T,
+        visitor: &mut T,
         current_investigation_direction: CurrentInvestigationDirection,
     ) -> super::Result<()>
     where
@@ -245,7 +245,7 @@ impl StandardInvestigator {
         &self,
         context: &WorkspaceContext,
         node_id: NodeID,
-        visitor: &T,
+        visitor: &mut T,
         current_investigation_direction: CurrentInvestigationDirection,
     ) -> super::Result<()>
     where
@@ -292,7 +292,7 @@ impl StandardInvestigator {
         &self,
         context: &WorkspaceContext,
         node_id: NodeID,
-        visitor: &T,
+        visitor: &mut T,
     ) -> super::Result<()>
     where
         T: StandardInvestigatorVisitor,
