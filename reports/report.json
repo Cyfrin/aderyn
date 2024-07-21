@@ -240,7 +240,7 @@
     ]
   },
   "issue_count": {
-    "high": 19,
+    "high": 20,
     "low": 23
   },
   "high_issues": {
@@ -1269,6 +1269,31 @@
             "line_no": 44,
             "src": "1153:16",
             "src_char": "1153:16"
+          }
+        ]
+      },
+      {
+        "title": "Delegatecall made by the function without checks on any adress.",
+        "description": "Introduce checks on the address",
+        "detector_name": "delegate-call-unchecked-address",
+        "instances": [
+          {
+            "contract_path": "src/DelegateCallWithoutAddressCheck.sol",
+            "line_no": 15,
+            "src": "392:9",
+            "src_char": "392:9"
+          },
+          {
+            "contract_path": "src/auditor_mode/ExternalCalls.sol",
+            "line_no": 38,
+            "src": "1253:28",
+            "src_char": "1253:28"
+          },
+          {
+            "contract_path": "src/inheritance/ExtendedInheritance.sol",
+            "line_no": 14,
+            "src": "391:15",
+            "src_char": "391:15"
           }
         ]
       }
@@ -2987,6 +3012,7 @@
     "incorrect-caret-operator",
     "yul-return",
     "state-variable-shadowing",
-    "send-ether-no-checks"
+    "send-ether-no-checks",
+    "delegate-call-unchecked-address"
   ]
 }

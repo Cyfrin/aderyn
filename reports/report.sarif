@@ -1815,6 +1815,48 @@
           "ruleId": "send-ether-no-checks"
         },
         {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DelegateCallWithoutAddressCheck.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 392
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 28,
+                  "byteOffset": 1253
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/inheritance/ExtendedInheritance.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 391
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Introduce checks on the address"
+          },
+          "ruleId": "delegate-call-unchecked-address"
+        },
+        {
           "level": "note",
           "locations": [
             {
