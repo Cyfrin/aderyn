@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 57,
-    "total_sloc": 1619
+    "total_source_units": 58,
+    "total_sloc": 1650
   },
   "files_details": {
     "files_details": [
@@ -40,6 +40,10 @@
       {
         "file_path": "src/CrazyPragma.sol",
         "n_sloc": 4
+      },
+      {
+        "file_path": "src/DelegateCallWithoutAddressCheck.sol",
+        "n_sloc": 31
       },
       {
         "file_path": "src/DeprecatedOZFunctions.sol",
@@ -236,7 +240,7 @@
     ]
   },
   "issue_count": {
-    "high": 18,
+    "high": 19,
     "low": 23
   },
   "high_issues": {
@@ -1254,6 +1258,19 @@
             "src_char": "239:13"
           }
         ]
+      },
+      {
+        "title": "Sending native Eth is not protected from these functions.",
+        "description": "Introduce checks for `msg.sender` in the function",
+        "detector_name": "send-ether-no-checks",
+        "instances": [
+          {
+            "contract_path": "src/Tower.sol",
+            "line_no": 44,
+            "src": "1153:16",
+            "src_char": "1153:16"
+          }
+        ]
       }
     ]
   },
@@ -1472,6 +1489,12 @@
             "line_no": 2,
             "src": "32:32",
             "src_char": "32:32"
+          },
+          {
+            "contract_path": "src/DelegateCallWithoutAddressCheck.sol",
+            "line_no": 2,
+            "src": "32:21",
+            "src_char": "32:21"
           },
           {
             "contract_path": "src/InconsistentUints.sol",
@@ -1789,6 +1812,24 @@
             "src_char": "1275:66"
           },
           {
+            "contract_path": "src/DelegateCallWithoutAddressCheck.sol",
+            "line_no": 24,
+            "src": "718:1",
+            "src_char": "718:1"
+          },
+          {
+            "contract_path": "src/DelegateCallWithoutAddressCheck.sol",
+            "line_no": 24,
+            "src": "771:1",
+            "src_char": "771:1"
+          },
+          {
+            "contract_path": "src/DelegateCallWithoutAddressCheck.sol",
+            "line_no": 26,
+            "src": "838:1",
+            "src_char": "838:1"
+          },
+          {
             "contract_path": "src/DynamicArrayLengthAssignment.sol",
             "line_no": 13,
             "src": "312:3",
@@ -2001,6 +2042,12 @@
         "detector_name": "require-with-string",
         "instances": [
           {
+            "contract_path": "src/DelegateCallWithoutAddressCheck.sol",
+            "line_no": 31,
+            "src": "948:7",
+            "src_char": "948:7"
+          },
+          {
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 37,
             "src": "1264:7",
@@ -2154,6 +2201,12 @@
             "src_char": "32:32"
           },
           {
+            "contract_path": "src/DelegateCallWithoutAddressCheck.sol",
+            "line_no": 2,
+            "src": "32:21",
+            "src_char": "32:21"
+          },
+          {
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 2,
             "src": "32:23",
@@ -2280,6 +2333,12 @@
         "description": "",
         "detector_name": "useless-modifier",
         "instances": [
+          {
+            "contract_path": "src/DelegateCallWithoutAddressCheck.sol",
+            "line_no": 23,
+            "src": "678:9",
+            "src_char": "678:9"
+          },
           {
             "contract_path": "src/InternalFunctions.sol",
             "line_no": 18,
@@ -2927,6 +2986,7 @@
     "dynamic-array-length-assignment",
     "incorrect-caret-operator",
     "yul-return",
-    "state-variable-shadowing"
+    "state-variable-shadowing",
+    "send-ether-no-checks"
   ]
 }

@@ -298,10 +298,11 @@ impl StandardInvestigator {
         T: StandardInvestigatorVisitor,
     {
         if let Some(node) = context.nodes.get(&node_id) {
-            assert!(
-                node.node_type() == NodeType::FunctionDefinition
-                    || node.node_type() == NodeType::ModifierDefinition
-            );
+            if node.node_type() != NodeType::FunctionDefinition
+                && node.node_type() != NodeType::ModifierDefinition
+            {
+                return Ok(());
+            }
 
             match current_investigation_direction {
                 CurrentDFSVector::Forward => {

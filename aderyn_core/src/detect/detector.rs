@@ -36,7 +36,7 @@ use std::{
     str::FromStr,
 };
 
-use super::high::SelfdestructIdentifierDetector;
+use super::high::{SelfdestructIdentifierDetector, SendEtherNoChecksDetector};
 
 pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
     vec![
@@ -81,6 +81,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<IncorrectUseOfCaretOperatorDetector>::default(),
         Box::<YulReturnDetector>::default(),
         Box::<StateVariableShadowingDetector>::default(),
+        Box::<SendEtherNoChecksDetector>::default(),
     ]
 }
 
@@ -133,6 +134,7 @@ pub(crate) enum IssueDetectorNamePool {
     IncorrectCaretOperator,
     YulReturn,
     StateVariableShadowing,
+    SendEtherNoChecks,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -248,6 +250,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::YulReturn => Some(Box::<YulReturnDetector>::default()),
         IssueDetectorNamePool::StateVariableShadowing => {
             Some(Box::<StateVariableShadowingDetector>::default())
+        }
+        IssueDetectorNamePool::SendEtherNoChecks => {
+            Some(Box::<SendEtherNoChecksDetector>::default())
         }
         IssueDetectorNamePool::Undecided => None,
     }

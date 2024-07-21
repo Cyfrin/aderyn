@@ -1795,6 +1795,26 @@
           "ruleId": "state-variable-shadowing"
         },
         {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Tower.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 1153
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Introduce checks for `msg.sender` in the function"
+          },
+          "ruleId": "send-ether-no-checks"
+        },
+        {
           "level": "note",
           "locations": [
             {
@@ -2157,6 +2177,17 @@
                 },
                 "region": {
                   "byteLength": 32,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DelegateCallWithoutAddressCheck.sol"
+                },
+                "region": {
+                  "byteLength": 21,
                   "byteOffset": 32
                 }
               }
@@ -2730,6 +2761,39 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/DelegateCallWithoutAddressCheck.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 718
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DelegateCallWithoutAddressCheck.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 771
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DelegateCallWithoutAddressCheck.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 838
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/DynamicArrayLengthAssignment.sol"
                 },
                 "region": {
@@ -3111,6 +3175,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/DelegateCallWithoutAddressCheck.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 948
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
@@ -3380,6 +3455,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/DelegateCallWithoutAddressCheck.sol"
+                },
+                "region": {
+                  "byteLength": 21,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
@@ -3606,6 +3692,17 @@
         {
           "level": "note",
           "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DelegateCallWithoutAddressCheck.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 678
+                }
+              }
+            },
             {
               "physicalLocation": {
                 "artifactLocation": {
