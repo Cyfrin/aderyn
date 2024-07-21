@@ -20,6 +20,7 @@ pub fn load_solidity_source_unit_with_callgraphs(filepath: &str) -> WorkspaceCon
 
 #[cfg(test)]
 pub fn load_solidity_source_unit(filepath: &str) -> WorkspaceContext {
+    println!("WARNING: Callgraph won't be loaded. Please use `load_solidity_source_unit_with_callgraphs` if callgraph is required!");
     _load_solidity_source_unit(filepath, false)
 }
 
