@@ -36,9 +36,12 @@ use std::{
     str::FromStr,
 };
 
-use super::high::{
-    DelegateCallOnUncheckedAddressDetector, SelfdestructIdentifierDetector,
-    SendEtherNoChecksDetector,
+use super::{
+    high::{
+        DelegateCallOnUncheckedAddressDetector, SelfdestructIdentifierDetector,
+        SendEtherNoChecksDetector,
+    },
+    low::SubWithoutIfDetector,
 };
 
 pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
@@ -86,6 +89,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<StateVariableShadowingDetector>::default(),
         Box::<SendEtherNoChecksDetector>::default(),
         Box::<DelegateCallOnUncheckedAddressDetector>::default(),
+        Box::<SubWithoutIfDetector>::default(),
     ]
 }
 
@@ -140,6 +144,7 @@ pub(crate) enum IssueDetectorNamePool {
     StateVariableShadowing,
     SendEtherNoChecks,
     DelegateCallUncheckedAddress,
+    SubWithoutIf,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -262,6 +267,7 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::DelegateCallUncheckedAddress => {
             Some(Box::<DelegateCallOnUncheckedAddressDetector>::default())
         }
+        IssueDetectorNamePool::SubWithoutIf => Some(Box::<SubWithoutIfDetector>::default()),
         IssueDetectorNamePool::Undecided => None,
     }
 }
