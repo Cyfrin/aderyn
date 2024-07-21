@@ -25,6 +25,8 @@ pub enum Error {
     UpstreamModifierDefinitionVisitError,
     DownstreamFunctionDefinitionVisitError,
     DownstreamModifierDefinitionVisitError,
+    UpstreamSideEffectFunctionDefinitionVisitError,
+    UpstreamSideEffectModifierDefinitionVisitError,
     // endregion
 }
 

@@ -26,7 +26,7 @@ pub enum StandardInvestigationStyle {
     /// Picks the reverse call graph
     Upstream,
 
-    /// Picks both the call graphs
+    /// Picks both the call graphs (choose this if upstream side effects also need to be tracked)
     BothWays,
 }
 
@@ -47,9 +47,10 @@ pub struct StandardInvestigator {
 }
 
 #[derive(PartialEq, Clone, Copy)]
-enum CurrentInvestigationDirection {
-    Forward,  // Going downstream
-    Backward, // Going upstream
+enum CurrentDFSVector {
+    Forward,            // Going downstream
+    Backward,           // Going upstream
+    UpstreamSideEffect, // Going downstream from upstream nodes
 }
 
 impl StandardInvestigator {
@@ -165,22 +166,25 @@ impl StandardInvestigator {
             self.make_entry_point_visit_call(context, *entry_point_id, visitor)?;
         }
 
+        // Keep track of visited node IDs during DFS from surface nodes
+        let mut visited_downstream = HashSet::new();
+        let mut visited_upstream = HashSet::new();
+        let mut visited_upstream_side_effects = HashSet::new();
+
         // Now decide, which points to visit upstream or downstream
         if self.investigation_style == StandardInvestigationStyle::BothWays
             || self.investigation_style == StandardInvestigationStyle::Downstream
         {
-            // Keep track of visited node IDs during DFS from surface nodes
-            let mut visited = HashSet::new();
-
             // Visit the subgraph starting from surface points
             for surface_point_id in &self.forward_surface_points {
                 self.dfs_and_visit_subgraph(
                     *surface_point_id,
-                    &mut visited,
+                    &mut visited_downstream,
                     context,
                     forward_callgraph,
                     visitor,
-                    CurrentInvestigationDirection::Forward,
+                    CurrentDFSVector::Forward,
+                    None,
                 )?;
             }
         }
@@ -188,18 +192,40 @@ impl StandardInvestigator {
         if self.investigation_style == StandardInvestigationStyle::BothWays
             || self.investigation_style == StandardInvestigationStyle::Upstream
         {
-            // Keep track of visited node IDs during DFS from surface nodes
-            let mut visited = HashSet::new();
-
             // Visit the subgraph starting from surface points
             for surface_point_id in &self.backward_surface_points {
                 self.dfs_and_visit_subgraph(
                     *surface_point_id,
-                    &mut visited,
+                    &mut visited_upstream,
                     context,
                     reverse_callgraph,
                     visitor,
-                    CurrentInvestigationDirection::Backward,
+                    CurrentDFSVector::Backward,
+                    None,
+                )?;
+            }
+        }
+
+        // Collect already visited nodes so that we don't repeat visit calls on them
+        // while traversing through side effect nodes.
+        let mut blacklisted = HashSet::new();
+        blacklisted.extend(visited_downstream.iter());
+        blacklisted.extend(visited_upstream.iter());
+        blacklisted.extend(self.entry_points.iter());
+
+        if self.investigation_style == StandardInvestigationStyle::BothWays {
+            // Visit the subgraph from the upstream points (go downstream in forward graph)
+            // but do not re-visit the upstream nodes or the downstream nodes again
+
+            for surface_point_id in &visited_upstream {
+                self.dfs_and_visit_subgraph(
+                    *surface_point_id,
+                    &mut visited_upstream_side_effects,
+                    context,
+                    forward_callgraph,
+                    visitor,
+                    CurrentDFSVector::UpstreamSideEffect,
+                    Some(&blacklisted),
                 )?;
             }
         }
@@ -214,7 +240,8 @@ impl StandardInvestigator {
         context: &WorkspaceContext,
         callgraph: &WorkspaceCallGraph,
         visitor: &mut T,
-        current_investigation_direction: CurrentInvestigationDirection,
+        current_investigation_direction: CurrentDFSVector,
+        blacklist: Option<&HashSet<NodeID>>,
     ) -> super::Result<()>
     where
         T: StandardInvestigatorVisitor,
@@ -224,7 +251,24 @@ impl StandardInvestigator {
         }
 
         visited.insert(node_id);
-        self.make_relevant_visit_call(context, node_id, visitor, current_investigation_direction)?;
+
+        if let Some(blacklist) = blacklist {
+            if !blacklist.contains(&node_id) {
+                self.make_relevant_visit_call(
+                    context,
+                    node_id,
+                    visitor,
+                    current_investigation_direction,
+                )?;
+            }
+        } else {
+            self.make_relevant_visit_call(
+                context,
+                node_id,
+                visitor,
+                current_investigation_direction,
+            )?;
+        }
 
         if let Some(pointing_to) = callgraph.graph.get(&node_id) {
             for destination in pointing_to {
@@ -235,6 +279,7 @@ impl StandardInvestigator {
                     callgraph,
                     visitor,
                     current_investigation_direction,
+                    blacklist,
                 )?;
             }
         }
@@ -246,7 +291,7 @@ impl StandardInvestigator {
         context: &WorkspaceContext,
         node_id: NodeID,
         visitor: &mut T,
-        current_investigation_direction: CurrentInvestigationDirection,
+        current_investigation_direction: CurrentDFSVector,
     ) -> super::Result<()>
     where
         T: StandardInvestigatorVisitor,
@@ -258,7 +303,7 @@ impl StandardInvestigator {
             );
 
             match current_investigation_direction {
-                CurrentInvestigationDirection::Forward => {
+                CurrentDFSVector::Forward => {
                     if let ASTNode::FunctionDefinition(function) = node {
                         visitor
                             .visit_downstream_function_definition(function)
@@ -270,7 +315,7 @@ impl StandardInvestigator {
                             .map_err(|_| super::Error::DownstreamModifierDefinitionVisitError)?;
                     }
                 }
-                CurrentInvestigationDirection::Backward => {
+                CurrentDFSVector::Backward => {
                     if let ASTNode::FunctionDefinition(function) = node {
                         visitor
                             .visit_upstream_function_definition(function)
@@ -280,6 +325,22 @@ impl StandardInvestigator {
                         visitor
                             .visit_upstream_modifier_definition(modifier)
                             .map_err(|_| super::Error::UpstreamModifierDefinitionVisitError)?;
+                    }
+                }
+                CurrentDFSVector::UpstreamSideEffect => {
+                    if let ASTNode::FunctionDefinition(function) = node {
+                        visitor
+                            .visit_upstream_side_effect_function_definition(function)
+                            .map_err(|_| {
+                                super::Error::UpstreamSideEffectFunctionDefinitionVisitError
+                            })?;
+                    }
+                    if let ASTNode::ModifierDefinition(modifier) = node {
+                        visitor
+                            .visit_upstream_side_effect_modifier_definition(modifier)
+                            .map_err(|_| {
+                                super::Error::UpstreamSideEffectModifierDefinitionVisitError
+                            })?;
                     }
                 }
             }
