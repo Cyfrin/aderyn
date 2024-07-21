@@ -233,6 +233,7 @@ impl StandardInvestigator {
         Ok(())
     }
 
+    #[allow(clippy::too_many_arguments)]
     fn dfs_and_visit_subgraph<T>(
         &self,
         node_id: NodeID,
