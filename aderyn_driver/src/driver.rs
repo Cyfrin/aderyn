@@ -2,7 +2,7 @@ use crate::{
     config_helpers::{append_from_foundry_toml, derive_from_aderyn_toml},
     ensure_valid_root_path, process_auto,
 };
-use aderyn_core::context::graph::traits::Reverseable;
+use aderyn_core::context::graph::traits::Transpose;
 use aderyn_core::{
     context::{graph::WorkspaceCallGraph, workspace_context::WorkspaceContext},
     detect::detector::{get_all_issue_detectors, IssueDetector, IssueSeverity},

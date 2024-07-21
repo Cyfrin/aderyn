@@ -7,7 +7,7 @@ use std::{
 
 use crate::{
     ast::SourceUnit,
-    context::{graph::traits::Reverseable, workspace_context::WorkspaceContext},
+    context::{graph::traits::Transpose, workspace_context::WorkspaceContext},
 };
 use crate::{context::graph::WorkspaceCallGraph, visitor::ast_visitor::Node};
 
