@@ -2175,6 +2175,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/SubWithoutIf.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/UsingSelfdestruct.sol"
                 },
                 "region": {
@@ -2277,6 +2288,17 @@
                 "region": {
                   "byteLength": 14,
                   "byteOffset": 2121
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SubWithoutIf.sol"
+                },
+                "region": {
+                  "byteLength": 63,
+                  "byteOffset": 298
                 }
               }
             },
@@ -2807,6 +2829,193 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/SubWithoutIf.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 581
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SubWithoutIf.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 586
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SubWithoutIf.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 615
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SubWithoutIf.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 645
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SubWithoutIf.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 686
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SubWithoutIf.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 953
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SubWithoutIf.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 958
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SubWithoutIf.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 991
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SubWithoutIf.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 1025
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SubWithoutIf.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 1074
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SubWithoutIf.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 1118
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SubWithoutIf.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 1369
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SubWithoutIf.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 1519
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SubWithoutIf.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 1524
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SubWithoutIf.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 1553
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SubWithoutIf.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 1583
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SubWithoutIf.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 1624
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/eth2/DepositContract.sol"
                 },
                 "region": {
@@ -3216,6 +3425,17 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/StorageConditionals.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SubWithoutIf.sol"
                 },
                 "region": {
                   "byteLength": 23,
@@ -3964,6 +4184,39 @@
                   "byteOffset": 1673
                 }
               }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SubWithoutIf.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 615
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SubWithoutIf.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 991
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SubWithoutIf.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 1553
+                }
+              }
             }
           ],
           "message": {
@@ -3993,6 +4246,17 @@
                 "region": {
                   "byteLength": 11,
                   "byteOffset": 388
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SubWithoutIf.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 1394
                 }
               }
             },

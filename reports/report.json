@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 56,
-    "total_sloc": 1565
+    "total_source_units": 57,
+    "total_sloc": 1614
   },
   "files_details": {
     "files_details": [
@@ -116,6 +116,10 @@
       {
         "file_path": "src/StorageParameters.sol",
         "n_sloc": 16
+      },
+      {
+        "file_path": "src/SubWithoutIf.sol",
+        "n_sloc": 49
       },
       {
         "file_path": "src/T11sTranferer.sol",
@@ -1476,6 +1480,12 @@
             "src_char": "0:24"
           },
           {
+            "contract_path": "src/SubWithoutIf.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/UsingSelfdestruct.sol",
             "line_no": 2,
             "src": "32:23",
@@ -1535,6 +1545,12 @@
             "line_no": 58,
             "src": "2121:14",
             "src_char": "2121:14"
+          },
+          {
+            "contract_path": "src/SubWithoutIf.sol",
+            "line_no": 12,
+            "src": "298:63",
+            "src_char": "298:63"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
@@ -1827,6 +1843,108 @@
             "src_char": "745:2"
           },
           {
+            "contract_path": "src/SubWithoutIf.sol",
+            "line_no": 17,
+            "src": "581:1",
+            "src_char": "581:1"
+          },
+          {
+            "contract_path": "src/SubWithoutIf.sol",
+            "line_no": 17,
+            "src": "586:1",
+            "src_char": "586:1"
+          },
+          {
+            "contract_path": "src/SubWithoutIf.sol",
+            "line_no": 18,
+            "src": "615:7",
+            "src_char": "615:7"
+          },
+          {
+            "contract_path": "src/SubWithoutIf.sol",
+            "line_no": 19,
+            "src": "645:3",
+            "src_char": "645:3"
+          },
+          {
+            "contract_path": "src/SubWithoutIf.sol",
+            "line_no": 21,
+            "src": "686:3",
+            "src_char": "686:3"
+          },
+          {
+            "contract_path": "src/SubWithoutIf.sol",
+            "line_no": 28,
+            "src": "953:1",
+            "src_char": "953:1"
+          },
+          {
+            "contract_path": "src/SubWithoutIf.sol",
+            "line_no": 28,
+            "src": "958:1",
+            "src_char": "958:1"
+          },
+          {
+            "contract_path": "src/SubWithoutIf.sol",
+            "line_no": 29,
+            "src": "991:7",
+            "src_char": "991:7"
+          },
+          {
+            "contract_path": "src/SubWithoutIf.sol",
+            "line_no": 30,
+            "src": "1025:3",
+            "src_char": "1025:3"
+          },
+          {
+            "contract_path": "src/SubWithoutIf.sol",
+            "line_no": 32,
+            "src": "1074:3",
+            "src_char": "1074:3"
+          },
+          {
+            "contract_path": "src/SubWithoutIf.sol",
+            "line_no": 35,
+            "src": "1118:3",
+            "src_char": "1118:3"
+          },
+          {
+            "contract_path": "src/SubWithoutIf.sol",
+            "line_no": 43,
+            "src": "1369:3",
+            "src_char": "1369:3"
+          },
+          {
+            "contract_path": "src/SubWithoutIf.sol",
+            "line_no": 47,
+            "src": "1519:1",
+            "src_char": "1519:1"
+          },
+          {
+            "contract_path": "src/SubWithoutIf.sol",
+            "line_no": 47,
+            "src": "1524:1",
+            "src_char": "1524:1"
+          },
+          {
+            "contract_path": "src/SubWithoutIf.sol",
+            "line_no": 48,
+            "src": "1553:7",
+            "src_char": "1553:7"
+          },
+          {
+            "contract_path": "src/SubWithoutIf.sol",
+            "line_no": 49,
+            "src": "1583:3",
+            "src_char": "1583:3"
+          },
+          {
+            "contract_path": "src/SubWithoutIf.sol",
+            "line_no": 51,
+            "src": "1624:3",
+            "src_char": "1624:3"
+          },
+          {
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 113,
             "src": "7252:2",
@@ -2061,6 +2179,12 @@
           },
           {
             "contract_path": "src/StorageConditionals.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/SubWithoutIf.sol",
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
@@ -2475,6 +2599,24 @@
             "line_no": 32,
             "src": "1673:6",
             "src_char": "1673:6"
+          },
+          {
+            "contract_path": "src/SubWithoutIf.sol",
+            "line_no": 18,
+            "src": "615:7",
+            "src_char": "615:7"
+          },
+          {
+            "contract_path": "src/SubWithoutIf.sol",
+            "line_no": 29,
+            "src": "991:7",
+            "src_char": "991:7"
+          },
+          {
+            "contract_path": "src/SubWithoutIf.sol",
+            "line_no": 48,
+            "src": "1553:7",
+            "src_char": "1553:7"
           }
         ]
       },
@@ -2494,6 +2636,12 @@
             "line_no": 17,
             "src": "388:11",
             "src_char": "388:11"
+          },
+          {
+            "contract_path": "src/SubWithoutIf.sol",
+            "line_no": 46,
+            "src": "1394:7",
+            "src_char": "1394:7"
           },
           {
             "contract_path": "src/Tower.sol",
