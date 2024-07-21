@@ -3,8 +3,8 @@ use semver::{Error, VersionReq};
 use crate::{
     ast::{Expression, FunctionDefinition, MemberAccess, NodeID, PragmaDirective, Visibility},
     context::{
-        browser::{ExtractBinaryOperations, ExtractMemberAccesses},
-        workspace_context::WorkspaceContext,
+        browser::{ExtractBinaryOperations, ExtractFunctionCallOptions, ExtractMemberAccesses},
+        workspace_context::{ASTNode, WorkspaceContext},
     },
 };
 
@@ -66,16 +66,16 @@ pub fn pragma_directive_to_semver(pragma_directive: &PragmaDirective) -> Result<
     VersionReq::parse(&version_string)
 }
 
-// Check if a function definition has a `msg.sender` binary operation.
+// Check if an ast_node has a `msg.sender` binary operation.
 // Examples:
 // ```
 // function foo() public {
 //     require(msg.sender == owner);
 // }
 // ```
-pub fn has_msg_sender_binary_operation(function_definition: &FunctionDefinition) -> bool {
+pub fn has_msg_sender_binary_operation(ast_node: &ASTNode) -> bool {
     // Directly return the evaluation of the condition
-    ExtractBinaryOperations::from(function_definition)
+    ExtractBinaryOperations::from(ast_node)
         .extracted
         .iter()
         .any(|binary_operation| {
@@ -93,4 +93,82 @@ pub fn has_msg_sender_binary_operation(function_definition: &FunctionDefinition)
                         }
                 })
         })
+}
+
+// Check if an ast_node sends native eth
+// Examples:
+// ```
+// function foo() public {
+//     address(0x1).call{value: 10}("...")
+// }
+// ```
+pub fn has_calls_that_sends_native_eth(ast_node: &ASTNode) -> bool {
+    // Check for address(..).call{value: 10}("...") pattern
+    let function_call_ops = ExtractFunctionCallOptions::from(ast_node).extracted;
+    for function_call in &function_call_ops {
+        let call_carries_value = function_call.options.iter().any(|c| {
+            if let Expression::Literal(literal) = c {
+                return literal.value.is_some();
+            }
+            false
+        });
+        if !call_carries_value {
+            continue;
+        }
+        if let Expression::MemberAccess(member_access) = function_call.expression.as_ref() {
+            let is_call = member_access.member_name == "call";
+            if !is_call {
+                continue;
+            }
+        }
+        return true;
+    }
+    // TODO:
+    // Add patterns for -
+
+    // payable(address(..)).transfer(100)
+    // payable(address(..)).send(100)
+
+    false
+}
+
+/// Detects for the pattern
+/// x.delegatecall("...") where x is not a state variable
+/// That means, it can be
+/// a) An Identifier that references a variable declaration which is not `state_variable`
+/// b) A literal adresss
+pub fn has_delegate_calls_on_non_state_variables(
+    ast_node: &ASTNode,
+    context: &WorkspaceContext,
+) -> bool {
+    let member_accesses = ExtractMemberAccesses::from(ast_node).extracted;
+    member_accesses.into_iter().any(|member| {
+        let is_delegate_call = member.member_name == "delegatecall";
+        let mut is_on_non_state_variable = false;
+        if let Expression::Identifier(identifier) = member.expression.as_ref() {
+            if let Some(referenced_id) = identifier.referenced_declaration {
+                if let Some(ASTNode::VariableDeclaration(v)) = context.nodes.get(&referenced_id) {
+                    if !v.state_variable {
+                        is_on_non_state_variable = true;
+                    }
+                }
+            }
+        } else if let Expression::Literal(_) = member.expression.as_ref() {
+            is_on_non_state_variable = true;
+        }
+        is_delegate_call && is_on_non_state_variable
+    })
+}
+
+pub fn has_binary_checks_on_some_address(ast_node: &ASTNode) -> bool {
+    let binary_operations = ExtractBinaryOperations::from(ast_node).extracted;
+    binary_operations.into_iter().any(|op| {
+        [op.left_expression, op.right_expression].iter().any(|op| {
+            op.as_ref().type_descriptions().is_some_and(|desc| {
+                desc.type_string
+                    .as_ref()
+                    .is_some_and(|type_string| type_string == "address")
+            })
+        })
+    })
 }
