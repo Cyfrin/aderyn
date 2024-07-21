@@ -4823,6 +4823,26 @@
             "text": "Division operations followed directly by multiplication operations can lead to precision loss due to the way integer arithmetic is handled in Solidity."
           },
           "ruleId": "division-before-multiplication"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SubWithoutIf.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 549
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Use an if-statement to see that `x` is bigger than `y` to protect from unexpected reverts"
+          },
+          "ruleId": "sub-without-if"
         }
       ],
       "tool": {

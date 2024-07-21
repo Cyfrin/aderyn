@@ -241,7 +241,7 @@
   },
   "issue_count": {
     "high": 20,
-    "low": 23
+    "low": 24
   },
   "high_issues": {
     "issues": [
@@ -2967,6 +2967,19 @@
             "src_char": "541:5"
           }
         ]
+      },
+      {
+        "title": "Potential unchecked call made to `x.sub(y)`.",
+        "description": "Use an if-statement to see that `x` is bigger than `y` to protect from unexpected reverts",
+        "detector_name": "sub-without-if",
+        "instances": [
+          {
+            "contract_path": "src/SubWithoutIf.sol",
+            "line_no": 17,
+            "src": "549:23",
+            "src_char": "549:23"
+          }
+        ]
       }
     ]
   },
@@ -3013,6 +3026,7 @@
     "yul-return",
     "state-variable-shadowing",
     "send-ether-no-checks",
-    "delegate-call-unchecked-address"
+    "delegate-call-unchecked-address",
+    "sub-without-if"
   ]
 }
