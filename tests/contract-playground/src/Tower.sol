@@ -77,3 +77,10 @@ contract Tower3 {
     }
 
 }
+
+contract Tower4 {
+    // A recursive function should have itself as upstream and downstream
+    function recurse(string memory something) private {
+        recurse(something);
+    }
+}

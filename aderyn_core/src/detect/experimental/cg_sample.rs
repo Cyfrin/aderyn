@@ -12,25 +12,26 @@ mod callgraph_tests {
         },
     };
 
-    fn get_function_by_name(context: &WorkspaceContext, name: &str) -> FunctionDefinition {
-        context
-            .function_definitions()
-            .into_iter()
-            .find(|&x| x.name == name.to_string())
-            .unwrap()
-            .to_owned()
+    use StandardInvestigationStyle::*;
+
+    fn get_function_by_name(context: &WorkspaceContext, name: &str) -> ASTNode {
+        ASTNode::from(
+            context
+                .function_definitions()
+                .into_iter()
+                .find(|&x| x.name == name.to_string())
+                .unwrap(),
+        )
     }
 
-    fn get_modifier_definition_by_name(
-        context: &WorkspaceContext,
-        name: &str,
-    ) -> ModifierDefinition {
-        context
-            .modifier_definitions()
-            .into_iter()
-            .find(|&x| x.name == name.to_string())
-            .unwrap()
-            .to_owned()
+    fn get_modifier_definition_by_name(context: &WorkspaceContext, name: &str) -> ASTNode {
+        ASTNode::from(
+            context
+                .modifier_definitions()
+                .into_iter()
+                .find(|&x| x.name == name.to_string())
+                .unwrap(),
+        )
     }
 
     #[test]
@@ -50,12 +51,8 @@ mod callgraph_tests {
 
         let visit_eighth_floor1 = get_function_by_name(&context, "visitEighthFloor1");
 
-        let investigator = StandardInvestigator::new(
-            &context,
-            &[&ASTNode::FunctionDefinition(visit_eighth_floor1)],
-            StandardInvestigationStyle::Downstream,
-        )
-        .unwrap();
+        let investigator =
+            StandardInvestigator::new(&context, &[&visit_eighth_floor1], Downstream).unwrap();
 
         let mut tracker = Tracker::new(&context);
         investigator.investigate(&context, &mut tracker).unwrap();
@@ -72,12 +69,8 @@ mod callgraph_tests {
 
         let visit_eighth_floor1 = get_function_by_name(&context, "visitEighthFloor1");
 
-        let investigator = StandardInvestigator::new(
-            &context,
-            &[&ASTNode::FunctionDefinition(visit_eighth_floor1)],
-            StandardInvestigationStyle::Upstream,
-        )
-        .unwrap();
+        let investigator =
+            StandardInvestigator::new(&context, &[&visit_eighth_floor1], Upstream).unwrap();
 
         let mut tracker = Tracker::new(&context);
         investigator.investigate(&context, &mut tracker).unwrap();
@@ -95,12 +88,8 @@ mod callgraph_tests {
         let pass_through_ninth_floor2 =
             get_modifier_definition_by_name(&context, "passThroughNinthFloor2");
 
-        let investigator = StandardInvestigator::new(
-            &context,
-            &[&ASTNode::ModifierDefinition(pass_through_ninth_floor2)],
-            StandardInvestigationStyle::BothWays,
-        )
-        .unwrap();
+        let investigator =
+            StandardInvestigator::new(&context, &[&pass_through_ninth_floor2], BothWays).unwrap();
 
         let mut tracker = Tracker::new(&context);
         investigator.investigate(&context, &mut tracker).unwrap();
@@ -118,12 +107,8 @@ mod callgraph_tests {
         let pass_through_ninth_floor3 =
             get_modifier_definition_by_name(&context, "passThroughNinthFloor3");
 
-        let investigator = StandardInvestigator::new(
-            &context,
-            &[&ASTNode::ModifierDefinition(pass_through_ninth_floor3)],
-            StandardInvestigationStyle::BothWays,
-        )
-        .unwrap();
+        let investigator =
+            StandardInvestigator::new(&context, &[&pass_through_ninth_floor3], BothWays).unwrap();
 
         let mut tracker = Tracker::new(&context);
         investigator.investigate(&context, &mut tracker).unwrap();
@@ -131,6 +116,7 @@ mod callgraph_tests {
         assert!(tracker.has_found_upstream_functions_with_names(&["enterTenthFloor3"]));
         assert!(tracker.has_found_downstream_functions_with_names(&["visitEighthFloor3"]));
         assert!(tracker.has_not_found_any_upstream_functions_with_name("visitSeventhFloor3"));
+        assert!(tracker.has_found_upstream_side_effect_functions_with_name(&["visitSeventhFloor3"]));
     }
 
     #[test]
@@ -141,17 +127,30 @@ mod callgraph_tests {
 
         let visit_eighth_floor3 = get_function_by_name(&context, "visitSeventhFloor3");
 
-        let investigator = StandardInvestigator::new(
-            &context,
-            &[&ASTNode::FunctionDefinition(visit_eighth_floor3)],
-            StandardInvestigationStyle::Upstream,
-        )
-        .unwrap();
+        let investigator =
+            StandardInvestigator::new(&context, &[&visit_eighth_floor3], Upstream).unwrap();
 
         let mut tracker = Tracker::new(&context);
         investigator.investigate(&context, &mut tracker).unwrap();
 
         assert!(tracker.has_found_upstream_functions_with_names(&["enterTenthFloor3"]));
+    }
+
+    #[test]
+    fn test_tower4_functions_has_upstream_and_downstream() {
+        let context = crate::detect::test_utils::load_solidity_source_unit_with_callgraphs(
+            "../tests/contract-playground/src/Tower.sol",
+        );
+
+        let recurse = get_function_by_name(&context, "recurse");
+
+        let investigator = StandardInvestigator::new(&context, &[&recurse], BothWays).unwrap();
+
+        let mut tracker = Tracker::new(&context);
+        investigator.investigate(&context, &mut tracker).unwrap();
+
+        assert!(tracker.has_found_upstream_functions_with_names(&["recurse"]));
+        assert!(tracker.has_found_downstream_functions_with_names(&["recurse"]));
     }
 
     struct Tracker<'a> {
@@ -161,6 +160,8 @@ mod callgraph_tests {
         upstream_func_definitions_names: Vec<String>,
         downstream_modifier_definitions_names: Vec<String>,
         upstream_modifier_definitions_names: Vec<String>,
+        upstream_side_effects_func_definitions_names: Vec<String>,
+        upstream_side_effects_modifier_definitions_names: Vec<String>,
     }
 
     impl<'a> Tracker<'a> {
@@ -172,6 +173,8 @@ mod callgraph_tests {
                 downstream_modifier_definitions_names: vec![],
                 upstream_func_definitions_names: vec![],
                 upstream_modifier_definitions_names: vec![],
+                upstream_side_effects_func_definitions_names: vec![],
+                upstream_side_effects_modifier_definitions_names: vec![],
             }
         }
 
@@ -201,6 +204,14 @@ mod callgraph_tests {
         fn has_found_upstream_modifiers_with_names(&self, name: &[&str]) -> bool {
             name.iter().all(|&n| {
                 self.upstream_modifier_definitions_names
+                    .contains(&n.to_string())
+            })
+        }
+
+        // upstream side effects
+        fn has_found_upstream_side_effect_functions_with_name(&self, name: &[&str]) -> bool {
+            name.iter().all(|&n| {
+                self.upstream_side_effects_func_definitions_names
                     .contains(&n.to_string())
             })
         }
@@ -241,6 +252,22 @@ mod callgraph_tests {
             node: &crate::ast::ModifierDefinition,
         ) -> eyre::Result<()> {
             self.upstream_modifier_definitions_names
+                .push(node.name.to_string());
+            Ok(())
+        }
+        fn visit_upstream_side_effect_function_definition(
+            &mut self,
+            node: &FunctionDefinition,
+        ) -> eyre::Result<()> {
+            self.upstream_side_effects_func_definitions_names
+                .push(node.name.to_string());
+            Ok(())
+        }
+        fn visit_upstream_side_effect_modifier_definition(
+            &mut self,
+            node: &ModifierDefinition,
+        ) -> eyre::Result<()> {
+            self.upstream_side_effects_modifier_definitions_names
                 .push(node.name.to_string());
             Ok(())
         }
