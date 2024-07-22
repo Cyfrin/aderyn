@@ -28,8 +28,8 @@ impl IssueDetector for MisusedBooleanDetector {
         // 4. if (false && false)
 
         for binary_operation in context.binary_operations() {
-            if binary_operation.operator == "||" {
-                if [
+            if binary_operation.operator == "||"
+                && [
                     binary_operation.left_expression.as_ref(),
                     binary_operation.right_expression.as_ref(),
                 ]
@@ -46,11 +46,13 @@ impl IssueDetector for MisusedBooleanDetector {
                         }
                     }
                     false
-                }) {
-                    capture!(self, context, binary_operation);
-                }
-            } else if binary_operation.operator == "&&" {
-                if [
+                })
+            {
+                capture!(self, context, binary_operation);
+            }
+
+            if binary_operation.operator == "&&"
+                && [
                     binary_operation.left_expression.as_ref(),
                     binary_operation.right_expression.as_ref(),
                 ]
@@ -67,9 +69,9 @@ impl IssueDetector for MisusedBooleanDetector {
                         }
                     }
                     false
-                }) {
-                    capture!(self, context, binary_operation);
-                }
+                })
+            {
+                capture!(self, context, binary_operation);
             }
         }
 
@@ -102,7 +104,7 @@ mod misused_boolean_tests {
     use crate::detect::{detector::IssueDetector, high::misused_boolean::MisusedBooleanDetector};
 
     #[test]
-    fn test_misused_boolean() {
+    fn test_misused_boolean_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/MisusedBoolean.sol",
         );
@@ -115,7 +117,7 @@ mod misused_boolean_tests {
         assert_eq!(detector.instances().len(), 4);
         // assert the severity is high
         assert_eq!(
-            detector.severity(),
+            detector.severiity(),
             crate::detect::detector::IssueSeverity::High
         );
         // assert the title is correct
