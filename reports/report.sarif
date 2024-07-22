@@ -1696,6 +1696,158 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/AssemblyExample.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 97
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DelegateCallWithoutAddressCheck.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 337
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/InconsistentUints.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 197
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/InconsistentUints.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 233
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectCaretOperator.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 355
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 13,
+                  "byteOffset": 87
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariables.sol"
+                },
+                "region": {
+                  "byteLength": 19,
+                  "byteOffset": 199
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariables.sol"
+                },
+                "region": {
+                  "byteLength": 20,
+                  "byteOffset": 241
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariables.sol"
+                },
+                "region": {
+                  "byteLength": 18,
+                  "byteOffset": 282
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedStateVariable.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 122
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedStateVariable.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 529
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WrongOrderOfLayout.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 257
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 1971
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Solidity does initialize variables by default when you declare them, however it's good practice to explicitly declare an initial value. For example, if you transfer money to an address we must make sure that the address has been initialized."
+          },
+          "ruleId": "uninitialized-state-variable"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/IncorrectCaretOperator.sol"
                 },
                 "region": {
@@ -2180,6 +2332,17 @@
                   "byteOffset": 368
                 }
               }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedStateVariable.sol"
+                },
+                "region": {
+                  "byteLength": 29,
+                  "byteOffset": 599
+                }
+              }
             }
           ],
           "message": {
@@ -2524,6 +2687,17 @@
                 "region": {
                   "byteLength": 25,
                   "byteOffset": 2539
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedStateVariable.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 563
                 }
               }
             },
@@ -3169,6 +3343,17 @@
                 "region": {
                   "byteLength": 70,
                   "byteOffset": 413
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedStateVariable.sol"
+                },
+                "region": {
+                  "byteLength": 27,
+                  "byteOffset": 700
                 }
               }
             },

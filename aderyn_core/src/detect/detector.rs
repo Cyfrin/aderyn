@@ -8,12 +8,14 @@ use crate::{
         high::{
             ArbitraryTransferFromDetector, AvoidAbiEncodePackedDetector,
             BlockTimestampDeadlineDetector, DelegateCallInLoopDetector,
-            DynamicArrayLengthAssignmentDetector, EnumerableLoopRemovalDetector,
-            ExperimentalEncoderDetector, IncorrectShiftOrderDetector,
-            IncorrectUseOfCaretOperatorDetector, MultipleConstructorsDetector,
-            NestedStructInMappingDetector, ReusedContractNameDetector,
+            DelegateCallOnUncheckedAddressDetector, DynamicArrayLengthAssignmentDetector,
+            EnumerableLoopRemovalDetector, ExperimentalEncoderDetector,
+            IncorrectShiftOrderDetector, IncorrectUseOfCaretOperatorDetector,
+            MultipleConstructorsDetector, NestedStructInMappingDetector,
+            ReusedContractNameDetector, SelfdestructIdentifierDetector, SendEtherNoChecksDetector,
             StateVariableShadowingDetector, StorageArrayEditWithMemoryDetector,
-            UnprotectedInitializerDetector, UnsafeCastingDetector, YulReturnDetector,
+            UninitializedStateVariableDetector, UnprotectedInitializerDetector,
+            UnsafeCastingDetector, YulReturnDetector,
         },
         low::{
             CentralizationRiskDetector, ConstantsInsteadOfLiteralsDetector,
@@ -22,8 +24,8 @@ use crate::{
             InconsistentTypeNamesDetector, LargeLiteralValueDetector,
             NonReentrantBeforeOthersDetector, PushZeroOpcodeDetector, RequireWithStringDetector,
             RevertsAndRequiresInLoopsDetector, SolmateSafeTransferLibDetector,
-            UnindexedEventsDetector, UnsafeERC20FunctionsDetector, UnsafeERC721MintDetector,
-            UnspecificSolidityPragmaDetector, UselessErrorDetector,
+            SubWithoutIfDetector, UnindexedEventsDetector, UnsafeERC20FunctionsDetector,
+            UnsafeERC721MintDetector, UnspecificSolidityPragmaDetector, UselessErrorDetector,
             UselessInternalFunctionDetector, UselessModifierDetector,
             UselessPublicFunctionDetector, ZeroAddressCheckDetector,
         },
@@ -34,14 +36,6 @@ use std::{
     error::Error,
     fmt::{self, Display},
     str::FromStr,
-};
-
-use super::{
-    high::{
-        DelegateCallOnUncheckedAddressDetector, SelfdestructIdentifierDetector,
-        SendEtherNoChecksDetector,
-    },
-    low::SubWithoutIfDetector,
 };
 
 pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
@@ -84,6 +78,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<NestedStructInMappingDetector>::default(),
         Box::<SelfdestructIdentifierDetector>::default(),
         Box::<DynamicArrayLengthAssignmentDetector>::default(),
+        Box::<UninitializedStateVariableDetector>::default(),
         Box::<IncorrectUseOfCaretOperatorDetector>::default(),
         Box::<YulReturnDetector>::default(),
         Box::<StateVariableShadowingDetector>::default(),
@@ -139,6 +134,7 @@ pub(crate) enum IssueDetectorNamePool {
     NestedStructInMapping,
     SelfdestructIdentifier,
     DynamicArrayLengthAssignment,
+    UninitializedStateVariable,
     IncorrectCaretOperator,
     YulReturn,
     StateVariableShadowing,
@@ -253,6 +249,10 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         }
         IssueDetectorNamePool::DynamicArrayLengthAssignment => {
             Some(Box::<DynamicArrayLengthAssignmentDetector>::default())
+        }
+
+        IssueDetectorNamePool::UninitializedStateVariable => {
+            Some(Box::<UninitializedStateVariableDetector>::default())
         }
         IssueDetectorNamePool::IncorrectCaretOperator => {
             Some(Box::<IncorrectUseOfCaretOperatorDetector>::default())
