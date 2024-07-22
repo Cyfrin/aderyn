@@ -1,32 +1,16 @@
-use std::collections::BTreeMap;
-use std::error::Error;
-
 use crate::ast::{Expression, NodeID};
-
-use crate::capture;
-use crate::detect::detector::IssueDetectorNamePool;
-use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
-};
+use crate::issue_detector;
 use eyre::Result;
 
-#[derive(Default)]
-pub struct MisusedBooleanDetector {
-    // Keys are: [0] source file name, [1] line number, [2] character location of node.
-    // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
-    found_instances: BTreeMap<(String, usize, String), NodeID>,
-}
+issue_detector! {
+    MisusedBooleanDetector;
 
-impl IssueDetector for MisusedBooleanDetector {
-    fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        // PLAN -
-        // Check for
-        // 1. if (… || true)
-        // 2. if (.. && false)
-        // 3. if (true || ...)
-        // 4. if (false && false)
+    severity: High,
+    title: "Misused boolean with logical operators",
+    desc: "The patterns `if (… || true)` and `if (.. && false)` will always evaluate to true and false respectively.",
+    name: MisusedBoolean,
 
+    |context| {
         for binary_operation in context.binary_operations() {
             if binary_operation.operator == "||"
                 && [
@@ -48,7 +32,7 @@ impl IssueDetector for MisusedBooleanDetector {
                     false
                 })
             {
-                capture!(self, context, binary_operation);
+                grab!(binary_operation);
             }
 
             if binary_operation.operator == "&&"
@@ -71,32 +55,11 @@ impl IssueDetector for MisusedBooleanDetector {
                     false
                 })
             {
-                capture!(self, context, binary_operation);
+                grab!(binary_operation);
             }
         }
-
-        Ok(!self.found_instances.is_empty())
     }
 
-    fn severity(&self) -> IssueSeverity {
-        IssueSeverity::High
-    }
-
-    fn title(&self) -> String {
-        String::from("Misused boolean with logical operators")
-    }
-
-    fn description(&self) -> String {
-        String::from("The patterns `if (… || true)` and `if (.. && false)` will always evaluate to true and false respectively.")
-    }
-
-    fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
-        self.found_instances.clone()
-    }
-
-    fn name(&self) -> String {
-        IssueDetectorNamePool::MisusedBoolean.to_string()
-    }
 }
 
 #[cfg(test)]
@@ -115,20 +78,5 @@ mod misused_boolean_tests {
         assert!(found);
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 4);
-        // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
-        // assert the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from("Misused boolean with logical operators")
-        );
-        // assert the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from("The patterns `if (… || true)` and `if (.. && false)` will always evaluate to true and false respectively.")
-        );
     }
 }
