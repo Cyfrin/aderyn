@@ -1795,6 +1795,59 @@
           "ruleId": "state-variable-shadowing"
         },
         {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MisusedBoolean.sol"
+                },
+                "region": {
+                  "byteLength": 19,
+                  "byteOffset": 219
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MisusedBoolean.sol"
+                },
+                "region": {
+                  "byteLength": 20,
+                  "byteOffset": 381
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MisusedBoolean.sol"
+                },
+                "region": {
+                  "byteLength": 20,
+                  "byteOffset": 544
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MisusedBoolean.sol"
+                },
+                "region": {
+                  "byteLength": 19,
+                  "byteOffset": 709
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "The patterns `if (… || true)` and `if (.. && false)` will always evaluate to true and false respectively."
+          },
+          "ruleId": "misused-boolean"
+        },
+        {
           "level": "note",
           "locations": [
             {

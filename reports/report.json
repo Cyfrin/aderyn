@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 55,
-    "total_sloc": 1521
+    "total_source_units": 56,
+    "total_sloc": 1551
   },
   "files_details": {
     "files_details": [
@@ -88,6 +88,10 @@
       {
         "file_path": "src/KeccakContract.sol",
         "n_sloc": 21
+      },
+      {
+        "file_path": "src/MisusedBoolean.sol",
+        "n_sloc": 30
       },
       {
         "file_path": "src/MultipleConstructorSchemes.sol",
@@ -228,7 +232,7 @@
     ]
   },
   "issue_count": {
-    "high": 18,
+    "high": 19,
     "low": 23
   },
   "high_issues": {
@@ -1244,6 +1248,37 @@
             "line_no": 15,
             "src": "239:13",
             "src_char": "239:13"
+          }
+        ]
+      },
+      {
+        "title": "Misused boolean with logical operators",
+        "description": "The patterns `if (… || true)` and `if (.. && false)` will always evaluate to true and false respectively.",
+        "detector_name": "misused-boolean",
+        "instances": [
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 10,
+            "src": "219:19",
+            "src_char": "219:19"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 17,
+            "src": "381:20",
+            "src_char": "381:20"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 24,
+            "src": "544:20",
+            "src_char": "544:20"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 31,
+            "src": "709:19",
+            "src_char": "709:19"
           }
         ]
       }
@@ -2697,6 +2732,7 @@
     "dynamic-array-length-assignment",
     "incorrect-caret-operator",
     "yul-return",
-    "state-variable-shadowing"
+    "state-variable-shadowing",
+    "misused-boolean"
   ]
 }
