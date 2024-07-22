@@ -117,7 +117,7 @@ mod misused_boolean_tests {
         assert_eq!(detector.instances().len(), 4);
         // assert the severity is high
         assert_eq!(
-            detector.severiity(),
+            detector.severity(),
             crate::detect::detector::IssueSeverity::High
         );
         // assert the title is correct
