@@ -12,7 +12,8 @@ use crate::{
             ExperimentalEncoderDetector, IncorrectShiftOrderDetector,
             IncorrectUseOfCaretOperatorDetector, MultipleConstructorsDetector,
             NestedStructInMappingDetector, ReusedContractNameDetector,
-            StateVariableShadowingDetector, StorageArrayEditWithMemoryDetector,
+            SelfdestructIdentifierDetector, StateVariableShadowingDetector,
+            StorageArrayEditWithMemoryDetector, UninitializedStateVariableDetector,
             UnprotectedInitializerDetector, UnsafeCastingDetector, YulReturnDetector,
         },
         low::{
@@ -35,8 +36,6 @@ use std::{
     fmt::{self, Display},
     str::FromStr,
 };
-
-use super::high::SelfdestructIdentifierDetector;
 
 pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
     vec![
@@ -78,6 +77,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<NestedStructInMappingDetector>::default(),
         Box::<SelfdestructIdentifierDetector>::default(),
         Box::<DynamicArrayLengthAssignmentDetector>::default(),
+        Box::<UninitializedStateVariableDetector>::default(),
         Box::<IncorrectUseOfCaretOperatorDetector>::default(),
         Box::<YulReturnDetector>::default(),
         Box::<StateVariableShadowingDetector>::default(),
@@ -130,6 +130,7 @@ pub(crate) enum IssueDetectorNamePool {
     NestedStructInMapping,
     SelfdestructIdentifier,
     DynamicArrayLengthAssignment,
+    UninitializedStateVariable,
     IncorrectCaretOperator,
     YulReturn,
     StateVariableShadowing,
@@ -241,6 +242,10 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         }
         IssueDetectorNamePool::DynamicArrayLengthAssignment => {
             Some(Box::<DynamicArrayLengthAssignmentDetector>::default())
+        }
+
+        IssueDetectorNamePool::UninitializedStateVariable => {
+            Some(Box::<UninitializedStateVariableDetector>::default())
         }
         IssueDetectorNamePool::IncorrectCaretOperator => {
             Some(Box::<IncorrectUseOfCaretOperatorDetector>::default())

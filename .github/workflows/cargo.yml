@@ -223,7 +223,6 @@ jobs:
           cat ./reports/2024-07-templegold-report-workflow.md
           diff ./reports/templegold-report.md ./reports/2024-07-templegold-report-workflow.md
 
-
       # Verify report.json 
       
       - name: Generate report-workflow.json
