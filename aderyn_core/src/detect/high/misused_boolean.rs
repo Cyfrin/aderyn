@@ -22,8 +22,10 @@ impl IssueDetector for MisusedBooleanDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // PLAN -
         // Check for
-        // 1. if (… || true)`
-        // 2. if(.. && false) (on either side of the || binary operations)
+        // 1. if (… || true)
+        // 2. if (.. && false)
+        // 3. if (true || ...)
+        // 4. if (false && false)
 
         for binary_operation in context.binary_operations() {
             if binary_operation.operator == "||" {
