@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 56,
-    "total_sloc": 1550
+    "total_source_units": 57,
+    "total_sloc": 1574
   },
   "files_details": {
     "files_details": [
@@ -126,6 +126,10 @@
         "n_sloc": 62
       },
       {
+        "file_path": "src/UncheckedReturn.sol",
+        "n_sloc": 24
+      },
+      {
         "file_path": "src/UninitializedStateVariable.sol",
         "n_sloc": 29
       },
@@ -232,7 +236,7 @@
     ]
   },
   "issue_count": {
-    "high": 19,
+    "high": 20,
     "low": 23
   },
   "high_issues": {
@@ -1329,6 +1333,25 @@
             "src_char": "239:13"
           }
         ]
+      },
+      {
+        "title": "Return value of the function call is not checked.",
+        "description": "Function returns a value but it is ignored.",
+        "detector_name": "unchecked-return",
+        "instances": [
+          {
+            "contract_path": "src/UncheckedReturn.sol",
+            "line_no": 14,
+            "src": "279:5",
+            "src_char": "279:5"
+          },
+          {
+            "contract_path": "src/UncheckedReturn.sol",
+            "line_no": 26,
+            "src": "555:47",
+            "src_char": "555:47"
+          }
+        ]
       }
     ]
   },
@@ -1918,6 +1941,18 @@
             "src_char": "745:2"
           },
           {
+            "contract_path": "src/UncheckedReturn.sol",
+            "line_no": 26,
+            "src": "587:7",
+            "src_char": "587:7"
+          },
+          {
+            "contract_path": "src/UncheckedReturn.sol",
+            "line_no": 31,
+            "src": "785:7",
+            "src_char": "785:7"
+          },
+          {
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 113,
             "src": "7252:2",
@@ -1947,6 +1982,12 @@
             "line_no": 15,
             "src": "413:70",
             "src_char": "413:70"
+          },
+          {
+            "contract_path": "src/UncheckedReturn.sol",
+            "line_no": 17,
+            "src": "297:30",
+            "src_char": "297:30"
           },
           {
             "contract_path": "src/UninitializedStateVariable.sol",
@@ -2799,6 +2840,7 @@
     "uninitialized-state-variable",
     "incorrect-caret-operator",
     "yul-return",
-    "state-variable-shadowing"
+    "state-variable-shadowing",
+    "unchecked-return"
   ]
 }
