@@ -1936,6 +1936,59 @@
           "ruleId": "state-variable-shadowing"
         },
         {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TautologicalCompare.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 255
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TautologicalCompare.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 359
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TautologicalCompare.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 463
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TautologicalCompare.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 566
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "The left hand side and the right hand side of the binary operation has the same value. This makes the condition always true or always false."
+          },
+          "ruleId": "tautological-compare"
+        },
+        {
           "level": "note",
           "locations": [
             {
@@ -3164,17 +3217,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
-                },
-                "region": {
-                  "byteLength": 7,
-                  "byteOffset": 1403
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/cloc/HeavilyCommentedContract.sol"
                 },
                 "region": {
@@ -3357,6 +3399,17 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/T11sTranferer.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TautologicalCompare.sol"
                 },
                 "region": {
                   "byteLength": 23,
@@ -4207,6 +4260,17 @@
                 "region": {
                   "byteLength": 12,
                   "byteOffset": 528
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TautologicalCompare.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 186
                 }
               }
             },
