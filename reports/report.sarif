@@ -1962,7 +1962,7 @@
             }
           ],
           "message": {
-            "text": "Description of the high issue."
+            "text": "Potentially mistakened `=+` for `+=` or `=-` for `-=`. Please include a space in between."
           },
           "ruleId": "dangerous-unary-operator"
         },

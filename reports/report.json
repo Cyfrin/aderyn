@@ -1335,8 +1335,8 @@
         ]
       },
       {
-        "title": "High Issue Title",
-        "description": "Description of the high issue.",
+        "title": "Dangerous unary operator found in assignment.",
+        "description": "Potentially mistakened `=+` for `+=` or `=-` for `-=`. Please include a space in between.",
         "detector_name": "dangerous-unary-operator",
         "instances": [
           {

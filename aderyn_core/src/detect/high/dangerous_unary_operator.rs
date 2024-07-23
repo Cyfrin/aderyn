@@ -37,11 +37,11 @@ impl IssueDetector for DangerousUnaryOperatorDetector {
     }
 
     fn title(&self) -> String {
-        String::from("High Issue Title")
+        String::from("Dangerous unary operator found in assignment.")
     }
 
     fn description(&self) -> String {
-        String::from("Description of the high issue.")
+        String::from("Potentially mistakened `=+` for `+=` or `=-` for `-=`. Please include a space in between.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -80,11 +80,14 @@ mod dangerous_unary_expression_tests {
             crate::detect::detector::IssueSeverity::High
         );
         // assert the title is correct
-        assert_eq!(detector.title(), String::from("High Issue Title"));
+        assert_eq!(
+            detector.title(),
+            String::from("Dangerous unary operator found in assignment.")
+        );
         // assert the description is correct
         assert_eq!(
             detector.description(),
-            String::from("Description of the high issue.")
+            String::from("Potentially mistakened `=+` for `+=` or `=-` for `-=`. Please include a space in between.")
         );
     }
 }
