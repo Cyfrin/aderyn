@@ -1342,8 +1342,8 @@
           {
             "contract_path": "src/UncheckedSend.sol",
             "line_no": 24,
-            "src": "807:22",
-            "src_char": "807:22"
+            "src": "815:22",
+            "src_char": "815:22"
           }
         ]
       }
@@ -1728,30 +1728,6 @@
             "line_no": 71,
             "src": "2539:25",
             "src_char": "2539:25"
-          },
-          {
-            "contract_path": "src/UncheckedSend.sol",
-            "line_no": 6,
-            "src": "85:244",
-            "src_char": "85:244"
-          },
-          {
-            "contract_path": "src/UncheckedSend.sol",
-            "line_no": 12,
-            "src": "335:188",
-            "src_char": "335:188"
-          },
-          {
-            "contract_path": "src/UncheckedSend.sol",
-            "line_no": 17,
-            "src": "529:182",
-            "src_char": "529:182"
-          },
-          {
-            "contract_path": "src/UncheckedSend.sol",
-            "line_no": 22,
-            "src": "717:184",
-            "src_char": "717:184"
           },
           {
             "contract_path": "src/UninitializedStateVariable.sol",
@@ -2376,8 +2352,8 @@
           {
             "contract_path": "src/UncheckedSend.sol",
             "line_no": 27,
-            "src": "907:65",
-            "src_char": "907:65"
+            "src": "915:65",
+            "src_char": "915:65"
           },
           {
             "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
@@ -2594,8 +2570,8 @@
           {
             "contract_path": "src/UncheckedSend.sol",
             "line_no": 27,
-            "src": "907:65",
-            "src_char": "907:65"
+            "src": "915:65",
+            "src_char": "915:65"
           }
         ]
       },
