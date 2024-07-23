@@ -4,30 +4,7 @@ use strum::{Display, EnumCount, EnumIter, EnumString};
 use crate::{
     ast::NodeID,
     context::workspace_context::WorkspaceContext,
-    detect::{
-        high::{
-            ArbitraryTransferFromDetector, AvoidAbiEncodePackedDetector,
-            BlockTimestampDeadlineDetector, DelegateCallInLoopDetector,
-            DynamicArrayLengthAssignmentDetector, EnumerableLoopRemovalDetector,
-            ExperimentalEncoderDetector, IncorrectShiftOrderDetector,
-            IncorrectUseOfCaretOperatorDetector, MultipleConstructorsDetector,
-            NestedStructInMappingDetector, ReusedContractNameDetector,
-            StateVariableShadowingDetector, StorageArrayEditWithMemoryDetector,
-            UnprotectedInitializerDetector, UnsafeCastingDetector, YulReturnDetector,
-        },
-        low::{
-            CentralizationRiskDetector, ConstantsInsteadOfLiteralsDetector,
-            ContractsWithTodosDetector, DeprecatedOZFunctionsDetector,
-            DivisionBeforeMultiplicationDetector, EcrecoverDetector, EmptyBlockDetector,
-            InconsistentTypeNamesDetector, LargeLiteralValueDetector,
-            NonReentrantBeforeOthersDetector, PushZeroOpcodeDetector, RequireWithStringDetector,
-            RevertsAndRequiresInLoopsDetector, SolmateSafeTransferLibDetector,
-            UnindexedEventsDetector, UnsafeERC20FunctionsDetector, UnsafeERC721MintDetector,
-            UnspecificSolidityPragmaDetector, UselessErrorDetector,
-            UselessInternalFunctionDetector, UselessModifierDetector,
-            UselessPublicFunctionDetector, ZeroAddressCheckDetector,
-        },
-    },
+    detect::{high::*, low::*},
 };
 use std::{
     collections::BTreeMap,
@@ -35,8 +12,6 @@ use std::{
     fmt::{self, Display},
     str::FromStr,
 };
-
-use super::high::{MisusedBooleanDetector, SelfdestructIdentifierDetector};
 
 pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
     vec![
@@ -78,6 +53,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<NestedStructInMappingDetector>::default(),
         Box::<SelfdestructIdentifierDetector>::default(),
         Box::<DynamicArrayLengthAssignmentDetector>::default(),
+        Box::<UninitializedStateVariableDetector>::default(),
         Box::<IncorrectUseOfCaretOperatorDetector>::default(),
         Box::<YulReturnDetector>::default(),
         Box::<StateVariableShadowingDetector>::default(),
@@ -131,6 +107,7 @@ pub(crate) enum IssueDetectorNamePool {
     NestedStructInMapping,
     SelfdestructIdentifier,
     DynamicArrayLengthAssignment,
+    UninitializedStateVariable,
     IncorrectCaretOperator,
     YulReturn,
     StateVariableShadowing,
@@ -243,6 +220,10 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         }
         IssueDetectorNamePool::DynamicArrayLengthAssignment => {
             Some(Box::<DynamicArrayLengthAssignmentDetector>::default())
+        }
+
+        IssueDetectorNamePool::UninitializedStateVariable => {
+            Some(Box::<UninitializedStateVariableDetector>::default())
         }
         IssueDetectorNamePool::IncorrectCaretOperator => {
             Some(Box::<IncorrectUseOfCaretOperatorDetector>::default())

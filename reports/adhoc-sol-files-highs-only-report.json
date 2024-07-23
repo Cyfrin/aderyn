@@ -88,7 +88,7 @@
     ]
   },
   "issue_count": {
-    "high": 1,
+    "high": 2,
     "low": 0
   },
   "high_issues": {
@@ -103,6 +103,43 @@
             "line_no": 16,
             "src": "488:19",
             "src_char": "488:19"
+          }
+        ]
+      },
+      {
+        "title": "Uninitialized State Variables",
+        "description": "Solidity does initialize variables by default when you declare them, however it's good practice to explicitly declare an initial value. For example, if you transfer money to an address we must make sure that the address has been initialized.",
+        "detector_name": "uninitialized-state-variable",
+        "instances": [
+          {
+            "contract_path": "InconsistentUints.sol",
+            "line_no": 7,
+            "src": "197:11",
+            "src_char": "197:11"
+          },
+          {
+            "contract_path": "InconsistentUints.sol",
+            "line_no": 8,
+            "src": "233:14",
+            "src_char": "233:14"
+          },
+          {
+            "contract_path": "StateVariables.sol",
+            "line_no": 8,
+            "src": "199:19",
+            "src_char": "199:19"
+          },
+          {
+            "contract_path": "StateVariables.sol",
+            "line_no": 9,
+            "src": "241:20",
+            "src_char": "241:20"
+          },
+          {
+            "contract_path": "StateVariables.sol",
+            "line_no": 10,
+            "src": "282:18",
+            "src_char": "282:18"
           }
         ]
       }
@@ -127,6 +164,7 @@
     "nested-struct-in-mapping",
     "selfdestruct-identifier",
     "dynamic-array-length-assignment",
+    "uninitialized-state-variable",
     "incorrect-caret-operator",
     "yul-return",
     "state-variable-shadowing",
