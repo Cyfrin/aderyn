@@ -1,10 +1,11 @@
 use std::collections::BTreeMap;
 use std::error::Error;
 
-use crate::ast::{ASTNode, Expression, Identifier, MemberAccess, NodeID, VariableDeclaration};
+use crate::ast::{Expression, Identifier, MemberAccess, NodeID};
 
 use crate::capture;
 use crate::detect::detector::IssueDetectorNamePool;
+use crate::detect::helpers::get_literal_value_or_constant_variable_value;
 use crate::{
     context::workspace_context::WorkspaceContext,
     detect::detector::{IssueDetector, IssueSeverity},
@@ -160,33 +161,6 @@ impl IssueDetector for TautologicalCompareDetector {
     fn name(&self) -> String {
         IssueDetectorNamePool::TautologicalCompare.to_string()
     }
-}
-
-fn get_literal_value_or_constant_variable_value(
-    node_id: NodeID,
-    context: &WorkspaceContext,
-) -> Option<String> {
-    fn get_constant_variable_declaration_value(variable: &VariableDeclaration) -> Option<String> {
-        if variable.mutability() == Some(&crate::ast::Mutability::Constant) {
-            if let Some(value) = variable.value.as_ref() {
-                if let Expression::Literal(literal) = value {
-                    return literal.value.to_owned();
-                }
-            }
-        }
-        None
-    }
-
-    if let Some(node) = context.nodes.get(&node_id) {
-        match node {
-            ASTNode::Literal(literal) => return literal.value.to_owned(),
-            ASTNode::VariableDeclaration(variable) => {
-                return get_constant_variable_declaration_value(variable);
-            }
-            _ => (),
-        }
-    }
-    None
 }
 
 #[cfg(test)]
