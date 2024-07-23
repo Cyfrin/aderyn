@@ -1,9 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.19;
 
-// Goal of this contract is to test if we can establish a link between 
-// the external function `enterTenthFloor` and the fact that `require(msg.sender == 0x011)` 
-// could potentially be called as a result
 contract Tower1 {
 
     function visitEighthFloor1() internal {
@@ -22,10 +19,7 @@ contract Tower1 {
 
 }
 
-// Goal of this contract is to test if we can establish a link between 
-// the external function `enterTenthFloor` and the fact that `x.call{value: 10}("calldata");` 
-// could potentially be called as a result.
-// Here, the call to send native eth is not safe
+
 contract Tower2 {
 
     function visitEighthFloor2(address x) internal {
@@ -48,11 +42,6 @@ contract Tower2 {
 }
 
 
-
-// Goal of this contract is to test if we can establish a link between 
-// the external function `enterTenthFloor` <-> `x.call{value: 10}("calldata");` 
-// and external function `enterTenthFloor` <-> `require(msg.sender == 0x11);` 
-// As a result the call to send native eth is safe
 contract Tower3 {
 
     function visitEighthFloor3(address x) internal {

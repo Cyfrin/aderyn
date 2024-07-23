@@ -72,7 +72,7 @@ mod send_ether_no_checks_detector_tests {
     #[test]
     fn test_send_ether_no_checks() {
         let context = crate::detect::test_utils::load_solidity_source_unit_with_callgraphs(
-            "../tests/contract-playground/src/Tower.sol",
+            "../tests/contract-playground/src/SendEtherNoChecks.sol",
         );
 
         let mut detector = SendEtherNoChecksDetector::default();

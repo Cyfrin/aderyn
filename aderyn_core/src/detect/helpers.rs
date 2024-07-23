@@ -3,7 +3,10 @@ use semver::{Error, VersionReq};
 use crate::{
     ast::{Expression, FunctionDefinition, MemberAccess, NodeID, PragmaDirective, Visibility},
     context::{
-        browser::{ExtractBinaryOperations, ExtractFunctionCallOptions, ExtractMemberAccesses},
+        browser::{
+            ExtractBinaryOperations, ExtractFunctionCallOptions, ExtractFunctionCalls,
+            ExtractMemberAccesses,
+        },
         workspace_context::{ASTNode, WorkspaceContext},
     },
 };
@@ -123,6 +126,8 @@ pub fn has_calls_that_sends_native_eth(ast_node: &ASTNode) -> bool {
         }
         return true;
     }
+
+    let function_calls = ExtractFunctionCalls::from(ast_node).extracted;
     // TODO:
     // Add patterns for -
 
