@@ -27,7 +27,7 @@ impl IssueDetector for RTLODetector {
 
         for source_unit in context.source_units() {
             if let Some(content) = &source_unit.source {
-                if content.contains("\u{202e}") {
+                if content.contains('\u{202e}') {
                     capture!(self, context, source_unit);
                 }
             }

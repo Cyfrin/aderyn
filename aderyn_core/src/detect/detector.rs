@@ -137,6 +137,7 @@ pub(crate) enum IssueDetectorNamePool {
     IncorrectCaretOperator,
     YulReturn,
     StateVariableShadowing,
+    #[allow(clippy::upper_case_acronyms)]
     RTLO,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn

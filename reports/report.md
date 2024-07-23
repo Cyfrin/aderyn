@@ -2009,7 +2009,7 @@ Index event fields make the field more quickly accessible to off-chain tools tha
 
 Use descriptive reason strings or custom errors for revert paths.
 
-<details><summary>10 Found Instances</summary>
+<details><summary>11 Found Instances</summary>
 
 
 - Found in src/DeprecatedOZFunctions.sol [Line: 37](../tests/contract-playground/src/DeprecatedOZFunctions.sol#L37)
@@ -2055,6 +2055,12 @@ Use descriptive reason strings or custom errors for revert paths.
 	```
 
 - Found in src/cloc/AnotherHeavilyCommentedContract.sol [Line: 35](../tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol#L35)
+
+	```solidity
+	        require(bar != address(0));
+	```
+
+- Found in src/cloc/AnotherHeavilyCommentedContract.sol [Line: 56](../tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol#L56)
 
 	```solidity
 	        require(bar != address(0));
