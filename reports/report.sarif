@@ -1936,6 +1936,26 @@
           "ruleId": "state-variable-shadowing"
         },
         {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedSend.sol"
+                },
+                "region": {
+                  "byteLength": 22,
+                  "byteOffset": 807
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "`address(payable?).send(address)` returns a boolean that must be used to verify if the transaction was successful"
+          },
+          "ruleId": "unchecked-send"
+        },
+        {
           "level": "note",
           "locations": [
             {
@@ -2327,6 +2347,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/UncheckedSend.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/UsingSelfdestruct.sol"
                 },
                 "region": {
@@ -2581,6 +2612,50 @@
                 "region": {
                   "byteLength": 25,
                   "byteOffset": 2539
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedSend.sol"
+                },
+                "region": {
+                  "byteLength": 244,
+                  "byteOffset": 85
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedSend.sol"
+                },
+                "region": {
+                  "byteLength": 188,
+                  "byteOffset": 335
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedSend.sol"
+                },
+                "region": {
+                  "byteLength": 182,
+                  "byteOffset": 529
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedSend.sol"
+                },
+                "region": {
+                  "byteLength": 184,
+                  "byteOffset": 717
                 }
               }
             },
@@ -3693,6 +3768,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/UncheckedSend.sol"
+                },
+                "region": {
+                  "byteLength": 65,
+                  "byteOffset": 907
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
                 },
                 "region": {
@@ -4068,6 +4154,17 @@
                 "region": {
                   "byteLength": 11,
                   "byteOffset": 388
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedSend.sol"
+                },
+                "region": {
+                  "byteLength": 65,
+                  "byteOffset": 907
                 }
               }
             }

@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 56,
-    "total_sloc": 1550
+    "total_source_units": 57,
+    "total_sloc": 1568
   },
   "files_details": {
     "files_details": [
@@ -126,6 +126,10 @@
         "n_sloc": 62
       },
       {
+        "file_path": "src/UncheckedSend.sol",
+        "n_sloc": 18
+      },
+      {
         "file_path": "src/UninitializedStateVariable.sol",
         "n_sloc": 29
       },
@@ -232,7 +236,7 @@
     ]
   },
   "issue_count": {
-    "high": 19,
+    "high": 20,
     "low": 23
   },
   "high_issues": {
@@ -1329,6 +1333,19 @@
             "src_char": "239:13"
           }
         ]
+      },
+      {
+        "title": "Unchecked `bool success` value for send call.",
+        "description": "`address(payable?).send(address)` returns a boolean that must be used to verify if the transaction was successful",
+        "detector_name": "unchecked-send",
+        "instances": [
+          {
+            "contract_path": "src/UncheckedSend.sol",
+            "line_no": 24,
+            "src": "807:22",
+            "src_char": "807:22"
+          }
+        ]
       }
     ]
   },
@@ -1561,6 +1578,12 @@
             "src_char": "0:24"
           },
           {
+            "contract_path": "src/UncheckedSend.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/UsingSelfdestruct.sol",
             "line_no": 2,
             "src": "32:23",
@@ -1705,6 +1728,30 @@
             "line_no": 71,
             "src": "2539:25",
             "src_char": "2539:25"
+          },
+          {
+            "contract_path": "src/UncheckedSend.sol",
+            "line_no": 6,
+            "src": "85:244",
+            "src_char": "85:244"
+          },
+          {
+            "contract_path": "src/UncheckedSend.sol",
+            "line_no": 12,
+            "src": "335:188",
+            "src_char": "335:188"
+          },
+          {
+            "contract_path": "src/UncheckedSend.sol",
+            "line_no": 17,
+            "src": "529:182",
+            "src_char": "529:182"
+          },
+          {
+            "contract_path": "src/UncheckedSend.sol",
+            "line_no": 22,
+            "src": "717:184",
+            "src_char": "717:184"
           },
           {
             "contract_path": "src/UninitializedStateVariable.sol",
@@ -2327,6 +2374,12 @@
             "src_char": "147:7"
           },
           {
+            "contract_path": "src/UncheckedSend.sol",
+            "line_no": 27,
+            "src": "907:65",
+            "src_char": "907:65"
+          },
+          {
             "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
             "line_no": 11,
             "src": "367:17",
@@ -2537,6 +2590,12 @@
             "line_no": 17,
             "src": "388:11",
             "src_char": "388:11"
+          },
+          {
+            "contract_path": "src/UncheckedSend.sol",
+            "line_no": 27,
+            "src": "907:65",
+            "src_char": "907:65"
           }
         ]
       },
@@ -2799,6 +2858,7 @@
     "uninitialized-state-variable",
     "incorrect-caret-operator",
     "yul-return",
-    "state-variable-shadowing"
+    "state-variable-shadowing",
+    "unchecked-send"
   ]
 }

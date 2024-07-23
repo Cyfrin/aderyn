@@ -167,6 +167,7 @@
     "uninitialized-state-variable",
     "incorrect-caret-operator",
     "yul-return",
-    "state-variable-shadowing"
+    "state-variable-shadowing",
+    "unchecked-send"
   ]
 }
