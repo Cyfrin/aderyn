@@ -1936,6 +1936,37 @@
           "ruleId": "state-variable-shadowing"
         },
         {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DangerousUnaryOperator.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 220
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DangerousUnaryOperator.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 247
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Description of the high issue."
+          },
+          "ruleId": "dangerous-unary-operator"
+        },
+        {
           "level": "note",
           "locations": [
             {
@@ -2309,6 +2340,17 @@
                 },
                 "region": {
                   "byteLength": 32,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DangerousUnaryOperator.sol"
+                },
+                "region": {
+                  "byteLength": 23,
                   "byteOffset": 32
                 }
               }
