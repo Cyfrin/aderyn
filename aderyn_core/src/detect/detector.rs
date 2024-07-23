@@ -37,6 +37,8 @@ use std::{
     str::FromStr,
 };
 
+use super::high::RTLODetector;
+
 pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
     vec![
         Box::<DelegateCallInLoopDetector>::default(),
@@ -81,6 +83,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<IncorrectUseOfCaretOperatorDetector>::default(),
         Box::<YulReturnDetector>::default(),
         Box::<StateVariableShadowingDetector>::default(),
+        Box::<RTLODetector>::default(),
     ]
 }
 
@@ -134,6 +137,7 @@ pub(crate) enum IssueDetectorNamePool {
     IncorrectCaretOperator,
     YulReturn,
     StateVariableShadowing,
+    RTLO,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -254,6 +258,7 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::StateVariableShadowing => {
             Some(Box::<StateVariableShadowingDetector>::default())
         }
+        IssueDetectorNamePool::RTLO => Some(Box::<RTLODetector>::default()),
         IssueDetectorNamePool::Undecided => None,
     }
 }

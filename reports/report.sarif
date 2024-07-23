@@ -1936,6 +1936,26 @@
           "ruleId": "state-variable-shadowing"
         },
         {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/RTLO.sol"
+                },
+                "region": {
+                  "byteLength": 157,
+                  "byteOffset": 33
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Right to left override character may be misledaing and cause potential attacks by visually misordering method arguments!"
+          },
+          "ruleId": "rtlo"
+        },
+        {
           "level": "note",
           "locations": [
             {
