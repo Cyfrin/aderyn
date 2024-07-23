@@ -1,4 +1,4 @@
-use crate::ast::{Expression, NodeID};
+use crate::ast::{Expression, LiteralKind, NodeID};
 use crate::issue_detector;
 use eyre::Result;
 
@@ -58,6 +58,16 @@ issue_detector! {
                 grab!(binary_operation);
             }
         }
+
+        for if_statement in context.if_statements() {
+            if let Expression::Literal(literal) = &if_statement.condition {
+                if literal.kind == LiteralKind::Bool &&
+                    literal.value.as_ref().is_some_and(|value| value == "false" || value == "true") {
+                    grab!(literal);
+                }
+            }
+        }
+
     }
 
 }
@@ -77,6 +87,6 @@ mod misused_boolean_tests {
         // assert that the detector found an issue
         assert!(found);
         // assert that the detector found the correct number of instances
-        assert_eq!(detector.instances().len(), 4);
+        assert_eq!(detector.instances().len(), 6);
     }
 }

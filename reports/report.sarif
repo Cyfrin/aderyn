@@ -1978,7 +1978,29 @@
                 },
                 "region": {
                   "byteLength": 19,
-                  "byteOffset": 709
+                  "byteOffset": 707
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MisusedBoolean.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 874
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MisusedBoolean.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 1026
                 }
               }
             }

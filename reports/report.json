@@ -1,7 +1,7 @@
 {
   "files_summary": {
     "total_source_units": 57,
-    "total_sloc": 1580
+    "total_sloc": 1592
   },
   "files_details": {
     "files_details": [
@@ -91,7 +91,7 @@
       },
       {
         "file_path": "src/MisusedBoolean.sol",
-        "n_sloc": 30
+        "n_sloc": 42
       },
       {
         "file_path": "src/MultipleConstructorSchemes.sol",
@@ -1360,8 +1360,20 @@
           {
             "contract_path": "src/MisusedBoolean.sol",
             "line_no": 31,
-            "src": "709:19",
-            "src_char": "709:19"
+            "src": "707:19",
+            "src_char": "707:19"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 38,
+            "src": "874:4",
+            "src_char": "874:4"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 45,
+            "src": "1026:5",
+            "src_char": "1026:5"
           }
         ]
       }
