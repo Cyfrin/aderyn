@@ -1952,11 +1952,55 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Tower.sol"
+                  "uri": "src/CallGraphTests.sol"
                 },
                 "region": {
                   "byteLength": 16,
-                  "byteOffset": 1153
+                  "byteOffset": 686
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SendEtherNoChecks.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 1060
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SendEtherNoChecks.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 1405
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SendEtherNoChecks.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 1795
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedStateVariable.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 563
                 }
               }
             }
@@ -2319,6 +2363,17 @@
                 "region": {
                   "byteLength": 18,
                   "byteOffset": 1598
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SendEtherNoChecks.sol"
+                },
+                "region": {
+                  "byteLength": 19,
+                  "byteOffset": 1255
                 }
               }
             },
@@ -3402,6 +3457,50 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/CallGraphTests.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 128
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CallGraphTests.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 531
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CallGraphTests.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 936
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CallGraphTests.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 1246
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/DelegateCallWithoutAddressCheck.sol"
                 },
                 "region": {
@@ -3446,55 +3545,44 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/SendEtherNoChecks.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 268
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SendEtherNoChecks.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 513
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SendEtherNoChecks.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 920
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/StateShadowing.sol"
                 },
                 "region": {
                   "byteLength": 7,
                   "byteOffset": 135
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Tower.sol"
-                },
-                "region": {
-                  "byteLength": 7,
-                  "byteOffset": 336
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Tower.sol"
-                },
-                "region": {
-                  "byteLength": 6,
-                  "byteOffset": 998
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Tower.sol"
-                },
-                "region": {
-                  "byteLength": 6,
-                  "byteOffset": 1687
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Tower.sol"
-                },
-                "region": {
-                  "byteLength": 7,
-                  "byteOffset": 1997
                 }
               }
             },
@@ -3922,6 +4010,39 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/CallGraphTests.sol"
+                },
+                "region": {
+                  "byteLength": 22,
+                  "byteOffset": 186
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CallGraphTests.sol"
+                },
+                "region": {
+                  "byteLength": 22,
+                  "byteOffset": 571
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CallGraphTests.sol"
+                },
+                "region": {
+                  "byteLength": 22,
+                  "byteOffset": 976
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/DelegateCallWithoutAddressCheck.sol"
                 },
                 "region": {
@@ -3955,44 +4076,55 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/SendEtherNoChecks.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 308
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SendEtherNoChecks.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 960
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SendEtherNoChecks.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 1301
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SendEtherNoChecks.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 1704
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/StateShadowing.sol"
                 },
                 "region": {
                   "byteLength": 74,
                   "byteOffset": 107
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Tower.sol"
-                },
-                "region": {
-                  "byteLength": 22,
-                  "byteOffset": 394
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Tower.sol"
-                },
-                "region": {
-                  "byteLength": 22,
-                  "byteOffset": 1038
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Tower.sol"
-                },
-                "region": {
-                  "byteLength": 22,
-                  "byteOffset": 1727
                 }
               }
             },
@@ -4024,6 +4156,28 @@
                 "region": {
                   "byteLength": 23,
                   "byteOffset": 457
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CallGraphTests.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 291
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CallGraphTests.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 686
                 }
               }
             },
@@ -4140,22 +4294,33 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Tower.sol"
+                  "uri": "src/SendEtherNoChecks.sol"
                 },
                 "region": {
-                  "byteLength": 16,
-                  "byteOffset": 499
+                  "byteLength": 5,
+                  "byteOffset": 1060
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Tower.sol"
+                  "uri": "src/SendEtherNoChecks.sol"
                 },
                 "region": {
-                  "byteLength": 16,
-                  "byteOffset": 1153
+                  "byteLength": 5,
+                  "byteOffset": 1405
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SendEtherNoChecks.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 1795
                 }
               }
             },
@@ -4554,11 +4719,110 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/CallGraphTests.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 89
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CallGraphTests.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 398
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CallGraphTests.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 803
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CallGraphTests.sol"
+                },
+                "region": {
+                  "byteLength": 18,
+                  "byteOffset": 1206
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/InternalFunctions.sol"
                 },
                 "region": {
                   "byteLength": 12,
                   "byteOffset": 693
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SendEtherNoChecks.sol"
+                },
+                "region": {
+                  "byteLength": 20,
+                  "byteOffset": 132
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SendEtherNoChecks.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 481
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SendEtherNoChecks.sol"
+                },
+                "region": {
+                  "byteLength": 20,
+                  "byteOffset": 784
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SendEtherNoChecks.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 1209
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SendEtherNoChecks.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 1551
                 }
               }
             },
@@ -4581,50 +4845,6 @@
                 "region": {
                   "byteLength": 7,
                   "byteOffset": 1394
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Tower.sol"
-                },
-                "region": {
-                  "byteLength": 17,
-                  "byteOffset": 297
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Tower.sol"
-                },
-                "region": {
-                  "byteLength": 17,
-                  "byteOffset": 865
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Tower.sol"
-                },
-                "region": {
-                  "byteLength": 17,
-                  "byteOffset": 1554
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Tower.sol"
-                },
-                "region": {
-                  "byteLength": 18,
-                  "byteOffset": 1957
                 }
               }
             }

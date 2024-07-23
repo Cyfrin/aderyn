@@ -127,12 +127,28 @@ pub fn has_calls_that_sends_native_eth(ast_node: &ASTNode) -> bool {
         return true;
     }
 
-    let function_calls = ExtractFunctionCalls::from(ast_node).extracted;
-    // TODO:
-    // Add patterns for -
+    // Now, check for :-
 
     // payable(address(..)).transfer(100)
     // payable(address(..)).send(100)
+
+    let function_calls = ExtractFunctionCalls::from(ast_node).extracted;
+
+    for function_call in function_calls {
+        if let Expression::MemberAccess(member_access) = function_call.expression.as_ref() {
+            if member_access.member_name == "transfer" || member_access.member_name == "send" {
+                if let Some(type_description) = member_access.expression.type_descriptions() {
+                    if type_description
+                        .type_string
+                        .as_ref()
+                        .is_some_and(|type_string| type_string.starts_with("address"))
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+    }
 
     false
 }

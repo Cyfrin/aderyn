@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 59,
-    "total_sloc": 1679
+    "total_source_units": 60,
+    "total_sloc": 1737
   },
   "files_details": {
     "files_details": [
@@ -20,6 +20,10 @@
       {
         "file_path": "src/AssemblyExample.sol",
         "n_sloc": 9
+      },
+      {
+        "file_path": "src/CallGraphTests.sol",
+        "n_sloc": 49
       },
       {
         "file_path": "src/Casting.sol",
@@ -106,6 +110,10 @@
         "n_sloc": 27
       },
       {
+        "file_path": "src/SendEtherNoChecks.sol",
+        "n_sloc": 58
+      },
+      {
         "file_path": "src/StateShadowing.sol",
         "n_sloc": 17
       },
@@ -132,10 +140,6 @@
       {
         "file_path": "src/TestERC20.sol",
         "n_sloc": 62
-      },
-      {
-        "file_path": "src/Tower.sol",
-        "n_sloc": 49
       },
       {
         "file_path": "src/UninitializedStateVariable.sol",
@@ -1354,10 +1358,34 @@
         "detector_name": "send-ether-no-checks",
         "instances": [
           {
-            "contract_path": "src/Tower.sol",
-            "line_no": 44,
-            "src": "1153:16",
-            "src_char": "1153:16"
+            "contract_path": "src/CallGraphTests.sol",
+            "line_no": 38,
+            "src": "686:16",
+            "src_char": "686:16"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 53,
+            "src": "1060:5",
+            "src_char": "1060:5"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 77,
+            "src": "1405:5",
+            "src_char": "1405:5"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 99,
+            "src": "1795:5",
+            "src_char": "1795:5"
+          },
+          {
+            "contract_path": "src/UninitializedStateVariable.sol",
+            "line_no": 17,
+            "src": "563:8",
+            "src_char": "563:8"
           }
         ]
       },
@@ -1572,6 +1600,12 @@
             "line_no": 47,
             "src": "1598:18",
             "src_char": "1598:18"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 67,
+            "src": "1255:19",
+            "src_char": "1255:19"
           },
           {
             "contract_path": "src/StateShadowing.sol",
@@ -2174,6 +2208,30 @@
         "detector_name": "require-with-string",
         "instances": [
           {
+            "contract_path": "src/CallGraphTests.sol",
+            "line_no": 7,
+            "src": "128:7",
+            "src_char": "128:7"
+          },
+          {
+            "contract_path": "src/CallGraphTests.sol",
+            "line_no": 28,
+            "src": "531:6",
+            "src_char": "531:6"
+          },
+          {
+            "contract_path": "src/CallGraphTests.sol",
+            "line_no": 50,
+            "src": "936:6",
+            "src_char": "936:6"
+          },
+          {
+            "contract_path": "src/CallGraphTests.sol",
+            "line_no": 65,
+            "src": "1246:7",
+            "src_char": "1246:7"
+          },
+          {
             "contract_path": "src/DelegateCallWithoutAddressCheck.sol",
             "line_no": 31,
             "src": "948:7",
@@ -2198,34 +2256,28 @@
             "src_char": "503:6"
           },
           {
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 12,
+            "src": "268:6",
+            "src_char": "268:6"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 27,
+            "src": "513:7",
+            "src_char": "513:7"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 43,
+            "src": "920:6",
+            "src_char": "920:6"
+          },
+          {
             "contract_path": "src/StateShadowing.sol",
             "line_no": 8,
             "src": "135:7",
             "src_char": "135:7"
-          },
-          {
-            "contract_path": "src/Tower.sol",
-            "line_no": 10,
-            "src": "336:7",
-            "src_char": "336:7"
-          },
-          {
-            "contract_path": "src/Tower.sol",
-            "line_no": 34,
-            "src": "998:6",
-            "src_char": "998:6"
-          },
-          {
-            "contract_path": "src/Tower.sol",
-            "line_no": 61,
-            "src": "1687:6",
-            "src_char": "1687:6"
-          },
-          {
-            "contract_path": "src/Tower.sol",
-            "line_no": 76,
-            "src": "1997:7",
-            "src_char": "1997:7"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
@@ -2466,6 +2518,24 @@
         "detector_name": "useless-modifier",
         "instances": [
           {
+            "contract_path": "src/CallGraphTests.sol",
+            "line_no": 10,
+            "src": "186:22",
+            "src_char": "186:22"
+          },
+          {
+            "contract_path": "src/CallGraphTests.sol",
+            "line_no": 32,
+            "src": "571:22",
+            "src_char": "571:22"
+          },
+          {
+            "contract_path": "src/CallGraphTests.sol",
+            "line_no": 54,
+            "src": "976:22",
+            "src_char": "976:22"
+          },
+          {
             "contract_path": "src/DelegateCallWithoutAddressCheck.sol",
             "line_no": 23,
             "src": "678:9",
@@ -2484,28 +2554,34 @@
             "src_char": "103:8"
           },
           {
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 16,
+            "src": "308:4",
+            "src_char": "308:4"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 47,
+            "src": "960:4",
+            "src_char": "960:4"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 70,
+            "src": "1301:4",
+            "src_char": "1301:4"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 93,
+            "src": "1704:4",
+            "src_char": "1704:4"
+          },
+          {
             "contract_path": "src/StateShadowing.sol",
             "line_no": 7,
             "src": "107:74",
             "src_char": "107:74"
-          },
-          {
-            "contract_path": "src/Tower.sol",
-            "line_no": 13,
-            "src": "394:22",
-            "src_char": "394:22"
-          },
-          {
-            "contract_path": "src/Tower.sol",
-            "line_no": 38,
-            "src": "1038:22",
-            "src_char": "1038:22"
-          },
-          {
-            "contract_path": "src/Tower.sol",
-            "line_no": 65,
-            "src": "1727:22",
-            "src_char": "1727:22"
           },
           {
             "contract_path": "src/UnprotectedInitialize.sol",
@@ -2525,6 +2601,18 @@
             "line_no": 14,
             "src": "457:23",
             "src_char": "457:23"
+          },
+          {
+            "contract_path": "src/CallGraphTests.sol",
+            "line_no": 16,
+            "src": "291:16",
+            "src_char": "291:16"
+          },
+          {
+            "contract_path": "src/CallGraphTests.sol",
+            "line_no": 38,
+            "src": "686:16",
+            "src_char": "686:16"
           },
           {
             "contract_path": "src/ContractWithTodo.sol",
@@ -2587,16 +2675,22 @@
             "src_char": "147:7"
           },
           {
-            "contract_path": "src/Tower.sol",
-            "line_no": 19,
-            "src": "499:16",
-            "src_char": "499:16"
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 53,
+            "src": "1060:5",
+            "src_char": "1060:5"
           },
           {
-            "contract_path": "src/Tower.sol",
-            "line_no": 44,
-            "src": "1153:16",
-            "src_char": "1153:16"
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 77,
+            "src": "1405:5",
+            "src_char": "1405:5"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 99,
+            "src": "1795:5",
+            "src_char": "1795:5"
           },
           {
             "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
@@ -2817,10 +2911,64 @@
         "detector_name": "useless-internal-function",
         "instances": [
           {
+            "contract_path": "src/CallGraphTests.sol",
+            "line_no": 6,
+            "src": "89:17",
+            "src_char": "89:17"
+          },
+          {
+            "contract_path": "src/CallGraphTests.sol",
+            "line_no": 25,
+            "src": "398:17",
+            "src_char": "398:17"
+          },
+          {
+            "contract_path": "src/CallGraphTests.sol",
+            "line_no": 47,
+            "src": "803:17",
+            "src_char": "803:17"
+          },
+          {
+            "contract_path": "src/CallGraphTests.sol",
+            "line_no": 64,
+            "src": "1206:18",
+            "src_char": "1206:18"
+          },
+          {
             "contract_path": "src/InternalFunctions.sol",
             "line_no": 28,
             "src": "693:12",
             "src_char": "693:12"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 9,
+            "src": "132:20",
+            "src_char": "132:20"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 26,
+            "src": "481:5",
+            "src_char": "481:5"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 40,
+            "src": "784:20",
+            "src_char": "784:20"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 66,
+            "src": "1209:15",
+            "src_char": "1209:15"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 88,
+            "src": "1551:11",
+            "src_char": "1551:11"
           },
           {
             "contract_path": "src/StorageParameters.sol",
@@ -2833,30 +2981,6 @@
             "line_no": 46,
             "src": "1394:7",
             "src_char": "1394:7"
-          },
-          {
-            "contract_path": "src/Tower.sol",
-            "line_no": 9,
-            "src": "297:17",
-            "src_char": "297:17"
-          },
-          {
-            "contract_path": "src/Tower.sol",
-            "line_no": 31,
-            "src": "865:17",
-            "src_char": "865:17"
-          },
-          {
-            "contract_path": "src/Tower.sol",
-            "line_no": 58,
-            "src": "1554:17",
-            "src_char": "1554:17"
-          },
-          {
-            "contract_path": "src/Tower.sol",
-            "line_no": 75,
-            "src": "1957:18",
-            "src_char": "1957:18"
           }
         ]
       },

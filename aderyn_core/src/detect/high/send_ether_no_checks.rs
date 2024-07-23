@@ -80,7 +80,7 @@ mod send_ether_no_checks_detector_tests {
         // assert that the detector found an issue
         assert!(found);
         // assert that the detector found the correct number of instances
-        assert_eq!(detector.instances().len(), 1);
+        assert_eq!(detector.instances().len(), 3);
         // assert the severity is high
         assert_eq!(
             detector.severity(),
