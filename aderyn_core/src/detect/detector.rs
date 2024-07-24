@@ -11,7 +11,7 @@ use crate::{
             DelegateCallInLoopDetector, DynamicArrayLengthAssignmentDetector,
             EnumerableLoopRemovalDetector, ExperimentalEncoderDetector,
             IncorrectShiftOrderDetector, IncorrectUseOfCaretOperatorDetector,
-            MultipleConstructorsDetector, NestedStructInMappingDetector,
+            MultipleConstructorsDetector, NestedStructInMappingDetector, RTLODetector,
             ReusedContractNameDetector, SelfdestructIdentifierDetector,
             StateVariableShadowingDetector, StorageArrayEditWithMemoryDetector,
             UncheckedReturnDetector, UninitializedStateVariableDetector,
@@ -82,6 +82,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<IncorrectUseOfCaretOperatorDetector>::default(),
         Box::<YulReturnDetector>::default(),
         Box::<StateVariableShadowingDetector>::default(),
+        Box::<RTLODetector>::default(),
         Box::<UncheckedReturnDetector>::default(),
         Box::<DangerousUnaryOperatorDetector>::default(),
     ]
@@ -137,6 +138,8 @@ pub(crate) enum IssueDetectorNamePool {
     IncorrectCaretOperator,
     YulReturn,
     StateVariableShadowing,
+    #[allow(clippy::upper_case_acronyms)]
+    RTLO,
     UncheckedReturn,
     DangerousUnaryOperator,
     // NOTE: `Undecided` will be the default name (for new bots).
@@ -259,6 +262,7 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::StateVariableShadowing => {
             Some(Box::<StateVariableShadowingDetector>::default())
         }
+        IssueDetectorNamePool::RTLO => Some(Box::<RTLODetector>::default()),
         IssueDetectorNamePool::UncheckedReturn => Some(Box::<UncheckedReturnDetector>::default()),
         IssueDetectorNamePool::DangerousUnaryOperator => {
             Some(Box::<DangerousUnaryOperatorDetector>::default())
