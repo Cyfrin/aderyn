@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 57,
-    "total_sloc": 1557
+    "total_source_units": 59,
+    "total_sloc": 1603
   },
   "files_details": {
     "files_details": [
@@ -40,6 +40,10 @@
       {
         "file_path": "src/CrazyPragma.sol",
         "n_sloc": 4
+      },
+      {
+        "file_path": "src/DangerousUnaryOperator.sol",
+        "n_sloc": 13
       },
       {
         "file_path": "src/DeprecatedOZFunctions.sol",
@@ -128,6 +132,10 @@
       {
         "file_path": "src/TestERC20.sol",
         "n_sloc": 62
+      },
+      {
+        "file_path": "src/UncheckedReturn.sol",
+        "n_sloc": 33
       },
       {
         "file_path": "src/UninitializedStateVariable.sol",
@@ -236,7 +244,7 @@
     ]
   },
   "issue_count": {
-    "high": 20,
+    "high": 22,
     "low": 23
   },
   "high_issues": {
@@ -1346,6 +1354,44 @@
             "src_char": "33:155"
           }
         ]
+      },
+      {
+        "title": "Return value of the function call is not checked.",
+        "description": "Function returns a value but it is ignored.",
+        "detector_name": "unchecked-return",
+        "instances": [
+          {
+            "contract_path": "src/UncheckedReturn.sol",
+            "line_no": 14,
+            "src": "279:5",
+            "src_char": "279:5"
+          },
+          {
+            "contract_path": "src/UncheckedReturn.sol",
+            "line_no": 27,
+            "src": "575:47",
+            "src_char": "575:47"
+          }
+        ]
+      },
+      {
+        "title": "Dangerous unary operator found in assignment.",
+        "description": "Potentially mistakened `=+` for `+=` or `=-` for `-=`. Please include a space in between.",
+        "detector_name": "dangerous-unary-operator",
+        "instances": [
+          {
+            "contract_path": "src/DangerousUnaryOperator.sol",
+            "line_no": 12,
+            "src": "220:10",
+            "src_char": "220:10"
+          },
+          {
+            "contract_path": "src/DangerousUnaryOperator.sol",
+            "line_no": 13,
+            "src": "247:10",
+            "src_char": "247:10"
+          }
+        ]
       }
     ]
   },
@@ -1570,6 +1616,12 @@
             "line_no": 2,
             "src": "32:32",
             "src_char": "32:32"
+          },
+          {
+            "contract_path": "src/DangerousUnaryOperator.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
           },
           {
             "contract_path": "src/InconsistentUints.sol",
@@ -1935,6 +1987,30 @@
             "src_char": "745:2"
           },
           {
+            "contract_path": "src/UncheckedReturn.sol",
+            "line_no": 27,
+            "src": "607:7",
+            "src_char": "607:7"
+          },
+          {
+            "contract_path": "src/UncheckedReturn.sol",
+            "line_no": 32,
+            "src": "805:7",
+            "src_char": "805:7"
+          },
+          {
+            "contract_path": "src/UncheckedReturn.sol",
+            "line_no": 37,
+            "src": "995:7",
+            "src_char": "995:7"
+          },
+          {
+            "contract_path": "src/UncheckedReturn.sol",
+            "line_no": 42,
+            "src": "1190:7",
+            "src_char": "1190:7"
+          },
+          {
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 113,
             "src": "7252:2",
@@ -1964,6 +2040,12 @@
             "line_no": 15,
             "src": "413:70",
             "src_char": "413:70"
+          },
+          {
+            "contract_path": "src/UncheckedReturn.sol",
+            "line_no": 17,
+            "src": "297:30",
+            "src_char": "297:30"
           },
           {
             "contract_path": "src/UninitializedStateVariable.sol",
@@ -2817,6 +2899,8 @@
     "incorrect-caret-operator",
     "yul-return",
     "state-variable-shadowing",
-    "rtlo"
+    "rtlo",
+    "unchecked-return",
+    "dangerous-unary-operator"
   ]
 }

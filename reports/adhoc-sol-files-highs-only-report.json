@@ -168,6 +168,8 @@
     "incorrect-caret-operator",
     "yul-return",
     "state-variable-shadowing",
-    "rtlo"
+    "rtlo",
+    "unchecked-return",
+    "dangerous-unary-operator"
   ]
 }

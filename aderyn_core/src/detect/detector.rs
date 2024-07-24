@@ -7,13 +7,14 @@ use crate::{
     detect::{
         high::{
             ArbitraryTransferFromDetector, AvoidAbiEncodePackedDetector,
-            BlockTimestampDeadlineDetector, DelegateCallInLoopDetector,
-            DynamicArrayLengthAssignmentDetector, EnumerableLoopRemovalDetector,
-            ExperimentalEncoderDetector, IncorrectShiftOrderDetector,
-            IncorrectUseOfCaretOperatorDetector, MultipleConstructorsDetector,
-            NestedStructInMappingDetector, ReusedContractNameDetector,
-            SelfdestructIdentifierDetector, StateVariableShadowingDetector,
-            StorageArrayEditWithMemoryDetector, UninitializedStateVariableDetector,
+            BlockTimestampDeadlineDetector, DangerousUnaryOperatorDetector,
+            DelegateCallInLoopDetector, DynamicArrayLengthAssignmentDetector,
+            EnumerableLoopRemovalDetector, ExperimentalEncoderDetector,
+            IncorrectShiftOrderDetector, IncorrectUseOfCaretOperatorDetector,
+            MultipleConstructorsDetector, NestedStructInMappingDetector, RTLODetector,
+            ReusedContractNameDetector, SelfdestructIdentifierDetector,
+            StateVariableShadowingDetector, StorageArrayEditWithMemoryDetector,
+            UncheckedReturnDetector, UninitializedStateVariableDetector,
             UnprotectedInitializerDetector, UnsafeCastingDetector, YulReturnDetector,
         },
         low::{
@@ -36,8 +37,6 @@ use std::{
     fmt::{self, Display},
     str::FromStr,
 };
-
-use super::high::RTLODetector;
 
 pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
     vec![
@@ -84,6 +83,8 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<YulReturnDetector>::default(),
         Box::<StateVariableShadowingDetector>::default(),
         Box::<RTLODetector>::default(),
+        Box::<UncheckedReturnDetector>::default(),
+        Box::<DangerousUnaryOperatorDetector>::default(),
     ]
 }
 
@@ -139,6 +140,8 @@ pub(crate) enum IssueDetectorNamePool {
     StateVariableShadowing,
     #[allow(clippy::upper_case_acronyms)]
     RTLO,
+    UncheckedReturn,
+    DangerousUnaryOperator,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -260,6 +263,10 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
             Some(Box::<StateVariableShadowingDetector>::default())
         }
         IssueDetectorNamePool::RTLO => Some(Box::<RTLODetector>::default()),
+        IssueDetectorNamePool::UncheckedReturn => Some(Box::<UncheckedReturnDetector>::default()),
+        IssueDetectorNamePool::DangerousUnaryOperator => {
+            Some(Box::<DangerousUnaryOperatorDetector>::default())
+        }
         IssueDetectorNamePool::Undecided => None,
     }
 }
