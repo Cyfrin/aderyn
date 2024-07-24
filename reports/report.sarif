@@ -1989,6 +1989,68 @@
           "ruleId": "tautological-compare"
         },
         {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedReturn.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 279
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedReturn.sol"
+                },
+                "region": {
+                  "byteLength": 47,
+                  "byteOffset": 575
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Function returns a value but it is ignored."
+          },
+          "ruleId": "unchecked-return"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DangerousUnaryOperator.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 220
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DangerousUnaryOperator.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 247
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Potentially mistakened `=+` for `+=` or `=-` for `-=`. Please include a space in between."
+          },
+          "ruleId": "dangerous-unary-operator"
+        },
+        {
           "level": "note",
           "locations": [
             {
@@ -2362,6 +2424,17 @@
                 },
                 "region": {
                   "byteLength": 32,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DangerousUnaryOperator.sol"
+                },
+                "region": {
+                  "byteLength": 23,
                   "byteOffset": 32
                 }
               }
@@ -3023,6 +3096,50 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/UncheckedReturn.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 607
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedReturn.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 805
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedReturn.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 995
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedReturn.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 1190
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/eth2/DepositContract.sol"
                 },
                 "region": {
@@ -3070,6 +3187,17 @@
                 "region": {
                   "byteLength": 70,
                   "byteOffset": 413
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedReturn.sol"
+                },
+                "region": {
+                  "byteLength": 30,
+                  "byteOffset": 297
                 }
               }
             },
