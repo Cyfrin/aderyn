@@ -168,11 +168,8 @@
     "incorrect-caret-operator",
     "yul-return",
     "state-variable-shadowing",
-<<<<<<< HEAD
-    "uninitialized-function-pointer"
-=======
+    "uninitialized-function-pointer",
     "unchecked-return",
     "dangerous-unary-operator"
->>>>>>> dev
   ]
 }

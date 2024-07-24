@@ -1,12 +1,7 @@
 {
   "files_summary": {
-<<<<<<< HEAD
-    "total_source_units": 57,
-    "total_sloc": 1563
-=======
-    "total_source_units": 58,
-    "total_sloc": 1596
->>>>>>> dev
+    "total_source_units": 59,
+    "total_sloc": 1609
   },
   "files_details": {
     "files_details": [
@@ -135,13 +130,12 @@
         "n_sloc": 62
       },
       {
-<<<<<<< HEAD
-        "file_path": "src/UninitializedFunctionPointer.sol",
-        "n_sloc": 13
-=======
         "file_path": "src/UncheckedReturn.sol",
         "n_sloc": 33
->>>>>>> dev
+      },
+      {
+        "file_path": "src/UninitializedFunctionPointer.sol",
+        "n_sloc": 13
       },
       {
         "file_path": "src/UninitializedStateVariable.sol",
@@ -250,11 +244,7 @@
     ]
   },
   "issue_count": {
-<<<<<<< HEAD
-    "high": 20,
-=======
-    "high": 21,
->>>>>>> dev
+    "high": 22,
     "low": 23
   },
   "high_issues": {
@@ -1353,7 +1343,6 @@
         ]
       },
       {
-<<<<<<< HEAD
         "title": "Uninitialized function pointer.",
         "description": "Initialize the function pointer",
         "detector_name": "uninitialized-function-pointer",
@@ -1363,7 +1352,10 @@
             "line_no": 7,
             "src": "147:7",
             "src_char": "147:7"
-=======
+          }
+        ]
+      },
+      {
         "title": "Return value of the function call is not checked.",
         "description": "Function returns a value but it is ignored.",
         "detector_name": "unchecked-return",
@@ -1398,7 +1390,6 @@
             "line_no": 13,
             "src": "247:10",
             "src_char": "247:10"
->>>>>>> dev
           }
         ]
       }
@@ -2002,24 +1993,6 @@
             "src_char": "745:2"
           },
           {
-<<<<<<< HEAD
-            "contract_path": "src/UninitializedFunctionPointer.sol",
-            "line_no": 8,
-            "src": "241:2",
-            "src_char": "241:2"
-          },
-          {
-            "contract_path": "src/UninitializedFunctionPointer.sol",
-            "line_no": 12,
-            "src": "392:2",
-            "src_char": "392:2"
-          },
-          {
-            "contract_path": "src/UninitializedFunctionPointer.sol",
-            "line_no": 15,
-            "src": "464:2",
-            "src_char": "464:2"
-=======
             "contract_path": "src/UncheckedReturn.sol",
             "line_no": 27,
             "src": "607:7",
@@ -2042,7 +2015,24 @@
             "line_no": 42,
             "src": "1190:7",
             "src_char": "1190:7"
->>>>>>> dev
+          },
+          {
+            "contract_path": "src/UninitializedFunctionPointer.sol",
+            "line_no": 8,
+            "src": "241:2",
+            "src_char": "241:2"
+          },
+          {
+            "contract_path": "src/UninitializedFunctionPointer.sol",
+            "line_no": 12,
+            "src": "392:2",
+            "src_char": "392:2"
+          },
+          {
+            "contract_path": "src/UninitializedFunctionPointer.sol",
+            "line_no": 15,
+            "src": "464:2",
+            "src_char": "464:2"
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
@@ -2945,11 +2935,8 @@
     "incorrect-caret-operator",
     "yul-return",
     "state-variable-shadowing",
-<<<<<<< HEAD
-    "uninitialized-function-pointer"
-=======
+    "uninitialized-function-pointer",
     "unchecked-return",
     "dangerous-unary-operator"
->>>>>>> dev
   ]
 }

@@ -14,11 +14,8 @@ pub(crate) mod reused_contract_name;
 pub(crate) mod selfdestruct;
 pub(crate) mod state_variable_shadowing;
 pub(crate) mod storage_array_edit_with_memory;
-<<<<<<< HEAD
-pub(crate) mod uninitialized_function_ptr;
-=======
 pub(crate) mod unchecked_return;
->>>>>>> dev
+pub(crate) mod uninitialized_function_ptr;
 pub(crate) mod uninitialized_state_variable;
 pub(crate) mod unprotected_init_function;
 pub(crate) mod unsafe_casting;
@@ -40,8 +37,8 @@ pub use reused_contract_name::ReusedContractNameDetector;
 pub use selfdestruct::SelfdestructIdentifierDetector;
 pub use state_variable_shadowing::StateVariableShadowingDetector;
 pub use storage_array_edit_with_memory::StorageArrayEditWithMemoryDetector;
-pub use uninitialized_function_ptr::UninitializedFunctionPointerDetector;
 pub use unchecked_return::UncheckedReturnDetector;
+pub use uninitialized_function_ptr::UninitializedFunctionPointerDetector;
 pub use uninitialized_state_variable::UninitializedStateVariableDetector;
 pub use unprotected_init_function::UnprotectedInitializerDetector;
 pub use unsafe_casting::UnsafeCastingDetector;
