@@ -1941,6 +1941,59 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/TautologicalCompare.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 255
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TautologicalCompare.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 359
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TautologicalCompare.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 463
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TautologicalCompare.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 566
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "The left hand side and the right hand side of the binary operation has the same value. This makes the condition always true or always false."
+          },
+          "ruleId": "tautological-compare"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/RTLO.sol"
                 },
                 "region": {
@@ -3515,6 +3568,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/TautologicalCompare.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/UnsafeERC721Mint.sol"
                 },
                 "region": {
@@ -4355,6 +4419,17 @@
                 "region": {
                   "byteLength": 12,
                   "byteOffset": 528
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TautologicalCompare.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 186
                 }
               }
             },

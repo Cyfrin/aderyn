@@ -14,8 +14,9 @@ use crate::{
             MultipleConstructorsDetector, NestedStructInMappingDetector, RTLODetector,
             ReusedContractNameDetector, SelfdestructIdentifierDetector,
             StateVariableShadowingDetector, StorageArrayEditWithMemoryDetector,
-            UncheckedReturnDetector, UninitializedStateVariableDetector,
-            UnprotectedInitializerDetector, UnsafeCastingDetector, YulReturnDetector,
+            TautologicalCompareDetector, UncheckedReturnDetector,
+            UninitializedStateVariableDetector, UnprotectedInitializerDetector,
+            UnsafeCastingDetector, YulReturnDetector,
         },
         low::{
             CentralizationRiskDetector, ConstantsInsteadOfLiteralsDetector,
@@ -82,6 +83,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<IncorrectUseOfCaretOperatorDetector>::default(),
         Box::<YulReturnDetector>::default(),
         Box::<StateVariableShadowingDetector>::default(),
+        Box::<TautologicalCompareDetector>::default(),
         Box::<RTLODetector>::default(),
         Box::<UncheckedReturnDetector>::default(),
         Box::<DangerousUnaryOperatorDetector>::default(),
@@ -138,6 +140,7 @@ pub(crate) enum IssueDetectorNamePool {
     IncorrectCaretOperator,
     YulReturn,
     StateVariableShadowing,
+    TautologicalCompare,
     #[allow(clippy::upper_case_acronyms)]
     RTLO,
     UncheckedReturn,
@@ -261,6 +264,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::YulReturn => Some(Box::<YulReturnDetector>::default()),
         IssueDetectorNamePool::StateVariableShadowing => {
             Some(Box::<StateVariableShadowingDetector>::default())
+        }
+        IssueDetectorNamePool::TautologicalCompare => {
+            Some(Box::<TautologicalCompareDetector>::default())
         }
         IssueDetectorNamePool::RTLO => Some(Box::<RTLODetector>::default()),
         IssueDetectorNamePool::UncheckedReturn => Some(Box::<UncheckedReturnDetector>::default()),
