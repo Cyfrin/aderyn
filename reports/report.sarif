@@ -1967,6 +1967,37 @@
           "ruleId": "unchecked-return"
         },
         {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DangerousUnaryOperator.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 220
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DangerousUnaryOperator.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 247
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Potentially mistakened `=+` for `+=` or `=-` for `-=`. Please include a space in between."
+          },
+          "ruleId": "dangerous-unary-operator"
+        },
+        {
           "level": "note",
           "locations": [
             {
@@ -2340,6 +2371,17 @@
                 },
                 "region": {
                   "byteLength": 32,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DangerousUnaryOperator.sol"
+                },
+                "region": {
+                  "byteLength": 23,
                   "byteOffset": 32
                 }
               }
