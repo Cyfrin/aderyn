@@ -1,7 +1,7 @@
 {
   "files_summary": {
     "total_source_units": 58,
-    "total_sloc": 1587
+    "total_sloc": 1596
   },
   "files_details": {
     "files_details": [
@@ -131,7 +131,7 @@
       },
       {
         "file_path": "src/UncheckedReturn.sol",
-        "n_sloc": 24
+        "n_sloc": 33
       },
       {
         "file_path": "src/UninitializedStateVariable.sol",
@@ -1351,9 +1351,9 @@
           },
           {
             "contract_path": "src/UncheckedReturn.sol",
-            "line_no": 26,
-            "src": "555:47",
-            "src_char": "555:47"
+            "line_no": 27,
+            "src": "575:47",
+            "src_char": "575:47"
           }
         ]
       },
@@ -1971,15 +1971,27 @@
           },
           {
             "contract_path": "src/UncheckedReturn.sol",
-            "line_no": 26,
-            "src": "587:7",
-            "src_char": "587:7"
+            "line_no": 27,
+            "src": "607:7",
+            "src_char": "607:7"
           },
           {
             "contract_path": "src/UncheckedReturn.sol",
-            "line_no": 31,
-            "src": "785:7",
-            "src_char": "785:7"
+            "line_no": 32,
+            "src": "805:7",
+            "src_char": "805:7"
+          },
+          {
+            "contract_path": "src/UncheckedReturn.sol",
+            "line_no": 37,
+            "src": "995:7",
+            "src_char": "995:7"
+          },
+          {
+            "contract_path": "src/UncheckedReturn.sol",
+            "line_no": 42,
+            "src": "1190:7",
+            "src_char": "1190:7"
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
