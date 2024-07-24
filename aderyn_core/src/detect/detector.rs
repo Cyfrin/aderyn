@@ -16,7 +16,7 @@ use crate::{
             StateVariableShadowingDetector, StorageArrayEditWithMemoryDetector,
             TautologicalCompareDetector, UncheckedReturnDetector,
             UninitializedStateVariableDetector, UnprotectedInitializerDetector,
-            UnsafeCastingDetector, YulReturnDetector,
+            UnsafeCastingDetector, WeakRandomnessDetector, YulReturnDetector,
         },
         low::{
             CentralizationRiskDetector, ConstantsInsteadOfLiteralsDetector,
@@ -87,6 +87,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<RTLODetector>::default(),
         Box::<UncheckedReturnDetector>::default(),
         Box::<DangerousUnaryOperatorDetector>::default(),
+        Box::<WeakRandomnessDetector>::default(),
     ]
 }
 
@@ -145,6 +146,7 @@ pub(crate) enum IssueDetectorNamePool {
     RTLO,
     UncheckedReturn,
     DangerousUnaryOperator,
+    WeakRandomness,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -273,6 +275,7 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::DangerousUnaryOperator => {
             Some(Box::<DangerousUnaryOperatorDetector>::default())
         }
+        IssueDetectorNamePool::WeakRandomness => Some(Box::<WeakRandomnessDetector>::default()),
         IssueDetectorNamePool::Undecided => None,
     }
 }
