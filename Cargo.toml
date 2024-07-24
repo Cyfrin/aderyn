@@ -12,3 +12,7 @@ exclude = [
     "bot_ci_cd",
     "foundry",
 ]
+
+[profile.release]
+codegen-units = 1
+lto = true
