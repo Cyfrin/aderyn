@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 56,
-    "total_sloc": 1550
+    "total_source_units": 57,
+    "total_sloc": 1563
   },
   "files_details": {
     "files_details": [
@@ -126,6 +126,10 @@
         "n_sloc": 62
       },
       {
+        "file_path": "src/UninitializedFunctionPointer.sol",
+        "n_sloc": 13
+      },
+      {
         "file_path": "src/UninitializedStateVariable.sol",
         "n_sloc": 29
       },
@@ -232,7 +236,7 @@
     ]
   },
   "issue_count": {
-    "high": 19,
+    "high": 20,
     "low": 23
   },
   "high_issues": {
@@ -1329,6 +1333,19 @@
             "src_char": "239:13"
           }
         ]
+      },
+      {
+        "title": "Uninitialized function pointer.",
+        "description": "Initialize the function pointer",
+        "detector_name": "uninitialized-function-pointer",
+        "instances": [
+          {
+            "contract_path": "src/UninitializedFunctionPointer.sol",
+            "line_no": 7,
+            "src": "147:7",
+            "src_char": "147:7"
+          }
+        ]
       }
     ]
   },
@@ -1559,6 +1576,12 @@
             "line_no": 1,
             "src": "0:24",
             "src_char": "0:24"
+          },
+          {
+            "contract_path": "src/UninitializedFunctionPointer.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
           },
           {
             "contract_path": "src/UsingSelfdestruct.sol",
@@ -1918,6 +1941,24 @@
             "src_char": "745:2"
           },
           {
+            "contract_path": "src/UninitializedFunctionPointer.sol",
+            "line_no": 8,
+            "src": "241:2",
+            "src_char": "241:2"
+          },
+          {
+            "contract_path": "src/UninitializedFunctionPointer.sol",
+            "line_no": 12,
+            "src": "392:2",
+            "src_char": "392:2"
+          },
+          {
+            "contract_path": "src/UninitializedFunctionPointer.sol",
+            "line_no": 15,
+            "src": "464:2",
+            "src_char": "464:2"
+          },
+          {
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 113,
             "src": "7252:2",
@@ -2145,6 +2186,12 @@
             "src_char": "32:23"
           },
           {
+            "contract_path": "src/UninitializedFunctionPointer.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/UnsafeERC721Mint.sol",
             "line_no": 2,
             "src": "32:23",
@@ -2325,6 +2372,12 @@
             "line_no": 10,
             "src": "147:7",
             "src_char": "147:7"
+          },
+          {
+            "contract_path": "src/UninitializedFunctionPointer.sol",
+            "line_no": 23,
+            "src": "771:8",
+            "src_char": "771:8"
           },
           {
             "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
@@ -2799,6 +2852,7 @@
     "uninitialized-state-variable",
     "incorrect-caret-operator",
     "yul-return",
-    "state-variable-shadowing"
+    "state-variable-shadowing",
+    "uninitialized-function-pointer"
   ]
 }

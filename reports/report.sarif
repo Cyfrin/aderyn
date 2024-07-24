@@ -1936,6 +1936,26 @@
           "ruleId": "state-variable-shadowing"
         },
         {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedFunctionPointer.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 147
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Initialize the function pointer"
+          },
+          "ruleId": "uninitialized-function-pointer"
+        },
+        {
           "level": "note",
           "locations": [
             {
@@ -2321,6 +2341,17 @@
                 "region": {
                   "byteLength": 24,
                   "byteOffset": 0
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedFunctionPointer.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
                 }
               }
             },
@@ -2970,6 +3001,39 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/UninitializedFunctionPointer.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 241
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedFunctionPointer.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 392
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedFunctionPointer.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 464
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/eth2/DepositContract.sol"
                 },
                 "region": {
@@ -3367,6 +3431,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/UninitializedFunctionPointer.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/UnsafeERC721Mint.sol"
                 },
                 "region": {
@@ -3687,6 +3762,17 @@
                 "region": {
                   "byteLength": 7,
                   "byteOffset": 147
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedFunctionPointer.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 771
                 }
               }
             },
