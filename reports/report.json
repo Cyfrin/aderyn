@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 59,
-    "total_sloc": 1613
+    "total_source_units": 60,
+    "total_sloc": 1620
   },
   "files_details": {
     "files_details": [
@@ -100,6 +100,10 @@
       {
         "file_path": "src/OnceModifierExample.sol",
         "n_sloc": 8
+      },
+      {
+        "file_path": "src/RTLO.sol",
+        "n_sloc": 7
       },
       {
         "file_path": "src/RevertsAndRequriesInLoops.sol",
@@ -244,7 +248,7 @@
     ]
   },
   "issue_count": {
-    "high": 22,
+    "high": 23,
     "low": 23
   },
   "high_issues": {
@@ -1370,6 +1374,19 @@
             "line_no": 28,
             "src": "566:5",
             "src_char": "566:5"
+          }
+        ]
+      },
+      {
+        "title": "RTLO character detected in file. \\u{202e}",
+        "description": "Right to left override character may be misledaing and cause potential attacks by visually misordering method arguments!",
+        "detector_name": "rtlo",
+        "instances": [
+          {
+            "contract_path": "src/RTLO.sol",
+            "line_no": 3,
+            "src": "33:157",
+            "src_char": "33:155"
           }
         ]
       },
@@ -2930,6 +2947,7 @@
     "yul-return",
     "state-variable-shadowing",
     "tautological-compare",
+    "rtlo",
     "unchecked-return",
     "dangerous-unary-operator"
   ]

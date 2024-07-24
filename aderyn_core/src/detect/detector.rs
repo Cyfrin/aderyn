@@ -11,7 +11,7 @@ use crate::{
             DelegateCallInLoopDetector, DynamicArrayLengthAssignmentDetector,
             EnumerableLoopRemovalDetector, ExperimentalEncoderDetector,
             IncorrectShiftOrderDetector, IncorrectUseOfCaretOperatorDetector,
-            MultipleConstructorsDetector, NestedStructInMappingDetector,
+            MultipleConstructorsDetector, NestedStructInMappingDetector, RTLODetector,
             ReusedContractNameDetector, SelfdestructIdentifierDetector,
             StateVariableShadowingDetector, StorageArrayEditWithMemoryDetector,
             TautologicalCompareDetector, UncheckedReturnDetector,
@@ -84,6 +84,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<YulReturnDetector>::default(),
         Box::<StateVariableShadowingDetector>::default(),
         Box::<TautologicalCompareDetector>::default(),
+        Box::<RTLODetector>::default(),
         Box::<UncheckedReturnDetector>::default(),
         Box::<DangerousUnaryOperatorDetector>::default(),
     ]
@@ -140,6 +141,8 @@ pub(crate) enum IssueDetectorNamePool {
     YulReturn,
     StateVariableShadowing,
     TautologicalCompare,
+    #[allow(clippy::upper_case_acronyms)]
+    RTLO,
     UncheckedReturn,
     DangerousUnaryOperator,
     // NOTE: `Undecided` will be the default name (for new bots).
@@ -265,6 +268,7 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::TautologicalCompare => {
             Some(Box::<TautologicalCompareDetector>::default())
         }
+        IssueDetectorNamePool::RTLO => Some(Box::<RTLODetector>::default()),
         IssueDetectorNamePool::UncheckedReturn => Some(Box::<UncheckedReturnDetector>::default()),
         IssueDetectorNamePool::DangerousUnaryOperator => {
             Some(Box::<DangerousUnaryOperatorDetector>::default())

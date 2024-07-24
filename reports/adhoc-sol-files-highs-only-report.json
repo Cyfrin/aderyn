@@ -169,6 +169,7 @@
     "yul-return",
     "state-variable-shadowing",
     "tautological-compare",
+    "rtlo",
     "unchecked-return",
     "dangerous-unary-operator"
   ]
