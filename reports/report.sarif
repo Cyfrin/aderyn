@@ -1941,19 +1941,75 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+<<<<<<< HEAD
                   "uri": "src/UninitializedFunctionPointer.sol"
                 },
                 "region": {
                   "byteLength": 7,
                   "byteOffset": 147
+=======
+                  "uri": "src/UncheckedReturn.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 279
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedReturn.sol"
+                },
+                "region": {
+                  "byteLength": 47,
+                  "byteOffset": 575
+>>>>>>> dev
                 }
               }
             }
           ],
           "message": {
+<<<<<<< HEAD
             "text": "Initialize the function pointer"
           },
           "ruleId": "uninitialized-function-pointer"
+=======
+            "text": "Function returns a value but it is ignored."
+          },
+          "ruleId": "unchecked-return"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DangerousUnaryOperator.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 220
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DangerousUnaryOperator.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 247
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Potentially mistakened `=+` for `+=` or `=-` for `-=`. Please include a space in between."
+          },
+          "ruleId": "dangerous-unary-operator"
+>>>>>>> dev
         },
         {
           "level": "note",
@@ -2329,6 +2385,17 @@
                 },
                 "region": {
                   "byteLength": 32,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DangerousUnaryOperator.sol"
+                },
+                "region": {
+                  "byteLength": 23,
                   "byteOffset": 32
                 }
               }
@@ -3001,33 +3068,68 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+<<<<<<< HEAD
                   "uri": "src/UninitializedFunctionPointer.sol"
                 },
                 "region": {
                   "byteLength": 2,
                   "byteOffset": 241
+=======
+                  "uri": "src/UncheckedReturn.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 607
+>>>>>>> dev
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
+<<<<<<< HEAD
                   "uri": "src/UninitializedFunctionPointer.sol"
                 },
                 "region": {
                   "byteLength": 2,
                   "byteOffset": 392
+=======
+                  "uri": "src/UncheckedReturn.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 805
+>>>>>>> dev
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
+<<<<<<< HEAD
                   "uri": "src/UninitializedFunctionPointer.sol"
                 },
                 "region": {
                   "byteLength": 2,
                   "byteOffset": 464
+=======
+                  "uri": "src/UncheckedReturn.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 995
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedReturn.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 1190
+>>>>>>> dev
                 }
               }
             },
@@ -3081,6 +3183,17 @@
                 "region": {
                   "byteLength": 70,
                   "byteOffset": 413
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedReturn.sol"
+                },
+                "region": {
+                  "byteLength": 30,
+                  "byteOffset": 297
                 }
               }
             },

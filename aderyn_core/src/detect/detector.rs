@@ -7,14 +7,16 @@ use crate::{
     detect::{
         high::{
             ArbitraryTransferFromDetector, AvoidAbiEncodePackedDetector,
-            BlockTimestampDeadlineDetector, DelegateCallInLoopDetector,
-            DynamicArrayLengthAssignmentDetector, EnumerableLoopRemovalDetector,
-            ExperimentalEncoderDetector, IncorrectShiftOrderDetector,
-            IncorrectUseOfCaretOperatorDetector, MultipleConstructorsDetector,
-            NestedStructInMappingDetector, ReusedContractNameDetector,
-            SelfdestructIdentifierDetector, StateVariableShadowingDetector,
-            StorageArrayEditWithMemoryDetector, UninitializedStateVariableDetector,
-            UnprotectedInitializerDetector, UnsafeCastingDetector, YulReturnDetector,
+            BlockTimestampDeadlineDetector, DangerousUnaryOperatorDetector,
+            DelegateCallInLoopDetector, DynamicArrayLengthAssignmentDetector,
+            EnumerableLoopRemovalDetector, ExperimentalEncoderDetector,
+            IncorrectShiftOrderDetector, IncorrectUseOfCaretOperatorDetector,
+            MultipleConstructorsDetector, NestedStructInMappingDetector,
+            ReusedContractNameDetector, SelfdestructIdentifierDetector,
+            StateVariableShadowingDetector, StorageArrayEditWithMemoryDetector,
+            UncheckedReturnDetector, UninitializedFunctionPointerDetector,
+            UninitializedStateVariableDetector, UnprotectedInitializerDetector,
+            UnsafeCastingDetector, YulReturnDetector,
         },
         low::{
             CentralizationRiskDetector, ConstantsInsteadOfLiteralsDetector,
@@ -84,6 +86,8 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<YulReturnDetector>::default(),
         Box::<StateVariableShadowingDetector>::default(),
         Box::<UninitializedFunctionPointerDetector>::default(),
+        Box::<UncheckedReturnDetector>::default(),
+        Box::<DangerousUnaryOperatorDetector>::default(),
     ]
 }
 
@@ -138,6 +142,8 @@ pub(crate) enum IssueDetectorNamePool {
     YulReturn,
     StateVariableShadowing,
     UninitializedFunctionPointer,
+    UncheckedReturn,
+    DangerousUnaryOperator,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -260,6 +266,10 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         }
         IssueDetectorNamePool::UninitializedFunctionPointer => {
             Some(Box::<UninitializedFunctionPointerDetector>::default())
+        }
+        IssueDetectorNamePool::UncheckedReturn => Some(Box::<UncheckedReturnDetector>::default()),
+        IssueDetectorNamePool::DangerousUnaryOperator => {
+            Some(Box::<DangerousUnaryOperatorDetector>::default())
         }
         IssueDetectorNamePool::Undecided => None,
     }
