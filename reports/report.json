@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 59,
-    "total_sloc": 1603
+    "total_source_units": 60,
+    "total_sloc": 1620
   },
   "files_details": {
     "files_details": [
@@ -130,6 +130,10 @@
         "n_sloc": 8
       },
       {
+        "file_path": "src/TautologicalCompare.sol",
+        "n_sloc": 17
+      },
+      {
         "file_path": "src/TestERC20.sol",
         "n_sloc": 62
       },
@@ -244,7 +248,7 @@
     ]
   },
   "issue_count": {
-    "high": 22,
+    "high": 23,
     "low": 23
   },
   "high_issues": {
@@ -1343,6 +1347,37 @@
         ]
       },
       {
+        "title": "Tautological comparison.",
+        "description": "The left hand side and the right hand side of the binary operation has the same value. This makes the condition always true or always false.",
+        "detector_name": "tautological-compare",
+        "instances": [
+          {
+            "contract_path": "src/TautologicalCompare.sol",
+            "line_no": 13,
+            "src": "255:6",
+            "src_char": "255:6"
+          },
+          {
+            "contract_path": "src/TautologicalCompare.sol",
+            "line_no": 18,
+            "src": "359:6",
+            "src_char": "359:6"
+          },
+          {
+            "contract_path": "src/TautologicalCompare.sol",
+            "line_no": 23,
+            "src": "463:5",
+            "src_char": "463:5"
+          },
+          {
+            "contract_path": "src/TautologicalCompare.sol",
+            "line_no": 28,
+            "src": "566:5",
+            "src_char": "566:5"
+          }
+        ]
+      },
+      {
         "title": "RTLO character detected in file. \\u{202e}",
         "description": "Right to left override character may be misledaing and cause potential attacks by visually misordering method arguments!",
         "detector_name": "rtlo",
@@ -2244,6 +2279,12 @@
             "src_char": "32:23"
           },
           {
+            "contract_path": "src/TautologicalCompare.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/UnsafeERC721Mint.sol",
             "line_no": 2,
             "src": "32:23",
@@ -2718,6 +2759,12 @@
             "src_char": "528:12"
           },
           {
+            "contract_path": "src/TautologicalCompare.sol",
+            "line_no": 11,
+            "src": "186:1",
+            "src_char": "186:1"
+          },
+          {
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 59,
             "src": "4611:27",
@@ -2899,6 +2946,7 @@
     "incorrect-caret-operator",
     "yul-return",
     "state-variable-shadowing",
+    "tautological-compare",
     "rtlo",
     "unchecked-return",
     "dangerous-unary-operator"
