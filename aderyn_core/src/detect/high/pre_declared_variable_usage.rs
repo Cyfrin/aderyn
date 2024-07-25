@@ -1,14 +1,12 @@
 use std::collections::{BTreeMap, HashSet};
-use std::convert::identity;
 use std::error::Error;
 
 use crate::ast::{ASTNode, NodeID};
 
 use crate::capture;
-use crate::context::browser::{
-    AppearsAfterNodeLocation, ExtractIdentifiers, ExtractVariableDeclarations,
-};
+use crate::context::browser::{ExtractIdentifiers, ExtractVariableDeclarations};
 use crate::detect::detector::IssueDetectorNamePool;
+use crate::detect::helpers;
 use crate::{
     context::workspace_context::WorkspaceContext,
     detect::detector::{IssueDetector, IssueSeverity},
@@ -60,31 +58,15 @@ impl IssueDetector for PreDeclaredLocalVariableUsageDetector {
                     if let Some(ASTNode::VariableDeclaration(variable_declaration)) =
                         context.nodes.get(&id)
                     {
-                        let src_location = used.src.to_string();
+                        let used_offset = helpers::get_node_offset(&used.into());
+                        let declaration_offset =
+                            helpers::get_node_offset(&variable_declaration.into());
 
-                        let chopped_location = match src_location.rfind(':') {
-                            Some(index) => &src_location[..index],
-                            None => &src_location, // No colon found, return the original string
-                        }
-                        .to_string();
-
-                        let (fo, _) = chopped_location.split_once(':').unwrap();
-
-                        let src_location2 = variable_declaration.src.to_string();
-
-                        let chopped_location2 = match src_location2.rfind(':') {
-                            Some(index) => &src_location2[..index],
-                            None => &src_location2, // No colon found, return the original string
-                        }
-                        .to_string();
-
-                        let (so, _) = chopped_location2.split_once(':').unwrap();
-
-                        if let Ok(fo) = fo.parse::<usize>() {
-                            if let Ok(so) = so.parse::<usize>() {
-                                if fo < so {
-                                    capture!(self, context, used);
-                                }
+                        if let (Some(used_offset), Some(declaration_offset)) =
+                            (used_offset, declaration_offset)
+                        {
+                            if used_offset < declaration_offset {
+                                capture!(self, context, used);
                             }
                         }
                     }

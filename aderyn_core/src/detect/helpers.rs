@@ -122,3 +122,16 @@ pub fn get_literal_value_or_constant_variable_value(
     }
     None
 }
+
+pub fn get_node_offset(node: &ASTNode) -> Option<usize> {
+    let src_location = node.src()?;
+
+    let chopped_location = match src_location.rfind(':') {
+        Some(index) => &src_location[..index],
+        None => src_location, // No colon found, return the original string
+    }
+    .to_string();
+
+    let (offset, _) = chopped_location.split_once(':').unwrap();
+    offset.parse::<usize>().ok()
+}
