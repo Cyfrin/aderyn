@@ -1956,6 +1956,141 @@
           "ruleId": "unchecked-send"
         },
         {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TautologicalCompare.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 255
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TautologicalCompare.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 359
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TautologicalCompare.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 463
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TautologicalCompare.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 566
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "The left hand side and the right hand side of the binary operation has the same value. This makes the condition always true or always false."
+          },
+          "ruleId": "tautological-compare"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/RTLO.sol"
+                },
+                "region": {
+                  "byteLength": 157,
+                  "byteOffset": 33
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Right to left override character may be misledaing and cause potential attacks by visually misordering method arguments!"
+          },
+          "ruleId": "rtlo"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedReturn.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 279
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedReturn.sol"
+                },
+                "region": {
+                  "byteLength": 47,
+                  "byteOffset": 575
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Function returns a value but it is ignored."
+          },
+          "ruleId": "unchecked-return"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DangerousUnaryOperator.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 220
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DangerousUnaryOperator.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 247
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Potentially mistakened `=+` for `+=` or `=-` for `-=`. Please include a space in between."
+          },
+          "ruleId": "dangerous-unary-operator"
+        },
+        {
           "level": "note",
           "locations": [
             {
@@ -2329,6 +2464,17 @@
                 },
                 "region": {
                   "byteLength": 32,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DangerousUnaryOperator.sol"
+                },
+                "region": {
+                  "byteLength": 23,
                   "byteOffset": 32
                 }
               }
@@ -3001,6 +3147,50 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/UncheckedReturn.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 607
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedReturn.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 805
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedReturn.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 995
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedReturn.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 1190
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/eth2/DepositContract.sol"
                 },
                 "region": {
@@ -3048,6 +3238,17 @@
                 "region": {
                   "byteLength": 70,
                   "byteOffset": 413
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedReturn.sol"
+                },
+                "region": {
+                  "byteLength": 30,
+                  "byteOffset": 297
                 }
               }
             },
@@ -3388,6 +3589,17 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/T11sTranferer.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TautologicalCompare.sol"
                 },
                 "region": {
                   "byteLength": 23,
@@ -4260,6 +4472,17 @@
                 "region": {
                   "byteLength": 12,
                   "byteOffset": 528
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TautologicalCompare.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 186
                 }
               }
             },
