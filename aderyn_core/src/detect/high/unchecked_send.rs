@@ -56,7 +56,9 @@ impl IssueDetector for UncheckedSendDetector {
     }
 
     fn description(&self) -> String {
-        String::from("`address(payable?).send(address)` returns a boolean that must be used to verify if the transaction was successful")
+        String::from("The transaction `address(payable?).send(address)` may fail because of reasons like out-of-gas, \
+        invalid receipient address or revert from the recipient. Therefore, the boolean returned by this function call must be checked \
+        to be `true` in order to verify that the transaction was successful")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -100,7 +102,9 @@ mod unchecked_send_tests {
         // assert the description is correct
         assert_eq!(
             detector.description(),
-            String::from("`address(payable?).send(address)` returns a boolean that must be used to verify if the transaction was successful")
+            String::from("The transaction `address(payable?).send(address)` may fail because of reasons like out-of-gas, \
+            invalid receipient address or revert from the recipient. Therefore, the boolean returned by this function call must be checked \
+            to be `true` in order to verify that the transaction was successful")
         );
     }
 }

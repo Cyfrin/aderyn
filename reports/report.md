@@ -1319,7 +1319,7 @@ Description of the high issue.
 
 ## H-20: Unchecked `bool success` value for send call.
 
-`address(payable?).send(address)` returns a boolean that must be used to verify if the transaction was successful
+The transaction `address(payable?).send(address)` may fail because of reasons like out-of-gas, invalid receipient address or revert from the recipient. Therefore, the boolean returned by this function call must be checked to be `true` in order to verify that the transaction was successful
 
 <details><summary>1 Found Instances</summary>
 
