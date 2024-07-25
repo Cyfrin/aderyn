@@ -60,11 +60,32 @@ impl IssueDetector for PreDeclaredLocalVariableUsageDetector {
                     if let Some(ASTNode::VariableDeclaration(variable_declaration)) =
                         context.nodes.get(&id)
                     {
-                        if !used
-                            .appears_after(context, variable_declaration)
-                            .is_some_and(identity)
-                        {
-                            capture!(self, context, used);
+                        let src_location = used.src.to_string();
+
+                        let chopped_location = match src_location.rfind(':') {
+                            Some(index) => &src_location[..index],
+                            None => &src_location, // No colon found, return the original string
+                        }
+                        .to_string();
+
+                        let (fo, _) = chopped_location.split_once(':').unwrap();
+
+                        let src_location2 = variable_declaration.src.to_string();
+
+                        let chopped_location2 = match src_location2.rfind(':') {
+                            Some(index) => &src_location2[..index],
+                            None => &src_location2, // No colon found, return the original string
+                        }
+                        .to_string();
+
+                        let (so, _) = chopped_location2.split_once(':').unwrap();
+
+                        if let Ok(fo) = fo.parse::<usize>() {
+                            if let Ok(so) = so.parse::<usize>() {
+                                if fo < so {
+                                    capture!(self, context, used);
+                                }
+                            }
                         }
                     }
                 }
