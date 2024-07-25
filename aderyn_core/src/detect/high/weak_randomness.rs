@@ -1,7 +1,7 @@
 use std::collections::BTreeMap;
 use std::error::Error;
 
-use crate::ast::{Expression, FunctionCall, NodeID};
+use crate::ast::{Expression, FunctionCall, MemberAccess, NodeID};
 
 use crate::capture;
 use crate::detect::detector::IssueDetectorNamePool;
@@ -44,6 +44,30 @@ impl IssueDetector for WeakRandomnessDetector {
                         if let Some(Expression::FunctionCall(function_call)) = &var.initial_value {
                             if check_encode(function_call) {
                                 capture!(self, context, keccak);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // check for modulo operations on block.timestamp and block.number
+        for binary_operation in context.binary_operations().into_iter().filter(|b| b.operator == "%") {
+            if let Expression::MemberAccess(ref member_access) = *binary_operation.left_expression {
+                if check_operand(member_access) {
+                    capture!(self, context, binary_operation);
+                }
+            }
+
+            // if left operand is a variable, check its definition
+            if let Expression::Identifier(ref i) = *binary_operation.left_expression {
+                if let Some(node_id) = i.referenced_declaration {
+                    let decleration = context.get_parent(node_id);
+
+                    if let Some(ASTNode::VariableDeclarationStatement(var)) = decleration {
+                        if let Some(Expression::MemberAccess(member_access)) = &var.initial_value {
+                            if check_operand(member_access) {
+                                capture!(self, context, binary_operation);
                             }
                         }
                     }
@@ -97,6 +121,17 @@ fn check_encode(function_call: &FunctionCall) -> bool {
     false
 }
 
+// returns whether operand is block.timestamp or block.number
+fn check_operand(member_access: &MemberAccess) -> bool {
+    if vec!["timestamp", "number"].iter().any(|ma| {
+        ma == &member_access.member_name &&
+            matches!(*member_access.expression, Expression::Identifier(ref id) if id.name == "block")
+    }) {
+        return true;
+    }
+    false
+}
+
 #[cfg(test)]
 mod weak_randomness_detector_tests {
     use crate::detect::{detector::IssueDetector, high::weak_randomness::WeakRandomnessDetector};
@@ -112,7 +147,7 @@ mod weak_randomness_detector_tests {
         // assert that the detector found an issue
         assert!(found);
         // assert that the detector found the correct number of instances
-        assert_eq!(detector.instances().len(), 4);
+        assert_eq!(detector.instances().len(), 6);
         // assert the severity is high
         assert_eq!(
             detector.severity(),
