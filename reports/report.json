@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 60,
-    "total_sloc": 1620
+    "total_source_units": 61,
+    "total_sloc": 1629
   },
   "files_details": {
     "files_details": [
@@ -100,6 +100,10 @@
       {
         "file_path": "src/OnceModifierExample.sol",
         "n_sloc": 8
+      },
+      {
+        "file_path": "src/PreDeclaredVarUsage.sol",
+        "n_sloc": 9
       },
       {
         "file_path": "src/RTLO.sol",
@@ -248,7 +252,7 @@
     ]
   },
   "issue_count": {
-    "high": 23,
+    "high": 24,
     "low": 23
   },
   "high_issues": {
@@ -1427,6 +1431,19 @@
             "src_char": "247:10"
           }
         ]
+      },
+      {
+        "title": "Usage of variable before declaration.",
+        "description": "This is a bad practice that may lead to unintended consequences. Please declare the variable before using it.",
+        "detector_name": "pre-declared-local-variable-usage",
+        "instances": [
+          {
+            "contract_path": "src/PreDeclaredVarUsage.sol",
+            "line_no": 8,
+            "src": "196:1",
+            "src_char": "196:1"
+          }
+        ]
       }
     ]
   },
@@ -1663,6 +1680,12 @@
             "line_no": 1,
             "src": "0:24",
             "src_char": "0:24"
+          },
+          {
+            "contract_path": "src/PreDeclaredVarUsage.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
           },
           {
             "contract_path": "src/UsingSelfdestruct.sol",
@@ -1996,6 +2019,18 @@
             "line_no": 18,
             "src": "606:2",
             "src_char": "606:2"
+          },
+          {
+            "contract_path": "src/PreDeclaredVarUsage.sol",
+            "line_no": 8,
+            "src": "200:3",
+            "src_char": "200:3"
+          },
+          {
+            "contract_path": "src/PreDeclaredVarUsage.sol",
+            "line_no": 9,
+            "src": "222:3",
+            "src_char": "222:3"
           },
           {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
@@ -2949,6 +2984,7 @@
     "tautological-compare",
     "rtlo",
     "unchecked-return",
-    "dangerous-unary-operator"
+    "dangerous-unary-operator",
+    "pre-declared-local-variable-usage"
   ]
 }
