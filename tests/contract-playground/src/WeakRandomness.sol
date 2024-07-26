@@ -31,6 +31,16 @@ contract WeakRandomness {
         return a % b;
     }
 
+    function getRandomNumberUsingModulo3() external view returns (uint256) {
+        uint256 randomNumber = uint256(blockhash(block.number)) % 10;
+        return randomNumber;
+    }
+
+    function getRandomNumberUsingModulo4() external view returns (uint256) {
+        uint256 hash = uint256(blockhash(12345));
+        return hash % 10;
+    }
+
     // good
     function timestamp() external view returns (uint256) {
         return block.timestamp;
@@ -50,5 +60,9 @@ contract WeakRandomness {
 
     function moduloOperation(uint256 a, uint256 b) external pure returns (uint256) {
         return a % b;
+    }
+
+    function getBlockHashAsUint(uint256 blockNumber) external view returns (uint256) {
+        return uint256(blockhash(blockNumber));
     }
 }

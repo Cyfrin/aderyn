@@ -1,7 +1,7 @@
 use std::collections::BTreeMap;
 use std::error::Error;
 
-use crate::ast::{Expression, FunctionCall, MemberAccess, NodeID};
+use crate::ast::{Expression, FunctionCallKind, FunctionCall, NodeID};
 
 use crate::capture;
 use crate::detect::detector::IssueDetectorNamePool;
@@ -35,7 +35,7 @@ impl IssueDetector for WeakRandomnessDetector {
                 }
             }
 
-            // check if the variable is defined using encode or encodePacked
+            // get variable definition
             else if let Expression::Identifier(ref i) = *arg {
                 if let Some(node_id) = i.referenced_declaration {
                     let decleration = context.get_parent(node_id);
@@ -51,27 +51,26 @@ impl IssueDetector for WeakRandomnessDetector {
             }
         }
 
-        // check for modulo operations on block.timestamp and block.number
+        // check for modulo operations on block.timestamp, block.number and blockhash
         for binary_operation in context.binary_operations().into_iter().filter(|b| b.operator == "%") {
-            if let Expression::MemberAccess(ref member_access) = *binary_operation.left_expression {
-                if check_operand(member_access) {
-                    capture!(self, context, binary_operation);
-                }
-            }
 
-            // if left operand is a variable, check its definition
+            // if left operand is a variable, get its definition and perform check
             if let Expression::Identifier(ref i) = *binary_operation.left_expression {
                 if let Some(node_id) = i.referenced_declaration {
                     let decleration = context.get_parent(node_id);
 
                     if let Some(ASTNode::VariableDeclarationStatement(var)) = decleration {
-                        if let Some(Expression::MemberAccess(member_access)) = &var.initial_value {
-                            if check_operand(member_access) {
+                        if let Some(expression) = &var.initial_value {
+                            if check_operand(expression) {
                                 capture!(self, context, binary_operation);
+                                continue;
                             }
                         }
                     }
                 }
+            }
+            else if check_operand(&binary_operation.left_expression) {
+                capture!(self, context, binary_operation);
             }
         }
 
@@ -121,14 +120,32 @@ fn check_encode(function_call: &FunctionCall) -> bool {
     false
 }
 
-// returns whether operand is block.timestamp or block.number
-fn check_operand(member_access: &MemberAccess) -> bool {
-    if vec!["timestamp", "number"].iter().any(|ma| {
-        ma == &member_access.member_name &&
-            matches!(*member_access.expression, Expression::Identifier(ref id) if id.name == "block")
-    }) {
-        return true;
+// returns whether operand is dependent on block.timestamp, block.number or blockhash
+fn check_operand(operand: &Expression) -> bool {
+    match operand {
+        Expression::MemberAccess(member_access) => {
+            if vec!["timestamp", "number"].iter().any(|ma| {
+                ma == &member_access.member_name &&
+                matches!(*member_access.expression, Expression::Identifier(ref id) if id.name == "block")
+            }) {
+                return true;
+            }
+        },
+        Expression::FunctionCall(function_call) => {
+            if function_call.kind == FunctionCallKind::TypeConversion {
+                // type conversion must have exactly one argument
+                let arg = function_call.arguments.get(0).unwrap();
+
+                if let Expression::FunctionCall(ref inner_function_call) = *arg {
+                    if matches!(*inner_function_call.expression, Expression::Identifier(ref id) if id.name == "blockhash") {
+                        return true;
+                    }
+                }
+            }
+        },
+        _ => ()
     }
+
     false
 }
 
@@ -147,7 +164,7 @@ mod weak_randomness_detector_tests {
         // assert that the detector found an issue
         assert!(found);
         // assert that the detector found the correct number of instances
-        assert_eq!(detector.instances().len(), 6);
+        assert_eq!(detector.instances().len(), 8);
         // assert the severity is high
         assert_eq!(
             detector.severity(),
