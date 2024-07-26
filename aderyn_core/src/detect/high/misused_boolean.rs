@@ -1,4 +1,5 @@
-use crate::ast::{Expression, LiteralKind, NodeID};
+use crate::ast::NodeID;
+use crate::detect::helpers::is_constant_boolean;
 use crate::issue_detector;
 use eyre::Result;
 
@@ -12,60 +13,23 @@ issue_detector! {
 
     |context| {
         for binary_operation in context.binary_operations() {
-            if binary_operation.operator == "||"
+            if (binary_operation.operator == "||" || binary_operation.operator == "&&")
                 && [
                     binary_operation.left_expression.as_ref(),
                     binary_operation.right_expression.as_ref(),
                 ]
                 .iter()
-                .any(|&operand| {
-                    if let Expression::Literal(literal) = operand {
-                        if literal
-                            .type_descriptions
-                            .type_string
-                            .as_ref()
-                            .is_some_and(|type_string| type_string == "bool")
-                        {
-                            return literal.value.as_ref().is_some_and(|value| value == "true");
-                        }
-                    }
-                    false
-                })
+                .any(|&operand| is_constant_boolean(operand))
             {
                 grab!(binary_operation);
             }
 
-            if binary_operation.operator == "&&"
-                && [
-                    binary_operation.left_expression.as_ref(),
-                    binary_operation.right_expression.as_ref(),
-                ]
-                .iter()
-                .any(|&operand| {
-                    if let Expression::Literal(literal) = operand {
-                        if literal
-                            .type_descriptions
-                            .type_string
-                            .as_ref()
-                            .is_some_and(|type_string| type_string == "bool")
-                        {
-                            return literal.value.as_ref().is_some_and(|value| value == "false");
-                        }
-                    }
-                    false
-                })
-            {
-                grab!(binary_operation);
-            }
         }
 
-        for if_statement in context.if_statements() {
-            if let Expression::Literal(literal) = &if_statement.condition {
-                if literal.kind == LiteralKind::Bool &&
-                    literal.value.as_ref().is_some_and(|value| value == "false" || value == "true") {
-                    grab!(literal);
-                }
-            }
+        for if_statement in context.if_statements()
+            .iter()
+            .filter(|statement| is_constant_boolean(&statement.condition)) {
+            grab!(if_statement);
         }
 
     }
@@ -87,6 +51,6 @@ mod misused_boolean_tests {
         // assert that the detector found an issue
         assert!(found);
         // assert that the detector found the correct number of instances
-        assert_eq!(detector.instances().len(), 6);
+        assert_eq!(detector.instances().len(), 8);
     }
 }
