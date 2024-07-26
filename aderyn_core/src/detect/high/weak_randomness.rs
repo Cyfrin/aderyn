@@ -27,22 +27,24 @@ impl IssueDetector for WeakRandomnessDetector {
 
         for keccak in keccaks {
             // keccak256 must have exactly one argument
-            let arg = keccak.arguments.get(0).unwrap();
-
-            if let Expression::FunctionCall(ref function_call) = *arg {
-                if check_encode(function_call) {
-                    capture!(self, context, keccak);
+            if let Some(arg) = keccak.arguments.first() {
+                if let Expression::FunctionCall(ref function_call) = *arg {
+                    if check_encode(function_call) {
+                        capture!(self, context, keccak);
+                    }
                 }
-            }
-            // get variable definition
-            else if let Expression::Identifier(ref i) = *arg {
-                if let Some(node_id) = i.referenced_declaration {
-                    let decleration = context.get_parent(node_id);
+                // get variable definition
+                else if let Expression::Identifier(ref i) = *arg {
+                    if let Some(node_id) = i.referenced_declaration {
+                        let decleration = context.get_parent(node_id);
 
-                    if let Some(ASTNode::VariableDeclarationStatement(var)) = decleration {
-                        if let Some(Expression::FunctionCall(function_call)) = &var.initial_value {
-                            if check_encode(function_call) {
-                                capture!(self, context, keccak);
+                        if let Some(ASTNode::VariableDeclarationStatement(var)) = decleration {
+                            if let Some(Expression::FunctionCall(function_call)) =
+                                &var.initial_value
+                            {
+                                if check_encode(function_call) {
+                                    capture!(self, context, keccak);
+                                }
                             }
                         }
                     }
@@ -116,7 +118,7 @@ fn check_encode(function_call: &FunctionCall) -> bool {
         if member_access.member_name == "encodePacked" || member_access.member_name == "encode" {
             for argument in &function_call.arguments {
                 if let Expression::MemberAccess(ref member_access) = *argument {
-                    if vec!["timestamp", "number"].iter().any(|ma| {
+                    if ["timestamp", "number"].iter().any(|ma| {
                         ma == &member_access.member_name &&
                         matches!(*member_access.expression, Expression::Identifier(ref id) if id.name == "block")
                     }) {
@@ -133,7 +135,7 @@ fn check_encode(function_call: &FunctionCall) -> bool {
 fn check_operand(operand: &Expression) -> bool {
     match operand {
         Expression::MemberAccess(member_access) => {
-            if vec!["timestamp", "number"].iter().any(|ma| {
+            if ["timestamp", "number"].iter().any(|ma| {
                 ma == &member_access.member_name &&
                 matches!(*member_access.expression, Expression::Identifier(ref id) if id.name == "block")
             }) {
@@ -143,9 +145,7 @@ fn check_operand(operand: &Expression) -> bool {
         Expression::FunctionCall(function_call) => {
             if function_call.kind == FunctionCallKind::TypeConversion {
                 // type conversion must have exactly one argument
-                let arg = function_call.arguments.get(0).unwrap();
-
-                if let Expression::FunctionCall(ref inner_function_call) = *arg {
+                if let Some(Expression::FunctionCall(ref inner_function_call)) = function_call.arguments.first() {
                     if matches!(*inner_function_call.expression, Expression::Identifier(ref id) if id.name == "blockhash") {
                         return true;
                     }
