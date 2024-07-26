@@ -168,6 +168,10 @@
     "incorrect-caret-operator",
     "yul-return",
     "state-variable-shadowing",
-    "misused-boolean"
+    "misused-boolean",
+    "tautological-compare",
+    "rtlo",
+    "unchecked-return",
+    "dangerous-unary-operator"
   ]
 }
