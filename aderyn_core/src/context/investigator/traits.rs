@@ -17,7 +17,7 @@ pub trait StandardInvestigatorVisitor {
     /// is essential because the tracker can get to take a look at not just the
     /// downstream functions and modifiers, but also the entry points that have invoked it.
     fn visit_entry_point(&mut self, node: &ASTNode) -> eyre::Result<()> {
-        self.visit_fallback(node)
+        self.visit_any(node)
     }
 
     /// Meant to be invoked while traversing [`crate::context::workspace_context::WorkspaceContext::forward_callgraph`]
@@ -25,7 +25,7 @@ pub trait StandardInvestigatorVisitor {
         &mut self,
         node: &FunctionDefinition,
     ) -> eyre::Result<()> {
-        self.visit_fallback(&(node.into()))
+        self.visit_any(&(node.into()))
     }
 
     /// Meant to be invoked while traversing [`crate::context::workspace_context::WorkspaceContext::reverse_callgraph`]
@@ -33,7 +33,7 @@ pub trait StandardInvestigatorVisitor {
         &mut self,
         node: &FunctionDefinition,
     ) -> eyre::Result<()> {
-        self.visit_fallback(&(node.into()))
+        self.visit_any(&(node.into()))
     }
 
     /// Meant to be invoked while traversing [`crate::context::workspace_context::WorkspaceContext::forward_callgraph`]
@@ -41,7 +41,7 @@ pub trait StandardInvestigatorVisitor {
         &mut self,
         node: &ModifierDefinition,
     ) -> eyre::Result<()> {
-        self.visit_fallback(&(node.into()))
+        self.visit_any(&(node.into()))
     }
 
     /// Meant to be invoked while traversing [`crate::context::workspace_context::WorkspaceContext::reverse_callgraph`]
@@ -49,7 +49,7 @@ pub trait StandardInvestigatorVisitor {
         &mut self,
         node: &ModifierDefinition,
     ) -> eyre::Result<()> {
-        self.visit_fallback(&(node.into()))
+        self.visit_any(&(node.into()))
     }
 
     /// Read as "upstream's downstream-side-effect" function definition
@@ -59,7 +59,7 @@ pub trait StandardInvestigatorVisitor {
         &mut self,
         node: &FunctionDefinition,
     ) -> eyre::Result<()> {
-        self.visit_fallback(&(node.into()))
+        self.visit_any(&(node.into()))
     }
 
     /// Read as "upstream's downstream-side-effect" modifier definition
@@ -69,10 +69,10 @@ pub trait StandardInvestigatorVisitor {
         &mut self,
         node: &ModifierDefinition,
     ) -> eyre::Result<()> {
-        self.visit_fallback(&(node.into()))
+        self.visit_any(&(node.into()))
     }
 
-    fn visit_fallback(&mut self, _node: &ASTNode) -> eyre::Result<()> {
+    fn visit_any(&mut self, _node: &ASTNode) -> eyre::Result<()> {
         Ok(())
     }
 }

@@ -106,7 +106,7 @@ pub struct MsgSenderAndCallWithValueTracker {
 }
 
 impl StandardInvestigatorVisitor for MsgSenderAndCallWithValueTracker {
-    fn visit_fallback(&mut self, node: &ASTNode) -> eyre::Result<()> {
+    fn visit_any(&mut self, node: &ASTNode) -> eyre::Result<()> {
         if !self.has_msg_sender_checks && helpers::has_msg_sender_binary_operation(node) {
             self.has_msg_sender_checks = true;
         }

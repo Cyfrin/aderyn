@@ -100,10 +100,7 @@ struct SubTracker {
 }
 
 impl StandardInvestigatorVisitor for SubTracker {
-    fn visit_fallback(
-        &mut self,
-        node: &crate::context::workspace_context::ASTNode,
-    ) -> eyre::Result<()> {
+    fn visit_any(&mut self, node: &crate::context::workspace_context::ASTNode) -> eyre::Result<()> {
         let member_accesses = ExtractMemberAccesses::from(node).extracted;
         self.sub_pattern_ids.extend(
             member_accesses
