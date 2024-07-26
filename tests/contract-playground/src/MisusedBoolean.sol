@@ -2,7 +2,7 @@ pragma solidity 0.4.22;
 
 contract MisusedBoolean {
 
-    bool public NO = false;
+    bool public constant NO = false;
 
     function isEven(uint256 num) internal returns(bool) {
         return num % 2 == 0;
@@ -64,7 +64,6 @@ contract MisusedBoolean {
         return 0;
     }
 
-    // TODO: Add support for variable declaration
     function misuse9(uint256 num) external returns(uint256) {
         if (isEven(num) && NO) {
             return num * num;

@@ -1945,7 +1945,7 @@
                 },
                 "region": {
                   "byteLength": 19,
-                  "byteOffset": 248
+                  "byteOffset": 257
                 }
               }
             },
@@ -1956,7 +1956,7 @@
                 },
                 "region": {
                   "byteLength": 20,
-                  "byteOffset": 410
+                  "byteOffset": 419
                 }
               }
             },
@@ -1967,7 +1967,7 @@
                 },
                 "region": {
                   "byteLength": 20,
-                  "byteOffset": 573
+                  "byteOffset": 582
                 }
               }
             },
@@ -1978,7 +1978,7 @@
                 },
                 "region": {
                   "byteLength": 19,
-                  "byteOffset": 736
+                  "byteOffset": 745
                 }
               }
             },
@@ -1989,7 +1989,7 @@
                 },
                 "region": {
                   "byteLength": 51,
-                  "byteOffset": 899
+                  "byteOffset": 908
                 }
               }
             },
@@ -2000,7 +2000,7 @@
                 },
                 "region": {
                   "byteLength": 52,
-                  "byteOffset": 1051
+                  "byteOffset": 1060
                 }
               }
             },
@@ -2011,7 +2011,7 @@
                 },
                 "region": {
                   "byteLength": 53,
-                  "byteOffset": 1204
+                  "byteOffset": 1213
                 }
               }
             },
@@ -2022,7 +2022,29 @@
                 },
                 "region": {
                   "byteLength": 21,
-                  "byteOffset": 1357
+                  "byteOffset": 1366
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MisusedBoolean.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 1530
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MisusedBoolean.sol"
+                },
+                "region": {
+                  "byteLength": 18,
+                  "byteOffset": 1691
                 }
               }
             }

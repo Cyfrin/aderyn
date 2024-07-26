@@ -19,7 +19,7 @@ issue_detector! {
                     binary_operation.right_expression.as_ref(),
                 ]
                 .iter()
-                .any(|&operand| is_constant_boolean(operand))
+                .any(|&operand| is_constant_boolean(context, operand))
             {
                 grab!(binary_operation);
             }
@@ -28,7 +28,7 @@ issue_detector! {
 
         for if_statement in context.if_statements()
             .iter()
-            .filter(|statement| is_constant_boolean(&statement.condition)) {
+            .filter(|statement| is_constant_boolean(context, &statement.condition)) {
             grab!(if_statement);
         }
 
@@ -51,6 +51,6 @@ mod misused_boolean_tests {
         // assert that the detector found an issue
         assert!(found);
         // assert that the detector found the correct number of instances
-        assert_eq!(detector.instances().len(), 8);
+        assert_eq!(detector.instances().len(), 10);
     }
 }

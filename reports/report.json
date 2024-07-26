@@ -1358,50 +1358,62 @@
           {
             "contract_path": "src/MisusedBoolean.sol",
             "line_no": 12,
-            "src": "248:19",
-            "src_char": "248:19"
+            "src": "257:19",
+            "src_char": "257:19"
           },
           {
             "contract_path": "src/MisusedBoolean.sol",
             "line_no": 19,
-            "src": "410:20",
-            "src_char": "410:20"
+            "src": "419:20",
+            "src_char": "419:20"
           },
           {
             "contract_path": "src/MisusedBoolean.sol",
             "line_no": 26,
-            "src": "573:20",
-            "src_char": "573:20"
+            "src": "582:20",
+            "src_char": "582:20"
           },
           {
             "contract_path": "src/MisusedBoolean.sol",
             "line_no": 33,
-            "src": "736:19",
-            "src_char": "736:19"
+            "src": "745:19",
+            "src_char": "745:19"
           },
           {
             "contract_path": "src/MisusedBoolean.sol",
             "line_no": 40,
-            "src": "899:51",
-            "src_char": "899:51"
+            "src": "908:51",
+            "src_char": "908:51"
           },
           {
             "contract_path": "src/MisusedBoolean.sol",
             "line_no": 47,
-            "src": "1051:52",
-            "src_char": "1051:52"
+            "src": "1060:52",
+            "src_char": "1060:52"
           },
           {
             "contract_path": "src/MisusedBoolean.sol",
             "line_no": 54,
-            "src": "1204:53",
-            "src_char": "1204:53"
+            "src": "1213:53",
+            "src_char": "1213:53"
           },
           {
             "contract_path": "src/MisusedBoolean.sol",
             "line_no": 61,
-            "src": "1357:21",
-            "src_char": "1357:21"
+            "src": "1366:21",
+            "src_char": "1366:21"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 68,
+            "src": "1530:17",
+            "src_char": "1530:17"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 75,
+            "src": "1691:18",
+            "src_char": "1691:18"
           }
         ]
       },

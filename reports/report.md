@@ -1321,7 +1321,7 @@ Description of the high issue.
 
 The patterns `if (… || true)` and `if (.. && false)` will always evaluate to true and false respectively.
 
-<details><summary>8 Found Instances</summary>
+<details><summary>10 Found Instances</summary>
 
 
 - Found in src/MisusedBoolean.sol [Line: 12](../tests/contract-playground/src/MisusedBoolean.sol#L12)
@@ -1370,6 +1370,18 @@ The patterns `if (… || true)` and `if (.. && false)` will always evaluate to t
 
 	```solidity
 	        if (isEven(num) && !false) {
+	```
+
+- Found in src/MisusedBoolean.sol [Line: 68](../tests/contract-playground/src/MisusedBoolean.sol#L68)
+
+	```solidity
+	        if (isEven(num) && NO) {
+	```
+
+- Found in src/MisusedBoolean.sol [Line: 75](../tests/contract-playground/src/MisusedBoolean.sol#L75)
+
+	```solidity
+	        if (isEven(num) && !NO) {
 	```
 
 </details>
