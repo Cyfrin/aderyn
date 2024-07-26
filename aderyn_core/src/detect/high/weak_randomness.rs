@@ -74,6 +74,14 @@ impl IssueDetector for WeakRandomnessDetector {
             }
         }
 
+        // check if contract uses block.prevrandao
+        for member_access in context.member_accesses() {
+            if member_access.member_name == "prevrandao" &&
+                matches!(*member_access.expression, Expression::Identifier(ref id) if id.name == "block") {
+                    capture!(self, context, member_access);
+                }
+        }
+
         Ok(!self.found_instances.is_empty())
     }
 
@@ -104,14 +112,11 @@ fn check_encode(function_call: &FunctionCall) -> bool {
         if member_access.member_name == "encodePacked" || member_access.member_name == "encode" {
             for argument in &function_call.arguments {
                 if let Expression::MemberAccess(ref member_access) = *argument {
-                    if member_access.member_name == "timestamp" || member_access.member_name == "number" {
-                        if let Expression::Identifier(ref identifier) =
-                            *member_access.expression
-                            {
-                                if identifier.name == "block" {
-                                    return true;
-                                }
-                            }
+                    if vec!["timestamp", "number"].iter().any(|ma| {
+                        ma == &member_access.member_name &&
+                        matches!(*member_access.expression, Expression::Identifier(ref id) if id.name == "block")
+                    }) {
+                        return true;
                     }
                 }
             }
@@ -164,7 +169,7 @@ mod weak_randomness_detector_tests {
         // assert that the detector found an issue
         assert!(found);
         // assert that the detector found the correct number of instances
-        assert_eq!(detector.instances().len(), 8);
+        assert_eq!(detector.instances().len(), 9);
         // assert the severity is high
         assert_eq!(
             detector.severity(),

@@ -3,7 +3,7 @@ pragma solidity 0.8.20;
 
 contract WeakRandomness {
     function getRandomNumber1() external view returns (uint256) {
-        uint256 randomNumber = uint256(keccak256(abi.encodePacked(msg.sender, block.prevrandao, block.timestamp)));
+        uint256 randomNumber = uint256(keccak256(abi.encodePacked(msg.sender, block.number, block.timestamp)));
         return randomNumber;
     }
 
@@ -41,6 +41,11 @@ contract WeakRandomness {
         return hash % 10;
     }
 
+    function getRandomNumberUsingPrevrandao() external view returns (uint256) {
+        uint256 randomNumber = block.prevrandao;
+        return randomNumber;
+    }
+
     // good
     function timestamp() external view returns (uint256) {
         return block.timestamp;
@@ -64,5 +69,9 @@ contract WeakRandomness {
 
     function getBlockHashAsUint(uint256 blockNumber) external view returns (uint256) {
         return uint256(blockhash(blockNumber));
+    }
+
+    function getDifficulty() external view returns (uint256) {
+        return block.difficulty;
     }
 }
