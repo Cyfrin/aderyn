@@ -182,6 +182,10 @@
     "yul-return",
     "state-variable-shadowing",
     "send-ether-no-checks",
-    "delegate-call-unchecked-address"
+    "delegate-call-unchecked-address",
+    "tautological-compare",
+    "rtlo",
+    "unchecked-return",
+    "dangerous-unary-operator"
   ]
 }

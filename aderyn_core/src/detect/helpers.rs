@@ -1,13 +1,16 @@
 use semver::{Error, VersionReq};
 
 use crate::{
-    ast::{Expression, FunctionDefinition, MemberAccess, NodeID, PragmaDirective, Visibility},
+    ast::{
+        ASTNode, Expression, FunctionDefinition, MemberAccess, NodeID, PragmaDirective,
+        VariableDeclaration, Visibility,
+    },
     context::{
         browser::{
             ExtractBinaryOperations, ExtractFunctionCallOptions, ExtractFunctionCalls,
             ExtractMemberAccesses,
         },
-        workspace_context::{ASTNode, WorkspaceContext},
+        workspace_context::WorkspaceContext,
     },
 };
 
@@ -192,4 +195,29 @@ pub fn has_binary_checks_on_some_address(ast_node: &ASTNode) -> bool {
             })
         })
     })
+}
+
+pub fn get_literal_value_or_constant_variable_value(
+    node_id: NodeID,
+    context: &WorkspaceContext,
+) -> Option<String> {
+    fn get_constant_variable_declaration_value(variable: &VariableDeclaration) -> Option<String> {
+        if variable.mutability() == Some(&crate::ast::Mutability::Constant) {
+            if let Some(Expression::Literal(literal)) = variable.value.as_ref() {
+                return literal.value.to_owned();
+            }
+        }
+        None
+    }
+
+    if let Some(node) = context.nodes.get(&node_id) {
+        match node {
+            ASTNode::Literal(literal) => return literal.value.to_owned(),
+            ASTNode::VariableDeclaration(variable) => {
+                return get_constant_variable_declaration_value(variable);
+            }
+            _ => (),
+        }
+    }
+    None
 }

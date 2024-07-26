@@ -7,13 +7,15 @@ use crate::{
     detect::{
         high::{
             ArbitraryTransferFromDetector, AvoidAbiEncodePackedDetector,
-            BlockTimestampDeadlineDetector, DelegateCallInLoopDetector,
-            DelegateCallOnUncheckedAddressDetector, DynamicArrayLengthAssignmentDetector,
-            EnumerableLoopRemovalDetector, ExperimentalEncoderDetector,
-            IncorrectShiftOrderDetector, IncorrectUseOfCaretOperatorDetector,
-            MultipleConstructorsDetector, NestedStructInMappingDetector,
-            ReusedContractNameDetector, SelfdestructIdentifierDetector, SendEtherNoChecksDetector,
+            BlockTimestampDeadlineDetector, DangerousUnaryOperatorDetector,
+            DelegateCallInLoopDetector, DelegateCallOnUncheckedAddressDetector,
+            DynamicArrayLengthAssignmentDetector, EnumerableLoopRemovalDetector,
+            ExperimentalEncoderDetector, IncorrectShiftOrderDetector,
+            IncorrectUseOfCaretOperatorDetector, MultipleConstructorsDetector,
+            NestedStructInMappingDetector, RTLODetector, ReusedContractNameDetector,
+            SelfdestructIdentifierDetector, SendEtherNoChecksDetector,
             StateVariableShadowingDetector, StorageArrayEditWithMemoryDetector,
+            TautologicalCompareDetector, UncheckedReturnDetector,
             UninitializedStateVariableDetector, UnprotectedInitializerDetector,
             UnsafeCastingDetector, YulReturnDetector,
         },
@@ -85,6 +87,10 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<SendEtherNoChecksDetector>::default(),
         Box::<DelegateCallOnUncheckedAddressDetector>::default(),
         Box::<SubWithoutIfDetector>::default(),
+        Box::<TautologicalCompareDetector>::default(),
+        Box::<RTLODetector>::default(),
+        Box::<UncheckedReturnDetector>::default(),
+        Box::<DangerousUnaryOperatorDetector>::default(),
     ]
 }
 
@@ -141,6 +147,11 @@ pub(crate) enum IssueDetectorNamePool {
     SendEtherNoChecks,
     DelegateCallUncheckedAddress,
     SubWithoutIf,
+    TautologicalCompare,
+    #[allow(clippy::upper_case_acronyms)]
+    RTLO,
+    UncheckedReturn,
+    DangerousUnaryOperator,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -268,6 +279,14 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
             Some(Box::<DelegateCallOnUncheckedAddressDetector>::default())
         }
         IssueDetectorNamePool::SubWithoutIf => Some(Box::<SubWithoutIfDetector>::default()),
+        IssueDetectorNamePool::TautologicalCompare => {
+            Some(Box::<TautologicalCompareDetector>::default())
+        }
+        IssueDetectorNamePool::RTLO => Some(Box::<RTLODetector>::default()),
+        IssueDetectorNamePool::UncheckedReturn => Some(Box::<UncheckedReturnDetector>::default()),
+        IssueDetectorNamePool::DangerousUnaryOperator => {
+            Some(Box::<DangerousUnaryOperatorDetector>::default())
+        }
         IssueDetectorNamePool::Undecided => None,
     }
 }
