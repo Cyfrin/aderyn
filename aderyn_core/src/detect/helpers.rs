@@ -159,18 +159,7 @@ pub fn is_constant_boolean(context: &WorkspaceContext, ast_node: &Expression) ->
     }
     if let Expression::UnaryOperation(operation) = ast_node {
         if operation.operator == "!" {
-            match operation.sub_expression.as_ref() {
-                Expression::Literal(literal) => {
-                    return is_constant_boolean(context, &Expression::Literal(literal.clone()));
-                }
-                Expression::Identifier(identifier) => {
-                    return is_constant_boolean(
-                        context,
-                        &&Expression::Identifier(identifier.clone()),
-                    );
-                }
-                _ => false,
-            };
+            return is_constant_boolean(context, operation.sub_expression.as_ref());
         }
     }
     false
