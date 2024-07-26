@@ -1945,7 +1945,7 @@
                 },
                 "region": {
                   "byteLength": 19,
-                  "byteOffset": 219
+                  "byteOffset": 248
                 }
               }
             },
@@ -1956,7 +1956,7 @@
                 },
                 "region": {
                   "byteLength": 20,
-                  "byteOffset": 381
+                  "byteOffset": 410
                 }
               }
             },
@@ -1967,7 +1967,7 @@
                 },
                 "region": {
                   "byteLength": 20,
-                  "byteOffset": 544
+                  "byteOffset": 573
                 }
               }
             },
@@ -1978,7 +1978,7 @@
                 },
                 "region": {
                   "byteLength": 19,
-                  "byteOffset": 707
+                  "byteOffset": 736
                 }
               }
             },
@@ -1988,8 +1988,8 @@
                   "uri": "src/MisusedBoolean.sol"
                 },
                 "region": {
-                  "byteLength": 4,
-                  "byteOffset": 874
+                  "byteLength": 51,
+                  "byteOffset": 899
                 }
               }
             },
@@ -1999,8 +1999,30 @@
                   "uri": "src/MisusedBoolean.sol"
                 },
                 "region": {
-                  "byteLength": 5,
-                  "byteOffset": 1026
+                  "byteLength": 52,
+                  "byteOffset": 1051
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MisusedBoolean.sol"
+                },
+                "region": {
+                  "byteLength": 53,
+                  "byteOffset": 1204
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MisusedBoolean.sol"
+                },
+                "region": {
+                  "byteLength": 21,
+                  "byteOffset": 1357
                 }
               }
             }
