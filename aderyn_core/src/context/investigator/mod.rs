@@ -1,3 +1,4 @@
+mod callgraph_tests;
 mod standard;
 mod traits;
 
