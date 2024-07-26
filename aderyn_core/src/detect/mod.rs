@@ -39,7 +39,7 @@ macro_rules! issue_detector {
 
         #[derive(Default)]
         pub struct $detector_struct {
-            found_instances: std::collections::BTreeMap<(String, usize, String), NodeID>,
+            found_instances: std::collections::BTreeMap<(String, usize, String), $crate::ast::NodeID>,
         }
 
         impl $crate::detect::detector::IssueDetector for $detector_struct {
@@ -80,7 +80,7 @@ macro_rules! issue_detector {
                 String::from($detector_desc)
             }
 
-            fn instances(&self) -> std::collections::BTreeMap<(String, usize, String), NodeID> {
+            fn instances(&self) -> std::collections::BTreeMap<(String, usize, String), $crate::ast::NodeID> {
                 self.found_instances.clone()
             }
 

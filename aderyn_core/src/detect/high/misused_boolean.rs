@@ -1,4 +1,3 @@
-use crate::ast::NodeID;
 use crate::detect::helpers::is_constant_boolean;
 use crate::issue_detector;
 use eyre::Result;
