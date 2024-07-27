@@ -23,10 +23,10 @@ use crate::{
             ContractsWithTodosDetector, DeprecatedOZFunctionsDetector,
             DivisionBeforeMultiplicationDetector, EcrecoverDetector, EmptyBlockDetector,
             InconsistentTypeNamesDetector, LargeLiteralValueDetector,
-            NonReentrantBeforeOthersDetector, PushZeroOpcodeDetector, RequireWithStringDetector,
-            RevertsAndRequiresInLoopsDetector, SolmateSafeTransferLibDetector,
-            UnindexedEventsDetector, UnsafeERC20FunctionsDetector, UnsafeERC721MintDetector,
-            UnspecificSolidityPragmaDetector, UselessErrorDetector,
+            NonReentrantBeforeOthersDetector, PushZeroOpcodeDetector, RedundantStatementsDetector,
+            RequireWithStringDetector, RevertsAndRequiresInLoopsDetector,
+            SolmateSafeTransferLibDetector, UnindexedEventsDetector, UnsafeERC20FunctionsDetector,
+            UnsafeERC721MintDetector, UnspecificSolidityPragmaDetector, UselessErrorDetector,
             UselessInternalFunctionDetector, UselessModifierDetector,
             UselessPublicFunctionDetector, ZeroAddressCheckDetector,
         },
@@ -87,6 +87,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<RTLODetector>::default(),
         Box::<UncheckedReturnDetector>::default(),
         Box::<DangerousUnaryOperatorDetector>::default(),
+        Box::<RedundantStatementsDetector>::default(),
     ]
 }
 
@@ -145,6 +146,7 @@ pub(crate) enum IssueDetectorNamePool {
     RTLO,
     UncheckedReturn,
     DangerousUnaryOperator,
+    RedundantStatements,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -272,6 +274,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::UncheckedReturn => Some(Box::<UncheckedReturnDetector>::default()),
         IssueDetectorNamePool::DangerousUnaryOperator => {
             Some(Box::<DangerousUnaryOperatorDetector>::default())
+        }
+        IssueDetectorNamePool::RedundantStatements => {
+            Some(Box::<RedundantStatementsDetector>::default())
         }
         IssueDetectorNamePool::Undecided => None,
     }

@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 60,
-    "total_sloc": 1620
+    "total_source_units": 61,
+    "total_sloc": 1634
   },
   "files_details": {
     "files_details": [
@@ -104,6 +104,10 @@
       {
         "file_path": "src/RTLO.sol",
         "n_sloc": 7
+      },
+      {
+        "file_path": "src/RedundantStatements.sol",
+        "n_sloc": 14
       },
       {
         "file_path": "src/RevertsAndRequriesInLoops.sol",
@@ -249,7 +253,7 @@
   },
   "issue_count": {
     "high": 23,
-    "low": 23
+    "low": 24
   },
   "high_issues": {
     "issues": [
@@ -1665,6 +1669,12 @@
             "src_char": "0:24"
           },
           {
+            "contract_path": "src/RedundantStatements.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/UsingSelfdestruct.sol",
             "line_no": 2,
             "src": "32:23",
@@ -2900,6 +2910,49 @@
             "src_char": "541:5"
           }
         ]
+      },
+      {
+        "title": "Redundant statements have no effect.",
+        "description": "Remove the redundant statements because no code will be generated and it just congests the codebase.",
+        "detector_name": "redundant-statements",
+        "instances": [
+          {
+            "contract_path": "src/RedundantStatements.sol",
+            "line_no": 6,
+            "src": "131:4",
+            "src_char": "131:4"
+          },
+          {
+            "contract_path": "src/RedundantStatements.sol",
+            "line_no": 7,
+            "src": "169:4",
+            "src_char": "169:4"
+          },
+          {
+            "contract_path": "src/RedundantStatements.sol",
+            "line_no": 8,
+            "src": "207:27",
+            "src_char": "207:27"
+          },
+          {
+            "contract_path": "src/RedundantStatements.sol",
+            "line_no": 12,
+            "src": "309:4",
+            "src_char": "309:4"
+          },
+          {
+            "contract_path": "src/RedundantStatements.sol",
+            "line_no": 13,
+            "src": "347:6",
+            "src_char": "347:6"
+          },
+          {
+            "contract_path": "src/RedundantStatements.sol",
+            "line_no": 14,
+            "src": "377:4",
+            "src_char": "377:4"
+          }
+        ]
       }
     ]
   },
@@ -2949,6 +3002,7 @@
     "tautological-compare",
     "rtlo",
     "unchecked-return",
-    "dangerous-unary-operator"
+    "dangerous-unary-operator",
+    "redundant-statements"
   ]
 }

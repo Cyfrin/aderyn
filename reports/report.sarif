@@ -2473,6 +2473,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/RedundantStatements.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/UsingSelfdestruct.sol"
                 },
                 "region": {
@@ -4674,6 +4685,81 @@
             "text": "Division operations followed directly by multiplication operations can lead to precision loss due to the way integer arithmetic is handled in Solidity."
           },
           "ruleId": "division-before-multiplication"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/RedundantStatements.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 131
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/RedundantStatements.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 169
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/RedundantStatements.sol"
+                },
+                "region": {
+                  "byteLength": 27,
+                  "byteOffset": 207
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/RedundantStatements.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 309
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/RedundantStatements.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 347
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/RedundantStatements.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 377
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Remove the redundant statements because no code will be generated and it just congests the codebase."
+          },
+          "ruleId": "redundant-statements"
         }
       ],
       "tool": {
