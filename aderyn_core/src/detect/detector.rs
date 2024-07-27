@@ -22,7 +22,8 @@ use crate::{
             InconsistentTypeNamesDetector, LargeLiteralValueDetector,
             NonReentrantBeforeOthersDetector, PushZeroOpcodeDetector, RequireWithStringDetector,
             RevertsAndRequiresInLoopsDetector, SolmateSafeTransferLibDetector,
-            UnindexedEventsDetector, UnsafeERC20FunctionsDetector, UnsafeERC721MintDetector,
+            StateVariableNotLoggedInEventDetector, UnindexedEventsDetector,
+            UnsafeERC20FunctionsDetector, UnsafeERC721MintDetector,
             UnspecificSolidityPragmaDetector, UselessErrorDetector,
             UselessInternalFunctionDetector, UselessModifierDetector,
             UselessPublicFunctionDetector, ZeroAddressCheckDetector,
@@ -81,6 +82,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<IncorrectUseOfCaretOperatorDetector>::default(),
         Box::<YulReturnDetector>::default(),
         Box::<StateVariableShadowingDetector>::default(),
+        Box::<StateVariableNotLoggedInEventDetector>::default(),
     ]
 }
 
@@ -132,6 +134,7 @@ pub(crate) enum IssueDetectorNamePool {
     DynamicArrayLengthAssignment,
     IncorrectCaretOperator,
     YulReturn,
+    StateVariableNotLoggedInEventDetector,
     StateVariableShadowing,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
@@ -248,6 +251,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::YulReturn => Some(Box::<YulReturnDetector>::default()),
         IssueDetectorNamePool::StateVariableShadowing => {
             Some(Box::<StateVariableShadowingDetector>::default())
+        }
+        IssueDetectorNamePool::StateVariableNotLoggedInEventDetector => {
+            Some(Box::<StateVariableNotLoggedInEventDetector>::default())
         }
         IssueDetectorNamePool::Undecided => None,
     }
