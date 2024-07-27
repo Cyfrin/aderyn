@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 60,
-    "total_sloc": 1620
+    "total_source_units": 57,
+    "total_sloc": 1583
   },
   "files_details": {
     "files_details": [
@@ -54,20 +54,12 @@
         "n_sloc": 22
       },
       {
-        "file_path": "src/DynamicArrayLengthAssignment.sol",
-        "n_sloc": 16
-      },
-      {
         "file_path": "src/EmptyBlocks.sol",
         "n_sloc": 48
       },
       {
         "file_path": "src/EnumerableSetIteration.sol",
         "n_sloc": 55
-      },
-      {
-        "file_path": "src/ExperimentalEncoder.sol",
-        "n_sloc": 4
       },
       {
         "file_path": "src/HugeConstants.sol",
@@ -108,10 +100,6 @@
       {
         "file_path": "src/RevertsAndRequriesInLoops.sol",
         "n_sloc": 27
-      },
-      {
-        "file_path": "src/StateShadowing.sol",
-        "n_sloc": 17
       },
       {
         "file_path": "src/StateVariables.sol",
@@ -248,7 +236,7 @@
     ]
   },
   "issue_count": {
-    "high": 23,
+    "high": 20,
     "low": 23
   },
   "high_issues": {
@@ -1053,19 +1041,6 @@
         ]
       },
       {
-        "title": "Experimental ABI Encoder",
-        "description": "Experimental encoders should not be used in production. There are multiple known compiler bugs that are caused by the experimental encoder. Upgrade your solidity version to remove the need for experimental features.",
-        "detector_name": "experimental-encoder",
-        "instances": [
-          {
-            "contract_path": "src/ExperimentalEncoder.sol",
-            "line_no": 2,
-            "src": "23:33",
-            "src_char": "23:33"
-          }
-        ]
-      },
-      {
         "title": "Incorrect Assembly Shift Parameter Order",
         "description": "Example: `shl(shifted, 4)` will shift the right constant `4` by `a` bits. The correct order is `shl(4, shifted)`.",
         "detector_name": "incorrect-shift-order",
@@ -1168,43 +1143,6 @@
         ]
       },
       {
-        "title": "Array length value has a direct assignment.",
-        "description": "If the length of a dynamic array (storage variable) directly assigned to, it may allow access to other storage slots by tweaking it's value. This practice has been depracated in newer Solidity versions",
-        "detector_name": "dynamic-array-length-assignment",
-        "instances": [
-          {
-            "contract_path": "src/DynamicArrayLengthAssignment.sol",
-            "line_no": 13,
-            "src": "295:14",
-            "src_char": "295:14"
-          },
-          {
-            "contract_path": "src/DynamicArrayLengthAssignment.sol",
-            "line_no": 14,
-            "src": "325:18",
-            "src_char": "325:18"
-          },
-          {
-            "contract_path": "src/DynamicArrayLengthAssignment.sol",
-            "line_no": 15,
-            "src": "359:33",
-            "src_char": "359:33"
-          },
-          {
-            "contract_path": "src/DynamicArrayLengthAssignment.sol",
-            "line_no": 16,
-            "src": "408:15",
-            "src_char": "408:15"
-          },
-          {
-            "contract_path": "src/DynamicArrayLengthAssignment.sol",
-            "line_no": 17,
-            "src": "439:14",
-            "src_char": "439:14"
-          }
-        ]
-      },
-      {
         "title": "Uninitialized State Variables",
         "description": "Solidity does initialize variables by default when you declare them, however it's good practice to explicitly declare an initial value. For example, if you transfer money to an address we must make sure that the address has been initialized.",
         "detector_name": "uninitialized-state-variable",
@@ -1232,12 +1170,6 @@
             "line_no": 10,
             "src": "355:7",
             "src_char": "355:7"
-          },
-          {
-            "contract_path": "src/StateShadowing.sol",
-            "line_no": 5,
-            "src": "87:13",
-            "src_char": "87:13"
           },
           {
             "contract_path": "src/StateVariables.sol",
@@ -1330,19 +1262,6 @@
             "line_no": 8,
             "src": "171:12",
             "src_char": "171:12"
-          }
-        ]
-      },
-      {
-        "title": "High Issue Title",
-        "description": "Description of the high issue.",
-        "detector_name": "state-variable-shadowing",
-        "instances": [
-          {
-            "contract_path": "src/StateShadowing.sol",
-            "line_no": 15,
-            "src": "239:13",
-            "src_char": "239:13"
           }
         ]
       },
@@ -1614,12 +1533,6 @@
             "line_no": 47,
             "src": "1598:18",
             "src_char": "1598:18"
-          },
-          {
-            "contract_path": "src/StateShadowing.sol",
-            "line_no": 22,
-            "src": "368:19",
-            "src_char": "368:19"
           },
           {
             "contract_path": "src/UninitializedStateVariable.sol",
@@ -1968,24 +1881,6 @@
             "src_char": "1275:66"
           },
           {
-            "contract_path": "src/DynamicArrayLengthAssignment.sol",
-            "line_no": 13,
-            "src": "312:3",
-            "src_char": "312:3"
-          },
-          {
-            "contract_path": "src/DynamicArrayLengthAssignment.sol",
-            "line_no": 14,
-            "src": "346:3",
-            "src_char": "346:3"
-          },
-          {
-            "contract_path": "src/DynamicArrayLengthAssignment.sol",
-            "line_no": 17,
-            "src": "457:3",
-            "src_char": "457:3"
-          },
-          {
             "contract_path": "src/IncorrectCaretOperator.sol",
             "line_no": 17,
             "src": "563:2",
@@ -2130,12 +2025,6 @@
             "line_no": 19,
             "src": "503:6",
             "src_char": "503:6"
-          },
-          {
-            "contract_path": "src/StateShadowing.sol",
-            "line_no": 8,
-            "src": "135:7",
-            "src_char": "135:7"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
@@ -2380,12 +2269,6 @@
             "line_no": 6,
             "src": "103:8",
             "src_char": "103:8"
-          },
-          {
-            "contract_path": "src/StateShadowing.sol",
-            "line_no": 7,
-            "src": "107:74",
-            "src_char": "107:74"
           },
           {
             "contract_path": "src/UnprotectedInitialize.sol",
@@ -2949,6 +2832,7 @@
     "tautological-compare",
     "rtlo",
     "unchecked-return",
-    "dangerous-unary-operator"
+    "dangerous-unary-operator",
+    "unimplemented-functions"
   ]
 }

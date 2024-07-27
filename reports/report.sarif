@@ -1448,26 +1448,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/ExperimentalEncoder.sol"
-                },
-                "region": {
-                  "byteLength": 33,
-                  "byteOffset": 23
-                }
-              }
-            }
-          ],
-          "message": {
-            "text": "Experimental encoders should not be used in production. There are multiple known compiler bugs that are caused by the experimental encoder. Upgrade your solidity version to remove the need for experimental features."
-          },
-          "ruleId": "experimental-encoder"
-        },
-        {
-          "level": "warning",
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/IncorrectShift.sol"
                 },
                 "region": {
@@ -1632,70 +1612,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/DynamicArrayLengthAssignment.sol"
-                },
-                "region": {
-                  "byteLength": 14,
-                  "byteOffset": 295
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/DynamicArrayLengthAssignment.sol"
-                },
-                "region": {
-                  "byteLength": 18,
-                  "byteOffset": 325
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/DynamicArrayLengthAssignment.sol"
-                },
-                "region": {
-                  "byteLength": 33,
-                  "byteOffset": 359
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/DynamicArrayLengthAssignment.sol"
-                },
-                "region": {
-                  "byteLength": 15,
-                  "byteOffset": 408
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/DynamicArrayLengthAssignment.sol"
-                },
-                "region": {
-                  "byteLength": 14,
-                  "byteOffset": 439
-                }
-              }
-            }
-          ],
-          "message": {
-            "text": "If the length of a dynamic array (storage variable) directly assigned to, it may allow access to other storage slots by tweaking it's value. This practice has been depracated in newer Solidity versions"
-          },
-          "ruleId": "dynamic-array-length-assignment"
-        },
-        {
-          "level": "warning",
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/AssemblyExample.sol"
                 },
                 "region": {
@@ -1734,17 +1650,6 @@
                 "region": {
                   "byteLength": 7,
                   "byteOffset": 355
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateShadowing.sol"
-                },
-                "region": {
-                  "byteLength": 13,
-                  "byteOffset": 87
                 }
               }
             },
@@ -1914,26 +1819,6 @@
             "text": "Remove this, as this causes execution to halt. Nothing after that call will execute, including code following the assembly block."
           },
           "ruleId": "yul-return"
-        },
-        {
-          "level": "warning",
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateShadowing.sol"
-                },
-                "region": {
-                  "byteLength": 13,
-                  "byteOffset": 239
-                }
-              }
-            }
-          ],
-          "message": {
-            "text": "Description of the high issue."
-          },
-          "ruleId": "state-variable-shadowing"
         },
         {
           "level": "warning",
@@ -2381,17 +2266,6 @@
                 "region": {
                   "byteLength": 18,
                   "byteOffset": 1598
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateShadowing.sol"
-                },
-                "region": {
-                  "byteLength": 19,
-                  "byteOffset": 368
                 }
               }
             },
@@ -3017,39 +2891,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/DynamicArrayLengthAssignment.sol"
-                },
-                "region": {
-                  "byteLength": 3,
-                  "byteOffset": 312
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/DynamicArrayLengthAssignment.sol"
-                },
-                "region": {
-                  "byteLength": 3,
-                  "byteOffset": 346
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/DynamicArrayLengthAssignment.sol"
-                },
-                "region": {
-                  "byteLength": 3,
-                  "byteOffset": 457
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/IncorrectCaretOperator.sol"
                 },
                 "region": {
@@ -3304,17 +3145,6 @@
                 "region": {
                   "byteLength": 6,
                   "byteOffset": 503
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateShadowing.sol"
-                },
-                "region": {
-                  "byteLength": 7,
-                  "byteOffset": 135
                 }
               }
             },
@@ -3747,17 +3577,6 @@
                 "region": {
                   "byteLength": 8,
                   "byteOffset": 103
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateShadowing.sol"
-                },
-                "region": {
-                  "byteLength": 74,
-                  "byteOffset": 107
                 }
               }
             },
