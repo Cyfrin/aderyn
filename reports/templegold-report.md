@@ -6669,7 +6669,7 @@ Index event fields make the field more quickly accessible to off-chain tools tha
 
 Use descriptive reason strings or custom errors for revert paths.
 
-<details><summary>54 Found Instances</summary>
+<details><summary>55 Found Instances</summary>
 
 
 - Found in contracts/core/OpsManager.sol [Line: 50](../tests/2024-07-templegold/protocol/contracts/core/OpsManager.sol#L50)
@@ -6688,6 +6688,12 @@ Use descriptive reason strings or custom errors for revert paths.
 
 	```solidity
 	      require (x <= 0x7FFFFFFFFFFFFFFF);
+	```
+
+- Found in contracts/util/ABDKMath64x64.sol [Line: 77](../tests/2024-07-templegold/protocol/contracts/util/ABDKMath64x64.sol#L77)
+
+	```solidity
+	      require (x >= 0);
 	```
 
 - Found in contracts/util/ABDKMath64x64.sol [Line: 92](../tests/2024-07-templegold/protocol/contracts/util/ABDKMath64x64.sol#L92)
@@ -6906,16 +6912,16 @@ Use descriptive reason strings or custom errors for revert paths.
 	      require (exponent <= 16638); // Overflow
 	```
 
-- Found in contracts/util/ABDKMathQuad.sol [Line: 83](../tests/2024-07-templegold/protocol/contracts/util/ABDKMathQuad.sol#L83)
-
-	```solidity
-	      else if (exponent > 16495) result <<= exponent - 16495;
-	```
-
 - Found in contracts/util/ABDKMathQuad.sol [Line: 86](../tests/2024-07-templegold/protocol/contracts/util/ABDKMathQuad.sol#L86)
 
 	```solidity
 	        require (result <= 0x8000000000000000000000000000000000000000000000000000000000000000);
+	```
+
+- Found in contracts/util/ABDKMathQuad.sol [Line: 89](../tests/2024-07-templegold/protocol/contracts/util/ABDKMathQuad.sol#L89)
+
+	```solidity
+	        require (result <= 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF);
 	```
 
 - Found in contracts/util/ABDKMathQuad.sol [Line: 133](../tests/2024-07-templegold/protocol/contracts/util/ABDKMathQuad.sol#L133)
