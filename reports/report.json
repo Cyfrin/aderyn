@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 64,
-    "total_sloc": 1825
+    "total_source_units": 65,
+    "total_sloc": 1836
   },
   "files_details": {
     "files_details": [
@@ -52,6 +52,10 @@
       {
         "file_path": "src/DelegateCallWithoutAddressCheck.sol",
         "n_sloc": 31
+      },
+      {
+        "file_path": "src/DeletionNestedMappingStructureContract.sol",
+        "n_sloc": 11
       },
       {
         "file_path": "src/DeprecatedOZFunctions.sol",
@@ -264,7 +268,7 @@
     ]
   },
   "issue_count": {
-    "high": 26,
+    "high": 27,
     "low": 23
   },
   "high_issues": {
@@ -1578,6 +1582,19 @@
             "src_char": "247:10"
           }
         ]
+      },
+      {
+        "title": "Deletion from a nested mappping.",
+        "description": "A deletion in a structure containing a mapping will not delete the mapping. The remaining data may be used to compromise the contract.",
+        "detector_name": "delete-nested-mapping",
+        "instances": [
+          {
+            "contract_path": "src/DeletionNestedMappingStructureContract.sol",
+            "line_no": 17,
+            "src": "426:25",
+            "src_char": "426:25"
+          }
+        ]
       }
     ]
   },
@@ -1820,6 +1837,12 @@
             "line_no": 2,
             "src": "32:21",
             "src_char": "32:21"
+          },
+          {
+            "contract_path": "src/DeletionNestedMappingStructureContract.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
           },
           {
             "contract_path": "src/InconsistentUints.sol",
@@ -2476,6 +2499,12 @@
             "line_no": 2,
             "src": "32:21",
             "src_char": "32:21"
+          },
+          {
+            "contract_path": "src/DeletionNestedMappingStructureContract.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
           },
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
@@ -3319,6 +3348,7 @@
     "tautological-compare",
     "rtlo",
     "unchecked-return",
-    "dangerous-unary-operator"
+    "dangerous-unary-operator",
+    "delete-nested-mapping"
   ]
 }

@@ -2307,6 +2307,26 @@
           "ruleId": "dangerous-unary-operator"
         },
         {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DeletionNestedMappingStructureContract.sol"
+                },
+                "region": {
+                  "byteLength": 25,
+                  "byteOffset": 426
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "A deletion in a structure containing a mapping will not delete the mapping. The remaining data may be used to compromise the contract."
+          },
+          "ruleId": "delete-nested-mapping"
+        },
+        {
           "level": "note",
           "locations": [
             {
@@ -2713,6 +2733,17 @@
                 },
                 "region": {
                   "byteLength": 21,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DeletionNestedMappingStructureContract.sol"
+                },
+                "region": {
+                  "byteLength": 23,
                   "byteOffset": 32
                 }
               }
@@ -3885,6 +3916,17 @@
                 },
                 "region": {
                   "byteLength": 21,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DeletionNestedMappingStructureContract.sol"
+                },
+                "region": {
+                  "byteLength": 23,
                   "byteOffset": 32
                 }
               }
