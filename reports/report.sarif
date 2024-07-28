@@ -2071,6 +2071,26 @@
           "ruleId": "dangerous-unary-operator"
         },
         {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CompilerBugStorageSignedIntegerArray.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 230
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "If you want to leverage signed arrays in storage by assigning a literal array with at least one negative number, then you mus use solidity version 0.5.10 or above. This is because of a bug in older compilers."
+          },
+          "ruleId": "signed-storage-array"
+        },
+        {
           "level": "note",
           "locations": [
             {
@@ -2415,6 +2435,17 @@
         {
           "level": "note",
           "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CompilerBugStorageSignedIntegerArray.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
             {
               "physicalLocation": {
                 "artifactLocation": {
@@ -2934,6 +2965,28 @@
                 "region": {
                   "byteLength": 18,
                   "byteOffset": 2103
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CompilerBugStorageSignedIntegerArray.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 235
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CompilerBugStorageSignedIntegerArray.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 352
                 }
               }
             },
