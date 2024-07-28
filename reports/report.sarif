@@ -2312,6 +2312,26 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/PreDeclaredVarUsage.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 196
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "This is a bad practice that may lead to unintended consequences. Please declare the variable before using it."
+          },
+          "ruleId": "pre-declared-local-variable-usage"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/DeletionNestedMappingStructureContract.sol"
                 },
                 "region": {
@@ -2756,6 +2776,17 @@
                 "region": {
                   "byteLength": 24,
                   "byteOffset": 0
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/PreDeclaredVarUsage.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
                 }
               }
             },
@@ -3388,6 +3419,28 @@
                 "region": {
                   "byteLength": 2,
                   "byteOffset": 606
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/PreDeclaredVarUsage.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 200
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/PreDeclaredVarUsage.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 222
                 }
               }
             },

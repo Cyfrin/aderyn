@@ -109,9 +109,12 @@ impl IssueDetector for NestedStructInMappingDetector {
 
 #[cfg(test)]
 mod nested_struct_in_mapping_detector_tests {
+    use serial_test::serial;
+
     use crate::detect::{detector::IssueDetector, high::NestedStructInMappingDetector};
 
     #[test]
+    #[serial]
     fn test_nested_struct_in_mapping_detector() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/nested_mappings/NestedMappings.sol",
@@ -141,6 +144,7 @@ mod nested_struct_in_mapping_detector_tests {
     }
 
     #[test]
+    #[serial]
     fn test_nested_struct_in_mapping_detector_no_issue() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/nested_mappings/LaterVersion.sol",

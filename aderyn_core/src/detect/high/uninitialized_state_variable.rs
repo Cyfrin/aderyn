@@ -106,12 +106,15 @@ impl IssueDetector for UninitializedStateVariableDetector {
 
 #[cfg(test)]
 mod uninitialized_state_variable_tests {
+    use serial_test::serial;
+
     use crate::detect::{
         detector::IssueDetector,
         high::uninitialized_state_variable::UninitializedStateVariableDetector,
     };
 
     #[test]
+    #[serial]
     fn test_uninitialized_state_variables() {
         let context: crate::context::workspace_context::WorkspaceContext =
             crate::detect::test_utils::load_solidity_source_unit(

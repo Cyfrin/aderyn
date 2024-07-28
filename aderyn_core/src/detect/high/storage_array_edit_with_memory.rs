@@ -86,12 +86,15 @@ impl IssueDetector for StorageArrayEditWithMemoryDetector {
 
 #[cfg(test)]
 mod storage_array_edit_with_memory_tests {
+    use serial_test::serial;
+
     use crate::detect::{
         detector::IssueDetector,
         high::storage_array_edit_with_memory::StorageArrayEditWithMemoryDetector,
     };
 
     #[test]
+    #[serial]
     fn test_storage_array_edit_with_memory() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/StorageParameters.sol",
