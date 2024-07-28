@@ -197,9 +197,12 @@ impl IssueDetector for StateVariableShadowingDetector {
 
 #[cfg(test)]
 mod state_variable_shadowing_detector_tests {
+    use serial_test::serial;
+
     use crate::detect::{detector::IssueDetector, high::StateVariableShadowingDetector};
 
     #[test]
+    #[serial]
     fn test_state_variable_shadowing_detector() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/StateShadowing.sol",
