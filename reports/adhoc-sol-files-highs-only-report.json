@@ -88,7 +88,7 @@
     ]
   },
   "issue_count": {
-    "high": 2,
+    "high": 3,
     "low": 0
   },
   "high_issues": {
@@ -142,6 +142,19 @@
             "src_char": "282:18"
           }
         ]
+      },
+      {
+        "title": "Delegatecall made by the function without checks on any adress.",
+        "description": "Introduce checks on the address",
+        "detector_name": "delegate-call-unchecked-address",
+        "instances": [
+          {
+            "contract_path": "inheritance/ExtendedInheritance.sol",
+            "line_no": 14,
+            "src": "391:15",
+            "src_char": "391:15"
+          }
+        ]
       }
     ]
   },
@@ -168,6 +181,9 @@
     "incorrect-caret-operator",
     "yul-return",
     "state-variable-shadowing",
+    "misused-boolean",
+    "send-ether-no-checks",
+    "delegate-call-unchecked-address",
     "tautological-compare",
     "rtlo",
     "unchecked-return",
