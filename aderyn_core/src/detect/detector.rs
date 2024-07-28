@@ -4,35 +4,9 @@ use strum::{Display, EnumCount, EnumIter, EnumString};
 use crate::{
     ast::NodeID,
     context::workspace_context::WorkspaceContext,
-    detect::{
-        high::{
-            ArbitraryTransferFromDetector, AvoidAbiEncodePackedDetector,
-            BlockTimestampDeadlineDetector, DangerousUnaryOperatorDetector,
-            DelegateCallInLoopDetector, DelegateCallOnUncheckedAddressDetector,
-            DynamicArrayLengthAssignmentDetector, EnumerableLoopRemovalDetector,
-            ExperimentalEncoderDetector, IncorrectShiftOrderDetector,
-            IncorrectUseOfCaretOperatorDetector, MultipleConstructorsDetector,
-            NestedStructInMappingDetector, RTLODetector, ReusedContractNameDetector,
-            SelfdestructIdentifierDetector, SendEtherNoChecksDetector,
-            StateVariableShadowingDetector, StorageArrayEditWithMemoryDetector,
-            TautologicalCompareDetector, UncheckedReturnDetector,
-            UninitializedStateVariableDetector, UnprotectedInitializerDetector,
-            UnsafeCastingDetector, YulReturnDetector,
-        },
-        low::{
-            CentralizationRiskDetector, ConstantsInsteadOfLiteralsDetector,
-            ContractsWithTodosDetector, DeprecatedOZFunctionsDetector,
-            DivisionBeforeMultiplicationDetector, EcrecoverDetector, EmptyBlockDetector,
-            InconsistentTypeNamesDetector, LargeLiteralValueDetector,
-            NonReentrantBeforeOthersDetector, PushZeroOpcodeDetector, RequireWithStringDetector,
-            RevertsAndRequiresInLoopsDetector, SolmateSafeTransferLibDetector,
-            UnindexedEventsDetector, UnsafeERC20FunctionsDetector, UnsafeERC721MintDetector,
-            UnspecificSolidityPragmaDetector, UselessErrorDetector,
-            UselessInternalFunctionDetector, UselessModifierDetector,
-            UselessPublicFunctionDetector, ZeroAddressCheckDetector,
-        },
-    },
+    detect::{high::*, low::*},
 };
+
 use std::{
     collections::BTreeMap,
     error::Error,
@@ -84,6 +58,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<IncorrectUseOfCaretOperatorDetector>::default(),
         Box::<YulReturnDetector>::default(),
         Box::<StateVariableShadowingDetector>::default(),
+        Box::<MisusedBooleanDetector>::default(),
         Box::<SendEtherNoChecksDetector>::default(),
         Box::<DelegateCallOnUncheckedAddressDetector>::default(),
         Box::<TautologicalCompareDetector>::default(),
@@ -143,6 +118,7 @@ pub(crate) enum IssueDetectorNamePool {
     IncorrectCaretOperator,
     YulReturn,
     StateVariableShadowing,
+    MisusedBoolean,
     SendEtherNoChecks,
     DelegateCallUncheckedAddress,
     TautologicalCompare,
@@ -270,6 +246,7 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::StateVariableShadowing => {
             Some(Box::<StateVariableShadowingDetector>::default())
         }
+        IssueDetectorNamePool::MisusedBoolean => Some(Box::<MisusedBooleanDetector>::default()),
         IssueDetectorNamePool::SendEtherNoChecks => {
             Some(Box::<SendEtherNoChecksDetector>::default())
         }
