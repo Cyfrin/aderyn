@@ -1784,6 +1784,28 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/TautologyOrContradiction.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 133
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TautologyOrContradiction.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 145
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/UninitializedStateVariable.sol"
                 },
                 "region": {
@@ -2069,6 +2091,37 @@
             "text": "Potentially mistakened `=+` for `+=` or `=-` for `-=`. Please include a space in between."
           },
           "ruleId": "dangerous-unary-operator"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TautologyOrContradiction.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 296
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TautologyOrContradiction.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 369
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "The condition has been determined to be either always true or always false due to the integer range in which we're operating."
+          },
+          "ruleId": "tautology-or-contradiction"
         },
         {
           "level": "note",
@@ -2467,6 +2520,17 @@
                 "region": {
                   "byteLength": 24,
                   "byteOffset": 0
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TautologyOrContradiction.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
                 }
               }
             },
@@ -3905,6 +3969,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/TautologyOrContradiction.sol"
+                },
+                "region": {
+                  "byteLength": 229,
+                  "byteOffset": 161
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
                 },
                 "region": {
@@ -4430,6 +4505,17 @@
                 "region": {
                   "byteLength": 1,
                   "byteOffset": 186
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TautologyOrContradiction.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 133
                 }
               }
             },
