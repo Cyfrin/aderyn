@@ -1,19 +1,24 @@
 use std::collections::BTreeMap;
 use std::error::Error;
+use std::str::FromStr;
 
 use crate::ast::{
     ASTNode, Expression, Identifier, NodeID, TupleExpression, TypeDescriptions, UnaryOperation,
 };
 
 use crate::capture;
-use crate::context::browser::GetImmediateParent;
+use crate::context::browser::{
+    ExtractPragmaDirectives, ExtractTupleExpressions, GetImmediateParent,
+};
 use crate::detect::detector::IssueDetectorNamePool;
+use crate::detect::helpers;
 use crate::{
     context::workspace_context::WorkspaceContext,
     detect::detector::{IssueDetector, IssueSeverity},
 };
 use eyre::Result;
 use lazy_regex::regex;
+use semver::{Version, VersionReq};
 
 #[derive(Default)]
 pub struct StorageSignedIntegerArrayDetector {
@@ -24,27 +29,43 @@ pub struct StorageSignedIntegerArrayDetector {
 
 impl IssueDetector for StorageSignedIntegerArrayDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        // Search for a literal array with one negative value in it
-        for tuple_expression in context
-            .tuple_expressions()
-            .into_iter()
-            .filter(|tuple_expression| tuple_expression.is_inline_array)
-        {
-            // First, make sure it's being assigned to an array pointer to storage
-            if !is_tuple_being_assigned_to_storage_array(tuple_expression, context) {
-                continue;
-            }
+        for source_unit in context.source_units() {
+            let tuple_expressions = ExtractTupleExpressions::from(source_unit).extracted;
+            let pragma_directives = ExtractPragmaDirectives::from(source_unit).extracted;
 
-            // Now, make sure there is at least 1 negative value in the tuple array
-            let negative_component_present = tuple_expression.components.iter().any(|c| {
-                if let Some(Expression::UnaryOperation(UnaryOperation { operator, .. })) = c {
-                    return operator == "-";
+            if let Some(pragma_directive) = pragma_directives.first() {
+                if let Ok(pragma_semver) = helpers::pragma_directive_to_semver(pragma_directive) {
+                    if version_req_allows_below_0_5_10(&pragma_semver) {
+                        // Search for a literal array with one negative value in it
+                        for tuple_expression in tuple_expressions
+                            .into_iter()
+                            .filter(|tuple_expression| tuple_expression.is_inline_array)
+                        {
+                            // First, make sure it's being assigned to an array pointer to storage
+                            if !is_tuple_being_assigned_to_storage_array(&tuple_expression, context)
+                            {
+                                continue;
+                            }
+
+                            // Now, make sure there is at least 1 negative value in the tuple array
+                            let negative_component_present =
+                                tuple_expression.components.iter().any(|c| {
+                                    if let Some(Expression::UnaryOperation(UnaryOperation {
+                                        operator,
+                                        ..
+                                    })) = c
+                                    {
+                                        return operator == "-";
+                                    }
+                                    false
+                                });
+
+                            if negative_component_present {
+                                capture!(self, context, tuple_expression);
+                            }
+                        }
+                    }
                 }
-                false
-            });
-
-            if negative_component_present {
-                capture!(self, context, tuple_expression);
             }
         }
 
@@ -56,11 +77,14 @@ impl IssueDetector for StorageSignedIntegerArrayDetector {
     }
 
     fn title(&self) -> String {
-        String::from("High Issue Title")
+        String::from(
+            "Compiler Bug: Signed array in storage detected for compiler version `<0.5.10`",
+        )
     }
 
     fn description(&self) -> String {
-        String::from("Description of the high issue.")
+        String::from("If you want to leverage signed arrays in storage by assigning a literal array with at least one negative \
+            number, then you mus use solidity version 0.5.10 or above. This is because of a bug in older compilers.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -68,8 +92,29 @@ impl IssueDetector for StorageSignedIntegerArrayDetector {
     }
 
     fn name(&self) -> String {
-        format!("high-issue-template")
+        IssueDetectorNamePool::SignedStorageArray.to_string()
     }
+}
+
+fn version_req_allows_below_0_5_10(version_req: &VersionReq) -> bool {
+    // If it matches any 0.4.0 to 0.4.26, return true
+    for i in 0..=26 {
+        let version = Version::from_str(&format!("0.4.{}", i)).unwrap();
+        if version_req.matches(&version) {
+            return true;
+        }
+    }
+
+    // If it matches any 0.5.0 to 0.5.9 return true
+    for i in 0..=9 {
+        let version = Version::from_str(&format!("0.5.{}", i)).unwrap();
+        if version_req.matches(&version) {
+            return true;
+        }
+    }
+
+    // Else, return false
+    false
 }
 
 // Build a regular expression to catch type names that correspond to pointers to storage arrays
@@ -128,11 +173,17 @@ mod storage_signed_array_detector {
             crate::detect::detector::IssueSeverity::High
         );
         // assert the title is correct
-        assert_eq!(detector.title(), String::from("High Issue Title"));
+        assert_eq!(
+            detector.title(),
+            String::from(
+                "Compiler Bug: Signed array in storage detected for compiler version `<0.5.10`",
+            )
+        );
         // assert the description is correct
         assert_eq!(
             detector.description(),
-            String::from("Description of the high issue.")
+            String::from("If you want to leverage signed arrays in storage by assigning a literal array with at least one negative \
+                number, then you mus use solidity version 0.5.10 or above. This is because of a bug in older compilers.")
         );
     }
 
