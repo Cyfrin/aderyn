@@ -26,8 +26,8 @@ use crate::{
             InconsistentTypeNamesDetector, LargeLiteralValueDetector,
             NonReentrantBeforeOthersDetector, PushZeroOpcodeDetector, RequireWithStringDetector,
             RevertsAndRequiresInLoopsDetector, SolmateSafeTransferLibDetector,
-            SubWithoutIfDetector, UnindexedEventsDetector, UnsafeERC20FunctionsDetector,
-            UnsafeERC721MintDetector, UnspecificSolidityPragmaDetector, UselessErrorDetector,
+            UnindexedEventsDetector, UnsafeERC20FunctionsDetector, UnsafeERC721MintDetector,
+            UnspecificSolidityPragmaDetector, UselessErrorDetector,
             UselessInternalFunctionDetector, UselessModifierDetector,
             UselessPublicFunctionDetector, ZeroAddressCheckDetector,
         },
@@ -86,7 +86,6 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<StateVariableShadowingDetector>::default(),
         Box::<SendEtherNoChecksDetector>::default(),
         Box::<DelegateCallOnUncheckedAddressDetector>::default(),
-        Box::<SubWithoutIfDetector>::default(),
         Box::<TautologicalCompareDetector>::default(),
         Box::<RTLODetector>::default(),
         Box::<UncheckedReturnDetector>::default(),
@@ -146,7 +145,6 @@ pub(crate) enum IssueDetectorNamePool {
     StateVariableShadowing,
     SendEtherNoChecks,
     DelegateCallUncheckedAddress,
-    SubWithoutIf,
     TautologicalCompare,
     #[allow(clippy::upper_case_acronyms)]
     RTLO,
@@ -278,7 +276,6 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::DelegateCallUncheckedAddress => {
             Some(Box::<DelegateCallOnUncheckedAddressDetector>::default())
         }
-        IssueDetectorNamePool::SubWithoutIf => Some(Box::<SubWithoutIfDetector>::default()),
         IssueDetectorNamePool::TautologicalCompare => {
             Some(Box::<TautologicalCompareDetector>::default())
         }
