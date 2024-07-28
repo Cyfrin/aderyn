@@ -2312,6 +2312,114 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/WeakRandomness.sol"
+                },
+                "region": {
+                  "byteLength": 70,
+                  "byteOffset": 188
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WeakRandomness.sol"
+                },
+                "region": {
+                  "byteLength": 41,
+                  "byteOffset": 386
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WeakRandomness.sol"
+                },
+                "region": {
+                  "byteLength": 20,
+                  "byteOffset": 597
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WeakRandomness.sol"
+                },
+                "region": {
+                  "byteLength": 20,
+                  "byteOffset": 793
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WeakRandomness.sol"
+                },
+                "region": {
+                  "byteLength": 20,
+                  "byteOffset": 915
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WeakRandomness.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 1095
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WeakRandomness.sol"
+                },
+                "region": {
+                  "byteLength": 37,
+                  "byteOffset": 1217
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WeakRandomness.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 1434
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WeakRandomness.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 1563
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "The use of keccak256 hash functions on predictable values like block.timestamp, block.number, or similar data, including modulo operations on these values, should be avoided for generating randomness, as they are easily predictable and manipulable. The `PREVRANDAO` opcode also should not be used as a source of randomness. Instead, utilize Chainlink VRF for cryptographically secure and provably random values to ensure protocol integrity."
+          },
+          "ruleId": "weak-randomness"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/PreDeclaredVarUsage.sol"
                 },
                 "region": {
@@ -3535,6 +3643,39 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/WeakRandomness.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 933
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WeakRandomness.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 1252
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WeakRandomness.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 1441
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/eth2/DepositContract.sol"
                 },
                 "region": {
@@ -4065,6 +4206,17 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/UnsafeERC721Mint.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WeakRandomness.sol"
                 },
                 "region": {
                   "byteLength": 23,
