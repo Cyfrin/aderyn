@@ -187,6 +187,7 @@
     "tautological-compare",
     "rtlo",
     "unchecked-return",
-    "dangerous-unary-operator"
+    "dangerous-unary-operator",
+    "delete-nested-mapping"
   ]
 }
