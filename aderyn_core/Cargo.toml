@@ -12,7 +12,7 @@ license = "MIT"
 crossbeam-channel = "0.5.9"
 eyre = "0.6.12"
 ignore = "0.4.21"
-phf = {version = "0.11.2", features = ["macros"]}
+phf = { version = "0.11.2", features = ["macros"] }
 prettytable = "0.10.0"
 rayon = "1.8.0"
 semver = "1.0.20"
@@ -22,7 +22,11 @@ serde-sarif = "0.4.2"
 serde_repr = "0.1.12"
 strum = { version = "0.26", features = ["derive"] }
 toml = "0.8.2"
-cyfrin-foundry-compilers = { version = "0.3.20-aderyn", features = ["svm-solc"]  }
+cyfrin-foundry-compilers = { version = "0.3.20-aderyn", features = [
+    "svm-solc",
+] }
+num-bigint = "0.4"
+num-traits = "0.2"
 
 [dev-dependencies]
 serial_test = "3.0.0"
