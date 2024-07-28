@@ -42,6 +42,7 @@ version = "0.1.7"
 dependencies = [
  "crossbeam-channel",
  "cyfrin-foundry-compilers",
+ "derive_more",
  "eyre",
  "ignore",
  "once_cell",
