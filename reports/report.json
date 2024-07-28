@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 55,
-    "total_sloc": 1521
+    "total_source_units": 67,
+    "total_sloc": 1904
   },
   "files_details": {
     "files_details": [
@@ -22,6 +22,10 @@
         "n_sloc": 9
       },
       {
+        "file_path": "src/CallGraphTests.sol",
+        "n_sloc": 49
+      },
+      {
         "file_path": "src/Casting.sol",
         "n_sloc": 126
       },
@@ -40,6 +44,18 @@
       {
         "file_path": "src/CrazyPragma.sol",
         "n_sloc": 4
+      },
+      {
+        "file_path": "src/DangerousUnaryOperator.sol",
+        "n_sloc": 13
+      },
+      {
+        "file_path": "src/DelegateCallWithoutAddressCheck.sol",
+        "n_sloc": 31
+      },
+      {
+        "file_path": "src/DeletionNestedMappingStructureContract.sol",
+        "n_sloc": 11
       },
       {
         "file_path": "src/DeprecatedOZFunctions.sol",
@@ -90,6 +106,10 @@
         "n_sloc": 21
       },
       {
+        "file_path": "src/MisusedBoolean.sol",
+        "n_sloc": 67
+      },
+      {
         "file_path": "src/MultipleConstructorSchemes.sol",
         "n_sloc": 10
       },
@@ -98,8 +118,20 @@
         "n_sloc": 8
       },
       {
+        "file_path": "src/PreDeclaredVarUsage.sol",
+        "n_sloc": 9
+      },
+      {
+        "file_path": "src/RTLO.sol",
+        "n_sloc": 7
+      },
+      {
         "file_path": "src/RevertsAndRequriesInLoops.sol",
         "n_sloc": 27
+      },
+      {
+        "file_path": "src/SendEtherNoChecks.sol",
+        "n_sloc": 58
       },
       {
         "file_path": "src/StateShadowing.sol",
@@ -122,8 +154,20 @@
         "n_sloc": 8
       },
       {
+        "file_path": "src/TautologicalCompare.sol",
+        "n_sloc": 17
+      },
+      {
         "file_path": "src/TestERC20.sol",
         "n_sloc": 62
+      },
+      {
+        "file_path": "src/UncheckedReturn.sol",
+        "n_sloc": 33
+      },
+      {
+        "file_path": "src/UninitializedStateVariable.sol",
+        "n_sloc": 29
       },
       {
         "file_path": "src/UnprotectedInitialize.sol",
@@ -140,6 +184,10 @@
       {
         "file_path": "src/UsingSelfdestruct.sol",
         "n_sloc": 6
+      },
+      {
+        "file_path": "src/WeakRandomness.sol",
+        "n_sloc": 59
       },
       {
         "file_path": "src/WrongOrderOfLayout.sol",
@@ -228,7 +276,7 @@
     ]
   },
   "issue_count": {
-    "high": 18,
+    "high": 29,
     "low": 23
   },
   "high_issues": {
@@ -1185,6 +1233,91 @@
         ]
       },
       {
+        "title": "Uninitialized State Variables",
+        "description": "Solidity does initialize variables by default when you declare them, however it's good practice to explicitly declare an initial value. For example, if you transfer money to an address we must make sure that the address has been initialized.",
+        "detector_name": "uninitialized-state-variable",
+        "instances": [
+          {
+            "contract_path": "src/AssemblyExample.sol",
+            "line_no": 5,
+            "src": "97:1",
+            "src_char": "97:1"
+          },
+          {
+            "contract_path": "src/DelegateCallWithoutAddressCheck.sol",
+            "line_no": 9,
+            "src": "337:7",
+            "src_char": "337:7"
+          },
+          {
+            "contract_path": "src/InconsistentUints.sol",
+            "line_no": 7,
+            "src": "197:11",
+            "src_char": "197:11"
+          },
+          {
+            "contract_path": "src/InconsistentUints.sol",
+            "line_no": 8,
+            "src": "233:14",
+            "src_char": "233:14"
+          },
+          {
+            "contract_path": "src/IncorrectCaretOperator.sol",
+            "line_no": 10,
+            "src": "355:7",
+            "src_char": "355:7"
+          },
+          {
+            "contract_path": "src/StateShadowing.sol",
+            "line_no": 5,
+            "src": "87:13",
+            "src_char": "87:13"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 8,
+            "src": "199:19",
+            "src_char": "199:19"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 9,
+            "src": "241:20",
+            "src_char": "241:20"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 10,
+            "src": "282:18",
+            "src_char": "282:18"
+          },
+          {
+            "contract_path": "src/UninitializedStateVariable.sol",
+            "line_no": 7,
+            "src": "122:8",
+            "src_char": "122:8"
+          },
+          {
+            "contract_path": "src/UninitializedStateVariable.sol",
+            "line_no": 15,
+            "src": "529:11",
+            "src_char": "529:11"
+          },
+          {
+            "contract_path": "src/WrongOrderOfLayout.sol",
+            "line_no": 11,
+            "src": "257:10",
+            "src_char": "257:10"
+          },
+          {
+            "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
+            "line_no": 68,
+            "src": "1971:5",
+            "src_char": "1971:5"
+          }
+        ]
+      },
+      {
         "title": "Incorrect use of caret operator on a non hexadcimal constant",
         "description": "The caret operator is usually mistakenly thought of as an exponentiation operator but actually, it's a bitwise xor operator.",
         "detector_name": "incorrect-caret-operator",
@@ -1244,6 +1377,304 @@
             "line_no": 15,
             "src": "239:13",
             "src_char": "239:13"
+          }
+        ]
+      },
+      {
+        "title": "Misused boolean with logical operators",
+        "description": "The patterns `if (… || true)` and `if (.. && false)` will always evaluate to true and false respectively.",
+        "detector_name": "misused-boolean",
+        "instances": [
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 12,
+            "src": "257:19",
+            "src_char": "257:19"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 19,
+            "src": "419:20",
+            "src_char": "419:20"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 26,
+            "src": "582:20",
+            "src_char": "582:20"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 33,
+            "src": "745:19",
+            "src_char": "745:19"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 40,
+            "src": "908:51",
+            "src_char": "908:51"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 47,
+            "src": "1060:52",
+            "src_char": "1060:52"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 54,
+            "src": "1213:53",
+            "src_char": "1213:53"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 61,
+            "src": "1366:21",
+            "src_char": "1366:21"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 68,
+            "src": "1530:17",
+            "src_char": "1530:17"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 75,
+            "src": "1691:18",
+            "src_char": "1691:18"
+          }
+        ]
+      },
+      {
+        "title": "Sending native Eth is not protected from these functions.",
+        "description": "Introduce checks for `msg.sender` in the function",
+        "detector_name": "send-ether-no-checks",
+        "instances": [
+          {
+            "contract_path": "src/CallGraphTests.sol",
+            "line_no": 38,
+            "src": "686:16",
+            "src_char": "686:16"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 53,
+            "src": "1060:5",
+            "src_char": "1060:5"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 77,
+            "src": "1405:5",
+            "src_char": "1405:5"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 99,
+            "src": "1795:5",
+            "src_char": "1795:5"
+          },
+          {
+            "contract_path": "src/UninitializedStateVariable.sol",
+            "line_no": 17,
+            "src": "563:8",
+            "src_char": "563:8"
+          }
+        ]
+      },
+      {
+        "title": "Delegatecall made by the function without checks on any adress.",
+        "description": "Introduce checks on the address",
+        "detector_name": "delegate-call-unchecked-address",
+        "instances": [
+          {
+            "contract_path": "src/DelegateCallWithoutAddressCheck.sol",
+            "line_no": 15,
+            "src": "392:9",
+            "src_char": "392:9"
+          },
+          {
+            "contract_path": "src/auditor_mode/ExternalCalls.sol",
+            "line_no": 38,
+            "src": "1253:28",
+            "src_char": "1253:28"
+          },
+          {
+            "contract_path": "src/inheritance/ExtendedInheritance.sol",
+            "line_no": 14,
+            "src": "391:15",
+            "src_char": "391:15"
+          }
+        ]
+      },
+      {
+        "title": "Tautological comparison.",
+        "description": "The left hand side and the right hand side of the binary operation has the same value. This makes the condition always true or always false.",
+        "detector_name": "tautological-compare",
+        "instances": [
+          {
+            "contract_path": "src/TautologicalCompare.sol",
+            "line_no": 13,
+            "src": "255:6",
+            "src_char": "255:6"
+          },
+          {
+            "contract_path": "src/TautologicalCompare.sol",
+            "line_no": 18,
+            "src": "359:6",
+            "src_char": "359:6"
+          },
+          {
+            "contract_path": "src/TautologicalCompare.sol",
+            "line_no": 23,
+            "src": "463:5",
+            "src_char": "463:5"
+          },
+          {
+            "contract_path": "src/TautologicalCompare.sol",
+            "line_no": 28,
+            "src": "566:5",
+            "src_char": "566:5"
+          }
+        ]
+      },
+      {
+        "title": "RTLO character detected in file. \\u{202e}",
+        "description": "Right to left override character may be misledaing and cause potential attacks by visually misordering method arguments!",
+        "detector_name": "rtlo",
+        "instances": [
+          {
+            "contract_path": "src/RTLO.sol",
+            "line_no": 3,
+            "src": "33:157",
+            "src_char": "33:155"
+          }
+        ]
+      },
+      {
+        "title": "Return value of the function call is not checked.",
+        "description": "Function returns a value but it is ignored.",
+        "detector_name": "unchecked-return",
+        "instances": [
+          {
+            "contract_path": "src/UncheckedReturn.sol",
+            "line_no": 14,
+            "src": "279:5",
+            "src_char": "279:5"
+          },
+          {
+            "contract_path": "src/UncheckedReturn.sol",
+            "line_no": 27,
+            "src": "575:47",
+            "src_char": "575:47"
+          }
+        ]
+      },
+      {
+        "title": "Dangerous unary operator found in assignment.",
+        "description": "Potentially mistakened `=+` for `+=` or `=-` for `-=`. Please include a space in between.",
+        "detector_name": "dangerous-unary-operator",
+        "instances": [
+          {
+            "contract_path": "src/DangerousUnaryOperator.sol",
+            "line_no": 12,
+            "src": "220:10",
+            "src_char": "220:10"
+          },
+          {
+            "contract_path": "src/DangerousUnaryOperator.sol",
+            "line_no": 13,
+            "src": "247:10",
+            "src_char": "247:10"
+          }
+        ]
+      },
+      {
+        "title": "Weak Randomness",
+        "description": "The use of keccak256 hash functions on predictable values like block.timestamp, block.number, or similar data, including modulo operations on these values, should be avoided for generating randomness, as they are easily predictable and manipulable. The `PREVRANDAO` opcode also should not be used as a source of randomness. Instead, utilize Chainlink VRF for cryptographically secure and provably random values to ensure protocol integrity.",
+        "detector_name": "weak-randomness",
+        "instances": [
+          {
+            "contract_path": "src/WeakRandomness.sol",
+            "line_no": 6,
+            "src": "188:70",
+            "src_char": "188:70"
+          },
+          {
+            "contract_path": "src/WeakRandomness.sol",
+            "line_no": 11,
+            "src": "386:41",
+            "src_char": "386:41"
+          },
+          {
+            "contract_path": "src/WeakRandomness.sol",
+            "line_no": 16,
+            "src": "597:20",
+            "src_char": "597:20"
+          },
+          {
+            "contract_path": "src/WeakRandomness.sol",
+            "line_no": 21,
+            "src": "793:20",
+            "src_char": "793:20"
+          },
+          {
+            "contract_path": "src/WeakRandomness.sol",
+            "line_no": 25,
+            "src": "915:20",
+            "src_char": "915:20"
+          },
+          {
+            "contract_path": "src/WeakRandomness.sol",
+            "line_no": 31,
+            "src": "1095:5",
+            "src_char": "1095:5"
+          },
+          {
+            "contract_path": "src/WeakRandomness.sol",
+            "line_no": 35,
+            "src": "1217:37",
+            "src_char": "1217:37"
+          },
+          {
+            "contract_path": "src/WeakRandomness.sol",
+            "line_no": 41,
+            "src": "1434:9",
+            "src_char": "1434:9"
+          },
+          {
+            "contract_path": "src/WeakRandomness.sol",
+            "line_no": 45,
+            "src": "1563:16",
+            "src_char": "1563:16"
+          }
+        ]
+      },
+      {
+        "title": "Usage of variable before declaration.",
+        "description": "This is a bad practice that may lead to unintended consequences. Please declare the variable before using it.",
+        "detector_name": "pre-declared-local-variable-usage",
+        "instances": [
+          {
+            "contract_path": "src/PreDeclaredVarUsage.sol",
+            "line_no": 8,
+            "src": "196:1",
+            "src_char": "196:1"
+          }
+        ]
+      },
+      {
+        "title": "Deletion from a nested mappping.",
+        "description": "A deletion in a structure containing a mapping will not delete the mapping. The remaining data may be used to compromise the contract.",
+        "detector_name": "delete-nested-mapping",
+        "instances": [
+          {
+            "contract_path": "src/DeletionNestedMappingStructureContract.sol",
+            "line_no": 17,
+            "src": "426:25",
+            "src_char": "426:25"
           }
         ]
       }
@@ -1435,10 +1866,22 @@
             "src_char": "1598:18"
           },
           {
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 67,
+            "src": "1255:19",
+            "src_char": "1255:19"
+          },
+          {
             "contract_path": "src/StateShadowing.sol",
             "line_no": 22,
             "src": "368:19",
             "src_char": "368:19"
+          },
+          {
+            "contract_path": "src/UninitializedStateVariable.sol",
+            "line_no": 18,
+            "src": "599:29",
+            "src_char": "599:29"
           }
         ]
       },
@@ -1466,10 +1909,34 @@
             "src_char": "32:32"
           },
           {
+            "contract_path": "src/DangerousUnaryOperator.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/DelegateCallWithoutAddressCheck.sol",
+            "line_no": 2,
+            "src": "32:21",
+            "src_char": "32:21"
+          },
+          {
+            "contract_path": "src/DeletionNestedMappingStructureContract.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/InconsistentUints.sol",
             "line_no": 1,
             "src": "0:24",
             "src_char": "0:24"
+          },
+          {
+            "contract_path": "src/PreDeclaredVarUsage.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
           },
           {
             "contract_path": "src/UsingSelfdestruct.sol",
@@ -1616,6 +2083,12 @@
             "line_no": 71,
             "src": "2539:25",
             "src_char": "2539:25"
+          },
+          {
+            "contract_path": "src/UninitializedStateVariable.sol",
+            "line_no": 17,
+            "src": "563:8",
+            "src_char": "563:8"
           },
           {
             "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
@@ -1769,6 +2242,24 @@
             "src_char": "1275:66"
           },
           {
+            "contract_path": "src/DelegateCallWithoutAddressCheck.sol",
+            "line_no": 24,
+            "src": "718:1",
+            "src_char": "718:1"
+          },
+          {
+            "contract_path": "src/DelegateCallWithoutAddressCheck.sol",
+            "line_no": 24,
+            "src": "771:1",
+            "src_char": "771:1"
+          },
+          {
+            "contract_path": "src/DelegateCallWithoutAddressCheck.sol",
+            "line_no": 26,
+            "src": "838:1",
+            "src_char": "838:1"
+          },
+          {
             "contract_path": "src/DynamicArrayLengthAssignment.sol",
             "line_no": 13,
             "src": "312:3",
@@ -1799,6 +2290,18 @@
             "src_char": "606:2"
           },
           {
+            "contract_path": "src/PreDeclaredVarUsage.sol",
+            "line_no": 8,
+            "src": "200:3",
+            "src_char": "200:3"
+          },
+          {
+            "contract_path": "src/PreDeclaredVarUsage.sol",
+            "line_no": 9,
+            "src": "222:3",
+            "src_char": "222:3"
+          },
+          {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
             "line_no": 10,
             "src": "253:2",
@@ -1821,6 +2324,48 @@
             "line_no": 27,
             "src": "745:2",
             "src_char": "745:2"
+          },
+          {
+            "contract_path": "src/UncheckedReturn.sol",
+            "line_no": 27,
+            "src": "607:7",
+            "src_char": "607:7"
+          },
+          {
+            "contract_path": "src/UncheckedReturn.sol",
+            "line_no": 32,
+            "src": "805:7",
+            "src_char": "805:7"
+          },
+          {
+            "contract_path": "src/UncheckedReturn.sol",
+            "line_no": 37,
+            "src": "995:7",
+            "src_char": "995:7"
+          },
+          {
+            "contract_path": "src/UncheckedReturn.sol",
+            "line_no": 42,
+            "src": "1190:7",
+            "src_char": "1190:7"
+          },
+          {
+            "contract_path": "src/WeakRandomness.sol",
+            "line_no": 25,
+            "src": "933:2",
+            "src_char": "933:2"
+          },
+          {
+            "contract_path": "src/WeakRandomness.sol",
+            "line_no": 35,
+            "src": "1252:2",
+            "src_char": "1252:2"
+          },
+          {
+            "contract_path": "src/WeakRandomness.sol",
+            "line_no": 41,
+            "src": "1441:2",
+            "src_char": "1441:2"
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
@@ -1854,6 +2399,18 @@
             "src_char": "413:70"
           },
           {
+            "contract_path": "src/UncheckedReturn.sol",
+            "line_no": 17,
+            "src": "297:30",
+            "src_char": "297:30"
+          },
+          {
+            "contract_path": "src/UninitializedStateVariable.sol",
+            "line_no": 21,
+            "src": "700:27",
+            "src_char": "700:27"
+          },
+          {
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 19,
             "src": "2641:107",
@@ -1879,6 +2436,36 @@
         "detector_name": "require-with-string",
         "instances": [
           {
+            "contract_path": "src/CallGraphTests.sol",
+            "line_no": 7,
+            "src": "128:7",
+            "src_char": "128:7"
+          },
+          {
+            "contract_path": "src/CallGraphTests.sol",
+            "line_no": 28,
+            "src": "531:6",
+            "src_char": "531:6"
+          },
+          {
+            "contract_path": "src/CallGraphTests.sol",
+            "line_no": 50,
+            "src": "936:6",
+            "src_char": "936:6"
+          },
+          {
+            "contract_path": "src/CallGraphTests.sol",
+            "line_no": 65,
+            "src": "1246:7",
+            "src_char": "1246:7"
+          },
+          {
+            "contract_path": "src/DelegateCallWithoutAddressCheck.sol",
+            "line_no": 31,
+            "src": "948:7",
+            "src_char": "948:7"
+          },
+          {
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 37,
             "src": "1264:7",
@@ -1895,6 +2482,24 @@
             "line_no": 19,
             "src": "503:6",
             "src_char": "503:6"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 12,
+            "src": "268:6",
+            "src_char": "268:6"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 27,
+            "src": "513:7",
+            "src_char": "513:7"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 43,
+            "src": "920:6",
+            "src_char": "920:6"
           },
           {
             "contract_path": "src/StateShadowing.sol",
@@ -2008,6 +2613,18 @@
             "src_char": "32:32"
           },
           {
+            "contract_path": "src/DelegateCallWithoutAddressCheck.sol",
+            "line_no": 2,
+            "src": "32:21",
+            "src_char": "32:21"
+          },
+          {
+            "contract_path": "src/DeletionNestedMappingStructureContract.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 2,
             "src": "32:23",
@@ -2044,7 +2661,19 @@
             "src_char": "32:23"
           },
           {
+            "contract_path": "src/TautologicalCompare.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/UnsafeERC721Mint.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/WeakRandomness.sol",
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
@@ -2129,6 +2758,30 @@
         "detector_name": "useless-modifier",
         "instances": [
           {
+            "contract_path": "src/CallGraphTests.sol",
+            "line_no": 10,
+            "src": "186:22",
+            "src_char": "186:22"
+          },
+          {
+            "contract_path": "src/CallGraphTests.sol",
+            "line_no": 32,
+            "src": "571:22",
+            "src_char": "571:22"
+          },
+          {
+            "contract_path": "src/CallGraphTests.sol",
+            "line_no": 54,
+            "src": "976:22",
+            "src_char": "976:22"
+          },
+          {
+            "contract_path": "src/DelegateCallWithoutAddressCheck.sol",
+            "line_no": 23,
+            "src": "678:9",
+            "src_char": "678:9"
+          },
+          {
             "contract_path": "src/InternalFunctions.sol",
             "line_no": 18,
             "src": "413:9",
@@ -2139,6 +2792,30 @@
             "line_no": 6,
             "src": "103:8",
             "src_char": "103:8"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 16,
+            "src": "308:4",
+            "src_char": "308:4"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 47,
+            "src": "960:4",
+            "src_char": "960:4"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 70,
+            "src": "1301:4",
+            "src_char": "1301:4"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 93,
+            "src": "1704:4",
+            "src_char": "1704:4"
           },
           {
             "contract_path": "src/StateShadowing.sol",
@@ -2164,6 +2841,18 @@
             "line_no": 14,
             "src": "457:23",
             "src_char": "457:23"
+          },
+          {
+            "contract_path": "src/CallGraphTests.sol",
+            "line_no": 16,
+            "src": "291:16",
+            "src_char": "291:16"
+          },
+          {
+            "contract_path": "src/CallGraphTests.sol",
+            "line_no": 38,
+            "src": "686:16",
+            "src_char": "686:16"
           },
           {
             "contract_path": "src/ContractWithTodo.sol",
@@ -2224,6 +2913,24 @@
             "line_no": 10,
             "src": "147:7",
             "src_char": "147:7"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 53,
+            "src": "1060:5",
+            "src_char": "1060:5"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 77,
+            "src": "1405:5",
+            "src_char": "1405:5"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 99,
+            "src": "1795:5",
+            "src_char": "1795:5"
           },
           {
             "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
@@ -2426,10 +3133,64 @@
         "detector_name": "useless-internal-function",
         "instances": [
           {
+            "contract_path": "src/CallGraphTests.sol",
+            "line_no": 6,
+            "src": "89:17",
+            "src_char": "89:17"
+          },
+          {
+            "contract_path": "src/CallGraphTests.sol",
+            "line_no": 25,
+            "src": "398:17",
+            "src_char": "398:17"
+          },
+          {
+            "contract_path": "src/CallGraphTests.sol",
+            "line_no": 47,
+            "src": "803:17",
+            "src_char": "803:17"
+          },
+          {
+            "contract_path": "src/CallGraphTests.sol",
+            "line_no": 64,
+            "src": "1206:18",
+            "src_char": "1206:18"
+          },
+          {
             "contract_path": "src/InternalFunctions.sol",
             "line_no": 28,
             "src": "693:12",
             "src_char": "693:12"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 9,
+            "src": "132:20",
+            "src_char": "132:20"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 26,
+            "src": "481:5",
+            "src_char": "481:5"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 40,
+            "src": "784:20",
+            "src_char": "784:20"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 66,
+            "src": "1209:15",
+            "src_char": "1209:15"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 88,
+            "src": "1551:11",
+            "src_char": "1551:11"
           },
           {
             "contract_path": "src/StorageParameters.sol",
@@ -2516,6 +3277,12 @@
             "line_no": 19,
             "src": "528:12",
             "src_char": "528:12"
+          },
+          {
+            "contract_path": "src/TautologicalCompare.sol",
+            "line_no": 11,
+            "src": "186:1",
+            "src_char": "186:1"
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
@@ -2695,8 +3462,19 @@
     "nested-struct-in-mapping",
     "selfdestruct-identifier",
     "dynamic-array-length-assignment",
+    "uninitialized-state-variable",
     "incorrect-caret-operator",
     "yul-return",
-    "state-variable-shadowing"
+    "state-variable-shadowing",
+    "misused-boolean",
+    "send-ether-no-checks",
+    "delegate-call-unchecked-address",
+    "tautological-compare",
+    "rtlo",
+    "unchecked-return",
+    "dangerous-unary-operator",
+    "weak-randomness",
+    "pre-declared-local-variable-usage",
+    "delete-nested-mapping"
   ]
 }

@@ -63,12 +63,15 @@ impl IssueDetector for ReusedContractNameDetector {
 
 #[cfg(test)]
 mod reused_contract_name_detector_tests {
+    use serial_test::serial;
+
     use crate::detect::{
         detector::IssueDetector, high::ReusedContractNameDetector,
         test_utils::load_multiple_solidity_source_units_into_single_context,
     };
 
     #[test]
+    #[serial]
     fn test_reused_contract_name_detector() {
         let context = load_multiple_solidity_source_units_into_single_context(&[
             "../tests/contract-playground/src/reused_contract_name/ContractA.sol",
