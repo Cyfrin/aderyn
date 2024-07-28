@@ -25,6 +25,7 @@ pub(crate) mod unchecked_return;
 pub(crate) mod uninitialized_state_variable;
 pub(crate) mod unprotected_init_function;
 pub(crate) mod unsafe_casting;
+pub(crate) mod weak_randomness;
 pub(crate) mod yul_return;
 
 pub use arbitrary_transfer_from::ArbitraryTransferFromDetector;
@@ -54,4 +55,5 @@ pub use unchecked_return::UncheckedReturnDetector;
 pub use uninitialized_state_variable::UninitializedStateVariableDetector;
 pub use unprotected_init_function::UnprotectedInitializerDetector;
 pub use unsafe_casting::UnsafeCastingDetector;
+pub use weak_randomness::WeakRandomnessDetector;
 pub use yul_return::YulReturnDetector;

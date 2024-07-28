@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 66,
-    "total_sloc": 1845
+    "total_source_units": 67,
+    "total_sloc": 1904
   },
   "files_details": {
     "files_details": [
@@ -186,6 +186,10 @@
         "n_sloc": 6
       },
       {
+        "file_path": "src/WeakRandomness.sol",
+        "n_sloc": 59
+      },
+      {
         "file_path": "src/WrongOrderOfLayout.sol",
         "n_sloc": 13
       },
@@ -272,7 +276,7 @@
     ]
   },
   "issue_count": {
-    "high": 28,
+    "high": 29,
     "low": 23
   },
   "high_issues": {
@@ -1588,6 +1592,67 @@
         ]
       },
       {
+        "title": "Weak Randomness",
+        "description": "The use of keccak256 hash functions on predictable values like block.timestamp, block.number, or similar data, including modulo operations on these values, should be avoided for generating randomness, as they are easily predictable and manipulable. The `PREVRANDAO` opcode also should not be used as a source of randomness. Instead, utilize Chainlink VRF for cryptographically secure and provably random values to ensure protocol integrity.",
+        "detector_name": "weak-randomness",
+        "instances": [
+          {
+            "contract_path": "src/WeakRandomness.sol",
+            "line_no": 6,
+            "src": "188:70",
+            "src_char": "188:70"
+          },
+          {
+            "contract_path": "src/WeakRandomness.sol",
+            "line_no": 11,
+            "src": "386:41",
+            "src_char": "386:41"
+          },
+          {
+            "contract_path": "src/WeakRandomness.sol",
+            "line_no": 16,
+            "src": "597:20",
+            "src_char": "597:20"
+          },
+          {
+            "contract_path": "src/WeakRandomness.sol",
+            "line_no": 21,
+            "src": "793:20",
+            "src_char": "793:20"
+          },
+          {
+            "contract_path": "src/WeakRandomness.sol",
+            "line_no": 25,
+            "src": "915:20",
+            "src_char": "915:20"
+          },
+          {
+            "contract_path": "src/WeakRandomness.sol",
+            "line_no": 31,
+            "src": "1095:5",
+            "src_char": "1095:5"
+          },
+          {
+            "contract_path": "src/WeakRandomness.sol",
+            "line_no": 35,
+            "src": "1217:37",
+            "src_char": "1217:37"
+          },
+          {
+            "contract_path": "src/WeakRandomness.sol",
+            "line_no": 41,
+            "src": "1434:9",
+            "src_char": "1434:9"
+          },
+          {
+            "contract_path": "src/WeakRandomness.sol",
+            "line_no": 45,
+            "src": "1563:16",
+            "src_char": "1563:16"
+          }
+        ]
+      },
+      {
         "title": "Usage of variable before declaration.",
         "description": "This is a bad practice that may lead to unintended consequences. Please declare the variable before using it.",
         "detector_name": "pre-declared-local-variable-usage",
@@ -2285,6 +2350,24 @@
             "src_char": "1190:7"
           },
           {
+            "contract_path": "src/WeakRandomness.sol",
+            "line_no": 25,
+            "src": "933:2",
+            "src_char": "933:2"
+          },
+          {
+            "contract_path": "src/WeakRandomness.sol",
+            "line_no": 35,
+            "src": "1252:2",
+            "src_char": "1252:2"
+          },
+          {
+            "contract_path": "src/WeakRandomness.sol",
+            "line_no": 41,
+            "src": "1441:2",
+            "src_char": "1441:2"
+          },
+          {
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 113,
             "src": "7252:2",
@@ -2585,6 +2668,12 @@
           },
           {
             "contract_path": "src/UnsafeERC721Mint.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/WeakRandomness.sol",
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
@@ -3384,6 +3473,7 @@
     "rtlo",
     "unchecked-return",
     "dangerous-unary-operator",
+    "weak-randomness",
     "pre-declared-local-variable-usage",
     "delete-nested-mapping"
   ]
