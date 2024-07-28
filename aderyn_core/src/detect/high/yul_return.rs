@@ -52,9 +52,12 @@ impl IssueDetector for YulReturnDetector {
 
 #[cfg(test)]
 mod yul_return_detector_tests {
+    use serial_test::serial;
+
     use crate::detect::{detector::IssueDetector, high::yul_return::YulReturnDetector};
 
     #[test]
+    #[serial]
     fn test_yul_return() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/YulReturn.sol",
