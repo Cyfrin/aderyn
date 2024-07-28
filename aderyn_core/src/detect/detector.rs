@@ -8,11 +8,12 @@ use crate::{
         high::{
             ArbitraryTransferFromDetector, AvoidAbiEncodePackedDetector,
             BlockTimestampDeadlineDetector, DangerousUnaryOperatorDetector,
-            DelegateCallInLoopDetector, DynamicArrayLengthAssignmentDetector,
-            EnumerableLoopRemovalDetector, ExperimentalEncoderDetector,
-            IncorrectShiftOrderDetector, IncorrectUseOfCaretOperatorDetector,
-            MultipleConstructorsDetector, NestedStructInMappingDetector, RTLODetector,
-            ReusedContractNameDetector, SelfdestructIdentifierDetector,
+            DelegateCallInLoopDetector, DelegateCallOnUncheckedAddressDetector,
+            DynamicArrayLengthAssignmentDetector, EnumerableLoopRemovalDetector,
+            ExperimentalEncoderDetector, IncorrectShiftOrderDetector,
+            IncorrectUseOfCaretOperatorDetector, MultipleConstructorsDetector,
+            NestedStructInMappingDetector, RTLODetector, ReusedContractNameDetector,
+            SelfdestructIdentifierDetector, SendEtherNoChecksDetector,
             StateVariableShadowingDetector, StorageArrayEditWithMemoryDetector,
             TautologicalCompareDetector, UncheckedReturnDetector,
             UninitializedStateVariableDetector, UnprotectedInitializerDetector,
@@ -83,6 +84,8 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<IncorrectUseOfCaretOperatorDetector>::default(),
         Box::<YulReturnDetector>::default(),
         Box::<StateVariableShadowingDetector>::default(),
+        Box::<SendEtherNoChecksDetector>::default(),
+        Box::<DelegateCallOnUncheckedAddressDetector>::default(),
         Box::<TautologicalCompareDetector>::default(),
         Box::<RTLODetector>::default(),
         Box::<UncheckedReturnDetector>::default(),
@@ -140,6 +143,8 @@ pub(crate) enum IssueDetectorNamePool {
     IncorrectCaretOperator,
     YulReturn,
     StateVariableShadowing,
+    SendEtherNoChecks,
+    DelegateCallUncheckedAddress,
     TautologicalCompare,
     #[allow(clippy::upper_case_acronyms)]
     RTLO,
@@ -264,6 +269,12 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::YulReturn => Some(Box::<YulReturnDetector>::default()),
         IssueDetectorNamePool::StateVariableShadowing => {
             Some(Box::<StateVariableShadowingDetector>::default())
+        }
+        IssueDetectorNamePool::SendEtherNoChecks => {
+            Some(Box::<SendEtherNoChecksDetector>::default())
+        }
+        IssueDetectorNamePool::DelegateCallUncheckedAddress => {
+            Some(Box::<DelegateCallOnUncheckedAddressDetector>::default())
         }
         IssueDetectorNamePool::TautologicalCompare => {
             Some(Box::<TautologicalCompareDetector>::default())
