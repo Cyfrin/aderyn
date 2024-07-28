@@ -144,11 +144,6 @@ jobs:
       - uses: bahmutov/npm-install@v1
         with:
           useLockFile: false
-          working-directory: tests/2024-07-templegold/
-
-      - uses: bahmutov/npm-install@v1
-        with:
-          useLockFile: false
           working-directory: tests/prb-math/
 
       # Verify sablier.md
@@ -213,15 +208,6 @@ jobs:
           cat ./reports/prb-math-report-workflow.md
           diff ./reports/prb-math-report.md ./reports/prb-math-report-workflow.md
      
-      
-      - name: Generate 2024-07-templegold-report-workflow.md
-        run: |
-          cargo run -- ./tests/2024-07-templegold/protocol -o ./reports/2024-07-templegold-report-workflow.md --skip-update-check
-    
-      - name: Check 2024-07-templegold-report.md vs 2024-07-templegold-report-workflow.md
-        run: |
-          cat ./reports/2024-07-templegold-report-workflow.md
-          diff ./reports/templegold-report.md ./reports/2024-07-templegold-report-workflow.md
 
       # Verify report.json 
       
