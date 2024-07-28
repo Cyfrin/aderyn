@@ -19,7 +19,7 @@ mod callgraph_tests {
             context
                 .function_definitions()
                 .into_iter()
-                .find(|&x| x.name == name.to_string())
+                .find(|&x| x.name == *name)
                 .unwrap(),
         )
     }
@@ -29,7 +29,7 @@ mod callgraph_tests {
             context
                 .modifier_definitions()
                 .into_iter()
-                .find(|&x| x.name == name.to_string())
+                .find(|&x| x.name == *name)
                 .unwrap(),
         )
     }

@@ -68,6 +68,26 @@ impl IssueDetector for DelegateCallOnUncheckedAddressDetector {
     }
 }
 
+struct DelegateCallNoAddressChecksTracker<'a> {
+    has_address_checks: bool,
+    has_delegate_call_on_non_state_variable_address: bool,
+    context: &'a WorkspaceContext,
+}
+
+impl<'a> StandardInvestigatorVisitor for DelegateCallNoAddressChecksTracker<'a> {
+    fn visit_any(&mut self, node: &crate::context::workspace_context::ASTNode) -> eyre::Result<()> {
+        if !self.has_address_checks && helpers::has_binary_checks_on_some_address(node) {
+            self.has_address_checks = true;
+        }
+        if !self.has_delegate_call_on_non_state_variable_address
+            && helpers::has_delegate_calls_on_non_state_variables(node, self.context)
+        {
+            self.has_delegate_call_on_non_state_variable_address = true;
+        }
+        eyre::Ok(())
+    }
+}
+
 #[cfg(test)]
 mod delegate_call_no_address_check_tests {
     use crate::detect::{
@@ -108,25 +128,5 @@ mod delegate_call_no_address_check_tests {
             detector.description(),
             String::from("Introduce checks on the address")
         );
-    }
-}
-
-struct DelegateCallNoAddressChecksTracker<'a> {
-    has_address_checks: bool,
-    has_delegate_call_on_non_state_variable_address: bool,
-    context: &'a WorkspaceContext,
-}
-
-impl<'a> StandardInvestigatorVisitor for DelegateCallNoAddressChecksTracker<'a> {
-    fn visit_any(&mut self, node: &crate::context::workspace_context::ASTNode) -> eyre::Result<()> {
-        if !self.has_address_checks && helpers::has_binary_checks_on_some_address(node) {
-            self.has_address_checks = true;
-        }
-        if !self.has_delegate_call_on_non_state_variable_address
-            && helpers::has_delegate_calls_on_non_state_variables(node, self.context)
-        {
-            self.has_delegate_call_on_non_state_variable_address = true;
-        }
-        eyre::Ok(())
     }
 }
