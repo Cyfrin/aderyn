@@ -1952,6 +1952,125 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/MisusedBoolean.sol"
+                },
+                "region": {
+                  "byteLength": 19,
+                  "byteOffset": 257
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MisusedBoolean.sol"
+                },
+                "region": {
+                  "byteLength": 20,
+                  "byteOffset": 419
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MisusedBoolean.sol"
+                },
+                "region": {
+                  "byteLength": 20,
+                  "byteOffset": 582
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MisusedBoolean.sol"
+                },
+                "region": {
+                  "byteLength": 19,
+                  "byteOffset": 745
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MisusedBoolean.sol"
+                },
+                "region": {
+                  "byteLength": 51,
+                  "byteOffset": 908
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MisusedBoolean.sol"
+                },
+                "region": {
+                  "byteLength": 52,
+                  "byteOffset": 1060
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MisusedBoolean.sol"
+                },
+                "region": {
+                  "byteLength": 53,
+                  "byteOffset": 1213
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MisusedBoolean.sol"
+                },
+                "region": {
+                  "byteLength": 21,
+                  "byteOffset": 1366
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MisusedBoolean.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 1530
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MisusedBoolean.sol"
+                },
+                "region": {
+                  "byteLength": 18,
+                  "byteOffset": 1691
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "The patterns `if (… || true)` and `if (.. && false)` will always evaluate to true and false respectively."
+          },
+          "ruleId": "misused-boolean"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/CallGraphTests.sol"
                 },
                 "region": {

@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 63,
-    "total_sloc": 1758
+    "total_source_units": 64,
+    "total_sloc": 1825
   },
   "files_details": {
     "files_details": [
@@ -100,6 +100,10 @@
       {
         "file_path": "src/KeccakContract.sol",
         "n_sloc": 21
+      },
+      {
+        "file_path": "src/MisusedBoolean.sol",
+        "n_sloc": 67
       },
       {
         "file_path": "src/MultipleConstructorSchemes.sol",
@@ -260,7 +264,7 @@
     ]
   },
   "issue_count": {
-    "high": 25,
+    "high": 26,
     "low": 23
   },
   "high_issues": {
@@ -1361,6 +1365,73 @@
             "line_no": 15,
             "src": "239:13",
             "src_char": "239:13"
+          }
+        ]
+      },
+      {
+        "title": "Misused boolean with logical operators",
+        "description": "The patterns `if (… || true)` and `if (.. && false)` will always evaluate to true and false respectively.",
+        "detector_name": "misused-boolean",
+        "instances": [
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 12,
+            "src": "257:19",
+            "src_char": "257:19"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 19,
+            "src": "419:20",
+            "src_char": "419:20"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 26,
+            "src": "582:20",
+            "src_char": "582:20"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 33,
+            "src": "745:19",
+            "src_char": "745:19"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 40,
+            "src": "908:51",
+            "src_char": "908:51"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 47,
+            "src": "1060:52",
+            "src_char": "1060:52"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 54,
+            "src": "1213:53",
+            "src_char": "1213:53"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 61,
+            "src": "1366:21",
+            "src_char": "1366:21"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 68,
+            "src": "1530:17",
+            "src_char": "1530:17"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 75,
+            "src": "1691:18",
+            "src_char": "1691:18"
           }
         ]
       },
@@ -3242,6 +3313,7 @@
     "incorrect-caret-operator",
     "yul-return",
     "state-variable-shadowing",
+    "misused-boolean",
     "send-ether-no-checks",
     "delegate-call-unchecked-address",
     "tautological-compare",

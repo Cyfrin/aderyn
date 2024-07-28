@@ -2,8 +2,8 @@ use semver::{Error, VersionReq};
 
 use crate::{
     ast::{
-        ASTNode, Expression, FunctionDefinition, MemberAccess, NodeID, PragmaDirective,
-        VariableDeclaration, Visibility,
+        ASTNode, Expression, FunctionDefinition, Identifier, LiteralKind, MemberAccess, NodeID,
+        PragmaDirective, VariableDeclaration, Visibility,
     },
     context::{
         browser::{
@@ -220,4 +220,46 @@ pub fn get_literal_value_or_constant_variable_value(
         }
     }
     None
+}
+
+/*
+Check if expression in constant
+Expression::Literal whose value is false/true
+Expression::Identifier that refers to a constant boolean variable declaration
+Expression::UnaryOperation with ! operator followed by a sub expression that could be either of the above
+*/
+pub fn is_constant_boolean(context: &WorkspaceContext, ast_node: &Expression) -> bool {
+    if let Expression::Literal(literal) = ast_node {
+        if literal.kind == LiteralKind::Bool
+            && literal
+                .value
+                .as_ref()
+                .is_some_and(|value| value == "false" || value == "true")
+        {
+            return true;
+        }
+    }
+    if let Expression::Identifier(Identifier {
+        referenced_declaration: Some(id),
+        ..
+    }) = ast_node
+    {
+        if let Some(ASTNode::VariableDeclaration(variable_declaration)) = context.nodes.get(id) {
+            if variable_declaration
+                .type_descriptions
+                .type_string
+                .as_ref()
+                .is_some_and(|value| value == "bool")
+                && variable_declaration.mutability() == Some(&crate::ast::Mutability::Constant)
+            {
+                return true;
+            }
+        }
+    }
+    if let Expression::UnaryOperation(operation) = ast_node {
+        if operation.operator == "!" {
+            return is_constant_boolean(context, operation.sub_expression.as_ref());
+        }
+    }
+    false
 }
