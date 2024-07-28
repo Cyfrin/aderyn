@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 60,
-    "total_sloc": 1620
+    "total_source_units": 62,
+    "total_sloc": 1635
   },
   "files_details": {
     "files_details": [
@@ -40,6 +40,14 @@
       {
         "file_path": "src/CrazyPragma.sol",
         "n_sloc": 4
+      },
+      {
+        "file_path": "src/DangerousStrictEquality1.sol",
+        "n_sloc": 6
+      },
+      {
+        "file_path": "src/DangerousStrictEquality2.sol",
+        "n_sloc": 9
       },
       {
         "file_path": "src/DangerousUnaryOperator.sol",
@@ -248,7 +256,7 @@
     ]
   },
   "issue_count": {
-    "high": 23,
+    "high": 24,
     "low": 23
   },
   "high_issues": {
@@ -1427,6 +1435,31 @@
             "src_char": "247:10"
           }
         ]
+      },
+      {
+        "title": "Dangerous strict equality checks on contract balances.",
+        "description": "A contract's balance can be forcibly manipulated by another selfdestructing contract. Therefore, it's recommended to use >, <, >= or <= instead of strict equality.",
+        "detector_name": "dangerous-strict-equailty-on-contract-balance",
+        "instances": [
+          {
+            "contract_path": "src/DangerousStrictEquality1.sol",
+            "line_no": 6,
+            "src": "177:25",
+            "src_char": "177:25"
+          },
+          {
+            "contract_path": "src/DangerousStrictEquality2.sol",
+            "line_no": 6,
+            "src": "177:34",
+            "src_char": "177:34"
+          },
+          {
+            "contract_path": "src/DangerousStrictEquality2.sol",
+            "line_no": 10,
+            "src": "305:43",
+            "src_char": "305:43"
+          }
+        ]
       }
     ]
   },
@@ -1651,6 +1684,12 @@
             "line_no": 2,
             "src": "32:32",
             "src_char": "32:32"
+          },
+          {
+            "contract_path": "src/DangerousStrictEquality1.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
           },
           {
             "contract_path": "src/DangerousUnaryOperator.sol",
@@ -1968,6 +2007,18 @@
             "src_char": "1275:66"
           },
           {
+            "contract_path": "src/DangerousStrictEquality2.sol",
+            "line_no": 6,
+            "src": "202:9",
+            "src_char": "202:9"
+          },
+          {
+            "contract_path": "src/DangerousStrictEquality2.sol",
+            "line_no": 10,
+            "src": "339:9",
+            "src_char": "339:9"
+          },
+          {
             "contract_path": "src/DynamicArrayLengthAssignment.sol",
             "line_no": 13,
             "src": "312:3",
@@ -2241,6 +2292,12 @@
             "line_no": 2,
             "src": "32:32",
             "src_char": "32:32"
+          },
+          {
+            "contract_path": "src/DangerousStrictEquality2.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
           },
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
@@ -2949,6 +3006,7 @@
     "tautological-compare",
     "rtlo",
     "unchecked-return",
-    "dangerous-unary-operator"
+    "dangerous-unary-operator",
+    "dangerous-strict-equailty-on-contract-balance"
   ]
 }

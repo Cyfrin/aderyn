@@ -2071,6 +2071,48 @@
           "ruleId": "dangerous-unary-operator"
         },
         {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DangerousStrictEquality1.sol"
+                },
+                "region": {
+                  "byteLength": 25,
+                  "byteOffset": 177
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DangerousStrictEquality2.sol"
+                },
+                "region": {
+                  "byteLength": 34,
+                  "byteOffset": 177
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DangerousStrictEquality2.sol"
+                },
+                "region": {
+                  "byteLength": 43,
+                  "byteOffset": 305
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "A contract's balance can be forcibly manipulated by another selfdestructing contract. Therefore, it's recommended to use >, <, >= or <= instead of strict equality."
+          },
+          "ruleId": "dangerous-strict-equailty-on-contract-balance"
+        },
+        {
           "level": "note",
           "locations": [
             {
@@ -2444,6 +2486,17 @@
                 },
                 "region": {
                   "byteLength": 32,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DangerousStrictEquality1.sol"
+                },
+                "region": {
+                  "byteLength": 23,
                   "byteOffset": 32
                 }
               }
@@ -3017,6 +3070,28 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/DangerousStrictEquality2.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 202
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DangerousStrictEquality2.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 339
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/DynamicArrayLengthAssignment.sol"
                 },
                 "region": {
@@ -3495,6 +3570,17 @@
                 },
                 "region": {
                   "byteLength": 32,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DangerousStrictEquality2.sol"
+                },
+                "region": {
+                  "byteLength": 23,
                   "byteOffset": 32
                 }
               }
