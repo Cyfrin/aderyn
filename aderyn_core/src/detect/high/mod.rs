@@ -1,6 +1,7 @@
 pub(crate) mod arbitrary_transfer_from;
 pub(crate) mod avoid_abi_encode_packed;
 pub(crate) mod block_timestamp_deadline;
+pub(crate) mod boolean_equality;
 pub(crate) mod dangerous_unary_operator;
 pub(crate) mod delegate_call_in_loop;
 pub(crate) mod delegate_call_no_address_check;
