@@ -54,11 +54,14 @@ impl IssueDetector for ExperimentalEncoderDetector {
 
 #[cfg(test)]
 mod storage_array_encode_compiler_bug_detector_tests {
+    use serial_test::serial;
+
     use crate::detect::{
         detector::IssueDetector, high::experimental_encoder::ExperimentalEncoderDetector,
     };
 
     #[test]
+    #[serial]
     fn test_storage_array_encode_compiler_bug_detector() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/ExperimentalEncoder.sol",
