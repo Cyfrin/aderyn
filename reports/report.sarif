@@ -1942,7 +1942,7 @@
             }
           ],
           "message": {
-            "text": "Description of the high issue."
+            "text": "This vulnerability occurs when a state variable in a derived contract unintentionallyshadows a state variable declared in one of its parent contracts. Shadowing happens when a derived contract declares a variable with the same name as a variable in its base contract, leading to potential confusion and unintended behavior. Shadowed state variables can cause issues such as incorrect data being accessed or modified, making the contract behavior unpredictable. It is crucialto ensure that variable names are unique across the inheritance hierarchy or to use appropriate visibilityand scope controls to avoid such conflicts."
           },
           "ruleId": "state-variable-shadowing"
         },

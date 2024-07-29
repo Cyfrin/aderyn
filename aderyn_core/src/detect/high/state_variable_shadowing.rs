@@ -179,11 +179,19 @@ impl IssueDetector for StateVariableShadowingDetector {
     }
 
     fn title(&self) -> String {
-        String::from("High Issue Title")
+        String::from("Shadowed State Variables in Inheritance Hierarchy")
     }
 
     fn description(&self) -> String {
-        String::from("Description of the high issue.")
+        String::from(
+            "This vulnerability occurs when a state variable in a derived contract unintentionally\
+            shadows a state variable declared in one of its parent contracts. Shadowing happens when a derived \
+            contract declares a variable with the same name as a variable in its base contract, leading to \
+            potential confusion and unintended behavior. Shadowed state variables can cause issues such as \
+            incorrect data being accessed or modified, making the contract behavior unpredictable. It is crucial\
+            to ensure that variable names are unique across the inheritance hierarchy or to use appropriate visibility\
+            and scope controls to avoid such conflicts."
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -220,11 +228,22 @@ mod state_variable_shadowing_detector_tests {
             crate::detect::detector::IssueSeverity::High
         );
         // assert the title is correct
-        assert_eq!(detector.title(), String::from("High Issue Title"));
+        assert_eq!(
+            detector.title(),
+            String::from("Shadowed State Variables in Inheritance Hierarchy")
+        );
         // assert the description is correct
         assert_eq!(
             detector.description(),
-            String::from("Description of the high issue.")
+            String::from(
+                "This vulnerability occurs when a state variable in a derived contract unintentionally\
+                shadows a state variable declared in one of its parent contracts. Shadowing happens when a derived \
+                contract declares a variable with the same name as a variable in its base contract, leading to \
+                potential confusion and unintended behavior. Shadowed state variables can cause issues such as \
+                incorrect data being accessed or modified, making the contract behavior unpredictable. It is crucial\
+                to ensure that variable names are unique across the inheritance hierarchy or to use appropriate visibility\
+                and scope controls to avoid such conflicts."
+            )
         );
     }
 }
