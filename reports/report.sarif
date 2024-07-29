@@ -2371,6 +2371,154 @@
           "ruleId": "dangerous-unary-operator"
         },
         {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WeakRandomness.sol"
+                },
+                "region": {
+                  "byteLength": 70,
+                  "byteOffset": 188
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WeakRandomness.sol"
+                },
+                "region": {
+                  "byteLength": 41,
+                  "byteOffset": 386
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WeakRandomness.sol"
+                },
+                "region": {
+                  "byteLength": 20,
+                  "byteOffset": 597
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WeakRandomness.sol"
+                },
+                "region": {
+                  "byteLength": 20,
+                  "byteOffset": 793
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WeakRandomness.sol"
+                },
+                "region": {
+                  "byteLength": 20,
+                  "byteOffset": 915
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WeakRandomness.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 1095
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WeakRandomness.sol"
+                },
+                "region": {
+                  "byteLength": 37,
+                  "byteOffset": 1217
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WeakRandomness.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 1434
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WeakRandomness.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 1563
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "The use of keccak256 hash functions on predictable values like block.timestamp, block.number, or similar data, including modulo operations on these values, should be avoided for generating randomness, as they are easily predictable and manipulable. The `PREVRANDAO` opcode also should not be used as a source of randomness. Instead, utilize Chainlink VRF for cryptographically secure and provably random values to ensure protocol integrity."
+          },
+          "ruleId": "weak-randomness"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/PreDeclaredVarUsage.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 196
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "This is a bad practice that may lead to unintended consequences. Please declare the variable before using it."
+          },
+          "ruleId": "pre-declared-local-variable-usage"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DeletionNestedMappingStructureContract.sol"
+                },
+                "region": {
+                  "byteLength": 25,
+                  "byteOffset": 426
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "A deletion in a structure containing a mapping will not delete the mapping. The remaining data may be used to compromise the contract."
+          },
+          "ruleId": "delete-nested-mapping"
+        },
+        {
           "level": "note",
           "locations": [
             {
@@ -2784,11 +2932,33 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/DeletionNestedMappingStructureContract.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/InconsistentUints.sol"
                 },
                 "region": {
                   "byteLength": 24,
                   "byteOffset": 0
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/PreDeclaredVarUsage.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
                 }
               }
             },
@@ -3438,6 +3608,28 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/PreDeclaredVarUsage.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 200
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/PreDeclaredVarUsage.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 222
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/RevertsAndRequriesInLoops.sol"
                 },
                 "region": {
@@ -3520,6 +3712,39 @@
                 "region": {
                   "byteLength": 7,
                   "byteOffset": 1190
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WeakRandomness.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 933
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WeakRandomness.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 1252
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WeakRandomness.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 1441
                 }
               }
             },
@@ -3967,6 +4192,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/DeletionNestedMappingStructureContract.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
@@ -4045,6 +4281,17 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/UnsafeERC721Mint.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WeakRandomness.sol"
                 },
                 "region": {
                   "byteLength": 23,
@@ -5411,8 +5658,8 @@
           "informationUri": "https://github.com/Cyfrin/aderyn",
           "name": "Aderyn",
           "organization": "Cyfrin",
-          "semanticVersion": "0.1.7",
-          "version": "0.1.7"
+          "semanticVersion": "0.1.8",
+          "version": "0.1.8"
         }
       }
     }

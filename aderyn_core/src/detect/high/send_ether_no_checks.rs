@@ -65,11 +65,14 @@ impl IssueDetector for SendEtherNoChecksDetector {
 
 #[cfg(test)]
 mod send_ether_no_checks_detector_tests {
+    use serial_test::serial;
+
     use crate::detect::{
         detector::IssueDetector, high::send_ether_no_checks::SendEtherNoChecksDetector,
     };
 
     #[test]
+    #[serial]
     fn test_send_ether_no_checks() {
         let context = crate::detect::test_utils::load_solidity_source_unit_with_callgraphs(
             "../tests/contract-playground/src/SendEtherNoChecks.sol",

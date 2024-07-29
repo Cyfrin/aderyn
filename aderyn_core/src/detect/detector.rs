@@ -66,6 +66,9 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<RTLODetector>::default(),
         Box::<UncheckedReturnDetector>::default(),
         Box::<DangerousUnaryOperatorDetector>::default(),
+        Box::<WeakRandomnessDetector>::default(),
+        Box::<PreDeclaredLocalVariableUsageDetector>::default(),
+        Box::<DeletionNestedMappingDetector>::default(),
     ]
 }
 
@@ -128,6 +131,9 @@ pub(crate) enum IssueDetectorNamePool {
     RTLO,
     UncheckedReturn,
     DangerousUnaryOperator,
+    WeakRandomness,
+    PreDeclaredLocalVariableUsage,
+    DeleteNestedMapping,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -263,6 +269,13 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::UncheckedReturn => Some(Box::<UncheckedReturnDetector>::default()),
         IssueDetectorNamePool::DangerousUnaryOperator => {
             Some(Box::<DangerousUnaryOperatorDetector>::default())
+        }
+        IssueDetectorNamePool::WeakRandomness => Some(Box::<WeakRandomnessDetector>::default()),
+        IssueDetectorNamePool::PreDeclaredLocalVariableUsage => {
+            Some(Box::<PreDeclaredLocalVariableUsageDetector>::default())
+        }
+        IssueDetectorNamePool::DeleteNestedMapping => {
+            Some(Box::<DeletionNestedMappingDetector>::default())
         }
         IssueDetectorNamePool::Undecided => None,
     }

@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 65,
-    "total_sloc": 1843
+    "total_source_units": 68,
+    "total_sloc": 1922
   },
   "files_details": {
     "files_details": [
@@ -52,6 +52,10 @@
       {
         "file_path": "src/DelegateCallWithoutAddressCheck.sol",
         "n_sloc": 31
+      },
+      {
+        "file_path": "src/DeletionNestedMappingStructureContract.sol",
+        "n_sloc": 11
       },
       {
         "file_path": "src/DeprecatedOZFunctions.sol",
@@ -112,6 +116,10 @@
       {
         "file_path": "src/OnceModifierExample.sol",
         "n_sloc": 8
+      },
+      {
+        "file_path": "src/PreDeclaredVarUsage.sol",
+        "n_sloc": 9
       },
       {
         "file_path": "src/RTLO.sol",
@@ -180,6 +188,10 @@
       {
         "file_path": "src/UsingSelfdestruct.sol",
         "n_sloc": 6
+      },
+      {
+        "file_path": "src/WeakRandomness.sol",
+        "n_sloc": 59
       },
       {
         "file_path": "src/WrongOrderOfLayout.sol",
@@ -268,7 +280,7 @@
     ]
   },
   "issue_count": {
-    "high": 27,
+    "high": 30,
     "low": 23
   },
   "high_issues": {
@@ -1619,6 +1631,93 @@
             "src_char": "247:10"
           }
         ]
+      },
+      {
+        "title": "Weak Randomness",
+        "description": "The use of keccak256 hash functions on predictable values like block.timestamp, block.number, or similar data, including modulo operations on these values, should be avoided for generating randomness, as they are easily predictable and manipulable. The `PREVRANDAO` opcode also should not be used as a source of randomness. Instead, utilize Chainlink VRF for cryptographically secure and provably random values to ensure protocol integrity.",
+        "detector_name": "weak-randomness",
+        "instances": [
+          {
+            "contract_path": "src/WeakRandomness.sol",
+            "line_no": 6,
+            "src": "188:70",
+            "src_char": "188:70"
+          },
+          {
+            "contract_path": "src/WeakRandomness.sol",
+            "line_no": 11,
+            "src": "386:41",
+            "src_char": "386:41"
+          },
+          {
+            "contract_path": "src/WeakRandomness.sol",
+            "line_no": 16,
+            "src": "597:20",
+            "src_char": "597:20"
+          },
+          {
+            "contract_path": "src/WeakRandomness.sol",
+            "line_no": 21,
+            "src": "793:20",
+            "src_char": "793:20"
+          },
+          {
+            "contract_path": "src/WeakRandomness.sol",
+            "line_no": 25,
+            "src": "915:20",
+            "src_char": "915:20"
+          },
+          {
+            "contract_path": "src/WeakRandomness.sol",
+            "line_no": 31,
+            "src": "1095:5",
+            "src_char": "1095:5"
+          },
+          {
+            "contract_path": "src/WeakRandomness.sol",
+            "line_no": 35,
+            "src": "1217:37",
+            "src_char": "1217:37"
+          },
+          {
+            "contract_path": "src/WeakRandomness.sol",
+            "line_no": 41,
+            "src": "1434:9",
+            "src_char": "1434:9"
+          },
+          {
+            "contract_path": "src/WeakRandomness.sol",
+            "line_no": 45,
+            "src": "1563:16",
+            "src_char": "1563:16"
+          }
+        ]
+      },
+      {
+        "title": "Usage of variable before declaration.",
+        "description": "This is a bad practice that may lead to unintended consequences. Please declare the variable before using it.",
+        "detector_name": "pre-declared-local-variable-usage",
+        "instances": [
+          {
+            "contract_path": "src/PreDeclaredVarUsage.sol",
+            "line_no": 8,
+            "src": "196:1",
+            "src_char": "196:1"
+          }
+        ]
+      },
+      {
+        "title": "Deletion from a nested mappping.",
+        "description": "A deletion in a structure containing a mapping will not delete the mapping. The remaining data may be used to compromise the contract.",
+        "detector_name": "delete-nested-mapping",
+        "instances": [
+          {
+            "contract_path": "src/DeletionNestedMappingStructureContract.sol",
+            "line_no": 17,
+            "src": "426:25",
+            "src_char": "426:25"
+          }
+        ]
       }
     ]
   },
@@ -1863,10 +1962,22 @@
             "src_char": "32:21"
           },
           {
+            "contract_path": "src/DeletionNestedMappingStructureContract.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/InconsistentUints.sol",
             "line_no": 1,
             "src": "0:24",
             "src_char": "0:24"
+          },
+          {
+            "contract_path": "src/PreDeclaredVarUsage.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
           },
           {
             "contract_path": "src/UncheckedSend.sol",
@@ -2226,6 +2337,18 @@
             "src_char": "606:2"
           },
           {
+            "contract_path": "src/PreDeclaredVarUsage.sol",
+            "line_no": 8,
+            "src": "200:3",
+            "src_char": "200:3"
+          },
+          {
+            "contract_path": "src/PreDeclaredVarUsage.sol",
+            "line_no": 9,
+            "src": "222:3",
+            "src_char": "222:3"
+          },
+          {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
             "line_no": 10,
             "src": "253:2",
@@ -2272,6 +2395,24 @@
             "line_no": 42,
             "src": "1190:7",
             "src_char": "1190:7"
+          },
+          {
+            "contract_path": "src/WeakRandomness.sol",
+            "line_no": 25,
+            "src": "933:2",
+            "src_char": "933:2"
+          },
+          {
+            "contract_path": "src/WeakRandomness.sol",
+            "line_no": 35,
+            "src": "1252:2",
+            "src_char": "1252:2"
+          },
+          {
+            "contract_path": "src/WeakRandomness.sol",
+            "line_no": 41,
+            "src": "1441:2",
+            "src_char": "1441:2"
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
@@ -2525,6 +2666,12 @@
             "src_char": "32:21"
           },
           {
+            "contract_path": "src/DeletionNestedMappingStructureContract.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 2,
             "src": "32:23",
@@ -2568,6 +2715,12 @@
           },
           {
             "contract_path": "src/UnsafeERC721Mint.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/WeakRandomness.sol",
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
@@ -3379,6 +3532,9 @@
     "tautological-compare",
     "rtlo",
     "unchecked-return",
-    "dangerous-unary-operator"
+    "dangerous-unary-operator",
+    "weak-randomness",
+    "pre-declared-local-variable-usage",
+    "delete-nested-mapping"
   ]
 }
