@@ -4066,6 +4066,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 1403
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/cloc/HeavilyCommentedContract.sol"
                 },
                 "region": {
