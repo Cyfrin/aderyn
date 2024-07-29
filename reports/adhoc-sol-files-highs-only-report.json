@@ -88,7 +88,7 @@
     ]
   },
   "issue_count": {
-    "high": 3,
+    "high": 4,
     "low": 0
   },
   "high_issues": {
@@ -155,6 +155,19 @@
             "src_char": "391:15"
           }
         ]
+      },
+      {
+        "title": "Incorrect Modifier",
+        "description": "A modifier must contain a placeholder statement `_` and a `revert` or a `require` condition.",
+        "detector_name": "incorrect-modifier",
+        "instances": [
+          {
+            "contract_path": "OnceModifierExample.sol",
+            "line_no": 6,
+            "src": "103:8",
+            "src_char": "103:8"
+          }
+        ]
       }
     ]
   },
@@ -190,6 +203,7 @@
     "dangerous-unary-operator",
     "weak-randomness",
     "pre-declared-local-variable-usage",
-    "delete-nested-mapping"
+    "delete-nested-mapping",
+    "incorrect-modifier"
   ]
 }

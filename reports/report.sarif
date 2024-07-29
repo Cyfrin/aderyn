@@ -2455,6 +2455,81 @@
           "ruleId": "delete-nested-mapping"
         },
         {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectModifier.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 856
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectModifier.sol"
+                },
+                "region": {
+                  "byteLength": 13,
+                  "byteOffset": 1156
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectModifier.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 1387
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/OnceModifierExample.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 103
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SendEtherNoChecks.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 1301
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WrongOrderOfLayout.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 332
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "A modifier must contain a placeholder statement `_` and a `revert` or a `require` condition."
+          },
+          "ruleId": "incorrect-modifier"
+        },
+        {
           "level": "note",
           "locations": [
             {
@@ -2509,6 +2584,39 @@
                 "region": {
                   "byteLength": 7,
                   "byteOffset": 188
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectModifier.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 3047
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectModifier.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 3284
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectModifier.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 3770
                 }
               }
             },
@@ -2771,6 +2879,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/IncorrectModifier.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 3790
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/SendEtherNoChecks.sol"
                 },
                 "region": {
@@ -2890,6 +3009,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/IncorrectModifier.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/PreDeclaredVarUsage.sol"
                 },
                 "region": {
@@ -2992,6 +3122,17 @@
                 "region": {
                   "byteLength": 15,
                   "byteOffset": 267
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectModifier.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 3101
                 }
               }
             },
@@ -3533,6 +3674,28 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/IncorrectModifier.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 1894
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectModifier.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 2032
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/PreDeclaredVarUsage.sol"
                 },
                 "region": {
@@ -3870,6 +4033,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/IncorrectModifier.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 2051
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/RevertsAndRequriesInLoops.sol"
                 },
                 "region": {
@@ -4150,6 +4324,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/IncorrectModifier.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/KeccakContract.sol"
                 },
                 "region": {
@@ -4412,6 +4597,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/IncorrectModifier.sol"
+                },
+                "region": {
+                  "byteLength": 13,
+                  "byteOffset": 1156
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/InternalFunctions.sol"
                 },
                 "region": {
@@ -4635,6 +4831,17 @@
                 "region": {
                   "byteLength": 41,
                   "byteOffset": 1219
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectModifier.sol"
+                },
+                "region": {
+                  "byteLength": 13,
+                  "byteOffset": 3442
                 }
               }
             },

@@ -68,6 +68,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<WeakRandomnessDetector>::default(),
         Box::<PreDeclaredLocalVariableUsageDetector>::default(),
         Box::<DeletionNestedMappingDetector>::default(),
+        Box::<IncorrectModifierDetector>::default(),
     ]
 }
 
@@ -132,6 +133,7 @@ pub(crate) enum IssueDetectorNamePool {
     WeakRandomness,
     PreDeclaredLocalVariableUsage,
     DeleteNestedMapping,
+    IncorrectModifier,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -273,6 +275,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         }
         IssueDetectorNamePool::DeleteNestedMapping => {
             Some(Box::<DeletionNestedMappingDetector>::default())
+        }
+        IssueDetectorNamePool::IncorrectModifier => {
+            Some(Box::<IncorrectModifierDetector>::default())
         }
         IssueDetectorNamePool::Undecided => None,
     }

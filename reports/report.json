@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 67,
-    "total_sloc": 1904
+    "total_source_units": 68,
+    "total_sloc": 1976
   },
   "files_details": {
     "files_details": [
@@ -92,6 +92,10 @@
       {
         "file_path": "src/IncorrectCaretOperator.sol",
         "n_sloc": 16
+      },
+      {
+        "file_path": "src/IncorrectModifier.sol",
+        "n_sloc": 72
       },
       {
         "file_path": "src/IncorrectShift.sol",
@@ -276,7 +280,7 @@
     ]
   },
   "issue_count": {
-    "high": 29,
+    "high": 30,
     "low": 23
   },
   "high_issues": {
@@ -1677,6 +1681,49 @@
             "src_char": "426:25"
           }
         ]
+      },
+      {
+        "title": "Incorrect Modifier",
+        "description": "A modifier must contain a placeholder statement `_` and a `revert` or a `require` condition.",
+        "detector_name": "incorrect-modifier",
+        "instances": [
+          {
+            "contract_path": "src/IncorrectModifier.sol",
+            "line_no": 29,
+            "src": "856:9",
+            "src_char": "856:9"
+          },
+          {
+            "contract_path": "src/IncorrectModifier.sol",
+            "line_no": 38,
+            "src": "1156:13",
+            "src_char": "1156:13"
+          },
+          {
+            "contract_path": "src/IncorrectModifier.sol",
+            "line_no": 46,
+            "src": "1387:14",
+            "src_char": "1387:14"
+          },
+          {
+            "contract_path": "src/OnceModifierExample.sol",
+            "line_no": 6,
+            "src": "103:8",
+            "src_char": "103:8"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecks.sol",
+            "line_no": 70,
+            "src": "1301:4",
+            "src_char": "1301:4"
+          },
+          {
+            "contract_path": "src/WrongOrderOfLayout.sol",
+            "line_no": 17,
+            "src": "332:6",
+            "src_char": "332:6"
+          }
+        ]
       }
     ]
   },
@@ -1716,6 +1763,24 @@
             "line_no": 6,
             "src": "188:7",
             "src_char": "188:7"
+          },
+          {
+            "contract_path": "src/IncorrectModifier.sol",
+            "line_no": 97,
+            "src": "3047:9",
+            "src_char": "3047:9"
+          },
+          {
+            "contract_path": "src/IncorrectModifier.sol",
+            "line_no": 104,
+            "src": "3284:9",
+            "src_char": "3284:9"
+          },
+          {
+            "contract_path": "src/IncorrectModifier.sol",
+            "line_no": 116,
+            "src": "3770:9",
+            "src_char": "3770:9"
           },
           {
             "contract_path": "src/InternalFunctions.sol",
@@ -1866,6 +1931,12 @@
             "src_char": "1598:18"
           },
           {
+            "contract_path": "src/IncorrectModifier.sol",
+            "line_no": 117,
+            "src": "3790:11",
+            "src_char": "3790:11"
+          },
+          {
             "contract_path": "src/SendEtherNoChecks.sol",
             "line_no": 67,
             "src": "1255:19",
@@ -1933,6 +2004,12 @@
             "src_char": "0:24"
           },
           {
+            "contract_path": "src/IncorrectModifier.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/PreDeclaredVarUsage.sol",
             "line_no": 2,
             "src": "32:23",
@@ -1992,6 +2069,12 @@
             "line_no": 12,
             "src": "267:15",
             "src_char": "267:15"
+          },
+          {
+            "contract_path": "src/IncorrectModifier.sol",
+            "line_no": 99,
+            "src": "3101:16",
+            "src_char": "3101:16"
           },
           {
             "contract_path": "src/StateVariables.sol",
@@ -2290,6 +2373,18 @@
             "src_char": "606:2"
           },
           {
+            "contract_path": "src/IncorrectModifier.sol",
+            "line_no": 59,
+            "src": "1894:3",
+            "src_char": "1894:3"
+          },
+          {
+            "contract_path": "src/IncorrectModifier.sol",
+            "line_no": 66,
+            "src": "2032:3",
+            "src_char": "2032:3"
+          },
+          {
             "contract_path": "src/PreDeclaredVarUsage.sol",
             "line_no": 8,
             "src": "200:3",
@@ -2478,6 +2573,12 @@
             "src_char": "1389:6"
           },
           {
+            "contract_path": "src/IncorrectModifier.sol",
+            "line_no": 67,
+            "src": "2051:6",
+            "src_char": "2051:6"
+          },
+          {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
             "line_no": 19,
             "src": "503:6",
@@ -2637,6 +2738,12 @@
             "src_char": "0:24"
           },
           {
+            "contract_path": "src/IncorrectModifier.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/KeccakContract.sol",
             "line_no": 2,
             "src": "32:23",
@@ -2782,6 +2889,12 @@
             "src_char": "678:9"
           },
           {
+            "contract_path": "src/IncorrectModifier.sol",
+            "line_no": 38,
+            "src": "1156:13",
+            "src_char": "1156:13"
+          },
+          {
             "contract_path": "src/InternalFunctions.sol",
             "line_no": 18,
             "src": "413:9",
@@ -2907,6 +3020,12 @@
             "line_no": 81,
             "src": "1219:41",
             "src_char": "1219:41"
+          },
+          {
+            "contract_path": "src/IncorrectModifier.sol",
+            "line_no": 110,
+            "src": "3442:13",
+            "src_char": "3442:13"
           },
           {
             "contract_path": "src/OnceModifierExample.sol",
@@ -3475,6 +3594,7 @@
     "dangerous-unary-operator",
     "weak-randomness",
     "pre-declared-local-variable-usage",
-    "delete-nested-mapping"
+    "delete-nested-mapping",
+    "incorrect-modifier"
   ]
 }
