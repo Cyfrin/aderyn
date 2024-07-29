@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 67,
-    "total_sloc": 1904
+    "total_source_units": 68,
+    "total_sloc": 1922
   },
   "files_details": {
     "files_details": [
@@ -166,6 +166,10 @@
         "n_sloc": 33
       },
       {
+        "file_path": "src/UncheckedSend.sol",
+        "n_sloc": 18
+      },
+      {
         "file_path": "src/UninitializedStateVariable.sol",
         "n_sloc": 29
       },
@@ -276,7 +280,7 @@
     ]
   },
   "issue_count": {
-    "high": 29,
+    "high": 30,
     "low": 23
   },
   "high_issues": {
@@ -1381,6 +1385,19 @@
         ]
       },
       {
+        "title": "Unchecked `bool success` value for send call.",
+        "description": "The transaction `address(payable?).send(address)` may fail because of reasons like out-of-gas, invalid receipient address or revert from the recipient. Therefore, the boolean returned by this function call must be checked to be `true` in order to verify that the transaction was successful",
+        "detector_name": "unchecked-send",
+        "instances": [
+          {
+            "contract_path": "src/UncheckedSend.sol",
+            "line_no": 24,
+            "src": "815:22",
+            "src_char": "815:22"
+          }
+        ]
+      },
+      {
         "title": "Misused boolean with logical operators",
         "description": "The patterns `if (… || true)` and `if (.. && false)` will always evaluate to true and false respectively.",
         "detector_name": "misused-boolean",
@@ -1475,6 +1492,30 @@
             "line_no": 99,
             "src": "1795:5",
             "src_char": "1795:5"
+          },
+          {
+            "contract_path": "src/UncheckedSend.sol",
+            "line_no": 6,
+            "src": "85:246",
+            "src_char": "85:246"
+          },
+          {
+            "contract_path": "src/UncheckedSend.sol",
+            "line_no": 12,
+            "src": "337:190",
+            "src_char": "337:190"
+          },
+          {
+            "contract_path": "src/UncheckedSend.sol",
+            "line_no": 17,
+            "src": "533:184",
+            "src_char": "533:184"
+          },
+          {
+            "contract_path": "src/UncheckedSend.sol",
+            "line_no": 22,
+            "src": "723:186",
+            "src_char": "723:186"
           },
           {
             "contract_path": "src/UninitializedStateVariable.sol",
@@ -1934,6 +1975,12 @@
           },
           {
             "contract_path": "src/PreDeclaredVarUsage.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/UncheckedSend.sol",
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
@@ -2933,6 +2980,12 @@
             "src_char": "1795:5"
           },
           {
+            "contract_path": "src/UncheckedSend.sol",
+            "line_no": 27,
+            "src": "915:65",
+            "src_char": "915:65"
+          },
+          {
             "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
             "line_no": 11,
             "src": "367:17",
@@ -3197,6 +3250,12 @@
             "line_no": 17,
             "src": "388:11",
             "src_char": "388:11"
+          },
+          {
+            "contract_path": "src/UncheckedSend.sol",
+            "line_no": 27,
+            "src": "915:65",
+            "src_char": "915:65"
           }
         ]
       },
@@ -3466,6 +3525,7 @@
     "incorrect-caret-operator",
     "yul-return",
     "state-variable-shadowing",
+    "unchecked-send",
     "misused-boolean",
     "send-ether-no-checks",
     "delegate-call-unchecked-address",
