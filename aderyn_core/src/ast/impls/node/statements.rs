@@ -40,8 +40,15 @@ impl Node for ExpressionStatement {
     fn accept(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
         if visitor.visit_expression_statement(self)? {
             self.expression.accept(visitor)?;
+            self.accept_metadata(visitor)?;
         }
         visitor.end_visit_expression_statement(self)
+    }
+    fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
+        if let Some(child_id) = self.expression.get_node_id() {
+            visitor.visit_immediate_children(self.id, vec![child_id])?;
+        }
+        Ok(())
     }
 }
 

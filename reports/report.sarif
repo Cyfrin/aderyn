@@ -1707,6 +1707,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/DelegateCallWithoutAddressCheck.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 337
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/InconsistentUints.sol"
                 },
                 "region": {
@@ -1734,6 +1745,17 @@
                 "region": {
                   "byteLength": 7,
                   "byteOffset": 355
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/PublicVariableReadInExternalContext.sol"
+                },
+                "region": {
+                  "byteLength": 26,
+                  "byteOffset": 130
                 }
               }
             },
@@ -1941,6 +1963,295 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/UncheckedSend.sol"
+                },
+                "region": {
+                  "byteLength": 22,
+                  "byteOffset": 815
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "The transaction `address(payable?).send(address)` may fail because of reasons like out-of-gas, invalid receipient address or revert from the recipient. Therefore, the boolean returned by this function call must be checked to be `true` in order to verify that the transaction was successful"
+          },
+          "ruleId": "unchecked-send"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MisusedBoolean.sol"
+                },
+                "region": {
+                  "byteLength": 19,
+                  "byteOffset": 257
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MisusedBoolean.sol"
+                },
+                "region": {
+                  "byteLength": 20,
+                  "byteOffset": 419
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MisusedBoolean.sol"
+                },
+                "region": {
+                  "byteLength": 20,
+                  "byteOffset": 582
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MisusedBoolean.sol"
+                },
+                "region": {
+                  "byteLength": 19,
+                  "byteOffset": 745
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MisusedBoolean.sol"
+                },
+                "region": {
+                  "byteLength": 51,
+                  "byteOffset": 908
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MisusedBoolean.sol"
+                },
+                "region": {
+                  "byteLength": 52,
+                  "byteOffset": 1060
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MisusedBoolean.sol"
+                },
+                "region": {
+                  "byteLength": 53,
+                  "byteOffset": 1213
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MisusedBoolean.sol"
+                },
+                "region": {
+                  "byteLength": 21,
+                  "byteOffset": 1366
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MisusedBoolean.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 1530
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MisusedBoolean.sol"
+                },
+                "region": {
+                  "byteLength": 18,
+                  "byteOffset": 1691
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "The patterns `if (… || true)` and `if (.. && false)` will always evaluate to true and false respectively."
+          },
+          "ruleId": "misused-boolean"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CallGraphTests.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 686
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SendEtherNoChecks.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 1060
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SendEtherNoChecks.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 1405
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SendEtherNoChecks.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 1795
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedSend.sol"
+                },
+                "region": {
+                  "byteLength": 246,
+                  "byteOffset": 85
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedSend.sol"
+                },
+                "region": {
+                  "byteLength": 190,
+                  "byteOffset": 337
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedSend.sol"
+                },
+                "region": {
+                  "byteLength": 184,
+                  "byteOffset": 533
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedSend.sol"
+                },
+                "region": {
+                  "byteLength": 186,
+                  "byteOffset": 723
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedStateVariable.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 563
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Introduce checks for `msg.sender` in the function"
+          },
+          "ruleId": "send-ether-no-checks"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DelegateCallWithoutAddressCheck.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 392
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 28,
+                  "byteOffset": 1253
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/inheritance/ExtendedInheritance.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 391
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Introduce checks on the address"
+          },
+          "ruleId": "delegate-call-unchecked-address"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/TautologicalCompare.sol"
                 },
                 "region": {
@@ -2069,6 +2380,154 @@
             "text": "Potentially mistakened `=+` for `+=` or `=-` for `-=`. Please include a space in between."
           },
           "ruleId": "dangerous-unary-operator"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WeakRandomness.sol"
+                },
+                "region": {
+                  "byteLength": 70,
+                  "byteOffset": 188
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WeakRandomness.sol"
+                },
+                "region": {
+                  "byteLength": 41,
+                  "byteOffset": 386
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WeakRandomness.sol"
+                },
+                "region": {
+                  "byteLength": 20,
+                  "byteOffset": 597
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WeakRandomness.sol"
+                },
+                "region": {
+                  "byteLength": 20,
+                  "byteOffset": 793
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WeakRandomness.sol"
+                },
+                "region": {
+                  "byteLength": 20,
+                  "byteOffset": 915
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WeakRandomness.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 1095
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WeakRandomness.sol"
+                },
+                "region": {
+                  "byteLength": 37,
+                  "byteOffset": 1217
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WeakRandomness.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 1434
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WeakRandomness.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 1563
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "The use of keccak256 hash functions on predictable values like block.timestamp, block.number, or similar data, including modulo operations on these values, should be avoided for generating randomness, as they are easily predictable and manipulable. The `PREVRANDAO` opcode also should not be used as a source of randomness. Instead, utilize Chainlink VRF for cryptographically secure and provably random values to ensure protocol integrity."
+          },
+          "ruleId": "weak-randomness"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/PreDeclaredVarUsage.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 196
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "This is a bad practice that may lead to unintended consequences. Please declare the variable before using it."
+          },
+          "ruleId": "pre-declared-local-variable-usage"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DeletionNestedMappingStructureContract.sol"
+                },
+                "region": {
+                  "byteLength": 25,
+                  "byteOffset": 426
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "A deletion in a structure containing a mapping will not delete the mapping. The remaining data may be used to compromise the contract."
+          },
+          "ruleId": "delete-nested-mapping"
         },
         {
           "level": "note",
@@ -2387,6 +2846,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/SendEtherNoChecks.sol"
+                },
+                "region": {
+                  "byteLength": 19,
+                  "byteOffset": 1255
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/StateShadowing.sol"
                 },
                 "region": {
@@ -2462,6 +2932,28 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/DelegateCallWithoutAddressCheck.sol"
+                },
+                "region": {
+                  "byteLength": 21,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DeletionNestedMappingStructureContract.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/InconsistentUints.sol"
                 },
                 "region": {
@@ -2473,7 +2965,29 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/PreDeclaredVarUsage.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/RedundantStatements.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedSend.sol"
                 },
                 "region": {
                   "byteLength": 23,
@@ -3028,6 +3542,39 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/DelegateCallWithoutAddressCheck.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 718
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DelegateCallWithoutAddressCheck.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 771
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DelegateCallWithoutAddressCheck.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 838
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/DynamicArrayLengthAssignment.sol"
                 },
                 "region": {
@@ -3077,6 +3624,28 @@
                 "region": {
                   "byteLength": 2,
                   "byteOffset": 606
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/PreDeclaredVarUsage.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 200
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/PreDeclaredVarUsage.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 222
                 }
               }
             },
@@ -3165,6 +3734,39 @@
                 "region": {
                   "byteLength": 7,
                   "byteOffset": 1190
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WeakRandomness.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 933
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WeakRandomness.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 1252
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WeakRandomness.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 1441
                 }
               }
             },
@@ -3288,6 +3890,61 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/CallGraphTests.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 128
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CallGraphTests.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 531
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CallGraphTests.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 936
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CallGraphTests.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 1246
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DelegateCallWithoutAddressCheck.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 948
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
@@ -3315,6 +3972,39 @@
                 "region": {
                   "byteLength": 6,
                   "byteOffset": 503
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SendEtherNoChecks.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 268
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SendEtherNoChecks.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 513
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SendEtherNoChecks.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 920
                 }
               }
             },
@@ -3370,17 +4060,6 @@
                 "region": {
                   "byteLength": 7,
                   "byteOffset": 589
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
-                },
-                "region": {
-                  "byteLength": 7,
-                  "byteOffset": 1403
                 }
               }
             },
@@ -3513,6 +4192,28 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/DelegateCallWithoutAddressCheck.sol"
+                },
+                "region": {
+                  "byteLength": 21,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DeletionNestedMappingStructureContract.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
@@ -3591,6 +4292,17 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/UnsafeERC721Mint.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/WeakRandomness.sol"
                 },
                 "region": {
                   "byteLength": 23,
@@ -3742,6 +4454,50 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/CallGraphTests.sol"
+                },
+                "region": {
+                  "byteLength": 22,
+                  "byteOffset": 186
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CallGraphTests.sol"
+                },
+                "region": {
+                  "byteLength": 22,
+                  "byteOffset": 571
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CallGraphTests.sol"
+                },
+                "region": {
+                  "byteLength": 22,
+                  "byteOffset": 976
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DelegateCallWithoutAddressCheck.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 678
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/InternalFunctions.sol"
                 },
                 "region": {
@@ -3758,6 +4514,50 @@
                 "region": {
                   "byteLength": 8,
                   "byteOffset": 103
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SendEtherNoChecks.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 308
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SendEtherNoChecks.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 960
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SendEtherNoChecks.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 1301
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SendEtherNoChecks.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 1704
                 }
               }
             },
@@ -3800,6 +4600,28 @@
                 "region": {
                   "byteLength": 23,
                   "byteOffset": 457
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CallGraphTests.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 291
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CallGraphTests.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 686
                 }
               }
             },
@@ -3910,6 +4732,50 @@
                 "region": {
                   "byteLength": 7,
                   "byteOffset": 147
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SendEtherNoChecks.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 1060
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SendEtherNoChecks.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 1405
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SendEtherNoChecks.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 1795
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedSend.sol"
+                },
+                "region": {
+                  "byteLength": 65,
+                  "byteOffset": 915
                 }
               }
             },
@@ -4275,6 +5141,50 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/CallGraphTests.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 89
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CallGraphTests.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 398
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CallGraphTests.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 803
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CallGraphTests.sol"
+                },
+                "region": {
+                  "byteLength": 18,
+                  "byteOffset": 1206
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/InternalFunctions.sol"
                 },
                 "region": {
@@ -4286,11 +5196,77 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/SendEtherNoChecks.sol"
+                },
+                "region": {
+                  "byteLength": 20,
+                  "byteOffset": 132
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SendEtherNoChecks.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 481
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SendEtherNoChecks.sol"
+                },
+                "region": {
+                  "byteLength": 20,
+                  "byteOffset": 784
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SendEtherNoChecks.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 1209
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SendEtherNoChecks.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 1551
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/StorageParameters.sol"
                 },
                 "region": {
                   "byteLength": 11,
                   "byteOffset": 388
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedSend.sol"
+                },
+                "region": {
+                  "byteLength": 65,
+                  "byteOffset": 915
                 }
               }
             }
@@ -4760,6 +5736,59 @@
             "text": "Remove the redundant statements because no code will be generated and it just congests the codebase."
           },
           "ruleId": "redundant-statements"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/PublicVariableReadInExternalContext.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 355
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/PublicVariableReadInExternalContext.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 457
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/PublicVariableReadInExternalContext.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 553
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/PublicVariableReadInExternalContext.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 1175
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "The contract reads it's own variable using `this` which adds an unnecessary STATICCALL. Remove `this` and access the variable like storage."
+          },
+          "ruleId": "public-variable-read-in-external-context"
         }
       ],
       "tool": {
@@ -4768,8 +5797,8 @@
           "informationUri": "https://github.com/Cyfrin/aderyn",
           "name": "Aderyn",
           "organization": "Cyfrin",
-          "semanticVersion": "0.1.7",
-          "version": "0.1.7"
+          "semanticVersion": "0.1.8",
+          "version": "0.1.8"
         }
       }
     }

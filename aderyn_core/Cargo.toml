@@ -1,8 +1,8 @@
 [package]
 name = "aderyn_core"
-version = "0.1.7"
+version = "0.1.8"
 edition = "2021"
-authors = ["Alex Roan <alex@cyfrin.io>"]
+authors = ["Cyfrin <aderyn@cyfrin.io>"]
 description = "Rust based Solidity AST analyzer backend"
 license = "MIT"
 
@@ -23,6 +23,7 @@ serde_repr = "0.1.12"
 strum = { version = "0.26", features = ["derive"] }
 toml = "0.8.2"
 cyfrin-foundry-compilers = { version = "0.3.20-aderyn", features = ["svm-solc"]  }
+derive_more = "0.99.18"
 
 [dev-dependencies]
 serial_test = "3.0.0"

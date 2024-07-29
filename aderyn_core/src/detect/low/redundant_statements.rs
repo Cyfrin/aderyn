@@ -71,11 +71,14 @@ impl IssueDetector for RedundantStatementsDetector {
 
 #[cfg(test)]
 mod redundant_statements_detector {
+    use serial_test::serial;
+
     use crate::detect::{
         detector::IssueDetector, low::redundant_statements::RedundantStatementsDetector,
     };
 
     #[test]
+    #[serial]
     fn test_redundant_statements() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/RedundantStatements.sol",

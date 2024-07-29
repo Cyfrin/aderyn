@@ -83,9 +83,12 @@ Consider using a different data structure or removing items by collecting them d
 
 #[cfg(test)]
 mod enuemrable_loop_removal_tests {
+    use serial_test::serial;
+
     use crate::detect::{detector::IssueDetector, high::EnumerableLoopRemovalDetector};
 
     #[test]
+    #[serial]
     fn test_enumerable_loop_detector() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/EnumerableSetIteration.sol",
