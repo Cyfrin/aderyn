@@ -64,7 +64,7 @@ impl IssueDetector for ContractLocksEtherDetector {
 /// Handles tasks related to contract level analysis for eth
 mod contract_eth_helper {
     use crate::{
-        ast::{ASTNode, ContractDefinition, ContractKind, StateMutability, Visibility},
+        ast::{ASTNode, ContractDefinition, StateMutability, Visibility},
         context::{
             browser::ExtractFunctionDefinitions, investigator::*,
             workspace_context::WorkspaceContext,
@@ -98,15 +98,6 @@ mod contract_eth_helper {
             let contracts = self.linearized_base_contracts.as_ref()?;
             for contract_id in contracts {
                 if let ASTNode::ContractDefinition(contract) = context.nodes.get(contract_id)? {
-                    if contract.kind == ContractKind::Interface {
-                        // In this case, to be safe, we assume that when the interface is implemented, it
-                        // will allow for withdrawals. So we give it a pass. This is to prevent false positives
-
-                        // However this is debatable...Maybe in auditor mode you don't want to assume this.
-                        // Either case, I am making this comment so we're aware of this.
-                        return Some(true);
-                    }
-
                     let funcs = contract
                         .function_definitions()
                         .into_iter()
