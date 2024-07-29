@@ -2149,61 +2149,61 @@ Instead of marking a function as `public`, consider marking it as `external` if 
 - Found in src/StateVariableEvents.sol [Line: 19](../tests/contract-playground/src/StateVariableEvents.sol#L19)
 
 	```solidity
-	    function stateChangedNoEventEmitted(uint a) public {
+	    function stateChangedNoEventEmitted(uint a) public { // bad
 	```
 
 - Found in src/StateVariableEvents.sol [Line: 23](../tests/contract-playground/src/StateVariableEvents.sol#L23)
 
 	```solidity
-	    function addressChangedNotEmitted(address a) public {
+	    function addressChangedNotEmitted(address a) public { // bad
 	```
 
 - Found in src/StateVariableEvents.sol [Line: 28](../tests/contract-playground/src/StateVariableEvents.sol#L28)
 
 	```solidity
-	    function addressChangedEventEmitted(address a) public {
+	    function addressChangedEventEmitted(address a) public { // good
 	```
 
 - Found in src/StateVariableEvents.sol [Line: 34](../tests/contract-playground/src/StateVariableEvents.sol#L34)
 
 	```solidity
-	    function wholeStructChangedEventNotEmitted(uint a, uint b) public {
+	    function wholeStructChangedEventNotEmitted(uint a, uint b) public { // bad
 	```
 
 - Found in src/StateVariableEvents.sol [Line: 39](../tests/contract-playground/src/StateVariableEvents.sol#L39)
 
 	```solidity
-	    function wholeStructChangedEventEmitted(uint a, uint b) public {
+	    function wholeStructChangedEventEmitted(uint a, uint b) public { // good
 	```
 
 - Found in src/StateVariableEvents.sol [Line: 45](../tests/contract-playground/src/StateVariableEvents.sol#L45)
 
 	```solidity
-	    function structMemberChangedEventNotEmitted(uint a, uint b) public {
+	    function structMemberChangedEventNotEmitted(uint a, uint b) public { // bad
 	```
 
 - Found in src/StateVariableEvents.sol [Line: 50](../tests/contract-playground/src/StateVariableEvents.sol#L50)
 
 	```solidity
-	    function structMemberChangedEventEmitted(uint a) public {
+	    function structMemberChangedEventEmitted(uint a) public { // good
 	```
 
 - Found in src/StateVariableEvents.sol [Line: 55](../tests/contract-playground/src/StateVariableEvents.sol#L55)
 
 	```solidity
-	    function stateChangedEventEmitted(uint a) public {
+	    function stateChangedEventEmitted(uint a) public { // good
 	```
 
 - Found in src/StateVariableEvents.sol [Line: 61](../tests/contract-playground/src/StateVariableEvents.sol#L61)
 
 	```solidity
-	    function stateChangedEventEmittedForLocal(uint a) public {
+	    function stateChangedEventEmittedForLocal(uint a) public { // good
 	```
 
 - Found in src/StateVariableEvents.sol [Line: 67](../tests/contract-playground/src/StateVariableEvents.sol#L67)
 
 	```solidity
-	    function noStateChangedNoEventEmitted(uint a) public pure returns(uint){
+	    function noStateChangedNoEventEmitted(uint a) public pure returns(uint){ // good
 	```
 
 - Found in src/StateVariables.sol [Line: 47](../tests/contract-playground/src/StateVariables.sol#L47)

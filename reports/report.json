@@ -2134,56 +2134,56 @@
           {
             "contract_path": "src/StateVariableEvents.sol",
             "line_no": 23,
-            "src": "501:24",
-            "src_char": "501:24"
+            "src": "508:24",
+            "src_char": "508:24"
           },
           {
             "contract_path": "src/StateVariableEvents.sol",
             "line_no": 28,
-            "src": "644:26",
-            "src_char": "644:26"
+            "src": "658:26",
+            "src_char": "658:26"
           },
           {
             "contract_path": "src/StateVariableEvents.sol",
             "line_no": 34,
-            "src": "821:33",
-            "src_char": "821:33"
+            "src": "843:33",
+            "src_char": "843:33"
           },
           {
             "contract_path": "src/StateVariableEvents.sol",
             "line_no": 39,
-            "src": "972:30",
-            "src_char": "972:30"
+            "src": "1001:30",
+            "src_char": "1001:30"
           },
           {
             "contract_path": "src/StateVariableEvents.sol",
             "line_no": 45,
-            "src": "1156:34",
-            "src_char": "1156:34"
+            "src": "1193:34",
+            "src_char": "1193:34"
           },
           {
             "contract_path": "src/StateVariableEvents.sol",
             "line_no": 50,
-            "src": "1284:31",
-            "src_char": "1284:31"
+            "src": "1328:31",
+            "src_char": "1328:31"
           },
           {
             "contract_path": "src/StateVariableEvents.sol",
             "line_no": 55,
-            "src": "1416:24",
-            "src_char": "1416:24"
+            "src": "1468:24",
+            "src_char": "1468:24"
           },
           {
             "contract_path": "src/StateVariableEvents.sol",
             "line_no": 61,
-            "src": "1542:32",
-            "src_char": "1542:32"
+            "src": "1602:32",
+            "src_char": "1602:32"
           },
           {
             "contract_path": "src/StateVariableEvents.sol",
             "line_no": 67,
-            "src": "1670:28",
-            "src_char": "1670:28"
+            "src": "1738:28",
+            "src_char": "1738:28"
           },
           {
             "contract_path": "src/StateVariables.sol",
@@ -3644,20 +3644,20 @@
           {
             "contract_path": "src/StateVariableEvents.sol",
             "line_no": 20,
-            "src": "468:11",
-            "src_char": "468:11"
+            "src": "475:11",
+            "src_char": "475:11"
           },
           {
             "contract_path": "src/StateVariableEvents.sol",
             "line_no": 25,
-            "src": "611:11",
-            "src_char": "611:11"
+            "src": "625:11",
+            "src_char": "625:11"
           },
           {
             "contract_path": "src/StateVariableEvents.sol",
             "line_no": 36,
-            "src": "935:15",
-            "src_char": "935:15"
+            "src": "964:15",
+            "src_char": "964:15"
           },
           {
             "contract_path": "src/StateVariables.sol",
