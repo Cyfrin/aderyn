@@ -1722,12 +1722,6 @@
             "line_no": 44,
             "src": "630:11",
             "src_char": "630:11"
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 58,
-            "src": "4547:15",
-            "src_char": "3059:15"
           }
         ]
       }

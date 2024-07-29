@@ -2522,17 +2522,6 @@
                   "byteOffset": 630
                 }
               }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/eth2/DepositContract.sol"
-                },
-                "region": {
-                  "byteLength": 15,
-                  "byteOffset": 4547
-                }
-              }
             }
           ],
           "message": {

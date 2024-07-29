@@ -1690,7 +1690,7 @@ A deletion in a structure containing a mapping will not delete the mapping. The 
 
 It appears that the contract includes a payable function to accept Ether but lacks a corresponding function to withdraw it, which leads to the Ether being locked in the contract. To resolve this issue, please implement a public or external function that allows for the withdrawal of Ether from the contract.
 
-<details><summary>5 Found Instances</summary>
+<details><summary>4 Found Instances</summary>
 
 
 - Found in src/ContractLocksEther.sol [Line: 5](../tests/contract-playground/src/ContractLocksEther.sol#L5)
@@ -1715,12 +1715,6 @@ It appears that the contract includes a payable function to accept Ether but lac
 
 	```solidity
 	contract EmptyBlocks {
-	```
-
-- Found in src/eth2/DepositContract.sol [Line: 58](../tests/contract-playground/src/eth2/DepositContract.sol#L58)
-
-	```solidity
-	contract DepositContract is IDepositContract, ERC165 {
 	```
 
 </details>
