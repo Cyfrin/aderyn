@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 70,
-    "total_sloc": 1968
+    "total_source_units": 71,
+    "total_sloc": 2023
   },
   "files_details": {
     "files_details": [
@@ -144,6 +144,10 @@
       {
         "file_path": "src/StateShadowing.sol",
         "n_sloc": 17
+      },
+      {
+        "file_path": "src/StateVariableEvents.sol",
+        "n_sloc": 55
       },
       {
         "file_path": "src/StateVariables.sol",
@@ -289,7 +293,7 @@
   },
   "issue_count": {
     "high": 30,
-    "low": 25
+    "low": 26
   },
   "high_issues": {
     "issues": [
@@ -2122,6 +2126,66 @@
             "src_char": "129:9"
           },
           {
+            "contract_path": "src/StateVariableEvents.sol",
+            "line_no": 19,
+            "src": "416:26",
+            "src_char": "416:26"
+          },
+          {
+            "contract_path": "src/StateVariableEvents.sol",
+            "line_no": 23,
+            "src": "501:24",
+            "src_char": "501:24"
+          },
+          {
+            "contract_path": "src/StateVariableEvents.sol",
+            "line_no": 28,
+            "src": "644:26",
+            "src_char": "644:26"
+          },
+          {
+            "contract_path": "src/StateVariableEvents.sol",
+            "line_no": 34,
+            "src": "821:33",
+            "src_char": "821:33"
+          },
+          {
+            "contract_path": "src/StateVariableEvents.sol",
+            "line_no": 39,
+            "src": "972:30",
+            "src_char": "972:30"
+          },
+          {
+            "contract_path": "src/StateVariableEvents.sol",
+            "line_no": 45,
+            "src": "1156:34",
+            "src_char": "1156:34"
+          },
+          {
+            "contract_path": "src/StateVariableEvents.sol",
+            "line_no": 50,
+            "src": "1284:31",
+            "src_char": "1284:31"
+          },
+          {
+            "contract_path": "src/StateVariableEvents.sol",
+            "line_no": 55,
+            "src": "1416:24",
+            "src_char": "1416:24"
+          },
+          {
+            "contract_path": "src/StateVariableEvents.sol",
+            "line_no": 61,
+            "src": "1542:32",
+            "src_char": "1542:32"
+          },
+          {
+            "contract_path": "src/StateVariableEvents.sol",
+            "line_no": 67,
+            "src": "1670:28",
+            "src_char": "1670:28"
+          },
+          {
             "contract_path": "src/StateVariables.sol",
             "line_no": 47,
             "src": "1764:18",
@@ -2453,6 +2517,30 @@
         "description": "Index event fields make the field more quickly accessible to off-chain tools that parse events. However, note that each index field costs extra gas during emission, so it's not necessarily best to index the maximum allowed per event (three fields). Each event should use three indexed fields if there are three or more fields, and gas usage is not particularly of concern for the events in question. If there are fewer than three fields, all of the fields should be indexed.",
         "detector_name": "unindexed-events",
         "instances": [
+          {
+            "contract_path": "src/StateVariableEvents.sol",
+            "line_no": 14,
+            "src": "236:36",
+            "src_char": "236:36"
+          },
+          {
+            "contract_path": "src/StateVariableEvents.sol",
+            "line_no": 15,
+            "src": "277:38",
+            "src_char": "277:38"
+          },
+          {
+            "contract_path": "src/StateVariableEvents.sol",
+            "line_no": 16,
+            "src": "320:40",
+            "src_char": "320:40"
+          },
+          {
+            "contract_path": "src/StateVariableEvents.sol",
+            "line_no": 17,
+            "src": "365:36",
+            "src_char": "365:36"
+          },
           {
             "contract_path": "src/TestERC20.sol",
             "line_no": 14,
@@ -3501,6 +3589,223 @@
         ]
       },
       {
+        "title": "State variable modification not logged in event",
+        "description": "State variable assignment not recorded in event logs",
+        "detector_name": "state-variable-not-logged-in-event-detector",
+        "instances": [
+          {
+            "contract_path": "src/AbstractContract.sol",
+            "line_no": 11,
+            "src": "343:16",
+            "src_char": "343:16"
+          },
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 12,
+            "src": "267:15",
+            "src_char": "267:15"
+          },
+          {
+            "contract_path": "src/Counter.sol",
+            "line_no": 8,
+            "src": "175:18",
+            "src_char": "175:18"
+          },
+          {
+            "contract_path": "src/Counter.sol",
+            "line_no": 29,
+            "src": "539:13",
+            "src_char": "539:13"
+          },
+          {
+            "contract_path": "src/InconsistentUints.sol",
+            "line_no": 20,
+            "src": "584:27",
+            "src_char": "584:27"
+          },
+          {
+            "contract_path": "src/InconsistentUints.sol",
+            "line_no": 21,
+            "src": "621:33",
+            "src_char": "621:33"
+          },
+          {
+            "contract_path": "src/InternalFunctions.sol",
+            "line_no": 25,
+            "src": "654:17",
+            "src_char": "654:17"
+          },
+          {
+            "contract_path": "src/InternalFunctions.sol",
+            "line_no": 30,
+            "src": "810:17",
+            "src_char": "810:17"
+          },
+          {
+            "contract_path": "src/StateVariableEvents.sol",
+            "line_no": 20,
+            "src": "468:11",
+            "src_char": "468:11"
+          },
+          {
+            "contract_path": "src/StateVariableEvents.sol",
+            "line_no": 25,
+            "src": "611:11",
+            "src_char": "611:11"
+          },
+          {
+            "contract_path": "src/StateVariableEvents.sol",
+            "line_no": 36,
+            "src": "935:15",
+            "src_char": "935:15"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 49,
+            "src": "1879:14",
+            "src_char": "1879:14"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 54,
+            "src": "2036:14",
+            "src_char": "2036:14"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 58,
+            "src": "2121:14",
+            "src_char": "2121:14"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 66,
+            "src": "2335:54",
+            "src_char": "2335:54"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 67,
+            "src": "2399:56",
+            "src_char": "2399:56"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 68,
+            "src": "2465:52",
+            "src_char": "2465:52"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 76,
+            "src": "2729:60",
+            "src_char": "2729:60"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 77,
+            "src": "2799:62",
+            "src_char": "2799:62"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 78,
+            "src": "2871:58",
+            "src_char": "2871:58"
+          },
+          {
+            "contract_path": "src/StorageConditionals.sol",
+            "line_no": 9,
+            "src": "233:25",
+            "src_char": "233:25"
+          },
+          {
+            "contract_path": "src/StorageConditionals.sol",
+            "line_no": 10,
+            "src": "268:35",
+            "src_char": "268:35"
+          },
+          {
+            "contract_path": "src/TestERC20.sol",
+            "line_no": 26,
+            "src": "732:16",
+            "src_char": "732:16"
+          },
+          {
+            "contract_path": "src/TestERC20.sol",
+            "line_no": 27,
+            "src": "758:12",
+            "src_char": "758:12"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 14,
+            "src": "347:14",
+            "src_char": "347:14"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 19,
+            "src": "498:14",
+            "src_char": "498:14"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 34,
+            "src": "952:16",
+            "src_char": "952:16"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 39,
+            "src": "1092:16",
+            "src_char": "1092:16"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 43,
+            "src": "1171:14",
+            "src_char": "1171:14"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 47,
+            "src": "1248:16",
+            "src_char": "1248:16"
+          },
+          {
+            "contract_path": "src/auditor_mode/ExternalCalls.sol",
+            "line_no": 14,
+            "src": "373:18",
+            "src_char": "373:18"
+          },
+          {
+            "contract_path": "src/nested/1/Nested.sol",
+            "line_no": 11,
+            "src": "329:34",
+            "src_char": "329:34"
+          },
+          {
+            "contract_path": "src/nested/2/Nested.sol",
+            "line_no": 11,
+            "src": "336:34",
+            "src_char": "336:34"
+          },
+          {
+            "contract_path": "src/parent_chain/ParentChainContract.sol",
+            "line_no": 18,
+            "src": "563:18",
+            "src_char": "563:18"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 11,
+            "src": "365:17",
+            "src_char": "365:17"
+          }
+        ]
+      },
+      {
         "title": "Redundant statements have no effect.",
         "description": "Remove the redundant statements because no code will be generated and it just congests the codebase.",
         "detector_name": "redundant-statements",
@@ -3619,6 +3924,7 @@
     "incorrect-caret-operator",
     "yul-return",
     "state-variable-shadowing",
+    "state-variable-not-logged-in-event-detector",
     "unchecked-send",
     "misused-boolean",
     "send-ether-no-checks",

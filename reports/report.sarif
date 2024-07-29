@@ -3203,6 +3203,116 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/StateVariableEvents.sol"
+                },
+                "region": {
+                  "byteLength": 26,
+                  "byteOffset": 416
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariableEvents.sol"
+                },
+                "region": {
+                  "byteLength": 24,
+                  "byteOffset": 501
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariableEvents.sol"
+                },
+                "region": {
+                  "byteLength": 26,
+                  "byteOffset": 644
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariableEvents.sol"
+                },
+                "region": {
+                  "byteLength": 33,
+                  "byteOffset": 821
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariableEvents.sol"
+                },
+                "region": {
+                  "byteLength": 30,
+                  "byteOffset": 972
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariableEvents.sol"
+                },
+                "region": {
+                  "byteLength": 34,
+                  "byteOffset": 1156
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariableEvents.sol"
+                },
+                "region": {
+                  "byteLength": 31,
+                  "byteOffset": 1284
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariableEvents.sol"
+                },
+                "region": {
+                  "byteLength": 24,
+                  "byteOffset": 1416
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariableEvents.sol"
+                },
+                "region": {
+                  "byteLength": 32,
+                  "byteOffset": 1542
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariableEvents.sol"
+                },
+                "region": {
+                  "byteLength": 28,
+                  "byteOffset": 1670
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/StateVariables.sol"
                 },
                 "region": {
@@ -3801,6 +3911,50 @@
         {
           "level": "note",
           "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariableEvents.sol"
+                },
+                "region": {
+                  "byteLength": 36,
+                  "byteOffset": 236
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariableEvents.sol"
+                },
+                "region": {
+                  "byteLength": 38,
+                  "byteOffset": 277
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariableEvents.sol"
+                },
+                "region": {
+                  "byteLength": 40,
+                  "byteOffset": 320
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariableEvents.sol"
+                },
+                "region": {
+                  "byteLength": 36,
+                  "byteOffset": 365
+                }
+              }
+            },
             {
               "physicalLocation": {
                 "artifactLocation": {
@@ -5672,6 +5826,400 @@
             "text": "Division operations followed directly by multiplication operations can lead to precision loss due to the way integer arithmetic is handled in Solidity."
           },
           "ruleId": "division-before-multiplication"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/AbstractContract.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 343
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ArbitraryTransferFrom.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 267
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Counter.sol"
+                },
+                "region": {
+                  "byteLength": 18,
+                  "byteOffset": 175
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Counter.sol"
+                },
+                "region": {
+                  "byteLength": 13,
+                  "byteOffset": 539
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/InconsistentUints.sol"
+                },
+                "region": {
+                  "byteLength": 27,
+                  "byteOffset": 584
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/InconsistentUints.sol"
+                },
+                "region": {
+                  "byteLength": 33,
+                  "byteOffset": 621
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/InternalFunctions.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 654
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/InternalFunctions.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 810
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariableEvents.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 468
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariableEvents.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 611
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariableEvents.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 935
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariables.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 1879
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariables.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 2036
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariables.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 2121
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariables.sol"
+                },
+                "region": {
+                  "byteLength": 54,
+                  "byteOffset": 2335
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariables.sol"
+                },
+                "region": {
+                  "byteLength": 56,
+                  "byteOffset": 2399
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariables.sol"
+                },
+                "region": {
+                  "byteLength": 52,
+                  "byteOffset": 2465
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariables.sol"
+                },
+                "region": {
+                  "byteLength": 60,
+                  "byteOffset": 2729
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariables.sol"
+                },
+                "region": {
+                  "byteLength": 62,
+                  "byteOffset": 2799
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariables.sol"
+                },
+                "region": {
+                  "byteLength": 58,
+                  "byteOffset": 2871
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StorageConditionals.sol"
+                },
+                "region": {
+                  "byteLength": 25,
+                  "byteOffset": 233
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StorageConditionals.sol"
+                },
+                "region": {
+                  "byteLength": 35,
+                  "byteOffset": 268
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TestERC20.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 732
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TestERC20.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 758
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ZeroAddressCheck.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 347
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ZeroAddressCheck.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 498
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ZeroAddressCheck.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 952
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ZeroAddressCheck.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 1092
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ZeroAddressCheck.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 1171
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ZeroAddressCheck.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 1248
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 18,
+                  "byteOffset": 373
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/nested/1/Nested.sol"
+                },
+                "region": {
+                  "byteLength": 34,
+                  "byteOffset": 329
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/nested/2/Nested.sol"
+                },
+                "region": {
+                  "byteLength": 34,
+                  "byteOffset": 336
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/parent_chain/ParentChainContract.sol"
+                },
+                "region": {
+                  "byteLength": 18,
+                  "byteOffset": 563
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV2Swapper.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 365
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "State variable assignment not recorded in event logs"
+          },
+          "ruleId": "state-variable-not-logged-in-event-detector"
         },
         {
           "level": "note",
