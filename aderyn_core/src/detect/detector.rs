@@ -66,6 +66,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<RTLODetector>::default(),
         Box::<UncheckedReturnDetector>::default(),
         Box::<DangerousUnaryOperatorDetector>::default(),
+        Box::<PublicVariableReadInExternalContextDetector>::default(),
         Box::<WeakRandomnessDetector>::default(),
         Box::<PreDeclaredLocalVariableUsageDetector>::default(),
         Box::<DeletionNestedMappingDetector>::default(),
@@ -131,6 +132,7 @@ pub(crate) enum IssueDetectorNamePool {
     RTLO,
     UncheckedReturn,
     DangerousUnaryOperator,
+    PublicVariableReadInExternalContext,
     WeakRandomness,
     PreDeclaredLocalVariableUsage,
     DeleteNestedMapping,
@@ -269,6 +271,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::UncheckedReturn => Some(Box::<UncheckedReturnDetector>::default()),
         IssueDetectorNamePool::DangerousUnaryOperator => {
             Some(Box::<DangerousUnaryOperatorDetector>::default())
+        }
+        IssueDetectorNamePool::PublicVariableReadInExternalContext => {
+            Some(Box::<PublicVariableReadInExternalContextDetector>::default())
         }
         IssueDetectorNamePool::WeakRandomness => Some(Box::<WeakRandomnessDetector>::default()),
         IssueDetectorNamePool::PreDeclaredLocalVariableUsage => {

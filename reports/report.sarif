@@ -1751,6 +1751,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/PublicVariableReadInExternalContext.sol"
+                },
+                "region": {
+                  "byteLength": 26,
+                  "byteOffset": 130
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/StateShadowing.sol"
                 },
                 "region": {
@@ -5650,6 +5661,59 @@
             "text": "Division operations followed directly by multiplication operations can lead to precision loss due to the way integer arithmetic is handled in Solidity."
           },
           "ruleId": "division-before-multiplication"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/PublicVariableReadInExternalContext.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 355
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/PublicVariableReadInExternalContext.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 457
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/PublicVariableReadInExternalContext.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 553
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/PublicVariableReadInExternalContext.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 1175
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "The contract reads it's own variable using `this` which adds an unnecessary STATICCALL. Remove `this` and access the variable like storage."
+          },
+          "ruleId": "public-variable-read-in-external-context"
         }
       ],
       "tool": {

@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 68,
-    "total_sloc": 1922
+    "total_source_units": 69,
+    "total_sloc": 1954
   },
   "files_details": {
     "files_details": [
@@ -120,6 +120,10 @@
       {
         "file_path": "src/PreDeclaredVarUsage.sol",
         "n_sloc": 9
+      },
+      {
+        "file_path": "src/PublicVariableReadInExternalContext.sol",
+        "n_sloc": 32
       },
       {
         "file_path": "src/RTLO.sol",
@@ -281,7 +285,7 @@
   },
   "issue_count": {
     "high": 30,
-    "low": 23
+    "low": 24
   },
   "high_issues": {
     "issues": [
@@ -1270,6 +1274,12 @@
             "line_no": 10,
             "src": "355:7",
             "src_char": "355:7"
+          },
+          {
+            "contract_path": "src/PublicVariableReadInExternalContext.sol",
+            "line_no": 6,
+            "src": "130:26",
+            "src_char": "130:26"
           },
           {
             "contract_path": "src/StateShadowing.sol",
@@ -3479,6 +3489,37 @@
             "src_char": "541:5"
           }
         ]
+      },
+      {
+        "title": "Public variables of a contract read in an external context (using `this`).",
+        "description": "The contract reads it's own variable using `this` which adds an unnecessary STATICCALL. Remove `this` and access the variable like storage.",
+        "detector_name": "public-variable-read-in-external-context",
+        "instances": [
+          {
+            "contract_path": "src/PublicVariableReadInExternalContext.sol",
+            "line_no": 12,
+            "src": "355:14",
+            "src_char": "355:14"
+          },
+          {
+            "contract_path": "src/PublicVariableReadInExternalContext.sol",
+            "line_no": 16,
+            "src": "457:16",
+            "src_char": "457:16"
+          },
+          {
+            "contract_path": "src/PublicVariableReadInExternalContext.sol",
+            "line_no": 20,
+            "src": "553:12",
+            "src_char": "553:12"
+          },
+          {
+            "contract_path": "src/PublicVariableReadInExternalContext.sol",
+            "line_no": 42,
+            "src": "1175:14",
+            "src_char": "1175:14"
+          }
+        ]
       }
     ]
   },
@@ -3533,6 +3574,7 @@
     "rtlo",
     "unchecked-return",
     "dangerous-unary-operator",
+    "public-variable-read-in-external-context",
     "weak-randomness",
     "pre-declared-local-variable-usage",
     "delete-nested-mapping"
