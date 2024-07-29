@@ -1952,6 +1952,26 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/UncheckedSend.sol"
+                },
+                "region": {
+                  "byteLength": 22,
+                  "byteOffset": 815
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "The transaction `address(payable?).send(address)` may fail because of reasons like out-of-gas, invalid receipient address or revert from the recipient. Therefore, the boolean returned by this function call must be checked to be `true` in order to verify that the transaction was successful"
+          },
+          "ruleId": "unchecked-send"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/MisusedBoolean.sol"
                 },
                 "region": {
@@ -2109,6 +2129,50 @@
                 "region": {
                   "byteLength": 5,
                   "byteOffset": 1795
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedSend.sol"
+                },
+                "region": {
+                  "byteLength": 246,
+                  "byteOffset": 85
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedSend.sol"
+                },
+                "region": {
+                  "byteLength": 190,
+                  "byteOffset": 337
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedSend.sol"
+                },
+                "region": {
+                  "byteLength": 184,
+                  "byteOffset": 533
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedSend.sol"
+                },
+                "region": {
+                  "byteLength": 186,
+                  "byteOffset": 723
                 }
               }
             },
@@ -2891,6 +2955,17 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/PreDeclaredVarUsage.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedSend.sol"
                 },
                 "region": {
                   "byteLength": 23,
@@ -4685,6 +4760,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/UncheckedSend.sol"
+                },
+                "region": {
+                  "byteLength": 65,
+                  "byteOffset": 915
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
                 },
                 "region": {
@@ -5159,6 +5245,17 @@
                 "region": {
                   "byteLength": 11,
                   "byteOffset": 388
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedSend.sol"
+                },
+                "region": {
+                  "byteLength": 65,
+                  "byteOffset": 915
                 }
               }
             }

@@ -181,6 +181,7 @@
     "incorrect-caret-operator",
     "yul-return",
     "state-variable-shadowing",
+    "unchecked-send",
     "misused-boolean",
     "send-ether-no-checks",
     "delegate-call-unchecked-address",
