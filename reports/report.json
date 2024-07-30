@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 68,
-    "total_sloc": 1982
+    "total_source_units": 74,
+    "total_sloc": 2074
   },
   "files_details": {
     "files_details": [
@@ -30,6 +30,10 @@
         "n_sloc": 126
       },
       {
+        "file_path": "src/CompilerBugStorageSignedIntegerArray.sol",
+        "n_sloc": 13
+      },
+      {
         "file_path": "src/ConstantsLiterals.sol",
         "n_sloc": 28
       },
@@ -48,6 +52,14 @@
       {
         "file_path": "src/CrazyPragma.sol",
         "n_sloc": 4
+      },
+      {
+        "file_path": "src/DangerousStrictEquality1.sol",
+        "n_sloc": 6
+      },
+      {
+        "file_path": "src/DangerousStrictEquality2.sol",
+        "n_sloc": 9
       },
       {
         "file_path": "src/DangerousUnaryOperator.sol",
@@ -126,8 +138,16 @@
         "n_sloc": 9
       },
       {
+        "file_path": "src/PublicVariableReadInExternalContext.sol",
+        "n_sloc": 32
+      },
+      {
         "file_path": "src/RTLO.sol",
         "n_sloc": 7
+      },
+      {
+        "file_path": "src/RedundantStatements.sol",
+        "n_sloc": 14
       },
       {
         "file_path": "src/RevertsAndRequriesInLoops.sol",
@@ -168,6 +188,10 @@
       {
         "file_path": "src/UncheckedReturn.sol",
         "n_sloc": 33
+      },
+      {
+        "file_path": "src/UncheckedSend.sol",
+        "n_sloc": 18
       },
       {
         "file_path": "src/UninitializedStateVariable.sol",
@@ -280,8 +304,8 @@
     ]
   },
   "issue_count": {
-    "high": 30,
-    "low": 23
+    "high": 33,
+    "low": 25
   },
   "high_issues": {
     "issues": [
@@ -1272,6 +1296,12 @@
             "src_char": "355:7"
           },
           {
+            "contract_path": "src/PublicVariableReadInExternalContext.sol",
+            "line_no": 6,
+            "src": "130:26",
+            "src_char": "130:26"
+          },
+          {
             "contract_path": "src/StateShadowing.sol",
             "line_no": 5,
             "src": "87:13",
@@ -1385,6 +1415,19 @@
         ]
       },
       {
+        "title": "Unchecked `bool success` value for send call.",
+        "description": "The transaction `address(payable?).send(address)` may fail because of reasons like out-of-gas, invalid receipient address or revert from the recipient. Therefore, the boolean returned by this function call must be checked to be `true` in order to verify that the transaction was successful",
+        "detector_name": "unchecked-send",
+        "instances": [
+          {
+            "contract_path": "src/UncheckedSend.sol",
+            "line_no": 24,
+            "src": "815:22",
+            "src_char": "815:22"
+          }
+        ]
+      },
+      {
         "title": "Misused boolean with logical operators",
         "description": "The patterns `if (… || true)` and `if (.. && false)` will always evaluate to true and false respectively.",
         "detector_name": "misused-boolean",
@@ -1491,6 +1534,30 @@
             "line_no": 99,
             "src": "1795:5",
             "src_char": "1795:5"
+          },
+          {
+            "contract_path": "src/UncheckedSend.sol",
+            "line_no": 6,
+            "src": "85:246",
+            "src_char": "85:246"
+          },
+          {
+            "contract_path": "src/UncheckedSend.sol",
+            "line_no": 12,
+            "src": "337:190",
+            "src_char": "337:190"
+          },
+          {
+            "contract_path": "src/UncheckedSend.sol",
+            "line_no": 17,
+            "src": "533:184",
+            "src_char": "533:184"
+          },
+          {
+            "contract_path": "src/UncheckedSend.sol",
+            "line_no": 22,
+            "src": "723:186",
+            "src_char": "723:186"
           },
           {
             "contract_path": "src/UninitializedStateVariable.sol",
@@ -1604,6 +1671,44 @@
             "line_no": 13,
             "src": "247:10",
             "src_char": "247:10"
+          }
+        ]
+      },
+      {
+        "title": "Dangerous strict equality checks on contract balances.",
+        "description": "A contract's balance can be forcibly manipulated by another selfdestructing contract. Therefore, it's recommended to use >, <, >= or <= instead of strict equality.",
+        "detector_name": "dangerous-strict-equailty-on-contract-balance",
+        "instances": [
+          {
+            "contract_path": "src/DangerousStrictEquality1.sol",
+            "line_no": 6,
+            "src": "177:25",
+            "src_char": "177:25"
+          },
+          {
+            "contract_path": "src/DangerousStrictEquality2.sol",
+            "line_no": 6,
+            "src": "177:34",
+            "src_char": "177:34"
+          },
+          {
+            "contract_path": "src/DangerousStrictEquality2.sol",
+            "line_no": 10,
+            "src": "305:43",
+            "src_char": "305:43"
+          }
+        ]
+      },
+      {
+        "title": "Compiler Bug: Signed array in storage detected for compiler version `<0.5.10`",
+        "description": "If you want to leverage signed arrays in storage by assigning a literal array with at least one negative number, then you mus use solidity version 0.5.10 or above. This is because of a bug in older compilers.",
+        "detector_name": "signed-storage-array",
+        "instances": [
+          {
+            "contract_path": "src/CompilerBugStorageSignedIntegerArray.sol",
+            "line_no": 9,
+            "src": "230:10",
+            "src_char": "230:10"
           }
         ]
       },
@@ -1944,6 +2049,12 @@
         "detector_name": "unspecific-solidity-pragma",
         "instances": [
           {
+            "contract_path": "src/CompilerBugStorageSignedIntegerArray.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/ContractLocksEther.sol",
             "line_no": 2,
             "src": "32:23",
@@ -1966,6 +2077,12 @@
             "line_no": 2,
             "src": "32:32",
             "src_char": "32:32"
+          },
+          {
+            "contract_path": "src/DangerousStrictEquality1.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
           },
           {
             "contract_path": "src/DangerousUnaryOperator.sol",
@@ -1993,6 +2110,18 @@
           },
           {
             "contract_path": "src/PreDeclaredVarUsage.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/RedundantStatements.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/UncheckedSend.sol",
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
@@ -2283,6 +2412,18 @@
             "src_char": "2103:18"
           },
           {
+            "contract_path": "src/CompilerBugStorageSignedIntegerArray.sol",
+            "line_no": 9,
+            "src": "235:1",
+            "src_char": "235:1"
+          },
+          {
+            "contract_path": "src/CompilerBugStorageSignedIntegerArray.sol",
+            "line_no": 14,
+            "src": "352:1",
+            "src_char": "352:1"
+          },
+          {
             "contract_path": "src/ConstantsLiterals.sol",
             "line_no": 25,
             "src": "958:3",
@@ -2323,6 +2464,18 @@
             "line_no": 31,
             "src": "1275:66",
             "src_char": "1275:66"
+          },
+          {
+            "contract_path": "src/DangerousStrictEquality2.sol",
+            "line_no": 6,
+            "src": "202:9",
+            "src_char": "202:9"
+          },
+          {
+            "contract_path": "src/DangerousStrictEquality2.sol",
+            "line_no": 10,
+            "src": "339:9",
+            "src_char": "339:9"
           },
           {
             "contract_path": "src/DelegateCallWithoutAddressCheck.sol",
@@ -2744,6 +2897,12 @@
             "src_char": "32:32"
           },
           {
+            "contract_path": "src/DangerousStrictEquality2.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/DelegateCallWithoutAddressCheck.sol",
             "line_no": 2,
             "src": "32:21",
@@ -3064,6 +3223,12 @@
             "src_char": "1795:5"
           },
           {
+            "contract_path": "src/UncheckedSend.sol",
+            "line_no": 27,
+            "src": "915:65",
+            "src_char": "915:65"
+          },
+          {
             "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
             "line_no": 11,
             "src": "367:17",
@@ -3328,6 +3493,12 @@
             "line_no": 17,
             "src": "388:11",
             "src_char": "388:11"
+          },
+          {
+            "contract_path": "src/UncheckedSend.sol",
+            "line_no": 27,
+            "src": "915:65",
+            "src_char": "915:65"
           }
         ]
       },
@@ -3551,6 +3722,80 @@
             "src_char": "541:5"
           }
         ]
+      },
+      {
+        "title": "Redundant statements have no effect.",
+        "description": "Remove the redundant statements because no code will be generated and it just congests the codebase.",
+        "detector_name": "redundant-statements",
+        "instances": [
+          {
+            "contract_path": "src/RedundantStatements.sol",
+            "line_no": 6,
+            "src": "131:4",
+            "src_char": "131:4"
+          },
+          {
+            "contract_path": "src/RedundantStatements.sol",
+            "line_no": 7,
+            "src": "169:4",
+            "src_char": "169:4"
+          },
+          {
+            "contract_path": "src/RedundantStatements.sol",
+            "line_no": 8,
+            "src": "207:27",
+            "src_char": "207:27"
+          },
+          {
+            "contract_path": "src/RedundantStatements.sol",
+            "line_no": 12,
+            "src": "309:4",
+            "src_char": "309:4"
+          },
+          {
+            "contract_path": "src/RedundantStatements.sol",
+            "line_no": 13,
+            "src": "347:6",
+            "src_char": "347:6"
+          },
+          {
+            "contract_path": "src/RedundantStatements.sol",
+            "line_no": 14,
+            "src": "377:4",
+            "src_char": "377:4"
+          }
+        ]
+      },
+      {
+        "title": "Public variables of a contract read in an external context (using `this`).",
+        "description": "The contract reads it's own variable using `this` which adds an unnecessary STATICCALL. Remove `this` and access the variable like storage.",
+        "detector_name": "public-variable-read-in-external-context",
+        "instances": [
+          {
+            "contract_path": "src/PublicVariableReadInExternalContext.sol",
+            "line_no": 12,
+            "src": "355:14",
+            "src_char": "355:14"
+          },
+          {
+            "contract_path": "src/PublicVariableReadInExternalContext.sol",
+            "line_no": 16,
+            "src": "457:16",
+            "src_char": "457:16"
+          },
+          {
+            "contract_path": "src/PublicVariableReadInExternalContext.sol",
+            "line_no": 20,
+            "src": "553:12",
+            "src_char": "553:12"
+          },
+          {
+            "contract_path": "src/PublicVariableReadInExternalContext.sol",
+            "line_no": 42,
+            "src": "1175:14",
+            "src_char": "1175:14"
+          }
+        ]
       }
     ]
   },
@@ -3597,6 +3842,7 @@
     "incorrect-caret-operator",
     "yul-return",
     "state-variable-shadowing",
+    "unchecked-send",
     "misused-boolean",
     "send-ether-no-checks",
     "delegate-call-unchecked-address",
@@ -3604,6 +3850,10 @@
     "rtlo",
     "unchecked-return",
     "dangerous-unary-operator",
+    "dangerous-strict-equailty-on-contract-balance",
+    "signed-storage-array",
+    "redundant-statements",
+    "public-variable-read-in-external-context",
     "weak-randomness",
     "pre-declared-local-variable-usage",
     "delete-nested-mapping",
