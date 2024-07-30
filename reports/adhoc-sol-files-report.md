@@ -693,7 +693,7 @@ it is recommended that the definition be removed when custom error is unused
 
 ## L-17: State variable modification not logged in event
 
-State variable assignment not recorded in event logs
+State variable assignment not recorded in event logs, this will make it difficult for off-chain applications to track changes to state or searching historic event logs
 
 <details><summary>15 Found Instances</summary>
 
