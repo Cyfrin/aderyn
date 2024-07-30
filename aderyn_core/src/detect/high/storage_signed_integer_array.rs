@@ -191,37 +191,13 @@ mod storage_signed_array_detector {
     fn test_regular_expression_works() {
         // TARGET signed storage array references
 
-        assert_eq!(
-            SIGNED_STORAGE_ARRAY_POINTER.is_match("int256[3] storage ref"),
-            true
-        );
-        assert_eq!(
-            SIGNED_STORAGE_ARRAY_POINTER.is_match("int[1300] storage ref"),
-            true
-        );
-        assert_eq!(
-            SIGNED_STORAGE_ARRAY_POINTER.is_match("int8[] storage ref"),
-            true
-        );
-        assert_eq!(
-            SIGNED_STORAGE_ARRAY_POINTER.is_match("int[] storage ref"),
-            true
-        );
-        assert_eq!(
-            SIGNED_STORAGE_ARRAY_POINTER.is_match("uint256[3] storage ref"),
-            false
-        );
-        assert_eq!(
-            SIGNED_STORAGE_ARRAY_POINTER.is_match("uint[1300] storage ref"),
-            false
-        );
-        assert_eq!(
-            SIGNED_STORAGE_ARRAY_POINTER.is_match("uint8[] storage ref"),
-            false
-        );
-        assert_eq!(
-            SIGNED_STORAGE_ARRAY_POINTER.is_match("uint[] storage ref"),
-            false
-        );
+        assert!(SIGNED_STORAGE_ARRAY_POINTER.is_match("int256[3] storage ref"));
+        assert!(SIGNED_STORAGE_ARRAY_POINTER.is_match("int[1300] storage ref"));
+        assert!(SIGNED_STORAGE_ARRAY_POINTER.is_match("int8[] storage ref"));
+        assert!(SIGNED_STORAGE_ARRAY_POINTER.is_match("int[] storage ref"));
+        assert!(!SIGNED_STORAGE_ARRAY_POINTER.is_match("uint256[3] storage ref"));
+        assert!(!SIGNED_STORAGE_ARRAY_POINTER.is_match("uint[1300] storage ref"));
+        assert!(!SIGNED_STORAGE_ARRAY_POINTER.is_match("uint8[] storage ref"));
+        assert!(!SIGNED_STORAGE_ARRAY_POINTER.is_match("uint[] storage ref"));
     }
 }
