@@ -4,6 +4,7 @@ use std::collections::HashMap;
 
 use super::browser::GetImmediateParent;
 use super::capturable::Capturable;
+use super::graph::WorkspaceCallGraph;
 pub use crate::ast::ASTNode;
 
 #[derive(Default, Debug, Clone, PartialEq, Eq, Hash)]
@@ -27,6 +28,8 @@ pub struct WorkspaceContext {
     pub src_filepaths: Vec<String>,
     pub sloc_stats: HashMap<String, usize>,
     pub ignore_lines_stats: HashMap<String, Option<Vec<usize>>>,
+    pub forward_callgraph: Option<WorkspaceCallGraph>,
+    pub reverse_callgraph: Option<WorkspaceCallGraph>,
     pub nodes: HashMap<NodeID, ASTNode>,
 
     // Hashmaps of all nodes => source_unit_id

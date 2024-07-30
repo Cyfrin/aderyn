@@ -4,34 +4,9 @@ use strum::{Display, EnumCount, EnumIter, EnumString};
 use crate::{
     ast::NodeID,
     context::workspace_context::WorkspaceContext,
-    detect::{
-        high::{
-            ArbitraryTransferFromDetector, AvoidAbiEncodePackedDetector,
-            BlockTimestampDeadlineDetector, DangerousStrictEqualityOnBalanceDetector,
-            DangerousUnaryOperatorDetector, DelegateCallInLoopDetector,
-            DynamicArrayLengthAssignmentDetector, EnumerableLoopRemovalDetector,
-            ExperimentalEncoderDetector, IncorrectShiftOrderDetector,
-            IncorrectUseOfCaretOperatorDetector, MultipleConstructorsDetector,
-            NestedStructInMappingDetector, RTLODetector, ReusedContractNameDetector,
-            SelfdestructIdentifierDetector, StateVariableShadowingDetector,
-            StorageArrayEditWithMemoryDetector, TautologicalCompareDetector,
-            UncheckedReturnDetector, UninitializedStateVariableDetector,
-            UnprotectedInitializerDetector, UnsafeCastingDetector, YulReturnDetector,
-        },
-        low::{
-            CentralizationRiskDetector, ConstantsInsteadOfLiteralsDetector,
-            ContractsWithTodosDetector, DeprecatedOZFunctionsDetector,
-            DivisionBeforeMultiplicationDetector, EcrecoverDetector, EmptyBlockDetector,
-            InconsistentTypeNamesDetector, LargeLiteralValueDetector,
-            NonReentrantBeforeOthersDetector, PushZeroOpcodeDetector, RequireWithStringDetector,
-            RevertsAndRequiresInLoopsDetector, SolmateSafeTransferLibDetector,
-            UnindexedEventsDetector, UnsafeERC20FunctionsDetector, UnsafeERC721MintDetector,
-            UnspecificSolidityPragmaDetector, UselessErrorDetector,
-            UselessInternalFunctionDetector, UselessModifierDetector,
-            UselessPublicFunctionDetector, ZeroAddressCheckDetector,
-        },
-    },
+    detect::{high::*, low::*},
 };
+
 use std::{
     collections::BTreeMap,
     error::Error,
@@ -83,11 +58,21 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<IncorrectUseOfCaretOperatorDetector>::default(),
         Box::<YulReturnDetector>::default(),
         Box::<StateVariableShadowingDetector>::default(),
+        Box::<UncheckedSendDetector>::default(),
+        Box::<MisusedBooleanDetector>::default(),
+        Box::<SendEtherNoChecksDetector>::default(),
+        Box::<DelegateCallOnUncheckedAddressDetector>::default(),
         Box::<TautologicalCompareDetector>::default(),
         Box::<RTLODetector>::default(),
         Box::<UncheckedReturnDetector>::default(),
         Box::<DangerousUnaryOperatorDetector>::default(),
         Box::<DangerousStrictEqualityOnBalanceDetector>::default(),
+        Box::<StorageSignedIntegerArrayDetector>::default(),
+        Box::<RedundantStatementsDetector>::default(),
+        Box::<PublicVariableReadInExternalContextDetector>::default(),
+        Box::<WeakRandomnessDetector>::default(),
+        Box::<PreDeclaredLocalVariableUsageDetector>::default(),
+        Box::<DeletionNestedMappingDetector>::default(),
     ]
 }
 
@@ -141,12 +126,22 @@ pub(crate) enum IssueDetectorNamePool {
     IncorrectCaretOperator,
     YulReturn,
     StateVariableShadowing,
+    UncheckedSend,
+    MisusedBoolean,
+    SendEtherNoChecks,
+    DelegateCallUncheckedAddress,
     TautologicalCompare,
     #[allow(clippy::upper_case_acronyms)]
     RTLO,
     UncheckedReturn,
     DangerousUnaryOperator,
     DangerousStrictEquailtyOnContractBalance,
+    SignedStorageArray,
+    RedundantStatements,
+    PublicVariableReadInExternalContext,
+    WeakRandomness,
+    PreDeclaredLocalVariableUsage,
+    DeleteNestedMapping,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -267,6 +262,14 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::StateVariableShadowing => {
             Some(Box::<StateVariableShadowingDetector>::default())
         }
+        IssueDetectorNamePool::UncheckedSend => Some(Box::<UncheckedSendDetector>::default()),
+        IssueDetectorNamePool::MisusedBoolean => Some(Box::<MisusedBooleanDetector>::default()),
+        IssueDetectorNamePool::SendEtherNoChecks => {
+            Some(Box::<SendEtherNoChecksDetector>::default())
+        }
+        IssueDetectorNamePool::DelegateCallUncheckedAddress => {
+            Some(Box::<DelegateCallOnUncheckedAddressDetector>::default())
+        }
         IssueDetectorNamePool::TautologicalCompare => {
             Some(Box::<TautologicalCompareDetector>::default())
         }
@@ -277,6 +280,22 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         }
         IssueDetectorNamePool::DangerousStrictEquailtyOnContractBalance => {
             Some(Box::<DangerousStrictEqualityOnBalanceDetector>::default())
+        }
+        IssueDetectorNamePool::SignedStorageArray => {
+            Some(Box::<StorageSignedIntegerArrayDetector>::default())
+        }
+        IssueDetectorNamePool::RedundantStatements => {
+            Some(Box::<RedundantStatementsDetector>::default())
+        }
+        IssueDetectorNamePool::PublicVariableReadInExternalContext => {
+            Some(Box::<PublicVariableReadInExternalContextDetector>::default())
+        }
+        IssueDetectorNamePool::WeakRandomness => Some(Box::<WeakRandomnessDetector>::default()),
+        IssueDetectorNamePool::PreDeclaredLocalVariableUsage => {
+            Some(Box::<PreDeclaredLocalVariableUsageDetector>::default())
+        }
+        IssueDetectorNamePool::DeleteNestedMapping => {
+            Some(Box::<DeletionNestedMappingDetector>::default())
         }
         IssueDetectorNamePool::Undecided => None,
     }
