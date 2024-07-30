@@ -5,33 +5,6 @@ use crate::{
     ast::NodeID,
     context::workspace_context::WorkspaceContext,
     detect::{high::*, low::*},
-    detect::{
-        high::{
-            ArbitraryTransferFromDetector, AvoidAbiEncodePackedDetector,
-            BlockTimestampDeadlineDetector, DangerousUnaryOperatorDetector,
-            DelegateCallInLoopDetector, DynamicArrayLengthAssignmentDetector,
-            EnumerableLoopRemovalDetector, ExperimentalEncoderDetector,
-            IncorrectShiftOrderDetector, IncorrectUseOfCaretOperatorDetector,
-            MultipleConstructorsDetector, NestedStructInMappingDetector, RTLODetector,
-            ReusedContractNameDetector, SelfdestructIdentifierDetector,
-            StateVariableShadowingDetector, StorageArrayEditWithMemoryDetector,
-            TautologicalCompareDetector, UncheckedReturnDetector,
-            UninitializedStateVariableDetector, UnprotectedInitializerDetector,
-            UnsafeCastingDetector, YulReturnDetector,
-        },
-        low::{
-            CentralizationRiskDetector, ConstantsInsteadOfLiteralsDetector,
-            ContractsWithTodosDetector, DeprecatedOZFunctionsDetector,
-            DivisionBeforeMultiplicationDetector, EcrecoverDetector, EmptyBlockDetector,
-            InconsistentTypeNamesDetector, LargeLiteralValueDetector,
-            NonReentrantBeforeOthersDetector, PushZeroOpcodeDetector, RedundantStatementsDetector,
-            RequireWithStringDetector, RevertsAndRequiresInLoopsDetector,
-            SolmateSafeTransferLibDetector, UnindexedEventsDetector, UnsafeERC20FunctionsDetector,
-            UnsafeERC721MintDetector, UnspecificSolidityPragmaDetector, UselessErrorDetector,
-            UselessInternalFunctionDetector, UselessModifierDetector,
-            UselessPublicFunctionDetector, ZeroAddressCheckDetector,
-        },
-    },
 };
 
 use std::{
@@ -93,6 +66,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<RTLODetector>::default(),
         Box::<UncheckedReturnDetector>::default(),
         Box::<DangerousUnaryOperatorDetector>::default(),
+        Box::<StorageSignedIntegerArrayDetector>::default(),
         Box::<RedundantStatementsDetector>::default(),
         Box::<PublicVariableReadInExternalContextDetector>::default(),
         Box::<WeakRandomnessDetector>::default(),
@@ -160,6 +134,7 @@ pub(crate) enum IssueDetectorNamePool {
     RTLO,
     UncheckedReturn,
     DangerousUnaryOperator,
+    SignedStorageArray,
     RedundantStatements,
     PublicVariableReadInExternalContext,
     WeakRandomness,
@@ -300,6 +275,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::UncheckedReturn => Some(Box::<UncheckedReturnDetector>::default()),
         IssueDetectorNamePool::DangerousUnaryOperator => {
             Some(Box::<DangerousUnaryOperatorDetector>::default())
+        }
+        IssueDetectorNamePool::SignedStorageArray => {
+            Some(Box::<StorageSignedIntegerArrayDetector>::default())
         }
         IssueDetectorNamePool::RedundantStatements => {
             Some(Box::<RedundantStatementsDetector>::default())
