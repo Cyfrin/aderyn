@@ -66,6 +66,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<RTLODetector>::default(),
         Box::<UncheckedReturnDetector>::default(),
         Box::<DangerousUnaryOperatorDetector>::default(),
+        Box::<DangerousStrictEqualityOnBalanceDetector>::default(),
         Box::<StorageSignedIntegerArrayDetector>::default(),
         Box::<RedundantStatementsDetector>::default(),
         Box::<PublicVariableReadInExternalContextDetector>::default(),
@@ -134,6 +135,7 @@ pub(crate) enum IssueDetectorNamePool {
     RTLO,
     UncheckedReturn,
     DangerousUnaryOperator,
+    DangerousStrictEquailtyOnContractBalance,
     SignedStorageArray,
     RedundantStatements,
     PublicVariableReadInExternalContext,
@@ -275,6 +277,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::UncheckedReturn => Some(Box::<UncheckedReturnDetector>::default()),
         IssueDetectorNamePool::DangerousUnaryOperator => {
             Some(Box::<DangerousUnaryOperatorDetector>::default())
+        }
+        IssueDetectorNamePool::DangerousStrictEquailtyOnContractBalance => {
+            Some(Box::<DangerousStrictEqualityOnBalanceDetector>::default())
         }
         IssueDetectorNamePool::SignedStorageArray => {
             Some(Box::<StorageSignedIntegerArrayDetector>::default())

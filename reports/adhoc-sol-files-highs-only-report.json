@@ -189,6 +189,7 @@
     "rtlo",
     "unchecked-return",
     "dangerous-unary-operator",
+    "dangerous-strict-equailty-on-contract-balance",
     "signed-storage-array",
     "weak-randomness",
     "pre-declared-local-variable-usage",
