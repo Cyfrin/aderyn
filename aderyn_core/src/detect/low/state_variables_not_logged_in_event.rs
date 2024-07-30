@@ -40,7 +40,7 @@ impl IssueDetector for StateVariableNotLoggedInEventDetector {
          * If not, raise an issue
          */
 
-        //collect all state variables together
+        //collect all mutable state variables together
         self.mutable_state_variables = context
             .variable_declarations()
             .iter()
@@ -72,19 +72,20 @@ impl IssueDetector for StateVariableNotLoggedInEventDetector {
                                     //assignment is happening on state variable
                                     let mut counter: u32 = 0; //counter for number of times state variable is logged in events in same function
 
+                                    let body = function
+                                        .body
+                                        .clone()
+                                        .ok_or("Failed to clone function body: body is None")?;
                                     //now we must search all events listed in function
                                     for event_emission in
-                                        ExtractEmitStatements::from(&function.body.clone().unwrap())
-                                            .extracted
-                                            .into_iter()
+                                        ExtractEmitStatements::from(&body).extracted.into_iter()
                                     {
+                                        let children = event_emission
+                                        .event_call
+                                        .children(context).ok_or("Failed to unwrap ASTNode children: children is None")?;
+
                                         //if a parameter matches, increment a counter, then after checking all events we can check if the counter is zero
-                                        for child in event_emission
-                                            .event_call
-                                            .children(context)
-                                            .unwrap()
-                                            .into_iter()
-                                        {
+                                        for child in children.into_iter() {
                                             if let ASTNode::Identifier(child_identifier) = child {
                                                 if child_identifier.name == left_identifier.name
                                                     || child_identifier.name
@@ -117,7 +118,7 @@ impl IssueDetector for StateVariableNotLoggedInEventDetector {
     }
 
     fn description(&self) -> String {
-        String::from("State variable assignment not recorded in event logs")
+        String::from("State variable assignment not recorded in event logs, this will make it difficult for off-chain applications to track changes to state or searching historic event logs")
     }
 
     fn severity(&self) -> IssueSeverity {
@@ -166,7 +167,7 @@ mod template_detector_tests {
         // assert the description is correct
         assert_eq!(
             detector.description(),
-            String::from("State variable assignment not recorded in event logs")
+            String::from("State variable assignment not recorded in event logs, this will make it difficult for off-chain applications to track changes to state or searching historic event logs")
         );
 
         //now lets check if local variable assignment triggers the detector
