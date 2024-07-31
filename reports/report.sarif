@@ -2113,6 +2113,28 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/HighLevelCallsInsideLoop.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 143
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/HighLevelCallsInsideLoop.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 350
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/SendEtherNoChecks.sol"
                 },
                 "region": {
@@ -2592,6 +2614,59 @@
           "ruleId": "delete-nested-mapping"
         },
         {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/HighLevelCallsInsideLoop.sol"
+                },
+                "region": {
+                  "byteLength": 99,
+                  "byteOffset": 230
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/HighLevelCallsInsideLoop.sol"
+                },
+                "region": {
+                  "byteLength": 100,
+                  "byteOffset": 438
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/HighLevelCallsInsideLoop.sol"
+                },
+                "region": {
+                  "byteLength": 112,
+                  "byteOffset": 739
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/HighLevelCallsInsideLoop.sol"
+                },
+                "region": {
+                  "byteLength": 112,
+                  "byteOffset": 1192
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "One of the dangers of having high level calls or an `address.transfer()` inside a loop is thatif a single call fails, then the whole transaction is reverted which maybe undesirable. It's recommendedto convert high level calls into low level calls so that we get a `bool success` instead of an automaticrevert on failure."
+          },
+          "ruleId": "high-level-calls-in-loop"
+        },
+        {
           "level": "note",
           "locations": [
             {
@@ -2908,6 +2983,28 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/HighLevelCallsInsideLoop.sol"
+                },
+                "region": {
+                  "byteLength": 24,
+                  "byteOffset": 291
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/HighLevelCallsInsideLoop.sol"
+                },
+                "region": {
+                  "byteLength": 28,
+                  "byteOffset": 627
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/SendEtherNoChecks.sol"
                 },
                 "region": {
@@ -3032,6 +3129,17 @@
                 "region": {
                   "byteLength": 23,
                   "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/HighLevelCallsInsideLoop.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 36
                 }
               }
             },
@@ -4095,6 +4203,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/HighLevelCallsInsideLoop.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 1413
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/RevertsAndRequriesInLoops.sol"
                 },
                 "region": {
@@ -4369,6 +4488,17 @@
                 "region": {
                   "byteLength": 23,
                   "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/HighLevelCallsInsideLoop.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 36
                 }
               }
             },
@@ -4877,6 +5007,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/HighLevelCallsInsideLoop.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 1541
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/OnceModifierExample.sol"
                 },
                 "region": {
@@ -5335,6 +5476,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/HighLevelCallsInsideLoop.sol"
+                },
+                "region": {
+                  "byteLength": 18,
+                  "byteOffset": 559
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/InternalFunctions.sol"
                 },
                 "region": {
@@ -5479,6 +5631,50 @@
                 "region": {
                   "byteLength": 13,
                   "byteOffset": 2086
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/HighLevelCallsInsideLoop.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 240
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/HighLevelCallsInsideLoop.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 448
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/HighLevelCallsInsideLoop.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 749
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/HighLevelCallsInsideLoop.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 1202
                 }
               }
             },

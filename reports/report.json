@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 73,
-    "total_sloc": 1996
+    "total_source_units": 74,
+    "total_sloc": 2033
   },
   "files_details": {
     "files_details": [
@@ -92,6 +92,10 @@
       {
         "file_path": "src/ExperimentalEncoder.sol",
         "n_sloc": 4
+      },
+      {
+        "file_path": "src/HighLevelCallsInsideLoop.sol",
+        "n_sloc": 37
       },
       {
         "file_path": "src/HugeConstants.sol",
@@ -300,7 +304,7 @@
     ]
   },
   "issue_count": {
-    "high": 32,
+    "high": 33,
     "low": 25
   },
   "high_issues": {
@@ -1502,6 +1506,18 @@
             "src_char": "686:16"
           },
           {
+            "contract_path": "src/HighLevelCallsInsideLoop.sol",
+            "line_no": 7,
+            "src": "143:3",
+            "src_char": "143:3"
+          },
+          {
+            "contract_path": "src/HighLevelCallsInsideLoop.sol",
+            "line_no": 14,
+            "src": "350:4",
+            "src_char": "350:4"
+          },
+          {
             "contract_path": "src/SendEtherNoChecks.sol",
             "line_no": 53,
             "src": "1060:5",
@@ -1782,6 +1798,37 @@
             "src_char": "426:25"
           }
         ]
+      },
+      {
+        "title": "Loop contains high level calls to other contracts and/or eth is transferred.",
+        "description": "One of the dangers of having high level calls or an `address.transfer()` inside a loop is thatif a single call fails, then the whole transaction is reverted which maybe undesirable. It's recommendedto convert high level calls into low level calls so that we get a `bool success` instead of an automaticrevert on failure.",
+        "detector_name": "high-level-calls-in-loop",
+        "instances": [
+          {
+            "contract_path": "src/HighLevelCallsInsideLoop.sol",
+            "line_no": 9,
+            "src": "230:99",
+            "src_char": "230:99"
+          },
+          {
+            "contract_path": "src/HighLevelCallsInsideLoop.sol",
+            "line_no": 16,
+            "src": "438:100",
+            "src_char": "438:100"
+          },
+          {
+            "contract_path": "src/HighLevelCallsInsideLoop.sol",
+            "line_no": 27,
+            "src": "739:112",
+            "src_char": "739:112"
+          },
+          {
+            "contract_path": "src/HighLevelCallsInsideLoop.sol",
+            "line_no": 37,
+            "src": "1192:112",
+            "src_char": "1192:112"
+          }
+        ]
       }
     ]
   },
@@ -1971,6 +2018,18 @@
             "src_char": "1598:18"
           },
           {
+            "contract_path": "src/HighLevelCallsInsideLoop.sol",
+            "line_no": 10,
+            "src": "291:24",
+            "src_char": "291:24"
+          },
+          {
+            "contract_path": "src/HighLevelCallsInsideLoop.sol",
+            "line_no": 22,
+            "src": "627:28",
+            "src_char": "627:28"
+          },
+          {
             "contract_path": "src/SendEtherNoChecks.sol",
             "line_no": 67,
             "src": "1255:19",
@@ -2042,6 +2101,12 @@
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/HighLevelCallsInsideLoop.sol",
+            "line_no": 2,
+            "src": "36:23",
+            "src_char": "36:23"
           },
           {
             "contract_path": "src/InconsistentUints.sol",
@@ -2631,6 +2696,12 @@
             "src_char": "1389:6"
           },
           {
+            "contract_path": "src/HighLevelCallsInsideLoop.sol",
+            "line_no": 47,
+            "src": "1413:6",
+            "src_char": "1413:6"
+          },
+          {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
             "line_no": 19,
             "src": "503:6",
@@ -2788,6 +2859,12 @@
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/HighLevelCallsInsideLoop.sol",
+            "line_no": 2,
+            "src": "36:23",
+            "src_char": "36:23"
           },
           {
             "contract_path": "src/InconsistentUints.sol",
@@ -3068,6 +3145,12 @@
             "src_char": "1219:41"
           },
           {
+            "contract_path": "src/HighLevelCallsInsideLoop.sol",
+            "line_no": 54,
+            "src": "1541:8",
+            "src_char": "1541:8"
+          },
+          {
             "contract_path": "src/OnceModifierExample.sol",
             "line_no": 10,
             "src": "147:7",
@@ -3322,6 +3405,12 @@
             "src_char": "1206:18"
           },
           {
+            "contract_path": "src/HighLevelCallsInsideLoop.sol",
+            "line_no": 21,
+            "src": "559:18",
+            "src_char": "559:18"
+          },
+          {
             "contract_path": "src/InternalFunctions.sol",
             "line_no": 28,
             "src": "693:12",
@@ -3406,6 +3495,30 @@
             "line_no": 69,
             "src": "2086:13",
             "src_char": "2086:13"
+          },
+          {
+            "contract_path": "src/HighLevelCallsInsideLoop.sol",
+            "line_no": 9,
+            "src": "240:1",
+            "src_char": "240:1"
+          },
+          {
+            "contract_path": "src/HighLevelCallsInsideLoop.sol",
+            "line_no": 16,
+            "src": "448:1",
+            "src_char": "448:1"
+          },
+          {
+            "contract_path": "src/HighLevelCallsInsideLoop.sol",
+            "line_no": 27,
+            "src": "749:1",
+            "src_char": "749:1"
+          },
+          {
+            "contract_path": "src/HighLevelCallsInsideLoop.sol",
+            "line_no": 37,
+            "src": "1202:1",
+            "src_char": "1202:1"
           },
           {
             "contract_path": "src/InconsistentUints.sol",
@@ -3725,6 +3838,7 @@
     "public-variable-read-in-external-context",
     "weak-randomness",
     "pre-declared-local-variable-usage",
-    "delete-nested-mapping"
+    "delete-nested-mapping",
+    "high-level-calls-in-loop"
   ]
 }
