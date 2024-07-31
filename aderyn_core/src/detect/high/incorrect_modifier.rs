@@ -1,11 +1,13 @@
 use std::collections::BTreeMap;
+use std::convert::identity;
 use std::error::Error;
 
-use crate::ast::NodeID;
+use crate::ast::{ASTNode, ContractKind, NodeID, NodeType};
 
 use crate::capture;
 use crate::context::browser::{
     ExtractIdentifiers, ExtractPlaceholderStatements, ExtractRevertStatements,
+    GetClosestAncestorOfTypeX,
 };
 use crate::context::investigator::{
     StandardInvestigationStyle, StandardInvestigator, StandardInvestigatorVisitor,
@@ -27,6 +29,17 @@ pub struct IncorrectModifierDetector {
 impl IssueDetector for IncorrectModifierDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for modifier in context.modifier_definitions() {
+            if let Some(ASTNode::ContractDefinition(parent_contract)) =
+                modifier.closest_ancestor_of_type(context, NodeType::ContractDefinition)
+            {
+                if parent_contract.kind != ContractKind::Contract
+                    || parent_contract.is_abstract.is_some_and(identity)
+                {
+                    // Skip checking the modifier if it's part of an abstract contract
+                    continue;
+                }
+            }
+
             let mut incorrect_modifier_tracker = PlaceholdersRequiresAndRevertsTracker::default();
 
             let investigator = StandardInvestigator::new(
