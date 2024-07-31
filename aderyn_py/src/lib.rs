@@ -1,26 +1,43 @@
 #![allow(unused)]
 
 use aderyn_driver::driver;
+use field_access::{FieldAccess, FieldMut};
 
 fn main() {
     use pyo3::prelude::*;
+    use pyo3::types::{PyBool, PyDict};
 
     #[pyfunction]
-    fn generate_report(root: String, output: String) {
-        let args = driver::Args {
+    #[pyo3(signature = (root, output, **py_kwargs))]
+    fn generate_report(root: String, output: String, py_kwargs: Option<&Bound<'_, PyDict>>) {
+        let mut args = driver::Args {
             root,
             output,
-            src: None,                // TODO support this later
-            no_snippets: false,       // TODO support this later
-            skip_build: false,        // TODO support this later
-            skip_cloc: false,         // TODO support this later
-            path_includes: None,      // TODO support this later
-            path_excludes: None,      // TODO support this later
-            stdout: false,            // TODO support this later
-            skip_update_check: false, // TODO support this later
-            auditor_mode: false,      // TODO support this later
-            highs_only: false,        // TODO support this later
+            src: None,
+            no_snippets: false,
+            skip_build: false,
+            skip_cloc: false,
+            path_includes: None,
+            path_excludes: None,
+            stdout: false,
+            skip_update_check: false,
+            auditor_mode: false,
+            highs_only: false,
         };
+
+        if let Some(kwargs) = py_kwargs {
+            kwargs.iter().for_each(|(py_key, py_value)| {
+                let rust_key: String = py_key.extract().unwrap();
+                if py_value.is_instance_of::<PyBool>() {
+                    let rust_value: bool = py_value.extract().unwrap();
+                    args.field_mut(&rust_key).unwrap().replace(rust_value);
+                } else {
+                    let rust_value: Vec<String> = py_value.extract().unwrap();
+                    args.field_mut(&rust_key).unwrap().replace(Some(rust_value));
+                }
+            })
+        }
+
         driver::drive(args);
     }
 

@@ -68,6 +68,7 @@ dependencies = [
  "criterion",
  "cyfrin-foundry-compilers",
  "cyfrin-foundry-config",
+ "field_access",
  "rayon",
  "serde",
  "serde_json",
@@ -80,6 +81,7 @@ name = "aderyn_py"
 version = "0.1.8"
 dependencies = [
  "aderyn_driver",
+ "field_access",
  "pyo3",
 ]
 
@@ -1196,6 +1198,27 @@ checksum = "ded41244b729663b1e574f1b4fb731469f69f79c17667b5d776b16cda0479449"
 dependencies = [
  "rand_core",
  "subtle",
+]
+
+[[package]]
+name = "field_access"
+version = "0.1.8"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7e623ab785a56a622537034c7109d47898c41cb9219803155759dcca1f19655c"
+dependencies = [
+ "field_access_derive",
+ "paste",
+]
+
+[[package]]
+name = "field_access_derive"
+version = "0.1.8"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "917d5dcdd27ef8b8bd66913702385e92fa2a2a9fd6f7b94ffa03e884d847a8d9"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.67",
 ]
 
 [[package]]
