@@ -525,7 +525,7 @@ A deletion in a structure containing a mapping will not delete the mapping. The 
 
 ## H-9: Loop contains high level calls to other contracts and/or eth is transferred.
 
-One of the dangers of having high level calls or an `address.transfer()` inside a loop is thatif a single call fails, then the whole transaction is reverted which maybe undesirable. It's recommendedto convert high level calls into low level calls so that we get a `bool success` instead of an automaticrevert on failure.
+One of the dangers of having high level calls or an `address.transfer()` inside a loop is that if a single call fails, then the whole transaction is reverted which maybe undesirable. It's recommended to convert high level calls into low level calls so that we get a `bool success` instead of an automatic revert on failure.
 
 <details><summary>17 Found Instances</summary>
 

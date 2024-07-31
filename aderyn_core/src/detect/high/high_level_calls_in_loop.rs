@@ -81,9 +81,9 @@ impl IssueDetector for HighLevelCallsInLoopDetector {
     }
 
     fn description(&self) -> String {
-        String::from("One of the dangers of having high level calls or an `address.transfer()` inside a loop is that\
-            if a single call fails, then the whole transaction is reverted which maybe undesirable. It's recommended\
-            to convert high level calls into low level calls so that we get a `bool success` instead of an automatic\
+        String::from("One of the dangers of having high level calls or an `address.transfer()` inside a loop is that \
+            if a single call fails, then the whole transaction is reverted which maybe undesirable. It's recommended \
+            to convert high level calls into low level calls so that we get a `bool success` instead of an automatic \
             revert on failure.")
     }
 
