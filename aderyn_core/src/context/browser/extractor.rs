@@ -1,3 +1,5 @@
+use std::collections::HashSet;
+
 use crate::{
     ast::*,
     visitor::ast_visitor::{ASTConstVisitor, Node},
@@ -123,5 +125,181 @@ impl ASTConstVisitor for ExtractReferencedDeclarations {
     fn visit_user_defined_type_name(&mut self, node: &UserDefinedTypeName) -> Result<bool> {
         self.extracted.push(node.referenced_declaration);
         Ok(true)
+    }
+}
+
+// Extract Reference Declaration IDs
+#[derive(Default)]
+pub struct ExtractWrittenStateVariablesIDs {
+    pub deleted: HashSet<NodeID>,
+    pub assigned: HashSet<NodeID>,
+    pub pushed: HashSet<NodeID>,
+    pub popped: HashSet<NodeID>,
+}
+
+impl ExtractWrittenStateVariablesIDs {
+    pub fn get_all_node_ids(&self) -> Vec<NodeID> {
+        let mut all_nodes = [
+            self.deleted.clone().into_iter().collect::<Vec<_>>(),
+            self.assigned.clone().into_iter().collect::<Vec<_>>(),
+            self.pushed.clone().into_iter().collect::<Vec<_>>(),
+            self.popped.clone().into_iter().collect::<Vec<_>>(),
+        ]
+        .concat();
+        // Some state variables can undergo more than 1 of the above operation.
+        // Hence, we should deduplicate it
+        all_nodes.dedup();
+        all_nodes
+    }
+
+    pub fn from<T: Node + ?Sized>(node: &T) -> Self {
+        let mut extractor: ExtractWrittenStateVariablesIDs = Self::default();
+        node.accept(&mut extractor).unwrap_or_default();
+        extractor
+    }
+}
+
+impl ASTConstVisitor for ExtractWrittenStateVariablesIDs {
+    fn visit_unary_operation(&mut self, node: &UnaryOperation) -> Result<bool> {
+        // Catch delete operations
+        if node.operator == "delete" {
+            if let Some(id) = find_referenced_declaration_for_identifier_or_indexed_identifier(
+                node.sub_expression.as_ref(),
+            ) {
+                self.deleted.insert(id);
+            }
+        }
+        Ok(true)
+    }
+
+    fn visit_member_access(&mut self, member: &MemberAccess) -> Result<bool> {
+        if let Some(id) = find_referenced_declaration_for_identifier_or_indexed_identifier(
+            member.expression.as_ref(),
+        ) {
+            if member.member_name == "push" {
+                self.pushed.insert(id);
+            } else if member.member_name == "pop" {
+                self.popped.insert(id);
+            }
+        }
+        Ok(true)
+    }
+
+    fn visit_assignment(&mut self, assignment: &Assignment) -> Result<bool> {
+        if let Some(id) = find_referenced_declaration_for_identifier_or_indexed_identifier(
+            assignment.left_hand_side.as_ref(),
+        ) {
+            self.assigned.insert(id);
+        }
+        Ok(true)
+    }
+}
+
+fn find_referenced_declaration_for_identifier_or_indexed_identifier(
+    expr: &Expression,
+) -> Option<NodeID> {
+    match expr {
+        Expression::Identifier(Identifier {
+            referenced_declaration: Some(id),
+            ..
+        }) => {
+            return Some(*id);
+        }
+        Expression::IndexAccess(IndexAccess {
+            base_expression, ..
+        }) => {
+            return find_referenced_declaration_for_identifier_or_indexed_identifier(
+                base_expression.as_ref(),
+            );
+        }
+        _ => (),
+    };
+    None
+}
+
+#[cfg(test)]
+mod written_state_variables_tests {
+    use crate::detect::test_utils::load_solidity_source_unit;
+
+    use super::ExtractWrittenStateVariablesIDs;
+
+    #[test]
+    fn has_variable_declarations() {
+        let context =
+            load_solidity_source_unit("../tests/contract-playground/src/StateVariablesWritten.sol");
+
+        assert!(!context.variable_declarations().is_empty());
+    }
+
+    #[test]
+    fn can_capture_deletes() {
+        let context =
+            load_solidity_source_unit("../tests/contract-playground/src/StateVariablesWritten.sol");
+
+        let mut total_state_variables_deleted = 0;
+
+        for contract in context.contract_definitions() {
+            let state_variables_info = ExtractWrittenStateVariablesIDs::from(contract);
+            println!("{} - {}", contract.name, state_variables_info.deleted.len());
+            println!("{:?}", state_variables_info.deleted);
+            total_state_variables_deleted += state_variables_info.deleted.len();
+        }
+
+        assert_eq!(total_state_variables_deleted, 5);
+    }
+
+    #[test]
+    fn can_capture_pushes() {
+        let context =
+            load_solidity_source_unit("../tests/contract-playground/src/StateVariablesWritten.sol");
+
+        let mut total_state_variables_pushed_to = 0;
+
+        for contract in context.contract_definitions() {
+            let state_variables_info = ExtractWrittenStateVariablesIDs::from(contract);
+            println!("{} - {}", contract.name, state_variables_info.pushed.len());
+            println!("{:?}", state_variables_info.pushed);
+            total_state_variables_pushed_to += state_variables_info.pushed.len();
+        }
+
+        assert_eq!(total_state_variables_pushed_to, 2);
+    }
+
+    #[test]
+    fn can_capture_pops() {
+        let context =
+            load_solidity_source_unit("../tests/contract-playground/src/StateVariablesWritten.sol");
+
+        let mut total_state_variables_popped = 0;
+
+        for contract in context.contract_definitions() {
+            let state_variables_info = ExtractWrittenStateVariablesIDs::from(contract);
+            println!("{} - {}", contract.name, state_variables_info.popped.len());
+            println!("{:?}", state_variables_info.popped);
+            total_state_variables_popped += state_variables_info.popped.len();
+        }
+
+        assert_eq!(total_state_variables_popped, 1);
+    }
+
+    #[test]
+    fn can_capture_assignments() {
+        let context =
+            load_solidity_source_unit("../tests/contract-playground/src/StateVariablesWritten.sol");
+
+        let mut total_state_variables_assigned = 0;
+
+        for contract in context.contract_definitions() {
+            let state_variables_info = ExtractWrittenStateVariablesIDs::from(contract);
+            println!(
+                "{} - {}",
+                contract.name,
+                state_variables_info.assigned.len()
+            );
+            println!("{:?}", state_variables_info.assigned);
+            total_state_variables_assigned += state_variables_info.assigned.len();
+        }
+
+        assert_eq!(total_state_variables_assigned, 10);
     }
 }
