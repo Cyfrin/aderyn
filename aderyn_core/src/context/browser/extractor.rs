@@ -130,14 +130,14 @@ impl ASTConstVisitor for ExtractReferencedDeclarations {
 
 // Extract Reference Declaration IDs
 #[derive(Default)]
-pub struct ExtractWrittenStateVariablesIDs {
+pub struct ExtractManipulatedStateVariablesIDs {
     pub deleted: HashSet<NodeID>,
     pub assigned: HashSet<NodeID>,
     pub pushed: HashSet<NodeID>,
     pub popped: HashSet<NodeID>,
 }
 
-impl ExtractWrittenStateVariablesIDs {
+impl ExtractManipulatedStateVariablesIDs {
     pub fn get_all_node_ids(&self) -> Vec<NodeID> {
         let mut all_nodes = [
             self.deleted.clone().into_iter().collect::<Vec<_>>(),
@@ -153,13 +153,13 @@ impl ExtractWrittenStateVariablesIDs {
     }
 
     pub fn from<T: Node + ?Sized>(node: &T) -> Self {
-        let mut extractor: ExtractWrittenStateVariablesIDs = Self::default();
+        let mut extractor: ExtractManipulatedStateVariablesIDs = Self::default();
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl ASTConstVisitor for ExtractWrittenStateVariablesIDs {
+impl ASTConstVisitor for ExtractManipulatedStateVariablesIDs {
     fn visit_unary_operation(&mut self, node: &UnaryOperation) -> Result<bool> {
         // Catch delete operations
         if node.operator == "delete" {
@@ -221,7 +221,7 @@ fn find_referenced_declaration_for_identifier_or_indexed_identifier(
 mod written_state_variables_tests {
     use crate::detect::test_utils::load_solidity_source_unit;
 
-    use super::ExtractWrittenStateVariablesIDs;
+    use super::ExtractManipulatedStateVariablesIDs;
 
     #[test]
     fn has_variable_declarations() {
@@ -239,7 +239,7 @@ mod written_state_variables_tests {
         let mut total_state_variables_deleted = 0;
 
         for contract in context.contract_definitions() {
-            let state_variables_info = ExtractWrittenStateVariablesIDs::from(contract);
+            let state_variables_info = ExtractManipulatedStateVariablesIDs::from(contract);
             println!("{} - {}", contract.name, state_variables_info.deleted.len());
             println!("{:?}", state_variables_info.deleted);
             total_state_variables_deleted += state_variables_info.deleted.len();
@@ -256,7 +256,7 @@ mod written_state_variables_tests {
         let mut total_state_variables_pushed_to = 0;
 
         for contract in context.contract_definitions() {
-            let state_variables_info = ExtractWrittenStateVariablesIDs::from(contract);
+            let state_variables_info = ExtractManipulatedStateVariablesIDs::from(contract);
             println!("{} - {}", contract.name, state_variables_info.pushed.len());
             println!("{:?}", state_variables_info.pushed);
             total_state_variables_pushed_to += state_variables_info.pushed.len();
@@ -273,7 +273,7 @@ mod written_state_variables_tests {
         let mut total_state_variables_popped = 0;
 
         for contract in context.contract_definitions() {
-            let state_variables_info = ExtractWrittenStateVariablesIDs::from(contract);
+            let state_variables_info = ExtractManipulatedStateVariablesIDs::from(contract);
             println!("{} - {}", contract.name, state_variables_info.popped.len());
             println!("{:?}", state_variables_info.popped);
             total_state_variables_popped += state_variables_info.popped.len();
@@ -290,7 +290,7 @@ mod written_state_variables_tests {
         let mut total_state_variables_assigned = 0;
 
         for contract in context.contract_definitions() {
-            let state_variables_info = ExtractWrittenStateVariablesIDs::from(contract);
+            let state_variables_info = ExtractManipulatedStateVariablesIDs::from(contract);
             println!(
                 "{} - {}",
                 contract.name,
