@@ -1,7 +1,12 @@
 {
   "files_summary": {
+<<<<<<< HEAD
     "total_source_units": 81,
     "total_sloc": 2334
+=======
+    "total_source_units": 80,
+    "total_sloc": 2423
+>>>>>>> 5a4e28a1 (finder)
   },
   "files_details": {
     "files_details": [
@@ -180,6 +185,10 @@
       {
         "file_path": "src/StateVariables.sol",
         "n_sloc": 58
+      },
+      {
+        "file_path": "src/StateVariablesManipulation.sol",
+        "n_sloc": 145
       },
       {
         "file_path": "src/StorageConditionals.sol",
@@ -1366,6 +1375,48 @@
             "src_char": "282:18"
           },
           {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 8,
+            "src": "184:10",
+            "src_char": "184:10"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 9,
+            "src": "214:9",
+            "src_char": "214:9"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 10,
+            "src": "241:10",
+            "src_char": "241:10"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 11,
+            "src": "272:13",
+            "src_char": "272:13"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 12,
+            "src": "314:20",
+            "src_char": "314:20"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 13,
+            "src": "354:12",
+            "src_char": "354:12"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 14,
+            "src": "385:11",
+            "src_char": "385:11"
+          },
+          {
             "contract_path": "src/TautologyOrContradiction.sol",
             "line_no": 6,
             "src": "133:6",
@@ -1741,6 +1792,12 @@
         "description": "Function returns a value but it is ignored.",
         "detector_name": "unchecked-return",
         "instances": [
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 138,
+            "src": "4003:20",
+            "src_char": "4003:20"
+          },
           {
             "contract_path": "src/UncheckedReturn.sol",
             "line_no": 14,
@@ -2344,6 +2401,12 @@
             "src_char": "32:23"
           },
           {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/TautologyOrContradiction.sol",
             "line_no": 2,
             "src": "32:23",
@@ -2427,6 +2490,12 @@
             "line_no": 58,
             "src": "2121:14",
             "src_char": "2121:14"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 56,
+            "src": "1657:17",
+            "src_char": "1657:17"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
@@ -2875,6 +2944,36 @@
             "src_char": "745:2"
           },
           {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 115,
+            "src": "3342:2",
+            "src_char": "3342:2"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 117,
+            "src": "3413:2",
+            "src_char": "3413:2"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 181,
+            "src": "4985:2",
+            "src_char": "4985:2"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 183,
+            "src": "5060:2",
+            "src_char": "5060:2"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 188,
+            "src": "5221:2",
+            "src_char": "5221:2"
+          },
+          {
             "contract_path": "src/UncheckedReturn.sol",
             "line_no": 27,
             "src": "607:7",
@@ -3283,6 +3382,12 @@
           },
           {
             "contract_path": "src/StateVariables.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
