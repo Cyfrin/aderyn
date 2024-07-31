@@ -1,7 +1,7 @@
 {
   "files_summary": {
     "total_source_units": 74,
-    "total_sloc": 2068
+    "total_sloc": 2072
   },
   "files_details": {
     "files_details": [
@@ -107,7 +107,7 @@
       },
       {
         "file_path": "src/IncorrectModifier.sol",
-        "n_sloc": 72
+        "n_sloc": 76
       },
       {
         "file_path": "src/IncorrectShift.sol",
@@ -1815,12 +1815,6 @@
             "line_no": 6,
             "src": "103:8",
             "src_char": "103:8"
-          },
-          {
-            "contract_path": "src/SendEtherNoChecks.sol",
-            "line_no": 70,
-            "src": "1301:4",
-            "src_char": "1301:4"
           }
         ]
       }
@@ -1865,21 +1859,21 @@
           },
           {
             "contract_path": "src/IncorrectModifier.sol",
-            "line_no": 97,
-            "src": "3047:9",
-            "src_char": "3047:9"
+            "line_no": 102,
+            "src": "3212:9",
+            "src_char": "3212:9"
           },
           {
             "contract_path": "src/IncorrectModifier.sol",
-            "line_no": 104,
-            "src": "3284:9",
-            "src_char": "3284:9"
+            "line_no": 109,
+            "src": "3449:9",
+            "src_char": "3449:9"
           },
           {
             "contract_path": "src/IncorrectModifier.sol",
-            "line_no": 116,
-            "src": "3770:9",
-            "src_char": "3770:9"
+            "line_no": 121,
+            "src": "3935:9",
+            "src_char": "3935:9"
           },
           {
             "contract_path": "src/InternalFunctions.sol",
@@ -2031,9 +2025,15 @@
           },
           {
             "contract_path": "src/IncorrectModifier.sol",
-            "line_no": 117,
-            "src": "3790:11",
-            "src_char": "3790:11"
+            "line_no": 91,
+            "src": "2773:33",
+            "src_char": "2773:33"
+          },
+          {
+            "contract_path": "src/IncorrectModifier.sol",
+            "line_no": 122,
+            "src": "3955:11",
+            "src_char": "3955:11"
           },
           {
             "contract_path": "src/SendEtherNoChecks.sol",
@@ -2195,9 +2195,9 @@
           },
           {
             "contract_path": "src/IncorrectModifier.sol",
-            "line_no": 99,
-            "src": "3101:16",
-            "src_char": "3101:16"
+            "line_no": 104,
+            "src": "3266:16",
+            "src_char": "3266:16"
           },
           {
             "contract_path": "src/StateVariables.sol",
@@ -3176,9 +3176,9 @@
           },
           {
             "contract_path": "src/IncorrectModifier.sol",
-            "line_no": 110,
-            "src": "3442:13",
-            "src_char": "3442:13"
+            "line_no": 115,
+            "src": "3607:13",
+            "src_char": "3607:13"
           },
           {
             "contract_path": "src/OnceModifierExample.sol",
