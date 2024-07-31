@@ -87,6 +87,11 @@ contract IncorrectModifierContract {
         _; // Continue execution if the condition is met
     }
 
+    modifier revertsButWithoutUsingRevertKeyword() {
+        payable(address(0x3000)).transfer(130);
+        _; // Continue execution if the condition is met
+    }
+
     //////////////////////////// FUNCTIONS //////////////////////////////////////////////////////////////////////
 
     function _checkInternallyForPaused() internal view {

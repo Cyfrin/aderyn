@@ -2,12 +2,12 @@ use std::collections::BTreeMap;
 use std::convert::identity;
 use std::error::Error;
 
-use crate::ast::{ASTNode, ContractKind, NodeID, NodeType};
+use crate::ast::{ASTNode, ContractKind, Expression, NodeID, NodeType};
 
 use crate::capture;
 use crate::context::browser::{
-    ExtractIdentifiers, ExtractPlaceholderStatements, ExtractRevertStatements,
-    GetClosestAncestorOfTypeX,
+    ExtractFunctionCalls, ExtractIdentifiers, ExtractPlaceholderStatements,
+    ExtractRevertStatements, GetClosestAncestorOfTypeX,
 };
 use crate::context::investigator::{
     StandardInvestigationStyle, StandardInvestigator, StandardInvestigatorVisitor,
@@ -84,6 +84,7 @@ struct PlaceholdersRequiresAndRevertsTracker {
     has_placeholder: bool,
     has_require: bool,
     has_revert: bool,
+    has_transfer: bool,
 }
 
 impl StandardInvestigatorVisitor for PlaceholdersRequiresAndRevertsTracker {
@@ -121,13 +122,37 @@ impl StandardInvestigatorVisitor for PlaceholdersRequiresAndRevertsTracker {
             self.has_revert = !revert_statements.is_empty();
         }
 
+        if !self.has_transfer {
+            let function_calls = ExtractFunctionCalls::from(ast_node).extracted;
+
+            for function_call in function_calls {
+                if let Expression::MemberAccess(member_access) = function_call.expression.as_ref() {
+                    if member_access.member_name == "transfer" {
+                        if let Some(type_description) = member_access.expression.type_descriptions()
+                        {
+                            if type_description
+                                .type_string
+                                .as_ref()
+                                .is_some_and(|type_string| {
+                                    type_string == "address" || type_string == "address payable"
+                                })
+                            {
+                                self.has_transfer = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         Ok(())
     }
 }
 
 impl PlaceholdersRequiresAndRevertsTracker {
     pub fn satisfied(&self) -> bool {
-        self.has_placeholder && (self.has_require || self.has_revert)
+        self.has_placeholder && (self.has_require || self.has_revert || self.has_transfer)
     }
 }
 
