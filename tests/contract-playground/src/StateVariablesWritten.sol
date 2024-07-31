@@ -24,6 +24,7 @@ contract StorageManipulationExamples {
         uint256 age;
     }
     Person public person;
+    Person public person2;
 
     // Nested mapping
     mapping(address => mapping(uint256 => bool)) public nestedMapping;
@@ -90,6 +91,12 @@ contract StorageManipulationExamples {
     // Function to update Person struct
     function setPerson(string calldata _name, uint256 _age) external {
         person = Person(_name, _age);
+    }
+
+    // Function to update Person struct
+    function setPerson2Name(string calldata _name, uint256 _age) external {
+        person2.name = _name;
+        person2.age = _age;
     }
 
     // Function to delete Person struct

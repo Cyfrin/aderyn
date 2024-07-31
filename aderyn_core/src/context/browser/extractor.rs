@@ -212,6 +212,11 @@ fn find_referenced_declaration_for_identifier_or_indexed_identifier(
                 base_expression.as_ref(),
             );
         }
+        Expression::MemberAccess(MemberAccess { expression, .. }) => {
+            return find_referenced_declaration_for_identifier_or_indexed_identifier(
+                expression.as_ref(),
+            );
+        }
         _ => (),
     };
     None
@@ -300,6 +305,6 @@ mod written_state_variables_tests {
             total_state_variables_assigned += state_variables_info.assigned.len();
         }
 
-        assert_eq!(total_state_variables_assigned, 10);
+        assert_eq!(total_state_variables_assigned, 11);
     }
 }
