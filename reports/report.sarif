@@ -2128,7 +2128,29 @@
                 },
                 "region": {
                   "byteLength": 11,
-                  "byteOffset": 3950
+                  "byteOffset": 4205
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 5373
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 6342
                 }
               }
             },
@@ -2939,6 +2961,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 18,
+                  "byteOffset": 5185
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
@@ -3399,7 +3432,29 @@
                 },
                 "region": {
                   "byteLength": 10,
-                  "byteOffset": 3383
+                  "byteOffset": 3653
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 4877
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 5775
                 }
               }
             },
@@ -4132,7 +4187,7 @@
                 },
                 "region": {
                   "byteLength": 56,
-                  "byteOffset": 3171
+                  "byteOffset": 3143
                 }
               }
             },
@@ -4143,7 +4198,51 @@
                 },
                 "region": {
                   "byteLength": 54,
-                  "byteOffset": 3263
+                  "byteOffset": 3235
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 56,
+                  "byteOffset": 4367
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 54,
+                  "byteOffset": 4459
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 56,
+                  "byteOffset": 5563
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 54,
+                  "byteOffset": 5655
                 }
               }
             },

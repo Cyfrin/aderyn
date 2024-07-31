@@ -1,7 +1,7 @@
 {
   "files_summary": {
     "total_source_units": 74,
-    "total_sloc": 2074
+    "total_sloc": 2117
   },
   "files_details": {
     "files_details": [
@@ -39,7 +39,7 @@
       },
       {
         "file_path": "src/ContractLocksEther.sol",
-        "n_sloc": 78
+        "n_sloc": 121
       },
       {
         "file_path": "src/ContractWithTodo.sol",
@@ -1513,9 +1513,21 @@
           },
           {
             "contract_path": "src/ContractLocksEther.sol",
-            "line_no": 121,
-            "src": "3950:11",
-            "src_char": "3950:11"
+            "line_no": 131,
+            "src": "4205:11",
+            "src_char": "4205:11"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 167,
+            "src": "5373:11",
+            "src_char": "5373:11"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 194,
+            "src": "6342:11",
+            "src_char": "6342:11"
           },
           {
             "contract_path": "src/SendEtherNoChecks.sol",
@@ -1994,6 +2006,12 @@
             "src_char": "1517:20"
           },
           {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 162,
+            "src": "5185:18",
+            "src_char": "5185:18"
+          },
+          {
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 32,
             "src": "1062:13",
@@ -2250,9 +2268,21 @@
           },
           {
             "contract_path": "src/ContractLocksEther.sol",
-            "line_no": 108,
-            "src": "3383:10",
-            "src_char": "3383:10"
+            "line_no": 118,
+            "src": "3653:10",
+            "src_char": "3653:10"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 155,
+            "src": "4877:10",
+            "src_char": "4877:10"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 181,
+            "src": "5775:10",
+            "src_char": "5775:10"
           },
           {
             "contract_path": "src/ContractWithTodo.sol",
@@ -2655,14 +2685,38 @@
           {
             "contract_path": "src/ContractLocksEther.sol",
             "line_no": 102,
-            "src": "3171:56",
-            "src_char": "3171:56"
+            "src": "3143:56",
+            "src_char": "3143:56"
           },
           {
             "contract_path": "src/ContractLocksEther.sol",
             "line_no": 105,
-            "src": "3263:54",
-            "src_char": "3263:54"
+            "src": "3235:54",
+            "src_char": "3235:54"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 139,
+            "src": "4367:56",
+            "src_char": "4367:56"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 142,
+            "src": "4459:54",
+            "src_char": "4459:54"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 175,
+            "src": "5563:56",
+            "src_char": "5563:56"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 178,
+            "src": "5655:54",
+            "src_char": "5655:54"
           },
           {
             "contract_path": "src/TestERC20.sol",
