@@ -1,12 +1,7 @@
 {
   "files_summary": {
-<<<<<<< HEAD
-    "total_source_units": 68,
-    "total_sloc": 1976
-=======
-    "total_source_units": 73,
-    "total_sloc": 1996
->>>>>>> dev
+    "total_source_units": 74,
+    "total_sloc": 2068
   },
   "files_details": {
     "files_details": [
@@ -309,13 +304,8 @@
     ]
   },
   "issue_count": {
-<<<<<<< HEAD
-    "high": 30,
-    "low": 23
-=======
-    "high": 32,
+    "high": 33,
     "low": 25
->>>>>>> dev
   },
   "high_issues": {
     "issues": [
