@@ -3071,6 +3071,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/StateVariablesWritten.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/UncheckedSend.sol"
                 },
                 "region": {
@@ -3184,6 +3195,17 @@
                 "region": {
                   "byteLength": 14,
                   "byteOffset": 2121
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariablesWritten.sol"
+                },
+                "region": {
+                  "byteLength": 22,
+                  "byteOffset": 1706
                 }
               }
             },
@@ -3336,6 +3358,28 @@
                 "region": {
                   "byteLength": 25,
                   "byteOffset": 2539
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariablesWritten.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 931
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariablesWritten.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 1387
                 }
               }
             },
@@ -4398,6 +4442,17 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/StateVariables.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariablesWritten.sol"
                 },
                 "region": {
                   "byteLength": 23,

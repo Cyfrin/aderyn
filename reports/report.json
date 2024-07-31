@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 73,
-    "total_sloc": 1996
+    "total_source_units": 74,
+    "total_sloc": 2089
   },
   "files_details": {
     "files_details": [
@@ -160,6 +160,10 @@
       {
         "file_path": "src/StateVariables.sol",
         "n_sloc": 58
+      },
+      {
+        "file_path": "src/StateVariablesWritten.sol",
+        "n_sloc": 93
       },
       {
         "file_path": "src/StorageConditionals.sol",
@@ -2062,6 +2066,12 @@
             "src_char": "32:23"
           },
           {
+            "contract_path": "src/StateVariablesWritten.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/UncheckedSend.sol",
             "line_no": 2,
             "src": "32:23",
@@ -2127,6 +2137,12 @@
             "line_no": 58,
             "src": "2121:14",
             "src_char": "2121:14"
+          },
+          {
+            "contract_path": "src/StateVariablesWritten.sol",
+            "line_no": 58,
+            "src": "1706:22",
+            "src_char": "1706:22"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
@@ -2212,6 +2228,18 @@
             "line_no": 71,
             "src": "2539:25",
             "src_char": "2539:25"
+          },
+          {
+            "contract_path": "src/StateVariablesWritten.sol",
+            "line_no": 32,
+            "src": "931:8",
+            "src_char": "931:8"
+          },
+          {
+            "contract_path": "src/StateVariablesWritten.sol",
+            "line_no": 47,
+            "src": "1387:12",
+            "src_char": "1387:12"
           },
           {
             "contract_path": "src/UninitializedStateVariable.sol",
@@ -2803,6 +2831,12 @@
           },
           {
             "contract_path": "src/StateVariables.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/StateVariablesWritten.sol",
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
