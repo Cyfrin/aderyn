@@ -1,7 +1,7 @@
 {
   "files_summary": {
     "total_source_units": 74,
-    "total_sloc": 2089
+    "total_sloc": 2094
   },
   "files_details": {
     "files_details": [
@@ -163,7 +163,7 @@
       },
       {
         "file_path": "src/StateVariablesWritten.sol",
-        "n_sloc": 93
+        "n_sloc": 98
       },
       {
         "file_path": "src/StorageConditionals.sol",
@@ -2140,9 +2140,9 @@
           },
           {
             "contract_path": "src/StateVariablesWritten.sol",
-            "line_no": 58,
-            "src": "1706:22",
-            "src_char": "1706:22"
+            "line_no": 59,
+            "src": "1733:22",
+            "src_char": "1733:22"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
@@ -2231,15 +2231,15 @@
           },
           {
             "contract_path": "src/StateVariablesWritten.sol",
-            "line_no": 32,
-            "src": "931:8",
-            "src_char": "931:8"
+            "line_no": 33,
+            "src": "958:8",
+            "src_char": "958:8"
           },
           {
             "contract_path": "src/StateVariablesWritten.sol",
-            "line_no": 47,
-            "src": "1387:12",
-            "src_char": "1387:12"
+            "line_no": 48,
+            "src": "1414:12",
+            "src_char": "1414:12"
           },
           {
             "contract_path": "src/UninitializedStateVariable.sol",
