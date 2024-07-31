@@ -1751,6 +1751,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/PublicVariableReadInExternalContext.sol"
+                },
+                "region": {
+                  "byteLength": 26,
+                  "byteOffset": 130
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/StateShadowing.sol"
                 },
                 "region": {
@@ -1952,6 +1963,26 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/UncheckedSend.sol"
+                },
+                "region": {
+                  "byteLength": 22,
+                  "byteOffset": 815
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "The transaction `address(payable?).send(address)` may fail because of reasons like out-of-gas, invalid receipient address or revert from the recipient. Therefore, the boolean returned by this function call must be checked to be `true` in order to verify that the transaction was successful"
+          },
+          "ruleId": "unchecked-send"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/MisusedBoolean.sol"
                 },
                 "region": {
@@ -2109,6 +2140,50 @@
                 "region": {
                   "byteLength": 5,
                   "byteOffset": 1795
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedSend.sol"
+                },
+                "region": {
+                  "byteLength": 246,
+                  "byteOffset": 85
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedSend.sol"
+                },
+                "region": {
+                  "byteLength": 190,
+                  "byteOffset": 337
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedSend.sol"
+                },
+                "region": {
+                  "byteLength": 184,
+                  "byteOffset": 533
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedSend.sol"
+                },
+                "region": {
+                  "byteLength": 186,
+                  "byteOffset": 723
                 }
               }
             },
@@ -2305,6 +2380,68 @@
             "text": "Potentially mistakened `=+` for `+=` or `=-` for `-=`. Please include a space in between."
           },
           "ruleId": "dangerous-unary-operator"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DangerousStrictEquality1.sol"
+                },
+                "region": {
+                  "byteLength": 25,
+                  "byteOffset": 177
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DangerousStrictEquality2.sol"
+                },
+                "region": {
+                  "byteLength": 34,
+                  "byteOffset": 177
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DangerousStrictEquality2.sol"
+                },
+                "region": {
+                  "byteLength": 43,
+                  "byteOffset": 305
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "A contract's balance can be forcibly manipulated by another selfdestructing contract. Therefore, it's recommended to use >, <, >= or <= instead of strict equality."
+          },
+          "ruleId": "dangerous-strict-equailty-on-contract-balance"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CompilerBugStorageSignedIntegerArray.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 230
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "If you want to leverage signed arrays in storage by assigning a literal array with at least one negative number, then you mus use solidity version 0.5.10 or above. This is because of a bug in older compilers."
+          },
+          "ruleId": "signed-storage-array"
         },
         {
           "level": "warning",
@@ -2932,6 +3069,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/CompilerBugStorageSignedIntegerArray.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/ContractWithTodo.sol"
                 },
                 "region": {
@@ -2958,6 +3106,17 @@
                 },
                 "region": {
                   "byteLength": 32,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DangerousStrictEquality1.sol"
+                },
+                "region": {
+                  "byteLength": 23,
                   "byteOffset": 32
                 }
               }
@@ -3021,6 +3180,28 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/PreDeclaredVarUsage.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/RedundantStatements.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedSend.sol"
                 },
                 "region": {
                   "byteLength": 23,
@@ -3509,6 +3690,28 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/CompilerBugStorageSignedIntegerArray.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 235
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CompilerBugStorageSignedIntegerArray.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 352
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/ConstantsLiterals.sol"
                 },
                 "region": {
@@ -3580,6 +3783,28 @@
                 "region": {
                   "byteLength": 66,
                   "byteOffset": 1275
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DangerousStrictEquality2.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 202
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DangerousStrictEquality2.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 339
                 }
               }
             },
@@ -4280,6 +4505,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/DangerousStrictEquality2.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/DelegateCallWithoutAddressCheck.sol"
                 },
                 "region": {
@@ -4892,6 +5128,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/UncheckedSend.sol"
+                },
+                "region": {
+                  "byteLength": 65,
+                  "byteOffset": 915
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
                 },
                 "region": {
@@ -5368,6 +5615,17 @@
                   "byteOffset": 388
                 }
               }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedSend.sol"
+                },
+                "region": {
+                  "byteLength": 65,
+                  "byteOffset": 915
+                }
+              }
             }
           ],
           "message": {
@@ -5760,6 +6018,134 @@
             "text": "Division operations followed directly by multiplication operations can lead to precision loss due to the way integer arithmetic is handled in Solidity."
           },
           "ruleId": "division-before-multiplication"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/RedundantStatements.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 131
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/RedundantStatements.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 169
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/RedundantStatements.sol"
+                },
+                "region": {
+                  "byteLength": 27,
+                  "byteOffset": 207
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/RedundantStatements.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 309
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/RedundantStatements.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 347
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/RedundantStatements.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 377
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Remove the redundant statements because no code will be generated and it just congests the codebase."
+          },
+          "ruleId": "redundant-statements"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/PublicVariableReadInExternalContext.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 355
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/PublicVariableReadInExternalContext.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 457
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/PublicVariableReadInExternalContext.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 553
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/PublicVariableReadInExternalContext.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 1175
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "The contract reads it's own variable using `this` which adds an unnecessary STATICCALL. Remove `this` and access the variable like storage."
+          },
+          "ruleId": "public-variable-read-in-external-context"
         }
       ],
       "tool": {
