@@ -1782,7 +1782,7 @@ A deletion in a structure containing a mapping will not delete the mapping. The 
 
 A modifier must contain a placeholder statement `_` and a `revert` or a `require` condition.
 
-<details><summary>6 Found Instances</summary>
+<details><summary>5 Found Instances</summary>
 
 
 - Found in src/IncorrectModifier.sol [Line: 29](../tests/contract-playground/src/IncorrectModifier.sol#L29)
@@ -1813,12 +1813,6 @@ A modifier must contain a placeholder statement `_` and a `revert` or a `require
 
 	```solidity
 	    modifier mod1(address x) {
-	```
-
-- Found in src/WrongOrderOfLayout.sol [Line: 17](../tests/contract-playground/src/WrongOrderOfLayout.sol#L17)
-
-	```solidity
-	    modifier isZero(uint256 value) {
 	```
 
 </details>

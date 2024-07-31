@@ -2648,17 +2648,6 @@
                   "byteOffset": 1301
                 }
               }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/WrongOrderOfLayout.sol"
-                },
-                "region": {
-                  "byteLength": 6,
-                  "byteOffset": 332
-                }
-              }
             }
           ],
           "message": {

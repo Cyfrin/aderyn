@@ -1821,12 +1821,6 @@
             "line_no": 70,
             "src": "1301:4",
             "src_char": "1301:4"
-          },
-          {
-            "contract_path": "src/WrongOrderOfLayout.sol",
-            "line_no": 17,
-            "src": "332:6",
-            "src_char": "332:6"
           }
         ]
       }
