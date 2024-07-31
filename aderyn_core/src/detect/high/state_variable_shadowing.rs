@@ -184,13 +184,10 @@ impl IssueDetector for StateVariableShadowingDetector {
 
     fn description(&self) -> String {
         String::from(
-            "This vulnerability occurs when a state variable in a derived contract unintentionally\
-            shadows a state variable declared in one of its parent contracts. Shadowing happens when a derived \
-            contract declares a variable with the same name as a variable in its base contract, leading to \
-            potential confusion and unintended behavior. Shadowed state variables can cause issues such as \
-            incorrect data being accessed or modified, making the contract behavior unpredictable. It is crucial\
-            to ensure that variable names are unique across the inheritance hierarchy or to use appropriate visibility\
-            and scope controls to avoid such conflicts."
+            "This vulnerability arises when a derived contract unintentionally shadows a state variable from \
+            a parent contract by declaring a variable with the same name. This can be misleading. \
+            To prevent this, ensure variable names \
+            are unique across the inheritance hierarchy or use proper visibility and scope controls."
         )
     }
 
@@ -236,13 +233,10 @@ mod state_variable_shadowing_detector_tests {
         assert_eq!(
             detector.description(),
             String::from(
-                "This vulnerability occurs when a state variable in a derived contract unintentionally\
-                shadows a state variable declared in one of its parent contracts. Shadowing happens when a derived \
-                contract declares a variable with the same name as a variable in its base contract, leading to \
-                potential confusion and unintended behavior. Shadowed state variables can cause issues such as \
-                incorrect data being accessed or modified, making the contract behavior unpredictable. It is crucial\
-                to ensure that variable names are unique across the inheritance hierarchy or to use appropriate visibility\
-                and scope controls to avoid such conflicts."
+                "This vulnerability arises when a derived contract unintentionally shadows a state variable from \
+                a parent contract by declaring a variable with the same name. This can be misleading. \
+                To prevent this, ensure variable names \
+                are unique across the inheritance hierarchy or use proper visibility and scope controls."
             )
         );
     }
