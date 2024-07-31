@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 73,
-    "total_sloc": 1996
+    "total_source_units": 74,
+    "total_sloc": 2042
   },
   "files_details": {
     "files_details": [
@@ -120,6 +120,10 @@
       {
         "file_path": "src/MisusedBoolean.sol",
         "n_sloc": 67
+      },
+      {
+        "file_path": "src/MsgValueInLoop.sol",
+        "n_sloc": 46
       },
       {
         "file_path": "src/MultipleConstructorSchemes.sol",
@@ -300,7 +304,7 @@
     ]
   },
   "issue_count": {
-    "high": 32,
+    "high": 33,
     "low": 25
   },
   "high_issues": {
@@ -1782,6 +1786,37 @@
             "src_char": "426:25"
           }
         ]
+      },
+      {
+        "title": "Loop contains `msg.value`.",
+        "description": "Do not use `msg.value` in loops since it may be misleading when calculating the total amount.It's recommended to prepare additional variables outside the loop to do the required calculation.",
+        "detector_name": "msg-value-in-loop",
+        "instances": [
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 10,
+            "src": "249:107",
+            "src_char": "249:107"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 21,
+            "src": "530:94",
+            "src_char": "530:94"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 37,
+            "src": "955:93",
+            "src_char": "955:93"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 54,
+            "src": "1382:97",
+            "src_char": "1382:97"
+          }
+        ]
       }
     ]
   },
@@ -2050,6 +2085,12 @@
             "src_char": "0:24"
           },
           {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/PreDeclaredVarUsage.sol",
             "line_no": 2,
             "src": "32:23",
@@ -2182,6 +2223,30 @@
             "line_no": 7,
             "src": "129:9",
             "src_char": "129:9"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 8,
+            "src": "168:3",
+            "src_char": "168:3"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 19,
+            "src": "449:3",
+            "src_char": "449:3"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 34,
+            "src": "849:3",
+            "src_char": "849:3"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 51,
+            "src": "1273:3",
+            "src_char": "1273:3"
           },
           {
             "contract_path": "src/StateVariables.sol",
@@ -2802,6 +2867,12 @@
             "src_char": "32:23"
           },
           {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/StateVariables.sol",
             "line_no": 2,
             "src": "32:23",
@@ -3328,6 +3399,24 @@
             "src_char": "693:12"
           },
           {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 26,
+            "src": "645:8",
+            "src_char": "645:8"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 43,
+            "src": "1069:8",
+            "src_char": "1069:8"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 60,
+            "src": "1500:8",
+            "src_char": "1500:8"
+          },
+          {
             "contract_path": "src/SendEtherNoChecks.sol",
             "line_no": 9,
             "src": "132:20",
@@ -3725,6 +3814,7 @@
     "public-variable-read-in-external-context",
     "weak-randomness",
     "pre-declared-local-variable-usage",
-    "delete-nested-mapping"
+    "delete-nested-mapping",
+    "msg-value-in-loop"
   ]
 }
