@@ -6772,7 +6772,7 @@ Index event fields make the field more quickly accessible to off-chain tools tha
 
 Use descriptive reason strings or custom errors for revert paths.
 
-<details><summary>54 Found Instances</summary>
+<details><summary>55 Found Instances</summary>
 
 
 - Found in contracts/core/OpsManager.sol [Line: 50](../tests/2024-07-templegold/protocol/contracts/core/OpsManager.sol#L50)
@@ -6785,6 +6785,12 @@ Use descriptive reason strings or custom errors for revert paths.
 
 	```solidity
 	      require (x >= -0x8000000000000000 && x <= 0x7FFFFFFFFFFFFFFF);
+	```
+
+- Found in contracts/util/ABDKMath64x64.sol [Line: 63](../tests/2024-07-templegold/protocol/contracts/util/ABDKMath64x64.sol#L63)
+
+	```solidity
+	      require (x <= 0x7FFFFFFFFFFFFFFF);
 	```
 
 - Found in contracts/util/ABDKMath64x64.sol [Line: 77](../tests/2024-07-templegold/protocol/contracts/util/ABDKMath64x64.sol#L77)
@@ -7003,10 +7009,10 @@ Use descriptive reason strings or custom errors for revert paths.
 	      require (result <= 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF);
 	```
 
-- Found in contracts/util/ABDKMathQuad.sol [Line: 72](../tests/2024-07-templegold/protocol/contracts/util/ABDKMathQuad.sol#L72)
+- Found in contracts/util/ABDKMathQuad.sol [Line: 76](../tests/2024-07-templegold/protocol/contracts/util/ABDKMathQuad.sol#L76)
 
 	```solidity
-	  function toInt (bytes16 x) internal pure returns (int256) {
+	      require (exponent <= 16638); // Overflow
 	```
 
 - Found in contracts/util/ABDKMathQuad.sol [Line: 86](../tests/2024-07-templegold/protocol/contracts/util/ABDKMathQuad.sol#L86)
