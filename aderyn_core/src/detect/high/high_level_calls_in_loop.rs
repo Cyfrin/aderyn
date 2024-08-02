@@ -77,14 +77,11 @@ impl IssueDetector for HighLevelCallsInLoopDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Loop contains high level calls to other contracts and/or eth is transferred.")
+        String::from("Calls inside a loop might lead to a denial-of-service attack.")
     }
 
     fn description(&self) -> String {
-        String::from("One of the dangers of having high level calls or an `address.transfer()` inside a loop is that \
-            if a single call fails, then the whole transaction is reverted which maybe undesirable. It's recommended \
-            to convert high level calls into low level calls so that we get a `bool success` instead of an automatic \
-            revert on failure.")
+        String::from("If one of the destinations has a fallback function that reverts, it will cause the whole transaction to revert. Favor pull over push for external calls.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
