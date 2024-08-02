@@ -1,12 +1,7 @@
 {
   "files_summary": {
-<<<<<<< HEAD
-    "total_source_units": 76,
-    "total_sloc": 2155
-=======
-    "total_source_units": 77,
-    "total_sloc": 2225
->>>>>>> dev
+    "total_source_units": 78,
+    "total_sloc": 2252
   },
   "files_details": {
     "files_details": [
@@ -325,13 +320,8 @@
     ]
   },
   "issue_count": {
-<<<<<<< HEAD
-    "high": 34,
-    "low": 26
-=======
     "high": 36,
-    "low": 25
->>>>>>> dev
+    "low": 26
   },
   "high_issues": {
     "issues": [
@@ -1466,6 +1456,73 @@
         ]
       },
       {
+        "title": "Misused boolean with logical operators",
+        "description": "The patterns `if (… || true)` and `if (.. && false)` will always evaluate to true and false respectively.",
+        "detector_name": "misused-boolean",
+        "instances": [
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 12,
+            "src": "257:19",
+            "src_char": "257:19"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 19,
+            "src": "419:20",
+            "src_char": "419:20"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 26,
+            "src": "582:20",
+            "src_char": "582:20"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 33,
+            "src": "745:19",
+            "src_char": "745:19"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 40,
+            "src": "908:51",
+            "src_char": "908:51"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 47,
+            "src": "1060:52",
+            "src_char": "1060:52"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 54,
+            "src": "1213:53",
+            "src_char": "1213:53"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 61,
+            "src": "1366:21",
+            "src_char": "1366:21"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 68,
+            "src": "1530:17",
+            "src_char": "1530:17"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 75,
+            "src": "1691:18",
+            "src_char": "1691:18"
+          }
+        ]
+      },
+      {
         "title": "Sending native Eth is not protected from these functions.",
         "description": "Introduce checks for `msg.sender` in the function",
         "detector_name": "send-ether-no-checks",
@@ -1802,35 +1859,6 @@
         ]
       },
       {
-<<<<<<< HEAD
-        "title": "Boolean equality is not required.",
-        "description": "If `x` is a boolean, there is no need to do `if(x == true)` or `if(x == false)`. Just use `if(x)` and `if(!x)` respectively.",
-        "detector_name": "boolean-equality",
-        "instances": [
-          {
-            "contract_path": "src/BooleanEquality.sol",
-            "line_no": 5,
-            "src": "133:14",
-            "src_char": "133:14"
-          },
-          {
-            "contract_path": "src/BooleanEquality.sol",
-            "line_no": 12,
-            "src": "292:15",
-            "src_char": "292:15"
-          },
-          {
-            "contract_path": "src/BooleanEquality.sol",
-            "line_no": 19,
-            "src": "454:15",
-            "src_char": "454:15"
-          },
-          {
-            "contract_path": "src/BooleanEquality.sol",
-            "line_no": 26,
-            "src": "614:16",
-            "src_char": "614:16"
-=======
         "title": "Potential use of `tx.origin` for authentication.",
         "description": "Using `tx.origin` may lead to problems when users are interacting via smart contract with your protocol. It is recommended to use `msg.sender` for authentication.",
         "detector_name": "tx-origin-used-for-auth",
@@ -1883,7 +1911,6 @@
             "line_no": 71,
             "src": "1844:97",
             "src_char": "1844:97"
->>>>>>> dev
           }
         ]
       },
@@ -3980,73 +4007,6 @@
         ]
       },
       {
-        "title": "Misused boolean with logical operators",
-        "description": "The patterns `if (… || true)` and `if (.. && false)` will always evaluate to true and false respectively.",
-        "detector_name": "misused-boolean",
-        "instances": [
-          {
-            "contract_path": "src/MisusedBoolean.sol",
-            "line_no": 12,
-            "src": "257:19",
-            "src_char": "257:19"
-          },
-          {
-            "contract_path": "src/MisusedBoolean.sol",
-            "line_no": 19,
-            "src": "419:20",
-            "src_char": "419:20"
-          },
-          {
-            "contract_path": "src/MisusedBoolean.sol",
-            "line_no": 26,
-            "src": "582:20",
-            "src_char": "582:20"
-          },
-          {
-            "contract_path": "src/MisusedBoolean.sol",
-            "line_no": 33,
-            "src": "745:19",
-            "src_char": "745:19"
-          },
-          {
-            "contract_path": "src/MisusedBoolean.sol",
-            "line_no": 40,
-            "src": "908:51",
-            "src_char": "908:51"
-          },
-          {
-            "contract_path": "src/MisusedBoolean.sol",
-            "line_no": 47,
-            "src": "1060:52",
-            "src_char": "1060:52"
-          },
-          {
-            "contract_path": "src/MisusedBoolean.sol",
-            "line_no": 54,
-            "src": "1213:53",
-            "src_char": "1213:53"
-          },
-          {
-            "contract_path": "src/MisusedBoolean.sol",
-            "line_no": 61,
-            "src": "1366:21",
-            "src_char": "1366:21"
-          },
-          {
-            "contract_path": "src/MisusedBoolean.sol",
-            "line_no": 68,
-            "src": "1530:17",
-            "src_char": "1530:17"
-          },
-          {
-            "contract_path": "src/MisusedBoolean.sol",
-            "line_no": 75,
-            "src": "1691:18",
-            "src_char": "1691:18"
-          }
-        ]
-      },
-      {
         "title": "Redundant statements have no effect.",
         "description": "Remove the redundant statements because no code will be generated and it just congests the codebase.",
         "detector_name": "redundant-statements",
@@ -4119,6 +4079,37 @@
             "src_char": "1175:14"
           }
         ]
+      },
+      {
+        "title": "Boolean equality is not required.",
+        "description": "If `x` is a boolean, there is no need to do `if(x == true)` or `if(x == false)`. Just use `if(x)` and `if(!x)` respectively.",
+        "detector_name": "boolean-equality",
+        "instances": [
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 5,
+            "src": "133:14",
+            "src_char": "133:14"
+          },
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 12,
+            "src": "292:15",
+            "src_char": "292:15"
+          },
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 19,
+            "src": "454:15",
+            "src_char": "454:15"
+          },
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 26,
+            "src": "614:16",
+            "src_char": "614:16"
+          }
+        ]
       }
     ]
   },
@@ -4181,12 +4172,9 @@
     "weak-randomness",
     "pre-declared-local-variable-usage",
     "delete-nested-mapping",
-<<<<<<< HEAD
     "boolean-equality",
-=======
     "tx-origin-used-for-auth",
     "msg-value-in-loop",
->>>>>>> dev
     "contract-locks-ether"
   ]
 }

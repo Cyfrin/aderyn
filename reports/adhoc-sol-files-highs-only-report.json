@@ -182,6 +182,7 @@
     "yul-return",
     "state-variable-shadowing",
     "unchecked-send",
+    "misused-boolean",
     "send-ether-no-checks",
     "delegate-call-unchecked-address",
     "tautological-compare",
@@ -194,12 +195,8 @@
     "weak-randomness",
     "pre-declared-local-variable-usage",
     "delete-nested-mapping",
-<<<<<<< HEAD
-    "boolean-equality",
-=======
     "tx-origin-used-for-auth",
     "msg-value-in-loop",
->>>>>>> dev
     "contract-locks-ether"
   ]
 }
