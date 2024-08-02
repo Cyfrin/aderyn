@@ -13,9 +13,10 @@ use aderyn_core::{
     },
     run,
 };
+use field_access::FieldAccess;
 use std::{collections::HashMap, error::Error, path::PathBuf};
 
-#[derive(Clone)]
+#[derive(Clone, FieldAccess)]
 pub struct Args {
     pub root: String,
     pub output: String,
