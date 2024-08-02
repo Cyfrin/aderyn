@@ -1,12 +1,7 @@
 {
   "files_summary": {
-<<<<<<< HEAD
-    "total_source_units": 68,
-    "total_sloc": 1931
-=======
-    "total_source_units": 75,
-    "total_sloc": 2128
->>>>>>> dev
+    "total_source_units": 76,
+    "total_sloc": 2155
   },
   "files_details": {
     "files_details": [
@@ -317,13 +312,8 @@
     ]
   },
   "issue_count": {
-<<<<<<< HEAD
-    "high": 30,
-    "low": 23
-=======
     "high": 34,
-    "low": 25
->>>>>>> dev
+    "low": 26
   },
   "high_issues": {
     "issues": [
@@ -1458,73 +1448,6 @@
         ]
       },
       {
-        "title": "Misused boolean with logical operators",
-        "description": "The patterns `if (… || true)` and `if (.. && false)` will always evaluate to true and false respectively.",
-        "detector_name": "misused-boolean",
-        "instances": [
-          {
-            "contract_path": "src/MisusedBoolean.sol",
-            "line_no": 12,
-            "src": "257:19",
-            "src_char": "257:19"
-          },
-          {
-            "contract_path": "src/MisusedBoolean.sol",
-            "line_no": 19,
-            "src": "419:20",
-            "src_char": "419:20"
-          },
-          {
-            "contract_path": "src/MisusedBoolean.sol",
-            "line_no": 26,
-            "src": "582:20",
-            "src_char": "582:20"
-          },
-          {
-            "contract_path": "src/MisusedBoolean.sol",
-            "line_no": 33,
-            "src": "745:19",
-            "src_char": "745:19"
-          },
-          {
-            "contract_path": "src/MisusedBoolean.sol",
-            "line_no": 40,
-            "src": "908:51",
-            "src_char": "908:51"
-          },
-          {
-            "contract_path": "src/MisusedBoolean.sol",
-            "line_no": 47,
-            "src": "1060:52",
-            "src_char": "1060:52"
-          },
-          {
-            "contract_path": "src/MisusedBoolean.sol",
-            "line_no": 54,
-            "src": "1213:53",
-            "src_char": "1213:53"
-          },
-          {
-            "contract_path": "src/MisusedBoolean.sol",
-            "line_no": 61,
-            "src": "1366:21",
-            "src_char": "1366:21"
-          },
-          {
-            "contract_path": "src/MisusedBoolean.sol",
-            "line_no": 68,
-            "src": "1530:17",
-            "src_char": "1530:17"
-          },
-          {
-            "contract_path": "src/MisusedBoolean.sol",
-            "line_no": 75,
-            "src": "1691:18",
-            "src_char": "1691:18"
-          }
-        ]
-      },
-      {
         "title": "Sending native Eth is not protected from these functions.",
         "description": "Introduce checks for `msg.sender` in the function",
         "detector_name": "send-ether-no-checks",
@@ -1861,7 +1784,6 @@
         ]
       },
       {
-<<<<<<< HEAD
         "title": "Boolean equality is not required.",
         "description": "If `x` is a boolean, there is no need to do `if(x == true)` or `if(x == false)`. Just use `if(x)` and `if(!x)` respectively.",
         "detector_name": "boolean-equality",
@@ -1889,7 +1811,10 @@
             "line_no": 26,
             "src": "614:16",
             "src_char": "614:16"
-=======
+          }
+        ]
+      },
+      {
         "title": "Contract locks Ether without a withdraw function.",
         "description": "It appears that the contract includes a payable function to accept Ether but lacks a corresponding function to withdraw it, which leads to the Ether being locked in the contract. To resolve this issue, please implement a public or external function that allows for the withdrawal of Ether from the contract.",
         "detector_name": "contract-locks-ether",
@@ -1923,7 +1848,6 @@
             "line_no": 58,
             "src": "4547:15",
             "src_char": "3059:15"
->>>>>>> dev
           }
         ]
       }
@@ -3911,6 +3835,73 @@
         ]
       },
       {
+        "title": "Misused boolean with logical operators",
+        "description": "The patterns `if (… || true)` and `if (.. && false)` will always evaluate to true and false respectively.",
+        "detector_name": "misused-boolean",
+        "instances": [
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 12,
+            "src": "257:19",
+            "src_char": "257:19"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 19,
+            "src": "419:20",
+            "src_char": "419:20"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 26,
+            "src": "582:20",
+            "src_char": "582:20"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 33,
+            "src": "745:19",
+            "src_char": "745:19"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 40,
+            "src": "908:51",
+            "src_char": "908:51"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 47,
+            "src": "1060:52",
+            "src_char": "1060:52"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 54,
+            "src": "1213:53",
+            "src_char": "1213:53"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 61,
+            "src": "1366:21",
+            "src_char": "1366:21"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 68,
+            "src": "1530:17",
+            "src_char": "1530:17"
+          },
+          {
+            "contract_path": "src/MisusedBoolean.sol",
+            "line_no": 75,
+            "src": "1691:18",
+            "src_char": "1691:18"
+          }
+        ]
+      },
+      {
         "title": "Redundant statements have no effect.",
         "description": "Remove the redundant statements because no code will be generated and it just congests the codebase.",
         "detector_name": "redundant-statements",
@@ -4045,10 +4036,7 @@
     "weak-randomness",
     "pre-declared-local-variable-usage",
     "delete-nested-mapping",
-<<<<<<< HEAD
-    "boolean-equality"
-=======
+    "boolean-equality",
     "contract-locks-ether"
->>>>>>> dev
   ]
 }

@@ -2005,125 +2005,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/MisusedBoolean.sol"
-                },
-                "region": {
-                  "byteLength": 19,
-                  "byteOffset": 257
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/MisusedBoolean.sol"
-                },
-                "region": {
-                  "byteLength": 20,
-                  "byteOffset": 419
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/MisusedBoolean.sol"
-                },
-                "region": {
-                  "byteLength": 20,
-                  "byteOffset": 582
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/MisusedBoolean.sol"
-                },
-                "region": {
-                  "byteLength": 19,
-                  "byteOffset": 745
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/MisusedBoolean.sol"
-                },
-                "region": {
-                  "byteLength": 51,
-                  "byteOffset": 908
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/MisusedBoolean.sol"
-                },
-                "region": {
-                  "byteLength": 52,
-                  "byteOffset": 1060
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/MisusedBoolean.sol"
-                },
-                "region": {
-                  "byteLength": 53,
-                  "byteOffset": 1213
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/MisusedBoolean.sol"
-                },
-                "region": {
-                  "byteLength": 21,
-                  "byteOffset": 1366
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/MisusedBoolean.sol"
-                },
-                "region": {
-                  "byteLength": 17,
-                  "byteOffset": 1530
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/MisusedBoolean.sol"
-                },
-                "region": {
-                  "byteLength": 18,
-                  "byteOffset": 1691
-                }
-              }
-            }
-          ],
-          "message": {
-            "text": "The patterns `if (… || true)` and `if (.. && false)` will always evaluate to true and false respectively."
-          },
-          "ruleId": "misused-boolean"
-        },
-        {
-          "level": "warning",
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/CallGraphTests.sol"
                 },
                 "region": {
@@ -2694,26 +2575,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-<<<<<<< HEAD
                   "uri": "src/BooleanEquality.sol"
                 },
                 "region": {
                   "byteLength": 14,
                   "byteOffset": 133
-=======
-                  "uri": "src/ContractLocksEther.sol"
-                },
-                "region": {
-                  "byteLength": 10,
-                  "byteOffset": 73
->>>>>>> dev
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-<<<<<<< HEAD
                   "uri": "src/BooleanEquality.sol"
                 },
                 "region": {
@@ -2741,7 +2613,32 @@
                 "region": {
                   "byteLength": 16,
                   "byteOffset": 614
-=======
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "If `x` is a boolean, there is no need to do `if(x == true)` or `if(x == false)`. Just use `if(x)` and `if(!x)` respectively."
+          },
+          "ruleId": "boolean-equality"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 73
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/ContractLocksEther.sol"
                 },
                 "region": {
@@ -2780,21 +2677,14 @@
                 "region": {
                   "byteLength": 15,
                   "byteOffset": 4547
->>>>>>> dev
                 }
               }
             }
           ],
           "message": {
-<<<<<<< HEAD
-            "text": "If `x` is a boolean, there is no need to do `if(x == true)` or `if(x == false)`. Just use `if(x)` and `if(!x)` respectively."
-          },
-          "ruleId": "boolean-equality"
-=======
             "text": "It appears that the contract includes a payable function to accept Ether but lacks a corresponding function to withdraw it, which leads to the Ether being locked in the contract. To resolve this issue, please implement a public or external function that allows for the withdrawal of Ether from the contract."
           },
           "ruleId": "contract-locks-ether"
->>>>>>> dev
         },
         {
           "level": "note",
@@ -6335,6 +6225,125 @@
             "text": "Division operations followed directly by multiplication operations can lead to precision loss due to the way integer arithmetic is handled in Solidity."
           },
           "ruleId": "division-before-multiplication"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MisusedBoolean.sol"
+                },
+                "region": {
+                  "byteLength": 19,
+                  "byteOffset": 257
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MisusedBoolean.sol"
+                },
+                "region": {
+                  "byteLength": 20,
+                  "byteOffset": 419
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MisusedBoolean.sol"
+                },
+                "region": {
+                  "byteLength": 20,
+                  "byteOffset": 582
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MisusedBoolean.sol"
+                },
+                "region": {
+                  "byteLength": 19,
+                  "byteOffset": 745
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MisusedBoolean.sol"
+                },
+                "region": {
+                  "byteLength": 51,
+                  "byteOffset": 908
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MisusedBoolean.sol"
+                },
+                "region": {
+                  "byteLength": 52,
+                  "byteOffset": 1060
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MisusedBoolean.sol"
+                },
+                "region": {
+                  "byteLength": 53,
+                  "byteOffset": 1213
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MisusedBoolean.sol"
+                },
+                "region": {
+                  "byteLength": 21,
+                  "byteOffset": 1366
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MisusedBoolean.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 1530
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MisusedBoolean.sol"
+                },
+                "region": {
+                  "byteLength": 18,
+                  "byteOffset": 1691
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "The patterns `if (… || true)` and `if (.. && false)` will always evaluate to true and false respectively."
+          },
+          "ruleId": "misused-boolean"
         },
         {
           "level": "note",
