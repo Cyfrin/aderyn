@@ -12,6 +12,7 @@ mod callgraph_tests {
         },
     };
 
+    use serial_test::serial;
     use StandardInvestigationStyle::*;
 
     fn get_function_by_name(context: &WorkspaceContext, name: &str) -> ASTNode {
