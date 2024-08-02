@@ -189,6 +189,7 @@
     "rtlo",
     "unchecked-return",
     "dangerous-unary-operator",
+    "tautology-or-contradiction",
     "dangerous-strict-equailty-on-contract-balance",
     "signed-storage-array",
     "weak-randomness",
