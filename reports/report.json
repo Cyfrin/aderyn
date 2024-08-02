@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 73,
-    "total_sloc": 1996
+    "total_source_units": 74,
+    "total_sloc": 2022
   },
   "files_details": {
     "files_details": [
@@ -32,6 +32,10 @@
       {
         "file_path": "src/CompilerBugStorageSignedIntegerArray.sol",
         "n_sloc": 13
+      },
+      {
+        "file_path": "src/ConstantFuncsAssembly.sol",
+        "n_sloc": 26
       },
       {
         "file_path": "src/ConstantsLiterals.sol",
@@ -301,7 +305,7 @@
   },
   "issue_count": {
     "high": 32,
-    "low": 25
+    "low": 26
   },
   "high_issues": {
     "issues": [
@@ -1268,6 +1272,12 @@
             "src_char": "97:1"
           },
           {
+            "contract_path": "src/ConstantFuncsAssembly.sol",
+            "line_no": 6,
+            "src": "110:20",
+            "src_char": "110:20"
+          },
+          {
             "contract_path": "src/DelegateCallWithoutAddressCheck.sol",
             "line_no": 9,
             "src": "337:7",
@@ -1997,6 +2007,12 @@
         "instances": [
           {
             "contract_path": "src/CompilerBugStorageSignedIntegerArray.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/ConstantFuncsAssembly.sol",
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
@@ -3322,6 +3338,12 @@
             "src_char": "1206:18"
           },
           {
+            "contract_path": "src/ConstantFuncsAssembly.sol",
+            "line_no": 26,
+            "src": "651:232",
+            "src_char": "651:232"
+          },
+          {
             "contract_path": "src/InternalFunctions.sol",
             "line_no": 28,
             "src": "693:12",
@@ -3665,6 +3687,49 @@
             "src_char": "1175:14"
           }
         ]
+      },
+      {
+        "title": "Functions declared `pure` / `view` but contains assembly",
+        "description": "If the assembly code contains bugs or unintended side effects, it can lead to incorrect results or vulnerabilities, which are hard to debug and resolve, especially when the function is meant to be simple and predictable.",
+        "detector_name": "constant-functions-assembly",
+        "instances": [
+          {
+            "contract_path": "src/AssemblyExample.sol",
+            "line_no": 6,
+            "src": "113:1",
+            "src_char": "113:1"
+          },
+          {
+            "contract_path": "src/ConstantFuncsAssembly.sol",
+            "line_no": 9,
+            "src": "182:175",
+            "src_char": "182:175"
+          },
+          {
+            "contract_path": "src/ConstantFuncsAssembly.sol",
+            "line_no": 17,
+            "src": "408:237",
+            "src_char": "408:237"
+          },
+          {
+            "contract_path": "src/ConstantFuncsAssembly.sol",
+            "line_no": 36,
+            "src": "934:98",
+            "src_char": "934:98"
+          },
+          {
+            "contract_path": "src/TestERC20.sol",
+            "line_no": 17,
+            "src": "498:10",
+            "src_char": "498:10"
+          },
+          {
+            "contract_path": "src/YulReturn.sol",
+            "line_no": 6,
+            "src": "92:12",
+            "src_char": "92:12"
+          }
+        ]
       }
     ]
   },
@@ -3725,6 +3790,7 @@
     "public-variable-read-in-external-context",
     "weak-randomness",
     "pre-declared-local-variable-usage",
-    "delete-nested-mapping"
+    "delete-nested-mapping",
+    "constant-functions-assembly"
   ]
 }

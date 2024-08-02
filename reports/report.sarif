@@ -1707,6 +1707,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/ConstantFuncsAssembly.sol"
+                },
+                "region": {
+                  "byteLength": 20,
+                  "byteOffset": 110
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/DelegateCallWithoutAddressCheck.sol"
                 },
                 "region": {
@@ -2951,6 +2962,17 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/CompilerBugStorageSignedIntegerArray.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ConstantFuncsAssembly.sol"
                 },
                 "region": {
                   "byteLength": 23,
@@ -5335,6 +5357,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/ConstantFuncsAssembly.sol"
+                },
+                "region": {
+                  "byteLength": 232,
+                  "byteOffset": 651
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/InternalFunctions.sol"
                 },
                 "region": {
@@ -5939,6 +5972,81 @@
             "text": "The contract reads it's own variable using `this` which adds an unnecessary STATICCALL. Remove `this` and access the variable like storage."
           },
           "ruleId": "public-variable-read-in-external-context"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/AssemblyExample.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 113
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ConstantFuncsAssembly.sol"
+                },
+                "region": {
+                  "byteLength": 175,
+                  "byteOffset": 182
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ConstantFuncsAssembly.sol"
+                },
+                "region": {
+                  "byteLength": 237,
+                  "byteOffset": 408
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ConstantFuncsAssembly.sol"
+                },
+                "region": {
+                  "byteLength": 98,
+                  "byteOffset": 934
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TestERC20.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 498
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/YulReturn.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 92
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "If the assembly code contains bugs or unintended side effects, it can lead to incorrect results or vulnerabilities, which are hard to debug and resolve, especially when the function is meant to be simple and predictable."
+          },
+          "ruleId": "constant-functions-assembly"
         }
       ],
       "tool": {
