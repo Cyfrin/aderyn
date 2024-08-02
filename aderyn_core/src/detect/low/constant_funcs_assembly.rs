@@ -112,7 +112,7 @@ mod constant_functions_assembly_detector {
     #[test]
     #[serial]
     fn test_constant_functions_assembly() {
-        let context = crate::detect::test_utils::load_solidity_source_unit_with_callgraphs(
+        let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/ConstantFuncsAssembly.sol",
         );
 
