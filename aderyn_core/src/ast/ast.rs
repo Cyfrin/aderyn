@@ -146,3 +146,49 @@ impl From<Expression> for ASTNode {
         }
     }
 }
+
+impl From<Statement> for ASTNode {
+    fn from(value: Statement) -> Self {
+        match value {
+            Statement::Block(node) => node.into(),
+            Statement::Break(node) => node.into(),
+            Statement::Continue(node) => node.into(),
+            Statement::DoWhileStatement(node) => node.into(),
+            Statement::PlaceholderStatement(node) => node.into(),
+            Statement::VariableDeclarationStatement(node) => node.into(),
+            Statement::IfStatement(node) => node.into(),
+            Statement::ForStatement(node) => node.into(),
+            Statement::WhileStatement(node) => node.into(),
+            Statement::EmitStatement(node) => node.into(),
+            Statement::TryStatement(node) => node.into(),
+            Statement::UncheckedBlock(node) => node.into(),
+            Statement::Return(node) => node.into(),
+            Statement::RevertStatement(node) => node.into(),
+            Statement::ExpressionStatement(node) => node.into(),
+            Statement::InlineAssembly(node) => node.into(),
+        }
+    }
+}
+
+impl From<&Statement> for ASTNode {
+    fn from(value: &Statement) -> Self {
+        match value {
+            Statement::Block(node) => node.into(),
+            Statement::Break(node) => node.into(),
+            Statement::Continue(node) => node.into(),
+            Statement::DoWhileStatement(node) => node.into(),
+            Statement::PlaceholderStatement(node) => node.into(),
+            Statement::VariableDeclarationStatement(node) => node.into(),
+            Statement::IfStatement(node) => node.into(),
+            Statement::ForStatement(node) => node.into(),
+            Statement::WhileStatement(node) => node.into(),
+            Statement::EmitStatement(node) => node.into(),
+            Statement::TryStatement(node) => node.into(),
+            Statement::UncheckedBlock(node) => node.into(),
+            Statement::Return(node) => node.into(),
+            Statement::RevertStatement(node) => node.into(),
+            Statement::ExpressionStatement(node) => node.into(),
+            Statement::InlineAssembly(node) => node.into(),
+        }
+    }
+}

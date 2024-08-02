@@ -1,7 +1,12 @@
 {
   "files_summary": {
+<<<<<<< HEAD
     "total_source_units": 74,
     "total_sloc": 2008
+=======
+    "total_source_units": 77,
+    "total_sloc": 2225
+>>>>>>> dev
   },
   "files_details": {
     "files_details": [
@@ -36,6 +41,10 @@
       {
         "file_path": "src/ConstantsLiterals.sol",
         "n_sloc": 28
+      },
+      {
+        "file_path": "src/ContractLocksEther.sol",
+        "n_sloc": 121
       },
       {
         "file_path": "src/ContractWithTodo.sol",
@@ -122,6 +131,10 @@
         "n_sloc": 67
       },
       {
+        "file_path": "src/MsgValueInLoop.sol",
+        "n_sloc": 55
+      },
+      {
         "file_path": "src/MultipleConstructorSchemes.sol",
         "n_sloc": 10
       },
@@ -178,8 +191,16 @@
         "n_sloc": 17
       },
       {
+        "file_path": "src/TautologyOrContradiction.sol",
+        "n_sloc": 11
+      },
+      {
         "file_path": "src/TestERC20.sol",
         "n_sloc": 62
+      },
+      {
+        "file_path": "src/TxOriginUsedForAuth.sol",
+        "n_sloc": 42
       },
       {
         "file_path": "src/UncheckedReturn.sol",
@@ -304,8 +325,13 @@
     ]
   },
   "issue_count": {
+<<<<<<< HEAD
     "high": 32,
     "low": 26
+=======
+    "high": 36,
+    "low": 25
+>>>>>>> dev
   },
   "high_issues": {
     "issues": [
@@ -1326,6 +1352,18 @@
             "src_char": "282:18"
           },
           {
+            "contract_path": "src/TautologyOrContradiction.sol",
+            "line_no": 6,
+            "src": "133:6",
+            "src_char": "133:6"
+          },
+          {
+            "contract_path": "src/TautologyOrContradiction.sol",
+            "line_no": 7,
+            "src": "145:9",
+            "src_char": "145:9"
+          },
+          {
             "contract_path": "src/UninitializedStateVariable.sol",
             "line_no": 7,
             "src": "122:8",
@@ -1432,8 +1470,8 @@
         ]
       },
       {
-        "title": "High Issue Title",
-        "description": "Description of the high issue.",
+        "title": "Shadowed State Variables in Inheritance Hierarchy",
+        "description": "This vulnerability arises when a derived contract unintentionally shadows a state variable from a parent contract by declaring a variable with the same name. This can be misleading. To prevent this, ensure variable names are unique across the inheritance hierarchy or use proper visibility and scope controls.",
         "detector_name": "state-variable-shadowing",
         "instances": [
           {
@@ -1534,6 +1572,30 @@
             "line_no": 38,
             "src": "686:16",
             "src_char": "686:16"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 94,
+            "src": "2981:11",
+            "src_char": "2981:11"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 131,
+            "src": "4205:11",
+            "src_char": "4205:11"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 167,
+            "src": "5373:11",
+            "src_char": "5373:11"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 194,
+            "src": "6342:11",
+            "src_char": "6342:11"
           },
           {
             "contract_path": "src/SendEtherNoChecks.sol",
@@ -1693,6 +1755,25 @@
         ]
       },
       {
+        "title": "Tautology or Contradiction in comparison.",
+        "description": "The condition has been determined to be either always true or always false due to the integer range in which we're operating.",
+        "detector_name": "tautology-or-contradiction",
+        "instances": [
+          {
+            "contract_path": "src/TautologyOrContradiction.sol",
+            "line_no": 13,
+            "src": "296:7",
+            "src_char": "296:7"
+          },
+          {
+            "contract_path": "src/TautologyOrContradiction.sol",
+            "line_no": 16,
+            "src": "369:11",
+            "src_char": "369:11"
+          }
+        ]
+      },
+      {
         "title": "Dangerous strict equality checks on contract balances.",
         "description": "A contract's balance can be forcibly manipulated by another selfdestructing contract. Therefore, it's recommended to use >, <, >= or <= instead of strict equality.",
         "detector_name": "dangerous-strict-equailty-on-contract-balance",
@@ -1814,6 +1895,129 @@
             "line_no": 17,
             "src": "426:25",
             "src_char": "426:25"
+          }
+        ]
+      },
+      {
+        "title": "Potential use of `tx.origin` for authentication.",
+        "description": "Using `tx.origin` may lead to problems when users are interacting via smart contract with your protocol. It is recommended to use `msg.sender` for authentication.",
+        "detector_name": "tx-origin-used-for-auth",
+        "instances": [
+          {
+            "contract_path": "src/TxOriginUsedForAuth.sol",
+            "line_no": 40,
+            "src": "1117:183",
+            "src_char": "1117:183"
+          },
+          {
+            "contract_path": "src/TxOriginUsedForAuth.sol",
+            "line_no": 51,
+            "src": "1431:90",
+            "src_char": "1431:90"
+          },
+          {
+            "contract_path": "src/TxOriginUsedForAuth.sol",
+            "line_no": 59,
+            "src": "1610:68",
+            "src_char": "1610:68"
+          }
+        ]
+      },
+      {
+        "title": "Loop contains `msg.value`.",
+        "description": "Provide an explicit array of amounts alongside the receivers array, and check that the sum of all amounts matches `msg.value`.",
+        "detector_name": "msg-value-in-loop",
+        "instances": [
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 12,
+            "src": "289:107",
+            "src_char": "289:107"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 38,
+            "src": "988:94",
+            "src_char": "988:94"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 54,
+            "src": "1415:93",
+            "src_char": "1415:93"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 71,
+            "src": "1844:97",
+            "src_char": "1844:97"
+          }
+        ]
+      },
+      {
+        "title": "Contract locks Ether without a withdraw function.",
+        "description": "It appears that the contract includes a payable function to accept Ether but lacks a corresponding function to withdraw it, which leads to the Ether being locked in the contract. To resolve this issue, please implement a public or external function that allows for the withdrawal of Ether from the contract.",
+        "detector_name": "contract-locks-ether",
+        "instances": [
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 5,
+            "src": "73:10",
+            "src_char": "73:10"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 31,
+            "src": "822:11",
+            "src_char": "822:11"
+          },
+          {
+            "contract_path": "src/EmptyBlocks.sol",
+            "line_no": 20,
+            "src": "344:39",
+            "src_char": "344:39"
+          },
+          {
+            "contract_path": "src/EmptyBlocks.sol",
+            "line_no": 44,
+            "src": "630:11",
+            "src_char": "630:11"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 7,
+            "src": "103:15",
+            "src_char": "103:15"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 19,
+            "src": "423:19",
+            "src_char": "423:19"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 33,
+            "src": "831:15",
+            "src_char": "831:15"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 48,
+            "src": "1233:15",
+            "src_char": "1233:15"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 65,
+            "src": "1659:15",
+            "src_char": "1659:15"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 58,
+            "src": "4547:15",
+            "src_char": "3059:15"
           }
         ]
       }
@@ -1975,6 +2179,12 @@
             "src_char": "1517:20"
           },
           {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 162,
+            "src": "5185:18",
+            "src_char": "5185:18"
+          },
+          {
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 32,
             "src": "1062:13",
@@ -2036,6 +2246,12 @@
             "src_char": "32:23"
           },
           {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/ContractWithTodo.sol",
             "line_no": 2,
             "src": "32:23",
@@ -2084,6 +2300,12 @@
             "src_char": "0:24"
           },
           {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/PreDeclaredVarUsage.sol",
             "line_no": 2,
             "src": "32:23",
@@ -2094,6 +2316,18 @@
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/TautologyOrContradiction.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/TxOriginUsedForAuth.sol",
+            "line_no": 2,
+            "src": "32:24",
+            "src_char": "32:24"
           },
           {
             "contract_path": "src/UncheckedSend.sol",
@@ -2210,6 +2444,42 @@
             "line_no": 6,
             "src": "113:1",
             "src_char": "113:1"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 20,
+            "src": "539:10",
+            "src_char": "539:10"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 49,
+            "src": "1379:10",
+            "src_char": "1379:10"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 81,
+            "src": "2414:10",
+            "src_char": "2414:10"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 118,
+            "src": "3653:10",
+            "src_char": "3653:10"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 155,
+            "src": "4877:10",
+            "src_char": "4877:10"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 181,
+            "src": "5775:10",
+            "src_char": "5775:10"
           },
           {
             "contract_path": "src/ContractWithTodo.sol",
@@ -2580,6 +2850,72 @@
         "detector_name": "unindexed-events",
         "instances": [
           {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 7,
+            "src": "119:56",
+            "src_char": "119:56"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 33,
+            "src": "869:56",
+            "src_char": "869:56"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 36,
+            "src": "961:54",
+            "src_char": "961:54"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 65,
+            "src": "1904:56",
+            "src_char": "1904:56"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 68,
+            "src": "1996:54",
+            "src_char": "1996:54"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 102,
+            "src": "3143:56",
+            "src_char": "3143:56"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 105,
+            "src": "3235:54",
+            "src_char": "3235:54"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 139,
+            "src": "4367:56",
+            "src_char": "4367:56"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 142,
+            "src": "4459:54",
+            "src_char": "4459:54"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 175,
+            "src": "5563:56",
+            "src_char": "5563:56"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 178,
+            "src": "5655:54",
+            "src_char": "5655:54"
+          },
+          {
             "contract_path": "src/TestERC20.sol",
             "line_no": 14,
             "src": "338:70",
@@ -2788,6 +3124,12 @@
             "src_char": "32:23"
           },
           {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/ContractWithTodo.sol",
             "line_no": 2,
             "src": "32:23",
@@ -2842,6 +3184,12 @@
             "src_char": "32:23"
           },
           {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/StateVariables.sol",
             "line_no": 2,
             "src": "32:23",
@@ -2864,6 +3212,12 @@
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/TxOriginUsedForAuth.sol",
+            "line_no": 2,
+            "src": "32:24",
+            "src_char": "32:24"
           },
           {
             "contract_path": "src/UnsafeERC721Mint.sol",
@@ -3138,6 +3492,12 @@
             "src_char": "1795:5"
           },
           {
+            "contract_path": "src/TautologyOrContradiction.sol",
+            "line_no": 9,
+            "src": "161:229",
+            "src_char": "161:229"
+          },
+          {
             "contract_path": "src/UncheckedSend.sol",
             "line_no": 27,
             "src": "915:65",
@@ -3374,6 +3734,24 @@
             "src_char": "693:12"
           },
           {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 43,
+            "src": "1103:8",
+            "src_char": "1103:8"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 60,
+            "src": "1529:8",
+            "src_char": "1529:8"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 77,
+            "src": "1962:8",
+            "src_char": "1962:8"
+          },
+          {
             "contract_path": "src/SendEtherNoChecks.sol",
             "line_no": 9,
             "src": "132:20",
@@ -3500,6 +3878,12 @@
             "line_no": 11,
             "src": "186:1",
             "src_char": "186:1"
+          },
+          {
+            "contract_path": "src/TautologyOrContradiction.sol",
+            "line_no": 6,
+            "src": "133:6",
+            "src_char": "133:6"
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
@@ -3910,6 +4294,7 @@
     "rtlo",
     "unchecked-return",
     "dangerous-unary-operator",
+    "tautology-or-contradiction",
     "dangerous-strict-equailty-on-contract-balance",
     "signed-storage-array",
     "redundant-statements",
@@ -3917,6 +4302,12 @@
     "weak-randomness",
     "pre-declared-local-variable-usage",
     "delete-nested-mapping",
+<<<<<<< HEAD
     "unused-state-variable"
+=======
+    "tx-origin-used-for-auth",
+    "msg-value-in-loop",
+    "contract-locks-ether"
+>>>>>>> dev
   ]
 }
