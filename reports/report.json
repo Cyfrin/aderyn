@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 73,
-    "total_sloc": 1996
+    "total_source_units": 74,
+    "total_sloc": 2038
   },
   "files_details": {
     "files_details": [
@@ -182,6 +182,10 @@
         "n_sloc": 62
       },
       {
+        "file_path": "src/TxOriginUsedForAuth.sol",
+        "n_sloc": 42
+      },
+      {
         "file_path": "src/UncheckedReturn.sol",
         "n_sloc": 33
       },
@@ -300,7 +304,7 @@
     ]
   },
   "issue_count": {
-    "high": 32,
+    "high": 33,
     "low": 25
   },
   "high_issues": {
@@ -1782,6 +1786,31 @@
             "src_char": "426:25"
           }
         ]
+      },
+      {
+        "title": "Potential use of `tx.origin` for authentication.",
+        "description": "Using `tx.origin` may lead to problems when users are interacting via smart contract with your protocol. It is recommended to use `msg.sender` for authentication.",
+        "detector_name": "tx-origin-used-for-auth",
+        "instances": [
+          {
+            "contract_path": "src/TxOriginUsedForAuth.sol",
+            "line_no": 40,
+            "src": "1117:183",
+            "src_char": "1117:183"
+          },
+          {
+            "contract_path": "src/TxOriginUsedForAuth.sol",
+            "line_no": 51,
+            "src": "1431:90",
+            "src_char": "1431:90"
+          },
+          {
+            "contract_path": "src/TxOriginUsedForAuth.sol",
+            "line_no": 59,
+            "src": "1610:68",
+            "src_char": "1610:68"
+          }
+        ]
       }
     ]
   },
@@ -2060,6 +2089,12 @@
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/TxOriginUsedForAuth.sol",
+            "line_no": 2,
+            "src": "32:24",
+            "src_char": "32:24"
           },
           {
             "contract_path": "src/UncheckedSend.sol",
@@ -2824,6 +2859,12 @@
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/TxOriginUsedForAuth.sol",
+            "line_no": 2,
+            "src": "32:24",
+            "src_char": "32:24"
           },
           {
             "contract_path": "src/UnsafeERC721Mint.sol",
@@ -3725,6 +3766,7 @@
     "public-variable-read-in-external-context",
     "weak-randomness",
     "pre-declared-local-variable-usage",
-    "delete-nested-mapping"
+    "delete-nested-mapping",
+    "tx-origin-used-for-auth"
   ]
 }
