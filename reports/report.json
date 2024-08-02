@@ -1858,26 +1858,26 @@
           {
             "contract_path": "src/MsgValueInLoop.sol",
             "line_no": 12,
-            "src": "287:107",
-            "src_char": "287:107"
+            "src": "289:107",
+            "src_char": "289:107"
           },
           {
             "contract_path": "src/MsgValueInLoop.sol",
             "line_no": 38,
-            "src": "982:94",
-            "src_char": "982:94"
+            "src": "988:94",
+            "src_char": "988:94"
           },
           {
             "contract_path": "src/MsgValueInLoop.sol",
             "line_no": 54,
-            "src": "1407:93",
-            "src_char": "1407:93"
+            "src": "1415:93",
+            "src_char": "1415:93"
           },
           {
             "contract_path": "src/MsgValueInLoop.sol",
             "line_no": 71,
-            "src": "1834:97",
-            "src_char": "1834:97"
+            "src": "1844:97",
+            "src_char": "1844:97"
           }
         ]
       },
@@ -1919,26 +1919,26 @@
           {
             "contract_path": "src/MsgValueInLoop.sol",
             "line_no": 19,
-            "src": "421:19",
-            "src_char": "421:19"
+            "src": "423:19",
+            "src_char": "423:19"
           },
           {
             "contract_path": "src/MsgValueInLoop.sol",
             "line_no": 33,
-            "src": "827:15",
-            "src_char": "827:15"
+            "src": "831:15",
+            "src_char": "831:15"
           },
           {
             "contract_path": "src/MsgValueInLoop.sol",
             "line_no": 48,
-            "src": "1227:15",
-            "src_char": "1227:15"
+            "src": "1233:15",
+            "src_char": "1233:15"
           },
           {
             "contract_path": "src/MsgValueInLoop.sol",
             "line_no": 65,
-            "src": "1651:15",
-            "src_char": "1651:15"
+            "src": "1659:15",
+            "src_char": "1659:15"
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
@@ -2407,36 +2407,6 @@
             "line_no": 7,
             "src": "129:9",
             "src_char": "129:9"
-          },
-          {
-            "contract_path": "src/MsgValueInLoop.sol",
-            "line_no": 10,
-            "src": "177:3",
-            "src_char": "177:3"
-          },
-          {
-            "contract_path": "src/MsgValueInLoop.sol",
-            "line_no": 22,
-            "src": "499:4",
-            "src_char": "499:4"
-          },
-          {
-            "contract_path": "src/MsgValueInLoop.sol",
-            "line_no": 36,
-            "src": "901:3",
-            "src_char": "901:3"
-          },
-          {
-            "contract_path": "src/MsgValueInLoop.sol",
-            "line_no": 51,
-            "src": "1301:3",
-            "src_char": "1301:3"
-          },
-          {
-            "contract_path": "src/MsgValueInLoop.sol",
-            "line_no": 68,
-            "src": "1725:3",
-            "src_char": "1725:3"
           },
           {
             "contract_path": "src/StateVariables.sol",
@@ -3669,20 +3639,20 @@
           {
             "contract_path": "src/MsgValueInLoop.sol",
             "line_no": 43,
-            "src": "1097:8",
-            "src_char": "1097:8"
+            "src": "1103:8",
+            "src_char": "1103:8"
           },
           {
             "contract_path": "src/MsgValueInLoop.sol",
             "line_no": 60,
-            "src": "1521:8",
-            "src_char": "1521:8"
+            "src": "1529:8",
+            "src_char": "1529:8"
           },
           {
             "contract_path": "src/MsgValueInLoop.sol",
             "line_no": 77,
-            "src": "1952:8",
-            "src_char": "1952:8"
+            "src": "1962:8",
+            "src_char": "1962:8"
           },
           {
             "contract_path": "src/SendEtherNoChecks.sol",
