@@ -1,12 +1,7 @@
 {
   "files_summary": {
-<<<<<<< HEAD
-    "total_source_units": 74,
-    "total_sloc": 2008
-=======
-    "total_source_units": 77,
-    "total_sloc": 2225
->>>>>>> dev
+    "total_source_units": 78,
+    "total_sloc": 2237
   },
   "files_details": {
     "files_details": [
@@ -325,13 +320,8 @@
     ]
   },
   "issue_count": {
-<<<<<<< HEAD
-    "high": 32,
-    "low": 26
-=======
     "high": 36,
-    "low": 25
->>>>>>> dev
+    "low": 26
   },
   "high_issues": {
     "issues": [
@@ -4150,6 +4140,18 @@
             "src_char": "1108:17"
           },
           {
+            "contract_path": "src/TautologyOrContradiction.sol",
+            "line_no": 6,
+            "src": "133:6",
+            "src_char": "133:6"
+          },
+          {
+            "contract_path": "src/TautologyOrContradiction.sol",
+            "line_no": 7,
+            "src": "145:9",
+            "src_char": "145:9"
+          },
+          {
             "contract_path": "src/UninitializedStateVariable.sol",
             "line_no": 13,
             "src": "503:3",
@@ -4302,12 +4304,9 @@
     "weak-randomness",
     "pre-declared-local-variable-usage",
     "delete-nested-mapping",
-<<<<<<< HEAD
-    "unused-state-variable"
-=======
+    "unused-state-variable",
     "tx-origin-used-for-auth",
     "msg-value-in-loop",
     "contract-locks-ether"
->>>>>>> dev
   ]
 }

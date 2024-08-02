@@ -6752,6 +6752,28 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/TautologyOrContradiction.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 133
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TautologyOrContradiction.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 145
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/UninitializedStateVariable.sol"
                 },
                 "region": {
