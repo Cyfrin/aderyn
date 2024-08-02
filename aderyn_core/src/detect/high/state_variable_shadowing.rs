@@ -179,11 +179,16 @@ impl IssueDetector for StateVariableShadowingDetector {
     }
 
     fn title(&self) -> String {
-        String::from("High Issue Title")
+        String::from("Shadowed State Variables in Inheritance Hierarchy")
     }
 
     fn description(&self) -> String {
-        String::from("Description of the high issue.")
+        String::from(
+            "This vulnerability arises when a derived contract unintentionally shadows a state variable from \
+            a parent contract by declaring a variable with the same name. This can be misleading. \
+            To prevent this, ensure variable names \
+            are unique across the inheritance hierarchy or use proper visibility and scope controls."
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -220,11 +225,19 @@ mod state_variable_shadowing_detector_tests {
             crate::detect::detector::IssueSeverity::High
         );
         // assert the title is correct
-        assert_eq!(detector.title(), String::from("High Issue Title"));
+        assert_eq!(
+            detector.title(),
+            String::from("Shadowed State Variables in Inheritance Hierarchy")
+        );
         // assert the description is correct
         assert_eq!(
             detector.description(),
-            String::from("Description of the high issue.")
+            String::from(
+                "This vulnerability arises when a derived contract unintentionally shadows a state variable from \
+                a parent contract by declaring a variable with the same name. This can be misleading. \
+                To prevent this, ensure variable names \
+                are unique across the inheritance hierarchy or use proper visibility and scope controls."
+            )
         );
     }
 }

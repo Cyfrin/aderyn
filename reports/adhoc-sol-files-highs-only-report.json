@@ -189,11 +189,14 @@
     "rtlo",
     "unchecked-return",
     "dangerous-unary-operator",
+    "tautology-or-contradiction",
     "dangerous-strict-equailty-on-contract-balance",
     "signed-storage-array",
     "weak-randomness",
     "pre-declared-local-variable-usage",
     "delete-nested-mapping",
-    "tx-origin-used-for-auth"
+    "tx-origin-used-for-auth",
+    "msg-value-in-loop",
+    "contract-locks-ether"
   ]
 }
