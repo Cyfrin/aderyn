@@ -4154,14 +4154,8 @@ The contract reads it's own variable using `this` which adds an unnecessary STAT
 
 If the assembly code contains bugs or unintended side effects, it can lead to incorrect results or vulnerabilities, which are hard to debug and resolve, especially when the function is meant to be simple and predictable.
 
-<details><summary>6 Found Instances</summary>
+<details><summary>3 Found Instances</summary>
 
-
-- Found in src/AssemblyExample.sol [Line: 6](../tests/contract-playground/src/AssemblyExample.sol#L6)
-
-	```solidity
-	    function f(uint x) public view returns (uint r) {
-	```
 
 - Found in src/ConstantFuncsAssembly.sol [Line: 9](../tests/contract-playground/src/ConstantFuncsAssembly.sol#L9)
 
@@ -4179,18 +4173,6 @@ If the assembly code contains bugs or unintended side effects, it can lead to in
 
 	```solidity
 	    function getConstantValue2() external pure returns (uint256) {
-	```
-
-- Found in src/TestERC20.sol [Line: 17](../tests/contract-playground/src/TestERC20.sol#L17)
-
-	```solidity
-	    function getChainId() external view returns(uint256) {
-	```
-
-- Found in src/YulReturn.sol [Line: 6](../tests/contract-playground/src/YulReturn.sol#L6)
-
-	```solidity
-	    function hasYulReturn() external pure returns(uint256) {
 	```
 
 </details>

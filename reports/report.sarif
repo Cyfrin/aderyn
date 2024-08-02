@@ -6620,17 +6620,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/AssemblyExample.sol"
-                },
-                "region": {
-                  "byteLength": 1,
-                  "byteOffset": 113
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/ConstantFuncsAssembly.sol"
                 },
                 "region": {
@@ -6658,28 +6647,6 @@
                 "region": {
                   "byteLength": 98,
                   "byteOffset": 934
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/TestERC20.sol"
-                },
-                "region": {
-                  "byteLength": 10,
-                  "byteOffset": 498
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/YulReturn.sol"
-                },
-                "region": {
-                  "byteLength": 12,
-                  "byteOffset": 92
                 }
               }
             }

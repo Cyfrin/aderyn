@@ -4068,12 +4068,6 @@
         "detector_name": "constant-functions-assembly",
         "instances": [
           {
-            "contract_path": "src/AssemblyExample.sol",
-            "line_no": 6,
-            "src": "113:1",
-            "src_char": "113:1"
-          },
-          {
             "contract_path": "src/ConstantFuncsAssembly.sol",
             "line_no": 9,
             "src": "182:175",
@@ -4090,18 +4084,6 @@
             "line_no": 36,
             "src": "934:98",
             "src_char": "934:98"
-          },
-          {
-            "contract_path": "src/TestERC20.sol",
-            "line_no": 17,
-            "src": "498:10",
-            "src_char": "498:10"
-          },
-          {
-            "contract_path": "src/YulReturn.sol",
-            "line_no": 6,
-            "src": "92:12",
-            "src_char": "92:12"
           }
         ]
       }
