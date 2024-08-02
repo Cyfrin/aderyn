@@ -1,7 +1,7 @@
 use std::{collections::BTreeMap, error::Error};
 
 use crate::{
-    ast::{ASTNode, NodeID},
+    ast::NodeID,
     capture,
     context::workspace_context::WorkspaceContext,
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
