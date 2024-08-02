@@ -8658,7 +8658,7 @@ Remove the redundant statements because no code will be generated and it just co
 
 State variable appears to be unused. No analysis has been performed to see if any inilne assembly references it. So if that's not the case, consider removing this unused variable.
 
-<details><summary>3 Found Instances</summary>
+<details><summary>2 Found Instances</summary>
 
 
 - Found in contracts/fakes/templegold/TempleGoldStakingMock.sol [Line: 71](../tests/2024-07-templegold/protocol/contracts/fakes/templegold/TempleGoldStakingMock.sol#L71)
@@ -8671,12 +8671,6 @@ State variable appears to be unused. No analysis has been performed to see if an
 
 	```solidity
 	    mapping(address account => EnumerableSet.UintSet indexes) private _accountStakes;
-	```
-
-- Found in contracts/templegold/AuctionBase.sol [Line: 13](../tests/2024-07-templegold/protocol/contracts/templegold/AuctionBase.sol#L13)
-
-	```solidity
-	    uint256 internal _currentEpochId;
 	```
 
 </details>
