@@ -1,7 +1,7 @@
 use std::collections::{BTreeMap, BTreeSet};
 use std::error::Error;
 
-use crate::ast::NodeID;
+use crate::ast::{NodeID, Visibility};
 
 use crate::capture;
 use crate::context::browser::{ExtractReferencedDeclarations, ExtractVariableDeclarations};
@@ -33,7 +33,11 @@ impl IssueDetector for UnusedStateVariablesDetector {
             all_state_variable_declarations.extend(
                 variable_declarations
                     .into_iter()
-                    .filter(|v| v.state_variable)
+                    .filter(|v| {
+                        v.state_variable
+                            && (v.visibility == Visibility::Private
+                                || v.visibility == Visibility::Internal)
+                    })
                     .map(|v| v.id),
             )
         }
@@ -55,7 +59,7 @@ impl IssueDetector for UnusedStateVariablesDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Potentially unused state variables found.")
+        String::from("Potentially unused `private` / `internal` state variables found.")
     }
 
     fn description(&self) -> String {
@@ -92,7 +96,7 @@ mod unused_detector_tests {
         // assert that the detector found an issue
         assert!(found);
         // assert that the detector found the correct number of instances
-        assert_eq!(detector.instances().len(), 5);
+        assert_eq!(detector.instances().len(), 4);
         // assert the severity is low
         assert_eq!(
             detector.severity(),
