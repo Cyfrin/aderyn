@@ -2694,70 +2694,92 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-<<<<<<< HEAD
                   "uri": "src/IncorrectModifier.sol"
                 },
                 "region": {
                   "byteLength": 9,
                   "byteOffset": 856
-=======
-                  "uri": "src/ContractLocksEther.sol"
-                },
-                "region": {
-                  "byteLength": 10,
-                  "byteOffset": 73
->>>>>>> dev
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-<<<<<<< HEAD
                   "uri": "src/IncorrectModifier.sol"
                 },
                 "region": {
                   "byteLength": 13,
                   "byteOffset": 1156
-=======
-                  "uri": "src/ContractLocksEther.sol"
-                },
-                "region": {
-                  "byteLength": 11,
-                  "byteOffset": 822
->>>>>>> dev
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-<<<<<<< HEAD
                   "uri": "src/IncorrectModifier.sol"
                 },
                 "region": {
                   "byteLength": 14,
                   "byteOffset": 1387
-=======
-                  "uri": "src/EmptyBlocks.sol"
-                },
-                "region": {
-                  "byteLength": 39,
-                  "byteOffset": 344
->>>>>>> dev
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-<<<<<<< HEAD
                   "uri": "src/OnceModifierExample.sol"
                 },
                 "region": {
                   "byteLength": 8,
                   "byteOffset": 103
-=======
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "A modifier must contain a placeholder statement `_` and a `revert` or a `require` condition."
+          },
+          "ruleId": "incorrect-modifier"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 73
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 822
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/EmptyBlocks.sol"
+                },
+                "region": {
+                  "byteLength": 39,
+                  "byteOffset": 344
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/EmptyBlocks.sol"
                 },
                 "region": {
@@ -2774,21 +2796,14 @@
                 "region": {
                   "byteLength": 15,
                   "byteOffset": 4547
->>>>>>> dev
                 }
               }
             }
           ],
           "message": {
-<<<<<<< HEAD
-            "text": "A modifier must contain a placeholder statement `_` and a `revert` or a `require` condition."
-          },
-          "ruleId": "incorrect-modifier"
-=======
             "text": "It appears that the contract includes a payable function to accept Ether but lacks a corresponding function to withdraw it, which leads to the Ether being locked in the contract. To resolve this issue, please implement a public or external function that allows for the withdrawal of Ether from the contract."
           },
           "ruleId": "contract-locks-ether"
->>>>>>> dev
         },
         {
           "level": "note",

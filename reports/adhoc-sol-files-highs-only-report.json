@@ -208,10 +208,7 @@
     "weak-randomness",
     "pre-declared-local-variable-usage",
     "delete-nested-mapping",
-<<<<<<< HEAD
-    "incorrect-modifier"
-=======
+    "incorrect-modifier",
     "contract-locks-ether"
->>>>>>> dev
   ]
 }

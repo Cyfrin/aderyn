@@ -1,12 +1,7 @@
 {
   "files_summary": {
-<<<<<<< HEAD
-    "total_source_units": 74,
-    "total_sloc": 2072
-=======
-    "total_source_units": 75,
-    "total_sloc": 2128
->>>>>>> dev
+    "total_source_units": 76,
+    "total_sloc": 2204
   },
   "files_details": {
     "files_details": [
@@ -317,11 +312,7 @@
     ]
   },
   "issue_count": {
-<<<<<<< HEAD
-    "high": 33,
-=======
-    "high": 34,
->>>>>>> dev
+    "high": 35,
     "low": 25
   },
   "high_issues": {
@@ -1860,7 +1851,6 @@
         ]
       },
       {
-<<<<<<< HEAD
         "title": "Incorrect Modifier",
         "description": "A modifier must contain a placeholder statement `_` and a `revert` or a `require` condition.",
         "detector_name": "incorrect-modifier",
@@ -1888,7 +1878,10 @@
             "line_no": 6,
             "src": "103:8",
             "src_char": "103:8"
-=======
+          }
+        ]
+      },
+      {
         "title": "Contract locks Ether without a withdraw function.",
         "description": "It appears that the contract includes a payable function to accept Ether but lacks a corresponding function to withdraw it, which leads to the Ether being locked in the contract. To resolve this issue, please implement a public or external function that allows for the withdrawal of Ether from the contract.",
         "detector_name": "contract-locks-ether",
@@ -1922,7 +1915,6 @@
             "line_no": 58,
             "src": "4547:15",
             "src_char": "3059:15"
->>>>>>> dev
           }
         ]
       }
@@ -4086,10 +4078,7 @@
     "weak-randomness",
     "pre-declared-local-variable-usage",
     "delete-nested-mapping",
-<<<<<<< HEAD
-    "incorrect-modifier"
-=======
+    "incorrect-modifier",
     "contract-locks-ether"
->>>>>>> dev
   ]
 }
