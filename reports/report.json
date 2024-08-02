@@ -1,12 +1,7 @@
 {
   "files_summary": {
-<<<<<<< HEAD
-    "total_source_units": 74,
-    "total_sloc": 2033
-=======
-    "total_source_units": 77,
-    "total_sloc": 2225
->>>>>>> dev
+    "total_source_units": 78,
+    "total_sloc": 2262
   },
   "files_details": {
     "files_details": [
@@ -325,11 +320,7 @@
     ]
   },
   "issue_count": {
-<<<<<<< HEAD
-    "high": 33,
-=======
-    "high": 36,
->>>>>>> dev
+    "high": 37,
     "low": 25
   },
   "high_issues": {
@@ -1543,18 +1534,6 @@
             "src_char": "686:16"
           },
           {
-<<<<<<< HEAD
-            "contract_path": "src/HighLevelCallsInsideLoop.sol",
-            "line_no": 7,
-            "src": "143:3",
-            "src_char": "143:3"
-          },
-          {
-            "contract_path": "src/HighLevelCallsInsideLoop.sol",
-            "line_no": 14,
-            "src": "350:4",
-            "src_char": "350:4"
-=======
             "contract_path": "src/ContractLocksEther.sol",
             "line_no": 94,
             "src": "2981:11",
@@ -1577,7 +1556,18 @@
             "line_no": 194,
             "src": "6342:11",
             "src_char": "6342:11"
->>>>>>> dev
+          },
+          {
+            "contract_path": "src/HighLevelCallsInsideLoop.sol",
+            "line_no": 7,
+            "src": "143:3",
+            "src_char": "143:3"
+          },
+          {
+            "contract_path": "src/HighLevelCallsInsideLoop.sol",
+            "line_no": 14,
+            "src": "350:4",
+            "src_char": "350:4"
           },
           {
             "contract_path": "src/SendEtherNoChecks.sol",
@@ -1881,9 +1871,8 @@
         ]
       },
       {
-<<<<<<< HEAD
-        "title": "Loop contains high level calls to other contracts and/or eth is transferred.",
-        "description": "One of the dangers of having high level calls or an `address.transfer()` inside a loop is that if a single call fails, then the whole transaction is reverted which maybe undesirable. It's recommended to convert high level calls into low level calls so that we get a `bool success` instead of an automatic revert on failure.",
+        "title": "Calls inside a loop might lead to a denial-of-service attack.",
+        "description": "If one of the destinations has a fallback function that reverts, it will cause the whole transaction to revert. Favor pull over push for external calls.",
         "detector_name": "high-level-calls-in-loop",
         "instances": [
           {
@@ -1909,7 +1898,10 @@
             "line_no": 37,
             "src": "1192:112",
             "src_char": "1192:112"
-=======
+          }
+        ]
+      },
+      {
         "title": "Potential use of `tx.origin` for authentication.",
         "description": "Using `tx.origin` may lead to problems when users are interacting via smart contract with your protocol. It is recommended to use `msg.sender` for authentication.",
         "detector_name": "tx-origin-used-for-auth",
@@ -2029,7 +2021,6 @@
             "line_no": 58,
             "src": "4547:15",
             "src_char": "3059:15"
->>>>>>> dev
           }
         ]
       }
@@ -4223,12 +4214,9 @@
     "weak-randomness",
     "pre-declared-local-variable-usage",
     "delete-nested-mapping",
-<<<<<<< HEAD
-    "high-level-calls-in-loop"
-=======
+    "high-level-calls-in-loop",
     "tx-origin-used-for-auth",
     "msg-value-in-loop",
     "contract-locks-ether"
->>>>>>> dev
   ]
 }

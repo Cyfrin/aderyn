@@ -2135,32 +2135,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-<<<<<<< HEAD
-                  "uri": "src/HighLevelCallsInsideLoop.sol"
-                },
-                "region": {
-                  "byteLength": 3,
-                  "byteOffset": 143
-=======
                   "uri": "src/ContractLocksEther.sol"
                 },
                 "region": {
                   "byteLength": 11,
                   "byteOffset": 2981
->>>>>>> dev
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-<<<<<<< HEAD
-                  "uri": "src/HighLevelCallsInsideLoop.sol"
-                },
-                "region": {
-                  "byteLength": 4,
-                  "byteOffset": 350
-=======
                   "uri": "src/ContractLocksEther.sol"
                 },
                 "region": {
@@ -2188,7 +2173,28 @@
                 "region": {
                   "byteLength": 11,
                   "byteOffset": 6342
->>>>>>> dev
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/HighLevelCallsInsideLoop.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 143
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/HighLevelCallsInsideLoop.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 350
                 }
               }
             },
@@ -2710,45 +2716,28 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-<<<<<<< HEAD
                   "uri": "src/HighLevelCallsInsideLoop.sol"
                 },
                 "region": {
                   "byteLength": 99,
                   "byteOffset": 230
-=======
-                  "uri": "src/TxOriginUsedForAuth.sol"
-                },
-                "region": {
-                  "byteLength": 183,
-                  "byteOffset": 1117
->>>>>>> dev
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-<<<<<<< HEAD
                   "uri": "src/HighLevelCallsInsideLoop.sol"
                 },
                 "region": {
                   "byteLength": 100,
                   "byteOffset": 438
-=======
-                  "uri": "src/TxOriginUsedForAuth.sol"
-                },
-                "region": {
-                  "byteLength": 90,
-                  "byteOffset": 1431
->>>>>>> dev
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-<<<<<<< HEAD
                   "uri": "src/HighLevelCallsInsideLoop.sol"
                 },
                 "region": {
@@ -2765,23 +2754,53 @@
                 "region": {
                   "byteLength": 112,
                   "byteOffset": 1192
-=======
-                  "uri": "src/TxOriginUsedForAuth.sol"
-                },
-                "region": {
-                  "byteLength": 68,
-                  "byteOffset": 1610
->>>>>>> dev
                 }
               }
             }
           ],
           "message": {
-<<<<<<< HEAD
-            "text": "One of the dangers of having high level calls or an `address.transfer()` inside a loop is that if a single call fails, then the whole transaction is reverted which maybe undesirable. It's recommended to convert high level calls into low level calls so that we get a `bool success` instead of an automatic revert on failure."
+            "text": "If one of the destinations has a fallback function that reverts, it will cause the whole transaction to revert. Favor pull over push for external calls."
           },
           "ruleId": "high-level-calls-in-loop"
-=======
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TxOriginUsedForAuth.sol"
+                },
+                "region": {
+                  "byteLength": 183,
+                  "byteOffset": 1117
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TxOriginUsedForAuth.sol"
+                },
+                "region": {
+                  "byteLength": 90,
+                  "byteOffset": 1431
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TxOriginUsedForAuth.sol"
+                },
+                "region": {
+                  "byteLength": 68,
+                  "byteOffset": 1610
+                }
+              }
+            }
+          ],
+          "message": {
             "text": "Using `tx.origin` may lead to problems when users are interacting via smart contract with your protocol. It is recommended to use `msg.sender` for authentication."
           },
           "ruleId": "tx-origin-used-for-auth"
@@ -2957,7 +2976,6 @@
             "text": "It appears that the contract includes a payable function to accept Ether but lacks a corresponding function to withdraw it, which leads to the Ether being locked in the contract. To resolve this issue, please implement a public or external function that allows for the withdrawal of Ether from the contract."
           },
           "ruleId": "contract-locks-ether"
->>>>>>> dev
         },
         {
           "level": "note",

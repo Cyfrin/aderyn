@@ -195,12 +195,9 @@
     "weak-randomness",
     "pre-declared-local-variable-usage",
     "delete-nested-mapping",
-<<<<<<< HEAD
-    "high-level-calls-in-loop"
-=======
+    "high-level-calls-in-loop",
     "tx-origin-used-for-auth",
     "msg-value-in-loop",
     "contract-locks-ether"
->>>>>>> dev
   ]
 }
