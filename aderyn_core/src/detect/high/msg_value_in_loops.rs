@@ -58,8 +58,7 @@ impl IssueDetector for MsgValueUsedInLoopDetector {
     }
 
     fn description(&self) -> String {
-        String::from("Do not use `msg.value` in loops since it may be misleading when calculating the total amount.\
-            It's recommended to prepare additional variables outside the loop to do the required calculation.")
+        String::from("Provide an explicit array of amounts alongside the receivers array, and check that the sum of all amounts matches `msg.value`.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -121,7 +120,7 @@ mod msg_value_in_loop_detector {
     #[test]
     #[serial]
     fn test_msg_value_in_loop() {
-        let context = crate::detect::test_utils::load_solidity_source_unit_with_callgraphs(
+        let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/MsgValueInLoop.sol",
         );
 
