@@ -1,4 +1,3 @@
-use boolean_equality::BooleanEqualityDetector;
 use serde::{Deserialize, Serialize};
 use strum::{Display, EnumCount, EnumIter, EnumString};
 
@@ -59,6 +58,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<IncorrectUseOfCaretOperatorDetector>::default(),
         Box::<YulReturnDetector>::default(),
         Box::<StateVariableShadowingDetector>::default(),
+        Box::<UncheckedSendDetector>::default(),
         Box::<MisusedBooleanDetector>::default(),
         Box::<SendEtherNoChecksDetector>::default(),
         Box::<DelegateCallOnUncheckedAddressDetector>::default(),
@@ -66,10 +66,16 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<RTLODetector>::default(),
         Box::<UncheckedReturnDetector>::default(),
         Box::<DangerousUnaryOperatorDetector>::default(),
+        Box::<TautologyOrContraditionDetector>::default(),
+        Box::<DangerousStrictEqualityOnBalanceDetector>::default(),
+        Box::<StorageSignedIntegerArrayDetector>::default(),
+        Box::<RedundantStatementsDetector>::default(),
+        Box::<PublicVariableReadInExternalContextDetector>::default(),
         Box::<WeakRandomnessDetector>::default(),
         Box::<PreDeclaredLocalVariableUsageDetector>::default(),
         Box::<DeletionNestedMappingDetector>::default(),
         Box::<BooleanEqualityDetector>::default(),
+        Box::<ContractLocksEtherDetector>::default(),
     ]
 }
 
@@ -123,6 +129,7 @@ pub(crate) enum IssueDetectorNamePool {
     IncorrectCaretOperator,
     YulReturn,
     StateVariableShadowing,
+    UncheckedSend,
     MisusedBoolean,
     SendEtherNoChecks,
     DelegateCallUncheckedAddress,
@@ -131,10 +138,16 @@ pub(crate) enum IssueDetectorNamePool {
     RTLO,
     UncheckedReturn,
     DangerousUnaryOperator,
+    TautologyOrContradiction,
+    DangerousStrictEquailtyOnContractBalance,
+    SignedStorageArray,
+    RedundantStatements,
+    PublicVariableReadInExternalContext,
     WeakRandomness,
     PreDeclaredLocalVariableUsage,
     DeleteNestedMapping,
     BooleanEquality,
+    ContractLocksEther,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -255,6 +268,7 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::StateVariableShadowing => {
             Some(Box::<StateVariableShadowingDetector>::default())
         }
+        IssueDetectorNamePool::UncheckedSend => Some(Box::<UncheckedSendDetector>::default()),
         IssueDetectorNamePool::MisusedBoolean => Some(Box::<MisusedBooleanDetector>::default()),
         IssueDetectorNamePool::SendEtherNoChecks => {
             Some(Box::<SendEtherNoChecksDetector>::default())
@@ -270,6 +284,21 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::DangerousUnaryOperator => {
             Some(Box::<DangerousUnaryOperatorDetector>::default())
         }
+        IssueDetectorNamePool::TautologyOrContradiction => {
+            Some(Box::<TautologyOrContraditionDetector>::default())
+        }
+        IssueDetectorNamePool::DangerousStrictEquailtyOnContractBalance => {
+            Some(Box::<DangerousStrictEqualityOnBalanceDetector>::default())
+        }
+        IssueDetectorNamePool::SignedStorageArray => {
+            Some(Box::<StorageSignedIntegerArrayDetector>::default())
+        }
+        IssueDetectorNamePool::RedundantStatements => {
+            Some(Box::<RedundantStatementsDetector>::default())
+        }
+        IssueDetectorNamePool::PublicVariableReadInExternalContext => {
+            Some(Box::<PublicVariableReadInExternalContextDetector>::default())
+        }
         IssueDetectorNamePool::WeakRandomness => Some(Box::<WeakRandomnessDetector>::default()),
         IssueDetectorNamePool::PreDeclaredLocalVariableUsage => {
             Some(Box::<PreDeclaredLocalVariableUsageDetector>::default())
@@ -278,6 +307,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
             Some(Box::<DeletionNestedMappingDetector>::default())
         }
         IssueDetectorNamePool::BooleanEquality => Some(Box::<BooleanEqualityDetector>::default()),
+        IssueDetectorNamePool::ContractLocksEther => {
+            Some(Box::<ContractLocksEtherDetector>::default())
+        }
         IssueDetectorNamePool::Undecided => None,
     }
 }

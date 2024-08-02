@@ -14,18 +14,7 @@ use crate::{context::graph::WorkspaceCallGraph, visitor::ast_visitor::Node};
 use super::ensure_valid_solidity_file;
 
 #[cfg(test)]
-pub fn load_solidity_source_unit_with_callgraphs(filepath: &str) -> WorkspaceContext {
-    _load_solidity_source_unit(filepath, true)
-}
-
-#[cfg(test)]
 pub fn load_solidity_source_unit(filepath: &str) -> WorkspaceContext {
-    println!("WARNING: Callgraph won't be loaded. Please use `load_solidity_source_unit_with_callgraphs` if callgraph is required!");
-    _load_solidity_source_unit(filepath, false)
-}
-
-#[cfg(test)]
-fn _load_solidity_source_unit(filepath: &str, should_load_callgraphs: bool) -> WorkspaceContext {
     let solidity_file = &ensure_valid_solidity_file(filepath);
     let solidity_content = std::fs::read_to_string(solidity_file).unwrap();
 
@@ -95,10 +84,6 @@ fn _load_solidity_source_unit(filepath: &str, should_load_callgraphs: bool) -> W
             absorb_ast_content_into_context(&ast_content, solidity_content.clone(), &mut context);
         }
 
-        if should_load_callgraphs {
-            load_callgraphs(&mut context);
-        }
-
         context
     } else {
         eprintln!("Error running solc command");
@@ -128,6 +113,7 @@ fn absorb_ast_content_into_context(
         eprintln!("{:?}", err);
         std::process::exit(1);
     });
+    load_callgraphs(context);
 }
 
 fn is_demarcation_line(line: &str, file_args: Vec<&str>) -> (bool, Option<String>) {
