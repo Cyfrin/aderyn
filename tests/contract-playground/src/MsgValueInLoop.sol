@@ -2,16 +2,33 @@
 pragma solidity ^0.8.0;
 
 // COPIED from Slither Wiki
+
+// BAD 
 contract MsgValueInLoop1 {
     mapping(address => uint256) balances;
 
     function bad(address[] memory receivers) public payable {
-        // BAD for loop
+        // BAD for loop (uses msg.value inside loop)
         for (uint256 i = 0; i < receivers.length; i++) {
             balances[receivers[i]] += msg.value;
         }
     }
 }
+
+// GOOD
+contract MsgValueOutsideLoop {
+    mapping(address => uint256) balances;
+
+    function good(address[] memory receivers) public payable {
+        // GOOD for loop (does not use msg.value inside loop)
+        uint256 total = msg.value;
+        for (uint256 i = 0; i < receivers.length; i++) {
+            balances[receivers[i]] += total / receivers.length;
+        }
+    }
+}
+
+///// MORE BAD EXAMPLES //////
 
 contract MsgValueInLoop2 {
     mapping(address => uint256) balances;
