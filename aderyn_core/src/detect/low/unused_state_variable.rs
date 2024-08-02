@@ -1,10 +1,13 @@
 use std::collections::{BTreeMap, BTreeSet};
+use std::convert::identity;
 use std::error::Error;
 
-use crate::ast::{NodeID, Visibility};
+use crate::ast::{ASTNode, ContractKind, NodeID, NodeType, Visibility};
 
 use crate::capture;
-use crate::context::browser::{ExtractReferencedDeclarations, ExtractVariableDeclarations};
+use crate::context::browser::{
+    ExtractReferencedDeclarations, ExtractVariableDeclarations, GetClosestAncestorOfTypeX,
+};
 use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
     context::workspace_context::WorkspaceContext,
@@ -47,7 +50,19 @@ impl IssueDetector for UnusedStateVariablesDetector {
 
         for unused_state_var_id in all_state_variable_declarations {
             if let Some(node) = context.nodes.get(&unused_state_var_id) {
-                capture!(self, context, node);
+                if let Some(ASTNode::ContractDefinition(contract)) =
+                    node.closest_ancestor_of_type(context, NodeType::ContractDefinition)
+                {
+                    // If this variable is defined inside a contract, make sure it's not an abstract contract before capturing it
+                    if !contract.is_abstract.is_some_and(identity)
+                        && contract.kind == ContractKind::Contract
+                    {
+                        capture!(self, context, node);
+                    }
+                } else {
+                    // Otherwise, just capture it !
+                    capture!(self, context, node);
+                }
             }
         }
 
