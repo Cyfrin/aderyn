@@ -1832,7 +1832,7 @@
                 },
                 "region": {
                   "byteLength": 13,
-                  "byteOffset": 145
+                  "byteOffset": 147
                 }
               }
             },
@@ -1843,7 +1843,7 @@
                 },
                 "region": {
                   "byteLength": 13,
-                  "byteOffset": 179
+                  "byteOffset": 183
                 }
               }
             },
@@ -1854,7 +1854,7 @@
                 },
                 "region": {
                   "byteLength": 10,
-                  "byteOffset": 210
+                  "byteOffset": 215
                 }
               }
             },
@@ -1865,7 +1865,7 @@
                 },
                 "region": {
                   "byteLength": 12,
-                  "byteOffset": 240
+                  "byteOffset": 246
                 }
               }
             },
@@ -1875,8 +1875,8 @@
                   "uri": "src/UnusedStateVariables.sol"
                 },
                 "region": {
-                  "byteLength": 13,
-                  "byteOffset": 273
+                  "byteLength": 11,
+                  "byteOffset": 314
                 }
               }
             },
@@ -6034,402 +6034,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/HugeConstants.sol"
-                },
-                "region": {
-                  "byteLength": 13,
-                  "byteOffset": 166
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/HugeConstants.sol"
-                },
-                "region": {
-                  "byteLength": 13,
-                  "byteOffset": 236
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/HugeConstants.sol"
-                },
-                "region": {
-                  "byteLength": 13,
-                  "byteOffset": 305
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/HugeConstants.sol"
-                },
-                "region": {
-                  "byteLength": 13,
-                  "byteOffset": 373
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/HugeConstants.sol"
-                },
-                "region": {
-                  "byteLength": 13,
-                  "byteOffset": 440
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/HugeConstants.sol"
-                },
-                "region": {
-                  "byteLength": 13,
-                  "byteOffset": 506
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/HugeConstants.sol"
-                },
-                "region": {
-                  "byteLength": 13,
-                  "byteOffset": 571
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/HugeConstants.sol"
-                },
-                "region": {
-                  "byteLength": 13,
-                  "byteOffset": 635
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/HugeConstants.sol"
-                },
-                "region": {
-                  "byteLength": 13,
-                  "byteOffset": 698
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/HugeConstants.sol"
-                },
-                "region": {
-                  "byteLength": 14,
-                  "byteOffset": 760
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/HugeConstants.sol"
-                },
-                "region": {
-                  "byteLength": 14,
-                  "byteOffset": 822
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/HugeConstants.sol"
-                },
-                "region": {
-                  "byteLength": 14,
-                  "byteOffset": 883
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/HugeConstants.sol"
-                },
-                "region": {
-                  "byteLength": 14,
-                  "byteOffset": 943
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/HugeConstants.sol"
-                },
-                "region": {
-                  "byteLength": 14,
-                  "byteOffset": 1002
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/HugeConstants.sol"
-                },
-                "region": {
-                  "byteLength": 14,
-                  "byteOffset": 1060
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/HugeConstants.sol"
-                },
-                "region": {
-                  "byteLength": 14,
-                  "byteOffset": 1117
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/HugeConstants.sol"
-                },
-                "region": {
-                  "byteLength": 14,
-                  "byteOffset": 1173
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/HugeConstants.sol"
-                },
-                "region": {
-                  "byteLength": 14,
-                  "byteOffset": 1228
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/HugeConstants.sol"
-                },
-                "region": {
-                  "byteLength": 14,
-                  "byteOffset": 1282
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/HugeConstants.sol"
-                },
-                "region": {
-                  "byteLength": 14,
-                  "byteOffset": 1335
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/HugeConstants.sol"
-                },
-                "region": {
-                  "byteLength": 19,
-                  "byteOffset": 1388
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/HugeConstants.sol"
-                },
-                "region": {
-                  "byteLength": 19,
-                  "byteOffset": 1444
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/HugeConstants.sol"
-                },
-                "region": {
-                  "byteLength": 19,
-                  "byteOffset": 1499
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/HugeConstants.sol"
-                },
-                "region": {
-                  "byteLength": 26,
-                  "byteOffset": 1556
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/HugeConstants.sol"
-                },
-                "region": {
-                  "byteLength": 26,
-                  "byteOffset": 1644
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/HugeConstants.sol"
-                },
-                "region": {
-                  "byteLength": 31,
-                  "byteOffset": 1709
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/HugeConstants.sol"
-                },
-                "region": {
-                  "byteLength": 23,
-                  "byteOffset": 1779
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/HugeConstants.sol"
-                },
-                "region": {
-                  "byteLength": 23,
-                  "byteOffset": 1859
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/HugeConstants.sol"
-                },
-                "region": {
-                  "byteLength": 23,
-                  "byteOffset": 1922
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/HugeConstants.sol"
-                },
-                "region": {
-                  "byteLength": 23,
-                  "byteOffset": 1984
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/HugeConstants.sol"
-                },
-                "region": {
-                  "byteLength": 23,
-                  "byteOffset": 2071
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/HugeConstants.sol"
-                },
-                "region": {
-                  "byteLength": 23,
-                  "byteOffset": 2135
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/HugeConstants.sol"
-                },
-                "region": {
-                  "byteLength": 18,
-                  "byteOffset": 2199
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/InconsistentUints.sol"
-                },
-                "region": {
-                  "byteLength": 11,
-                  "byteOffset": 197
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/InconsistentUints.sol"
-                },
-                "region": {
-                  "byteLength": 14,
-                  "byteOffset": 233
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/InconsistentUints.sol"
-                },
-                "region": {
-                  "byteLength": 9,
-                  "byteOffset": 383
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/InconsistentUints.sol"
                 },
                 "region": {
@@ -6466,17 +6070,6 @@
                   "uri": "src/StateVariables.sol"
                 },
                 "region": {
-                  "byteLength": 18,
-                  "byteOffset": 282
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariables.sol"
-                },
-                "region": {
                   "byteLength": 27,
                   "byteOffset": 383
                 }
@@ -6490,17 +6083,6 @@
                 "region": {
                   "byteLength": 28,
                   "byteOffset": 437
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariables.sol"
-                },
-                "region": {
-                  "byteLength": 26,
-                  "byteOffset": 490
                 }
               }
             },
@@ -6529,39 +6111,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/StateVariables.sol"
-                },
-                "region": {
-                  "byteLength": 15,
-                  "byteOffset": 1159
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/TestERC20.sol"
-                },
-                "region": {
-                  "byteLength": 8,
-                  "byteOffset": 111
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/UninitializedStateVariable.sol"
-                },
-                "region": {
-                  "byteLength": 3,
-                  "byteOffset": 448
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/UninitializedStateVariable.sol"
                 },
                 "region": {
@@ -6577,7 +6126,7 @@
                 },
                 "region": {
                   "byteLength": 13,
-                  "byteOffset": 145
+                  "byteOffset": 147
                 }
               }
             },
@@ -6588,7 +6137,7 @@
                 },
                 "region": {
                   "byteLength": 13,
-                  "byteOffset": 179
+                  "byteOffset": 183
                 }
               }
             },
@@ -6599,7 +6148,7 @@
                 },
                 "region": {
                   "byteLength": 10,
-                  "byteOffset": 210
+                  "byteOffset": 215
                 }
               }
             },
@@ -6610,29 +6159,7 @@
                 },
                 "region": {
                   "byteLength": 12,
-                  "byteOffset": 240
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/UnusedStateVariables.sol"
-                },
-                "region": {
-                  "byteLength": 13,
-                  "byteOffset": 273
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/WrongOrderOfLayout.sol"
-                },
-                "region": {
-                  "byteLength": 10,
-                  "byteOffset": 257
+                  "byteOffset": 246
                 }
               }
             },
@@ -6743,28 +6270,6 @@
                 "region": {
                   "byteLength": 3,
                   "byteOffset": 486
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/nested_mappings/LaterVersion.sol"
-                },
-                "region": {
-                  "byteLength": 20,
-                  "byteOffset": 416
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/nested_mappings/NestedMappings.sol"
-                },
-                "region": {
-                  "byteLength": 58,
-                  "byteOffset": 367
                 }
               }
             }
