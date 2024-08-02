@@ -8592,25 +8592,13 @@ Remove the redundant statements because no code will be generated and it just co
 
 If the assembly code contains bugs or unintended side effects, it can lead to incorrect results or vulnerabilities, which are hard to debug and resolve, especially when the function is meant to be simple and predictable.
 
-<details><summary>3 Found Instances</summary>
+<details><summary>1 Found Instances</summary>
 
 
 - Found in contracts/v2/safeGuards/ThresholdSafeGuard.sol [Line: 182](../tests/2024-07-templegold/protocol/contracts/v2/safeGuards/ThresholdSafeGuard.sol#L182)
 
 	```solidity
 	    function checkTransaction(
-	```
-
-- Found in contracts/v2/strategies/DsrBaseStrategy.sol [Line: 129](../tests/2024-07-templegold/protocol/contracts/v2/strategies/DsrBaseStrategy.sol#L129)
-
-	```solidity
-	    function latestDsrBalance() public view returns (uint256) {
-	```
-
-- Found in contracts/v2/strategies/DsrBaseStrategy.sol [Line: 159](../tests/2024-07-templegold/protocol/contracts/v2/strategies/DsrBaseStrategy.sol#L159)
-
-	```solidity
-	    function latestAssetBalances() public override(AbstractStrategy, ITempleBaseStrategy) view returns (
 	```
 
 </details>

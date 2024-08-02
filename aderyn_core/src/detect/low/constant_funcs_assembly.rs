@@ -1,10 +1,10 @@
 use std::collections::BTreeMap;
 use std::error::Error;
 
-use crate::ast::{NodeID, StateMutability};
+use crate::ast::{ASTNode, NodeID, StateMutability};
 
 use crate::capture;
-use crate::context::browser::ExtractInlineAssemblys;
+use crate::context::browser::{ExtractInlineAssemblys, Peek};
 use crate::context::investigator::{
     StandardInvestigationStyle, StandardInvestigator, StandardInvestigatorVisitor,
 };
@@ -29,7 +29,9 @@ impl IssueDetector for ConstantFunctionContainsAssemblyDetector {
             if function.state_mutability() == &StateMutability::View
                 || function.state_mutability() == &StateMutability::Pure
             {
-                let mut tracker = AssemblyTracker::default();
+                let mut tracker = AssemblyTracker {
+                    has_assembly: false,
+                };
                 let investigator = StandardInvestigator::new(
                     context,
                     &[&(function.into())],
@@ -69,7 +71,6 @@ impl IssueDetector for ConstantFunctionContainsAssemblyDetector {
     }
 }
 
-#[derive(Default)]
 struct AssemblyTracker {
     has_assembly: bool,
 }
@@ -79,6 +80,15 @@ impl StandardInvestigatorVisitor for AssemblyTracker {
         // If we are already satisifed, do not bother checking
         if self.has_assembly {
             return Ok(());
+        }
+
+        if let ASTNode::FunctionDefinition(function) = node {
+            // Ignore checking functions that start with `_`
+            // Example - templegold contains math functions like `_rpow()`, etc that are used by view functions
+            // That should be okay .. I guess? (idk ... it's open for dicussion)
+            if function.name.starts_with("_") {
+                return Ok(());
+            }
         }
 
         // Check if this node has assembly code

@@ -2,10 +2,10 @@
 
 #### MARKDOWN REPORTS ######
 
-# Basic report.md 
+# Basic report.md
 cargo run --  -i src/ -x lib/ ./tests/contract-playground -o ./reports/report.md --skip-update-check &
 
-# Adhoc sol files report.md 
+# Adhoc sol files report.md
 cargo run --  ./tests/adhoc-sol-files -o ./reports/adhoc-sol-files-report.md --skip-update-check &
 
 # Aderyn.toml with nested root
