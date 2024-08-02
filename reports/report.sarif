@@ -1806,6 +1806,28 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/TautologyOrContradiction.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 133
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TautologyOrContradiction.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 145
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/UninitializedStateVariable.sol"
                 },
                 "region": {
@@ -1953,7 +1975,7 @@
             }
           ],
           "message": {
-            "text": "Description of the high issue."
+            "text": "This vulnerability arises when a derived contract unintentionally shadows a state variable from a parent contract by declaring a variable with the same name. This can be misleading. To prevent this, ensure variable names are unique across the inheritance hierarchy or use proper visibility and scope controls."
           },
           "ruleId": "state-variable-shadowing"
         },
@@ -2113,22 +2135,60 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+<<<<<<< HEAD
                   "uri": "src/HighLevelCallsInsideLoop.sol"
                 },
                 "region": {
                   "byteLength": 3,
                   "byteOffset": 143
+=======
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 2981
+>>>>>>> dev
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
+<<<<<<< HEAD
                   "uri": "src/HighLevelCallsInsideLoop.sol"
                 },
                 "region": {
                   "byteLength": 4,
                   "byteOffset": 350
+=======
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 4205
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 5373
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 6342
+>>>>>>> dev
                 }
               }
             },
@@ -2409,6 +2469,37 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/TautologyOrContradiction.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 296
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TautologyOrContradiction.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 369
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "The condition has been determined to be either always true or always false due to the integer range in which we're operating."
+          },
+          "ruleId": "tautology-or-contradiction"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/DangerousStrictEquality1.sol"
                 },
                 "region": {
@@ -2619,28 +2710,45 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+<<<<<<< HEAD
                   "uri": "src/HighLevelCallsInsideLoop.sol"
                 },
                 "region": {
                   "byteLength": 99,
                   "byteOffset": 230
+=======
+                  "uri": "src/TxOriginUsedForAuth.sol"
+                },
+                "region": {
+                  "byteLength": 183,
+                  "byteOffset": 1117
+>>>>>>> dev
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
+<<<<<<< HEAD
                   "uri": "src/HighLevelCallsInsideLoop.sol"
                 },
                 "region": {
                   "byteLength": 100,
                   "byteOffset": 438
+=======
+                  "uri": "src/TxOriginUsedForAuth.sol"
+                },
+                "region": {
+                  "byteLength": 90,
+                  "byteOffset": 1431
+>>>>>>> dev
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
+<<<<<<< HEAD
                   "uri": "src/HighLevelCallsInsideLoop.sol"
                 },
                 "region": {
@@ -2657,14 +2765,199 @@
                 "region": {
                   "byteLength": 112,
                   "byteOffset": 1192
+=======
+                  "uri": "src/TxOriginUsedForAuth.sol"
+                },
+                "region": {
+                  "byteLength": 68,
+                  "byteOffset": 1610
+>>>>>>> dev
                 }
               }
             }
           ],
           "message": {
+<<<<<<< HEAD
             "text": "One of the dangers of having high level calls or an `address.transfer()` inside a loop is that if a single call fails, then the whole transaction is reverted which maybe undesirable. It's recommended to convert high level calls into low level calls so that we get a `bool success` instead of an automatic revert on failure."
           },
           "ruleId": "high-level-calls-in-loop"
+=======
+            "text": "Using `tx.origin` may lead to problems when users are interacting via smart contract with your protocol. It is recommended to use `msg.sender` for authentication."
+          },
+          "ruleId": "tx-origin-used-for-auth"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 107,
+                  "byteOffset": 289
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 94,
+                  "byteOffset": 988
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 93,
+                  "byteOffset": 1415
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 97,
+                  "byteOffset": 1844
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Provide an explicit array of amounts alongside the receivers array, and check that the sum of all amounts matches `msg.value`."
+          },
+          "ruleId": "msg-value-in-loop"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 73
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 822
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/EmptyBlocks.sol"
+                },
+                "region": {
+                  "byteLength": 39,
+                  "byteOffset": 344
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/EmptyBlocks.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 630
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 103
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 19,
+                  "byteOffset": 423
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 831
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 1233
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 1659
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/eth2/DepositContract.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 4547
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "It appears that the contract includes a payable function to accept Ether but lacks a corresponding function to withdraw it, which leads to the Ether being locked in the contract. To resolve this issue, please implement a public or external function that allows for the withdrawal of Ether from the contract."
+          },
+          "ruleId": "contract-locks-ether"
+>>>>>>> dev
         },
         {
           "level": "note",
@@ -2928,6 +3221,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 18,
+                  "byteOffset": 5185
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
@@ -3058,6 +3362,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/ContractWithTodo.sol"
                 },
                 "region": {
@@ -3157,6 +3472,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/PreDeclaredVarUsage.sol"
                 },
                 "region": {
@@ -3172,6 +3498,28 @@
                 },
                 "region": {
                   "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TautologyOrContradiction.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TxOriginUsedForAuth.sol"
+                },
+                "region": {
+                  "byteLength": 24,
                   "byteOffset": 32
                 }
               }
@@ -3367,6 +3715,72 @@
                 "region": {
                   "byteLength": 1,
                   "byteOffset": 113
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 539
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 1379
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 2414
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 3653
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 4877
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 5775
                 }
               }
             },
@@ -4040,6 +4454,127 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 56,
+                  "byteOffset": 119
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 56,
+                  "byteOffset": 869
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 54,
+                  "byteOffset": 961
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 56,
+                  "byteOffset": 1904
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 54,
+                  "byteOffset": 1996
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 56,
+                  "byteOffset": 3143
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 54,
+                  "byteOffset": 3235
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 56,
+                  "byteOffset": 4367
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 54,
+                  "byteOffset": 4459
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 56,
+                  "byteOffset": 5563
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 54,
+                  "byteOffset": 5655
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/TestERC20.sol"
                 },
                 "region": {
@@ -4417,6 +4952,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/ContractWithTodo.sol"
                 },
                 "region": {
@@ -4527,6 +5073,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/StateVariables.sol"
                 },
                 "region": {
@@ -4564,6 +5121,17 @@
                 },
                 "region": {
                   "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TxOriginUsedForAuth.sol"
+                },
+                "region": {
+                  "byteLength": 24,
                   "byteOffset": 32
                 }
               }
@@ -5062,6 +5630,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/TautologyOrContradiction.sol"
+                },
+                "region": {
+                  "byteLength": 229,
+                  "byteOffset": 161
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/UncheckedSend.sol"
                 },
                 "region": {
@@ -5498,6 +6077,39 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 1103
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 1529
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 1962
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/SendEtherNoChecks.sol"
                 },
                 "region": {
@@ -5763,6 +6375,17 @@
                 "region": {
                   "byteLength": 1,
                   "byteOffset": 186
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TautologyOrContradiction.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 133
                 }
               }
             },
