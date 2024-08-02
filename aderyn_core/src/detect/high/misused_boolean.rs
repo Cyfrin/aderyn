@@ -5,7 +5,7 @@ use eyre::Result;
 issue_detector! {
     MisusedBooleanDetector;
 
-    severity: Low,
+    severity: High,
     title: "Misused boolean with logical operators",
     desc: "The patterns `if (… || true)` and `if (.. && false)` will always evaluate to true and false respectively.",
     name: MisusedBoolean,
@@ -39,7 +39,7 @@ issue_detector! {
 mod misused_boolean_tests {
     use serial_test::serial;
 
-    use crate::detect::{detector::IssueDetector, low::misused_boolean::MisusedBooleanDetector};
+    use crate::detect::{detector::IssueDetector, high::misused_boolean::MisusedBooleanDetector};
 
     #[test]
     #[serial]

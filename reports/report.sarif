@@ -2575,28 +2575,45 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+<<<<<<< HEAD
                   "uri": "src/BooleanEquality.sol"
                 },
                 "region": {
                   "byteLength": 14,
                   "byteOffset": 133
+=======
+                  "uri": "src/TxOriginUsedForAuth.sol"
+                },
+                "region": {
+                  "byteLength": 183,
+                  "byteOffset": 1117
+>>>>>>> dev
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
+<<<<<<< HEAD
                   "uri": "src/BooleanEquality.sol"
                 },
                 "region": {
                   "byteLength": 15,
                   "byteOffset": 292
+=======
+                  "uri": "src/TxOriginUsedForAuth.sol"
+                },
+                "region": {
+                  "byteLength": 90,
+                  "byteOffset": 1431
+>>>>>>> dev
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
+<<<<<<< HEAD
                   "uri": "src/BooleanEquality.sol"
                 },
                 "region": {
@@ -2613,14 +2630,80 @@
                 "region": {
                   "byteLength": 16,
                   "byteOffset": 614
+=======
+                  "uri": "src/TxOriginUsedForAuth.sol"
+                },
+                "region": {
+                  "byteLength": 68,
+                  "byteOffset": 1610
+>>>>>>> dev
                 }
               }
             }
           ],
           "message": {
+<<<<<<< HEAD
             "text": "If `x` is a boolean, there is no need to do `if(x == true)` or `if(x == false)`. Just use `if(x)` and `if(!x)` respectively."
           },
           "ruleId": "boolean-equality"
+=======
+            "text": "Using `tx.origin` may lead to problems when users are interacting via smart contract with your protocol. It is recommended to use `msg.sender` for authentication."
+          },
+          "ruleId": "tx-origin-used-for-auth"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 107,
+                  "byteOffset": 289
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 94,
+                  "byteOffset": 988
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 93,
+                  "byteOffset": 1415
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 97,
+                  "byteOffset": 1844
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Provide an explicit array of amounts alongside the receivers array, and check that the sum of all amounts matches `msg.value`."
+          },
+          "ruleId": "msg-value-in-loop"
+>>>>>>> dev
         },
         {
           "level": "warning",
@@ -2666,6 +2749,61 @@
                 "region": {
                   "byteLength": 11,
                   "byteOffset": 630
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 103
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 19,
+                  "byteOffset": 423
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 831
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 1233
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 1659
                 }
               }
             },
@@ -3166,6 +3304,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/PreDeclaredVarUsage.sol"
                 },
                 "region": {
@@ -3192,6 +3341,17 @@
                 },
                 "region": {
                   "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TxOriginUsedForAuth.sol"
+                },
+                "region": {
+                  "byteLength": 24,
                   "byteOffset": 32
                 }
               }
@@ -4789,6 +4949,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/StateVariables.sol"
                 },
                 "region": {
@@ -4826,6 +4997,17 @@
                 },
                 "region": {
                   "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TxOriginUsedForAuth.sol"
+                },
+                "region": {
+                  "byteLength": 24,
                   "byteOffset": 32
                 }
               }
@@ -5743,6 +5925,39 @@
                 "region": {
                   "byteLength": 12,
                   "byteOffset": 693
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 1103
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 1529
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 1962
                 }
               }
             },

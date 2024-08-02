@@ -75,6 +75,8 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<PreDeclaredLocalVariableUsageDetector>::default(),
         Box::<DeletionNestedMappingDetector>::default(),
         Box::<BooleanEqualityDetector>::default(),
+        Box::<TxOriginUsedForAuthDetector>::default(),
+        Box::<MsgValueUsedInLoopDetector>::default(),
         Box::<ContractLocksEtherDetector>::default(),
     ]
 }
@@ -147,6 +149,8 @@ pub(crate) enum IssueDetectorNamePool {
     PreDeclaredLocalVariableUsage,
     DeleteNestedMapping,
     BooleanEquality,
+    TxOriginUsedForAuth,
+    MsgValueInLoop,
     ContractLocksEther,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
@@ -307,6 +311,10 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
             Some(Box::<DeletionNestedMappingDetector>::default())
         }
         IssueDetectorNamePool::BooleanEquality => Some(Box::<BooleanEqualityDetector>::default()),
+        IssueDetectorNamePool::TxOriginUsedForAuth => {
+            Some(Box::<TxOriginUsedForAuthDetector>::default())
+        }
+        IssueDetectorNamePool::MsgValueInLoop => Some(Box::<MsgValueUsedInLoopDetector>::default()),
         IssueDetectorNamePool::ContractLocksEther => {
             Some(Box::<ContractLocksEtherDetector>::default())
         }

@@ -5,7 +5,7 @@ use eyre::Result;
 issue_detector! {
     BooleanEqualityDetector;
 
-    severity: High,
+    severity: Low,
     title: "Boolean equality is not required.",
     desc: "If `x` is a boolean, there is no need to do `if(x == true)` or `if(x == false)`. Just use `if(x)` and `if(!x)` respectively.",
     name: BooleanEquality,
@@ -31,7 +31,7 @@ issue_detector! {
 mod boolean_equality_tests {
     use serial_test::serial;
 
-    use crate::detect::{detector::IssueDetector, high::boolean_equality::BooleanEqualityDetector};
+    use crate::detect::{detector::IssueDetector, low::boolean_equality::BooleanEqualityDetector};
 
     #[test]
     #[serial]

@@ -1,3 +1,4 @@
+pub(crate) mod boolean_equality;
 pub(crate) mod centralization_risk;
 pub(crate) mod constants_instead_of_literals;
 pub(crate) mod contracts_with_todos;
@@ -7,7 +8,6 @@ pub(crate) mod ecrecover;
 pub(crate) mod empty_blocks;
 pub(crate) mod inconsistent_type_names;
 pub(crate) mod large_literal_value;
-pub(crate) mod misused_boolean;
 pub(crate) mod non_reentrant_before_others;
 pub(crate) mod public_variable_read_in_external_context;
 pub(crate) mod push_0_opcode;
@@ -25,6 +25,7 @@ pub(crate) mod useless_modifier;
 pub(crate) mod useless_public_function;
 pub(crate) mod zero_address_check;
 
+pub use boolean_equality::BooleanEqualityDetector;
 pub use centralization_risk::CentralizationRiskDetector;
 pub use constants_instead_of_literals::ConstantsInsteadOfLiteralsDetector;
 pub use contracts_with_todos::ContractsWithTodosDetector;
@@ -34,7 +35,6 @@ pub use ecrecover::EcrecoverDetector;
 pub use empty_blocks::EmptyBlockDetector;
 pub use inconsistent_type_names::InconsistentTypeNamesDetector;
 pub use large_literal_value::LargeLiteralValueDetector;
-pub use misused_boolean::MisusedBooleanDetector;
 pub use non_reentrant_before_others::NonReentrantBeforeOthersDetector;
 pub use public_variable_read_in_external_context::PublicVariableReadInExternalContextDetector;
 pub use push_0_opcode::PushZeroOpcodeDetector;
