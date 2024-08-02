@@ -4424,17 +4424,6 @@
                   "uri": "src/CallGraphTests.sol"
                 },
                 "region": {
-                  "byteLength": 6,
-                  "byteOffset": 936
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/CallGraphTests.sol"
-                },
-                "region": {
                   "byteLength": 7,
                   "byteOffset": 1246
                 }
@@ -4546,7 +4535,7 @@
                 },
                 "region": {
                   "byteLength": 6,
-                  "byteOffset": 608
+                  "byteOffset": 936
                 }
               }
             },
