@@ -639,7 +639,7 @@ ast_node!(
 ast_node!(
     #[derive(Hash)]
     struct Return {
-        function_return_parameters: NodeID,
+        function_return_parameters: Option<NodeID>,
         expression: Option<Expression>,
     }
 );
