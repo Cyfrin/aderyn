@@ -2694,70 +2694,92 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-<<<<<<< HEAD
                   "uri": "src/MsgValueInLoop.sol"
                 },
                 "region": {
                   "byteLength": 107,
-                  "byteOffset": 249
-=======
+                  "byteOffset": 287
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 94,
+                  "byteOffset": 982
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 93,
+                  "byteOffset": 1407
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 97,
+                  "byteOffset": 1834
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Provide an explicit array of amounts alongside the receivers array, and check that the sum of all amounts matches `msg.value`."
+          },
+          "ruleId": "msg-value-in-loop"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/ContractLocksEther.sol"
                 },
                 "region": {
                   "byteLength": 10,
                   "byteOffset": 73
->>>>>>> dev
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-<<<<<<< HEAD
-                  "uri": "src/MsgValueInLoop.sol"
-                },
-                "region": {
-                  "byteLength": 94,
-                  "byteOffset": 530
-=======
                   "uri": "src/ContractLocksEther.sol"
                 },
                 "region": {
                   "byteLength": 11,
                   "byteOffset": 822
->>>>>>> dev
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-<<<<<<< HEAD
-                  "uri": "src/MsgValueInLoop.sol"
-                },
-                "region": {
-                  "byteLength": 93,
-                  "byteOffset": 955
-=======
                   "uri": "src/EmptyBlocks.sol"
                 },
                 "region": {
                   "byteLength": 39,
                   "byteOffset": 344
->>>>>>> dev
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-<<<<<<< HEAD
-                  "uri": "src/MsgValueInLoop.sol"
-                },
-                "region": {
-                  "byteLength": 97,
-                  "byteOffset": 1382
-=======
                   "uri": "src/EmptyBlocks.sol"
                 },
                 "region": {
@@ -2769,26 +2791,74 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 103
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 19,
+                  "byteOffset": 421
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 827
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 1227
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 1651
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/eth2/DepositContract.sol"
                 },
                 "region": {
                   "byteLength": 15,
                   "byteOffset": 4547
->>>>>>> dev
                 }
               }
             }
           ],
           "message": {
-<<<<<<< HEAD
-            "text": "Do not use `msg.value` in loops since it may be misleading when calculating the total amount.It's recommended to prepare additional variables outside the loop to do the required calculation."
-          },
-          "ruleId": "msg-value-in-loop"
-=======
             "text": "It appears that the contract includes a payable function to accept Ether but lacks a corresponding function to withdraw it, which leads to the Ether being locked in the contract. To resolve this issue, please implement a public or external function that allows for the withdrawal of Ether from the contract."
           },
           "ruleId": "contract-locks-ether"
->>>>>>> dev
         },
         {
           "level": "note",
@@ -3600,7 +3670,18 @@
                 },
                 "region": {
                   "byteLength": 3,
-                  "byteOffset": 168
+                  "byteOffset": 177
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 499
                 }
               }
             },
@@ -3611,7 +3692,7 @@
                 },
                 "region": {
                   "byteLength": 3,
-                  "byteOffset": 449
+                  "byteOffset": 901
                 }
               }
             },
@@ -3622,7 +3703,7 @@
                 },
                 "region": {
                   "byteLength": 3,
-                  "byteOffset": 849
+                  "byteOffset": 1301
                 }
               }
             },
@@ -3633,7 +3714,7 @@
                 },
                 "region": {
                   "byteLength": 3,
-                  "byteOffset": 1273
+                  "byteOffset": 1725
                 }
               }
             },
@@ -5857,7 +5938,7 @@
                 },
                 "region": {
                   "byteLength": 8,
-                  "byteOffset": 645
+                  "byteOffset": 1097
                 }
               }
             },
@@ -5868,7 +5949,7 @@
                 },
                 "region": {
                   "byteLength": 8,
-                  "byteOffset": 1069
+                  "byteOffset": 1521
                 }
               }
             },
@@ -5879,7 +5960,7 @@
                 },
                 "region": {
                   "byteLength": 8,
-                  "byteOffset": 1500
+                  "byteOffset": 1952
                 }
               }
             },

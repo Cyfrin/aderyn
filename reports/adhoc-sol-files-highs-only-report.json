@@ -195,10 +195,7 @@
     "weak-randomness",
     "pre-declared-local-variable-usage",
     "delete-nested-mapping",
-<<<<<<< HEAD
-    "msg-value-in-loop"
-=======
+    "msg-value-in-loop",
     "contract-locks-ether"
->>>>>>> dev
   ]
 }

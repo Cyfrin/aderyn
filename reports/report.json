@@ -1,12 +1,7 @@
 {
   "files_summary": {
-<<<<<<< HEAD
-    "total_source_units": 74,
-    "total_sloc": 2042
-=======
-    "total_source_units": 75,
-    "total_sloc": 2128
->>>>>>> dev
+    "total_source_units": 76,
+    "total_sloc": 2183
   },
   "files_details": {
     "files_details": [
@@ -132,7 +127,7 @@
       },
       {
         "file_path": "src/MsgValueInLoop.sol",
-        "n_sloc": 46
+        "n_sloc": 55
       },
       {
         "file_path": "src/MultipleConstructorSchemes.sol",
@@ -317,11 +312,7 @@
     ]
   },
   "issue_count": {
-<<<<<<< HEAD
-    "high": 33,
-=======
-    "high": 34,
->>>>>>> dev
+    "high": 35,
     "low": 25
   },
   "high_issues": {
@@ -1860,35 +1851,37 @@
         ]
       },
       {
-<<<<<<< HEAD
         "title": "Loop contains `msg.value`.",
-        "description": "Do not use `msg.value` in loops since it may be misleading when calculating the total amount.It's recommended to prepare additional variables outside the loop to do the required calculation.",
+        "description": "Provide an explicit array of amounts alongside the receivers array, and check that the sum of all amounts matches `msg.value`.",
         "detector_name": "msg-value-in-loop",
         "instances": [
           {
             "contract_path": "src/MsgValueInLoop.sol",
-            "line_no": 10,
-            "src": "249:107",
-            "src_char": "249:107"
+            "line_no": 12,
+            "src": "287:107",
+            "src_char": "287:107"
           },
           {
             "contract_path": "src/MsgValueInLoop.sol",
-            "line_no": 21,
-            "src": "530:94",
-            "src_char": "530:94"
-          },
-          {
-            "contract_path": "src/MsgValueInLoop.sol",
-            "line_no": 37,
-            "src": "955:93",
-            "src_char": "955:93"
+            "line_no": 38,
+            "src": "982:94",
+            "src_char": "982:94"
           },
           {
             "contract_path": "src/MsgValueInLoop.sol",
             "line_no": 54,
-            "src": "1382:97",
-            "src_char": "1382:97"
-=======
+            "src": "1407:93",
+            "src_char": "1407:93"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 71,
+            "src": "1834:97",
+            "src_char": "1834:97"
+          }
+        ]
+      },
+      {
         "title": "Contract locks Ether without a withdraw function.",
         "description": "It appears that the contract includes a payable function to accept Ether but lacks a corresponding function to withdraw it, which leads to the Ether being locked in the contract. To resolve this issue, please implement a public or external function that allows for the withdrawal of Ether from the contract.",
         "detector_name": "contract-locks-ether",
@@ -1918,11 +1911,40 @@
             "src_char": "630:11"
           },
           {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 7,
+            "src": "103:15",
+            "src_char": "103:15"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 19,
+            "src": "421:19",
+            "src_char": "421:19"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 33,
+            "src": "827:15",
+            "src_char": "827:15"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 48,
+            "src": "1227:15",
+            "src_char": "1227:15"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 65,
+            "src": "1651:15",
+            "src_char": "1651:15"
+          },
+          {
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 58,
             "src": "4547:15",
             "src_char": "3059:15"
->>>>>>> dev
           }
         ]
       }
@@ -2388,27 +2410,33 @@
           },
           {
             "contract_path": "src/MsgValueInLoop.sol",
-            "line_no": 8,
-            "src": "168:3",
-            "src_char": "168:3"
+            "line_no": 10,
+            "src": "177:3",
+            "src_char": "177:3"
           },
           {
             "contract_path": "src/MsgValueInLoop.sol",
-            "line_no": 19,
-            "src": "449:3",
-            "src_char": "449:3"
+            "line_no": 22,
+            "src": "499:4",
+            "src_char": "499:4"
           },
           {
             "contract_path": "src/MsgValueInLoop.sol",
-            "line_no": 34,
-            "src": "849:3",
-            "src_char": "849:3"
+            "line_no": 36,
+            "src": "901:3",
+            "src_char": "901:3"
           },
           {
             "contract_path": "src/MsgValueInLoop.sol",
             "line_no": 51,
-            "src": "1273:3",
-            "src_char": "1273:3"
+            "src": "1301:3",
+            "src_char": "1301:3"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 68,
+            "src": "1725:3",
+            "src_char": "1725:3"
           },
           {
             "contract_path": "src/StateVariables.sol",
@@ -3640,21 +3668,21 @@
           },
           {
             "contract_path": "src/MsgValueInLoop.sol",
-            "line_no": 26,
-            "src": "645:8",
-            "src_char": "645:8"
-          },
-          {
-            "contract_path": "src/MsgValueInLoop.sol",
             "line_no": 43,
-            "src": "1069:8",
-            "src_char": "1069:8"
+            "src": "1097:8",
+            "src_char": "1097:8"
           },
           {
             "contract_path": "src/MsgValueInLoop.sol",
             "line_no": 60,
-            "src": "1500:8",
-            "src_char": "1500:8"
+            "src": "1521:8",
+            "src_char": "1521:8"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 77,
+            "src": "1952:8",
+            "src_char": "1952:8"
           },
           {
             "contract_path": "src/SendEtherNoChecks.sol",
@@ -4062,10 +4090,7 @@
     "weak-randomness",
     "pre-declared-local-variable-usage",
     "delete-nested-mapping",
-<<<<<<< HEAD
-    "msg-value-in-loop"
-=======
+    "msg-value-in-loop",
     "contract-locks-ether"
->>>>>>> dev
   ]
 }
