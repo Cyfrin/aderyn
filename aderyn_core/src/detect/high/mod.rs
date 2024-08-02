@@ -1,6 +1,7 @@
 pub(crate) mod arbitrary_transfer_from;
 pub(crate) mod avoid_abi_encode_packed;
 pub(crate) mod block_timestamp_deadline;
+pub(crate) mod contract_locks_ether;
 pub(crate) mod dangerous_strict_equality_balance;
 pub(crate) mod dangerous_unary_operator;
 pub(crate) mod delegate_call_in_loop;
@@ -35,6 +36,7 @@ pub(crate) mod yul_return;
 pub use arbitrary_transfer_from::ArbitraryTransferFromDetector;
 pub use avoid_abi_encode_packed::AvoidAbiEncodePackedDetector;
 pub use block_timestamp_deadline::BlockTimestampDeadlineDetector;
+pub use contract_locks_ether::ContractLocksEtherDetector;
 pub use dangerous_strict_equality_balance::DangerousStrictEqualityOnBalanceDetector;
 pub use dangerous_unary_operator::DangerousUnaryOperatorDetector;
 pub use delegate_call_in_loop::DelegateCallInLoopDetector;

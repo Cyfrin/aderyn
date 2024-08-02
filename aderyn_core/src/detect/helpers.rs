@@ -116,6 +116,9 @@ pub fn has_calls_that_sends_native_eth(ast_node: &ASTNode) -> bool {
             if let Expression::Literal(literal) = c {
                 return literal.value.is_some();
             }
+            if let Expression::Identifier(_) = c {
+                return true;
+            }
             false
         });
         if !call_carries_value {
@@ -189,9 +192,9 @@ pub fn has_binary_checks_on_some_address(ast_node: &ASTNode) -> bool {
     binary_operations.into_iter().any(|op| {
         [op.left_expression, op.right_expression].iter().any(|op| {
             op.as_ref().type_descriptions().is_some_and(|desc| {
-                desc.type_string
-                    .as_ref()
-                    .is_some_and(|type_string| type_string == "address")
+                desc.type_string.as_ref().is_some_and(|type_string| {
+                    type_string == "address" || type_string == "address payable"
+                })
             })
         })
     })
