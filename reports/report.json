@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 73,
-    "total_sloc": 1996
+    "total_source_units": 74,
+    "total_sloc": 2007
   },
   "files_details": {
     "files_details": [
@@ -178,6 +178,10 @@
         "n_sloc": 17
       },
       {
+        "file_path": "src/TautologyOrContradiction.sol",
+        "n_sloc": 11
+      },
+      {
         "file_path": "src/TestERC20.sol",
         "n_sloc": 62
       },
@@ -300,7 +304,7 @@
     ]
   },
   "issue_count": {
-    "high": 32,
+    "high": 33,
     "low": 25
   },
   "high_issues": {
@@ -1322,6 +1326,18 @@
             "src_char": "282:18"
           },
           {
+            "contract_path": "src/TautologyOrContradiction.sol",
+            "line_no": 6,
+            "src": "133:6",
+            "src_char": "133:6"
+          },
+          {
+            "contract_path": "src/TautologyOrContradiction.sol",
+            "line_no": 7,
+            "src": "145:9",
+            "src_char": "145:9"
+          },
+          {
             "contract_path": "src/UninitializedStateVariable.sol",
             "line_no": 7,
             "src": "122:8",
@@ -1655,6 +1671,25 @@
             "line_no": 13,
             "src": "247:10",
             "src_char": "247:10"
+          }
+        ]
+      },
+      {
+        "title": "Tautology or Contradiction in comparison.",
+        "description": "The condition has been determined to be either always true or always false due to the integer range in which we're operating.",
+        "detector_name": "tautology-or-contradiction",
+        "instances": [
+          {
+            "contract_path": "src/TautologyOrContradiction.sol",
+            "line_no": 13,
+            "src": "296:7",
+            "src_char": "296:7"
+          },
+          {
+            "contract_path": "src/TautologyOrContradiction.sol",
+            "line_no": 16,
+            "src": "369:11",
+            "src_char": "369:11"
           }
         ]
       },
@@ -2057,6 +2092,12 @@
           },
           {
             "contract_path": "src/RedundantStatements.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/TautologyOrContradiction.sol",
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
@@ -3092,6 +3133,12 @@
             "src_char": "1795:5"
           },
           {
+            "contract_path": "src/TautologyOrContradiction.sol",
+            "line_no": 9,
+            "src": "161:229",
+            "src_char": "161:229"
+          },
+          {
             "contract_path": "src/UncheckedSend.sol",
             "line_no": 27,
             "src": "915:65",
@@ -3456,6 +3503,12 @@
             "src_char": "186:1"
           },
           {
+            "contract_path": "src/TautologyOrContradiction.sol",
+            "line_no": 6,
+            "src": "133:6",
+            "src_char": "133:6"
+          },
+          {
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 59,
             "src": "4611:27",
@@ -3719,6 +3772,7 @@
     "rtlo",
     "unchecked-return",
     "dangerous-unary-operator",
+    "tautology-or-contradiction",
     "dangerous-strict-equailty-on-contract-balance",
     "signed-storage-array",
     "redundant-statements",
