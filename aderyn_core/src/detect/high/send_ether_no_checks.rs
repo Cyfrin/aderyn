@@ -74,7 +74,7 @@ mod send_ether_no_checks_detector_tests {
     #[test]
     #[serial]
     fn test_send_ether_no_checks() {
-        let context = crate::detect::test_utils::load_solidity_source_unit_with_callgraphs(
+        let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/SendEtherNoChecks.sol",
         );
 

@@ -160,7 +160,7 @@ mod contract_locks_ether_detector_tests {
     #[test]
     #[serial]
     fn test_contract_locks_ether() {
-        let context = crate::detect::test_utils::load_solidity_source_unit_with_callgraphs(
+        let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/ContractLocksEther.sol",
         );
 
