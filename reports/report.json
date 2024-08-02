@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 76,
-    "total_sloc": 2183
+    "total_source_units": 77,
+    "total_sloc": 2225
   },
   "files_details": {
     "files_details": [
@@ -194,6 +194,10 @@
         "n_sloc": 62
       },
       {
+        "file_path": "src/TxOriginUsedForAuth.sol",
+        "n_sloc": 42
+      },
+      {
         "file_path": "src/UncheckedReturn.sol",
         "n_sloc": 33
       },
@@ -312,7 +316,7 @@
     ]
   },
   "issue_count": {
-    "high": 35,
+    "high": 36,
     "low": 25
   },
   "high_issues": {
@@ -1851,6 +1855,31 @@
         ]
       },
       {
+        "title": "Potential use of `tx.origin` for authentication.",
+        "description": "Using `tx.origin` may lead to problems when users are interacting via smart contract with your protocol. It is recommended to use `msg.sender` for authentication.",
+        "detector_name": "tx-origin-used-for-auth",
+        "instances": [
+          {
+            "contract_path": "src/TxOriginUsedForAuth.sol",
+            "line_no": 40,
+            "src": "1117:183",
+            "src_char": "1117:183"
+          },
+          {
+            "contract_path": "src/TxOriginUsedForAuth.sol",
+            "line_no": 51,
+            "src": "1431:90",
+            "src_char": "1431:90"
+          },
+          {
+            "contract_path": "src/TxOriginUsedForAuth.sol",
+            "line_no": 59,
+            "src": "1610:68",
+            "src_char": "1610:68"
+          }
+        ]
+      },
+      {
         "title": "Loop contains `msg.value`.",
         "description": "Provide an explicit array of amounts alongside the receivers array, and check that the sum of all amounts matches `msg.value`.",
         "detector_name": "msg-value-in-loop",
@@ -2249,6 +2278,12 @@
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/TxOriginUsedForAuth.sol",
+            "line_no": 2,
+            "src": "32:24",
+            "src_char": "32:24"
           },
           {
             "contract_path": "src/UncheckedSend.sol",
@@ -3127,6 +3162,12 @@
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/TxOriginUsedForAuth.sol",
+            "line_no": 2,
+            "src": "32:24",
+            "src_char": "32:24"
           },
           {
             "contract_path": "src/UnsafeERC721Mint.sol",
@@ -4060,6 +4101,7 @@
     "weak-randomness",
     "pre-declared-local-variable-usage",
     "delete-nested-mapping",
+    "tx-origin-used-for-auth",
     "msg-value-in-loop",
     "contract-locks-ether"
   ]
