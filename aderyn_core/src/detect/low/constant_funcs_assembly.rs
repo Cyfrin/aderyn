@@ -4,7 +4,7 @@ use std::error::Error;
 use crate::ast::{ASTNode, NodeID, StateMutability};
 
 use crate::capture;
-use crate::context::browser::{ExtractInlineAssemblys, Peek};
+use crate::context::browser::ExtractInlineAssemblys;
 use crate::context::investigator::{
     StandardInvestigationStyle, StandardInvestigator, StandardInvestigatorVisitor,
 };
