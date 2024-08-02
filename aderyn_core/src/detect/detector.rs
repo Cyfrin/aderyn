@@ -74,6 +74,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<WeakRandomnessDetector>::default(),
         Box::<PreDeclaredLocalVariableUsageDetector>::default(),
         Box::<DeletionNestedMappingDetector>::default(),
+        Box::<TxOriginUsedForAuthDetector>::default(),
         Box::<MsgValueUsedInLoopDetector>::default(),
         Box::<ContractLocksEtherDetector>::default(),
     ]
@@ -146,6 +147,7 @@ pub(crate) enum IssueDetectorNamePool {
     WeakRandomness,
     PreDeclaredLocalVariableUsage,
     DeleteNestedMapping,
+    TxOriginUsedForAuth,
     MsgValueInLoop,
     ContractLocksEther,
     // NOTE: `Undecided` will be the default name (for new bots).
@@ -305,6 +307,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         }
         IssueDetectorNamePool::DeleteNestedMapping => {
             Some(Box::<DeletionNestedMappingDetector>::default())
+        }
+        IssueDetectorNamePool::TxOriginUsedForAuth => {
+            Some(Box::<TxOriginUsedForAuthDetector>::default())
         }
         IssueDetectorNamePool::MsgValueInLoop => Some(Box::<MsgValueUsedInLoopDetector>::default()),
         IssueDetectorNamePool::ContractLocksEther => {
