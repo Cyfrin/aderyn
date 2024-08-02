@@ -1,20 +1,24 @@
 use std::collections::BTreeMap;
 use std::error::Error;
+use std::str::FromStr;
 
-use crate::ast::{ASTNode, NodeID, StateMutability};
+use crate::ast::{ASTNode, NodeID, NodeType, StateMutability};
 
 use crate::capture;
-use crate::context::browser::ExtractInlineAssemblys;
+use crate::context::browser::{
+    ExtractInlineAssemblys, ExtractPragmaDirectives, GetClosestAncestorOfTypeX,
+};
 use crate::context::investigator::{
     StandardInvestigationStyle, StandardInvestigator, StandardInvestigatorVisitor,
 };
 use crate::detect::detector::IssueDetectorNamePool;
-use crate::detect::helpers;
+use crate::detect::helpers::{self, pragma_directive_to_semver};
 use crate::{
     context::workspace_context::WorkspaceContext,
     detect::detector::{IssueDetector, IssueSeverity},
 };
 use eyre::Result;
+use semver::{Version, VersionReq};
 
 #[derive(Default)]
 pub struct ConstantFunctionContainsAssemblyDetector {
@@ -26,21 +30,39 @@ pub struct ConstantFunctionContainsAssemblyDetector {
 impl IssueDetector for ConstantFunctionContainsAssemblyDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for function in helpers::get_implemented_external_and_public_functions(context) {
-            if function.state_mutability() == &StateMutability::View
-                || function.state_mutability() == &StateMutability::Pure
+            // First, check the eligibility for this function by checking
+            if let Some(ASTNode::SourceUnit(source_unit)) =
+                function.closest_ancestor_of_type(context, NodeType::SourceUnit)
             {
-                let mut tracker = AssemblyTracker {
-                    has_assembly: false,
-                };
-                let investigator = StandardInvestigator::new(
-                    context,
-                    &[&(function.into())],
-                    StandardInvestigationStyle::Downstream,
-                )?;
-                investigator.investigate(context, &mut tracker)?;
+                // Store the extracted directives in a variable to extend its lifetime
+                let extracted_directives = ExtractPragmaDirectives::from(source_unit).extracted;
+                let pragma_directive = extracted_directives.first();
 
-                if tracker.has_assembly {
-                    capture!(self, context, function);
+                if let Some(pragma_directive) = pragma_directive {
+                    let version_req = pragma_directive_to_semver(pragma_directive);
+                    if let Ok(version_req) = version_req {
+                        if version_req_allows_below_0_5_0(&version_req) {
+                            // Only run the logic if pragma is allowed to run on solc <0.5.0
+
+                            if function.state_mutability() == &StateMutability::View
+                                || function.state_mutability() == &StateMutability::Pure
+                            {
+                                let mut tracker = AssemblyTracker {
+                                    has_assembly: false,
+                                };
+                                let investigator = StandardInvestigator::new(
+                                    context,
+                                    &[&(function.into())],
+                                    StandardInvestigationStyle::Downstream,
+                                )?;
+                                investigator.investigate(context, &mut tracker)?;
+
+                                if tracker.has_assembly {
+                                    capture!(self, context, function);
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -69,6 +91,19 @@ impl IssueDetector for ConstantFunctionContainsAssemblyDetector {
     fn name(&self) -> String {
         format!("{}", IssueDetectorNamePool::ConstantFunctionsAssembly)
     }
+}
+
+fn version_req_allows_below_0_5_0(version_req: &VersionReq) -> bool {
+    // If it matches any 0.4.0 to 0.4.26, return true
+    for i in 0..=26 {
+        let version: semver::Version = Version::from_str(&format!("0.4.{}", i)).unwrap();
+        if version_req.matches(&version) {
+            return true;
+        }
+    }
+
+    // Else, return false
+    false
 }
 
 struct AssemblyTracker {
