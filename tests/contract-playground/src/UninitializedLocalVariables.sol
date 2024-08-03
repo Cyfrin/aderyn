@@ -73,8 +73,14 @@ contract AllDataTypes {
         bytes32[1] memory delayedBytes32Array;
         string[1] memory delayedStringArray;
 
+
+        // Initialize delayedUint via assembly
+        assembly ("memory-safe") {
+            delayedUint := 6
+        }
+
+
         // Initialization of variables
-        delayedUint = 42;
         delayedBool = true;
         delayedAddress = 0x0000000000000000000000000000000000000001;
         delayedInt = -42;

@@ -1,7 +1,7 @@
 use std::collections::{BTreeMap, HashSet};
 use std::error::Error;
 
-use crate::ast::NodeID;
+use crate::ast::{ASTNode, NodeID};
 
 use crate::capture;
 use crate::context::browser::ExtractReferencedDeclarations;
@@ -55,9 +55,26 @@ impl IssueDetector for UninitializedLocalVariableDetector {
             potentially_uninitialized_local_variables.retain(|v| !references.contains(v));
         }
 
+        // Blacklist variables assigned via Yul Assignments
+        let mut blacklist_variable_names = HashSet::new();
+
+        for yul_assignment in context.yul_assignments() {
+            blacklist_variable_names
+                .extend(yul_assignment.variable_names.iter().map(|v| v.name.clone()))
+        }
+
         for id in potentially_uninitialized_local_variables {
-            if let Some(node) = context.nodes.get(&id) {
-                capture!(self, context, node);
+            if let Some(ASTNode::VariableDeclaration(v)) = context.nodes.get(&id) {
+                if !blacklist_variable_names.contains(&v.name) {
+                    // Ignore memory structs because they can have an initializeMethod of their own. So not covered under the assignment operator
+                    if v.type_descriptions
+                        .type_string
+                        .as_ref()
+                        .is_some_and(|type_string| !type_string.contains("struct "))
+                    {
+                        capture!(self, context, v);
+                    }
+                }
             }
         }
 
