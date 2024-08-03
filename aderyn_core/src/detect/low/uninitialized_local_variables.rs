@@ -50,8 +50,7 @@ impl IssueDetector for UninitializedLocalVariableDetector {
         // declared local to the function.
         for assignment in context.assignments() {
             let references =
-                ExtractReferencedDeclarations::from(assignment.left_hand_side.as_ref().into())
-                    .extracted;
+                ExtractReferencedDeclarations::from(assignment.left_hand_side.as_ref()).extracted;
             potentially_uninitialized_local_variables.retain(|v| !references.contains(v));
         }
 
