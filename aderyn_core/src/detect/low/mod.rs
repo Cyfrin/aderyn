@@ -12,6 +12,7 @@ pub(crate) mod public_variable_read_in_external_context;
 pub(crate) mod push_0_opcode;
 pub(crate) mod redundant_statements;
 pub(crate) mod require_with_string;
+pub(crate) mod return_bomb;
 pub(crate) mod reverts_and_requries_in_loops;
 pub(crate) mod solmate_safe_transfer_lib;
 pub(crate) mod unindexed_events;
@@ -38,6 +39,7 @@ pub use public_variable_read_in_external_context::PublicVariableReadInExternalCo
 pub use push_0_opcode::PushZeroOpcodeDetector;
 pub use redundant_statements::RedundantStatementsDetector;
 pub use require_with_string::RequireWithStringDetector;
+pub use return_bomb::ReturnBombDetector;
 pub use reverts_and_requries_in_loops::RevertsAndRequiresInLoopsDetector;
 pub use solmate_safe_transfer_lib::SolmateSafeTransferLibDetector;
 pub use unindexed_events::UnindexedEventsDetector;
