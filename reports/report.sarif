@@ -6058,7 +6058,36 @@
         },
         {
           "level": "note",
-          "locations": [],
+          "locations": [
+            {
+              "message": {
+                "text": "A TODO comment was found on line 5"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractWithTodo.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 66
+                }
+              }
+            },
+            {
+              "message": {
+                "text": "A TODO comment was found on line 12"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Counter.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 74
+                }
+              }
+            }
+          ],
           "message": {
             "text": "Contract contains comments with TODOS"
           },
