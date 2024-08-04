@@ -1,7 +1,7 @@
 {
   "files_summary": {
     "total_source_units": 78,
-    "total_sloc": 2247
+    "total_sloc": 2248
   },
   "files_details": {
     "files_details": [
@@ -123,7 +123,7 @@
       },
       {
         "file_path": "src/LocalVariableShadowing.sol",
-        "n_sloc": 22
+        "n_sloc": 23
       },
       {
         "file_path": "src/MisusedBoolean.sol",

@@ -34,6 +34,8 @@ contract LocalVariableShadowingBugChild is LocalVariableShadowingBugParent {
         require(roll == msg.sender);
     } 
 
+    event RollChanged(uint indexed roll); // This is okay because even though roll is shadowing, it's inside event definition
+
     function get_roll() external view returns(uint) {
         return roll;
     }
