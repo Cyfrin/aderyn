@@ -6061,7 +6061,7 @@
           "locations": [
             {
               "message": {
-                "text": "A TODO comment was found on line 5"
+                "text": "A TODO comment was found on line 8"
               },
               "physicalLocation": {
                 "artifactLocation": {
@@ -6075,7 +6075,7 @@
             },
             {
               "message": {
-                "text": "A TODO comment was found on line 12"
+                "text": "A TODO comment was found on line 15"
               },
               "physicalLocation": {
                 "artifactLocation": {

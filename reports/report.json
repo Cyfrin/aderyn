@@ -3749,14 +3749,14 @@
             "line_no": 4,
             "src": "66:8",
             "src_char": "66:8",
-            "hint": "A TODO comment was found on line 5"
+            "hint": "A TODO comment was found on line 8"
           },
           {
             "contract_path": "src/Counter.sol",
             "line_no": 4,
             "src": "74:7",
             "src_char": "74:7",
-            "hint": "A TODO comment was found on line 12"
+            "hint": "A TODO comment was found on line 15"
           }
         ]
       },

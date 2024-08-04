@@ -35,15 +35,22 @@ impl IssueDetector for ContractsWithTodosDetector {
                         | fscloc::token::TokenType::SinglelineComment => {
                             if token.content.to_lowercase().contains("todo") {
                                 let hint = {
+                                    let (_, contract_start_line, _) =
+                                        context.get_node_sort_key(&(contract.into()));
+
                                     if token.start_line != token.end_line {
                                         format!(
                                             "A TODO comment was found between lines {}-{}",
-                                            token.start_line, token.end_line
+                                            (contract_start_line + token.start_line)
+                                                .saturating_sub(1),
+                                            (contract_start_line + token.end_line)
+                                                .saturating_sub(1)
                                         )
                                     } else {
                                         format!(
                                             "A TODO comment was found on line {}",
-                                            token.start_line
+                                            (contract_start_line + token.start_line)
+                                                .saturating_sub(1)
                                         )
                                     }
                                 };
