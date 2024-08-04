@@ -2,10 +2,10 @@ use std::collections::BTreeMap;
 use std::convert::identity;
 use std::error::Error;
 
-use crate::ast::{ContractKind, NodeID};
+use crate::ast::{ContractKind, NodeID, NodeType};
 
 use crate::capture;
-use crate::context::browser::ExtractVariableDeclarations;
+use crate::context::browser::{ExtractVariableDeclarations, GetClosestAncestorOfTypeX};
 use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
     context::workspace_context::WorkspaceContext,
@@ -40,6 +40,17 @@ impl IssueDetector for LocalVariableShadowingDetector {
                         .iter()
                         .any(|v| v.name == local_contract_variable.name)
                     {
+                        // It's okay to allow EventDefinitions/ ErrorDefinitions to shadow the state variable name
+                        if local_contract_variable
+                            .closest_ancestor_of_type(context, NodeType::EventDefinition)
+                            .is_some()
+                            || local_contract_variable
+                                .closest_ancestor_of_type(context, NodeType::ErrorDefinition)
+                                .is_some()
+                        {
+                            continue;
+                        }
+
                         capture!(self, context, local_contract_variable);
                     }
                 }

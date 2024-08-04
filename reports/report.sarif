@@ -1751,6 +1751,28 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/LocalVariableShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 132
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LocalVariableShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 566
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/PublicVariableReadInExternalContext.sol"
                 },
                 "region": {
@@ -3719,6 +3741,39 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/LocalVariableShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 18,
+                  "byteOffset": 184
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LocalVariableShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 28,
+                  "byteOffset": 336
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LocalVariableShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 18,
+                  "byteOffset": 737
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/StateVariables.sol"
                 },
                 "region": {
@@ -4642,6 +4697,39 @@
                 "region": {
                   "byteLength": 6,
                   "byteOffset": 1389
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LocalVariableShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 255
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LocalVariableShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 440
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LocalVariableShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 807
                 }
               }
             },
@@ -6580,6 +6668,48 @@
             "text": "The contract reads it's own variable using `this` which adds an unnecessary STATICCALL. Remove `this` and access the variable like storage."
           },
           "ruleId": "public-variable-read-in-external-context"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LocalVariableShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 211
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LocalVariableShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 397
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LocalVariableShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 764
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Rename the local variables that shadow another component."
+          },
+          "ruleId": "local-variable-shadowing"
         }
       ],
       "tool": {
