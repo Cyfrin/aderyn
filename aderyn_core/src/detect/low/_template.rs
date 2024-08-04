@@ -1,7 +1,7 @@
 use std::collections::BTreeMap;
 use std::error::Error;
 
-use crate::ast::{NodeID, TypeName};
+use crate::ast::NodeID;
 
 use crate::capture;
 use crate::detect::detector::IssueDetectorNamePool;
@@ -22,6 +22,7 @@ pub struct TemplateDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
+    found_instances_with_hints: BTreeMap<(String, usize, String, String), NodeID>,
 }
 
 impl IssueDetector for TemplateDetector {
@@ -30,8 +31,9 @@ impl IssueDetector for TemplateDetector {
         // use the following macro to add it to `found_instances`:
         //
         // capture!(self, context, item);
+        // capture!(self, context, item, "hint");
 
-        Ok(!self.found_instances.is_empty())
+        Ok(!(self.found_instances.is_empty() && self.found_instances_with_hints.is_empty()))
     }
 
     fn severity(&self) -> IssueSeverity {
