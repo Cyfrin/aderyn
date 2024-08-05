@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 67,
-    "total_sloc": 1904
+    "total_source_units": 79,
+    "total_sloc": 2278
   },
   "files_details": {
     "files_details": [
@@ -22,6 +22,10 @@
         "n_sloc": 9
       },
       {
+        "file_path": "src/BooleanEquality.sol",
+        "n_sloc": 27
+      },
+      {
         "file_path": "src/CallGraphTests.sol",
         "n_sloc": 49
       },
@@ -30,8 +34,20 @@
         "n_sloc": 126
       },
       {
+        "file_path": "src/CompilerBugStorageSignedIntegerArray.sol",
+        "n_sloc": 13
+      },
+      {
+        "file_path": "src/ConstantFuncsAssembly.sol",
+        "n_sloc": 26
+      },
+      {
         "file_path": "src/ConstantsLiterals.sol",
         "n_sloc": 28
+      },
+      {
+        "file_path": "src/ContractLocksEther.sol",
+        "n_sloc": 121
       },
       {
         "file_path": "src/ContractWithTodo.sol",
@@ -44,6 +60,14 @@
       {
         "file_path": "src/CrazyPragma.sol",
         "n_sloc": 4
+      },
+      {
+        "file_path": "src/DangerousStrictEquality1.sol",
+        "n_sloc": 6
+      },
+      {
+        "file_path": "src/DangerousStrictEquality2.sol",
+        "n_sloc": 9
       },
       {
         "file_path": "src/DangerousUnaryOperator.sol",
@@ -110,6 +134,10 @@
         "n_sloc": 67
       },
       {
+        "file_path": "src/MsgValueInLoop.sol",
+        "n_sloc": 55
+      },
+      {
         "file_path": "src/MultipleConstructorSchemes.sol",
         "n_sloc": 10
       },
@@ -122,8 +150,16 @@
         "n_sloc": 9
       },
       {
+        "file_path": "src/PublicVariableReadInExternalContext.sol",
+        "n_sloc": 32
+      },
+      {
         "file_path": "src/RTLO.sol",
         "n_sloc": 7
+      },
+      {
+        "file_path": "src/RedundantStatements.sol",
+        "n_sloc": 14
       },
       {
         "file_path": "src/RevertsAndRequriesInLoops.sol",
@@ -158,12 +194,24 @@
         "n_sloc": 17
       },
       {
+        "file_path": "src/TautologyOrContradiction.sol",
+        "n_sloc": 11
+      },
+      {
         "file_path": "src/TestERC20.sol",
         "n_sloc": 62
       },
       {
+        "file_path": "src/TxOriginUsedForAuth.sol",
+        "n_sloc": 42
+      },
+      {
         "file_path": "src/UncheckedReturn.sol",
         "n_sloc": 33
+      },
+      {
+        "file_path": "src/UncheckedSend.sol",
+        "n_sloc": 18
       },
       {
         "file_path": "src/UninitializedStateVariable.sol",
@@ -276,8 +324,8 @@
     ]
   },
   "issue_count": {
-    "high": 29,
-    "low": 23
+    "high": 36,
+    "low": 27
   },
   "high_issues": {
     "issues": [
@@ -1244,6 +1292,12 @@
             "src_char": "97:1"
           },
           {
+            "contract_path": "src/ConstantFuncsAssembly.sol",
+            "line_no": 6,
+            "src": "110:20",
+            "src_char": "110:20"
+          },
+          {
             "contract_path": "src/DelegateCallWithoutAddressCheck.sol",
             "line_no": 9,
             "src": "337:7",
@@ -1268,6 +1322,12 @@
             "src_char": "355:7"
           },
           {
+            "contract_path": "src/PublicVariableReadInExternalContext.sol",
+            "line_no": 6,
+            "src": "130:26",
+            "src_char": "130:26"
+          },
+          {
             "contract_path": "src/StateShadowing.sol",
             "line_no": 5,
             "src": "87:13",
@@ -1290,6 +1350,18 @@
             "line_no": 10,
             "src": "282:18",
             "src_char": "282:18"
+          },
+          {
+            "contract_path": "src/TautologyOrContradiction.sol",
+            "line_no": 6,
+            "src": "133:6",
+            "src_char": "133:6"
+          },
+          {
+            "contract_path": "src/TautologyOrContradiction.sol",
+            "line_no": 7,
+            "src": "145:9",
+            "src_char": "145:9"
           },
           {
             "contract_path": "src/UninitializedStateVariable.sol",
@@ -1368,8 +1440,8 @@
         ]
       },
       {
-        "title": "High Issue Title",
-        "description": "Description of the high issue.",
+        "title": "Shadowed State Variables in Inheritance Hierarchy",
+        "description": "This vulnerability arises when a derived contract unintentionally shadows a state variable from a parent contract by declaring a variable with the same name. This can be misleading. To prevent this, ensure variable names are unique across the inheritance hierarchy or use proper visibility and scope controls.",
         "detector_name": "state-variable-shadowing",
         "instances": [
           {
@@ -1377,6 +1449,19 @@
             "line_no": 15,
             "src": "239:13",
             "src_char": "239:13"
+          }
+        ]
+      },
+      {
+        "title": "Unchecked `bool success` value for send call.",
+        "description": "The transaction `address(payable?).send(address)` may fail because of reasons like out-of-gas, invalid receipient address or revert from the recipient. Therefore, the boolean returned by this function call must be checked to be `true` in order to verify that the transaction was successful",
+        "detector_name": "unchecked-send",
+        "instances": [
+          {
+            "contract_path": "src/UncheckedSend.sol",
+            "line_no": 24,
+            "src": "815:22",
+            "src_char": "815:22"
           }
         ]
       },
@@ -1459,6 +1544,30 @@
             "src_char": "686:16"
           },
           {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 94,
+            "src": "2981:11",
+            "src_char": "2981:11"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 131,
+            "src": "4205:11",
+            "src_char": "4205:11"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 167,
+            "src": "5373:11",
+            "src_char": "5373:11"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 194,
+            "src": "6342:11",
+            "src_char": "6342:11"
+          },
+          {
             "contract_path": "src/SendEtherNoChecks.sol",
             "line_no": 53,
             "src": "1060:5",
@@ -1475,6 +1584,30 @@
             "line_no": 99,
             "src": "1795:5",
             "src_char": "1795:5"
+          },
+          {
+            "contract_path": "src/UncheckedSend.sol",
+            "line_no": 6,
+            "src": "85:246",
+            "src_char": "85:246"
+          },
+          {
+            "contract_path": "src/UncheckedSend.sol",
+            "line_no": 12,
+            "src": "337:190",
+            "src_char": "337:190"
+          },
+          {
+            "contract_path": "src/UncheckedSend.sol",
+            "line_no": 17,
+            "src": "533:184",
+            "src_char": "533:184"
+          },
+          {
+            "contract_path": "src/UncheckedSend.sol",
+            "line_no": 22,
+            "src": "723:186",
+            "src_char": "723:186"
           },
           {
             "contract_path": "src/UninitializedStateVariable.sol",
@@ -1592,6 +1725,63 @@
         ]
       },
       {
+        "title": "Tautology or Contradiction in comparison.",
+        "description": "The condition has been determined to be either always true or always false due to the integer range in which we're operating.",
+        "detector_name": "tautology-or-contradiction",
+        "instances": [
+          {
+            "contract_path": "src/TautologyOrContradiction.sol",
+            "line_no": 13,
+            "src": "296:7",
+            "src_char": "296:7"
+          },
+          {
+            "contract_path": "src/TautologyOrContradiction.sol",
+            "line_no": 16,
+            "src": "369:11",
+            "src_char": "369:11"
+          }
+        ]
+      },
+      {
+        "title": "Dangerous strict equality checks on contract balances.",
+        "description": "A contract's balance can be forcibly manipulated by another selfdestructing contract. Therefore, it's recommended to use >, <, >= or <= instead of strict equality.",
+        "detector_name": "dangerous-strict-equailty-on-contract-balance",
+        "instances": [
+          {
+            "contract_path": "src/DangerousStrictEquality1.sol",
+            "line_no": 6,
+            "src": "177:25",
+            "src_char": "177:25"
+          },
+          {
+            "contract_path": "src/DangerousStrictEquality2.sol",
+            "line_no": 6,
+            "src": "177:34",
+            "src_char": "177:34"
+          },
+          {
+            "contract_path": "src/DangerousStrictEquality2.sol",
+            "line_no": 10,
+            "src": "305:43",
+            "src_char": "305:43"
+          }
+        ]
+      },
+      {
+        "title": "Compiler Bug: Signed array in storage detected for compiler version `<0.5.10`",
+        "description": "If you want to leverage signed arrays in storage by assigning a literal array with at least one negative number, then you mus use solidity version 0.5.10 or above. This is because of a bug in older compilers.",
+        "detector_name": "signed-storage-array",
+        "instances": [
+          {
+            "contract_path": "src/CompilerBugStorageSignedIntegerArray.sol",
+            "line_no": 9,
+            "src": "230:10",
+            "src_char": "230:10"
+          }
+        ]
+      },
+      {
         "title": "Weak Randomness",
         "description": "The use of keccak256 hash functions on predictable values like block.timestamp, block.number, or similar data, including modulo operations on these values, should be avoided for generating randomness, as they are easily predictable and manipulable. The `PREVRANDAO` opcode also should not be used as a source of randomness. Instead, utilize Chainlink VRF for cryptographically secure and provably random values to ensure protocol integrity.",
         "detector_name": "weak-randomness",
@@ -1675,6 +1865,129 @@
             "line_no": 17,
             "src": "426:25",
             "src_char": "426:25"
+          }
+        ]
+      },
+      {
+        "title": "Potential use of `tx.origin` for authentication.",
+        "description": "Using `tx.origin` may lead to problems when users are interacting via smart contract with your protocol. It is recommended to use `msg.sender` for authentication.",
+        "detector_name": "tx-origin-used-for-auth",
+        "instances": [
+          {
+            "contract_path": "src/TxOriginUsedForAuth.sol",
+            "line_no": 40,
+            "src": "1117:183",
+            "src_char": "1117:183"
+          },
+          {
+            "contract_path": "src/TxOriginUsedForAuth.sol",
+            "line_no": 51,
+            "src": "1431:90",
+            "src_char": "1431:90"
+          },
+          {
+            "contract_path": "src/TxOriginUsedForAuth.sol",
+            "line_no": 59,
+            "src": "1610:68",
+            "src_char": "1610:68"
+          }
+        ]
+      },
+      {
+        "title": "Loop contains `msg.value`.",
+        "description": "Provide an explicit array of amounts alongside the receivers array, and check that the sum of all amounts matches `msg.value`.",
+        "detector_name": "msg-value-in-loop",
+        "instances": [
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 12,
+            "src": "289:107",
+            "src_char": "289:107"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 38,
+            "src": "988:94",
+            "src_char": "988:94"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 54,
+            "src": "1415:93",
+            "src_char": "1415:93"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 71,
+            "src": "1844:97",
+            "src_char": "1844:97"
+          }
+        ]
+      },
+      {
+        "title": "Contract locks Ether without a withdraw function.",
+        "description": "It appears that the contract includes a payable function to accept Ether but lacks a corresponding function to withdraw it, which leads to the Ether being locked in the contract. To resolve this issue, please implement a public or external function that allows for the withdrawal of Ether from the contract.",
+        "detector_name": "contract-locks-ether",
+        "instances": [
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 5,
+            "src": "73:10",
+            "src_char": "73:10"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 31,
+            "src": "822:11",
+            "src_char": "822:11"
+          },
+          {
+            "contract_path": "src/EmptyBlocks.sol",
+            "line_no": 20,
+            "src": "344:39",
+            "src_char": "344:39"
+          },
+          {
+            "contract_path": "src/EmptyBlocks.sol",
+            "line_no": 44,
+            "src": "630:11",
+            "src_char": "630:11"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 7,
+            "src": "103:15",
+            "src_char": "103:15"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 19,
+            "src": "423:19",
+            "src_char": "423:19"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 33,
+            "src": "831:15",
+            "src_char": "831:15"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 48,
+            "src": "1233:15",
+            "src_char": "1233:15"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 65,
+            "src": "1659:15",
+            "src_char": "1659:15"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 58,
+            "src": "4547:15",
+            "src_char": "3059:15"
           }
         ]
       }
@@ -1836,6 +2149,12 @@
             "src_char": "1517:20"
           },
           {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 162,
+            "src": "5185:18",
+            "src_char": "5185:18"
+          },
+          {
             "contract_path": "src/DeprecatedOZFunctions.sol",
             "line_no": 32,
             "src": "1062:13",
@@ -1891,6 +2210,24 @@
         "detector_name": "unspecific-solidity-pragma",
         "instances": [
           {
+            "contract_path": "src/CompilerBugStorageSignedIntegerArray.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/ConstantFuncsAssembly.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/ContractWithTodo.sol",
             "line_no": 2,
             "src": "32:23",
@@ -1907,6 +2244,12 @@
             "line_no": 2,
             "src": "32:32",
             "src_char": "32:32"
+          },
+          {
+            "contract_path": "src/DangerousStrictEquality1.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
           },
           {
             "contract_path": "src/DangerousUnaryOperator.sol",
@@ -1933,7 +2276,37 @@
             "src_char": "0:24"
           },
           {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/PreDeclaredVarUsage.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/RedundantStatements.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/TautologyOrContradiction.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/TxOriginUsedForAuth.sol",
+            "line_no": 2,
+            "src": "32:24",
+            "src_char": "32:24"
+          },
+          {
+            "contract_path": "src/UncheckedSend.sol",
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
@@ -2041,6 +2414,42 @@
             "line_no": 6,
             "src": "113:1",
             "src_char": "113:1"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 20,
+            "src": "539:10",
+            "src_char": "539:10"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 49,
+            "src": "1379:10",
+            "src_char": "1379:10"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 81,
+            "src": "2414:10",
+            "src_char": "2414:10"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 118,
+            "src": "3653:10",
+            "src_char": "3653:10"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 155,
+            "src": "4877:10",
+            "src_char": "4877:10"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 181,
+            "src": "5775:10",
+            "src_char": "5775:10"
           },
           {
             "contract_path": "src/ContractWithTodo.sol",
@@ -2176,6 +2585,42 @@
         "detector_name": "constants-instead-of-literals",
         "instances": [
           {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 6,
+            "src": "170:3",
+            "src_char": "170:3"
+          },
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 13,
+            "src": "330:3",
+            "src_char": "330:3"
+          },
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 15,
+            "src": "360:3",
+            "src_char": "360:3"
+          },
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 20,
+            "src": "492:3",
+            "src_char": "492:3"
+          },
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 27,
+            "src": "653:3",
+            "src_char": "653:3"
+          },
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 29,
+            "src": "683:3",
+            "src_char": "683:3"
+          },
+          {
             "contract_path": "src/Casting.sol",
             "line_no": 16,
             "src": "483:18",
@@ -2198,6 +2643,18 @@
             "line_no": 69,
             "src": "2103:18",
             "src_char": "2103:18"
+          },
+          {
+            "contract_path": "src/CompilerBugStorageSignedIntegerArray.sol",
+            "line_no": 9,
+            "src": "235:1",
+            "src_char": "235:1"
+          },
+          {
+            "contract_path": "src/CompilerBugStorageSignedIntegerArray.sol",
+            "line_no": 14,
+            "src": "352:1",
+            "src_char": "352:1"
           },
           {
             "contract_path": "src/ConstantsLiterals.sol",
@@ -2240,6 +2697,18 @@
             "line_no": 31,
             "src": "1275:66",
             "src_char": "1275:66"
+          },
+          {
+            "contract_path": "src/DangerousStrictEquality2.sol",
+            "line_no": 6,
+            "src": "202:9",
+            "src_char": "202:9"
+          },
+          {
+            "contract_path": "src/DangerousStrictEquality2.sol",
+            "line_no": 10,
+            "src": "339:9",
+            "src_char": "339:9"
           },
           {
             "contract_path": "src/DelegateCallWithoutAddressCheck.sol",
@@ -2386,6 +2855,72 @@
         "description": "Index event fields make the field more quickly accessible to off-chain tools that parse events. However, note that each index field costs extra gas during emission, so it's not necessarily best to index the maximum allowed per event (three fields). Each event should use three indexed fields if there are three or more fields, and gas usage is not particularly of concern for the events in question. If there are fewer than three fields, all of the fields should be indexed.",
         "detector_name": "unindexed-events",
         "instances": [
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 7,
+            "src": "119:56",
+            "src_char": "119:56"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 33,
+            "src": "869:56",
+            "src_char": "869:56"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 36,
+            "src": "961:54",
+            "src_char": "961:54"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 65,
+            "src": "1904:56",
+            "src_char": "1904:56"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 68,
+            "src": "1996:54",
+            "src_char": "1996:54"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 102,
+            "src": "3143:56",
+            "src_char": "3143:56"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 105,
+            "src": "3235:54",
+            "src_char": "3235:54"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 139,
+            "src": "4367:56",
+            "src_char": "4367:56"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 142,
+            "src": "4459:54",
+            "src_char": "4459:54"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 175,
+            "src": "5563:56",
+            "src_char": "5563:56"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 178,
+            "src": "5655:54",
+            "src_char": "5655:54"
+          },
           {
             "contract_path": "src/TestERC20.sol",
             "line_no": 14,
@@ -2595,6 +3130,12 @@
             "src_char": "32:23"
           },
           {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/ContractWithTodo.sol",
             "line_no": 2,
             "src": "32:23",
@@ -2611,6 +3152,12 @@
             "line_no": 2,
             "src": "32:32",
             "src_char": "32:32"
+          },
+          {
+            "contract_path": "src/DangerousStrictEquality2.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
           },
           {
             "contract_path": "src/DelegateCallWithoutAddressCheck.sol",
@@ -2643,6 +3190,12 @@
             "src_char": "32:23"
           },
           {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/StateVariables.sol",
             "line_no": 2,
             "src": "32:23",
@@ -2665,6 +3218,12 @@
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/TxOriginUsedForAuth.sol",
+            "line_no": 2,
+            "src": "32:24",
+            "src_char": "32:24"
           },
           {
             "contract_path": "src/UnsafeERC721Mint.sol",
@@ -2933,6 +3492,18 @@
             "src_char": "1795:5"
           },
           {
+            "contract_path": "src/TautologyOrContradiction.sol",
+            "line_no": 9,
+            "src": "161:229",
+            "src_char": "161:229"
+          },
+          {
+            "contract_path": "src/UncheckedSend.sol",
+            "line_no": 27,
+            "src": "915:65",
+            "src_char": "915:65"
+          },
+          {
             "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
             "line_no": 11,
             "src": "367:17",
@@ -3157,10 +3728,34 @@
             "src_char": "1206:18"
           },
           {
+            "contract_path": "src/ConstantFuncsAssembly.sol",
+            "line_no": 26,
+            "src": "651:232",
+            "src_char": "651:232"
+          },
+          {
             "contract_path": "src/InternalFunctions.sol",
             "line_no": 28,
             "src": "693:12",
             "src_char": "693:12"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 43,
+            "src": "1103:8",
+            "src_char": "1103:8"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 60,
+            "src": "1529:8",
+            "src_char": "1529:8"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 77,
+            "src": "1962:8",
+            "src_char": "1962:8"
           },
           {
             "contract_path": "src/SendEtherNoChecks.sol",
@@ -3197,6 +3792,12 @@
             "line_no": 17,
             "src": "388:11",
             "src_char": "388:11"
+          },
+          {
+            "contract_path": "src/UncheckedSend.sol",
+            "line_no": 27,
+            "src": "915:65",
+            "src_char": "915:65"
           }
         ]
       },
@@ -3283,6 +3884,12 @@
             "line_no": 11,
             "src": "186:1",
             "src_char": "186:1"
+          },
+          {
+            "contract_path": "src/TautologyOrContradiction.sol",
+            "line_no": 6,
+            "src": "133:6",
+            "src_char": "133:6"
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
@@ -3420,6 +4027,136 @@
             "src_char": "541:5"
           }
         ]
+      },
+      {
+        "title": "Redundant statements have no effect.",
+        "description": "Remove the redundant statements because no code will be generated and it just congests the codebase.",
+        "detector_name": "redundant-statements",
+        "instances": [
+          {
+            "contract_path": "src/RedundantStatements.sol",
+            "line_no": 6,
+            "src": "131:4",
+            "src_char": "131:4"
+          },
+          {
+            "contract_path": "src/RedundantStatements.sol",
+            "line_no": 7,
+            "src": "169:4",
+            "src_char": "169:4"
+          },
+          {
+            "contract_path": "src/RedundantStatements.sol",
+            "line_no": 8,
+            "src": "207:27",
+            "src_char": "207:27"
+          },
+          {
+            "contract_path": "src/RedundantStatements.sol",
+            "line_no": 12,
+            "src": "309:4",
+            "src_char": "309:4"
+          },
+          {
+            "contract_path": "src/RedundantStatements.sol",
+            "line_no": 13,
+            "src": "347:6",
+            "src_char": "347:6"
+          },
+          {
+            "contract_path": "src/RedundantStatements.sol",
+            "line_no": 14,
+            "src": "377:4",
+            "src_char": "377:4"
+          }
+        ]
+      },
+      {
+        "title": "Public variables of a contract read in an external context (using `this`).",
+        "description": "The contract reads it's own variable using `this` which adds an unnecessary STATICCALL. Remove `this` and access the variable like storage.",
+        "detector_name": "public-variable-read-in-external-context",
+        "instances": [
+          {
+            "contract_path": "src/PublicVariableReadInExternalContext.sol",
+            "line_no": 12,
+            "src": "355:14",
+            "src_char": "355:14"
+          },
+          {
+            "contract_path": "src/PublicVariableReadInExternalContext.sol",
+            "line_no": 16,
+            "src": "457:16",
+            "src_char": "457:16"
+          },
+          {
+            "contract_path": "src/PublicVariableReadInExternalContext.sol",
+            "line_no": 20,
+            "src": "553:12",
+            "src_char": "553:12"
+          },
+          {
+            "contract_path": "src/PublicVariableReadInExternalContext.sol",
+            "line_no": 42,
+            "src": "1175:14",
+            "src_char": "1175:14"
+          }
+        ]
+      },
+      {
+        "title": "Functions declared `pure` / `view` but contains assembly",
+        "description": "If the assembly code contains bugs or unintended side effects, it can lead to incorrect results or vulnerabilities, which are hard to debug and resolve, especially when the function is meant to be simple and predictable.",
+        "detector_name": "constant-functions-assembly",
+        "instances": [
+          {
+            "contract_path": "src/ConstantFuncsAssembly.sol",
+            "line_no": 9,
+            "src": "182:175",
+            "src_char": "182:175"
+          },
+          {
+            "contract_path": "src/ConstantFuncsAssembly.sol",
+            "line_no": 17,
+            "src": "408:237",
+            "src_char": "408:237"
+          },
+          {
+            "contract_path": "src/ConstantFuncsAssembly.sol",
+            "line_no": 36,
+            "src": "934:98",
+            "src_char": "934:98"
+          }
+        ]
+      },
+      {
+        "title": "Boolean equality is not required.",
+        "description": "If `x` is a boolean, there is no need to do `if(x == true)` or `if(x == false)`. Just use `if(x)` and `if(!x)` respectively.",
+        "detector_name": "boolean-equality",
+        "instances": [
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 5,
+            "src": "133:14",
+            "src_char": "133:14"
+          },
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 12,
+            "src": "292:15",
+            "src_char": "292:15"
+          },
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 19,
+            "src": "454:15",
+            "src_char": "454:15"
+          },
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 26,
+            "src": "614:16",
+            "src_char": "614:16"
+          }
+        ]
       }
     ]
   },
@@ -3466,6 +4203,7 @@
     "incorrect-caret-operator",
     "yul-return",
     "state-variable-shadowing",
+    "unchecked-send",
     "misused-boolean",
     "send-ether-no-checks",
     "delegate-call-unchecked-address",
@@ -3473,8 +4211,18 @@
     "rtlo",
     "unchecked-return",
     "dangerous-unary-operator",
+    "tautology-or-contradiction",
+    "dangerous-strict-equailty-on-contract-balance",
+    "signed-storage-array",
+    "redundant-statements",
+    "public-variable-read-in-external-context",
     "weak-randomness",
     "pre-declared-local-variable-usage",
-    "delete-nested-mapping"
+    "delete-nested-mapping",
+    "constant-functions-assembly",
+    "boolean-equality",
+    "tx-origin-used-for-auth",
+    "msg-value-in-loop",
+    "contract-locks-ether"
   ]
 }

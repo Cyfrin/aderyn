@@ -160,9 +160,12 @@ fn check_operand(operand: &Expression) -> bool {
 
 #[cfg(test)]
 mod weak_randomness_detector_tests {
+    use serial_test::serial;
+
     use crate::detect::{detector::IssueDetector, high::weak_randomness::WeakRandomnessDetector};
 
     #[test]
+    #[serial]
     fn test_weak_randomness_detector() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/WeakRandomness.sol",

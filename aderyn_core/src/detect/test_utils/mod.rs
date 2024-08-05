@@ -7,7 +7,6 @@ use std::path::PathBuf;
 // Using `solc` to read AST given a source unit (i.e Solidity file)
 pub use load_source_unit::load_multiple_solidity_source_units_into_single_context;
 pub use load_source_unit::load_solidity_source_unit;
-pub use load_source_unit::load_solidity_source_unit_with_callgraphs;
 
 pub(crate) fn take_loader_lock() -> impl Drop {
     static LOCK: Lazy<std::sync::Mutex<()>> = Lazy::new(|| std::sync::Mutex::new(()));

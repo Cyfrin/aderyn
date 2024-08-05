@@ -12,6 +12,7 @@ mod callgraph_tests {
         },
     };
 
+    use serial_test::serial;
     use StandardInvestigationStyle::*;
 
     fn get_function_by_name(context: &WorkspaceContext, name: &str) -> ASTNode {
@@ -35,8 +36,9 @@ mod callgraph_tests {
     }
 
     #[test]
+    #[serial]
     fn test_callgraph_is_not_none() {
-        let context = crate::detect::test_utils::load_solidity_source_unit_with_callgraphs(
+        let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/CallGraphTests.sol",
         );
         assert!(context.forward_callgraph.is_some());
@@ -44,8 +46,9 @@ mod callgraph_tests {
     }
 
     #[test]
+    #[serial]
     fn test_tower1_modifier_has_no_downstream() {
-        let context = crate::detect::test_utils::load_solidity_source_unit_with_callgraphs(
+        let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/CallGraphTests.sol",
         );
 
@@ -62,8 +65,9 @@ mod callgraph_tests {
     }
 
     #[test]
+    #[serial]
     fn test_tower1_modifier_has_upstream() {
-        let context = crate::detect::test_utils::load_solidity_source_unit_with_callgraphs(
+        let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/CallGraphTests.sol",
         );
 
@@ -80,8 +84,9 @@ mod callgraph_tests {
     }
 
     #[test]
+    #[serial]
     fn test_tower2_modifier_has_both_upstream_and_downstream() {
-        let context = crate::detect::test_utils::load_solidity_source_unit_with_callgraphs(
+        let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/CallGraphTests.sol",
         );
 
@@ -99,8 +104,9 @@ mod callgraph_tests {
     }
 
     #[test]
+    #[serial]
     fn test_tower3_modifier_has_both_upstream_and_downstream() {
-        let context = crate::detect::test_utils::load_solidity_source_unit_with_callgraphs(
+        let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/CallGraphTests.sol",
         );
 
@@ -120,8 +126,9 @@ mod callgraph_tests {
     }
 
     #[test]
+    #[serial]
     fn test_tower3_functions_has_upstream() {
-        let context = crate::detect::test_utils::load_solidity_source_unit_with_callgraphs(
+        let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/CallGraphTests.sol",
         );
 
@@ -137,8 +144,9 @@ mod callgraph_tests {
     }
 
     #[test]
+    #[serial]
     fn test_tower4_functions_has_upstream_and_downstream() {
-        let context = crate::detect::test_utils::load_solidity_source_unit_with_callgraphs(
+        let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/CallGraphTests.sol",
         );
 
