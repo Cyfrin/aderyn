@@ -79,6 +79,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<TxOriginUsedForAuthDetector>::default(),
         Box::<MsgValueUsedInLoopDetector>::default(),
         Box::<ContractLocksEtherDetector>::default(),
+        Box::<IncorrectERC721InterfaceDetector>::default(),
     ]
 }
 
@@ -90,6 +91,7 @@ pub fn get_all_detectors_names() -> Vec<String> {
 #[derive(Debug, PartialEq, EnumString, Display)]
 #[strum(serialize_all = "kebab-case")]
 pub(crate) enum IssueDetectorNamePool {
+    IncorrectERC721Interface,
     DelegateCallInLoop,
     CentralizationRisk,
     SolmateSafeTransferLib,
@@ -163,6 +165,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
     // Expects a valid detector_name
     let detector_name = IssueDetectorNamePool::from_str(detector_name).ok()?;
     match detector_name {
+        IssueDetectorNamePool::IncorrectERC721Interface => {
+            Some(Box::<IncorrectERC721InterfaceDetector>::default())
+        }
         IssueDetectorNamePool::DelegateCallInLoop => {
             Some(Box::<DelegateCallInLoopDetector>::default())
         }
