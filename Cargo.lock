@@ -23,7 +23,7 @@ dependencies = [
 
 [[package]]
 name = "aderyn"
-version = "0.1.8"
+version = "0.1.9"
 dependencies = [
  "aderyn_driver",
  "clap",
@@ -38,7 +38,7 @@ dependencies = [
 
 [[package]]
 name = "aderyn_core"
-version = "0.1.8"
+version = "0.1.9"
 dependencies = [
  "crossbeam-channel",
  "cyfrin-foundry-compilers",
@@ -64,7 +64,7 @@ dependencies = [
 
 [[package]]
 name = "aderyn_driver"
-version = "0.1.8"
+version = "0.1.9"
 dependencies = [
  "aderyn_core",
  "criterion",
@@ -79,7 +79,7 @@ dependencies = [
 
 [[package]]
 name = "aderyn_py"
-version = "0.1.8"
+version = "0.1.9"
 dependencies = [
  "aderyn_driver",
  "pyo3",

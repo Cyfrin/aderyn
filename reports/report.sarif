@@ -1707,6 +1707,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/ConstantFuncsAssembly.sol"
+                },
+                "region": {
+                  "byteLength": 20,
+                  "byteOffset": 110
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/DelegateCallWithoutAddressCheck.sol"
                 },
                 "region": {
@@ -3347,6 +3358,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/ConstantFuncsAssembly.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/ContractLocksEther.sol"
                 },
                 "region": {
@@ -4064,6 +4086,72 @@
         {
           "level": "note",
           "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/BooleanEquality.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 170
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/BooleanEquality.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 330
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/BooleanEquality.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 360
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/BooleanEquality.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 492
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/BooleanEquality.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 653
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/BooleanEquality.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 683
+                }
+              }
+            },
             {
               "physicalLocation": {
                 "artifactLocation": {
@@ -6095,6 +6183,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/ConstantFuncsAssembly.sol"
+                },
+                "region": {
+                  "byteLength": 232,
+                  "byteOffset": 651
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/InternalFunctions.sol"
                 },
                 "region": {
@@ -6743,6 +6842,101 @@
             "text": "The contract reads it's own variable using `this` which adds an unnecessary STATICCALL. Remove `this` and access the variable like storage."
           },
           "ruleId": "public-variable-read-in-external-context"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ConstantFuncsAssembly.sol"
+                },
+                "region": {
+                  "byteLength": 175,
+                  "byteOffset": 182
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ConstantFuncsAssembly.sol"
+                },
+                "region": {
+                  "byteLength": 237,
+                  "byteOffset": 408
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ConstantFuncsAssembly.sol"
+                },
+                "region": {
+                  "byteLength": 98,
+                  "byteOffset": 934
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "If the assembly code contains bugs or unintended side effects, it can lead to incorrect results or vulnerabilities, which are hard to debug and resolve, especially when the function is meant to be simple and predictable."
+          },
+          "ruleId": "constant-functions-assembly"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/BooleanEquality.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 133
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/BooleanEquality.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 292
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/BooleanEquality.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 454
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/BooleanEquality.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 614
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "If `x` is a boolean, there is no need to do `if(x == true)` or `if(x == false)`. Just use `if(x)` and `if(!x)` respectively."
+          },
+          "ruleId": "boolean-equality"
         }
       ],
       "tool": {
@@ -6751,8 +6945,8 @@
           "informationUri": "https://github.com/Cyfrin/aderyn",
           "name": "Aderyn",
           "organization": "Cyfrin",
-          "semanticVersion": "0.1.8",
-          "version": "0.1.8"
+          "semanticVersion": "0.1.9",
+          "version": "0.1.9"
         }
       }
     }
