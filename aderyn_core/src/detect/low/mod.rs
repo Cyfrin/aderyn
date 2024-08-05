@@ -1,3 +1,4 @@
+pub(crate) mod boolean_equality;
 pub(crate) mod centralization_risk;
 pub(crate) mod constants_instead_of_literals;
 pub(crate) mod contracts_with_todos;
@@ -24,6 +25,7 @@ pub(crate) mod useless_modifier;
 pub(crate) mod useless_public_function;
 pub(crate) mod zero_address_check;
 
+pub use boolean_equality::BooleanEqualityDetector;
 pub use centralization_risk::CentralizationRiskDetector;
 pub use constants_instead_of_literals::ConstantsInsteadOfLiteralsDetector;
 pub use contracts_with_todos::ContractsWithTodosDetector;

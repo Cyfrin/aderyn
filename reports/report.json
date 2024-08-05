@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 77,
-    "total_sloc": 2225
+    "total_source_units": 78,
+    "total_sloc": 2252
   },
   "files_details": {
     "files_details": [
@@ -20,6 +20,10 @@
       {
         "file_path": "src/AssemblyExample.sol",
         "n_sloc": 9
+      },
+      {
+        "file_path": "src/BooleanEquality.sol",
+        "n_sloc": 27
       },
       {
         "file_path": "src/CallGraphTests.sol",
@@ -317,7 +321,7 @@
   },
   "issue_count": {
     "high": 36,
-    "low": 25
+    "low": 26
   },
   "high_issues": {
     "issues": [
@@ -2565,6 +2569,42 @@
         "detector_name": "constants-instead-of-literals",
         "instances": [
           {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 6,
+            "src": "170:3",
+            "src_char": "170:3"
+          },
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 13,
+            "src": "330:3",
+            "src_char": "330:3"
+          },
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 15,
+            "src": "360:3",
+            "src_char": "360:3"
+          },
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 20,
+            "src": "492:3",
+            "src_char": "492:3"
+          },
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 27,
+            "src": "653:3",
+            "src_char": "653:3"
+          },
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 29,
+            "src": "683:3",
+            "src_char": "683:3"
+          },
+          {
             "contract_path": "src/Casting.sol",
             "line_no": 16,
             "src": "483:18",
@@ -4039,6 +4079,37 @@
             "src_char": "1175:14"
           }
         ]
+      },
+      {
+        "title": "Boolean equality is not required.",
+        "description": "If `x` is a boolean, there is no need to do `if(x == true)` or `if(x == false)`. Just use `if(x)` and `if(!x)` respectively.",
+        "detector_name": "boolean-equality",
+        "instances": [
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 5,
+            "src": "133:14",
+            "src_char": "133:14"
+          },
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 12,
+            "src": "292:15",
+            "src_char": "292:15"
+          },
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 19,
+            "src": "454:15",
+            "src_char": "454:15"
+          },
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 26,
+            "src": "614:16",
+            "src_char": "614:16"
+          }
+        ]
       }
     ]
   },
@@ -4101,6 +4172,7 @@
     "weak-randomness",
     "pre-declared-local-variable-usage",
     "delete-nested-mapping",
+    "boolean-equality",
     "tx-origin-used-for-auth",
     "msg-value-in-loop",
     "contract-locks-ether"

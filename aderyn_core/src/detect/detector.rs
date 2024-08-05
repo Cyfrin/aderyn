@@ -74,6 +74,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<WeakRandomnessDetector>::default(),
         Box::<PreDeclaredLocalVariableUsageDetector>::default(),
         Box::<DeletionNestedMappingDetector>::default(),
+        Box::<BooleanEqualityDetector>::default(),
         Box::<TxOriginUsedForAuthDetector>::default(),
         Box::<MsgValueUsedInLoopDetector>::default(),
         Box::<ContractLocksEtherDetector>::default(),
@@ -147,6 +148,7 @@ pub(crate) enum IssueDetectorNamePool {
     WeakRandomness,
     PreDeclaredLocalVariableUsage,
     DeleteNestedMapping,
+    BooleanEquality,
     TxOriginUsedForAuth,
     MsgValueInLoop,
     ContractLocksEther,
@@ -308,6 +310,7 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::DeleteNestedMapping => {
             Some(Box::<DeletionNestedMappingDetector>::default())
         }
+        IssueDetectorNamePool::BooleanEquality => Some(Box::<BooleanEqualityDetector>::default()),
         IssueDetectorNamePool::TxOriginUsedForAuth => {
             Some(Box::<TxOriginUsedForAuthDetector>::default())
         }
