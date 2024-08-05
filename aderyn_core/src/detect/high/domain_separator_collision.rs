@@ -68,8 +68,10 @@ impl IssueDetector for DomainSeparatorCollisionDetector {
                                 // We eliminate the cases of mappings and arrays because they take parameters
                                 // so it clearly does not collide with DOMAIN_SEPARATOR()
                                 capture!(self, context, var);
-                            } else {
-                                // Now, cover the case where the name could be different, but the function selector matches
+                            } else if var.name != "DOMAIN_SEPARATOR" {
+                                // NOTE - This else if block is untested
+
+                                // Now, cover the case where the name is different, but the function selector matches
 
                                 if var
                                     .function_selector
@@ -98,8 +100,24 @@ impl IssueDetector for DomainSeparatorCollisionDetector {
                             if func.name == "DOMAIN_SEPARATOR"
                                 && func.parameters.parameters.is_empty()
                             {
+                                // Okay, so now we KNOW that function signature matches. Buuut ....
+                                // let's see if this was intentional or not.
+                                //
+                                // Heuristic: If the return paramter is bytes32 then it must be by design.
+                                // Otherwise, it could be a mistake
+                                if func.return_parameters.parameters.len() == 1 // Ensure exactly
+                                    && func.return_parameters.parameters.first()
+                                        .is_some_and(|param|
+                                            param.type_descriptions.type_string.as_ref()
+                                                .is_some_and(|type_string| type_string == "bytes32")
+                                ) {
+                                    continue;
+                                }
+
                                 capture!(self, context, func);
-                            } else {
+                            } else if func.name != "DOMAIN_SEPARATOR" {
+                                // NOTE - This else if block is untested
+
                                 if func
                                     .function_selector
                                     .as_ref()

@@ -18,11 +18,19 @@ abstract contract SomeERC20 {
 }
 
 contract DomainSeparatorCollision2 is SomeERC20 {
-    // BAD
+    // GOOD (even though function sig collides, since it returns bytes32, we are assuming it's intentional)
     function DOMAIN_SEPARATOR() external pure returns (bytes32) {
         return bytes32("Hello World!");
     }
 }
+
+contract DomainSeparatorCollision21 is SomeERC20 {
+    // BAD (function signature collides plus we also know that we are not returning bytes32, hence it must be a mistake)
+    function DOMAIN_SEPARATOR() external pure returns (uint256) {
+        return 5;
+    }
+}
+
 
 contract DomainSeparatorCollision3 is SomeERC20 {
     // BAD
