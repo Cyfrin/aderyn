@@ -6773,7 +6773,7 @@ Index event fields make the field more quickly accessible to off-chain tools tha
 
 Use descriptive reason strings or custom errors for revert paths.
 
-<details><summary>54 Found Instances</summary>
+<details><summary>55 Found Instances</summary>
 
 
 - Found in contracts/core/OpsManager.sol [Line: 50](../tests/2024-07-templegold/protocol/contracts/core/OpsManager.sol#L50)
@@ -6870,6 +6870,12 @@ Use descriptive reason strings or custom errors for revert paths.
 
 	```solidity
 	      require (result >= MIN_64x64 && result <= MAX_64x64);
+	```
+
+- Found in contracts/util/ABDKMath64x64.sol [Line: 246](../tests/2024-07-templegold/protocol/contracts/util/ABDKMath64x64.sol#L246)
+
+	```solidity
+	      require (y != 0);
 	```
 
 - Found in contracts/util/ABDKMath64x64.sol [Line: 259](../tests/2024-07-templegold/protocol/contracts/util/ABDKMath64x64.sol#L259)
@@ -7058,12 +7064,6 @@ Use descriptive reason strings or custom errors for revert paths.
 	      require (exponent <= 16446); // Overflow
 	```
 
-- Found in contracts/util/ABDKMathQuad.sol [Line: 242](../tests/2024-07-templegold/protocol/contracts/util/ABDKMathQuad.sol#L242)
-
-	```solidity
-	      uint256 result = uint256 (uint128 (x)) & 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFF |
-	```
-
 - Found in contracts/util/ABDKMathQuad.sol [Line: 249](../tests/2024-07-templegold/protocol/contracts/util/ABDKMathQuad.sol#L249)
 
 	```solidity
@@ -7092,6 +7092,12 @@ Use descriptive reason strings or custom errors for revert paths.
 
 	```solidity
 	      require (absoluteY <= 0x7FFF0000000000000000000000000000); // Not NaN
+	```
+
+- Found in contracts/util/ABDKMathQuad.sol [Line: 467](../tests/2024-07-templegold/protocol/contracts/util/ABDKMathQuad.sol#L467)
+
+	```solidity
+	      require (x != y || absoluteX < 0x7FFF0000000000000000000000000000);
 	```
 
 - Found in contracts/util/ABDKMathQuad.sol [Line: 1199](../tests/2024-07-templegold/protocol/contracts/util/ABDKMathQuad.sol#L1199)
