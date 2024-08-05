@@ -2903,6 +2903,59 @@
           "ruleId": "contract-locks-ether"
         },
         {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DomainSeparatorCollision.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 713
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DomainSeparatorCollision.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 904
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DomainSeparatorCollision.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 1013
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DomainSeparatorCollision.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 1157
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "An ERC20 token has a function whose signature collides with EIP-2612's DOMAIN_SEPARATOR(), causing unanticipated behavior for contracts using permit functionality. Remove or rename the pubic/external variable or function that collides with DOMAIN_SEPARATOR()"
+          },
+          "ruleId": "domain-separator-collision"
+        },
+        {
           "level": "note",
           "locations": [
             {
@@ -3361,6 +3414,17 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/DeletionNestedMappingStructureContract.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DomainSeparatorCollision.sol"
                 },
                 "region": {
                   "byteLength": 23,
@@ -4929,6 +4993,17 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/DeprecatedOZFunctions.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DomainSeparatorCollision.sol"
                 },
                 "region": {
                   "byteLength": 23,
@@ -6531,6 +6606,17 @@
         {
           "level": "note",
           "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DomainSeparatorCollision.sol"
+                },
+                "region": {
+                  "byteLength": 21,
+                  "byteOffset": 1222
+                }
+              }
+            },
             {
               "physicalLocation": {
                 "artifactLocation": {

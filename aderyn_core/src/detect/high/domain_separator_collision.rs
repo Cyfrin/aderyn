@@ -129,7 +129,7 @@ impl IssueDetector for DomainSeparatorCollisionDetector {
     }
 
     fn description(&self) -> String {
-        String::from("Remove or rename the pubic/external variable or function that collides with DOMAIN_SEPARATOR()")
+        String::from("An ERC20 token has a function whose signature collides with EIP-2612's DOMAIN_SEPARATOR(), causing unanticipated behavior for contracts using permit functionality. Remove or rename the pubic/external variable or function that collides with DOMAIN_SEPARATOR()")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
