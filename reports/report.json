@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 79,
-    "total_sloc": 2278
+    "total_source_units": 80,
+    "total_sloc": 2333
   },
   "files_details": {
     "files_details": [
@@ -172,6 +172,10 @@
       {
         "file_path": "src/StateShadowing.sol",
         "n_sloc": 17
+      },
+      {
+        "file_path": "src/StateVariableEvents.sol",
+        "n_sloc": 55
       },
       {
         "file_path": "src/StateVariables.sol",
@@ -2464,6 +2468,66 @@
             "src_char": "129:9"
           },
           {
+            "contract_path": "src/StateVariableEvents.sol",
+            "line_no": 20,
+            "src": "417:26",
+            "src_char": "417:26"
+          },
+          {
+            "contract_path": "src/StateVariableEvents.sol",
+            "line_no": 24,
+            "src": "509:24",
+            "src_char": "509:24"
+          },
+          {
+            "contract_path": "src/StateVariableEvents.sol",
+            "line_no": 29,
+            "src": "659:26",
+            "src_char": "659:26"
+          },
+          {
+            "contract_path": "src/StateVariableEvents.sol",
+            "line_no": 35,
+            "src": "844:33",
+            "src_char": "844:33"
+          },
+          {
+            "contract_path": "src/StateVariableEvents.sol",
+            "line_no": 41,
+            "src": "1003:30",
+            "src_char": "1003:30"
+          },
+          {
+            "contract_path": "src/StateVariableEvents.sol",
+            "line_no": 47,
+            "src": "1199:34",
+            "src_char": "1199:34"
+          },
+          {
+            "contract_path": "src/StateVariableEvents.sol",
+            "line_no": 52,
+            "src": "1334:31",
+            "src_char": "1334:31"
+          },
+          {
+            "contract_path": "src/StateVariableEvents.sol",
+            "line_no": 57,
+            "src": "1475:24",
+            "src_char": "1475:24"
+          },
+          {
+            "contract_path": "src/StateVariableEvents.sol",
+            "line_no": 63,
+            "src": "1609:32",
+            "src_char": "1609:32"
+          },
+          {
+            "contract_path": "src/StateVariableEvents.sol",
+            "line_no": 69,
+            "src": "1745:28",
+            "src_char": "1745:28"
+          },
+          {
             "contract_path": "src/StateVariables.sol",
             "line_no": 47,
             "src": "1764:18",
@@ -2920,6 +2984,30 @@
             "line_no": 178,
             "src": "5655:54",
             "src_char": "5655:54"
+          },
+          {
+            "contract_path": "src/StateVariableEvents.sol",
+            "line_no": 15,
+            "src": "237:36",
+            "src_char": "237:36"
+          },
+          {
+            "contract_path": "src/StateVariableEvents.sol",
+            "line_no": 16,
+            "src": "278:38",
+            "src_char": "278:38"
+          },
+          {
+            "contract_path": "src/StateVariableEvents.sol",
+            "line_no": 17,
+            "src": "321:40",
+            "src_char": "321:40"
+          },
+          {
+            "contract_path": "src/StateVariableEvents.sol",
+            "line_no": 18,
+            "src": "366:36",
+            "src_char": "366:36"
           },
           {
             "contract_path": "src/TestERC20.sol",
@@ -4203,6 +4291,7 @@
     "incorrect-caret-operator",
     "yul-return",
     "state-variable-shadowing",
+    "state-variable-not-logged-in-event-detector",
     "unchecked-send",
     "misused-boolean",
     "send-ether-no-checks",

@@ -3741,6 +3741,116 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/StateVariableEvents.sol"
+                },
+                "region": {
+                  "byteLength": 26,
+                  "byteOffset": 417
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariableEvents.sol"
+                },
+                "region": {
+                  "byteLength": 24,
+                  "byteOffset": 509
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariableEvents.sol"
+                },
+                "region": {
+                  "byteLength": 26,
+                  "byteOffset": 659
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariableEvents.sol"
+                },
+                "region": {
+                  "byteLength": 33,
+                  "byteOffset": 844
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariableEvents.sol"
+                },
+                "region": {
+                  "byteLength": 30,
+                  "byteOffset": 1003
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariableEvents.sol"
+                },
+                "region": {
+                  "byteLength": 34,
+                  "byteOffset": 1199
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariableEvents.sol"
+                },
+                "region": {
+                  "byteLength": 31,
+                  "byteOffset": 1334
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariableEvents.sol"
+                },
+                "region": {
+                  "byteLength": 24,
+                  "byteOffset": 1475
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariableEvents.sol"
+                },
+                "region": {
+                  "byteLength": 32,
+                  "byteOffset": 1609
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariableEvents.sol"
+                },
+                "region": {
+                  "byteLength": 28,
+                  "byteOffset": 1745
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/StateVariables.sol"
                 },
                 "region": {
@@ -4567,6 +4677,50 @@
                 "region": {
                   "byteLength": 54,
                   "byteOffset": 5655
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariableEvents.sol"
+                },
+                "region": {
+                  "byteLength": 36,
+                  "byteOffset": 237
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariableEvents.sol"
+                },
+                "region": {
+                  "byteLength": 38,
+                  "byteOffset": 278
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariableEvents.sol"
+                },
+                "region": {
+                  "byteLength": 40,
+                  "byteOffset": 321
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariableEvents.sol"
+                },
+                "region": {
+                  "byteLength": 36,
+                  "byteOffset": 366
                 }
               }
             },

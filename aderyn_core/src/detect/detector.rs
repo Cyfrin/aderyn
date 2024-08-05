@@ -58,6 +58,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<IncorrectUseOfCaretOperatorDetector>::default(),
         Box::<YulReturnDetector>::default(),
         Box::<StateVariableShadowingDetector>::default(),
+        Box::<StateVariableNotLoggedInEventDetector>::default(),
         Box::<UncheckedSendDetector>::default(),
         Box::<MisusedBooleanDetector>::default(),
         Box::<SendEtherNoChecksDetector>::default(),
@@ -131,6 +132,7 @@ pub(crate) enum IssueDetectorNamePool {
     UninitializedStateVariable,
     IncorrectCaretOperator,
     YulReturn,
+    StateVariableNotLoggedInEventDetector,
     StateVariableShadowing,
     UncheckedSend,
     MisusedBoolean,
@@ -273,6 +275,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::YulReturn => Some(Box::<YulReturnDetector>::default()),
         IssueDetectorNamePool::StateVariableShadowing => {
             Some(Box::<StateVariableShadowingDetector>::default())
+        }
+        IssueDetectorNamePool::StateVariableNotLoggedInEventDetector => {
+            Some(Box::<StateVariableNotLoggedInEventDetector>::default())
         }
         IssueDetectorNamePool::UncheckedSend => Some(Box::<UncheckedSendDetector>::default()),
         IssueDetectorNamePool::MisusedBoolean => Some(Box::<MisusedBooleanDetector>::default()),
