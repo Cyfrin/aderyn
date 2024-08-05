@@ -3937,6 +3937,72 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/BooleanEquality.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 170
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/BooleanEquality.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 330
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/BooleanEquality.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 360
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/BooleanEquality.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 492
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/BooleanEquality.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 653
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/BooleanEquality.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 683
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/Casting.sol"
                 },
                 "region": {
@@ -6580,6 +6646,59 @@
             "text": "The contract reads it's own variable using `this` which adds an unnecessary STATICCALL. Remove `this` and access the variable like storage."
           },
           "ruleId": "public-variable-read-in-external-context"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/BooleanEquality.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 133
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/BooleanEquality.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 292
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/BooleanEquality.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 454
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/BooleanEquality.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 614
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "If `x` is a boolean, there is no need to do `if(x == true)` or `if(x == false)`. Just use `if(x)` and `if(!x)` respectively."
+          },
+          "ruleId": "boolean-equality"
         }
       ],
       "tool": {
