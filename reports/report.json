@@ -1,7 +1,7 @@
 {
   "files_summary": {
     "total_source_units": 78,
-    "total_sloc": 2264
+    "total_sloc": 2269
   },
   "files_details": {
     "files_details": [
@@ -83,7 +83,7 @@
       },
       {
         "file_path": "src/DomainSeparatorCollision.sol",
-        "n_sloc": 39
+        "n_sloc": 44
       },
       {
         "file_path": "src/DynamicArrayLengthAssignment.sol",
@@ -1988,27 +1988,27 @@
         "instances": [
           {
             "contract_path": "src/DomainSeparatorCollision.sol",
-            "line_no": 22,
-            "src": "713:16",
-            "src_char": "713:16"
-          },
-          {
-            "contract_path": "src/DomainSeparatorCollision.sol",
             "line_no": 29,
-            "src": "904:16",
-            "src_char": "904:16"
+            "src": "1097:16",
+            "src_char": "1097:16"
           },
           {
             "contract_path": "src/DomainSeparatorCollision.sol",
-            "line_no": 34,
-            "src": "1013:16",
-            "src_char": "1013:16"
+            "line_no": 37,
+            "src": "1267:16",
+            "src_char": "1267:16"
           },
           {
             "contract_path": "src/DomainSeparatorCollision.sol",
-            "line_no": 43,
-            "src": "1157:16",
-            "src_char": "1157:16"
+            "line_no": 42,
+            "src": "1376:16",
+            "src_char": "1376:16"
+          },
+          {
+            "contract_path": "src/DomainSeparatorCollision.sol",
+            "line_no": 51,
+            "src": "1520:16",
+            "src_char": "1520:16"
           }
         ]
       }
@@ -4063,9 +4063,9 @@
         "instances": [
           {
             "contract_path": "src/DomainSeparatorCollision.sol",
-            "line_no": 46,
-            "src": "1222:21",
-            "src_char": "1222:21"
+            "line_no": 54,
+            "src": "1585:21",
+            "src_char": "1585:21"
           },
           {
             "contract_path": "src/PublicVariableReadInExternalContext.sol",
