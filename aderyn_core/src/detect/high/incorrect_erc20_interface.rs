@@ -22,8 +22,9 @@ pub struct IncorrectERC20InterfaceDetector {
 
 impl IssueDetector for IncorrectERC20InterfaceDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        // Analyze each contract in
+        // Analyze each contract in context
         for current_contract in context.contract_definitions() {
+            // Look through it's inheritance heirarchy to determine if it's an ERC20
             if let Some(contract_ids) = current_contract.linearized_base_contracts.as_ref() {
                 let current_contract_is_erc20 = contract_ids.iter().any(|i| {
                     context.nodes.get(i).is_some_and(|c| {
@@ -41,8 +42,6 @@ impl IssueDetector for IncorrectERC20InterfaceDetector {
                 }
 
                 // Now we know that current contract is an ERC20
-                // So we need to go through all the public/external functions + state variables
-                // in it's inheritance hirearchy and make sure that it doesn't collide with DOMAIN_SEPARATOR() sign
 
                 for contract_id in contract_ids {
                     if let Some(ASTNode::ContractDefinition(contract)) =
