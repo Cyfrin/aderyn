@@ -695,31 +695,13 @@ it is recommended that the definition be removed when custom error is unused
 
 State variable assignment not recorded in event logs, this will make it difficult for off-chain applications to track changes to state or searching historic event logs
 
-<details><summary>15 Found Instances</summary>
+<details><summary>3 Found Instances</summary>
 
 
-- Found in Counter.sol [Line: 8](../tests/adhoc-sol-files/Counter.sol#L8)
-
-	```solidity
-	        number = newNumber;
-	```
-
-- Found in Counter.sol [Line: 29](../tests/adhoc-sol-files/Counter.sol#L29)
+- Found in InternalFunctions.sol [Line: 9](../tests/adhoc-sol-files/InternalFunctions.sol#L9)
 
 	```solidity
-	        number += TWO;
-	```
-
-- Found in InconsistentUints.sol [Line: 20](../tests/adhoc-sol-files/InconsistentUints.sol#L20)
-
-	```solidity
-	        uintVariable = _uintInitial;
-	```
-
-- Found in InconsistentUints.sol [Line: 21](../tests/adhoc-sol-files/InconsistentUints.sol#L21)
-
-	```solidity
-	        uint256Variable = _uint256Initial;
+	        owner = msg.sender;
 	```
 
 - Found in InternalFunctions.sol [Line: 25](../tests/adhoc-sol-files/InternalFunctions.sol#L25)
@@ -732,60 +714,6 @@ State variable assignment not recorded in event logs, this will make it difficul
 
 	```solidity
 	        value = _newValue;
-	```
-
-- Found in StateVariables.sol [Line: 49](../tests/adhoc-sol-files/StateVariables.sol#L49)
-
-	```solidity
-	        addr = newAddr;
-	```
-
-- Found in StateVariables.sol [Line: 54](../tests/adhoc-sol-files/StateVariables.sol#L54)
-
-	```solidity
-	        addr = newAddr;
-	```
-
-- Found in StateVariables.sol [Line: 58](../tests/adhoc-sol-files/StateVariables.sol#L58)
-
-	```solidity
-	        addr = newAddr;
-	```
-
-- Found in StateVariables.sol [Line: 66](../tests/adhoc-sol-files/StateVariables.sol#L66)
-
-	```solidity
-	        emptyAlteredPrivateNumber = _emptyAlteredPrivateNumber;
-	```
-
-- Found in StateVariables.sol [Line: 67](../tests/adhoc-sol-files/StateVariables.sol#L67)
-
-	```solidity
-	        emptyAlteredInternalNumber = _emptyAlteredInternalNumber;
-	```
-
-- Found in StateVariables.sol [Line: 68](../tests/adhoc-sol-files/StateVariables.sol#L68)
-
-	```solidity
-	        emptyAlteredPublicNumber = _emptyAlteredPublicNumber;
-	```
-
-- Found in StateVariables.sol [Line: 76](../tests/adhoc-sol-files/StateVariables.sol#L76)
-
-	```solidity
-	        nonEmptyAlteredPrivateNumber = _nonEmptyAlteredPrivateNumber;
-	```
-
-- Found in StateVariables.sol [Line: 77](../tests/adhoc-sol-files/StateVariables.sol#L77)
-
-	```solidity
-	        nonEmptyAlteredInternalNumber = _nonEmptyAlteredInternalNumber;
-	```
-
-- Found in StateVariables.sol [Line: 78](../tests/adhoc-sol-files/StateVariables.sol#L78)
-
-	```solidity
-	        nonEmptyAlteredPublicNumber = _nonEmptyAlteredPublicNumber;
 	```
 
 </details>
