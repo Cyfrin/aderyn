@@ -155,4 +155,13 @@ fn main() {
             }
         }
     }
+
+    println!("----------------------------------------------------------------");
+    println!("|                                                              |");
+    println!("| Aderyn has been installed here using cargo, which is not     |");
+    println!("| recommended for use. Please use the official install script  |");
+    println!("| from the Aderyn repository to ensure the best experience:    |");
+    println!("| https://github.com/Cyfrin/aderyn#installation                |");
+    println!("|                                                              |");
+    println!("----------------------------------------------------------------");
 }
