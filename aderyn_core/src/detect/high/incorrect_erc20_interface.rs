@@ -89,7 +89,7 @@ impl IssueDetector for IncorrectERC20InterfaceDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Domain Separator collision for ERC20 contracts.")
+        String::from("Incorrect ERC20 interface.")
     }
 
     fn description(&self) -> String {

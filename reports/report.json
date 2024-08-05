@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 77,
-    "total_sloc": 2225
+    "total_source_units": 78,
+    "total_sloc": 2322
   },
   "files_details": {
     "files_details": [
@@ -108,6 +108,10 @@
       {
         "file_path": "src/IncorrectCaretOperator.sol",
         "n_sloc": 16
+      },
+      {
+        "file_path": "src/IncorrectERC20.sol",
+        "n_sloc": 97
       },
       {
         "file_path": "src/IncorrectShift.sol",
@@ -316,7 +320,7 @@
     ]
   },
   "issue_count": {
-    "high": 36,
+    "high": 37,
     "low": 25
   },
   "high_issues": {
@@ -1976,6 +1980,43 @@
             "src_char": "3059:15"
           }
         ]
+      },
+      {
+        "title": "Incorrect ERC20 interface.",
+        "description": "Incorrect return values for ERC20 functions. A contract compiled with Solidity > 0.4.22 interacting with these functions will fail to execute them, as the return value is missing. Set the appropriate return values and types for the defined ERC20 functions.",
+        "detector_name": "incorrect-erc20-interface",
+        "instances": [
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 17,
+            "src": "483:8",
+            "src_char": "483:8"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 23,
+            "src": "690:7",
+            "src_char": "690:7"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 27,
+            "src": "808:12",
+            "src_char": "808:12"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 35,
+            "src": "1146:9",
+            "src_char": "1146:9"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 39,
+            "src": "1249:9",
+            "src_char": "1249:9"
+          }
+        ]
       }
     ]
   },
@@ -2256,6 +2297,12 @@
             "src_char": "0:24"
           },
           {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/MsgValueInLoop.sol",
             "line_no": 2,
             "src": "32:23",
@@ -2442,6 +2489,36 @@
             "line_no": 7,
             "src": "129:9",
             "src_char": "129:9"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 17,
+            "src": "483:8",
+            "src_char": "483:8"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 23,
+            "src": "690:7",
+            "src_char": "690:7"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 27,
+            "src": "808:12",
+            "src_char": "808:12"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 35,
+            "src": "1146:9",
+            "src_char": "1146:9"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 39,
+            "src": "1249:9",
+            "src_char": "1249:9"
           },
           {
             "contract_path": "src/StateVariables.sol",
@@ -3128,6 +3205,12 @@
             "src_char": "0:24"
           },
           {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/KeccakContract.sol",
             "line_no": 2,
             "src": "32:23",
@@ -3639,6 +3722,18 @@
             "line_no": 32,
             "src": "1673:6",
             "src_char": "1673:6"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 8,
+            "src": "225:7",
+            "src_char": "225:7"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 51,
+            "src": "1550:7",
+            "src_char": "1550:7"
           }
         ]
       },
@@ -4103,6 +4198,7 @@
     "delete-nested-mapping",
     "tx-origin-used-for-auth",
     "msg-value-in-loop",
-    "contract-locks-ether"
+    "contract-locks-ether",
+    "incorrect-erc20-interface"
   ]
 }

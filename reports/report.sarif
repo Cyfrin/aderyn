@@ -2903,6 +2903,70 @@
           "ruleId": "contract-locks-ether"
         },
         {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC20.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 483
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC20.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 690
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC20.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 808
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC20.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 1146
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC20.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 1249
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Incorrect return values for ERC20 functions. A contract compiled with Solidity > 0.4.22 interacting with these functions will fail to execute them, as the return value is missing. Set the appropriate return values and types for the defined ERC20 functions."
+          },
+          "ruleId": "incorrect-erc20-interface"
+        },
+        {
           "level": "note",
           "locations": [
             {
@@ -3382,6 +3446,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/IncorrectERC20.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/MsgValueInLoop.sol"
                 },
                 "region": {
@@ -3713,6 +3788,61 @@
                 "region": {
                   "byteLength": 9,
                   "byteOffset": 129
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC20.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 483
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC20.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 690
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC20.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 808
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC20.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 1146
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC20.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 1249
                 }
               }
             },
@@ -4950,6 +5080,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/IncorrectERC20.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/KeccakContract.sol"
                 },
                 "region": {
@@ -5873,6 +6014,28 @@
                 "region": {
                   "byteLength": 6,
                   "byteOffset": 1673
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC20.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 225
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC20.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 1550
                 }
               }
             }
