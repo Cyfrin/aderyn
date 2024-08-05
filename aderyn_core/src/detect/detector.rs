@@ -67,11 +67,19 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<RTLODetector>::default(),
         Box::<UncheckedReturnDetector>::default(),
         Box::<DangerousUnaryOperatorDetector>::default(),
+        Box::<TautologyOrContraditionDetector>::default(),
+        Box::<DangerousStrictEqualityOnBalanceDetector>::default(),
+        Box::<StorageSignedIntegerArrayDetector>::default(),
         Box::<RedundantStatementsDetector>::default(),
         Box::<PublicVariableReadInExternalContextDetector>::default(),
         Box::<WeakRandomnessDetector>::default(),
         Box::<PreDeclaredLocalVariableUsageDetector>::default(),
         Box::<DeletionNestedMappingDetector>::default(),
+        Box::<ConstantFunctionContainsAssemblyDetector>::default(),
+        Box::<BooleanEqualityDetector>::default(),
+        Box::<TxOriginUsedForAuthDetector>::default(),
+        Box::<MsgValueUsedInLoopDetector>::default(),
+        Box::<ContractLocksEtherDetector>::default(),
     ]
 }
 
@@ -135,11 +143,19 @@ pub(crate) enum IssueDetectorNamePool {
     RTLO,
     UncheckedReturn,
     DangerousUnaryOperator,
+    TautologyOrContradiction,
+    DangerousStrictEquailtyOnContractBalance,
+    SignedStorageArray,
     RedundantStatements,
     PublicVariableReadInExternalContext,
     WeakRandomness,
     PreDeclaredLocalVariableUsage,
     DeleteNestedMapping,
+    ConstantFunctionsAssembly,
+    BooleanEquality,
+    TxOriginUsedForAuth,
+    MsgValueInLoop,
+    ContractLocksEther,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -279,6 +295,15 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::DangerousUnaryOperator => {
             Some(Box::<DangerousUnaryOperatorDetector>::default())
         }
+        IssueDetectorNamePool::TautologyOrContradiction => {
+            Some(Box::<TautologyOrContraditionDetector>::default())
+        }
+        IssueDetectorNamePool::DangerousStrictEquailtyOnContractBalance => {
+            Some(Box::<DangerousStrictEqualityOnBalanceDetector>::default())
+        }
+        IssueDetectorNamePool::SignedStorageArray => {
+            Some(Box::<StorageSignedIntegerArrayDetector>::default())
+        }
         IssueDetectorNamePool::RedundantStatements => {
             Some(Box::<RedundantStatementsDetector>::default())
         }
@@ -291,6 +316,17 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         }
         IssueDetectorNamePool::DeleteNestedMapping => {
             Some(Box::<DeletionNestedMappingDetector>::default())
+        }
+        IssueDetectorNamePool::ConstantFunctionsAssembly => {
+            Some(Box::<ConstantFunctionContainsAssemblyDetector>::default())
+        }
+        IssueDetectorNamePool::BooleanEquality => Some(Box::<BooleanEqualityDetector>::default()),
+        IssueDetectorNamePool::TxOriginUsedForAuth => {
+            Some(Box::<TxOriginUsedForAuthDetector>::default())
+        }
+        IssueDetectorNamePool::MsgValueInLoop => Some(Box::<MsgValueUsedInLoopDetector>::default()),
+        IssueDetectorNamePool::ContractLocksEther => {
+            Some(Box::<ContractLocksEtherDetector>::default())
         }
         IssueDetectorNamePool::Undecided => None,
     }

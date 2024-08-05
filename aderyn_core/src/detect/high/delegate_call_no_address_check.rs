@@ -100,7 +100,7 @@ mod delegate_call_no_address_check_tests {
     #[test]
     #[serial]
     fn test_delegate_call_without_checks() {
-        let context = crate::detect::test_utils::load_solidity_source_unit_with_callgraphs(
+        let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/DelegateCallWithoutAddressCheck.sol",
         );
 
