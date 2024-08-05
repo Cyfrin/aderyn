@@ -11,7 +11,7 @@ contract IncorrectERC721 {
     mapping(uint256 => address) public tokenApprovals;
     mapping(address => mapping(address => bool)) public operatorApprovals;
 
-    function balanceOf(address owner) public view returns (uint72) {
+    function balanceOf(address owner) external view returns (uint72) {
         return uint72(balances[owner]);
     }
 
@@ -22,7 +22,7 @@ contract IncorrectERC721 {
     function approve(
         address to,
         uint256 tokenId
-    ) public returns (bytes memory) {
+    ) external returns (bytes memory) {
         address owner = msg.sender;
         require(
             to != address(uint160(bytes20(owner))),
@@ -34,14 +34,14 @@ contract IncorrectERC721 {
         return "";
     }
 
-    function getApproved(uint256 tokenId) public view returns (uint72) {
+    function getApproved(uint256 tokenId) external view returns (uint72) {
         return uint72(uint160(tokenApprovals[tokenId]));
     }
 
     function setApprovalForAll(
         address operator,
         bool approved
-    ) public returns (bytes4) {
+    ) external returns (bytes4) {
         operatorApprovals[msg.sender][operator] = approved;
         return bytes4(keccak256(abi.encodePacked(operator, approved)));
     }
@@ -49,7 +49,7 @@ contract IncorrectERC721 {
     function isApprovedForAll(
         address owner,
         address operator
-    ) public view returns (uint72) {
+    ) external view returns (uint72) {
         return operatorApprovals[owner][operator] ? uint72(1) : uint72(0);
     }
 
@@ -57,7 +57,7 @@ contract IncorrectERC721 {
         address from,
         address to,
         uint256 tokenId
-    ) public returns (bytes memory) {
+    ) external returns (bytes memory) {
         require(
             address(uint160(bytes20(ownerOf(tokenId)))) == from,
             "Transfer from incorrect owner"
@@ -73,7 +73,7 @@ contract IncorrectERC721 {
         address to,
         uint256 tokenId,
         bytes memory _data
-    ) public returns (uint8) {
+    ) external returns (uint8) {
         return 1;
     }
 
@@ -83,7 +83,7 @@ contract IncorrectERC721 {
         balances[to] += 1;
     }
 
-    function mint(address to, uint256 tokenId) public returns (uint72) {
+    function mint(address to, uint256 tokenId) external returns (uint72) {
         require(to != address(0), "Mint to the zero address");
         require(owners[tokenId] == address(0), "Token already minted");
 
@@ -102,7 +102,7 @@ contract IncorrectERC721 {
 
     function supportsInterface(
         bytes4 interfaceId
-    ) public view virtual returns (address) {
+    ) external view virtual returns (address) {
         return address(0x1);
     }
 }
@@ -160,7 +160,7 @@ contract CorrectERC721 is MyIERC721 {
     mapping(uint256 => address) private _tokenApprovals;
     mapping(address => mapping(address => bool)) private _operatorApprovals;
 
-    function balanceOf(address owner) public view override returns (uint256) {
+    function balanceOf(address owner) external view override returns (uint256) {
         require(owner != address(0), "Balance query for the zero address");
         return _balances[owner];
     }
@@ -171,7 +171,7 @@ contract CorrectERC721 is MyIERC721 {
         return owner;
     }
 
-    function approve(address to, uint256 tokenId) public override {
+    function approve(address to, uint256 tokenId) external override {
         address owner = ownerOf(tokenId);
         require(to != owner, "Approval to current owner");
         require(
@@ -195,7 +195,7 @@ contract CorrectERC721 is MyIERC721 {
     function setApprovalForAll(
         address operator,
         bool approved
-    ) public override {
+    ) external override {
         require(operator != msg.sender, "Approve to caller");
 
         _operatorApprovals[msg.sender][operator] = approved;
@@ -213,7 +213,7 @@ contract CorrectERC721 is MyIERC721 {
         address from,
         address to,
         uint256 tokenId
-    ) public override {
+    ) external override {
         require(
             _isApprovedOrOwner(msg.sender, tokenId),
             "Transfer caller is not owner nor approved"
@@ -225,7 +225,7 @@ contract CorrectERC721 is MyIERC721 {
         address from,
         address to,
         uint256 tokenId
-    ) public override {
+    ) external override {
         safeTransferFrom(from, to, tokenId, "");
     }
 
@@ -288,7 +288,7 @@ contract CorrectERC721 is MyIERC721 {
 
     function supportsInterface(
         bytes4 interfaceId
-    ) public view virtual returns (bool) {
+    ) external view virtual returns (bool) {
         return interfaceId == _INTERFACE_ID_ERC165;
     }
 }

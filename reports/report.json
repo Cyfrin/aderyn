@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 79,
-    "total_sloc": 2278
+    "total_source_units": 80,
+    "total_sloc": 2521
   },
   "files_details": {
     "files_details": [
@@ -116,6 +116,10 @@
       {
         "file_path": "src/IncorrectCaretOperator.sol",
         "n_sloc": 16
+      },
+      {
+        "file_path": "src/IncorrectERC721.sol",
+        "n_sloc": 243
       },
       {
         "file_path": "src/IncorrectShift.sol",
@@ -324,7 +328,7 @@
     ]
   },
   "issue_count": {
-    "high": 36,
+    "high": 37,
     "low": 27
   },
   "high_issues": {
@@ -1322,6 +1326,12 @@
             "src_char": "355:7"
           },
           {
+            "contract_path": "src/IncorrectERC721.sol",
+            "line_no": 156,
+            "src": "4353:11",
+            "src_char": "4353:11"
+          },
+          {
             "contract_path": "src/PublicVariableReadInExternalContext.sol",
             "line_no": 6,
             "src": "130:26",
@@ -1990,6 +2000,67 @@
             "src_char": "3059:15"
           }
         ]
+      },
+      {
+        "title": "Incorrect ERC721 interface.",
+        "description": "Incorrect return values for ERC721 functions. A contract compiled with Solidity > 0.4.22 interacting with these functions will fail to execute them, as the return value is missing. Set the appropriate return values and types for the defined ERC721 functions.",
+        "detector_name": "incorrect-erc721-interface",
+        "instances": [
+          {
+            "contract_path": "src/IncorrectERC721.sol",
+            "line_no": 14,
+            "src": "433:9",
+            "src_char": "433:9"
+          },
+          {
+            "contract_path": "src/IncorrectERC721.sol",
+            "line_no": 18,
+            "src": "551:7",
+            "src_char": "551:7"
+          },
+          {
+            "contract_path": "src/IncorrectERC721.sol",
+            "line_no": 22,
+            "src": "696:7",
+            "src_char": "696:7"
+          },
+          {
+            "contract_path": "src/IncorrectERC721.sol",
+            "line_no": 37,
+            "src": "1092:11",
+            "src_char": "1092:11"
+          },
+          {
+            "contract_path": "src/IncorrectERC721.sol",
+            "line_no": 41,
+            "src": "1231:17",
+            "src_char": "1231:17"
+          },
+          {
+            "contract_path": "src/IncorrectERC721.sol",
+            "line_no": 49,
+            "src": "1484:16",
+            "src_char": "1484:16"
+          },
+          {
+            "contract_path": "src/IncorrectERC721.sol",
+            "line_no": 56,
+            "src": "1684:12",
+            "src_char": "1684:12"
+          },
+          {
+            "contract_path": "src/IncorrectERC721.sol",
+            "line_no": 71,
+            "src": "2086:16",
+            "src_char": "2086:16"
+          },
+          {
+            "contract_path": "src/IncorrectERC721.sol",
+            "line_no": 103,
+            "src": "3000:17",
+            "src_char": "3000:17"
+          }
+        ]
       }
     ]
   },
@@ -2274,6 +2345,12 @@
             "line_no": 1,
             "src": "0:24",
             "src_char": "0:24"
+          },
+          {
+            "contract_path": "src/IncorrectERC721.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
           },
           {
             "contract_path": "src/MsgValueInLoop.sol",
@@ -2922,6 +2999,12 @@
             "src_char": "5655:54"
           },
           {
+            "contract_path": "src/IncorrectERC721.sol",
+            "line_no": 121,
+            "src": "3399:115",
+            "src_char": "3399:115"
+          },
+          {
             "contract_path": "src/TestERC20.sol",
             "line_no": 14,
             "src": "338:70",
@@ -3182,6 +3265,12 @@
             "line_no": 1,
             "src": "0:24",
             "src_char": "0:24"
+          },
+          {
+            "contract_path": "src/IncorrectERC721.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
           },
           {
             "contract_path": "src/KeccakContract.sol",
@@ -4223,6 +4312,7 @@
     "boolean-equality",
     "tx-origin-used-for-auth",
     "msg-value-in-loop",
-    "contract-locks-ether"
+    "contract-locks-ether",
+    "incorrect-erc721-interface"
   ]
 }
