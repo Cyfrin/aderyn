@@ -58,22 +58,20 @@ impl IssueDetector for IncorrectERC20InterfaceDetector {
                                 continue;
                             }
 
-                            if func.represents_erc20_transfer().is_some_and(identity)
+                            if (func.represents_erc20_transfer().is_some_and(identity)
                                 || func.represents_erc20_transfer_from().is_some_and(identity)
-                                || func.represents_erc20_approve().is_some_and(identity)
+                                || func.represents_erc20_approve().is_some_and(identity))
+                                && !func.returns_bool()
                             {
-                                if !func.returns_bool() {
-                                    capture!(self, context, func);
-                                }
+                                capture!(self, context, func);
                             }
 
-                            if func.represents_erc20_allowance().is_some_and(identity)
+                            if (func.represents_erc20_allowance().is_some_and(identity)
                                 || func.represents_erc20_balance_of().is_some_and(identity)
-                                || func.represents_erc20_total_supply().is_some_and(identity)
+                                || func.represents_erc20_total_supply().is_some_and(identity))
+                                && !func.returns_uint256()
                             {
-                                if !func.returns_uint256() {
-                                    capture!(self, context, func)
-                                }
+                                capture!(self, context, func)
                             }
                         }
                     }
@@ -129,6 +127,7 @@ mod erc_matching_function_signature_helper {
             if params.len() != self.paramter_types.len() {
                 return Some(false);
             }
+            #[allow(clippy::needless_range_loop)]
             for idx in 0..params.len() {
                 if let Some(func_param_type) = params[idx].type_descriptions.type_string.as_ref() {
                     let target = &self.paramter_types[idx];
