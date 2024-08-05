@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 78,
-    "total_sloc": 2237
+    "total_source_units": 80,
+    "total_sloc": 2290
   },
   "files_details": {
     "files_details": [
@@ -22,6 +22,10 @@
         "n_sloc": 9
       },
       {
+        "file_path": "src/BooleanEquality.sol",
+        "n_sloc": 27
+      },
+      {
         "file_path": "src/CallGraphTests.sol",
         "n_sloc": 49
       },
@@ -32,6 +36,10 @@
       {
         "file_path": "src/CompilerBugStorageSignedIntegerArray.sol",
         "n_sloc": 13
+      },
+      {
+        "file_path": "src/ConstantFuncsAssembly.sol",
+        "n_sloc": 26
       },
       {
         "file_path": "src/ConstantsLiterals.sol",
@@ -321,7 +329,7 @@
   },
   "issue_count": {
     "high": 36,
-    "low": 26
+    "low": 28
   },
   "high_issues": {
     "issues": [
@@ -1288,6 +1296,12 @@
             "src_char": "97:1"
           },
           {
+            "contract_path": "src/ConstantFuncsAssembly.sol",
+            "line_no": 6,
+            "src": "110:20",
+            "src_char": "110:20"
+          },
+          {
             "contract_path": "src/DelegateCallWithoutAddressCheck.sol",
             "line_no": 9,
             "src": "337:7",
@@ -2236,6 +2250,12 @@
             "src_char": "32:23"
           },
           {
+            "contract_path": "src/ConstantFuncsAssembly.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/ContractLocksEther.sol",
             "line_no": 2,
             "src": "32:23",
@@ -2604,6 +2624,42 @@
         "description": "If the same constant literal value is used multiple times, create a constant state variable and reference it throughout the contract.",
         "detector_name": "constants-instead-of-literals",
         "instances": [
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 6,
+            "src": "170:3",
+            "src_char": "170:3"
+          },
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 13,
+            "src": "330:3",
+            "src_char": "330:3"
+          },
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 15,
+            "src": "360:3",
+            "src_char": "360:3"
+          },
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 20,
+            "src": "492:3",
+            "src_char": "492:3"
+          },
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 27,
+            "src": "653:3",
+            "src_char": "653:3"
+          },
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 29,
+            "src": "683:3",
+            "src_char": "683:3"
+          },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 16,
@@ -3718,6 +3774,12 @@
             "src_char": "1206:18"
           },
           {
+            "contract_path": "src/ConstantFuncsAssembly.sol",
+            "line_no": 26,
+            "src": "651:232",
+            "src_char": "651:232"
+          },
+          {
             "contract_path": "src/InternalFunctions.sol",
             "line_no": 28,
             "src": "693:12",
@@ -4242,6 +4304,62 @@
             "src_char": "486:3"
           }
         ]
+      },
+      {
+        "title": "Functions declared `pure` / `view` but contains assembly",
+        "description": "If the assembly code contains bugs or unintended side effects, it can lead to incorrect results or vulnerabilities, which are hard to debug and resolve, especially when the function is meant to be simple and predictable.",
+        "detector_name": "constant-functions-assembly",
+        "instances": [
+          {
+            "contract_path": "src/ConstantFuncsAssembly.sol",
+            "line_no": 9,
+            "src": "182:175",
+            "src_char": "182:175"
+          },
+          {
+            "contract_path": "src/ConstantFuncsAssembly.sol",
+            "line_no": 17,
+            "src": "408:237",
+            "src_char": "408:237"
+          },
+          {
+            "contract_path": "src/ConstantFuncsAssembly.sol",
+            "line_no": 36,
+            "src": "934:98",
+            "src_char": "934:98"
+          }
+        ]
+      },
+      {
+        "title": "Boolean equality is not required.",
+        "description": "If `x` is a boolean, there is no need to do `if(x == true)` or `if(x == false)`. Just use `if(x)` and `if(!x)` respectively.",
+        "detector_name": "boolean-equality",
+        "instances": [
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 5,
+            "src": "133:14",
+            "src_char": "133:14"
+          },
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 12,
+            "src": "292:15",
+            "src_char": "292:15"
+          },
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 19,
+            "src": "454:15",
+            "src_char": "454:15"
+          },
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 26,
+            "src": "614:16",
+            "src_char": "614:16"
+          }
+        ]
       }
     ]
   },
@@ -4305,6 +4423,8 @@
     "pre-declared-local-variable-usage",
     "delete-nested-mapping",
     "unused-state-variable",
+    "constant-functions-assembly",
+    "boolean-equality",
     "tx-origin-used-for-auth",
     "msg-value-in-loop",
     "contract-locks-ether"
