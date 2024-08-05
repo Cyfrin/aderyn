@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 78,
-    "total_sloc": 2252
+    "total_source_units": 79,
+    "total_sloc": 2278
   },
   "files_details": {
     "files_details": [
@@ -36,6 +36,10 @@
       {
         "file_path": "src/CompilerBugStorageSignedIntegerArray.sol",
         "n_sloc": 13
+      },
+      {
+        "file_path": "src/ConstantFuncsAssembly.sol",
+        "n_sloc": 26
       },
       {
         "file_path": "src/ConstantsLiterals.sol",
@@ -321,7 +325,7 @@
   },
   "issue_count": {
     "high": 36,
-    "low": 26
+    "low": 27
   },
   "high_issues": {
     "issues": [
@@ -1288,6 +1292,12 @@
             "src_char": "97:1"
           },
           {
+            "contract_path": "src/ConstantFuncsAssembly.sol",
+            "line_no": 6,
+            "src": "110:20",
+            "src_char": "110:20"
+          },
+          {
             "contract_path": "src/DelegateCallWithoutAddressCheck.sol",
             "line_no": 9,
             "src": "337:7",
@@ -2201,6 +2211,12 @@
         "instances": [
           {
             "contract_path": "src/CompilerBugStorageSignedIntegerArray.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/ConstantFuncsAssembly.sol",
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
@@ -3712,6 +3728,12 @@
             "src_char": "1206:18"
           },
           {
+            "contract_path": "src/ConstantFuncsAssembly.sol",
+            "line_no": 26,
+            "src": "651:232",
+            "src_char": "651:232"
+          },
+          {
             "contract_path": "src/InternalFunctions.sol",
             "line_no": 28,
             "src": "693:12",
@@ -4081,6 +4103,31 @@
         ]
       },
       {
+        "title": "Functions declared `pure` / `view` but contains assembly",
+        "description": "If the assembly code contains bugs or unintended side effects, it can lead to incorrect results or vulnerabilities, which are hard to debug and resolve, especially when the function is meant to be simple and predictable.",
+        "detector_name": "constant-functions-assembly",
+        "instances": [
+          {
+            "contract_path": "src/ConstantFuncsAssembly.sol",
+            "line_no": 9,
+            "src": "182:175",
+            "src_char": "182:175"
+          },
+          {
+            "contract_path": "src/ConstantFuncsAssembly.sol",
+            "line_no": 17,
+            "src": "408:237",
+            "src_char": "408:237"
+          },
+          {
+            "contract_path": "src/ConstantFuncsAssembly.sol",
+            "line_no": 36,
+            "src": "934:98",
+            "src_char": "934:98"
+          }
+        ]
+      },
+      {
         "title": "Boolean equality is not required.",
         "description": "If `x` is a boolean, there is no need to do `if(x == true)` or `if(x == false)`. Just use `if(x)` and `if(!x)` respectively.",
         "detector_name": "boolean-equality",
@@ -4172,6 +4219,7 @@
     "weak-randomness",
     "pre-declared-local-variable-usage",
     "delete-nested-mapping",
+    "constant-functions-assembly",
     "boolean-equality",
     "tx-origin-used-for-auth",
     "msg-value-in-loop",
