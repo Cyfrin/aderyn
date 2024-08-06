@@ -72,6 +72,33 @@ impl<'a> Debug for ApproximateStateVariableManipulationFinder<'a> {
             writeln!(f)?;
         }
 
+        writeln!(
+            f,
+            "Links heuristics: {:?}",
+            self.state_variables_to_storage_pointers
+        )?;
+
+        if !self.state_variables_to_storage_pointers.is_empty() {
+            writeln!(f, "↓↓")?;
+            for (state_variable_id, storage_pointer_references) in
+                &self.state_variables_to_storage_pointers
+            {
+                if let Some(node) = self.context.nodes.get(state_variable_id) {
+                    let loc_info = self.context.get_node_sort_key(node);
+                    writeln!(f, "Links to {:?}", (loc_info.1, loc_info.2))?;
+                    for node_id in storage_pointer_references {
+                        if let Some(node) = self.context.nodes.get(node_id) {
+                            let loc_info = self.context.get_node_sort_key(node);
+                            writeln!(f, "\t <> {:?}", (loc_info.1, loc_info.2))?;
+                        }
+                    }
+                } else {
+                    writeln!(f, "<uknown_node_id_{}>", state_variable_id)?;
+                }
+            }
+            writeln!(f)?;
+        }
+
         std::fmt::Result::Ok(())
     }
 }
@@ -462,6 +489,22 @@ mod light_weight_state_variables_finder_tests {
         let changes_found = finder.state_variables_have_been_manipulated();
         assert!(changes_found);
         assert_eq!(finder.manipulated_storage_pointers.len(), 1);
+        assert_eq!(
+            finder
+                .state_variables_to_storage_pointers
+                .get(&contract.find_state_variable_node_id_by_name("person3"))
+                .unwrap()
+                .len(),
+            1
+        );
+        assert_eq!(
+            finder
+                .state_variables_to_storage_pointers
+                .get(&contract.find_state_variable_node_id_by_name("persons"))
+                .unwrap()
+                .len(),
+            1
+        );
         assert!(finder.directly_manipulated_state_variables.is_empty());
 
         // Test manipulateStateVariables3
@@ -475,6 +518,14 @@ mod light_weight_state_variables_finder_tests {
         assert!(finder.manipulated_storage_pointers.is_empty());
         assert!(finder.directly_manipulated_state_variables.is_empty());
         assert_eq!(finder.state_variables_to_storage_pointers.len(), 1); // person3 links to ptr_person3
+        assert_eq!(
+            finder
+                .state_variables_to_storage_pointers
+                .get(&contract.find_state_variable_node_id_by_name("person3"))
+                .unwrap()
+                .len(),
+            1
+        );
 
         // Test manipulateStateVariables4
         let finder = ApproximateStateVariableManipulationFinder::from(&context, func4.into());
@@ -498,6 +549,14 @@ mod light_weight_state_variables_finder_tests {
         assert!(finder.manipulated_storage_pointers.is_empty());
         assert!(finder.directly_manipulated_state_variables.is_empty());
         assert_eq!(finder.state_variables_to_storage_pointers.len(), 1);
+        assert_eq!(
+            finder
+                .state_variables_to_storage_pointers
+                .get(&contract.find_state_variable_node_id_by_name("person3"))
+                .unwrap()
+                .len(),
+            1
+        );
 
         // Test funcHelper
         let finder = ApproximateStateVariableManipulationFinder::from(&context, func_helper.into());
@@ -509,6 +568,14 @@ mod light_weight_state_variables_finder_tests {
         assert!(changes_found);
         assert_eq!(finder.manipulated_storage_pointers.len(), 2);
         assert!(finder.directly_manipulated_state_variables.is_empty());
+        assert_eq!(
+            finder
+                .state_variables_to_storage_pointers
+                .get(&contract.find_state_variable_node_id_by_name("person3"))
+                .unwrap()
+                .len(),
+            1
+        );
 
         // Test manipulateStateVariables5
         let finder = ApproximateStateVariableManipulationFinder::from(&context, func6.into());
@@ -520,6 +587,14 @@ mod light_weight_state_variables_finder_tests {
         assert!(changes_found);
         assert_eq!(finder.manipulated_storage_pointers.len(), 2);
         assert!(finder.directly_manipulated_state_variables.is_empty());
+        assert_eq!(
+            finder
+                .state_variables_to_storage_pointers
+                .get(&contract.find_state_variable_node_id_by_name("person3"))
+                .unwrap()
+                .len(),
+            4
+        );
     }
 
     #[test]
@@ -705,9 +780,14 @@ mod light_weight_state_variables_finder_tests {
 
 #[cfg(test)]
 mod state_variables_tests_helper {
-    use crate::context::workspace_context::WorkspaceContext;
 
-    use super::{ContractDefinition, FunctionDefinition};
+    // Using unwraps here are OK *only* becuase it's compiled with #[cfg(test)]
+
+    use crate::context::{
+        browser::ExtractVariableDeclarations, workspace_context::WorkspaceContext,
+    };
+
+    use super::{ContractDefinition, FunctionDefinition, NodeID};
 
     impl WorkspaceContext {
         pub fn find_contract_by_name(&self, name: &str) -> &ContractDefinition {
@@ -724,6 +804,15 @@ mod state_variables_tests_helper {
                 .iter()
                 .find(|func| func.name == name)
                 .unwrap()
+        }
+
+        pub fn find_state_variable_node_id_by_name(&self, name: &str) -> NodeID {
+            let variable_declarations = ExtractVariableDeclarations::from(self).extracted;
+            let variable = variable_declarations
+                .into_iter()
+                .filter(|v| v.state_variable && v.name == name)
+                .collect::<Vec<_>>();
+            variable.first().unwrap().id
         }
     }
 }
