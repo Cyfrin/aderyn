@@ -394,7 +394,7 @@ mod light_weight_state_variables_finder_tests {
         let no_changes_found = !finder.state_variables_have_been_manipulated();
         assert!(no_changes_found);
         assert!(finder.manipulated_storage_pointers.is_empty());
-        assert!(finder.directly_manipulated_state_variables.is_empty());
+        assert!(finder.c.is_empty());
 
         // Test funcHelper
         let finder = LightWeightStateVariableManipulationFinder::from(&context, func_helper.into());
