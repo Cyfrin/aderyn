@@ -84,8 +84,19 @@ impl<'a> LightWeightStateVariableManipulationFinder<'a> {
             || !self.manipulated_storage_pointers.is_empty()
     }
 
-    pub fn has_variable_declaration_been_manipulated(&self, var: &VariableDeclaration) -> bool {
-        self.directly_manipulated_state_variables.contains(&var.id)
+    pub fn has_variable_declaration_been_manipulated(
+        &self,
+        var: &VariableDeclaration,
+    ) -> Option<bool> {
+        if self.directly_manipulated_state_variables.contains(&var.id) {
+            return Some(true);
+        }
+        if self.manipulated_storage_pointers.is_empty() {
+            return Some(false);
+        }
+        // At this point, we don't know if any of the storage pointers refer to [`var`], so we cannot say for
+        // sure, if it has been manipulated or not.
+        None
     }
 }
 
