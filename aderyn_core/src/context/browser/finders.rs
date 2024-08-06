@@ -21,6 +21,8 @@ use std::{
 /// `push()` and `pop()` on arrays, `M[i] = x` on mappings, `delete X` imply the same.
 ///
 /// Here, the term manipulation covers all kinds of changes discussed above.
+///
+/// IMPORTANT: DO NOT MAKE THIS MEMBERS PUBLIC. Use the public methods implemented on this structure only.
 pub struct ApproximateStateVariableManipulationFinder<'a> {
     directly_manipulated_state_variables: BTreeSet<NodeID>,
     manipulated_storage_pointers: BTreeSet<NodeID>,
@@ -115,28 +117,67 @@ impl<'a> ApproximateStateVariableManipulationFinder<'a> {
         extractor
     }
 
-    // TODO: Use the links to get out better information
     pub fn state_variables_have_been_manipulated(&self) -> bool {
         !self.directly_manipulated_state_variables.is_empty()
             || !self.manipulated_storage_pointers.is_empty()
     }
 
-    pub fn variable_declaration_has_been_manipulated(
-        &self,
-        var: &VariableDeclaration,
-    ) -> Option<bool> {
+    pub fn no_state_variable_has_been_manipulated(&self) -> bool {
+        self.directly_manipulated_state_variables.is_empty()
+            && self.manipulated_storage_pointers.is_empty()
+    }
+
+    pub fn fetch_non_exhaustive_manipulated_state_variables(&self) -> Vec<&VariableDeclaration> {
+        let mut manipulated_state_vars: BTreeSet<NodeID> = BTreeSet::new();
+        manipulated_state_vars.extend(self.directly_manipulated_state_variables.iter());
+        for (state_variable_id, storage_pointers) in self.state_variables_to_storage_pointers.iter()
+        {
+            if storage_pointers
+                .iter()
+                .any(|ptr| self.manipulated_storage_pointers.contains(ptr))
+            {
+                manipulated_state_vars.insert(*state_variable_id);
+            }
+        }
+        manipulated_state_vars
+            .into_iter()
+            .flat_map(|v| self.context.nodes.get(&v))
+            .flat_map(|n| {
+                if let ASTNode::VariableDeclaration(variable_declaration) = n {
+                    assert!(variable_declaration.state_variable);
+                    return Some(variable_declaration);
+                }
+                None
+            })
+            .collect()
+    }
+
+    pub fn state_variable_has_been_manipulated(&self, var: &VariableDeclaration) -> Option<bool> {
         if self.directly_manipulated_state_variables.contains(&var.id) {
             return Some(true);
         }
         if self.manipulated_storage_pointers.is_empty() {
             return Some(false);
         }
+        // Now use our heuristics
+        if self
+            .state_variables_to_storage_pointers
+            .get(&var.id)
+            .is_some_and(|entry| {
+                entry
+                    .iter()
+                    .any(|e| self.manipulated_storage_pointers.contains(e))
+            })
+        {
+            return Some(true);
+        }
+
         // At this point, we don't know if any of the storage pointers refer to [`var`], so we cannot say for
         // sure, if it has been manipulated or not.
         None
     }
 
-    pub fn variable_declaration_has_not_been_manipulated(
+    pub fn state_variable_has_not_been_manipulated(
         &self,
         var: &VariableDeclaration,
     ) -> Option<bool> {
@@ -146,6 +187,19 @@ impl<'a> ApproximateStateVariableManipulationFinder<'a> {
         if self.manipulated_storage_pointers.is_empty() {
             return Some(true);
         }
+        // Now use our heuristics
+        if self
+            .state_variables_to_storage_pointers
+            .get(&var.id)
+            .is_some_and(|entry| {
+                entry
+                    .iter()
+                    .any(|e| self.manipulated_storage_pointers.contains(e))
+            })
+        {
+            return Some(false);
+        }
+
         // At this point, we don't know if any of the storage pointers refer to [`var`], so we cannot say for
         // sure, if it has been manipulated or not.
         None
