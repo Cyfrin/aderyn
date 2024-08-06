@@ -197,6 +197,7 @@
     "delete-nested-mapping",
     "tx-origin-used-for-auth",
     "msg-value-in-loop",
-    "contract-locks-ether"
+    "contract-locks-ether",
+    "domain-separator-collision"
   ]
 }

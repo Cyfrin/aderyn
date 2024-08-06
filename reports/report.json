@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 81,
-    "total_sloc": 2334
+    "total_source_units": 82,
+    "total_sloc": 2378
   },
   "files_details": {
     "files_details": [
@@ -88,6 +88,10 @@
       {
         "file_path": "src/DivisionBeforeMultiplication.sol",
         "n_sloc": 22
+      },
+      {
+        "file_path": "src/DomainSeparatorCollision.sol",
+        "n_sloc": 44
       },
       {
         "file_path": "src/DynamicArrayLengthAssignment.sol",
@@ -332,7 +336,7 @@
     ]
   },
   "issue_count": {
-    "high": 36,
+    "high": 37,
     "low": 29
   },
   "high_issues": {
@@ -2040,6 +2044,37 @@
             "src_char": "3059:15"
           }
         ]
+      },
+      {
+        "title": "Domain Separator collision for ERC20 contracts.",
+        "description": "An ERC20 token has a function whose signature collides with EIP-2612's DOMAIN_SEPARATOR(), causing unanticipated behavior for contracts using permit functionality. Remove or rename the pubic/external variable or function that collides with DOMAIN_SEPARATOR()",
+        "detector_name": "domain-separator-collision",
+        "instances": [
+          {
+            "contract_path": "src/DomainSeparatorCollision.sol",
+            "line_no": 29,
+            "src": "1097:16",
+            "src_char": "1097:16"
+          },
+          {
+            "contract_path": "src/DomainSeparatorCollision.sol",
+            "line_no": 37,
+            "src": "1267:16",
+            "src_char": "1267:16"
+          },
+          {
+            "contract_path": "src/DomainSeparatorCollision.sol",
+            "line_no": 42,
+            "src": "1376:16",
+            "src_char": "1376:16"
+          },
+          {
+            "contract_path": "src/DomainSeparatorCollision.sol",
+            "line_no": 51,
+            "src": "1520:16",
+            "src_char": "1520:16"
+          }
+        ]
       }
     ]
   },
@@ -2315,6 +2350,12 @@
           },
           {
             "contract_path": "src/DeletionNestedMappingStructureContract.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/DomainSeparatorCollision.sol",
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
@@ -3258,6 +3299,12 @@
             "src_char": "32:23"
           },
           {
+            "contract_path": "src/DomainSeparatorCollision.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/InconsistentUints.sol",
             "line_no": 1,
             "src": "0:24",
@@ -4169,6 +4216,12 @@
         "detector_name": "public-variable-read-in-external-context",
         "instances": [
           {
+            "contract_path": "src/DomainSeparatorCollision.sol",
+            "line_no": 54,
+            "src": "1585:21",
+            "src_char": "1585:21"
+          },
+          {
             "contract_path": "src/PublicVariableReadInExternalContext.sol",
             "line_no": 12,
             "src": "355:14",
@@ -4487,6 +4540,7 @@
     "tx-origin-used-for-auth",
     "msg-value-in-loop",
     "contract-locks-ether",
+    "domain-separator-collision",
     "return-bomb"
   ]
 }
