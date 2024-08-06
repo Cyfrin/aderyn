@@ -204,10 +204,8 @@ fn find_base(expr: &Expression) -> Vec<NodeID> {
         }
         // Handle tuple form lhs while assigning
         Expression::TupleExpression(TupleExpression { components, .. }) => {
-            for component in components {
-                if let Some(component) = component {
-                    node_ids.extend(find_base(component))
-                }
+            for component in components.iter().flatten() {
+                node_ids.extend(find_base(component))
             }
         }
         _ => (),
@@ -394,7 +392,7 @@ mod light_weight_state_variables_finder_tests {
         let no_changes_found = !finder.state_variables_have_been_manipulated();
         assert!(no_changes_found);
         assert!(finder.manipulated_storage_pointers.is_empty());
-        assert!(finder.c.is_empty());
+        assert!(finder.directly_manipulated_state_variables.is_empty());
 
         // Test funcHelper
         let finder = LightWeightStateVariableManipulationFinder::from(&context, func_helper.into());
