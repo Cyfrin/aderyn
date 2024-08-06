@@ -145,8 +145,7 @@ contract StructPlusFixedArrayAssignmentExample {
         return (p1, p1);
     }
 
-    // TODO !!! CHECK THAT THIS DOES NOT MANIPULATE STORAGE VARIABLE
-    function manipulateStateVariables5() external {
+    function manipulateStateVariables5() external view {
         Person storage p1;
         p1 = person3;
     }

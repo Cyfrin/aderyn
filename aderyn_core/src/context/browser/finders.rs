@@ -152,6 +152,22 @@ impl<'a> ASTConstVisitor for LightWeightStateVariableManipulationFinder<'a> {
     }
 
     fn visit_assignment(&mut self, assignment: &Assignment) -> Result<bool> {
+        // When something is assigned to an expression of type "storage pointer", no state variable's value changes.
+        // The only value changed is the thing which the storage pointer points to.
+        // The value of a storage variable changes if te expression's type string contains "storage ref"
+        if assignment
+            .left_hand_side
+            .type_descriptions()
+            .is_some_and(|type_desc| {
+                type_desc
+                    .type_string
+                    .as_ref()
+                    .is_some_and(|type_string| type_string.ends_with("storage pointer"))
+            })
+        {
+            return Ok(true);
+        }
+
         for id in find_base(assignment.left_hand_side.as_ref()) {
             match is_storage_variable_or_storage_pointer(self.context, id) {
                 Some(AssigneeType::StorageVariable) => {
@@ -322,6 +338,7 @@ mod light_weight_state_variables_finder_tests {
         let func2 = contract.find_function_by_name("manipulateStateVariables2");
         let func3 = contract.find_function_by_name("manipulateStateVariables3");
         let func4 = contract.find_function_by_name("manipulateStateVariables4");
+        let func5 = contract.find_function_by_name("manipulateStateVariables5");
         let func_helper = contract.find_function_by_name("manipulateHelper");
 
         // Test manipulateStateVariables
@@ -361,6 +378,17 @@ mod light_weight_state_variables_finder_tests {
         let finder = LightWeightStateVariableManipulationFinder::from(&context, func4.into());
         println!(
             "StructPlusFixedArrayAssignmentExample::manipulateStateVariables4()\n{:?}",
+            finder
+        );
+        let no_changes_found = !finder.state_variables_have_been_manipulated();
+        assert!(no_changes_found);
+        assert!(finder.manipulated_storage_pointers.is_empty());
+        assert!(finder.directly_manipulated_state_variables.is_empty());
+
+        // Test manipulateStateVariables5
+        let finder = LightWeightStateVariableManipulationFinder::from(&context, func5.into());
+        println!(
+            "StructPlusFixedArrayAssignmentExample::manipulateStateVariables5()\n{:?}",
             finder
         );
         let no_changes_found = !finder.state_variables_have_been_manipulated();
