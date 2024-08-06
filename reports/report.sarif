@@ -4927,6 +4927,17 @@
                 },
                 "region": {
                   "byteLength": 7,
+                  "byteOffset": 255
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LocalVariableShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 7,
                   "byteOffset": 440
                 }
               }
@@ -5059,7 +5070,7 @@
                 },
                 "region": {
                   "byteLength": 7,
-                  "byteOffset": 255
+                  "byteOffset": 598
                 }
               }
             },
@@ -5070,7 +5081,7 @@
                 },
                 "region": {
                   "byteLength": 7,
-                  "byteOffset": 598
+                  "byteOffset": 1408
                 }
               }
             }
