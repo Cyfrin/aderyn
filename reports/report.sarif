@@ -1762,6 +1762,28 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/LocalVariableShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 132
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LocalVariableShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 566
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/PublicVariableReadInExternalContext.sol"
                 },
                 "region": {
@@ -3829,6 +3851,39 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/LocalVariableShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 18,
+                  "byteOffset": 184
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LocalVariableShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 28,
+                  "byteOffset": 336
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LocalVariableShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 18,
+                  "byteOffset": 737
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/ReturnBomb.sol"
                 },
                 "region": {
@@ -4862,6 +4917,39 @@
                 "region": {
                   "byteLength": 6,
                   "byteOffset": 1389
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LocalVariableShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 255
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LocalVariableShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 440
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LocalVariableShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 807
                 }
               }
             },
@@ -6862,6 +6950,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/LocalVariableShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 132
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/StateVariables.sol"
                 },
                 "region": {
@@ -7212,6 +7311,48 @@
             "text": "If `x` is a boolean, there is no need to do `if(x == true)` or `if(x == false)`. Just use `if(x)` and `if(!x)` respectively."
           },
           "ruleId": "boolean-equality"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LocalVariableShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 211
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LocalVariableShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 397
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LocalVariableShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 764
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Rename the local variables that shadow another component."
+          },
+          "ruleId": "local-variable-shadowing"
         },
         {
           "level": "note",

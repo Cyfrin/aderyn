@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 81,
-    "total_sloc": 2334
+    "total_source_units": 82,
+    "total_sloc": 2357
   },
   "files_details": {
     "files_details": [
@@ -128,6 +128,10 @@
       {
         "file_path": "src/KeccakContract.sol",
         "n_sloc": 21
+      },
+      {
+        "file_path": "src/LocalVariableShadowing.sol",
+        "n_sloc": 23
       },
       {
         "file_path": "src/MisusedBoolean.sol",
@@ -333,7 +337,7 @@
   },
   "issue_count": {
     "high": 36,
-    "low": 29
+    "low": 30
   },
   "high_issues": {
     "issues": [
@@ -1328,6 +1332,18 @@
             "line_no": 10,
             "src": "355:7",
             "src_char": "355:7"
+          },
+          {
+            "contract_path": "src/LocalVariableShadowing.sol",
+            "line_no": 7,
+            "src": "132:5",
+            "src_char": "132:5"
+          },
+          {
+            "contract_path": "src/LocalVariableShadowing.sol",
+            "line_no": 26,
+            "src": "566:4",
+            "src_char": "566:4"
           },
           {
             "contract_path": "src/PublicVariableReadInExternalContext.sol",
@@ -2520,6 +2536,24 @@
             "src_char": "129:9"
           },
           {
+            "contract_path": "src/LocalVariableShadowing.sol",
+            "line_no": 10,
+            "src": "184:18",
+            "src_char": "184:18"
+          },
+          {
+            "contract_path": "src/LocalVariableShadowing.sol",
+            "line_no": 16,
+            "src": "336:28",
+            "src_char": "336:28"
+          },
+          {
+            "contract_path": "src/LocalVariableShadowing.sol",
+            "line_no": 32,
+            "src": "737:18",
+            "src_char": "737:18"
+          },
+          {
             "contract_path": "src/ReturnBomb.sol",
             "line_no": 16,
             "src": "358:4",
@@ -3091,6 +3125,24 @@
             "line_no": 40,
             "src": "1389:6",
             "src_char": "1389:6"
+          },
+          {
+            "contract_path": "src/LocalVariableShadowing.sol",
+            "line_no": 12,
+            "src": "255:7",
+            "src_char": "255:7"
+          },
+          {
+            "contract_path": "src/LocalVariableShadowing.sol",
+            "line_no": 19,
+            "src": "440:7",
+            "src_char": "440:7"
+          },
+          {
+            "contract_path": "src/LocalVariableShadowing.sol",
+            "line_no": 34,
+            "src": "807:7",
+            "src_char": "807:7"
           },
           {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
@@ -4212,6 +4264,12 @@
             "src_char": "434:10"
           },
           {
+            "contract_path": "src/LocalVariableShadowing.sol",
+            "line_no": 7,
+            "src": "132:5",
+            "src_char": "132:5"
+          },
+          {
             "contract_path": "src/StateVariables.sol",
             "line_no": 8,
             "src": "199:19",
@@ -4408,6 +4466,31 @@
         ]
       },
       {
+        "title": "Local variable shadows state variables in the contract hirearchy",
+        "description": "Rename the local variables that shadow another component.",
+        "detector_name": "local-variable-shadowing",
+        "instances": [
+          {
+            "contract_path": "src/LocalVariableShadowing.sol",
+            "line_no": 10,
+            "src": "211:5",
+            "src_char": "211:5"
+          },
+          {
+            "contract_path": "src/LocalVariableShadowing.sol",
+            "line_no": 17,
+            "src": "397:5",
+            "src_char": "397:5"
+          },
+          {
+            "contract_path": "src/LocalVariableShadowing.sol",
+            "line_no": 32,
+            "src": "764:4",
+            "src_char": "764:4"
+          }
+        ]
+      },
+      {
         "title": "Return Bomb",
         "description": "A low level callee may consume all callers gas unexpectedly. Avoid unlimited implicit decoding of returndata on calls to unchecked addresses. You can limit the gas by passing a gas limit as an option to the call. For example, `unknownAdress.call{gas: gasLimitHere}(\"calldata\")` That would act as a safety net from OOG errors.\n        ",
         "detector_name": "return-bomb",
@@ -4487,6 +4570,7 @@
     "tx-origin-used-for-auth",
     "msg-value-in-loop",
     "contract-locks-ether",
+    "local-variable-shadowing",
     "return-bomb"
   ]
 }
