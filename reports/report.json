@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 80,
-    "total_sloc": 2290
+    "total_source_units": 81,
+    "total_sloc": 2334
   },
   "files_details": {
     "files_details": [
@@ -160,6 +160,10 @@
       {
         "file_path": "src/RedundantStatements.sol",
         "n_sloc": 14
+      },
+      {
+        "file_path": "src/ReturnBomb.sol",
+        "n_sloc": 44
       },
       {
         "file_path": "src/RevertsAndRequriesInLoops.sol",
@@ -329,7 +333,7 @@
   },
   "issue_count": {
     "high": 36,
-    "low": 28
+    "low": 29
   },
   "high_issues": {
     "issues": [
@@ -1332,6 +1336,12 @@
             "src_char": "130:26"
           },
           {
+            "contract_path": "src/ReturnBomb.sol",
+            "line_no": 61,
+            "src": "1623:7",
+            "src_char": "1623:7"
+          },
+          {
             "contract_path": "src/StateShadowing.sol",
             "line_no": 5,
             "src": "87:13",
@@ -1600,6 +1610,12 @@
             "line_no": 194,
             "src": "6342:11",
             "src_char": "6342:11"
+          },
+          {
+            "contract_path": "src/ReturnBomb.sol",
+            "line_no": 32,
+            "src": "839:4",
+            "src_char": "839:4"
           },
           {
             "contract_path": "src/SendEtherNoChecks.sol",
@@ -2504,6 +2520,30 @@
             "src_char": "129:9"
           },
           {
+            "contract_path": "src/ReturnBomb.sol",
+            "line_no": 16,
+            "src": "358:4",
+            "src_char": "358:4"
+          },
+          {
+            "contract_path": "src/ReturnBomb.sol",
+            "line_no": 32,
+            "src": "839:4",
+            "src_char": "839:4"
+          },
+          {
+            "contract_path": "src/ReturnBomb.sol",
+            "line_no": 47,
+            "src": "1273:4",
+            "src_char": "1273:4"
+          },
+          {
+            "contract_path": "src/ReturnBomb.sol",
+            "line_no": 63,
+            "src": "1646:4",
+            "src_char": "1646:4"
+          },
+          {
             "contract_path": "src/StateVariables.sol",
             "line_no": 47,
             "src": "1764:18",
@@ -3231,6 +3271,12 @@
           },
           {
             "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/ReturnBomb.sol",
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
@@ -4360,6 +4406,19 @@
             "src_char": "614:16"
           }
         ]
+      },
+      {
+        "title": "Return Bomb",
+        "description": "A low level callee may consume all callers gas unexpectedly. Avoid unlimited implicit decoding of returndata on calls to unchecked addresses. You can limit the gas by passing a gas limit as an option to the call. For example, `unknownAdress.call{gas: gasLimitHere}(\"calldata\")` That would act as a safety net from OOG errors.\n        ",
+        "detector_name": "return-bomb",
+        "instances": [
+          {
+            "contract_path": "src/ReturnBomb.sol",
+            "line_no": 22,
+            "src": "591:115",
+            "src_char": "591:115"
+          }
+        ]
       }
     ]
   },
@@ -4427,6 +4486,7 @@
     "boolean-equality",
     "tx-origin-used-for-auth",
     "msg-value-in-loop",
-    "contract-locks-ether"
+    "contract-locks-ether",
+    "return-bomb"
   ]
 }
