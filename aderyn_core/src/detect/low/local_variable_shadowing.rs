@@ -65,7 +65,7 @@ impl IssueDetector for LocalVariableShadowingDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Local variable shadows state variables in the contract or it's hirearchy.")
+        String::from("Local variable shadows state variables in the contract hirearchy")
     }
 
     fn description(&self) -> String {

@@ -3234,6 +3234,12 @@
           },
           {
             "contract_path": "src/LocalVariableShadowing.sol",
+            "line_no": 12,
+            "src": "255:7",
+            "src_char": "255:7"
+          },
+          {
+            "contract_path": "src/LocalVariableShadowing.sol",
             "line_no": 19,
             "src": "440:7",
             "src_char": "440:7"
@@ -3306,9 +3312,9 @@
           },
           {
             "contract_path": "src/cloc/HeavilyCommentedContract.sol",
-            "line_no": 17,
-            "src": "255:7",
-            "src_char": "255:7"
+            "line_no": 35,
+            "src": "598:7",
+            "src_char": "598:7"
           },
           {
             "contract_path": "src/cloc/HeavilyCommentedContract.sol",
@@ -4782,7 +4788,7 @@
         ]
       },
       {
-        "title": "Local variable shadows state variables in the contract or it's hirearchy.",
+        "title": "Local variable shadows state variables in the contract hirearchy",
         "description": "Rename the local variables that shadow another component.",
         "detector_name": "local-variable-shadowing",
         "instances": [
