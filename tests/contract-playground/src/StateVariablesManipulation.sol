@@ -126,11 +126,8 @@ contract StructPlusFixedArrayAssignmentExample {
     }
 
     function manipulateStateVariables3() external {
-        Person storage ptr_person = person3;
-        ptr_person.name = "Changed";
-
-        ptr_person = persons[dummy.age][0];
-        ptr_person.name = "Changed";
+        // This is VariableDeclarationStatement, not an Assigment
+        Person storage ptr_person3 = person3;
     }
 
     function manipulateStateVariables4() external {
@@ -147,6 +144,12 @@ contract StructPlusFixedArrayAssignmentExample {
         p1.age = 130;
         return (p1, p1);
     }
+
+    // TODO !!! CHECK THAT THIS DOES NOT MANIPULATE STORAGE VARIABLE
+    function manipulateStateVariables5() external {
+        Person storage p1;
+        p1 = person3;
+    }
 }
 
 library SVManipulationLibrary {
@@ -154,6 +157,26 @@ library SVManipulationLibrary {
         StructPlusFixedArrayAssignmentExample.Person storage p
     ) internal {
         p.age = 200;
+    }
+
+    function manipulateLib2()
+        internal
+        returns (StructPlusFixedArrayAssignmentExample.Person storage p2)
+    {
+        assembly {
+            p2.slot := 0x00
+        }
+        p2.age = 200;
+    }
+
+    function manipulateLib3() internal {
+        StructPlusFixedArrayAssignmentExample.Person storage p1;
+        StructPlusFixedArrayAssignmentExample.Person storage p2;
+        assembly {
+            p1.slot := 0x00
+            p2.slot := 0x01
+        }
+        (p1.name, p2.age) = ("Hello", 400);
     }
 }
 

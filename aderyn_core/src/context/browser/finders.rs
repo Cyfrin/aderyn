@@ -84,7 +84,7 @@ impl<'a> LightWeightStateVariableManipulationFinder<'a> {
             || !self.manipulated_storage_pointers.is_empty()
     }
 
-    pub fn has_variable_declaration_been_manipulated(
+    pub fn variable_declaration_has_been_manipulated(
         &self,
         var: &VariableDeclaration,
     ) -> Option<bool> {
@@ -98,15 +98,28 @@ impl<'a> LightWeightStateVariableManipulationFinder<'a> {
         // sure, if it has been manipulated or not.
         None
     }
+
+    pub fn variable_declaration_has_not_been_manipulated(
+        &self,
+        var: &VariableDeclaration,
+    ) -> Option<bool> {
+        if self.directly_manipulated_state_variables.contains(&var.id) {
+            return Some(false);
+        }
+        if self.manipulated_storage_pointers.is_empty() {
+            return Some(true);
+        }
+        // At this point, we don't know if any of the storage pointers refer to [`var`], so we cannot say for
+        // sure, if it has been manipulated or not.
+        None
+    }
 }
 
 impl<'a> ASTConstVisitor for LightWeightStateVariableManipulationFinder<'a> {
     fn visit_unary_operation(&mut self, node: &UnaryOperation) -> Result<bool> {
         // Catch delete operations
         if node.operator == "delete" {
-            if let Some(id) = find_referenced_declaration_for_identifier_or_indexed_identifier(
-                node.sub_expression.as_ref(),
-            ) {
+            for id in find_base(node.sub_expression.as_ref()) {
                 match is_storage_variable_or_storage_pointer(self.context, id) {
                     Some(AssigneeType::StorageVariable) => {
                         self.directly_manipulated_state_variables.insert(id);
@@ -122,9 +135,7 @@ impl<'a> ASTConstVisitor for LightWeightStateVariableManipulationFinder<'a> {
     }
 
     fn visit_member_access(&mut self, member: &MemberAccess) -> Result<bool> {
-        if let Some(id) = find_referenced_declaration_for_identifier_or_indexed_identifier(
-            member.expression.as_ref(),
-        ) {
+        for id in find_base(member.expression.as_ref()) {
             if member.member_name == "push" || member.member_name == "pop" {
                 match is_storage_variable_or_storage_pointer(self.context, id) {
                     Some(AssigneeType::StorageVariable) => {
@@ -141,9 +152,7 @@ impl<'a> ASTConstVisitor for LightWeightStateVariableManipulationFinder<'a> {
     }
 
     fn visit_assignment(&mut self, assignment: &Assignment) -> Result<bool> {
-        if let Some(id) = find_referenced_declaration_for_identifier_or_indexed_identifier(
-            assignment.left_hand_side.as_ref(),
-        ) {
+        for id in find_base(assignment.left_hand_side.as_ref()) {
             match is_storage_variable_or_storage_pointer(self.context, id) {
                 Some(AssigneeType::StorageVariable) => {
                     self.directly_manipulated_state_variables.insert(id);
@@ -158,33 +167,36 @@ impl<'a> ASTConstVisitor for LightWeightStateVariableManipulationFinder<'a> {
     }
 }
 
-fn find_referenced_declaration_for_identifier_or_indexed_identifier(
-    expr: &Expression,
-) -> Option<NodeID> {
+fn find_base(expr: &Expression) -> Vec<NodeID> {
+    let mut node_ids = vec![];
     match expr {
         Expression::Identifier(Identifier {
             referenced_declaration: Some(id),
             ..
         }) => {
-            return Some(*id);
+            node_ids.push(*id);
         }
         // Handle mappings assignment
         Expression::IndexAccess(IndexAccess {
             base_expression, ..
         }) => {
-            return find_referenced_declaration_for_identifier_or_indexed_identifier(
-                base_expression.as_ref(),
-            );
+            node_ids.extend(find_base(base_expression.as_ref()));
         }
         // Handle struct member assignment
         Expression::MemberAccess(MemberAccess { expression, .. }) => {
-            return find_referenced_declaration_for_identifier_or_indexed_identifier(
-                expression.as_ref(),
-            );
+            node_ids.extend(find_base(expression.as_ref()));
+        }
+        // Handle tuple form lhs while assigning
+        Expression::TupleExpression(TupleExpression { components, .. }) => {
+            for component in components {
+                if let Some(component) = component {
+                    node_ids.extend(find_base(component))
+                }
+            }
         }
         _ => (),
     };
-    None
+    node_ids
 }
 
 enum AssigneeType {
@@ -268,35 +280,141 @@ mod light_weight_state_variables_finder_tests {
 
         let contract = context.find_contract_by_name("FixedSizeArraysAssignmentExample");
 
+        let func1 = contract.find_function_by_name("manipulateDirectly");
+        let func2 = contract.find_function_by_name("manipulateViaIndexAccess");
+
         // Test manipulateDirectly() function
 
-        let func1 = contract.find_function_by_name("manipulateDirectly");
-
-        let finder1 = LightWeightStateVariableManipulationFinder::from(&context, func1.into());
+        let finder = LightWeightStateVariableManipulationFinder::from(&context, func1.into());
         println!(
             "FixedSizeArraysAssignmentExample::manipulateDirectly()\n{:?}",
-            finder1
+            finder
         );
 
-        let changes_found1 = finder1.state_variables_have_been_manipulated();
-        assert!(changes_found1);
-        assert_eq!(finder1.directly_manipulated_state_variables.len(), 1);
-        assert!(finder1.manipulated_storage_pointers.is_empty());
+        let changes_found = finder.state_variables_have_been_manipulated();
+        assert!(changes_found);
+        assert_eq!(finder.directly_manipulated_state_variables.len(), 1);
+        assert!(finder.manipulated_storage_pointers.is_empty());
 
         // Test manipulateViaIndexAccess() function
 
-        let func2 = contract.find_function_by_name("manipulateViaIndexAccess");
-
-        let finder2 = LightWeightStateVariableManipulationFinder::from(&context, func2.into());
+        let finder = LightWeightStateVariableManipulationFinder::from(&context, func2.into());
         println!(
             "FixedSizeArraysAssignmentExample::manipulateViaIndexAccess()\n{:?}",
-            finder2
+            finder
         );
 
-        let changes_found2 = finder2.state_variables_have_been_manipulated();
+        let changes_found2 = finder.state_variables_have_been_manipulated();
         assert!(changes_found2);
-        assert_eq!(finder2.directly_manipulated_state_variables.len(), 2);
-        assert!(finder2.manipulated_storage_pointers.is_empty());
+        assert_eq!(finder.directly_manipulated_state_variables.len(), 2);
+        assert!(finder.manipulated_storage_pointers.is_empty());
+    }
+
+    #[test]
+    fn test_struct_plus_fixed_array_assignment_example() {
+        let context = load_solidity_source_unit(
+            "../tests/contract-playground/src/StateVariablesManipulation.sol",
+        );
+
+        let contract = context.find_contract_by_name("StructPlusFixedArrayAssignmentExample");
+
+        let func = contract.find_function_by_name("manipulateStateVariables");
+        let func2 = contract.find_function_by_name("manipulateStateVariables2");
+        let func3 = contract.find_function_by_name("manipulateStateVariables3");
+        let func4 = contract.find_function_by_name("manipulateStateVariables4");
+        let func_helper = contract.find_function_by_name("manipulateHelper");
+
+        // Test manipulateStateVariables
+        let finder = LightWeightStateVariableManipulationFinder::from(&context, func.into());
+        println!(
+            "StructPlusFixedArrayAssignmentExample::manipulateStateVariables()\n{:?}",
+            finder
+        );
+        let changes_found = finder.state_variables_have_been_manipulated();
+        assert!(changes_found);
+        assert_eq!(finder.directly_manipulated_state_variables.len(), 3);
+        assert!(finder.manipulated_storage_pointers.is_empty());
+
+        // Test manipulateStateVariables2
+        let finder = LightWeightStateVariableManipulationFinder::from(&context, func2.into());
+        println!(
+            "StructPlusFixedArrayAssignmentExample::manipulateStateVariables2()\n{:?}",
+            finder
+        );
+        let changes_found = finder.state_variables_have_been_manipulated();
+        assert!(changes_found);
+        assert_eq!(finder.manipulated_storage_pointers.len(), 1);
+        assert!(finder.directly_manipulated_state_variables.is_empty());
+
+        // Test manipulateStateVariables3
+        let finder = LightWeightStateVariableManipulationFinder::from(&context, func3.into());
+        println!(
+            "StructPlusFixedArrayAssignmentExample::manipulateStateVariables3()\n{:?}",
+            finder
+        );
+        let no_changes_found = !finder.state_variables_have_been_manipulated();
+        assert!(no_changes_found);
+        assert!(finder.manipulated_storage_pointers.is_empty());
+        assert!(finder.directly_manipulated_state_variables.is_empty());
+
+        // Test manipulateStateVariables4
+        let finder = LightWeightStateVariableManipulationFinder::from(&context, func4.into());
+        println!(
+            "StructPlusFixedArrayAssignmentExample::manipulateStateVariables4()\n{:?}",
+            finder
+        );
+        let no_changes_found = !finder.state_variables_have_been_manipulated();
+        assert!(no_changes_found);
+        assert!(finder.manipulated_storage_pointers.is_empty());
+        assert!(finder.directly_manipulated_state_variables.is_empty());
+
+        // Test funcHelper
+        let finder = LightWeightStateVariableManipulationFinder::from(&context, func_helper.into());
+        println!(
+            "StructPlusFixedArrayAssignmentExample::manipulateHelper()\n{:?}",
+            finder
+        );
+        let changes_found = finder.state_variables_have_been_manipulated();
+        assert!(changes_found);
+        assert_eq!(finder.manipulated_storage_pointers.len(), 2);
+        assert!(finder.directly_manipulated_state_variables.is_empty());
+    }
+
+    #[test]
+    fn test_sv_manipulation_library() {
+        let context = load_solidity_source_unit(
+            "../tests/contract-playground/src/StateVariablesManipulation.sol",
+        );
+
+        let contract = context.find_contract_by_name("SVManipulationLibrary");
+
+        let func = contract.find_function_by_name("manipulateLib");
+        let func2 = contract.find_function_by_name("manipulateLib2");
+        let func3 = contract.find_function_by_name("manipulateLib3");
+
+        // Test manipulateLib()
+        let finder = LightWeightStateVariableManipulationFinder::from(&context, func.into());
+        println!("SVManipulationLibrary::manipulateLib()\n{:?}", finder);
+        let changes_found = finder.state_variables_have_been_manipulated();
+        assert!(changes_found);
+        assert_eq!(finder.manipulated_storage_pointers.len(), 1);
+        assert!(finder.directly_manipulated_state_variables.is_empty());
+
+        // Test manipulateLib2()
+        let finder = LightWeightStateVariableManipulationFinder::from(&context, func2.into());
+        println!("SVManipulationLibrary::manipulateLib2()\n{:?}", finder);
+        let changes_found = finder.state_variables_have_been_manipulated();
+        assert!(changes_found);
+        assert_eq!(finder.manipulated_storage_pointers.len(), 1);
+        assert!(finder.directly_manipulated_state_variables.is_empty());
+
+        // Test manipulateLib3()
+        let finder = LightWeightStateVariableManipulationFinder::from(&context, func3.into());
+        println!("SVManipulationLibrary::manipulateLib3()\n{:?}", finder);
+        let changes_found = finder.state_variables_have_been_manipulated();
+        assert!(changes_found);
+        assert_eq!(finder.manipulated_storage_pointers.len(), 2);
+        assert!(finder.directly_manipulated_state_variables.is_empty());
     }
 }
 
