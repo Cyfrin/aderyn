@@ -131,6 +131,7 @@ contract StructPlusFixedArrayAssignmentExample {
     }
 
     function manipulateStateVariables4() external {
+        // This is VariableDeclarationStatement, not an Assigment
         (Person storage p1, ) = manipulateHelper(personsUltimate[0][0]);
         manipulateHelper(p1);
         p1.manipulateLib();
@@ -148,6 +149,22 @@ contract StructPlusFixedArrayAssignmentExample {
     function manipulateStateVariables5() external view {
         Person storage p1;
         p1 = person3;
+    }
+
+    function manipulateStateVariables6() external {
+        // here, p1 and p2 are manipulated but not p3 and p4
+        Person storage p1;
+        Person storage p2;
+        Person storage p3;
+        Person storage p4;
+        // These are assigments with tuple expression on lhs and rhs
+        (p3, p4, p1, p2, (p1.age, p2.age)) = (
+            person3,
+            person3,
+            person3,
+            person3,
+            (1398, 1399)
+        );
     }
 }
 
@@ -273,8 +290,29 @@ contract DynamicArraysPushExample {
         indexMeToPushDArray.push(12309);
     }
 
-    // 1 more state variable pushed to here
+    // 1 state variable pushed to here
     function manipulateViaMemberAccess() external {
         p.some.push(102);
+    }
+
+    // 1 storage pointer pushed to here
+    function manipulateViaMemberAccess2() external {
+        uint256[] storage that = p.some;
+        that.push(102);
+    }
+}
+
+contract DynamicMappingsArrayPushExample {
+    // Struct example
+    struct Person {
+        string name;
+        uint256 age;
+        uint256[] some;
+    }
+
+    mapping(uint256 => Person) myMap;
+
+    function add(uint256 i) external {
+        myMap[i].some.push(304);
     }
 }
