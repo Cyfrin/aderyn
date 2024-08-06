@@ -239,6 +239,65 @@ mod light_weight_state_variables_finder_tests {
         println!("{:?}", finder);
         assert!(no_changes_found);
     }
+
+    #[test]
+    fn test_simple_state_variable_manipulations_found() {
+        let context = load_solidity_source_unit(
+            "../tests/contract-playground/src/StateVariablesManipulation.sol",
+        );
+
+        let contract = context.find_contract_by_name("SimpleStateVarManipulationExample");
+        let func = contract.find_function_by_name("manipulateStateVarDirectly");
+
+        let finder = LightWeightStateVariableManipulationFinder::from(&context, func.into());
+        let changes_found = finder.state_variables_have_been_manipulated();
+        println!(
+            "SimpleStateVarManipulationExample::manipulateStateVarDirectly()\n{:?}",
+            finder
+        );
+        assert!(changes_found);
+        assert_eq!(finder.directly_manipulated_state_variables.len(), 5);
+        assert!(finder.manipulated_storage_pointers.is_empty());
+    }
+
+    #[test]
+    fn test_fixed_size_array_assignments() {
+        let context = load_solidity_source_unit(
+            "../tests/contract-playground/src/StateVariablesManipulation.sol",
+        );
+
+        let contract = context.find_contract_by_name("FixedSizeArraysAssignmentExample");
+
+        // Test manipulateDirectly() function
+
+        let func1 = contract.find_function_by_name("manipulateDirectly");
+
+        let finder1 = LightWeightStateVariableManipulationFinder::from(&context, func1.into());
+        println!(
+            "FixedSizeArraysAssignmentExample::manipulateDirectly()\n{:?}",
+            finder1
+        );
+
+        let changes_found1 = finder1.state_variables_have_been_manipulated();
+        assert!(changes_found1);
+        assert_eq!(finder1.directly_manipulated_state_variables.len(), 1);
+        assert!(finder1.manipulated_storage_pointers.is_empty());
+
+        // Test manipulateViaIndexAccess() function
+
+        let func2 = contract.find_function_by_name("manipulateViaIndexAccess");
+
+        let finder2 = LightWeightStateVariableManipulationFinder::from(&context, func2.into());
+        println!(
+            "FixedSizeArraysAssignmentExample::manipulateViaIndexAccess()\n{:?}",
+            finder2
+        );
+
+        let changes_found2 = finder2.state_variables_have_been_manipulated();
+        assert!(changes_found2);
+        assert_eq!(finder2.directly_manipulated_state_variables.len(), 2);
+        assert!(finder2.manipulated_storage_pointers.is_empty());
+    }
 }
 
 #[cfg(test)]
