@@ -151,9 +151,7 @@ fn main() {
         if let Ok(yes) = aderyn_is_currently_running_newest_version() {
             if !yes {
                 println!();
-                println!(
-                    "NEW VERSION OF ADERYN AVAILABLE! Please run `cargo install aderyn` to fully upgrade the current version"
-                );
+                println!("NEW VERSION OF ADERYN AVAILABLE! Please run `cyfrinup` to upgrade.");
             }
         }
     }

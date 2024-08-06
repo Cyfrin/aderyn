@@ -59,6 +59,50 @@
                   "byteOffset": 887
                 }
               }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 1994
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 2692
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 4694
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 5230
+                }
+              }
             }
           ],
           "message": {
@@ -1707,6 +1751,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/ConstantFuncsAssembly.sol"
+                },
+                "region": {
+                  "byteLength": 20,
+                  "byteOffset": 110
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/DelegateCallWithoutAddressCheck.sol"
                 },
                 "region": {
@@ -1784,6 +1839,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/ReturnBomb.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 1623
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/StateShadowing.sol"
                 },
                 "region": {
@@ -1850,6 +1916,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 95
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/UninitializedStateVariable.sol"
                 },
                 "region": {
@@ -1866,6 +1943,61 @@
                 "region": {
                   "byteLength": 11,
                   "byteOffset": 529
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UnusedStateVariables.sol"
+                },
+                "region": {
+                  "byteLength": 13,
+                  "byteOffset": 147
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UnusedStateVariables.sol"
+                },
+                "region": {
+                  "byteLength": 13,
+                  "byteOffset": 183
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UnusedStateVariables.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 215
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UnusedStateVariables.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 246
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UnusedStateVariables.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 314
                 }
               }
             },
@@ -2133,6 +2265,28 @@
                   "byteOffset": 1691
                 }
               }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 20,
+                  "byteOffset": 4375
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 27,
+                  "byteOffset": 4853
+                }
+              }
             }
           ],
           "message": {
@@ -2195,6 +2349,17 @@
                 "region": {
                   "byteLength": 11,
                   "byteOffset": 6342
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ReturnBomb.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 839
                 }
               }
             },
@@ -3305,6 +3470,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/ConstantFuncsAssembly.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/ContractLocksEther.sol"
                 },
                 "region": {
@@ -3463,6 +3639,28 @@
                 },
                 "region": {
                   "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 33
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UnusedStateVariables.sol"
+                },
+                "region": {
+                  "byteLength": 24,
                   "byteOffset": 32
                 }
               }
@@ -3774,6 +3972,50 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/ReturnBomb.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 358
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ReturnBomb.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 839
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ReturnBomb.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 1273
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ReturnBomb.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 1646
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/StateVariables.sol"
                 },
                 "region": {
@@ -3823,6 +4065,28 @@
                 "region": {
                   "byteLength": 25,
                   "byteOffset": 2539
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 124
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 3093
                 }
               }
             },
@@ -3989,6 +4253,72 @@
         {
           "level": "note",
           "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/BooleanEquality.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 170
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/BooleanEquality.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 330
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/BooleanEquality.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 360
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/BooleanEquality.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 492
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/BooleanEquality.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 653
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/BooleanEquality.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 683
+                }
+              }
+            },
             {
               "physicalLocation": {
                 "artifactLocation": {
@@ -4349,6 +4679,83 @@
                 "region": {
                   "byteLength": 7,
                   "byteOffset": 1190
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 42,
+                  "byteOffset": 1204
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 42,
+                  "byteOffset": 3846
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 4027
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 42,
+                  "byteOffset": 4101
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 4175
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 42,
+                  "byteOffset": 4444
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 42,
+                  "byteOffset": 4942
                 }
               }
             },
@@ -5060,6 +5467,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/ReturnBomb.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/StateVariables.sol"
                 },
                 "region": {
@@ -5115,10 +5533,32 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 33
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/UnsafeERC721Mint.sol"
                 },
                 "region": {
                   "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UnusedStateVariables.sol"
+                },
+                "region": {
+                  "byteLength": 24,
                   "byteOffset": 32
                 }
               }
@@ -6020,6 +6460,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/ConstantFuncsAssembly.sol"
+                },
+                "region": {
+                  "byteLength": 232,
+                  "byteOffset": 651
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/InternalFunctions.sol"
                 },
                 "region": {
@@ -6296,6 +6747,116 @@
                 "region": {
                   "byteLength": 6,
                   "byteOffset": 133
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 211
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 22,
+                  "byteOffset": 434
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 770
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 20,
+                  "byteOffset": 1062
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 1538
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 2110
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 3205
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 3392
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 4325
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 4785
                 }
               }
             },
@@ -6609,6 +7170,270 @@
                   "byteOffset": 377
                 }
               }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 2871
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 2876
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 2889
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 2901
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 2913
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 2930
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 2958
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 2968
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 2986
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 3003
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 20,
+                  "byteOffset": 3020
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 19,
+                  "byteOffset": 3042
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 5369
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 5374
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 5387
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 5399
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 5411
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 5428
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 5452
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 5462
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 5480
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 5497
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 20,
+                  "byteOffset": 5514
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 19,
+                  "byteOffset": 5536
+                }
+              }
             }
           ],
           "message": {
@@ -6675,6 +7500,407 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/AssemblyExample.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 97
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/InconsistentUints.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 434
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LocalVariableShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 132
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariables.sol"
+                },
+                "region": {
+                  "byteLength": 19,
+                  "byteOffset": 199
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariables.sol"
+                },
+                "region": {
+                  "byteLength": 20,
+                  "byteOffset": 241
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariables.sol"
+                },
+                "region": {
+                  "byteLength": 27,
+                  "byteOffset": 383
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariables.sol"
+                },
+                "region": {
+                  "byteLength": 28,
+                  "byteOffset": 437
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariables.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 1056
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariables.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 1108
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TautologyOrContradiction.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 133
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TautologyOrContradiction.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 145
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 95
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedStateVariable.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 503
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UnusedStateVariables.sol"
+                },
+                "region": {
+                  "byteLength": 13,
+                  "byteOffset": 147
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UnusedStateVariables.sol"
+                },
+                "region": {
+                  "byteLength": 13,
+                  "byteOffset": 183
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UnusedStateVariables.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 215
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UnusedStateVariables.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 246
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 151
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 190
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 261
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 367
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 477
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/HeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 160
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/HeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 199
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/HeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 270
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/HeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 376
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/HeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 486
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "State variable appears to be unused. No analysis has been performed to see if any inilne assembly references it. So if that's not the case, consider removing this unused variable."
+          },
+          "ruleId": "unused-state-variable"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ConstantFuncsAssembly.sol"
+                },
+                "region": {
+                  "byteLength": 175,
+                  "byteOffset": 182
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ConstantFuncsAssembly.sol"
+                },
+                "region": {
+                  "byteLength": 237,
+                  "byteOffset": 408
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ConstantFuncsAssembly.sol"
+                },
+                "region": {
+                  "byteLength": 98,
+                  "byteOffset": 934
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "If the assembly code contains bugs or unintended side effects, it can lead to incorrect results or vulnerabilities, which are hard to debug and resolve, especially when the function is meant to be simple and predictable."
+          },
+          "ruleId": "constant-functions-assembly"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/BooleanEquality.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 133
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/BooleanEquality.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 292
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/BooleanEquality.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 454
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/BooleanEquality.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 614
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "If `x` is a boolean, there is no need to do `if(x == true)` or `if(x == false)`. Just use `if(x)` and `if(!x)` respectively."
+          },
+          "ruleId": "boolean-equality"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/LocalVariableShadowing.sol"
                 },
                 "region": {
@@ -6710,6 +7936,200 @@
             "text": "Rename the local variables that shadow another component."
           },
           "ruleId": "local-variable-shadowing"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ConstantFuncsAssembly.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 478
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ConstantFuncsAssembly.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 716
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StorageParameters.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 184
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 211
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 243
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 20,
+                  "byteOffset": 278
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 312
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 20,
+                  "byteOffset": 346
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 19,
+                  "byteOffset": 390
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 22,
+                  "byteOffset": 434
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 22,
+                  "byteOffset": 481
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 25,
+                  "byteOffset": 531
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 21,
+                  "byteOffset": 580
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 25,
+                  "byteOffset": 629
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 24,
+                  "byteOffset": 681
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Initialize all the variables. If a variable is meant to be initialized to zero, explicitly set it to zero to improve code readability."
+          },
+          "ruleId": "uninitialized-local-variable"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ReturnBomb.sol"
+                },
+                "region": {
+                  "byteLength": 115,
+                  "byteOffset": 591
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "A low level callee may consume all callers gas unexpectedly. Avoid unlimited implicit decoding of returndata on calls to unchecked addresses. You can limit the gas by passing a gas limit as an option to the call. For example, `unknownAdress.call{gas: gasLimitHere}(\"calldata\")` That would act as a safety net from OOG errors.\n        "
+          },
+          "ruleId": "return-bomb"
         }
       ],
       "tool": {
@@ -6718,8 +8138,8 @@
           "informationUri": "https://github.com/Cyfrin/aderyn",
           "name": "Aderyn",
           "organization": "Cyfrin",
-          "semanticVersion": "0.1.8",
-          "version": "0.1.8"
+          "semanticVersion": "0.1.10",
+          "version": "0.1.10"
         }
       }
     }
