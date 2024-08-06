@@ -35,11 +35,11 @@ impl<'a> Debug for LightWeightStateVariableManipulationFinder<'a> {
         if !self.directly_manipulated_state_variables.is_empty() {
             writeln!(f, "↓↓")?;
             for id in &self.directly_manipulated_state_variables {
-                if let Some(node) = self.context.nodes.get(&id) {
+                if let Some(node) = self.context.nodes.get(id) {
                     let loc_info = self.context.get_node_sort_key(node);
-                    write!(f, "Line {:?}\n", (loc_info.1, loc_info.2))?;
+                    writeln!(f, "Line {:?}", (loc_info.1, loc_info.2))?;
                 } else {
-                    write!(f, "<uknown_node_id_{}>\n", id)?;
+                    writeln!(f, "<uknown_node_id_{}>\n", id)?;
                 }
             }
             writeln!(f)?;
@@ -54,11 +54,11 @@ impl<'a> Debug for LightWeightStateVariableManipulationFinder<'a> {
         if !self.manipulated_storage_pointers.is_empty() {
             writeln!(f, "↓↓")?;
             for id in &self.manipulated_storage_pointers {
-                if let Some(node) = self.context.nodes.get(&id) {
+                if let Some(node) = self.context.nodes.get(id) {
                     let loc_info = self.context.get_node_sort_key(node);
-                    write!(f, "Line {:?}\n", (loc_info.1, loc_info.2))?;
+                    writeln!(f, "Line {:?}", (loc_info.1, loc_info.2))?;
                 } else {
-                    write!(f, "<uknown_node_id_{}>\n", id)?;
+                    writeln!(f, "<uknown_node_id_{}>", id)?;
                 }
             }
             writeln!(f)?;
