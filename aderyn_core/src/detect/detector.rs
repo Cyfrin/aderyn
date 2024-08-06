@@ -81,7 +81,6 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<MsgValueUsedInLoopDetector>::default(),
         Box::<ContractLocksEtherDetector>::default(),
         Box::<DomainSeparatorCollisionDetector>::default(),
-        Box::<UninitializedLocalVariableDetector>::default(),
         Box::<ReturnBombDetector>::default(),
     ]
 }
@@ -160,7 +159,6 @@ pub(crate) enum IssueDetectorNamePool {
     MsgValueInLoop,
     ContractLocksEther,
     DomainSeparatorCollision,
-    UninitializedLocalVariable,
     ReturnBomb,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
@@ -173,9 +171,6 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
     match detector_name {
         IssueDetectorNamePool::DomainSeparatorCollision => {
             Some(Box::<DomainSeparatorCollisionDetector>::default())
-        }
-        IssueDetectorNamePool::UninitializedLocalVariable => {
-            Some(Box::<UninitializedLocalVariableDetector>::default())
         }
         IssueDetectorNamePool::ReturnBomb => Some(Box::<ReturnBombDetector>::default()),
         IssueDetectorNamePool::UnusedStateVariable => {
