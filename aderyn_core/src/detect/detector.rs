@@ -74,6 +74,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<WeakRandomnessDetector>::default(),
         Box::<PreDeclaredLocalVariableUsageDetector>::default(),
         Box::<DeletionNestedMappingDetector>::default(),
+        Box::<UnusedStateVariablesDetector>::default(),
         Box::<ConstantFunctionContainsAssemblyDetector>::default(),
         Box::<BooleanEqualityDetector>::default(),
         Box::<TxOriginUsedForAuthDetector>::default(),
@@ -149,6 +150,7 @@ pub(crate) enum IssueDetectorNamePool {
     WeakRandomness,
     PreDeclaredLocalVariableUsage,
     DeleteNestedMapping,
+    UnusedStateVariable,
     ConstantFunctionsAssembly,
     BooleanEquality,
     TxOriginUsedForAuth,
@@ -163,6 +165,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
     // Expects a valid detector_name
     let detector_name = IssueDetectorNamePool::from_str(detector_name).ok()?;
     match detector_name {
+        IssueDetectorNamePool::UnusedStateVariable => {
+            Some(Box::<UnusedStateVariablesDetector>::default())
+        }
         IssueDetectorNamePool::DelegateCallInLoop => {
             Some(Box::<DelegateCallInLoopDetector>::default())
         }
