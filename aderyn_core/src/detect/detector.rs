@@ -74,6 +74,9 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<WeakRandomnessDetector>::default(),
         Box::<PreDeclaredLocalVariableUsageDetector>::default(),
         Box::<DeletionNestedMappingDetector>::default(),
+        Box::<UnusedStateVariablesDetector>::default(),
+        Box::<ConstantFunctionContainsAssemblyDetector>::default(),
+        Box::<BooleanEqualityDetector>::default(),
         Box::<TxOriginUsedForAuthDetector>::default(),
         Box::<MsgValueUsedInLoopDetector>::default(),
         Box::<ContractLocksEtherDetector>::default(),
@@ -148,6 +151,9 @@ pub(crate) enum IssueDetectorNamePool {
     WeakRandomness,
     PreDeclaredLocalVariableUsage,
     DeleteNestedMapping,
+    UnusedStateVariable,
+    ConstantFunctionsAssembly,
+    BooleanEquality,
     TxOriginUsedForAuth,
     MsgValueInLoop,
     ContractLocksEther,
@@ -162,6 +168,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
     let detector_name = IssueDetectorNamePool::from_str(detector_name).ok()?;
     match detector_name {
         IssueDetectorNamePool::ReturnBomb => Some(Box::<ReturnBombDetector>::default()),
+        IssueDetectorNamePool::UnusedStateVariable => {
+            Some(Box::<UnusedStateVariablesDetector>::default())
+        }
         IssueDetectorNamePool::DelegateCallInLoop => {
             Some(Box::<DelegateCallInLoopDetector>::default())
         }
@@ -311,6 +320,10 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::DeleteNestedMapping => {
             Some(Box::<DeletionNestedMappingDetector>::default())
         }
+        IssueDetectorNamePool::ConstantFunctionsAssembly => {
+            Some(Box::<ConstantFunctionContainsAssemblyDetector>::default())
+        }
+        IssueDetectorNamePool::BooleanEquality => Some(Box::<BooleanEqualityDetector>::default()),
         IssueDetectorNamePool::TxOriginUsedForAuth => {
             Some(Box::<TxOriginUsedForAuthDetector>::default())
         }
