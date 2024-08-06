@@ -8,6 +8,7 @@ use std::{
     collections::{BTreeMap, BTreeSet},
     fmt::Debug,
     iter::zip,
+    ops::Add,
 };
 
 /// Given an AST Block, it tries to detect any state variable inside it that may have been manipulated.
@@ -31,6 +32,35 @@ pub struct ApproximateStateVariableManipulationFinder<'a> {
     /// But on average, for most cases the way code is generally written, this should contain a decent chunk of links to lookup.
     state_variables_to_storage_pointers: BTreeMap<NodeID, BTreeSet<NodeID>>,
     context: &'a WorkspaceContext,
+}
+
+/// This trait implementation will be useful when we run it through our callgraph and try to aggregate state variable changes.
+impl<'a> Add<&'a ApproximateStateVariableManipulationFinder<'_>>
+    for ApproximateStateVariableManipulationFinder<'a>
+{
+    type Output = ApproximateStateVariableManipulationFinder<'a>;
+
+    fn add(mut self, rhs: &ApproximateStateVariableManipulationFinder) -> Self::Output {
+        self.directly_manipulated_state_variables
+            .extend(rhs.directly_manipulated_state_variables.iter());
+        self.manipulated_storage_pointers
+            .extend(rhs.manipulated_storage_pointers.iter());
+        // For state_variables_to_storage_pointers, we have to "add" the storage point entry vectors
+        for (state_var_id, storage_pointer_ids) in &rhs.state_variables_to_storage_pointers {
+            match self
+                .state_variables_to_storage_pointers
+                .entry(*state_var_id)
+            {
+                std::collections::btree_map::Entry::Vacant(v) => {
+                    v.insert(BTreeSet::from_iter(storage_pointer_ids.iter().copied()));
+                }
+                std::collections::btree_map::Entry::Occupied(mut o) => {
+                    (*o.get_mut()).extend(storage_pointer_ids);
+                }
+            };
+        }
+        self
+    }
 }
 
 impl<'a> Debug for ApproximateStateVariableManipulationFinder<'a> {
