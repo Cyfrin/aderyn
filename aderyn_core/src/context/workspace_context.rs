@@ -94,7 +94,6 @@ pub struct WorkspaceContext {
     pub(crate) yul_function_calls_context: HashMap<YulFunctionCall, NodeContext>,
     pub(crate) yul_identifiers_context: HashMap<YulIdentifier, NodeContext>,
     pub(crate) yul_literals_context: HashMap<YulLiteral, NodeContext>,
-    pub(crate) yul_assignments_context: HashMap<YulAssignment, NodeContext>,
 }
 
 impl WorkspaceContext {
