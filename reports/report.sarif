@@ -1773,6 +1773,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/ReturnBomb.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 1623
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/StateShadowing.sol"
                 },
                 "region": {
@@ -2239,6 +2250,17 @@
                 "region": {
                   "byteLength": 11,
                   "byteOffset": 6342
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ReturnBomb.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 839
                 }
               }
             },
@@ -3807,6 +3829,50 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/ReturnBomb.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 358
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ReturnBomb.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 839
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ReturnBomb.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 1273
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ReturnBomb.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 1646
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/StateVariables.sol"
                 },
                 "region": {
@@ -5116,6 +5182,17 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ReturnBomb.sol"
                 },
                 "region": {
                   "byteLength": 23,
@@ -7135,6 +7212,26 @@
             "text": "If `x` is a boolean, there is no need to do `if(x == true)` or `if(x == false)`. Just use `if(x)` and `if(!x)` respectively."
           },
           "ruleId": "boolean-equality"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ReturnBomb.sol"
+                },
+                "region": {
+                  "byteLength": 115,
+                  "byteOffset": 591
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "A low level callee may consume all callers gas unexpectedly. Avoid unlimited implicit decoding of returndata on calls to unchecked addresses. You can limit the gas by passing a gas limit as an option to the call. For example, `unknownAdress.call{gas: gasLimitHere}(\"calldata\")` That would act as a safety net from OOG errors.\n        "
+          },
+          "ruleId": "return-bomb"
         }
       ],
       "tool": {
