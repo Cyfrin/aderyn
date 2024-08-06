@@ -476,6 +476,52 @@ mod light_weight_state_variables_finder_tests {
         assert!(finder.manipulated_storage_pointers.is_empty());
         assert!(finder.directly_manipulated_state_variables.is_empty());
     }
+
+    #[test]
+    fn test_dynamic_array_push_changes() {
+        let context = load_solidity_source_unit(
+            "../tests/contract-playground/src/StateVariablesManipulation.sol",
+        );
+
+        let contract = context.find_contract_by_name("DynamicArraysPushExample");
+
+        let func = contract.find_function_by_name("manipulateDirectly");
+        let func2 = contract.find_function_by_name("manipulateViaIndexAccess");
+        let func3 = contract.find_function_by_name("manipulateViaMemberAccess");
+
+        // Test manipulateDirectly()
+        let finder = LightWeightStateVariableManipulationFinder::from(&context, func.into());
+        println!(
+            "DynamicArraysPushExample::manipulateDirectly()\n{:?}",
+            finder
+        );
+        let changes_found = finder.state_variables_have_been_manipulated();
+        assert!(changes_found);
+        assert!(finder.manipulated_storage_pointers.is_empty());
+        assert_eq!(finder.directly_manipulated_state_variables.len(), 1);
+
+        // Test manipulateViaIndexAccess()
+        let finder = LightWeightStateVariableManipulationFinder::from(&context, func2.into());
+        println!(
+            "DynamicArraysPushExample::manipulateViaIndexAccess()\n{:?}",
+            finder
+        );
+        let changes_found = finder.state_variables_have_been_manipulated();
+        assert!(changes_found);
+        assert!(finder.manipulated_storage_pointers.is_empty());
+        assert_eq!(finder.directly_manipulated_state_variables.len(), 3);
+
+        // Test manipulateViaMemberAccess()
+        let finder = LightWeightStateVariableManipulationFinder::from(&context, func3.into());
+        println!(
+            "DynamicArraysPushExample::manipulateViaMemberAccess()\n{:?}",
+            finder
+        );
+        let changes_found = finder.state_variables_have_been_manipulated();
+        assert!(changes_found);
+        assert!(finder.manipulated_storage_pointers.is_empty());
+        assert_eq!(finder.directly_manipulated_state_variables.len(), 1);
+    }
 }
 
 #[cfg(test)]

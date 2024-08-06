@@ -233,3 +233,48 @@ contract FixedSizeArraysDeletionExample {
         delete indexMeTwiceToDelete[dummy[dummy[0]]];
     }
 }
+
+/***** PUSH OPERATIONS *****/
+
+// This contract should catch 3 state variables undergoing a delete operation
+contract DynamicArraysPushExample {
+    // Struct example
+    struct Person {
+        string name;
+        uint256 age;
+        uint256[] some;
+    }
+
+    Person[] public directlyPushMe;
+    Person[][5] public indexMeToPush;
+    Person[][] public indexMeTwiceToPush;
+
+    uint256[] public indexMeToPushDArray;
+    Person public p;
+
+    // This shouldn't be caught! (it's not being manipulated)
+    uint256[5] public dummy;
+
+    // 1 State variable is pushed to here
+    function manipulateDirectly() external {
+        directlyPushMe.push(
+            Person({name: "dfsf", age: 610, some: indexMeToPushDArray})
+        );
+    }
+
+    // 3 more state variables pushed to here
+    function manipulateViaIndexAccess() external {
+        indexMeToPush[dummy.length].push(
+            Person({name: "dfsf", age: 710, some: indexMeToPushDArray})
+        );
+        indexMeTwiceToPush[dummy.length].push(
+            Person({name: "dfsf", age: 810, some: indexMeToPushDArray})
+        );
+        indexMeToPushDArray.push(12309);
+    }
+
+    // 1 more state variable pushed to here
+    function manipulateViaMemberAccess() external {
+        p.some.push(102);
+    }
+}
