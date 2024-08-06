@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 78,
-    "total_sloc": 2269
+    "total_source_units": 83,
+    "total_sloc": 2466
   },
   "files_details": {
     "files_details": [
@@ -22,6 +22,10 @@
         "n_sloc": 9
       },
       {
+        "file_path": "src/BooleanEquality.sol",
+        "n_sloc": 27
+      },
+      {
         "file_path": "src/CallGraphTests.sol",
         "n_sloc": 49
       },
@@ -32,6 +36,10 @@
       {
         "file_path": "src/CompilerBugStorageSignedIntegerArray.sol",
         "n_sloc": 13
+      },
+      {
+        "file_path": "src/ConstantFuncsAssembly.sol",
+        "n_sloc": 26
       },
       {
         "file_path": "src/ConstantsLiterals.sol",
@@ -158,6 +166,10 @@
         "n_sloc": 14
       },
       {
+        "file_path": "src/ReturnBomb.sol",
+        "n_sloc": 44
+      },
+      {
         "file_path": "src/RevertsAndRequriesInLoops.sol",
         "n_sloc": 27
       },
@@ -210,6 +222,10 @@
         "n_sloc": 18
       },
       {
+        "file_path": "src/UninitializedLocalVariables.sol",
+        "n_sloc": 88
+      },
+      {
         "file_path": "src/UninitializedStateVariable.sol",
         "n_sloc": 29
       },
@@ -224,6 +240,10 @@
       {
         "file_path": "src/UnusedError.sol",
         "n_sloc": 19
+      },
+      {
+        "file_path": "src/UnusedStateVariables.sol",
+        "n_sloc": 12
       },
       {
         "file_path": "src/UsingSelfdestruct.sol",
@@ -321,7 +341,7 @@
   },
   "issue_count": {
     "high": 37,
-    "low": 25
+    "low": 30
   },
   "high_issues": {
     "issues": [
@@ -360,6 +380,30 @@
             "line_no": 26,
             "src": "887:16",
             "src_char": "887:16"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 45,
+            "src": "1994:16",
+            "src_char": "1994:16"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 53,
+            "src": "2692:16",
+            "src_char": "2692:16"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 102,
+            "src": "4694:16",
+            "src_char": "4694:16"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 110,
+            "src": "5230:16",
+            "src_char": "5230:16"
           }
         ]
       },
@@ -1288,6 +1332,12 @@
             "src_char": "97:1"
           },
           {
+            "contract_path": "src/ConstantFuncsAssembly.sol",
+            "line_no": 6,
+            "src": "110:20",
+            "src_char": "110:20"
+          },
+          {
             "contract_path": "src/DelegateCallWithoutAddressCheck.sol",
             "line_no": 9,
             "src": "337:7",
@@ -1316,6 +1366,12 @@
             "line_no": 6,
             "src": "130:26",
             "src_char": "130:26"
+          },
+          {
+            "contract_path": "src/ReturnBomb.sol",
+            "line_no": 61,
+            "src": "1623:7",
+            "src_char": "1623:7"
           },
           {
             "contract_path": "src/StateShadowing.sol",
@@ -1354,6 +1410,12 @@
             "src_char": "145:9"
           },
           {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 6,
+            "src": "95:12",
+            "src_char": "95:12"
+          },
+          {
             "contract_path": "src/UninitializedStateVariable.sol",
             "line_no": 7,
             "src": "122:8",
@@ -1364,6 +1426,36 @@
             "line_no": 15,
             "src": "529:11",
             "src_char": "529:11"
+          },
+          {
+            "contract_path": "src/UnusedStateVariables.sol",
+            "line_no": 6,
+            "src": "147:13",
+            "src_char": "147:13"
+          },
+          {
+            "contract_path": "src/UnusedStateVariables.sol",
+            "line_no": 7,
+            "src": "183:13",
+            "src_char": "183:13"
+          },
+          {
+            "contract_path": "src/UnusedStateVariables.sol",
+            "line_no": 8,
+            "src": "215:10",
+            "src_char": "215:10"
+          },
+          {
+            "contract_path": "src/UnusedStateVariables.sol",
+            "line_no": 9,
+            "src": "246:12",
+            "src_char": "246:12"
+          },
+          {
+            "contract_path": "src/UnusedStateVariables.sol",
+            "line_no": 12,
+            "src": "314:11",
+            "src_char": "314:11"
           },
           {
             "contract_path": "src/WrongOrderOfLayout.sol",
@@ -1519,6 +1611,18 @@
             "line_no": 75,
             "src": "1691:18",
             "src_char": "1691:18"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 98,
+            "src": "4375:20",
+            "src_char": "4375:20"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 106,
+            "src": "4853:27",
+            "src_char": "4853:27"
           }
         ]
       },
@@ -1556,6 +1660,12 @@
             "line_no": 194,
             "src": "6342:11",
             "src_char": "6342:11"
+          },
+          {
+            "contract_path": "src/ReturnBomb.sol",
+            "line_no": 32,
+            "src": "839:4",
+            "src_char": "839:4"
           },
           {
             "contract_path": "src/SendEtherNoChecks.sol",
@@ -2237,6 +2347,12 @@
             "src_char": "32:23"
           },
           {
+            "contract_path": "src/ConstantFuncsAssembly.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/ContractLocksEther.sol",
             "line_no": 2,
             "src": "32:23",
@@ -2331,6 +2447,18 @@
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 2,
+            "src": "33:23",
+            "src_char": "33:23"
+          },
+          {
+            "contract_path": "src/UnusedStateVariables.sol",
+            "line_no": 2,
+            "src": "32:24",
+            "src_char": "32:24"
           },
           {
             "contract_path": "src/UsingSelfdestruct.sol",
@@ -2485,6 +2613,30 @@
             "src_char": "129:9"
           },
           {
+            "contract_path": "src/ReturnBomb.sol",
+            "line_no": 16,
+            "src": "358:4",
+            "src_char": "358:4"
+          },
+          {
+            "contract_path": "src/ReturnBomb.sol",
+            "line_no": 32,
+            "src": "839:4",
+            "src_char": "839:4"
+          },
+          {
+            "contract_path": "src/ReturnBomb.sol",
+            "line_no": 47,
+            "src": "1273:4",
+            "src_char": "1273:4"
+          },
+          {
+            "contract_path": "src/ReturnBomb.sol",
+            "line_no": 63,
+            "src": "1646:4",
+            "src_char": "1646:4"
+          },
+          {
             "contract_path": "src/StateVariables.sol",
             "line_no": 47,
             "src": "1764:18",
@@ -2513,6 +2665,18 @@
             "line_no": 71,
             "src": "2539:25",
             "src_char": "2539:25"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 8,
+            "src": "124:16",
+            "src_char": "124:16"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 61,
+            "src": "3093:17",
+            "src_char": "3093:17"
           },
           {
             "contract_path": "src/UninitializedStateVariable.sol",
@@ -2605,6 +2769,42 @@
         "description": "If the same constant literal value is used multiple times, create a constant state variable and reference it throughout the contract.",
         "detector_name": "constants-instead-of-literals",
         "instances": [
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 6,
+            "src": "170:3",
+            "src_char": "170:3"
+          },
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 13,
+            "src": "330:3",
+            "src_char": "330:3"
+          },
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 15,
+            "src": "360:3",
+            "src_char": "360:3"
+          },
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 20,
+            "src": "492:3",
+            "src_char": "492:3"
+          },
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 27,
+            "src": "653:3",
+            "src_char": "653:3"
+          },
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 29,
+            "src": "683:3",
+            "src_char": "683:3"
+          },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 16,
@@ -2802,6 +3002,48 @@
             "line_no": 42,
             "src": "1190:7",
             "src_char": "1190:7"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 33,
+            "src": "1204:42",
+            "src_char": "1204:42"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 85,
+            "src": "3846:42",
+            "src_char": "3846:42"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 89,
+            "src": "4027:2",
+            "src_char": "4027:2"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 91,
+            "src": "4101:42",
+            "src_char": "4101:42"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 92,
+            "src": "4175:2",
+            "src_char": "4175:2"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 99,
+            "src": "4444:42",
+            "src_char": "4444:42"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 107,
+            "src": "4942:42",
+            "src_char": "4942:42"
           },
           {
             "contract_path": "src/WeakRandomness.sol",
@@ -3187,6 +3429,12 @@
             "src_char": "32:23"
           },
           {
+            "contract_path": "src/ReturnBomb.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/StateVariables.sol",
             "line_no": 2,
             "src": "32:23",
@@ -3217,10 +3465,22 @@
             "src_char": "32:24"
           },
           {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 2,
+            "src": "33:23",
+            "src_char": "33:23"
+          },
+          {
             "contract_path": "src/UnsafeERC721Mint.sol",
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/UnusedStateVariables.sol",
+            "line_no": 2,
+            "src": "32:24",
+            "src_char": "32:24"
           },
           {
             "contract_path": "src/WeakRandomness.sol",
@@ -3719,6 +3979,12 @@
             "src_char": "1206:18"
           },
           {
+            "contract_path": "src/ConstantFuncsAssembly.sol",
+            "line_no": 26,
+            "src": "651:232",
+            "src_char": "651:232"
+          },
+          {
             "contract_path": "src/InternalFunctions.sol",
             "line_no": 28,
             "src": "693:12",
@@ -3875,6 +4141,66 @@
             "line_no": 6,
             "src": "133:6",
             "src_char": "133:6"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 10,
+            "src": "211:17",
+            "src_char": "211:17"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 16,
+            "src": "434:22",
+            "src_char": "434:22"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 25,
+            "src": "770:15",
+            "src_char": "770:15"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 31,
+            "src": "1062:20",
+            "src_char": "1062:20"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 40,
+            "src": "1538:3",
+            "src_char": "1538:3"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 48,
+            "src": "2110:8",
+            "src_char": "2110:8"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 63,
+            "src": "3205:11",
+            "src_char": "3205:11"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 69,
+            "src": "3392:16",
+            "src_char": "3392:16"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 97,
+            "src": "4325:3",
+            "src_char": "4325:3"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 105,
+            "src": "4785:8",
+            "src_char": "4785:8"
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
@@ -4053,6 +4379,150 @@
             "line_no": 14,
             "src": "377:4",
             "src_char": "377:4"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 56,
+            "src": "2871:3",
+            "src_char": "2871:3"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 56,
+            "src": "2876:11",
+            "src_char": "2876:11"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 56,
+            "src": "2889:10",
+            "src_char": "2889:10"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 56,
+            "src": "2901:10",
+            "src_char": "2901:10"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 56,
+            "src": "2913:15",
+            "src_char": "2913:15"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 56,
+            "src": "2930:14",
+            "src_char": "2930:14"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 57,
+            "src": "2958:8",
+            "src_char": "2958:8"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 57,
+            "src": "2968:16",
+            "src_char": "2968:16"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 57,
+            "src": "2986:15",
+            "src_char": "2986:15"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 57,
+            "src": "3003:15",
+            "src_char": "3003:15"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 57,
+            "src": "3020:20",
+            "src_char": "3020:20"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 57,
+            "src": "3042:19",
+            "src_char": "3042:19"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 113,
+            "src": "5369:3",
+            "src_char": "5369:3"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 113,
+            "src": "5374:11",
+            "src_char": "5374:11"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 113,
+            "src": "5387:10",
+            "src_char": "5387:10"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 113,
+            "src": "5399:10",
+            "src_char": "5399:10"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 113,
+            "src": "5411:15",
+            "src_char": "5411:15"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 113,
+            "src": "5428:14",
+            "src_char": "5428:14"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 114,
+            "src": "5452:8",
+            "src_char": "5452:8"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 114,
+            "src": "5462:16",
+            "src_char": "5462:16"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 114,
+            "src": "5480:15",
+            "src_char": "5480:15"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 114,
+            "src": "5497:15",
+            "src_char": "5497:15"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 114,
+            "src": "5514:20",
+            "src_char": "5514:20"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 114,
+            "src": "5536:19",
+            "src_char": "5536:19"
           }
         ]
       },
@@ -4090,6 +4560,335 @@
             "line_no": 42,
             "src": "1175:14",
             "src_char": "1175:14"
+          }
+        ]
+      },
+      {
+        "title": "Potentially unused `private` / `internal` state variables found.",
+        "description": "State variable appears to be unused. No analysis has been performed to see if any inilne assembly references it. So if that's not the case, consider removing this unused variable.",
+        "detector_name": "unused-state-variable",
+        "instances": [
+          {
+            "contract_path": "src/AssemblyExample.sol",
+            "line_no": 5,
+            "src": "97:1",
+            "src_char": "97:1"
+          },
+          {
+            "contract_path": "src/InconsistentUints.sol",
+            "line_no": 16,
+            "src": "434:10",
+            "src_char": "434:10"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 8,
+            "src": "199:19",
+            "src_char": "199:19"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 9,
+            "src": "241:20",
+            "src_char": "241:20"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 13,
+            "src": "383:27",
+            "src_char": "383:27"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 14,
+            "src": "437:28",
+            "src_char": "437:28"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 28,
+            "src": "1056:16",
+            "src_char": "1056:16"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 29,
+            "src": "1108:17",
+            "src_char": "1108:17"
+          },
+          {
+            "contract_path": "src/TautologyOrContradiction.sol",
+            "line_no": 6,
+            "src": "133:6",
+            "src_char": "133:6"
+          },
+          {
+            "contract_path": "src/TautologyOrContradiction.sol",
+            "line_no": 7,
+            "src": "145:9",
+            "src_char": "145:9"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 6,
+            "src": "95:12",
+            "src_char": "95:12"
+          },
+          {
+            "contract_path": "src/UninitializedStateVariable.sol",
+            "line_no": 13,
+            "src": "503:3",
+            "src_char": "503:3"
+          },
+          {
+            "contract_path": "src/UnusedStateVariables.sol",
+            "line_no": 6,
+            "src": "147:13",
+            "src_char": "147:13"
+          },
+          {
+            "contract_path": "src/UnusedStateVariables.sol",
+            "line_no": 7,
+            "src": "183:13",
+            "src_char": "183:13"
+          },
+          {
+            "contract_path": "src/UnusedStateVariables.sol",
+            "line_no": 8,
+            "src": "215:10",
+            "src_char": "215:10"
+          },
+          {
+            "contract_path": "src/UnusedStateVariables.sol",
+            "line_no": 9,
+            "src": "246:12",
+            "src_char": "246:12"
+          },
+          {
+            "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
+            "line_no": 14,
+            "src": "151:3",
+            "src_char": "151:3"
+          },
+          {
+            "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
+            "line_no": 16,
+            "src": "190:3",
+            "src_char": "190:3"
+          },
+          {
+            "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
+            "line_no": 19,
+            "src": "261:3",
+            "src_char": "261:3"
+          },
+          {
+            "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
+            "line_no": 22,
+            "src": "367:3",
+            "src_char": "367:3"
+          },
+          {
+            "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
+            "line_no": 29,
+            "src": "477:3",
+            "src_char": "477:3"
+          },
+          {
+            "contract_path": "src/cloc/HeavilyCommentedContract.sol",
+            "line_no": 14,
+            "src": "160:3",
+            "src_char": "160:3"
+          },
+          {
+            "contract_path": "src/cloc/HeavilyCommentedContract.sol",
+            "line_no": 16,
+            "src": "199:3",
+            "src_char": "199:3"
+          },
+          {
+            "contract_path": "src/cloc/HeavilyCommentedContract.sol",
+            "line_no": 19,
+            "src": "270:3",
+            "src_char": "270:3"
+          },
+          {
+            "contract_path": "src/cloc/HeavilyCommentedContract.sol",
+            "line_no": 22,
+            "src": "376:3",
+            "src_char": "376:3"
+          },
+          {
+            "contract_path": "src/cloc/HeavilyCommentedContract.sol",
+            "line_no": 29,
+            "src": "486:3",
+            "src_char": "486:3"
+          }
+        ]
+      },
+      {
+        "title": "Functions declared `pure` / `view` but contains assembly",
+        "description": "If the assembly code contains bugs or unintended side effects, it can lead to incorrect results or vulnerabilities, which are hard to debug and resolve, especially when the function is meant to be simple and predictable.",
+        "detector_name": "constant-functions-assembly",
+        "instances": [
+          {
+            "contract_path": "src/ConstantFuncsAssembly.sol",
+            "line_no": 9,
+            "src": "182:175",
+            "src_char": "182:175"
+          },
+          {
+            "contract_path": "src/ConstantFuncsAssembly.sol",
+            "line_no": 17,
+            "src": "408:237",
+            "src_char": "408:237"
+          },
+          {
+            "contract_path": "src/ConstantFuncsAssembly.sol",
+            "line_no": 36,
+            "src": "934:98",
+            "src_char": "934:98"
+          }
+        ]
+      },
+      {
+        "title": "Boolean equality is not required.",
+        "description": "If `x` is a boolean, there is no need to do `if(x == true)` or `if(x == false)`. Just use `if(x)` and `if(!x)` respectively.",
+        "detector_name": "boolean-equality",
+        "instances": [
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 5,
+            "src": "133:14",
+            "src_char": "133:14"
+          },
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 12,
+            "src": "292:15",
+            "src_char": "292:15"
+          },
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 19,
+            "src": "454:15",
+            "src_char": "454:15"
+          },
+          {
+            "contract_path": "src/BooleanEquality.sol",
+            "line_no": 26,
+            "src": "614:16",
+            "src_char": "614:16"
+          }
+        ]
+      },
+      {
+        "title": "Uninitialized local variables.",
+        "description": "Initialize all the variables. If a variable is meant to be initialized to zero, explicitly set it to zero to improve code readability.",
+        "detector_name": "uninitialized-local-variable",
+        "instances": [
+          {
+            "contract_path": "src/ConstantFuncsAssembly.sol",
+            "line_no": 18,
+            "src": "478:14",
+            "src_char": "478:14"
+          },
+          {
+            "contract_path": "src/ConstantFuncsAssembly.sol",
+            "line_no": 27,
+            "src": "716:14",
+            "src_char": "716:14"
+          },
+          {
+            "contract_path": "src/StorageParameters.sol",
+            "line_no": 8,
+            "src": "184:11",
+            "src_char": "184:11"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 10,
+            "src": "211:17",
+            "src_char": "211:17"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 11,
+            "src": "243:17",
+            "src_char": "243:17"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 12,
+            "src": "278:20",
+            "src_char": "278:20"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 13,
+            "src": "312:16",
+            "src_char": "312:16"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 14,
+            "src": "346:20",
+            "src_char": "346:20"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 15,
+            "src": "390:19",
+            "src_char": "390:19"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 16,
+            "src": "434:22",
+            "src_char": "434:22"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 17,
+            "src": "481:22",
+            "src_char": "481:22"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 18,
+            "src": "531:25",
+            "src_char": "531:25"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 19,
+            "src": "580:21",
+            "src_char": "580:21"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 20,
+            "src": "629:25",
+            "src_char": "629:25"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 21,
+            "src": "681:24",
+            "src_char": "681:24"
+          }
+        ]
+      },
+      {
+        "title": "Return Bomb",
+        "description": "A low level callee may consume all callers gas unexpectedly. Avoid unlimited implicit decoding of returndata on calls to unchecked addresses. You can limit the gas by passing a gas limit as an option to the call. For example, `unknownAdress.call{gas: gasLimitHere}(\"calldata\")` That would act as a safety net from OOG errors.\n        ",
+        "detector_name": "return-bomb",
+        "instances": [
+          {
+            "contract_path": "src/ReturnBomb.sol",
+            "line_no": 22,
+            "src": "591:115",
+            "src_char": "591:115"
           }
         ]
       }
@@ -4154,9 +4953,14 @@
     "weak-randomness",
     "pre-declared-local-variable-usage",
     "delete-nested-mapping",
+    "unused-state-variable",
+    "constant-functions-assembly",
+    "boolean-equality",
     "tx-origin-used-for-auth",
     "msg-value-in-loop",
     "contract-locks-ether",
-    "domain-separator-collision"
+    "domain-separator-collision",
+    "uninitialized-local-variable",
+    "return-bomb"
   ]
 }
