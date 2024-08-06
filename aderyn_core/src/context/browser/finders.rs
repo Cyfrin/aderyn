@@ -442,6 +442,40 @@ mod light_weight_state_variables_finder_tests {
         assert_eq!(finder.manipulated_storage_pointers.len(), 2);
         assert!(finder.directly_manipulated_state_variables.is_empty());
     }
+
+    #[test]
+    fn test_no_struct_plus_fixed_array_assignment_example() {
+        let context = load_solidity_source_unit(
+            "../tests/contract-playground/src/StateVariablesManipulation.sol",
+        );
+
+        let contract = context.find_contract_by_name("NoStructPlusFixedArrayAssignmentExample");
+
+        let func = contract.find_function_by_name("dontManipulateStateVariables");
+        let func2 = contract.find_function_by_name("dontManipulateStateVariablesPart2");
+
+        // Test dontManipulateStateVariables()
+        let finder = LightWeightStateVariableManipulationFinder::from(&context, func.into());
+        println!(
+            "NoStructPlusFixedArrayAssignmentExample::dontManipulateStateVariables()\n{:?}",
+            finder
+        );
+        let no_changes_found = !finder.state_variables_have_been_manipulated();
+        assert!(no_changes_found);
+        assert!(finder.manipulated_storage_pointers.is_empty());
+        assert!(finder.directly_manipulated_state_variables.is_empty());
+
+        // Test dontManipulateStateVariablesPart2()
+        let finder = LightWeightStateVariableManipulationFinder::from(&context, func2.into());
+        println!(
+            "NoStructPlusFixedArrayAssignmentExample::dontManipulateStateVariablesPart2()\n{:?}",
+            finder
+        );
+        let no_changes_found = !finder.state_variables_have_been_manipulated();
+        assert!(no_changes_found);
+        assert!(finder.manipulated_storage_pointers.is_empty());
+        assert!(finder.directly_manipulated_state_variables.is_empty());
+    }
 }
 
 #[cfg(test)]
