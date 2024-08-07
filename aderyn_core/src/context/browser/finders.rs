@@ -12,6 +12,8 @@ use std::{
     ops::Add,
 };
 
+use super::ExtractReferencedDeclarations;
+
 /// Given an AST Block, it tries to detect any state variable inside it that may have been manipulated.
 /// Now it's important to know that manipulations can occur either directly by assigning to a state variable
 /// or, it may occur by assigning to a storage pointer that points to some state variable.
@@ -28,6 +30,8 @@ use std::{
 pub struct ApproximateStateVariableManipulationFinder<'a> {
     directly_manipulated_state_variables: BTreeSet<NodeID>,
     manipulated_storage_pointers: BTreeSet<NodeID>,
+    directly_read_state_variables: BTreeSet<NodeID>,
+    read_storage_pointers: BTreeSet<NodeID>,
     /// Key => State Variable ID, Value => Storage Pointer ID (Heuristics based, this map is NOT exhaustive)
     /// It leaves out a lot of links especially in cases where storage pointers are passed to and fro internal functions.
     /// But on average, for most cases the way code is generally written, this should contain a decent chunk of links to lookup.
@@ -107,6 +111,44 @@ impl<'a> Debug for ApproximateStateVariableManipulationFinder<'a> {
 
         writeln!(
             f,
+            "Directly read state variables: {:?}",
+            self.directly_read_state_variables
+        )?;
+
+        if !self.directly_read_state_variables.is_empty() {
+            writeln!(f, "↓↓")?;
+            for id in &self.directly_read_state_variables {
+                if let Some(node) = self.context.nodes.get(id) {
+                    let loc_info = self.context.get_node_sort_key(node);
+                    writeln!(f, "Line {:?}", (loc_info.1, loc_info.2))?;
+                } else {
+                    writeln!(f, "<uknown_node_id_{}>", id)?;
+                }
+            }
+            writeln!(f)?;
+        }
+
+        writeln!(
+            f,
+            "Read form storage pointers: {:?}",
+            self.read_storage_pointers
+        )?;
+
+        if !self.read_storage_pointers.is_empty() {
+            writeln!(f, "↓↓")?;
+            for id in &self.read_storage_pointers {
+                if let Some(node) = self.context.nodes.get(id) {
+                    let loc_info = self.context.get_node_sort_key(node);
+                    writeln!(f, "Line {:?}", (loc_info.1, loc_info.2))?;
+                } else {
+                    writeln!(f, "<uknown_node_id_{}>", id)?;
+                }
+            }
+            writeln!(f)?;
+        }
+
+        writeln!(
+            f,
             "Links heuristics: {:?}",
             self.state_variables_to_storage_pointers
         )?;
@@ -144,6 +186,8 @@ impl<'a> ApproximateStateVariableManipulationFinder<'a> {
             directly_manipulated_state_variables: BTreeSet::new(),
             manipulated_storage_pointers: BTreeSet::new(),
             state_variables_to_storage_pointers: BTreeMap::new(),
+            directly_read_state_variables: BTreeSet::new(),
+            read_storage_pointers: BTreeSet::new(),
             context,
         };
         node.accept(&mut extractor).unwrap_or_default();
@@ -273,9 +317,10 @@ impl<'a> ASTConstVisitor for ApproximateStateVariableManipulationFinder<'a> {
         }
 
         let (base_variable_ids, _) = find_base(member.expression.as_ref());
+        // assert!(base_variable_ids.len() == 1);
 
-        for id in base_variable_ids {
-            if member.member_name == "push" || member.member_name == "pop" {
+        if member.member_name == "push" || member.member_name == "pop" {
+            for id in base_variable_ids {
                 match is_storage_variable_or_storage_pointer(self.context, id) {
                     Some(AssigneeType::StorageVariable) => {
                         self.directly_manipulated_state_variables.insert(id);
@@ -337,6 +382,16 @@ impl<'a> ASTConstVisitor for ApproximateStateVariableManipulationFinder<'a> {
                 }
             }
         }
+
+        // READ HEURISTICS
+        // Pretty much the same logic as described in `visit_variable_declaration_statement`
+        //
+
+        let (left_node_ids, _) = find_base(assignment.left_hand_side.as_ref());
+        let right_node_ids = flatten_expression(assignment.right_hand_side.as_ref());
+
+        assert_eq!(left_node_ids.len(), right_node_ids.len());
+
         Ok(true)
     }
 
@@ -345,27 +400,107 @@ impl<'a> ASTConstVisitor for ApproximateStateVariableManipulationFinder<'a> {
         &mut self,
         node: &VariableDeclarationStatement,
     ) -> Result<bool> {
-        if let Some(Expression::Identifier(Identifier {
-            referenced_declaration: Some(id),
-            ..
-        })) = node.initial_value.as_ref()
-        {
-            if is_storage_variable_or_storage_pointer(self.context, *id)
-                .is_some_and(|t| t == AssigneeType::StorageVariable)
-                && node.declarations.len() == 1
-            {
-                if let Some(n) = node.declarations[0].as_ref() {
-                    if is_storage_variable_or_storage_pointer(self.context, n.id)
-                        .is_some_and(|t| t == AssigneeType::StorageVariableReference)
+        // READ HEURISTICS
+        //
+        // TODO: Write tests for these
+        // Then creates `passes_read_check()` before matching the var id on extracting refernce declarations
+        // Then replicate the logic for assignments
+        // use lvaluerequested = false and islvalue = true to check if it's being read
+        // in case of visiting indexaccess, memberaccess, etc (expr_node! variants)
+        // So that it can detect stuff outside of just assignments. Example - functionCall(a.b) where a is state var
+        // (Technically you are reading a.b's value to make that function call)
+        if let Some(initial_value) = node.initial_value.as_ref() {
+            let corresponding_variable_declaration_ids = node
+                .declarations
+                .iter()
+                .map(|v| {
+                    if let Some(variable_declaration) = v {
+                        return variable_declaration.id;
+                    } else {
+                        return i64::MIN;
+                    }
+                })
+                .collect::<Vec<_>>();
+            let initial_value_node_ids = flatten_expression(initial_value); // For READ heuristics
+            let (initial_value_bases, _) = find_base(initial_value); // For LINK heuristics
+
+            // Let's first support 1:1 relationships only
+            if corresponding_variable_declaration_ids.len() == initial_value_node_ids.len() {
+                let common_len = corresponding_variable_declaration_ids.len();
+
+                // This for loop takes care of recording instances in VDS (Var Decl Stmnt) where there is a read
+                // from the storage.
+                for i in 0..common_len {
+                    let variable_declaration_id = corresponding_variable_declaration_ids[i];
+                    let corresponding_initial_value_id = initial_value_node_ids[i];
+
+                    if is_storage_variable_or_storage_pointer(
+                        &self.context,
+                        variable_declaration_id,
+                    )
+                    .is_some()
                     {
-                        match self.state_variables_to_storage_pointers.entry(*id) {
-                            std::collections::btree_map::Entry::Vacant(v) => {
-                                v.insert(BTreeSet::from_iter([n.id]));
+                        // If we are not assigning something to a storage pointer or a storage reference, that means
+                        // we're storing it in memory. Therefore, we can consider that the corresponding initialValue
+                        // is being "read". Otherwise we are just creating pointers, not "sload"ing.
+                        continue;
+                    }
+
+                    if let Some(node) = self.context.nodes.get(&corresponding_initial_value_id) {
+                        let referenced_declarations =
+                            ExtractReferencedDeclarations::from(node).extracted;
+
+                        for variable_id in referenced_declarations {
+                            match is_storage_variable_or_storage_pointer(self.context, variable_id)
+                            {
+                                // Assumption: At this point in code we know that it could be a storage pointer/variable that represents
+                                // uint, bool, array element, etc. so it's technically being read.
+                                Some(AssigneeType::StorageVariable) => {
+                                    self.directly_read_state_variables.insert(variable_id);
+                                }
+                                Some(AssigneeType::StorageVariableReference) => {
+                                    self.read_storage_pointers.insert(variable_id);
+                                }
+                                None => {}
                             }
-                            std::collections::btree_map::Entry::Occupied(mut o) => {
-                                (*o.get_mut()).insert(n.id);
-                            }
-                        };
+                        }
+                    }
+                }
+
+                assert!(initial_value_bases.len() == common_len);
+
+                // LINK heuristics
+                for i in 0..common_len {
+                    let variable_declaration_id = corresponding_variable_declaration_ids[i];
+                    let corresponding_initial_value_base_id = initial_value_bases[i];
+
+                    match (
+                        is_storage_variable_or_storage_pointer(
+                            self.context,
+                            variable_declaration_id,
+                        ),
+                        is_storage_variable_or_storage_pointer(
+                            self.context,
+                            corresponding_initial_value_base_id,
+                        ),
+                    ) {
+                        (
+                            Some(AssigneeType::StorageVariableReference),
+                            Some(AssigneeType::StorageVariable),
+                        ) => {
+                            match self
+                                .state_variables_to_storage_pointers
+                                .entry(corresponding_initial_value_base_id)
+                            {
+                                std::collections::btree_map::Entry::Vacant(v) => {
+                                    v.insert(BTreeSet::from_iter([variable_declaration_id]));
+                                }
+                                std::collections::btree_map::Entry::Occupied(mut o) => {
+                                    (*o.get_mut()).insert(variable_declaration_id);
+                                }
+                            };
+                        }
+                        _ => {}
                     }
                 }
             }
@@ -373,6 +508,22 @@ impl<'a> ASTConstVisitor for ApproximateStateVariableManipulationFinder<'a> {
 
         Ok(true)
     }
+}
+
+fn flatten_expression(expr: &Expression) -> Vec<NodeID> {
+    let mut node_ids = vec![];
+    match expr {
+        Expression::TupleExpression(TupleExpression { components, .. }) => {
+            for component in components.iter().flatten() {
+                let component_node_ids = flatten_expression(component);
+                node_ids.extend(component_node_ids);
+            }
+        }
+        _ => {
+            node_ids.push(expr.get_node_id().unwrap_or(i64::MIN));
+        }
+    }
+    node_ids
 }
 
 fn find_base(expr: &Expression) -> (Vec<NodeID>, Vec<String>) {
@@ -419,10 +570,15 @@ fn find_base(expr: &Expression) -> (Vec<NodeID>, Vec<String>) {
         }
         // Handle tuple form lhs while assigning
         Expression::TupleExpression(TupleExpression { components, .. }) => {
-            for component in components.iter().flatten() {
-                let (component_node_ids, component_type_strings) = find_base(component);
-                node_ids.extend(component_node_ids);
-                type_strings.extend(component_type_strings);
+            for component in components.iter() {
+                if let Some(component) = component {
+                    let (component_node_ids, component_type_strings) = find_base(component);
+                    node_ids.extend(component_node_ids);
+                    type_strings.extend(component_type_strings);
+                } else {
+                    node_ids.push(i64::MIN);
+                    type_strings.push(String::from("irrelevant"));
+                }
             }
         }
         _ => {
@@ -484,6 +640,10 @@ mod light_weight_state_variables_finder_tests {
 
         let finder = ApproximateStateVariableManipulationFinder::from(&context, func.into());
         let no_changes_found = !finder.state_variables_have_been_manipulated();
+        println!(
+            "NoStateVarManipulationExample::dontManipulateStateVar()\n{:?}",
+            finder
+        );
         println!("{:?}", finder);
         assert!(no_changes_found);
     }
@@ -496,6 +656,7 @@ mod light_weight_state_variables_finder_tests {
 
         let contract = context.find_contract_by_name("SimpleStateVarManipulationExample");
         let func = contract.find_function_by_name("manipulateStateVarDirectly");
+        let func2 = contract.find_function_by_name("readSimpleStateVars");
 
         let finder = ApproximateStateVariableManipulationFinder::from(&context, func.into());
         let changes_found = finder.state_variables_have_been_manipulated();
@@ -505,6 +666,16 @@ mod light_weight_state_variables_finder_tests {
         );
         assert!(changes_found);
         assert_eq!(finder.directly_manipulated_state_variables.len(), 5);
+        assert!(finder.manipulated_storage_pointers.is_empty());
+
+        let finder = ApproximateStateVariableManipulationFinder::from(&context, func2.into());
+        let changes_found = finder.state_variables_have_been_manipulated();
+        println!(
+            "SimpleStateVarManipulationExample::readSimpleStateVars()\n{:?}",
+            finder
+        );
+        assert!(!changes_found);
+        assert!(finder.directly_manipulated_state_variables.is_empty());
         assert!(finder.manipulated_storage_pointers.is_empty());
     }
 
@@ -737,6 +908,9 @@ mod light_weight_state_variables_finder_tests {
 
         let func = contract.find_function_by_name("dontManipulateStateVariables");
         let func2 = contract.find_function_by_name("dontManipulateStateVariablesPart2");
+        let func3 = contract.find_function_by_name("dontManipulateStateVariablesPart3");
+        let func4 = contract.find_function_by_name("dontManipulateStateVariablesPart4");
+        let func5 = contract.find_function_by_name("dontManipulateStateVariablesPart5");
 
         // Test dontManipulateStateVariables()
         let finder = ApproximateStateVariableManipulationFinder::from(&context, func.into());
@@ -753,6 +927,39 @@ mod light_weight_state_variables_finder_tests {
         let finder = ApproximateStateVariableManipulationFinder::from(&context, func2.into());
         println!(
             "NoStructPlusFixedArrayAssignmentExample::dontManipulateStateVariablesPart2()\n{:?}",
+            finder
+        );
+        let no_changes_found = !finder.state_variables_have_been_manipulated();
+        assert!(no_changes_found);
+        assert!(finder.manipulated_storage_pointers.is_empty());
+        assert!(finder.directly_manipulated_state_variables.is_empty());
+
+        // Test dontManipulateStateVariablesPart3()
+        let finder = ApproximateStateVariableManipulationFinder::from(&context, func3.into());
+        println!(
+            "NoStructPlusFixedArrayAssignmentExample::dontManipulateStateVariablesPart3()\n{:?}",
+            finder
+        );
+        let no_changes_found = !finder.state_variables_have_been_manipulated();
+        assert!(no_changes_found);
+        assert!(finder.manipulated_storage_pointers.is_empty());
+        assert!(finder.directly_manipulated_state_variables.is_empty());
+
+        // Test dontManipulateStateVariablesPart4()
+        let finder = ApproximateStateVariableManipulationFinder::from(&context, func4.into());
+        println!(
+            "NoStructPlusFixedArrayAssignmentExample::dontManipulateStateVariablesPart4()\n{:?}",
+            finder
+        );
+        let no_changes_found = !finder.state_variables_have_been_manipulated();
+        assert!(no_changes_found);
+        assert!(finder.manipulated_storage_pointers.is_empty());
+        assert!(finder.directly_manipulated_state_variables.is_empty());
+
+        // Test dontManipulateStateVariablesPart4()
+        let finder = ApproximateStateVariableManipulationFinder::from(&context, func5.into());
+        println!(
+            "NoStructPlusFixedArrayAssignmentExample::dontManipulateStateVariablesPart5()\n{:?}",
             finder
         );
         let no_changes_found = !finder.state_variables_have_been_manipulated();
