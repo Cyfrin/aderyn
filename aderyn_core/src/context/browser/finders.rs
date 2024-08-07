@@ -7,6 +7,7 @@ use eyre::*;
 use std::{
     collections::{BTreeMap, BTreeSet},
     fmt::Debug,
+    i64,
     iter::zip,
     ops::Add,
 };
@@ -135,7 +136,9 @@ impl<'a> Debug for ApproximateStateVariableManipulationFinder<'a> {
     }
 }
 
+/// Interface to be used by other modules defined here.
 impl<'a> ApproximateStateVariableManipulationFinder<'a> {
+    /// Initialize
     pub fn from<T: Node + ?Sized>(context: &'a WorkspaceContext, node: &T) -> Self {
         let mut extractor = ApproximateStateVariableManipulationFinder {
             directly_manipulated_state_variables: BTreeSet::new(),
@@ -312,23 +315,26 @@ impl<'a> ASTConstVisitor for ApproximateStateVariableManipulationFinder<'a> {
         }
 
         // Now, on a separate note, let's look for a heuristic to link up state variables with storage pointers.
-        // This heuristic is tested on function `manipulateStateVariables5()` in `StateVariablesManipulation.sol`
-        for (lhs_id, rhs_id) in zip(base_variable_lhs_ids, base_variable_rhs_ids) {
-            if let (
-                Some(AssigneeType::StorageVariableReference),
-                Some(AssigneeType::StorageVariable),
-            ) = (
-                is_storage_variable_or_storage_pointer(self.context, lhs_id),
-                is_storage_variable_or_storage_pointer(self.context, rhs_id),
-            ) {
-                match self.state_variables_to_storage_pointers.entry(rhs_id) {
-                    std::collections::btree_map::Entry::Vacant(v) => {
-                        v.insert(BTreeSet::from_iter([lhs_id]));
-                    }
-                    std::collections::btree_map::Entry::Occupied(mut o) => {
-                        (*o.get_mut()).insert(lhs_id);
-                    }
-                };
+        // But here, we only handle the cases when there are equal number of elements on either side of `=` .
+        // This allows us to assume 1:1 relationship.
+        if base_variable_lhs_ids.len() == base_variable_rhs_ids.len() {
+            for (lhs_id, rhs_id) in zip(base_variable_lhs_ids, base_variable_rhs_ids) {
+                if let (
+                    Some(AssigneeType::StorageVariableReference),
+                    Some(AssigneeType::StorageVariable),
+                ) = (
+                    is_storage_variable_or_storage_pointer(self.context, lhs_id),
+                    is_storage_variable_or_storage_pointer(self.context, rhs_id),
+                ) {
+                    match self.state_variables_to_storage_pointers.entry(rhs_id) {
+                        std::collections::btree_map::Entry::Vacant(v) => {
+                            v.insert(BTreeSet::from_iter([lhs_id]));
+                        }
+                        std::collections::btree_map::Entry::Occupied(mut o) => {
+                            (*o.get_mut()).insert(lhs_id);
+                        }
+                    };
+                }
             }
         }
         Ok(true)
@@ -369,7 +375,7 @@ impl<'a> ASTConstVisitor for ApproximateStateVariableManipulationFinder<'a> {
     }
 }
 
-fn find_base(expr: &Expression) -> (Vec<NodeID>, Vec<&String>) {
+fn find_base(expr: &Expression) -> (Vec<NodeID>, Vec<String>) {
     let mut node_ids = vec![];
     let mut type_strings = vec![];
     match expr {
@@ -383,7 +389,7 @@ fn find_base(expr: &Expression) -> (Vec<NodeID>, Vec<&String>) {
             ..
         }) => {
             node_ids.push(*id);
-            type_strings.push(type_string);
+            type_strings.push(type_string.clone());
         }
         // Handle mappings assignment
         Expression::IndexAccess(IndexAccess {
@@ -396,7 +402,7 @@ fn find_base(expr: &Expression) -> (Vec<NodeID>, Vec<&String>) {
             ..
         }) => {
             node_ids.extend(find_base(base_expression.as_ref()).0);
-            type_strings.push(type_string);
+            type_strings.push(type_string.clone());
         }
         // Handle struct member assignment
         Expression::MemberAccess(MemberAccess {
@@ -409,7 +415,7 @@ fn find_base(expr: &Expression) -> (Vec<NodeID>, Vec<&String>) {
             ..
         }) => {
             node_ids.extend(find_base(expression.as_ref()).0);
-            type_strings.push(type_string);
+            type_strings.push(type_string.clone());
         }
         // Handle tuple form lhs while assigning
         Expression::TupleExpression(TupleExpression { components, .. }) => {
@@ -419,7 +425,10 @@ fn find_base(expr: &Expression) -> (Vec<NodeID>, Vec<&String>) {
                 type_strings.extend(component_type_strings);
             }
         }
-        _ => (),
+        _ => {
+            node_ids.push(i64::MIN);
+            type_strings.push(String::from("irrelevant"));
+        }
     };
     assert_eq!(node_ids.len(), type_strings.len());
     (node_ids, type_strings)
