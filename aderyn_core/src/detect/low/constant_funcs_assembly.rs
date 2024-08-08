@@ -121,7 +121,7 @@ impl StandardInvestigatorVisitor for AssemblyTracker {
             // Ignore checking functions that start with `_`
             // Example - templegold contains math functions like `_rpow()`, etc that are used by view functions
             // That should be okay .. I guess? (idk ... it's open for dicussion)
-            if function.name.starts_with("_") {
+            if function.name.starts_with('_') {
                 return Ok(());
             }
         }

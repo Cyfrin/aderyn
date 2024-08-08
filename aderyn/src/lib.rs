@@ -119,7 +119,7 @@ pub fn aderyn_is_currently_running_newest_version() -> Result<bool, reqwest::Err
 
     let data = latest_version_checker.json::<Value>()?;
     let newest =
-        Version::parse(data["tag_name"].as_str().unwrap().replace("v", "").as_str()).unwrap();
+        Version::parse(data["tag_name"].as_str().unwrap().replace('v', "").as_str()).unwrap();
     let current = Version::parse(env!("CARGO_PKG_VERSION")).unwrap();
 
     Ok(current >= newest)

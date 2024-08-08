@@ -1,6 +1,7 @@
 mod ancestral_line;
 mod closest_ancestor;
 mod extractor;
+mod finders;
 mod immediate_children;
 mod location;
 mod macros;
@@ -13,6 +14,7 @@ mod sort_nodes;
 pub use ancestral_line::*;
 pub use closest_ancestor::*;
 pub use extractor::*;
+pub use finders::*;
 pub use immediate_children::*;
 pub use location::*;
 pub use parent::*;
