@@ -81,6 +81,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<MsgValueUsedInLoopDetector>::default(),
         Box::<ContractLocksEtherDetector>::default(),
         Box::<ReturnBombDetector>::default(),
+        Box::<FunctionInitializingStateDetector>::default(),
     ]
 }
 
@@ -92,6 +93,7 @@ pub fn get_all_detectors_names() -> Vec<String> {
 #[derive(Debug, PartialEq, EnumString, Display)]
 #[strum(serialize_all = "kebab-case")]
 pub(crate) enum IssueDetectorNamePool {
+    FunctionInitializingState,
     DelegateCallInLoop,
     CentralizationRisk,
     SolmateSafeTransferLib,
@@ -167,6 +169,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
     // Expects a valid detector_name
     let detector_name = IssueDetectorNamePool::from_str(detector_name).ok()?;
     match detector_name {
+        IssueDetectorNamePool::FunctionInitializingState => {
+            Some(Box::<FunctionInitializingStateDetector>::default())
+        }
         IssueDetectorNamePool::ReturnBomb => Some(Box::<ReturnBombDetector>::default()),
         IssueDetectorNamePool::UnusedStateVariable => {
             Some(Box::<UnusedStateVariablesDetector>::default())
