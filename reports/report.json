@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 81,
-    "total_sloc": 2334
+    "total_source_units": 82,
+    "total_sloc": 2383
   },
   "files_details": {
     "files_details": [
@@ -104,6 +104,10 @@
       {
         "file_path": "src/ExperimentalEncoder.sol",
         "n_sloc": 4
+      },
+      {
+        "file_path": "src/FunctionInitializingState.sol",
+        "n_sloc": 49
       },
       {
         "file_path": "src/HugeConstants.sol",
@@ -333,7 +337,7 @@
   },
   "issue_count": {
     "high": 36,
-    "low": 29
+    "low": 30
   },
   "high_issues": {
     "issues": [
@@ -2320,6 +2324,12 @@
             "src_char": "32:23"
           },
           {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 2,
+            "src": "32:21",
+            "src_char": "32:21"
+          },
+          {
             "contract_path": "src/InconsistentUints.sol",
             "line_no": 1,
             "src": "0:24",
@@ -2825,6 +2835,54 @@
             "line_no": 17,
             "src": "457:3",
             "src_char": "457:3"
+          },
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 23,
+            "src": "798:2",
+            "src_char": "798:2"
+          },
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 26,
+            "src": "828:2",
+            "src_char": "828:2"
+          },
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 34,
+            "src": "1117:2",
+            "src_char": "1117:2"
+          },
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 37,
+            "src": "1147:2",
+            "src_char": "1147:2"
+          },
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 42,
+            "src": "1276:4",
+            "src_char": "1276:4"
+          },
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 42,
+            "src": "1283:4",
+            "src_char": "1283:4"
+          },
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 48,
+            "src": "1467:4",
+            "src_char": "1467:4"
+          },
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 48,
+            "src": "1474:4",
+            "src_char": "1474:4"
           },
           {
             "contract_path": "src/IncorrectCaretOperator.sol",
@@ -4419,6 +4477,25 @@
             "src_char": "591:115"
           }
         ]
+      },
+      {
+        "title": "Function initializing state.",
+        "description": "Detects the immediate initialization of state variables through function calls that are not pure/constant, or that use non-constant state variable. Remove any initialization of state variables via non-constant state variables or function calls. If variables must be set upon contract deployment, locate initialization in the constructor instead.",
+        "detector_name": "function-initializing-state",
+        "instances": [
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 19,
+            "src": "557:280",
+            "src_char": "557:280"
+          },
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 30,
+            "src": "871:285",
+            "src_char": "871:285"
+          }
+        ]
       }
     ]
   },
@@ -4487,6 +4564,7 @@
     "tx-origin-used-for-auth",
     "msg-value-in-loop",
     "contract-locks-ether",
-    "return-bomb"
+    "return-bomb",
+    "function-initializing-state"
   ]
 }

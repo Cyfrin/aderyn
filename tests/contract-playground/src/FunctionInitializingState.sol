@@ -3,9 +3,9 @@ pragma solidity ^0.4;
 
 // WRONG WAY
 contract StateVarInitFromFunction {
-    uint public v = set(); // Initialize from function (sets to 77) BAD
+    uint public v = set(); // Initialize from function (sets to 77)
     uint public w = 5;
-    uint public x = set(); // Initialize from function (sets to 88) BAD
+    uint public x = set(); // Initialize from function (sets to 88)
     uint public f = tes();
     uint public h = okay();
     uint public m = okay2();
@@ -63,7 +63,7 @@ contract StateVarInitFromFunction2 {
         x = set();
     }
 
-    // GOOD here, although it refrences non constant variable because this is called from inside the constructor.
+    // GOOD here, although it refrences non constant variable, it is called from inside the constructor!
     function set() public returns (uint) {
         // If this function is being used to initialize a state variable declared
         // before w, w will be zero. If it is declared after w, w will be set.
