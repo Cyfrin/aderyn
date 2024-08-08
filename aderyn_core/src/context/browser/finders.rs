@@ -7,7 +7,6 @@ use eyre::*;
 use std::{
     collections::{BTreeMap, BTreeSet},
     fmt::Debug,
-    i64,
     iter::zip,
     ops::Add,
 };
@@ -373,9 +372,9 @@ impl<'a> ASTConstVisitor for ApproximateStorageChangeFinder<'a> {
                 .iter()
                 .map(|v| {
                     if let Some(variable_declaration) = v {
-                        return variable_declaration.id;
+                        variable_declaration.id
                     } else {
-                        return i64::MIN;
+                        i64::MIN
                     }
                 })
                 .collect::<Vec<_>>();
@@ -448,7 +447,10 @@ impl<'a> ASTConstVisitor for ApproximateStorageChangeFinder<'a> {
                     let variable_declaration_id = corresponding_variable_declaration_ids[i];
                     let corresponding_initial_value_base_id = initial_value_bases[i];
 
-                    match (
+                    if let (
+                        Some(AssigneeType::StorageLocationVariable),
+                        Some(AssigneeType::StateVariable),
+                    ) = (
                         is_storage_variable_or_storage_pointer(
                             self.context,
                             variable_declaration_id,
@@ -458,23 +460,17 @@ impl<'a> ASTConstVisitor for ApproximateStorageChangeFinder<'a> {
                             corresponding_initial_value_base_id,
                         ),
                     ) {
-                        (
-                            Some(AssigneeType::StorageLocationVariable),
-                            Some(AssigneeType::StateVariable),
-                        ) => {
-                            match self
-                                .state_variables_to_storage_pointers
-                                .entry(corresponding_initial_value_base_id)
-                            {
-                                std::collections::btree_map::Entry::Vacant(v) => {
-                                    v.insert(BTreeSet::from_iter([variable_declaration_id]));
-                                }
-                                std::collections::btree_map::Entry::Occupied(mut o) => {
-                                    (*o.get_mut()).insert(variable_declaration_id);
-                                }
-                            };
-                        }
-                        _ => {}
+                        match self
+                            .state_variables_to_storage_pointers
+                            .entry(corresponding_initial_value_base_id)
+                        {
+                            std::collections::btree_map::Entry::Vacant(v) => {
+                                v.insert(BTreeSet::from_iter([variable_declaration_id]));
+                            }
+                            std::collections::btree_map::Entry::Occupied(mut o) => {
+                                (*o.get_mut()).insert(variable_declaration_id);
+                            }
+                        };
                     }
                 }
             }
