@@ -58,6 +58,12 @@ contract SimpleStateVarManipulationExample {
         simpleString = f;
         simpleBytes = g;
     }
+
+    function readSimpleStateVars() external {
+        uint256 _a = simpleUint;
+        int256 _b;
+        _b = simpleInt;
+    }
 }
 
 // This contract should catch 4 state variables being assigned
@@ -225,6 +231,27 @@ contract NoStructPlusFixedArrayAssignmentExample {
     // NO state vars manipulated here
     function dontManipulateStateVariablesPart2() external {
         Person memory m_dummy = Person("Spiderman", 21);
+    }
+
+    // NO state vars manipulated here
+    function dontManipulateStateVariablesPart3() external {
+        uint256 theAge = person.age;
+        uint256 theAge2;
+        theAge2 = person.age;
+    }
+
+    // Only person2 state variable is read here. Also it's "directly read" (aka not through storage pointers)
+    // Other initializations are merely just references.
+    function dontManipulateStateVariablesPart4() external {
+        (uint256 theAge3, uint256 theAge4) = (340, bytes(person2.name).length);
+        uint256[5] storage ageRef1 = allAges[0];
+        Person storage dr = dummy;
+    }
+
+    // Only `v` is the one that's causing a read. Also, this is "indirectly" read (through a storage pointer)
+    function dontManipulateStateVariablesPart5() external {
+        uint256[5] storage ageRef2 = allAges[0];
+        uint256 v = ageRef2[3];
     }
 }
 

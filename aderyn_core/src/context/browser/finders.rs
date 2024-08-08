@@ -12,8 +12,6 @@ use std::{
     ops::Add,
 };
 
-use super::ExtractReferencedDeclarations;
-
 /// Given an AST Block, it tries to detect any state variable inside it that may have been manipulated.
 /// Now it's important to know that manipulations can occur either directly by assigning to a state variable
 /// or, it may occur by assigning to a storage pointer that points to some state variable.
@@ -26,12 +24,10 @@ use super::ExtractReferencedDeclarations;
 ///
 /// Here, the term manipulation covers all kinds of changes discussed above.
 ///
-/// IMPORTANT: DO NOT MAKE THIS MEMBERS PUBLIC. Use the public methods implemented on this structure only.
-pub struct ApproximateStateVariableManipulationFinder<'a> {
+/// IMPORTANT: DO NOT MAKE THESE MEMBERS PUBLIC. Use the public methods implemented on this structure only.
+pub struct ApproximateStorageChangeFinder<'a> {
     directly_manipulated_state_variables: BTreeSet<NodeID>,
     manipulated_storage_pointers: BTreeSet<NodeID>,
-    directly_read_state_variables: BTreeSet<NodeID>,
-    read_storage_pointers: BTreeSet<NodeID>,
     /// Key => State Variable ID, Value => Storage Pointer ID (Heuristics based, this map is NOT exhaustive)
     /// It leaves out a lot of links especially in cases where storage pointers are passed to and fro internal functions.
     /// But on average, for most cases the way code is generally written, this should contain a decent chunk of links to lookup.
@@ -40,12 +36,10 @@ pub struct ApproximateStateVariableManipulationFinder<'a> {
 }
 
 /// This trait implementation will be useful when we run it through our callgraph and try to aggregate state variable changes.
-impl<'a> Add<&'a ApproximateStateVariableManipulationFinder<'_>>
-    for ApproximateStateVariableManipulationFinder<'a>
-{
-    type Output = ApproximateStateVariableManipulationFinder<'a>;
+impl<'a> Add<&'a ApproximateStorageChangeFinder<'_>> for ApproximateStorageChangeFinder<'a> {
+    type Output = ApproximateStorageChangeFinder<'a>;
 
-    fn add(mut self, rhs: &ApproximateStateVariableManipulationFinder) -> Self::Output {
+    fn add(mut self, rhs: &ApproximateStorageChangeFinder) -> Self::Output {
         self.directly_manipulated_state_variables
             .extend(rhs.directly_manipulated_state_variables.iter());
         self.manipulated_storage_pointers
@@ -68,7 +62,7 @@ impl<'a> Add<&'a ApproximateStateVariableManipulationFinder<'_>>
     }
 }
 
-impl<'a> Debug for ApproximateStateVariableManipulationFinder<'a> {
+impl<'a> Debug for ApproximateStorageChangeFinder<'a> {
     // Do not print context. Hence, debug is custom derived for this struct
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         writeln!(
@@ -111,44 +105,6 @@ impl<'a> Debug for ApproximateStateVariableManipulationFinder<'a> {
 
         writeln!(
             f,
-            "Directly read state variables: {:?}",
-            self.directly_read_state_variables
-        )?;
-
-        if !self.directly_read_state_variables.is_empty() {
-            writeln!(f, "↓↓")?;
-            for id in &self.directly_read_state_variables {
-                if let Some(node) = self.context.nodes.get(id) {
-                    let loc_info = self.context.get_node_sort_key(node);
-                    writeln!(f, "Line {:?}", (loc_info.1, loc_info.2))?;
-                } else {
-                    writeln!(f, "<uknown_node_id_{}>", id)?;
-                }
-            }
-            writeln!(f)?;
-        }
-
-        writeln!(
-            f,
-            "Read form storage pointers: {:?}",
-            self.read_storage_pointers
-        )?;
-
-        if !self.read_storage_pointers.is_empty() {
-            writeln!(f, "↓↓")?;
-            for id in &self.read_storage_pointers {
-                if let Some(node) = self.context.nodes.get(id) {
-                    let loc_info = self.context.get_node_sort_key(node);
-                    writeln!(f, "Line {:?}", (loc_info.1, loc_info.2))?;
-                } else {
-                    writeln!(f, "<uknown_node_id_{}>", id)?;
-                }
-            }
-            writeln!(f)?;
-        }
-
-        writeln!(
-            f,
             "Links heuristics: {:?}",
             self.state_variables_to_storage_pointers
         )?;
@@ -179,15 +135,13 @@ impl<'a> Debug for ApproximateStateVariableManipulationFinder<'a> {
 }
 
 /// Interface to be used by other modules defined here.
-impl<'a> ApproximateStateVariableManipulationFinder<'a> {
+impl<'a> ApproximateStorageChangeFinder<'a> {
     /// Initialize
     pub fn from<T: Node + ?Sized>(context: &'a WorkspaceContext, node: &T) -> Self {
-        let mut extractor = ApproximateStateVariableManipulationFinder {
+        let mut extractor = ApproximateStorageChangeFinder {
             directly_manipulated_state_variables: BTreeSet::new(),
             manipulated_storage_pointers: BTreeSet::new(),
             state_variables_to_storage_pointers: BTreeMap::new(),
-            directly_read_state_variables: BTreeSet::new(),
-            read_storage_pointers: BTreeSet::new(),
             context,
         };
         node.accept(&mut extractor).unwrap_or_default();
@@ -283,22 +237,24 @@ impl<'a> ApproximateStateVariableManipulationFinder<'a> {
     }
 }
 
-impl<'a> ASTConstVisitor for ApproximateStateVariableManipulationFinder<'a> {
+impl<'a> ASTConstVisitor for ApproximateStorageChangeFinder<'a> {
     fn visit_unary_operation(&mut self, node: &UnaryOperation) -> Result<bool> {
+        // WRITE HEURISTICS
         // Catch delete operations
         if node.operator == "delete" {
             for id in find_base(node.sub_expression.as_ref()).0 {
                 match is_storage_variable_or_storage_pointer(self.context, id) {
-                    Some(AssigneeType::StorageVariable) => {
+                    Some(AssigneeType::StateVariable) => {
                         self.directly_manipulated_state_variables.insert(id);
                     }
-                    Some(AssigneeType::StorageVariableReference) => {
+                    Some(AssigneeType::StorageLocationVariable) => {
                         self.manipulated_storage_pointers.insert(id);
                     }
                     None => {}
                 };
             }
         }
+
         Ok(true)
     }
 
@@ -319,19 +275,21 @@ impl<'a> ASTConstVisitor for ApproximateStateVariableManipulationFinder<'a> {
         let (base_variable_ids, _) = find_base(member.expression.as_ref());
         // assert!(base_variable_ids.len() == 1);
 
+        // WRITE HEURISTICS
         if member.member_name == "push" || member.member_name == "pop" {
-            for id in base_variable_ids {
-                match is_storage_variable_or_storage_pointer(self.context, id) {
-                    Some(AssigneeType::StorageVariable) => {
-                        self.directly_manipulated_state_variables.insert(id);
+            for id in base_variable_ids.iter() {
+                match is_storage_variable_or_storage_pointer(self.context, *id) {
+                    Some(AssigneeType::StateVariable) => {
+                        self.directly_manipulated_state_variables.insert(*id);
                     }
-                    Some(AssigneeType::StorageVariableReference) => {
-                        self.manipulated_storage_pointers.insert(id);
+                    Some(AssigneeType::StorageLocationVariable) => {
+                        self.manipulated_storage_pointers.insert(*id);
                     }
                     None => {}
                 };
             }
         }
+
         Ok(true)
     }
 
@@ -349,10 +307,10 @@ impl<'a> ASTConstVisitor for ApproximateStateVariableManipulationFinder<'a> {
             }
 
             match is_storage_variable_or_storage_pointer(self.context, *id) {
-                Some(AssigneeType::StorageVariable) => {
+                Some(AssigneeType::StateVariable) => {
                     self.directly_manipulated_state_variables.insert(*id);
                 }
-                Some(AssigneeType::StorageVariableReference) => {
+                Some(AssigneeType::StorageLocationVariable) => {
                     self.manipulated_storage_pointers.insert(*id);
                 }
                 None => {}
@@ -365,8 +323,8 @@ impl<'a> ASTConstVisitor for ApproximateStateVariableManipulationFinder<'a> {
         if base_variable_lhs_ids.len() == base_variable_rhs_ids.len() {
             for (lhs_id, rhs_id) in zip(base_variable_lhs_ids, base_variable_rhs_ids) {
                 if let (
-                    Some(AssigneeType::StorageVariableReference),
-                    Some(AssigneeType::StorageVariable),
+                    Some(AssigneeType::StorageLocationVariable),
+                    Some(AssigneeType::StateVariable),
                 ) = (
                     is_storage_variable_or_storage_pointer(self.context, lhs_id),
                     is_storage_variable_or_storage_pointer(self.context, rhs_id),
@@ -387,10 +345,19 @@ impl<'a> ASTConstVisitor for ApproximateStateVariableManipulationFinder<'a> {
         // Pretty much the same logic as described in `visit_variable_declaration_statement`
         //
 
-        let (left_node_ids, _) = find_base(assignment.left_hand_side.as_ref());
-        let right_node_ids = flatten_expression(assignment.right_hand_side.as_ref());
+        // let (left_node_ids, _) = find_base(assignment.left_hand_side.as_ref());
+        // let right_node_ids = flatten_expression(assignment.right_hand_side.as_ref());
 
-        assert_eq!(left_node_ids.len(), right_node_ids.len());
+        // See if it's a 1:1 relationship. Only then, proceed. Later, we can think of heuristics to handle x:y
+        // (but likely we will have to rely on a dependency graph for that. Case: `(x, y) = func()` is out of scope for this).
+        //
+        // When it comes to tracking WRITEs, it doesn't matter what's on RHS of `=`
+        // When it comes to tracking READs, it does! If the LHS type is storage then you are simply carrying a reference
+        // at compile time, you are not actually reading. Whereas, if the LHS is memory, you are performing "sload"!
+        // But again, this logic changes based on type of value in RHS. If it's a function call you should look at
+        // return values and nature of the corresponding variable where that value will be stored. Likewise, differernt
+        // for different nodes albeit identifier one is probably the most straightforward
+        // if left_node_ids.len() == right_node_ids.len() {}
 
         Ok(true)
     }
@@ -400,15 +367,6 @@ impl<'a> ASTConstVisitor for ApproximateStateVariableManipulationFinder<'a> {
         &mut self,
         node: &VariableDeclarationStatement,
     ) -> Result<bool> {
-        // READ HEURISTICS
-        //
-        // TODO: Write tests for these
-        // Then creates `passes_read_check()` before matching the var id on extracting refernce declarations
-        // Then replicate the logic for assignments
-        // use lvaluerequested = false and islvalue = true to check if it's being read
-        // in case of visiting indexaccess, memberaccess, etc (expr_node! variants)
-        // So that it can detect stuff outside of just assignments. Example - functionCall(a.b) where a is state var
-        // (Technically you are reading a.b's value to make that function call)
         if let Some(initial_value) = node.initial_value.as_ref() {
             let corresponding_variable_declaration_ids = node
                 .declarations
@@ -430,42 +388,58 @@ impl<'a> ASTConstVisitor for ApproximateStateVariableManipulationFinder<'a> {
 
                 // This for loop takes care of recording instances in VDS (Var Decl Stmnt) where there is a read
                 // from the storage.
-                for i in 0..common_len {
-                    let variable_declaration_id = corresponding_variable_declaration_ids[i];
-                    let corresponding_initial_value_id = initial_value_node_ids[i];
+                //
+                //  READ HEURISTICS
+                //
+                // TODO: Write tests for these
+                // Then creates `passes_read_check()` before matching the var id on extracting refernce declarations
+                // Then replicate the logic for assignments
+                // use lvaluerequested = false and islvalue = true to check if it's being read
+                // in case of visiting indexaccess, memberaccess, etc (expr_node! variants)
+                // So that it can detect stuff outside of just assignments. Example - functionCall(a.b) where a is state var
+                // (Technically you are reading a.b's value to make that function call)
+                //
+                // for i in 0..common_len {
+                //     let variable_declaration_id = corresponding_variable_declaration_ids[i];
+                //     let corresponding_initial_value_id = initial_value_node_ids[i];
 
-                    if is_storage_variable_or_storage_pointer(
-                        &self.context,
-                        variable_declaration_id,
-                    )
-                    .is_some()
-                    {
-                        // If we are not assigning something to a storage pointer or a storage reference, that means
-                        // we're storing it in memory. Therefore, we can consider that the corresponding initialValue
-                        // is being "read". Otherwise we are just creating pointers, not "sload"ing.
-                        continue;
-                    }
+                //     if is_storage_variable_or_storage_pointer(
+                //         &self.context,
+                //         variable_declaration_id,
+                //     )
+                //     .is_some()
+                //     {
+                //         // If we are not assigning something to a storage pointer or a storage reference, that means
+                //         // we're storing it in memory. Therefore, we can consider that the corresponding initialValue
+                //         // is being "read". Otherwise we are just creating pointers, not "sload"ing.
+                //         continue;
+                //     }
 
-                    if let Some(node) = self.context.nodes.get(&corresponding_initial_value_id) {
-                        let referenced_declarations =
-                            ExtractReferencedDeclarations::from(node).extracted;
+                //     if let Some(node) = self.context.nodes.get(&corresponding_initial_value_id) {
+                //         // In case of internal function call, it's complex to analyze
+                //         if node.node_type() != NodeType::FunctionCall || it is{
+                //             let referenced_declarations =
+                //                 ExtractReferencedDeclarations::from(node).extracted;
 
-                        for variable_id in referenced_declarations {
-                            match is_storage_variable_or_storage_pointer(self.context, variable_id)
-                            {
-                                // Assumption: At this point in code we know that it could be a storage pointer/variable that represents
-                                // uint, bool, array element, etc. so it's technically being read.
-                                Some(AssigneeType::StorageVariable) => {
-                                    self.directly_read_state_variables.insert(variable_id);
-                                }
-                                Some(AssigneeType::StorageVariableReference) => {
-                                    self.read_storage_pointers.insert(variable_id);
-                                }
-                                None => {}
-                            }
-                        }
-                    }
-                }
+                //             for variable_id in referenced_declarations {
+                //                 match is_storage_variable_or_storage_pointer(
+                //                     self.context,
+                //                     variable_id,
+                //                 ) {
+                //                     // Assumption: At this point in code we know that it could be a storage pointer/variable that represents
+                //                     // uint, bool, array element, etc. so it's technically being read.
+                //                     Some(AssigneeType::StateVariable) => {
+                //                         self.directly_read_state_variables.insert(variable_id);
+                //                     }
+                //                     Some(AssigneeType::StorageLocationVariable) => {
+                //                         self.read_storage_pointers.insert(variable_id);
+                //                     }
+                //                     None => {}
+                //                 }
+                //             }
+                //         }
+                //     }
+                // }
 
                 assert!(initial_value_bases.len() == common_len);
 
@@ -485,8 +459,8 @@ impl<'a> ASTConstVisitor for ApproximateStateVariableManipulationFinder<'a> {
                         ),
                     ) {
                         (
-                            Some(AssigneeType::StorageVariableReference),
-                            Some(AssigneeType::StorageVariable),
+                            Some(AssigneeType::StorageLocationVariable),
+                            Some(AssigneeType::StateVariable),
                         ) => {
                             match self
                                 .state_variables_to_storage_pointers
@@ -592,8 +566,8 @@ fn find_base(expr: &Expression) -> (Vec<NodeID>, Vec<String>) {
 
 #[derive(PartialEq)]
 enum AssigneeType {
-    StorageVariable,
-    StorageVariableReference,
+    StateVariable,
+    StorageLocationVariable,
 }
 
 fn is_storage_variable_or_storage_pointer(
@@ -606,9 +580,9 @@ fn is_storage_variable_or_storage_pointer(
         // variable.state_variable is true when it's an actual state variable
         // variable.storage_location is StorageLocation::Storage when it's a storage reference pointer
         if variable.state_variable {
-            return Some(AssigneeType::StorageVariable);
+            return Some(AssigneeType::StateVariable);
         } else if variable.storage_location == StorageLocation::Storage {
-            return Some(AssigneeType::StorageVariableReference);
+            return Some(AssigneeType::StorageLocationVariable);
         }
     }
     None
@@ -618,7 +592,7 @@ fn is_storage_variable_or_storage_pointer(
 mod light_weight_state_variables_finder_tests {
     use crate::detect::test_utils::load_solidity_source_unit;
 
-    use super::ApproximateStateVariableManipulationFinder;
+    use super::ApproximateStorageChangeFinder;
 
     #[test]
     fn has_variable_declarations() {
@@ -638,7 +612,7 @@ mod light_weight_state_variables_finder_tests {
         let contract = context.find_contract_by_name("NoStateVarManipulationExample");
         let func = contract.find_function_by_name("dontManipulateStateVar");
 
-        let finder = ApproximateStateVariableManipulationFinder::from(&context, func.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func.into());
         let no_changes_found = !finder.state_variables_have_been_manipulated();
         println!(
             "NoStateVarManipulationExample::dontManipulateStateVar()\n{:?}",
@@ -658,7 +632,7 @@ mod light_weight_state_variables_finder_tests {
         let func = contract.find_function_by_name("manipulateStateVarDirectly");
         let func2 = contract.find_function_by_name("readSimpleStateVars");
 
-        let finder = ApproximateStateVariableManipulationFinder::from(&context, func.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func.into());
         let changes_found = finder.state_variables_have_been_manipulated();
         println!(
             "SimpleStateVarManipulationExample::manipulateStateVarDirectly()\n{:?}",
@@ -668,7 +642,7 @@ mod light_weight_state_variables_finder_tests {
         assert_eq!(finder.directly_manipulated_state_variables.len(), 5);
         assert!(finder.manipulated_storage_pointers.is_empty());
 
-        let finder = ApproximateStateVariableManipulationFinder::from(&context, func2.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func2.into());
         let changes_found = finder.state_variables_have_been_manipulated();
         println!(
             "SimpleStateVarManipulationExample::readSimpleStateVars()\n{:?}",
@@ -692,7 +666,7 @@ mod light_weight_state_variables_finder_tests {
 
         // Test manipulateDirectly() function
 
-        let finder = ApproximateStateVariableManipulationFinder::from(&context, func1.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func1.into());
         println!(
             "FixedSizeArraysAssignmentExample::manipulateDirectly()\n{:?}",
             finder
@@ -705,7 +679,7 @@ mod light_weight_state_variables_finder_tests {
 
         // Test manipulateViaIndexAccess() function
 
-        let finder = ApproximateStateVariableManipulationFinder::from(&context, func2.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func2.into());
         println!(
             "FixedSizeArraysAssignmentExample::manipulateViaIndexAccess()\n{:?}",
             finder
@@ -734,7 +708,7 @@ mod light_weight_state_variables_finder_tests {
         let func_helper = contract.find_function_by_name("manipulateHelper");
 
         // Test manipulateStateVariables
-        let finder = ApproximateStateVariableManipulationFinder::from(&context, func.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func.into());
         println!(
             "StructPlusFixedArrayAssignmentExample::manipulateStateVariables()\n{:?}",
             finder
@@ -745,7 +719,7 @@ mod light_weight_state_variables_finder_tests {
         assert!(finder.manipulated_storage_pointers.is_empty());
 
         // Test manipulateStateVariables2
-        let finder = ApproximateStateVariableManipulationFinder::from(&context, func2.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func2.into());
         println!(
             "StructPlusFixedArrayAssignmentExample::manipulateStateVariables2()\n{:?}",
             finder
@@ -772,7 +746,7 @@ mod light_weight_state_variables_finder_tests {
         assert!(finder.directly_manipulated_state_variables.is_empty());
 
         // Test manipulateStateVariables3
-        let finder = ApproximateStateVariableManipulationFinder::from(&context, func3.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func3.into());
         println!(
             "StructPlusFixedArrayAssignmentExample::manipulateStateVariables3()\n{:?}",
             finder
@@ -792,7 +766,7 @@ mod light_weight_state_variables_finder_tests {
         );
 
         // Test manipulateStateVariables4
-        let finder = ApproximateStateVariableManipulationFinder::from(&context, func4.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func4.into());
         println!(
             "StructPlusFixedArrayAssignmentExample::manipulateStateVariables4()\n{:?}",
             finder
@@ -803,7 +777,7 @@ mod light_weight_state_variables_finder_tests {
         assert!(finder.directly_manipulated_state_variables.is_empty());
 
         // Test manipulateStateVariables5
-        let finder = ApproximateStateVariableManipulationFinder::from(&context, func5.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func5.into());
         println!(
             "StructPlusFixedArrayAssignmentExample::manipulateStateVariables5()\n{:?}",
             finder
@@ -823,7 +797,7 @@ mod light_weight_state_variables_finder_tests {
         );
 
         // Test funcHelper
-        let finder = ApproximateStateVariableManipulationFinder::from(&context, func_helper.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func_helper.into());
         println!(
             "StructPlusFixedArrayAssignmentExample::manipulateHelper()\n{:?}",
             finder
@@ -842,7 +816,7 @@ mod light_weight_state_variables_finder_tests {
         );
 
         // Test manipulateStateVariables5
-        let finder = ApproximateStateVariableManipulationFinder::from(&context, func6.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func6.into());
         println!(
             "StructPlusFixedArrayAssignmentExample::manipulateStateVariables6()\n{:?}",
             finder
@@ -874,7 +848,7 @@ mod light_weight_state_variables_finder_tests {
         let func3 = contract.find_function_by_name("manipulateLib3");
 
         // Test manipulateLib()
-        let finder = ApproximateStateVariableManipulationFinder::from(&context, func.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func.into());
         println!("SVManipulationLibrary::manipulateLib()\n{:?}", finder);
         let changes_found = finder.state_variables_have_been_manipulated();
         assert!(changes_found);
@@ -882,7 +856,7 @@ mod light_weight_state_variables_finder_tests {
         assert!(finder.directly_manipulated_state_variables.is_empty());
 
         // Test manipulateLib2()
-        let finder = ApproximateStateVariableManipulationFinder::from(&context, func2.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func2.into());
         println!("SVManipulationLibrary::manipulateLib2()\n{:?}", finder);
         let changes_found = finder.state_variables_have_been_manipulated();
         assert!(changes_found);
@@ -890,7 +864,7 @@ mod light_weight_state_variables_finder_tests {
         assert!(finder.directly_manipulated_state_variables.is_empty());
 
         // Test manipulateLib3()
-        let finder = ApproximateStateVariableManipulationFinder::from(&context, func3.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func3.into());
         println!("SVManipulationLibrary::manipulateLib3()\n{:?}", finder);
         let changes_found = finder.state_variables_have_been_manipulated();
         assert!(changes_found);
@@ -913,7 +887,7 @@ mod light_weight_state_variables_finder_tests {
         let func5 = contract.find_function_by_name("dontManipulateStateVariablesPart5");
 
         // Test dontManipulateStateVariables()
-        let finder = ApproximateStateVariableManipulationFinder::from(&context, func.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func.into());
         println!(
             "NoStructPlusFixedArrayAssignmentExample::dontManipulateStateVariables()\n{:?}",
             finder
@@ -924,7 +898,7 @@ mod light_weight_state_variables_finder_tests {
         assert!(finder.directly_manipulated_state_variables.is_empty());
 
         // Test dontManipulateStateVariablesPart2()
-        let finder = ApproximateStateVariableManipulationFinder::from(&context, func2.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func2.into());
         println!(
             "NoStructPlusFixedArrayAssignmentExample::dontManipulateStateVariablesPart2()\n{:?}",
             finder
@@ -935,7 +909,7 @@ mod light_weight_state_variables_finder_tests {
         assert!(finder.directly_manipulated_state_variables.is_empty());
 
         // Test dontManipulateStateVariablesPart3()
-        let finder = ApproximateStateVariableManipulationFinder::from(&context, func3.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func3.into());
         println!(
             "NoStructPlusFixedArrayAssignmentExample::dontManipulateStateVariablesPart3()\n{:?}",
             finder
@@ -946,7 +920,7 @@ mod light_weight_state_variables_finder_tests {
         assert!(finder.directly_manipulated_state_variables.is_empty());
 
         // Test dontManipulateStateVariablesPart4()
-        let finder = ApproximateStateVariableManipulationFinder::from(&context, func4.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func4.into());
         println!(
             "NoStructPlusFixedArrayAssignmentExample::dontManipulateStateVariablesPart4()\n{:?}",
             finder
@@ -957,7 +931,7 @@ mod light_weight_state_variables_finder_tests {
         assert!(finder.directly_manipulated_state_variables.is_empty());
 
         // Test dontManipulateStateVariablesPart4()
-        let finder = ApproximateStateVariableManipulationFinder::from(&context, func5.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func5.into());
         println!(
             "NoStructPlusFixedArrayAssignmentExample::dontManipulateStateVariablesPart5()\n{:?}",
             finder
@@ -982,7 +956,7 @@ mod light_weight_state_variables_finder_tests {
         let func4 = contract.find_function_by_name("manipulateViaMemberAccess2");
 
         // Test manipulateDirectly()
-        let finder = ApproximateStateVariableManipulationFinder::from(&context, func.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func.into());
         println!(
             "DynamicArraysPushExample::manipulateDirectly()\n{:?}",
             finder
@@ -993,7 +967,7 @@ mod light_weight_state_variables_finder_tests {
         assert_eq!(finder.directly_manipulated_state_variables.len(), 1);
 
         // Test manipulateViaIndexAccess()
-        let finder = ApproximateStateVariableManipulationFinder::from(&context, func2.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func2.into());
         println!(
             "DynamicArraysPushExample::manipulateViaIndexAccess()\n{:?}",
             finder
@@ -1004,7 +978,7 @@ mod light_weight_state_variables_finder_tests {
         assert_eq!(finder.directly_manipulated_state_variables.len(), 3);
 
         // Test manipulateViaMemberAccess()
-        let finder = ApproximateStateVariableManipulationFinder::from(&context, func3.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func3.into());
         println!(
             "DynamicArraysPushExample::manipulateViaMemberAccess()\n{:?}",
             finder
@@ -1015,7 +989,7 @@ mod light_weight_state_variables_finder_tests {
         assert_eq!(finder.directly_manipulated_state_variables.len(), 1);
 
         // Test manipulateViaMemberAccess2()
-        let finder = ApproximateStateVariableManipulationFinder::from(&context, func4.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func4.into());
         println!(
             "DynamicArraysPushExample::manipulateViaMemberAccess2()\n{:?}",
             finder
@@ -1036,7 +1010,7 @@ mod light_weight_state_variables_finder_tests {
         let func = contract.find_function_by_name("add");
 
         // Test add()
-        let finder = ApproximateStateVariableManipulationFinder::from(&context, func.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func.into());
         println!("DynamicMappingsArrayPushExample::add()\n{:?}", finder);
         let changes_found = finder.state_variables_have_been_manipulated();
         assert!(changes_found);
@@ -1055,7 +1029,7 @@ mod light_weight_state_variables_finder_tests {
         let func2 = contract.find_function_by_name("manipulateViaIndexAccess");
 
         // Test func()
-        let finder = ApproximateStateVariableManipulationFinder::from(&context, func.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func.into());
         println!(
             "FixedSizeArraysDeletionExample::manipulateDirectly()\n{:?}",
             finder
@@ -1066,7 +1040,7 @@ mod light_weight_state_variables_finder_tests {
         assert!(finder.manipulated_storage_pointers.is_empty());
 
         // Test func2()
-        let finder = ApproximateStateVariableManipulationFinder::from(&context, func2.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func2.into());
         println!(
             "FixedSizeArraysDeletionExample::manipulateViaIndexAccess()\n{:?}",
             finder
