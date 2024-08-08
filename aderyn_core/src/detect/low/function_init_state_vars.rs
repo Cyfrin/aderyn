@@ -145,7 +145,7 @@ mod function_initializing_state_tests {
         // assert that the detector found an issue
         assert!(found);
         // assert that the detector found the correct number of instances
-        assert_eq!(detector.instances().len(), 2);
+        assert_eq!(detector.instances().len(), 3);
         // assert the severity is low
         assert_eq!(
             detector.severity(),
