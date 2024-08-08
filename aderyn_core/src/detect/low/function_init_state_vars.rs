@@ -5,6 +5,9 @@ use crate::ast::{ASTNode, Expression, FunctionCall, Identifier, NodeID};
 
 use crate::capture;
 use crate::context::browser::ExtractReferencedDeclarations;
+use crate::context::investigator::{
+    StandardInvestigationStyle, StandardInvestigator, StandardInvestigatorVisitor,
+};
 use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
     context::workspace_context::WorkspaceContext,
@@ -40,20 +43,19 @@ impl IssueDetector for FunctionInitializingStateDetector {
                 }) = expression.as_ref()
                 {
                     if let Some(ASTNode::FunctionDefinition(func)) = context.nodes.get(func_id) {
-                        // Check to see if this `func` references non constant state variables
+                        let mut tracker =
+                            NonConstantStateVariableReferenceDeclarationTracker::new(context);
 
-                        let references = ExtractReferencedDeclarations::from(func).extracted;
+                        let investigator = StandardInvestigator::new(
+                            context,
+                            &[&(func.into())],
+                            StandardInvestigationStyle::Downstream,
+                        )?;
 
-                        for reference in references {
-                            if let Some(ASTNode::VariableDeclaration(variable_declaration)) =
-                                context.nodes.get(&reference)
-                            {
-                                if variable_declaration.state_variable
-                                    && !variable_declaration.constant
-                                {
-                                    capture!(self, context, func);
-                                }
-                            }
+                        investigator.investigate(context, &mut tracker)?;
+
+                        if tracker.makes_a_reference {
+                            capture!(self, context, variable_declaration);
                         }
                     }
                 }
@@ -83,6 +85,43 @@ impl IssueDetector for FunctionInitializingStateDetector {
 
     fn name(&self) -> String {
         format!("{}", IssueDetectorNamePool::FunctionInitializingState)
+    }
+}
+
+struct NonConstantStateVariableReferenceDeclarationTracker<'a> {
+    makes_a_reference: bool,
+    context: &'a WorkspaceContext,
+}
+
+impl<'a> NonConstantStateVariableReferenceDeclarationTracker<'a> {
+    fn new(context: &'a WorkspaceContext) -> Self {
+        Self {
+            makes_a_reference: false,
+            context,
+        }
+    }
+}
+
+impl<'a> StandardInvestigatorVisitor for NonConstantStateVariableReferenceDeclarationTracker<'a> {
+    fn visit_any(&mut self, node: &ASTNode) -> eyre::Result<()> {
+        // We already know the condition is satisifed
+        if self.makes_a_reference {
+            return Ok(());
+        }
+
+        let references = ExtractReferencedDeclarations::from(node).extracted;
+
+        for reference in references {
+            if let Some(ASTNode::VariableDeclaration(variable_declaration)) =
+                self.context.nodes.get(&reference)
+            {
+                if variable_declaration.state_variable && !variable_declaration.constant {
+                    self.makes_a_reference = true;
+                }
+            }
+        }
+
+        Ok(())
     }
 }
 

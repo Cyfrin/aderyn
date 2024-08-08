@@ -4567,19 +4567,25 @@ A low level callee may consume all callers gas unexpectedly. Avoid unlimited imp
 
 Detects the immediate initialization of state variables through function calls that are not pure/constant, or that use non-constant state variable. Remove any initialization of state variables via non-constant state variables or function calls. If variables must be set upon contract deployment, locate initialization in the constructor instead.
 
-<details><summary>2 Found Instances</summary>
+<details><summary>3 Found Instances</summary>
 
 
-- Found in src/FunctionInitializingState.sol [Line: 19](../tests/contract-playground/src/FunctionInitializingState.sol#L19)
+- Found in src/FunctionInitializingState.sol [Line: 6](../tests/contract-playground/src/FunctionInitializingState.sol#L6)
 
 	```solidity
-	    function set() public returns (uint) {
+	    uint public v = set(); // Initialize from function (sets to 77)
 	```
 
-- Found in src/FunctionInitializingState.sol [Line: 30](../tests/contract-playground/src/FunctionInitializingState.sol#L30)
+- Found in src/FunctionInitializingState.sol [Line: 8](../tests/contract-playground/src/FunctionInitializingState.sol#L8)
 
 	```solidity
-	    function tes() public view returns (uint) {
+	    uint public x = set(); // Initialize from function (sets to 88)
+	```
+
+- Found in src/FunctionInitializingState.sol [Line: 9](../tests/contract-playground/src/FunctionInitializingState.sol#L9)
+
+	```solidity
+	    uint public f = tes();
 	```
 
 </details>

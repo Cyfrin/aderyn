@@ -7341,8 +7341,8 @@
                   "uri": "src/FunctionInitializingState.sol"
                 },
                 "region": {
-                  "byteLength": 280,
-                  "byteOffset": 549
+                  "byteLength": 21,
+                  "byteOffset": 108
                 }
               }
             },
@@ -7352,8 +7352,19 @@
                   "uri": "src/FunctionInitializingState.sol"
                 },
                 "region": {
-                  "byteLength": 285,
-                  "byteOffset": 863
+                  "byteLength": 21,
+                  "byteOffset": 199
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/FunctionInitializingState.sol"
+                },
+                "region": {
+                  "byteLength": 21,
+                  "byteOffset": 267
                 }
               }
             }
