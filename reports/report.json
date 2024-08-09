@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 80,
-    "total_sloc": 2375
+    "total_source_units": 82,
+    "total_sloc": 2431
   },
   "files_details": {
     "files_details": [
@@ -166,6 +166,10 @@
         "n_sloc": 14
       },
       {
+        "file_path": "src/ReturnBomb.sol",
+        "n_sloc": 44
+      },
+      {
         "file_path": "src/RevertsAndRequriesInLoops.sol",
         "n_sloc": 27
       },
@@ -232,6 +236,10 @@
       {
         "file_path": "src/UnusedError.sol",
         "n_sloc": 19
+      },
+      {
+        "file_path": "src/UnusedStateVariables.sol",
+        "n_sloc": 12
       },
       {
         "file_path": "src/UsingSelfdestruct.sol",
@@ -329,7 +337,7 @@
   },
   "issue_count": {
     "high": 37,
-    "low": 27
+    "low": 29
   },
   "high_issues": {
     "issues": [
@@ -1332,6 +1340,12 @@
             "src_char": "130:26"
           },
           {
+            "contract_path": "src/ReturnBomb.sol",
+            "line_no": 61,
+            "src": "1623:7",
+            "src_char": "1623:7"
+          },
+          {
             "contract_path": "src/StateShadowing.sol",
             "line_no": 5,
             "src": "87:13",
@@ -1378,6 +1392,36 @@
             "line_no": 15,
             "src": "529:11",
             "src_char": "529:11"
+          },
+          {
+            "contract_path": "src/UnusedStateVariables.sol",
+            "line_no": 6,
+            "src": "147:13",
+            "src_char": "147:13"
+          },
+          {
+            "contract_path": "src/UnusedStateVariables.sol",
+            "line_no": 7,
+            "src": "183:13",
+            "src_char": "183:13"
+          },
+          {
+            "contract_path": "src/UnusedStateVariables.sol",
+            "line_no": 8,
+            "src": "215:10",
+            "src_char": "215:10"
+          },
+          {
+            "contract_path": "src/UnusedStateVariables.sol",
+            "line_no": 9,
+            "src": "246:12",
+            "src_char": "246:12"
+          },
+          {
+            "contract_path": "src/UnusedStateVariables.sol",
+            "line_no": 12,
+            "src": "314:11",
+            "src_char": "314:11"
           },
           {
             "contract_path": "src/WrongOrderOfLayout.sol",
@@ -1570,6 +1614,12 @@
             "line_no": 194,
             "src": "6342:11",
             "src_char": "6342:11"
+          },
+          {
+            "contract_path": "src/ReturnBomb.sol",
+            "line_no": 32,
+            "src": "839:4",
+            "src_char": "839:4"
           },
           {
             "contract_path": "src/SendEtherNoChecks.sol",
@@ -2359,6 +2409,12 @@
             "src_char": "32:23"
           },
           {
+            "contract_path": "src/UnusedStateVariables.sol",
+            "line_no": 2,
+            "src": "32:24",
+            "src_char": "32:24"
+          },
+          {
             "contract_path": "src/UsingSelfdestruct.sol",
             "line_no": 2,
             "src": "32:23",
@@ -2539,6 +2595,30 @@
             "line_no": 39,
             "src": "1249:9",
             "src_char": "1249:9"
+          },
+          {
+            "contract_path": "src/ReturnBomb.sol",
+            "line_no": 16,
+            "src": "358:4",
+            "src_char": "358:4"
+          },
+          {
+            "contract_path": "src/ReturnBomb.sol",
+            "line_no": 32,
+            "src": "839:4",
+            "src_char": "839:4"
+          },
+          {
+            "contract_path": "src/ReturnBomb.sol",
+            "line_no": 47,
+            "src": "1273:4",
+            "src_char": "1273:4"
+          },
+          {
+            "contract_path": "src/ReturnBomb.sol",
+            "line_no": 63,
+            "src": "1646:4",
+            "src_char": "1646:4"
           },
           {
             "contract_path": "src/StateVariables.sol",
@@ -3279,6 +3359,12 @@
             "src_char": "32:23"
           },
           {
+            "contract_path": "src/ReturnBomb.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/StateVariables.sol",
             "line_no": 2,
             "src": "32:23",
@@ -3313,6 +3399,12 @@
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/UnusedStateVariables.sol",
+            "line_no": 2,
+            "src": "32:24",
+            "src_char": "32:24"
           },
           {
             "contract_path": "src/WeakRandomness.sol",
@@ -4198,6 +4290,163 @@
         ]
       },
       {
+        "title": "Potentially unused `private` / `internal` state variables found.",
+        "description": "State variable appears to be unused. No analysis has been performed to see if any inilne assembly references it. So if that's not the case, consider removing this unused variable.",
+        "detector_name": "unused-state-variable",
+        "instances": [
+          {
+            "contract_path": "src/AssemblyExample.sol",
+            "line_no": 5,
+            "src": "97:1",
+            "src_char": "97:1"
+          },
+          {
+            "contract_path": "src/InconsistentUints.sol",
+            "line_no": 16,
+            "src": "434:10",
+            "src_char": "434:10"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 8,
+            "src": "199:19",
+            "src_char": "199:19"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 9,
+            "src": "241:20",
+            "src_char": "241:20"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 13,
+            "src": "383:27",
+            "src_char": "383:27"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 14,
+            "src": "437:28",
+            "src_char": "437:28"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 28,
+            "src": "1056:16",
+            "src_char": "1056:16"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 29,
+            "src": "1108:17",
+            "src_char": "1108:17"
+          },
+          {
+            "contract_path": "src/TautologyOrContradiction.sol",
+            "line_no": 6,
+            "src": "133:6",
+            "src_char": "133:6"
+          },
+          {
+            "contract_path": "src/TautologyOrContradiction.sol",
+            "line_no": 7,
+            "src": "145:9",
+            "src_char": "145:9"
+          },
+          {
+            "contract_path": "src/UninitializedStateVariable.sol",
+            "line_no": 13,
+            "src": "503:3",
+            "src_char": "503:3"
+          },
+          {
+            "contract_path": "src/UnusedStateVariables.sol",
+            "line_no": 6,
+            "src": "147:13",
+            "src_char": "147:13"
+          },
+          {
+            "contract_path": "src/UnusedStateVariables.sol",
+            "line_no": 7,
+            "src": "183:13",
+            "src_char": "183:13"
+          },
+          {
+            "contract_path": "src/UnusedStateVariables.sol",
+            "line_no": 8,
+            "src": "215:10",
+            "src_char": "215:10"
+          },
+          {
+            "contract_path": "src/UnusedStateVariables.sol",
+            "line_no": 9,
+            "src": "246:12",
+            "src_char": "246:12"
+          },
+          {
+            "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
+            "line_no": 14,
+            "src": "151:3",
+            "src_char": "151:3"
+          },
+          {
+            "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
+            "line_no": 16,
+            "src": "190:3",
+            "src_char": "190:3"
+          },
+          {
+            "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
+            "line_no": 19,
+            "src": "261:3",
+            "src_char": "261:3"
+          },
+          {
+            "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
+            "line_no": 22,
+            "src": "367:3",
+            "src_char": "367:3"
+          },
+          {
+            "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
+            "line_no": 29,
+            "src": "477:3",
+            "src_char": "477:3"
+          },
+          {
+            "contract_path": "src/cloc/HeavilyCommentedContract.sol",
+            "line_no": 14,
+            "src": "160:3",
+            "src_char": "160:3"
+          },
+          {
+            "contract_path": "src/cloc/HeavilyCommentedContract.sol",
+            "line_no": 16,
+            "src": "199:3",
+            "src_char": "199:3"
+          },
+          {
+            "contract_path": "src/cloc/HeavilyCommentedContract.sol",
+            "line_no": 19,
+            "src": "270:3",
+            "src_char": "270:3"
+          },
+          {
+            "contract_path": "src/cloc/HeavilyCommentedContract.sol",
+            "line_no": 22,
+            "src": "376:3",
+            "src_char": "376:3"
+          },
+          {
+            "contract_path": "src/cloc/HeavilyCommentedContract.sol",
+            "line_no": 29,
+            "src": "486:3",
+            "src_char": "486:3"
+          }
+        ]
+      },
+      {
         "title": "Functions declared `pure` / `view` but contains assembly",
         "description": "If the assembly code contains bugs or unintended side effects, it can lead to incorrect results or vulnerabilities, which are hard to debug and resolve, especially when the function is meant to be simple and predictable.",
         "detector_name": "constant-functions-assembly",
@@ -4250,6 +4499,19 @@
             "line_no": 26,
             "src": "614:16",
             "src_char": "614:16"
+          }
+        ]
+      },
+      {
+        "title": "Return Bomb",
+        "description": "A low level callee may consume all callers gas unexpectedly. Avoid unlimited implicit decoding of returndata on calls to unchecked addresses. You can limit the gas by passing a gas limit as an option to the call. For example, `unknownAdress.call{gas: gasLimitHere}(\"calldata\")` That would act as a safety net from OOG errors.\n        ",
+        "detector_name": "return-bomb",
+        "instances": [
+          {
+            "contract_path": "src/ReturnBomb.sol",
+            "line_no": 22,
+            "src": "591:115",
+            "src_char": "591:115"
           }
         ]
       }
@@ -4314,11 +4576,13 @@
     "weak-randomness",
     "pre-declared-local-variable-usage",
     "delete-nested-mapping",
+    "unused-state-variable",
     "constant-functions-assembly",
     "boolean-equality",
     "tx-origin-used-for-auth",
     "msg-value-in-loop",
     "contract-locks-ether",
-    "incorrect-erc20-interface"
+    "incorrect-erc20-interface",
+    "return-bomb"
   ]
 }

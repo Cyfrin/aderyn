@@ -75,12 +75,14 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<WeakRandomnessDetector>::default(),
         Box::<PreDeclaredLocalVariableUsageDetector>::default(),
         Box::<DeletionNestedMappingDetector>::default(),
+        Box::<UnusedStateVariablesDetector>::default(),
         Box::<ConstantFunctionContainsAssemblyDetector>::default(),
         Box::<BooleanEqualityDetector>::default(),
         Box::<TxOriginUsedForAuthDetector>::default(),
         Box::<MsgValueUsedInLoopDetector>::default(),
         Box::<ContractLocksEtherDetector>::default(),
         Box::<IncorrectERC20InterfaceDetector>::default(),
+        Box::<ReturnBombDetector>::default(),
     ]
 }
 
@@ -151,12 +153,14 @@ pub(crate) enum IssueDetectorNamePool {
     WeakRandomness,
     PreDeclaredLocalVariableUsage,
     DeleteNestedMapping,
+    UnusedStateVariable,
     ConstantFunctionsAssembly,
     BooleanEquality,
     TxOriginUsedForAuth,
     MsgValueInLoop,
     ContractLocksEther,
     IncorrectERC20Interface,
+    ReturnBomb,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -168,6 +172,10 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
     match detector_name {
         IssueDetectorNamePool::IncorrectERC20Interface => {
             Some(Box::<IncorrectERC20InterfaceDetector>::default())
+        }
+        IssueDetectorNamePool::ReturnBomb => Some(Box::<ReturnBombDetector>::default()),
+        IssueDetectorNamePool::UnusedStateVariable => {
+            Some(Box::<UnusedStateVariablesDetector>::default())
         }
         IssueDetectorNamePool::DelegateCallInLoop => {
             Some(Box::<DelegateCallInLoopDetector>::default())
