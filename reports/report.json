@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 81,
-    "total_sloc": 2334
+    "total_source_units": 82,
+    "total_sloc": 2499
   },
   "files_details": {
     "files_details": [
@@ -144,6 +144,10 @@
       {
         "file_path": "src/OnceModifierExample.sol",
         "n_sloc": 8
+      },
+      {
+        "file_path": "src/OutOfOrderRetryable.sol",
+        "n_sloc": 165
       },
       {
         "file_path": "src/PreDeclaredVarUsage.sol",
@@ -332,7 +336,7 @@
     ]
   },
   "issue_count": {
-    "high": 36,
+    "high": 37,
     "low": 29
   },
   "high_issues": {
@@ -1612,6 +1616,30 @@
             "src_char": "6342:11"
           },
           {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 63,
+            "src": "1649:11",
+            "src_char": "1649:11"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 90,
+            "src": "2557:22",
+            "src_char": "2557:22"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 167,
+            "src": "4685:13",
+            "src_char": "4685:13"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 175,
+            "src": "5072:7",
+            "src_char": "5072:7"
+          },
+          {
             "contract_path": "src/ReturnBomb.sol",
             "line_no": 32,
             "src": "839:4",
@@ -1741,6 +1769,42 @@
         "description": "Function returns a value but it is ignored.",
         "detector_name": "unchecked-return",
         "instances": [
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 65,
+            "src": "1705:390",
+            "src_char": "1705:390"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 77,
+            "src": "2129:379",
+            "src_char": "2129:379"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 92,
+            "src": "2624:390",
+            "src_char": "2624:390"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 107,
+            "src": "3107:379",
+            "src_char": "3107:379"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 129,
+            "src": "3777:208",
+            "src_char": "3777:208"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 151,
+            "src": "4337:261",
+            "src_char": "4337:261"
+          },
           {
             "contract_path": "src/UncheckedReturn.sol",
             "line_no": 14,
@@ -2040,6 +2104,25 @@
             "src_char": "3059:15"
           }
         ]
+      },
+      {
+        "title": "Out of order retryable transactions.",
+        "description": "Do not rely on the order or successful execution of retryable tickets. Functions like createRetryableTicket, outboundTransferCustomRefund, unsafeCreateRetryableTicket are free to be re-tried in any\n            order if they fail in the first go. Since this operation happens off chain, the sequencer is in control of the\n            order of these transactions. Therefore, restrict the use to at most 1 ticket call per function.",
+        "detector_name": "out-of-order-retryable",
+        "instances": [
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 63,
+            "src": "1649:11",
+            "src_char": "1649:11"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 90,
+            "src": "2557:22",
+            "src_char": "2557:22"
+          }
+        ]
       }
     ]
   },
@@ -2235,6 +2318,18 @@
             "src_char": "1598:18"
           },
           {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 171,
+            "src": "4927:28",
+            "src_char": "4927:28"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 180,
+            "src": "5328:28",
+            "src_char": "5328:28"
+          },
+          {
             "contract_path": "src/SendEtherNoChecks.sol",
             "line_no": 67,
             "src": "1255:19",
@@ -2332,6 +2427,12 @@
             "src_char": "32:23"
           },
           {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/PreDeclaredVarUsage.sol",
             "line_no": 2,
             "src": "32:23",
@@ -2421,6 +2522,18 @@
             "line_no": 12,
             "src": "267:15",
             "src_char": "267:15"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 54,
+            "src": "1416:14",
+            "src_char": "1416:14"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 55,
+            "src": "1440:24",
+            "src_char": "1440:24"
           },
           {
             "contract_path": "src/StateVariables.sol",
@@ -2518,6 +2631,18 @@
             "line_no": 7,
             "src": "129:9",
             "src_char": "129:9"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 167,
+            "src": "4685:13",
+            "src_char": "4685:13"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 175,
+            "src": "5072:7",
+            "src_char": "5072:7"
           },
           {
             "contract_path": "src/ReturnBomb.sol",
@@ -3276,6 +3401,12 @@
             "src_char": "32:23"
           },
           {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/ReturnBomb.sol",
             "line_no": 2,
             "src": "32:23",
@@ -3564,6 +3695,12 @@
             "line_no": 10,
             "src": "147:7",
             "src_char": "147:7"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 193,
+            "src": "5775:13",
+            "src_char": "5775:13"
           },
           {
             "contract_path": "src/SendEtherNoChecks.sol",
@@ -4487,6 +4624,7 @@
     "tx-origin-used-for-auth",
     "msg-value-in-loop",
     "contract-locks-ether",
-    "return-bomb"
+    "return-bomb",
+    "out-of-order-retryable"
   ]
 }
