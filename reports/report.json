@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 82,
-    "total_sloc": 2499
+    "total_source_units": 84,
+    "total_sloc": 2645
   },
   "files_details": {
     "files_details": [
@@ -106,6 +106,10 @@
         "n_sloc": 4
       },
       {
+        "file_path": "src/FunctionInitializingState.sol",
+        "n_sloc": 49
+      },
+      {
         "file_path": "src/HugeConstants.sol",
         "n_sloc": 36
       },
@@ -116,6 +120,10 @@
       {
         "file_path": "src/IncorrectCaretOperator.sol",
         "n_sloc": 16
+      },
+      {
+        "file_path": "src/IncorrectERC20.sol",
+        "n_sloc": 97
       },
       {
         "file_path": "src/IncorrectShift.sol",
@@ -336,8 +344,8 @@
     ]
   },
   "issue_count": {
-    "high": 37,
-    "low": 29
+    "high": 38,
+    "low": 30
   },
   "high_issues": {
     "issues": [
@@ -2106,6 +2114,43 @@
         ]
       },
       {
+        "title": "Incorrect ERC20 interface.",
+        "description": "Incorrect return values for ERC20 functions. A contract compiled with Solidity > 0.4.22 interacting with these functions will fail to execute them, as the return value is missing. Set the appropriate return values and types for the defined ERC20 functions.",
+        "detector_name": "incorrect-erc20-interface",
+        "instances": [
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 17,
+            "src": "483:8",
+            "src_char": "483:8"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 23,
+            "src": "690:7",
+            "src_char": "690:7"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 27,
+            "src": "808:12",
+            "src_char": "808:12"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 35,
+            "src": "1146:9",
+            "src_char": "1146:9"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 39,
+            "src": "1249:9",
+            "src_char": "1249:9"
+          }
+        ]
+      },
+      {
         "title": "Out of order retryable transactions.",
         "description": "Do not rely on the order or successful execution of retryable tickets. Functions like createRetryableTicket, outboundTransferCustomRefund, unsafeCreateRetryableTicket are free to be re-tried in any\n            order if they fail in the first go. Since this operation happens off chain, the sequencer is in control of the\n            order of these transactions. Therefore, restrict the use to at most 1 ticket call per function.",
         "detector_name": "out-of-order-retryable",
@@ -2415,10 +2460,22 @@
             "src_char": "32:23"
           },
           {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 2,
+            "src": "32:21",
+            "src_char": "32:21"
+          },
+          {
             "contract_path": "src/InconsistentUints.sol",
             "line_no": 1,
             "src": "0:24",
             "src_char": "0:24"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
           },
           {
             "contract_path": "src/MsgValueInLoop.sol",
@@ -2631,6 +2688,36 @@
             "line_no": 7,
             "src": "129:9",
             "src_char": "129:9"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 17,
+            "src": "483:8",
+            "src_char": "483:8"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 23,
+            "src": "690:7",
+            "src_char": "690:7"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 27,
+            "src": "808:12",
+            "src_char": "808:12"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 35,
+            "src": "1146:9",
+            "src_char": "1146:9"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 39,
+            "src": "1249:9",
+            "src_char": "1249:9"
           },
           {
             "contract_path": "src/OutOfOrderRetryable.sol",
@@ -2950,6 +3037,54 @@
             "line_no": 17,
             "src": "457:3",
             "src_char": "457:3"
+          },
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 23,
+            "src": "790:2",
+            "src_char": "790:2"
+          },
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 26,
+            "src": "820:2",
+            "src_char": "820:2"
+          },
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 34,
+            "src": "1109:2",
+            "src_char": "1109:2"
+          },
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 37,
+            "src": "1139:2",
+            "src_char": "1139:2"
+          },
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 42,
+            "src": "1268:4",
+            "src_char": "1268:4"
+          },
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 42,
+            "src": "1275:4",
+            "src_char": "1275:4"
+          },
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 48,
+            "src": "1459:4",
+            "src_char": "1459:4"
+          },
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 48,
+            "src": "1466:4",
+            "src_char": "1466:4"
           },
           {
             "contract_path": "src/IncorrectCaretOperator.sol",
@@ -3387,6 +3522,12 @@
             "line_no": 1,
             "src": "0:24",
             "src_char": "0:24"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
           },
           {
             "contract_path": "src/KeccakContract.sol",
@@ -3924,6 +4065,18 @@
             "line_no": 32,
             "src": "1673:6",
             "src_char": "1673:6"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 8,
+            "src": "225:7",
+            "src_char": "225:7"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 51,
+            "src": "1550:7",
+            "src_char": "1550:7"
           }
         ]
       },
@@ -4556,6 +4709,31 @@
             "src_char": "591:115"
           }
         ]
+      },
+      {
+        "title": "Function initializing state.",
+        "description": "Detects the immediate initialization of state variables through function calls that are not pure/constant, or that use non-constant state variable. Remove any initialization of state variables via non-constant state variables or function calls. If variables must be set upon contract deployment, locate initialization in the constructor instead.",
+        "detector_name": "function-initializing-state",
+        "instances": [
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 6,
+            "src": "108:21",
+            "src_char": "108:21"
+          },
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 8,
+            "src": "199:21",
+            "src_char": "199:21"
+          },
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 9,
+            "src": "267:21",
+            "src_char": "267:21"
+          }
+        ]
       }
     ]
   },
@@ -4624,7 +4802,9 @@
     "tx-origin-used-for-auth",
     "msg-value-in-loop",
     "contract-locks-ether",
+    "incorrect-erc20-interface",
     "return-bomb",
-    "out-of-order-retryable"
+    "out-of-order-retryable",
+    "function-initializing-state"
   ]
 }
