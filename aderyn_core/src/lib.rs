@@ -127,9 +127,11 @@ where
                 description: detector.description(),
                 detector_name: detector.name(),
                 instances: Default::default(),
+                instances_with_hints: Default::default(),
             };
 
             let mut detectors_instances = BTreeMap::new();
+            let mut detectors_instances_with_hints = BTreeMap::new();
 
             let collection_of_instances = contexts
                 .into_par_iter()
@@ -138,18 +140,20 @@ where
                     if let Ok(found) = d.detect(context) {
                         if found {
                             let instances = d.instances();
-                            return Some(instances);
+                            let instances_with_hints = d.instances_with_hints();
+                            return Some((instances, instances_with_hints));
                         }
                     }
                     None
                 })
                 .collect::<Vec<_>>();
 
-            for instances in collection_of_instances {
+            for (instances, instances_with_hints) in collection_of_instances {
                 detectors_instances.extend(instances);
+                detectors_instances_with_hints.extend(instances_with_hints);
             }
 
-            if detectors_instances.is_empty() {
+            if detectors_instances.is_empty() && detectors_instances_with_hints.is_empty() {
                 return None;
             }
 
@@ -168,6 +172,23 @@ where
                         .is_some_and(|lines_to_ignore| lines_to_ignore.contains(&instance.1))
                 })
                 .collect();
+
+            issue.instances_with_hints = detectors_instances_with_hints
+                .into_iter()
+                .filter(|(instance, _)| {
+                    !ignore_lines
+                        .get(
+                            &canonicalize(root_rel_path.join(&instance.0))
+                                .unwrap()
+                                .to_string_lossy()
+                                .to_string(),
+                        )
+                        .unwrap()
+                        .as_ref()
+                        .is_some_and(|lines_to_ignore| lines_to_ignore.contains(&instance.1))
+                })
+                .collect();
+
             Some((issue, detector.severity()))
         })
         .collect();

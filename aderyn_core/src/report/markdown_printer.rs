@@ -294,20 +294,40 @@ impl MarkdownReportPrinter {
                 .next()
                 .unwrap();
 
-            writeln!(
-                writer,
-                "- Found in {} [Line: {}]({}#L{})\n\n\t```solidity\n\t{}\n\t```\n",
-                instance.contract_path,
-                instance.line_no,
-                carve_shortest_path(
-                    std::fs::canonicalize(PathBuf::from(params.output_rel_path.clone())).unwrap(),
-                    std::fs::canonicalize(&path).unwrap()
-                )
-                .to_str()
-                .unwrap(),
-                instance.line_no,
-                line_preview,
-            )?;
+            if let Some(hint) = instance.hint.as_ref() {
+                writeln!(
+                    writer,
+                    "- Found in {} [Line: {}]({}#L{})\n\n\t{}\n\t```solidity\n\t{}\n\t```\n",
+                    instance.contract_path,
+                    instance.line_no,
+                    carve_shortest_path(
+                        std::fs::canonicalize(PathBuf::from(params.output_rel_path.clone()))
+                            .unwrap(),
+                        std::fs::canonicalize(&path).unwrap()
+                    )
+                    .to_str()
+                    .unwrap(),
+                    instance.line_no,
+                    hint,
+                    line_preview,
+                )?;
+            } else {
+                writeln!(
+                    writer,
+                    "- Found in {} [Line: {}]({}#L{})\n\n\t```solidity\n\t{}\n\t```\n",
+                    instance.contract_path,
+                    instance.line_no,
+                    carve_shortest_path(
+                        std::fs::canonicalize(PathBuf::from(params.output_rel_path.clone()))
+                            .unwrap(),
+                        std::fs::canonicalize(&path).unwrap()
+                    )
+                    .to_str()
+                    .unwrap(),
+                    instance.line_no,
+                    line_preview,
+                )?;
+            }
         }
         writeln!(writer, "</details>\n")?;
         line_nos_printed.clear();

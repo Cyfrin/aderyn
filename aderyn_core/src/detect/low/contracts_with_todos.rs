@@ -17,6 +17,7 @@ pub struct ContractsWithTodosDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
+    found_instances_with_hints: BTreeMap<(String, usize, String, String), NodeID>,
 }
 
 impl IssueDetector for ContractsWithTodosDetector {
@@ -33,7 +34,28 @@ impl IssueDetector for ContractsWithTodosDetector {
                         fscloc::token::TokenType::MultilineComment
                         | fscloc::token::TokenType::SinglelineComment => {
                             if token.content.to_lowercase().contains("todo") {
-                                capture!(self, context, contract);
+                                let hint = {
+                                    let (_, contract_start_line, _) =
+                                        context.get_node_sort_key(&(contract.into()));
+
+                                    if token.start_line != token.end_line {
+                                        format!(
+                                            "A TODO comment was found between lines {}-{}",
+                                            (contract_start_line + token.start_line)
+                                                .saturating_sub(1),
+                                            (contract_start_line + token.end_line)
+                                                .saturating_sub(1)
+                                        )
+                                    } else {
+                                        format!(
+                                            "A TODO comment was found on line {}",
+                                            (contract_start_line + token.start_line)
+                                                .saturating_sub(1)
+                                        )
+                                    }
+                                };
+
+                                capture!(self, context, contract, hint);
                                 break;
                             }
                         }
@@ -43,7 +65,7 @@ impl IssueDetector for ContractsWithTodosDetector {
             }
         }
 
-        Ok(!self.found_instances.is_empty())
+        Ok(!(self.found_instances.is_empty() && self.found_instances_with_hints.is_empty()))
     }
 
     fn title(&self) -> String {
@@ -60,6 +82,10 @@ impl IssueDetector for ContractsWithTodosDetector {
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
         self.found_instances.clone()
+    }
+
+    fn instances_with_hints(&self) -> BTreeMap<(String, usize, String, String), NodeID> {
+        self.found_instances_with_hints.clone()
     }
 
     fn name(&self) -> String {
@@ -86,7 +112,7 @@ mod contracts_with_todos {
         let found = detector.detect(&context).unwrap();
         assert!(found);
         // assert that the detector finds the correct number of instances
-        assert_eq!(detector.instances().len(), 1);
+        assert_eq!(detector.instances_with_hints().len(), 1);
         // assert that the detector returns the correct severity
         assert_eq!(
             detector.severity(),

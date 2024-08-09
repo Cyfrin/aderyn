@@ -22,6 +22,19 @@ macro_rules! capture {
             );
         }
     };
+    ($self:ident, $context:ident, $item:expr, $hint:tt) => {
+        let instance = $context.get_node_sort_key_from_capturable(&$item.clone().into());
+        if let Some(id) = $context.get_node_id_of_capturable(&$item.clone().into()) {
+            $self.found_instances_with_hints.insert(
+                (instance.0, instance.1, instance.2, String::from($hint)),
+                id,
+            );
+        } else {
+            $self
+                .found_instances_with_hints
+                .insert((instance.0, instance.1, instance.2, String::from($hint)), 0);
+        }
+    };
 }
 
 #[macro_export]

@@ -247,5 +247,52 @@ fn create_sarif_locations(issue: &Issue) -> Vec<Location> {
             locations.push(location);
         }
     }
+    for ((filename, _line_number, source_location, hint), _value) in
+        issue.instances_with_hints.iter()
+    {
+        if let Some((offset, len)) = source_location.split_once(':') {
+            let location = Location {
+                physical_location: Some(PhysicalLocation {
+                    address: None,
+                    artifact_location: Some(ArtifactLocation {
+                        uri: Some(filename.clone()),
+                        uri_base_id: None,
+                        description: None,
+                        index: None,
+                        properties: None,
+                    }),
+                    context_region: None,
+                    properties: None,
+                    region: Some(Region {
+                        char_offset: None,
+                        char_length: None,
+                        byte_length: Some(len.parse().unwrap()),
+                        byte_offset: Some(offset.parse().unwrap()),
+                        end_column: None,
+                        end_line: None,
+                        message: None,
+                        properties: None,
+                        snippet: None,
+                        source_language: None,
+                        start_column: None,
+                        start_line: None,
+                    }),
+                }),
+                properties: None,
+                annotations: None,
+                id: None,
+                logical_locations: None,
+                relationships: None,
+                message: Some(Message {
+                    text: Some(hint.to_owned()),
+                    arguments: None,
+                    id: None,
+                    markdown: None,
+                    properties: None,
+                }),
+            };
+            locations.push(location);
+        }
+    }
     locations
 }
