@@ -53,7 +53,11 @@ impl IssueDetector for StateVariableNotLoggedInEventDetector {
             })
             .collect();
 
-        for function in context.function_definitions().into_iter() {
+        for function in context
+            .function_definitions()
+            .into_iter()
+            .filter(|function| !function.is_constructor)
+        {
             for assignment in ExtractAssignments::from(function).extracted.into_iter() {
                 let left_hand_side = assignment.left_hand_side.as_ref();
                 let right_hand_side = assignment.right_hand_side.as_ref();
@@ -133,23 +137,23 @@ fn return_identifier_referenced_dec(expression: Expression) -> Result<i64, &'sta
     match expression {
         Expression::Identifier(left_identifier) => {
             if let Some(reference_id) = left_identifier.referenced_declaration {
-                return Ok(reference_id);
+                Ok(reference_id)
             } else {
-                return Err("Identifier has no ref_dec");
+                Err("Identifier has no ref_dec")
             }
         }
         Expression::MemberAccess(left_struct) => {
             if let Expression::Identifier(left_identifer) = *left_struct.expression {
                 if let Some(reference_id) = left_identifer.referenced_declaration {
-                    return Ok(reference_id);
+                    Ok(reference_id)
                 } else {
-                    return Err("MemberAccess Identifier has no ref_dec");
+                    Err("MemberAccess Identifier has no ref_dec")
                 }
             } else {
-                return Err("Assignment struct has no identifier");
+                Err("Assignment struct has no identifier")
             }
         }
-        _ => return Err("Unexpected type in assignment"),
+        _ => Err("Unexpected type in assignment"),
     }
 }
 
@@ -157,8 +161,8 @@ fn return_identifier_name(expression: Expression) -> Result<String, &'static str
     match expression {
         Expression::Identifier(left_identifier) => Ok(left_identifier.name),
         //we only get MemberAccess when the expression is a subfield of a struct so it is safe to just grab that member's name
-        Expression::MemberAccess(left_struct) => return Ok(left_struct.member_name),
-        _ => return Err("Unexpected type in assignment"),
+        Expression::MemberAccess(left_struct) => Ok(left_struct.member_name),
+        _ => Err("Unexpected type in assignment"),
     }
 }
 
@@ -170,8 +174,7 @@ fn check_event_args(
 ) -> bool {
     match event {
         ASTNode::Identifier(event_identifier) => {
-            return (event_identifier.name == *left_var_name
-                || event_identifier.name == *right_var_name)
+            event_identifier.name == *left_var_name || event_identifier.name == *right_var_name
         }
         ASTNode::MemberAccess(event_member_access) => {
             //if we are checking a struct subfield name we must confirm the parent structs are the same
@@ -179,27 +182,16 @@ fn check_event_args(
                 *event_member_access.expression.clone()
             {
                 if let Some(struct_ref_id) = event_identifier.referenced_declaration {
-                    if struct_ref_id == referenced_id {
-                        if event_member_access.member_name == *left_var_name
-                            || event_member_access.member_name == *right_var_name
-                        {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    } else {
-                        //parent struct does not match event struct, so subfields cannot be the same
-                        return false;
-                    }
-                } else {
-                    //identifier does not have a referenced id, this should not occur
-                    return false;
+                    return struct_ref_id == referenced_id
+                        && (event_member_access.member_name == *left_var_name
+                            || event_member_access.member_name == *right_var_name);
                 }
-            } else {
-                //we are only looking for subfields of structs, if the event does not have an expression which is an identifier it must not match
-                return false;
             }
+            //event does not have identifier so cannot match struct
+            false
         }
+
+        //we are only looking for subfields of structs, if the event does not have an expression which is an identifier it must not match
         _ => false,
     }
 }
