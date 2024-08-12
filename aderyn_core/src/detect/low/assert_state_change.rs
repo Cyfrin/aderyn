@@ -25,13 +25,12 @@ impl IssueDetector for AssertStateChangeDetector {
             if let Expression::Identifier(Identifier { name, .. }) =
                 function_call.expression.as_ref()
             {
-                if name == "assert" {
-                    if function_call
+                if name == "assert"
+                    && function_call
                         .arguments_change_contract_state(context)
                         .is_some_and(identity)
-                    {
-                        capture!(self, context, function_call);
-                    }
+                {
+                    capture!(self, context, function_call);
                 }
             }
         }
