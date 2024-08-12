@@ -81,9 +81,7 @@ impl IssueDetector for IncorrectERC721InterfaceDetector {
                                 capture!(self, context, func);
                             }
 
-                            if (func.represents_erc721_is_approved_for_all()
-                                || func.represents_erc165_supports_interface())
-                                && !func.returns_bool()
+                            if func.represents_erc721_is_approved_for_all() && !func.returns_bool()
                             {
                                 capture!(self, context, func);
                             }
@@ -233,14 +231,6 @@ mod erc721_matching_function_signature_helper {
             };
             satisfier.satisfies(self)
         }
-
-        pub fn represents_erc165_supports_interface(&self) -> bool {
-            let satisifer = SignatureMatcher {
-                name: "supportsInterface",
-                paramter_types: vec!["bytes4"],
-            };
-            satisifer.satisfies(self)
-        }
     }
 
     // Helpers to match return types (bool & uint256)
@@ -308,7 +298,7 @@ mod incorrect_erc721_tests {
         assert!(found);
         // assert that the detector found the correct number of instances
 
-        assert_eq!(detector.instances().len(), 9);
+        assert_eq!(detector.instances().len(), 8);
 
         // assert the severity is high
         assert_eq!(

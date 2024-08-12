@@ -96,15 +96,6 @@ contract IncorrectERC721 {
         balances[to] += 1;
         totalSupply += 1;
     }
-
-    // Define the ERC-165 identifier for the ERC-165 interface itself
-    bytes4 private constant _INTERFACE_ID_ERC165 = 0x01ffc9a7;
-
-    function supportsInterface(
-        bytes4 interfaceId
-    ) external view virtual returns (address) {
-        return address(0x1);
-    }
 }
 
 interface MyIERC721 {
@@ -281,15 +272,6 @@ contract CorrectERC721 is MyIERC721 {
         return (spender == owner ||
             getApproved(tokenId) == spender ||
             isApprovedForAll(owner, spender));
-    }
-
-    // Define the ERC-165 identifier for the ERC-165 interface itself
-    bytes4 private constant _INTERFACE_ID_ERC165 = 0x01ffc9a7;
-
-    function supportsInterface(
-        bytes4 interfaceId
-    ) external view virtual returns (bool) {
-        return interfaceId == _INTERFACE_ID_ERC165;
     }
 }
 
