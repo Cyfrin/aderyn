@@ -3284,6 +3284,26 @@
           "ruleId": "out-of-order-retryable"
         },
         {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ConstFuncChangeState.sol"
+                },
+                "region": {
+                  "byteLength": 112,
+                  "byteOffset": 173
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Function is declared constant/view but it changes state. Ensure that the attributes of contract compiled prior to 0.5 are correct."
+          },
+          "ruleId": "constant-function-changing-state"
+        },
+        {
           "level": "note",
           "locations": [
             {
@@ -3676,6 +3696,17 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/CompilerBugStorageSignedIntegerArray.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ConstFuncChangeState.sol"
                 },
                 "region": {
                   "byteLength": 23,
@@ -4127,6 +4158,39 @@
                 "region": {
                   "byteLength": 1,
                   "byteOffset": 113
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ConstFuncChangeState.sol"
+                },
+                "region": {
+                  "byteLength": 112,
+                  "byteOffset": 173
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ConstFuncChangeState.sol"
+                },
+                "region": {
+                  "byteLength": 108,
+                  "byteOffset": 339
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ConstFuncChangeState.sol"
+                },
+                "region": {
+                  "byteLength": 89,
+                  "byteOffset": 517
                 }
               }
             },

@@ -199,6 +199,7 @@
     "msg-value-in-loop",
     "contract-locks-ether",
     "incorrect-erc20-interface",
-    "out-of-order-retryable"
+    "out-of-order-retryable",
+    "constant-function-changing-state"
   ]
 }

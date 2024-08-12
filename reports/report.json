@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 85,
-    "total_sloc": 2895
+    "total_source_units": 86,
+    "total_sloc": 2910
   },
   "files_details": {
     "files_details": [
@@ -36,6 +36,10 @@
       {
         "file_path": "src/CompilerBugStorageSignedIntegerArray.sol",
         "n_sloc": 13
+      },
+      {
+        "file_path": "src/ConstFuncChangeState.sol",
+        "n_sloc": 15
       },
       {
         "file_path": "src/ConstantFuncsAssembly.sol",
@@ -348,7 +352,7 @@
     ]
   },
   "issue_count": {
-    "high": 38,
+    "high": 39,
     "low": 30
   },
   "high_issues": {
@@ -2220,6 +2224,19 @@
             "src_char": "2557:22"
           }
         ]
+      },
+      {
+        "title": "Constant functions changing state",
+        "description": "Function is declared constant/view but it changes state. Ensure that the attributes of contract compiled prior to 0.5 are correct.",
+        "detector_name": "constant-function-changing-state",
+        "instances": [
+          {
+            "contract_path": "src/ConstFuncChangeState.sol",
+            "line_no": 8,
+            "src": "173:112",
+            "src_char": "173:112"
+          }
+        ]
       }
     ]
   },
@@ -2453,6 +2470,12 @@
         "instances": [
           {
             "contract_path": "src/CompilerBugStorageSignedIntegerArray.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/ConstFuncChangeState.sol",
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
@@ -2704,6 +2727,24 @@
             "line_no": 6,
             "src": "113:1",
             "src_char": "113:1"
+          },
+          {
+            "contract_path": "src/ConstFuncChangeState.sol",
+            "line_no": 8,
+            "src": "173:112",
+            "src_char": "173:112"
+          },
+          {
+            "contract_path": "src/ConstFuncChangeState.sol",
+            "line_no": 14,
+            "src": "339:108",
+            "src_char": "339:108"
+          },
+          {
+            "contract_path": "src/ConstFuncChangeState.sol",
+            "line_no": 20,
+            "src": "517:89",
+            "src_char": "517:89"
           },
           {
             "contract_path": "src/ContractLocksEther.sol",
@@ -4947,6 +4988,7 @@
     "incorrect-erc20-interface",
     "return-bomb",
     "out-of-order-retryable",
-    "function-initializing-state"
+    "function-initializing-state",
+    "constant-function-changing-state"
   ]
 }
