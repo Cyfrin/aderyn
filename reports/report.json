@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 85,
-    "total_sloc": 2895
+    "total_source_units": 86,
+    "total_sloc": 2906
   },
   "files_details": {
     "files_details": [
@@ -20,6 +20,10 @@
       {
         "file_path": "src/AssemblyExample.sol",
         "n_sloc": 9
+      },
+      {
+        "file_path": "src/AssertStateChange.sol",
+        "n_sloc": 11
       },
       {
         "file_path": "src/BooleanEquality.sol",
@@ -349,7 +353,7 @@
   },
   "issue_count": {
     "high": 38,
-    "low": 30
+    "low": 31
   },
   "high_issues": {
     "issues": [
@@ -2706,6 +2710,18 @@
             "src_char": "113:1"
           },
           {
+            "contract_path": "src/AssertStateChange.sol",
+            "line_no": 8,
+            "src": "131:3",
+            "src_char": "131:3"
+          },
+          {
+            "contract_path": "src/AssertStateChange.sol",
+            "line_no": 12,
+            "src": "199:4",
+            "src_char": "199:4"
+          },
+          {
             "contract_path": "src/ContractLocksEther.sol",
             "line_no": 20,
             "src": "539:10",
@@ -2940,6 +2956,18 @@
         "description": "If the same constant literal value is used multiple times, create a constant state variable and reference it throughout the contract.",
         "detector_name": "constants-instead-of-literals",
         "instances": [
+          {
+            "contract_path": "src/AssertStateChange.sol",
+            "line_no": 9,
+            "src": "174:2",
+            "src_char": "174:2"
+          },
+          {
+            "contract_path": "src/AssertStateChange.sol",
+            "line_no": 14,
+            "src": "254:2",
+            "src_char": "254:2"
+          },
           {
             "contract_path": "src/BooleanEquality.sol",
             "line_no": 6,
@@ -3601,6 +3629,12 @@
         "instances": [
           {
             "contract_path": "src/AdminContract.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/AssertStateChange.sol",
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
@@ -4876,6 +4910,19 @@
             "src_char": "267:21"
           }
         ]
+      },
+      {
+        "title": "Incorrect use of `assert()`",
+        "description": "Argument to `assert()` modifies the state. Use `require` for invariants modifying state.",
+        "detector_name": "assert-state-change",
+        "instances": [
+          {
+            "contract_path": "src/AssertStateChange.sol",
+            "line_no": 9,
+            "src": "154:23",
+            "src_char": "154:23"
+          }
+        ]
       }
     ]
   },
@@ -4947,6 +4994,7 @@
     "incorrect-erc20-interface",
     "return-bomb",
     "out-of-order-retryable",
-    "function-initializing-state"
+    "function-initializing-state",
+    "assert-state-change"
   ]
 }
