@@ -172,6 +172,12 @@ contract StructPlusFixedArrayAssignmentExample {
             (1398, 1399)
         );
     }
+
+    function manipulateStateVariables7() external {
+        person.age += 1;
+        person2.age -= 10;
+        person3.age *= 100;
+    }
 }
 
 library SVManipulationLibrary {

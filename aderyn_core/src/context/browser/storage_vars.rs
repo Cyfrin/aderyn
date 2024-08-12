@@ -701,6 +701,7 @@ mod light_weight_state_variables_finder_tests {
         let func4 = contract.find_function_by_name("manipulateStateVariables4");
         let func5 = contract.find_function_by_name("manipulateStateVariables5");
         let func6 = contract.find_function_by_name("manipulateStateVariables6");
+        let func7 = contract.find_function_by_name("manipulateStateVariables7");
         let func_helper = contract.find_function_by_name("manipulateHelper");
 
         // Test manipulateStateVariables
@@ -811,7 +812,7 @@ mod light_weight_state_variables_finder_tests {
             1
         );
 
-        // Test manipulateStateVariables5
+        // Test manipulateStateVariables6
         let finder = ApproximateStorageChangeFinder::from(&context, func6.into());
         println!(
             "StructPlusFixedArrayAssignmentExample::manipulateStateVariables6()\n{:?}",
@@ -829,6 +830,17 @@ mod light_weight_state_variables_finder_tests {
                 .len(),
             4
         );
+
+        // Test manipulateStateVariables7
+        let finder = ApproximateStorageChangeFinder::from(&context, func7.into());
+        println!(
+            "StructPlusFixedArrayAssignmentExample::manipulateStateVariables7()\n{:?}",
+            finder
+        );
+        let changes_found = finder.state_variables_have_been_manipulated();
+        assert!(changes_found);
+        assert!(finder.manipulated_storage_pointers.is_empty());
+        assert_eq!(finder.directly_manipulated_state_variables.len(), 3);
     }
 
     #[test]
