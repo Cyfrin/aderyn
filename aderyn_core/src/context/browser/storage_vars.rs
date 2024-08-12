@@ -239,8 +239,8 @@ impl<'a> ApproximateStorageChangeFinder<'a> {
 impl<'a> ASTConstVisitor for ApproximateStorageChangeFinder<'a> {
     fn visit_unary_operation(&mut self, node: &UnaryOperation) -> Result<bool> {
         // WRITE HEURISTICS
-        // Catch delete operations
-        if node.operator == "delete" {
+        // Catch unary operations that manipulate variables
+        if node.operator == "delete" || node.operator == "++" || node.operator == "--" {
             for id in find_base(node.sub_expression.as_ref()).0 {
                 match is_storage_variable_or_storage_pointer(self.context, id) {
                     Some(AssigneeType::StateVariable) => {
@@ -551,6 +551,19 @@ fn find_base(expr: &Expression) -> (Vec<NodeID>, Vec<String>) {
                 }
             }
         }
+        // Handle assignment with values like ++i, --j, i++, etc
+        Expression::UnaryOperation(UnaryOperation {
+            sub_expression,
+            type_descriptions:
+                TypeDescriptions {
+                    type_string: Some(type_string),
+                    ..
+                },
+            ..
+        }) => {
+            node_ids.extend(find_base(sub_expression.as_ref()).0);
+            type_strings.push(type_string.clone());
+        }
         _ => {
             node_ids.push(i64::MIN);
             type_strings.push(String::from("irrelevant"));
@@ -585,7 +598,7 @@ fn is_storage_variable_or_storage_pointer(
 }
 
 #[cfg(test)]
-mod light_weight_state_variables_finder_tests {
+mod approximate_storage_change_finder_tests {
     use crate::detect::test_utils::load_solidity_source_unit;
 
     use super::ApproximateStorageChangeFinder;
@@ -702,6 +715,7 @@ mod light_weight_state_variables_finder_tests {
         let func5 = contract.find_function_by_name("manipulateStateVariables5");
         let func6 = contract.find_function_by_name("manipulateStateVariables6");
         let func7 = contract.find_function_by_name("manipulateStateVariables7");
+        let func8 = contract.find_function_by_name("manipulateStateVariables8");
         let func_helper = contract.find_function_by_name("manipulateHelper");
 
         // Test manipulateStateVariables
@@ -841,6 +855,17 @@ mod light_weight_state_variables_finder_tests {
         assert!(changes_found);
         assert!(finder.manipulated_storage_pointers.is_empty());
         assert_eq!(finder.directly_manipulated_state_variables.len(), 3);
+
+        // Test manipulateStateVariables8
+        let finder = ApproximateStorageChangeFinder::from(&context, func8.into());
+        println!(
+            "StructPlusFixedArrayAssignmentExample::manipulateStateVariables8()\n{:?}",
+            finder
+        );
+        let changes_found = finder.state_variables_have_been_manipulated();
+        assert!(changes_found);
+        assert!(finder.manipulated_storage_pointers.is_empty());
+        assert_eq!(finder.directly_manipulated_state_variables.len(), 2);
     }
 
     #[test]
@@ -1061,7 +1086,7 @@ mod light_weight_state_variables_finder_tests {
 }
 
 #[cfg(test)]
-mod state_variables_tests_helper {
+mod storage_vars_tests_helper {
 
     // Using unwraps here are OK *only* becuase it's compiled with #[cfg(test)]
 
