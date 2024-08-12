@@ -32,9 +32,11 @@ impl IssueDetector for CacheArrayLengthDetector {
 
         for for_loop in context.for_statements() {
             if let Some(changes) = for_loop.state_variable_changes(context) {
+                // Find all the storage arrays on which `.length` is checked in for loop's conidition
                 let state_vars =
                     for_loop.state_variables_lengths_that_are_referenced_in_condition(context);
 
+                // Now see if any of the storage array has been manipulated. If yes, then it doesn't qualify for caching
                 let they_are_not_manipulated_in_the_for_loop =
                     state_vars.iter().all(|state_var_id| {
                         if let Some(ASTNode::VariableDeclaration(var)) =
@@ -50,6 +52,8 @@ impl IssueDetector for CacheArrayLengthDetector {
                         false
                     });
 
+                // Here, we know that none of the storage arrays whose length was referenced, changes in the loop
+                // So we report them as potential caches.
                 if !state_vars.is_empty() && they_are_not_manipulated_in_the_for_loop {
                     capture!(self, context, for_loop);
                 }
@@ -91,7 +95,7 @@ mod loop_investigation_helper {
     use std::collections::BTreeSet;
 
     use crate::{
-        ast::{ASTNode, Expression, ForStatement, Identifier, NodeID},
+        ast::{ASTNode, Expression, ForStatement, Identifier, NodeID, TypeDescriptions},
         context::{
             browser::{ApproximateStorageChangeFinder, ExtractMemberAccesses},
             investigator::{
@@ -116,13 +120,20 @@ mod loop_investigation_helper {
                     }
                     if let Expression::Identifier(Identifier {
                         referenced_declaration: Some(id),
+                        type_descriptions:
+                            TypeDescriptions {
+                                type_string: Some(type_string),
+                                ..
+                            },
                         ..
                     }) = member_access.expression.as_ref()
                     {
                         if let Some(ASTNode::VariableDeclaration(variable_declaration)) =
                             context.nodes.get(&id)
                         {
-                            if variable_declaration.state_variable {
+                            if variable_declaration.state_variable
+                                && type_string.ends_with("] storage ref")
+                            {
                                 state_vars_lengths_that_are_referenced.insert(*id);
                             }
                         }
