@@ -1,3 +1,4 @@
+use incorrect_erc20_interface::IncorrectERC20InterfaceDetector;
 use serde::{Deserialize, Serialize};
 use strum::{Display, EnumCount, EnumIter, EnumString};
 
@@ -66,6 +67,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<RTLODetector>::default(),
         Box::<UncheckedReturnDetector>::default(),
         Box::<DangerousUnaryOperatorDetector>::default(),
+        Box::<TautologyOrContraditionDetector>::default(),
         Box::<DangerousStrictEqualityOnBalanceDetector>::default(),
         Box::<StorageSignedIntegerArrayDetector>::default(),
         Box::<RedundantStatementsDetector>::default(),
@@ -73,6 +75,16 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<WeakRandomnessDetector>::default(),
         Box::<PreDeclaredLocalVariableUsageDetector>::default(),
         Box::<DeletionNestedMappingDetector>::default(),
+        Box::<UnusedStateVariablesDetector>::default(),
+        Box::<ConstantFunctionContainsAssemblyDetector>::default(),
+        Box::<BooleanEqualityDetector>::default(),
+        Box::<TxOriginUsedForAuthDetector>::default(),
+        Box::<MsgValueUsedInLoopDetector>::default(),
+        Box::<ContractLocksEtherDetector>::default(),
+        Box::<IncorrectERC20InterfaceDetector>::default(),
+        Box::<ReturnBombDetector>::default(),
+        Box::<OutOfOrderRetryableDetector>::default(),
+        Box::<FunctionInitializingStateDetector>::default(),
     ]
 }
 
@@ -84,6 +96,7 @@ pub fn get_all_detectors_names() -> Vec<String> {
 #[derive(Debug, PartialEq, EnumString, Display)]
 #[strum(serialize_all = "kebab-case")]
 pub(crate) enum IssueDetectorNamePool {
+    FunctionInitializingState,
     DelegateCallInLoop,
     CentralizationRisk,
     SolmateSafeTransferLib,
@@ -135,6 +148,7 @@ pub(crate) enum IssueDetectorNamePool {
     RTLO,
     UncheckedReturn,
     DangerousUnaryOperator,
+    TautologyOrContradiction,
     DangerousStrictEquailtyOnContractBalance,
     SignedStorageArray,
     RedundantStatements,
@@ -142,6 +156,15 @@ pub(crate) enum IssueDetectorNamePool {
     WeakRandomness,
     PreDeclaredLocalVariableUsage,
     DeleteNestedMapping,
+    UnusedStateVariable,
+    ConstantFunctionsAssembly,
+    BooleanEquality,
+    TxOriginUsedForAuth,
+    MsgValueInLoop,
+    ContractLocksEther,
+    IncorrectERC20Interface,
+    ReturnBomb,
+    OutOfOrderRetryable,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -151,6 +174,19 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
     // Expects a valid detector_name
     let detector_name = IssueDetectorNamePool::from_str(detector_name).ok()?;
     match detector_name {
+        IssueDetectorNamePool::OutOfOrderRetryable => {
+            Some(Box::<OutOfOrderRetryableDetector>::default())
+        }
+        IssueDetectorNamePool::FunctionInitializingState => {
+            Some(Box::<FunctionInitializingStateDetector>::default())
+        }
+        IssueDetectorNamePool::IncorrectERC20Interface => {
+            Some(Box::<IncorrectERC20InterfaceDetector>::default())
+        }
+        IssueDetectorNamePool::ReturnBomb => Some(Box::<ReturnBombDetector>::default()),
+        IssueDetectorNamePool::UnusedStateVariable => {
+            Some(Box::<UnusedStateVariablesDetector>::default())
+        }
         IssueDetectorNamePool::DelegateCallInLoop => {
             Some(Box::<DelegateCallInLoopDetector>::default())
         }
@@ -278,6 +314,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::DangerousUnaryOperator => {
             Some(Box::<DangerousUnaryOperatorDetector>::default())
         }
+        IssueDetectorNamePool::TautologyOrContradiction => {
+            Some(Box::<TautologyOrContraditionDetector>::default())
+        }
         IssueDetectorNamePool::DangerousStrictEquailtyOnContractBalance => {
             Some(Box::<DangerousStrictEqualityOnBalanceDetector>::default())
         }
@@ -296,6 +335,17 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         }
         IssueDetectorNamePool::DeleteNestedMapping => {
             Some(Box::<DeletionNestedMappingDetector>::default())
+        }
+        IssueDetectorNamePool::ConstantFunctionsAssembly => {
+            Some(Box::<ConstantFunctionContainsAssemblyDetector>::default())
+        }
+        IssueDetectorNamePool::BooleanEquality => Some(Box::<BooleanEqualityDetector>::default()),
+        IssueDetectorNamePool::TxOriginUsedForAuth => {
+            Some(Box::<TxOriginUsedForAuthDetector>::default())
+        }
+        IssueDetectorNamePool::MsgValueInLoop => Some(Box::<MsgValueUsedInLoopDetector>::default()),
+        IssueDetectorNamePool::ContractLocksEther => {
+            Some(Box::<ContractLocksEtherDetector>::default())
         }
         IssueDetectorNamePool::Undecided => None,
     }

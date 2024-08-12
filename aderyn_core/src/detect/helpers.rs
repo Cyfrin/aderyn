@@ -116,6 +116,9 @@ pub fn has_calls_that_sends_native_eth(ast_node: &ASTNode) -> bool {
             if let Expression::Literal(literal) = c {
                 return literal.value.is_some();
             }
+            if let Expression::Identifier(_) = c {
+                return true;
+            }
             false
         });
         if !call_carries_value {
@@ -184,14 +187,47 @@ pub fn has_delegate_calls_on_non_state_variables(
     })
 }
 
+/// Detects for the pattern
+/// x.call("...") where x is not a state variable
+/// That means, it can be
+/// a) An Identifier that references a variable declaration which is not `state_variable`
+/// b) A literal adresss
+pub fn get_low_level_calls_on_non_state_variable_addresses(
+    ast_node: &ASTNode,
+    context: &WorkspaceContext,
+) -> Vec<MemberAccess> {
+    ExtractMemberAccesses::from(ast_node)
+        .extracted
+        .into_iter()
+        .filter_map(|member| {
+            if member.member_name != "call" {
+                return None;
+            }
+            if let Expression::Identifier(identifier) = member.expression.as_ref() {
+                if let Some(referenced_id) = identifier.referenced_declaration {
+                    if let Some(ASTNode::VariableDeclaration(v)) = context.nodes.get(&referenced_id)
+                    {
+                        if !v.state_variable {
+                            return Some(member);
+                        }
+                    }
+                }
+            } else if let Expression::Literal(_) = member.expression.as_ref() {
+                return Some(member);
+            }
+            None
+        })
+        .collect::<_>()
+}
+
 pub fn has_binary_checks_on_some_address(ast_node: &ASTNode) -> bool {
     let binary_operations = ExtractBinaryOperations::from(ast_node).extracted;
     binary_operations.into_iter().any(|op| {
         [op.left_expression, op.right_expression].iter().any(|op| {
             op.as_ref().type_descriptions().is_some_and(|desc| {
-                desc.type_string
-                    .as_ref()
-                    .is_some_and(|type_string| type_string == "address")
+                desc.type_string.as_ref().is_some_and(|type_string| {
+                    type_string == "address" || type_string == "address payable"
+                })
             })
         })
     })
