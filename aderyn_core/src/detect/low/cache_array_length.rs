@@ -40,7 +40,7 @@ impl IssueDetector for CacheArrayLengthDetector {
                 let they_are_not_manipulated_in_the_for_loop =
                     state_vars.iter().all(|state_var_id| {
                         if let Some(ASTNode::VariableDeclaration(var)) =
-                            context.nodes.get(&state_var_id)
+                            context.nodes.get(state_var_id)
                         {
                             if changes
                                 .state_variable_has_not_been_manipulated(var)
@@ -87,7 +87,7 @@ impl IssueDetector for CacheArrayLengthDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::CacheArrayLength.to_string())
+        format!("{}", IssueDetectorNamePool::CacheArrayLength)
     }
 }
 
@@ -113,7 +113,7 @@ mod loop_investigation_helper {
             let mut state_vars_lengths_that_are_referenced = BTreeSet::new();
 
             if let Some(condition) = self.condition.as_ref() {
-                let member_accesses = ExtractMemberAccesses::from(condition.into()).extracted;
+                let member_accesses = ExtractMemberAccesses::from(condition).extracted;
                 for member_access in member_accesses {
                     if member_access.member_name != "length" {
                         continue;
@@ -129,7 +129,7 @@ mod loop_investigation_helper {
                     }) = member_access.expression.as_ref()
                     {
                         if let Some(ASTNode::VariableDeclaration(variable_declaration)) =
-                            context.nodes.get(&id)
+                            context.nodes.get(id)
                         {
                             if variable_declaration.state_variable
                                 && type_string.ends_with("] storage ref")
