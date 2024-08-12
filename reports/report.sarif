@@ -1766,7 +1766,7 @@
                 },
                 "region": {
                   "byteLength": 11,
-                  "byteOffset": 4353
+                  "byteOffset": 4076
                 }
               }
             },
@@ -3012,17 +3012,6 @@
                 "region": {
                   "byteLength": 16,
                   "byteOffset": 2086
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectERC721.sol"
-                },
-                "region": {
-                  "byteLength": 17,
-                  "byteOffset": 3000
                 }
               }
             }
@@ -4707,7 +4696,7 @@
                 },
                 "region": {
                   "byteLength": 115,
-                  "byteOffset": 3399
+                  "byteOffset": 3122
                 }
               }
             },

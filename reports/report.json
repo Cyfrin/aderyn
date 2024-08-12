@@ -1,7 +1,7 @@
 {
   "files_summary": {
     "total_source_units": 80,
-    "total_sloc": 2521
+    "total_sloc": 2509
   },
   "files_details": {
     "files_details": [
@@ -119,7 +119,7 @@
       },
       {
         "file_path": "src/IncorrectERC721.sol",
-        "n_sloc": 243
+        "n_sloc": 231
       },
       {
         "file_path": "src/IncorrectShift.sol",
@@ -1327,9 +1327,9 @@
           },
           {
             "contract_path": "src/IncorrectERC721.sol",
-            "line_no": 156,
-            "src": "4353:11",
-            "src_char": "4353:11"
+            "line_no": 147,
+            "src": "4076:11",
+            "src_char": "4076:11"
           },
           {
             "contract_path": "src/PublicVariableReadInExternalContext.sol",
@@ -2053,12 +2053,6 @@
             "line_no": 71,
             "src": "2086:16",
             "src_char": "2086:16"
-          },
-          {
-            "contract_path": "src/IncorrectERC721.sol",
-            "line_no": 103,
-            "src": "3000:17",
-            "src_char": "3000:17"
           }
         ]
       }
@@ -3000,9 +2994,9 @@
           },
           {
             "contract_path": "src/IncorrectERC721.sol",
-            "line_no": 121,
-            "src": "3399:115",
-            "src_char": "3399:115"
+            "line_no": 112,
+            "src": "3122:115",
+            "src_char": "3122:115"
           },
           {
             "contract_path": "src/TestERC20.sol",
