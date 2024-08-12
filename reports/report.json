@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 85,
-    "total_sloc": 2895
+    "total_source_units": 86,
+    "total_sloc": 2933
   },
   "files_details": {
     "files_details": [
@@ -24,6 +24,10 @@
       {
         "file_path": "src/BooleanEquality.sol",
         "n_sloc": 27
+      },
+      {
+        "file_path": "src/CacheArrayLength.sol",
+        "n_sloc": 38
       },
       {
         "file_path": "src/CallGraphTests.sol",
@@ -349,7 +353,7 @@
   },
   "issue_count": {
     "high": 38,
-    "low": 30
+    "low": 31
   },
   "high_issues": {
     "issues": [
@@ -2977,6 +2981,30 @@
             "src_char": "683:3"
           },
           {
+            "contract_path": "src/CacheArrayLength.sol",
+            "line_no": 26,
+            "src": "611:3",
+            "src_char": "611:3"
+          },
+          {
+            "contract_path": "src/CacheArrayLength.sol",
+            "line_no": 27,
+            "src": "639:3",
+            "src_char": "639:3"
+          },
+          {
+            "contract_path": "src/CacheArrayLength.sol",
+            "line_no": 36,
+            "src": "1015:3",
+            "src_char": "1015:3"
+          },
+          {
+            "contract_path": "src/CacheArrayLength.sol",
+            "line_no": 37,
+            "src": "1043:3",
+            "src_char": "1043:3"
+          },
+          {
             "contract_path": "src/Casting.sol",
             "line_no": 16,
             "src": "483:18",
@@ -3606,6 +3634,12 @@
             "src_char": "32:23"
           },
           {
+            "contract_path": "src/CacheArrayLength.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/ContractLocksEther.sol",
             "line_no": 2,
             "src": "32:23",
@@ -3906,6 +3940,18 @@
             "line_no": 14,
             "src": "457:23",
             "src_char": "457:23"
+          },
+          {
+            "contract_path": "src/CacheArrayLength.sol",
+            "line_no": 17,
+            "src": "337:2",
+            "src_char": "337:2"
+          },
+          {
+            "contract_path": "src/CacheArrayLength.sol",
+            "line_no": 42,
+            "src": "1104:2",
+            "src_char": "1104:2"
           },
           {
             "contract_path": "src/CallGraphTests.sol",
@@ -4876,6 +4922,31 @@
             "src_char": "267:21"
           }
         ]
+      },
+      {
+        "title": "Loop condition contains `state_variable.length` that could be cached outside.",
+        "description": "Cache the lengths of storage arrays if they are used and not modified in for loops.",
+        "detector_name": "cache-array-length",
+        "instances": [
+          {
+            "contract_path": "src/CacheArrayLength.sol",
+            "line_no": 12,
+            "src": "234:82",
+            "src_char": "234:82"
+          },
+          {
+            "contract_path": "src/CacheArrayLength.sol",
+            "line_no": 44,
+            "src": "1160:64",
+            "src_char": "1160:64"
+          },
+          {
+            "contract_path": "src/CacheArrayLength.sol",
+            "line_no": 50,
+            "src": "1325:183",
+            "src_char": "1325:183"
+          }
+        ]
       }
     ]
   },
@@ -4947,6 +5018,7 @@
     "incorrect-erc20-interface",
     "return-bomb",
     "out-of-order-retryable",
-    "function-initializing-state"
+    "function-initializing-state",
+    "cache-array-length"
   ]
 }
