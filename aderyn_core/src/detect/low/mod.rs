@@ -1,3 +1,4 @@
+pub(crate) mod assert_state_change;
 pub(crate) mod boolean_equality;
 pub(crate) mod centralization_risk;
 pub(crate) mod constant_funcs_assembly;
@@ -29,6 +30,7 @@ pub(crate) mod useless_modifier;
 pub(crate) mod useless_public_function;
 pub(crate) mod zero_address_check;
 
+pub use assert_state_change::AssertStateChangeDetector;
 pub use boolean_equality::BooleanEqualityDetector;
 pub use centralization_risk::CentralizationRiskDetector;
 pub use constant_funcs_assembly::ConstantFunctionContainsAssemblyDetector;
