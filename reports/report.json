@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 84,
-    "total_sloc": 2645
+    "total_source_units": 85,
+    "total_sloc": 2659
   },
   "files_details": {
     "files_details": [
@@ -24,6 +24,10 @@
       {
         "file_path": "src/BooleanEquality.sol",
         "n_sloc": 27
+      },
+      {
+        "file_path": "src/BuiltinSymbolShadow.sol",
+        "n_sloc": 14
       },
       {
         "file_path": "src/CallGraphTests.sol",
@@ -345,7 +349,7 @@
   },
   "issue_count": {
     "high": 38,
-    "low": 30
+    "low": 31
   },
   "high_issues": {
     "issues": [
@@ -1310,6 +1314,12 @@
             "line_no": 5,
             "src": "97:1",
             "src_char": "97:1"
+          },
+          {
+            "contract_path": "src/BuiltinSymbolShadow.sol",
+            "line_no": 5,
+            "src": "92:8",
+            "src_char": "92:8"
           },
           {
             "contract_path": "src/ConstantFuncsAssembly.sol",
@@ -2400,6 +2410,12 @@
         "detector_name": "unspecific-solidity-pragma",
         "instances": [
           {
+            "contract_path": "src/BuiltinSymbolShadow.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/CompilerBugStorageSignedIntegerArray.sol",
             "line_no": 2,
             "src": "32:23",
@@ -2640,6 +2656,12 @@
             "line_no": 6,
             "src": "113:1",
             "src_char": "113:1"
+          },
+          {
+            "contract_path": "src/BuiltinSymbolShadow.sol",
+            "line_no": 8,
+            "src": "125:41",
+            "src_char": "125:41"
           },
           {
             "contract_path": "src/ContractLocksEther.sol",
@@ -3681,6 +3703,12 @@
         "detector_name": "useless-modifier",
         "instances": [
           {
+            "contract_path": "src/BuiltinSymbolShadow.sol",
+            "line_no": 17,
+            "src": "358:39",
+            "src_char": "358:39"
+          },
+          {
             "contract_path": "src/CallGraphTests.sol",
             "line_no": 10,
             "src": "186:22",
@@ -3764,6 +3792,12 @@
             "line_no": 14,
             "src": "457:23",
             "src_char": "457:23"
+          },
+          {
+            "contract_path": "src/BuiltinSymbolShadow.sol",
+            "line_no": 8,
+            "src": "125:41",
+            "src_char": "125:41"
           },
           {
             "contract_path": "src/CallGraphTests.sol",
@@ -4734,6 +4768,37 @@
             "src_char": "267:21"
           }
         ]
+      },
+      {
+        "title": "Builtin Symbol Shadowing",
+        "description": "Name clashes with a built-in-symbol. Consider renaming it.",
+        "detector_name": "builtin-symbol-shadow",
+        "instances": [
+          {
+            "contract_path": "src/BuiltinSymbolShadow.sol",
+            "line_no": 5,
+            "src": "92:8",
+            "src_char": "92:8"
+          },
+          {
+            "contract_path": "src/BuiltinSymbolShadow.sol",
+            "line_no": 8,
+            "src": "125:41",
+            "src_char": "125:41"
+          },
+          {
+            "contract_path": "src/BuiltinSymbolShadow.sol",
+            "line_no": 17,
+            "src": "358:39",
+            "src_char": "358:39"
+          },
+          {
+            "contract_path": "src/BuiltinSymbolShadow.sol",
+            "line_no": 22,
+            "src": "414:15",
+            "src_char": "414:15"
+          }
+        ]
       }
     ]
   },
@@ -4805,6 +4870,7 @@
     "incorrect-erc20-interface",
     "return-bomb",
     "out-of-order-retryable",
-    "function-initializing-state"
+    "function-initializing-state",
+    "builtin-symbol-shadow"
   ]
 }
