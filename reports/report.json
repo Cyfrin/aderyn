@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 85,
-    "total_sloc": 2895
+    "total_source_units": 86,
+    "total_sloc": 2912
   },
   "files_details": {
     "files_details": [
@@ -52,6 +52,10 @@
       {
         "file_path": "src/ContractWithTodo.sol",
         "n_sloc": 7
+      },
+      {
+        "file_path": "src/CostlyOperationsInsideLoops.sol",
+        "n_sloc": 17
       },
       {
         "file_path": "src/Counter.sol",
@@ -349,7 +353,7 @@
   },
   "issue_count": {
     "high": 38,
-    "low": 30
+    "low": 31
   },
   "high_issues": {
     "issues": [
@@ -2471,6 +2475,12 @@
           },
           {
             "contract_path": "src/ContractWithTodo.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/CostlyOperationsInsideLoops.sol",
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
@@ -4876,6 +4886,85 @@
             "src_char": "267:21"
           }
         ]
+      },
+      {
+        "title": "Costly operations inside loops.",
+        "description": "Invoking `SSTORE`operations in loops may lead to Out-of-gas errors. Use a local variable to hold the loop computation result.",
+        "detector_name": "costly-operations-inside-loops",
+        "instances": [
+          {
+            "contract_path": "src/CostlyOperationsInsideLoops.sol",
+            "line_no": 10,
+            "src": "214:79",
+            "src_char": "214:79"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 12,
+            "src": "289:107",
+            "src_char": "289:107"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 25,
+            "src": "658:122",
+            "src_char": "658:122"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 38,
+            "src": "988:94",
+            "src_char": "988:94"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 54,
+            "src": "1415:93",
+            "src_char": "1415:93"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 71,
+            "src": "1844:97",
+            "src_char": "1844:97"
+          },
+          {
+            "contract_path": "src/RevertsAndRequriesInLoops.sol",
+            "line_no": 10,
+            "src": "227:129",
+            "src_char": "227:129"
+          },
+          {
+            "contract_path": "src/RevertsAndRequriesInLoops.sol",
+            "line_no": 17,
+            "src": "416:150",
+            "src_char": "416:150"
+          },
+          {
+            "contract_path": "src/RevertsAndRequriesInLoops.sol",
+            "line_no": 27,
+            "src": "719:159",
+            "src_char": "719:159"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 70,
+            "src": "5010:178",
+            "src_char": "3522:178"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 134,
+            "src": "8131:283",
+            "src_char": "6643:283"
+          },
+          {
+            "contract_path": "src/parent_chain/ParentChainContract.sol",
+            "line_no": 17,
+            "src": "512:110",
+            "src_char": "512:110"
+          }
+        ]
       }
     ]
   },
@@ -4947,6 +5036,7 @@
     "incorrect-erc20-interface",
     "return-bomb",
     "out-of-order-retryable",
-    "function-initializing-state"
+    "function-initializing-state",
+    "costly-operations-inside-loops"
   ]
 }
