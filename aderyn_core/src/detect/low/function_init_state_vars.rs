@@ -5,9 +5,7 @@ use crate::ast::{ASTNode, Expression, FunctionCall, Identifier, NodeID};
 
 use crate::capture;
 use crate::context::browser::ExtractReferencedDeclarations;
-use crate::context::investigator::{
-    StandardInvestigationStyle, StandardInvestigator, StandardInvestigatorVisitor,
-};
+use crate::context::investigator::{StandardInvestigator, StandardInvestigatorVisitor};
 use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
     context::workspace_context::WorkspaceContext,
@@ -46,11 +44,7 @@ impl IssueDetector for FunctionInitializingStateDetector {
                         let mut tracker =
                             NonConstantStateVariableReferenceDeclarationTracker::new(context);
 
-                        let investigator = StandardInvestigator::new(
-                            context,
-                            &[&(func.into())],
-                            StandardInvestigationStyle::Downstream,
-                        )?;
+                        let investigator = StandardInvestigator::new(context, &[&(func.into())])?;
 
                         investigator.investigate(context, &mut tracker)?;
 

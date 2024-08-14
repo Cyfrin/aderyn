@@ -8,9 +8,7 @@ use crate::capture;
 use crate::context::browser::{
     ExtractInlineAssemblys, ExtractPragmaDirectives, GetClosestAncestorOfTypeX,
 };
-use crate::context::investigator::{
-    StandardInvestigationStyle, StandardInvestigator, StandardInvestigatorVisitor,
-};
+use crate::context::investigator::{StandardInvestigator, StandardInvestigatorVisitor};
 use crate::detect::detector::IssueDetectorNamePool;
 use crate::detect::helpers::{self, pragma_directive_to_semver};
 use crate::{
@@ -50,11 +48,8 @@ impl IssueDetector for ConstantFunctionContainsAssemblyDetector {
                                 let mut tracker = AssemblyTracker {
                                     has_assembly: false,
                                 };
-                                let investigator = StandardInvestigator::new(
-                                    context,
-                                    &[&(function.into())],
-                                    StandardInvestigationStyle::Downstream,
-                                )?;
+                                let investigator =
+                                    StandardInvestigator::new(context, &[&(function.into())])?;
                                 investigator.investigate(context, &mut tracker)?;
 
                                 if tracker.has_assembly {

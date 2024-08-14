@@ -114,7 +114,6 @@ mod contract_eth_helper {
                     let investigator = StandardInvestigator::new(
                         context,
                         funcs.iter().collect::<Vec<_>>().as_slice(),
-                        StandardInvestigationStyle::Downstream,
                     )
                     .ok()?;
 

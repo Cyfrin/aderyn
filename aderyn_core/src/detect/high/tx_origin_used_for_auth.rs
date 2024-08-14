@@ -5,9 +5,7 @@ use crate::ast::{ASTNode, Expression, Identifier, NodeID};
 
 use crate::capture;
 use crate::context::browser::ExtractMemberAccesses;
-use crate::context::investigator::{
-    StandardInvestigationStyle, StandardInvestigator, StandardInvestigatorVisitor,
-};
+use crate::context::investigator::{StandardInvestigator, StandardInvestigatorVisitor};
 use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
     context::workspace_context::WorkspaceContext,
@@ -85,11 +83,7 @@ impl TxOriginUsedForAuthDetector {
     ) -> Result<(), Box<dyn Error>> {
         // Boilerplate
         let mut tracker = MsgSenderAndTxOriginTracker::default();
-        let investigator = StandardInvestigator::new(
-            context,
-            check_nodes,
-            StandardInvestigationStyle::Downstream,
-        )?;
+        let investigator = StandardInvestigator::new(context, check_nodes)?;
         investigator.investigate(context, &mut tracker)?;
 
         if tracker.satisifed() {
