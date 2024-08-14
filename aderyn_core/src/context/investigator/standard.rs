@@ -10,7 +10,7 @@ use std::collections::HashSet;
 use crate::{
     ast::{NodeID, NodeType},
     context::{
-        browser::{ExtractReferencedDeclarations, GetClosestAncestorOfTypeX},
+        browser::ExtractReferencedDeclarations,
         callgraph::WorkspaceCallGraph,
         workspace_context::{ASTNode, WorkspaceContext},
     },

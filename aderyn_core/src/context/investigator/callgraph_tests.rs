@@ -2,13 +2,10 @@
 
 #[cfg(test)]
 mod callgraph_tests {
-    use crate::{
-        ast::{FunctionDefinition, ModifierDefinition},
-        context::{
+    use crate::context::{
             investigator::{StandardInvestigator, StandardInvestigatorVisitor},
             workspace_context::{ASTNode, WorkspaceContext},
-        },
-    };
+        };
 
     use serial_test::serial;
 
