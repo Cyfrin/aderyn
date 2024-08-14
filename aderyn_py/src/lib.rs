@@ -32,7 +32,7 @@ fn main() {
                     let rust_value: bool = py_value.extract().unwrap();
                     args.field_mut(&rust_key).unwrap().replace(rust_value);
                 } else {
-                    let rust_value: Vec<String> = py_value.extract().unwrap();
+                    let rust_value: Vec<String> = py_value.extract().unwrap_or_default();
                     args.field_mut(&rust_key).unwrap().replace(Some(rust_value));
                 }
             })
