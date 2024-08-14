@@ -3,7 +3,7 @@
 #[cfg(test)]
 mod callgraph_tests {
     use crate::context::{
-        investigator::{CallGraphInvestigator, CallGraphInvestigatorVisitor},
+        callgraph::callgraph::{CallGraph, CallGraphVisitor},
         workspace_context::{ASTNode, WorkspaceContext},
     };
 
@@ -47,10 +47,10 @@ mod callgraph_tests {
 
         let visit_eighth_floor1 = get_function_by_name(&context, "visitEighthFloor1");
 
-        let investigator = CallGraphInvestigator::new(&context, &[&visit_eighth_floor1]).unwrap();
+        let investigator = CallGraph::new(&context, &[&visit_eighth_floor1]).unwrap();
 
         let mut tracker = Tracker::new(&context);
-        investigator.investigate(&context, &mut tracker).unwrap();
+        investigator.accept(&context, &mut tracker).unwrap();
 
         assert!(tracker.func_definitions_names.is_empty());
         assert!(tracker.modifier_definitions_names.is_empty());
@@ -66,11 +66,10 @@ mod callgraph_tests {
         let pass_through_ninth_floor2 =
             get_modifier_definition_by_name(&context, "passThroughNinthFloor2");
 
-        let investigator =
-            CallGraphInvestigator::new(&context, &[&pass_through_ninth_floor2]).unwrap();
+        let investigator = CallGraph::new(&context, &[&pass_through_ninth_floor2]).unwrap();
 
         let mut tracker = Tracker::new(&context);
-        investigator.investigate(&context, &mut tracker).unwrap();
+        investigator.accept(&context, &mut tracker).unwrap();
 
         assert!(tracker.has_found_functions_with_names(&["visitEighthFloor2"]));
     }
@@ -85,11 +84,10 @@ mod callgraph_tests {
         let pass_through_ninth_floor3 =
             get_modifier_definition_by_name(&context, "passThroughNinthFloor3");
 
-        let investigator =
-            CallGraphInvestigator::new(&context, &[&pass_through_ninth_floor3]).unwrap();
+        let investigator = CallGraph::new(&context, &[&pass_through_ninth_floor3]).unwrap();
 
         let mut tracker = Tracker::new(&context);
-        investigator.investigate(&context, &mut tracker).unwrap();
+        investigator.accept(&context, &mut tracker).unwrap();
 
         assert!(tracker.has_found_functions_with_names(&["visitEighthFloor3"]));
     }
@@ -103,10 +101,10 @@ mod callgraph_tests {
 
         let recurse = get_function_by_name(&context, "recurse");
 
-        let investigator = CallGraphInvestigator::new(&context, &[&recurse]).unwrap();
+        let investigator = CallGraph::new(&context, &[&recurse]).unwrap();
 
         let mut tracker = Tracker::new(&context);
-        investigator.investigate(&context, &mut tracker).unwrap();
+        investigator.accept(&context, &mut tracker).unwrap();
 
         assert!(tracker.has_found_functions_with_names(&["recurse"]));
     }
@@ -135,7 +133,7 @@ mod callgraph_tests {
         }
     }
 
-    impl CallGraphInvestigatorVisitor for Tracker<'_> {
+    impl CallGraphVisitor for Tracker<'_> {
         fn visit_entry_point(&mut self, node: &ASTNode) -> eyre::Result<()> {
             self.entry_points
                 .push(self.context.get_node_sort_key_pure(node));

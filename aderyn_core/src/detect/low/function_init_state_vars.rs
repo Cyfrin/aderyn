@@ -5,8 +5,8 @@ use crate::ast::{ASTNode, Expression, FunctionCall, Identifier, NodeID};
 
 use crate::capture;
 use crate::context::browser::ExtractReferencedDeclarations;
-use crate::context::callgraph::investigator::{
-    CallGraphInvestigator, CallGraphInvestigatorVisitor,
+use crate::context::callgraph::callgraph::{
+    CallGraph, CallGraphVisitor,
 };
 use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
@@ -46,9 +46,9 @@ impl IssueDetector for FunctionInitializingStateDetector {
                         let mut tracker =
                             NonConstantStateVariableReferenceDeclarationTracker::new(context);
 
-                        let investigator = CallGraphInvestigator::new(context, &[&(func.into())])?;
+                        let investigator = CallGraph::new(context, &[&(func.into())])?;
 
-                        investigator.investigate(context, &mut tracker)?;
+                        investigator.accept(context, &mut tracker)?;
 
                         if tracker.makes_a_reference {
                             capture!(self, context, variable_declaration);
@@ -98,7 +98,7 @@ impl<'a> NonConstantStateVariableReferenceDeclarationTracker<'a> {
     }
 }
 
-impl<'a> CallGraphInvestigatorVisitor for NonConstantStateVariableReferenceDeclarationTracker<'a> {
+impl<'a> CallGraphVisitor for NonConstantStateVariableReferenceDeclarationTracker<'a> {
     fn visit_any(&mut self, node: &ASTNode) -> eyre::Result<()> {
         // We already know the condition is satisifed
         if self.makes_a_reference {

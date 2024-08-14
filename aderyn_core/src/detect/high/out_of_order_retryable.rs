@@ -5,9 +5,7 @@ use crate::ast::{Expression, MemberAccess, NodeID};
 
 use crate::capture;
 use crate::context::browser::ExtractFunctionCalls;
-use crate::context::callgraph::investigator::{
-    CallGraphInvestigator, CallGraphInvestigatorVisitor,
-};
+use crate::context::callgraph::callgraph::{CallGraph, CallGraphVisitor};
 use crate::detect::detector::IssueDetectorNamePool;
 use crate::detect::helpers;
 use crate::{
@@ -29,8 +27,8 @@ impl IssueDetector for OutOfOrderRetryableDetector {
             let mut tracker = OutOfOrderRetryableTracker {
                 number_of_retry_calls: 0,
             };
-            let investigator = CallGraphInvestigator::new(context, &[&(func.into())])?;
-            investigator.investigate(context, &mut tracker)?;
+            let investigator = CallGraph::new(context, &[&(func.into())])?;
+            investigator.accept(context, &mut tracker)?;
             if tracker.number_of_retry_calls >= 2 {
                 capture!(self, context, func);
             }
@@ -73,7 +71,7 @@ const SEQUENCER_FUNCTIONS: [&str; 3] = [
     "unsafeCreateRetryableTicket",
 ];
 
-impl CallGraphInvestigatorVisitor for OutOfOrderRetryableTracker {
+impl CallGraphVisitor for OutOfOrderRetryableTracker {
     fn visit_any(&mut self, node: &crate::ast::ASTNode) -> eyre::Result<()> {
         if self.number_of_retry_calls >= 2 {
             return Ok(());

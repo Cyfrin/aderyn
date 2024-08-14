@@ -4,9 +4,7 @@ use std::error::Error;
 use crate::ast::NodeID;
 
 use crate::capture;
-use crate::context::callgraph::investigator::{
-    CallGraphInvestigator, CallGraphInvestigatorVisitor,
-};
+use crate::context::callgraph::callgraph::{CallGraph, CallGraphVisitor};
 use crate::context::workspace_context::ASTNode;
 use crate::detect::detector::IssueDetectorNamePool;
 use crate::detect::helpers;
@@ -27,8 +25,8 @@ impl IssueDetector for SendEtherNoChecksDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for func in helpers::get_implemented_external_and_public_functions(context) {
             let mut tracker = MsgSenderAndCallWithValueTracker::default();
-            let investigator = CallGraphInvestigator::new(context, &[&(func.into())])?;
-            investigator.investigate(context, &mut tracker)?;
+            let investigator = CallGraph::new(context, &[&(func.into())])?;
+            investigator.accept(context, &mut tracker)?;
 
             if tracker.sends_native_eth && !tracker.has_msg_sender_checks {
                 capture!(self, context, func);
@@ -104,7 +102,7 @@ pub struct MsgSenderAndCallWithValueTracker {
     pub sends_native_eth: bool,
 }
 
-impl CallGraphInvestigatorVisitor for MsgSenderAndCallWithValueTracker {
+impl CallGraphVisitor for MsgSenderAndCallWithValueTracker {
     fn visit_any(&mut self, node: &ASTNode) -> eyre::Result<()> {
         if !self.has_msg_sender_checks && helpers::has_msg_sender_binary_operation(node) {
             self.has_msg_sender_checks = true;

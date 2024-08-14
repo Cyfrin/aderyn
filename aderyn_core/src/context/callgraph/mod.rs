@@ -1,4 +1,5 @@
-pub mod investigator;
+mod callgraph_tests;
+pub mod callgraph;
 mod workspace_callgraph;
 
 pub use workspace_callgraph::*;

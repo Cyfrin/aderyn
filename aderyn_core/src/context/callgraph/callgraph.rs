@@ -7,8 +7,8 @@ use crate::{
 
 use super::WorkspaceCallGraph;
 
-/// Use with [`super::CallGraphInvestigator`]
-pub trait CallGraphInvestigatorVisitor {
+/// Use with [`super::CallGraph`]
+pub trait CallGraphVisitor {
     /// Shift all logic to tracker otherwise, you would track state at 2 different places
     /// One at the tracker level, and other at the application level. Instead, we must
     /// contain all of the tracking logic in the tracker. Therefore, visit entry point
@@ -33,7 +33,7 @@ pub trait CallGraphInvestigatorVisitor {
     }
 }
 
-pub struct CallGraphInvestigator {
+pub struct CallGraph {
     /// Ad-hoc Nodes that we would like to explore from.
     pub entry_points: Vec<NodeID>,
 
@@ -43,12 +43,12 @@ pub struct CallGraphInvestigator {
     pub surface_points: Vec<NodeID>,
 }
 
-impl CallGraphInvestigator {
-    /// Creates a [`CallGraphInvestigator`] by exploring paths from given nodes. This is the starting point.
+impl CallGraph {
+    /// Creates a [`CallGraph`] by exploring paths from given nodes. This is the starting point.
     pub fn for_specific_nodes(
         context: &WorkspaceContext,
         nodes: &[&ASTNode],
-    ) -> super::Result<CallGraphInvestigator> {
+    ) -> super::Result<CallGraph> {
         let mut entry_points = vec![];
         let mut surface_points = vec![];
 
@@ -77,26 +77,23 @@ impl CallGraphInvestigator {
             }
         }
 
-        Ok(CallGraphInvestigator {
+        Ok(CallGraph {
             entry_points,
             surface_points,
         })
     }
 
-    pub fn new(
-        context: &WorkspaceContext,
-        nodes: &[&ASTNode],
-    ) -> super::Result<CallGraphInvestigator> {
+    pub fn new(context: &WorkspaceContext, nodes: &[&ASTNode]) -> super::Result<CallGraph> {
         Self::for_specific_nodes(context, nodes)
     }
 
     /// Visit the entry points and all the plausible function definitions and modifier definitions that
     /// EVM may encounter during execution.
-    pub fn investigate<T>(&self, context: &WorkspaceContext, visitor: &mut T) -> super::Result<()>
+    pub fn accept<T>(&self, context: &WorkspaceContext, visitor: &mut T) -> super::Result<()>
     where
-        T: CallGraphInvestigatorVisitor,
+        T: CallGraphVisitor,
     {
-        self._investigate(
+        self._accept(
             context,
             context
                 .callgraph
@@ -110,14 +107,14 @@ impl CallGraphInvestigator {
     /// First, we visit the entry points. Then, we derive the subgraph from the [`WorkspaceCallGraph`]
     /// which consists of all the nodes that can be reached by traversing the edges starting
     /// from the surface points.
-    fn _investigate<T>(
+    fn _accept<T>(
         &self,
         context: &WorkspaceContext,
         callgraph: &WorkspaceCallGraph,
         visitor: &mut T,
     ) -> super::Result<()>
     where
-        T: CallGraphInvestigatorVisitor,
+        T: CallGraphVisitor,
     {
         // Visit entry point nodes (so that trackers can track the state across all code regions in 1 place)
         for entry_point_id in &self.entry_points {
@@ -159,7 +156,7 @@ impl CallGraphInvestigator {
         blacklist: Option<&HashSet<NodeID>>,
     ) -> super::Result<()>
     where
-        T: CallGraphInvestigatorVisitor,
+        T: CallGraphVisitor,
     {
         if visited.contains(&node_id) {
             return Ok(());
@@ -175,7 +172,7 @@ impl CallGraphInvestigator {
             self.make_relevant_visit_call(context, node_id, visitor)?;
         }
 
-        if let Some(pointing_to) = callgraph.graph.get(&node_id) {
+        if let Some(pointing_to) = callgraph.raw_callgraph.get(&node_id) {
             for destination in pointing_to {
                 self.dfs_and_visit_subgraph(
                     *destination,
@@ -197,7 +194,7 @@ impl CallGraphInvestigator {
         visitor: &mut T,
     ) -> super::Result<()>
     where
-        T: CallGraphInvestigatorVisitor,
+        T: CallGraphVisitor,
     {
         if let Some(node) = context.nodes.get(&node_id) {
             if node.node_type() != NodeType::FunctionDefinition
@@ -228,7 +225,7 @@ impl CallGraphInvestigator {
         visitor: &mut T,
     ) -> super::Result<()>
     where
-        T: CallGraphInvestigatorVisitor,
+        T: CallGraphVisitor,
     {
         let node = context
             .nodes
