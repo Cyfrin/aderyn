@@ -3,7 +3,7 @@
 #[cfg(test)]
 mod callgraph_tests {
     use crate::context::{
-        investigator::{StandardInvestigator, StandardInvestigatorVisitor},
+        investigator::{CallGraphInvestigator, CallGraphInvestigatorVisitor},
         workspace_context::{ASTNode, WorkspaceContext},
     };
 
@@ -47,7 +47,7 @@ mod callgraph_tests {
 
         let visit_eighth_floor1 = get_function_by_name(&context, "visitEighthFloor1");
 
-        let investigator = StandardInvestigator::new(&context, &[&visit_eighth_floor1]).unwrap();
+        let investigator = CallGraphInvestigator::new(&context, &[&visit_eighth_floor1]).unwrap();
 
         let mut tracker = Tracker::new(&context);
         investigator.investigate(&context, &mut tracker).unwrap();
@@ -67,7 +67,7 @@ mod callgraph_tests {
             get_modifier_definition_by_name(&context, "passThroughNinthFloor2");
 
         let investigator =
-            StandardInvestigator::new(&context, &[&pass_through_ninth_floor2]).unwrap();
+            CallGraphInvestigator::new(&context, &[&pass_through_ninth_floor2]).unwrap();
 
         let mut tracker = Tracker::new(&context);
         investigator.investigate(&context, &mut tracker).unwrap();
@@ -86,7 +86,7 @@ mod callgraph_tests {
             get_modifier_definition_by_name(&context, "passThroughNinthFloor3");
 
         let investigator =
-            StandardInvestigator::new(&context, &[&pass_through_ninth_floor3]).unwrap();
+            CallGraphInvestigator::new(&context, &[&pass_through_ninth_floor3]).unwrap();
 
         let mut tracker = Tracker::new(&context);
         investigator.investigate(&context, &mut tracker).unwrap();
@@ -103,7 +103,7 @@ mod callgraph_tests {
 
         let recurse = get_function_by_name(&context, "recurse");
 
-        let investigator = StandardInvestigator::new(&context, &[&recurse]).unwrap();
+        let investigator = CallGraphInvestigator::new(&context, &[&recurse]).unwrap();
 
         let mut tracker = Tracker::new(&context);
         investigator.investigate(&context, &mut tracker).unwrap();
@@ -135,7 +135,7 @@ mod callgraph_tests {
         }
     }
 
-    impl StandardInvestigatorVisitor for Tracker<'_> {
+    impl CallGraphInvestigatorVisitor for Tracker<'_> {
         fn visit_entry_point(&mut self, node: &ASTNode) -> eyre::Result<()> {
             self.entry_points
                 .push(self.context.get_node_sort_key_pure(node));

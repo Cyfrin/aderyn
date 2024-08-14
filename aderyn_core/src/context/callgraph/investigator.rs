@@ -1,24 +1,39 @@
-//! This module helps with strategies on performing different types of investigations.
-//!
-//! Our first kind of investigator is [`StandardInvestigator`] it comes bundled with actions to help
-//! application modules "hook in" and consume the graphs.
-//!
-//!
-
 use std::collections::HashSet;
 
 use crate::{
-    ast::{NodeID, NodeType},
-    context::{
-        browser::ExtractReferencedDeclarations,
-        callgraph::WorkspaceCallGraph,
-        workspace_context::{ASTNode, WorkspaceContext},
-    },
+    ast::{ASTNode, FunctionDefinition, ModifierDefinition, NodeID, NodeType},
+    context::{browser::ExtractReferencedDeclarations, workspace_context::WorkspaceContext},
 };
 
-use super::StandardInvestigatorVisitor;
+use super::WorkspaceCallGraph;
 
-pub struct StandardInvestigator {
+/// Use with [`super::CallGraphInvestigator`]
+pub trait CallGraphInvestigatorVisitor {
+    /// Shift all logic to tracker otherwise, you would track state at 2 different places
+    /// One at the tracker level, and other at the application level. Instead, we must
+    /// contain all of the tracking logic in the tracker. Therefore, visit entry point
+    /// is essential because the tracker can get to take a look at not just the
+    /// functions and modifiers, but also the entry points that have invoked it.
+    fn visit_entry_point(&mut self, node: &ASTNode) -> eyre::Result<()> {
+        self.visit_any(node)
+    }
+
+    /// Meant to be invoked while traversing [`crate::context::workspace_context::WorkspaceContext::callgraph`]
+    fn visit_function_definition(&mut self, node: &FunctionDefinition) -> eyre::Result<()> {
+        self.visit_any(&(node.into()))
+    }
+
+    /// Meant to be invoked while traversing [`crate::context::workspace_context::WorkspaceContext::callgraph`]
+    fn visit_modifier_definition(&mut self, node: &ModifierDefinition) -> eyre::Result<()> {
+        self.visit_any(&(node.into()))
+    }
+
+    fn visit_any(&mut self, _node: &ASTNode) -> eyre::Result<()> {
+        Ok(())
+    }
+}
+
+pub struct CallGraphInvestigator {
     /// Ad-hoc Nodes that we would like to explore from.
     pub entry_points: Vec<NodeID>,
 
@@ -28,12 +43,12 @@ pub struct StandardInvestigator {
     pub surface_points: Vec<NodeID>,
 }
 
-impl StandardInvestigator {
-    /// Creates a [`StandardInvestigator`] by exploring paths from given nodes. This is the starting point.
+impl CallGraphInvestigator {
+    /// Creates a [`CallGraphInvestigator`] by exploring paths from given nodes. This is the starting point.
     pub fn for_specific_nodes(
         context: &WorkspaceContext,
         nodes: &[&ASTNode],
-    ) -> super::Result<StandardInvestigator> {
+    ) -> super::Result<CallGraphInvestigator> {
         let mut entry_points = vec![];
         let mut surface_points = vec![];
 
@@ -62,7 +77,7 @@ impl StandardInvestigator {
             }
         }
 
-        Ok(StandardInvestigator {
+        Ok(CallGraphInvestigator {
             entry_points,
             surface_points,
         })
@@ -71,7 +86,7 @@ impl StandardInvestigator {
     pub fn new(
         context: &WorkspaceContext,
         nodes: &[&ASTNode],
-    ) -> super::Result<StandardInvestigator> {
+    ) -> super::Result<CallGraphInvestigator> {
         Self::for_specific_nodes(context, nodes)
     }
 
@@ -79,7 +94,7 @@ impl StandardInvestigator {
     /// EVM may encounter during execution.
     pub fn investigate<T>(&self, context: &WorkspaceContext, visitor: &mut T) -> super::Result<()>
     where
-        T: StandardInvestigatorVisitor,
+        T: CallGraphInvestigatorVisitor,
     {
         self._investigate(
             context,
@@ -102,7 +117,7 @@ impl StandardInvestigator {
         visitor: &mut T,
     ) -> super::Result<()>
     where
-        T: StandardInvestigatorVisitor,
+        T: CallGraphInvestigatorVisitor,
     {
         // Visit entry point nodes (so that trackers can track the state across all code regions in 1 place)
         for entry_point_id in &self.entry_points {
@@ -144,7 +159,7 @@ impl StandardInvestigator {
         blacklist: Option<&HashSet<NodeID>>,
     ) -> super::Result<()>
     where
-        T: StandardInvestigatorVisitor,
+        T: CallGraphInvestigatorVisitor,
     {
         if visited.contains(&node_id) {
             return Ok(());
@@ -182,7 +197,7 @@ impl StandardInvestigator {
         visitor: &mut T,
     ) -> super::Result<()>
     where
-        T: StandardInvestigatorVisitor,
+        T: CallGraphInvestigatorVisitor,
     {
         if let Some(node) = context.nodes.get(&node_id) {
             if node.node_type() != NodeType::FunctionDefinition
@@ -213,7 +228,7 @@ impl StandardInvestigator {
         visitor: &mut T,
     ) -> super::Result<()>
     where
-        T: StandardInvestigatorVisitor,
+        T: CallGraphInvestigatorVisitor,
     {
         let node = context
             .nodes

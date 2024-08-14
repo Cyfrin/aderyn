@@ -89,8 +89,8 @@ pub fn load_solidity_source_unit(filepath: &str) -> WorkspaceContext {
 }
 
 fn load_callgraphs(context: &mut WorkspaceContext) {
-    let forward_callgraph = WorkspaceCallGraph::from_context(context).unwrap();
-    context.callgraph = Some(forward_callgraph);
+    let callgraph = WorkspaceCallGraph::from_context(context).unwrap();
+    context.callgraph = Some(callgraph);
 }
 
 fn absorb_ast_content_into_context(

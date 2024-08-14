@@ -6,7 +6,9 @@ use crate::ast::{ASTNode, Expression, NodeID};
 
 use crate::capture;
 use crate::context::browser::ExtractMemberAccesses;
-use crate::context::investigator::{StandardInvestigator, StandardInvestigatorVisitor};
+use crate::context::callgraph::investigator::{
+    CallGraphInvestigator, CallGraphInvestigatorVisitor,
+};
 use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
     context::workspace_context::WorkspaceContext,
@@ -70,7 +72,7 @@ impl IssueDetector for MsgValueUsedInLoopDetector {
 
 fn uses_msg_value(context: &WorkspaceContext, ast_node: &ASTNode) -> Option<bool> {
     let mut tracker = MsgValueTracker::default();
-    let investigator = StandardInvestigator::new(context, &[ast_node]).ok()?;
+    let investigator = CallGraphInvestigator::new(context, &[ast_node]).ok()?;
 
     investigator.investigate(context, &mut tracker).ok()?;
     Some(tracker.has_msg_value)
@@ -81,7 +83,7 @@ struct MsgValueTracker {
     has_msg_value: bool,
 }
 
-impl StandardInvestigatorVisitor for MsgValueTracker {
+impl CallGraphInvestigatorVisitor for MsgValueTracker {
     fn visit_any(&mut self, node: &crate::ast::ASTNode) -> eyre::Result<()> {
         if !self.has_msg_value
             && ExtractMemberAccesses::from(node)

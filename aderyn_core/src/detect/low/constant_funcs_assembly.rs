@@ -8,7 +8,9 @@ use crate::capture;
 use crate::context::browser::{
     ExtractInlineAssemblys, ExtractPragmaDirectives, GetClosestAncestorOfTypeX,
 };
-use crate::context::investigator::{StandardInvestigator, StandardInvestigatorVisitor};
+use crate::context::callgraph::investigator::{
+    CallGraphInvestigator, CallGraphInvestigatorVisitor,
+};
 use crate::detect::detector::IssueDetectorNamePool;
 use crate::detect::helpers::{self, pragma_directive_to_semver};
 use crate::{
@@ -49,7 +51,7 @@ impl IssueDetector for ConstantFunctionContainsAssemblyDetector {
                                     has_assembly: false,
                                 };
                                 let investigator =
-                                    StandardInvestigator::new(context, &[&(function.into())])?;
+                                    CallGraphInvestigator::new(context, &[&(function.into())])?;
                                 investigator.investigate(context, &mut tracker)?;
 
                                 if tracker.has_assembly {
@@ -105,7 +107,7 @@ struct AssemblyTracker {
     has_assembly: bool,
 }
 
-impl StandardInvestigatorVisitor for AssemblyTracker {
+impl CallGraphInvestigatorVisitor for AssemblyTracker {
     fn visit_any(&mut self, node: &crate::ast::ASTNode) -> eyre::Result<()> {
         // If we are already satisifed, do not bother checking
         if self.has_assembly {
