@@ -82,11 +82,11 @@ impl TxOriginUsedForAuthDetector {
         capture_node: &ASTNode,
     ) -> Result<(), Box<dyn Error>> {
         // Boilerplate
-        let mut tracker = MsgSenderAndTxOriginTracker::default();
-        let investigator = CallGraph::from_many(context, check_nodes)?;
-        investigator.accept(context, &mut tracker)?;
+        let mut inspector = MsgSenderAndTxOriginInspector::default();
+        let callgraph = CallGraph::from_many(context, check_nodes)?;
+        callgraph.accept(context, &mut inspector)?;
 
-        if tracker.satisifed() {
+        if inspector.satisifed() {
             capture!(self, context, capture_node);
         }
         Ok(())
@@ -94,12 +94,12 @@ impl TxOriginUsedForAuthDetector {
 }
 
 #[derive(Default)]
-struct MsgSenderAndTxOriginTracker {
+struct MsgSenderAndTxOriginInspector {
     reads_msg_sender: bool,
     reads_tx_origin: bool,
 }
 
-impl MsgSenderAndTxOriginTracker {
+impl MsgSenderAndTxOriginInspector {
     /// To avoid FP (msg.sender == tx.origin) we require that tx.origin is present and msg.sender is absent
     /// for it to be considered satisfied
     fn satisifed(&self) -> bool {
@@ -107,7 +107,7 @@ impl MsgSenderAndTxOriginTracker {
     }
 }
 
-impl CallGraphVisitor for MsgSenderAndTxOriginTracker {
+impl CallGraphVisitor for MsgSenderAndTxOriginInspector {
     fn visit_any(&mut self, node: &crate::ast::ASTNode) -> eyre::Result<()> {
         let member_accesses = ExtractMemberAccesses::from(node).extracted;
 

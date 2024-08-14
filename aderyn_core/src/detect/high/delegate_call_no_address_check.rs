@@ -23,16 +23,16 @@ pub struct DelegateCallOnUncheckedAddressDetector {
 impl IssueDetector for DelegateCallOnUncheckedAddressDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for func in helpers::get_implemented_external_and_public_functions(context) {
-            let mut tracker = DelegateCallNoAddressChecksTracker {
+            let mut inspector = DelegateCallNoAddressChecksInspector {
                 has_address_checks: false,
                 has_delegate_call_on_non_state_variable_address: false,
                 context,
             };
-            let investigator = CallGraph::from_one(context, &(func.into()))?;
-            investigator.accept(context, &mut tracker)?;
+            let callgraph = CallGraph::from_one(context, &(func.into()))?;
+            callgraph.accept(context, &mut inspector)?;
 
-            if tracker.has_delegate_call_on_non_state_variable_address
-                && !tracker.has_address_checks
+            if inspector.has_delegate_call_on_non_state_variable_address
+                && !inspector.has_address_checks
             {
                 capture!(self, context, func)
             }
@@ -62,13 +62,13 @@ impl IssueDetector for DelegateCallOnUncheckedAddressDetector {
     }
 }
 
-struct DelegateCallNoAddressChecksTracker<'a> {
+struct DelegateCallNoAddressChecksInspector<'a> {
     has_address_checks: bool,
     has_delegate_call_on_non_state_variable_address: bool,
     context: &'a WorkspaceContext,
 }
 
-impl<'a> CallGraphVisitor for DelegateCallNoAddressChecksTracker<'a> {
+impl<'a> CallGraphVisitor for DelegateCallNoAddressChecksInspector<'a> {
     fn visit_any(&mut self, node: &crate::context::workspace_context::ASTNode) -> eyre::Result<()> {
         if !self.has_address_checks && helpers::has_binary_checks_on_some_address(node) {
             self.has_address_checks = true;

@@ -24,12 +24,12 @@ pub struct OutOfOrderRetryableDetector {
 impl IssueDetector for OutOfOrderRetryableDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for func in helpers::get_implemented_external_and_public_functions(context) {
-            let mut tracker = OutOfOrderRetryableTracker {
+            let mut call_collector = RetryableCallCollector {
                 number_of_retry_calls: 0,
             };
-            let investigator = CallGraph::from_one(context, &(func.into()))?;
-            investigator.accept(context, &mut tracker)?;
-            if tracker.number_of_retry_calls >= 2 {
+            let callgraph = CallGraph::from_one(context, &(func.into()))?;
+            callgraph.accept(context, &mut call_collector)?;
+            if call_collector.number_of_retry_calls >= 2 {
                 capture!(self, context, func);
             }
         }
@@ -61,7 +61,7 @@ impl IssueDetector for OutOfOrderRetryableDetector {
     }
 }
 
-struct OutOfOrderRetryableTracker {
+struct RetryableCallCollector {
     number_of_retry_calls: usize,
 }
 
@@ -71,7 +71,7 @@ const SEQUENCER_FUNCTIONS: [&str; 3] = [
     "unsafeCreateRetryableTicket",
 ];
 
-impl CallGraphVisitor for OutOfOrderRetryableTracker {
+impl CallGraphVisitor for RetryableCallCollector {
     fn visit_any(&mut self, node: &crate::ast::ASTNode) -> eyre::Result<()> {
         if self.number_of_retry_calls >= 2 {
             return Ok(());

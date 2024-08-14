@@ -45,14 +45,13 @@ impl IssueDetector for ConstantFunctionContainsAssemblyDetector {
                             if function.state_mutability() == &StateMutability::View
                                 || function.state_mutability() == &StateMutability::Pure
                             {
-                                let mut tracker = AssemblyTracker {
-                                    has_assembly: false,
+                                let mut inspector = AssemblyInspector {
+                                    found_assembly: false,
                                 };
-                                let investigator =
-                                    CallGraph::from_one(context, &(function.into()))?;
-                                investigator.accept(context, &mut tracker)?;
+                                let callgraph = CallGraph::from_one(context, &(function.into()))?;
+                                callgraph.accept(context, &mut inspector)?;
 
-                                if tracker.has_assembly {
+                                if inspector.found_assembly {
                                     capture!(self, context, function);
                                 }
                             }
@@ -101,14 +100,14 @@ fn version_req_allows_below_0_5_0(version_req: &VersionReq) -> bool {
     false
 }
 
-struct AssemblyTracker {
-    has_assembly: bool,
+struct AssemblyInspector {
+    found_assembly: bool,
 }
 
-impl CallGraphVisitor for AssemblyTracker {
+impl CallGraphVisitor for AssemblyInspector {
     fn visit_any(&mut self, node: &crate::ast::ASTNode) -> eyre::Result<()> {
         // If we are already satisifed, do not bother checking
-        if self.has_assembly {
+        if self.found_assembly {
             return Ok(());
         }
 
@@ -124,7 +123,7 @@ impl CallGraphVisitor for AssemblyTracker {
         // Check if this node has assembly code
         let assemblies = ExtractInlineAssemblys::from(node).extracted;
         if !assemblies.is_empty() {
-            self.has_assembly = true;
+            self.found_assembly = true;
         }
         Ok(())
     }

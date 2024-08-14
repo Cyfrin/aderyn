@@ -69,19 +69,19 @@ impl IssueDetector for MsgValueUsedInLoopDetector {
 }
 
 fn uses_msg_value(context: &WorkspaceContext, ast_node: &ASTNode) -> Option<bool> {
-    let mut tracker = MsgValueTracker::default();
-    let investigator = CallGraph::from_one(context, ast_node).ok()?;
+    let mut inspector = MsgValueInspector::default();
+    let callgraph = CallGraph::from_one(context, ast_node).ok()?;
 
-    investigator.accept(context, &mut tracker).ok()?;
-    Some(tracker.has_msg_value)
+    callgraph.accept(context, &mut inspector).ok()?;
+    Some(inspector.has_msg_value)
 }
 
 #[derive(Default)]
-struct MsgValueTracker {
+struct MsgValueInspector {
     has_msg_value: bool,
 }
 
-impl CallGraphVisitor for MsgValueTracker {
+impl CallGraphVisitor for MsgValueInspector {
     fn visit_any(&mut self, node: &crate::ast::ASTNode) -> eyre::Result<()> {
         if !self.has_msg_value
             && ExtractMemberAccesses::from(node)

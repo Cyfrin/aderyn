@@ -41,14 +41,14 @@ impl IssueDetector for FunctionInitializingStateDetector {
                 }) = expression.as_ref()
                 {
                     if let Some(ASTNode::FunctionDefinition(func)) = context.nodes.get(func_id) {
-                        let mut tracker =
-                            NonConstantStateVariableReferenceDeclarationTracker::new(context);
+                        let mut inspector =
+                            NonConstantStateVariableReferenceDeclarationInspector::new(context);
 
-                        let investigator = CallGraph::from_one(context, &(func.into()))?;
+                        let callgraph = CallGraph::from_one(context, &(func.into()))?;
 
-                        investigator.accept(context, &mut tracker)?;
+                        callgraph.accept(context, &mut inspector)?;
 
-                        if tracker.makes_a_reference {
+                        if inspector.found_a_reference {
                             capture!(self, context, variable_declaration);
                         }
                     }
@@ -82,24 +82,24 @@ impl IssueDetector for FunctionInitializingStateDetector {
     }
 }
 
-struct NonConstantStateVariableReferenceDeclarationTracker<'a> {
-    makes_a_reference: bool,
+struct NonConstantStateVariableReferenceDeclarationInspector<'a> {
+    found_a_reference: bool,
     context: &'a WorkspaceContext,
 }
 
-impl<'a> NonConstantStateVariableReferenceDeclarationTracker<'a> {
+impl<'a> NonConstantStateVariableReferenceDeclarationInspector<'a> {
     fn new(context: &'a WorkspaceContext) -> Self {
         Self {
-            makes_a_reference: false,
+            found_a_reference: false,
             context,
         }
     }
 }
 
-impl<'a> CallGraphVisitor for NonConstantStateVariableReferenceDeclarationTracker<'a> {
+impl<'a> CallGraphVisitor for NonConstantStateVariableReferenceDeclarationInspector<'a> {
     fn visit_any(&mut self, node: &ASTNode) -> eyre::Result<()> {
         // We already know the condition is satisifed
-        if self.makes_a_reference {
+        if self.found_a_reference {
             return Ok(());
         }
 
@@ -110,7 +110,7 @@ impl<'a> CallGraphVisitor for NonConstantStateVariableReferenceDeclarationTracke
                 self.context.nodes.get(&reference)
             {
                 if variable_declaration.state_variable && !variable_declaration.constant {
-                    self.makes_a_reference = true;
+                    self.found_a_reference = true;
                 }
             }
         }

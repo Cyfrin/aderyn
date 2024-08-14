@@ -32,17 +32,17 @@ impl IssueDetector for ReturnBombDetector {
         // above operation.
 
         for func in helpers::get_implemented_external_and_public_functions(context) {
-            let mut tracker = CallNoAddressChecksTracker {
+            let mut collector = CallNoAddressChecksCollector {
                 has_address_checks: false,
                 calls_on_non_state_variable_addresses: vec![], // collection of all `address.call` Member Accesses where address is not a state variable
                 context,
             };
-            let investigator = CallGraph::from_one(context, &(func.into()))?;
-            investigator.accept(context, &mut tracker)?;
+            let callgraph = CallGraph::from_one(context, &(func.into()))?;
+            callgraph.accept(context, &mut collector)?;
 
-            if !tracker.has_address_checks {
+            if !collector.has_address_checks {
                 // Now we assume that in this region all addresses are unprotected (because they are not involved in any binary ops/checks)
-                for member_access in tracker.calls_on_non_state_variable_addresses {
+                for member_access in collector.calls_on_non_state_variable_addresses {
                     // Now we need to see if address.call{gas: xxx}() has been called with options and if so,
                     // scan to see if the gaslimit is set. If it is, then it is not a vulnerability because
                     // OOG is likely not possible when there is defined gas limit
@@ -113,13 +113,13 @@ impl IssueDetector for ReturnBombDetector {
     }
 }
 
-struct CallNoAddressChecksTracker<'a> {
+struct CallNoAddressChecksCollector<'a> {
     has_address_checks: bool,
     calls_on_non_state_variable_addresses: Vec<MemberAccess>,
     context: &'a WorkspaceContext,
 }
 
-impl<'a> CallGraphVisitor for CallNoAddressChecksTracker<'a> {
+impl<'a> CallGraphVisitor for CallNoAddressChecksCollector<'a> {
     fn visit_any(&mut self, node: &crate::context::workspace_context::ASTNode) -> eyre::Result<()> {
         if !self.has_address_checks && helpers::has_binary_checks_on_some_address(node) {
             self.has_address_checks = true;

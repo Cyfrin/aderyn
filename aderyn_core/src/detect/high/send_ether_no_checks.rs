@@ -24,11 +24,11 @@ pub struct SendEtherNoChecksDetector {
 impl IssueDetector for SendEtherNoChecksDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for func in helpers::get_implemented_external_and_public_functions(context) {
-            let mut tracker = MsgSenderAndCallWithValueTracker::default();
-            let investigator = CallGraph::from_one(context, &(func.into()))?;
-            investigator.accept(context, &mut tracker)?;
+            let mut inspector = MsgSenderAndCallWithValueInspector::default();
+            let callgraph = CallGraph::from_one(context, &(func.into()))?;
+            callgraph.accept(context, &mut inspector)?;
 
-            if tracker.sends_native_eth && !tracker.has_msg_sender_checks {
+            if inspector.sends_native_eth && !inspector.has_msg_sender_checks {
                 capture!(self, context, func);
             }
         }
@@ -97,12 +97,12 @@ mod send_ether_no_checks_detector_tests {
 }
 
 #[derive(Default)]
-pub struct MsgSenderAndCallWithValueTracker {
+pub struct MsgSenderAndCallWithValueInspector {
     pub has_msg_sender_checks: bool,
     pub sends_native_eth: bool,
 }
 
-impl CallGraphVisitor for MsgSenderAndCallWithValueTracker {
+impl CallGraphVisitor for MsgSenderAndCallWithValueInspector {
     fn visit_any(&mut self, node: &ASTNode) -> eyre::Result<()> {
         if !self.has_msg_sender_checks && helpers::has_msg_sender_binary_operation(node) {
             self.has_msg_sender_checks = true;

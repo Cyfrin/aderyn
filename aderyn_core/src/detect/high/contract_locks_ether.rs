@@ -110,32 +110,32 @@ mod contract_eth_helper {
                         .map(|f| f.into())
                         .collect::<Vec<ASTNode>>();
 
-                    let mut tracker = EthWithdrawalAllowerTracker::default();
+                    let mut inspector = EthWithdrawalFunctionInspector::default();
 
-                    let investigator =
+                    let callgraph =
                         CallGraph::from_many(context, funcs.iter().collect::<Vec<_>>().as_slice())
                             .ok()?;
 
-                    investigator.accept(context, &mut tracker).ok()?;
+                    callgraph.accept(context, &mut inspector).ok()?;
 
-                    if tracker.has_calls_that_sends_native_eth {
+                    if inspector.has_calls_that_sends_native_eth {
                         return Some(true);
                     }
                 }
             }
             // At this point we have successfully gone through all the contracts in the inheritance heirarchy
-            // but tracker has determined that none of them have have calls that sends native eth Even if they are by
+            // but inspector has determined that none of them have have calls that sends native eth Even if they are by
             // some chance, they are not reachable from external & public functions
             Some(false)
         }
     }
 
     #[derive(Default)]
-    struct EthWithdrawalAllowerTracker {
+    struct EthWithdrawalFunctionInspector {
         has_calls_that_sends_native_eth: bool,
     }
 
-    impl CallGraphVisitor for EthWithdrawalAllowerTracker {
+    impl CallGraphVisitor for EthWithdrawalFunctionInspector {
         fn visit_any(&mut self, ast_node: &ASTNode) -> eyre::Result<()> {
             if !self.has_calls_that_sends_native_eth
                 && helpers::has_calls_that_sends_native_eth(ast_node)

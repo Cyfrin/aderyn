@@ -47,13 +47,13 @@ mod callgraph_tests {
 
         let visit_eighth_floor1 = get_function_by_name(&context, "visitEighthFloor1");
 
-        let investigator = CallGraph::new(&context, &[&visit_eighth_floor1]).unwrap();
+        let investigator = CallGraph::from_one(&context, &visit_eighth_floor1).unwrap();
 
-        let mut tracker = Tracker::new(&context);
-        investigator.accept(&context, &mut tracker).unwrap();
+        let mut collector = FunctionCollector::new(&context);
+        investigator.accept(&context, &mut collector).unwrap();
 
-        assert!(tracker.func_definitions_names.is_empty());
-        assert!(tracker.modifier_definitions_names.is_empty());
+        assert!(collector.func_definitions_names.is_empty());
+        assert!(collector.modifier_definitions_names.is_empty());
     }
 
     #[test]
@@ -66,12 +66,12 @@ mod callgraph_tests {
         let pass_through_ninth_floor2 =
             get_modifier_definition_by_name(&context, "passThroughNinthFloor2");
 
-        let investigator = CallGraph::new(&context, &[&pass_through_ninth_floor2]).unwrap();
+        let investigator = CallGraph::from_one(&context, &pass_through_ninth_floor2).unwrap();
 
-        let mut tracker = Tracker::new(&context);
-        investigator.accept(&context, &mut tracker).unwrap();
+        let mut collector = FunctionCollector::new(&context);
+        investigator.accept(&context, &mut collector).unwrap();
 
-        assert!(tracker.has_found_functions_with_names(&["visitEighthFloor2"]));
+        assert!(collector.has_found_functions_with_names(&["visitEighthFloor2"]));
     }
 
     #[test]
@@ -84,12 +84,12 @@ mod callgraph_tests {
         let pass_through_ninth_floor3 =
             get_modifier_definition_by_name(&context, "passThroughNinthFloor3");
 
-        let investigator = CallGraph::new(&context, &[&pass_through_ninth_floor3]).unwrap();
+        let investigator = CallGraph::from_one(&context, &pass_through_ninth_floor3).unwrap();
 
-        let mut tracker = Tracker::new(&context);
-        investigator.accept(&context, &mut tracker).unwrap();
+        let mut collector = FunctionCollector::new(&context);
+        investigator.accept(&context, &mut collector).unwrap();
 
-        assert!(tracker.has_found_functions_with_names(&["visitEighthFloor3"]));
+        assert!(collector.has_found_functions_with_names(&["visitEighthFloor3"]));
     }
 
     #[test]
@@ -101,24 +101,24 @@ mod callgraph_tests {
 
         let recurse = get_function_by_name(&context, "recurse");
 
-        let investigator = CallGraph::new(&context, &[&recurse]).unwrap();
+        let investigator = CallGraph::from_one(&context, &recurse).unwrap();
 
-        let mut tracker = Tracker::new(&context);
-        investigator.accept(&context, &mut tracker).unwrap();
+        let mut collector = FunctionCollector::new(&context);
+        investigator.accept(&context, &mut collector).unwrap();
 
-        assert!(tracker.has_found_functions_with_names(&["recurse"]));
+        assert!(collector.has_found_functions_with_names(&["recurse"]));
     }
 
-    struct Tracker<'a> {
+    struct FunctionCollector<'a> {
         context: &'a WorkspaceContext,
         entry_points: Vec<(String, usize, String)>,
         func_definitions_names: Vec<String>,
         modifier_definitions_names: Vec<String>,
     }
 
-    impl<'a> Tracker<'a> {
-        fn new(context: &WorkspaceContext) -> Tracker {
-            Tracker {
+    impl<'a> FunctionCollector<'a> {
+        fn new(context: &WorkspaceContext) -> FunctionCollector {
+            FunctionCollector {
                 context,
                 entry_points: vec![],
                 func_definitions_names: vec![],
@@ -133,7 +133,7 @@ mod callgraph_tests {
         }
     }
 
-    impl CallGraphVisitor for Tracker<'_> {
+    impl CallGraphVisitor for FunctionCollector<'_> {
         fn visit_entry_point(&mut self, node: &ASTNode) -> eyre::Result<()> {
             self.entry_points
                 .push(self.context.get_node_sort_key_pure(node));
