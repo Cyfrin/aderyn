@@ -7,9 +7,9 @@ use std::{
 
 use crate::{
     ast::SourceUnit,
-    context::{graph::traits::Transpose, workspace_context::WorkspaceContext},
+    context::{callgraph::traits::Transpose, workspace_context::WorkspaceContext},
 };
-use crate::{context::graph::WorkspaceCallGraph, visitor::ast_visitor::Node};
+use crate::{context::callgraph::WorkspaceCallGraph, visitor::ast_visitor::Node};
 
 use super::ensure_valid_solidity_file;
 

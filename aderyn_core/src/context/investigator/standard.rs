@@ -11,7 +11,7 @@ use crate::{
     ast::{NodeID, NodeType},
     context::{
         browser::{ExtractReferencedDeclarations, GetClosestAncestorOfTypeX},
-        graph::WorkspaceCallGraph,
+        callgraph::WorkspaceCallGraph,
         workspace_context::{ASTNode, WorkspaceContext},
     },
 };

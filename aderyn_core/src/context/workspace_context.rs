@@ -3,8 +3,8 @@ use std::cmp::Ordering;
 use std::collections::HashMap;
 
 use super::browser::GetImmediateParent;
+use super::callgraph::WorkspaceCallGraph;
 use super::capturable::Capturable;
-use super::graph::WorkspaceCallGraph;
 pub use crate::ast::ASTNode;
 
 #[derive(Default, Debug, Clone, PartialEq, Eq, Hash)]
