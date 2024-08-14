@@ -49,7 +49,7 @@ impl IssueDetector for ConstantFunctionContainsAssemblyDetector {
                                     has_assembly: false,
                                 };
                                 let investigator =
-                                    CallGraph::new(context, &[&(function.into())])?;
+                                    CallGraph::from_one(context, &(function.into()))?;
                                 investigator.accept(context, &mut tracker)?;
 
                                 if tracker.has_assembly {

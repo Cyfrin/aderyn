@@ -113,7 +113,7 @@ mod contract_eth_helper {
                     let mut tracker = EthWithdrawalAllowerTracker::default();
 
                     let investigator =
-                        CallGraph::new(context, funcs.iter().collect::<Vec<_>>().as_slice())
+                        CallGraph::from_many(context, funcs.iter().collect::<Vec<_>>().as_slice())
                             .ok()?;
 
                     investigator.accept(context, &mut tracker).ok()?;

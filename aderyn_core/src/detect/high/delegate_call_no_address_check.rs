@@ -28,7 +28,7 @@ impl IssueDetector for DelegateCallOnUncheckedAddressDetector {
                 has_delegate_call_on_non_state_variable_address: false,
                 context,
             };
-            let investigator = CallGraph::new(context, &[&(func.into())])?;
+            let investigator = CallGraph::from_one(context, &(func.into()))?;
             investigator.accept(context, &mut tracker)?;
 
             if tracker.has_delegate_call_on_non_state_variable_address

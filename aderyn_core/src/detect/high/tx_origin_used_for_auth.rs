@@ -83,7 +83,7 @@ impl TxOriginUsedForAuthDetector {
     ) -> Result<(), Box<dyn Error>> {
         // Boilerplate
         let mut tracker = MsgSenderAndTxOriginTracker::default();
-        let investigator = CallGraph::new(context, check_nodes)?;
+        let investigator = CallGraph::from_many(context, check_nodes)?;
         investigator.accept(context, &mut tracker)?;
 
         if tracker.satisifed() {

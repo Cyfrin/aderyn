@@ -25,7 +25,7 @@ impl IssueDetector for SendEtherNoChecksDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for func in helpers::get_implemented_external_and_public_functions(context) {
             let mut tracker = MsgSenderAndCallWithValueTracker::default();
-            let investigator = CallGraph::new(context, &[&(func.into())])?;
+            let investigator = CallGraph::from_one(context, &(func.into()))?;
             investigator.accept(context, &mut tracker)?;
 
             if tracker.sends_native_eth && !tracker.has_msg_sender_checks {

@@ -45,10 +45,7 @@ pub struct CallGraph {
 
 impl CallGraph {
     /// Creates a [`CallGraph`] by exploring paths from given nodes. This is the starting point.
-    pub fn for_specific_nodes(
-        context: &WorkspaceContext,
-        nodes: &[&ASTNode],
-    ) -> super::Result<CallGraph> {
+    pub fn from_many(context: &WorkspaceContext, nodes: &[&ASTNode]) -> super::Result<CallGraph> {
         let mut entry_points = vec![];
         let mut surface_points = vec![];
 
@@ -83,8 +80,8 @@ impl CallGraph {
         })
     }
 
-    pub fn new(context: &WorkspaceContext, nodes: &[&ASTNode]) -> super::Result<CallGraph> {
-        Self::for_specific_nodes(context, nodes)
+    pub fn from_one(context: &WorkspaceContext, node: &ASTNode) -> super::Result<CallGraph> {
+        Self::from_many(context, &[node])
     }
 
     /// Visit the entry points and all the plausible function definitions and modifier definitions that

@@ -6,9 +6,7 @@ use crate::ast::{ASTNode, MemberAccess, NodeID};
 use crate::ast::NodeType;
 use crate::capture;
 use crate::context::browser::GetClosestAncestorOfTypeX;
-use crate::context::callgraph::callgraph::{
-    CallGraph, CallGraphVisitor,
-};
+use crate::context::callgraph::callgraph::{CallGraph, CallGraphVisitor};
 use crate::detect::detector::IssueDetectorNamePool;
 use crate::detect::helpers;
 use crate::{
@@ -39,7 +37,7 @@ impl IssueDetector for ReturnBombDetector {
                 calls_on_non_state_variable_addresses: vec![], // collection of all `address.call` Member Accesses where address is not a state variable
                 context,
             };
-            let investigator = CallGraph::new(context, &[&(func.into())])?;
+            let investigator = CallGraph::from_one(context, &(func.into()))?;
             investigator.accept(context, &mut tracker)?;
 
             if !tracker.has_address_checks {
