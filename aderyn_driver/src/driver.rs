@@ -2,7 +2,6 @@ use crate::{
     config_helpers::{append_from_foundry_toml, derive_from_aderyn_toml},
     ensure_valid_root_path, process_auto,
 };
-use aderyn_core::context::callgraph::traits::Transpose;
 use aderyn_core::{
     context::{callgraph::WorkspaceCallGraph, workspace_context::WorkspaceContext},
     detect::detector::{get_all_issue_detectors, IssueDetector, IssueSeverity},
@@ -154,12 +153,8 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
         context.set_sloc_stats(sloc_stats);
         context.set_ignore_lines_stats(ignore_line_stats);
 
-        let forward_callgraph = WorkspaceCallGraph::from_context(context).unwrap();
-        let reverse_callgraph = WorkspaceCallGraph {
-            graph: forward_callgraph.graph.reverse(),
-        };
-        context.forward_callgraph = Some(forward_callgraph);
-        context.reverse_callgraph = Some(reverse_callgraph);
+        let callgraph = WorkspaceCallGraph::from_context(context).unwrap();
+        context.callgraph = Some(callgraph);
     }
     // Using the source path, calculate the sloc
 
