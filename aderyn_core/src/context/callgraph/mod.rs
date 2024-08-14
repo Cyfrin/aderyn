@@ -1,4 +1,3 @@
-pub mod traits;
 mod workspace_callgraph;
 
 pub use workspace_callgraph::*;

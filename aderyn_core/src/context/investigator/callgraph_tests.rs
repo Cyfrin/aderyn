@@ -3,9 +3,9 @@
 #[cfg(test)]
 mod callgraph_tests {
     use crate::context::{
-            investigator::{StandardInvestigator, StandardInvestigatorVisitor},
-            workspace_context::{ASTNode, WorkspaceContext},
-        };
+        investigator::{StandardInvestigator, StandardInvestigatorVisitor},
+        workspace_context::{ASTNode, WorkspaceContext},
+    };
 
     use serial_test::serial;
 
@@ -35,8 +35,7 @@ mod callgraph_tests {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/CallGraphTests.sol",
         );
-        assert!(context.forward_callgraph.is_some());
-        assert!(context.reverse_callgraph.is_some());
+        assert!(context.callgraph.is_some());
     }
 
     #[test]
@@ -53,8 +52,8 @@ mod callgraph_tests {
         let mut tracker = Tracker::new(&context);
         investigator.investigate(&context, &mut tracker).unwrap();
 
-        assert!(tracker.downstream_func_definitions_names.is_empty());
-        assert!(tracker.downstream_modifier_definitions_names.is_empty());
+        assert!(tracker.func_definitions_names.is_empty());
+        assert!(tracker.modifier_definitions_names.is_empty());
     }
 
     #[test]
@@ -73,7 +72,7 @@ mod callgraph_tests {
         let mut tracker = Tracker::new(&context);
         investigator.investigate(&context, &mut tracker).unwrap();
 
-        assert!(tracker.has_found_downstream_functions_with_names(&["visitEighthFloor2"]));
+        assert!(tracker.has_found_functions_with_names(&["visitEighthFloor2"]));
     }
 
     #[test]
@@ -92,7 +91,7 @@ mod callgraph_tests {
         let mut tracker = Tracker::new(&context);
         investigator.investigate(&context, &mut tracker).unwrap();
 
-        assert!(tracker.has_found_downstream_functions_with_names(&["visitEighthFloor3"]));
+        assert!(tracker.has_found_functions_with_names(&["visitEighthFloor3"]));
     }
 
     #[test]
@@ -109,14 +108,14 @@ mod callgraph_tests {
         let mut tracker = Tracker::new(&context);
         investigator.investigate(&context, &mut tracker).unwrap();
 
-        assert!(tracker.has_found_downstream_functions_with_names(&["recurse"]));
+        assert!(tracker.has_found_functions_with_names(&["recurse"]));
     }
 
     struct Tracker<'a> {
         context: &'a WorkspaceContext,
         entry_points: Vec<(String, usize, String)>,
-        downstream_func_definitions_names: Vec<String>,
-        downstream_modifier_definitions_names: Vec<String>,
+        func_definitions_names: Vec<String>,
+        modifier_definitions_names: Vec<String>,
     }
 
     impl<'a> Tracker<'a> {
@@ -124,17 +123,15 @@ mod callgraph_tests {
             Tracker {
                 context,
                 entry_points: vec![],
-                downstream_func_definitions_names: vec![],
-                downstream_modifier_definitions_names: vec![],
+                func_definitions_names: vec![],
+                modifier_definitions_names: vec![],
             }
         }
 
         // downstream functions
-        fn has_found_downstream_functions_with_names(&self, name: &[&str]) -> bool {
-            name.iter().all(|&n| {
-                self.downstream_func_definitions_names
-                    .contains(&n.to_string())
-            })
+        fn has_found_functions_with_names(&self, name: &[&str]) -> bool {
+            name.iter()
+                .all(|&n| self.func_definitions_names.contains(&n.to_string()))
         }
     }
 
@@ -144,20 +141,18 @@ mod callgraph_tests {
                 .push(self.context.get_node_sort_key_pure(node));
             Ok(())
         }
-        fn visit_downstream_function_definition(
+        fn visit_function_definition(
             &mut self,
             node: &crate::ast::FunctionDefinition,
         ) -> eyre::Result<()> {
-            self.downstream_func_definitions_names
-                .push(node.name.to_string());
+            self.func_definitions_names.push(node.name.to_string());
             Ok(())
         }
-        fn visit_downstream_modifier_definition(
+        fn visit_modifier_definition(
             &mut self,
             node: &crate::ast::ModifierDefinition,
         ) -> eyre::Result<()> {
-            self.downstream_modifier_definitions_names
-                .push(node.name.to_string());
+            self.modifier_definitions_names.push(node.name.to_string());
             Ok(())
         }
     }

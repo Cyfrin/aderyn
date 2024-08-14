@@ -8,8 +8,6 @@ use crate::{
     },
 };
 
-use super::traits::Transpose;
-
 #[derive(Debug)]
 pub struct WorkspaceCallGraph {
     pub graph: CallGraph,
@@ -118,17 +116,5 @@ fn create_connection_if_not_exsits(from_id: NodeID, to_id: NodeID, graph: &mut C
         hash_map::Entry::Vacant(v) => {
             v.insert(vec![to_id]);
         }
-    }
-}
-
-impl Transpose for CallGraph {
-    fn reverse(&self) -> Self {
-        let mut reversed_callgraph = CallGraph::default();
-        for (from_id, tos) in self {
-            for to_id in tos {
-                create_connection_if_not_exsits(*to_id, *from_id, &mut reversed_callgraph);
-            }
-        }
-        reversed_callgraph
     }
 }

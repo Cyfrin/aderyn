@@ -19,13 +19,13 @@ use crate::{
 use super::StandardInvestigatorVisitor;
 
 pub struct StandardInvestigator {
-    /// Ad-hoc Nodes that we would like to explore downstream from.
+    /// Ad-hoc Nodes that we would like to explore from.
     pub entry_points: Vec<NodeID>,
 
     /// Surface points are calculated based on the entry points (input)
     /// and only consists of [`crate::ast::FunctionDefinition`] and [`crate::ast::ModifierDefinition`]
     /// These are nodes that are the *actual* starting points for traversal in the graph
-    pub forward_surface_points: Vec<NodeID>,
+    pub surface_points: Vec<NodeID>,
 }
 
 impl StandardInvestigator {
@@ -35,7 +35,7 @@ impl StandardInvestigator {
         nodes: &[&ASTNode],
     ) -> super::Result<StandardInvestigator> {
         let mut entry_points = vec![];
-        let mut forward_surface_points = vec![];
+        let mut surface_points = vec![];
 
         // Construct entry points
         for &node in nodes {
@@ -45,17 +45,17 @@ impl StandardInvestigator {
             entry_points.push(node_id);
         }
 
-        // Construct forward surface points
+        // Construct surface points
         for &node in nodes {
             let referenced_declarations = ExtractReferencedDeclarations::from(node).extracted;
 
             for declared_id in referenced_declarations {
                 if let Some(node) = context.nodes.get(&declared_id) {
                     if node.node_type() == NodeType::ModifierDefinition {
-                        forward_surface_points.push(declared_id);
+                        surface_points.push(declared_id);
                     } else if let ASTNode::FunctionDefinition(function_definition) = node {
                         if function_definition.implemented {
-                            forward_surface_points.push(declared_id);
+                            surface_points.push(declared_id);
                         }
                     }
                 }
@@ -64,7 +64,7 @@ impl StandardInvestigator {
 
         Ok(StandardInvestigator {
             entry_points,
-            forward_surface_points,
+            surface_points,
         })
     }
 
@@ -84,13 +84,9 @@ impl StandardInvestigator {
         self._investigate(
             context,
             context
-                .forward_callgraph
+                .callgraph
                 .as_ref()
-                .ok_or(super::Error::ForwardCallgraphNotAvailable)?,
-            context
-                .reverse_callgraph
-                .as_ref()
-                .ok_or(super::Error::BackwardCallgraphNotAvailable)?,
+                .ok_or(super::Error::CallgraphNotAvailable)?,
             visitor,
         )
     }
@@ -102,8 +98,7 @@ impl StandardInvestigator {
     fn _investigate<T>(
         &self,
         context: &WorkspaceContext,
-        forward_callgraph: &WorkspaceCallGraph,
-        reverse_callgraph: &WorkspaceCallGraph,
+        callgraph: &WorkspaceCallGraph,
         visitor: &mut T,
     ) -> super::Result<()>
     where
@@ -115,15 +110,15 @@ impl StandardInvestigator {
         }
 
         // Keep track of visited node IDs during DFS from surface nodes
-        let mut visited_downstream = HashSet::new();
+        let mut visited = HashSet::new();
 
         // Visit the subgraph starting from surface points
-        for surface_point_id in &self.forward_surface_points {
+        for surface_point_id in &self.surface_points {
             self.dfs_and_visit_subgraph(
                 *surface_point_id,
-                &mut visited_downstream,
+                &mut visited,
                 context,
-                forward_callgraph,
+                callgraph,
                 visitor,
                 None,
             )?;
@@ -132,7 +127,7 @@ impl StandardInvestigator {
         // Collect already visited nodes so that we don't repeat visit calls on them
         // while traversing through side effect nodes.
         let mut blacklisted: HashSet<i64> = HashSet::new();
-        blacklisted.extend(visited_downstream.iter());
+        blacklisted.extend(visited.iter());
         blacklisted.extend(self.entry_points.iter());
 
         Ok(())
@@ -198,13 +193,13 @@ impl StandardInvestigator {
 
             if let ASTNode::FunctionDefinition(function) = node {
                 visitor
-                    .visit_downstream_function_definition(function)
-                    .map_err(|_| super::Error::DownstreamFunctionDefinitionVisitError)?;
+                    .visit_function_definition(function)
+                    .map_err(|_| super::Error::FunctionDefinitionVisitError)?;
             }
             if let ASTNode::ModifierDefinition(modifier) = node {
                 visitor
-                    .visit_downstream_modifier_definition(modifier)
-                    .map_err(|_| super::Error::DownstreamModifierDefinitionVisitError)?;
+                    .visit_modifier_definition(modifier)
+                    .map_err(|_| super::Error::ModifierDefinitionVisitError)?;
             }
         }
 
