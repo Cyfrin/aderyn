@@ -209,3 +209,7 @@ This project exists thanks to all the people who [contribute](/CONTRIBUTING.md).
 [license-shield]: https://img.shields.io/github/license/cyfrin/aderyn?logoColor=%23fff&color=blue
 [license-url]: https://github.com/cyfrin/aderyn/blob/master/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=cyfrin/aderyn&type=Date)](https://star-history.com/#cyfrin/aderyn&Date)
