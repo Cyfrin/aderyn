@@ -3,7 +3,7 @@
 #[cfg(test)]
 mod callgraph_tests {
     use crate::context::{
-        callgraph::callgraph::{CallGraph, CallGraphVisitor},
+        callgraph::graph::{CallGraph, CallGraphVisitor},
         workspace_context::{ASTNode, WorkspaceContext},
     };
 

@@ -67,7 +67,7 @@ mod contract_eth_helper {
         ast::{ASTNode, ContractDefinition, StateMutability, Visibility},
         context::{
             browser::ExtractFunctionDefinitions,
-            callgraph::callgraph::{CallGraph, CallGraphVisitor},
+            callgraph::graph::{CallGraph, CallGraphVisitor},
             workspace_context::WorkspaceContext,
         },
         detect::helpers,

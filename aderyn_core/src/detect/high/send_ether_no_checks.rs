@@ -4,7 +4,7 @@ use std::error::Error;
 use crate::ast::NodeID;
 
 use crate::capture;
-use crate::context::callgraph::callgraph::{CallGraph, CallGraphVisitor};
+use crate::context::callgraph::graph::{CallGraph, CallGraphVisitor};
 use crate::context::workspace_context::ASTNode;
 use crate::detect::detector::IssueDetectorNamePool;
 use crate::detect::helpers;

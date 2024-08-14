@@ -8,7 +8,7 @@ use crate::capture;
 use crate::context::browser::{
     ExtractInlineAssemblys, ExtractPragmaDirectives, GetClosestAncestorOfTypeX,
 };
-use crate::context::callgraph::callgraph::{CallGraph, CallGraphVisitor};
+use crate::context::callgraph::graph::{CallGraph, CallGraphVisitor};
 use crate::detect::detector::IssueDetectorNamePool;
 use crate::detect::helpers::{self, pragma_directive_to_semver};
 use crate::{

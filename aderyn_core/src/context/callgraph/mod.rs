@@ -1,5 +1,5 @@
 mod callgraph_tests;
-pub mod callgraph;
+pub mod graph;
 mod workspace_callgraph;
 
 pub use workspace_callgraph::*;

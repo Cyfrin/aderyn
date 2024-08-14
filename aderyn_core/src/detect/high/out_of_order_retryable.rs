@@ -5,7 +5,7 @@ use crate::ast::{Expression, MemberAccess, NodeID};
 
 use crate::capture;
 use crate::context::browser::ExtractFunctionCalls;
-use crate::context::callgraph::callgraph::{CallGraph, CallGraphVisitor};
+use crate::context::callgraph::graph::{CallGraph, CallGraphVisitor};
 use crate::detect::detector::IssueDetectorNamePool;
 use crate::detect::helpers;
 use crate::{
