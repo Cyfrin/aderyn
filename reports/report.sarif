@@ -1762,6 +1762,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/IncorrectERC721.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 4076
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/PublicVariableReadInExternalContext.sol"
                 },
                 "region": {
@@ -3106,6 +3117,103 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/IncorrectERC721.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 433
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC721.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 551
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC721.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 696
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC721.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 1092
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC721.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 1231
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC721.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 1484
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC721.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 1684
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC721.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 2086
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Incorrect return values for ERC721 functions. A contract compiled with Solidity > 0.4.22 interacting with these functions will fail to execute them, as the return value is missing. Set the appropriate return values and types for the defined ERC721 functions."
+          },
+          "ruleId": "incorrect-erc721-interface"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/IncorrectERC20.sol"
                 },
                 "region": {
@@ -3720,6 +3828,17 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/IncorrectERC20.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC721.sol"
                 },
                 "region": {
                   "byteLength": 23,
@@ -5152,6 +5271,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/IncorrectERC721.sol"
+                },
+                "region": {
+                  "byteLength": 115,
+                  "byteOffset": 3122
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/TestERC20.sol"
                 },
                 "region": {
@@ -5618,6 +5748,17 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/IncorrectERC20.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC721.sol"
                 },
                 "region": {
                   "byteLength": 23,
