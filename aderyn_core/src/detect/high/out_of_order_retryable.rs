@@ -28,8 +28,7 @@ impl IssueDetector for OutOfOrderRetryableDetector {
             let mut tracker = OutOfOrderRetryableTracker {
                 number_of_retry_calls: 0,
             };
-            let callgraph =
-                CallGraph::new(context, &[&(func.into())], CallGraphDirection::Inward)?;
+            let callgraph = CallGraph::new(context, &[&(func.into())], CallGraphDirection::Inward)?;
             callgraph.investigate(context, &mut tracker)?;
             if tracker.number_of_retry_calls >= 2 {
                 capture!(self, context, func);
