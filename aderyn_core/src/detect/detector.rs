@@ -81,6 +81,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<TxOriginUsedForAuthDetector>::default(),
         Box::<MsgValueUsedInLoopDetector>::default(),
         Box::<ContractLocksEtherDetector>::default(),
+        Box::<IncorrectERC721InterfaceDetector>::default(),
         Box::<IncorrectERC20InterfaceDetector>::default(),
         Box::<ReturnBombDetector>::default(),
         Box::<OutOfOrderRetryableDetector>::default(),
@@ -98,6 +99,7 @@ pub fn get_all_detectors_names() -> Vec<String> {
 #[strum(serialize_all = "kebab-case")]
 pub(crate) enum IssueDetectorNamePool {
     BuiltinSymbolShadow,
+    IncorrectERC721Interface,
     FunctionInitializingState,
     DelegateCallInLoop,
     CentralizationRisk,
@@ -178,6 +180,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
     match detector_name {
         IssueDetectorNamePool::BuiltinSymbolShadow => {
             Some(Box::<BuiltinSymbolShadowDetector>::default())
+        }
+        IssueDetectorNamePool::IncorrectERC721Interface => {
+            Some(Box::<IncorrectERC721InterfaceDetector>::default())
         }
         IssueDetectorNamePool::OutOfOrderRetryable => {
             Some(Box::<OutOfOrderRetryableDetector>::default())
