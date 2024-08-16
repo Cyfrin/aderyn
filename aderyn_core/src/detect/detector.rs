@@ -1,3 +1,4 @@
+use incorrect_erc20_interface::IncorrectERC20InterfaceDetector;
 use serde::{Deserialize, Serialize};
 use strum::{Display, EnumCount, EnumIter, EnumString};
 
@@ -81,7 +82,10 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<MsgValueUsedInLoopDetector>::default(),
         Box::<ContractLocksEtherDetector>::default(),
         Box::<LocalVariableShadowingDetector>::default(),
+        Box::<IncorrectERC20InterfaceDetector>::default(),
         Box::<ReturnBombDetector>::default(),
+        Box::<OutOfOrderRetryableDetector>::default(),
+        Box::<FunctionInitializingStateDetector>::default(),
     ]
 }
 
@@ -93,6 +97,7 @@ pub fn get_all_detectors_names() -> Vec<String> {
 #[derive(Debug, PartialEq, EnumString, Display)]
 #[strum(serialize_all = "kebab-case")]
 pub(crate) enum IssueDetectorNamePool {
+    FunctionInitializingState,
     DelegateCallInLoop,
     CentralizationRisk,
     SolmateSafeTransferLib,
@@ -159,7 +164,9 @@ pub(crate) enum IssueDetectorNamePool {
     MsgValueInLoop,
     ContractLocksEther,
     LocalVariableShadowing,
+    IncorrectERC20Interface,
     ReturnBomb,
+    OutOfOrderRetryable,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -171,6 +178,15 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
     match detector_name {
         IssueDetectorNamePool::LocalVariableShadowing => {
             Some(Box::<LocalVariableShadowingDetector>::default())
+        }
+        IssueDetectorNamePool::OutOfOrderRetryable => {
+            Some(Box::<OutOfOrderRetryableDetector>::default())
+        }
+        IssueDetectorNamePool::FunctionInitializingState => {
+            Some(Box::<FunctionInitializingStateDetector>::default())
+        }
+        IssueDetectorNamePool::IncorrectERC20Interface => {
+            Some(Box::<IncorrectERC20InterfaceDetector>::default())
         }
         IssueDetectorNamePool::ReturnBomb => Some(Box::<ReturnBombDetector>::default()),
         IssueDetectorNamePool::UnusedStateVariable => {
