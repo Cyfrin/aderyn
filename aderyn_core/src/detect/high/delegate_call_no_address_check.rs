@@ -5,7 +5,7 @@ use crate::ast::NodeID;
 
 use crate::capture;
 use crate::context::investigator::{
-    StandardInvestigationStyle, StandardInvestigator, StandardInvestigatorVisitor,
+    CallGraphDirection, CallGraph, CallGraphVisitor,
 };
 use crate::detect::detector::IssueDetectorNamePool;
 use crate::detect::helpers;
@@ -30,10 +30,10 @@ impl IssueDetector for DelegateCallOnUncheckedAddressDetector {
                 has_delegate_call_on_non_state_variable_address: false,
                 context,
             };
-            let investigator = StandardInvestigator::new(
+            let investigator = CallGraph::new(
                 context,
                 &[&(func.into())],
-                StandardInvestigationStyle::Downstream,
+                CallGraphDirection::Downstream,
             )?;
             investigator.investigate(context, &mut tracker)?;
 
@@ -74,7 +74,7 @@ struct DelegateCallNoAddressChecksTracker<'a> {
     context: &'a WorkspaceContext,
 }
 
-impl<'a> StandardInvestigatorVisitor for DelegateCallNoAddressChecksTracker<'a> {
+impl<'a> CallGraphVisitor for DelegateCallNoAddressChecksTracker<'a> {
     fn visit_any(&mut self, node: &crate::context::workspace_context::ASTNode) -> eyre::Result<()> {
         if !self.has_address_checks && helpers::has_binary_checks_on_some_address(node) {
             self.has_address_checks = true;

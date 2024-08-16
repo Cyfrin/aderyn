@@ -156,11 +156,11 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
         context.set_ignore_lines_stats(ignore_line_stats);
 
         let forward_callgraph = WorkspaceCallGraph::from_context(context).unwrap();
-        let reverse_callgraph = WorkspaceCallGraph {
+        let outward_callgraph = WorkspaceCallGraph {
             graph: forward_callgraph.graph.reverse(),
         };
         context.forward_callgraph = Some(forward_callgraph);
-        context.reverse_callgraph = Some(reverse_callgraph);
+        context.outward_callgraph = Some(outward_callgraph);
     }
     // Using the source path, calculate the sloc
 

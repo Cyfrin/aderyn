@@ -1,71 +1,59 @@
 //! Trackers can implement the following traits to interact with investigators
 //!
 //! NOTE
-//! Upstream and downstream here is relative to [`super::StandardInvestigator::entry_points`]
-//! which is initialized with [`super::StandardInvestigator::new`] function.
+//! Outward and inward here is relative to [`super::CallGraph::entry_points`]
+//! which is initialized with [`super::CallGraph::new`] function.
 
 use crate::{
     ast::{FunctionDefinition, ModifierDefinition},
     context::workspace_context::ASTNode,
 };
 
-/// Use with [`super::StandardInvestigator`]
-pub trait StandardInvestigatorVisitor {
+/// Use with [`super::CallGraph`]
+pub trait CallGraphVisitor {
     /// Shift all logic to tracker otherwise, you would track state at 2 different places
     /// One at the tracker level, and other at the application level. Instead, we must
     /// contain all of the tracking logic in the tracker. Therefore, visit entry point
     /// is essential because the tracker can get to take a look at not just the
-    /// downstream functions and modifiers, but also the entry points that have invoked it.
+    /// inward functions and modifiers, but also the entry points that have invoked it.
     fn visit_entry_point(&mut self, node: &ASTNode) -> eyre::Result<()> {
         self.visit_any(node)
     }
 
-    /// Meant to be invoked while traversing [`crate::context::workspace_context::WorkspaceContext::forward_callgraph`]
-    fn visit_downstream_function_definition(
+    /// Meant to be invoked while traversing [`crate::context::workspace_context::WorkspaceContext::inward_callgraph`]
+    fn visit_inward_function_definition(&mut self, node: &FunctionDefinition) -> eyre::Result<()> {
+        self.visit_any(&(node.into()))
+    }
+
+    /// Meant to be invoked while traversing [`crate::context::workspace_context::WorkspaceContext::outward_callgraph`]
+    fn visit_outward_function_definition(&mut self, node: &FunctionDefinition) -> eyre::Result<()> {
+        self.visit_any(&(node.into()))
+    }
+
+    /// Meant to be invoked while traversing [`crate::context::workspace_context::WorkspaceContext::inward_callgraph`]
+    fn visit_inward_modifier_definition(&mut self, node: &ModifierDefinition) -> eyre::Result<()> {
+        self.visit_any(&(node.into()))
+    }
+
+    /// Meant to be invoked while traversing [`crate::context::workspace_context::WorkspaceContext::outward_callgraph`]
+    fn visit_outward_modifier_definition(&mut self, node: &ModifierDefinition) -> eyre::Result<()> {
+        self.visit_any(&(node.into()))
+    }
+
+    /// Read as "outward's inward-side-effect" function definition
+    /// These are function definitions that are inward from the outward nodes
+    /// but are themselves neither outward nor inward to the entry points
+    fn visit_outward_side_effect_function_definition(
         &mut self,
         node: &FunctionDefinition,
     ) -> eyre::Result<()> {
         self.visit_any(&(node.into()))
     }
 
-    /// Meant to be invoked while traversing [`crate::context::workspace_context::WorkspaceContext::reverse_callgraph`]
-    fn visit_upstream_function_definition(
-        &mut self,
-        node: &FunctionDefinition,
-    ) -> eyre::Result<()> {
-        self.visit_any(&(node.into()))
-    }
-
-    /// Meant to be invoked while traversing [`crate::context::workspace_context::WorkspaceContext::forward_callgraph`]
-    fn visit_downstream_modifier_definition(
-        &mut self,
-        node: &ModifierDefinition,
-    ) -> eyre::Result<()> {
-        self.visit_any(&(node.into()))
-    }
-
-    /// Meant to be invoked while traversing [`crate::context::workspace_context::WorkspaceContext::reverse_callgraph`]
-    fn visit_upstream_modifier_definition(
-        &mut self,
-        node: &ModifierDefinition,
-    ) -> eyre::Result<()> {
-        self.visit_any(&(node.into()))
-    }
-
-    /// Read as "upstream's downstream-side-effect" function definition
-    /// These are function definitions that are downstream from the upstream nodes
-    /// but are themselves neither upstream nor downstream to the entry points
-    fn visit_upstream_side_effect_function_definition(
-        &mut self,
-        node: &FunctionDefinition,
-    ) -> eyre::Result<()> {
-        self.visit_any(&(node.into()))
-    }
-
-    /// Read as "upstream's downstream-side-effect" modifier definition
-    /// These are modifier definitions that are downstream from the upstream nodes
-    /// but are themselves neither upstream nor downstream to the entry points
-    fn visit_upstream_side_effect_modifier_definition(
+    /// Read as "outward's inward-side-effect" modifier definition
+    /// These are modifier definitions that are inward from the outward nodes
+    /// but are themselves neither outward nor inward to the entry points
+    fn visit_outward_side_effect_modifier_definition(
         &mut self,
         node: &ModifierDefinition,
     ) -> eyre::Result<()> {

@@ -5,15 +5,13 @@ mod callgraph_tests {
     use crate::{
         ast::{FunctionDefinition, ModifierDefinition},
         context::{
-            investigator::{
-                StandardInvestigationStyle, StandardInvestigator, StandardInvestigatorVisitor,
-            },
+            investigator::{CallGraph, CallGraphDirection, CallGraphVisitor},
             workspace_context::{ASTNode, WorkspaceContext},
         },
     };
 
     use serial_test::serial;
-    use StandardInvestigationStyle::*;
+    use CallGraphDirection::*;
 
     fn get_function_by_name(context: &WorkspaceContext, name: &str) -> ASTNode {
         ASTNode::from(
@@ -41,51 +39,49 @@ mod callgraph_tests {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/CallGraphTests.sol",
         );
-        assert!(context.forward_callgraph.is_some());
-        assert!(context.reverse_callgraph.is_some());
+        assert!(context.inward_callgraph.is_some());
+        assert!(context.outward_callgraph.is_some());
     }
 
     #[test]
     #[serial]
-    fn test_tower1_modifier_has_no_downstream() {
+    fn test_tower1_modifier_has_no_inward() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/CallGraphTests.sol",
         );
 
         let visit_eighth_floor1 = get_function_by_name(&context, "visitEighthFloor1");
 
-        let investigator =
-            StandardInvestigator::new(&context, &[&visit_eighth_floor1], Downstream).unwrap();
+        let investigator = CallGraph::new(&context, &[&visit_eighth_floor1], Inward).unwrap();
 
         let mut tracker = Tracker::new(&context);
         investigator.investigate(&context, &mut tracker).unwrap();
 
-        assert!(tracker.downstream_func_definitions_names.is_empty());
-        assert!(tracker.downstream_modifier_definitions_names.is_empty());
+        assert!(tracker.inward_func_definitions_names.is_empty());
+        assert!(tracker.inward_modifier_definitions_names.is_empty());
     }
 
     #[test]
     #[serial]
-    fn test_tower1_modifier_has_upstream() {
+    fn test_tower1_modifier_has_outward() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/CallGraphTests.sol",
         );
 
         let visit_eighth_floor1 = get_function_by_name(&context, "visitEighthFloor1");
 
-        let investigator =
-            StandardInvestigator::new(&context, &[&visit_eighth_floor1], Upstream).unwrap();
+        let investigator = CallGraph::new(&context, &[&visit_eighth_floor1], Outward).unwrap();
 
         let mut tracker = Tracker::new(&context);
         investigator.investigate(&context, &mut tracker).unwrap();
 
-        assert!(tracker.has_found_upstream_modifiers_with_names(&["passThroughNinthFloor1"]));
-        assert!(tracker.has_found_upstream_functions_with_names(&["enterTenthFloor1"]));
+        assert!(tracker.has_found_outward_modifiers_with_names(&["passThroughNinthFloor1"]));
+        assert!(tracker.has_found_outward_functions_with_names(&["enterTenthFloor1"]));
     }
 
     #[test]
     #[serial]
-    fn test_tower2_modifier_has_both_upstream_and_downstream() {
+    fn test_tower2_modifier_has_both_outward_and_inward() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/CallGraphTests.sol",
         );
@@ -94,18 +90,18 @@ mod callgraph_tests {
             get_modifier_definition_by_name(&context, "passThroughNinthFloor2");
 
         let investigator =
-            StandardInvestigator::new(&context, &[&pass_through_ninth_floor2], BothWays).unwrap();
+            CallGraph::new(&context, &[&pass_through_ninth_floor2], BothWays).unwrap();
 
         let mut tracker = Tracker::new(&context);
         investigator.investigate(&context, &mut tracker).unwrap();
 
-        assert!(tracker.has_found_downstream_functions_with_names(&["visitEighthFloor2"]));
-        assert!(tracker.has_found_upstream_functions_with_names(&["enterTenthFloor2"]));
+        assert!(tracker.has_found_inward_functions_with_names(&["visitEighthFloor2"]));
+        assert!(tracker.has_found_outward_functions_with_names(&["enterTenthFloor2"]));
     }
 
     #[test]
     #[serial]
-    fn test_tower3_modifier_has_both_upstream_and_downstream() {
+    fn test_tower3_modifier_has_both_outward_and_inward() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/CallGraphTests.sol",
         );
@@ -114,62 +110,61 @@ mod callgraph_tests {
             get_modifier_definition_by_name(&context, "passThroughNinthFloor3");
 
         let investigator =
-            StandardInvestigator::new(&context, &[&pass_through_ninth_floor3], BothWays).unwrap();
+            CallGraph::new(&context, &[&pass_through_ninth_floor3], BothWays).unwrap();
 
         let mut tracker = Tracker::new(&context);
         investigator.investigate(&context, &mut tracker).unwrap();
 
-        assert!(tracker.has_found_upstream_functions_with_names(&["enterTenthFloor3"]));
-        assert!(tracker.has_found_downstream_functions_with_names(&["visitEighthFloor3"]));
-        assert!(tracker.has_not_found_any_upstream_functions_with_name("visitSeventhFloor3"));
-        assert!(tracker.has_found_upstream_side_effect_functions_with_name(&["visitSeventhFloor3"]));
+        assert!(tracker.has_found_outward_functions_with_names(&["enterTenthFloor3"]));
+        assert!(tracker.has_found_inward_functions_with_names(&["visitEighthFloor3"]));
+        assert!(tracker.has_not_found_any_outward_functions_with_name("visitSeventhFloor3"));
+        assert!(tracker.has_found_outward_side_effect_functions_with_name(&["visitSeventhFloor3"]));
     }
 
     #[test]
     #[serial]
-    fn test_tower3_functions_has_upstream() {
+    fn test_tower3_functions_has_outward() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/CallGraphTests.sol",
         );
 
         let visit_eighth_floor3 = get_function_by_name(&context, "visitSeventhFloor3");
 
-        let investigator =
-            StandardInvestigator::new(&context, &[&visit_eighth_floor3], Upstream).unwrap();
+        let investigator = CallGraph::new(&context, &[&visit_eighth_floor3], Outward).unwrap();
 
         let mut tracker = Tracker::new(&context);
         investigator.investigate(&context, &mut tracker).unwrap();
 
-        assert!(tracker.has_found_upstream_functions_with_names(&["enterTenthFloor3"]));
+        assert!(tracker.has_found_outward_functions_with_names(&["enterTenthFloor3"]));
     }
 
     #[test]
     #[serial]
-    fn test_tower4_functions_has_upstream_and_downstream() {
+    fn test_tower4_functions_has_outward_and_inward() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/CallGraphTests.sol",
         );
 
         let recurse = get_function_by_name(&context, "recurse");
 
-        let investigator = StandardInvestigator::new(&context, &[&recurse], BothWays).unwrap();
+        let investigator = CallGraph::new(&context, &[&recurse], BothWays).unwrap();
 
         let mut tracker = Tracker::new(&context);
         investigator.investigate(&context, &mut tracker).unwrap();
 
-        assert!(tracker.has_found_upstream_functions_with_names(&["recurse"]));
-        assert!(tracker.has_found_downstream_functions_with_names(&["recurse"]));
+        assert!(tracker.has_found_outward_functions_with_names(&["recurse"]));
+        assert!(tracker.has_found_inward_functions_with_names(&["recurse"]));
     }
 
     struct Tracker<'a> {
         context: &'a WorkspaceContext,
         entry_points: Vec<(String, usize, String)>,
-        downstream_func_definitions_names: Vec<String>,
-        upstream_func_definitions_names: Vec<String>,
-        downstream_modifier_definitions_names: Vec<String>,
-        upstream_modifier_definitions_names: Vec<String>,
-        upstream_side_effects_func_definitions_names: Vec<String>,
-        upstream_side_effects_modifier_definitions_names: Vec<String>,
+        inward_func_definitions_names: Vec<String>,
+        outward_func_definitions_names: Vec<String>,
+        inward_modifier_definitions_names: Vec<String>,
+        outward_modifier_definitions_names: Vec<String>,
+        outward_side_effects_func_definitions_names: Vec<String>,
+        outward_side_effects_modifier_definitions_names: Vec<String>,
     }
 
     impl<'a> Tracker<'a> {
@@ -177,105 +172,101 @@ mod callgraph_tests {
             Tracker {
                 context,
                 entry_points: vec![],
-                downstream_func_definitions_names: vec![],
-                downstream_modifier_definitions_names: vec![],
-                upstream_func_definitions_names: vec![],
-                upstream_modifier_definitions_names: vec![],
-                upstream_side_effects_func_definitions_names: vec![],
-                upstream_side_effects_modifier_definitions_names: vec![],
+                inward_func_definitions_names: vec![],
+                inward_modifier_definitions_names: vec![],
+                outward_func_definitions_names: vec![],
+                outward_modifier_definitions_names: vec![],
+                outward_side_effects_func_definitions_names: vec![],
+                outward_side_effects_modifier_definitions_names: vec![],
             }
         }
 
-        // downstream functions
-        fn has_found_downstream_functions_with_names(&self, name: &[&str]) -> bool {
-            name.iter().all(|&n| {
-                self.downstream_func_definitions_names
-                    .contains(&n.to_string())
-            })
+        // inward functions
+        fn has_found_inward_functions_with_names(&self, name: &[&str]) -> bool {
+            name.iter()
+                .all(|&n| self.inward_func_definitions_names.contains(&n.to_string()))
         }
 
-        // upstream functions
-        fn has_found_upstream_functions_with_names(&self, name: &[&str]) -> bool {
-            name.iter().all(|&n| {
-                self.upstream_func_definitions_names
-                    .contains(&n.to_string())
-            })
+        // outward functions
+        fn has_found_outward_functions_with_names(&self, name: &[&str]) -> bool {
+            name.iter()
+                .all(|&n| self.outward_func_definitions_names.contains(&n.to_string()))
         }
 
-        fn has_not_found_any_upstream_functions_with_name(&self, name: &str) -> bool {
+        fn has_not_found_any_outward_functions_with_name(&self, name: &str) -> bool {
             !self
-                .upstream_func_definitions_names
+                .outward_func_definitions_names
                 .contains(&name.to_string())
         }
 
-        // upstream modifiers
-        fn has_found_upstream_modifiers_with_names(&self, name: &[&str]) -> bool {
+        // outward modifiers
+        fn has_found_outward_modifiers_with_names(&self, name: &[&str]) -> bool {
             name.iter().all(|&n| {
-                self.upstream_modifier_definitions_names
+                self.outward_modifier_definitions_names
                     .contains(&n.to_string())
             })
         }
 
-        // upstream side effects
-        fn has_found_upstream_side_effect_functions_with_name(&self, name: &[&str]) -> bool {
+        // outward side effects
+        fn has_found_outward_side_effect_functions_with_name(&self, name: &[&str]) -> bool {
             name.iter().all(|&n| {
-                self.upstream_side_effects_func_definitions_names
+                self.outward_side_effects_func_definitions_names
                     .contains(&n.to_string())
             })
         }
     }
 
-    impl StandardInvestigatorVisitor for Tracker<'_> {
+    impl CallGraphVisitor for Tracker<'_> {
         fn visit_entry_point(&mut self, node: &ASTNode) -> eyre::Result<()> {
             self.entry_points
                 .push(self.context.get_node_sort_key_pure(node));
             Ok(())
         }
-        fn visit_downstream_function_definition(
+        fn visit_inward_function_definition(
             &mut self,
             node: &crate::ast::FunctionDefinition,
         ) -> eyre::Result<()> {
-            self.downstream_func_definitions_names
+            self.inward_func_definitions_names
                 .push(node.name.to_string());
             Ok(())
         }
-        fn visit_downstream_modifier_definition(
+        fn visit_inward_modifier_definition(
             &mut self,
             node: &crate::ast::ModifierDefinition,
         ) -> eyre::Result<()> {
-            self.downstream_modifier_definitions_names
+            self.inward_modifier_definitions_names
                 .push(node.name.to_string());
             Ok(())
         }
-        fn visit_upstream_function_definition(
+        fn visit_outward_function_definition(
             &mut self,
             node: &crate::ast::FunctionDefinition,
         ) -> eyre::Result<()> {
-            self.upstream_func_definitions_names
+            self.outward_func_definitions_names
                 .push(node.name.to_string());
             Ok(())
         }
-        fn visit_upstream_modifier_definition(
+        fn visit_outward_modifier_definition(
             &mut self,
             node: &crate::ast::ModifierDefinition,
         ) -> eyre::Result<()> {
-            self.upstream_modifier_definitions_names
+            self.outward_modifier_definitions_names
                 .push(node.name.to_string());
             Ok(())
         }
-        fn visit_upstream_side_effect_function_definition(
+        fn visit_outward_side_effect_function_definition(
             &mut self,
             node: &FunctionDefinition,
         ) -> eyre::Result<()> {
-            self.upstream_side_effects_func_definitions_names
+            self.outward_side_effects_func_definitions_names
                 .push(node.name.to_string());
             Ok(())
         }
-        fn visit_upstream_side_effect_modifier_definition(
+        fn visit_outward_side_effect_modifier_definition(
             &mut self,
             node: &ModifierDefinition,
         ) -> eyre::Result<()> {
-            self.upstream_side_effects_modifier_definitions_names
+            self.outward_side_effects_modifier_definitions_names
                 .push(node.name.to_string());
             Ok(())
         }

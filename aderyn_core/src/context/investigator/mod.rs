@@ -17,17 +17,17 @@ pub enum Error {
     Custom(String),
 
     // region: -- standard::* errors
-    ForwardCallgraphNotAvailable,
-    BackwardCallgraphNotAvailable,
+    InwardCallgraphNotAvailable,
+    OutwardCallgraphNotAvailable,
     UnidentifiedEntryPointNode(ASTNode),
     InvalidEntryPointId(NodeID),
     EntryPointVisitError,
-    UpstreamFunctionDefinitionVisitError,
-    UpstreamModifierDefinitionVisitError,
-    DownstreamFunctionDefinitionVisitError,
-    DownstreamModifierDefinitionVisitError,
-    UpstreamSideEffectFunctionDefinitionVisitError,
-    UpstreamSideEffectModifierDefinitionVisitError,
+    OutwardFunctionDefinitionVisitError,
+    OutwardModifierDefinitionVisitError,
+    InwardFunctionDefinitionVisitError,
+    InwardModifierDefinitionVisitError,
+    OutwardSideEffectFunctionDefinitionVisitError,
+    OutwardSideEffectModifierDefinitionVisitError,
     // endregion
 }
 

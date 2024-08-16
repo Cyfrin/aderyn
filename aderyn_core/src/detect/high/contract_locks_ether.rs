@@ -111,10 +111,10 @@ mod contract_eth_helper {
 
                     let mut tracker = EthWithdrawalAllowerTracker::default();
 
-                    let investigator = StandardInvestigator::new(
+                    let investigator = CallGraph::new(
                         context,
                         funcs.iter().collect::<Vec<_>>().as_slice(),
-                        StandardInvestigationStyle::Downstream,
+                        CallGraphDirection::Downstream,
                     )
                     .ok()?;
 
@@ -137,7 +137,7 @@ mod contract_eth_helper {
         has_calls_that_sends_native_eth: bool,
     }
 
-    impl StandardInvestigatorVisitor for EthWithdrawalAllowerTracker {
+    impl CallGraphVisitor for EthWithdrawalAllowerTracker {
         fn visit_any(&mut self, ast_node: &ASTNode) -> eyre::Result<()> {
             if !self.has_calls_that_sends_native_eth
                 && helpers::has_calls_that_sends_native_eth(ast_node)

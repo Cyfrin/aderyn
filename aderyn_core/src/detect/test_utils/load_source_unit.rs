@@ -92,12 +92,12 @@ pub fn load_solidity_source_unit(filepath: &str) -> WorkspaceContext {
 }
 
 fn load_callgraphs(context: &mut WorkspaceContext) {
-    let forward_callgraph = WorkspaceCallGraph::from_context(context).unwrap();
-    let reverse_callgraph = WorkspaceCallGraph {
-        graph: forward_callgraph.graph.reverse(),
+    let inward_callgraph = WorkspaceCallGraph::from_context(context).unwrap();
+    let outward_callgraph = WorkspaceCallGraph {
+        graph: inward_callgraph.graph.reverse(),
     };
-    context.forward_callgraph = Some(forward_callgraph);
-    context.reverse_callgraph = Some(reverse_callgraph);
+    context.inward_callgraph = Some(inward_callgraph);
+    context.outward_callgraph = Some(outward_callgraph);
 }
 
 fn absorb_ast_content_into_context(

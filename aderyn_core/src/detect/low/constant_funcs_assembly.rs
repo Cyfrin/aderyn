@@ -9,7 +9,7 @@ use crate::context::browser::{
     ExtractInlineAssemblys, ExtractPragmaDirectives, GetClosestAncestorOfTypeX,
 };
 use crate::context::investigator::{
-    StandardInvestigationStyle, StandardInvestigator, StandardInvestigatorVisitor,
+    CallGraphDirection, CallGraph, CallGraphVisitor,
 };
 use crate::detect::detector::IssueDetectorNamePool;
 use crate::detect::helpers::{self, pragma_directive_to_semver};
@@ -50,10 +50,10 @@ impl IssueDetector for ConstantFunctionContainsAssemblyDetector {
                                 let mut tracker = AssemblyTracker {
                                     has_assembly: false,
                                 };
-                                let investigator = StandardInvestigator::new(
+                                let investigator = CallGraph::new(
                                     context,
                                     &[&(function.into())],
-                                    StandardInvestigationStyle::Downstream,
+                                    CallGraphDirection::Downstream,
                                 )?;
                                 investigator.investigate(context, &mut tracker)?;
 
@@ -110,7 +110,7 @@ struct AssemblyTracker {
     has_assembly: bool,
 }
 
-impl StandardInvestigatorVisitor for AssemblyTracker {
+impl CallGraphVisitor for AssemblyTracker {
     fn visit_any(&mut self, node: &crate::ast::ASTNode) -> eyre::Result<()> {
         // If we are already satisifed, do not bother checking
         if self.has_assembly {
