@@ -5,7 +5,8 @@ use crate::ast::{ASTNode, Expression, FunctionCall, Identifier, NodeID};
 
 use crate::capture;
 use crate::context::browser::ExtractReferencedDeclarations;
-use crate::context::investigator::{CallGraph, CallGraphVisitor, CallGraphDirection};
+use crate::context::graph::callgraph::{CallGraph, CallGraphDirection};
+use crate::context::graph::traits::CallGraphVisitor;
 use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
     context::workspace_context::WorkspaceContext,
@@ -47,7 +48,7 @@ impl IssueDetector for FunctionInitializingStateDetector {
                         let investigator = CallGraph::new(
                             context,
                             &[&(func.into())],
-                            CallGraphDirection::Downstream,
+                            CallGraphDirection::Inward,
                         )?;
 
                         investigator.investigate(context, &mut tracker)?;

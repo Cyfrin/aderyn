@@ -94,7 +94,7 @@ pub fn load_solidity_source_unit(filepath: &str) -> WorkspaceContext {
 fn load_callgraphs(context: &mut WorkspaceContext) {
     let inward_callgraph = WorkspaceCallGraph::from_context(context).unwrap();
     let outward_callgraph = WorkspaceCallGraph {
-        graph: inward_callgraph.graph.reverse(),
+        raw_callgraph: inward_callgraph.raw_callgraph.reverse(),
     };
     context.inward_callgraph = Some(inward_callgraph);
     context.outward_callgraph = Some(outward_callgraph);

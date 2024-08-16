@@ -1,9 +1,13 @@
+pub mod callgraph;
+pub mod callgraph_tests;
 pub mod traits;
 mod workspace_callgraph;
 
 pub use workspace_callgraph::*;
 
 use derive_more::From;
+
+use crate::ast::{ASTNode, NodeID};
 
 pub type Result<T> = core::result::Result<T, Error>;
 
@@ -14,6 +18,17 @@ pub enum Error {
 
     // region: -- standard::* errors
     WorkspaceCallGraphDFSError,
+    InwardCallgraphNotAvailable,
+    OutwardCallgraphNotAvailable,
+    UnidentifiedEntryPointNode(ASTNode),
+    InvalidEntryPointId(NodeID),
+    EntryPointVisitError,
+    OutwardFunctionDefinitionVisitError,
+    OutwardModifierDefinitionVisitError,
+    InwardFunctionDefinitionVisitError,
+    InwardModifierDefinitionVisitError,
+    OutwardSideEffectFunctionDefinitionVisitError,
+    OutwardSideEffectModifierDefinitionVisitError,
     // endregion
 }
 

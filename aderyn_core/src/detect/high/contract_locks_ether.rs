@@ -66,7 +66,11 @@ mod contract_eth_helper {
     use crate::{
         ast::{ASTNode, ContractDefinition, StateMutability, Visibility},
         context::{
-            browser::ExtractFunctionDefinitions, investigator::*,
+            browser::ExtractFunctionDefinitions,
+            graph::{
+                callgraph::{CallGraph, CallGraphDirection},
+                traits::CallGraphVisitor,
+            },
             workspace_context::WorkspaceContext,
         },
         detect::helpers,
@@ -111,14 +115,14 @@ mod contract_eth_helper {
 
                     let mut tracker = EthWithdrawalAllowerTracker::default();
 
-                    let investigator = CallGraph::new(
+                    let callgraph = CallGraph::new(
                         context,
                         funcs.iter().collect::<Vec<_>>().as_slice(),
-                        CallGraphDirection::Downstream,
+                        CallGraphDirection::Inward,
                     )
                     .ok()?;
 
-                    investigator.investigate(context, &mut tracker).ok()?;
+                    callgraph.investigate(context, &mut tracker).ok()?;
 
                     if tracker.has_calls_that_sends_native_eth {
                         return Some(true);

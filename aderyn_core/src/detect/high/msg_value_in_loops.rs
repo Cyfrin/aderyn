@@ -6,9 +6,8 @@ use crate::ast::{ASTNode, Expression, NodeID};
 
 use crate::capture;
 use crate::context::browser::ExtractMemberAccesses;
-use crate::context::investigator::{
-    CallGraphDirection, CallGraph, CallGraphVisitor,
-};
+use crate::context::graph::callgraph::{CallGraph, CallGraphDirection};
+use crate::context::graph::traits::CallGraphVisitor;
 use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
     context::workspace_context::WorkspaceContext,
@@ -72,11 +71,9 @@ impl IssueDetector for MsgValueUsedInLoopDetector {
 
 fn uses_msg_value(context: &WorkspaceContext, ast_node: &ASTNode) -> Option<bool> {
     let mut tracker = MsgValueTracker::default();
-    let investigator =
-        CallGraph::new(context, &[ast_node], CallGraphDirection::Downstream)
-            .ok()?;
+    let callgraph = CallGraph::new(context, &[ast_node], CallGraphDirection::Inward).ok()?;
 
-    investigator.investigate(context, &mut tracker).ok()?;
+    callgraph.investigate(context, &mut tracker).ok()?;
     Some(tracker.has_msg_value)
 }
 

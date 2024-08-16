@@ -16,7 +16,7 @@ use crate::{
     },
 };
 
-use super::CallGraphVisitor;
+use super::traits::CallGraphVisitor;
 
 #[derive(PartialEq)]
 pub enum CallGraphDirection {
@@ -271,7 +271,7 @@ impl CallGraph {
             )?;
         }
 
-        if let Some(pointing_to) = callgraph.graph.get(&node_id) {
+        if let Some(pointing_to) = callgraph.raw_callgraph.get(&node_id) {
             for destination in pointing_to {
                 self.dfs_and_visit_subgraph(
                     *destination,

@@ -8,9 +8,9 @@ use crate::capture;
 use crate::context::browser::{
     ExtractInlineAssemblys, ExtractPragmaDirectives, GetClosestAncestorOfTypeX,
 };
-use crate::context::investigator::{
-    CallGraphDirection, CallGraph, CallGraphVisitor,
-};
+
+use crate::context::graph::callgraph::{CallGraph, CallGraphDirection};
+use crate::context::graph::traits::CallGraphVisitor;
 use crate::detect::detector::IssueDetectorNamePool;
 use crate::detect::helpers::{self, pragma_directive_to_semver};
 use crate::{
@@ -50,12 +50,12 @@ impl IssueDetector for ConstantFunctionContainsAssemblyDetector {
                                 let mut tracker = AssemblyTracker {
                                     has_assembly: false,
                                 };
-                                let investigator = CallGraph::new(
+                                let callgraph = CallGraph::new(
                                     context,
                                     &[&(function.into())],
-                                    CallGraphDirection::Downstream,
+                                    CallGraphDirection::Inward,
                                 )?;
-                                investigator.investigate(context, &mut tracker)?;
+                                callgraph.investigate(context, &mut tracker)?;
 
                                 if tracker.has_assembly {
                                     capture!(self, context, function);
