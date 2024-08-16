@@ -1,7 +1,12 @@
 {
   "files_summary": {
+<<<<<<< HEAD
     "total_source_units": 80,
     "total_sloc": 2509
+=======
+    "total_source_units": 84,
+    "total_sloc": 2645
+>>>>>>> dev
   },
   "files_details": {
     "files_details": [
@@ -106,6 +111,10 @@
         "n_sloc": 4
       },
       {
+        "file_path": "src/FunctionInitializingState.sol",
+        "n_sloc": 49
+      },
+      {
         "file_path": "src/HugeConstants.sol",
         "n_sloc": 36
       },
@@ -118,8 +127,13 @@
         "n_sloc": 16
       },
       {
+<<<<<<< HEAD
         "file_path": "src/IncorrectERC721.sol",
         "n_sloc": 231
+=======
+        "file_path": "src/IncorrectERC20.sol",
+        "n_sloc": 97
+>>>>>>> dev
       },
       {
         "file_path": "src/IncorrectShift.sol",
@@ -150,6 +164,10 @@
         "n_sloc": 8
       },
       {
+        "file_path": "src/OutOfOrderRetryable.sol",
+        "n_sloc": 165
+      },
+      {
         "file_path": "src/PreDeclaredVarUsage.sol",
         "n_sloc": 9
       },
@@ -164,6 +182,10 @@
       {
         "file_path": "src/RedundantStatements.sol",
         "n_sloc": 14
+      },
+      {
+        "file_path": "src/ReturnBomb.sol",
+        "n_sloc": 44
       },
       {
         "file_path": "src/RevertsAndRequriesInLoops.sol",
@@ -232,6 +254,10 @@
       {
         "file_path": "src/UnusedError.sol",
         "n_sloc": 19
+      },
+      {
+        "file_path": "src/UnusedStateVariables.sol",
+        "n_sloc": 12
       },
       {
         "file_path": "src/UsingSelfdestruct.sol",
@@ -328,8 +354,13 @@
     ]
   },
   "issue_count": {
+<<<<<<< HEAD
     "high": 37,
     "low": 27
+=======
+    "high": 38,
+    "low": 30
+>>>>>>> dev
   },
   "high_issues": {
     "issues": [
@@ -1338,6 +1369,12 @@
             "src_char": "130:26"
           },
           {
+            "contract_path": "src/ReturnBomb.sol",
+            "line_no": 61,
+            "src": "1623:7",
+            "src_char": "1623:7"
+          },
+          {
             "contract_path": "src/StateShadowing.sol",
             "line_no": 5,
             "src": "87:13",
@@ -1384,6 +1421,36 @@
             "line_no": 15,
             "src": "529:11",
             "src_char": "529:11"
+          },
+          {
+            "contract_path": "src/UnusedStateVariables.sol",
+            "line_no": 6,
+            "src": "147:13",
+            "src_char": "147:13"
+          },
+          {
+            "contract_path": "src/UnusedStateVariables.sol",
+            "line_no": 7,
+            "src": "183:13",
+            "src_char": "183:13"
+          },
+          {
+            "contract_path": "src/UnusedStateVariables.sol",
+            "line_no": 8,
+            "src": "215:10",
+            "src_char": "215:10"
+          },
+          {
+            "contract_path": "src/UnusedStateVariables.sol",
+            "line_no": 9,
+            "src": "246:12",
+            "src_char": "246:12"
+          },
+          {
+            "contract_path": "src/UnusedStateVariables.sol",
+            "line_no": 12,
+            "src": "314:11",
+            "src_char": "314:11"
           },
           {
             "contract_path": "src/WrongOrderOfLayout.sol",
@@ -1578,6 +1645,36 @@
             "src_char": "6342:11"
           },
           {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 63,
+            "src": "1649:11",
+            "src_char": "1649:11"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 90,
+            "src": "2557:22",
+            "src_char": "2557:22"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 167,
+            "src": "4685:13",
+            "src_char": "4685:13"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 175,
+            "src": "5072:7",
+            "src_char": "5072:7"
+          },
+          {
+            "contract_path": "src/ReturnBomb.sol",
+            "line_no": 32,
+            "src": "839:4",
+            "src_char": "839:4"
+          },
+          {
             "contract_path": "src/SendEtherNoChecks.sol",
             "line_no": 53,
             "src": "1060:5",
@@ -1701,6 +1798,42 @@
         "description": "Function returns a value but it is ignored.",
         "detector_name": "unchecked-return",
         "instances": [
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 65,
+            "src": "1705:390",
+            "src_char": "1705:390"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 77,
+            "src": "2129:379",
+            "src_char": "2129:379"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 92,
+            "src": "2624:390",
+            "src_char": "2624:390"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 107,
+            "src": "3107:379",
+            "src_char": "3107:379"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 129,
+            "src": "3777:208",
+            "src_char": "3777:208"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 151,
+            "src": "4337:261",
+            "src_char": "4337:261"
+          },
           {
             "contract_path": "src/UncheckedReturn.sol",
             "line_no": 14,
@@ -2002,6 +2135,7 @@
         ]
       },
       {
+<<<<<<< HEAD
         "title": "Incorrect ERC721 interface.",
         "description": "Incorrect return values for ERC721 functions. A contract compiled with Solidity > 0.4.22 interacting with these functions will fail to execute them, as the return value is missing. Set the appropriate return values and types for the defined ERC721 functions.",
         "detector_name": "incorrect-erc721-interface",
@@ -2053,6 +2187,60 @@
             "line_no": 71,
             "src": "2086:16",
             "src_char": "2086:16"
+=======
+        "title": "Incorrect ERC20 interface.",
+        "description": "Incorrect return values for ERC20 functions. A contract compiled with Solidity > 0.4.22 interacting with these functions will fail to execute them, as the return value is missing. Set the appropriate return values and types for the defined ERC20 functions.",
+        "detector_name": "incorrect-erc20-interface",
+        "instances": [
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 17,
+            "src": "483:8",
+            "src_char": "483:8"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 23,
+            "src": "690:7",
+            "src_char": "690:7"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 27,
+            "src": "808:12",
+            "src_char": "808:12"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 35,
+            "src": "1146:9",
+            "src_char": "1146:9"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 39,
+            "src": "1249:9",
+            "src_char": "1249:9"
+          }
+        ]
+      },
+      {
+        "title": "Out of order retryable transactions.",
+        "description": "Do not rely on the order or successful execution of retryable tickets. Functions like createRetryableTicket, outboundTransferCustomRefund, unsafeCreateRetryableTicket are free to be re-tried in any\n            order if they fail in the first go. Since this operation happens off chain, the sequencer is in control of the\n            order of these transactions. Therefore, restrict the use to at most 1 ticket call per function.",
+        "detector_name": "out-of-order-retryable",
+        "instances": [
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 63,
+            "src": "1649:11",
+            "src_char": "1649:11"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 90,
+            "src": "2557:22",
+            "src_char": "2557:22"
+>>>>>>> dev
           }
         ]
       }
@@ -2250,6 +2438,18 @@
             "src_char": "1598:18"
           },
           {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 171,
+            "src": "4927:28",
+            "src_char": "4927:28"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 180,
+            "src": "5328:28",
+            "src_char": "5328:28"
+          },
+          {
             "contract_path": "src/SendEtherNoChecks.sol",
             "line_no": 67,
             "src": "1255:19",
@@ -2335,19 +2535,35 @@
             "src_char": "32:23"
           },
           {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 2,
+            "src": "32:21",
+            "src_char": "32:21"
+          },
+          {
             "contract_path": "src/InconsistentUints.sol",
             "line_no": 1,
             "src": "0:24",
             "src_char": "0:24"
           },
           {
+<<<<<<< HEAD
             "contract_path": "src/IncorrectERC721.sol",
+=======
+            "contract_path": "src/IncorrectERC20.sol",
+>>>>>>> dev
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
           },
           {
             "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
@@ -2381,6 +2597,12 @@
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/UnusedStateVariables.sol",
+            "line_no": 2,
+            "src": "32:24",
+            "src_char": "32:24"
           },
           {
             "contract_path": "src/UsingSelfdestruct.sol",
@@ -2436,6 +2658,18 @@
             "line_no": 12,
             "src": "267:15",
             "src_char": "267:15"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 54,
+            "src": "1416:14",
+            "src_char": "1416:14"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 55,
+            "src": "1440:24",
+            "src_char": "1440:24"
           },
           {
             "contract_path": "src/StateVariables.sol",
@@ -2533,6 +2767,72 @@
             "line_no": 7,
             "src": "129:9",
             "src_char": "129:9"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 17,
+            "src": "483:8",
+            "src_char": "483:8"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 23,
+            "src": "690:7",
+            "src_char": "690:7"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 27,
+            "src": "808:12",
+            "src_char": "808:12"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 35,
+            "src": "1146:9",
+            "src_char": "1146:9"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 39,
+            "src": "1249:9",
+            "src_char": "1249:9"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 167,
+            "src": "4685:13",
+            "src_char": "4685:13"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 175,
+            "src": "5072:7",
+            "src_char": "5072:7"
+          },
+          {
+            "contract_path": "src/ReturnBomb.sol",
+            "line_no": 16,
+            "src": "358:4",
+            "src_char": "358:4"
+          },
+          {
+            "contract_path": "src/ReturnBomb.sol",
+            "line_no": 32,
+            "src": "839:4",
+            "src_char": "839:4"
+          },
+          {
+            "contract_path": "src/ReturnBomb.sol",
+            "line_no": 47,
+            "src": "1273:4",
+            "src_char": "1273:4"
+          },
+          {
+            "contract_path": "src/ReturnBomb.sol",
+            "line_no": 63,
+            "src": "1646:4",
+            "src_char": "1646:4"
           },
           {
             "contract_path": "src/StateVariables.sol",
@@ -2816,6 +3116,54 @@
             "line_no": 17,
             "src": "457:3",
             "src_char": "457:3"
+          },
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 23,
+            "src": "790:2",
+            "src_char": "790:2"
+          },
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 26,
+            "src": "820:2",
+            "src_char": "820:2"
+          },
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 34,
+            "src": "1109:2",
+            "src_char": "1109:2"
+          },
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 37,
+            "src": "1139:2",
+            "src_char": "1139:2"
+          },
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 42,
+            "src": "1268:4",
+            "src_char": "1268:4"
+          },
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 42,
+            "src": "1275:4",
+            "src_char": "1275:4"
+          },
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 48,
+            "src": "1459:4",
+            "src_char": "1459:4"
+          },
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 48,
+            "src": "1466:4",
+            "src_char": "1466:4"
           },
           {
             "contract_path": "src/IncorrectCaretOperator.sol",
@@ -3261,7 +3609,11 @@
             "src_char": "0:24"
           },
           {
+<<<<<<< HEAD
             "contract_path": "src/IncorrectERC721.sol",
+=======
+            "contract_path": "src/IncorrectERC20.sol",
+>>>>>>> dev
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
@@ -3274,6 +3626,18 @@
           },
           {
             "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/ReturnBomb.sol",
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
@@ -3313,6 +3677,12 @@
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/UnusedStateVariables.sol",
+            "line_no": 2,
+            "src": "32:24",
+            "src_char": "32:24"
           },
           {
             "contract_path": "src/WeakRandomness.sol",
@@ -3557,6 +3927,12 @@
             "src_char": "147:7"
           },
           {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 193,
+            "src": "5775:13",
+            "src_char": "5775:13"
+          },
+          {
             "contract_path": "src/SendEtherNoChecks.sol",
             "line_no": 53,
             "src": "1060:5",
@@ -3778,6 +4154,18 @@
             "line_no": 32,
             "src": "1673:6",
             "src_char": "1673:6"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 8,
+            "src": "225:7",
+            "src_char": "225:7"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 51,
+            "src": "1550:7",
+            "src_char": "1550:7"
           }
         ]
       },
@@ -4186,6 +4574,163 @@
         ]
       },
       {
+        "title": "Potentially unused `private` / `internal` state variables found.",
+        "description": "State variable appears to be unused. No analysis has been performed to see if any inilne assembly references it. So if that's not the case, consider removing this unused variable.",
+        "detector_name": "unused-state-variable",
+        "instances": [
+          {
+            "contract_path": "src/AssemblyExample.sol",
+            "line_no": 5,
+            "src": "97:1",
+            "src_char": "97:1"
+          },
+          {
+            "contract_path": "src/InconsistentUints.sol",
+            "line_no": 16,
+            "src": "434:10",
+            "src_char": "434:10"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 8,
+            "src": "199:19",
+            "src_char": "199:19"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 9,
+            "src": "241:20",
+            "src_char": "241:20"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 13,
+            "src": "383:27",
+            "src_char": "383:27"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 14,
+            "src": "437:28",
+            "src_char": "437:28"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 28,
+            "src": "1056:16",
+            "src_char": "1056:16"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 29,
+            "src": "1108:17",
+            "src_char": "1108:17"
+          },
+          {
+            "contract_path": "src/TautologyOrContradiction.sol",
+            "line_no": 6,
+            "src": "133:6",
+            "src_char": "133:6"
+          },
+          {
+            "contract_path": "src/TautologyOrContradiction.sol",
+            "line_no": 7,
+            "src": "145:9",
+            "src_char": "145:9"
+          },
+          {
+            "contract_path": "src/UninitializedStateVariable.sol",
+            "line_no": 13,
+            "src": "503:3",
+            "src_char": "503:3"
+          },
+          {
+            "contract_path": "src/UnusedStateVariables.sol",
+            "line_no": 6,
+            "src": "147:13",
+            "src_char": "147:13"
+          },
+          {
+            "contract_path": "src/UnusedStateVariables.sol",
+            "line_no": 7,
+            "src": "183:13",
+            "src_char": "183:13"
+          },
+          {
+            "contract_path": "src/UnusedStateVariables.sol",
+            "line_no": 8,
+            "src": "215:10",
+            "src_char": "215:10"
+          },
+          {
+            "contract_path": "src/UnusedStateVariables.sol",
+            "line_no": 9,
+            "src": "246:12",
+            "src_char": "246:12"
+          },
+          {
+            "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
+            "line_no": 14,
+            "src": "151:3",
+            "src_char": "151:3"
+          },
+          {
+            "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
+            "line_no": 16,
+            "src": "190:3",
+            "src_char": "190:3"
+          },
+          {
+            "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
+            "line_no": 19,
+            "src": "261:3",
+            "src_char": "261:3"
+          },
+          {
+            "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
+            "line_no": 22,
+            "src": "367:3",
+            "src_char": "367:3"
+          },
+          {
+            "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
+            "line_no": 29,
+            "src": "477:3",
+            "src_char": "477:3"
+          },
+          {
+            "contract_path": "src/cloc/HeavilyCommentedContract.sol",
+            "line_no": 14,
+            "src": "160:3",
+            "src_char": "160:3"
+          },
+          {
+            "contract_path": "src/cloc/HeavilyCommentedContract.sol",
+            "line_no": 16,
+            "src": "199:3",
+            "src_char": "199:3"
+          },
+          {
+            "contract_path": "src/cloc/HeavilyCommentedContract.sol",
+            "line_no": 19,
+            "src": "270:3",
+            "src_char": "270:3"
+          },
+          {
+            "contract_path": "src/cloc/HeavilyCommentedContract.sol",
+            "line_no": 22,
+            "src": "376:3",
+            "src_char": "376:3"
+          },
+          {
+            "contract_path": "src/cloc/HeavilyCommentedContract.sol",
+            "line_no": 29,
+            "src": "486:3",
+            "src_char": "486:3"
+          }
+        ]
+      },
+      {
         "title": "Functions declared `pure` / `view` but contains assembly",
         "description": "If the assembly code contains bugs or unintended side effects, it can lead to incorrect results or vulnerabilities, which are hard to debug and resolve, especially when the function is meant to be simple and predictable.",
         "detector_name": "constant-functions-assembly",
@@ -4238,6 +4783,44 @@
             "line_no": 26,
             "src": "614:16",
             "src_char": "614:16"
+          }
+        ]
+      },
+      {
+        "title": "Return Bomb",
+        "description": "A low level callee may consume all callers gas unexpectedly. Avoid unlimited implicit decoding of returndata on calls to unchecked addresses. You can limit the gas by passing a gas limit as an option to the call. For example, `unknownAdress.call{gas: gasLimitHere}(\"calldata\")` That would act as a safety net from OOG errors.\n        ",
+        "detector_name": "return-bomb",
+        "instances": [
+          {
+            "contract_path": "src/ReturnBomb.sol",
+            "line_no": 22,
+            "src": "591:115",
+            "src_char": "591:115"
+          }
+        ]
+      },
+      {
+        "title": "Function initializing state.",
+        "description": "Detects the immediate initialization of state variables through function calls that are not pure/constant, or that use non-constant state variable. Remove any initialization of state variables via non-constant state variables or function calls. If variables must be set upon contract deployment, locate initialization in the constructor instead.",
+        "detector_name": "function-initializing-state",
+        "instances": [
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 6,
+            "src": "108:21",
+            "src_char": "108:21"
+          },
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 8,
+            "src": "199:21",
+            "src_char": "199:21"
+          },
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 9,
+            "src": "267:21",
+            "src_char": "267:21"
           }
         ]
       }
@@ -4302,11 +4885,19 @@
     "weak-randomness",
     "pre-declared-local-variable-usage",
     "delete-nested-mapping",
+    "unused-state-variable",
     "constant-functions-assembly",
     "boolean-equality",
     "tx-origin-used-for-auth",
     "msg-value-in-loop",
     "contract-locks-ether",
+<<<<<<< HEAD
     "incorrect-erc721-interface"
+=======
+    "incorrect-erc20-interface",
+    "return-bomb",
+    "out-of-order-retryable",
+    "function-initializing-state"
+>>>>>>> dev
   ]
 }

@@ -1,3 +1,4 @@
+use incorrect_erc20_interface::IncorrectERC20InterfaceDetector;
 use serde::{Deserialize, Serialize};
 use strum::{Display, EnumCount, EnumIter, EnumString};
 
@@ -74,12 +75,17 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<WeakRandomnessDetector>::default(),
         Box::<PreDeclaredLocalVariableUsageDetector>::default(),
         Box::<DeletionNestedMappingDetector>::default(),
+        Box::<UnusedStateVariablesDetector>::default(),
         Box::<ConstantFunctionContainsAssemblyDetector>::default(),
         Box::<BooleanEqualityDetector>::default(),
         Box::<TxOriginUsedForAuthDetector>::default(),
         Box::<MsgValueUsedInLoopDetector>::default(),
         Box::<ContractLocksEtherDetector>::default(),
         Box::<IncorrectERC721InterfaceDetector>::default(),
+        Box::<IncorrectERC20InterfaceDetector>::default(),
+        Box::<ReturnBombDetector>::default(),
+        Box::<OutOfOrderRetryableDetector>::default(),
+        Box::<FunctionInitializingStateDetector>::default(),
     ]
 }
 
@@ -92,6 +98,7 @@ pub fn get_all_detectors_names() -> Vec<String> {
 #[strum(serialize_all = "kebab-case")]
 pub(crate) enum IssueDetectorNamePool {
     IncorrectERC721Interface,
+    FunctionInitializingState,
     DelegateCallInLoop,
     CentralizationRisk,
     SolmateSafeTransferLib,
@@ -151,11 +158,15 @@ pub(crate) enum IssueDetectorNamePool {
     WeakRandomness,
     PreDeclaredLocalVariableUsage,
     DeleteNestedMapping,
+    UnusedStateVariable,
     ConstantFunctionsAssembly,
     BooleanEquality,
     TxOriginUsedForAuth,
     MsgValueInLoop,
     ContractLocksEther,
+    IncorrectERC20Interface,
+    ReturnBomb,
+    OutOfOrderRetryable,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -167,6 +178,19 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
     match detector_name {
         IssueDetectorNamePool::IncorrectERC721Interface => {
             Some(Box::<IncorrectERC721InterfaceDetector>::default())
+        }
+        IssueDetectorNamePool::OutOfOrderRetryable => {
+            Some(Box::<OutOfOrderRetryableDetector>::default())
+        }
+        IssueDetectorNamePool::FunctionInitializingState => {
+            Some(Box::<FunctionInitializingStateDetector>::default())
+        }
+        IssueDetectorNamePool::IncorrectERC20Interface => {
+            Some(Box::<IncorrectERC20InterfaceDetector>::default())
+        }
+        IssueDetectorNamePool::ReturnBomb => Some(Box::<ReturnBombDetector>::default()),
+        IssueDetectorNamePool::UnusedStateVariable => {
+            Some(Box::<UnusedStateVariablesDetector>::default())
         }
         IssueDetectorNamePool::DelegateCallInLoop => {
             Some(Box::<DelegateCallInLoopDetector>::default())
