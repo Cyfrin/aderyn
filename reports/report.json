@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 86,
-    "total_sloc": 2890
+    "total_source_units": 87,
+    "total_sloc": 2899
   },
   "files_details": {
     "files_details": [
@@ -112,6 +112,10 @@
       {
         "file_path": "src/FunctionInitializingState.sol",
         "n_sloc": 49
+      },
+      {
+        "file_path": "src/FunctionSignatureCollision.sol",
+        "n_sloc": 9
       },
       {
         "file_path": "src/HugeConstants.sol",
@@ -352,7 +356,7 @@
     ]
   },
   "issue_count": {
-    "high": 39,
+    "high": 40,
     "low": 31
   },
   "high_issues": {
@@ -2243,6 +2247,25 @@
             "src_char": "2557:22"
           }
         ]
+      },
+      {
+        "title": "Function selector collides with other functions",
+        "description": "Function selector collides with other functions. This may cause the solidity function dispatcher to invoke the wrong function if the functions happen to be included in the same contract through an inheritance hirearchy later down the line. It is recommended to rename this function or change its parameters.",
+        "detector_name": "function-selector-collision",
+        "instances": [
+          {
+            "contract_path": "src/FunctionSignatureCollision.sol",
+            "line_no": 7,
+            "src": "166:8",
+            "src_char": "166:8"
+          },
+          {
+            "contract_path": "src/FunctionSignatureCollision.sol",
+            "line_no": 13,
+            "src": "231:22",
+            "src_char": "231:22"
+          }
+        ]
       }
     ]
   },
@@ -2545,6 +2568,12 @@
             "line_no": 2,
             "src": "32:21",
             "src_char": "32:21"
+          },
+          {
+            "contract_path": "src/FunctionSignatureCollision.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
           },
           {
             "contract_path": "src/InconsistentUints.sol",
@@ -3617,6 +3646,12 @@
             "src_char": "32:23"
           },
           {
+            "contract_path": "src/FunctionSignatureCollision.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/InconsistentUints.sol",
             "line_no": 1,
             "src": "0:24",
@@ -3947,6 +3982,18 @@
             "line_no": 81,
             "src": "1219:41",
             "src_char": "1219:41"
+          },
+          {
+            "contract_path": "src/FunctionSignatureCollision.sol",
+            "line_no": 7,
+            "src": "166:8",
+            "src_char": "166:8"
+          },
+          {
+            "contract_path": "src/FunctionSignatureCollision.sol",
+            "line_no": 13,
+            "src": "231:22",
+            "src_char": "231:22"
           },
           {
             "contract_path": "src/OnceModifierExample.sol",
@@ -4955,6 +5002,7 @@
     "return-bomb",
     "out-of-order-retryable",
     "function-initializing-state",
-    "builtin-symbol-shadow"
+    "builtin-symbol-shadow",
+    "function-selector-collision"
   ]
 }
