@@ -6,9 +6,7 @@ use crate::ast::{ASTNode, MemberAccess, NodeID};
 use crate::ast::NodeType;
 use crate::capture;
 use crate::context::browser::GetClosestAncestorOfTypeX;
-use crate::context::investigator::{
-    StandardInvestigationStyle, StandardInvestigator, StandardInvestigatorVisitor,
-};
+use crate::context::graph::{CallGraph, CallGraphDirection, CallGraphVisitor};
 use crate::detect::detector::IssueDetectorNamePool;
 use crate::detect::helpers;
 use crate::{
@@ -39,12 +37,8 @@ impl IssueDetector for ReturnBombDetector {
                 calls_on_non_state_variable_addresses: vec![], // collection of all `address.call` Member Accesses where address is not a state variable
                 context,
             };
-            let investigator = StandardInvestigator::new(
-                context,
-                &[&(func.into())],
-                StandardInvestigationStyle::Downstream,
-            )?;
-            investigator.investigate(context, &mut tracker)?;
+            let callgraph = CallGraph::new(context, &[&(func.into())], CallGraphDirection::Inward)?;
+            callgraph.accept(context, &mut tracker)?;
 
             if !tracker.has_address_checks {
                 // Now we assume that in this region all addresses are unprotected (because they are not involved in any binary ops/checks)
@@ -125,7 +119,7 @@ struct CallNoAddressChecksTracker<'a> {
     context: &'a WorkspaceContext,
 }
 
-impl<'a> StandardInvestigatorVisitor for CallNoAddressChecksTracker<'a> {
+impl<'a> CallGraphVisitor for CallNoAddressChecksTracker<'a> {
     fn visit_any(&mut self, node: &crate::context::workspace_context::ASTNode) -> eyre::Result<()> {
         if !self.has_address_checks && helpers::has_binary_checks_on_some_address(node) {
             self.has_address_checks = true;
