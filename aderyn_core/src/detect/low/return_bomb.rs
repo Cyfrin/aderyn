@@ -6,7 +6,7 @@ use crate::ast::{ASTNode, MemberAccess, NodeID};
 use crate::ast::NodeType;
 use crate::capture;
 use crate::context::browser::GetClosestAncestorOfTypeX;
-use crate::context::graph::{CallGraph, CallGraphDirection,CallGraphVisitor};
+use crate::context::graph::{CallGraph, CallGraphDirection, CallGraphVisitor};
 use crate::detect::detector::IssueDetectorNamePool;
 use crate::detect::helpers;
 use crate::{
