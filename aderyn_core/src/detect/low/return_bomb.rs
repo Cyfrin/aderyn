@@ -6,8 +6,7 @@ use crate::ast::{ASTNode, MemberAccess, NodeID};
 use crate::ast::NodeType;
 use crate::capture;
 use crate::context::browser::GetClosestAncestorOfTypeX;
-use crate::context::graph::callgraph::{CallGraph, CallGraphDirection};
-use crate::context::graph::traits::CallGraphVisitor;
+use crate::context::graph::{CallGraph, CallGraphDirection,CallGraphVisitor};
 use crate::detect::detector::IssueDetectorNamePool;
 use crate::detect::helpers;
 use crate::{
@@ -39,7 +38,7 @@ impl IssueDetector for ReturnBombDetector {
                 context,
             };
             let callgraph = CallGraph::new(context, &[&(func.into())], CallGraphDirection::Inward)?;
-            callgraph.investigate(context, &mut tracker)?;
+            callgraph.accept(context, &mut tracker)?;
 
             if !tracker.has_address_checks {
                 // Now we assume that in this region all addresses are unprotected (because they are not involved in any binary ops/checks)

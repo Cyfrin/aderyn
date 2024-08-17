@@ -5,8 +5,7 @@ use crate::ast::{Expression, MemberAccess, NodeID};
 
 use crate::capture;
 use crate::context::browser::ExtractFunctionCalls;
-use crate::context::graph::callgraph::{CallGraph, CallGraphDirection};
-use crate::context::graph::traits::CallGraphVisitor;
+use crate::context::graph::{CallGraph, CallGraphDirection, CallGraphVisitor};
 use crate::detect::detector::IssueDetectorNamePool;
 use crate::detect::helpers;
 use crate::{
@@ -29,7 +28,7 @@ impl IssueDetector for OutOfOrderRetryableDetector {
                 number_of_retry_calls: 0,
             };
             let callgraph = CallGraph::new(context, &[&(func.into())], CallGraphDirection::Inward)?;
-            callgraph.investigate(context, &mut tracker)?;
+            callgraph.accept(context, &mut tracker)?;
             if tracker.number_of_retry_calls >= 2 {
                 capture!(self, context, func);
             }

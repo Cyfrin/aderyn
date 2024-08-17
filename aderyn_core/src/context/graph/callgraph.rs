@@ -55,7 +55,7 @@ enum CurrentDFSVector {
 
 impl CallGraph {
     /// Creates a [`CallGraph`] by exploring paths from given nodes. This is the starting point.
-    pub fn for_specific_nodes(
+    pub fn from_nodes(
         context: &WorkspaceContext,
         nodes: &[&ASTNode],
         direction: CallGraphDirection,
@@ -124,16 +124,16 @@ impl CallGraph {
         nodes: &[&ASTNode],
         direction: CallGraphDirection,
     ) -> super::Result<CallGraph> {
-        Self::for_specific_nodes(context, nodes, direction)
+        Self::from_nodes(context, nodes, direction)
     }
 
     /// Visit the entry points and all the plausible function definitions and modifier definitions that
     /// EVM may encounter during execution.
-    pub fn investigate<T>(&self, context: &WorkspaceContext, visitor: &mut T) -> super::Result<()>
+    pub fn accept<T>(&self, context: &WorkspaceContext, visitor: &mut T) -> super::Result<()>
     where
         T: CallGraphVisitor,
     {
-        self._investigate(
+        self._accept(
             context,
             context
                 .inward_callgraph
@@ -151,7 +151,7 @@ impl CallGraph {
     /// First, we visit the entry points. Then, we derive the subgraph from the [`WorkspaceCallGraph`]
     /// which consists of all the nodes that can be reached by traversing the edges starting
     /// from the surface points.
-    fn _investigate<T>(
+    fn _accept<T>(
         &self,
         context: &WorkspaceContext,
         inward_callgraph: &WorkspaceCallGraph,

@@ -55,7 +55,7 @@ mod callgraph_tests {
         let callgraph = CallGraph::new(&context, &[&visit_eighth_floor1], Inward).unwrap();
 
         let mut tracker = Tracker::new(&context);
-        callgraph.investigate(&context, &mut tracker).unwrap();
+        callgraph.accept(&context, &mut tracker).unwrap();
 
         assert!(tracker.inward_func_definitions_names.is_empty());
         assert!(tracker.inward_modifier_definitions_names.is_empty());
@@ -73,7 +73,7 @@ mod callgraph_tests {
         let callgraph = CallGraph::new(&context, &[&visit_eighth_floor1], Outward).unwrap();
 
         let mut tracker = Tracker::new(&context);
-        callgraph.investigate(&context, &mut tracker).unwrap();
+        callgraph.accept(&context, &mut tracker).unwrap();
 
         assert!(tracker.has_found_outward_modifiers_with_names(&["passThroughNinthFloor1"]));
         assert!(tracker.has_found_outward_functions_with_names(&["enterTenthFloor1"]));
@@ -92,7 +92,7 @@ mod callgraph_tests {
         let callgraph = CallGraph::new(&context, &[&pass_through_ninth_floor2], BothWays).unwrap();
 
         let mut tracker = Tracker::new(&context);
-        callgraph.investigate(&context, &mut tracker).unwrap();
+        callgraph.accept(&context, &mut tracker).unwrap();
 
         assert!(tracker.has_found_inward_functions_with_names(&["visitEighthFloor2"]));
         assert!(tracker.has_found_outward_functions_with_names(&["enterTenthFloor2"]));
@@ -111,7 +111,7 @@ mod callgraph_tests {
         let callgraph = CallGraph::new(&context, &[&pass_through_ninth_floor3], BothWays).unwrap();
 
         let mut tracker = Tracker::new(&context);
-        callgraph.investigate(&context, &mut tracker).unwrap();
+        callgraph.accept(&context, &mut tracker).unwrap();
 
         assert!(tracker.has_found_outward_functions_with_names(&["enterTenthFloor3"]));
         assert!(tracker.has_found_inward_functions_with_names(&["visitEighthFloor3"]));
@@ -131,7 +131,7 @@ mod callgraph_tests {
         let callgraph = CallGraph::new(&context, &[&visit_eighth_floor3], Outward).unwrap();
 
         let mut tracker = Tracker::new(&context);
-        callgraph.investigate(&context, &mut tracker).unwrap();
+        callgraph.accept(&context, &mut tracker).unwrap();
 
         assert!(tracker.has_found_outward_functions_with_names(&["enterTenthFloor3"]));
     }
@@ -148,7 +148,7 @@ mod callgraph_tests {
         let callgraph = CallGraph::new(&context, &[&recurse], BothWays).unwrap();
 
         let mut tracker = Tracker::new(&context);
-        callgraph.investigate(&context, &mut tracker).unwrap();
+        callgraph.accept(&context, &mut tracker).unwrap();
 
         assert!(tracker.has_found_outward_functions_with_names(&["recurse"]));
         assert!(tracker.has_found_inward_functions_with_names(&["recurse"]));

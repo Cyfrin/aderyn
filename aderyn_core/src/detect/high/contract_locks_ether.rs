@@ -67,10 +67,7 @@ mod contract_eth_helper {
         ast::{ASTNode, ContractDefinition, StateMutability, Visibility},
         context::{
             browser::ExtractFunctionDefinitions,
-            graph::{
-                callgraph::{CallGraph, CallGraphDirection},
-                traits::CallGraphVisitor,
-            },
+            graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
             workspace_context::WorkspaceContext,
         },
         detect::helpers,
@@ -122,7 +119,7 @@ mod contract_eth_helper {
                     )
                     .ok()?;
 
-                    callgraph.investigate(context, &mut tracker).ok()?;
+                    callgraph.accept(context, &mut tracker).ok()?;
 
                     if tracker.has_calls_that_sends_native_eth {
                         return Some(true);

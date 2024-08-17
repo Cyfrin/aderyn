@@ -4,8 +4,7 @@ use std::error::Error;
 use crate::ast::NodeID;
 
 use crate::capture;
-use crate::context::graph::callgraph::{CallGraph, CallGraphDirection};
-use crate::context::graph::traits::CallGraphVisitor;
+use crate::context::graph::{CallGraph, CallGraphDirection,CallGraphVisitor};
 use crate::context::workspace_context::ASTNode;
 use crate::detect::detector::IssueDetectorNamePool;
 use crate::detect::helpers;
@@ -28,7 +27,7 @@ impl IssueDetector for SendEtherNoChecksDetector {
             let mut tracker = MsgSenderAndCallWithValueTracker::default();
             let investigator =
                 CallGraph::new(context, &[&(func.into())], CallGraphDirection::Inward)?;
-            investigator.investigate(context, &mut tracker)?;
+            investigator.accept(context, &mut tracker)?;
 
             if tracker.sends_native_eth && !tracker.has_msg_sender_checks {
                 capture!(self, context, func);

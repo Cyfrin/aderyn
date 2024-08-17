@@ -6,8 +6,7 @@ use crate::ast::{ASTNode, Expression, NodeID};
 
 use crate::capture;
 use crate::context::browser::ExtractMemberAccesses;
-use crate::context::graph::callgraph::{CallGraph, CallGraphDirection};
-use crate::context::graph::traits::CallGraphVisitor;
+use crate::context::graph::{CallGraph, CallGraphDirection, CallGraphVisitor};
 use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
     context::workspace_context::WorkspaceContext,
@@ -73,7 +72,7 @@ fn uses_msg_value(context: &WorkspaceContext, ast_node: &ASTNode) -> Option<bool
     let mut tracker = MsgValueTracker::default();
     let callgraph = CallGraph::new(context, &[ast_node], CallGraphDirection::Inward).ok()?;
 
-    callgraph.investigate(context, &mut tracker).ok()?;
+    callgraph.accept(context, &mut tracker).ok()?;
     Some(tracker.has_msg_value)
 }
 

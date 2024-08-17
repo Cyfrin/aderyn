@@ -5,8 +5,7 @@ use crate::ast::NodeID;
 
 use crate::capture;
 
-use crate::context::graph::callgraph::{CallGraph, CallGraphDirection};
-use crate::context::graph::traits::CallGraphVisitor;
+use crate::context::graph::{CallGraph, CallGraphDirection, CallGraphVisitor};
 use crate::detect::detector::IssueDetectorNamePool;
 use crate::detect::helpers;
 use crate::{
@@ -31,7 +30,7 @@ impl IssueDetector for DelegateCallOnUncheckedAddressDetector {
                 context,
             };
             let callgraph = CallGraph::new(context, &[&(func.into())], CallGraphDirection::Inward)?;
-            callgraph.investigate(context, &mut tracker)?;
+            callgraph.accept(context, &mut tracker)?;
 
             if tracker.has_delegate_call_on_non_state_variable_address
                 && !tracker.has_address_checks

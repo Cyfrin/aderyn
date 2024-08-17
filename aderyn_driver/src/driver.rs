@@ -4,7 +4,7 @@ use crate::{
 };
 use aderyn_core::{
     context::{
-        graph::{traits::Transpose, WorkspaceCallGraph},
+        graph::{Transpose, WorkspaceCallGraph},
         workspace_context::WorkspaceContext,
     },
     detect::detector::{get_all_issue_detectors, IssueDetector, IssueSeverity},

@@ -1,8 +1,10 @@
-pub mod callgraph;
-pub mod callgraph_tests;
-pub mod traits;
+mod callgraph;
+mod callgraph_tests;
+mod traits;
 mod workspace_callgraph;
 
+pub use callgraph::*;
+pub use traits::*;
 pub use workspace_callgraph::*;
 
 use derive_more::From;
