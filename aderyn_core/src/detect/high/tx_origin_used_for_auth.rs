@@ -5,9 +5,7 @@ use crate::ast::{ASTNode, Expression, Identifier, NodeID};
 
 use crate::capture;
 use crate::context::browser::ExtractMemberAccesses;
-use crate::context::investigator::{
-    StandardInvestigationStyle, StandardInvestigator, StandardInvestigatorVisitor,
-};
+use crate::context::graph::{CallGraph, CallGraphDirection, CallGraphVisitor};
 use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
     context::workspace_context::WorkspaceContext,
@@ -85,12 +83,8 @@ impl TxOriginUsedForAuthDetector {
     ) -> Result<(), Box<dyn Error>> {
         // Boilerplate
         let mut tracker = MsgSenderAndTxOriginTracker::default();
-        let investigator = StandardInvestigator::new(
-            context,
-            check_nodes,
-            StandardInvestigationStyle::Downstream,
-        )?;
-        investigator.investigate(context, &mut tracker)?;
+        let callgraph = CallGraph::new(context, check_nodes, CallGraphDirection::Inward)?;
+        callgraph.accept(context, &mut tracker)?;
 
         if tracker.satisifed() {
             capture!(self, context, capture_node);
@@ -113,7 +107,7 @@ impl MsgSenderAndTxOriginTracker {
     }
 }
 
-impl StandardInvestigatorVisitor for MsgSenderAndTxOriginTracker {
+impl CallGraphVisitor for MsgSenderAndTxOriginTracker {
     fn visit_any(&mut self, node: &crate::ast::ASTNode) -> eyre::Result<()> {
         let member_accesses = ExtractMemberAccesses::from(node).extracted;
 
