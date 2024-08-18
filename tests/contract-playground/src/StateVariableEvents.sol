@@ -10,15 +10,41 @@ contract StateVariableEvents {
 
     uint public result;
     address public result2;
+    bool public result3;
     MyStruct public myStruct;
 
+    uint256 constant NUMBER = 123;
+
     event variableChanged(uint outcome);
+    event variableChanged2(bool outcome);
     event AddressChanged(address outcome);
     event MyStructChanged(MyStruct outcome);
     event MyStructMemberChanged(uint a);
 
     function stateChangedNoEventEmitted(uint a) public { // bad
         result *= a;
+    }
+
+    function stateChangedNoEventEmittedPlusEquals(uint a) public { // bad
+        result += a;
+    }
+
+    function stateChangedToBooleanNoEventEmitted() public { // bad
+        result3 = true;
+    }
+
+    function stateChangedToBooleanEventEmitted() public { // good
+        result3 = true;
+
+        emit variableChanged2(true);
+    }
+
+    function stateChangedToConstantNoEventEmitted() public { // bad
+        result = NUMBER;
+    }
+
+    function stateChangedNoEventEmitted() public { // bad
+        result = block.timestamp;
     }
 
     function addressChangedNotEmitted(address a) public { // bad
@@ -59,8 +85,13 @@ contract StateVariableEvents {
         emit variableChanged(result);
     }
 
+    function stateChangedEventEmittedForLocal(uint a) public { // bad
+        result += a;
+        emit variableChanged(a);
+    }
+
     
-    function stateChangedEventEmittedForLocal(uint a) public { // good
+    function stateChangedEventEmittedForLocalEquals(uint a) public { // good
         result = a;
         emit variableChanged(a);
     }

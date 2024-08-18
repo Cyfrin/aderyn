@@ -17,8 +17,6 @@ use eyre::Result;
 
 #[derive(Default)]
 pub struct StateVariableNotLoggedInEventDetector {
-    // All the state variables, set at the beginning of the detect Function
-    mutable_state_variables: HashMap<i64, VariableDeclaration>,
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
@@ -37,8 +35,9 @@ impl IssueDetector for StateVariableNotLoggedInEventDetector {
          * If not, raise an issue
          */
 
-        //collect all mutable state variables together
-        self.mutable_state_variables = context
+        // All the state variables, set at the beginning of the detect Function
+
+        let mutable_state_variables: HashMap<i64, VariableDeclaration> = context
             .variable_declarations()
             .iter()
             .filter_map(|&var_decl| {
@@ -46,7 +45,7 @@ impl IssueDetector for StateVariableNotLoggedInEventDetector {
                     && matches!(var_decl.mutability(), Some(Mutability::Mutable))
                     && var_decl.state_variable
                 {
-                    Some((var_decl.id, (*var_decl).clone())) // Deref and clone the VariableDeclaration.
+                    Some((var_decl.id, var_decl.clone())) // clone the VariableDeclaration.
                 } else {
                     None
                 }
@@ -59,17 +58,19 @@ impl IssueDetector for StateVariableNotLoggedInEventDetector {
             .filter(|function| !function.is_constructor)
         {
             for assignment in ExtractAssignments::from(function).extracted.into_iter() {
+                //if we use an operator such as += we do not want to check for event args with RHS
+                let check_rhs = assignment.operator == "=";
                 let left_hand_side = assignment.left_hand_side.as_ref();
                 let right_hand_side = assignment.right_hand_side.as_ref();
                 let left_identifier_id = return_identifier_referenced_dec(left_hand_side.clone());
                 let right_identifier_name_result = return_identifier_name(right_hand_side.clone());
                 let left_identifier_name_result = return_identifier_name(left_hand_side.clone());
                 let referenced_id = left_identifier_id?;
-                let right_identifier_name = right_identifier_name_result?;
-                let left_identifier_name = left_identifier_name_result?;
+                let right_identifier_name = right_identifier_name_result.unwrap();
+                let left_identifier_name = left_identifier_name_result.unwrap();
 
                 //assignment is happening on state variable
-                if self.mutable_state_variables.contains_key(&referenced_id) {
+                if mutable_state_variables.contains_key(&referenced_id) {
                     let mut counter: u32 = 0; //counter for number of times state variable is logged in events in same function
 
                     let body = function
@@ -90,6 +91,7 @@ impl IssueDetector for StateVariableNotLoggedInEventDetector {
                                 &left_identifier_name,
                                 &right_identifier_name,
                                 referenced_id,
+                                check_rhs,
                             ) {
                                 counter += 1;
                             }
@@ -159,9 +161,12 @@ fn return_identifier_referenced_dec(expression: Expression) -> Result<i64, &'sta
 
 fn return_identifier_name(expression: Expression) -> Result<String, &'static str> {
     match expression {
-        Expression::Identifier(left_identifier) => Ok(left_identifier.name),
+        Expression::Identifier(exp_identifier) => Ok(exp_identifier.name),
         //we only get MemberAccess when the expression is a subfield of a struct so it is safe to just grab that member's name
-        Expression::MemberAccess(left_struct) => Ok(left_struct.member_name),
+        Expression::MemberAccess(exp_struct) => Ok(exp_struct.member_name),
+        Expression::Literal(exp_literal) => {
+            Ok(exp_literal.value.ok_or("Failed to unwrap literal value")?)
+        }
         _ => Err("Unexpected type in assignment"),
     }
 }
@@ -171,10 +176,12 @@ fn check_event_args(
     left_var_name: &String,
     right_var_name: &String,
     referenced_id: i64,
+    check_rhs: bool,
 ) -> bool {
     match event {
         ASTNode::Identifier(event_identifier) => {
-            event_identifier.name == *left_var_name || event_identifier.name == *right_var_name
+            event_identifier.name == *left_var_name
+                || (check_rhs && event_identifier.name == *right_var_name)
         }
         ASTNode::MemberAccess(event_member_access) => {
             //if we are checking a struct subfield name we must confirm the parent structs are the same
@@ -184,10 +191,17 @@ fn check_event_args(
                 if let Some(struct_ref_id) = event_identifier.referenced_declaration {
                     return struct_ref_id == referenced_id
                         && (event_member_access.member_name == *left_var_name
-                            || event_member_access.member_name == *right_var_name);
+                            || (check_rhs && event_identifier.name == *right_var_name));
                 }
             }
             //event does not have identifier so cannot match struct
+            false
+        }
+        ASTNode::Literal(event_literal) => {
+            //if we are checking a literal then they do not have a name so we must check the value instead
+            if let Some(event_arg) = &event_literal.value {
+                return event_arg == left_var_name || (check_rhs && event_arg == right_var_name);
+            }
             false
         }
 
@@ -209,7 +223,7 @@ mod template_detector_tests {
             "../tests/contract-playground/src/StateVariableEvents.sol",
         );
 
-        const EXPECTED_NO_OF_FAILURES: usize = 5;
+        const EXPECTED_NO_OF_FAILURES: usize = 10;
         let mut detector = StateVariableNotLoggedInEventDetector::default();
         let found = detector.detect(&context).unwrap();
         // assert that the detector found an issue
@@ -221,7 +235,8 @@ mod template_detector_tests {
         //check the correct assignment lines are triggering detection
         //@dev if StateVariableEvents.sol is modified these line notations will have to be updated
 
-        let expected_lines: [usize; EXPECTED_NO_OF_FAILURES] = [21, 26, 37, 48, 49];
+        let expected_lines: [usize; EXPECTED_NO_OF_FAILURES] =
+            [25, 29, 33, 43, 47, 52, 63, 74, 75, 89];
         for instance in detector.instances() {
             assert!(expected_lines.contains(&instance.0 .1))
         }
