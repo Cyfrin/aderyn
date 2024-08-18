@@ -1,4 +1,3 @@
-use incorrect_erc20_interface::IncorrectERC20InterfaceDetector;
 use serde::{Deserialize, Serialize};
 use strum::{Display, EnumCount, EnumIter, EnumString};
 
@@ -83,6 +82,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<ContractLocksEtherDetector>::default(),
         Box::<IncorrectERC721InterfaceDetector>::default(),
         Box::<IncorrectERC20InterfaceDetector>::default(),
+        Box::<UninitializedLocalVariableDetector>::default(),
         Box::<ReturnBombDetector>::default(),
         Box::<OutOfOrderRetryableDetector>::default(),
         Box::<FunctionInitializingStateDetector>::default(),
@@ -166,7 +166,11 @@ pub(crate) enum IssueDetectorNamePool {
     TxOriginUsedForAuth,
     MsgValueInLoop,
     ContractLocksEther,
+<<<<<<< HEAD
     IncorrectERC20Interface,
+=======
+    UninitializedLocalVariable,
+>>>>>>> parent of a98f487b (Revert "Detector: Uninitialized local variables (#646)")
     ReturnBomb,
     OutOfOrderRetryable,
     // NOTE: `Undecided` will be the default name (for new bots).
@@ -178,6 +182,7 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
     // Expects a valid detector_name
     let detector_name = IssueDetectorNamePool::from_str(detector_name).ok()?;
     match detector_name {
+<<<<<<< HEAD
         IssueDetectorNamePool::BuiltinSymbolShadow => {
             Some(Box::<BuiltinSymbolShadowDetector>::default())
         }
@@ -192,6 +197,10 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         }
         IssueDetectorNamePool::IncorrectERC20Interface => {
             Some(Box::<IncorrectERC20InterfaceDetector>::default())
+=======
+        IssueDetectorNamePool::UninitializedLocalVariable => {
+            Some(Box::<UninitializedLocalVariableDetector>::default())
+>>>>>>> parent of a98f487b (Revert "Detector: Uninitialized local variables (#646)")
         }
         IssueDetectorNamePool::ReturnBomb => Some(Box::<ReturnBombDetector>::default()),
         IssueDetectorNamePool::UnusedStateVariable => {
