@@ -4305,7 +4305,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-<<<<<<< HEAD
+                  "uri": "src/BuiltinSymbolShadow.sol"
+                },
+                "region": {
+                  "byteLength": 41,
+                  "byteOffset": 125
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/ConstFuncChangeState.sol"
                 },
                 "region": {
@@ -4333,13 +4343,6 @@
                 "region": {
                   "byteLength": 89,
                   "byteOffset": 517
-=======
-                  "uri": "src/BuiltinSymbolShadow.sol"
-                },
-                "region": {
-                  "byteLength": 41,
-                  "byteOffset": 125
->>>>>>> dev
                 }
               }
             },

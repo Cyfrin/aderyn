@@ -1,11 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 86,
-<<<<<<< HEAD
-    "total_sloc": 2910
-=======
-    "total_sloc": 2890
->>>>>>> dev
+    "total_source_units": 88,
+    "total_sloc": 3155
   },
   "files_details": {
     "files_details": [
@@ -364,12 +360,8 @@
     ]
   },
   "issue_count": {
-    "high": 39,
-<<<<<<< HEAD
-    "low": 30
-=======
+    "high": 40,
     "low": 31
->>>>>>> dev
   },
   "high_issues": {
     "issues": [
@@ -2824,7 +2816,12 @@
             "src_char": "113:1"
           },
           {
-<<<<<<< HEAD
+            "contract_path": "src/BuiltinSymbolShadow.sol",
+            "line_no": 8,
+            "src": "125:41",
+            "src_char": "125:41"
+          },
+          {
             "contract_path": "src/ConstFuncChangeState.sol",
             "line_no": 8,
             "src": "173:112",
@@ -2841,12 +2838,6 @@
             "line_no": 20,
             "src": "517:89",
             "src_char": "517:89"
-=======
-            "contract_path": "src/BuiltinSymbolShadow.sol",
-            "line_no": 8,
-            "src": "125:41",
-            "src_char": "125:41"
->>>>>>> dev
           },
           {
             "contract_path": "src/ContractLocksEther.sol",
@@ -5147,10 +5138,7 @@
     "return-bomb",
     "out-of-order-retryable",
     "function-initializing-state",
-<<<<<<< HEAD
-    "constant-function-changing-state"
-=======
+    "constant-function-changing-state",
     "builtin-symbol-shadow"
->>>>>>> dev
   ]
 }
