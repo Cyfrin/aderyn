@@ -98,9 +98,7 @@ mod loop_investigation_helper {
         ast::{ASTNode, Expression, ForStatement, Identifier, NodeID, TypeDescriptions},
         context::{
             browser::{ApproximateStorageChangeFinder, ExtractMemberAccesses},
-            investigator::{
-                StandardInvestigationStyle, StandardInvestigator, StandardInvestigatorVisitor,
-            },
+            graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
             workspace_context::WorkspaceContext,
         },
     };
@@ -155,14 +153,10 @@ mod loop_investigation_helper {
                 context,
             };
 
-            let investigator = StandardInvestigator::new(
-                context,
-                &[&(self.into())],
-                StandardInvestigationStyle::Downstream,
-            )
-            .ok()?;
+            let investigator =
+                CallGraph::new(context, &[&(self.into())], CallGraphDirection::Inward).ok()?;
 
-            investigator.investigate(context, &mut tracker).ok()?;
+            investigator.accept(context, &mut tracker).ok()?;
 
             tracker.changes.take()
         }
@@ -173,7 +167,7 @@ mod loop_investigation_helper {
         changes: Option<ApproximateStorageChangeFinder<'a>>,
     }
 
-    impl<'a> StandardInvestigatorVisitor for StateVariableChangeTracker<'a> {
+    impl<'a> CallGraphVisitor for StateVariableChangeTracker<'a> {
         fn visit_any(&mut self, node: &ASTNode) -> eyre::Result<()> {
             let changes = ApproximateStorageChangeFinder::from(self.context, node);
             if self.changes.is_none() {

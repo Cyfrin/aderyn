@@ -7,7 +7,7 @@ use std::{
 
 use crate::{
     ast::SourceUnit,
-    context::{graph::traits::Transpose, workspace_context::WorkspaceContext},
+    context::{graph::Transpose, workspace_context::WorkspaceContext},
 };
 use crate::{context::graph::WorkspaceCallGraph, visitor::ast_visitor::Node};
 
@@ -92,12 +92,12 @@ pub fn load_solidity_source_unit(filepath: &str) -> WorkspaceContext {
 }
 
 fn load_callgraphs(context: &mut WorkspaceContext) {
-    let forward_callgraph = WorkspaceCallGraph::from_context(context).unwrap();
-    let reverse_callgraph = WorkspaceCallGraph {
-        graph: forward_callgraph.graph.reverse(),
+    let inward_callgraph = WorkspaceCallGraph::from_context(context).unwrap();
+    let outward_callgraph = WorkspaceCallGraph {
+        raw_callgraph: inward_callgraph.raw_callgraph.reverse(),
     };
-    context.forward_callgraph = Some(forward_callgraph);
-    context.reverse_callgraph = Some(reverse_callgraph);
+    context.inward_callgraph = Some(inward_callgraph);
+    context.outward_callgraph = Some(outward_callgraph);
 }
 
 fn absorb_ast_content_into_context(

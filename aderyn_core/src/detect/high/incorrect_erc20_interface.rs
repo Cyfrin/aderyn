@@ -197,29 +197,6 @@ mod erc_matching_function_signature_helper {
             satisifer.satisfies(self)
         }
     }
-
-    // Helpers to match return types (bool & uint256)
-    impl FunctionDefinition {
-        pub fn returns_bool(&self) -> bool {
-            let params = &self.return_parameters.parameters;
-            params.len() == 1
-                && params[0]
-                    .type_descriptions
-                    .type_string
-                    .as_ref()
-                    .is_some_and(|type_string| type_string == "bool")
-        }
-
-        pub fn returns_uint256(&self) -> bool {
-            let params = &self.return_parameters.parameters;
-            params.len() == 1
-                && params[0]
-                    .type_descriptions
-                    .type_string
-                    .as_ref()
-                    .is_some_and(|type_string| type_string == "uint256")
-        }
-    }
 }
 
 #[cfg(test)]
