@@ -1,7 +1,11 @@
 {
   "files_summary": {
     "total_source_units": 86,
+<<<<<<< HEAD
     "total_sloc": 2912
+=======
+    "total_sloc": 2890
+>>>>>>> dev
   },
   "files_details": {
     "files_details": [
@@ -24,6 +28,10 @@
       {
         "file_path": "src/BooleanEquality.sol",
         "n_sloc": 27
+      },
+      {
+        "file_path": "src/BuiltinSymbolShadow.sol",
+        "n_sloc": 14
       },
       {
         "file_path": "src/CallGraphTests.sol",
@@ -128,6 +136,10 @@
       {
         "file_path": "src/IncorrectERC20.sol",
         "n_sloc": 97
+      },
+      {
+        "file_path": "src/IncorrectERC721.sol",
+        "n_sloc": 231
       },
       {
         "file_path": "src/IncorrectShift.sol",
@@ -352,7 +364,11 @@
     ]
   },
   "issue_count": {
+<<<<<<< HEAD
     "high": 38,
+=======
+    "high": 39,
+>>>>>>> dev
     "low": 31
   },
   "high_issues": {
@@ -1320,6 +1336,12 @@
             "src_char": "97:1"
           },
           {
+            "contract_path": "src/BuiltinSymbolShadow.sol",
+            "line_no": 5,
+            "src": "92:8",
+            "src_char": "92:8"
+          },
+          {
             "contract_path": "src/ConstantFuncsAssembly.sol",
             "line_no": 6,
             "src": "110:20",
@@ -1348,6 +1370,12 @@
             "line_no": 10,
             "src": "355:7",
             "src_char": "355:7"
+          },
+          {
+            "contract_path": "src/IncorrectERC721.sol",
+            "line_no": 147,
+            "src": "4076:11",
+            "src_char": "4076:11"
           },
           {
             "contract_path": "src/PublicVariableReadInExternalContext.sol",
@@ -2170,6 +2198,61 @@
         ]
       },
       {
+        "title": "Incorrect ERC721 interface.",
+        "description": "Incorrect return values for ERC721 functions. A contract compiled with Solidity > 0.4.22 interacting with these functions will fail to execute them, as the return value is missing. Set the appropriate return values and types for the defined ERC721 functions.",
+        "detector_name": "incorrect-erc721-interface",
+        "instances": [
+          {
+            "contract_path": "src/IncorrectERC721.sol",
+            "line_no": 14,
+            "src": "433:9",
+            "src_char": "433:9"
+          },
+          {
+            "contract_path": "src/IncorrectERC721.sol",
+            "line_no": 18,
+            "src": "551:7",
+            "src_char": "551:7"
+          },
+          {
+            "contract_path": "src/IncorrectERC721.sol",
+            "line_no": 22,
+            "src": "696:7",
+            "src_char": "696:7"
+          },
+          {
+            "contract_path": "src/IncorrectERC721.sol",
+            "line_no": 37,
+            "src": "1092:11",
+            "src_char": "1092:11"
+          },
+          {
+            "contract_path": "src/IncorrectERC721.sol",
+            "line_no": 41,
+            "src": "1231:17",
+            "src_char": "1231:17"
+          },
+          {
+            "contract_path": "src/IncorrectERC721.sol",
+            "line_no": 49,
+            "src": "1484:16",
+            "src_char": "1484:16"
+          },
+          {
+            "contract_path": "src/IncorrectERC721.sol",
+            "line_no": 56,
+            "src": "1684:12",
+            "src_char": "1684:12"
+          },
+          {
+            "contract_path": "src/IncorrectERC721.sol",
+            "line_no": 71,
+            "src": "2086:16",
+            "src_char": "2086:16"
+          }
+        ]
+      },
+      {
         "title": "Incorrect ERC20 interface.",
         "description": "Incorrect return values for ERC20 functions. A contract compiled with Solidity > 0.4.22 interacting with these functions will fail to execute them, as the return value is missing. Set the appropriate return values and types for the defined ERC20 functions.",
         "detector_name": "incorrect-erc20-interface",
@@ -2456,6 +2539,12 @@
         "detector_name": "unspecific-solidity-pragma",
         "instances": [
           {
+            "contract_path": "src/BuiltinSymbolShadow.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/CompilerBugStorageSignedIntegerArray.sol",
             "line_no": 2,
             "src": "32:23",
@@ -2535,6 +2624,12 @@
           },
           {
             "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/IncorrectERC721.sol",
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
@@ -2714,6 +2809,12 @@
             "line_no": 6,
             "src": "113:1",
             "src_char": "113:1"
+          },
+          {
+            "contract_path": "src/BuiltinSymbolShadow.sol",
+            "line_no": 8,
+            "src": "125:41",
+            "src_char": "125:41"
           },
           {
             "contract_path": "src/ContractLocksEther.sol",
@@ -3408,6 +3509,12 @@
             "src_char": "5655:54"
           },
           {
+            "contract_path": "src/IncorrectERC721.sol",
+            "line_no": 112,
+            "src": "3122:115",
+            "src_char": "3122:115"
+          },
+          {
             "contract_path": "src/TestERC20.sol",
             "line_no": 14,
             "src": "338:70",
@@ -3676,6 +3783,12 @@
             "src_char": "32:23"
           },
           {
+            "contract_path": "src/IncorrectERC721.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/KeccakContract.sol",
             "line_no": 2,
             "src": "32:23",
@@ -3833,6 +3946,12 @@
         "detector_name": "useless-modifier",
         "instances": [
           {
+            "contract_path": "src/BuiltinSymbolShadow.sol",
+            "line_no": 17,
+            "src": "358:39",
+            "src_char": "358:39"
+          },
+          {
             "contract_path": "src/CallGraphTests.sol",
             "line_no": 10,
             "src": "186:22",
@@ -3916,6 +4035,12 @@
             "line_no": 14,
             "src": "457:23",
             "src_char": "457:23"
+          },
+          {
+            "contract_path": "src/BuiltinSymbolShadow.sol",
+            "line_no": 8,
+            "src": "125:41",
+            "src_char": "125:41"
           },
           {
             "contract_path": "src/CallGraphTests.sol",
@@ -4888,6 +5013,7 @@
         ]
       },
       {
+<<<<<<< HEAD
         "title": "Costly operations inside loops.",
         "description": "Invoking `SSTORE`operations in loops may lead to Out-of-gas errors. Use a local variable to hold the loop computation result.",
         "detector_name": "costly-operations-inside-loops",
@@ -4963,6 +5089,35 @@
             "line_no": 17,
             "src": "512:110",
             "src_char": "512:110"
+=======
+        "title": "Builtin Symbol Shadowing",
+        "description": "Name clashes with a built-in-symbol. Consider renaming it.",
+        "detector_name": "builtin-symbol-shadow",
+        "instances": [
+          {
+            "contract_path": "src/BuiltinSymbolShadow.sol",
+            "line_no": 5,
+            "src": "92:8",
+            "src_char": "92:8"
+          },
+          {
+            "contract_path": "src/BuiltinSymbolShadow.sol",
+            "line_no": 8,
+            "src": "125:41",
+            "src_char": "125:41"
+          },
+          {
+            "contract_path": "src/BuiltinSymbolShadow.sol",
+            "line_no": 17,
+            "src": "358:39",
+            "src_char": "358:39"
+          },
+          {
+            "contract_path": "src/BuiltinSymbolShadow.sol",
+            "line_no": 22,
+            "src": "414:15",
+            "src_char": "414:15"
+>>>>>>> dev
           }
         ]
       }
@@ -5033,10 +5188,15 @@
     "tx-origin-used-for-auth",
     "msg-value-in-loop",
     "contract-locks-ether",
+    "incorrect-erc721-interface",
     "incorrect-erc20-interface",
     "return-bomb",
     "out-of-order-retryable",
     "function-initializing-state",
+<<<<<<< HEAD
     "costly-operations-inside-loops"
+=======
+    "builtin-symbol-shadow"
+>>>>>>> dev
   ]
 }

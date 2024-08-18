@@ -6,9 +6,8 @@ use crate::ast::{ASTNode, NodeID};
 
 use crate::capture;
 use crate::context::browser::ApproximateStorageChangeFinder;
-use crate::context::investigator::{
-    StandardInvestigationStyle, StandardInvestigator, StandardInvestigatorVisitor,
-};
+
+use crate::context::graph::{CallGraph, CallGraphDirection, CallGraphVisitor};
 use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
     context::workspace_context::WorkspaceContext,
@@ -76,10 +75,8 @@ fn changes_state(context: &WorkspaceContext, ast_node: &ASTNode) -> Option<bool>
         state_var_has_changed: false,
         context,
     };
-    let investigator =
-        StandardInvestigator::new(context, &[ast_node], StandardInvestigationStyle::Downstream)
-            .ok()?;
-    investigator.investigate(context, &mut tracker).ok()?;
+    let investigator = CallGraph::new(context, &[ast_node], CallGraphDirection::Inward).ok()?;
+    investigator.accept(context, &mut tracker).ok()?;
     Some(tracker.state_var_has_changed)
 }
 
@@ -88,7 +85,7 @@ struct StateVariableChangeTracker<'a> {
     context: &'a WorkspaceContext,
 }
 
-impl<'a> StandardInvestigatorVisitor for StateVariableChangeTracker<'a> {
+impl<'a> CallGraphVisitor for StateVariableChangeTracker<'a> {
     fn visit_any(&mut self, node: &crate::ast::ASTNode) -> eyre::Result<()> {
         if self.state_var_has_changed {
             return Ok(());

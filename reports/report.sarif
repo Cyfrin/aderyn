@@ -1707,6 +1707,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/BuiltinSymbolShadow.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 92
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/ConstantFuncsAssembly.sol"
                 },
                 "region": {
@@ -1756,6 +1767,17 @@
                 "region": {
                   "byteLength": 7,
                   "byteOffset": 355
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC721.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 4076
                 }
               }
             },
@@ -3194,6 +3216,103 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/IncorrectERC721.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 433
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC721.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 551
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC721.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 696
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC721.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 1092
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC721.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 1231
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC721.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 1484
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC721.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 1684
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC721.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 2086
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Incorrect return values for ERC721 functions. A contract compiled with Solidity > 0.4.22 interacting with these functions will fail to execute them, as the return value is missing. Set the appropriate return values and types for the defined ERC721 functions."
+          },
+          "ruleId": "incorrect-erc721-interface"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/IncorrectERC20.sol"
                 },
                 "region": {
@@ -3675,6 +3794,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/BuiltinSymbolShadow.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/CompilerBugStorageSignedIntegerArray.sol"
                 },
                 "region": {
@@ -3819,6 +3949,17 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/IncorrectERC20.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC721.sol"
                 },
                 "region": {
                   "byteLength": 23,
@@ -4138,6 +4279,17 @@
                 "region": {
                   "byteLength": 1,
                   "byteOffset": 113
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/BuiltinSymbolShadow.sol"
+                },
+                "region": {
+                  "byteLength": 41,
+                  "byteOffset": 125
                 }
               }
             },
@@ -5405,6 +5557,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/IncorrectERC721.sol"
+                },
+                "region": {
+                  "byteLength": 115,
+                  "byteOffset": 3122
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/TestERC20.sol"
                 },
                 "region": {
@@ -5881,6 +6044,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/IncorrectERC721.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/KeccakContract.sol"
                 },
                 "region": {
@@ -6165,6 +6339,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/BuiltinSymbolShadow.sol"
+                },
+                "region": {
+                  "byteLength": 39,
+                  "byteOffset": 358
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/CallGraphTests.sol"
                 },
                 "region": {
@@ -6311,6 +6496,17 @@
                 "region": {
                   "byteLength": 23,
                   "byteOffset": 457
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/BuiltinSymbolShadow.sol"
+                },
+                "region": {
+                  "byteLength": 41,
+                  "byteOffset": 125
                 }
               }
             },
@@ -8047,39 +8243,64 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+<<<<<<< HEAD
                   "uri": "src/CostlyOperationsInsideLoops.sol"
                 },
                 "region": {
                   "byteLength": 79,
                   "byteOffset": 214
+=======
+                  "uri": "src/BuiltinSymbolShadow.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 92
+>>>>>>> dev
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
+<<<<<<< HEAD
                   "uri": "src/MsgValueInLoop.sol"
                 },
                 "region": {
                   "byteLength": 107,
                   "byteOffset": 289
+=======
+                  "uri": "src/BuiltinSymbolShadow.sol"
+                },
+                "region": {
+                  "byteLength": 41,
+                  "byteOffset": 125
+>>>>>>> dev
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
+<<<<<<< HEAD
                   "uri": "src/MsgValueInLoop.sol"
                 },
                 "region": {
                   "byteLength": 122,
                   "byteOffset": 658
+=======
+                  "uri": "src/BuiltinSymbolShadow.sol"
+                },
+                "region": {
+                  "byteLength": 39,
+                  "byteOffset": 358
+>>>>>>> dev
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
+<<<<<<< HEAD
                   "uri": "src/MsgValueInLoop.sol"
                 },
                 "region": {
@@ -8173,14 +8394,27 @@
                 "region": {
                   "byteLength": 110,
                   "byteOffset": 512
+=======
+                  "uri": "src/BuiltinSymbolShadow.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 414
+>>>>>>> dev
                 }
               }
             }
           ],
           "message": {
+<<<<<<< HEAD
             "text": "Invoking `SSTORE`operations in loops may lead to Out-of-gas errors. Use a local variable to hold the loop computation result."
           },
           "ruleId": "costly-operations-inside-loops"
+=======
+            "text": "Name clashes with a built-in-symbol. Consider renaming it."
+          },
+          "ruleId": "builtin-symbol-shadow"
+>>>>>>> dev
         }
       ],
       "tool": {
