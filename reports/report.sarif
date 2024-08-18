@@ -4274,7 +4274,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-<<<<<<< HEAD
                   "uri": "src/AssertStateChange.sol"
                 },
                 "region": {
@@ -4291,13 +4290,17 @@
                 "region": {
                   "byteLength": 4,
                   "byteOffset": 199
-=======
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/BuiltinSymbolShadow.sol"
                 },
                 "region": {
                   "byteLength": 41,
                   "byteOffset": 125
->>>>>>> dev
                 }
               }
             },
@@ -8284,13 +8287,26 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-<<<<<<< HEAD
                   "uri": "src/AssertStateChange.sol"
                 },
                 "region": {
                   "byteLength": 23,
                   "byteOffset": 154
-=======
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Argument to `assert()` modifies the state. Use `require` for invariants modifying state."
+          },
+          "ruleId": "assert-state-change"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/BuiltinSymbolShadow.sol"
                 },
                 "region": {
@@ -8329,21 +8345,14 @@
                 "region": {
                   "byteLength": 15,
                   "byteOffset": 414
->>>>>>> dev
                 }
               }
             }
           ],
           "message": {
-<<<<<<< HEAD
-            "text": "Argument to `assert()` modifies the state. Use `require` for invariants modifying state."
-          },
-          "ruleId": "assert-state-change"
-=======
             "text": "Name clashes with a built-in-symbol. Consider renaming it."
           },
           "ruleId": "builtin-symbol-shadow"
->>>>>>> dev
         }
       ],
       "tool": {

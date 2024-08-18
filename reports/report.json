@@ -1,11 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 86,
-<<<<<<< HEAD
-    "total_sloc": 2906
-=======
-    "total_sloc": 2890
->>>>>>> dev
+    "total_source_units": 88,
+    "total_sloc": 3151
   },
   "files_details": {
     "files_details": [
@@ -364,12 +360,8 @@
     ]
   },
   "issue_count": {
-<<<<<<< HEAD
-    "high": 38,
-=======
     "high": 39,
->>>>>>> dev
-    "low": 31
+    "low": 32
   },
   "high_issues": {
     "issues": [
@@ -2805,7 +2797,6 @@
             "src_char": "113:1"
           },
           {
-<<<<<<< HEAD
             "contract_path": "src/AssertStateChange.sol",
             "line_no": 8,
             "src": "131:3",
@@ -2816,12 +2807,12 @@
             "line_no": 12,
             "src": "199:4",
             "src_char": "199:4"
-=======
+          },
+          {
             "contract_path": "src/BuiltinSymbolShadow.sol",
             "line_no": 8,
             "src": "125:41",
             "src_char": "125:41"
->>>>>>> dev
           },
           {
             "contract_path": "src/ContractLocksEther.sol",
@@ -5038,7 +5029,6 @@
         ]
       },
       {
-<<<<<<< HEAD
         "title": "Incorrect use of `assert()`",
         "description": "Argument to `assert()` modifies the state. Use `require` for invariants modifying state.",
         "detector_name": "assert-state-change",
@@ -5048,7 +5038,10 @@
             "line_no": 9,
             "src": "154:23",
             "src_char": "154:23"
-=======
+          }
+        ]
+      },
+      {
         "title": "Builtin Symbol Shadowing",
         "description": "Name clashes with a built-in-symbol. Consider renaming it.",
         "detector_name": "builtin-symbol-shadow",
@@ -5076,7 +5069,6 @@
             "line_no": 22,
             "src": "414:15",
             "src_char": "414:15"
->>>>>>> dev
           }
         ]
       }
@@ -5152,10 +5144,7 @@
     "return-bomb",
     "out-of-order-retryable",
     "function-initializing-state",
-<<<<<<< HEAD
-    "assert-state-change"
-=======
+    "assert-state-change",
     "builtin-symbol-shadow"
->>>>>>> dev
   ]
 }
