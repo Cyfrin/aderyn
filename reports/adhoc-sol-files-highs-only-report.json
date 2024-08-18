@@ -198,6 +198,7 @@
     "tx-origin-used-for-auth",
     "msg-value-in-loop",
     "contract-locks-ether",
+    "incorrect-erc721-interface",
     "incorrect-erc20-interface",
     "out-of-order-retryable"
   ]

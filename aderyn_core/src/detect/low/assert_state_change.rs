@@ -64,9 +64,7 @@ mod assert_state_change_tracker {
         ast::{ASTNode, FunctionCall},
         context::{
             browser::ApproximateStorageChangeFinder,
-            investigator::{
-                StandardInvestigationStyle, StandardInvestigator, StandardInvestigatorVisitor,
-            },
+            graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
             workspace_context::WorkspaceContext,
         },
     };
@@ -76,7 +74,7 @@ mod assert_state_change_tracker {
         context: &'a WorkspaceContext,
     }
 
-    impl<'a> StandardInvestigatorVisitor for StateVariableChangeTracker<'a> {
+    impl<'a> CallGraphVisitor for StateVariableChangeTracker<'a> {
         fn visit_any(&mut self, node: &crate::ast::ASTNode) -> eyre::Result<()> {
             if self.has_some_state_variable_changed {
                 return Ok(());
@@ -105,14 +103,10 @@ mod assert_state_change_tracker {
 
             let ast_nodes: &[&ASTNode] = &(arguments.iter().collect::<Vec<_>>());
 
-            let investigator = StandardInvestigator::new(
-                context,
-                ast_nodes,
-                StandardInvestigationStyle::Downstream,
-            )
-            .ok()?;
+            let investigator =
+                CallGraph::new(context, ast_nodes, CallGraphDirection::Inward).ok()?;
 
-            investigator.investigate(context, &mut tracker).ok()?;
+            investigator.accept(context, &mut tracker).ok()?;
             Some(tracker.has_some_state_variable_changed)
         }
     }
