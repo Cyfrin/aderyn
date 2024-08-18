@@ -8243,64 +8243,39 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-<<<<<<< HEAD
                   "uri": "src/CostlyOperationsInsideLoops.sol"
                 },
                 "region": {
                   "byteLength": 79,
                   "byteOffset": 214
-=======
-                  "uri": "src/BuiltinSymbolShadow.sol"
-                },
-                "region": {
-                  "byteLength": 8,
-                  "byteOffset": 92
->>>>>>> dev
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-<<<<<<< HEAD
                   "uri": "src/MsgValueInLoop.sol"
                 },
                 "region": {
                   "byteLength": 107,
                   "byteOffset": 289
-=======
-                  "uri": "src/BuiltinSymbolShadow.sol"
-                },
-                "region": {
-                  "byteLength": 41,
-                  "byteOffset": 125
->>>>>>> dev
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-<<<<<<< HEAD
                   "uri": "src/MsgValueInLoop.sol"
                 },
                 "region": {
                   "byteLength": 122,
                   "byteOffset": 658
-=======
-                  "uri": "src/BuiltinSymbolShadow.sol"
-                },
-                "region": {
-                  "byteLength": 39,
-                  "byteOffset": 358
->>>>>>> dev
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-<<<<<<< HEAD
                   "uri": "src/MsgValueInLoop.sol"
                 },
                 "region": {
@@ -8394,27 +8369,67 @@
                 "region": {
                   "byteLength": 110,
                   "byteOffset": 512
-=======
-                  "uri": "src/BuiltinSymbolShadow.sol"
-                },
-                "region": {
-                  "byteLength": 15,
-                  "byteOffset": 414
->>>>>>> dev
                 }
               }
             }
           ],
           "message": {
-<<<<<<< HEAD
             "text": "Invoking `SSTORE`operations in loops may lead to Out-of-gas errors. Use a local variable to hold the loop computation result."
           },
           "ruleId": "costly-operations-inside-loops"
-=======
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/BuiltinSymbolShadow.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 92
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/BuiltinSymbolShadow.sol"
+                },
+                "region": {
+                  "byteLength": 41,
+                  "byteOffset": 125
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/BuiltinSymbolShadow.sol"
+                },
+                "region": {
+                  "byteLength": 39,
+                  "byteOffset": 358
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/BuiltinSymbolShadow.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 414
+                }
+              }
+            }
+          ],
+          "message": {
             "text": "Name clashes with a built-in-symbol. Consider renaming it."
           },
           "ruleId": "builtin-symbol-shadow"
->>>>>>> dev
         }
       ],
       "tool": {

@@ -1,11 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 86,
-<<<<<<< HEAD
-    "total_sloc": 2912
-=======
-    "total_sloc": 2890
->>>>>>> dev
+    "total_source_units": 88,
+    "total_sloc": 3157
   },
   "files_details": {
     "files_details": [
@@ -364,12 +360,8 @@
     ]
   },
   "issue_count": {
-<<<<<<< HEAD
-    "high": 38,
-=======
     "high": 39,
->>>>>>> dev
-    "low": 31
+    "low": 32
   },
   "high_issues": {
     "issues": [
@@ -5013,7 +5005,6 @@
         ]
       },
       {
-<<<<<<< HEAD
         "title": "Costly operations inside loops.",
         "description": "Invoking `SSTORE`operations in loops may lead to Out-of-gas errors. Use a local variable to hold the loop computation result.",
         "detector_name": "costly-operations-inside-loops",
@@ -5089,7 +5080,10 @@
             "line_no": 17,
             "src": "512:110",
             "src_char": "512:110"
-=======
+          }
+        ]
+      },
+      {
         "title": "Builtin Symbol Shadowing",
         "description": "Name clashes with a built-in-symbol. Consider renaming it.",
         "detector_name": "builtin-symbol-shadow",
@@ -5117,7 +5111,6 @@
             "line_no": 22,
             "src": "414:15",
             "src_char": "414:15"
->>>>>>> dev
           }
         ]
       }
@@ -5193,10 +5186,7 @@
     "return-bomb",
     "out-of-order-retryable",
     "function-initializing-state",
-<<<<<<< HEAD
-    "costly-operations-inside-loops"
-=======
+    "costly-operations-inside-loops",
     "builtin-symbol-shadow"
->>>>>>> dev
   ]
 }
