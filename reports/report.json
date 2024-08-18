@@ -1,12 +1,7 @@
 {
   "files_summary": {
-<<<<<<< HEAD
-    "total_source_units": 86,
-    "total_sloc": 2890
-=======
-    "total_source_units": 82,
-    "total_sloc": 2422
->>>>>>> parent of a98f487b (Revert "Detector: Uninitialized local variables (#646)")
+    "total_source_units": 87,
+    "total_sloc": 2978
   },
   "files_details": {
     "files_details": [
@@ -361,13 +356,8 @@
     ]
   },
   "issue_count": {
-<<<<<<< HEAD
     "high": 39,
-    "low": 31
-=======
-    "high": 36,
-    "low": 30
->>>>>>> parent of a98f487b (Revert "Detector: Uninitialized local variables (#646)")
+    "low": 32
   },
   "high_issues": {
     "issues": [
@@ -5379,16 +5369,12 @@
     "tx-origin-used-for-auth",
     "msg-value-in-loop",
     "contract-locks-ether",
-<<<<<<< HEAD
     "incorrect-erc721-interface",
     "incorrect-erc20-interface",
+    "uninitialized-local-variable",
     "return-bomb",
     "out-of-order-retryable",
     "function-initializing-state",
     "builtin-symbol-shadow"
-=======
-    "uninitialized-local-variable",
-    "return-bomb"
->>>>>>> parent of a98f487b (Revert "Detector: Uninitialized local variables (#646)")
   ]
 }
