@@ -38,9 +38,8 @@ impl IssueDetector for ConstantFunctionChangingStateDetector {
                 context,
             };
 
-            let investigator =
-                CallGraph::new(context, &[&(func.into())], CallGraphDirection::Inward)?;
-            investigator.accept(context, &mut tracker)?;
+            let callgraph = CallGraph::new(context, &[&(func.into())], CallGraphDirection::Inward)?;
+            callgraph.accept(context, &mut tracker)?;
 
             if tracker.state_var_has_changed {
                 capture!(self, context, func);

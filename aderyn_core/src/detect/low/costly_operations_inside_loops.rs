@@ -75,8 +75,8 @@ fn changes_state(context: &WorkspaceContext, ast_node: &ASTNode) -> Option<bool>
         state_var_has_changed: false,
         context,
     };
-    let investigator = CallGraph::new(context, &[ast_node], CallGraphDirection::Inward).ok()?;
-    investigator.accept(context, &mut tracker).ok()?;
+    let callgraph = CallGraph::new(context, &[ast_node], CallGraphDirection::Inward).ok()?;
+    callgraph.accept(context, &mut tracker).ok()?;
     Some(tracker.state_var_has_changed)
 }
 
