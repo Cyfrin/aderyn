@@ -66,7 +66,8 @@ mod contract_eth_helper {
     use crate::{
         ast::{ASTNode, ContractDefinition, StateMutability, Visibility},
         context::{
-            browser::ExtractFunctionDefinitions, investigator::*,
+            browser::ExtractFunctionDefinitions,
+            graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
             workspace_context::WorkspaceContext,
         },
         detect::helpers,
@@ -111,14 +112,14 @@ mod contract_eth_helper {
 
                     let mut tracker = EthWithdrawalAllowerTracker::default();
 
-                    let investigator = StandardInvestigator::new(
+                    let callgraph = CallGraph::new(
                         context,
                         funcs.iter().collect::<Vec<_>>().as_slice(),
-                        StandardInvestigationStyle::Downstream,
+                        CallGraphDirection::Inward,
                     )
                     .ok()?;
 
-                    investigator.investigate(context, &mut tracker).ok()?;
+                    callgraph.accept(context, &mut tracker).ok()?;
 
                     if tracker.has_calls_that_sends_native_eth {
                         return Some(true);
@@ -137,7 +138,7 @@ mod contract_eth_helper {
         has_calls_that_sends_native_eth: bool,
     }
 
-    impl StandardInvestigatorVisitor for EthWithdrawalAllowerTracker {
+    impl CallGraphVisitor for EthWithdrawalAllowerTracker {
         fn visit_any(&mut self, ast_node: &ASTNode) -> eyre::Result<()> {
             if !self.has_calls_that_sends_native_eth
                 && helpers::has_calls_that_sends_native_eth(ast_node)

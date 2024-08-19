@@ -114,15 +114,12 @@ pub fn aderyn_is_currently_running_newest_version() -> Result<bool, reqwest::Err
         .build()?;
 
     let latest_version_checker = client
-        .get("https://crates.io/api/v1/crates?q=aderyn&per_page=1")
+        .get("https://api.github.com/repos/Cyfrin/aderyn/releases/latest")
         .send()?;
 
     let data = latest_version_checker.json::<Value>()?;
-
-    let newest_version = data["crates"][0]["newest_version"].to_string();
-    let newest_version = &newest_version[1..newest_version.len() - 1];
-
-    let newest = Version::parse(newest_version).unwrap();
+    let newest =
+        Version::parse(data["tag_name"].as_str().unwrap().replace('v', "").as_str()).unwrap();
     let current = Version::parse(env!("CARGO_PKG_VERSION")).unwrap();
 
     Ok(current >= newest)

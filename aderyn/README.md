@@ -1,4 +1,9 @@
 
+> ⚠️ **Installing via crates is no longer fully supported. `cyfrinup` is the preferred installation method.**.
+>
+> For the best experience, please remove the legacy crate installation by running `cargo uninstall aderyn`, and use `cyfrinup` instead.
+>
+> Full install instructions are [here](#installation).
 
 <p align="center">
     <br />
