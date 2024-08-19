@@ -153,10 +153,10 @@ mod loop_investigation_helper {
                 context,
             };
 
-            let investigator =
+            let callgraph =
                 CallGraph::new(context, &[&(self.into())], CallGraphDirection::Inward).ok()?;
 
-            investigator.accept(context, &mut tracker).ok()?;
+            callgraph.accept(context, &mut tracker).ok()?;
 
             tracker.changes.take()
         }

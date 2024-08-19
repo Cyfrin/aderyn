@@ -44,10 +44,10 @@ impl IssueDetector for FunctionInitializingStateDetector {
                         let mut tracker =
                             NonConstantStateVariableReferenceDeclarationTracker::new(context);
 
-                        let investigator =
+                        let callgraph =
                             CallGraph::new(context, &[&(func.into())], CallGraphDirection::Inward)?;
 
-                        investigator.accept(context, &mut tracker)?;
+                        callgraph.accept(context, &mut tracker)?;
 
                         if tracker.makes_a_reference {
                             capture!(self, context, variable_declaration);
