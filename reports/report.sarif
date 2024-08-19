@@ -6086,11 +6086,18 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-<<<<<<< HEAD
-                  "uri": "src/CacheArrayLength.sol"
-=======
                   "uri": "src/AssertStateChange.sol"
->>>>>>> dev
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CacheArrayLength.sol"
                 },
                 "region": {
                   "byteLength": 23,
@@ -8432,7 +8439,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-<<<<<<< HEAD
                   "uri": "src/CacheArrayLength.sol"
                 },
                 "region": {
@@ -8460,23 +8466,31 @@
                 "region": {
                   "byteLength": 183,
                   "byteOffset": 1325
-=======
-                  "uri": "src/AssertStateChange.sol"
-                },
-                "region": {
-                  "byteLength": 23,
-                  "byteOffset": 154
->>>>>>> dev
                 }
               }
             }
           ],
           "message": {
-<<<<<<< HEAD
             "text": "Cache the lengths of storage arrays if they are used and not modified in for loops."
           },
           "ruleId": "cache-array-length"
-=======
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/AssertStateChange.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 154
+                }
+              }
+            }
+          ],
+          "message": {
             "text": "Argument to `assert()` modifies the state. Use `require` for invariants modifying state."
           },
           "ruleId": "assert-state-change"
@@ -8484,6 +8498,28 @@
         {
           "level": "note",
           "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CacheArrayLength.sol"
+                },
+                "region": {
+                  "byteLength": 133,
+                  "byteOffset": 546
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CacheArrayLength.sol"
+                },
+                "region": {
+                  "byteLength": 155,
+                  "byteOffset": 928
+                }
+              }
+            },
             {
               "physicalLocation": {
                 "artifactLocation": {
@@ -8621,7 +8657,6 @@
             "text": "Invoking `SSTORE`operations in loops may lead to Out-of-gas errors. Use a local variable to hold the loop computation result."
           },
           "ruleId": "costly-operations-inside-loops"
->>>>>>> dev
         },
         {
           "level": "note",
