@@ -33,7 +33,7 @@ impl IssueDetector for TemplateDetector {
         // capture!(self, context, item);
         // capture!(self, context, item, "hint");
 
-        Ok(!(self.found_instances.is_empty()))
+        Ok(!self.found_instances.is_empty())
     }
 
     fn severity(&self) -> IssueSeverity {
