@@ -624,7 +624,7 @@ mod approximate_storage_change_finder_tests {
         let contract = context.find_contract_by_name("NoStateVarManipulationExample");
         let func = contract.find_function_by_name("dontManipulateStateVar");
 
-        let finder = ApproximateStorageChangeFinder::from(&context, func.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func);
         let no_changes_found = !finder.state_variables_have_been_manipulated();
         println!(
             "NoStateVarManipulationExample::dontManipulateStateVar()\n{:?}",
@@ -645,7 +645,7 @@ mod approximate_storage_change_finder_tests {
         let func = contract.find_function_by_name("manipulateStateVarDirectly");
         let func2 = contract.find_function_by_name("readSimpleStateVars");
 
-        let finder = ApproximateStorageChangeFinder::from(&context, func.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func);
         let changes_found = finder.state_variables_have_been_manipulated();
         println!(
             "SimpleStateVarManipulationExample::manipulateStateVarDirectly()\n{:?}",
@@ -655,7 +655,7 @@ mod approximate_storage_change_finder_tests {
         assert_eq!(finder.directly_manipulated_state_variables.len(), 5);
         assert!(finder.manipulated_storage_pointers.is_empty());
 
-        let finder = ApproximateStorageChangeFinder::from(&context, func2.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func2);
         let changes_found = finder.state_variables_have_been_manipulated();
         println!(
             "SimpleStateVarManipulationExample::readSimpleStateVars()\n{:?}",
@@ -680,7 +680,7 @@ mod approximate_storage_change_finder_tests {
 
         // Test manipulateDirectly() function
 
-        let finder = ApproximateStorageChangeFinder::from(&context, func1.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func1);
         println!(
             "FixedSizeArraysAssignmentExample::manipulateDirectly()\n{:?}",
             finder
@@ -693,7 +693,7 @@ mod approximate_storage_change_finder_tests {
 
         // Test manipulateViaIndexAccess() function
 
-        let finder = ApproximateStorageChangeFinder::from(&context, func2.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func2);
         println!(
             "FixedSizeArraysAssignmentExample::manipulateViaIndexAccess()\n{:?}",
             finder
@@ -725,7 +725,7 @@ mod approximate_storage_change_finder_tests {
         let func_helper = contract.find_function_by_name("manipulateHelper");
 
         // Test manipulateStateVariables
-        let finder = ApproximateStorageChangeFinder::from(&context, func.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func);
         println!(
             "StructPlusFixedArrayAssignmentExample::manipulateStateVariables()\n{:?}",
             finder
@@ -736,7 +736,7 @@ mod approximate_storage_change_finder_tests {
         assert!(finder.manipulated_storage_pointers.is_empty());
 
         // Test manipulateStateVariables2
-        let finder = ApproximateStorageChangeFinder::from(&context, func2.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func2);
         println!(
             "StructPlusFixedArrayAssignmentExample::manipulateStateVariables2()\n{:?}",
             finder
@@ -763,7 +763,7 @@ mod approximate_storage_change_finder_tests {
         assert!(finder.directly_manipulated_state_variables.is_empty());
 
         // Test manipulateStateVariables3
-        let finder = ApproximateStorageChangeFinder::from(&context, func3.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func3);
         println!(
             "StructPlusFixedArrayAssignmentExample::manipulateStateVariables3()\n{:?}",
             finder
@@ -783,7 +783,7 @@ mod approximate_storage_change_finder_tests {
         );
 
         // Test manipulateStateVariables4
-        let finder = ApproximateStorageChangeFinder::from(&context, func4.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func4);
         println!(
             "StructPlusFixedArrayAssignmentExample::manipulateStateVariables4()\n{:?}",
             finder
@@ -794,7 +794,7 @@ mod approximate_storage_change_finder_tests {
         assert!(finder.directly_manipulated_state_variables.is_empty());
 
         // Test manipulateStateVariables5
-        let finder = ApproximateStorageChangeFinder::from(&context, func5.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func5);
         println!(
             "StructPlusFixedArrayAssignmentExample::manipulateStateVariables5()\n{:?}",
             finder
@@ -814,7 +814,7 @@ mod approximate_storage_change_finder_tests {
         );
 
         // Test funcHelper
-        let finder = ApproximateStorageChangeFinder::from(&context, func_helper.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func_helper);
         println!(
             "StructPlusFixedArrayAssignmentExample::manipulateHelper()\n{:?}",
             finder
@@ -833,7 +833,7 @@ mod approximate_storage_change_finder_tests {
         );
 
         // Test manipulateStateVariables6
-        let finder = ApproximateStorageChangeFinder::from(&context, func6.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func6);
         println!(
             "StructPlusFixedArrayAssignmentExample::manipulateStateVariables6()\n{:?}",
             finder
@@ -852,7 +852,7 @@ mod approximate_storage_change_finder_tests {
         );
 
         // Test manipulateStateVariables7
-        let finder = ApproximateStorageChangeFinder::from(&context, func7.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func7);
         println!(
             "StructPlusFixedArrayAssignmentExample::manipulateStateVariables7()\n{:?}",
             finder
@@ -863,7 +863,7 @@ mod approximate_storage_change_finder_tests {
         assert_eq!(finder.directly_manipulated_state_variables.len(), 3);
 
         // Test manipulateStateVariables8
-        let finder = ApproximateStorageChangeFinder::from(&context, func8.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func8);
         println!(
             "StructPlusFixedArrayAssignmentExample::manipulateStateVariables8()\n{:?}",
             finder
@@ -888,7 +888,7 @@ mod approximate_storage_change_finder_tests {
         let func3 = contract.find_function_by_name("manipulateLib3");
 
         // Test manipulateLib()
-        let finder = ApproximateStorageChangeFinder::from(&context, func.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func);
         println!("SVManipulationLibrary::manipulateLib()\n{:?}", finder);
         let changes_found = finder.state_variables_have_been_manipulated();
         assert!(changes_found);
@@ -896,7 +896,7 @@ mod approximate_storage_change_finder_tests {
         assert!(finder.directly_manipulated_state_variables.is_empty());
 
         // Test manipulateLib2()
-        let finder = ApproximateStorageChangeFinder::from(&context, func2.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func2);
         println!("SVManipulationLibrary::manipulateLib2()\n{:?}", finder);
         let changes_found = finder.state_variables_have_been_manipulated();
         assert!(changes_found);
@@ -904,7 +904,7 @@ mod approximate_storage_change_finder_tests {
         assert!(finder.directly_manipulated_state_variables.is_empty());
 
         // Test manipulateLib3()
-        let finder = ApproximateStorageChangeFinder::from(&context, func3.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func3);
         println!("SVManipulationLibrary::manipulateLib3()\n{:?}", finder);
         let changes_found = finder.state_variables_have_been_manipulated();
         assert!(changes_found);
@@ -928,7 +928,7 @@ mod approximate_storage_change_finder_tests {
         let func5 = contract.find_function_by_name("dontManipulateStateVariablesPart5");
 
         // Test dontManipulateStateVariables()
-        let finder = ApproximateStorageChangeFinder::from(&context, func.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func);
         println!(
             "NoStructPlusFixedArrayAssignmentExample::dontManipulateStateVariables()\n{:?}",
             finder
@@ -939,7 +939,7 @@ mod approximate_storage_change_finder_tests {
         assert!(finder.directly_manipulated_state_variables.is_empty());
 
         // Test dontManipulateStateVariablesPart2()
-        let finder = ApproximateStorageChangeFinder::from(&context, func2.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func2);
         println!(
             "NoStructPlusFixedArrayAssignmentExample::dontManipulateStateVariablesPart2()\n{:?}",
             finder
@@ -950,7 +950,7 @@ mod approximate_storage_change_finder_tests {
         assert!(finder.directly_manipulated_state_variables.is_empty());
 
         // Test dontManipulateStateVariablesPart3()
-        let finder = ApproximateStorageChangeFinder::from(&context, func3.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func3);
         println!(
             "NoStructPlusFixedArrayAssignmentExample::dontManipulateStateVariablesPart3()\n{:?}",
             finder
@@ -961,7 +961,7 @@ mod approximate_storage_change_finder_tests {
         assert!(finder.directly_manipulated_state_variables.is_empty());
 
         // Test dontManipulateStateVariablesPart4()
-        let finder = ApproximateStorageChangeFinder::from(&context, func4.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func4);
         println!(
             "NoStructPlusFixedArrayAssignmentExample::dontManipulateStateVariablesPart4()\n{:?}",
             finder
@@ -972,7 +972,7 @@ mod approximate_storage_change_finder_tests {
         assert!(finder.directly_manipulated_state_variables.is_empty());
 
         // Test dontManipulateStateVariablesPart4()
-        let finder = ApproximateStorageChangeFinder::from(&context, func5.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func5);
         println!(
             "NoStructPlusFixedArrayAssignmentExample::dontManipulateStateVariablesPart5()\n{:?}",
             finder
@@ -998,7 +998,7 @@ mod approximate_storage_change_finder_tests {
         let func4 = contract.find_function_by_name("manipulateViaMemberAccess2");
 
         // Test manipulateDirectly()
-        let finder = ApproximateStorageChangeFinder::from(&context, func.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func);
         println!(
             "DynamicArraysPushExample::manipulateDirectly()\n{:?}",
             finder
@@ -1009,7 +1009,7 @@ mod approximate_storage_change_finder_tests {
         assert_eq!(finder.directly_manipulated_state_variables.len(), 1);
 
         // Test manipulateViaIndexAccess()
-        let finder = ApproximateStorageChangeFinder::from(&context, func2.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func2);
         println!(
             "DynamicArraysPushExample::manipulateViaIndexAccess()\n{:?}",
             finder
@@ -1020,7 +1020,7 @@ mod approximate_storage_change_finder_tests {
         assert_eq!(finder.directly_manipulated_state_variables.len(), 3);
 
         // Test manipulateViaMemberAccess()
-        let finder = ApproximateStorageChangeFinder::from(&context, func3.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func3);
         println!(
             "DynamicArraysPushExample::manipulateViaMemberAccess()\n{:?}",
             finder
@@ -1031,7 +1031,7 @@ mod approximate_storage_change_finder_tests {
         assert_eq!(finder.directly_manipulated_state_variables.len(), 1);
 
         // Test manipulateViaMemberAccess2()
-        let finder = ApproximateStorageChangeFinder::from(&context, func4.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func4);
         println!(
             "DynamicArraysPushExample::manipulateViaMemberAccess2()\n{:?}",
             finder
@@ -1053,7 +1053,7 @@ mod approximate_storage_change_finder_tests {
         let func = contract.find_function_by_name("add");
 
         // Test add()
-        let finder = ApproximateStorageChangeFinder::from(&context, func.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func);
         println!("DynamicMappingsArrayPushExample::add()\n{:?}", finder);
         let changes_found = finder.state_variables_have_been_manipulated();
         assert!(changes_found);
@@ -1073,7 +1073,7 @@ mod approximate_storage_change_finder_tests {
         let func2 = contract.find_function_by_name("manipulateViaIndexAccess");
 
         // Test func()
-        let finder = ApproximateStorageChangeFinder::from(&context, func.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func);
         println!(
             "FixedSizeArraysDeletionExample::manipulateDirectly()\n{:?}",
             finder
@@ -1084,7 +1084,7 @@ mod approximate_storage_change_finder_tests {
         assert!(finder.manipulated_storage_pointers.is_empty());
 
         // Test func2()
-        let finder = ApproximateStorageChangeFinder::from(&context, func2.into());
+        let finder = ApproximateStorageChangeFinder::from(&context, func2);
         println!(
             "FixedSizeArraysDeletionExample::manipulateViaIndexAccess()\n{:?}",
             finder
