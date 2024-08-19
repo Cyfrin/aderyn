@@ -2455,7 +2455,7 @@ Avoid `require` / `revert` statements in a loop because a single bad item can ca
 
 State variables that are not updated following deployment should be declared constant to save gas. Add the `constant` attribute to state variables that never change.
 
-<details><summary>27 Found Instances</summary>
+<details><summary>22 Found Instances</summary>
 
 
 - Found in src/v0.8/functions/dev/v1_X/FunctionsBilling.sol [Line: 66](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/FunctionsBilling.sol#L66)
@@ -2486,18 +2486,6 @@ State variables that are not updated following deployment should be declared con
 
 	```solidity
 	  IOwnableFunctionsRouter private immutable i_functionsRouter;
-	```
-
-- Found in src/v0.8/functions/dev/v1_X/accessControl/TermsOfServiceAllowList.sol [Line: 21](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/accessControl/TermsOfServiceAllowList.sol#L21)
-
-	```solidity
-	  EnumerableSet.AddressSet private s_allowedSenders;
-	```
-
-- Found in src/v0.8/functions/dev/v1_X/accessControl/TermsOfServiceAllowList.sol [Line: 22](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/accessControl/TermsOfServiceAllowList.sol#L22)
-
-	```solidity
-	  EnumerableSet.AddressSet private s_blockedSenders;
 	```
 
 - Found in src/v0.8/functions/dev/v1_X/example/FunctionsClientExample.sol [Line: 15](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/example/FunctionsClientExample.sol#L15)
@@ -2546,12 +2534,6 @@ State variables that are not updated following deployment should be declared con
 
 	```solidity
 	  IOwnableFunctionsRouter private immutable i_router;
-	```
-
-- Found in src/v0.8/functions/v1_0_0/accessControl/TermsOfServiceAllowList.sol [Line: 21](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/accessControl/TermsOfServiceAllowList.sol#L21)
-
-	```solidity
-	  EnumerableSet.AddressSet private s_allowedSenders;
 	```
 
 - Found in src/v0.8/functions/v1_0_0/example/FunctionsClientExample.sol [Line: 15](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/example/FunctionsClientExample.sol#L15)
@@ -2606,18 +2588,6 @@ State variables that are not updated following deployment should be declared con
 
 	```solidity
 	  IFunctionsRouter internal immutable i_functionsRouter;
-	```
-
-- Found in src/v0.8/functions/v1_3_0/accessControl/TermsOfServiceAllowList.sol [Line: 22](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_3_0/accessControl/TermsOfServiceAllowList.sol#L22)
-
-	```solidity
-	  EnumerableSet.AddressSet private s_allowedSenders;
-	```
-
-- Found in src/v0.8/functions/v1_3_0/accessControl/TermsOfServiceAllowList.sol [Line: 23](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_3_0/accessControl/TermsOfServiceAllowList.sol#L23)
-
-	```solidity
-	  EnumerableSet.AddressSet private s_blockedSenders;
 	```
 
 </details>

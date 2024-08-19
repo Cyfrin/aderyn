@@ -51,7 +51,15 @@ impl IssueDetector for StateVariableCouldBeConstantDetector {
             let collection_b_ids: HashSet<_> = collection_b.into_iter().map(|v| v.id).collect();
 
             // RESULT =  collection A - collection B
-            for variable in collection_a {
+            for variable in collection_a.into_iter().filter(|s| {
+                // Do not report it if it's a struct / mapping / contract type
+                s.type_descriptions
+                    .type_string
+                    .as_ref()
+                    .is_some_and(|type_string| {
+                        !type_string.starts_with("mapping") && !type_string.starts_with("struct")
+                    })
+            }) {
                 if !collection_b_ids.contains(&variable.id) {
                     capture!(self, context, variable);
                 }

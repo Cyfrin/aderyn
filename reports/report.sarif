@@ -8384,50 +8384,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/DeletionNestedMappingStructureContract.sol"
-                },
-                "region": {
-                  "byteLength": 6,
-                  "byteOffset": 236
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/EnumerableSetIteration.sol"
-                },
-                "region": {
-                  "byteLength": 10,
-                  "byteOffset": 392
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/EnumerableSetIteration.sol"
-                },
-                "region": {
-                  "byteLength": 10,
-                  "byteOffset": 441
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/EnumerableSetIteration.sol"
-                },
-                "region": {
-                  "byteLength": 7,
-                  "byteOffset": 487
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/FunctionInitializingState.sol"
                 },
                 "region": {
@@ -8532,17 +8488,6 @@
                 "region": {
                   "byteLength": 9,
                   "byteOffset": 383
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/InconsistentUints.sol"
-                },
-                "region": {
-                  "byteLength": 10,
-                  "byteOffset": 434
                 }
               }
             },
@@ -8719,17 +8664,6 @@
                 "region": {
                   "byteLength": 26,
                   "byteOffset": 130
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/PublicVariableReadInExternalContext.sol"
-                },
-                "region": {
-                  "byteLength": 39,
-                  "byteOffset": 162
                 }
               }
             },
@@ -8959,63 +8893,8 @@
                   "uri": "src/StateVariablesManipulation.sol"
                 },
                 "region": {
-                  "byteLength": 15,
-                  "byteOffset": 3271
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesManipulation.sol"
-                },
-                "region": {
-                  "byteLength": 5,
-                  "byteOffset": 3338
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesManipulation.sol"
-                },
-                "region": {
-                  "byteLength": 6,
-                  "byteOffset": 6102
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesManipulation.sol"
-                },
-                "region": {
-                  "byteLength": 7,
-                  "byteOffset": 6128
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesManipulation.sol"
-                },
-                "region": {
                   "byteLength": 7,
                   "byteOffset": 6162
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesManipulation.sol"
-                },
-                "region": {
-                  "byteLength": 5,
-                  "byteOffset": 6190
                 }
               }
             },
@@ -9049,17 +8928,6 @@
                 "region": {
                   "byteLength": 12,
                   "byteOffset": 109
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/TautologyOrContradiction.sol"
-                },
-                "region": {
-                  "byteLength": 30,
-                  "byteOffset": 97
                 }
               }
             },
@@ -9115,17 +8983,6 @@
                 "region": {
                   "byteLength": 3,
                   "byteOffset": 448
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/UninitializedStateVariable.sol"
-                },
-                "region": {
-                  "byteLength": 3,
-                  "byteOffset": 503
                 }
               }
             },
@@ -9324,17 +9181,6 @@
                 "region": {
                   "byteLength": 3,
                   "byteOffset": 486
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/nested_mappings/LaterVersion.sol"
-                },
-                "region": {
-                  "byteLength": 20,
-                  "byteOffset": 416
                 }
               }
             }

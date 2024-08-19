@@ -5089,30 +5089,6 @@
             "src_char": "337:7"
           },
           {
-            "contract_path": "src/DeletionNestedMappingStructureContract.sol",
-            "line_no": 12,
-            "src": "236:6",
-            "src_char": "236:6"
-          },
-          {
-            "contract_path": "src/EnumerableSetIteration.sol",
-            "line_no": 11,
-            "src": "392:10",
-            "src_char": "392:10"
-          },
-          {
-            "contract_path": "src/EnumerableSetIteration.sol",
-            "line_no": 12,
-            "src": "441:10",
-            "src_char": "441:10"
-          },
-          {
-            "contract_path": "src/EnumerableSetIteration.sol",
-            "line_no": 13,
-            "src": "487:7",
-            "src_char": "487:7"
-          },
-          {
             "contract_path": "src/FunctionInitializingState.sol",
             "line_no": 6,
             "src": "108:21",
@@ -5171,12 +5147,6 @@
             "line_no": 15,
             "src": "383:9",
             "src_char": "383:9"
-          },
-          {
-            "contract_path": "src/InconsistentUints.sol",
-            "line_no": 16,
-            "src": "434:10",
-            "src_char": "434:10"
           },
           {
             "contract_path": "src/IncorrectCaretOperator.sol",
@@ -5273,12 +5243,6 @@
             "line_no": 6,
             "src": "130:26",
             "src_char": "130:26"
-          },
-          {
-            "contract_path": "src/PublicVariableReadInExternalContext.sol",
-            "line_no": 7,
-            "src": "162:39",
-            "src_char": "162:39"
           },
           {
             "contract_path": "src/ReturnBomb.sol",
@@ -5402,39 +5366,9 @@
           },
           {
             "contract_path": "src/StateVariablesManipulation.sol",
-            "line_no": 114,
-            "src": "3271:15",
-            "src_char": "3271:15"
-          },
-          {
-            "contract_path": "src/StateVariablesManipulation.sol",
-            "line_no": 117,
-            "src": "3338:5",
-            "src_char": "3338:5"
-          },
-          {
-            "contract_path": "src/StateVariablesManipulation.sol",
-            "line_no": 223,
-            "src": "6102:6",
-            "src_char": "6102:6"
-          },
-          {
-            "contract_path": "src/StateVariablesManipulation.sol",
-            "line_no": 224,
-            "src": "6128:7",
-            "src_char": "6128:7"
-          },
-          {
-            "contract_path": "src/StateVariablesManipulation.sol",
             "line_no": 225,
             "src": "6162:7",
             "src_char": "6162:7"
-          },
-          {
-            "contract_path": "src/StateVariablesManipulation.sol",
-            "line_no": 227,
-            "src": "6190:5",
-            "src_char": "6190:5"
           },
           {
             "contract_path": "src/StateVariablesManipulation.sol",
@@ -5453,12 +5387,6 @@
             "line_no": 5,
             "src": "109:12",
             "src_char": "109:12"
-          },
-          {
-            "contract_path": "src/TautologyOrContradiction.sol",
-            "line_no": 5,
-            "src": "97:30",
-            "src_char": "97:30"
           },
           {
             "contract_path": "src/TautologyOrContradiction.sol",
@@ -5489,12 +5417,6 @@
             "line_no": 12,
             "src": "448:3",
             "src_char": "448:3"
-          },
-          {
-            "contract_path": "src/UninitializedStateVariable.sol",
-            "line_no": 13,
-            "src": "503:3",
-            "src_char": "503:3"
           },
           {
             "contract_path": "src/UninitializedStateVariable.sol",
@@ -5603,12 +5525,6 @@
             "line_no": 29,
             "src": "486:3",
             "src_char": "486:3"
-          },
-          {
-            "contract_path": "src/nested_mappings/LaterVersion.sol",
-            "line_no": 17,
-            "src": "416:20",
-            "src_char": "416:20"
           }
         ]
       }

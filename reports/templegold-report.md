@@ -8706,7 +8706,7 @@ If `x` is a boolean, there is no need to do `if(x == true)` or `if(x == false)`.
 
 State variables that are not updated following deployment should be declared constant to save gas. Add the `constant` attribute to state variables that never change.
 
-<details><summary>23 Found Instances</summary>
+<details><summary>11 Found Instances</summary>
 
 
 - Found in contracts/amm/TempleUniswapV2Pair.sol [Line: 29](../tests/2024-07-templegold/protocol/contracts/amm/TempleUniswapV2Pair.sol#L29)
@@ -8715,28 +8715,10 @@ State variables that are not updated following deployment should be declared con
 	    uint public kLast; // reserve0 * reserve1, as of immediately after the most recent liquidity event
 	```
 
-- Found in contracts/core/MultiOtcOffer.sol [Line: 32](../tests/2024-07-templegold/protocol/contracts/core/MultiOtcOffer.sol#L32)
-
-	```solidity
-	    EnumerableSet.Bytes32Set private _otcMarketIds;
-	```
-
-- Found in contracts/core/OpsManager.sol [Line: 18](../tests/2024-07-templegold/protocol/contracts/core/OpsManager.sol#L18)
-
-	```solidity
-	    mapping(IERC20 => TreasuryFarmingRevenue) public pools;
-	```
-
 - Found in contracts/core/RebasingERC20.sol [Line: 18](../tests/2024-07-templegold/protocol/contracts/core/RebasingERC20.sol#L18)
 
 	```solidity
 	    uint256 public totalShares;
-	```
-
-- Found in contracts/core/RebasingERC20.sol [Line: 25](../tests/2024-07-templegold/protocol/contracts/core/RebasingERC20.sol#L25)
-
-	```solidity
-	    mapping(address => uint256) public shareBalanceOf;
 	```
 
 - Found in contracts/core/Vault.sol [Line: 33](../tests/2024-07-templegold/protocol/contracts/core/Vault.sol#L33)
@@ -8763,40 +8745,10 @@ State variables that are not updated following deployment should be declared con
 	    uint256 public lastUpdateTime;
 	```
 
-- Found in contracts/fakes/templegold/TempleGoldStakingMock.sol [Line: 71](../tests/2024-07-templegold/protocol/contracts/fakes/templegold/TempleGoldStakingMock.sol#L71)
-
-	```solidity
-	    mapping(address delegate => uint256 balance) private _delegateBalances;
-	```
-
-- Found in contracts/fakes/templegold/TempleGoldStakingMock.sol [Line: 73](../tests/2024-07-templegold/protocol/contracts/fakes/templegold/TempleGoldStakingMock.sol#L73)
-
-	```solidity
-	    mapping(address user => uint256 withdrawTime) public userWithdrawTimes;
-	```
-
-- Found in contracts/fakes/templegold/TempleGoldStakingMock.sol [Line: 79](../tests/2024-07-templegold/protocol/contracts/fakes/templegold/TempleGoldStakingMock.sol#L79)
-
-	```solidity
-	    mapping(address account => EnumerableSet.UintSet indexes) private _accountStakes;
-	```
-
 - Found in contracts/templegold/AuctionBase.sol [Line: 13](../tests/2024-07-templegold/protocol/contracts/templegold/AuctionBase.sol#L13)
 
 	```solidity
 	    uint256 internal _currentEpochId;
-	```
-
-- Found in contracts/templegold/AuctionBase.sol [Line: 15](../tests/2024-07-templegold/protocol/contracts/templegold/AuctionBase.sol#L15)
-
-	```solidity
-	    mapping(uint256 epochId => EpochInfo info) internal epochs;
-	```
-
-- Found in contracts/templegold/AuctionBase.sol [Line: 17](../tests/2024-07-templegold/protocol/contracts/templegold/AuctionBase.sol#L17)
-
-	```solidity
-	    mapping(address depositor => mapping(uint256 epochId => uint256 amount)) public override depositors;
 	```
 
 - Found in contracts/templegold/TempleGoldStaking.sol [Line: 40](../tests/2024-07-templegold/protocol/contracts/templegold/TempleGoldStaking.sol#L40)
@@ -8815,30 +8767,6 @@ State variables that are not updated following deployment should be declared con
 
 	```solidity
 	    uint256 public override lastUpdateTime;
-	```
-
-- Found in contracts/v2/TreasuryReservesVault.sol [Line: 60](../tests/2024-07-templegold/protocol/contracts/v2/TreasuryReservesVault.sol#L60)
-
-	```solidity
-	    EnumerableSet.AddressSet internal _strategySet;
-	```
-
-- Found in contracts/v2/TreasuryReservesVault.sol [Line: 70](../tests/2024-07-templegold/protocol/contracts/v2/TreasuryReservesVault.sol#L70)
-
-	```solidity
-	    EnumerableSet.AddressSet internal _borrowTokenSet;
-	```
-
-- Found in contracts/v2/circuitBreaker/TempleCircuitBreakerProxy.sol [Line: 34](../tests/2024-07-templegold/protocol/contracts/v2/circuitBreaker/TempleCircuitBreakerProxy.sol#L34)
-
-	```solidity
-	    EnumerableSet.Bytes32Set internal _identifiers;
-	```
-
-- Found in contracts/v2/safeGuards/ThresholdSafeGuard.sol [Line: 58](../tests/2024-07-templegold/protocol/contracts/v2/safeGuards/ThresholdSafeGuard.sol#L58)
-
-	```solidity
-	    EnumerableSet.AddressSet internal _safeTxExecutors;
 	```
 
 - Found in contracts/v2/strategies/AbstractStrategy.sol [Line: 26](../tests/2024-07-templegold/protocol/contracts/v2/strategies/AbstractStrategy.sol#L26)

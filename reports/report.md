@@ -5145,7 +5145,7 @@ Name clashes with a built-in-symbol. Consider renaming it.
 
 State variables that are not updated following deployment should be declared constant to save gas. Add the `constant` attribute to state variables that never change.
 
-<details><summary>93 Found Instances</summary>
+<details><summary>79 Found Instances</summary>
 
 
 - Found in src/AssemblyExample.sol [Line: 5](../tests/contract-playground/src/AssemblyExample.sol#L5)
@@ -5182,30 +5182,6 @@ State variables that are not updated following deployment should be declared con
 
 	```solidity
 	    address public manager;
-	```
-
-- Found in src/DeletionNestedMappingStructureContract.sol [Line: 12](../tests/contract-playground/src/DeletionNestedMappingStructureContract.sol#L12)
-
-	```solidity
-	    mapping(address => Person) private people;
-	```
-
-- Found in src/EnumerableSetIteration.sol [Line: 11](../tests/contract-playground/src/EnumerableSetIteration.sol#L11)
-
-	```solidity
-	    EnumerableSet.Bytes32Set private bytes32Set;
-	```
-
-- Found in src/EnumerableSetIteration.sol [Line: 12](../tests/contract-playground/src/EnumerableSetIteration.sol#L12)
-
-	```solidity
-	    EnumerableSet.AddressSet private addressSet;
-	```
-
-- Found in src/EnumerableSetIteration.sol [Line: 13](../tests/contract-playground/src/EnumerableSetIteration.sol#L13)
-
-	```solidity
-	    EnumerableSet.UintSet private uintSet;
 	```
 
 - Found in src/FunctionInitializingState.sol [Line: 6](../tests/contract-playground/src/FunctionInitializingState.sol#L6)
@@ -5266,12 +5242,6 @@ State variables that are not updated following deployment should be declared con
 
 	```solidity
 	    uint[] public uintArray; // 4
-	```
-
-- Found in src/InconsistentUints.sol [Line: 16](../tests/contract-playground/src/InconsistentUints.sol#L16)
-
-	```solidity
-	    mapping(uint256 => uint other) u2uMapping; // 5 3
 	```
 
 - Found in src/IncorrectCaretOperator.sol [Line: 10](../tests/contract-playground/src/IncorrectCaretOperator.sol#L10)
@@ -5368,12 +5338,6 @@ State variables that are not updated following deployment should be declared con
 
 	```solidity
 	    uint256 public testUint256;
-	```
-
-- Found in src/PublicVariableReadInExternalContext.sol [Line: 7](../tests/contract-playground/src/PublicVariableReadInExternalContext.sol#L7)
-
-	```solidity
-	    mapping(uint256 => bool) public testMap;
 	```
 
 - Found in src/ReturnBomb.sol [Line: 61](../tests/contract-playground/src/ReturnBomb.sol#L61)
@@ -5496,40 +5460,10 @@ State variables that are not updated following deployment should be declared con
 	    uint256[5] public dummy;
 	```
 
-- Found in src/StateVariablesManipulation.sol [Line: 114](../tests/contract-playground/src/StateVariablesManipulation.sol#L114)
-
-	```solidity
-	    Person[5][1] public personsUltimate;
-	```
-
-- Found in src/StateVariablesManipulation.sol [Line: 117](../tests/contract-playground/src/StateVariablesManipulation.sol#L117)
-
-	```solidity
-	    Person public dummy;
-	```
-
-- Found in src/StateVariablesManipulation.sol [Line: 223](../tests/contract-playground/src/StateVariablesManipulation.sol#L223)
-
-	```solidity
-	    Person public person;
-	```
-
-- Found in src/StateVariablesManipulation.sol [Line: 224](../tests/contract-playground/src/StateVariablesManipulation.sol#L224)
-
-	```solidity
-	    Person public person2;
-	```
-
 - Found in src/StateVariablesManipulation.sol [Line: 225](../tests/contract-playground/src/StateVariablesManipulation.sol#L225)
 
 	```solidity
 	    uint256[5][1] public allAges;
-	```
-
-- Found in src/StateVariablesManipulation.sol [Line: 227](../tests/contract-playground/src/StateVariablesManipulation.sol#L227)
-
-	```solidity
-	    Person public dummy;
 	```
 
 - Found in src/StateVariablesManipulation.sol [Line: 278](../tests/contract-playground/src/StateVariablesManipulation.sol#L278)
@@ -5548,12 +5482,6 @@ State variables that are not updated following deployment should be declared con
 
 	```solidity
 	    uint[1] public storageArray;
-	```
-
-- Found in src/TautologyOrContradiction.sol [Line: 5](../tests/contract-playground/src/TautologyOrContradiction.sol#L5)
-
-	```solidity
-	    mapping(uint256 => uint72) map;
 	```
 
 - Found in src/TautologyOrContradiction.sol [Line: 6](../tests/contract-playground/src/TautologyOrContradiction.sol#L6)
@@ -5584,12 +5512,6 @@ State variables that are not updated following deployment should be declared con
 
 	```solidity
 	    uint256[] public arr; // GOOD
-	```
-
-- Found in src/UninitializedStateVariable.sol [Line: 13](../tests/contract-playground/src/UninitializedStateVariable.sol#L13)
-
-	```solidity
-	    mapping(uint256 => uint256[]) private map; // GOOD
 	```
 
 - Found in src/UninitializedStateVariable.sol [Line: 15](../tests/contract-playground/src/UninitializedStateVariable.sol#L15)
@@ -5698,12 +5620,6 @@ State variables that are not updated following deployment should be declared con
 
 	```solidity
 	     this is longer comment */ uint256 s_5 = 0;
-	```
-
-- Found in src/nested_mappings/LaterVersion.sol [Line: 17](../tests/contract-playground/src/nested_mappings/LaterVersion.sol#L17)
-
-	```solidity
-	    mapping(uint256 => structMain) public s_mapOfNestedStructs;
 	```
 
 </details>
