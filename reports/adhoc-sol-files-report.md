@@ -749,44 +749,8 @@ State variable appears to be unused. No analysis has been performed to see if an
 
 State variables that are not updated following deployment should be declared constant to save gas. Add the `constant` attribute to state variables that never change.
 
-<details><summary>13 Found Instances</summary>
+<details><summary>7 Found Instances</summary>
 
-
-- Found in InconsistentUints.sol [Line: 7](../tests/adhoc-sol-files/InconsistentUints.sol#L7)
-
-	```solidity
-	    int public intVariable; // 1
-	```
-
-- Found in InconsistentUints.sol [Line: 8](../tests/adhoc-sol-files/InconsistentUints.sol#L8)
-
-	```solidity
-	    int256 public int256Variable; // 1 
-	```
-
-- Found in InconsistentUints.sol [Line: 15](../tests/adhoc-sol-files/InconsistentUints.sol#L15)
-
-	```solidity
-	    uint[] public uintArray; // 4
-	```
-
-- Found in StateVariables.sol [Line: 8](../tests/adhoc-sol-files/StateVariables.sol#L8)
-
-	```solidity
-	    uint256 private staticPrivateNumber;
-	```
-
-- Found in StateVariables.sol [Line: 9](../tests/adhoc-sol-files/StateVariables.sol#L9)
-
-	```solidity
-	    uint256 internal staticInternalNumber;
-	```
-
-- Found in StateVariables.sol [Line: 10](../tests/adhoc-sol-files/StateVariables.sol#L10)
-
-	```solidity
-	    uint256 public staticPublicNumber;
-	```
 
 - Found in StateVariables.sol [Line: 13](../tests/adhoc-sol-files/StateVariables.sol#L13)
 

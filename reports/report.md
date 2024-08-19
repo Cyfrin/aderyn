@@ -5145,32 +5145,8 @@ Name clashes with a built-in-symbol. Consider renaming it.
 
 State variables that are not updated following deployment should be declared constant to save gas. Add the `constant` attribute to state variables that never change.
 
-<details><summary>77 Found Instances</summary>
+<details><summary>37 Found Instances</summary>
 
-
-- Found in src/AssemblyExample.sol [Line: 5](../tests/contract-playground/src/AssemblyExample.sol#L5)
-
-	```solidity
-	    uint b;
-	```
-
-- Found in src/BuiltinSymbolShadow.sol [Line: 5](../tests/contract-playground/src/BuiltinSymbolShadow.sol#L5)
-
-	```solidity
-	    uint now; // BAD
-	```
-
-- Found in src/ConstantFuncsAssembly.sol [Line: 6](../tests/contract-playground/src/ConstantFuncsAssembly.sol#L6)
-
-	```solidity
-	    uint256 public value;
-	```
-
-- Found in src/DelegateCallWithoutAddressCheck.sol [Line: 9](../tests/contract-playground/src/DelegateCallWithoutAddressCheck.sol#L9)
-
-	```solidity
-	    address public manager;
-	```
 
 - Found in src/FunctionInitializingState.sol [Line: 6](../tests/contract-playground/src/FunctionInitializingState.sol#L6)
 
@@ -5212,30 +5188,6 @@ State variables that are not updated following deployment should be declared con
 
 	```solidity
 	    uint public w = 5;
-	```
-
-- Found in src/InconsistentUints.sol [Line: 7](../tests/contract-playground/src/InconsistentUints.sol#L7)
-
-	```solidity
-	    int public intVariable; // 1
-	```
-
-- Found in src/InconsistentUints.sol [Line: 8](../tests/contract-playground/src/InconsistentUints.sol#L8)
-
-	```solidity
-	    int256 public int256Variable; // 1 
-	```
-
-- Found in src/InconsistentUints.sol [Line: 15](../tests/contract-playground/src/InconsistentUints.sol#L15)
-
-	```solidity
-	    uint[] public uintArray; // 4
-	```
-
-- Found in src/IncorrectCaretOperator.sol [Line: 10](../tests/contract-playground/src/IncorrectCaretOperator.sol#L10)
-
-	```solidity
-	    uint256 private s_first;
 	```
 
 - Found in src/IncorrectERC20.sol [Line: 5](../tests/contract-playground/src/IncorrectERC20.sol#L5)
@@ -5310,58 +5262,10 @@ State variables that are not updated following deployment should be declared con
 	    string public symbol = "CNFT";
 	```
 
-- Found in src/IncorrectERC721.sol [Line: 147](../tests/contract-playground/src/IncorrectERC721.sol#L147)
-
-	```solidity
-	    uint256 public totalSupply;
-	```
-
-- Found in src/PublicVariableReadInExternalContext.sol [Line: 5](../tests/contract-playground/src/PublicVariableReadInExternalContext.sol#L5)
-
-	```solidity
-	    string[] public testArray;
-	```
-
-- Found in src/PublicVariableReadInExternalContext.sol [Line: 6](../tests/contract-playground/src/PublicVariableReadInExternalContext.sol#L6)
-
-	```solidity
-	    uint256 public testUint256;
-	```
-
-- Found in src/ReturnBomb.sol [Line: 61](../tests/contract-playground/src/ReturnBomb.sol#L61)
-
-	```solidity
-	    address goodGuy;
-	```
-
-- Found in src/StateShadowing.sol [Line: 5](../tests/contract-playground/src/StateShadowing.sol#L5)
-
-	```solidity
-	    address owner;
-	```
-
 - Found in src/StateVariableCouldBeDeclaredConstant.sol [Line: 6](../tests/contract-playground/src/StateVariableCouldBeDeclaredConstant.sol#L6)
 
 	```solidity
 	    uint256 public constantValue = 100;
-	```
-
-- Found in src/StateVariables.sol [Line: 8](../tests/contract-playground/src/StateVariables.sol#L8)
-
-	```solidity
-	    uint256 private staticPrivateNumber;
-	```
-
-- Found in src/StateVariables.sol [Line: 9](../tests/contract-playground/src/StateVariables.sol#L9)
-
-	```solidity
-	    uint256 internal staticInternalNumber;
-	```
-
-- Found in src/StateVariables.sol [Line: 10](../tests/contract-playground/src/StateVariables.sol#L10)
-
-	```solidity
-	    uint256 public staticPublicNumber;
 	```
 
 - Found in src/StateVariables.sol [Line: 13](../tests/contract-playground/src/StateVariables.sol#L13)
@@ -5382,48 +5286,6 @@ State variables that are not updated following deployment should be declared con
 	    uint256 public staticNonEmptyPublicNumber = 3;
 	```
 
-- Found in src/StateVariablesManipulation.sol [Line: 8](../tests/contract-playground/src/StateVariablesManipulation.sol#L8)
-
-	```solidity
-	    uint256 public simpleUint;
-	```
-
-- Found in src/StateVariablesManipulation.sol [Line: 9](../tests/contract-playground/src/StateVariablesManipulation.sol#L9)
-
-	```solidity
-	    int256 public simpleInt;
-	```
-
-- Found in src/StateVariablesManipulation.sol [Line: 10](../tests/contract-playground/src/StateVariablesManipulation.sol#L10)
-
-	```solidity
-	    bool public simpleBool;
-	```
-
-- Found in src/StateVariablesManipulation.sol [Line: 11](../tests/contract-playground/src/StateVariablesManipulation.sol#L11)
-
-	```solidity
-	    address public simpleAddress;
-	```
-
-- Found in src/StateVariablesManipulation.sol [Line: 12](../tests/contract-playground/src/StateVariablesManipulation.sol#L12)
-
-	```solidity
-	    address payable public simplePayableAddress;
-	```
-
-- Found in src/StateVariablesManipulation.sol [Line: 13](../tests/contract-playground/src/StateVariablesManipulation.sol#L13)
-
-	```solidity
-	    string public simpleString;
-	```
-
-- Found in src/StateVariablesManipulation.sol [Line: 14](../tests/contract-playground/src/StateVariablesManipulation.sol#L14)
-
-	```solidity
-	    bytes public simpleBytes;
-	```
-
 - Found in src/StateVariablesManipulation.sol [Line: 40](../tests/contract-playground/src/StateVariablesManipulation.sol#L40)
 
 	```solidity
@@ -5442,112 +5304,10 @@ State variables that are not updated following deployment should be declared con
 	    uint256[5] public assignToMeNow = [1, 4, 5, 8, 9]; // 1 state var assigned here
 	```
 
-- Found in src/StateVariablesManipulation.sol [Line: 77](../tests/contract-playground/src/StateVariablesManipulation.sol#L77)
-
-	```solidity
-	    uint256[5] public dummy;
-	```
-
-- Found in src/StateVariablesManipulation.sol [Line: 225](../tests/contract-playground/src/StateVariablesManipulation.sol#L225)
-
-	```solidity
-	    uint256[5][1] public allAges;
-	```
-
-- Found in src/StateVariablesManipulation.sol [Line: 278](../tests/contract-playground/src/StateVariablesManipulation.sol#L278)
-
-	```solidity
-	    uint256[5] public dummy;
-	```
-
-- Found in src/StateVariablesManipulation.sol [Line: 311](../tests/contract-playground/src/StateVariablesManipulation.sol#L311)
-
-	```solidity
-	    uint256[5] public dummy;
-	```
-
-- Found in src/StorageParameters.sol [Line: 5](../tests/contract-playground/src/StorageParameters.sol#L5)
-
-	```solidity
-	    uint[1] public storageArray;
-	```
-
-- Found in src/TautologyOrContradiction.sol [Line: 6](../tests/contract-playground/src/TautologyOrContradiction.sol#L6)
-
-	```solidity
-	    uint x;
-	```
-
-- Found in src/TautologyOrContradiction.sol [Line: 7](../tests/contract-playground/src/TautologyOrContradiction.sol#L7)
-
-	```solidity
-	    uint256 y;
-	```
-
-- Found in src/UninitializedStateVariable.sol [Line: 7](../tests/contract-playground/src/UninitializedStateVariable.sol#L7)
-
-	```solidity
-	    string public s_author; // BAD (because it's used without initializing)
-	```
-
 - Found in src/UninitializedStateVariable.sol [Line: 8](../tests/contract-playground/src/UninitializedStateVariable.sol#L8)
 
 	```solidity
 	    string public s_publisher = "Blockchain Ltd."; // GOOD (because it's initialized here.)
-	```
-
-- Found in src/UninitializedStateVariable.sol [Line: 12](../tests/contract-playground/src/UninitializedStateVariable.sol#L12)
-
-	```solidity
-	    uint256[] public arr; // GOOD
-	```
-
-- Found in src/UninitializedStateVariable.sol [Line: 15](../tests/contract-playground/src/UninitializedStateVariable.sol#L15)
-
-	```solidity
-	    address destination; // BAD
-	```
-
-- Found in src/UnusedStateVariables.sol [Line: 6](../tests/contract-playground/src/UnusedStateVariables.sol#L6)
-
-	```solidity
-	    uint256 internal unusedUint256;
-	```
-
-- Found in src/UnusedStateVariables.sol [Line: 7](../tests/contract-playground/src/UnusedStateVariables.sol#L7)
-
-	```solidity
-	    address internal unusedAddress;
-	```
-
-- Found in src/UnusedStateVariables.sol [Line: 8](../tests/contract-playground/src/UnusedStateVariables.sol#L8)
-
-	```solidity
-	    bool private unusedBool;
-	```
-
-- Found in src/UnusedStateVariables.sol [Line: 9](../tests/contract-playground/src/UnusedStateVariables.sol#L9)
-
-	```solidity
-	    string private unusedString;
-	```
-
-- Found in src/UnusedStateVariables.sol [Line: 12](../tests/contract-playground/src/UnusedStateVariables.sol#L12)
-
-	```solidity
-	    bytes32 public usedBytes32; // External contracts may want to interact with it by calling it as a function
-	```
-
-- Found in src/WrongOrderOfLayout.sol [Line: 11](../tests/contract-playground/src/WrongOrderOfLayout.sol#L11)
-
-	```solidity
-	    uint256 public multiplier;
-	```
-
-- Found in src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol [Line: 68](../tests/contract-playground/src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol#L68)
-
-	```solidity
-	    address public owner;
 	```
 
 - Found in src/cloc/AnotherHeavilyCommentedContract.sol [Line: 14](../tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol#L14)

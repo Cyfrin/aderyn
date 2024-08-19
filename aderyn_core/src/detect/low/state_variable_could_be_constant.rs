@@ -28,6 +28,11 @@ impl IssueDetector for StateVariableCouldBeConstantDetector {
         let mut collection_a = Vec::new();
 
         for variable in context.variable_declarations() {
+            // If we're not able to set the value upfront, then it cannot be constant
+            if variable.value.is_none() {
+                continue;
+            }
+
             if variable.mutability() == Some(&Mutability::Immutable) {
                 continue;
             }
