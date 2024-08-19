@@ -1,6 +1,7 @@
 pub(crate) mod assert_state_change;
 pub(crate) mod boolean_equality;
 pub(crate) mod builtin_symbol_shadowing;
+pub(crate) mod cache_array_length;
 pub(crate) mod centralization_risk;
 pub(crate) mod constant_funcs_assembly;
 pub(crate) mod constants_instead_of_literals;
@@ -35,6 +36,7 @@ pub(crate) mod zero_address_check;
 pub use assert_state_change::AssertStateChangeDetector;
 pub use boolean_equality::BooleanEqualityDetector;
 pub use builtin_symbol_shadowing::BuiltinSymbolShadowDetector;
+pub use cache_array_length::CacheArrayLengthDetector;
 pub use centralization_risk::CentralizationRiskDetector;
 pub use constant_funcs_assembly::ConstantFunctionContainsAssemblyDetector;
 pub use constants_instead_of_literals::ConstantsInsteadOfLiteralsDetector;
