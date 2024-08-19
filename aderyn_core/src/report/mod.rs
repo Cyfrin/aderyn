@@ -23,8 +23,7 @@ pub struct Issue {
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     // Value is ASTNode.src
     pub instances: BTreeMap<(String, usize, String), NodeID>,
-    // The last key: [3] description about that particular instance
-    pub instances_with_hints: BTreeMap<(String, usize, String, String), NodeID>,
+    pub hints: BTreeMap<(String, usize, String), String>,
 }
 
 #[derive(Serialize, Default)]
@@ -125,53 +124,24 @@ pub fn extract_issue_bodies(
                         char_len += 1;
                     }
 
-                    IssueInstance {
-                        contract_path: contract_path.clone(),
-                        line_no: *line_no,
-                        src: src_location.clone(),
-                        src_char: format!("{}:{}", char_offset, char_len),
-                        hint: None,
-                    }
-                })
-                .collect();
-
-            let instances_with_extra_info: Vec<_> = cr
-                .instances_with_hints
-                .keys()
-                .map(|(contract_path, line_no, src_location, hint)| {
-                    // Calculate character based offset & length position here
-                    let (byte_offset_str, byte_len_str) = src_location.split_once(':').unwrap();
-                    let byte_offset: usize = byte_offset_str.parse().unwrap();
-                    let byte_length: usize = byte_len_str.parse().unwrap();
-                    let content = *file_contents.get(contract_path).unwrap();
-                    let mut char_offset = 0;
-                    for (byte_offset_so_far, _) in content.char_indices() {
-                        if byte_offset_so_far == byte_offset {
-                            break;
-                        }
-                        char_offset += 1;
-                    }
-                    let mut char_len = 0;
-                    for (byte_offset_so_far, _) in content.as_str()[byte_offset..].char_indices() {
-                        if byte_offset_so_far == byte_length {
-                            break;
-                        }
-                        char_len += 1;
-                    }
+                    let hint = cr.hints.get(&(
+                        contract_path.to_string(),
+                        *line_no,
+                        src_location.to_string(),
+                    ));
 
                     IssueInstance {
                         contract_path: contract_path.clone(),
                         line_no: *line_no,
                         src: src_location.clone(),
                         src_char: format!("{}:{}", char_offset, char_len),
-                        hint: Some(hint.clone()),
+                        hint: hint.cloned(),
                     }
                 })
                 .collect();
 
             let mut all_instances = vec![];
             all_instances.extend(instances);
-            all_instances.extend(instances_with_extra_info);
 
             IssueBody {
                 title: cr.title.clone(),

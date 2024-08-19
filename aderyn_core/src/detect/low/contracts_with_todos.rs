@@ -17,7 +17,7 @@ pub struct ContractsWithTodosDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
-    found_instances_with_hints: BTreeMap<(String, usize, String, String), NodeID>,
+    hints: BTreeMap<(String, usize, String), String>,
 }
 
 impl IssueDetector for ContractsWithTodosDetector {
@@ -65,7 +65,7 @@ impl IssueDetector for ContractsWithTodosDetector {
             }
         }
 
-        Ok(!(self.found_instances.is_empty() && self.found_instances_with_hints.is_empty()))
+        Ok(!(self.found_instances.is_empty() && self.hints.is_empty()))
     }
 
     fn title(&self) -> String {
@@ -84,8 +84,8 @@ impl IssueDetector for ContractsWithTodosDetector {
         self.found_instances.clone()
     }
 
-    fn instances_with_hints(&self) -> BTreeMap<(String, usize, String, String), NodeID> {
-        self.found_instances_with_hints.clone()
+    fn hints(&self) -> BTreeMap<(String, usize, String), String> {
+        self.hints.clone()
     }
 
     fn name(&self) -> String {
@@ -110,9 +110,13 @@ mod contracts_with_todos {
 
         let mut detector = ContractsWithTodosDetector::default();
         let found = detector.detect(&context).unwrap();
+
+        println!("{:?}", detector.hints());
+        println!("{:?}", detector.instances());
+
         assert!(found);
         // assert that the detector finds the correct number of instances
-        assert_eq!(detector.instances_with_hints().len(), 1);
+        assert_eq!(detector.hints().len(), 1);
         // assert that the detector returns the correct severity
         assert_eq!(
             detector.severity(),
