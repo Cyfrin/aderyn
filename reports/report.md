@@ -4965,13 +4965,79 @@ Detects the immediate initialization of state variables through function calls t
 
 Functions that are not used. Consider removing them.
 
-<details><summary>1 Found Instances</summary>
+<details><summary>12 Found Instances</summary>
 
 
-- Found in src/DeadCode.sol [Line: 25](../tests/contract-playground/src/DeadCode.sol#L25)
+- Found in src/ArbitraryTransferFrom.sol [Line: 15](../tests/contract-playground/src/ArbitraryTransferFrom.sol#L15)
+
+	```solidity
+	    function bad1(address from, address to, uint256 amount) internal {
+	```
+
+- Found in src/ContractLocksEther.sol [Line: 54](../tests/contract-playground/src/ContractLocksEther.sol#L54)
+
+	```solidity
+	    function _sendEther(address payable recipient, uint256 amount) internal {
+	```
+
+- Found in src/DeadCode.sol [Line: 16](../tests/contract-playground/src/DeadCode.sol#L16)
 
 	```solidity
 	    function unusedInternalFunction() internal pure returns (string memory) {
+	```
+
+- Found in src/DeletionNestedMappingStructureContract.sol [Line: 14](../tests/contract-playground/src/DeletionNestedMappingStructureContract.sol#L14)
+
+	```solidity
+	    function remove() internal{
+	```
+
+- Found in src/IncorrectShift.sol [Line: 5](../tests/contract-playground/src/IncorrectShift.sol#L5)
+
+	```solidity
+	    function shiftBad() internal pure returns (uint shifted) {
+	```
+
+- Found in src/IncorrectShift.sol [Line: 13](../tests/contract-playground/src/IncorrectShift.sol#L13)
+
+	```solidity
+	    function shiftGood() internal pure returns (uint shifted) {
+	```
+
+- Found in src/UncheckedReturn.sol [Line: 12](../tests/contract-playground/src/UncheckedReturn.sol#L12)
+
+	```solidity
+	    function callOneAndDoNothing() internal pure {
+	```
+
+- Found in src/UncheckedReturn.sol [Line: 20](../tests/contract-playground/src/UncheckedReturn.sol#L20)
+
+	```solidity
+	    function callOneAndDoSomething() internal {
+	```
+
+- Found in src/UncheckedReturn.sol [Line: 25](../tests/contract-playground/src/UncheckedReturn.sol#L25)
+
+	```solidity
+	    function callTwoAndDoNothing() internal pure {
+	```
+
+- Found in src/UncheckedReturn.sol [Line: 30](../tests/contract-playground/src/UncheckedReturn.sol#L30)
+
+	```solidity
+	    function callTwoAndDoSomething() internal pure {
+	```
+
+- Found in src/UncheckedReturn.sol [Line: 35](../tests/contract-playground/src/UncheckedReturn.sol#L35)
+
+	```solidity
+	    function callTwoAndRequireSomething() internal pure {
+	```
+
+- Found in src/UncheckedReturn.sol [Line: 40](../tests/contract-playground/src/UncheckedReturn.sol#L40)
+
+	```solidity
+	    function callTwoAndEmitError() internal pure {
 	```
 
 </details>

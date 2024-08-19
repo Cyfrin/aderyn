@@ -4874,10 +4874,76 @@
         "detector_name": "dead-code",
         "instances": [
           {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 15,
+            "src": "304:4",
+            "src_char": "304:4"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 54,
+            "src": "1540:10",
+            "src_char": "1540:10"
+          },
+          {
             "contract_path": "src/DeadCode.sol",
+            "line_no": 16,
+            "src": "362:22",
+            "src_char": "362:22"
+          },
+          {
+            "contract_path": "src/DeletionNestedMappingStructureContract.sol",
+            "line_no": 14,
+            "src": "258:6",
+            "src_char": "258:6"
+          },
+          {
+            "contract_path": "src/IncorrectShift.sol",
+            "line_no": 5,
+            "src": "100:8",
+            "src_char": "100:8"
+          },
+          {
+            "contract_path": "src/IncorrectShift.sol",
+            "line_no": 13,
+            "src": "292:9",
+            "src_char": "292:9"
+          },
+          {
+            "contract_path": "src/UncheckedReturn.sol",
+            "line_no": 12,
+            "src": "186:19",
+            "src_char": "186:19"
+          },
+          {
+            "contract_path": "src/UncheckedReturn.sol",
+            "line_no": 20,
+            "src": "362:21",
+            "src_char": "362:21"
+          },
+          {
+            "contract_path": "src/UncheckedReturn.sol",
             "line_no": 25,
-            "src": "600:22",
-            "src_char": "600:22"
+            "src": "492:19",
+            "src_char": "492:19"
+          },
+          {
+            "contract_path": "src/UncheckedReturn.sol",
+            "line_no": 30,
+            "src": "644:21",
+            "src_char": "644:21"
+          },
+          {
+            "contract_path": "src/UncheckedReturn.sol",
+            "line_no": 35,
+            "src": "842:26",
+            "src_char": "842:26"
+          },
+          {
+            "contract_path": "src/UncheckedReturn.sol",
+            "line_no": 40,
+            "src": "1049:19",
+            "src_char": "1049:19"
           }
         ]
       },

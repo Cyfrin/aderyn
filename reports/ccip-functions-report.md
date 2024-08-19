@@ -2455,109 +2455,31 @@ Avoid `require` / `revert` statements in a loop because a single bad item can ca
 
 Functions that are not used. Consider removing them.
 
-<details><summary>17 Found Instances</summary>
+<details><summary>4 Found Instances</summary>
 
 
-- Found in src/v0.8/functions/dev/v1_X/FunctionsBilling.sol [Line: 72](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/FunctionsBilling.sol#L72)
+- Found in src/v0.8/functions/dev/v1_X/FunctionsCoordinator.sol [Line: 82](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/FunctionsCoordinator.sol#L82)
 
 	```solidity
-	  constructor(
+	  function _isTransmitter(address node) internal view returns (bool) {
 	```
 
-- Found in src/v0.8/functions/dev/v1_X/FunctionsClient.sol [Line: 21](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/FunctionsClient.sol#L21)
+- Found in src/v0.8/functions/v1_0_0/FunctionsCoordinator.sol [Line: 81](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/FunctionsCoordinator.sol#L81)
 
 	```solidity
-	  constructor(address router) {
+	  function _isTransmitter(address node) internal view returns (bool) {
 	```
 
-- Found in src/v0.8/functions/dev/v1_X/FunctionsSubscriptions.sol [Line: 87](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/FunctionsSubscriptions.sol#L87)
+- Found in src/v0.8/functions/v1_1_0/FunctionsCoordinator.sol [Line: 81](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_1_0/FunctionsCoordinator.sol#L81)
 
 	```solidity
-	  constructor(address link) {
+	  function _isTransmitter(address node) internal view returns (bool) {
 	```
 
-- Found in src/v0.8/functions/dev/v1_X/Routable.sol [Line: 18](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/Routable.sol#L18)
+- Found in src/v0.8/functions/v1_3_0/FunctionsCoordinator.sol [Line: 83](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_3_0/FunctionsCoordinator.sol#L83)
 
 	```solidity
-	  constructor(address router) {
-	```
-
-- Found in src/v0.8/functions/dev/v1_X/ocr/OCR2Base.sol [Line: 16](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/ocr/OCR2Base.sol#L16)
-
-	```solidity
-	  constructor() ConfirmedOwner(msg.sender) {}
-	```
-
-- Found in src/v0.8/functions/v1_0_0/FunctionsBilling.sol [Line: 72](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/FunctionsBilling.sol#L72)
-
-	```solidity
-	  constructor(address router, Config memory config, address linkToNativeFeed) Routable(router) {
-	```
-
-- Found in src/v0.8/functions/v1_0_0/FunctionsClient.sol [Line: 21](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/FunctionsClient.sol#L21)
-
-	```solidity
-	  constructor(address router) {
-	```
-
-- Found in src/v0.8/functions/v1_0_0/FunctionsSubscriptions.sol [Line: 87](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/FunctionsSubscriptions.sol#L87)
-
-	```solidity
-	  constructor(address link) {
-	```
-
-- Found in src/v0.8/functions/v1_0_0/Routable.sol [Line: 18](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/Routable.sol#L18)
-
-	```solidity
-	  constructor(address router) {
-	```
-
-- Found in src/v0.8/functions/v1_0_0/ocr/OCR2Abstract.sol [Line: 64](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/ocr/OCR2Abstract.sol#L64)
-
-	```solidity
-	  function _configDigestFromConfigData(
-	```
-
-- Found in src/v0.8/functions/v1_0_0/ocr/OCR2Base.sol [Line: 18](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/ocr/OCR2Base.sol#L18)
-
-	```solidity
-	  constructor(bool uniqueReports) ConfirmedOwner(msg.sender) {
-	```
-
-- Found in src/v0.8/functions/v1_1_0/FunctionsBilling.sol [Line: 84](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_1_0/FunctionsBilling.sol#L84)
-
-	```solidity
-	  constructor(address router, Config memory config, address linkToNativeFeed) Routable(router) {
-	```
-
-- Found in src/v0.8/functions/v1_1_0/ocr/OCR2Base.sol [Line: 16](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_1_0/ocr/OCR2Base.sol#L16)
-
-	```solidity
-	  constructor() ConfirmedOwner(msg.sender) {}
-	```
-
-- Found in src/v0.8/functions/v1_3_0/FunctionsBilling.sol [Line: 72](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_3_0/FunctionsBilling.sol#L72)
-
-	```solidity
-	  constructor(
-	```
-
-- Found in src/v0.8/functions/v1_3_0/FunctionsClient.sol [Line: 21](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_3_0/FunctionsClient.sol#L21)
-
-	```solidity
-	  constructor(address router) {
-	```
-
-- Found in src/v0.8/functions/v1_3_0/FunctionsClient.sol [Line: 30](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_3_0/FunctionsClient.sol#L30)
-
-	```solidity
-	  function _sendRequest(
-	```
-
-- Found in src/v0.8/functions/v1_3_0/ocr/OCR2Base.sol [Line: 16](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_3_0/ocr/OCR2Base.sol#L16)
-
-	```solidity
-	  constructor() ConfirmedOwner(msg.sender) {}
+	  function _isTransmitter(address node) internal view returns (bool) {
 	```
 
 </details>

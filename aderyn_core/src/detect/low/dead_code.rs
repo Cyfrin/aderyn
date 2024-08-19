@@ -28,7 +28,12 @@ impl IssueDetector for DeadCodeDetector {
         for func in context
             .function_definitions()
             .into_iter()
-            .filter(|&f| f.implemented && f.visibility == Visibility::Internal && !f.is_constructor)
+            .filter(|&f| {
+                f.overrides.is_none()
+                    && f.implemented
+                    && f.visibility == Visibility::Internal
+                    && !f.is_constructor
+            })
             .filter(|&f| {
                 if let Some(ASTNode::ContractDefinition(contract)) =
                     f.closest_ancestor_of_type(context, NodeType::ContractDefinition)
