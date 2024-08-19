@@ -8,9 +8,8 @@ use crate::capture;
 use crate::context::browser::{
     ExtractInlineAssemblys, ExtractPragmaDirectives, GetClosestAncestorOfTypeX,
 };
-use crate::context::investigator::{
-    StandardInvestigationStyle, StandardInvestigator, StandardInvestigatorVisitor,
-};
+
+use crate::context::graph::{CallGraph, CallGraphDirection, CallGraphVisitor};
 use crate::detect::detector::IssueDetectorNamePool;
 use crate::detect::helpers::{self, pragma_directive_to_semver};
 use crate::{
@@ -50,12 +49,12 @@ impl IssueDetector for ConstantFunctionContainsAssemblyDetector {
                                 let mut tracker = AssemblyTracker {
                                     has_assembly: false,
                                 };
-                                let investigator = StandardInvestigator::new(
+                                let callgraph = CallGraph::new(
                                     context,
                                     &[&(function.into())],
-                                    StandardInvestigationStyle::Downstream,
+                                    CallGraphDirection::Inward,
                                 )?;
-                                investigator.investigate(context, &mut tracker)?;
+                                callgraph.accept(context, &mut tracker)?;
 
                                 if tracker.has_assembly {
                                     capture!(self, context, function);
@@ -110,7 +109,7 @@ struct AssemblyTracker {
     has_assembly: bool,
 }
 
-impl StandardInvestigatorVisitor for AssemblyTracker {
+impl CallGraphVisitor for AssemblyTracker {
     fn visit_any(&mut self, node: &crate::ast::ASTNode) -> eyre::Result<()> {
         // If we are already satisifed, do not bother checking
         if self.has_assembly {
@@ -121,7 +120,7 @@ impl StandardInvestigatorVisitor for AssemblyTracker {
             // Ignore checking functions that start with `_`
             // Example - templegold contains math functions like `_rpow()`, etc that are used by view functions
             // That should be okay .. I guess? (idk ... it's open for dicussion)
-            if function.name.starts_with("_") {
+            if function.name.starts_with('_') {
                 return Ok(());
             }
         }
