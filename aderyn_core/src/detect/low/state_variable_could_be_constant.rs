@@ -5,7 +5,6 @@ use crate::ast::{Mutability, NodeID};
 
 use crate::capture;
 use crate::detect::detector::IssueDetectorNamePool;
-use crate::detect::helpers;
 use crate::{
     context::workspace_context::WorkspaceContext,
     detect::detector::{IssueDetector, IssueSeverity},
@@ -22,13 +21,31 @@ pub struct StateVariableCouldBeConstantDetector {
 impl IssueDetector for StateVariableCouldBeConstantDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // PLAN
-        // 1. Collect all state variables that are not marked constant (collection A)
+        // 1. Collect all state variables that are not marked constant or immutable and are also not structs/mappings/contracts (collection A)
         // 2. Investigate every function and collect all the state variables that could change (collection B)
         // 3. Result = collection A - collection B
 
         let mut collection_a = Vec::new();
 
         for variable in context.variable_declarations() {
+            if variable.mutability() == Some(&Mutability::Immutable) {
+                continue;
+            }
+
+            // Do not report it if it's a struct / mapping / contract type
+            if variable
+                .type_descriptions
+                .type_string
+                .as_ref()
+                .is_some_and(|type_string| {
+                    !type_string.starts_with("mapping")
+                        && !type_string.starts_with("struct")
+                        && !type_string.starts_with("contract")
+                })
+            {
+                continue;
+            }
+
             if variable.state_variable && !variable.constant {
                 collection_a.push(variable);
             }
@@ -51,20 +68,7 @@ impl IssueDetector for StateVariableCouldBeConstantDetector {
             let collection_b_ids: HashSet<_> = collection_b.into_iter().map(|v| v.id).collect();
 
             // RESULT =  collection A - collection B
-            for variable in collection_a.into_iter().filter(|s| {
-                // Do not report it if it's a struct / mapping / contract type
-                s.type_descriptions
-                    .type_string
-                    .as_ref()
-                    .is_some_and(|type_string| {
-                        !type_string.starts_with("mapping")
-                            && !type_string.starts_with("struct")
-                            && !type_string.starts_with("contract")
-                    })
-            }) {
-                if variable.mutability() == Some(&Mutability::Immutable) {
-                    continue;
-                }
+            for variable in collection_a {
                 if !collection_b_ids.contains(&variable.id) {
                     capture!(self, context, variable);
                 }
