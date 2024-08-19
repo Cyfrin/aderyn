@@ -3805,6 +3805,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/DeadCode.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/DelegateCallWithoutAddressCheck.sol"
                 },
                 "region": {
@@ -5726,6 +5737,17 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/DangerousStrictEquality2.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DeadCode.sol"
                 },
                 "region": {
                   "byteLength": 23,
@@ -7972,6 +7994,26 @@
             "text": "Detects the immediate initialization of state variables through function calls that are not pure/constant, or that use non-constant state variable. Remove any initialization of state variables via non-constant state variables or function calls. If variables must be set upon contract deployment, locate initialization in the constructor instead."
           },
           "ruleId": "function-initializing-state"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DeadCode.sol"
+                },
+                "region": {
+                  "byteLength": 22,
+                  "byteOffset": 600
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Functions that are not used. Consider removing them."
+          },
+          "ruleId": "dead-code"
         },
         {
           "level": "note",

@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 86,
-    "total_sloc": 2890
+    "total_source_units": 87,
+    "total_sloc": 2913
   },
   "files_details": {
     "files_details": [
@@ -76,6 +76,10 @@
       {
         "file_path": "src/DangerousUnaryOperator.sol",
         "n_sloc": 13
+      },
+      {
+        "file_path": "src/DeadCode.sol",
+        "n_sloc": 23
       },
       {
         "file_path": "src/DelegateCallWithoutAddressCheck.sol",
@@ -353,7 +357,7 @@
   },
   "issue_count": {
     "high": 39,
-    "low": 31
+    "low": 32
   },
   "high_issues": {
     "issues": [
@@ -2529,6 +2533,12 @@
             "src_char": "32:23"
           },
           {
+            "contract_path": "src/DeadCode.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/DelegateCallWithoutAddressCheck.sol",
             "line_no": 2,
             "src": "32:21",
@@ -3594,6 +3604,12 @@
           },
           {
             "contract_path": "src/DangerousStrictEquality2.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/DeadCode.sol",
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
@@ -4853,6 +4869,19 @@
         ]
       },
       {
+        "title": "Dead Code",
+        "description": "Functions that are not used. Consider removing them.",
+        "detector_name": "dead-code",
+        "instances": [
+          {
+            "contract_path": "src/DeadCode.sol",
+            "line_no": 25,
+            "src": "600:22",
+            "src_char": "600:22"
+          }
+        ]
+      },
+      {
         "title": "Builtin Symbol Shadowing",
         "description": "Name clashes with a built-in-symbol. Consider renaming it.",
         "detector_name": "builtin-symbol-shadow",
@@ -4955,6 +4984,7 @@
     "return-bomb",
     "out-of-order-retryable",
     "function-initializing-state",
+    "dead-code",
     "builtin-symbol-shadow"
   ]
 }
