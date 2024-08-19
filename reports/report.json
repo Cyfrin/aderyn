@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 87,
-    "total_sloc": 2899
+    "total_source_units": 92,
+    "total_sloc": 3230
   },
   "files_details": {
     "files_details": [
@@ -22,12 +22,20 @@
         "n_sloc": 9
       },
       {
+        "file_path": "src/AssertStateChange.sol",
+        "n_sloc": 11
+      },
+      {
         "file_path": "src/BooleanEquality.sol",
         "n_sloc": 27
       },
       {
         "file_path": "src/BuiltinSymbolShadow.sol",
         "n_sloc": 14
+      },
+      {
+        "file_path": "src/CacheArrayLength.sol",
+        "n_sloc": 38
       },
       {
         "file_path": "src/CallGraphTests.sol",
@@ -40,6 +48,10 @@
       {
         "file_path": "src/CompilerBugStorageSignedIntegerArray.sol",
         "n_sloc": 13
+      },
+      {
+        "file_path": "src/ConstFuncChangeState.sol",
+        "n_sloc": 15
       },
       {
         "file_path": "src/ConstantFuncsAssembly.sol",
@@ -56,6 +68,10 @@
       {
         "file_path": "src/ContractWithTodo.sol",
         "n_sloc": 7
+      },
+      {
+        "file_path": "src/CostlyOperationsInsideLoops.sol",
+        "n_sloc": 17
       },
       {
         "file_path": "src/Counter.sol",
@@ -204,6 +220,10 @@
       {
         "file_path": "src/StateVariables.sol",
         "n_sloc": 58
+      },
+      {
+        "file_path": "src/StateVariablesManipulation.sol",
+        "n_sloc": 250
       },
       {
         "file_path": "src/StorageConditionals.sol",
@@ -356,8 +376,8 @@
     ]
   },
   "issue_count": {
-    "high": 40,
-    "low": 31
+    "high": 41,
+    "low": 34
   },
   "high_issues": {
     "issues": [
@@ -1402,6 +1422,48 @@
             "src_char": "282:18"
           },
           {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 8,
+            "src": "184:10",
+            "src_char": "184:10"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 9,
+            "src": "214:9",
+            "src_char": "214:9"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 10,
+            "src": "241:10",
+            "src_char": "241:10"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 11,
+            "src": "272:13",
+            "src_char": "272:13"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 12,
+            "src": "314:20",
+            "src_char": "314:20"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 13,
+            "src": "354:12",
+            "src_char": "354:12"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 14,
+            "src": "385:11",
+            "src_char": "385:11"
+          },
+          {
             "contract_path": "src/TautologyOrContradiction.sol",
             "line_no": 6,
             "src": "133:6",
@@ -1838,6 +1900,12 @@
             "src_char": "4337:261"
           },
           {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 142,
+            "src": "4146:20",
+            "src_char": "4146:20"
+          },
+          {
             "contract_path": "src/UncheckedReturn.sol",
             "line_no": 14,
             "src": "279:5",
@@ -2249,6 +2317,19 @@
         ]
       },
       {
+        "title": "Constant functions changing state",
+        "description": "Function is declared constant/view but it changes state. Ensure that the attributes of contract compiled prior to 0.5 are correct.",
+        "detector_name": "constant-function-changing-state",
+        "instances": [
+          {
+            "contract_path": "src/ConstFuncChangeState.sol",
+            "line_no": 8,
+            "src": "173:112",
+            "src_char": "173:112"
+          }
+        ]
+      },
+      {
         "title": "Function selector collides with other functions",
         "description": "Function selector collides with other functions. This may cause the solidity function dispatcher to invoke the wrong function if the functions happen to be included in the same contract through an inheritance hirearchy later down the line. It is recommended to rename this function or change its parameters.",
         "detector_name": "function-selector-collision",
@@ -2510,6 +2591,12 @@
             "src_char": "32:23"
           },
           {
+            "contract_path": "src/ConstFuncChangeState.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/ConstantFuncsAssembly.sol",
             "line_no": 2,
             "src": "32:23",
@@ -2523,6 +2610,12 @@
           },
           {
             "contract_path": "src/ContractWithTodo.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/CostlyOperationsInsideLoops.sol",
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
@@ -2613,6 +2706,12 @@
           },
           {
             "contract_path": "src/RedundantStatements.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
@@ -2715,6 +2814,12 @@
             "src_char": "2121:14"
           },
           {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 56,
+            "src": "1657:17",
+            "src_char": "1657:17"
+          },
+          {
             "contract_path": "src/ZeroAddressCheck.sol",
             "line_no": 43,
             "src": "1171:14",
@@ -2758,10 +2863,40 @@
             "src_char": "113:1"
           },
           {
+            "contract_path": "src/AssertStateChange.sol",
+            "line_no": 8,
+            "src": "131:3",
+            "src_char": "131:3"
+          },
+          {
+            "contract_path": "src/AssertStateChange.sol",
+            "line_no": 12,
+            "src": "199:4",
+            "src_char": "199:4"
+          },
+          {
             "contract_path": "src/BuiltinSymbolShadow.sol",
             "line_no": 8,
             "src": "125:41",
             "src_char": "125:41"
+          },
+          {
+            "contract_path": "src/ConstFuncChangeState.sol",
+            "line_no": 8,
+            "src": "173:112",
+            "src_char": "173:112"
+          },
+          {
+            "contract_path": "src/ConstFuncChangeState.sol",
+            "line_no": 14,
+            "src": "339:108",
+            "src_char": "339:108"
+          },
+          {
+            "contract_path": "src/ConstFuncChangeState.sol",
+            "line_no": 20,
+            "src": "517:89",
+            "src_char": "517:89"
           },
           {
             "contract_path": "src/ContractLocksEther.sol",
@@ -2999,6 +3134,18 @@
         "detector_name": "constants-instead-of-literals",
         "instances": [
           {
+            "contract_path": "src/AssertStateChange.sol",
+            "line_no": 9,
+            "src": "174:2",
+            "src_char": "174:2"
+          },
+          {
+            "contract_path": "src/AssertStateChange.sol",
+            "line_no": 14,
+            "src": "254:2",
+            "src_char": "254:2"
+          },
+          {
             "contract_path": "src/BooleanEquality.sol",
             "line_no": 6,
             "src": "170:3",
@@ -3033,6 +3180,30 @@
             "line_no": 29,
             "src": "683:3",
             "src_char": "683:3"
+          },
+          {
+            "contract_path": "src/CacheArrayLength.sol",
+            "line_no": 26,
+            "src": "611:3",
+            "src_char": "611:3"
+          },
+          {
+            "contract_path": "src/CacheArrayLength.sol",
+            "line_no": 27,
+            "src": "639:3",
+            "src_char": "639:3"
+          },
+          {
+            "contract_path": "src/CacheArrayLength.sol",
+            "line_no": 36,
+            "src": "1015:3",
+            "src_char": "1015:3"
+          },
+          {
+            "contract_path": "src/CacheArrayLength.sol",
+            "line_no": 37,
+            "src": "1043:3",
+            "src_char": "1043:3"
           },
           {
             "contract_path": "src/Casting.sol",
@@ -3255,6 +3426,78 @@
             "line_no": 27,
             "src": "745:2",
             "src_char": "745:2"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 121,
+            "src": "3471:2",
+            "src_char": "3471:2"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 123,
+            "src": "3542:2",
+            "src_char": "3542:2"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 192,
+            "src": "5408:3",
+            "src_char": "5408:3"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 202,
+            "src": "5621:3",
+            "src_char": "5621:3"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 233,
+            "src": "6372:1",
+            "src_char": "6372:1"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 237,
+            "src": "6468:2",
+            "src_char": "6468:2"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 239,
+            "src": "6543:2",
+            "src_char": "6543:2"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 244,
+            "src": "6704:2",
+            "src_char": "6704:2"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 258,
+            "src": "7236:1",
+            "src_char": "7236:1"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 264,
+            "src": "7497:1",
+            "src_char": "7497:1"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 333,
+            "src": "9506:3",
+            "src_char": "9506:3"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 339,
+            "src": "9671:3",
+            "src_char": "9671:3"
           },
           {
             "contract_path": "src/UncheckedReturn.sol",
@@ -3598,6 +3841,18 @@
             "src_char": "32:23"
           },
           {
+            "contract_path": "src/AssertStateChange.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/CacheArrayLength.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/ContractLocksEther.sol",
             "line_no": 2,
             "src": "32:23",
@@ -3695,6 +3950,12 @@
           },
           {
             "contract_path": "src/StateVariables.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
@@ -3916,6 +4177,18 @@
             "line_no": 8,
             "src": "125:41",
             "src_char": "125:41"
+          },
+          {
+            "contract_path": "src/CacheArrayLength.sol",
+            "line_no": 17,
+            "src": "337:2",
+            "src_char": "337:2"
+          },
+          {
+            "contract_path": "src/CacheArrayLength.sol",
+            "line_no": 42,
+            "src": "1104:2",
+            "src_char": "1104:2"
           },
           {
             "contract_path": "src/CallGraphTests.sol",
@@ -4900,6 +5173,135 @@
         ]
       },
       {
+        "title": "Loop condition contains `state_variable.length` that could be cached outside.",
+        "description": "Cache the lengths of storage arrays if they are used and not modified in for loops.",
+        "detector_name": "cache-array-length",
+        "instances": [
+          {
+            "contract_path": "src/CacheArrayLength.sol",
+            "line_no": 12,
+            "src": "234:82",
+            "src_char": "234:82"
+          },
+          {
+            "contract_path": "src/CacheArrayLength.sol",
+            "line_no": 44,
+            "src": "1160:64",
+            "src_char": "1160:64"
+          },
+          {
+            "contract_path": "src/CacheArrayLength.sol",
+            "line_no": 50,
+            "src": "1325:183",
+            "src_char": "1325:183"
+          }
+        ]
+      },
+      {
+        "title": "Incorrect use of `assert()`",
+        "description": "Argument to `assert()` modifies the state. Use `require` for invariants modifying state.",
+        "detector_name": "assert-state-change",
+        "instances": [
+          {
+            "contract_path": "src/AssertStateChange.sol",
+            "line_no": 9,
+            "src": "154:23",
+            "src_char": "154:23"
+          }
+        ]
+      },
+      {
+        "title": "Costly operations inside loops.",
+        "description": "Invoking `SSTORE`operations in loops may lead to Out-of-gas errors. Use a local variable to hold the loop computation result.",
+        "detector_name": "costly-operations-inside-loops",
+        "instances": [
+          {
+            "contract_path": "src/CacheArrayLength.sol",
+            "line_no": 25,
+            "src": "546:133",
+            "src_char": "546:133"
+          },
+          {
+            "contract_path": "src/CacheArrayLength.sol",
+            "line_no": 35,
+            "src": "928:155",
+            "src_char": "928:155"
+          },
+          {
+            "contract_path": "src/CostlyOperationsInsideLoops.sol",
+            "line_no": 10,
+            "src": "214:79",
+            "src_char": "214:79"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 12,
+            "src": "289:107",
+            "src_char": "289:107"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 25,
+            "src": "658:122",
+            "src_char": "658:122"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 38,
+            "src": "988:94",
+            "src_char": "988:94"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 54,
+            "src": "1415:93",
+            "src_char": "1415:93"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 71,
+            "src": "1844:97",
+            "src_char": "1844:97"
+          },
+          {
+            "contract_path": "src/RevertsAndRequriesInLoops.sol",
+            "line_no": 10,
+            "src": "227:129",
+            "src_char": "227:129"
+          },
+          {
+            "contract_path": "src/RevertsAndRequriesInLoops.sol",
+            "line_no": 17,
+            "src": "416:150",
+            "src_char": "416:150"
+          },
+          {
+            "contract_path": "src/RevertsAndRequriesInLoops.sol",
+            "line_no": 27,
+            "src": "719:159",
+            "src_char": "719:159"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 70,
+            "src": "5010:178",
+            "src_char": "3522:178"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 134,
+            "src": "8131:283",
+            "src_char": "6643:283"
+          },
+          {
+            "contract_path": "src/parent_chain/ParentChainContract.sol",
+            "line_no": 17,
+            "src": "512:110",
+            "src_char": "512:110"
+          }
+        ]
+      },
+      {
         "title": "Builtin Symbol Shadowing",
         "description": "Name clashes with a built-in-symbol. Consider renaming it.",
         "detector_name": "builtin-symbol-shadow",
@@ -5002,6 +5404,10 @@
     "return-bomb",
     "out-of-order-retryable",
     "function-initializing-state",
+    "cache-array-length",
+    "assert-state-change",
+    "costly-operations-inside-loops",
+    "constant-function-changing-state",
     "builtin-symbol-shadow",
     "function-selector-collision"
   ]
