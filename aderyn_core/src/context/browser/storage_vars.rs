@@ -35,10 +35,10 @@ pub struct ApproximateStorageChangeFinder<'a> {
 }
 
 /// This trait implementation will be useful when we run it through our callgraph and try to aggregate state variable changes.
-impl<'a> Add<&'a ApproximateStorageChangeFinder<'_>> for ApproximateStorageChangeFinder<'a> {
+impl<'a> Add<ApproximateStorageChangeFinder<'_>> for ApproximateStorageChangeFinder<'a> {
     type Output = ApproximateStorageChangeFinder<'a>;
 
-    fn add(mut self, rhs: &ApproximateStorageChangeFinder) -> Self::Output {
+    fn add(mut self, rhs: ApproximateStorageChangeFinder) -> Self::Output {
         self.directly_manipulated_state_variables
             .extend(rhs.directly_manipulated_state_variables.iter());
         self.manipulated_storage_pointers
@@ -60,7 +60,6 @@ impl<'a> Add<&'a ApproximateStorageChangeFinder<'_>> for ApproximateStorageChang
         self
     }
 }
-
 impl<'a> Debug for ApproximateStorageChangeFinder<'a> {
     // Do not print context. Hence, debug is custom derived for this struct
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {

@@ -4,7 +4,6 @@ use std::error::Error;
 use crate::ast::NodeID;
 
 use crate::capture;
-use crate::context::graph::{CallGraph, CallGraphDirection};
 use crate::detect::detector::IssueDetectorNamePool;
 use crate::detect::helpers;
 use crate::{
@@ -23,23 +22,40 @@ pub struct StateVariableCouldBeConstantDetector {
 impl IssueDetector for StateVariableCouldBeConstantDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // PLAN
-        // 1. Collect all state variables that are not marked constant (Set A)
-        // 2. Investigate every function and collect all the state variables that could change (Set B)
-        // 3. Result = Set A - Set B
+        // 1. Collect all state variables that are not marked constant (collection A)
+        // 2. Investigate every function and collect all the state variables that could change (collection B)
+        // 3. Result = collection A - collection B
 
-        let mut set_a = HashSet::new();
+        let mut collection_a = Vec::new();
 
         for variable in context.variable_declarations() {
             if variable.state_variable && !variable.constant {
-                set_a.insert(variable.id);
+                collection_a.push(variable);
             }
         }
 
-        // let mut set_b = HashSet::new();
-
+        let mut all_state_changes = None;
         for func in helpers::get_implemented_external_and_public_functions(context) {
-            let investigator =
-                CallGraph::new(context, &[&(func.into())], CallGraphDirection::Inward)?;
+            if let Some(changes) = func.state_variable_changes(context) {
+                if all_state_changes.is_none() {
+                    all_state_changes = Some(changes);
+                } else if let Some(existing_changes) = all_state_changes {
+                    let new_changes = existing_changes + changes;
+                    all_state_changes = Some(new_changes);
+                }
+            }
+        }
+
+        if let Some(all_state_changes) = all_state_changes {
+            let collection_b = all_state_changes.fetch_non_exhaustive_manipulated_state_variables();
+            let collection_b_ids: HashSet<_> = collection_b.into_iter().map(|v| v.id).collect();
+
+            // RESULT =  collection A - collection B
+            for variable in collection_a {
+                if !collection_b_ids.contains(&variable.id) {
+                    capture!(self, context, variable);
+                }
+            }
         }
 
         Ok(!self.found_instances.is_empty())
@@ -54,7 +70,7 @@ impl IssueDetector for StateVariableCouldBeConstantDetector {
     }
 
     fn description(&self) -> String {
-        String::from("Description of the low issue.")
+        String::from("State variables that are not updated following deployment should be declared constant to save gas. Add the `constant` attribute to state variables that never change.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -62,16 +78,24 @@ impl IssueDetector for StateVariableCouldBeConstantDetector {
     }
 
     fn name(&self) -> String {
-        format!("low-issue-template")
+        format!(
+            "{}",
+            IssueDetectorNamePool::StateVariableCouldBeDeclaredConstant
+        )
     }
 }
 
 mod function_state_changes_finder_helper {
-    use crate::{ast::FunctionDefinition, context::workspace_context::WorkspaceContext};
-
+    use crate::{
+        ast::{ASTNode, FunctionDefinition},
+        context::{
+            browser::ApproximateStorageChangeFinder,
+            graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
+            workspace_context::WorkspaceContext,
+        },
+    };
 
     impl FunctionDefinition {
-
         /// Investigates the function with the help callgraph and accumulates all the state variables
         /// that have been changed.
         pub fn state_variable_changes<'a>(
@@ -85,31 +109,29 @@ mod function_state_changes_finder_helper {
 
             let investigator =
                 CallGraph::new(context, &[&(self.into())], CallGraphDirection::Inward).ok()?;
-
             investigator.accept(context, &mut tracker).ok()?;
 
             tracker.changes.take()
         }
-
-        struct StateVariableChangeTracker<'a> {
-            context: &'a WorkspaceContext,
-            changes: Option<ApproximateStorageChangeFinder<'a>>,
-        }
-    
-        impl<'a> CallGraphVisitor for StateVariableChangeTracker<'a> {
-            fn visit_any(&mut self, node: &ASTNode) -> eyre::Result<()> {
-                let changes = ApproximateStorageChangeFinder::from(self.context, node);
-                if self.changes.is_none() {
-                    self.changes = Some(changes);
-                } else if let Some(existing_changes) = self.changes.take() {
-                    let new_changes = existing_changes + changes;
-                    self.changes = Some(new_changes);
-                }
-                Ok(())
-            }
-        }
     }
 
+    struct StateVariableChangeTracker<'a> {
+        context: &'a WorkspaceContext,
+        changes: Option<ApproximateStorageChangeFinder<'a>>,
+    }
+
+    impl<'a> CallGraphVisitor for StateVariableChangeTracker<'a> {
+        fn visit_any(&mut self, node: &ASTNode) -> eyre::Result<()> {
+            let changes = ApproximateStorageChangeFinder::from(self.context, node);
+            if self.changes.is_none() {
+                self.changes = Some(changes);
+            } else if let Some(existing_changes) = self.changes.take() {
+                let new_changes = existing_changes + changes;
+                self.changes = Some(new_changes);
+            }
+            Ok(())
+        }
+    }
 }
 
 #[cfg(test)]
@@ -134,6 +156,8 @@ mod state_variable_could_be_constant_tests {
         assert!(found);
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
+
+        println!("{:?}", detector.instances());
         // assert the severity is low
         assert_eq!(
             detector.severity(),
