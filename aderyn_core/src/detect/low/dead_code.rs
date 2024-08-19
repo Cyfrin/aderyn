@@ -23,7 +23,9 @@ pub struct DeadCodeDetector {
 impl IssueDetector for DeadCodeDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // Heuristic:
-        // Internal functions inside of non abstract contracts that have a body (implemented) and are not used
+        // Internal non overriding functions inside of non abstract contracts that have a body (implemented) and are not used
+        // If an internal function is marked override then, it may still be used even if it doesn't have a direct referencedDeclaration
+        // pointing to it.
 
         for func in context
             .function_definitions()
