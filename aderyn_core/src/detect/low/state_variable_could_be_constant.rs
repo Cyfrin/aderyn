@@ -38,9 +38,9 @@ impl IssueDetector for StateVariableCouldBeConstantDetector {
                 .type_string
                 .as_ref()
                 .is_some_and(|type_string| {
-                    !type_string.starts_with("mapping")
-                        && !type_string.starts_with("struct")
-                        && !type_string.starts_with("contract")
+                    type_string.starts_with("mapping")
+                        || type_string.starts_with("struct")
+                        || type_string.starts_with("contract")
                 })
             {
                 continue;
