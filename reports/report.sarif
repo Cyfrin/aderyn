@@ -3403,6 +3403,26 @@
           "ruleId": "out-of-order-retryable"
         },
         {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ConstFuncChangeState.sol"
+                },
+                "region": {
+                  "byteLength": 112,
+                  "byteOffset": 173
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Function is declared constant/view but it changes state. Ensure that the attributes of contract compiled prior to 0.5 are correct."
+          },
+          "ruleId": "constant-function-changing-state"
+        },
+        {
           "level": "note",
           "locations": [
             {
@@ -3816,6 +3836,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/ConstFuncChangeState.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/ConstantFuncsAssembly.sol"
                 },
                 "region": {
@@ -3839,6 +3870,17 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/ContractWithTodo.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CostlyOperationsInsideLoops.sol"
                 },
                 "region": {
                   "byteLength": 23,
@@ -4274,11 +4316,66 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/AssertStateChange.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 131
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/AssertStateChange.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 199
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/BuiltinSymbolShadow.sol"
                 },
                 "region": {
                   "byteLength": 41,
                   "byteOffset": 125
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ConstFuncChangeState.sol"
+                },
+                "region": {
+                  "byteLength": 112,
+                  "byteOffset": 173
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ConstFuncChangeState.sol"
+                },
+                "region": {
+                  "byteLength": 108,
+                  "byteOffset": 339
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ConstFuncChangeState.sol"
+                },
+                "region": {
+                  "byteLength": 89,
+                  "byteOffset": 517
                 }
               }
             },
@@ -4709,6 +4806,28 @@
         {
           "level": "note",
           "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/AssertStateChange.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 174
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/AssertStateChange.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 254
+                }
+              }
+            },
             {
               "physicalLocation": {
                 "artifactLocation": {
@@ -5967,7 +6086,11 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+<<<<<<< HEAD
                   "uri": "src/CacheArrayLength.sol"
+=======
+                  "uri": "src/AssertStateChange.sol"
+>>>>>>> dev
                 },
                 "region": {
                   "byteLength": 23,
@@ -8309,6 +8432,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+<<<<<<< HEAD
                   "uri": "src/CacheArrayLength.sol"
                 },
                 "region": {
@@ -8336,14 +8460,168 @@
                 "region": {
                   "byteLength": 183,
                   "byteOffset": 1325
+=======
+                  "uri": "src/AssertStateChange.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 154
+>>>>>>> dev
                 }
               }
             }
           ],
           "message": {
+<<<<<<< HEAD
             "text": "Cache the lengths of storage arrays if they are used and not modified in for loops."
           },
           "ruleId": "cache-array-length"
+=======
+            "text": "Argument to `assert()` modifies the state. Use `require` for invariants modifying state."
+          },
+          "ruleId": "assert-state-change"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CostlyOperationsInsideLoops.sol"
+                },
+                "region": {
+                  "byteLength": 79,
+                  "byteOffset": 214
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 107,
+                  "byteOffset": 289
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 122,
+                  "byteOffset": 658
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 94,
+                  "byteOffset": 988
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 93,
+                  "byteOffset": 1415
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 97,
+                  "byteOffset": 1844
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/RevertsAndRequriesInLoops.sol"
+                },
+                "region": {
+                  "byteLength": 129,
+                  "byteOffset": 227
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/RevertsAndRequriesInLoops.sol"
+                },
+                "region": {
+                  "byteLength": 150,
+                  "byteOffset": 416
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/RevertsAndRequriesInLoops.sol"
+                },
+                "region": {
+                  "byteLength": 159,
+                  "byteOffset": 719
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/eth2/DepositContract.sol"
+                },
+                "region": {
+                  "byteLength": 178,
+                  "byteOffset": 5010
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/eth2/DepositContract.sol"
+                },
+                "region": {
+                  "byteLength": 283,
+                  "byteOffset": 8131
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/parent_chain/ParentChainContract.sol"
+                },
+                "region": {
+                  "byteLength": 110,
+                  "byteOffset": 512
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Invoking `SSTORE`operations in loops may lead to Out-of-gas errors. Use a local variable to hold the loop computation result."
+          },
+          "ruleId": "costly-operations-inside-loops"
+>>>>>>> dev
         },
         {
           "level": "note",

@@ -1,3 +1,4 @@
+pub(crate) mod assert_state_change;
 pub(crate) mod boolean_equality;
 pub(crate) mod builtin_symbol_shadowing;
 pub(crate) mod cache_array_length;
@@ -5,6 +6,7 @@ pub(crate) mod centralization_risk;
 pub(crate) mod constant_funcs_assembly;
 pub(crate) mod constants_instead_of_literals;
 pub(crate) mod contracts_with_todos;
+pub(crate) mod costly_operations_inside_loops;
 pub(crate) mod deprecated_oz_functions;
 pub(crate) mod division_before_multiplication;
 pub(crate) mod ecrecover;
@@ -31,6 +33,7 @@ pub(crate) mod useless_modifier;
 pub(crate) mod useless_public_function;
 pub(crate) mod zero_address_check;
 
+pub use assert_state_change::AssertStateChangeDetector;
 pub use boolean_equality::BooleanEqualityDetector;
 pub use builtin_symbol_shadowing::BuiltinSymbolShadowDetector;
 pub use cache_array_length::CacheArrayLengthDetector;
@@ -38,6 +41,7 @@ pub use centralization_risk::CentralizationRiskDetector;
 pub use constant_funcs_assembly::ConstantFunctionContainsAssemblyDetector;
 pub use constants_instead_of_literals::ConstantsInsteadOfLiteralsDetector;
 pub use contracts_with_todos::ContractsWithTodosDetector;
+pub use costly_operations_inside_loops::CostlyOperationsInsideLoopsDetector;
 pub use deprecated_oz_functions::DeprecatedOZFunctionsDetector;
 pub use division_before_multiplication::DivisionBeforeMultiplicationDetector;
 pub use ecrecover::EcrecoverDetector;
