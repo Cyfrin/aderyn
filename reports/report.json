@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 86,
-    "total_sloc": 2890
+    "total_source_units": 87,
+    "total_sloc": 2911
   },
   "files_details": {
     "files_details": [
@@ -262,6 +262,10 @@
         "n_sloc": 6
       },
       {
+        "file_path": "src/VoidConstructor.sol",
+        "n_sloc": 21
+      },
+      {
         "file_path": "src/WeakRandomness.sol",
         "n_sloc": 59
       },
@@ -353,7 +357,7 @@
   },
   "issue_count": {
     "high": 39,
-    "low": 31
+    "low": 32
   },
   "high_issues": {
     "issues": [
@@ -2619,6 +2623,12 @@
             "src_char": "32:23"
           },
           {
+            "contract_path": "src/VoidConstructor.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
             "line_no": 6,
             "src": "46:24",
@@ -3699,6 +3709,12 @@
             "line_no": 2,
             "src": "32:24",
             "src_char": "32:24"
+          },
+          {
+            "contract_path": "src/VoidConstructor.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
           },
           {
             "contract_path": "src/WeakRandomness.sol",
@@ -4882,6 +4898,19 @@
             "src_char": "414:15"
           }
         ]
+      },
+      {
+        "title": "Void constructor",
+        "description": "Call to a constructor that is not implemented.",
+        "detector_name": "void-constructor",
+        "instances": [
+          {
+            "contract_path": "src/VoidConstructor.sol",
+            "line_no": 16,
+            "src": "372:17",
+            "src_char": "372:17"
+          }
+        ]
       }
     ]
   },
@@ -4955,6 +4984,7 @@
     "return-bomb",
     "out-of-order-retryable",
     "function-initializing-state",
-    "builtin-symbol-shadow"
+    "builtin-symbol-shadow",
+    "void-constructor"
   ]
 }

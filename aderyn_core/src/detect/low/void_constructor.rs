@@ -21,9 +21,9 @@ pub struct VoidConstructorDetector {
 impl IssueDetector for VoidConstructorDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // PLAN
-        // Gather all the contract whose constructors are invoked / called (Collection A)
-        // Gather all the contracts that have constructor defined. (Collection B)
-        // Result = Collection A - Collection B
+        // Gather all the invocations of base constructors
+        // For each, inspect the contract and see if there is a constructor defined. If there isn't,
+        // capture the invocation
 
         for modifier_invocation in context.modifier_invocations() {
             if modifier_invocation.kind != Some(ModifierInvocationKind::BaseConstructorSpecifier) {

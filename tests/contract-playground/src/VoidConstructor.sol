@@ -12,7 +12,10 @@ contract FilledConstructor {
 // This contracts think VoidConstructor has a defined constructor and it tries to call it
 contract B is VoidConstructor, FilledConstructor {
     // BAD invocation (1 instance)
-    constructor() VoidConstructor() FilledConstructor() {
+    constructor() 
+    VoidConstructor() 
+    FilledConstructor() 
+    {
         
     }
 }

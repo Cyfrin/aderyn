@@ -3970,6 +3970,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/VoidConstructor.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
                 },
                 "region": {
@@ -5916,6 +5927,17 @@
                 },
                 "region": {
                   "byteLength": 24,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/VoidConstructor.sol"
+                },
+                "region": {
+                  "byteLength": 23,
                   "byteOffset": 32
                 }
               }
@@ -8025,6 +8047,26 @@
             "text": "Name clashes with a built-in-symbol. Consider renaming it."
           },
           "ruleId": "builtin-symbol-shadow"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/VoidConstructor.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 372
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Call to a constructor that is not implemented."
+          },
+          "ruleId": "void-constructor"
         }
       ],
       "tool": {
