@@ -1784,22 +1784,22 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/LocalVariableShadowing.sol"
+                  "uri": "src/LocalVariableShadow.sol"
                 },
                 "region": {
                   "byteLength": 5,
-                  "byteOffset": 132
+                  "byteOffset": 129
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/LocalVariableShadowing.sol"
+                  "uri": "src/LocalVariableShadow.sol"
                 },
                 "region": {
                   "byteLength": 4,
-                  "byteOffset": 566
+                  "byteOffset": 532
                 }
               }
             },
@@ -4589,33 +4589,33 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/LocalVariableShadowing.sol"
+                  "uri": "src/LocalVariableShadow.sol"
                 },
                 "region": {
-                  "byteLength": 18,
-                  "byteOffset": 184
+                  "byteLength": 17,
+                  "byteOffset": 181
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/LocalVariableShadowing.sol"
+                  "uri": "src/LocalVariableShadow.sol"
                 },
                 "region": {
-                  "byteLength": 28,
-                  "byteOffset": 336
+                  "byteLength": 26,
+                  "byteOffset": 332
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/LocalVariableShadowing.sol"
+                  "uri": "src/LocalVariableShadow.sol"
                 },
                 "region": {
                   "byteLength": 18,
-                  "byteOffset": 737
+                  "byteOffset": 700
                 }
               }
             },
@@ -5980,33 +5980,33 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/LocalVariableShadowing.sol"
+                  "uri": "src/LocalVariableShadow.sol"
                 },
                 "region": {
                   "byteLength": 7,
-                  "byteOffset": 255
+                  "byteOffset": 251
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/LocalVariableShadowing.sol"
+                  "uri": "src/LocalVariableShadow.sol"
                 },
                 "region": {
                   "byteLength": 7,
-                  "byteOffset": 440
+                  "byteOffset": 434
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/LocalVariableShadowing.sol"
+                  "uri": "src/LocalVariableShadow.sol"
                 },
                 "region": {
                   "byteLength": 7,
-                  "byteOffset": 807
+                  "byteOffset": 770
                 }
               }
             },
@@ -8183,11 +8183,11 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/LocalVariableShadowing.sol"
+                  "uri": "src/LocalVariableShadow.sol"
                 },
                 "region": {
                   "byteLength": 5,
-                  "byteOffset": 132
+                  "byteOffset": 129
                 }
               }
             },
@@ -8573,33 +8573,33 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/LocalVariableShadowing.sol"
+                  "uri": "src/LocalVariableShadow.sol"
                 },
                 "region": {
                   "byteLength": 5,
-                  "byteOffset": 211
+                  "byteOffset": 207
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/LocalVariableShadowing.sol"
+                  "uri": "src/LocalVariableShadow.sol"
                 },
                 "region": {
                   "byteLength": 5,
-                  "byteOffset": 397
+                  "byteOffset": 391
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/LocalVariableShadowing.sol"
+                  "uri": "src/LocalVariableShadow.sol"
                 },
                 "region": {
                   "byteLength": 4,
-                  "byteOffset": 764
+                  "byteOffset": 727
                 }
               }
             },

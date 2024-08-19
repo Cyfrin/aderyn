@@ -166,7 +166,7 @@
         "n_sloc": 21
       },
       {
-        "file_path": "src/LocalVariableShadowing.sol",
+        "file_path": "src/LocalVariableShadow.sol",
         "n_sloc": 23
       },
       {
@@ -1390,16 +1390,16 @@
             "src_char": "4076:11"
           },
           {
-            "contract_path": "src/LocalVariableShadowing.sol",
+            "contract_path": "src/LocalVariableShadow.sol",
             "line_no": 7,
-            "src": "132:5",
-            "src_char": "132:5"
+            "src": "129:5",
+            "src_char": "129:5"
           },
           {
-            "contract_path": "src/LocalVariableShadowing.sol",
-            "line_no": 26,
-            "src": "566:4",
-            "src_char": "566:4"
+            "contract_path": "src/LocalVariableShadow.sol",
+            "line_no": 25,
+            "src": "532:4",
+            "src_char": "532:4"
           },
           {
             "contract_path": "src/PublicVariableReadInExternalContext.sol",
@@ -2993,22 +2993,22 @@
             "src_char": "1249:9"
           },
           {
-            "contract_path": "src/LocalVariableShadowing.sol",
+            "contract_path": "src/LocalVariableShadow.sol",
             "line_no": 10,
-            "src": "184:18",
-            "src_char": "184:18"
+            "src": "181:17",
+            "src_char": "181:17"
           },
           {
-            "contract_path": "src/LocalVariableShadowing.sol",
+            "contract_path": "src/LocalVariableShadow.sol",
             "line_no": 16,
-            "src": "336:28",
-            "src_char": "336:28"
+            "src": "332:26",
+            "src_char": "332:26"
           },
           {
-            "contract_path": "src/LocalVariableShadowing.sol",
-            "line_no": 32,
-            "src": "737:18",
-            "src_char": "737:18"
+            "contract_path": "src/LocalVariableShadow.sol",
+            "line_no": 31,
+            "src": "700:18",
+            "src_char": "700:18"
           },
           {
             "contract_path": "src/OutOfOrderRetryable.sol",
@@ -3758,22 +3758,22 @@
             "src_char": "1389:6"
           },
           {
-            "contract_path": "src/LocalVariableShadowing.sol",
+            "contract_path": "src/LocalVariableShadow.sol",
             "line_no": 12,
-            "src": "255:7",
-            "src_char": "255:7"
+            "src": "251:7",
+            "src_char": "251:7"
           },
           {
-            "contract_path": "src/LocalVariableShadowing.sol",
+            "contract_path": "src/LocalVariableShadow.sol",
             "line_no": 19,
-            "src": "440:7",
-            "src_char": "440:7"
+            "src": "434:7",
+            "src_char": "434:7"
           },
           {
-            "contract_path": "src/LocalVariableShadowing.sol",
-            "line_no": 34,
-            "src": "807:7",
-            "src_char": "807:7"
+            "contract_path": "src/LocalVariableShadow.sol",
+            "line_no": 33,
+            "src": "770:7",
+            "src_char": "770:7"
           },
           {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
@@ -4991,10 +4991,10 @@
             "src_char": "434:10"
           },
           {
-            "contract_path": "src/LocalVariableShadowing.sol",
+            "contract_path": "src/LocalVariableShadow.sol",
             "line_no": 7,
-            "src": "132:5",
-            "src_char": "132:5"
+            "src": "129:5",
+            "src_char": "129:5"
           },
           {
             "contract_path": "src/StateVariables.sol",
@@ -5210,22 +5210,22 @@
             "src_char": "1385:6"
           },
           {
-            "contract_path": "src/LocalVariableShadowing.sol",
+            "contract_path": "src/LocalVariableShadow.sol",
             "line_no": 10,
-            "src": "211:5",
-            "src_char": "211:5"
+            "src": "207:5",
+            "src_char": "207:5"
           },
           {
-            "contract_path": "src/LocalVariableShadowing.sol",
+            "contract_path": "src/LocalVariableShadow.sol",
             "line_no": 17,
-            "src": "397:5",
-            "src_char": "397:5"
+            "src": "391:5",
+            "src_char": "391:5"
           },
           {
-            "contract_path": "src/LocalVariableShadowing.sol",
-            "line_no": 32,
-            "src": "764:4",
-            "src_char": "764:4"
+            "contract_path": "src/LocalVariableShadow.sol",
+            "line_no": 31,
+            "src": "727:4",
+            "src_char": "727:4"
           },
           {
             "contract_path": "src/OutOfOrderRetryable.sol",
