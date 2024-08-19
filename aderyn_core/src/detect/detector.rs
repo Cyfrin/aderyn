@@ -88,6 +88,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<OutOfOrderRetryableDetector>::default(),
         Box::<FunctionInitializingStateDetector>::default(),
         Box::<CostlyOperationsInsideLoopsDetector>::default(),
+        Box::<ConstantFunctionChangingStateDetector>::default(),
         Box::<BuiltinSymbolShadowDetector>::default(),
     ]
 }
@@ -101,6 +102,7 @@ pub fn get_all_detectors_names() -> Vec<String> {
 #[strum(serialize_all = "kebab-case")]
 pub(crate) enum IssueDetectorNamePool {
     CostlyOperationsInsideLoops,
+    ConstantFunctionChangingState,
     BuiltinSymbolShadow,
     IncorrectERC721Interface,
     FunctionInitializingState,
@@ -183,6 +185,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
     match detector_name {
         IssueDetectorNamePool::CostlyOperationsInsideLoops => {
             Some(Box::<CostlyOperationsInsideLoopsDetector>::default())
+        }
+        IssueDetectorNamePool::ConstantFunctionChangingState => {
+            Some(Box::<ConstantFunctionChangingStateDetector>::default())
         }
         IssueDetectorNamePool::BuiltinSymbolShadow => {
             Some(Box::<BuiltinSymbolShadowDetector>::default())

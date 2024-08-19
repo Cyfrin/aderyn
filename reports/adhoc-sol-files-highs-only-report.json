@@ -200,6 +200,7 @@
     "contract-locks-ether",
     "incorrect-erc721-interface",
     "incorrect-erc20-interface",
-    "out-of-order-retryable"
+    "out-of-order-retryable",
+    "constant-function-changing-state"
   ]
 }
