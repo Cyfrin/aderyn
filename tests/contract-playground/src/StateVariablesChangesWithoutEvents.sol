@@ -21,83 +21,85 @@ contract StateVariableEvents {
     event MyStructChanged(MyStruct outcome);
     event MyStructMemberChanged(uint a);
 
-    function stateChangedNoEventEmitted(uint a) public { // bad
+    function stateChangedNoEventEmitted(uint a) external { // bad
         result *= a;
     }
 
-    function stateChangedNoEventEmittedPlusEquals(uint a) public { // bad
+    function stateChangedNoEventEmittedPlusEquals(uint a) external { // bad
         result += a;
     }
 
-    function stateChangedToBooleanNoEventEmitted() public { // bad
+    function stateChangedToBooleanNoEventEmitted() external { // bad
         result3 = true;
     }
 
-    function stateChangedToBooleanEventEmitted() public { // good
+    function stateChangedToBooleanEventEmitted() external { // good
         result3 = true;
 
         emit variableChanged2(true);
     }
 
-    function stateChangedToConstantNoEventEmitted() public { // bad
+    function stateChangedToConstantNoEventEmitted() external { // bad
         result = NUMBER;
     }
 
-    function stateChangedNoEventEmitted() public { // bad
+    function stateChangedNoEventEmitted() external { // bad
         result = block.timestamp;
     }
 
-    function addressChangedNotEmitted(address a) public { // bad
+    function addressChangedNotEmitted(address a) external { // bad
         require(a != address(0), "Address cannot be 0");
         result2 = a;
     }
 
-    function addressChangedEventEmitted(address a) public { // good
+    function addressChangedEventEmitted(address a) external { // good
         require(a != address(0), "Address cannot be 0");
         result2 = a;
         emit AddressChanged(a);
     }
 
-    function wholeStructChangedEventNotEmitted(uint a, uint b) public { // bad
+    function wholeStructChangedEventNotEmitted(uint a, uint b) external { // bad
         MyStruct memory temp = MyStruct(a, b);
         myStruct = temp;
     }
 
 
-    function wholeStructChangedEventEmitted(uint a, uint b) public { // good
+    function wholeStructChangedEventEmitted(uint a, uint b) external { // good
         MyStruct memory temp = MyStruct(a, b);
         myStruct = temp;
         emit MyStructChanged(temp);
     }
     
-    function structMemberChangedEventNotEmitted(uint a, uint b) public { // bad
+    function structMemberChangedEventNotEmitted(uint a, uint b) external { // bad
         myStruct.a = a;
         myStruct.b = b;
     }
 
-    function structMemberChangedEventEmitted(uint a) public { // good
+    function structMemberChangedEventEmitted(uint a) external { // good
         myStruct.a = a;
         emit MyStructMemberChanged(a); 
     }
 
-    function stateChangedEventEmitted(uint a) public { // good
+    function stateChangedEventEmitted(uint a) external { // good
         result += a;
         emit variableChanged(result);
     }
 
-    function stateChangedEventEmittedForLocal(uint a) public { // bad
+    // GOOD because there is some event emitted even though the contents
+    // of the event doesn't directly reprsent the state variable's value
+    function stateChangedEventEmittedForLocal(uint a) external { // good
         result += a;
         emit variableChanged(a);
     }
 
     
-    function stateChangedEventEmittedForLocalEquals(uint a) public { // good
+    function stateChangedEventEmittedForLocalEquals(uint a) external { // good
         result = a;
         emit variableChanged(a);
     }
     
 
-    function noStateChangedNoEventEmitted(uint a) public pure returns(uint){ // good
+    function noStateChangedNoEventEmitted(uint a) external pure returns(uint){ // good
         uint b = a;
         return b;
     }
