@@ -3423,6 +3423,37 @@
           "ruleId": "constant-function-changing-state"
         },
         {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/FunctionSignatureCollision.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 166
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/FunctionSignatureCollision.sol"
+                },
+                "region": {
+                  "byteLength": 22,
+                  "byteOffset": 231
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Function selector collides with other functions. This may cause the solidity function dispatcher to invoke the wrong function if the functions happen to be included in the same contract through an inheritance hirearchy later down the line. It is recommended to rename this function or change its parameters."
+          },
+          "ruleId": "function-selector-collision"
+        },
+        {
           "level": "note",
           "locations": [
             {
@@ -3961,6 +3992,17 @@
                 },
                 "region": {
                   "byteLength": 21,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/FunctionSignatureCollision.sol"
+                },
+                "region": {
+                  "byteLength": 23,
                   "byteOffset": 32
                 }
               }
@@ -6196,6 +6238,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/FunctionSignatureCollision.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/InconsistentUints.sol"
                 },
                 "region": {
@@ -6824,6 +6877,28 @@
                 "region": {
                   "byteLength": 41,
                   "byteOffset": 1219
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/FunctionSignatureCollision.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 166
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/FunctionSignatureCollision.sol"
+                },
+                "region": {
+                  "byteLength": 22,
+                  "byteOffset": 231
                 }
               }
             },
