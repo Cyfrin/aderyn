@@ -1,3 +1,4 @@
+pub(crate) mod assert_state_change;
 pub(crate) mod boolean_equality;
 pub(crate) mod builtin_symbol_shadowing;
 pub(crate) mod centralization_risk;
@@ -31,6 +32,7 @@ pub(crate) mod useless_modifier;
 pub(crate) mod useless_public_function;
 pub(crate) mod zero_address_check;
 
+pub use assert_state_change::AssertStateChangeDetector;
 pub use boolean_equality::BooleanEqualityDetector;
 pub use builtin_symbol_shadowing::BuiltinSymbolShadowDetector;
 pub use centralization_risk::CentralizationRiskDetector;
