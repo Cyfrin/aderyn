@@ -1,12 +1,7 @@
 {
   "files_summary": {
-<<<<<<< HEAD
-    "total_source_units": 83,
-    "total_sloc": 2445
-=======
-    "total_source_units": 92,
-    "total_sloc": 3230
->>>>>>> dev
+    "total_source_units": 93,
+    "total_sloc": 3253
   },
   "files_details": {
     "files_details": [
@@ -385,13 +380,8 @@
     ]
   },
   "issue_count": {
-<<<<<<< HEAD
-    "high": 36,
-    "low": 31
-=======
     "high": 41,
-    "low": 34
->>>>>>> dev
+    "low": 35
   },
   "high_issues": {
     "issues": [
@@ -1394,7 +1384,12 @@
             "src_char": "355:7"
           },
           {
-<<<<<<< HEAD
+            "contract_path": "src/IncorrectERC721.sol",
+            "line_no": 147,
+            "src": "4076:11",
+            "src_char": "4076:11"
+          },
+          {
             "contract_path": "src/LocalVariableShadowing.sol",
             "line_no": 7,
             "src": "132:5",
@@ -1405,12 +1400,6 @@
             "line_no": 26,
             "src": "566:4",
             "src_char": "566:4"
-=======
-            "contract_path": "src/IncorrectERC721.sol",
-            "line_no": 147,
-            "src": "4076:11",
-            "src_char": "4076:11"
->>>>>>> dev
           },
           {
             "contract_path": "src/PublicVariableReadInExternalContext.sol",
@@ -2974,24 +2963,6 @@
             "src_char": "129:9"
           },
           {
-<<<<<<< HEAD
-            "contract_path": "src/LocalVariableShadowing.sol",
-            "line_no": 10,
-            "src": "184:18",
-            "src_char": "184:18"
-          },
-          {
-            "contract_path": "src/LocalVariableShadowing.sol",
-            "line_no": 16,
-            "src": "336:28",
-            "src_char": "336:28"
-          },
-          {
-            "contract_path": "src/LocalVariableShadowing.sol",
-            "line_no": 32,
-            "src": "737:18",
-            "src_char": "737:18"
-=======
             "contract_path": "src/IncorrectERC20.sol",
             "line_no": 17,
             "src": "483:8",
@@ -3022,6 +2993,24 @@
             "src_char": "1249:9"
           },
           {
+            "contract_path": "src/LocalVariableShadowing.sol",
+            "line_no": 10,
+            "src": "184:18",
+            "src_char": "184:18"
+          },
+          {
+            "contract_path": "src/LocalVariableShadowing.sol",
+            "line_no": 16,
+            "src": "336:28",
+            "src_char": "336:28"
+          },
+          {
+            "contract_path": "src/LocalVariableShadowing.sol",
+            "line_no": 32,
+            "src": "737:18",
+            "src_char": "737:18"
+          },
+          {
             "contract_path": "src/OutOfOrderRetryable.sol",
             "line_no": 167,
             "src": "4685:13",
@@ -3032,7 +3021,6 @@
             "line_no": 175,
             "src": "5072:7",
             "src_char": "5072:7"
->>>>>>> dev
           },
           {
             "contract_path": "src/ReturnBomb.sol",
@@ -5205,11 +5193,22 @@
         ]
       },
       {
-<<<<<<< HEAD
         "title": "Local variable shadows state variables in the contract hirearchy",
         "description": "Rename the local variables that shadow another component.",
         "detector_name": "local-variable-shadowing",
         "instances": [
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 41,
+            "src": "1246:6",
+            "src_char": "1246:6"
+          },
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 46,
+            "src": "1385:6",
+            "src_char": "1385:6"
+          },
           {
             "contract_path": "src/LocalVariableShadowing.sol",
             "line_no": 10,
@@ -5227,109 +5226,28 @@
             "line_no": 32,
             "src": "764:4",
             "src_char": "764:4"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 144,
+            "src": "4121:17",
+            "src_char": "4121:17"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 147,
+            "src": "4236:8",
+            "src_char": "4236:8"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 148,
+            "src": "4262:12",
+            "src_char": "4262:12"
           }
         ]
       },
       {
-        "title": "Uninitialized local variables.",
-        "description": "Initialize all the variables. If a variable is meant to be initialized to zero, explicitly set it to zero to improve code readability.",
-        "detector_name": "uninitialized-local-variable",
-        "instances": [
-          {
-            "contract_path": "src/ConstantFuncsAssembly.sol",
-            "line_no": 18,
-            "src": "478:14",
-            "src_char": "478:14"
-          },
-          {
-            "contract_path": "src/ConstantFuncsAssembly.sol",
-            "line_no": 27,
-            "src": "716:14",
-            "src_char": "716:14"
-          },
-          {
-            "contract_path": "src/StorageParameters.sol",
-            "line_no": 8,
-            "src": "184:11",
-            "src_char": "184:11"
-          },
-          {
-            "contract_path": "src/UninitializedLocalVariables.sol",
-            "line_no": 10,
-            "src": "211:17",
-            "src_char": "211:17"
-          },
-          {
-            "contract_path": "src/UninitializedLocalVariables.sol",
-            "line_no": 11,
-            "src": "243:17",
-            "src_char": "243:17"
-          },
-          {
-            "contract_path": "src/UninitializedLocalVariables.sol",
-            "line_no": 12,
-            "src": "278:20",
-            "src_char": "278:20"
-          },
-          {
-            "contract_path": "src/UninitializedLocalVariables.sol",
-            "line_no": 13,
-            "src": "312:16",
-            "src_char": "312:16"
-          },
-          {
-            "contract_path": "src/UninitializedLocalVariables.sol",
-            "line_no": 14,
-            "src": "346:20",
-            "src_char": "346:20"
-          },
-          {
-            "contract_path": "src/UninitializedLocalVariables.sol",
-            "line_no": 15,
-            "src": "390:19",
-            "src_char": "390:19"
-          },
-          {
-            "contract_path": "src/UninitializedLocalVariables.sol",
-            "line_no": 16,
-            "src": "434:22",
-            "src_char": "434:22"
-          },
-          {
-            "contract_path": "src/UninitializedLocalVariables.sol",
-            "line_no": 17,
-            "src": "481:22",
-            "src_char": "481:22"
-          },
-          {
-            "contract_path": "src/UninitializedLocalVariables.sol",
-            "line_no": 18,
-            "src": "531:25",
-            "src_char": "531:25"
-          },
-          {
-            "contract_path": "src/UninitializedLocalVariables.sol",
-            "line_no": 19,
-            "src": "580:21",
-            "src_char": "580:21"
-          },
-          {
-            "contract_path": "src/UninitializedLocalVariables.sol",
-            "line_no": 20,
-            "src": "629:25",
-            "src_char": "629:25"
-          },
-          {
-            "contract_path": "src/UninitializedLocalVariables.sol",
-            "line_no": 21,
-            "src": "681:24",
-            "src_char": "681:24"
-          }
-        ]
-      },
-      {
-=======
->>>>>>> dev
         "title": "Return Bomb",
         "description": "A low level callee may consume all callers gas unexpectedly. Avoid unlimited implicit decoding of returndata on calls to unchecked addresses. You can limit the gas by passing a gas limit as an option to the call. For example, `unknownAdress.call{gas: gasLimitHere}(\"calldata\")` That would act as a safety net from OOG errors.\n        ",
         "detector_name": "return-bomb",
@@ -5594,11 +5512,7 @@
     "tx-origin-used-for-auth",
     "msg-value-in-loop",
     "contract-locks-ether",
-<<<<<<< HEAD
     "local-variable-shadowing",
-    "uninitialized-local-variable",
-    "return-bomb"
-=======
     "incorrect-erc721-interface",
     "incorrect-erc20-interface",
     "return-bomb",
@@ -5610,6 +5524,5 @@
     "constant-function-changing-state",
     "builtin-symbol-shadow",
     "function-selector-collision"
->>>>>>> dev
   ]
 }

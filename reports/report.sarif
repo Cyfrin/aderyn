@@ -1773,7 +1773,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-<<<<<<< HEAD
+                  "uri": "src/IncorrectERC721.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 4076
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/LocalVariableShadowing.sol"
                 },
                 "region": {
@@ -1790,13 +1800,6 @@
                 "region": {
                   "byteLength": 4,
                   "byteOffset": 566
-=======
-                  "uri": "src/IncorrectERC721.sol"
-                },
-                "region": {
-                  "byteLength": 11,
-                  "byteOffset": 4076
->>>>>>> dev
                 }
               }
             },
@@ -4531,51 +4534,28 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-<<<<<<< HEAD
-                  "uri": "src/LocalVariableShadowing.sol"
-                },
-                "region": {
-                  "byteLength": 18,
-                  "byteOffset": 184
-=======
                   "uri": "src/IncorrectERC20.sol"
                 },
                 "region": {
                   "byteLength": 8,
                   "byteOffset": 483
->>>>>>> dev
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-<<<<<<< HEAD
-                  "uri": "src/LocalVariableShadowing.sol"
-                },
-                "region": {
-                  "byteLength": 28,
-                  "byteOffset": 336
-=======
                   "uri": "src/IncorrectERC20.sol"
                 },
                 "region": {
                   "byteLength": 7,
                   "byteOffset": 690
->>>>>>> dev
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-<<<<<<< HEAD
-                  "uri": "src/LocalVariableShadowing.sol"
-                },
-                "region": {
-                  "byteLength": 18,
-                  "byteOffset": 737
-=======
                   "uri": "src/IncorrectERC20.sol"
                 },
                 "region": {
@@ -4609,6 +4589,39 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/LocalVariableShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 18,
+                  "byteOffset": 184
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LocalVariableShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 28,
+                  "byteOffset": 336
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LocalVariableShadowing.sol"
+                },
+                "region": {
+                  "byteLength": 18,
+                  "byteOffset": 737
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/OutOfOrderRetryable.sol"
                 },
                 "region": {
@@ -4625,7 +4638,6 @@
                 "region": {
                   "byteLength": 7,
                   "byteOffset": 5072
->>>>>>> dev
                 }
               }
             },
@@ -8539,7 +8551,28 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-<<<<<<< HEAD
+                  "uri": "src/FunctionInitializingState.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 1246
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/FunctionInitializingState.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 1385
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/LocalVariableShadowing.sol"
                 },
                 "region": {
@@ -8569,6 +8602,39 @@
                   "byteOffset": 764
                 }
               }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/OutOfOrderRetryable.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 4121
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/OutOfOrderRetryable.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 4236
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/OutOfOrderRetryable.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 4262
+                }
+              }
             }
           ],
           "message": {
@@ -8582,182 +8648,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/ConstantFuncsAssembly.sol"
-                },
-                "region": {
-                  "byteLength": 14,
-                  "byteOffset": 478
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ConstantFuncsAssembly.sol"
-                },
-                "region": {
-                  "byteLength": 14,
-                  "byteOffset": 716
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StorageParameters.sol"
-                },
-                "region": {
-                  "byteLength": 11,
-                  "byteOffset": 184
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/UninitializedLocalVariables.sol"
-                },
-                "region": {
-                  "byteLength": 17,
-                  "byteOffset": 211
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/UninitializedLocalVariables.sol"
-                },
-                "region": {
-                  "byteLength": 17,
-                  "byteOffset": 243
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/UninitializedLocalVariables.sol"
-                },
-                "region": {
-                  "byteLength": 20,
-                  "byteOffset": 278
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/UninitializedLocalVariables.sol"
-                },
-                "region": {
-                  "byteLength": 16,
-                  "byteOffset": 312
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/UninitializedLocalVariables.sol"
-                },
-                "region": {
-                  "byteLength": 20,
-                  "byteOffset": 346
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/UninitializedLocalVariables.sol"
-                },
-                "region": {
-                  "byteLength": 19,
-                  "byteOffset": 390
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/UninitializedLocalVariables.sol"
-                },
-                "region": {
-                  "byteLength": 22,
-                  "byteOffset": 434
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/UninitializedLocalVariables.sol"
-                },
-                "region": {
-                  "byteLength": 22,
-                  "byteOffset": 481
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/UninitializedLocalVariables.sol"
-                },
-                "region": {
-                  "byteLength": 25,
-                  "byteOffset": 531
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/UninitializedLocalVariables.sol"
-                },
-                "region": {
-                  "byteLength": 21,
-                  "byteOffset": 580
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/UninitializedLocalVariables.sol"
-                },
-                "region": {
-                  "byteLength": 25,
-                  "byteOffset": 629
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/UninitializedLocalVariables.sol"
-                },
-                "region": {
-                  "byteLength": 24,
-                  "byteOffset": 681
-                }
-              }
-            }
-          ],
-          "message": {
-            "text": "Initialize all the variables. If a variable is meant to be initialized to zero, explicitly set it to zero to improve code readability."
-          },
-          "ruleId": "uninitialized-local-variable"
-        },
-        {
-          "level": "note",
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-=======
->>>>>>> dev
                   "uri": "src/ReturnBomb.sol"
                 },
                 "region": {
