@@ -2455,38 +2455,8 @@ Avoid `require` / `revert` statements in a loop because a single bad item can ca
 
 State variables that are not updated following deployment should be declared constant to save gas. Add the `constant` attribute to state variables that never change.
 
-<details><summary>22 Found Instances</summary>
+<details><summary>9 Found Instances</summary>
 
-
-- Found in src/v0.8/functions/dev/v1_X/FunctionsBilling.sol [Line: 66](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/FunctionsBilling.sol#L66)
-
-	```solidity
-	  AggregatorV3Interface private s_linkToNativeFeed;
-	```
-
-- Found in src/v0.8/functions/dev/v1_X/FunctionsBilling.sol [Line: 67](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/FunctionsBilling.sol#L67)
-
-	```solidity
-	  AggregatorV3Interface private s_linkToUsdFeed;
-	```
-
-- Found in src/v0.8/functions/dev/v1_X/FunctionsClient.sol [Line: 14](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/FunctionsClient.sol#L14)
-
-	```solidity
-	  IFunctionsRouter internal immutable i_functionsRouter;
-	```
-
-- Found in src/v0.8/functions/dev/v1_X/FunctionsSubscriptions.sol [Line: 23](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/FunctionsSubscriptions.sol#L23)
-
-	```solidity
-	  IERC20 internal immutable i_linkToken;
-	```
-
-- Found in src/v0.8/functions/dev/v1_X/Routable.sol [Line: 11](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/Routable.sol#L11)
-
-	```solidity
-	  IOwnableFunctionsRouter private immutable i_functionsRouter;
-	```
 
 - Found in src/v0.8/functions/dev/v1_X/example/FunctionsClientExample.sol [Line: 15](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/example/FunctionsClientExample.sol#L15)
 
@@ -2510,30 +2480,6 @@ State variables that are not updated following deployment should be declared con
 
 	```solidity
 	  uint32 public s_lastErrorLength;
-	```
-
-- Found in src/v0.8/functions/v1_0_0/FunctionsBilling.sol [Line: 67](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/FunctionsBilling.sol#L67)
-
-	```solidity
-	  AggregatorV3Interface private s_linkToNativeFeed;
-	```
-
-- Found in src/v0.8/functions/v1_0_0/FunctionsClient.sol [Line: 14](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/FunctionsClient.sol#L14)
-
-	```solidity
-	  IFunctionsRouter internal immutable i_router;
-	```
-
-- Found in src/v0.8/functions/v1_0_0/FunctionsSubscriptions.sol [Line: 23](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/FunctionsSubscriptions.sol#L23)
-
-	```solidity
-	  IERC20 internal immutable i_linkToken;
-	```
-
-- Found in src/v0.8/functions/v1_0_0/Routable.sol [Line: 11](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/Routable.sol#L11)
-
-	```solidity
-	  IOwnableFunctionsRouter private immutable i_router;
 	```
 
 - Found in src/v0.8/functions/v1_0_0/example/FunctionsClientExample.sol [Line: 15](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/example/FunctionsClientExample.sol#L15)
@@ -2564,30 +2510,6 @@ State variables that are not updated following deployment should be declared con
 
 	```solidity
 	  bool internal immutable i_uniqueReports;
-	```
-
-- Found in src/v0.8/functions/v1_1_0/FunctionsBilling.sol [Line: 79](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_1_0/FunctionsBilling.sol#L79)
-
-	```solidity
-	  AggregatorV3Interface private s_linkToNativeFeed;
-	```
-
-- Found in src/v0.8/functions/v1_3_0/FunctionsBilling.sol [Line: 66](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_3_0/FunctionsBilling.sol#L66)
-
-	```solidity
-	  AggregatorV3Interface private s_linkToNativeFeed;
-	```
-
-- Found in src/v0.8/functions/v1_3_0/FunctionsBilling.sol [Line: 67](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_3_0/FunctionsBilling.sol#L67)
-
-	```solidity
-	  AggregatorV3Interface private s_linkToUsdFeed;
-	```
-
-- Found in src/v0.8/functions/v1_3_0/FunctionsClient.sol [Line: 14](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_3_0/FunctionsClient.sol#L14)
-
-	```solidity
-	  IFunctionsRouter internal immutable i_functionsRouter;
 	```
 
 </details>

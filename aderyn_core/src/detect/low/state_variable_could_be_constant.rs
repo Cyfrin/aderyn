@@ -57,7 +57,9 @@ impl IssueDetector for StateVariableCouldBeConstantDetector {
                     .type_string
                     .as_ref()
                     .is_some_and(|type_string| {
-                        !type_string.starts_with("mapping") && !type_string.starts_with("struct")
+                        !type_string.starts_with("mapping")
+                            && !type_string.starts_with("struct")
+                            && !type_string.starts_with("contract")
                     })
             }) {
                 if !collection_b_ids.contains(&variable.id) {
