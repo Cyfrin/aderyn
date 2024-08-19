@@ -168,6 +168,11 @@ where
                         .is_some_and(|lines_to_ignore| lines_to_ignore.contains(&instance.1))
                 })
                 .collect();
+
+            if issue.instances.is_empty() {
+                return None;
+            }
+
             Some((issue, detector.severity()))
         })
         .collect();
