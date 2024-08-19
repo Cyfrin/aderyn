@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 90,
-    "total_sloc": 3183
+    "total_source_units": 91,
+    "total_sloc": 3221
   },
   "files_details": {
     "files_details": [
@@ -32,6 +32,10 @@
       {
         "file_path": "src/BuiltinSymbolShadow.sol",
         "n_sloc": 14
+      },
+      {
+        "file_path": "src/CacheArrayLength.sol",
+        "n_sloc": 38
       },
       {
         "file_path": "src/CallGraphTests.sol",
@@ -369,7 +373,7 @@
   },
   "issue_count": {
     "high": 40,
-    "low": 33
+    "low": 34
   },
   "high_issues": {
     "issues": [
@@ -3149,6 +3153,30 @@
             "src_char": "683:3"
           },
           {
+            "contract_path": "src/CacheArrayLength.sol",
+            "line_no": 26,
+            "src": "611:3",
+            "src_char": "611:3"
+          },
+          {
+            "contract_path": "src/CacheArrayLength.sol",
+            "line_no": 27,
+            "src": "639:3",
+            "src_char": "639:3"
+          },
+          {
+            "contract_path": "src/CacheArrayLength.sol",
+            "line_no": 36,
+            "src": "1015:3",
+            "src_char": "1015:3"
+          },
+          {
+            "contract_path": "src/CacheArrayLength.sol",
+            "line_no": 37,
+            "src": "1043:3",
+            "src_char": "1043:3"
+          },
+          {
             "contract_path": "src/Casting.sol",
             "line_no": 16,
             "src": "483:18",
@@ -3790,6 +3818,12 @@
             "src_char": "32:23"
           },
           {
+            "contract_path": "src/CacheArrayLength.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/ContractLocksEther.sol",
             "line_no": 2,
             "src": "32:23",
@@ -4108,6 +4142,18 @@
             "line_no": 8,
             "src": "125:41",
             "src_char": "125:41"
+          },
+          {
+            "contract_path": "src/CacheArrayLength.sol",
+            "line_no": 17,
+            "src": "337:2",
+            "src_char": "337:2"
+          },
+          {
+            "contract_path": "src/CacheArrayLength.sol",
+            "line_no": 42,
+            "src": "1104:2",
+            "src_char": "1104:2"
           },
           {
             "contract_path": "src/CallGraphTests.sol",
@@ -5080,6 +5126,31 @@
         ]
       },
       {
+        "title": "Loop condition contains `state_variable.length` that could be cached outside.",
+        "description": "Cache the lengths of storage arrays if they are used and not modified in for loops.",
+        "detector_name": "cache-array-length",
+        "instances": [
+          {
+            "contract_path": "src/CacheArrayLength.sol",
+            "line_no": 12,
+            "src": "234:82",
+            "src_char": "234:82"
+          },
+          {
+            "contract_path": "src/CacheArrayLength.sol",
+            "line_no": 44,
+            "src": "1160:64",
+            "src_char": "1160:64"
+          },
+          {
+            "contract_path": "src/CacheArrayLength.sol",
+            "line_no": 50,
+            "src": "1325:183",
+            "src_char": "1325:183"
+          }
+        ]
+      },
+      {
         "title": "Incorrect use of `assert()`",
         "description": "Argument to `assert()` modifies the state. Use `require` for invariants modifying state.",
         "detector_name": "assert-state-change",
@@ -5097,6 +5168,18 @@
         "description": "Invoking `SSTORE`operations in loops may lead to Out-of-gas errors. Use a local variable to hold the loop computation result.",
         "detector_name": "costly-operations-inside-loops",
         "instances": [
+          {
+            "contract_path": "src/CacheArrayLength.sol",
+            "line_no": 25,
+            "src": "546:133",
+            "src_char": "546:133"
+          },
+          {
+            "contract_path": "src/CacheArrayLength.sol",
+            "line_no": 35,
+            "src": "928:155",
+            "src_char": "928:155"
+          },
           {
             "contract_path": "src/CostlyOperationsInsideLoops.sol",
             "line_no": 10,
@@ -5274,6 +5357,7 @@
     "return-bomb",
     "out-of-order-retryable",
     "function-initializing-state",
+    "cache-array-length",
     "assert-state-change",
     "costly-operations-inside-loops",
     "constant-function-changing-state",
