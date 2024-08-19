@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 89,
-    "total_sloc": 3172
+    "total_source_units": 90,
+    "total_sloc": 3183
   },
   "files_details": {
     "files_details": [
@@ -20,6 +20,10 @@
       {
         "file_path": "src/AssemblyExample.sol",
         "n_sloc": 9
+      },
+      {
+        "file_path": "src/AssertStateChange.sol",
+        "n_sloc": 11
       },
       {
         "file_path": "src/BooleanEquality.sol",
@@ -365,7 +369,7 @@
   },
   "issue_count": {
     "high": 40,
-    "low": 32
+    "low": 33
   },
   "high_issues": {
     "issues": [
@@ -2826,6 +2830,18 @@
             "src_char": "113:1"
           },
           {
+            "contract_path": "src/AssertStateChange.sol",
+            "line_no": 8,
+            "src": "131:3",
+            "src_char": "131:3"
+          },
+          {
+            "contract_path": "src/AssertStateChange.sol",
+            "line_no": 12,
+            "src": "199:4",
+            "src_char": "199:4"
+          },
+          {
             "contract_path": "src/BuiltinSymbolShadow.sol",
             "line_no": 8,
             "src": "125:41",
@@ -3084,6 +3100,18 @@
         "description": "If the same constant literal value is used multiple times, create a constant state variable and reference it throughout the contract.",
         "detector_name": "constants-instead-of-literals",
         "instances": [
+          {
+            "contract_path": "src/AssertStateChange.sol",
+            "line_no": 9,
+            "src": "174:2",
+            "src_char": "174:2"
+          },
+          {
+            "contract_path": "src/AssertStateChange.sol",
+            "line_no": 14,
+            "src": "254:2",
+            "src_char": "254:2"
+          },
           {
             "contract_path": "src/BooleanEquality.sol",
             "line_no": 6,
@@ -3751,6 +3779,12 @@
         "instances": [
           {
             "contract_path": "src/AdminContract.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/AssertStateChange.sol",
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
@@ -5046,6 +5080,19 @@
         ]
       },
       {
+        "title": "Incorrect use of `assert()`",
+        "description": "Argument to `assert()` modifies the state. Use `require` for invariants modifying state.",
+        "detector_name": "assert-state-change",
+        "instances": [
+          {
+            "contract_path": "src/AssertStateChange.sol",
+            "line_no": 9,
+            "src": "154:23",
+            "src_char": "154:23"
+          }
+        ]
+      },
+      {
         "title": "Costly operations inside loops.",
         "description": "Invoking `SSTORE`operations in loops may lead to Out-of-gas errors. Use a local variable to hold the loop computation result.",
         "detector_name": "costly-operations-inside-loops",
@@ -5227,6 +5274,7 @@
     "return-bomb",
     "out-of-order-retryable",
     "function-initializing-state",
+    "assert-state-change",
     "costly-operations-inside-loops",
     "constant-function-changing-state",
     "builtin-symbol-shadow"
