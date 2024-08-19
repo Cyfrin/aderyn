@@ -28,6 +28,7 @@ pub(crate) mod useless_error;
 pub(crate) mod useless_internal_function;
 pub(crate) mod useless_modifier;
 pub(crate) mod useless_public_function;
+pub(crate) mod void_constructor;
 pub(crate) mod zero_address_check;
 
 pub use boolean_equality::BooleanEqualityDetector;
@@ -60,4 +61,5 @@ pub use useless_error::UselessErrorDetector;
 pub use useless_internal_function::UselessInternalFunctionDetector;
 pub use useless_modifier::UselessModifierDetector;
 pub use useless_public_function::UselessPublicFunctionDetector;
+pub use void_constructor::VoidConstructorDetector;
 pub use zero_address_check::ZeroAddressCheckDetector;
