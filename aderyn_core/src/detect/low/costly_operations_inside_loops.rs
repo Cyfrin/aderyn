@@ -2,10 +2,11 @@ use std::collections::BTreeMap;
 use std::convert::identity;
 use std::error::Error;
 
-use crate::ast::{ASTNode, Expression, NodeID};
+use crate::ast::{ASTNode, NodeID};
 
 use crate::capture;
-use crate::context::browser::ExtractMemberAccesses;
+use crate::context::browser::ApproximateStorageChangeFinder;
+
 use crate::context::graph::{CallGraph, CallGraphDirection, CallGraphVisitor};
 use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
@@ -15,31 +16,31 @@ use crate::{
 use eyre::Result;
 
 #[derive(Default)]
-pub struct MsgValueUsedInLoopDetector {
+pub struct CostlyOperationsInsideLoopsDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-impl IssueDetector for MsgValueUsedInLoopDetector {
+impl IssueDetector for CostlyOperationsInsideLoopsDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        // Investigate for loops to check for usage of `msg.value`
+        // Investigate for loops to check for storage writes
         for for_statement in context.for_statements() {
-            if uses_msg_value(context, &(for_statement.into())).is_some_and(identity) {
+            if changes_state(context, &(for_statement.into())).is_some_and(identity) {
                 capture!(self, context, for_statement);
             }
         }
 
-        // Investigate while loops to check for usage of `msg.value`
+        // Investigate while loops to check for storage writes
         for while_statement in context.while_statements() {
-            if uses_msg_value(context, &(while_statement.into())).is_some_and(identity) {
+            if changes_state(context, &(while_statement.into())).is_some_and(identity) {
                 capture!(self, context, while_statement);
             }
         }
 
-        // Investigate the do while loops to check for usage of `msg.value`
+        // Investigate the do while loops to check for storage writes
         for do_while_statement in context.do_while_statements() {
-            if uses_msg_value(context, &(do_while_statement.into())).is_some_and(identity) {
+            if changes_state(context, &(do_while_statement.into())).is_some_and(identity) {
                 capture!(self, context, do_while_statement);
             }
         }
@@ -48,15 +49,15 @@ impl IssueDetector for MsgValueUsedInLoopDetector {
     }
 
     fn severity(&self) -> IssueSeverity {
-        IssueSeverity::High
+        IssueSeverity::Low
     }
 
     fn title(&self) -> String {
-        String::from("Loop contains `msg.value`.")
+        String::from("Costly operations inside loops.")
     }
 
     fn description(&self) -> String {
-        String::from("Provide an explicit array of amounts alongside the receivers array, and check that the sum of all amounts matches `msg.value`.")
+        String::from("Invoking `SSTORE`operations in loops may lead to Out-of-gas errors. Use a local variable to hold the loop computation result.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -64,72 +65,66 @@ impl IssueDetector for MsgValueUsedInLoopDetector {
     }
 
     fn name(&self) -> String {
-        IssueDetectorNamePool::MsgValueInLoop.to_string()
+        IssueDetectorNamePool::CostlyOperationsInsideLoops.to_string()
     }
 }
 
-fn uses_msg_value(context: &WorkspaceContext, ast_node: &ASTNode) -> Option<bool> {
-    let mut tracker = MsgValueTracker::default();
+fn changes_state(context: &WorkspaceContext, ast_node: &ASTNode) -> Option<bool> {
+    // Now, investigate the function to see if there is scope for any state variable changes
+    let mut tracker = StateVariableChangeTracker {
+        state_var_has_changed: false,
+        context,
+    };
     let callgraph = CallGraph::new(context, &[ast_node], CallGraphDirection::Inward).ok()?;
-
     callgraph.accept(context, &mut tracker).ok()?;
-    Some(tracker.has_msg_value)
+    Some(tracker.state_var_has_changed)
 }
 
-#[derive(Default)]
-struct MsgValueTracker {
-    has_msg_value: bool,
+struct StateVariableChangeTracker<'a> {
+    state_var_has_changed: bool,
+    context: &'a WorkspaceContext,
 }
 
-impl CallGraphVisitor for MsgValueTracker {
+impl<'a> CallGraphVisitor for StateVariableChangeTracker<'a> {
     fn visit_any(&mut self, node: &crate::ast::ASTNode) -> eyre::Result<()> {
-        if !self.has_msg_value
-            && ExtractMemberAccesses::from(node)
-                .extracted
-                .iter()
-                .any(|member_access| {
-                    member_access.member_name == "value"
-                        && if let Expression::Identifier(identifier) =
-                            member_access.expression.as_ref()
-                        {
-                            identifier.name == "msg"
-                        } else {
-                            false
-                        }
-                })
-        {
-            self.has_msg_value = true;
+        if self.state_var_has_changed {
+            return Ok(());
         }
-
+        // Check for state variable changes
+        let finder = ApproximateStorageChangeFinder::from(self.context, node);
+        if finder.state_variables_have_been_manipulated() {
+            self.state_var_has_changed = true;
+        }
         Ok(())
     }
 }
 
 #[cfg(test)]
-mod msg_value_in_loop_detector {
+mod costly_operations_inside_loops {
     use serial_test::serial;
 
     use crate::detect::{
-        detector::IssueDetector, high::msg_value_in_loops::MsgValueUsedInLoopDetector,
+        detector::IssueDetector,
+        low::costly_operations_inside_loops::CostlyOperationsInsideLoopsDetector,
     };
 
     #[test]
     #[serial]
-    fn test_msg_value_in_loop() {
+    fn test_constly_operations_inside_loops() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
-            "../tests/contract-playground/src/MsgValueInLoop.sol",
+            "../tests/contract-playground/src/CostlyOperationsInsideLoops.sol",
         );
 
-        let mut detector = MsgValueUsedInLoopDetector::default();
+        let mut detector = CostlyOperationsInsideLoopsDetector::default();
         let found = detector.detect(&context).unwrap();
         // assert that the detector found an issue
         assert!(found);
         // assert that the detector found the correct number of instances
-        assert_eq!(detector.instances().len(), 4);
+        assert_eq!(detector.instances().len(), 1);
         // assert the severity is high
         assert_eq!(
             detector.severity(),
-            crate::detect::detector::IssueSeverity::High
+            crate::detect::detector::IssueSeverity::Low
         );
     }
 }

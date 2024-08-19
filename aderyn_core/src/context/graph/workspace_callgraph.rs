@@ -12,18 +12,18 @@ use super::traits::Transpose;
 
 #[derive(Debug)]
 pub struct WorkspaceCallGraph {
-    pub graph: CallGraph,
+    pub raw_callgraph: RawCallGraph,
 }
 
 /**
-* Every NodeID in CallGraph should corresponds to [`crate::ast::FunctionDefinition`] or [`crate::ast::ModifierDefinition`]
+* Every NodeID in RawCallGraph should corresponds to [`crate::ast::FunctionDefinition`] or [`crate::ast::ModifierDefinition`]
 */
-pub type CallGraph = HashMap<NodeID, Vec<NodeID>>;
+pub type RawCallGraph = HashMap<NodeID, Vec<NodeID>>;
 
 impl WorkspaceCallGraph {
     /// Formula to create [`WorkspaceCallGraph`] for global preprocessing .
     pub fn from_context(context: &WorkspaceContext) -> super::Result<WorkspaceCallGraph> {
-        let mut graph: CallGraph = HashMap::new();
+        let mut raw_callgraph: RawCallGraph = HashMap::new();
         let mut visited: HashSet<NodeID> = HashSet::new();
 
         let funcs = context
@@ -35,16 +35,16 @@ impl WorkspaceCallGraph {
         let modifier_definitions = context.modifier_definitions();
 
         for func in funcs {
-            dfs_to_create_graph(func.id, &mut graph, &mut visited, context)
+            dfs_to_create_graph(func.id, &mut raw_callgraph, &mut visited, context)
                 .map_err(|_| super::Error::WorkspaceCallGraphDFSError)?;
         }
 
         for modifier in modifier_definitions {
-            dfs_to_create_graph(modifier.id, &mut graph, &mut visited, context)
+            dfs_to_create_graph(modifier.id, &mut raw_callgraph, &mut visited, context)
                 .map_err(|_| super::Error::WorkspaceCallGraphDFSError)?;
         }
 
-        Ok(WorkspaceCallGraph { graph })
+        Ok(WorkspaceCallGraph { raw_callgraph })
     }
 }
 
@@ -52,7 +52,7 @@ impl WorkspaceCallGraph {
 /// with their connected counterparts.
 fn dfs_to_create_graph(
     id: NodeID,
-    graph: &mut CallGraph,
+    raw_callgraph: &mut RawCallGraph,
     visited: &mut HashSet<NodeID>,
     context: &WorkspaceContext,
 ) -> super::Result<()> {
@@ -76,8 +76,8 @@ fn dfs_to_create_graph(
         for function_call in function_calls {
             if let Expression::Identifier(identifier) = function_call.expression.as_ref() {
                 if let Some(referenced_function_id) = identifier.referenced_declaration {
-                    create_connection_if_not_exsits(id, referenced_function_id, graph);
-                    dfs_to_create_graph(referenced_function_id, graph, visited, context)?;
+                    create_connection_if_not_exsits(id, referenced_function_id, raw_callgraph);
+                    dfs_to_create_graph(referenced_function_id, raw_callgraph, visited, context)?;
                 }
             }
         }
@@ -88,14 +88,28 @@ fn dfs_to_create_graph(
             match &modifier_invocation.modifier_name {
                 IdentifierOrIdentifierPath::Identifier(identifier) => {
                     if let Some(reference_modifier_id) = identifier.referenced_declaration {
-                        create_connection_if_not_exsits(id, reference_modifier_id, graph);
-                        dfs_to_create_graph(reference_modifier_id, graph, visited, context)?;
+                        create_connection_if_not_exsits(id, reference_modifier_id, raw_callgraph);
+                        dfs_to_create_graph(
+                            reference_modifier_id,
+                            raw_callgraph,
+                            visited,
+                            context,
+                        )?;
                     }
                 }
                 IdentifierOrIdentifierPath::IdentifierPath(identifier_path) => {
                     let referenced_modifier_id = identifier_path.referenced_declaration;
-                    create_connection_if_not_exsits(id, referenced_modifier_id as i64, graph);
-                    dfs_to_create_graph(referenced_modifier_id as i64, graph, visited, context)?;
+                    create_connection_if_not_exsits(
+                        id,
+                        referenced_modifier_id as i64,
+                        raw_callgraph,
+                    );
+                    dfs_to_create_graph(
+                        referenced_modifier_id as i64,
+                        raw_callgraph,
+                        visited,
+                        context,
+                    )?;
                 }
             }
         }
@@ -107,8 +121,12 @@ fn dfs_to_create_graph(
     Ok(())
 }
 
-fn create_connection_if_not_exsits(from_id: NodeID, to_id: NodeID, graph: &mut CallGraph) {
-    match graph.entry(from_id) {
+fn create_connection_if_not_exsits(
+    from_id: NodeID,
+    to_id: NodeID,
+    raw_callgraph: &mut RawCallGraph,
+) {
+    match raw_callgraph.entry(from_id) {
         hash_map::Entry::Occupied(mut o) => {
             // Performance Tip: Maybe later use binary search (it requires keeping ascending order while inserting tho)
             if !o.get().contains(&to_id) {
@@ -121,9 +139,9 @@ fn create_connection_if_not_exsits(from_id: NodeID, to_id: NodeID, graph: &mut C
     }
 }
 
-impl Transpose for CallGraph {
+impl Transpose for RawCallGraph {
     fn reverse(&self) -> Self {
-        let mut reversed_callgraph = CallGraph::default();
+        let mut reversed_callgraph = RawCallGraph::default();
         for (from_id, tos) in self {
             for to_id in tos {
                 create_connection_if_not_exsits(*to_id, *from_id, &mut reversed_callgraph);

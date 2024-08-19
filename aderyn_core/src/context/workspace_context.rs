@@ -28,8 +28,8 @@ pub struct WorkspaceContext {
     pub src_filepaths: Vec<String>,
     pub sloc_stats: HashMap<String, usize>,
     pub ignore_lines_stats: HashMap<String, Option<Vec<usize>>>,
-    pub forward_callgraph: Option<WorkspaceCallGraph>,
-    pub reverse_callgraph: Option<WorkspaceCallGraph>,
+    pub inward_callgraph: Option<WorkspaceCallGraph>,
+    pub outward_callgraph: Option<WorkspaceCallGraph>,
     pub nodes: HashMap<NodeID, ASTNode>,
 
     // Hashmaps of all nodes => source_unit_id
@@ -94,7 +94,6 @@ pub struct WorkspaceContext {
     pub(crate) yul_function_calls_context: HashMap<YulFunctionCall, NodeContext>,
     pub(crate) yul_identifiers_context: HashMap<YulIdentifier, NodeContext>,
     pub(crate) yul_literals_context: HashMap<YulLiteral, NodeContext>,
-    pub(crate) yul_assignments_context: HashMap<YulAssignment, NodeContext>,
 }
 
 impl WorkspaceContext {
