@@ -65,7 +65,7 @@ impl IssueDetector for ContractsWithTodosDetector {
             }
         }
 
-        Ok(!(self.found_instances.is_empty() && self.hints.is_empty()))
+        Ok(!(self.found_instances.is_empty()))
     }
 
     fn title(&self) -> String {

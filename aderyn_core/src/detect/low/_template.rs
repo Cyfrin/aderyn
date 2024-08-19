@@ -22,7 +22,7 @@ pub struct TemplateDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
-    found_instances_with_hints: BTreeMap<(String, usize, String, String), NodeID>,
+    hints: BTreeMap<(String, usize, String, String), NodeID>,
 }
 
 impl IssueDetector for TemplateDetector {
@@ -33,7 +33,7 @@ impl IssueDetector for TemplateDetector {
         // capture!(self, context, item);
         // capture!(self, context, item, "hint");
 
-        Ok(!(self.found_instances.is_empty() && self.found_instances_with_hints.is_empty()))
+        Ok(!(self.found_instances.is_empty()))
     }
 
     fn severity(&self) -> IssueSeverity {
@@ -50,6 +50,10 @@ impl IssueDetector for TemplateDetector {
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
         self.found_instances.clone()
+    }
+
+    fn hints(&self) -> BTreeMap<(String, usize, String), String> {
+        self.hints.clone()
     }
 
     fn name(&self) -> String {
