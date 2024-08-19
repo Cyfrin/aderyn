@@ -1,7 +1,7 @@
 use std::collections::{BTreeMap, HashSet};
 use std::error::Error;
 
-use crate::ast::NodeID;
+use crate::ast::{Mutability, NodeID};
 
 use crate::capture;
 use crate::detect::detector::IssueDetectorNamePool;
@@ -35,7 +35,7 @@ impl IssueDetector for StateVariableCouldBeConstantDetector {
         }
 
         let mut all_state_changes = None;
-        for func in helpers::get_implemented_external_and_public_functions(context) {
+        for func in context.function_definitions() {
             if let Some(changes) = func.state_variable_changes(context) {
                 if all_state_changes.is_none() {
                     all_state_changes = Some(changes);
@@ -62,6 +62,9 @@ impl IssueDetector for StateVariableCouldBeConstantDetector {
                             && !type_string.starts_with("contract")
                     })
             }) {
+                if variable.mutability() == Some(&Mutability::Immutable) {
+                    continue;
+                }
                 if !collection_b_ids.contains(&variable.id) {
                     capture!(self, context, variable);
                 }

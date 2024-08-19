@@ -5145,7 +5145,7 @@ Name clashes with a built-in-symbol. Consider renaming it.
 
 State variables that are not updated following deployment should be declared constant to save gas. Add the `constant` attribute to state variables that never change.
 
-<details><summary>79 Found Instances</summary>
+<details><summary>77 Found Instances</summary>
 
 
 - Found in src/AssemblyExample.sol [Line: 5](../tests/contract-playground/src/AssemblyExample.sol#L5)
@@ -5158,18 +5158,6 @@ State variables that are not updated following deployment should be declared con
 
 	```solidity
 	    uint now; // BAD
-	```
-
-- Found in src/CompilerBugStorageSignedIntegerArray.sol [Line: 5](../tests/contract-playground/src/CompilerBugStorageSignedIntegerArray.sol#L5)
-
-	```solidity
-	    int256[3] affectedArray;
-	```
-
-- Found in src/CompilerBugStorageSignedIntegerArray.sol [Line: 6](../tests/contract-playground/src/CompilerBugStorageSignedIntegerArray.sol#L6)
-
-	```solidity
-	    int256[4] unaffectedArray;
 	```
 
 - Found in src/ConstantFuncsAssembly.sol [Line: 6](../tests/contract-playground/src/ConstantFuncsAssembly.sol#L6)

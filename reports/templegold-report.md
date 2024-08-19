@@ -8706,25 +8706,13 @@ If `x` is a boolean, there is no need to do `if(x == true)` or `if(x == false)`.
 
 State variables that are not updated following deployment should be declared constant to save gas. Add the `constant` attribute to state variables that never change.
 
-<details><summary>11 Found Instances</summary>
+<details><summary>8 Found Instances</summary>
 
 
 - Found in contracts/amm/TempleUniswapV2Pair.sol [Line: 29](../tests/2024-07-templegold/protocol/contracts/amm/TempleUniswapV2Pair.sol#L29)
 
 	```solidity
 	    uint public kLast; // reserve0 * reserve1, as of immediately after the most recent liquidity event
-	```
-
-- Found in contracts/core/RebasingERC20.sol [Line: 18](../tests/2024-07-templegold/protocol/contracts/core/RebasingERC20.sol#L18)
-
-	```solidity
-	    uint256 public totalShares;
-	```
-
-- Found in contracts/core/Vault.sol [Line: 33](../tests/2024-07-templegold/protocol/contracts/core/Vault.sol#L33)
-
-	```solidity
-	    bytes32 public immutable WITHDRAW_FOR_TYPEHASH = keccak256("withdrawFor(address owner,address sender,uint256 amount,uint256 deadline,uint256 nonce)");
 	```
 
 - Found in contracts/fakes/templegold/TempleGoldStakingMock.sol [Line: 39](../tests/2024-07-templegold/protocol/contracts/fakes/templegold/TempleGoldStakingMock.sol#L39)
@@ -8767,12 +8755,6 @@ State variables that are not updated following deployment should be declared con
 
 	```solidity
 	    uint256 public override lastUpdateTime;
-	```
-
-- Found in contracts/v2/strategies/AbstractStrategy.sol [Line: 26](../tests/2024-07-templegold/protocol/contracts/v2/strategies/AbstractStrategy.sol#L26)
-
-	```solidity
-	    string public override strategyName;
 	```
 
 </details>

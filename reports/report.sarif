@@ -8340,28 +8340,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/CompilerBugStorageSignedIntegerArray.sol"
-                },
-                "region": {
-                  "byteLength": 23,
-                  "byteOffset": 109
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/CompilerBugStorageSignedIntegerArray.sol"
-                },
-                "region": {
-                  "byteLength": 25,
-                  "byteOffset": 138
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/ConstantFuncsAssembly.sol"
                 },
                 "region": {

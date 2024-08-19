@@ -5065,18 +5065,6 @@
             "src_char": "92:8"
           },
           {
-            "contract_path": "src/CompilerBugStorageSignedIntegerArray.sol",
-            "line_no": 5,
-            "src": "109:23",
-            "src_char": "109:23"
-          },
-          {
-            "contract_path": "src/CompilerBugStorageSignedIntegerArray.sol",
-            "line_no": 6,
-            "src": "138:25",
-            "src_char": "138:25"
-          },
-          {
             "contract_path": "src/ConstantFuncsAssembly.sol",
             "line_no": 6,
             "src": "110:20",
