@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 88,
-    "total_sloc": 3163
+    "total_source_units": 89,
+    "total_sloc": 3241
   },
   "files_details": {
     "files_details": [
@@ -206,6 +206,10 @@
         "n_sloc": 58
       },
       {
+        "file_path": "src/StateVariablesChangesWithoutEvents.sol",
+        "n_sloc": 78
+      },
+      {
         "file_path": "src/StateVariablesManipulation.sol",
         "n_sloc": 250
       },
@@ -361,7 +365,7 @@
   },
   "issue_count": {
     "high": 39,
-    "low": 32
+    "low": 33
   },
   "high_issues": {
     "issues": [
@@ -3513,6 +3517,36 @@
             "src_char": "3122:115"
           },
           {
+            "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
+            "line_no": 18,
+            "src": "298:36",
+            "src_char": "298:36"
+          },
+          {
+            "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
+            "line_no": 19,
+            "src": "339:37",
+            "src_char": "339:37"
+          },
+          {
+            "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
+            "line_no": 20,
+            "src": "381:38",
+            "src_char": "381:38"
+          },
+          {
+            "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
+            "line_no": 21,
+            "src": "424:40",
+            "src_char": "424:40"
+          },
+          {
+            "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
+            "line_no": 22,
+            "src": "469:36",
+            "src_char": "469:36"
+          },
+          {
             "contract_path": "src/TestERC20.sol",
             "line_no": 14,
             "src": "338:70",
@@ -4543,6 +4577,126 @@
             "src_char": "528:12"
           },
           {
+            "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
+            "line_no": 7,
+            "src": "124:1",
+            "src_char": "124:1"
+          },
+          {
+            "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
+            "line_no": 8,
+            "src": "140:1",
+            "src_char": "140:1"
+          },
+          {
+            "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
+            "line_no": 11,
+            "src": "166:6",
+            "src_char": "166:6"
+          },
+          {
+            "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
+            "line_no": 18,
+            "src": "325:7",
+            "src_char": "325:7"
+          },
+          {
+            "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
+            "line_no": 22,
+            "src": "502:1",
+            "src_char": "502:1"
+          },
+          {
+            "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
+            "line_no": 24,
+            "src": "552:1",
+            "src_char": "552:1"
+          },
+          {
+            "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
+            "line_no": 28,
+            "src": "656:1",
+            "src_char": "656:1"
+          },
+          {
+            "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
+            "line_no": 61,
+            "src": "1536:1",
+            "src_char": "1536:1"
+          },
+          {
+            "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
+            "line_no": 61,
+            "src": "1544:1",
+            "src_char": "1544:1"
+          },
+          {
+            "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
+            "line_no": 67,
+            "src": "1694:1",
+            "src_char": "1694:1"
+          },
+          {
+            "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
+            "line_no": 67,
+            "src": "1702:1",
+            "src_char": "1702:1"
+          },
+          {
+            "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
+            "line_no": 73,
+            "src": "1896:1",
+            "src_char": "1896:1"
+          },
+          {
+            "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
+            "line_no": 73,
+            "src": "1904:1",
+            "src_char": "1904:1"
+          },
+          {
+            "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
+            "line_no": 78,
+            "src": "2030:1",
+            "src_char": "2030:1"
+          },
+          {
+            "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
+            "line_no": 83,
+            "src": "2166:1",
+            "src_char": "2166:1"
+          },
+          {
+            "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
+            "line_no": 90,
+            "src": "2451:1",
+            "src_char": "2451:1"
+          },
+          {
+            "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
+            "line_no": 96,
+            "src": "2596:1",
+            "src_char": "2596:1"
+          },
+          {
+            "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
+            "line_no": 102,
+            "src": "2730:1",
+            "src_char": "2730:1"
+          },
+          {
+            "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
+            "line_no": 102,
+            "src": "2755:4",
+            "src_char": "2755:4"
+          },
+          {
+            "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
+            "line_no": 103,
+            "src": "2783:1",
+            "src_char": "2783:1"
+          },
+          {
             "contract_path": "src/TautologicalCompare.sol",
             "line_no": 11,
             "src": "186:1",
@@ -5275,6 +5429,679 @@
             "src_char": "486:3"
           }
         ]
+      },
+      {
+        "title": "State variable changes but no event is emitted.",
+        "description": "State variable changes in this function but no event is emitted.",
+        "detector_name": "state-variable-changes-without-events",
+        "instances": [
+          {
+            "contract_path": "src/AbstractContract.sol",
+            "line_no": 6,
+            "src": "146:13",
+            "src_char": "146:13"
+          },
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 11,
+            "src": "231:58",
+            "src_char": "231:58"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 30,
+            "src": "860:17",
+            "src_char": "860:17"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 68,
+            "src": "2044:16",
+            "src_char": "2044:16"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 106,
+            "src": "3160:20",
+            "src_char": "3160:20"
+          },
+          {
+            "contract_path": "src/Counter.sol",
+            "line_no": 7,
+            "src": "129:9",
+            "src_char": "129:9"
+          },
+          {
+            "contract_path": "src/Counter.sol",
+            "line_no": 11,
+            "src": "215:9",
+            "src_char": "215:9"
+          },
+          {
+            "contract_path": "src/Counter.sol",
+            "line_no": 16,
+            "src": "286:13",
+            "src_char": "286:13"
+          },
+          {
+            "contract_path": "src/Counter.sol",
+            "line_no": 21,
+            "src": "367:19",
+            "src_char": "367:19"
+          },
+          {
+            "contract_path": "src/Counter.sol",
+            "line_no": 28,
+            "src": "495:22",
+            "src_char": "495:22"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 7,
+            "src": "135:14",
+            "src_char": "135:14"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 11,
+            "src": "254:18",
+            "src_char": "254:18"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 15,
+            "src": "367:11",
+            "src_char": "367:11"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 19,
+            "src": "465:19",
+            "src_char": "465:19"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 23,
+            "src": "577:16",
+            "src_char": "577:16"
+          },
+          {
+            "contract_path": "src/DivisionBeforeMultiplication.sol",
+            "line_no": 27,
+            "src": "690:20",
+            "src_char": "690:20"
+          },
+          {
+            "contract_path": "src/DynamicArrayLengthAssignment.sol",
+            "line_no": 11,
+            "src": "242:345",
+            "src_char": "242:345"
+          },
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 61,
+            "src": "1646:59",
+            "src_char": "1646:59"
+          },
+          {
+            "contract_path": "src/InconsistentUints.sol",
+            "line_no": 19,
+            "src": "511:150",
+            "src_char": "511:150"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 13,
+            "src": "360:108",
+            "src_char": "360:108"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 17,
+            "src": "483:8",
+            "src_char": "483:8"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 23,
+            "src": "690:7",
+            "src_char": "690:7"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 27,
+            "src": "808:12",
+            "src_char": "808:12"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 56,
+            "src": "1712:67",
+            "src_char": "1712:67"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 68,
+            "src": "2007:8",
+            "src_char": "2007:8"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 83,
+            "src": "2352:7",
+            "src_char": "2352:7"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 88,
+            "src": "2507:12",
+            "src_char": "2507:12"
+          },
+          {
+            "contract_path": "src/IncorrectERC721.sol",
+            "line_no": 22,
+            "src": "696:7",
+            "src_char": "696:7"
+          },
+          {
+            "contract_path": "src/IncorrectERC721.sol",
+            "line_no": 41,
+            "src": "1231:17",
+            "src_char": "1231:17"
+          },
+          {
+            "contract_path": "src/IncorrectERC721.sol",
+            "line_no": 56,
+            "src": "1684:12",
+            "src_char": "1684:12"
+          },
+          {
+            "contract_path": "src/IncorrectERC721.sol",
+            "line_no": 86,
+            "src": "2439:4",
+            "src_char": "2439:4"
+          },
+          {
+            "contract_path": "src/InternalFunctions.sol",
+            "line_no": 8,
+            "src": "149:49",
+            "src_char": "149:49"
+          },
+          {
+            "contract_path": "src/InternalFunctions.sol",
+            "line_no": 12,
+            "src": "213:8",
+            "src_char": "213:8"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 10,
+            "src": "177:3",
+            "src_char": "177:3"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 22,
+            "src": "501:4",
+            "src_char": "501:4"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 36,
+            "src": "905:3",
+            "src_char": "905:3"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 51,
+            "src": "1307:3",
+            "src_char": "1307:3"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 68,
+            "src": "1733:3",
+            "src_char": "1733:3"
+          },
+          {
+            "contract_path": "src/MultipleConstructorSchemes.sol",
+            "line_no": 6,
+            "src": "87:43",
+            "src_char": "87:43"
+          },
+          {
+            "contract_path": "src/MultipleConstructorSchemes.sol",
+            "line_no": 10,
+            "src": "136:67",
+            "src_char": "136:67"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 46,
+            "src": "1219:388",
+            "src_char": "1219:388"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 63,
+            "src": "1649:11",
+            "src_char": "1649:11"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 175,
+            "src": "5072:7",
+            "src_char": "5072:7"
+          },
+          {
+            "contract_path": "src/RevertsAndRequriesInLoops.sol",
+            "line_no": 9,
+            "src": "188:17",
+            "src_char": "188:17"
+          },
+          {
+            "contract_path": "src/RevertsAndRequriesInLoops.sol",
+            "line_no": 16,
+            "src": "377:17",
+            "src_char": "377:17"
+          },
+          {
+            "contract_path": "src/RevertsAndRequriesInLoops.sol",
+            "line_no": 25,
+            "src": "588:17",
+            "src_char": "588:17"
+          },
+          {
+            "contract_path": "src/StateShadowing.sol",
+            "line_no": 17,
+            "src": "259:55",
+            "src_char": "259:55"
+          },
+          {
+            "contract_path": "src/StateVariableCouldBeDeclaredConstant.sol",
+            "line_no": 11,
+            "src": "286:49",
+            "src_char": "286:49"
+          },
+          {
+            "contract_path": "src/StateVariableCouldBeDeclaredConstant.sol",
+            "line_no": 28,
+            "src": "677:49",
+            "src_char": "677:49"
+          },
+          {
+            "contract_path": "src/StateVariableCouldBeDeclaredConstant.sol",
+            "line_no": 35,
+            "src": "843:8",
+            "src_char": "843:8"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 39,
+            "src": "1426:292",
+            "src_char": "1426:292"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 47,
+            "src": "1764:18",
+            "src_char": "1764:18"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 52,
+            "src": "1915:20",
+            "src_char": "1915:20"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 57,
+            "src": "2072:14",
+            "src_char": "2072:14"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 61,
+            "src": "2157:22",
+            "src_char": "2157:22"
+          },
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 71,
+            "src": "2539:25",
+            "src_char": "2539:25"
+          },
+          {
+            "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
+            "line_no": 24,
+            "src": "520:26",
+            "src_char": "520:26"
+          },
+          {
+            "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
+            "line_no": 28,
+            "src": "614:36",
+            "src_char": "614:36"
+          },
+          {
+            "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
+            "line_no": 32,
+            "src": "718:35",
+            "src_char": "718:35"
+          },
+          {
+            "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
+            "line_no": 42,
+            "src": "955:36",
+            "src_char": "955:36"
+          },
+          {
+            "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
+            "line_no": 46,
+            "src": "1057:26",
+            "src_char": "1057:26"
+          },
+          {
+            "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
+            "line_no": 50,
+            "src": "1158:24",
+            "src_char": "1158:24"
+          },
+          {
+            "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
+            "line_no": 61,
+            "src": "1497:33",
+            "src_char": "1497:33"
+          },
+          {
+            "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
+            "line_no": 73,
+            "src": "1856:34",
+            "src_char": "1856:34"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 48,
+            "src": "1463:26",
+            "src_char": "1463:26"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 80,
+            "src": "2360:18",
+            "src_char": "2360:18"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 85,
+            "src": "2519:24",
+            "src_char": "2519:24"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 120,
+            "src": "3396:24",
+            "src_char": "3396:24"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 126,
+            "src": "3566:25",
+            "src_char": "3566:25"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 139,
+            "src": "3960:25",
+            "src_char": "3960:25"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 160,
+            "src": "4556:25",
+            "src_char": "4556:25"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 176,
+            "src": "5020:25",
+            "src_char": "5020:25"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 182,
+            "src": "5159:25",
+            "src_char": "5159:25"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 281,
+            "src": "7993:18",
+            "src_char": "7993:18"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 286,
+            "src": "8121:24",
+            "src_char": "8121:24"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 314,
+            "src": "8845:18",
+            "src_char": "8845:18"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 321,
+            "src": "9054:24",
+            "src_char": "9054:24"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 332,
+            "src": "9447:25",
+            "src_char": "9447:25"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 337,
+            "src": "9572:26",
+            "src_char": "9572:26"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 353,
+            "src": "9896:3",
+            "src_char": "9896:3"
+          },
+          {
+            "contract_path": "src/StorageConditionals.sol",
+            "line_no": 8,
+            "src": "178:132",
+            "src_char": "178:132"
+          },
+          {
+            "contract_path": "src/StorageParameters.sol",
+            "line_no": 7,
+            "src": "137:10",
+            "src_char": "137:10"
+          },
+          {
+            "contract_path": "src/TestERC20.sol",
+            "line_no": 25,
+            "src": "666:111",
+            "src_char": "666:111"
+          },
+          {
+            "contract_path": "src/TxOriginUsedForAuth.sol",
+            "line_no": 11,
+            "src": "272:49",
+            "src_char": "272:49"
+          },
+          {
+            "contract_path": "src/TxOriginUsedForAuth.sol",
+            "line_no": 16,
+            "src": "348:13",
+            "src_char": "348:13"
+          },
+          {
+            "contract_path": "src/TxOriginUsedForAuth.sol",
+            "line_no": 22,
+            "src": "531:10",
+            "src_char": "531:10"
+          },
+          {
+            "contract_path": "src/UninitializedStateVariable.sol",
+            "line_no": 23,
+            "src": "733:90",
+            "src_char": "733:90"
+          },
+          {
+            "contract_path": "src/UninitializedStateVariable.sol",
+            "line_no": 41,
+            "src": "1222:40",
+            "src_char": "1222:40"
+          },
+          {
+            "contract_path": "src/UnprotectedInitialize.sol",
+            "line_no": 9,
+            "src": "158:49",
+            "src_char": "158:49"
+          },
+          {
+            "contract_path": "src/UnprotectedInitialize.sol",
+            "line_no": 19,
+            "src": "354:22",
+            "src_char": "354:22"
+          },
+          {
+            "contract_path": "src/UnprotectedInitialize.sol",
+            "line_no": 25,
+            "src": "522:20",
+            "src_char": "522:20"
+          },
+          {
+            "contract_path": "src/UnprotectedInitialize.sol",
+            "line_no": 35,
+            "src": "820:33",
+            "src_char": "820:33"
+          },
+          {
+            "contract_path": "src/UnusedError.sol",
+            "line_no": 15,
+            "src": "309:7",
+            "src_char": "309:7"
+          },
+          {
+            "contract_path": "src/UnusedStateVariables.sol",
+            "line_no": 15,
+            "src": "454:8",
+            "src_char": "454:8"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 12,
+            "src": "253:12",
+            "src_char": "253:12"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 17,
+            "src": "383:12",
+            "src_char": "383:12"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 22,
+            "src": "534:10",
+            "src_char": "534:10"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 27,
+            "src": "671:10",
+            "src_char": "671:10"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 32,
+            "src": "829:10",
+            "src_char": "829:10"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 37,
+            "src": "990:10",
+            "src_char": "990:10"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 42,
+            "src": "1130:4",
+            "src_char": "1130:4"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 46,
+            "src": "1207:4",
+            "src_char": "1207:4"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 50,
+            "src": "1286:4",
+            "src_char": "1286:4"
+          },
+          {
+            "contract_path": "src/auditor_mode/ExternalCalls.sol",
+            "line_no": 12,
+            "src": "272:189",
+            "src_char": "272:189"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 68,
+            "src": "4925:270",
+            "src_char": "3437:270"
+          },
+          {
+            "contract_path": "src/nested/1/Nested.sol",
+            "line_no": 10,
+            "src": "265:17",
+            "src_char": "265:17"
+          },
+          {
+            "contract_path": "src/nested/2/Nested.sol",
+            "line_no": 10,
+            "src": "272:17",
+            "src_char": "272:17"
+          },
+          {
+            "contract_path": "src/parent_chain/ParentChainContract.sol",
+            "line_no": 15,
+            "src": "422:9",
+            "src_char": "422:9"
+          },
+          {
+            "contract_path": "src/reused_contract_name/ContractA.sol",
+            "line_no": 7,
+            "src": "107:36",
+            "src_char": "107:36"
+          },
+          {
+            "contract_path": "src/reused_contract_name/ContractB.sol",
+            "line_no": 7,
+            "src": "110:45",
+            "src_char": "110:45"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 10,
+            "src": "327:62",
+            "src_char": "327:62"
+          }
+        ]
       }
     ]
   },
@@ -5349,6 +6176,7 @@
     "out-of-order-retryable",
     "function-initializing-state",
     "builtin-symbol-shadow",
-    "state-variable-could-be-declared-constant"
+    "state-variable-could-be-declared-constant",
+    "state-variable-changes-without-events"
   ]
 }
