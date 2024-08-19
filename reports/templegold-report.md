@@ -8706,7 +8706,7 @@ If `x` is a boolean, there is no need to do `if(x == true)` or `if(x == false)`.
 
 State variables that are not updated following deployment should be declared constant to save gas. Add the `constant` attribute to state variables that never change.
 
-<details><summary>8 Found Instances</summary>
+<details><summary>5 Found Instances</summary>
 
 
 - Found in contracts/amm/TempleUniswapV2Pair.sol [Line: 29](../tests/2024-07-templegold/protocol/contracts/amm/TempleUniswapV2Pair.sol#L29)
@@ -8737,24 +8737,6 @@ State variables that are not updated following deployment should be declared con
 
 	```solidity
 	    uint256 internal _currentEpochId;
-	```
-
-- Found in contracts/templegold/TempleGoldStaking.sol [Line: 40](../tests/2024-07-templegold/protocol/contracts/templegold/TempleGoldStaking.sol#L40)
-
-	```solidity
-	    uint256 public override rewardPerTokenStored;
-	```
-
-- Found in contracts/templegold/TempleGoldStaking.sol [Line: 45](../tests/2024-07-templegold/protocol/contracts/templegold/TempleGoldStaking.sol#L45)
-
-	```solidity
-	    uint256 public override periodFinish;
-	```
-
-- Found in contracts/templegold/TempleGoldStaking.sol [Line: 47](../tests/2024-07-templegold/protocol/contracts/templegold/TempleGoldStaking.sol#L47)
-
-	```solidity
-	    uint256 public override lastUpdateTime;
 	```
 
 </details>

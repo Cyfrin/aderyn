@@ -46,6 +46,10 @@ impl IssueDetector for StateVariableCouldBeConstantDetector {
                 continue;
             }
 
+            if variable.overrides.is_some() {
+                continue;
+            }
+
             if variable.state_variable && !variable.constant {
                 collection_a.push(variable);
             }
