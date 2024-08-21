@@ -33,26 +33,26 @@ impl From<&TokenDescriptor> for TokenInsight {
             ends_with_newline: value.content.ends_with('\n'),
         };
 
-        if value.token_type != TokenType::MultilineComment
-            && value.token_type != TokenType::SinglelineComment
-            && insight.start_line == 3
-            || insight.end_line == 3
-        {
-            print!(
-                "{:?}, {}-{}\n",
-                value.token_type.clone(),
-                value.start_line,
-                value.end_line
-            );
-            // println!("{}", value.content.clone());
+        // if value.token_type != TokenType::MultilineComment
+        //     && value.token_type != TokenType::SinglelineComment
+        //     && insight.start_line == 3
+        //     || insight.end_line == 3
+        // {
+        //     print!(
+        //         "{:?}, {}-{}\n",
+        //         value.token_type.clone(),
+        //         value.start_line,
+        //         value.end_line
+        //     );
+        //     println!("{}", value.content.clone());
 
-            println!(
-                "Lines {}/{}/{}\n----------------------",
-                insight.code_lines.info_lines,
-                insight.code_lines.actual_first_line,
-                insight.code_lines.last_line_has_code
-            );
-        }
+        //     println!(
+        //         "Lines {}/{}/{}\n----------------------",
+        //         insight.code_lines.info_lines,
+        //         insight.code_lines.actual_first_line,
+        //         insight.code_lines.last_line_has_code
+        //     );
+        // }
 
         insight
     }

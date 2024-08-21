@@ -46,7 +46,7 @@ pub fn count_lines_of_code_and_collect_line_numbers_to_ignore(
         let stats = cloc::get_stats(&r_content, skip_cloc);
         let key = String::from(target_file.path().to_string_lossy());
         let mut lock = lines_of_code.lock().unwrap();
-        println!("Inserting: {} - {}", key, stats.code);
+        // println!("Inserting: {} - {}", key, stats.code);
         lock.insert(key, stats);
     };
 
