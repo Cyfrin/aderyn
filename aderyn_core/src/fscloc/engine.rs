@@ -12,6 +12,7 @@ pub fn count_lines_of_code_and_collect_line_numbers_to_ignore(
 ) -> Mutex<HashMap<String, Stats>> {
     let walker = WalkBuilder::new(src);
     let (tx, rx) = crossbeam_channel::unbounded();
+
     walker.build_parallel().run(|| {
         let tx = tx.clone();
         Box::new(move |res| {
@@ -21,7 +22,7 @@ pub fn count_lines_of_code_and_collect_line_numbers_to_ignore(
                     // dbg!(target_path.unwrap());
                     if src_filepaths
                         .iter()
-                        .any(|fp| target_path.map_or(false, |path| path.contains(fp)))
+                        .any(|fp| target_path.map_or(false, |path| path.ends_with(fp)))
                     {
                         let send = target.to_owned();
                         tx.send(send).unwrap();
@@ -41,6 +42,11 @@ pub fn count_lines_of_code_and_collect_line_numbers_to_ignore(
 
     let receive = |target_file: DirEntry| {
         // println!("Processing: {:?}", target_file.path());
+        let y = std::fs::read_to_string(target_file.path());
+        if y.is_err() {
+            println!("{:#?}", target_file.file_name());
+            return;
+        }
         let r_content = std::fs::read_to_string(target_file.path()).unwrap();
         let stats = cloc::get_stats(&r_content, skip_cloc);
         let key = String::from(target_file.path().to_string_lossy());
