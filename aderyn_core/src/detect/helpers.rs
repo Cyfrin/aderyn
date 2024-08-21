@@ -312,3 +312,39 @@ pub fn is_constant_boolean(context: &WorkspaceContext, ast_node: &Expression) ->
     }
     false
 }
+
+/// List of [`ASTNode`]s that are in some kind of a loop
+/// Typically used as starting points to explore inward from callgraph
+pub fn get_explore_centers_of_loops(context: &WorkspaceContext) -> Vec<&ASTNode> {
+    let mut explore_node_ids: Vec<Option<NodeID>> = vec![];
+
+    for for_loop in context.for_statements() {
+        if let Some(loop_expression) = for_loop.loop_expression.as_ref() {
+            explore_node_ids.push(loop_expression.expression.get_node_id());
+        }
+        if let Some(condition) = &for_loop.condition {
+            explore_node_ids.push(condition.get_node_id());
+        }
+        explore_node_ids.push(for_loop.body.get_node_id());
+    }
+
+    for while_loop in context.while_statements() {
+        explore_node_ids.push(while_loop.condition.get_node_id());
+        explore_node_ids.push(while_loop.body.get_node_id());
+    }
+
+    for do_while_loop in context.do_while_statements() {
+        explore_node_ids.push(do_while_loop.condition.get_node_id());
+        explore_node_ids.push(Some(do_while_loop.body.id));
+    }
+
+    let mut explore_nodes = Vec::with_capacity(explore_node_ids.len());
+
+    for id in explore_node_ids.iter().flatten() {
+        if let Some(ast_node) = context.nodes.get(id) {
+            explore_nodes.push(ast_node);
+        }
+    }
+
+    explore_nodes
+}
