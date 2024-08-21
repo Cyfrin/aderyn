@@ -1,7 +1,7 @@
 {
   "files_summary": {
     "total_source_units": 92,
-    "total_sloc": 3230
+    "total_sloc": 3240
   },
   "files_details": {
     "files_details": [
@@ -147,11 +147,11 @@
       },
       {
         "file_path": "src/IncorrectERC20.sol",
-        "n_sloc": 97
+        "n_sloc": 98
       },
       {
         "file_path": "src/IncorrectERC721.sol",
-        "n_sloc": 231
+        "n_sloc": 238
       },
       {
         "file_path": "src/IncorrectShift.sol",
@@ -251,7 +251,7 @@
       },
       {
         "file_path": "src/TxOriginUsedForAuth.sol",
-        "n_sloc": 42
+        "n_sloc": 43
       },
       {
         "file_path": "src/UncheckedReturn.sol",
@@ -323,7 +323,7 @@
       },
       {
         "file_path": "src/eth2/DepositContract.sol",
-        "n_sloc": 95
+        "n_sloc": 96
       },
       {
         "file_path": "src/inheritance/ExtendedInheritance.sol",
