@@ -17,12 +17,12 @@ pub fn count_lines_of_code_and_collect_line_numbers_to_ignore(
         let tx = tx.clone();
         Box::new(move |res| {
             if let Ok(target) = res {
-                let target_path = target.path().to_str();
                 if target.file_type().unwrap().is_file() {
                     // dbg!(target_path.unwrap());
+                    let remaining = target.path().strip_prefix(&src).unwrap();
                     if src_filepaths
                         .iter()
-                        .any(|fp| target_path.map_or(false, |path| path.ends_with(fp)))
+                        .any(|fp| &remaining.to_string_lossy().to_string() == fp)
                     {
                         let send = target.to_owned();
                         tx.send(send).unwrap();
