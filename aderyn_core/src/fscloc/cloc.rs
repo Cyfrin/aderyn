@@ -33,6 +33,14 @@ pub struct TokenInsightGroup {
     pub token_type: HighLevelType,
 }
 
+impl TokenInsightGroup {
+    fn last_token_insight_has_code_in_its_last_line(&self) -> bool {
+        self.token_insights
+            .last()
+            .is_some_and(|insight| insight.code_lines.last_line_has_code)
+    }
+}
+
 pub fn get_stats(r_content: &str, skip_cloc: bool) -> Stats {
     if r_content.is_empty() {
         return Stats {
@@ -72,6 +80,8 @@ pub fn get_stats(r_content: &str, skip_cloc: bool) -> Stats {
             let prev_group = token_insight_groups.last_mut().unwrap();
 
             if insight.start_line == prev_group.end_line
+                && insight.code_lines.actual_first_line == 0
+                && prev_group.last_token_insight_has_code_in_its_last_line()
                 && prev_group.token_type == insight.token_type.clone().into()
             {
                 prev_group.token_insights.push(insight.clone());
@@ -91,29 +101,29 @@ pub fn get_stats(r_content: &str, skip_cloc: bool) -> Stats {
         assert!(content == r_content);
 
         // debug
-        // for group in &token_insight_groups {
-        //     if group.token_type == HighLevelType::Code {
-        // println!(
-        //     "{}-{} Size:{} Contrib:{}",
-        //     group.start_line,
-        //     group.end_line,
-        //     group.token_insights.len(),
-        //     group.total_contribution(),
-        // );
-        // if group.token_insights.len() == 7 {
-        //     for i in &group.token_insights {
-        //         println!(
-        //             "{:?} - {:?} - {} - {} - {}",
-        //             i.token_type,
-        //             i.code_lines.info_lines,
-        //             i.starts_with_newline,
-        //             i.start_line,
-        //             i.end_line
-        //         );
-        //     }
-        // }
-        //     }
-        // }
+        for group in &token_insight_groups {
+            if group.token_type == HighLevelType::Code {
+                println!(
+                    "{}-{} Size:{} Contrib:{}",
+                    group.start_line,
+                    group.end_line,
+                    group.token_insights.len(),
+                    group.total_contribution(),
+                );
+                if group.total_contribution() == 37 {
+                    for i in &group.token_insights {
+                        println!(
+                            "{:?} - {:?} - {} - {} - {}",
+                            i.token_type,
+                            i.code_lines.info_lines,
+                            i.starts_with_newline,
+                            i.start_line,
+                            i.end_line
+                        );
+                    }
+                }
+            }
+        }
 
         let groups = token_insight_groups
             .iter()
@@ -132,6 +142,8 @@ pub fn get_stats(r_content: &str, skip_cloc: bool) -> Stats {
         let mut prev = &groups[0];
         code_lines += prev.total_contribution();
 
+        println!("LEN {}", len);
+
         #[allow(clippy::needless_range_loop)]
         for i in 1..len {
             let curr = &groups[i];
@@ -142,8 +154,9 @@ pub fn get_stats(r_content: &str, skip_cloc: bool) -> Stats {
             if curr.start_line == prev.end_line
                 && (curr.token_insights[0].code_lines.actual_first_line == 0)
                 && grp_contrib >= 1
+                && prev.last_token_insight_has_code_in_its_last_line()
             {
-                // println!("deducting {} {}", curr.start_line, prev.end_line);
+                println!("deducting {} {}", curr.start_line, prev.end_line);
                 code_lines -= 1;
             }
             prev = curr;

@@ -22,6 +22,7 @@ impl From<&TokenDescriptor> for TokenInsight {
                 TokenType::CodeDoubleQuotes | TokenType::CodeSingleQuotes => CodeLines {
                     info_lines: value.end_line - value.start_line + 1,
                     actual_first_line: 0,
+                    last_line_has_code: true,
                 },
                 _ => value.token_type.number_of_lines(&value.content),
             },
@@ -32,23 +33,26 @@ impl From<&TokenDescriptor> for TokenInsight {
             ends_with_newline: value.content.ends_with('\n'),
         };
 
-        // if value.token_type != TokenType::MultilineComment
-        //     && value.token_type != TokenType::SinglelineComment
-        // && insight.code_lines.actual_first_line != -1
-        //{
-        // print!(
-        //     "{:?}, {}-{}\n",
-        //     value.token_type.clone(),
-        //     value.start_line,
-        //     value.end_line
-        // );
-        // println!("{}", value.content.clone());
+        if value.token_type != TokenType::MultilineComment
+            && value.token_type != TokenType::SinglelineComment
+            && insight.start_line == 3
+            || insight.end_line == 3
+        {
+            print!(
+                "{:?}, {}-{}\n",
+                value.token_type.clone(),
+                value.start_line,
+                value.end_line
+            );
+            // println!("{}", value.content.clone());
 
-        // println!(
-        //     "Lines {}/{}\n----------------------",
-        //     insight.code_lines.info_lines, insight.code_lines.actual_first_line
-        // );
-        //}
+            println!(
+                "Lines {}/{}/{}\n----------------------",
+                insight.code_lines.info_lines,
+                insight.code_lines.actual_first_line,
+                insight.code_lines.last_line_has_code
+            );
+        }
 
         insight
     }
@@ -61,6 +65,7 @@ impl TokenType {
                 let mut non_blank_lines = 0;
                 let mut actual_first_line = -1;
                 let mut count = 0;
+                let mut last_line_has_code = false;
                 #[allow(clippy::explicit_counter_loop)]
                 for curr in content.split('\n') {
                     if curr.trim() != "" {
@@ -68,6 +73,9 @@ impl TokenType {
                         if actual_first_line == -1 {
                             actual_first_line = count;
                         }
+                        last_line_has_code = true;
+                    } else {
+                        last_line_has_code = false;
                     }
                     count += 1;
                 }
@@ -75,11 +83,13 @@ impl TokenType {
                 CodeLines {
                     info_lines: non_blank_lines,
                     actual_first_line,
+                    last_line_has_code,
                 }
             }
             _ => CodeLines {
                 info_lines: 0, // we don't care about these values
                 actual_first_line: -1,
+                last_line_has_code: true,
             },
         }
     }
