@@ -19,7 +19,7 @@ pub fn count_lines_of_code_and_collect_line_numbers_to_ignore(
             if let Ok(target) = res {
                 if target.file_type().unwrap().is_file() {
                     // dbg!(target_path.unwrap());
-                    let remaining = target.path().strip_prefix(&src).unwrap();
+                    let remaining = target.path().strip_prefix(src).unwrap();
                     if src_filepaths
                         .iter()
                         .any(|fp| &remaining.to_string_lossy().to_string() == fp)
