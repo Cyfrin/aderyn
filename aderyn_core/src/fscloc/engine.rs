@@ -26,19 +26,17 @@ pub fn count_lines_of_code_and_collect_line_numbers_to_ignore(
         }
     };
 
-    let src_filepaths_as_paths = src_filepaths
-        .into_iter()
-        .flat_map(|f| form_path(f))
-        .collect::<Vec<_>>();
+    let src_filepaths_as_paths = src_filepaths.iter().flat_map(form_path).collect::<Vec<_>>();
 
-    if src_filepaths_as_paths.len() > 0 {
-        let mut better_walker = WalkBuilder::new(src_filepaths_as_paths[0].clone());
+    if !src_filepaths_as_paths.is_empty() {
+        // Only add the paths to WalkBuilder that we want to do analysis on.
+        let mut walker = WalkBuilder::new(src_filepaths_as_paths[0].clone());
 
-        for i in 1..src_filepaths_as_paths.len() {
-            better_walker.add(src_filepaths_as_paths[i].clone());
+        for item in src_filepaths_as_paths.iter().skip(1) {
+            walker.add(item);
         }
 
-        better_walker.build_parallel().run(|| {
+        walker.build_parallel().run(|| {
             let tx = tx.clone();
             Box::new(move |res| {
                 if let Ok(target) = res {
