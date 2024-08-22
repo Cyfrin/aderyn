@@ -10,28 +10,47 @@ pub fn count_lines_of_code_and_collect_line_numbers_to_ignore(
     src_filepaths: &[String],
     skip_cloc: bool,
 ) -> Mutex<HashMap<String, Stats>> {
-    let walker = WalkBuilder::new(src);
     let (tx, rx) = crossbeam_channel::unbounded();
 
-    walker.build_parallel().run(|| {
-        let tx = tx.clone();
-        Box::new(move |res| {
-            if let Ok(target) = res {
-                if target.file_type().unwrap().is_file() {
-                    // dbg!(target_path.unwrap());
-                    let remaining = target.path().strip_prefix(src).unwrap();
-                    if src_filepaths
-                        .iter()
-                        .any(|fp| &remaining.to_string_lossy().to_string() == fp)
-                    {
+    let form_path = |path: &String| {
+        // Soldiity compiler shenanigans ??
+        // In the line  `==== ??? ====` of the output, we're supposed to see the filename
+        // But sometimes solc puts filenames with path containing two forward slashes
+        // Example `contracts/templegold//AuctionBase.sol` in there
+        // Although there is a separate entry for `contracts/templegold/AuctionBase.sol`.
+        // We want to omit reading the former
+        if path.contains("//") {
+            None
+        } else {
+            Some(Path::new(&src).join(path))
+        }
+    };
+
+    let src_filepaths_as_paths = src_filepaths
+        .into_iter()
+        .flat_map(|f| form_path(f))
+        .collect::<Vec<_>>();
+
+    if src_filepaths_as_paths.len() > 0 {
+        let mut better_walker = WalkBuilder::new(src_filepaths_as_paths[0].clone());
+
+        for i in 1..src_filepaths_as_paths.len() {
+            better_walker.add(src_filepaths_as_paths[i].clone());
+        }
+
+        better_walker.build_parallel().run(|| {
+            let tx = tx.clone();
+            Box::new(move |res| {
+                if let Ok(target) = res {
+                    if target.file_type().unwrap().is_file() {
                         let send = target.to_owned();
                         tx.send(send).unwrap();
                     }
                 }
-            }
-            Continue
-        })
-    });
+                Continue
+            })
+        });
+    }
 
     drop(tx); // without this, the program would not terminate .. becoz receiver would
               // think that the `tx` is still waiting to send something.. but we're done
