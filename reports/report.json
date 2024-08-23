@@ -1734,12 +1734,6 @@
             "src_char": "5072:7"
           },
           {
-            "contract_path": "src/ReturnBomb.sol",
-            "line_no": 32,
-            "src": "839:4",
-            "src_char": "839:4"
-          },
-          {
             "contract_path": "src/SendEtherNoChecks.sol",
             "line_no": 53,
             "src": "1060:5",
