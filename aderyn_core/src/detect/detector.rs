@@ -93,6 +93,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<ConstantFunctionChangingStateDetector>::default(),
         Box::<BuiltinSymbolShadowDetector>::default(),
         Box::<FunctionSelectorCollisionDetector>::default(),
+        Box::<UncheckedLowLevelCallDetector>::default(),
     ]
 }
 
@@ -104,6 +105,7 @@ pub fn get_all_detectors_names() -> Vec<String> {
 #[derive(Debug, PartialEq, EnumString, Display)]
 #[strum(serialize_all = "kebab-case")]
 pub(crate) enum IssueDetectorNamePool {
+    UncheckedLowLevelCall,
     FunctionSelectorCollision,
     CacheArrayLength,
     AssertStateChange,
@@ -380,6 +382,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::MsgValueInLoop => Some(Box::<MsgValueUsedInLoopDetector>::default()),
         IssueDetectorNamePool::ContractLocksEther => {
             Some(Box::<ContractLocksEtherDetector>::default())
+        }
+        IssueDetectorNamePool::UncheckedLowLevelCall => {
+            Some(Box::<UncheckedLowLevelCallDetector>::default())
         }
         IssueDetectorNamePool::Undecided => None,
     }
