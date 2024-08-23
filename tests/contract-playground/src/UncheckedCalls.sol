@@ -3,24 +3,24 @@ pragma solidity ^0.6.0;
 
 contract UncheckedCallExamples {
     
-    function sendEther(address payable recipient) public payable {
-        recipient.call{value: msg.value}("");
+    function sendEther(address payable recipient) external payable {
+        recipient.call{value: 100}("");
     }
 
-    function callFunction(address target, bytes memory data) public {
+    function callFunction(address target, bytes calldata data) external {
         target.call(data);
     }
 
-    function delegateCallFunction(address target, bytes memory data) public {
+    function delegateCallFunction(address target, bytes calldata data) external {
         target.delegatecall(data);
     }
 
-    function staticCallFunction(address target, bytes memory data) public view {
+    function staticCallFunction(address target, bytes calldata data) external view {
         target.staticcall(data);
     }
 
-    function testMultipleUncheckedCalls(address target) public payable {
-        target.call{value: msg.value}("");
+    function testMultipleUncheckedCalls(address target) external payable {
+        target.call{value: 100}("");
 
         target.call(abi.encodeWithSignature("someFunction(uint256)", 123));
 
@@ -30,7 +30,7 @@ contract UncheckedCallExamples {
     }
 
     // Copied from Slither
-    function my_func(address payable dst) public payable{
-        dst.call.value(msg.value)("");
+    function my_func(address payable dst) external payable{
+        dst.call.value(100)("");
     }
 }

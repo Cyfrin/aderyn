@@ -2443,6 +2443,28 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/UncheckedCalls.sol"
+                },
+                "region": {
+                  "byteLength": 110,
+                  "byteOffset": 99
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedCalls.sol"
+                },
+                "region": {
+                  "byteLength": 359,
+                  "byteOffset": 572
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/UncheckedSend.sol"
                 },
                 "region": {
@@ -2512,6 +2534,28 @@
                 "region": {
                   "byteLength": 9,
                   "byteOffset": 392
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedCalls.sol"
+                },
+                "region": {
+                  "byteLength": 118,
+                  "byteOffset": 323
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedCalls.sol"
+                },
+                "region": {
+                  "byteLength": 359,
+                  "byteOffset": 572
                 }
               }
             },
@@ -3454,6 +3498,169 @@
           "ruleId": "function-selector-collision"
         },
         {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DelegateCallWithoutAddressCheck.sol"
+                },
+                "region": {
+                  "byteLength": 21,
+                  "byteOffset": 452
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DelegateCallWithoutAddressCheck.sol"
+                },
+                "region": {
+                  "byteLength": 26,
+                  "byteOffset": 583
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DelegateCallWithoutAddressCheck.sol"
+                },
+                "region": {
+                  "byteLength": 21,
+                  "byteOffset": 1071
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DelegateCallWithoutAddressCheck.sol"
+                },
+                "region": {
+                  "byteLength": 21,
+                  "byteOffset": 1287
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedCalls.sol"
+                },
+                "region": {
+                  "byteLength": 30,
+                  "byteOffset": 172
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedCalls.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 293
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedCalls.sol"
+                },
+                "region": {
+                  "byteLength": 25,
+                  "byteOffset": 409
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedCalls.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 536
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedCalls.sol"
+                },
+                "region": {
+                  "byteLength": 27,
+                  "byteOffset": 651
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedCalls.sol"
+                },
+                "region": {
+                  "byteLength": 66,
+                  "byteOffset": 689
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedCalls.sol"
+                },
+                "region": {
+                  "byteLength": 86,
+                  "byteOffset": 766
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedCalls.sol"
+                },
+                "region": {
+                  "byteLength": 61,
+                  "byteOffset": 863
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedCalls.sol"
+                },
+                "region": {
+                  "byteLength": 19,
+                  "byteOffset": 1028
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/inheritance/ExtendedInheritance.sol"
+                },
+                "region": {
+                  "byteLength": 71,
+                  "byteOffset": 488
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "The return value of the low-level call is not checked, so if the call fails, the Ether will be locked in the contract. If the low level is used to prevent blocking operations, consider logging failed calls. Ensure that the return value of a low-level call is checked or logged."
+          },
+          "ruleId": "unchecked-low-level-call"
+        },
+        {
           "level": "note",
           "locations": [
             {
@@ -4113,6 +4320,17 @@
                 },
                 "region": {
                   "byteLength": 24,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedCalls.sol"
+                },
+                "region": {
+                  "byteLength": 23,
                   "byteOffset": 32
                 }
               }
