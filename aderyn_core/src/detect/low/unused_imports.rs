@@ -43,7 +43,6 @@ impl IssueDetector for UnusedImportDetector {
                     if let Some(exported_symbols) = i.exported_symbols.as_ref() {
                         if exported_symbols
                             .values()
-                            .into_iter()
                             .flatten()
                             .all(|symbol| !all_references_set.contains(symbol))
                         {
