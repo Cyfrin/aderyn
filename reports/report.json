@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 92,
-    "total_sloc": 3230
+    "total_source_units": 94,
+    "total_sloc": 3237
   },
   "files_details": {
     "files_details": [
@@ -254,6 +254,10 @@
         "n_sloc": 42
       },
       {
+        "file_path": "src/U2.sol",
+        "n_sloc": 3
+      },
+      {
         "file_path": "src/UncheckedReturn.sol",
         "n_sloc": 33
       },
@@ -276,6 +280,10 @@
       {
         "file_path": "src/UnusedError.sol",
         "n_sloc": 19
+      },
+      {
+        "file_path": "src/UnusedImport.sol",
+        "n_sloc": 4
       },
       {
         "file_path": "src/UnusedStateVariables.sol",
@@ -377,7 +385,7 @@
   },
   "issue_count": {
     "high": 41,
-    "low": 34
+    "low": 35
   },
   "high_issues": {
     "issues": [
@@ -2729,10 +2737,22 @@
             "src_char": "32:24"
           },
           {
+            "contract_path": "src/U2.sol",
+            "line_no": 3,
+            "src": "33:24",
+            "src_char": "33:24"
+          },
+          {
             "contract_path": "src/UncheckedSend.sol",
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/UnusedImport.sol",
+            "line_no": 3,
+            "src": "33:24",
+            "src_char": "33:24"
           },
           {
             "contract_path": "src/UnusedStateVariables.sol",
@@ -3985,10 +4005,22 @@
             "src_char": "32:24"
           },
           {
+            "contract_path": "src/U2.sol",
+            "line_no": 3,
+            "src": "33:24",
+            "src_char": "33:24"
+          },
+          {
             "contract_path": "src/UnsafeERC721Mint.sol",
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/UnusedImport.sol",
+            "line_no": 3,
+            "src": "33:24",
+            "src_char": "33:24"
           },
           {
             "contract_path": "src/UnusedStateVariables.sol",
@@ -5329,6 +5361,19 @@
             "line_no": 22,
             "src": "414:15",
             "src_char": "414:15"
+          }
+        ]
+      },
+      {
+        "title": "Unused Imports",
+        "description": "Redundant import statement. Consider removing it.",
+        "detector_name": "unused-import",
+        "instances": [
+          {
+            "contract_path": "src/UnusedImport.sol",
+            "line_no": 6,
+            "src": "92:18",
+            "src_char": "92:18"
           }
         ]
       }

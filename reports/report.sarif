@@ -4120,11 +4120,33 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/U2.sol"
+                },
+                "region": {
+                  "byteLength": 24,
+                  "byteOffset": 33
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/UncheckedSend.sol"
                 },
                 "region": {
                   "byteLength": 23,
                   "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UnusedImport.sol"
+                },
+                "region": {
+                  "byteLength": 24,
+                  "byteOffset": 33
                 }
               }
             },
@@ -6392,11 +6414,33 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/U2.sol"
+                },
+                "region": {
+                  "byteLength": 24,
+                  "byteOffset": 33
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/UnsafeERC721Mint.sol"
                 },
                 "region": {
                   "byteLength": 23,
                   "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UnusedImport.sol"
+                },
+                "region": {
+                  "byteLength": 24,
+                  "byteOffset": 33
                 }
               }
             },
@@ -8785,6 +8829,26 @@
             "text": "Name clashes with a built-in-symbol. Consider renaming it."
           },
           "ruleId": "builtin-symbol-shadow"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UnusedImport.sol"
+                },
+                "region": {
+                  "byteLength": 18,
+                  "byteOffset": 92
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Redundant import statement. Consider removing it."
+          },
+          "ruleId": "unused-import"
         }
       ],
       "tool": {
