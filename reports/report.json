@@ -5409,6 +5409,7 @@
     "costly-operations-inside-loops",
     "constant-function-changing-state",
     "builtin-symbol-shadow",
-    "function-selector-collision"
+    "function-selector-collision",
+    "unused-import"
   ]
 }
