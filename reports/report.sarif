@@ -8785,6 +8785,26 @@
             "text": "Name clashes with a built-in-symbol. Consider renaming it."
           },
           "ruleId": "builtin-symbol-shadow"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/FunctionPointers.sol"
+                },
+                "region": {
+                  "byteLength": 50,
+                  "byteOffset": 330
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "solc versions below 0.5.9 contain a compiler bug leading to unexpected behavior when calling uninitialized function pointers in constructors. It is recommended to not use function pointers in constructors."
+          },
+          "ruleId": "function-pointer-in-constructor"
         }
       ],
       "tool": {

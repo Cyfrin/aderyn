@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity 0.5.8;
 
 contract FunctionPointerExample {
 
@@ -8,7 +8,7 @@ contract FunctionPointerExample {
         return a + b;
     }
 
-    constructor() {
+    constructor() public {
         // Declare a function type that takes two uint arguments and returns a uint
         function(uint, uint) pure returns (uint) operation;
         
