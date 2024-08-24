@@ -170,6 +170,7 @@ fn get_lines_to_ignore(token_descriptors: &Vec<TokenDescriptor>) -> Vec<IgnoreLi
             continue;
         }
 
+        #[allow(clippy::never_loop)]
         if let Some(ignore_line) = loop {
             // Check if we have a sepcific set of detectors only, for which we want to ignore.
             if let Some(captures) = ADERYN_IGNORE_REGEX.captures(&token.content) {
@@ -185,7 +186,7 @@ fn get_lines_to_ignore(token_descriptors: &Vec<TokenDescriptor>) -> Vec<IgnoreLi
                     .map(|m| m.as_str())
                     .map(|names| {
                         names
-                            .split(",")
+                            .split(',')
                             .map(|name| name.trim().to_string())
                             .filter(|name| !name.is_empty())
                             .collect::<Vec<_>>()
