@@ -104,7 +104,7 @@ impl IssueDetector for MissingInheritanceDetector {
                             .all(|s| contract_selectors.contains(s))
                         {
                             // Now we know that `_potentially_missing_inheritance` is missing inheritance for `contract_id`
-                            if let Some(contract) = context.nodes.get(&contract_id) {
+                            if let Some(contract) = context.nodes.get(contract_id) {
                                 capture!(self, context, contract);
                             }
                         }
