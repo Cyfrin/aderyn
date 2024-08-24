@@ -96,14 +96,20 @@ impl IssueDetector for MissingInheritanceDetector {
         }
 
         for (contract_id, contract_function_selectors) in contract_function_selectors {
+            if contract_function_selectors.is_empty() {
+                continue;
+            }
             let inheritances = inheritance_map.entry(contract_id).or_default();
             for (_potentially_missing_interface, interface_function_selectors) in
                 interface_function_selectors
                     .iter()
                     .filter(|(&k, _)| !inheritances.contains(&k))
             {
+                if interface_function_selectors.is_empty() {
+                    continue;
+                }
                 if interface_function_selectors
-                    .into_iter()
+                    .iter()
                     .all(|s| contract_function_selectors.contains(s))
                 {
                     // Now we know that `_potentially_missing_interface` is missing inheritance for `contract_id`
@@ -126,7 +132,7 @@ impl IssueDetector for MissingInheritanceDetector {
     }
 
     fn description(&self) -> String {
-        String::from("There is an interface that is potentially missing (not included in) the inheritance of this contract.")
+        String::from("There is an interface that is potentially missing (not included in) the inheritance of this contract. If that's not the case, consider using the same interface instead of defining multiple identical interfaces.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

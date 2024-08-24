@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 92,
-    "total_sloc": 3230
+    "total_source_units": 93,
+    "total_sloc": 3247
   },
   "files_details": {
     "files_details": [
@@ -164,6 +164,10 @@
       {
         "file_path": "src/KeccakContract.sol",
         "n_sloc": 21
+      },
+      {
+        "file_path": "src/MissingInheritance.sol",
+        "n_sloc": 17
       },
       {
         "file_path": "src/MisusedBoolean.sol",
@@ -377,7 +381,7 @@
   },
   "issue_count": {
     "high": 41,
-    "low": 34
+    "low": 35
   },
   "high_issues": {
     "issues": [
@@ -2687,6 +2691,12 @@
             "src_char": "32:23"
           },
           {
+            "contract_path": "src/MissingInheritance.sol",
+            "line_no": 2,
+            "src": "32:24",
+            "src_char": "32:24"
+          },
+          {
             "contract_path": "src/MsgValueInLoop.sol",
             "line_no": 2,
             "src": "32:23",
@@ -3929,6 +3939,12 @@
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/MissingInheritance.sol",
+            "line_no": 2,
+            "src": "32:24",
+            "src_char": "32:24"
           },
           {
             "contract_path": "src/MsgValueInLoop.sol",
@@ -5331,6 +5347,37 @@
             "src_char": "414:15"
           }
         ]
+      },
+      {
+        "title": "Potentially missing inheritance for contract.",
+        "description": "There is an interface that is potentially missing (not included in) the inheritance of this contract. If that's not the case, consider using the same interface instead of defining multiple identical interfaces.",
+        "detector_name": "missing-inheritance",
+        "instances": [
+          {
+            "contract_path": "src/MissingInheritance.sol",
+            "line_no": 5,
+            "src": "74:25",
+            "src_char": "74:25"
+          },
+          {
+            "contract_path": "src/TestERC20.sol",
+            "line_no": 4,
+            "src": "70:9",
+            "src_char": "70:9"
+          },
+          {
+            "contract_path": "src/inheritance/ExtendedInheritance.sol",
+            "line_no": 6,
+            "src": "99:19",
+            "src_char": "99:19"
+          },
+          {
+            "contract_path": "src/inheritance/InheritanceBase.sol",
+            "line_no": 6,
+            "src": "104:15",
+            "src_char": "104:15"
+          }
+        ]
       }
     ]
   },
@@ -5409,6 +5456,7 @@
     "costly-operations-inside-loops",
     "constant-function-changing-state",
     "builtin-symbol-shadow",
-    "function-selector-collision"
+    "function-selector-collision",
+    "missing-inheritance"
   ]
 }

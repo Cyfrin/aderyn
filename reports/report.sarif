@@ -4043,6 +4043,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/MissingInheritance.sol"
+                },
+                "region": {
+                  "byteLength": 24,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/MsgValueInLoop.sol"
                 },
                 "region": {
@@ -6286,6 +6297,17 @@
                 },
                 "region": {
                   "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MissingInheritance.sol"
+                },
+                "region": {
+                  "byteLength": 24,
                   "byteOffset": 32
                 }
               }
@@ -8785,6 +8807,59 @@
             "text": "Name clashes with a built-in-symbol. Consider renaming it."
           },
           "ruleId": "builtin-symbol-shadow"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MissingInheritance.sol"
+                },
+                "region": {
+                  "byteLength": 25,
+                  "byteOffset": 74
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TestERC20.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 70
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/inheritance/ExtendedInheritance.sol"
+                },
+                "region": {
+                  "byteLength": 19,
+                  "byteOffset": 99
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/inheritance/InheritanceBase.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 104
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "There is an interface that is potentially missing (not included in) the inheritance of this contract. If that's not the case, consider using the same interface instead of defining multiple identical interfaces."
+          },
+          "ruleId": "missing-inheritance"
         }
       ],
       "tool": {
