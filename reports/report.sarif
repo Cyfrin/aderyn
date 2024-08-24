@@ -72,6 +72,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 190,
+                  "byteOffset": 9949
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/uniswap/UniswapV2Swapper.sol"
                 },
                 "region": {
@@ -2443,6 +2454,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 10940
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/UncheckedSend.sol"
                 },
                 "region": {
@@ -2497,7 +2519,7 @@
             }
           ],
           "message": {
-            "text": "Introduce checks for `msg.sender` in the function"
+            "text": "Consider introducing checks for `msg.sender` to ensure the recipient of the money is as intended."
           },
           "ruleId": "send-ether-no-checks"
         },
@@ -2693,6 +2715,17 @@
                 "region": {
                   "byteLength": 20,
                   "byteOffset": 4146
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 71,
+                  "byteOffset": 11990
                 }
               }
             },
@@ -3525,6 +3558,50 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 2714
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 3592
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 10185
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 11494
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
                 },
                 "region": {
@@ -3819,6 +3896,61 @@
                 "region": {
                   "byteLength": 19,
                   "byteOffset": 368
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 19,
+                  "byteOffset": 10512
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 20,
+                  "byteOffset": 10557
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 29,
+                  "byteOffset": 10869
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 28,
+                  "byteOffset": 11111
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 29,
+                  "byteOffset": 11990
                 }
               }
             },
@@ -4688,6 +4820,105 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 2679
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 5624
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 5711
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 5802
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 5889
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 6111
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 6281
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 6428
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 6592
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/UninitializedStateVariable.sol"
                 },
                 "region": {
@@ -5522,6 +5753,50 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 7704
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 8497
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 10426
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 10498
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/UncheckedReturn.sol"
                 },
                 "region": {
@@ -5784,6 +6059,61 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 72,
+                  "byteOffset": 891
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 78,
+                  "byteOffset": 968
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 44,
+                  "byteOffset": 4970
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 33,
+                  "byteOffset": 5019
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 62,
+                  "byteOffset": 5057
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/UncheckedReturn.sol"
                 },
                 "region": {
@@ -5974,6 +6304,17 @@
                 "region": {
                   "byteLength": 7,
                   "byteOffset": 135
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 8065
                 }
               }
             },
@@ -6381,6 +6722,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 227
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/TxOriginUsedForAuth.sol"
                 },
                 "region": {
@@ -6692,6 +7044,17 @@
                 "region": {
                   "byteLength": 74,
                   "byteOffset": 107
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 5133
                 }
               }
             },
@@ -7350,6 +7713,39 @@
                   "byteOffset": 1550
                 }
               }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 4412
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 4579
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 4756
+                }
+              }
             }
           ],
           "message": {
@@ -7528,6 +7924,28 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 1403
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 1976
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/UncheckedSend.sol"
                 },
                 "region": {
@@ -7694,6 +8112,17 @@
                 "region": {
                   "byteLength": 6,
                   "byteOffset": 133
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 5000
                 }
               }
             },
