@@ -1,12 +1,16 @@
 {
   "files_summary": {
-    "total_source_units": 92,
-    "total_sloc": 3230
+    "total_source_units": 93,
+    "total_sloc": 3241
   },
   "files_details": {
     "files_details": [
       {
         "file_path": "src/AbstractContract.sol",
+        "n_sloc": 11
+      },
+      {
+        "file_path": "src/AderynIgnoreCustomDetectors.sol",
         "n_sloc": 11
       },
       {
@@ -2851,6 +2855,18 @@
         "detector_name": "useless-public-function",
         "instances": [
           {
+            "contract_path": "src/AderynIgnoreCustomDetectors.sol",
+            "line_no": 7,
+            "src": "174:2",
+            "src_char": "174:2"
+          },
+          {
+            "contract_path": "src/AderynIgnoreCustomDetectors.sol",
+            "line_no": 26,
+            "src": "586:2",
+            "src_char": "586:2"
+          },
+          {
             "contract_path": "src/ArbitraryTransferFrom.sol",
             "line_no": 28,
             "src": "772:5",
@@ -3835,6 +3851,12 @@
         "detector_name": "push-zero-opcode",
         "instances": [
           {
+            "contract_path": "src/AderynIgnoreCustomDetectors.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/AdminContract.sol",
             "line_no": 2,
             "src": "32:23",
@@ -4166,6 +4188,12 @@
         "description": "Consider removing empty blocks.",
         "detector_name": "empty-block",
         "instances": [
+          {
+            "contract_path": "src/AderynIgnoreCustomDetectors.sol",
+            "line_no": 7,
+            "src": "174:2",
+            "src_char": "174:2"
+          },
           {
             "contract_path": "src/AdminContract.sol",
             "line_no": 14,

@@ -170,8 +170,6 @@ where
                     }
 
                     for ignore_condition in lines_to_ignore_in_file.iter() {
-                        println!("IC {:?} {}", ignore_condition, instance.1);
-
                         if ignore_condition.which == instance.1 {
                             match &ignore_condition.when {
                                 When::Always => {
