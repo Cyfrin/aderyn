@@ -1,4 +1,5 @@
 use std::collections::{BTreeMap, BTreeSet, HashMap};
+use std::convert::identity;
 use std::error::Error;
 
 use crate::ast::{ASTNode, ContractKind, NodeID};
@@ -21,43 +22,13 @@ pub struct MissingInheritanceDetector {
 
 impl IssueDetector for MissingInheritanceDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        // Key -> Interface ID, Value -> Collection of function selectors in the inheritance
-        let mut interface_function_selectors: HashMap<NodeID, Vec<String>> = Default::default();
-
-        for interface in context
-            .contract_definitions()
-            .into_iter()
-            .filter(|&c| c.kind == ContractKind::Interface)
-        {
-            if let Some(full_interface) = &interface.linearized_base_contracts {
-                for interface_node_id in full_interface {
-                    if let Some(ASTNode::ContractDefinition(interface_node)) =
-                        context.nodes.get(interface_node_id)
-                    {
-                        let selectors: Vec<String> = interface_node
-                            .function_definitions()
-                            .iter()
-                            .flat_map(|f| f.function_selector.clone())
-                            .collect();
-                        interface_function_selectors
-                            .entry(interface.id)
-                            .or_insert(selectors);
-                    }
-                }
-            }
-        }
-
         // Key -> Contract ID, Value -> Collection of function selectors in the contract
         let mut contract_function_selectors: HashMap<NodeID, Vec<String>> = Default::default();
 
         // Key -> Contract ID, Value -> Set of contract/interface IDs in it's heirarchy
         let mut inheritance_map: HashMap<NodeID, BTreeSet<NodeID>> = Default::default();
 
-        for contract in context
-            .contract_definitions()
-            .into_iter()
-            .filter(|&c| c.kind == ContractKind::Contract)
-        {
+        for contract in context.contract_definitions() {
             if let Some(full_contract) = &contract.linearized_base_contracts {
                 inheritance_map
                     .entry(contract.id)
@@ -95,26 +66,48 @@ impl IssueDetector for MissingInheritanceDetector {
             }
         }
 
-        for (contract_id, contract_function_selectors) in contract_function_selectors {
-            if contract_function_selectors.is_empty() {
+        for (contract_id, contract_selectors) in &contract_function_selectors {
+            if contract_selectors.is_empty() {
                 continue;
             }
-            let inheritances = inheritance_map.entry(contract_id).or_default();
-            for (_potentially_missing_interface, interface_function_selectors) in
-                interface_function_selectors
-                    .iter()
-                    .filter(|(&k, _)| !inheritances.contains(&k))
-            {
-                if interface_function_selectors.is_empty() {
+            if let Some(ASTNode::ContractDefinition(c)) = context.nodes.get(contract_id) {
+                if c.kind != ContractKind::Contract || c.is_abstract.map_or(false, identity) {
                     continue;
                 }
-                if interface_function_selectors
-                    .iter()
-                    .all(|s| contract_function_selectors.contains(s))
+            }
+            let inheritances = inheritance_map.entry(*contract_id).or_default();
+            for (potentially_missing_inheritance, missing_function_selectors) in
+                &contract_function_selectors
+            {
+                // Check that it's not empty
+                if missing_function_selectors.is_empty() {
+                    continue;
+                }
+
+                // Check that it's not the same contract
+                if potentially_missing_inheritance == contract_id {
+                    continue;
+                }
+
+                // Check that it's not already inherited
+                if inheritances.contains(potentially_missing_inheritance) {
+                    continue;
+                }
+
+                if let Some(ASTNode::ContractDefinition(c)) =
+                    context.nodes.get(potentially_missing_inheritance)
                 {
-                    // Now we know that `_potentially_missing_interface` is missing inheritance for `contract_id`
-                    if let Some(contract) = context.nodes.get(&contract_id) {
-                        capture!(self, context, contract);
+                    if c.kind == ContractKind::Interface || c.is_abstract.map_or(false, identity) {
+                        // Check that the contract is compatible with the missing inheritance
+                        if missing_function_selectors
+                            .iter()
+                            .all(|s| contract_selectors.contains(s))
+                        {
+                            // Now we know that `_potentially_missing_inheritance` is missing inheritance for `contract_id`
+                            if let Some(contract) = context.nodes.get(&contract_id) {
+                                capture!(self, context, contract);
+                            }
+                        }
                     }
                 }
             }
@@ -132,7 +125,7 @@ impl IssueDetector for MissingInheritanceDetector {
     }
 
     fn description(&self) -> String {
-        String::from("There is an interface that is potentially missing (not included in) the inheritance of this contract. If that's not the case, consider using the same interface instead of defining multiple identical interfaces.")
+        String::from("There is an interface / abstract contract that is potentially missing (not included in) the inheritance of this contract. If that's not the case, consider using the same interface instead of defining multiple identical interfaces.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -163,6 +156,9 @@ mod missing_inheritance_tests {
         let found = detector.detect(&context).unwrap();
         // assert that the detector found an issue
         assert!(found);
+
+        println!("{:#?}", detector.instances());
+
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
         // assert the severity is low

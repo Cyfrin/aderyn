@@ -8824,21 +8824,15 @@ Invoking `SSTORE`operations in loops may lead to Out-of-gas errors. Use a local 
 
 ## L-23: Potentially missing inheritance for contract.
 
-There is an interface that is potentially missing (not included in) the inheritance of this contract. If that's not the case, consider using the same interface instead of defining multiple identical interfaces.
+There is an interface / abstract contract that is potentially missing (not included in) the inheritance of this contract. If that's not the case, consider using the same interface instead of defining multiple identical interfaces.
 
-<details><summary>6 Found Instances</summary>
+<details><summary>5 Found Instances</summary>
 
 
 - Found in contracts/amm/TreasuryIV.sol [Line: 9](../tests/2024-07-templegold/protocol/contracts/amm/TreasuryIV.sol#L9)
 
 	```solidity
 	contract TreasuryIV is Ownable {
-	```
-
-- Found in contracts/core/RebasingERC20.sol [Line: 13](../tests/2024-07-templegold/protocol/contracts/core/RebasingERC20.sol#L13)
-
-	```solidity
-	abstract contract RebasingERC20 is ERC20 {
 	```
 
 - Found in contracts/fakes/FakeERC20.sol [Line: 10](../tests/2024-07-templegold/protocol/contracts/fakes/FakeERC20.sol#L10)

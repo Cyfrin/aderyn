@@ -2657,22 +2657,10 @@ Invoking `SSTORE`operations in loops may lead to Out-of-gas errors. Use a local 
 
 ## L-16: Potentially missing inheritance for contract.
 
-There is an interface that is potentially missing (not included in) the inheritance of this contract. If that's not the case, consider using the same interface instead of defining multiple identical interfaces.
+There is an interface / abstract contract that is potentially missing (not included in) the inheritance of this contract. If that's not the case, consider using the same interface instead of defining multiple identical interfaces.
 
-<details><summary>15 Found Instances</summary>
+<details><summary>8 Found Instances</summary>
 
-
-- Found in src/v0.8/functions/dev/v1_X/FunctionsBilling.sol [Line: 17](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/FunctionsBilling.sol#L17)
-
-	```solidity
-	abstract contract FunctionsBilling is Routable, IFunctionsBilling {
-	```
-
-- Found in src/v0.8/functions/dev/v1_X/FunctionsClient.sol [Line: 11](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/FunctionsClient.sol#L11)
-
-	```solidity
-	abstract contract FunctionsClient is IFunctionsClient {
-	```
 
 - Found in src/v0.8/functions/dev/v1_X/FunctionsCoordinator.sol [Line: 13](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/FunctionsCoordinator.sol#L13)
 
@@ -2686,22 +2674,10 @@ There is an interface that is potentially missing (not included in) the inherita
 	contract FunctionsRouter is IFunctionsRouter, FunctionsSubscriptions, Pausable, ITypeAndVersion, ConfirmedOwner {
 	```
 
-- Found in src/v0.8/functions/dev/v1_X/FunctionsSubscriptions.sol [Line: 15](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/FunctionsSubscriptions.sol#L15)
-
-	```solidity
-	abstract contract FunctionsSubscriptions is IFunctionsSubscriptions, IERC677Receiver {
-	```
-
 - Found in src/v0.8/functions/dev/v1_X/accessControl/TermsOfServiceAllowList.sol [Line: 14](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/accessControl/TermsOfServiceAllowList.sol#L14)
 
 	```solidity
 	contract TermsOfServiceAllowList is ITermsOfServiceAllowList, IAccessController, ITypeAndVersion, ConfirmedOwner {
-	```
-
-- Found in src/v0.8/functions/v1_0_0/FunctionsClient.sol [Line: 11](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/FunctionsClient.sol#L11)
-
-	```solidity
-	abstract contract FunctionsClient is IFunctionsClient {
 	```
 
 - Found in src/v0.8/functions/v1_0_0/FunctionsCoordinator.sol [Line: 13](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/FunctionsCoordinator.sol#L13)
@@ -2716,28 +2692,10 @@ There is an interface that is potentially missing (not included in) the inherita
 	contract FunctionsRouter is IFunctionsRouter, FunctionsSubscriptions, Pausable, ITypeAndVersion, ConfirmedOwner {
 	```
 
-- Found in src/v0.8/functions/v1_0_0/FunctionsSubscriptions.sol [Line: 15](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/FunctionsSubscriptions.sol#L15)
-
-	```solidity
-	abstract contract FunctionsSubscriptions is IFunctionsSubscriptions, IERC677Receiver {
-	```
-
 - Found in src/v0.8/functions/v1_1_0/FunctionsCoordinator.sol [Line: 13](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_1_0/FunctionsCoordinator.sol#L13)
 
 	```solidity
 	contract FunctionsCoordinator is OCR2Base, IFunctionsCoordinator, FunctionsBilling {
-	```
-
-- Found in src/v0.8/functions/v1_3_0/FunctionsBilling.sol [Line: 17](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_3_0/FunctionsBilling.sol#L17)
-
-	```solidity
-	abstract contract FunctionsBilling is Routable, IFunctionsBilling {
-	```
-
-- Found in src/v0.8/functions/v1_3_0/FunctionsClient.sol [Line: 11](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_3_0/FunctionsClient.sol#L11)
-
-	```solidity
-	abstract contract FunctionsClient is IFunctionsClient {
 	```
 
 - Found in src/v0.8/functions/v1_3_0/FunctionsCoordinator.sol [Line: 13](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_3_0/FunctionsCoordinator.sol#L13)
