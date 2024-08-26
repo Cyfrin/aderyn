@@ -221,10 +221,10 @@ fn obtain_config_values(
         let hardhat_config_js_path = root_path.join("hardhat.config.js");
         let hardhat_config_ts_path = root_path.join("hardhat.config.ts");
 
-        if hardhat_config_js_path.exists() || hardhat_config_ts_path.exists() {
-            if local_src.is_none() {
-                local_src = Some(vec![String::from("contracts")])
-            }
+        if local_src.is_none()
+            && (hardhat_config_js_path.exists() || hardhat_config_ts_path.exists())
+        {
+            local_src = Some(vec![String::from("contracts")])
         }
 
         // Also if there is no `remappings.txt` or `remappings` in this case, print a warning!
