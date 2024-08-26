@@ -20,13 +20,9 @@ pub struct UselessInternalFunctionDetector {
 
 impl IssueDetector for UselessInternalFunctionDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        let internal_functions = context
-            .function_definitions()
-            .into_iter()
-            .filter(|&function| {
-                matches!(function.visibility, Visibility::Internal)
-                    && !function.name.starts_with('_')
-            });
+        let internal_functions = context.function_definitions().into_iter().filter(|&function| {
+            matches!(function.visibility, Visibility::Internal) && !function.name.starts_with('_')
+        });
 
         for internal_function in internal_functions {
             if count_identifiers_that_reference_an_id(context, internal_function.id) == 1 {
@@ -80,10 +76,7 @@ mod uselss_internal_function {
         assert_eq!(detector.instances().len(), 1);
 
         // assert that the detector returns the correct severity
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert that the detector returns the correct title
         assert_eq!(
             detector.title(),

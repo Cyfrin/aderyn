@@ -72,10 +72,7 @@ impl TokenType {
                     count += 1;
                 }
 
-                CodeLines {
-                    info_lines: non_blank_lines,
-                    actual_first_line,
-                }
+                CodeLines { info_lines: non_blank_lines, actual_first_line }
             }
             _ => CodeLines {
                 info_lines: 0, // we don't care about these values
@@ -99,9 +96,9 @@ impl TokenInsightGroup {
             //todo! do not over count
             if i > 0 {
                 let prev = &self.token_insights[i - 1];
-                if curr.code_lines.actual_first_line == 0
-                    && curr.start_line == prev.end_line
-                    && prev.code_lines.actual_first_line != -1
+                if curr.code_lines.actual_first_line == 0 &&
+                    curr.start_line == prev.end_line &&
+                    prev.code_lines.actual_first_line != -1
                 {
                     // starts in the same line, overcounted !
                     // println!(

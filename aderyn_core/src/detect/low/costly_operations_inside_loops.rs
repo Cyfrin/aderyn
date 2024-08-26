@@ -1,17 +1,15 @@
-use std::collections::BTreeMap;
-use std::convert::identity;
-use std::error::Error;
+use std::{collections::BTreeMap, convert::identity, error::Error};
 
 use crate::ast::{ASTNode, NodeID};
 
-use crate::capture;
-use crate::context::browser::ApproximateStorageChangeFinder;
+use crate::{capture, context::browser::ApproximateStorageChangeFinder};
 
-use crate::context::graph::{CallGraph, CallGraphDirection, CallGraphVisitor};
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    context::{
+        graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
+        workspace_context::WorkspaceContext,
+    },
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -71,10 +69,7 @@ impl IssueDetector for CostlyOperationsInsideLoopsDetector {
 
 fn changes_state(context: &WorkspaceContext, ast_node: &ASTNode) -> Option<bool> {
     // Now, investigate the function to see if there is scope for any state variable changes
-    let mut tracker = StateVariableChangeTracker {
-        state_var_has_changed: false,
-        context,
-    };
+    let mut tracker = StateVariableChangeTracker { state_var_has_changed: false, context };
     let callgraph = CallGraph::new(context, &[ast_node], CallGraphDirection::Inward).ok()?;
     callgraph.accept(context, &mut tracker).ok()?;
     Some(tracker.state_var_has_changed)
@@ -122,9 +117,6 @@ mod costly_operations_inside_loops {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

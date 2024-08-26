@@ -1,13 +1,11 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::ast::{Expression, FunctionCall, FunctionCallKind, NodeID};
 
-use crate::capture;
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
+    capture,
     context::workspace_context::{ASTNode, WorkspaceContext},
-    detect::detector::{IssueDetector, IssueSeverity},
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -53,10 +51,8 @@ impl IssueDetector for WeakRandomnessDetector {
         }
 
         // check for modulo operations on block.timestamp, block.number and blockhash
-        for binary_operation in context
-            .binary_operations()
-            .into_iter()
-            .filter(|b| b.operator == "%")
+        for binary_operation in
+            context.binary_operations().into_iter().filter(|b| b.operator == "%")
         {
             // if left operand is a variable, get its definition and perform check
             if let Expression::Identifier(ref i) = *binary_operation.left_expression {
@@ -81,8 +77,8 @@ impl IssueDetector for WeakRandomnessDetector {
 
         // check if contract uses block.prevrandao
         for member_access in context.member_accesses() {
-            if member_access.member_name == "prevrandao"
-                && matches!(*member_access.expression, Expression::Identifier(ref id) if id.name == "block")
+            if member_access.member_name == "prevrandao" &&
+                matches!(*member_access.expression, Expression::Identifier(ref id) if id.name == "block")
             {
                 capture!(self, context, member_access);
             }
@@ -178,10 +174,7 @@ mod weak_randomness_detector_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 9);
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
         // assert the title is correct
         assert_eq!(detector.title(), String::from("Weak Randomness"));
         // assert the description is correct

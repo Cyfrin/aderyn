@@ -18,9 +18,9 @@ pub struct UnsafeERC20FunctionsDetector {
 impl IssueDetector for UnsafeERC20FunctionsDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for member_access in context.member_accesses() {
-            if member_access.member_name == "transferFrom"
-                || member_access.member_name == "approve"
-                || member_access.member_name == "transfer"
+            if member_access.member_name == "transferFrom" ||
+                member_access.member_name == "approve" ||
+                member_access.member_name == "transfer"
             {
                 capture!(self, context, member_access);
             }
@@ -71,15 +71,9 @@ mod unsafe_erc20_functions_tests {
         // failure0, failure1 and failure3
         assert_eq!(detector.instances().len(), 5);
         // assert that the severity is low
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert that the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from("Unsafe ERC20 Operations should not be used")
-        );
+        assert_eq!(detector.title(), String::from("Unsafe ERC20 Operations should not be used"));
         // assert that the description is correct
         assert_eq!(
             detector.description(),

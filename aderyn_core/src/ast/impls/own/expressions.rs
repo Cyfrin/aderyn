@@ -119,49 +119,43 @@ impl Expression {
 
     pub fn type_descriptions(&self) -> Option<&TypeDescriptions> {
         match self {
-            Expression::Literal(Literal {
-                type_descriptions, ..
-            }) => Some(type_descriptions),
-            Expression::Identifier(Identifier {
-                type_descriptions, ..
-            }) => Some(type_descriptions),
-            Expression::UnaryOperation(UnaryOperation {
-                type_descriptions, ..
-            }) => Some(type_descriptions),
-            Expression::BinaryOperation(BinaryOperation {
-                type_descriptions, ..
-            }) => Some(type_descriptions),
-            Expression::Conditional(Conditional {
-                type_descriptions, ..
-            }) => Some(type_descriptions),
-            Expression::Assignment(Assignment {
-                type_descriptions, ..
-            }) => Some(type_descriptions),
-            Expression::FunctionCall(FunctionCall {
-                type_descriptions, ..
-            }) => Some(type_descriptions),
-            Expression::FunctionCallOptions(FunctionCallOptions {
-                type_descriptions, ..
-            }) => Some(type_descriptions),
-            Expression::IndexAccess(IndexAccess {
-                type_descriptions, ..
-            }) => Some(type_descriptions),
-            Expression::IndexRangeAccess(IndexRangeAccess {
-                type_descriptions, ..
-            }) => Some(type_descriptions),
-            Expression::MemberAccess(MemberAccess {
-                type_descriptions, ..
-            }) => Some(type_descriptions),
+            Expression::Literal(Literal { type_descriptions, .. }) => Some(type_descriptions),
+            Expression::Identifier(Identifier { type_descriptions, .. }) => Some(type_descriptions),
+            Expression::UnaryOperation(UnaryOperation { type_descriptions, .. }) => {
+                Some(type_descriptions)
+            }
+            Expression::BinaryOperation(BinaryOperation { type_descriptions, .. }) => {
+                Some(type_descriptions)
+            }
+            Expression::Conditional(Conditional { type_descriptions, .. }) => {
+                Some(type_descriptions)
+            }
+            Expression::Assignment(Assignment { type_descriptions, .. }) => Some(type_descriptions),
+            Expression::FunctionCall(FunctionCall { type_descriptions, .. }) => {
+                Some(type_descriptions)
+            }
+            Expression::FunctionCallOptions(FunctionCallOptions { type_descriptions, .. }) => {
+                Some(type_descriptions)
+            }
+            Expression::IndexAccess(IndexAccess { type_descriptions, .. }) => {
+                Some(type_descriptions)
+            }
+            Expression::IndexRangeAccess(IndexRangeAccess { type_descriptions, .. }) => {
+                Some(type_descriptions)
+            }
+            Expression::MemberAccess(MemberAccess { type_descriptions, .. }) => {
+                Some(type_descriptions)
+            }
             Expression::ElementaryTypeNameExpression(ElementaryTypeNameExpression {
                 type_descriptions,
                 ..
             }) => Some(type_descriptions),
-            Expression::TupleExpression(TupleExpression {
-                type_descriptions, ..
-            }) => Some(type_descriptions),
-            Expression::NewExpression(NewExpression {
-                type_descriptions, ..
-            }) => Some(type_descriptions),
+            Expression::TupleExpression(TupleExpression { type_descriptions, .. }) => {
+                Some(type_descriptions)
+            }
+            Expression::NewExpression(NewExpression { type_descriptions, .. }) => {
+                Some(type_descriptions)
+            }
         }
     }
 
@@ -195,17 +189,17 @@ impl UnaryOperation {
 
 impl BinaryOperation {
     pub fn contains_operation(&self, operator: &str) -> bool {
-        self.operator == operator
-            || self.left_expression.contains_operation(operator)
-            || self.right_expression.contains_operation(operator)
+        self.operator == operator ||
+            self.left_expression.contains_operation(operator) ||
+            self.right_expression.contains_operation(operator)
     }
 }
 
 impl Conditional {
     pub fn contains_operation(&self, operator: &str) -> bool {
-        self.condition.contains_operation(operator)
-            || self.true_expression.contains_operation(operator)
-            || self.false_expression.contains_operation(operator)
+        self.condition.contains_operation(operator) ||
+            self.true_expression.contains_operation(operator) ||
+            self.false_expression.contains_operation(operator)
     }
 }
 
@@ -253,9 +247,8 @@ impl IndexRangeAccess {
         self.start_expression
             .as_ref()
             .map(|expr| expr.contains_operation(operator))
-            .unwrap_or(false)
-            || self
-                .end_expression
+            .unwrap_or(false) ||
+            self.end_expression
                 .as_ref()
                 .map(|expr| expr.contains_operation(operator))
                 .unwrap_or(false)
@@ -271,11 +264,7 @@ impl MemberAccess {
 impl TupleExpression {
     pub fn contains_operation(&self, operator: &str) -> bool {
         for component in self.components.iter() {
-            if component
-                .as_ref()
-                .map(|expr| expr.contains_operation(operator))
-                .unwrap_or(false)
-            {
+            if component.as_ref().map(|expr| expr.contains_operation(operator)).unwrap_or(false) {
                 return true;
             }
         }

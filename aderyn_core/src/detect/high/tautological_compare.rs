@@ -1,14 +1,14 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::ast::{Expression, Identifier, MemberAccess, NodeID};
 
-use crate::capture;
-use crate::detect::detector::IssueDetectorNamePool;
-use crate::detect::helpers::get_literal_value_or_constant_variable_value;
 use crate::{
+    capture,
     context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    detect::{
+        detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
+        helpers::get_literal_value_or_constant_variable_value,
+    },
 };
 use eyre::Result;
 
@@ -22,9 +22,7 @@ pub struct TautologicalCompareDetector {
 impl IssueDetector for TautologicalCompareDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for binary_operation in context.binary_operations().into_iter().filter(|binary_op| {
-            ["&&", "||", ">=", ">", "<=", "<"]
-                .into_iter()
-                .any(|op| op == binary_op.operator)
+            ["&&", "||", ">=", ">", "<=", "<"].into_iter().any(|op| op == binary_op.operator)
         }) {
             let orientations = [
                 (
@@ -43,15 +41,13 @@ impl IssueDetector for TautologicalCompareDetector {
             ) {
                 (
                     Expression::Identifier(Identifier {
-                        referenced_declaration: Some(id0),
-                        ..
+                        referenced_declaration: Some(id0), ..
                     }),
                     Expression::Identifier(Identifier {
-                        referenced_declaration: Some(id1),
-                        ..
+                        referenced_declaration: Some(id1), ..
                     }),
-                )
-                | (
+                ) |
+                (
                     Expression::MemberAccess(MemberAccess {
                         referenced_declaration: Some(id0),
                         ..
@@ -114,8 +110,8 @@ impl IssueDetector for TautologicalCompareDetector {
                             referenced_declaration: Some(id1),
                             ..
                         }),
-                    )
-                    | (
+                    ) |
+                    (
                         Expression::Literal(literal),
                         Expression::Identifier(Identifier {
                             referenced_declaration: Some(id1),
@@ -185,10 +181,7 @@ mod tautological_compare_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 4);
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
         // assert the title is correct
         assert_eq!(detector.title(), String::from("Tautological comparison."));
         // assert the description is correct

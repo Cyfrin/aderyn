@@ -1,5 +1,4 @@
-use crate::ast::*;
-use crate::WorkspaceContext;
+use crate::{ast::*, WorkspaceContext};
 
 use super::macros::generate_get_source_unit;
 
@@ -26,9 +25,7 @@ impl WorkspaceContext {
         self.elementary_type_names_context.keys().collect()
     }
     pub fn elementary_type_name_expressions(&self) -> Vec<&ElementaryTypeNameExpression> {
-        self.elementary_type_name_expressions_context
-            .keys()
-            .collect()
+        self.elementary_type_name_expressions_context.keys().collect()
     }
     pub fn emit_statements(&self) -> Vec<&EmitStatement> {
         self.emit_statements_context.keys().collect()
@@ -145,9 +142,7 @@ impl WorkspaceContext {
         self.user_defined_type_names_context.keys().collect()
     }
     pub fn user_defined_value_type_definitions(&self) -> Vec<&UserDefinedValueTypeDefinition> {
-        self.user_defined_value_type_definitions_context
-            .keys()
-            .collect()
+        self.user_defined_value_type_definitions_context.keys().collect()
     }
     pub fn using_for_directives(&self) -> Vec<&UsingForDirective> {
         self.using_for_directives_context.keys().collect()
@@ -156,9 +151,7 @@ impl WorkspaceContext {
         self.variable_declarations_context.keys().collect()
     }
     pub fn variable_declaration_statements(&self) -> Vec<&VariableDeclarationStatement> {
-        self.variable_declaration_statements_context
-            .keys()
-            .collect()
+        self.variable_declaration_statements_context.keys().collect()
     }
     pub fn while_statements(&self) -> Vec<&WhileStatement> {
         self.while_statements_context.keys().collect()

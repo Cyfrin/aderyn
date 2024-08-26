@@ -31,23 +31,20 @@ impl IssueDetector for ZeroAddressCheckDetector {
             .variable_declarations()
             .iter()
             .filter_map(|&var_decl| {
-                if !var_decl.constant
-                    && matches!(var_decl.mutability(), Some(Mutability::Mutable))
-                    && var_decl.state_variable
-                    && (var_decl
-                        .type_descriptions
-                        .type_string
-                        .as_deref()
-                        .unwrap_or("")
-                        == "address"
-                        || var_decl
+                if !var_decl.constant &&
+                    matches!(var_decl.mutability(), Some(Mutability::Mutable)) &&
+                    var_decl.state_variable &&
+                    (var_decl.type_descriptions.type_string.as_deref().unwrap_or("") ==
+                        "address" ||
+                        var_decl
                             .type_descriptions
                             .type_string
                             .as_deref()
                             .unwrap_or("")
                             .contains("contract "))
                 {
-                    Some((var_decl.id, (*var_decl).clone())) // Deref and clone the VariableDeclaration.
+                    Some((var_decl.id, (*var_decl).clone())) // Deref and clone the
+                                                             // VariableDeclaration.
                 } else {
                     None
                 }
@@ -106,34 +103,29 @@ impl IssueDetector for ZeroAddressCheckDetector {
                 .filter(|x| {
                     let left_hand_side = x.left_hand_side.as_ref();
                     if let Expression::Identifier(left_identifier) = left_hand_side {
-                        left_identifier
-                            .referenced_declaration
-                            .is_some_and(|reference_id| {
-                                self.mutable_address_state_variables
-                                    .contains_key(&reference_id)
-                            })
+                        left_identifier.referenced_declaration.is_some_and(|reference_id| {
+                            self.mutable_address_state_variables.contains_key(&reference_id)
+                        })
                     } else {
                         let left_identifiers = ExtractIdentifiers::from(left_hand_side).extracted;
                         left_identifiers.into_iter().any(|identifier| {
-                            identifier
-                                .referenced_declaration
-                                .is_some_and(|reference_id| {
-                                    self.mutable_address_state_variables
-                                        .contains_key(&reference_id)
-                                })
+                            identifier.referenced_declaration.is_some_and(|reference_id| {
+                                self.mutable_address_state_variables.contains_key(&reference_id)
+                            })
                         })
                     }
                 })
                 .collect();
 
-            // For each assignment, if the right hand side is in the identifier_reference_declaration_ids_in_binary_checks
-            // and is also in the Function.parameters, then add the assignment to the found_instances
+            // For each assignment, if the right hand side is in the
+            // identifier_reference_declaration_ids_in_binary_checks and is also in the
+            // Function.parameters, then add the assignment to the found_instances
             for assignment in assignments {
                 if let Expression::Identifier(right_identifier) = &*assignment.right_hand_side {
                     if let Some(reference_id) = right_identifier.referenced_declaration {
                         if !identifier_reference_declaration_ids_in_binary_checks
-                            .contains(&reference_id)
-                            && function_definition
+                            .contains(&reference_id) &&
+                            function_definition
                                 .parameters
                                 .parameters
                                 .iter()
@@ -147,8 +139,8 @@ impl IssueDetector for ZeroAddressCheckDetector {
                     for right_identifier in right_identifiers.extracted {
                         if let Some(reference_id) = right_identifier.referenced_declaration {
                             if !identifier_reference_declaration_ids_in_binary_checks
-                                .contains(&reference_id)
-                                && function_definition
+                                .contains(&reference_id) &&
+                                function_definition
                                     .parameters
                                     .parameters
                                     .iter()
@@ -237,10 +229,7 @@ mod zero_address_check_tests {
             }
         }
         // assert that the severity is Low
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert that the title is correct
         assert_eq!(
             detector.title(),

@@ -3,8 +3,8 @@ use std::hash::{Hash, Hasher};
 
 impl PartialEq for ElementaryTypeName {
     fn eq(&self, other: &Self) -> bool {
-        self.state_mutability.eq(&other.state_mutability)
-            && self.type_descriptions.eq(&other.type_descriptions)
+        self.state_mutability.eq(&other.state_mutability) &&
+            self.type_descriptions.eq(&other.type_descriptions)
     }
 }
 
@@ -18,8 +18,7 @@ impl Hash for ElementaryTypeName {
 
 impl PartialEq for UserDefinedTypeName {
     fn eq(&self, other: &Self) -> bool {
-        self.referenced_declaration
-            .eq(&other.referenced_declaration)
+        self.referenced_declaration.eq(&other.referenced_declaration)
     }
 }
 

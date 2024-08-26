@@ -1,14 +1,11 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::ast::NodeID;
 
-use crate::capture;
-use crate::context::browser::ExtractFunctionDefinitions;
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    capture,
+    context::{browser::ExtractFunctionDefinitions, workspace_context::WorkspaceContext},
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -29,8 +26,8 @@ impl IssueDetector for MultipleConstructorsDetector {
                     .extracted
                     .iter()
                     .filter(|function| function.is_constructor)
-                    .count()
-                    > 1
+                    .count() >
+                    1
             })
             .collect::<Vec<_>>();
 
@@ -82,15 +79,9 @@ mod multiple_constructors_detector_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
         // assert the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from("Contract Has Multiple Constructors")
-        );
+        assert_eq!(detector.title(), String::from("Contract Has Multiple Constructors"));
         // assert the description is correct
         assert_eq!(
             detector.description(),

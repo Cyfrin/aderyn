@@ -1,13 +1,11 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::ast::{Expression, FunctionCall, NodeID, TypeName};
 
-use crate::capture;
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
+    capture,
     context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -32,12 +30,12 @@ fn check_argument_validity(function_call: &FunctionCall) -> bool {
 
     match &function_call.arguments[arg_index] {
         Expression::MemberAccess(arg_member_access) => {
-            !(arg_member_access.member_name == "sender"
-                && matches!(&*arg_member_access.expression, Expression::Identifier(identifier) if identifier.name == "msg"))
+            !(arg_member_access.member_name == "sender" &&
+                matches!(&*arg_member_access.expression, Expression::Identifier(identifier) if identifier.name == "msg"))
         }
         Expression::FunctionCall(arg_function_call) => {
-            !(matches!(&*arg_function_call.expression, Expression::ElementaryTypeNameExpression(arg_el_type_name_exp) if matches!(&arg_el_type_name_exp.type_name, TypeName::ElementaryTypeName(type_name) if type_name.name == "address"))
-                && matches!(arg_function_call.arguments.first(), Some(Expression::Identifier(arg_identifier)) if arg_identifier.name == "this"))
+            !(matches!(&*arg_function_call.expression, Expression::ElementaryTypeNameExpression(arg_el_type_name_exp) if matches!(&arg_el_type_name_exp.type_name, TypeName::ElementaryTypeName(type_name) if type_name.name == "address")) &&
+                matches!(arg_function_call.arguments.first(), Some(Expression::Identifier(arg_identifier)) if arg_identifier.name == "this"))
         }
         _ => true,
     }
@@ -46,22 +44,20 @@ fn check_argument_validity(function_call: &FunctionCall) -> bool {
 impl IssueDetector for ArbitraryTransferFromDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         let transfer_from_function_calls =
-            context
-                .function_calls()
-                .into_iter()
-                .filter(|&function_call| {
-                    // For each function call, check if the function call is a member access
-                    // and if the member name is "transferFrom" or "safeTransferFrom", then check if the first argument is valid
-                    // If the first argument is valid, add the function call to found_instances
-                    if let Expression::MemberAccess(member_access) = &*function_call.expression {
-                        if member_access.member_name == "transferFrom"
-                            || member_access.member_name == "safeTransferFrom"
-                        {
-                            return check_argument_validity(function_call);
-                        }
+            context.function_calls().into_iter().filter(|&function_call| {
+                // For each function call, check if the function call is a member access
+                // and if the member name is "transferFrom" or "safeTransferFrom", then check if the
+                // first argument is valid If the first argument is valid, add the
+                // function call to found_instances
+                if let Expression::MemberAccess(member_access) = &*function_call.expression {
+                    if member_access.member_name == "transferFrom" ||
+                        member_access.member_name == "safeTransferFrom"
+                    {
+                        return check_argument_validity(function_call);
                     }
-                    false
-                });
+                }
+                false
+            });
 
         for item in transfer_from_function_calls {
             capture!(self, context, item);
@@ -113,10 +109,7 @@ mod arbitrary_transfer_from_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 4);
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
         // assert the title is correct
         assert_eq!(
             detector.title(),

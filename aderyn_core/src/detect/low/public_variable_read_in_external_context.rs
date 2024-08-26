@@ -1,16 +1,19 @@
-use std::collections::{BTreeMap, HashSet};
-use std::error::Error;
+use std::{
+    collections::{BTreeMap, HashSet},
+    error::Error,
+};
 
 use crate::ast::{
     ASTNode, ContractDefinition, Expression, Identifier, MemberAccess, NodeID, Visibility,
 };
 
-use crate::capture;
-use crate::context::browser::{ExtractFunctionCalls, ExtractVariableDeclarations};
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    capture,
+    context::{
+        browser::{ExtractFunctionCalls, ExtractVariableDeclarations},
+        workspace_context::WorkspaceContext,
+    },
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::{eyre, Result};
 
@@ -92,15 +95,14 @@ fn find_all_public_member_names_called_using_this_keyword_in_contract<'a>(
     member_names
 }
 
-// Scans the linearized base contracts and returns a list of all the NodeIDs of public variable declarations
+// Scans the linearized base contracts and returns a list of all the NodeIDs of public variable
+// declarations
 fn find_all_public_state_variables_names_for_contract(
     context: &WorkspaceContext,
     contract: &ContractDefinition,
 ) -> Result<HashSet<String>, Box<dyn Error>> {
-    let inheritance_ancestors = contract
-        .linearized_base_contracts
-        .as_ref()
-        .ok_or(eyre!("base contracts not found!"))?;
+    let inheritance_ancestors =
+        contract.linearized_base_contracts.as_ref().ok_or(eyre!("base contracts not found!"))?;
 
     Ok(inheritance_ancestors
         .iter()
@@ -112,8 +114,8 @@ fn find_all_public_state_variables_names_for_contract(
                     public_variable_declaraions
                         .into_iter()
                         .filter(|declaration| {
-                            declaration.state_variable
-                                && declaration.visibility == Visibility::Public
+                            declaration.state_variable &&
+                                declaration.visibility == Visibility::Public
                         })
                         .collect::<Vec<_>>(),
                 );
@@ -148,10 +150,7 @@ mod public_variable_read_in_external_context_detector_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 4);
         // assert the severity is low
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert the title is correct
         assert_eq!(
             detector.title(),

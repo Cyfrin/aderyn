@@ -37,17 +37,14 @@ impl IssueDetector for ConstantsInsteadOfLiteralsDetector {
         for contract in context.contract_definitions() {
             let mut literal_values_found: HashMap<String, Vec<Literal>> = HashMap::new();
 
-            for function in ExtractFunctionDefinitions::from(contract)
-                .extracted
-                .into_iter()
-            {
+            for function in ExtractFunctionDefinitions::from(contract).extracted.into_iter() {
                 for literal in ExtractLiterals::from(&function).extracted.into_iter() {
-                    if (literal.kind == LiteralKind::Number
-                        && literal.value != Some(String::from("0"))
-                        && literal.value != Some(String::from("1")))
-                        && literal.value != Some(String::from("2"))
-                        || literal.kind == LiteralKind::HexString
-                        || literal.kind == LiteralKind::Address
+                    if (literal.kind == LiteralKind::Number &&
+                        literal.value != Some(String::from("0")) &&
+                        literal.value != Some(String::from("1"))) &&
+                        literal.value != Some(String::from("2")) ||
+                        literal.kind == LiteralKind::HexString ||
+                        literal.kind == LiteralKind::Address
                     {
                         // If the literal is used as an index access in a variable, don't capture it
                         if let Some(ASTNode::IndexAccess(_)) = literal.parent(context) {
@@ -56,10 +53,7 @@ impl IssueDetector for ConstantsInsteadOfLiteralsDetector {
 
                         if let Some(literal_value) = literal.value.as_ref() {
                             if literal_values_found.contains_key(literal_value) {
-                                literal_values_found
-                                    .get_mut(literal_value)
-                                    .unwrap()
-                                    .push(literal);
+                                literal_values_found.get_mut(literal_value).unwrap().push(literal);
                             } else {
                                 literal_values_found.insert(literal_value.clone(), vec![literal]);
                             }
@@ -68,17 +62,14 @@ impl IssueDetector for ConstantsInsteadOfLiteralsDetector {
                 }
             }
 
-            for modifier in ExtractModifierDefinitions::from(contract)
-                .extracted
-                .into_iter()
-            {
+            for modifier in ExtractModifierDefinitions::from(contract).extracted.into_iter() {
                 for literal in ExtractLiterals::from(&modifier).extracted.into_iter() {
-                    if (literal.kind == LiteralKind::Number
-                        && literal.value != Some(String::from("0"))
-                        && literal.value != Some(String::from("1")))
-                        && literal.value != Some(String::from("2"))
-                        || literal.kind == LiteralKind::HexString
-                        || literal.kind == LiteralKind::Address
+                    if (literal.kind == LiteralKind::Number &&
+                        literal.value != Some(String::from("0")) &&
+                        literal.value != Some(String::from("1"))) &&
+                        literal.value != Some(String::from("2")) ||
+                        literal.kind == LiteralKind::HexString ||
+                        literal.kind == LiteralKind::Address
                     {
                         // If the literal is used as an index access in a variable, don't capture it
                         if let Some(ASTNode::IndexAccess(_)) = context.get_parent(literal.id) {
@@ -87,10 +78,7 @@ impl IssueDetector for ConstantsInsteadOfLiteralsDetector {
 
                         if let Some(literal_value) = literal.value.as_ref() {
                             if literal_values_found.contains_key(literal_value) {
-                                literal_values_found
-                                    .get_mut(literal_value)
-                                    .unwrap()
-                                    .push(literal);
+                                literal_values_found.get_mut(literal_value).unwrap().push(literal);
                             } else {
                                 literal_values_found.insert(literal_value.clone(), vec![literal]);
                             }
@@ -154,10 +142,7 @@ mod constants_instead_of_literals_tests {
         // assert that the detector finds the correct number of instances
         assert_eq!(detector.instances().len(), 8);
         // assert that the detector returns the correct severity
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert that the detector returns the correct title
         assert_eq!(
             detector.title(),

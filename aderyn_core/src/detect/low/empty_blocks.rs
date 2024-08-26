@@ -27,9 +27,9 @@ impl IssueDetector for EmptyBlockDetector {
                 // It's okay to have empty block if it's a constructor, receive, or fallback
                 if *f.kind() == FunctionKind::Function {
                     capture!(self, context, f);
-                } else if *f.kind() == FunctionKind::Constructor
-                    || *f.kind() == FunctionKind::Receive
-                    || *f.kind() == FunctionKind::Fallback
+                } else if *f.kind() == FunctionKind::Constructor ||
+                    *f.kind() == FunctionKind::Receive ||
+                    *f.kind() == FunctionKind::Fallback
                 {
                     // It's not okay to have empty block nested somewhere inside constructor
                     if let Some(block_chain) = empty_block.ancestral_line(context) {
@@ -97,16 +97,10 @@ mod empty_block_tests {
         // assert that the detector returns the correct number of instances
         assert_eq!(detector.instances().len(), 7);
         // assert that the detector returns the correct severity
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert that the detector returns the correct title
         assert_eq!(detector.title(), String::from("Empty Block"));
         // assert that the detector returns the correct description
-        assert_eq!(
-            detector.description(),
-            String::from("Consider removing empty blocks.")
-        );
+        assert_eq!(detector.description(), String::from("Consider removing empty blocks."));
     }
 }

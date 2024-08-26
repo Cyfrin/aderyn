@@ -1,14 +1,11 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::ast::{NodeID, NodeType};
 
-use crate::capture;
-use crate::context::browser::GetClosestAncestorOfTypeX;
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    capture,
+    context::{browser::GetClosestAncestorOfTypeX, workspace_context::WorkspaceContext},
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -89,15 +86,9 @@ mod reevrts_and_requires_in_loops {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
         // assert the severity is low
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from("Loop contains `require`/`revert` statements")
-        );
+        assert_eq!(detector.title(), String::from("Loop contains `require`/`revert` statements"));
         // assert the description is correct
         assert_eq!(
             detector.description(),

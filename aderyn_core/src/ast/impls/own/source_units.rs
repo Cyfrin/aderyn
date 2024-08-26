@@ -1,6 +1,5 @@
 use crate::ast::*;
-use eyre::eyre;
-use eyre::Result;
+use eyre::{eyre, Result};
 use std::io;
 
 impl SourceUnitNode {
@@ -46,10 +45,7 @@ impl SourceUnit {
             })
             .collect();
 
-        let index = values
-            .first()
-            .and_then(|&value| value)
-            .ok_or_else(|| eyre!("not found"))?;
+        let index = values.first().and_then(|&value| value).ok_or_else(|| eyre!("not found"))?;
 
         if index > source.len() {
             return Err(eyre!("index out of bounds"));
@@ -217,8 +213,8 @@ impl SourceUnit {
         for node in self.nodes.iter() {
             if let SourceUnitNode::ContractDefinition(contract_definition) = node {
                 for node in contract_definition.nodes.iter() {
-                    if id
-                        == match node {
+                    if id ==
+                        match node {
                             ContractDefinitionNode::UsingForDirective(node) => node.id,
                             ContractDefinitionNode::StructDefinition(node) => node.id,
                             ContractDefinitionNode::EnumDefinition(node) => node.id,

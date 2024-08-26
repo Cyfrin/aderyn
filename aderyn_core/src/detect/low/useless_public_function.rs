@@ -24,14 +24,11 @@ pub struct UselessPublicFunctionDetector {
 impl IssueDetector for UselessPublicFunctionDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         let unreferenced_public_functions =
-            context
-                .function_definitions()
-                .into_iter()
-                .filter(|&function| {
-                    matches!(function.visibility, Visibility::Public)
-                        && !matches!(function.kind(), &FunctionKind::Constructor)
-                        && count_identifiers_that_reference_an_id(context, function.id) == 0
-                });
+            context.function_definitions().into_iter().filter(|&function| {
+                matches!(function.visibility, Visibility::Public) &&
+                    !matches!(function.kind(), &FunctionKind::Constructor) &&
+                    count_identifiers_that_reference_an_id(context, function.id) == 0
+            });
 
         for unreferenced_public_function in unreferenced_public_functions {
             if let Some(ASTNode::ContractDefinition(parent_contract)) = unreferenced_public_function
@@ -91,10 +88,7 @@ mod useless_public_function_tests {
         // assert that the detector returns the correct number of instances
         assert_eq!(detector.instances().len(), 1);
         // assert that the detector returns the correct severity
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert that the detector returns the correct title
         assert_eq!(
             detector.title(),

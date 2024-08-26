@@ -22,15 +22,15 @@ impl IssueDetector for CentralizationRiskDetector {
                 if let Some(base_name) = bc.base_name.name() {
                     if matches!(
                         base_name.as_str(),
-                        "Owned"
-                            | "Ownable"
-                            | "Ownable2Step"
-                            | "AccessControl"
-                            | "AccessControlCrossChain"
-                            | "AccessControlEnumerable"
-                            | "Auth"
-                            | "RolesAuthority"
-                            | "MultiRolesAuthority"
+                        "Owned" |
+                            "Ownable" |
+                            "Ownable2Step" |
+                            "AccessControl" |
+                            "AccessControlCrossChain" |
+                            "AccessControlEnumerable" |
+                            "Auth" |
+                            "RolesAuthority" |
+                            "MultiRolesAuthority"
                     ) {
                         capture!(self, context, bc);
                     }
@@ -39,9 +39,9 @@ impl IssueDetector for CentralizationRiskDetector {
         }
 
         for modifier_invocation in context.modifier_invocations().iter().filter(|&&mi| {
-            mi.modifier_name.name() == "onlyOwner"
-                || mi.modifier_name.name() == "requiresAuth"
-                || mi.modifier_name.name().contains("onlyRole")
+            mi.modifier_name.name() == "onlyOwner" ||
+                mi.modifier_name.name() == "requiresAuth" ||
+                mi.modifier_name.name().contains("onlyRole")
         }) {
             capture!(self, context, modifier_invocation);
         }
@@ -92,15 +92,9 @@ mod centralization_risk_detector_tests {
         // assert that the number of instances found is 3
         assert_eq!(detector.instances().len(), 3);
         // assert that the severity is Low
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert that the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from("Centralization Risk for trusted owners")
-        );
+        assert_eq!(detector.title(), String::from("Centralization Risk for trusted owners"));
         // assert that the description is correct
         assert_eq!(
             detector.description(),

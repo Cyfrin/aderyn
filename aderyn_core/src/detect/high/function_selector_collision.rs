@@ -1,13 +1,14 @@
-use std::collections::{BTreeMap, HashMap};
-use std::error::Error;
+use std::{
+    collections::{BTreeMap, HashMap},
+    error::Error,
+};
 
 use crate::ast::NodeID;
 
-use crate::capture;
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
+    capture,
     context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -24,7 +25,8 @@ impl IssueDetector for FunctionSelectorCollisionDetector {
         let mut selectors: HashMap<String, HashMap<String, Vec<NodeID>>> = HashMap::new();
 
         // PLAN
-        // If we have > 1 function_name entries for any function_selector, then capture all the corresponding NodeIDs
+        // If we have > 1 function_name entries for any function_selector, then capture all the
+        // corresponding NodeIDs
 
         for function in context.function_definitions() {
             if let Some(selector) = function.function_selector.as_ref() {
@@ -51,7 +53,8 @@ impl IssueDetector for FunctionSelectorCollisionDetector {
 
         for function_entries in selectors.values() {
             if function_entries.len() >= 2 {
-                // Now we know that there is a collision + at least 2 different function names found for that selector.
+                // Now we know that there is a collision + at least 2 different function names found
+                // for that selector.
                 for function_ids in function_entries.values() {
                     for function_id in function_ids {
                         if let Some(node) = context.nodes.get(function_id) {
@@ -109,9 +112,6 @@ mod function_signature_collision {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
     }
 }

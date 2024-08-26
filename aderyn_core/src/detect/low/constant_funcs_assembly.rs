@@ -1,20 +1,23 @@
-use std::collections::BTreeMap;
-use std::error::Error;
-use std::str::FromStr;
+use std::{collections::BTreeMap, error::Error, str::FromStr};
 
 use crate::ast::{ASTNode, NodeID, NodeType, StateMutability};
 
-use crate::capture;
-use crate::context::browser::{
-    ExtractInlineAssemblys, ExtractPragmaDirectives, GetClosestAncestorOfTypeX,
+use crate::{
+    capture,
+    context::browser::{
+        ExtractInlineAssemblys, ExtractPragmaDirectives, GetClosestAncestorOfTypeX,
+    },
 };
 
-use crate::context::graph::{CallGraph, CallGraphDirection, CallGraphVisitor};
-use crate::detect::detector::IssueDetectorNamePool;
-use crate::detect::helpers::{self, pragma_directive_to_semver};
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    context::{
+        graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
+        workspace_context::WorkspaceContext,
+    },
+    detect::{
+        detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
+        helpers::{self, pragma_directive_to_semver},
+    },
 };
 use eyre::Result;
 use semver::{Version, VersionReq};
@@ -43,12 +46,10 @@ impl IssueDetector for ConstantFunctionContainsAssemblyDetector {
                         if version_req_allows_below_0_5_0(&version_req) {
                             // Only run the logic if pragma is allowed to run on solc <0.5.0
 
-                            if function.state_mutability() == &StateMutability::View
-                                || function.state_mutability() == &StateMutability::Pure
+                            if function.state_mutability() == &StateMutability::View ||
+                                function.state_mutability() == &StateMutability::Pure
                             {
-                                let mut tracker = AssemblyTracker {
-                                    has_assembly: false,
-                                };
+                                let mut tracker = AssemblyTracker { has_assembly: false };
                                 let callgraph = CallGraph::new(
                                     context,
                                     &[&(function.into())],
@@ -118,8 +119,9 @@ impl CallGraphVisitor for AssemblyTracker {
 
         if let ASTNode::FunctionDefinition(function) = node {
             // Ignore checking functions that start with `_`
-            // Example - templegold contains math functions like `_rpow()`, etc that are used by view functions
-            // That should be okay .. I guess? (idk ... it's open for dicussion)
+            // Example - templegold contains math functions like `_rpow()`, etc that are used by
+            // view functions That should be okay .. I guess? (idk ... it's open for
+            // dicussion)
             if function.name.starts_with('_') {
                 return Ok(());
             }
@@ -157,9 +159,6 @@ mod constant_functions_assembly_detector {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 3);
         // assert the severity is low
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

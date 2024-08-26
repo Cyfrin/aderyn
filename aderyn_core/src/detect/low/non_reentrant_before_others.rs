@@ -20,12 +20,8 @@ impl IssueDetector for NonReentrantBeforeOthersDetector {
         for definition in function_definitions {
             if definition.modifiers.len() > 1 {
                 for (index, modifier) in definition.modifiers.iter().enumerate() {
-                    if modifier
-                        .modifier_name
-                        .name()
-                        .to_lowercase()
-                        .contains("nonreentrant")
-                        && index != 0
+                    if modifier.modifier_name.name().to_lowercase().contains("nonreentrant") &&
+                        index != 0
                     {
                         capture!(self, context, modifier);
                     }
@@ -80,10 +76,7 @@ mod non_reentrant_before_others_tests {
         let (_, line_number, _) = detector.instances().keys().next().unwrap().clone();
         assert_eq!(line_number, 10);
         // assert that the detector returns the correct severity
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert that the detector returns the correct title
         assert_eq!(
             detector.title(),

@@ -81,24 +81,16 @@ pub fn pragma_directive_to_semver(pragma_directive: &PragmaDirective) -> Result<
 // ```
 pub fn has_msg_sender_binary_operation(ast_node: &ASTNode) -> bool {
     // Directly return the evaluation of the condition
-    ExtractBinaryOperations::from(ast_node)
-        .extracted
-        .iter()
-        .any(|binary_operation| {
-            ExtractMemberAccesses::from(binary_operation)
-                .extracted
-                .iter()
-                .any(|member_access| {
-                    member_access.member_name == "sender"
-                        && if let Expression::Identifier(identifier) =
-                            member_access.expression.as_ref()
-                        {
-                            identifier.name == "msg"
-                        } else {
-                            false
-                        }
-                })
+    ExtractBinaryOperations::from(ast_node).extracted.iter().any(|binary_operation| {
+        ExtractMemberAccesses::from(binary_operation).extracted.iter().any(|member_access| {
+            member_access.member_name == "sender" &&
+                if let Expression::Identifier(identifier) = member_access.expression.as_ref() {
+                    identifier.name == "msg"
+                } else {
+                    false
+                }
         })
+    })
 }
 
 // Check if an ast_node sends native eth
@@ -279,27 +271,20 @@ Expression::UnaryOperation with ! operator followed by a sub expression that cou
 */
 pub fn is_constant_boolean(context: &WorkspaceContext, ast_node: &Expression) -> bool {
     if let Expression::Literal(literal) = ast_node {
-        if literal.kind == LiteralKind::Bool
-            && literal
-                .value
-                .as_ref()
-                .is_some_and(|value| value == "false" || value == "true")
+        if literal.kind == LiteralKind::Bool &&
+            literal.value.as_ref().is_some_and(|value| value == "false" || value == "true")
         {
             return true;
         }
     }
-    if let Expression::Identifier(Identifier {
-        referenced_declaration: Some(id),
-        ..
-    }) = ast_node
-    {
+    if let Expression::Identifier(Identifier { referenced_declaration: Some(id), .. }) = ast_node {
         if let Some(ASTNode::VariableDeclaration(variable_declaration)) = context.nodes.get(id) {
             if variable_declaration
                 .type_descriptions
                 .type_string
                 .as_ref()
-                .is_some_and(|value| value == "bool")
-                && variable_declaration.mutability() == Some(&crate::ast::Mutability::Constant)
+                .is_some_and(|value| value == "bool") &&
+                variable_declaration.mutability() == Some(&crate::ast::Mutability::Constant)
             {
                 return true;
             }

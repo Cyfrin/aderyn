@@ -1,16 +1,18 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::ast::NodeID;
 
 use crate::capture;
 
-use crate::context::graph::{CallGraph, CallGraphDirection, CallGraphVisitor};
-use crate::detect::detector::IssueDetectorNamePool;
-use crate::detect::helpers;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    context::{
+        graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
+        workspace_context::WorkspaceContext,
+    },
+    detect::{
+        detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
+        helpers,
+    },
 };
 use eyre::Result;
 
@@ -32,8 +34,8 @@ impl IssueDetector for DelegateCallOnUncheckedAddressDetector {
             let callgraph = CallGraph::new(context, &[&(func.into())], CallGraphDirection::Inward)?;
             callgraph.accept(context, &mut tracker)?;
 
-            if tracker.has_delegate_call_on_non_state_variable_address
-                && !tracker.has_address_checks
+            if tracker.has_delegate_call_on_non_state_variable_address &&
+                !tracker.has_address_checks
             {
                 capture!(self, context, func)
             }
@@ -74,8 +76,8 @@ impl<'a> CallGraphVisitor for DelegateCallNoAddressChecksTracker<'a> {
         if !self.has_address_checks && helpers::has_binary_checks_on_some_address(node) {
             self.has_address_checks = true;
         }
-        if !self.has_delegate_call_on_non_state_variable_address
-            && helpers::has_delegate_calls_on_non_state_variables(node, self.context)
+        if !self.has_delegate_call_on_non_state_variable_address &&
+            helpers::has_delegate_calls_on_non_state_variables(node, self.context)
         {
             self.has_delegate_call_on_non_state_variable_address = true;
         }
@@ -111,10 +113,7 @@ mod delegate_call_no_address_check_tests {
         assert_eq!(detector.instances().len(), 1);
 
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
 
         // assert the title is correct
         assert_eq!(
@@ -122,9 +121,6 @@ mod delegate_call_no_address_check_tests {
             String::from("Delegatecall made by the function without checks on any adress.")
         );
         // assert the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from("Introduce checks on the address")
-        );
+        assert_eq!(detector.description(), String::from("Introduce checks on the address"));
     }
 }

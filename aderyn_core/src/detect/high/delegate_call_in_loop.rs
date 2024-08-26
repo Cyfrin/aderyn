@@ -1,5 +1,4 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::{
     ast::{MemberAccess, NodeID},
@@ -87,15 +86,9 @@ mod delegate_call_in_loop_detector_tests {
         // assert that the detector found the correct number of instances (1)
         assert_eq!(detector.instances().len(), 1);
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
         // assert the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from("Using `delegatecall` in loop")
-        );
+        assert_eq!(detector.title(), String::from("Using `delegatecall` in loop"));
         // assert the description is correct
         assert_eq!(
             detector.description(),

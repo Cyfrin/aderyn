@@ -54,11 +54,7 @@ impl BlockOrStatement {
             BlockOrStatement::Statement(statement) => match statement.as_ref() {
                 Statement::Return(Return { .. }) => true,
 
-                Statement::IfStatement(IfStatement {
-                    true_body,
-                    false_body,
-                    ..
-                }) => {
+                Statement::IfStatement(IfStatement { true_body, false_body, .. }) => {
                     if !true_body.contains_returns() {
                         return false;
                     }

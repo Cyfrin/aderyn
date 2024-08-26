@@ -1,14 +1,11 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::ast::{Expression, NodeID, NodeType};
 
-use crate::capture;
-use crate::context::browser::GetImmediateParent;
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    capture,
+    context::{browser::GetImmediateParent, workspace_context::WorkspaceContext},
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -94,15 +91,9 @@ mod redundant_statements_detector {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 6);
         // assert the severity is low
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from("Redundant statements have no effect.")
-        );
+        assert_eq!(detector.title(), String::from("Redundant statements have no effect."));
         // assert the description is correct
         assert_eq!(
             detector.description(),

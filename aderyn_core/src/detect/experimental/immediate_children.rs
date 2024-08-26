@@ -92,10 +92,7 @@ mod child_chain_demo_tests {
         assert!(found);
 
         println!("{:?}", detector.instances());
-        println!(
-            "Total number of instances: {:?}",
-            detector.instances().len()
-        );
+        println!("Total number of instances: {:?}", detector.instances().len());
         assert!(detector.instances().len() == 1);
     }
 }

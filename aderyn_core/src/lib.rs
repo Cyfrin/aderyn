@@ -12,19 +12,17 @@ use detect::detector::IssueDetector;
 use eyre::Result;
 use prettytable::Row;
 use rayon::iter::{IntoParallelIterator, IntoParallelRefMutIterator, ParallelIterator};
-use std::collections::btree_map::Entry;
-use std::collections::{BTreeMap, HashMap};
-use std::error::Error;
-use std::fs::{remove_file, File};
-use std::io::{self};
-use std::path::{Path, PathBuf};
+use std::{
+    collections::{btree_map::Entry, BTreeMap, HashMap},
+    error::Error,
+    fs::{remove_file, File},
+    io::{self},
+    path::{Path, PathBuf},
+};
 
-use crate::context::workspace_context::WorkspaceContext;
-use crate::detect::detector::IssueSeverity;
+use crate::{context::workspace_context::WorkspaceContext, detect::detector::IssueSeverity};
 
-use crate::report::printer::ReportPrinter;
-use crate::report::reporter::Report;
-use crate::report::Issue;
+use crate::report::{printer::ReportPrinter, reporter::Report, Issue};
 
 #[allow(clippy::too_many_arguments)]
 pub fn run<T>(
@@ -113,10 +111,8 @@ where
 
     println!("Running {} detectors", detectors.len());
 
-    let detectors_used = &detectors
-        .iter()
-        .map(|d| (d.name(), d.severity().to_string()))
-        .collect::<Vec<_>>();
+    let detectors_used =
+        &detectors.iter().map(|d| (d.name(), d.severity().to_string())).collect::<Vec<_>>();
     let mut report: Report = Report::default();
 
     let issues_collection: Vec<(Issue, IssueSeverity)> = detectors

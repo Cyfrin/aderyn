@@ -1,15 +1,15 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::ast::{ASTNode, Expression, Identifier, NodeID};
 
-use crate::capture;
-use crate::context::browser::ExtractMemberAccesses;
-use crate::context::graph::{CallGraph, CallGraphDirection, CallGraphVisitor};
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    capture,
+    context::{
+        browser::ExtractMemberAccesses,
+        graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
+        workspace_context::WorkspaceContext,
+    },
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -100,8 +100,8 @@ struct MsgSenderAndTxOriginTracker {
 }
 
 impl MsgSenderAndTxOriginTracker {
-    /// To avoid FP (msg.sender == tx.origin) we require that tx.origin is present and msg.sender is absent
-    /// for it to be considered satisfied
+    /// To avoid FP (msg.sender == tx.origin) we require that tx.origin is present and msg.sender is
+    /// absent for it to be considered satisfied
     fn satisifed(&self) -> bool {
         self.reads_tx_origin && !self.reads_msg_sender
     }
@@ -112,8 +112,8 @@ impl CallGraphVisitor for MsgSenderAndTxOriginTracker {
         let member_accesses = ExtractMemberAccesses::from(node).extracted;
 
         let has_msg_sender = member_accesses.iter().any(|member_access| {
-            member_access.member_name == "sender"
-                && if let Expression::Identifier(identifier) = member_access.expression.as_ref() {
+            member_access.member_name == "sender" &&
+                if let Expression::Identifier(identifier) = member_access.expression.as_ref() {
                     identifier.name == "msg"
                 } else {
                     false
@@ -122,8 +122,8 @@ impl CallGraphVisitor for MsgSenderAndTxOriginTracker {
         self.reads_msg_sender = self.reads_msg_sender || has_msg_sender;
 
         let has_tx_origin = member_accesses.iter().any(|member_access| {
-            member_access.member_name == "origin"
-                && if let Expression::Identifier(identifier) = member_access.expression.as_ref() {
+            member_access.member_name == "origin" &&
+                if let Expression::Identifier(identifier) = member_access.expression.as_ref() {
                     identifier.name == "tx"
                 } else {
                     false
@@ -157,9 +157,6 @@ mod tx_origin_used_for_auth_detector {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 3);
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
     }
 }

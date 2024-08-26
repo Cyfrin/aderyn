@@ -30,8 +30,8 @@ impl IssueDetector for ContractsWithTodosDetector {
                 let tokens = fscloc::token::tokenize(&contract_code);
                 for token in tokens {
                     match token.token_type {
-                        fscloc::token::TokenType::MultilineComment
-                        | fscloc::token::TokenType::SinglelineComment => {
+                        fscloc::token::TokenType::MultilineComment |
+                        fscloc::token::TokenType::SinglelineComment => {
                             if token.content.to_lowercase().contains("todo") {
                                 capture!(self, context, contract);
                                 break;
@@ -88,9 +88,6 @@ mod contracts_with_todos {
         // assert that the detector finds the correct number of instances
         assert_eq!(detector.instances().len(), 1);
         // assert that the detector returns the correct severity
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

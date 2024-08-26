@@ -1,7 +1,9 @@
 use std::collections::{BTreeMap, HashMap};
 
-use super::macros::{ast_node, ast_node_no_partial_eq, expr_node};
-use super::*;
+use super::{
+    macros::{ast_node, ast_node_no_partial_eq, expr_node},
+    *,
+};
 
 use serde::{Deserialize, Serialize};
 
@@ -100,19 +102,17 @@ impl<'de> Deserialize<'de> for TypeName {
         let type_name = node_type.unwrap().as_str().unwrap();
 
         match type_name {
-            "FunctionTypeName" => Ok(TypeName::FunctionTypeName(
-                serde_json::from_value(json).unwrap(),
-            )),
-            "ArrayTypeName" => Ok(TypeName::ArrayTypeName(
-                serde_json::from_value(json).unwrap(),
-            )),
+            "FunctionTypeName" => {
+                Ok(TypeName::FunctionTypeName(serde_json::from_value(json).unwrap()))
+            }
+            "ArrayTypeName" => Ok(TypeName::ArrayTypeName(serde_json::from_value(json).unwrap())),
             "Mapping" => Ok(TypeName::Mapping(serde_json::from_value(json).unwrap())),
-            "UserDefinedTypeName" => Ok(TypeName::UserDefinedTypeName(
-                serde_json::from_value(json).unwrap(),
-            )),
-            "ElementaryTypeName" => Ok(TypeName::ElementaryTypeName(
-                serde_json::from_value(json).unwrap(),
-            )),
+            "UserDefinedTypeName" => {
+                Ok(TypeName::UserDefinedTypeName(serde_json::from_value(json).unwrap()))
+            }
+            "ElementaryTypeName" => {
+                Ok(TypeName::ElementaryTypeName(serde_json::from_value(json).unwrap()))
+            }
             _ => panic!("Unrecognized type name {type_name}"),
         }
     }
@@ -639,7 +639,8 @@ ast_node!(
 ast_node!(
     #[derive(Hash)]
     struct Return {
-        function_return_parameters: Option<NodeID>, // When returning in a modifier, this can be none
+        function_return_parameters: Option<NodeID>, /* When returning in a modifier, this can be
+                                                     * none */
         expression: Option<Expression>,
     }
 );

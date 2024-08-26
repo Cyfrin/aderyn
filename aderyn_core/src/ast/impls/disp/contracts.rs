@@ -84,16 +84,16 @@ impl Display for ContractDefinition {
                 "\t{}{}\n",
                 node,
                 match node {
-                    ContractDefinitionNode::UsingForDirective(_)
-                    | ContractDefinitionNode::EventDefinition(_)
-                    | ContractDefinitionNode::ErrorDefinition(_)
-                    | ContractDefinitionNode::VariableDeclaration(_)
-                    | ContractDefinitionNode::UserDefinedValueTypeDefinition(_) => ";",
+                    ContractDefinitionNode::UsingForDirective(_) |
+                    ContractDefinitionNode::EventDefinition(_) |
+                    ContractDefinitionNode::ErrorDefinition(_) |
+                    ContractDefinitionNode::VariableDeclaration(_) |
+                    ContractDefinitionNode::UserDefinedValueTypeDefinition(_) => ";",
 
-                    ContractDefinitionNode::StructDefinition(_)
-                    | ContractDefinitionNode::EnumDefinition(_)
-                    | ContractDefinitionNode::FunctionDefinition(_)
-                    | ContractDefinitionNode::ModifierDefinition(_) => "",
+                    ContractDefinitionNode::StructDefinition(_) |
+                    ContractDefinitionNode::EnumDefinition(_) |
+                    ContractDefinitionNode::FunctionDefinition(_) |
+                    ContractDefinitionNode::ModifierDefinition(_) => "",
                 }
             ))?;
         }

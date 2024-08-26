@@ -1,14 +1,11 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::ast::{ASTNode, NodeID, NodeType};
 
-use crate::capture;
-use crate::context::browser::GetImmediateParent;
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    capture,
+    context::{browser::GetImmediateParent, workspace_context::WorkspaceContext},
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -22,16 +19,13 @@ pub struct UncheckedSendDetector {
 impl IssueDetector for UncheckedSendDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for member_access in context.member_accesses() {
-            if member_access.member_name == "send"
-                && member_access
-                    .expression
-                    .type_descriptions()
-                    .is_some_and(|type_desc| {
-                        type_desc
-                            .type_string
-                            .as_ref()
-                            .is_some_and(|type_string| type_string.starts_with("address"))
-                    })
+            if member_access.member_name == "send" &&
+                member_access.expression.type_descriptions().is_some_and(|type_desc| {
+                    type_desc
+                        .type_string
+                        .as_ref()
+                        .is_some_and(|type_string| type_string.starts_with("address"))
+                })
             {
                 if let Some(ASTNode::FunctionCall(func_call)) = member_access.parent(context) {
                     if func_call
@@ -93,15 +87,9 @@ mod unchecked_send_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
         // assert the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from("Unchecked `bool success` value for send call.")
-        );
+        assert_eq!(detector.title(), String::from("Unchecked `bool success` value for send call."));
         // assert the description is correct
         assert_eq!(
             detector.description(),

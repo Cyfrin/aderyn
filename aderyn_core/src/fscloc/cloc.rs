@@ -17,9 +17,9 @@ pub enum HighLevelType {
 impl From<TokenType> for HighLevelType {
     fn from(value: TokenType) -> Self {
         match value {
-            TokenType::CodeDoubleQuotes
-            | TokenType::CodeOutsideQuotes
-            | TokenType::CodeSingleQuotes => Self::Code,
+            TokenType::CodeDoubleQuotes |
+            TokenType::CodeOutsideQuotes |
+            TokenType::CodeSingleQuotes => Self::Code,
             TokenType::MultilineComment | TokenType::SinglelineComment => Self::NotCode,
         }
     }
@@ -35,10 +35,7 @@ pub struct TokenInsightGroup {
 
 pub fn get_stats(r_content: &str, skip_cloc: bool) -> Stats {
     if r_content.is_empty() {
-        return Stats {
-            code: 0,
-            lines_to_ignore: None,
-        };
+        return Stats { code: 0, lines_to_ignore: None };
     }
 
     let token_descriptors = tokenize(r_content);
@@ -71,8 +68,8 @@ pub fn get_stats(r_content: &str, skip_cloc: bool) -> Stats {
             }
             let prev_group = token_insight_groups.last_mut().unwrap();
 
-            if insight.start_line == prev_group.end_line
-                && prev_group.token_type == insight.token_type.clone().into()
+            if insight.start_line == prev_group.end_line &&
+                prev_group.token_type == insight.token_type.clone().into()
             {
                 prev_group.token_insights.push(insight.clone());
                 prev_group.end_line = insight.end_line;
@@ -123,10 +120,7 @@ pub fn get_stats(r_content: &str, skip_cloc: bool) -> Stats {
         let len = groups.len();
 
         if len == 0 {
-            return Stats {
-                code: 0,
-                lines_to_ignore: None,
-            };
+            return Stats { code: 0, lines_to_ignore: None };
         }
 
         let mut prev = &groups[0];
@@ -139,9 +133,9 @@ pub fn get_stats(r_content: &str, skip_cloc: bool) -> Stats {
             code_lines += grp_contrib;
 
             // what line does the first contributing token start ?
-            if curr.start_line == prev.end_line
-                && (curr.token_insights[0].code_lines.actual_first_line == 0)
-                && grp_contrib >= 1
+            if curr.start_line == prev.end_line &&
+                (curr.token_insights[0].code_lines.actual_first_line == 0) &&
+                grp_contrib >= 1
             {
                 // println!("deducting {} {}", curr.start_line, prev.end_line);
                 code_lines -= 1;
@@ -152,10 +146,7 @@ pub fn get_stats(r_content: &str, skip_cloc: bool) -> Stats {
 
     let line_numbers_to_ignore = get_lines_to_ignore(&token_descriptors);
 
-    Stats {
-        code: code_lines,
-        lines_to_ignore: Some(line_numbers_to_ignore),
-    }
+    Stats { code: code_lines, lines_to_ignore: Some(line_numbers_to_ignore) }
 }
 
 fn get_lines_to_ignore(token_descriptors: &Vec<TokenDescriptor>) -> Vec<usize> {
@@ -163,9 +154,9 @@ fn get_lines_to_ignore(token_descriptors: &Vec<TokenDescriptor>) -> Vec<usize> {
     for token in token_descriptors {
         if matches!(
             token.token_type,
-            TokenType::CodeSingleQuotes
-                | TokenType::CodeDoubleQuotes
-                | TokenType::CodeOutsideQuotes
+            TokenType::CodeSingleQuotes |
+                TokenType::CodeDoubleQuotes |
+                TokenType::CodeOutsideQuotes
         ) {
             continue;
         }

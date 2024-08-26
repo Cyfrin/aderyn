@@ -1,14 +1,11 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::ast::{ASTNode, NodeID, Visibility};
 
-use crate::capture;
-use crate::context::browser::ExtractFunctionDefinitions;
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    capture,
+    context::{browser::ExtractFunctionDefinitions, workspace_context::WorkspaceContext},
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -49,9 +46,9 @@ impl IssueDetector for IncorrectERC721InterfaceDetector {
                         let functions = ExtractFunctionDefinitions::from(contract).extracted;
 
                         for func in functions {
-                            if (func.visibility != Visibility::Public
-                                && func.visibility != Visibility::External)
-                                || !func.implemented
+                            if (func.visibility != Visibility::Public &&
+                                func.visibility != Visibility::External) ||
+                                !func.implemented
                             {
                                 continue;
                             }
@@ -60,23 +57,23 @@ impl IssueDetector for IncorrectERC721InterfaceDetector {
                                 capture!(self, context, func);
                             }
 
-                            if (func.represents_erc721_get_approved()
-                                || func.represents_erc721_owner_of())
-                                && !func.returns_address()
+                            if (func.represents_erc721_get_approved() ||
+                                func.represents_erc721_owner_of()) &&
+                                !func.returns_address()
                             {
                                 capture!(self, context, func);
                             }
 
-                            if (func.represents_erc721_safe_transfer_from()
-                                || func.represents_erc721_transfer_from())
-                                && !func.returns_nothing()
+                            if (func.represents_erc721_safe_transfer_from() ||
+                                func.represents_erc721_transfer_from()) &&
+                                !func.returns_nothing()
                             {
                                 capture!(self, context, func);
                             }
 
-                            if (func.represents_erc721_approve()
-                                || func.represents_erc721_set_approval_for_all())
-                                && !func.returns_nothing()
+                            if (func.represents_erc721_approve() ||
+                                func.represents_erc721_set_approval_for_all()) &&
+                                !func.returns_nothing()
                             {
                                 capture!(self, context, func);
                             }
@@ -163,10 +160,8 @@ mod erc721_matching_function_signature_helper {
     // ERC721 function signature matching
     impl FunctionDefinition {
         pub fn represents_erc721_get_approved(&self) -> bool {
-            let satisifer = SignatureMatcher {
-                name: "getApproved",
-                paramter_types: vec!["uint256"],
-            };
+            let satisifer =
+                SignatureMatcher { name: "getApproved", paramter_types: vec!["uint256"] };
             satisifer.satisfies(self)
         }
 
@@ -179,10 +174,8 @@ mod erc721_matching_function_signature_helper {
         }
 
         pub fn represents_erc721_approve(&self) -> bool {
-            let satisifer = SignatureMatcher {
-                name: "approve",
-                paramter_types: vec!["address", "uint256"],
-            };
+            let satisifer =
+                SignatureMatcher { name: "approve", paramter_types: vec!["address", "uint256"] };
             satisifer.satisfies(self)
         }
 
@@ -195,18 +188,12 @@ mod erc721_matching_function_signature_helper {
         }
 
         pub fn represents_erc721_balance_of(&self) -> bool {
-            let satisifer = SignatureMatcher {
-                name: "balanceOf",
-                paramter_types: vec!["address"],
-            };
+            let satisifer = SignatureMatcher { name: "balanceOf", paramter_types: vec!["address"] };
             satisifer.satisfies(self)
         }
 
         pub fn represents_erc721_owner_of(&self) -> bool {
-            let satisifer = SignatureMatcher {
-                name: "ownerOf",
-                paramter_types: vec!["uint256"],
-            };
+            let satisifer = SignatureMatcher { name: "ownerOf", paramter_types: vec!["uint256"] };
             satisifer.satisfies(self)
         }
 
@@ -241,8 +228,8 @@ mod erc721_matching_function_signature_helper {
 
         pub fn returns_bool(&self) -> bool {
             let params = &self.return_parameters.parameters;
-            params.len() == 1
-                && params[0]
+            params.len() == 1 &&
+                params[0]
                     .type_descriptions
                     .type_string
                     .as_ref()
@@ -251,8 +238,8 @@ mod erc721_matching_function_signature_helper {
 
         pub fn returns_uint256(&self) -> bool {
             let params = &self.return_parameters.parameters;
-            params.len() == 1
-                && params[0]
+            params.len() == 1 &&
+                params[0]
                     .type_descriptions
                     .type_string
                     .as_ref()
@@ -261,14 +248,10 @@ mod erc721_matching_function_signature_helper {
 
         pub fn returns_address(&self) -> bool {
             let params = &self.return_parameters.parameters;
-            params.len() == 1
-                && params[0]
-                    .type_descriptions
-                    .type_string
-                    .as_ref()
-                    .is_some_and(|type_string| {
-                        type_string == "address" || type_string == "address payable"
-                    })
+            params.len() == 1 &&
+                params[0].type_descriptions.type_string.as_ref().is_some_and(|type_string| {
+                    type_string == "address" || type_string == "address payable"
+                })
         }
     }
 }
@@ -291,7 +274,8 @@ mod incorrect_erc721_tests {
         let mut detector = IncorrectERC721InterfaceDetector::default();
         let found = detector.detect(&context).unwrap();
 
-        // We capture every faulty method in the IncorrectERC721 contract that has the wrong return type
+        // We capture every faulty method in the IncorrectERC721 contract that has the wrong return
+        // type
         println!("{:#?}", detector.instances());
 
         // assert that the detector found an issue
@@ -301,9 +285,6 @@ mod incorrect_erc721_tests {
         assert_eq!(detector.instances().len(), 8);
 
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
     }
 }

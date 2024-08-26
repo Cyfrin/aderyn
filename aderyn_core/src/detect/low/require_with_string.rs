@@ -24,8 +24,8 @@ impl IssueDetector for RequireWithStringDetector {
             .filter(|&id| id.name == "revert" || id.name == "require");
 
         for id in requires_and_reverts {
-            if (id.name == "revert" && id.argument_types.as_ref().unwrap().is_empty())
-                || (id.name == "require" && id.argument_types.as_ref().unwrap().len() == 1)
+            if (id.name == "revert" && id.argument_types.as_ref().unwrap().is_empty()) ||
+                (id.name == "require" && id.argument_types.as_ref().unwrap().len() == 1)
             {
                 capture!(self, context, id);
             }
@@ -77,15 +77,9 @@ mod require_with_string_tests {
         // assert that the detector returns the correct number of instances
         assert_eq!(detector.instances().len(), 2);
         // assert that the detector returns the correct severity
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert that the detector returns the correct title
-        assert_eq!(
-            detector.title(),
-            String::from("Empty `require()` / `revert()` statements")
-        );
+        assert_eq!(detector.title(), String::from("Empty `require()` / `revert()` statements"));
         // assert that the detector returns the correct description
         assert_eq!(
             detector.description(),

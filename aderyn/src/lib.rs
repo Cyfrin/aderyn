@@ -23,10 +23,7 @@ where
 
     debouncer
         .watcher()
-        .watch(
-            PathBuf::from(args.root.clone()).as_path(),
-            RecursiveMode::Recursive,
-        )
+        .watch(PathBuf::from(args.root.clone()).as_path(), RecursiveMode::Recursive)
         .unwrap();
 
     // Then run again only if file events are observed
@@ -109,13 +106,10 @@ fn right_pad(s: &str, by: usize) -> String {
 pub static APP_USER_AGENT: &str = concat!(env!("CARGO_PKG_NAME"), "/", env!("CARGO_PKG_VERSION"));
 
 pub fn aderyn_is_currently_running_newest_version() -> Result<bool, reqwest::Error> {
-    let client = reqwest::blocking::Client::builder()
-        .user_agent(APP_USER_AGENT)
-        .build()?;
+    let client = reqwest::blocking::Client::builder().user_agent(APP_USER_AGENT).build()?;
 
-    let latest_version_checker = client
-        .get("https://api.github.com/repos/Cyfrin/aderyn/releases/latest")
-        .send()?;
+    let latest_version_checker =
+        client.get("https://api.github.com/repos/Cyfrin/aderyn/releases/latest").send()?;
 
     let data = latest_version_checker.json::<Value>()?;
     let newest =

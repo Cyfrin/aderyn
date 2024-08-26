@@ -34,9 +34,9 @@ fn version_req_allows_above_0_8_19(version_req: &VersionReq) -> bool {
                 return true;
             }
             Op::Exact => {
-                if comparator.major == 0
-                    && comparator.minor == Some(8)
-                    && comparator.patch == Some(20)
+                if comparator.major == 0 &&
+                    comparator.minor == Some(8) &&
+                    comparator.patch == Some(20)
                 {
                     return true;
                 }
@@ -45,9 +45,9 @@ fn version_req_allows_above_0_8_19(version_req: &VersionReq) -> bool {
         }
     } else if version_req.comparators.len() == 2 {
         let comparator_2 = &version_req.comparators[1];
-        if comparator_2.major > 0
-            || (comparator_2.minor >= Some(8))
-            || (comparator_2.minor == Some(8) && comparator_2.patch >= Some(20))
+        if comparator_2.major > 0 ||
+            (comparator_2.minor >= Some(8)) ||
+            (comparator_2.minor == Some(8) && comparator_2.patch >= Some(20))
         {
             return true;
         }
@@ -109,15 +109,9 @@ mod unspecific_solidity_pragma_tests {
         // assert that the number of instances is correct
         assert_eq!(detector.instances().len(), 1);
         // assert that the severity is low
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert that the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from("PUSH0 is not supported by all chains")
-        );
+        assert_eq!(detector.title(), String::from("PUSH0 is not supported by all chains"));
         // assert that the description is correct
         assert_eq!(
             detector.description(),
@@ -141,15 +135,9 @@ mod unspecific_solidity_pragma_tests {
         // assert that the number of instances is correct
         assert_eq!(detector.instances().len(), 1);
         // assert that the severity is low
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert that the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from("PUSH0 is not supported by all chains")
-        );
+        assert_eq!(detector.title(), String::from("PUSH0 is not supported by all chains"));
         // assert that the description is correct
         assert_eq!(
             detector.description(),

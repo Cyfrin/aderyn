@@ -1,13 +1,11 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::ast::{NodeID, YulExpression};
 
-use crate::capture;
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
+    capture,
     context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -22,9 +20,9 @@ impl IssueDetector for IncorrectShiftOrderDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         let yul_function_calls = context.yul_function_calls();
         for yul_function_call in yul_function_calls {
-            if (yul_function_call.function_name.name == "shl"
-                || yul_function_call.function_name.name == "shr")
-                && yul_function_call
+            if (yul_function_call.function_name.name == "shl" ||
+                yul_function_call.function_name.name == "shr") &&
+                yul_function_call
                     .arguments
                     .get(1)
                     .is_some_and(|n| matches!(n, YulExpression::YulLiteral(_)))
@@ -77,15 +75,9 @@ mod incorrect_shift_order_detector_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
         // assert the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from("Incorrect Assembly Shift Parameter Order")
-        );
+        assert_eq!(detector.title(), String::from("Incorrect Assembly Shift Parameter Order"));
         // assert the description is correct
         assert_eq!(
             detector.description(),
