@@ -63,7 +63,6 @@ impl IssueDetector for FunctionSelectorCollisionDetector {
                         .cloned()
                         .collect::<Vec<_>>();
 
-                    // for function_ids in function_entries.values() {
                     for function_id in function_ids {
                         // Prepare the hint
                         let mut hint =
