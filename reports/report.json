@@ -3851,12 +3851,6 @@
         "detector_name": "push-zero-opcode",
         "instances": [
           {
-            "contract_path": "src/AderynIgnoreCustomDetectors.sol",
-            "line_no": 2,
-            "src": "32:23",
-            "src_char": "32:23"
-          },
-          {
             "contract_path": "src/AdminContract.sol",
             "line_no": 2,
             "src": "32:23",
