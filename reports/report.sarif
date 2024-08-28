@@ -2399,17 +2399,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/ReturnBomb.sol"
-                },
-                "region": {
-                  "byteLength": 4,
-                  "byteOffset": 839
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/SendEtherNoChecks.sol"
                 },
                 "region": {
