@@ -2320,12 +2320,14 @@ Function selector collides with other functions. This may cause the solidity fun
 
 - Found in src/FunctionSignatureCollision.sol [Line: 7](../tests/contract-playground/src/FunctionSignatureCollision.sol#L7)
 
+	collides with the following function name(s) in scope: OwnerTransferV7b711143
 	```solidity
 	    function withdraw(uint256) external {
 	```
 
 - Found in src/FunctionSignatureCollision.sol [Line: 13](../tests/contract-playground/src/FunctionSignatureCollision.sol#L13)
 
+	collides with the following function name(s) in scope: withdraw
 	```solidity
 	    function OwnerTransferV7b711143(uint256) external {
 	```
