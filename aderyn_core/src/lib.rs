@@ -128,9 +128,11 @@ where
                 description: detector.description(),
                 detector_name: detector.name(),
                 instances: Default::default(),
+                hints: Default::default(),
             };
 
             let mut detectors_instances = BTreeMap::new();
+            let mut detector_hints = BTreeMap::new();
 
             let collection_of_instances = contexts
                 .into_par_iter()
@@ -139,15 +141,17 @@ where
                     if let Ok(found) = d.detect(context) {
                         if found {
                             let instances = d.instances();
-                            return Some(instances);
+                            let hints = d.hints();
+                            return Some((instances, hints));
                         }
                     }
                     None
                 })
                 .collect::<Vec<_>>();
 
-            for instances in collection_of_instances {
+            for (instances, hints) in collection_of_instances {
                 detectors_instances.extend(instances);
+                detector_hints.extend(hints);
             }
 
             if detectors_instances.is_empty() {
@@ -186,6 +190,9 @@ where
                     true
                 })
                 .collect();
+
+            issue.hints = detector_hints;
+
             Some((issue, detector.severity()))
         })
         .collect();

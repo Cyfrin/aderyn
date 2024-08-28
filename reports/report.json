@@ -1,7 +1,12 @@
 {
   "files_summary": {
+<<<<<<< HEAD
     "total_source_units": 93,
     "total_sloc": 3241
+=======
+    "total_source_units": 92,
+    "total_sloc": 3240
+>>>>>>> dev
   },
   "files_details": {
     "files_details": [
@@ -151,11 +156,11 @@
       },
       {
         "file_path": "src/IncorrectERC20.sol",
-        "n_sloc": 97
+        "n_sloc": 98
       },
       {
         "file_path": "src/IncorrectERC721.sol",
-        "n_sloc": 231
+        "n_sloc": 238
       },
       {
         "file_path": "src/IncorrectShift.sol",
@@ -255,7 +260,7 @@
       },
       {
         "file_path": "src/TxOriginUsedForAuth.sol",
-        "n_sloc": 42
+        "n_sloc": 43
       },
       {
         "file_path": "src/UncheckedReturn.sol",
@@ -327,7 +332,7 @@
       },
       {
         "file_path": "src/eth2/DepositContract.sol",
-        "n_sloc": 95
+        "n_sloc": 96
       },
       {
         "file_path": "src/inheritance/ExtendedInheritance.sol",
@@ -1738,12 +1743,6 @@
             "src_char": "5072:7"
           },
           {
-            "contract_path": "src/ReturnBomb.sol",
-            "line_no": 32,
-            "src": "839:4",
-            "src_char": "839:4"
-          },
-          {
             "contract_path": "src/SendEtherNoChecks.sol",
             "line_no": 53,
             "src": "1060:5",
@@ -2342,13 +2341,15 @@
             "contract_path": "src/FunctionSignatureCollision.sol",
             "line_no": 7,
             "src": "166:8",
-            "src_char": "166:8"
+            "src_char": "166:8",
+            "hint": "collides with the following function name(s) in scope: OwnerTransferV7b711143"
           },
           {
             "contract_path": "src/FunctionSignatureCollision.sol",
             "line_no": 13,
             "src": "231:22",
-            "src_char": "231:22"
+            "src_char": "231:22",
+            "hint": "collides with the following function name(s) in scope: withdraw"
           }
         ]
       }
