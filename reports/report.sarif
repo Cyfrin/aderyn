@@ -7552,9 +7552,6 @@
           "level": "note",
           "locations": [
             {
-              "message": {
-                "text": "A TODO comment was found on line 8"
-              },
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/ContractWithTodo.sol"
@@ -7566,9 +7563,6 @@
               }
             },
             {
-              "message": {
-                "text": "A TODO comment was found on line 15"
-              },
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/Counter.sol"

@@ -613,7 +613,6 @@ Contract contains comments with TODOS
 
 - Found in Counter.sol [Line: 4](../tests/adhoc-sol-files/Counter.sol#L4)
 
-	A TODO comment was found on line 15
 	```solidity
 	contract Counter {
 	```

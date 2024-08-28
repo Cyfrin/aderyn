@@ -34,28 +34,7 @@ impl IssueDetector for ContractsWithTodosDetector {
                         fscloc::token::TokenType::MultilineComment
                         | fscloc::token::TokenType::SinglelineComment => {
                             if token.content.to_lowercase().contains("todo") {
-                                let hint = {
-                                    let (_, contract_start_line, _) =
-                                        context.get_node_sort_key(&(contract.into()));
-
-                                    if token.start_line != token.end_line {
-                                        format!(
-                                            "A TODO comment was found between lines {}-{}",
-                                            (contract_start_line + token.start_line)
-                                                .saturating_sub(1),
-                                            (contract_start_line + token.end_line)
-                                                .saturating_sub(1)
-                                        )
-                                    } else {
-                                        format!(
-                                            "A TODO comment was found on line {}",
-                                            (contract_start_line + token.start_line)
-                                                .saturating_sub(1)
-                                        )
-                                    }
-                                };
-
-                                capture!(self, context, contract, hint);
+                                capture!(self, context, contract);
                                 break;
                             }
                         }
@@ -111,12 +90,9 @@ mod contracts_with_todos {
         let mut detector = ContractsWithTodosDetector::default();
         let found = detector.detect(&context).unwrap();
 
-        println!("{:?}", detector.hints());
-        println!("{:?}", detector.instances());
-
         assert!(found);
         // assert that the detector finds the correct number of instances
-        assert_eq!(detector.hints().len(), 1);
+        assert_eq!(detector.instances().len(), 1);
         // assert that the detector returns the correct severity
         assert_eq!(
             detector.severity(),

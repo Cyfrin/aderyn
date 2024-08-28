@@ -4672,14 +4672,12 @@ Contract contains comments with TODOS
 
 - Found in src/ContractWithTodo.sol [Line: 4](../tests/contract-playground/src/ContractWithTodo.sol#L4)
 
-	A TODO comment was found on line 8
 	```solidity
 	contract TodoList {
 	```
 
 - Found in src/Counter.sol [Line: 4](../tests/contract-playground/src/Counter.sol#L4)
 
-	A TODO comment was found on line 15
 	```solidity
 	contract Counter {
 	```
