@@ -3426,6 +3426,9 @@
           "level": "warning",
           "locations": [
             {
+              "message": {
+                "text": "collides with the following function name(s) in scope: OwnerTransferV7b711143"
+              },
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/FunctionSignatureCollision.sol"
@@ -3437,6 +3440,9 @@
               }
             },
             {
+              "message": {
+                "text": "collides with the following function name(s) in scope: withdraw"
+              },
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/FunctionSignatureCollision.sol"
