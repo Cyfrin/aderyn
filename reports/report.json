@@ -2332,13 +2332,15 @@
             "contract_path": "src/FunctionSignatureCollision.sol",
             "line_no": 7,
             "src": "166:8",
-            "src_char": "166:8"
+            "src_char": "166:8",
+            "hint": "collides with the following function name(s) in scope: OwnerTransferV7b711143"
           },
           {
             "contract_path": "src/FunctionSignatureCollision.sol",
             "line_no": 13,
             "src": "231:22",
-            "src_char": "231:22"
+            "src_char": "231:22",
+            "hint": "collides with the following function name(s) in scope: withdraw"
           }
         ]
       }
