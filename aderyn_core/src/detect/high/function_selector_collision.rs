@@ -16,6 +16,7 @@ pub struct FunctionSelectorCollisionDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
+    hints: BTreeMap<(String, usize, String), String>,
 }
 
 impl IssueDetector for FunctionSelectorCollisionDetector {
@@ -52,10 +53,25 @@ impl IssueDetector for FunctionSelectorCollisionDetector {
         for function_entries in selectors.values() {
             if function_entries.len() >= 2 {
                 // Now we know that there is a collision + at least 2 different function names found for that selector.
-                for function_ids in function_entries.values() {
+
+                // Capture the relevant functions
+                for (function_name, function_ids) in function_entries {
+                    // Prepare data for the hint
+                    let all_colliding_function_names = function_entries
+                        .keys()
+                        .filter(|&x| x != function_name)
+                        .cloned()
+                        .collect::<Vec<_>>();
+
                     for function_id in function_ids {
+                        // Prepare the hint
+                        let mut hint =
+                            String::from("collides with the following function name(s) in scope: ");
+                        hint.push_str(&all_colliding_function_names.join(", "));
+
+                        // Capture the function
                         if let Some(node) = context.nodes.get(function_id) {
-                            capture!(self, context, node);
+                            capture!(self, context, node, hint);
                         }
                     }
                 }
@@ -79,6 +95,10 @@ impl IssueDetector for FunctionSelectorCollisionDetector {
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
         self.found_instances.clone()
+    }
+
+    fn hints(&self) -> BTreeMap<(String, usize, String), String> {
+        self.hints.clone()
     }
 
     fn name(&self) -> String {

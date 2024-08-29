@@ -438,4 +438,8 @@ pub trait IssueDetector: Send + Sync + 'static {
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
         BTreeMap::new()
     }
+
+    fn hints(&self) -> BTreeMap<(String, usize, String), String> {
+        BTreeMap::new()
+    }
 }
