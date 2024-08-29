@@ -1,4 +1,5 @@
 use crate::ast::*;
+use crate::fscloc::cloc::IgnoreLine;
 use std::cmp::Ordering;
 use std::collections::HashMap;
 
@@ -27,7 +28,7 @@ pub struct WorkspaceContext {
     // relative source filepaths
     pub src_filepaths: Vec<String>,
     pub sloc_stats: HashMap<String, usize>,
-    pub ignore_lines_stats: HashMap<String, Option<Vec<usize>>>,
+    pub ignore_lines_stats: HashMap<String, Vec<IgnoreLine>>,
     pub inward_callgraph: Option<WorkspaceCallGraph>,
     pub outward_callgraph: Option<WorkspaceCallGraph>,
     pub nodes: HashMap<NodeID, ASTNode>,
@@ -103,10 +104,7 @@ impl WorkspaceContext {
         self.sloc_stats = sloc_stats;
     }
 
-    pub fn set_ignore_lines_stats(
-        &mut self,
-        ignore_lines_stats: HashMap<String, Option<Vec<usize>>>,
-    ) {
+    pub fn set_ignore_lines_stats(&mut self, ignore_lines_stats: HashMap<String, Vec<IgnoreLine>>) {
         self.ignore_lines_stats = ignore_lines_stats;
     }
 
