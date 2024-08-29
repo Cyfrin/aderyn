@@ -1588,7 +1588,7 @@ The patterns `if (… || true)` and `if (.. && false)` will always evaluate to t
 
 Introduce checks for `msg.sender` in the function
 
-<details><summary>18 Found Instances</summary>
+<details><summary>17 Found Instances</summary>
 
 
 - Found in src/CallGraphTests.sol [Line: 38](../tests/contract-playground/src/CallGraphTests.sol#L38)
@@ -1643,12 +1643,6 @@ Introduce checks for `msg.sender` in the function
 
 	```solidity
 	    function unstake() public {
-	```
-
-- Found in src/ReturnBomb.sol [Line: 32](../tests/contract-playground/src/ReturnBomb.sol#L32)
-
-	```solidity
-	    function oops(address badGuy) public {
 	```
 
 - Found in src/SendEtherNoChecks.sol [Line: 53](../tests/contract-playground/src/SendEtherNoChecks.sol#L53)
@@ -2326,12 +2320,14 @@ Function selector collides with other functions. This may cause the solidity fun
 
 - Found in src/FunctionSignatureCollision.sol [Line: 7](../tests/contract-playground/src/FunctionSignatureCollision.sol#L7)
 
+	collides with the following function name(s) in scope: OwnerTransferV7b711143
 	```solidity
 	    function withdraw(uint256) external {
 	```
 
 - Found in src/FunctionSignatureCollision.sol [Line: 13](../tests/contract-playground/src/FunctionSignatureCollision.sol#L13)
 
+	collides with the following function name(s) in scope: withdraw
 	```solidity
 	    function OwnerTransferV7b711143(uint256) external {
 	```
