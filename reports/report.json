@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 93,
-    "total_sloc": 3251
+    "total_source_units": 94,
+    "total_sloc": 3256
   },
   "files_details": {
     "files_details": [
@@ -140,6 +140,10 @@
       {
         "file_path": "src/HugeConstants.sol",
         "n_sloc": 36
+      },
+      {
+        "file_path": "src/IgnoreEverything.sol",
+        "n_sloc": 5
       },
       {
         "file_path": "src/InconsistentUints.sol",
