@@ -1,3 +1,4 @@
+use costly_operations_inside_loops::CostlyOperationsInsideLoopsDetector;
 use incorrect_erc20_interface::IncorrectERC20InterfaceDetector;
 use serde::{Deserialize, Serialize};
 use strum::{Display, EnumCount, EnumIter, EnumString};
@@ -86,8 +87,11 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<ReturnBombDetector>::default(),
         Box::<OutOfOrderRetryableDetector>::default(),
         Box::<FunctionInitializingStateDetector>::default(),
-        Box::<BuiltinSymbolShadowDetector>::default(),
-        Box::<StateVariableCouldBeConstantDetector>::default(),
+        Box::<CacheArrayLengthDetector>::default(),
+        Box::<AssertStateChangeDetector>::default(),
+        Box::<CostlyOperationsInsideLoopsDetector>::default(),
+        Box::<ConstantFunctionChangingStateDetector>::default(),
+        Box::<FunctionSelectorCollisionDetector>::default(),
     ]
 }
 
@@ -99,6 +103,11 @@ pub fn get_all_detectors_names() -> Vec<String> {
 #[derive(Debug, PartialEq, EnumString, Display)]
 #[strum(serialize_all = "kebab-case")]
 pub(crate) enum IssueDetectorNamePool {
+    FunctionSelectorCollision,
+    CacheArrayLength,
+    AssertStateChange,
+    CostlyOperationsInsideLoops,
+    ConstantFunctionChangingState,
     BuiltinSymbolShadow,
     IncorrectERC721Interface,
     FunctionInitializingState,
@@ -182,6 +191,19 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
     match detector_name {
         IssueDetectorNamePool::StateVariableCouldBeDeclaredConstant => {
             Some(Box::<StateVariableCouldBeConstantDetector>::default())
+        }
+        IssueDetectorNamePool::FunctionSelectorCollision => {
+            Some(Box::<FunctionSelectorCollisionDetector>::default())
+        }
+        IssueDetectorNamePool::CacheArrayLength => Some(Box::<CacheArrayLengthDetector>::default()),
+        IssueDetectorNamePool::AssertStateChange => {
+            Some(Box::<AssertStateChangeDetector>::default())
+        }
+        IssueDetectorNamePool::CostlyOperationsInsideLoops => {
+            Some(Box::<CostlyOperationsInsideLoopsDetector>::default())
+        }
+        IssueDetectorNamePool::ConstantFunctionChangingState => {
+            Some(Box::<ConstantFunctionChangingStateDetector>::default())
         }
         IssueDetectorNamePool::BuiltinSymbolShadow => {
             Some(Box::<BuiltinSymbolShadowDetector>::default())
@@ -417,6 +439,10 @@ pub trait IssueDetector: Send + Sync + 'static {
     // Keys are source file name, line number and source location
     // Value is ASTNode NodeID
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
+        BTreeMap::new()
+    }
+
+    fn hints(&self) -> BTreeMap<(String, usize, String), String> {
         BTreeMap::new()
     }
 }

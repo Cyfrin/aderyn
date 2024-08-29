@@ -1740,44 +1740,11 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/InconsistentUints.sol"
-                },
-                "region": {
-                  "byteLength": 11,
-                  "byteOffset": 197
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/InconsistentUints.sol"
-                },
-                "region": {
-                  "byteLength": 14,
-                  "byteOffset": 233
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/IncorrectCaretOperator.sol"
                 },
                 "region": {
                   "byteLength": 7,
                   "byteOffset": 355
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectERC721.sol"
-                },
-                "region": {
-                  "byteLength": 11,
-                  "byteOffset": 4076
                 }
               }
             },
@@ -1850,83 +1817,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/StateVariablesManipulation.sol"
-                },
-                "region": {
-                  "byteLength": 10,
-                  "byteOffset": 205
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesManipulation.sol"
-                },
-                "region": {
-                  "byteLength": 9,
-                  "byteOffset": 235
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesManipulation.sol"
-                },
-                "region": {
-                  "byteLength": 10,
-                  "byteOffset": 262
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesManipulation.sol"
-                },
-                "region": {
-                  "byteLength": 13,
-                  "byteOffset": 293
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesManipulation.sol"
-                },
-                "region": {
-                  "byteLength": 20,
-                  "byteOffset": 335
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesManipulation.sol"
-                },
-                "region": {
-                  "byteLength": 12,
-                  "byteOffset": 375
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesManipulation.sol"
-                },
-                "region": {
-                  "byteLength": 11,
-                  "byteOffset": 406
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/TautologyOrContradiction.sol"
                 },
                 "region": {
@@ -1965,61 +1855,6 @@
                 "region": {
                   "byteLength": 11,
                   "byteOffset": 529
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/UnusedStateVariables.sol"
-                },
-                "region": {
-                  "byteLength": 13,
-                  "byteOffset": 147
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/UnusedStateVariables.sol"
-                },
-                "region": {
-                  "byteLength": 13,
-                  "byteOffset": 183
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/UnusedStateVariables.sol"
-                },
-                "region": {
-                  "byteLength": 10,
-                  "byteOffset": 215
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/UnusedStateVariables.sol"
-                },
-                "region": {
-                  "byteLength": 12,
-                  "byteOffset": 246
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/UnusedStateVariables.sol"
-                },
-                "region": {
-                  "byteLength": 11,
-                  "byteOffset": 314
                 }
               }
             },
@@ -2355,61 +2190,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/OutOfOrderRetryable.sol"
-                },
-                "region": {
-                  "byteLength": 11,
-                  "byteOffset": 1649
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/OutOfOrderRetryable.sol"
-                },
-                "region": {
-                  "byteLength": 22,
-                  "byteOffset": 2557
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/OutOfOrderRetryable.sol"
-                },
-                "region": {
-                  "byteLength": 13,
-                  "byteOffset": 4685
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/OutOfOrderRetryable.sol"
-                },
-                "region": {
-                  "byteLength": 7,
-                  "byteOffset": 5072
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ReturnBomb.sol"
-                },
-                "region": {
-                  "byteLength": 4,
-                  "byteOffset": 839
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/SendEtherNoChecks.sol"
                 },
                 "region": {
@@ -2619,83 +2399,6 @@
         {
           "level": "warning",
           "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/OutOfOrderRetryable.sol"
-                },
-                "region": {
-                  "byteLength": 390,
-                  "byteOffset": 1705
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/OutOfOrderRetryable.sol"
-                },
-                "region": {
-                  "byteLength": 379,
-                  "byteOffset": 2129
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/OutOfOrderRetryable.sol"
-                },
-                "region": {
-                  "byteLength": 390,
-                  "byteOffset": 2624
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/OutOfOrderRetryable.sol"
-                },
-                "region": {
-                  "byteLength": 379,
-                  "byteOffset": 3107
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/OutOfOrderRetryable.sol"
-                },
-                "region": {
-                  "byteLength": 208,
-                  "byteOffset": 3777
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/OutOfOrderRetryable.sol"
-                },
-                "region": {
-                  "byteLength": 261,
-                  "byteOffset": 4337
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesManipulation.sol"
-                },
-                "region": {
-                  "byteLength": 20,
-                  "byteOffset": 4365
-                }
-              }
-            },
             {
               "physicalLocation": {
                 "artifactLocation": {
@@ -3002,101 +2705,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/TxOriginUsedForAuth.sol"
-                },
-                "region": {
-                  "byteLength": 183,
-                  "byteOffset": 1117
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/TxOriginUsedForAuth.sol"
-                },
-                "region": {
-                  "byteLength": 90,
-                  "byteOffset": 1431
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/TxOriginUsedForAuth.sol"
-                },
-                "region": {
-                  "byteLength": 68,
-                  "byteOffset": 1610
-                }
-              }
-            }
-          ],
-          "message": {
-            "text": "Using `tx.origin` may lead to problems when users are interacting via smart contract with your protocol. It is recommended to use `msg.sender` for authentication."
-          },
-          "ruleId": "tx-origin-used-for-auth"
-        },
-        {
-          "level": "warning",
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/MsgValueInLoop.sol"
-                },
-                "region": {
-                  "byteLength": 107,
-                  "byteOffset": 289
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/MsgValueInLoop.sol"
-                },
-                "region": {
-                  "byteLength": 94,
-                  "byteOffset": 988
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/MsgValueInLoop.sol"
-                },
-                "region": {
-                  "byteLength": 93,
-                  "byteOffset": 1415
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/MsgValueInLoop.sol"
-                },
-                "region": {
-                  "byteLength": 97,
-                  "byteOffset": 1844
-                }
-              }
-            }
-          ],
-          "message": {
-            "text": "Provide an explicit array of amounts alongside the receivers array, and check that the sum of all amounts matches `msg.value`."
-          },
-          "ruleId": "msg-value-in-loop"
-        },
-        {
-          "level": "warning",
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/ContractLocksEther.sol"
                 },
                 "region": {
@@ -3141,61 +2749,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/MsgValueInLoop.sol"
-                },
-                "region": {
-                  "byteLength": 15,
-                  "byteOffset": 103
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/MsgValueInLoop.sol"
-                },
-                "region": {
-                  "byteLength": 19,
-                  "byteOffset": 423
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/MsgValueInLoop.sol"
-                },
-                "region": {
-                  "byteLength": 15,
-                  "byteOffset": 831
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/MsgValueInLoop.sol"
-                },
-                "region": {
-                  "byteLength": 15,
-                  "byteOffset": 1233
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/MsgValueInLoop.sol"
-                },
-                "region": {
-                  "byteLength": 15,
-                  "byteOffset": 1659
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/eth2/DepositContract.sol"
                 },
                 "region": {
@@ -3216,191 +2769,56 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/IncorrectERC721.sol"
+                  "uri": "src/ConstFuncChangeState.sol"
                 },
                 "region": {
-                  "byteLength": 9,
-                  "byteOffset": 433
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectERC721.sol"
-                },
-                "region": {
-                  "byteLength": 7,
-                  "byteOffset": 551
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectERC721.sol"
-                },
-                "region": {
-                  "byteLength": 7,
-                  "byteOffset": 696
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectERC721.sol"
-                },
-                "region": {
-                  "byteLength": 11,
-                  "byteOffset": 1092
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectERC721.sol"
-                },
-                "region": {
-                  "byteLength": 17,
-                  "byteOffset": 1231
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectERC721.sol"
-                },
-                "region": {
-                  "byteLength": 16,
-                  "byteOffset": 1484
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectERC721.sol"
-                },
-                "region": {
-                  "byteLength": 12,
-                  "byteOffset": 1684
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectERC721.sol"
-                },
-                "region": {
-                  "byteLength": 16,
-                  "byteOffset": 2086
+                  "byteLength": 112,
+                  "byteOffset": 173
                 }
               }
             }
           ],
           "message": {
-            "text": "Incorrect return values for ERC721 functions. A contract compiled with Solidity > 0.4.22 interacting with these functions will fail to execute them, as the return value is missing. Set the appropriate return values and types for the defined ERC721 functions."
+            "text": "Function is declared constant/view but it changes state. Ensure that the attributes of contract compiled prior to 0.5 are correct."
           },
-          "ruleId": "incorrect-erc721-interface"
+          "ruleId": "constant-function-changing-state"
         },
         {
           "level": "warning",
           "locations": [
             {
+              "message": {
+                "text": "collides with the following function name(s) in scope: OwnerTransferV7b711143"
+              },
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/IncorrectERC20.sol"
+                  "uri": "src/FunctionSignatureCollision.sol"
                 },
                 "region": {
                   "byteLength": 8,
-                  "byteOffset": 483
+                  "byteOffset": 166
                 }
               }
             },
             {
+              "message": {
+                "text": "collides with the following function name(s) in scope: withdraw"
+              },
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/IncorrectERC20.sol"
-                },
-                "region": {
-                  "byteLength": 7,
-                  "byteOffset": 690
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectERC20.sol"
-                },
-                "region": {
-                  "byteLength": 12,
-                  "byteOffset": 808
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectERC20.sol"
-                },
-                "region": {
-                  "byteLength": 9,
-                  "byteOffset": 1146
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectERC20.sol"
-                },
-                "region": {
-                  "byteLength": 9,
-                  "byteOffset": 1249
-                }
-              }
-            }
-          ],
-          "message": {
-            "text": "Incorrect return values for ERC20 functions. A contract compiled with Solidity > 0.4.22 interacting with these functions will fail to execute them, as the return value is missing. Set the appropriate return values and types for the defined ERC20 functions."
-          },
-          "ruleId": "incorrect-erc20-interface"
-        },
-        {
-          "level": "warning",
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/OutOfOrderRetryable.sol"
-                },
-                "region": {
-                  "byteLength": 11,
-                  "byteOffset": 1649
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/OutOfOrderRetryable.sol"
+                  "uri": "src/FunctionSignatureCollision.sol"
                 },
                 "region": {
                   "byteLength": 22,
-                  "byteOffset": 2557
+                  "byteOffset": 231
                 }
               }
             }
           ],
           "message": {
-            "text": "Do not rely on the order or successful execution of retryable tickets. Functions like createRetryableTicket, outboundTransferCustomRefund, unsafeCreateRetryableTicket are free to be re-tried in any\n            order if they fail in the first go. Since this operation happens off chain, the sequencer is in control of the\n            order of these transactions. Therefore, restrict the use to at most 1 ticket call per function."
+            "text": "Function selector collides with other functions. This may cause the solidity function dispatcher to invoke the wrong function if the functions happen to be included in the same contract through an inheritance hirearchy later down the line. It is recommended to rename this function or change its parameters."
           },
-          "ruleId": "out-of-order-retryable"
+          "ruleId": "function-selector-collision"
         },
         {
           "level": "note",
@@ -3730,28 +3148,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/OutOfOrderRetryable.sol"
-                },
-                "region": {
-                  "byteLength": 28,
-                  "byteOffset": 4927
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/OutOfOrderRetryable.sol"
-                },
-                "region": {
-                  "byteLength": 28,
-                  "byteOffset": 5328
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/SendEtherNoChecks.sol"
                 },
                 "region": {
@@ -3816,6 +3212,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/ConstFuncChangeState.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/ConstantFuncsAssembly.sol"
                 },
                 "region": {
@@ -3839,6 +3246,17 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/ContractWithTodo.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CostlyOperationsInsideLoops.sol"
                 },
                 "region": {
                   "byteLength": 23,
@@ -3926,51 +3344,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/InconsistentUints.sol"
-                },
-                "region": {
-                  "byteLength": 24,
-                  "byteOffset": 0
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectERC20.sol"
-                },
-                "region": {
-                  "byteLength": 23,
-                  "byteOffset": 32
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectERC721.sol"
-                },
-                "region": {
-                  "byteLength": 23,
-                  "byteOffset": 32
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/MsgValueInLoop.sol"
-                },
-                "region": {
-                  "byteLength": 23,
-                  "byteOffset": 32
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/OutOfOrderRetryable.sol"
+                  "uri": "src/FunctionSignatureCollision.sol"
                 },
                 "region": {
                   "byteLength": 23,
@@ -4003,43 +3377,10 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/StateVariableCouldBeDeclaredConstant.sol"
-                },
-                "region": {
-                  "byteLength": 23,
-                  "byteOffset": 32
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesManipulation.sol"
-                },
-                "region": {
-                  "byteLength": 23,
-                  "byteOffset": 32
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/TautologyOrContradiction.sol"
                 },
                 "region": {
                   "byteLength": 23,
-                  "byteOffset": 32
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/TxOriginUsedForAuth.sol"
-                },
-                "region": {
-                  "byteLength": 24,
                   "byteOffset": 32
                 }
               }
@@ -4058,33 +3399,11 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/UnusedStateVariables.sol"
-                },
-                "region": {
-                  "byteLength": 24,
-                  "byteOffset": 32
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/UsingSelfdestruct.sol"
                 },
                 "region": {
                   "byteLength": 23,
                   "byteOffset": 32
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
-                },
-                "region": {
-                  "byteLength": 24,
-                  "byteOffset": 46
                 }
               }
             },
@@ -4124,17 +3443,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/nested_mappings/LaterVersion.sol"
-                },
-                "region": {
-                  "byteLength": 23,
-                  "byteOffset": 36
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/nested_mappings/NestedMappings.sol"
                 },
                 "region": {
@@ -4166,44 +3474,11 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/OutOfOrderRetryable.sol"
-                },
-                "region": {
-                  "byteLength": 14,
-                  "byteOffset": 1416
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/OutOfOrderRetryable.sol"
-                },
-                "region": {
-                  "byteLength": 24,
-                  "byteOffset": 1440
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/StateVariables.sol"
                 },
                 "region": {
                   "byteLength": 14,
                   "byteOffset": 2121
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesManipulation.sol"
-                },
-                "region": {
-                  "byteLength": 17,
-                  "byteOffset": 1876
                 }
               }
             },
@@ -4285,11 +3560,66 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/AssertStateChange.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 131
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/AssertStateChange.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 199
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/BuiltinSymbolShadow.sol"
                 },
                 "region": {
                   "byteLength": 41,
                   "byteOffset": 125
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ConstFuncChangeState.sol"
+                },
+                "region": {
+                  "byteLength": 112,
+                  "byteOffset": 173
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ConstFuncChangeState.sol"
+                },
+                "region": {
+                  "byteLength": 108,
+                  "byteOffset": 339
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ConstFuncChangeState.sol"
+                },
+                "region": {
+                  "byteLength": 89,
+                  "byteOffset": 517
                 }
               }
             },
@@ -4384,83 +3714,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/IncorrectERC20.sol"
-                },
-                "region": {
-                  "byteLength": 8,
-                  "byteOffset": 483
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectERC20.sol"
-                },
-                "region": {
-                  "byteLength": 7,
-                  "byteOffset": 690
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectERC20.sol"
-                },
-                "region": {
-                  "byteLength": 12,
-                  "byteOffset": 808
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectERC20.sol"
-                },
-                "region": {
-                  "byteLength": 9,
-                  "byteOffset": 1146
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectERC20.sol"
-                },
-                "region": {
-                  "byteLength": 9,
-                  "byteOffset": 1249
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/OutOfOrderRetryable.sol"
-                },
-                "region": {
-                  "byteLength": 13,
-                  "byteOffset": 4685
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/OutOfOrderRetryable.sol"
-                },
-                "region": {
-                  "byteLength": 7,
-                  "byteOffset": 5072
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/ReturnBomb.sol"
                 },
                 "region": {
@@ -4499,17 +3752,6 @@
                 "region": {
                   "byteLength": 4,
                   "byteOffset": 1646
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariableCouldBeDeclaredConstant.sol"
-                },
-                "region": {
-                  "byteLength": 16,
-                  "byteOffset": 354
                 }
               }
             },
@@ -4648,39 +3890,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
-                },
-                "region": {
-                  "byteLength": 3,
-                  "byteOffset": 500
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
-                },
-                "region": {
-                  "byteLength": 5,
-                  "byteOffset": 637
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
-                },
-                "region": {
-                  "byteLength": 4,
-                  "byteOffset": 738
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/cloc/HeavilyCommentedContract.sol"
                 },
                 "region": {
@@ -4731,6 +3940,28 @@
         {
           "level": "note",
           "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/AssertStateChange.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 174
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/AssertStateChange.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 254
+                }
+              }
+            },
             {
               "physicalLocation": {
                 "artifactLocation": {
@@ -4794,6 +4025,50 @@
                 "region": {
                   "byteLength": 3,
                   "byteOffset": 683
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CacheArrayLength.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 611
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CacheArrayLength.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 639
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CacheArrayLength.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 1015
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CacheArrayLength.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 1043
                 }
               }
             },
@@ -5207,138 +4482,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/StateVariablesManipulation.sol"
-                },
-                "region": {
-                  "byteLength": 2,
-                  "byteOffset": 3690
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesManipulation.sol"
-                },
-                "region": {
-                  "byteLength": 2,
-                  "byteOffset": 3761
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesManipulation.sol"
-                },
-                "region": {
-                  "byteLength": 3,
-                  "byteOffset": 5627
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesManipulation.sol"
-                },
-                "region": {
-                  "byteLength": 3,
-                  "byteOffset": 5840
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesManipulation.sol"
-                },
-                "region": {
-                  "byteLength": 1,
-                  "byteOffset": 6591
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesManipulation.sol"
-                },
-                "region": {
-                  "byteLength": 2,
-                  "byteOffset": 6687
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesManipulation.sol"
-                },
-                "region": {
-                  "byteLength": 2,
-                  "byteOffset": 6762
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesManipulation.sol"
-                },
-                "region": {
-                  "byteLength": 2,
-                  "byteOffset": 6923
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesManipulation.sol"
-                },
-                "region": {
-                  "byteLength": 1,
-                  "byteOffset": 7455
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesManipulation.sol"
-                },
-                "region": {
-                  "byteLength": 1,
-                  "byteOffset": 7716
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesManipulation.sol"
-                },
-                "region": {
-                  "byteLength": 3,
-                  "byteOffset": 9725
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesManipulation.sol"
-                },
-                "region": {
-                  "byteLength": 3,
-                  "byteOffset": 9890
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/UncheckedReturn.sol"
                 },
                 "region": {
@@ -5562,17 +4705,6 @@
                 "region": {
                   "byteLength": 54,
                   "byteOffset": 5655
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectERC721.sol"
-                },
-                "region": {
-                  "byteLength": 115,
-                  "byteOffset": 3122
                 }
               }
             },
@@ -5830,28 +4962,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
-                },
-                "region": {
-                  "byteLength": 7,
-                  "byteOffset": 589
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
-                },
-                "region": {
-                  "byteLength": 7,
-                  "byteOffset": 1403
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/cloc/HeavilyCommentedContract.sol"
                 },
                 "region": {
@@ -5935,6 +5045,28 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/AdminContract.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/AssertStateChange.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CacheArrayLength.sol"
                 },
                 "region": {
                   "byteLength": 23,
@@ -6033,29 +5165,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/InconsistentUints.sol"
-                },
-                "region": {
-                  "byteLength": 24,
-                  "byteOffset": 0
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectERC20.sol"
-                },
-                "region": {
-                  "byteLength": 23,
-                  "byteOffset": 32
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectERC721.sol"
+                  "uri": "src/FunctionSignatureCollision.sol"
                 },
                 "region": {
                   "byteLength": 23,
@@ -6077,28 +5187,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/MsgValueInLoop.sol"
-                },
-                "region": {
-                  "byteLength": 23,
-                  "byteOffset": 32
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/OutOfOrderRetryable.sol"
-                },
-                "region": {
-                  "byteLength": 23,
-                  "byteOffset": 32
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/ReturnBomb.sol"
                 },
                 "region": {
@@ -6110,29 +5198,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/StateVariableCouldBeDeclaredConstant.sol"
-                },
-                "region": {
-                  "byteLength": 23,
-                  "byteOffset": 32
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/StateVariables.sol"
-                },
-                "region": {
-                  "byteLength": 23,
-                  "byteOffset": 32
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesManipulation.sol"
                 },
                 "region": {
                   "byteLength": 23,
@@ -6176,32 +5242,10 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/TxOriginUsedForAuth.sol"
-                },
-                "region": {
-                  "byteLength": 24,
-                  "byteOffset": 32
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/UnsafeERC721Mint.sol"
                 },
                 "region": {
                   "byteLength": 23,
-                  "byteOffset": 32
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/UnusedStateVariables.sol"
-                },
-                "region": {
-                  "byteLength": 24,
                   "byteOffset": 32
                 }
               }
@@ -6214,17 +5258,6 @@
                 "region": {
                   "byteLength": 23,
                   "byteOffset": 32
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
-                },
-                "region": {
-                  "byteLength": 24,
-                  "byteOffset": 46
                 }
               }
             },
@@ -6302,17 +5335,6 @@
                 "region": {
                   "byteLength": 23,
                   "byteOffset": 180
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/nested_mappings/LaterVersion.sol"
-                },
-                "region": {
-                  "byteLength": 23,
-                  "byteOffset": 36
                 }
               }
             },
@@ -6535,6 +5557,28 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/CacheArrayLength.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 337
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CacheArrayLength.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 1104
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/CallGraphTests.sol"
                 },
                 "region": {
@@ -6656,22 +5700,33 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/OnceModifierExample.sol"
+                  "uri": "src/FunctionSignatureCollision.sol"
                 },
                 "region": {
-                  "byteLength": 7,
-                  "byteOffset": 147
+                  "byteLength": 8,
+                  "byteOffset": 166
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/OutOfOrderRetryable.sol"
+                  "uri": "src/FunctionSignatureCollision.sol"
                 },
                 "region": {
-                  "byteLength": 13,
-                  "byteOffset": 5775
+                  "byteLength": 22,
+                  "byteOffset": 231
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/OnceModifierExample.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 147
                 }
               }
             },
@@ -7079,28 +6134,6 @@
                   "byteOffset": 1673
                 }
               }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectERC20.sol"
-                },
-                "region": {
-                  "byteLength": 7,
-                  "byteOffset": 225
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectERC20.sol"
-                },
-                "region": {
-                  "byteLength": 7,
-                  "byteOffset": 1550
-                }
-              }
             }
           ],
           "message": {
@@ -7174,39 +6207,6 @@
                 "region": {
                   "byteLength": 12,
                   "byteOffset": 693
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/MsgValueInLoop.sol"
-                },
-                "region": {
-                  "byteLength": 8,
-                  "byteOffset": 1103
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/MsgValueInLoop.sol"
-                },
-                "region": {
-                  "byteLength": 8,
-                  "byteOffset": 1529
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/MsgValueInLoop.sol"
-                },
-                "region": {
-                  "byteLength": 8,
-                  "byteOffset": 1962
                 }
               }
             },
@@ -7352,83 +6352,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/InconsistentUints.sol"
-                },
-                "region": {
-                  "byteLength": 12,
-                  "byteOffset": 122
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/InconsistentUints.sol"
-                },
-                "region": {
-                  "byteLength": 11,
-                  "byteOffset": 197
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/InconsistentUints.sol"
-                },
-                "region": {
-                  "byteLength": 10,
-                  "byteOffset": 289
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/InconsistentUints.sol"
-                },
-                "region": {
-                  "byteLength": 9,
-                  "byteOffset": 340
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/InconsistentUints.sol"
-                },
-                "region": {
-                  "byteLength": 9,
-                  "byteOffset": 383
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/InconsistentUints.sol"
-                },
-                "region": {
-                  "byteLength": 10,
-                  "byteOffset": 434
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/InconsistentUints.sol"
-                },
-                "region": {
-                  "byteLength": 12,
-                  "byteOffset": 528
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/TautologicalCompare.sol"
                 },
                 "region": {
@@ -7533,17 +6456,6 @@
                 "region": {
                   "byteLength": 6,
                   "byteOffset": 8141
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/nested_mappings/LaterVersion.sol"
-                },
-                "region": {
-                  "byteLength": 5,
-                  "byteOffset": 184
                 }
               }
             },
@@ -7835,17 +6747,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/InconsistentUints.sol"
-                },
-                "region": {
-                  "byteLength": 10,
-                  "byteOffset": 434
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/StateVariables.sol"
                 },
                 "region": {
@@ -7939,105 +6840,6 @@
                 "region": {
                   "byteLength": 3,
                   "byteOffset": 503
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/UnusedStateVariables.sol"
-                },
-                "region": {
-                  "byteLength": 13,
-                  "byteOffset": 147
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/UnusedStateVariables.sol"
-                },
-                "region": {
-                  "byteLength": 13,
-                  "byteOffset": 183
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/UnusedStateVariables.sol"
-                },
-                "region": {
-                  "byteLength": 10,
-                  "byteOffset": 215
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/UnusedStateVariables.sol"
-                },
-                "region": {
-                  "byteLength": 12,
-                  "byteOffset": 246
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
-                },
-                "region": {
-                  "byteLength": 3,
-                  "byteOffset": 151
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
-                },
-                "region": {
-                  "byteLength": 3,
-                  "byteOffset": 190
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
-                },
-                "region": {
-                  "byteLength": 3,
-                  "byteOffset": 261
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
-                },
-                "region": {
-                  "byteLength": 3,
-                  "byteOffset": 367
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
-                },
-                "region": {
-                  "byteLength": 3,
-                  "byteOffset": 477
                 }
               }
             },
@@ -8265,52 +7067,41 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/BuiltinSymbolShadow.sol"
+                  "uri": "src/CacheArrayLength.sol"
                 },
                 "region": {
-                  "byteLength": 8,
-                  "byteOffset": 92
+                  "byteLength": 82,
+                  "byteOffset": 234
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/BuiltinSymbolShadow.sol"
+                  "uri": "src/CacheArrayLength.sol"
                 },
                 "region": {
-                  "byteLength": 41,
-                  "byteOffset": 125
+                  "byteLength": 64,
+                  "byteOffset": 1160
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/BuiltinSymbolShadow.sol"
+                  "uri": "src/CacheArrayLength.sol"
                 },
                 "region": {
-                  "byteLength": 39,
-                  "byteOffset": 358
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/BuiltinSymbolShadow.sol"
-                },
-                "region": {
-                  "byteLength": 15,
-                  "byteOffset": 414
+                  "byteLength": 183,
+                  "byteOffset": 1325
                 }
               }
             }
           ],
           "message": {
-            "text": "Name clashes with a built-in-symbol. Consider renaming it."
+            "text": "Cache the lengths of storage arrays if they are used and not modified in for loops."
           },
-          "ruleId": "builtin-symbol-shadow"
+          "ruleId": "cache-array-length"
         },
         {
           "level": "note",
@@ -8318,415 +7109,127 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/FunctionInitializingState.sol"
-                },
-                "region": {
-                  "byteLength": 21,
-                  "byteOffset": 108
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/FunctionInitializingState.sol"
-                },
-                "region": {
-                  "byteLength": 17,
-                  "byteOffset": 176
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/FunctionInitializingState.sol"
-                },
-                "region": {
-                  "byteLength": 21,
-                  "byteOffset": 199
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/FunctionInitializingState.sol"
-                },
-                "region": {
-                  "byteLength": 21,
-                  "byteOffset": 267
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/FunctionInitializingState.sol"
-                },
-                "region": {
-                  "byteLength": 22,
-                  "byteOffset": 294
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/FunctionInitializingState.sol"
+                  "uri": "src/AssertStateChange.sol"
                 },
                 "region": {
                   "byteLength": 23,
-                  "byteOffset": 322
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/FunctionInitializingState.sol"
-                },
-                "region": {
-                  "byteLength": 17,
-                  "byteOffset": 1603
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectERC20.sol"
-                },
-                "region": {
-                  "byteLength": 4,
-                  "byteOffset": 101
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectERC20.sol"
-                },
-                "region": {
-                  "byteLength": 6,
-                  "byteOffset": 144
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectERC20.sol"
-                },
-                "region": {
-                  "byteLength": 8,
-                  "byteOffset": 177
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectERC20.sol"
-                },
-                "region": {
-                  "byteLength": 11,
-                  "byteOffset": 211
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectERC20.sol"
-                },
-                "region": {
-                  "byteLength": 4,
-                  "byteOffset": 1426
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectERC20.sol"
-                },
-                "region": {
-                  "byteLength": 6,
-                  "byteOffset": 1467
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectERC20.sol"
-                },
-                "region": {
-                  "byteLength": 8,
-                  "byteOffset": 1500
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectERC20.sol"
-                },
-                "region": {
-                  "byteLength": 12,
-                  "byteOffset": 1535
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectERC721.sol"
-                },
-                "region": {
-                  "byteLength": 4,
-                  "byteOffset": 102
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectERC721.sol"
-                },
-                "region": {
-                  "byteLength": 6,
-                  "byteOffset": 143
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectERC721.sol"
-                },
-                "region": {
-                  "byteLength": 4,
-                  "byteOffset": 4001
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectERC721.sol"
-                },
-                "region": {
-                  "byteLength": 6,
-                  "byteOffset": 4040
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariableCouldBeDeclaredConstant.sol"
-                },
-                "region": {
-                  "byteLength": 13,
-                  "byteOffset": 188
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariables.sol"
-                },
-                "region": {
-                  "byteLength": 27,
-                  "byteOffset": 383
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariables.sol"
-                },
-                "region": {
-                  "byteLength": 28,
-                  "byteOffset": 437
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariables.sol"
-                },
-                "region": {
-                  "byteLength": 26,
-                  "byteOffset": 490
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesManipulation.sol"
-                },
-                "region": {
-                  "byteLength": 9,
-                  "byteOffset": 1407
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesManipulation.sol"
-                },
-                "region": {
-                  "byteLength": 10,
-                  "byteOffset": 1440
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesManipulation.sol"
-                },
-                "region": {
-                  "byteLength": 13,
-                  "byteOffset": 2287
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/UninitializedStateVariable.sol"
-                },
-                "region": {
-                  "byteLength": 11,
-                  "byteOffset": 198
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
-                },
-                "region": {
-                  "byteLength": 3,
-                  "byteOffset": 151
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
-                },
-                "region": {
-                  "byteLength": 3,
-                  "byteOffset": 190
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
-                },
-                "region": {
-                  "byteLength": 3,
-                  "byteOffset": 261
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
-                },
-                "region": {
-                  "byteLength": 3,
-                  "byteOffset": 367
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
-                },
-                "region": {
-                  "byteLength": 3,
-                  "byteOffset": 477
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/cloc/HeavilyCommentedContract.sol"
-                },
-                "region": {
-                  "byteLength": 3,
-                  "byteOffset": 160
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/cloc/HeavilyCommentedContract.sol"
-                },
-                "region": {
-                  "byteLength": 3,
-                  "byteOffset": 199
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/cloc/HeavilyCommentedContract.sol"
-                },
-                "region": {
-                  "byteLength": 3,
-                  "byteOffset": 270
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/cloc/HeavilyCommentedContract.sol"
-                },
-                "region": {
-                  "byteLength": 3,
-                  "byteOffset": 376
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/cloc/HeavilyCommentedContract.sol"
-                },
-                "region": {
-                  "byteLength": 3,
-                  "byteOffset": 486
+                  "byteOffset": 154
                 }
               }
             }
           ],
           "message": {
-            "text": "State variables that are not updated following deployment should be declared constant to save gas. Add the `constant` attribute to state variables that never change."
+            "text": "Argument to `assert()` modifies the state. Use `require` for invariants modifying state."
           },
-          "ruleId": "state-variable-could-be-declared-constant"
+          "ruleId": "assert-state-change"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CacheArrayLength.sol"
+                },
+                "region": {
+                  "byteLength": 133,
+                  "byteOffset": 546
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CacheArrayLength.sol"
+                },
+                "region": {
+                  "byteLength": 155,
+                  "byteOffset": 928
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CostlyOperationsInsideLoops.sol"
+                },
+                "region": {
+                  "byteLength": 79,
+                  "byteOffset": 214
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/RevertsAndRequriesInLoops.sol"
+                },
+                "region": {
+                  "byteLength": 129,
+                  "byteOffset": 227
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/RevertsAndRequriesInLoops.sol"
+                },
+                "region": {
+                  "byteLength": 150,
+                  "byteOffset": 416
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/RevertsAndRequriesInLoops.sol"
+                },
+                "region": {
+                  "byteLength": 159,
+                  "byteOffset": 719
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/eth2/DepositContract.sol"
+                },
+                "region": {
+                  "byteLength": 178,
+                  "byteOffset": 5010
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/eth2/DepositContract.sol"
+                },
+                "region": {
+                  "byteLength": 283,
+                  "byteOffset": 8131
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/parent_chain/ParentChainContract.sol"
+                },
+                "region": {
+                  "byteLength": 110,
+                  "byteOffset": 512
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Invoking `SSTORE`operations in loops may lead to Out-of-gas errors. Use a local variable to hold the loop computation result."
+          },
+          "ruleId": "costly-operations-inside-loops"
         }
       ],
       "tool": {
@@ -8735,8 +7238,8 @@
           "informationUri": "https://github.com/Cyfrin/aderyn",
           "name": "Aderyn",
           "organization": "Cyfrin",
-          "semanticVersion": "0.1.10",
-          "version": "0.1.10"
+          "semanticVersion": "0.1.11",
+          "version": "0.1.11"
         }
       }
     }

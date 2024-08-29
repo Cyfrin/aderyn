@@ -1,8 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+<<<<<<< HEAD
 interface IERC20 {}
 
+=======
+>>>>>>> dev
 /***** ASSIGNMENT OPERATIONS *****/
 
 contract NoStateVarManipulationExample {
@@ -14,6 +17,7 @@ contract NoStateVarManipulationExample {
     address payable public simplePayableAddress;
     string public simpleString;
     bytes public simpleBytes;
+<<<<<<< HEAD
     IERC20 public h = IERC20(address(3)); // BAD - but not caught. False negative.
 
     uint256 public i; // This one should not be constant, but immutable
@@ -21,6 +25,8 @@ contract NoStateVarManipulationExample {
     constructor() {
         i = 3;
     }
+=======
+>>>>>>> dev
 
     // There are NO state variables assigned in this function
     function dontManipulateStateVar() external view {
