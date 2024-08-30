@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 95,
-    "total_sloc": 3336
+    "total_source_units": 96,
+    "total_sloc": 3346
   },
   "files_details": {
     "files_details": [
@@ -136,6 +136,10 @@
       {
         "file_path": "src/FunctionInitializingState.sol",
         "n_sloc": 49
+      },
+      {
+        "file_path": "src/FunctionPointers.sol",
+        "n_sloc": 10
       },
       {
         "file_path": "src/FunctionSignatureCollision.sol",
@@ -389,7 +393,7 @@
   },
   "issue_count": {
     "high": 41,
-    "low": 36
+    "low": 37
   },
   "high_issues": {
     "issues": [
@@ -5623,6 +5627,19 @@
             "src_char": "414:15"
           }
         ]
+      },
+      {
+        "title": "Function pointers used in constructors.",
+        "description": "solc versions below 0.5.9 contain a compiler bug leading to unexpected behavior when calling uninitialized function pointers in constructors. It is recommended to not use function pointers in constructors.",
+        "detector_name": "function-pointer-in-constructor",
+        "instances": [
+          {
+            "contract_path": "src/FunctionPointers.sol",
+            "line_no": 13,
+            "src": "330:50",
+            "src_char": "330:50"
+          }
+        ]
       }
     ]
   },
@@ -5703,6 +5720,7 @@
     "costly-operations-inside-loops",
     "constant-function-changing-state",
     "builtin-symbol-shadow",
-    "function-selector-collision"
+    "function-selector-collision",
+    "function-pointer-in-constructor"
   ]
 }
