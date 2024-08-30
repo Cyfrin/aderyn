@@ -8902,11 +8902,33 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/StateVariables.sol"
+                },
+                "region": {
+                  "byteLength": 38,
+                  "byteOffset": 57
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/UnusedImport.sol"
                 },
                 "region": {
                   "byteLength": 18,
                   "byteOffset": 92
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UnusedImport.sol"
+                },
+                "region": {
+                  "byteLength": 28,
+                  "byteOffset": 145
                 }
               }
             }

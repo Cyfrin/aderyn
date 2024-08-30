@@ -1,7 +1,7 @@
 {
   "files_summary": {
     "total_source_units": 97,
-    "total_sloc": 3247
+    "total_sloc": 3248
   },
   "files_details": {
     "files_details": [
@@ -295,7 +295,7 @@
       },
       {
         "file_path": "src/UnusedImport.sol",
-        "n_sloc": 7
+        "n_sloc": 8
       },
       {
         "file_path": "src/UnusedStateVariables.sol",
@@ -5418,10 +5418,22 @@
         "detector_name": "unused-import",
         "instances": [
           {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 4,
+            "src": "57:38",
+            "src_char": "57:38"
+          },
+          {
             "contract_path": "src/UnusedImport.sol",
             "line_no": 6,
             "src": "92:18",
             "src_char": "92:18"
+          },
+          {
+            "contract_path": "src/UnusedImport.sol",
+            "line_no": 9,
+            "src": "145:28",
+            "src_char": "145:28"
           }
         ]
       }
