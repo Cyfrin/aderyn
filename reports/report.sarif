@@ -1949,6 +1949,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 93
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/UninitializedStateVariable.sol"
                 },
                 "region": {
@@ -2393,17 +2404,6 @@
                 "region": {
                   "byteLength": 7,
                   "byteOffset": 5072
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ReturnBomb.sol"
-                },
-                "region": {
-                  "byteLength": 4,
-                  "byteOffset": 839
                 }
               }
             },
@@ -3470,6 +3470,9 @@
           "level": "warning",
           "locations": [
             {
+              "message": {
+                "text": "collides with the following function name(s) in scope: OwnerTransferV7b711143"
+              },
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/FunctionSignatureCollision.sol"
@@ -3481,6 +3484,9 @@
               }
             },
             {
+              "message": {
+                "text": "collides with the following function name(s) in scope: withdraw"
+              },
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/FunctionSignatureCollision.sol"
@@ -4554,6 +4560,28 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/AderynIgnoreCustomDetectors.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 174
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/AderynIgnoreCustomDetectors.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 586
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/ArbitraryTransferFrom.sol"
                 },
                 "region": {
@@ -4900,6 +4928,39 @@
                 "region": {
                   "byteLength": 25,
                   "byteOffset": 2539
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 19,
+                  "byteOffset": 121
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 20,
+                  "byteOffset": 727
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 1527
                 }
               }
             },
@@ -5778,6 +5839,50 @@
                 "region": {
                   "byteLength": 7,
                   "byteOffset": 1190
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 42,
+                  "byteOffset": 1264
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 42,
+                  "byteOffset": 2278
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 2459
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 2607
                 }
               }
             },
@@ -6936,6 +7041,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/AderynIgnoreCustomDetectors.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 174
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/AdminContract.sol"
                 },
                 "region": {
@@ -7918,6 +8034,72 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 211
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 22,
+                  "byteOffset": 434
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 817
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 20,
+                  "byteOffset": 1109
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 1639
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 1826
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/eth2/DepositContract.sol"
                 },
                 "region": {
@@ -8401,6 +8583,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 93
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/UninitializedStateVariable.sol"
                 },
                 "region": {
@@ -8670,6 +8863,180 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/ConstantFuncsAssembly.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 478
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ConstantFuncsAssembly.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 716
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StorageParameters.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 184
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 211
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 243
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 20,
+                  "byteOffset": 278
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 312
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 20,
+                  "byteOffset": 346
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 19,
+                  "byteOffset": 390
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 22,
+                  "byteOffset": 434
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 22,
+                  "byteOffset": 481
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 25,
+                  "byteOffset": 531
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 21,
+                  "byteOffset": 580
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 25,
+                  "byteOffset": 629
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedLocalVariables.sol"
+                },
+                "region": {
+                  "byteLength": 24,
+                  "byteOffset": 681
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Initialize all the variables. If a variable is meant to be initialized to zero, explicitly set it to zero to improve code readability."
+          },
+          "ruleId": "uninitialized-local-variable"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/ReturnBomb.sol"
                 },
                 "region": {
@@ -8725,6 +9092,147 @@
             "text": "Detects the immediate initialization of state variables through function calls that are not pure/constant, or that use non-constant state variable. Remove any initialization of state variables via non-constant state variables or function calls. If variables must be set upon contract deployment, locate initialization in the constructor instead."
           },
           "ruleId": "function-initializing-state"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ArbitraryTransferFrom.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 304
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 1540
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DeadCode.sol"
+                },
+                "region": {
+                  "byteLength": 22,
+                  "byteOffset": 362
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DeletionNestedMappingStructureContract.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 258
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectShift.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 100
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectShift.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 292
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedReturn.sol"
+                },
+                "region": {
+                  "byteLength": 19,
+                  "byteOffset": 186
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedReturn.sol"
+                },
+                "region": {
+                  "byteLength": 21,
+                  "byteOffset": 362
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedReturn.sol"
+                },
+                "region": {
+                  "byteLength": 19,
+                  "byteOffset": 492
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedReturn.sol"
+                },
+                "region": {
+                  "byteLength": 21,
+                  "byteOffset": 644
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedReturn.sol"
+                },
+                "region": {
+                  "byteLength": 26,
+                  "byteOffset": 842
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedReturn.sol"
+                },
+                "region": {
+                  "byteLength": 19,
+                  "byteOffset": 1049
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Functions that are not used. Consider removing them."
+          },
+          "ruleId": "dead-code"
         },
         {
           "level": "note",
@@ -9003,6 +9511,26 @@
             "text": "Name clashes with a built-in-symbol. Consider renaming it."
           },
           "ruleId": "builtin-symbol-shadow"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/FunctionPointers.sol"
+                },
+                "region": {
+                  "byteLength": 50,
+                  "byteOffset": 330
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "solc versions below 0.5.9 contain a compiler bug leading to unexpected behavior when calling uninitialized function pointers in constructors. It is recommended to not use function pointers in constructors."
+          },
+          "ruleId": "function-pointer-in-constructor"
         }
       ],
       "tool": {
