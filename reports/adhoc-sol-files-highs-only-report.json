@@ -100,9 +100,9 @@
         "instances": [
           {
             "contract_path": "inheritance/ExtendedInheritance.sol",
-            "line_no": 16,
-            "src": "488:19",
-            "src_char": "488:19"
+            "line_no": 15,
+            "src": "474:96",
+            "src_char": "474:96"
           }
         ]
       },
