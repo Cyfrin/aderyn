@@ -1,5 +1,6 @@
 use crate::{
     ast::*,
+    context::workspace_context::WorkspaceContext,
     visitor::ast_visitor::{ASTConstVisitor, Node},
 };
 use eyre::Result;
@@ -121,6 +122,65 @@ impl ASTConstVisitor for ExtractReferencedDeclarations {
         Ok(true)
     }
     fn visit_user_defined_type_name(&mut self, node: &UserDefinedTypeName) -> Result<bool> {
+        self.extracted.push(node.referenced_declaration);
+        Ok(true)
+    }
+}
+
+// Extract Reference Declaration IDs
+pub struct ExtractReferencedDeclarationsConditionally<'a> {
+    pub extracted: Vec<NodeID>,
+    pub condition: Box<dyn Fn(NodeID, &'a WorkspaceContext) -> bool>,
+    pub context: &'a WorkspaceContext,
+}
+
+impl<'a> ExtractReferencedDeclarationsConditionally<'a> {
+    pub fn from<T: Node + ?Sized>(
+        node: &T,
+        context: &'a WorkspaceContext,
+        condition: Box<dyn Fn(NodeID, &'a WorkspaceContext) -> bool>,
+    ) -> Self {
+        let mut extractor: ExtractReferencedDeclarationsConditionally =
+            ExtractReferencedDeclarationsConditionally {
+                extracted: vec![],
+                condition,
+                context,
+            };
+        node.accept(&mut extractor).unwrap_or_default();
+        extractor
+    }
+}
+
+impl<'a> ASTConstVisitor for ExtractReferencedDeclarationsConditionally<'a> {
+    fn visit_member_access(&mut self, node: &MemberAccess) -> Result<bool> {
+        if !self.condition.as_ref()(node.id, self.context) {
+            return Ok(true);
+        }
+        if let Some(referenced_id) = node.referenced_declaration {
+            self.extracted.push(referenced_id);
+        }
+        Ok(true)
+    }
+    fn visit_identifier(&mut self, node: &Identifier) -> Result<bool> {
+        if !self.condition.as_ref()(node.id, self.context) {
+            return Ok(true);
+        }
+        if let Some(referenced_id) = node.referenced_declaration {
+            self.extracted.push(referenced_id);
+        }
+        Ok(true)
+    }
+    fn visit_identifier_path(&mut self, node: &IdentifierPath) -> Result<bool> {
+        if !self.condition.as_ref()(node.id, self.context) {
+            return Ok(true);
+        }
+        self.extracted.push(node.referenced_declaration as i64);
+        Ok(true)
+    }
+    fn visit_user_defined_type_name(&mut self, node: &UserDefinedTypeName) -> Result<bool> {
+        if !self.condition.as_ref()(node.id, self.context) {
+            return Ok(true);
+        }
         self.extracted.push(node.referenced_declaration);
         Ok(true)
     }

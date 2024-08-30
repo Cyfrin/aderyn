@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 94,
-    "total_sloc": 3237
+    "total_source_units": 97,
+    "total_sloc": 3247
   },
   "files_details": {
     "files_details": [
@@ -258,6 +258,18 @@
         "n_sloc": 3
       },
       {
+        "file_path": "src/U3.sol",
+        "n_sloc": 2
+      },
+      {
+        "file_path": "src/U4.sol",
+        "n_sloc": 3
+      },
+      {
+        "file_path": "src/U5.sol",
+        "n_sloc": 2
+      },
+      {
         "file_path": "src/UncheckedReturn.sol",
         "n_sloc": 33
       },
@@ -283,7 +295,7 @@
       },
       {
         "file_path": "src/UnusedImport.sol",
-        "n_sloc": 4
+        "n_sloc": 7
       },
       {
         "file_path": "src/UnusedStateVariables.sol",
@@ -2743,6 +2755,24 @@
             "src_char": "33:24"
           },
           {
+            "contract_path": "src/U3.sol",
+            "line_no": 3,
+            "src": "33:24",
+            "src_char": "33:24"
+          },
+          {
+            "contract_path": "src/U4.sol",
+            "line_no": 2,
+            "src": "32:24",
+            "src_char": "32:24"
+          },
+          {
+            "contract_path": "src/U5.sol",
+            "line_no": 2,
+            "src": "32:24",
+            "src_char": "32:24"
+          },
+          {
             "contract_path": "src/UncheckedSend.sol",
             "line_no": 2,
             "src": "32:23",
@@ -4009,6 +4039,24 @@
             "line_no": 3,
             "src": "33:24",
             "src_char": "33:24"
+          },
+          {
+            "contract_path": "src/U3.sol",
+            "line_no": 3,
+            "src": "33:24",
+            "src_char": "33:24"
+          },
+          {
+            "contract_path": "src/U4.sol",
+            "line_no": 2,
+            "src": "32:24",
+            "src_char": "32:24"
+          },
+          {
+            "contract_path": "src/U5.sol",
+            "line_no": 2,
+            "src": "32:24",
+            "src_char": "32:24"
           },
           {
             "contract_path": "src/UnsafeERC721Mint.sol",
