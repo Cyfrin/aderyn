@@ -88,7 +88,7 @@
     ]
   },
   "issue_count": {
-    "high": 3,
+    "high": 4,
     "low": 0
   },
   "high_issues": {
@@ -155,6 +155,19 @@
             "src_char": "391:15"
           }
         ]
+      },
+      {
+        "title": "Unchecked Low level calls",
+        "description": "The return value of the low-level call is not checked, so if the call fails, the Ether will be locked in the contract. If the low level is used to prevent blocking operations, consider logging failed calls. Ensure that the return value of a low-level call is checked or logged.",
+        "detector_name": "unchecked-low-level-call",
+        "instances": [
+          {
+            "contract_path": "inheritance/ExtendedInheritance.sol",
+            "line_no": 16,
+            "src": "488:71",
+            "src_char": "488:71"
+          }
+        ]
       }
     ]
   },
@@ -202,6 +215,7 @@
     "incorrect-erc20-interface",
     "out-of-order-retryable",
     "constant-function-changing-state",
-    "function-selector-collision"
+    "function-selector-collision",
+    "unchecked-low-level-call"
   ]
 }

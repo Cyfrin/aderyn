@@ -150,7 +150,7 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
             .lock()
             .unwrap()
             .iter()
-            .map(|(key, value)| (key.to_owned(), value.lines_to_ignore.clone()))
+            .map(|(key, value)| (key.to_owned(), value.ignore_lines.clone()))
             .collect::<HashMap<_, _>>();
 
         // dbg!(&stats);
@@ -216,6 +216,23 @@ fn obtain_config_values(
     if foundry_path.exists() {
         (local_src, local_exclude, local_remappings) =
             append_from_foundry_toml(&root_path, &local_src, &local_exclude, &local_remappings);
+    } else {
+        // If foundry.toml wasn't found see if it makes sense to set src as `contracts/` for hardhat projects
+        let hardhat_config_js_path = root_path.join("hardhat.config.js");
+        let hardhat_config_ts_path = root_path.join("hardhat.config.ts");
+
+        if local_src.is_none()
+            && (hardhat_config_js_path.exists() || hardhat_config_ts_path.exists())
+        {
+            local_src = Some(vec![String::from("contracts")])
+        }
+
+        // Also if there is no `remappings.txt` or `remappings` in this case, print a warning!
+        let remappings = root_path.join("remappings");
+        let remappings_txt = root_path.join("remappings.txt");
+        if local_remappings.is_none() && !remappings.exists() && !remappings_txt.exists() {
+            println!("WARNING: `remappings.txt` not found.")
+        }
     }
 
     Ok((

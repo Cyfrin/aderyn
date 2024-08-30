@@ -112,15 +112,7 @@ pub fn has_calls_that_sends_native_eth(ast_node: &ASTNode) -> bool {
     // Check for address(..).call{value: 10}("...") pattern
     let function_call_ops = ExtractFunctionCallOptions::from(ast_node).extracted;
     for function_call in &function_call_ops {
-        let call_carries_value = function_call.options.iter().any(|c| {
-            if let Expression::Literal(literal) = c {
-                return literal.value.is_some();
-            }
-            if let Expression::Identifier(_) = c {
-                return true;
-            }
-            false
-        });
+        let call_carries_value = function_call.names.contains(&String::from("value"));
         if !call_carries_value {
             continue;
         }
