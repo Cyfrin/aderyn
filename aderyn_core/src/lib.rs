@@ -10,6 +10,7 @@ use audit::auditor::{get_auditor_detectors, AuditorPrinter, BasicAuditorPrinter}
 use cyfrin_foundry_compilers::utils::canonicalize;
 use detect::detector::IssueDetector;
 use eyre::Result;
+use fscloc::cloc::When;
 use prettytable::Row;
 use rayon::iter::{IntoParallelIterator, IntoParallelRefMutIterator, ParallelIterator};
 use std::collections::btree_map::Entry;
@@ -127,9 +128,11 @@ where
                 description: detector.description(),
                 detector_name: detector.name(),
                 instances: Default::default(),
+                hints: Default::default(),
             };
 
             let mut detectors_instances = BTreeMap::new();
+            let mut detector_hints = BTreeMap::new();
 
             let collection_of_instances = contexts
                 .into_par_iter()
@@ -138,15 +141,17 @@ where
                     if let Ok(found) = d.detect(context) {
                         if found {
                             let instances = d.instances();
-                            return Some(instances);
+                            let hints = d.hints();
+                            return Some((instances, hints));
                         }
                     }
                     None
                 })
                 .collect::<Vec<_>>();
 
-            for instances in collection_of_instances {
+            for (instances, hints) in collection_of_instances {
                 detectors_instances.extend(instances);
+                detector_hints.extend(hints);
             }
 
             if detectors_instances.is_empty() {
@@ -156,18 +161,38 @@ where
             issue.instances = detectors_instances
                 .into_iter()
                 .filter(|(instance, _)| {
-                    !ignore_lines
+                    let lines_to_ignore_in_file = ignore_lines
                         .get(
                             &canonicalize(root_rel_path.join(&instance.0))
                                 .unwrap()
                                 .to_string_lossy()
                                 .to_string(),
                         )
-                        .unwrap()
-                        .as_ref()
-                        .is_some_and(|lines_to_ignore| lines_to_ignore.contains(&instance.1))
+                        .unwrap();
+                    if lines_to_ignore_in_file.is_empty() {
+                        return true;
+                    }
+
+                    for ignore_condition in lines_to_ignore_in_file.iter() {
+                        if ignore_condition.which == instance.1 {
+                            match &ignore_condition.when {
+                                When::Always => {
+                                    return false;
+                                }
+                                When::ForDetectorsWithNames(names) => {
+                                    if names.iter().any(|name| *name == detector.name()) {
+                                        return false;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    true
                 })
                 .collect();
+
+            issue.hints = detector_hints;
+
             Some((issue, detector.severity()))
         })
         .collect();

@@ -1,4 +1,3 @@
-use incorrect_erc20_interface::IncorrectERC20InterfaceDetector;
 use serde::{Deserialize, Serialize};
 use strum::{Display, EnumCount, EnumIter, EnumString};
 
@@ -83,11 +82,17 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<ContractLocksEtherDetector>::default(),
         Box::<IncorrectERC721InterfaceDetector>::default(),
         Box::<IncorrectERC20InterfaceDetector>::default(),
+        Box::<UninitializedLocalVariableDetector>::default(),
         Box::<ReturnBombDetector>::default(),
         Box::<OutOfOrderRetryableDetector>::default(),
         Box::<FunctionInitializingStateDetector>::default(),
         Box::<DeadCodeDetector>::default(),
+        Box::<CacheArrayLengthDetector>::default(),
+        Box::<AssertStateChangeDetector>::default(),
+        Box::<CostlyOperationsInsideLoopsDetector>::default(),
+        Box::<ConstantFunctionChangingStateDetector>::default(),
         Box::<BuiltinSymbolShadowDetector>::default(),
+        Box::<FunctionSelectorCollisionDetector>::default(),
     ]
 }
 
@@ -100,6 +105,11 @@ pub fn get_all_detectors_names() -> Vec<String> {
 #[strum(serialize_all = "kebab-case")]
 pub(crate) enum IssueDetectorNamePool {
     DeadCode,
+    FunctionSelectorCollision,
+    CacheArrayLength,
+    AssertStateChange,
+    CostlyOperationsInsideLoops,
+    ConstantFunctionChangingState,
     BuiltinSymbolShadow,
     IncorrectERC721Interface,
     FunctionInitializingState,
@@ -169,6 +179,7 @@ pub(crate) enum IssueDetectorNamePool {
     MsgValueInLoop,
     ContractLocksEther,
     IncorrectERC20Interface,
+    UninitializedLocalVariable,
     ReturnBomb,
     OutOfOrderRetryable,
     // NOTE: `Undecided` will be the default name (for new bots).
@@ -181,6 +192,19 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
     let detector_name = IssueDetectorNamePool::from_str(detector_name).ok()?;
     match detector_name {
         IssueDetectorNamePool::DeadCode => Some(Box::<DeadCodeDetector>::default()),
+        IssueDetectorNamePool::FunctionSelectorCollision => {
+            Some(Box::<FunctionSelectorCollisionDetector>::default())
+        }
+        IssueDetectorNamePool::CacheArrayLength => Some(Box::<CacheArrayLengthDetector>::default()),
+        IssueDetectorNamePool::AssertStateChange => {
+            Some(Box::<AssertStateChangeDetector>::default())
+        }
+        IssueDetectorNamePool::CostlyOperationsInsideLoops => {
+            Some(Box::<CostlyOperationsInsideLoopsDetector>::default())
+        }
+        IssueDetectorNamePool::ConstantFunctionChangingState => {
+            Some(Box::<ConstantFunctionChangingStateDetector>::default())
+        }
         IssueDetectorNamePool::BuiltinSymbolShadow => {
             Some(Box::<BuiltinSymbolShadowDetector>::default())
         }
@@ -195,6 +219,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         }
         IssueDetectorNamePool::IncorrectERC20Interface => {
             Some(Box::<IncorrectERC20InterfaceDetector>::default())
+        }
+        IssueDetectorNamePool::UninitializedLocalVariable => {
+            Some(Box::<UninitializedLocalVariableDetector>::default())
         }
         IssueDetectorNamePool::ReturnBomb => Some(Box::<ReturnBombDetector>::default()),
         IssueDetectorNamePool::UnusedStateVariable => {
@@ -415,6 +442,10 @@ pub trait IssueDetector: Send + Sync + 'static {
     // Keys are source file name, line number and source location
     // Value is ASTNode NodeID
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
+        BTreeMap::new()
+    }
+
+    fn hints(&self) -> BTreeMap<(String, usize, String), String> {
         BTreeMap::new()
     }
 }
