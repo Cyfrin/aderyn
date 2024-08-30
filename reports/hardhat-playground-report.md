@@ -66,10 +66,10 @@ When calling `delegatecall` the same `msg.value` amount will be accredited multi
 <details><summary>1 Found Instances</summary>
 
 
-- Found in contracts/ExtendedInheritance.sol [Line: 16](../tests/hardhat-js-playground/contracts/ExtendedInheritance.sol#L16)
+- Found in contracts/ExtendedInheritance.sol [Line: 15](../tests/hardhat-js-playground/contracts/ExtendedInheritance.sol#L15)
 
 	```solidity
-	            target.delegatecall(abi.encodeWithSignature("doSomething(uint256)", i));
+	        for (uint256 i = 0; i < 3; i++) {
 	```
 
 </details>
