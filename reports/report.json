@@ -1486,8 +1486,8 @@
           {
             "contract_path": "src/UninitializedLocalVariables.sol",
             "line_no": 5,
-            "src": "94:12",
-            "src_char": "94:12"
+            "src": "93:12",
+            "src_char": "93:12"
           },
           {
             "contract_path": "src/UninitializedStateVariable.sol",
@@ -2745,12 +2745,6 @@
             "src_char": "32:23"
           },
           {
-            "contract_path": "src/UninitializedLocalVariables.sol",
-            "line_no": 2,
-            "src": "33:23",
-            "src_char": "33:23"
-          },
-          {
             "contract_path": "src/UnusedStateVariables.sol",
             "line_no": 2,
             "src": "32:24",
@@ -3073,20 +3067,20 @@
           {
             "contract_path": "src/UninitializedLocalVariables.sol",
             "line_no": 7,
-            "src": "122:19",
-            "src_char": "122:19"
+            "src": "121:19",
+            "src_char": "121:19"
           },
           {
             "contract_path": "src/UninitializedLocalVariables.sol",
             "line_no": 23,
-            "src": "728:20",
-            "src_char": "728:20"
+            "src": "727:20",
+            "src_char": "727:20"
           },
           {
             "contract_path": "src/UninitializedLocalVariables.sol",
             "line_no": 41,
-            "src": "1528:17",
-            "src_char": "1528:17"
+            "src": "1527:17",
+            "src_char": "1527:17"
           },
           {
             "contract_path": "src/UninitializedStateVariable.sol",
@@ -3572,26 +3566,26 @@
           {
             "contract_path": "src/UninitializedLocalVariables.sol",
             "line_no": 34,
-            "src": "1265:42",
-            "src_char": "1265:42"
+            "src": "1264:42",
+            "src_char": "1264:42"
           },
           {
             "contract_path": "src/UninitializedLocalVariables.sol",
             "line_no": 63,
-            "src": "2279:42",
-            "src_char": "2279:42"
+            "src": "2278:42",
+            "src_char": "2278:42"
           },
           {
             "contract_path": "src/UninitializedLocalVariables.sol",
             "line_no": 67,
-            "src": "2460:2",
-            "src_char": "2460:2"
+            "src": "2459:2",
+            "src_char": "2459:2"
           },
           {
             "contract_path": "src/UninitializedLocalVariables.sol",
             "line_no": 70,
-            "src": "2608:2",
-            "src_char": "2608:2"
+            "src": "2607:2",
+            "src_char": "2607:2"
           },
           {
             "contract_path": "src/WeakRandomness.sol",
@@ -4053,12 +4047,6 @@
             "line_no": 2,
             "src": "32:24",
             "src_char": "32:24"
-          },
-          {
-            "contract_path": "src/UninitializedLocalVariables.sol",
-            "line_no": 2,
-            "src": "33:23",
-            "src_char": "33:23"
           },
           {
             "contract_path": "src/UnsafeERC721Mint.sol",
@@ -4795,38 +4783,38 @@
           {
             "contract_path": "src/UninitializedLocalVariables.sol",
             "line_no": 9,
-            "src": "212:17",
-            "src_char": "212:17"
+            "src": "211:17",
+            "src_char": "211:17"
           },
           {
             "contract_path": "src/UninitializedLocalVariables.sol",
             "line_no": 15,
-            "src": "435:22",
-            "src_char": "435:22"
+            "src": "434:22",
+            "src_char": "434:22"
           },
           {
             "contract_path": "src/UninitializedLocalVariables.sol",
             "line_no": 25,
-            "src": "818:15",
-            "src_char": "818:15"
+            "src": "817:15",
+            "src_char": "817:15"
           },
           {
             "contract_path": "src/UninitializedLocalVariables.sol",
             "line_no": 31,
-            "src": "1110:20",
-            "src_char": "1110:20"
+            "src": "1109:20",
+            "src_char": "1109:20"
           },
           {
             "contract_path": "src/UninitializedLocalVariables.sol",
             "line_no": 43,
-            "src": "1640:11",
-            "src_char": "1640:11"
+            "src": "1639:11",
+            "src_char": "1639:11"
           },
           {
             "contract_path": "src/UninitializedLocalVariables.sol",
             "line_no": 49,
-            "src": "1827:16",
-            "src_char": "1827:16"
+            "src": "1826:16",
+            "src_char": "1826:16"
           },
           {
             "contract_path": "src/eth2/DepositContract.sol",
@@ -5107,8 +5095,8 @@
           {
             "contract_path": "src/UninitializedLocalVariables.sol",
             "line_no": 5,
-            "src": "94:12",
-            "src_char": "94:12"
+            "src": "93:12",
+            "src_char": "93:12"
           },
           {
             "contract_path": "src/UninitializedStateVariable.sol",
@@ -5284,74 +5272,74 @@
           {
             "contract_path": "src/UninitializedLocalVariables.sol",
             "line_no": 9,
-            "src": "212:17",
-            "src_char": "212:17"
+            "src": "211:17",
+            "src_char": "211:17"
           },
           {
             "contract_path": "src/UninitializedLocalVariables.sol",
             "line_no": 10,
-            "src": "244:17",
-            "src_char": "244:17"
+            "src": "243:17",
+            "src_char": "243:17"
           },
           {
             "contract_path": "src/UninitializedLocalVariables.sol",
             "line_no": 11,
-            "src": "279:20",
-            "src_char": "279:20"
+            "src": "278:20",
+            "src_char": "278:20"
           },
           {
             "contract_path": "src/UninitializedLocalVariables.sol",
             "line_no": 12,
-            "src": "313:16",
-            "src_char": "313:16"
+            "src": "312:16",
+            "src_char": "312:16"
           },
           {
             "contract_path": "src/UninitializedLocalVariables.sol",
             "line_no": 13,
-            "src": "347:20",
-            "src_char": "347:20"
+            "src": "346:20",
+            "src_char": "346:20"
           },
           {
             "contract_path": "src/UninitializedLocalVariables.sol",
             "line_no": 14,
-            "src": "391:19",
-            "src_char": "391:19"
+            "src": "390:19",
+            "src_char": "390:19"
           },
           {
             "contract_path": "src/UninitializedLocalVariables.sol",
             "line_no": 15,
-            "src": "435:22",
-            "src_char": "435:22"
+            "src": "434:22",
+            "src_char": "434:22"
           },
           {
             "contract_path": "src/UninitializedLocalVariables.sol",
             "line_no": 16,
-            "src": "482:22",
-            "src_char": "482:22"
+            "src": "481:22",
+            "src_char": "481:22"
           },
           {
             "contract_path": "src/UninitializedLocalVariables.sol",
             "line_no": 17,
-            "src": "532:25",
-            "src_char": "532:25"
+            "src": "531:25",
+            "src_char": "531:25"
           },
           {
             "contract_path": "src/UninitializedLocalVariables.sol",
             "line_no": 18,
-            "src": "581:21",
-            "src_char": "581:21"
+            "src": "580:21",
+            "src_char": "580:21"
           },
           {
             "contract_path": "src/UninitializedLocalVariables.sol",
             "line_no": 19,
-            "src": "630:25",
-            "src_char": "630:25"
+            "src": "629:25",
+            "src_char": "629:25"
           },
           {
             "contract_path": "src/UninitializedLocalVariables.sol",
             "line_no": 20,
-            "src": "682:24",
-            "src_char": "682:24"
+            "src": "681:24",
+            "src_char": "681:24"
           }
         ]
       },

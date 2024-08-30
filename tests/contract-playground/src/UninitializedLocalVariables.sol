@@ -1,5 +1,5 @@
-// SPDX-License-Identifier: MITc
-pragma solidity ^0.8.0;
+// SPDX-License-Identifier: MIT
+pragma solidity 0.8.19;
 
 contract AllDataTypes {
     uint256 stateVarUint;
