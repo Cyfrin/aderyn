@@ -1,5 +1,3 @@
-use costly_operations_inside_loops::CostlyOperationsInsideLoopsDetector;
-use incorrect_erc20_interface::IncorrectERC20InterfaceDetector;
 use serde::{Deserialize, Serialize};
 use strum::{Display, EnumCount, EnumIter, EnumString};
 
@@ -84,6 +82,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<ContractLocksEtherDetector>::default(),
         Box::<IncorrectERC721InterfaceDetector>::default(),
         Box::<IncorrectERC20InterfaceDetector>::default(),
+        Box::<UninitializedLocalVariableDetector>::default(),
         Box::<ReturnBombDetector>::default(),
         Box::<OutOfOrderRetryableDetector>::default(),
         Box::<FunctionInitializingStateDetector>::default(),
@@ -178,6 +177,7 @@ pub(crate) enum IssueDetectorNamePool {
     MsgValueInLoop,
     ContractLocksEther,
     IncorrectERC20Interface,
+    UninitializedLocalVariable,
     ReturnBomb,
     OutOfOrderRetryable,
     // NOTE: `Undecided` will be the default name (for new bots).
@@ -216,6 +216,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         }
         IssueDetectorNamePool::IncorrectERC20Interface => {
             Some(Box::<IncorrectERC20InterfaceDetector>::default())
+        }
+        IssueDetectorNamePool::UninitializedLocalVariable => {
+            Some(Box::<UninitializedLocalVariableDetector>::default())
         }
         IssueDetectorNamePool::ReturnBomb => Some(Box::<ReturnBombDetector>::default()),
         IssueDetectorNamePool::UnusedStateVariable => {

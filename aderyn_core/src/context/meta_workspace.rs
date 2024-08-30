@@ -188,6 +188,10 @@ impl WorkspaceContext {
         self.yul_identifiers_context.keys().collect()
     }
 
+    pub fn yul_assignments(&self) -> Vec<&YulAssignment> {
+        self.yul_assignments_context.keys().collect()
+    }
+
     pub fn yul_literals(&self) -> Vec<&YulLiteral> {
         self.yul_literals_context.keys().collect()
     }
