@@ -1,7 +1,7 @@
 {
   "files_summary": {
     "total_source_units": 97,
-    "total_sloc": 3253
+    "total_sloc": 3254
   },
   "files_details": {
     "files_details": [
@@ -295,7 +295,7 @@
       },
       {
         "file_path": "src/UnusedImport.sol",
-        "n_sloc": 9
+        "n_sloc": 10
       },
       {
         "file_path": "src/UnusedStateVariables.sol",
@@ -2749,40 +2749,10 @@
             "src_char": "32:24"
           },
           {
-            "contract_path": "src/U2.sol",
-            "line_no": 3,
-            "src": "33:24",
-            "src_char": "33:24"
-          },
-          {
-            "contract_path": "src/U3.sol",
-            "line_no": 3,
-            "src": "33:24",
-            "src_char": "33:24"
-          },
-          {
-            "contract_path": "src/U4.sol",
-            "line_no": 2,
-            "src": "32:24",
-            "src_char": "32:24"
-          },
-          {
-            "contract_path": "src/U5.sol",
-            "line_no": 2,
-            "src": "32:24",
-            "src_char": "32:24"
-          },
-          {
             "contract_path": "src/UncheckedSend.sol",
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
-          },
-          {
-            "contract_path": "src/UnusedImport.sol",
-            "line_no": 3,
-            "src": "33:24",
-            "src_char": "33:24"
           },
           {
             "contract_path": "src/UnusedStateVariables.sol",
@@ -4035,40 +4005,10 @@
             "src_char": "32:24"
           },
           {
-            "contract_path": "src/U2.sol",
-            "line_no": 3,
-            "src": "33:24",
-            "src_char": "33:24"
-          },
-          {
-            "contract_path": "src/U3.sol",
-            "line_no": 3,
-            "src": "33:24",
-            "src_char": "33:24"
-          },
-          {
-            "contract_path": "src/U4.sol",
-            "line_no": 2,
-            "src": "32:24",
-            "src_char": "32:24"
-          },
-          {
-            "contract_path": "src/U5.sol",
-            "line_no": 2,
-            "src": "32:24",
-            "src_char": "32:24"
-          },
-          {
             "contract_path": "src/UnsafeERC721Mint.sol",
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
-          },
-          {
-            "contract_path": "src/UnusedImport.sol",
-            "line_no": 3,
-            "src": "33:24",
-            "src_char": "33:24"
           },
           {
             "contract_path": "src/UnusedStateVariables.sol",
@@ -4389,12 +4329,6 @@
             "line_no": 27,
             "src": "915:65",
             "src_char": "915:65"
-          },
-          {
-            "contract_path": "src/UnusedImport.sol",
-            "line_no": 16,
-            "src": "316:6",
-            "src_char": "316:6"
           },
           {
             "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
@@ -5432,14 +5366,14 @@
           {
             "contract_path": "src/UnusedImport.sol",
             "line_no": 6,
-            "src": "92:18",
-            "src_char": "92:18"
+            "src": "91:18",
+            "src_char": "91:18"
           },
           {
             "contract_path": "src/UnusedImport.sol",
             "line_no": 9,
-            "src": "145:28",
-            "src_char": "145:28"
+            "src": "144:28",
+            "src_char": "144:28"
           }
         ]
       }
