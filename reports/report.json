@@ -1,12 +1,16 @@
 {
   "files_summary": {
-    "total_source_units": 93,
-    "total_sloc": 3240
+    "total_source_units": 96,
+    "total_sloc": 3346
   },
   "files_details": {
     "files_details": [
       {
         "file_path": "src/AbstractContract.sol",
+        "n_sloc": 11
+      },
+      {
+        "file_path": "src/AderynIgnoreCustomDetectors.sol",
         "n_sloc": 11
       },
       {
@@ -94,6 +98,10 @@
         "n_sloc": 13
       },
       {
+        "file_path": "src/DeadCode.sol",
+        "n_sloc": 23
+      },
+      {
         "file_path": "src/DelegateCallWithoutAddressCheck.sol",
         "n_sloc": 31
       },
@@ -151,11 +159,11 @@
       },
       {
         "file_path": "src/IncorrectERC20.sol",
-        "n_sloc": 97
+        "n_sloc": 98
       },
       {
         "file_path": "src/IncorrectERC721.sol",
-        "n_sloc": 231
+        "n_sloc": 238
       },
       {
         "file_path": "src/IncorrectShift.sol",
@@ -255,7 +263,7 @@
       },
       {
         "file_path": "src/TxOriginUsedForAuth.sol",
-        "n_sloc": 42
+        "n_sloc": 43
       },
       {
         "file_path": "src/UncheckedReturn.sol",
@@ -264,6 +272,10 @@
       {
         "file_path": "src/UncheckedSend.sol",
         "n_sloc": 18
+      },
+      {
+        "file_path": "src/UninitializedLocalVariables.sol",
+        "n_sloc": 62
       },
       {
         "file_path": "src/UninitializedStateVariable.sol",
@@ -327,7 +339,7 @@
       },
       {
         "file_path": "src/eth2/DepositContract.sol",
-        "n_sloc": 95
+        "n_sloc": 96
       },
       {
         "file_path": "src/inheritance/ExtendedInheritance.sol",
@@ -381,7 +393,7 @@
   },
   "issue_count": {
     "high": 41,
-    "low": 35
+    "low": 37
   },
   "high_issues": {
     "issues": [
@@ -1480,6 +1492,12 @@
             "src_char": "145:9"
           },
           {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 5,
+            "src": "93:12",
+            "src_char": "93:12"
+          },
+          {
             "contract_path": "src/UninitializedStateVariable.sol",
             "line_no": 7,
             "src": "122:8",
@@ -1736,12 +1754,6 @@
             "line_no": 175,
             "src": "5072:7",
             "src_char": "5072:7"
-          },
-          {
-            "contract_path": "src/ReturnBomb.sol",
-            "line_no": 32,
-            "src": "839:4",
-            "src_char": "839:4"
           },
           {
             "contract_path": "src/SendEtherNoChecks.sol",
@@ -2342,13 +2354,15 @@
             "contract_path": "src/FunctionSignatureCollision.sol",
             "line_no": 7,
             "src": "166:8",
-            "src_char": "166:8"
+            "src_char": "166:8",
+            "hint": "collides with the following function name(s) in scope: OwnerTransferV7b711143"
           },
           {
             "contract_path": "src/FunctionSignatureCollision.sol",
             "line_no": 13,
             "src": "231:22",
-            "src_char": "231:22"
+            "src_char": "231:22",
+            "hint": "collides with the following function name(s) in scope: withdraw"
           }
         ]
       }
@@ -2855,6 +2869,18 @@
         "detector_name": "useless-public-function",
         "instances": [
           {
+            "contract_path": "src/AderynIgnoreCustomDetectors.sol",
+            "line_no": 7,
+            "src": "174:2",
+            "src_char": "174:2"
+          },
+          {
+            "contract_path": "src/AderynIgnoreCustomDetectors.sol",
+            "line_no": 26,
+            "src": "586:2",
+            "src_char": "586:2"
+          },
+          {
             "contract_path": "src/ArbitraryTransferFrom.sol",
             "line_no": 28,
             "src": "772:5",
@@ -3045,6 +3071,24 @@
             "line_no": 71,
             "src": "2539:25",
             "src_char": "2539:25"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 7,
+            "src": "121:19",
+            "src_char": "121:19"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 23,
+            "src": "727:20",
+            "src_char": "727:20"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 41,
+            "src": "1527:17",
+            "src_char": "1527:17"
           },
           {
             "contract_path": "src/UninitializedStateVariable.sol",
@@ -3526,6 +3570,30 @@
             "line_no": 42,
             "src": "1190:7",
             "src_char": "1190:7"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 34,
+            "src": "1264:42",
+            "src_char": "1264:42"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 63,
+            "src": "2278:42",
+            "src_char": "2278:42"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 67,
+            "src": "2459:2",
+            "src_char": "2459:2"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 70,
+            "src": "2607:2",
+            "src_char": "2607:2"
           },
           {
             "contract_path": "src/WeakRandomness.sol",
@@ -4171,6 +4239,12 @@
         "detector_name": "empty-block",
         "instances": [
           {
+            "contract_path": "src/AderynIgnoreCustomDetectors.sol",
+            "line_no": 7,
+            "src": "174:2",
+            "src_char": "174:2"
+          },
+          {
             "contract_path": "src/AdminContract.sol",
             "line_no": 14,
             "src": "457:23",
@@ -4715,6 +4789,42 @@
             "src_char": "133:6"
           },
           {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 9,
+            "src": "211:17",
+            "src_char": "211:17"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 15,
+            "src": "434:22",
+            "src_char": "434:22"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 25,
+            "src": "817:15",
+            "src_char": "817:15"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 31,
+            "src": "1109:20",
+            "src_char": "1109:20"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 43,
+            "src": "1639:11",
+            "src_char": "1639:11"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 49,
+            "src": "1826:16",
+            "src_char": "1826:16"
+          },
+          {
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 59,
             "src": "4611:27",
@@ -4991,6 +5101,12 @@
             "src_char": "145:9"
           },
           {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 5,
+            "src": "93:12",
+            "src_char": "93:12"
+          },
+          {
             "contract_path": "src/UninitializedStateVariable.sol",
             "line_no": 13,
             "src": "503:3",
@@ -5139,6 +5255,103 @@
         ]
       },
       {
+        "title": "Uninitialized local variables.",
+        "description": "Initialize all the variables. If a variable is meant to be initialized to zero, explicitly set it to zero to improve code readability.",
+        "detector_name": "uninitialized-local-variable",
+        "instances": [
+          {
+            "contract_path": "src/ConstantFuncsAssembly.sol",
+            "line_no": 18,
+            "src": "478:14",
+            "src_char": "478:14"
+          },
+          {
+            "contract_path": "src/ConstantFuncsAssembly.sol",
+            "line_no": 27,
+            "src": "716:14",
+            "src_char": "716:14"
+          },
+          {
+            "contract_path": "src/StorageParameters.sol",
+            "line_no": 8,
+            "src": "184:11",
+            "src_char": "184:11"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 9,
+            "src": "211:17",
+            "src_char": "211:17"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 10,
+            "src": "243:17",
+            "src_char": "243:17"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 11,
+            "src": "278:20",
+            "src_char": "278:20"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 12,
+            "src": "312:16",
+            "src_char": "312:16"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 13,
+            "src": "346:20",
+            "src_char": "346:20"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 14,
+            "src": "390:19",
+            "src_char": "390:19"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 15,
+            "src": "434:22",
+            "src_char": "434:22"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 16,
+            "src": "481:22",
+            "src_char": "481:22"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 17,
+            "src": "531:25",
+            "src_char": "531:25"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 18,
+            "src": "580:21",
+            "src_char": "580:21"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 19,
+            "src": "629:25",
+            "src_char": "629:25"
+          },
+          {
+            "contract_path": "src/UninitializedLocalVariables.sol",
+            "line_no": 20,
+            "src": "681:24",
+            "src_char": "681:24"
+          }
+        ]
+      },
+      {
         "title": "Return Bomb",
         "description": "A low level callee may consume all callers gas unexpectedly. Avoid unlimited implicit decoding of returndata on calls to unchecked addresses. You can limit the gas by passing a gas limit as an option to the call. For example, `unknownAdress.call{gas: gasLimitHere}(\"calldata\")` That would act as a safety net from OOG errors.\n        ",
         "detector_name": "return-bomb",
@@ -5173,6 +5386,85 @@
             "line_no": 9,
             "src": "267:21",
             "src_char": "267:21"
+          }
+        ]
+      },
+      {
+        "title": "Dead Code",
+        "description": "Functions that are not used. Consider removing them.",
+        "detector_name": "dead-code",
+        "instances": [
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 15,
+            "src": "304:4",
+            "src_char": "304:4"
+          },
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 54,
+            "src": "1540:10",
+            "src_char": "1540:10"
+          },
+          {
+            "contract_path": "src/DeadCode.sol",
+            "line_no": 16,
+            "src": "362:22",
+            "src_char": "362:22"
+          },
+          {
+            "contract_path": "src/DeletionNestedMappingStructureContract.sol",
+            "line_no": 14,
+            "src": "258:6",
+            "src_char": "258:6"
+          },
+          {
+            "contract_path": "src/IncorrectShift.sol",
+            "line_no": 5,
+            "src": "100:8",
+            "src_char": "100:8"
+          },
+          {
+            "contract_path": "src/IncorrectShift.sol",
+            "line_no": 13,
+            "src": "292:9",
+            "src_char": "292:9"
+          },
+          {
+            "contract_path": "src/UncheckedReturn.sol",
+            "line_no": 12,
+            "src": "186:19",
+            "src_char": "186:19"
+          },
+          {
+            "contract_path": "src/UncheckedReturn.sol",
+            "line_no": 20,
+            "src": "362:21",
+            "src_char": "362:21"
+          },
+          {
+            "contract_path": "src/UncheckedReturn.sol",
+            "line_no": 25,
+            "src": "492:19",
+            "src_char": "492:19"
+          },
+          {
+            "contract_path": "src/UncheckedReturn.sol",
+            "line_no": 30,
+            "src": "644:21",
+            "src_char": "644:21"
+          },
+          {
+            "contract_path": "src/UncheckedReturn.sol",
+            "line_no": 35,
+            "src": "842:26",
+            "src_char": "842:26"
+          },
+          {
+            "contract_path": "src/UncheckedReturn.sol",
+            "line_no": 40,
+            "src": "1049:19",
+            "src_char": "1049:19"
           }
         ]
       },
@@ -5418,9 +5710,11 @@
     "contract-locks-ether",
     "incorrect-erc721-interface",
     "incorrect-erc20-interface",
+    "uninitialized-local-variable",
     "return-bomb",
     "out-of-order-retryable",
     "function-initializing-state",
+    "dead-code",
     "cache-array-length",
     "assert-state-change",
     "costly-operations-inside-loops",
