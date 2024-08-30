@@ -86,6 +86,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<ReturnBombDetector>::default(),
         Box::<OutOfOrderRetryableDetector>::default(),
         Box::<FunctionInitializingStateDetector>::default(),
+        Box::<DeadCodeDetector>::default(),
         Box::<CacheArrayLengthDetector>::default(),
         Box::<AssertStateChangeDetector>::default(),
         Box::<CostlyOperationsInsideLoopsDetector>::default(),
@@ -103,6 +104,7 @@ pub fn get_all_detectors_names() -> Vec<String> {
 #[derive(Debug, PartialEq, EnumString, Display)]
 #[strum(serialize_all = "kebab-case")]
 pub(crate) enum IssueDetectorNamePool {
+    DeadCode,
     FunctionSelectorCollision,
     CacheArrayLength,
     AssertStateChange,
@@ -189,6 +191,7 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
     // Expects a valid detector_name
     let detector_name = IssueDetectorNamePool::from_str(detector_name).ok()?;
     match detector_name {
+        IssueDetectorNamePool::DeadCode => Some(Box::<DeadCodeDetector>::default()),
         IssueDetectorNamePool::FunctionSelectorCollision => {
             Some(Box::<FunctionSelectorCollisionDetector>::default())
         }
