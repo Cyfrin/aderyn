@@ -13,8 +13,8 @@
                   "uri": "src/inheritance/ExtendedInheritance.sol"
                 },
                 "region": {
-                  "byteLength": 19,
-                  "byteOffset": 488
+                  "byteLength": 96,
+                  "byteOffset": 474
                 }
               }
             }

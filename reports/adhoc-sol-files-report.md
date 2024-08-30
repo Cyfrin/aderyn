@@ -87,10 +87,10 @@ When calling `delegatecall` the same `msg.value` amount will be accredited multi
 <details><summary>1 Found Instances</summary>
 
 
-- Found in inheritance/ExtendedInheritance.sol [Line: 16](../tests/adhoc-sol-files/inheritance/ExtendedInheritance.sol#L16)
+- Found in inheritance/ExtendedInheritance.sol [Line: 15](../tests/adhoc-sol-files/inheritance/ExtendedInheritance.sol#L15)
 
 	```solidity
-	            target.delegatecall(abi.encodeWithSignature("doSomething(uint256)", i));
+	        for (uint256 i = 0; i < 3; i++) {
 	```
 
 </details>
