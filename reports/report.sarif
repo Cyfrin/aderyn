@@ -8881,6 +8881,147 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/ArbitraryTransferFrom.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 304
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ContractLocksEther.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 1540
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DeadCode.sol"
+                },
+                "region": {
+                  "byteLength": 22,
+                  "byteOffset": 362
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DeletionNestedMappingStructureContract.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 258
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectShift.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 100
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectShift.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 292
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedReturn.sol"
+                },
+                "region": {
+                  "byteLength": 19,
+                  "byteOffset": 186
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedReturn.sol"
+                },
+                "region": {
+                  "byteLength": 21,
+                  "byteOffset": 362
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedReturn.sol"
+                },
+                "region": {
+                  "byteLength": 19,
+                  "byteOffset": 492
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedReturn.sol"
+                },
+                "region": {
+                  "byteLength": 21,
+                  "byteOffset": 644
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedReturn.sol"
+                },
+                "region": {
+                  "byteLength": 26,
+                  "byteOffset": 842
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedReturn.sol"
+                },
+                "region": {
+                  "byteLength": 19,
+                  "byteOffset": 1049
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Functions that are not used. Consider removing them."
+          },
+          "ruleId": "dead-code"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/CacheArrayLength.sol"
                 },
                 "region": {

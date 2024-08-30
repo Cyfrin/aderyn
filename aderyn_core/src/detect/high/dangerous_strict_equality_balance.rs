@@ -82,12 +82,15 @@ impl IssueDetector for DangerousStrictEqualityOnBalanceDetector {
 
 #[cfg(test)]
 mod dangerous_strict_equality_balance_tests {
+    use serial_test::serial;
+
     use crate::detect::{
         detector::IssueDetector,
         high::dangerous_strict_equality_balance::DangerousStrictEqualityOnBalanceDetector,
     };
 
     #[test]
+    #[serial]
     fn test_dangerous_strict_equality_balance1() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/DangerousStrictEquality1.sol",
