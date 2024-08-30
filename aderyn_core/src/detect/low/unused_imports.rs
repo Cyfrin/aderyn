@@ -86,6 +86,13 @@ impl IssueDetector for UnusedImportDetector {
 
             for referenced_symbol in referenced_declarations {
                 graph.mark_used_pathways(source_unit.id, referenced_symbol);
+                if let Some(symbol_place) = context.nodes.get(&referenced_symbol) {
+                    if let Some(ASTNode::ContractDefinition(contract)) =
+                        symbol_place.closest_ancestor_of_type(context, NodeType::ContractDefinition)
+                    {
+                        graph.mark_used_pathways(source_unit.id, contract.id);
+                    }
+                }
             }
         }
 

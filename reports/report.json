@@ -1,7 +1,7 @@
 {
   "files_summary": {
     "total_source_units": 97,
-    "total_sloc": 3248
+    "total_sloc": 3253
   },
   "files_details": {
     "files_details": [
@@ -267,7 +267,7 @@
       },
       {
         "file_path": "src/U5.sol",
-        "n_sloc": 2
+        "n_sloc": 6
       },
       {
         "file_path": "src/UncheckedReturn.sol",
@@ -295,7 +295,7 @@
       },
       {
         "file_path": "src/UnusedImport.sol",
-        "n_sloc": 8
+        "n_sloc": 9
       },
       {
         "file_path": "src/UnusedStateVariables.sol",
@@ -4389,6 +4389,12 @@
             "line_no": 27,
             "src": "915:65",
             "src_char": "915:65"
+          },
+          {
+            "contract_path": "src/UnusedImport.sol",
+            "line_no": 16,
+            "src": "316:6",
+            "src_char": "316:6"
           },
           {
             "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",

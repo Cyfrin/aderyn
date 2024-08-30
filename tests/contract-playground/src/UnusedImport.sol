@@ -13,6 +13,8 @@ import {U5} from "./U4.sol";
 import "./U4.sol";
 
 contract UnusedImport {
-    U5 public constant u5 = U5(address(0x0));
+    function helpMe(U5.SIU5 calldata structInsideU5) external{
+
+    }
 }
 

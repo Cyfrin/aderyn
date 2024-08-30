@@ -8826,7 +8826,7 @@ Invoking `SSTORE`operations in loops may lead to Out-of-gas errors. Use a local 
 
 Redundant import statement. Consider removing it.
 
-<details><summary>14 Found Instances</summary>
+<details><summary>7 Found Instances</summary>
 
 
 - Found in contracts/fakes/templegold/TempleGoldMock.sol [Line: 8](../tests/2024-07-templegold/protocol/contracts/fakes/templegold/TempleGoldMock.sol#L8)
@@ -8859,42 +8859,6 @@ Redundant import statement. Consider removing it.
 	import { ERC20 } from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 	```
 
-- Found in contracts/fakes/v2/TempleDebtTokenTestnetAdmin.sol [Line: 5](../tests/2024-07-templegold/protocol/contracts/fakes/v2/TempleDebtTokenTestnetAdmin.sol#L5)
-
-	```solidity
-	import { ITempleElevatedAccess } from "contracts/interfaces/v2/access/ITempleElevatedAccess.sol";
-	```
-
-- Found in contracts/interfaces/external/balancer/IBalancerHelpers.sol [Line: 5](../tests/2024-07-templegold/protocol/contracts/interfaces/external/balancer/IBalancerHelpers.sol#L5)
-
-	```solidity
-	import { IBalancerVault } from "contracts/interfaces/external/balancer/IBalancerVault.sol";
-	```
-
-- Found in contracts/interfaces/v2/ITreasuryReservesVault.sol [Line: 8](../tests/2024-07-templegold/protocol/contracts/interfaces/v2/ITreasuryReservesVault.sol#L8)
-
-	```solidity
-	import { ITempleStrategy } from "contracts/interfaces/v2/strategies/ITempleStrategy.sol";
-	```
-
-- Found in contracts/templegold/DaiGoldAuction.sol [Line: 15](../tests/2024-07-templegold/protocol/contracts/templegold/DaiGoldAuction.sol#L15)
-
-	```solidity
-	import { IAuctionBase } from "contracts/interfaces/templegold/IAuctionBase.sol";
-	```
-
-- Found in contracts/templegold/EpochLib.sol [Line: 5](../tests/2024-07-templegold/protocol/contracts/templegold/EpochLib.sol#L5)
-
-	```solidity
-	import { IAuctionBase } from "contracts/interfaces/templegold/IAuctionBase.sol";
-	```
-
-- Found in contracts/templegold/SpiceAuction.sol [Line: 13](../tests/2024-07-templegold/protocol/contracts/templegold/SpiceAuction.sol#L13)
-
-	```solidity
-	import { IAuctionBase } from "contracts/interfaces/templegold/IAuctionBase.sol";
-	```
-
 - Found in contracts/templegold/TempleGoldStaking.sol [Line: 6](../tests/2024-07-templegold/protocol/contracts/templegold/TempleGoldStaking.sol#L6)
 
 	```solidity
@@ -8905,12 +8869,6 @@ Redundant import statement. Consider removing it.
 
 	```solidity
 	import { Enum } from "@gnosis.pm/safe-contracts/contracts/common/Enum.sol";
-	```
-
-- Found in contracts/v2/strategies/RamosStrategy.sol [Line: 9](../tests/2024-07-templegold/protocol/contracts/v2/strategies/RamosStrategy.sol#L9)
-
-	```solidity
-	import { IBalancerVault } from "contracts/interfaces/external/balancer/IBalancerVault.sol";
 	```
 
 </details>

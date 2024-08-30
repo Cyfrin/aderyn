@@ -2659,7 +2659,7 @@ Invoking `SSTORE`operations in loops may lead to Out-of-gas errors. Use a local 
 
 Redundant import statement. Consider removing it.
 
-<details><summary>10 Found Instances</summary>
+<details><summary>4 Found Instances</summary>
 
 
 - Found in src/v0.8/functions/dev/v1_X/FunctionsCoordinator.sol [Line: 5](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/FunctionsCoordinator.sol#L5)
@@ -2668,46 +2668,10 @@ Redundant import statement. Consider removing it.
 	import {ITypeAndVersion} from "../../../shared/interfaces/ITypeAndVersion.sol";
 	```
 
-- Found in src/v0.8/functions/dev/v1_X/interfaces/IFunctionsCoordinator.sol [Line: 4](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/interfaces/IFunctionsCoordinator.sol#L4)
-
-	```solidity
-	import {FunctionsResponse} from "../libraries/FunctionsResponse.sol";
-	```
-
-- Found in src/v0.8/functions/dev/v1_X/interfaces/IFunctionsRouter.sol [Line: 4](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/interfaces/IFunctionsRouter.sol#L4)
-
-	```solidity
-	import {FunctionsResponse} from "../libraries/FunctionsResponse.sol";
-	```
-
-- Found in src/v0.8/functions/dev/v1_X/interfaces/IFunctionsSubscriptions.sol [Line: 4](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/interfaces/IFunctionsSubscriptions.sol#L4)
-
-	```solidity
-	import {FunctionsResponse} from "../libraries/FunctionsResponse.sol";
-	```
-
 - Found in src/v0.8/functions/v1_0_0/FunctionsCoordinator.sol [Line: 5](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/FunctionsCoordinator.sol#L5)
 
 	```solidity
 	import {ITypeAndVersion} from "../../shared/interfaces/ITypeAndVersion.sol";
-	```
-
-- Found in src/v0.8/functions/v1_0_0/interfaces/IFunctionsCoordinator.sol [Line: 4](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/interfaces/IFunctionsCoordinator.sol#L4)
-
-	```solidity
-	import {FunctionsResponse} from "../libraries/FunctionsResponse.sol";
-	```
-
-- Found in src/v0.8/functions/v1_0_0/interfaces/IFunctionsRouter.sol [Line: 4](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/interfaces/IFunctionsRouter.sol#L4)
-
-	```solidity
-	import {FunctionsResponse} from "../libraries/FunctionsResponse.sol";
-	```
-
-- Found in src/v0.8/functions/v1_0_0/interfaces/IFunctionsSubscriptions.sol [Line: 4](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/interfaces/IFunctionsSubscriptions.sol#L4)
-
-	```solidity
-	import {FunctionsResponse} from "../libraries/FunctionsResponse.sol";
 	```
 
 - Found in src/v0.8/functions/v1_1_0/FunctionsCoordinator.sol [Line: 5](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_1_0/FunctionsCoordinator.sol#L5)

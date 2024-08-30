@@ -7092,6 +7092,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/UnusedImport.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 316
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol"
                 },
                 "region": {
