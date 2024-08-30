@@ -23,6 +23,7 @@ pub struct Issue {
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     // Value is ASTNode.src
     pub instances: BTreeMap<(String, usize, String), NodeID>,
+    pub hints: BTreeMap<(String, usize, String), String>,
 }
 
 #[derive(Serialize, Default)]
@@ -70,6 +71,8 @@ pub struct IssueInstance {
     line_no: usize,
     src: String,
     src_char: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    hint: Option<String>,
 }
 
 #[derive(Serialize)]
@@ -97,7 +100,7 @@ pub fn extract_issue_bodies(
     issues
         .iter()
         .map(|cr| {
-            let instances = cr
+            let instances: Vec<_> = cr
                 .instances
                 .keys()
                 .map(|(contract_path, line_no, src_location)| {
@@ -121,19 +124,29 @@ pub fn extract_issue_bodies(
                         char_len += 1;
                     }
 
+                    let hint = cr.hints.get(&(
+                        contract_path.to_string(),
+                        *line_no,
+                        src_location.to_string(),
+                    ));
+
                     IssueInstance {
                         contract_path: contract_path.clone(),
                         line_no: *line_no,
                         src: src_location.clone(),
                         src_char: format!("{}:{}", char_offset, char_len),
+                        hint: hint.cloned(),
                     }
                 })
                 .collect();
 
+            let mut all_instances = vec![];
+            all_instances.extend(instances);
+
             IssueBody {
                 title: cr.title.clone(),
                 description: cr.description.clone(),
-                instances,
+                instances: all_instances,
                 detector_name: cr.detector_name.clone(),
             }
         })
