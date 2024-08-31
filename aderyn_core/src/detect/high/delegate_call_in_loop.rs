@@ -2,10 +2,17 @@ use std::collections::BTreeMap;
 use std::error::Error;
 
 use crate::{
-    ast::{MemberAccess, NodeID},
+    ast::{ASTNode, NodeID},
     capture,
-    context::{browser::ExtractMemberAccesses, workspace_context::WorkspaceContext},
-    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
+    context::{
+        browser::ExtractMemberAccesses,
+        graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
+        workspace_context::WorkspaceContext,
+    },
+    detect::{
+        detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
+        helpers::get_explore_centers_of_loops,
+    },
 };
 use eyre::Result;
 
@@ -18,27 +25,26 @@ pub struct DelegateCallInLoopDetector {
 
 impl IssueDetector for DelegateCallInLoopDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        let mut member_accesses: Vec<MemberAccess> = vec![];
+        // PLAN
+        // Explore inward from loops and track all the `delegatecall` that you come across
 
-        // Get all delegatecall member accesses inside for statements
-        member_accesses.extend(context.for_statements().iter().flat_map(|&statement| {
-            ExtractMemberAccesses::from(statement)
-                .extracted
-                .into_iter()
-                .filter(|ma| ma.member_name == "delegatecall")
-        }));
+        let loop_explore_centers = get_explore_centers_of_loops(context);
 
-        // Get all delegatecall member accsesses inside while statements
-        member_accesses.extend(context.while_statements().iter().flat_map(|&statement| {
-            ExtractMemberAccesses::from(statement)
-                .extracted
-                .into_iter()
-                .filter(|ma| ma.member_name == "delegatecall")
-        }));
+        for explore_center in loop_explore_centers {
+            // Setup
+            // Later when https://github.com/Cyfrin/aderyn/pull/650 is merged, we can make it so that it
+            // tracks the whole path to the actual delegate call site to display in the report.
+            let mut delegate_call_tracker = DelegateCallTracker::default();
 
-        // For each member access found, add them to found_instances
-        for member_access in member_accesses {
-            capture!(self, context, member_access);
+            // All the ASTNodes that are potentially run in a loop
+            let callgraph = CallGraph::new(context, &[explore_center], CallGraphDirection::Inward)?;
+
+            // Kick-off
+            callgraph.accept(context, &mut delegate_call_tracker)?;
+
+            if delegate_call_tracker.has_delegate_call {
+                capture!(self, context, explore_center);
+            }
         }
 
         Ok(!self.found_instances.is_empty())
@@ -62,6 +68,29 @@ impl IssueDetector for DelegateCallInLoopDetector {
 
     fn name(&self) -> String {
         format!("{}", IssueDetectorNamePool::DelegateCallInLoop)
+    }
+}
+
+#[derive(Default)]
+struct DelegateCallTracker {
+    has_delegate_call: bool,
+}
+
+impl CallGraphVisitor for DelegateCallTracker {
+    fn visit_any(&mut self, node: &ASTNode) -> eyre::Result<()> {
+        if self.has_delegate_call {
+            return Ok(());
+        }
+
+        let dcalls = ExtractMemberAccesses::from(node)
+            .extracted
+            .into_iter()
+            .filter(|ma| ma.member_name == "delegatecall")
+            .count();
+
+        self.has_delegate_call = dcalls > 0;
+
+        Ok(())
     }
 }
 
