@@ -9516,17 +9516,37 @@
           "level": "note",
           "locations": [
             {
+              "message": {
+                "text": "Consider implementing the interface - IMissingInheritanceCounter"
+              },
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/MissingInheritance.sol"
                 },
                 "region": {
                   "byteLength": 25,
-                  "byteOffset": 73
+                  "byteOffset": 83
                 }
               }
             },
             {
+              "message": {
+                "text": "Consider implementing the interface - IMissingChild"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MissingInheritance.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 754
+                }
+              }
+            },
+            {
+              "message": {
+                "text": "Consider implementing the interface - IERC20"
+              },
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/TestERC20.sol"
@@ -9538,6 +9558,9 @@
               }
             },
             {
+              "message": {
+                "text": "Consider implementing the interface - CrazyPragma"
+              },
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/inheritance/ExtendedInheritance.sol"
@@ -9549,6 +9572,9 @@
               }
             },
             {
+              "message": {
+                "text": "Consider implementing the interface - CrazyPragma"
+              },
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/inheritance/InheritanceBase.sol"

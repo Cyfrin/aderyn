@@ -18,6 +18,7 @@ pub struct MissingInheritanceDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
+    hints: BTreeMap<(String, usize, String), String>,
 }
 
 impl IssueDetector for MissingInheritanceDetector {
@@ -105,7 +106,15 @@ impl IssueDetector for MissingInheritanceDetector {
                         {
                             // Now we know that `_potentially_missing_inheritance` is missing inheritance for `contract_id`
                             if let Some(contract) = context.nodes.get(contract_id) {
-                                capture!(self, context, contract);
+                                if let Some(ASTNode::ContractDefinition(missing_contract)) =
+                                    context.nodes.get(potentially_missing_inheritance)
+                                {
+                                    let hint = format!(
+                                        "Consider implementing the interface - {}",
+                                        missing_contract.name
+                                    );
+                                    capture!(self, context, contract, hint);
+                                }
                             }
                         }
                     }
@@ -118,6 +127,10 @@ impl IssueDetector for MissingInheritanceDetector {
 
     fn severity(&self) -> IssueSeverity {
         IssueSeverity::Low
+    }
+
+    fn hints(&self) -> BTreeMap<(String, usize, String), String> {
+        self.hints.clone()
     }
 
     fn title(&self) -> String {
@@ -160,7 +173,7 @@ mod missing_inheritance_tests {
         println!("{:#?}", detector.instances());
 
         // assert that the detector found the correct number of instances
-        assert_eq!(detector.instances().len(), 1);
+        assert_eq!(detector.instances().len(), 2);
         // assert the severity is low
         assert_eq!(
             detector.severity(),

@@ -1,7 +1,7 @@
 {
   "files_summary": {
     "total_source_units": 98,
-    "total_sloc": 3387
+    "total_sloc": 3409
   },
   "files_details": {
     "files_details": [
@@ -179,7 +179,7 @@
       },
       {
         "file_path": "src/MissingInheritance.sol",
-        "n_sloc": 17
+        "n_sloc": 39
       },
       {
         "file_path": "src/MisusedBoolean.sol",
@@ -5764,27 +5764,38 @@
         "instances": [
           {
             "contract_path": "src/MissingInheritance.sol",
-            "line_no": 5,
-            "src": "73:25",
-            "src_char": "73:25"
+            "line_no": 7,
+            "src": "83:25",
+            "src_char": "83:25",
+            "hint": "Consider implementing the interface - IMissingInheritanceCounter"
+          },
+          {
+            "contract_path": "src/MissingInheritance.sol",
+            "line_no": 41,
+            "src": "754:16",
+            "src_char": "754:16",
+            "hint": "Consider implementing the interface - IMissingParent"
           },
           {
             "contract_path": "src/TestERC20.sol",
             "line_no": 4,
             "src": "70:9",
-            "src_char": "70:9"
+            "src_char": "70:9",
+            "hint": "Consider implementing the interface - IERC20"
           },
           {
             "contract_path": "src/inheritance/ExtendedInheritance.sol",
             "line_no": 6,
             "src": "99:19",
-            "src_char": "99:19"
+            "src_char": "99:19",
+            "hint": "Consider implementing the interface - CrazyPragma"
           },
           {
             "contract_path": "src/inheritance/InheritanceBase.sol",
             "line_no": 6,
             "src": "104:15",
-            "src_char": "104:15"
+            "src_char": "104:15",
+            "hint": "Consider implementing the interface - CrazyPragma"
           }
         ]
       },
