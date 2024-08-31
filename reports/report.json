@@ -2691,12 +2691,6 @@
             "src_char": "32:23"
           },
           {
-            "contract_path": "src/MissingInheritance.sol",
-            "line_no": 2,
-            "src": "32:24",
-            "src_char": "32:24"
-          },
-          {
             "contract_path": "src/MsgValueInLoop.sol",
             "line_no": 2,
             "src": "32:23",
@@ -3939,12 +3933,6 @@
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
-          },
-          {
-            "contract_path": "src/MissingInheritance.sol",
-            "line_no": 2,
-            "src": "32:24",
-            "src_char": "32:24"
           },
           {
             "contract_path": "src/MsgValueInLoop.sol",
@@ -5356,8 +5344,8 @@
           {
             "contract_path": "src/MissingInheritance.sol",
             "line_no": 5,
-            "src": "74:25",
-            "src_char": "74:25"
+            "src": "73:25",
+            "src_char": "73:25"
           },
           {
             "contract_path": "src/TestERC20.sol",

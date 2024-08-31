@@ -8,6 +8,7 @@ pub mod util;
 pub struct CodeLines {
     pub info_lines: usize,
     pub actual_first_line: isize,
+    pub last_line_has_code: bool,
 }
 
 #[cfg(test)]
@@ -19,8 +20,8 @@ mod cloc_tests {
     #[test]
     fn test_print_loc() {
         let src_filepaths = vec![
-            "cloc/HeavilyCommentedContract.sol".to_string(),
-            "cloc/AnotherHeavilyCommentedContract.sol".to_string(),
+            "HeavilyCommentedContract.sol".to_string(),
+            "AnotherHeavilyCommentedContract.sol".to_string(),
         ];
         let sol = engine::count_lines_of_code_and_collect_line_numbers_to_ignore(
             PathBuf::from("../tests/contract-playground/src/cloc").as_path(),
@@ -49,7 +50,7 @@ mod cloc_tests {
 
     #[test]
     fn test_print_loc_specific_file() {
-        let src_filepaths = vec!["cloc/HeavilyCommentedContract.sol".to_string()];
+        let src_filepaths = vec!["HeavilyCommentedContract.sol".to_string()];
         let sol = engine::count_lines_of_code_and_collect_line_numbers_to_ignore(
             PathBuf::from("../tests/contract-playground/src/cloc").as_path(),
             &src_filepaths,

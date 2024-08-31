@@ -4043,17 +4043,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/MissingInheritance.sol"
-                },
-                "region": {
-                  "byteLength": 24,
-                  "byteOffset": 32
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/MsgValueInLoop.sol"
                 },
                 "region": {
@@ -6297,17 +6286,6 @@
                 },
                 "region": {
                   "byteLength": 23,
-                  "byteOffset": 32
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/MissingInheritance.sol"
-                },
-                "region": {
-                  "byteLength": 24,
                   "byteOffset": 32
                 }
               }
@@ -8818,7 +8796,7 @@
                 },
                 "region": {
                   "byteLength": 25,
-                  "byteOffset": 74
+                  "byteOffset": 73
                 }
               }
             },
