@@ -5871,35 +5871,35 @@ There is an interface / abstract contract that is potentially missing (not inclu
 
 - Found in src/MissingInheritance.sol [Line: 7](../tests/contract-playground/src/MissingInheritance.sol#L7)
 
-	Consider implementing the interface - IMissingInheritanceCounter
+	Consider implementing the interface - IMissingInheritanceCounter or any if it's children
 	```solidity
 	contract MissingInheritanceCounter {
 	```
 
 - Found in src/MissingInheritance.sol [Line: 41](../tests/contract-playground/src/MissingInheritance.sol#L41)
 
-	Consider implementing the interface - IMissingChild
+	Consider implementing the interface - IMissingParent or any if it's children
 	```solidity
 	contract MissingContract2 {
 	```
 
 - Found in src/TestERC20.sol [Line: 4](../tests/contract-playground/src/TestERC20.sol#L4)
 
-	Consider implementing the interface - IERC20
+	Consider implementing the interface - IERC20 or any if it's children
 	```solidity
 	contract TestERC20 {
 	```
 
 - Found in src/inheritance/ExtendedInheritance.sol [Line: 6](../tests/contract-playground/src/inheritance/ExtendedInheritance.sol#L6)
 
-	Consider implementing the interface - CrazyPragma
+	Consider implementing the interface - CrazyPragma or any if it's children
 	```solidity
 	contract ExtendedInheritance is InheritanceBase {
 	```
 
 - Found in src/inheritance/InheritanceBase.sol [Line: 6](../tests/contract-playground/src/inheritance/InheritanceBase.sol#L6)
 
-	Consider implementing the interface - CrazyPragma
+	Consider implementing the interface - CrazyPragma or any if it's children
 	```solidity
 	contract InheritanceBase is IContractInheritance {
 	```

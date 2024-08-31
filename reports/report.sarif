@@ -9517,7 +9517,7 @@
           "locations": [
             {
               "message": {
-                "text": "Consider implementing the interface - IMissingInheritanceCounter"
+                "text": "Consider implementing the interface - IMissingInheritanceCounter or any if it's children"
               },
               "physicalLocation": {
                 "artifactLocation": {
@@ -9531,7 +9531,7 @@
             },
             {
               "message": {
-                "text": "Consider implementing the interface - IMissingChild"
+                "text": "Consider implementing the interface - IMissingParent or any if it's children"
               },
               "physicalLocation": {
                 "artifactLocation": {
@@ -9545,7 +9545,7 @@
             },
             {
               "message": {
-                "text": "Consider implementing the interface - IERC20"
+                "text": "Consider implementing the interface - IERC20 or any if it's children"
               },
               "physicalLocation": {
                 "artifactLocation": {
@@ -9559,7 +9559,7 @@
             },
             {
               "message": {
-                "text": "Consider implementing the interface - CrazyPragma"
+                "text": "Consider implementing the interface - CrazyPragma or any if it's children"
               },
               "physicalLocation": {
                 "artifactLocation": {
@@ -9573,7 +9573,7 @@
             },
             {
               "message": {
-                "text": "Consider implementing the interface - CrazyPragma"
+                "text": "Consider implementing the interface - CrazyPragma or any if it's children"
               },
               "physicalLocation": {
                 "artifactLocation": {

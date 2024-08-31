@@ -1,4 +1,4 @@
-use std::collections::{BTreeMap, BTreeSet, HashMap};
+use std::collections::{BTreeMap, HashMap};
 use std::convert::identity;
 use std::error::Error;
 
@@ -27,13 +27,13 @@ impl IssueDetector for MissingInheritanceDetector {
         let mut contract_function_selectors: HashMap<NodeID, Vec<String>> = Default::default();
 
         // Key -> Contract ID, Value -> Set of contract/interface IDs in it's heirarchy
-        let mut inheritance_map: HashMap<NodeID, BTreeSet<NodeID>> = Default::default();
+        let mut inheritance_map: HashMap<NodeID, Vec<NodeID>> = Default::default();
 
         for contract in context.contract_definitions() {
             if let Some(full_contract) = &contract.linearized_base_contracts {
                 inheritance_map
                     .entry(contract.id)
-                    .or_insert(BTreeSet::from_iter(full_contract.iter().copied()));
+                    .or_insert(Vec::from_iter(full_contract.iter().copied()));
 
                 for contract_node_id in full_contract {
                     if let Some(ASTNode::ContractDefinition(contract_node)) =
@@ -106,15 +106,9 @@ impl IssueDetector for MissingInheritanceDetector {
                         {
                             // Now we know that `_potentially_missing_inheritance` is missing inheritance for `contract_id`
                             if let Some(contract) = context.nodes.get(contract_id) {
-                                if let Some(ASTNode::ContractDefinition(missing_contract)) =
-                                    context.nodes.get(potentially_missing_inheritance)
-                                {
-                                    let hint = format!(
-                                        "Consider implementing the interface - {}",
-                                        missing_contract.name
-                                    );
-                                    capture!(self, context, contract, hint);
-                                }
+                                let hint =
+                                    format!("Consider implementing the interface - {} or any if it's children", c.name);
+                                capture!(self, context, contract, hint);
                             }
                         }
                     }

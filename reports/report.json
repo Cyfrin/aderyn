@@ -5767,35 +5767,35 @@
             "line_no": 7,
             "src": "83:25",
             "src_char": "83:25",
-            "hint": "Consider implementing the interface - IMissingInheritanceCounter"
+            "hint": "Consider implementing the interface - IMissingInheritanceCounter or any if it's children"
           },
           {
             "contract_path": "src/MissingInheritance.sol",
             "line_no": 41,
             "src": "754:16",
             "src_char": "754:16",
-            "hint": "Consider implementing the interface - IMissingParent"
+            "hint": "Consider implementing the interface - IMissingChild or any if it's children"
           },
           {
             "contract_path": "src/TestERC20.sol",
             "line_no": 4,
             "src": "70:9",
             "src_char": "70:9",
-            "hint": "Consider implementing the interface - IERC20"
+            "hint": "Consider implementing the interface - IERC20 or any if it's children"
           },
           {
             "contract_path": "src/inheritance/ExtendedInheritance.sol",
             "line_no": 6,
             "src": "99:19",
             "src_char": "99:19",
-            "hint": "Consider implementing the interface - CrazyPragma"
+            "hint": "Consider implementing the interface - CrazyPragma or any if it's children"
           },
           {
             "contract_path": "src/inheritance/InheritanceBase.sol",
             "line_no": 6,
             "src": "104:15",
             "src_char": "104:15",
-            "hint": "Consider implementing the interface - CrazyPragma"
+            "hint": "Consider implementing the interface - CrazyPragma or any if it's children"
           }
         ]
       },
