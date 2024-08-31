@@ -1,4 +1,4 @@
-use std::collections::{BTreeMap, HashMap};
+use std::collections::{BTreeMap, BTreeSet, HashMap};
 use std::convert::identity;
 use std::error::Error;
 
@@ -67,6 +67,8 @@ impl IssueDetector for MissingInheritanceDetector {
             }
         }
 
+        let mut results: HashMap<NodeID, BTreeSet<String>> = Default::default();
+
         for (contract_id, contract_selectors) in &contract_function_selectors {
             if contract_selectors.is_empty() {
                 continue;
@@ -104,15 +106,28 @@ impl IssueDetector for MissingInheritanceDetector {
                             .iter()
                             .all(|s| contract_selectors.contains(s))
                         {
-                            // Now we know that `_potentially_missing_inheritance` is missing inheritance for `contract_id`
-                            if let Some(contract) = context.nodes.get(contract_id) {
-                                let hint =
-                                    format!("Consider implementing the interface - {} or any if it's children", c.name);
-                                capture!(self, context, contract, hint);
-                            }
+                            results
+                                .entry(*contract_id)
+                                .or_default()
+                                .insert(c.name.clone());
                         }
                     }
                 }
+            }
+        }
+
+        for (contract, missing_inheritances) in results {
+            if let Some(ASTNode::ContractDefinition(c)) = context.nodes.get(&contract) {
+                let missing_inheritances_vector =
+                    missing_inheritances.iter().cloned().collect::<Vec<_>>();
+                let missing_inheritaces_string = missing_inheritances_vector.join(", ");
+
+                let hint = format!(
+                    "Consider implementing the most suitable of following inheritances : {}",
+                    missing_inheritaces_string
+                );
+
+                capture!(self, context, c, hint);
             }
         }
 

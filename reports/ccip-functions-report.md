@@ -2700,56 +2700,56 @@ There is an interface / abstract contract that is potentially missing (not inclu
 
 - Found in src/v0.8/functions/dev/v1_X/FunctionsCoordinator.sol [Line: 13](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/FunctionsCoordinator.sol#L13)
 
-	Consider implementing the interface - IFunctionsCoordinator or any if it's children
+	Consider implementing the most suitable of following inheritances : IFunctionsCoordinator
 	```solidity
 	contract FunctionsCoordinator is OCR2Base, IFunctionsCoordinator, FunctionsBilling {
 	```
 
 - Found in src/v0.8/functions/dev/v1_X/FunctionsRouter.sol [Line: 16](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/FunctionsRouter.sol#L16)
 
-	Consider implementing the interface - IFunctionsRouter or any if it's children
+	Consider implementing the most suitable of following inheritances : IFunctionsRouter
 	```solidity
 	contract FunctionsRouter is IFunctionsRouter, FunctionsSubscriptions, Pausable, ITypeAndVersion, ConfirmedOwner {
 	```
 
 - Found in src/v0.8/functions/dev/v1_X/accessControl/TermsOfServiceAllowList.sol [Line: 14](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/accessControl/TermsOfServiceAllowList.sol#L14)
 
-	Consider implementing the interface - ITermsOfServiceAllowList or any if it's children
+	Consider implementing the most suitable of following inheritances : ITermsOfServiceAllowList
 	```solidity
 	contract TermsOfServiceAllowList is ITermsOfServiceAllowList, IAccessController, ITypeAndVersion, ConfirmedOwner {
 	```
 
 - Found in src/v0.8/functions/v1_0_0/FunctionsCoordinator.sol [Line: 13](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/FunctionsCoordinator.sol#L13)
 
-	Consider implementing the interface - IFunctionsCoordinator or any if it's children
+	Consider implementing the most suitable of following inheritances : IFunctionsCoordinator
 	```solidity
 	contract FunctionsCoordinator is OCR2Base, IFunctionsCoordinator, FunctionsBilling {
 	```
 
 - Found in src/v0.8/functions/v1_0_0/FunctionsRouter.sol [Line: 16](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/FunctionsRouter.sol#L16)
 
-	Consider implementing the interface - IFunctionsRouter or any if it's children
+	Consider implementing the most suitable of following inheritances : IFunctionsRouter
 	```solidity
 	contract FunctionsRouter is IFunctionsRouter, FunctionsSubscriptions, Pausable, ITypeAndVersion, ConfirmedOwner {
 	```
 
 - Found in src/v0.8/functions/v1_1_0/FunctionsCoordinator.sol [Line: 13](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_1_0/FunctionsCoordinator.sol#L13)
 
-	Consider implementing the interface - IFunctionsCoordinator or any if it's children
+	Consider implementing the most suitable of following inheritances : IFunctionsCoordinator
 	```solidity
 	contract FunctionsCoordinator is OCR2Base, IFunctionsCoordinator, FunctionsBilling {
 	```
 
 - Found in src/v0.8/functions/v1_3_0/FunctionsCoordinator.sol [Line: 13](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_3_0/FunctionsCoordinator.sol#L13)
 
-	Consider implementing the interface - IFunctionsCoordinator or any if it's children
+	Consider implementing the most suitable of following inheritances : IFunctionsCoordinator
 	```solidity
 	contract FunctionsCoordinator is OCR2Base, IFunctionsCoordinator, FunctionsBilling {
 	```
 
 - Found in src/v0.8/functions/v1_3_0/accessControl/TermsOfServiceAllowList.sol [Line: 14](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_3_0/accessControl/TermsOfServiceAllowList.sol#L14)
 
-	Consider implementing the interface - ITermsOfServiceAllowList or any if it's children
+	Consider implementing the most suitable of following inheritances : ITermsOfServiceAllowList
 	```solidity
 	contract TermsOfServiceAllowList is ITermsOfServiceAllowList, IAccessController, ITypeAndVersion, ConfirmedOwner {
 	```
