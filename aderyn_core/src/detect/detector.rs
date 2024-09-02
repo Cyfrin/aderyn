@@ -222,9 +222,6 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         }
         IssueDetectorNamePool::UnusedImport => Some(Box::<UnusedImportDetector>::default()),
         IssueDetectorNamePool::VoidConstructor => Some(Box::<VoidConstructorDetector>::default()),
-        IssueDetectorNamePool::StateVariableCouldBeDeclaredConstant => {
-            Some(Box::<StateVariableCouldBeConstantDetector>::default())
-        }
         IssueDetectorNamePool::FunctionPointerInConstructor => {
             Some(Box::<FucntionPointerInConstructorDetector>::default())
         }
