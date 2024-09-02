@@ -282,6 +282,18 @@ fn watch_asynchronously_and_report(args: Args) {
                 while let Some(change) = rxer.recv().await {
                     if let Ok(_event) = change {
                         // do something
+                        //
+
+                        let a = args.clone();
+                        let report_results = driver::drive_and_get_results(a);
+                        let report_results_lock = report_results.lock().await;
+
+                        let mut rcl = report_results_lock;
+                        // do some
+
+                        if let Some(_x) = &mut *rcl {
+                            // do some
+                        }
                         let diagnostic = Diagnostic::new_simple(
                             Range {
                                 start: Position {
@@ -305,8 +317,6 @@ fn watch_asynchronously_and_report(args: Args) {
                                 None,
                             )
                             .await;
-
-                        driver::drive(args.clone());
                     } else {
                         warn!("Error from rexr receiver");
                     }

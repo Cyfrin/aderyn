@@ -8,15 +8,16 @@ use aderyn_core::{
         workspace_context::WorkspaceContext,
     },
     detect::detector::{get_all_issue_detectors, IssueDetector, IssueSeverity},
-    fscloc,
+    fscloc, get_report,
     report::{
-        json_printer::JsonPrinter, markdown_printer::MarkdownReportPrinter,
+        json_printer::JsonPrinter, markdown_printer::MarkdownReportPrinter, reporter::Report,
         sarif_printer::SarifPrinter,
     },
     run,
 };
 use field_access::FieldAccess;
-use std::{collections::HashMap, error::Error, path::PathBuf};
+use std::{collections::HashMap, error::Error, path::PathBuf, sync::Arc};
+use tokio::sync::Mutex;
 
 #[derive(Clone, FieldAccess)]
 pub struct Args {
@@ -44,6 +45,24 @@ pub fn drive(args: Args) {
         get_all_issue_detectors()
     };
     drive_with(args, detectors);
+}
+
+pub fn drive_and_get_results(args: Args) -> Arc<Mutex<Option<Report>>> {
+    let detectors = if args.highs_only {
+        get_all_issue_detectors()
+            .into_iter()
+            .filter(|d| d.severity() == IssueSeverity::High)
+            .collect::<Vec<_>>()
+    } else {
+        get_all_issue_detectors()
+    };
+
+    let cx_wrapper = make_context(&args);
+    let root_rel_path = cx_wrapper.root_path;
+
+    Arc::new(tokio::sync::Mutex::new(
+        get_report(&cx_wrapper.contexts, &root_rel_path, detectors).ok(),
+    ))
 }
 
 pub fn drive_with(args: Args, detectors_list: Vec<Box<dyn IssueDetector>>) {
