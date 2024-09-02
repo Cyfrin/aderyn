@@ -162,7 +162,7 @@ fn main() {
 
 #[derive(Debug)]
 struct Backend {
-    client: Arc<Client>,
+    client: Arc<Mutex<Client>>,
     // rx_arc: Arc<Mutex<Receiver<NotifyResult<Event>>>>,
 }
 
@@ -172,12 +172,12 @@ impl LanguageServer for Backend {
         info!("TLSP initialize");
         info!("{:?}", params.capabilities);
 
-        self.client
-            .log_message(
-                MessageType::INFO,
-                format!("server initialized! {:#?}", params.capabilities),
-            )
-            .await;
+        //self.client
+        //    .log_message(
+        //        MessageType::INFO,
+        //        format!("server initialized! {:#?}", params.capabilities),
+        //    )
+        //    .await;
         Ok(InitializeResult {
             capabilities: ServerCapabilities {
                 text_document_sync: Some(TextDocumentSyncCapability::Options(
@@ -197,35 +197,16 @@ impl LanguageServer for Backend {
 
     async fn initialized(&self, params: InitializedParams) {
         info!("TLSP initialized: {:?}", params);
-        self.client
-            .log_message(
-                MessageType::INFO,
-                format!("server initialized! {:?}", params),
-            )
-            .await;
+        //self.client
+        //    .log_message(
+        //        MessageType::INFO,
+        //        format!("server initialized! {:?}", params),
+        //    )
+        //    .await;
     }
 
     async fn did_save(&self, params: DidSaveTextDocumentParams) {
         info!("TLSP didSave caught : {:?}", params);
-
-        let diagnostic = Diagnostic::new_simple(
-            Range {
-                start: Position {
-                    line: 1,
-                    character: 3,
-                },
-                end: Position {
-                    line: 2,
-                    character: 20,
-                },
-            },
-            "BAD CODE".to_string(),
-        );
-
-        self.client
-            .publish_diagnostics(params.text_document.uri, vec![diagnostic], None)
-            .await;
-
         // let mut res = self.rx_arc.lock().await;
 
         // Let's wait for upto 3 seconds to see if we receive the change
@@ -294,13 +275,39 @@ fn watch_asynchronously_and_report(args: Args) {
 
         let (service, socket) = LspService::new(move |client| {
             let rx_arc = Arc::new(Mutex::new(rx));
-            let client_arc = Arc::new(client);
+            let client_arc = Arc::new(Mutex::new(client));
+            let c2 = Arc::clone(&client_arc);
             tokio::spawn(async move {
                 let t = Arc::clone(&rx_arc);
+                let c = Arc::clone(&client_arc);
                 let mut rxer = t.lock().await;
                 while let Some(change) = rxer.recv().await {
                     if let Ok(_event) = change {
                         // do something
+                        let diagnostic = Diagnostic::new_simple(
+                            Range {
+                                start: Position {
+                                    line: 1,
+                                    character: 3,
+                                },
+                                end: Position {
+                                    line: 2,
+                                    character: 20,
+                                },
+                            },
+                            "BAD CODE".to_string(),
+                        );
+
+                        let c_lock = c.lock().await;
+
+                        c_lock
+                            .publish_diagnostics(
+                                Url::parse("file:///example/example.txt").unwrap(),
+                                vec![diagnostic],
+                                None,
+                            )
+                            .await;
+
                         driver::drive(args.clone());
                     } else {
                         warn!("Error from rexr receiver");
@@ -308,7 +315,7 @@ fn watch_asynchronously_and_report(args: Args) {
                 }
             });
             Backend {
-                client: client_arc,
+                client: c2,
                 //  rx_arc: Arc::clone(&rx_arc),
             }
         });
