@@ -8892,42 +8892,14 @@ Invoking `SSTORE`operations in loops may lead to Out-of-gas errors. Use a local 
 
 There is an interface / abstract contract that is potentially missing (not included in) the inheritance of this contract. If that's not the case, consider using the same interface instead of defining multiple identical interfaces.
 
-<details><summary>5 Found Instances</summary>
+<details><summary>1 Found Instances</summary>
 
-
-- Found in contracts/amm/TreasuryIV.sol [Line: 9](../tests/2024-07-templegold/protocol/contracts/amm/TreasuryIV.sol#L9)
-
-	Consider implementing the most suitable of following inheritances : ITreasuryIV
-	```solidity
-	contract TreasuryIV is Ownable {
-	```
-
-- Found in contracts/fakes/FakeERC20.sol [Line: 10](../tests/2024-07-templegold/protocol/contracts/fakes/FakeERC20.sol#L10)
-
-	Consider implementing the most suitable of following inheritances : AMO_IAuraToken
-	```solidity
-	contract FakeERC20 is ERC20 {
-	```
 
 - Found in contracts/fakes/v2/TempleDebtTokenTestnetAdmin.sol [Line: 7](../tests/2024-07-templegold/protocol/contracts/fakes/v2/TempleDebtTokenTestnetAdmin.sol#L7)
 
 	Consider implementing the most suitable of following inheritances : AMO_IAuraToken
 	```solidity
 	contract TempleDebtTokenTestnetAdmin {
-	```
-
-- Found in contracts/templegold/TempleGoldAdmin.sol [Line: 20](../tests/2024-07-templegold/protocol/contracts/templegold/TempleGoldAdmin.sol#L20)
-
-	Consider implementing the most suitable of following inheritances : IOFTCore
-	```solidity
-	contract TempleGoldAdmin is ITempleGoldAdmin, TempleElevatedAccess {
-	```
-
-- Found in contracts/v2/TempleDebtToken.sol [Line: 39](../tests/2024-07-templegold/protocol/contracts/v2/TempleDebtToken.sol#L39)
-
-	Consider implementing the most suitable of following inheritances : AMO_IAuraToken
-	```solidity
-	contract TempleDebtToken is ITempleDebtToken, TempleElevatedAccess {
 	```
 
 </details>

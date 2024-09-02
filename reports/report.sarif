@@ -9556,34 +9556,6 @@
                   "byteOffset": 70
                 }
               }
-            },
-            {
-              "message": {
-                "text": "Consider implementing the most suitable of following inheritances : CrazyPragma"
-              },
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/inheritance/ExtendedInheritance.sol"
-                },
-                "region": {
-                  "byteLength": 19,
-                  "byteOffset": 99
-                }
-              }
-            },
-            {
-              "message": {
-                "text": "Consider implementing the most suitable of following inheritances : CrazyPragma"
-              },
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/inheritance/InheritanceBase.sol"
-                },
-                "region": {
-                  "byteLength": 15,
-                  "byteOffset": 104
-                }
-              }
             }
           ],
           "message": {

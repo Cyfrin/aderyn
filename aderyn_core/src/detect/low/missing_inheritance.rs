@@ -118,6 +118,14 @@ impl IssueDetector for MissingInheritanceDetector {
 
         for (contract, missing_inheritances) in results {
             if let Some(ASTNode::ContractDefinition(c)) = context.nodes.get(&contract) {
+                // If the contract c already has some inheritance, don't report it because we want
+                // to respect the developer's choice.
+                if c.linearized_base_contracts
+                    .as_ref()
+                    .is_some_and(|chain| chain.len() != 1)
+                {
+                    continue;
+                }
                 let missing_inheritances_vector =
                     missing_inheritances.iter().cloned().collect::<Vec<_>>();
                 let missing_inheritaces_string = missing_inheritances_vector.join(", ");

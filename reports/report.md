@@ -5866,7 +5866,7 @@ Name clashes with a built-in-symbol. Consider renaming it.
 
 There is an interface / abstract contract that is potentially missing (not included in) the inheritance of this contract. If that's not the case, consider using the same interface instead of defining multiple identical interfaces.
 
-<details><summary>5 Found Instances</summary>
+<details><summary>3 Found Instances</summary>
 
 
 - Found in src/MissingInheritance.sol [Line: 7](../tests/contract-playground/src/MissingInheritance.sol#L7)
@@ -5888,20 +5888,6 @@ There is an interface / abstract contract that is potentially missing (not inclu
 	Consider implementing the most suitable of following inheritances : IERC20
 	```solidity
 	contract TestERC20 {
-	```
-
-- Found in src/inheritance/ExtendedInheritance.sol [Line: 6](../tests/contract-playground/src/inheritance/ExtendedInheritance.sol#L6)
-
-	Consider implementing the most suitable of following inheritances : CrazyPragma
-	```solidity
-	contract ExtendedInheritance is InheritanceBase {
-	```
-
-- Found in src/inheritance/InheritanceBase.sol [Line: 6](../tests/contract-playground/src/inheritance/InheritanceBase.sol#L6)
-
-	Consider implementing the most suitable of following inheritances : CrazyPragma
-	```solidity
-	contract InheritanceBase is IContractInheritance {
 	```
 
 </details>
