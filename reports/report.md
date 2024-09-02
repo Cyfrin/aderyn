@@ -5864,7 +5864,7 @@ Name clashes with a built-in-symbol. Consider renaming it.
 
 ## L-37: Potentially missing inheritance for contract.
 
-There is an interface / abstract contract that is potentially missing (not included in) the inheritance of this contract. If that's not the case, consider using the same interface instead of defining multiple identical interfaces.
+There is an interface / abstract contract that is potentially missing (not included in) the inheritance of this contract.
 
 <details><summary>3 Found Instances</summary>
 

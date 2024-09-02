@@ -8890,7 +8890,7 @@ Invoking `SSTORE`operations in loops may lead to Out-of-gas errors. Use a local 
 
 ## L-24: Potentially missing inheritance for contract.
 
-There is an interface / abstract contract that is potentially missing (not included in) the inheritance of this contract. If that's not the case, consider using the same interface instead of defining multiple identical interfaces.
+There is an interface / abstract contract that is potentially missing (not included in) the inheritance of this contract.
 
 <details><summary>1 Found Instances</summary>
 
