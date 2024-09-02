@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity 0.8.19;
 
 interface SVIERC20 {}
 
@@ -16,7 +16,7 @@ contract StateVariableCouldBeDeclaredConstant {
         variableValue = 50;
     }
 
-    function getConstantValue() public view returns (uint256) {
+    function getConstantValue() external view returns (uint256) {
         return constantValue;
     }
 }

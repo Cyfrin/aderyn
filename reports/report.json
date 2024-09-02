@@ -2852,12 +2852,6 @@
             "src_char": "32:23"
           },
           {
-            "contract_path": "src/StateVariableCouldBeDeclaredConstant.sol",
-            "line_no": 2,
-            "src": "32:23",
-            "src_char": "32:23"
-          },
-          {
             "contract_path": "src/StateVariablesManipulation.sol",
             "line_no": 2,
             "src": "32:23",
@@ -3176,12 +3170,6 @@
             "line_no": 63,
             "src": "1646:4",
             "src_char": "1646:4"
-          },
-          {
-            "contract_path": "src/StateVariableCouldBeDeclaredConstant.sol",
-            "line_no": 19,
-            "src": "515:16",
-            "src_char": "515:16"
           },
           {
             "contract_path": "src/StateVariables.sol",
@@ -4157,12 +4145,6 @@
           },
           {
             "contract_path": "src/ReturnBomb.sol",
-            "line_no": 2,
-            "src": "32:23",
-            "src_char": "32:23"
-          },
-          {
-            "contract_path": "src/StateVariableCouldBeDeclaredConstant.sol",
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"

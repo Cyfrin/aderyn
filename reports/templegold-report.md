@@ -6758,7 +6758,7 @@ Index event fields make the field more quickly accessible to off-chain tools tha
 
 Use descriptive reason strings or custom errors for revert paths.
 
-<details><summary>55 Found Instances</summary>
+<details><summary>54 Found Instances</summary>
 
 
 - Found in contracts/core/OpsManager.sol [Line: 50](../tests/2024-07-templegold/protocol/contracts/core/OpsManager.sol#L50)
@@ -6948,12 +6948,6 @@ Use descriptive reason strings or custom errors for revert paths.
 	```
 
 - Found in contracts/util/ABDKMath64x64.sol [Line: 462](../tests/2024-07-templegold/protocol/contracts/util/ABDKMath64x64.sol#L462)
-
-	```solidity
-	      require (x > 0);
-	```
-
-- Found in contracts/util/ABDKMath64x64.sol [Line: 495](../tests/2024-07-templegold/protocol/contracts/util/ABDKMath64x64.sol#L495)
 
 	```solidity
 	      require (x > 0);

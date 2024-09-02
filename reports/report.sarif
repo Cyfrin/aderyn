@@ -4300,17 +4300,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/StateVariableCouldBeDeclaredConstant.sol"
-                },
-                "region": {
-                  "byteLength": 23,
-                  "byteOffset": 32
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/StateVariablesManipulation.sol"
                 },
                 "region": {
@@ -4884,17 +4873,6 @@
                 "region": {
                   "byteLength": 4,
                   "byteOffset": 1646
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariableCouldBeDeclaredConstant.sol"
-                },
-                "region": {
-                  "byteLength": 16,
-                  "byteOffset": 515
                 }
               }
             },
@@ -6661,17 +6639,6 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/ReturnBomb.sol"
-                },
-                "region": {
-                  "byteLength": 23,
-                  "byteOffset": 32
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariableCouldBeDeclaredConstant.sol"
                 },
                 "region": {
                   "byteLength": 23,
