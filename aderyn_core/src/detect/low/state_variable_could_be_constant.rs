@@ -43,9 +43,7 @@ impl IssueDetector for StateVariableCouldBeConstantDetector {
                 .type_string
                 .as_ref()
                 .is_some_and(|type_string| {
-                    type_string.starts_with("mapping")
-                        || type_string.starts_with("struct")
-                        || type_string.starts_with("contract")
+                    type_string.starts_with("mapping") || type_string.starts_with("struct")
                 })
             {
                 continue;
@@ -181,7 +179,7 @@ mod state_variable_could_be_constant_tests {
         // assert that the detector found an issue
         assert!(found);
         // assert that the detector found the correct number of instances
-        assert_eq!(detector.instances().len(), 1);
+        assert_eq!(detector.instances().len(), 2);
 
         println!("{:?}", detector.instances());
         // assert the severity is low
