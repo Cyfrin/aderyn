@@ -12,11 +12,6 @@ contract NoStateVarManipulationExample {
     address payable public simplePayableAddress;
     string public simpleString;
     bytes public simpleBytes;
-    uint256 public i; // This one should not be constant, but immutable
-
-    constructor() {
-        i = 3;
-    }
 
     // There are NO state variables assigned in this function
     function dontManipulateStateVar() external view {

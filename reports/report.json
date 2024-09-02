@@ -219,7 +219,7 @@
       },
       {
         "file_path": "src/StateVariableCouldBeDeclaredConstant.sol",
-        "n_sloc": 23
+        "n_sloc": 27
       },
       {
         "file_path": "src/StateVariables.sol",
@@ -227,7 +227,7 @@
       },
       {
         "file_path": "src/StateVariablesManipulation.sol",
-        "n_sloc": 254
+        "n_sloc": 250
       },
       {
         "file_path": "src/StorageConditionals.sol",
@@ -1899,9 +1899,9 @@
           },
           {
             "contract_path": "src/StateVariablesManipulation.sol",
-            "line_no": 147,
-            "src": "4260:20",
-            "src_char": "4260:20"
+            "line_no": 142,
+            "src": "4146:20",
+            "src_char": "4146:20"
           },
           {
             "contract_path": "src/UncheckedReturn.sol",
@@ -2821,9 +2821,9 @@
           },
           {
             "contract_path": "src/StateVariablesManipulation.sol",
-            "line_no": 61,
-            "src": "1771:17",
-            "src_char": "1771:17"
+            "line_no": 56,
+            "src": "1657:17",
+            "src_char": "1657:17"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
@@ -3020,9 +3020,9 @@
           },
           {
             "contract_path": "src/StateVariableCouldBeDeclaredConstant.sol",
-            "line_no": 15,
-            "src": "354:16",
-            "src_char": "354:16"
+            "line_no": 19,
+            "src": "515:16",
+            "src_char": "515:16"
           },
           {
             "contract_path": "src/StateVariables.sol",
@@ -3441,75 +3441,75 @@
           },
           {
             "contract_path": "src/StateVariablesManipulation.sol",
-            "line_no": 126,
-            "src": "3585:2",
-            "src_char": "3585:2"
+            "line_no": 121,
+            "src": "3471:2",
+            "src_char": "3471:2"
           },
           {
             "contract_path": "src/StateVariablesManipulation.sol",
-            "line_no": 128,
-            "src": "3656:2",
-            "src_char": "3656:2"
+            "line_no": 123,
+            "src": "3542:2",
+            "src_char": "3542:2"
           },
           {
             "contract_path": "src/StateVariablesManipulation.sol",
-            "line_no": 197,
-            "src": "5522:3",
-            "src_char": "5522:3"
+            "line_no": 192,
+            "src": "5408:3",
+            "src_char": "5408:3"
           },
           {
             "contract_path": "src/StateVariablesManipulation.sol",
-            "line_no": 207,
-            "src": "5735:3",
-            "src_char": "5735:3"
+            "line_no": 202,
+            "src": "5621:3",
+            "src_char": "5621:3"
           },
           {
             "contract_path": "src/StateVariablesManipulation.sol",
-            "line_no": 238,
-            "src": "6486:1",
-            "src_char": "6486:1"
+            "line_no": 233,
+            "src": "6372:1",
+            "src_char": "6372:1"
           },
           {
             "contract_path": "src/StateVariablesManipulation.sol",
-            "line_no": 242,
-            "src": "6582:2",
-            "src_char": "6582:2"
+            "line_no": 237,
+            "src": "6468:2",
+            "src_char": "6468:2"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 239,
+            "src": "6543:2",
+            "src_char": "6543:2"
           },
           {
             "contract_path": "src/StateVariablesManipulation.sol",
             "line_no": 244,
-            "src": "6657:2",
-            "src_char": "6657:2"
+            "src": "6704:2",
+            "src_char": "6704:2"
           },
           {
             "contract_path": "src/StateVariablesManipulation.sol",
-            "line_no": 249,
-            "src": "6818:2",
-            "src_char": "6818:2"
+            "line_no": 258,
+            "src": "7236:1",
+            "src_char": "7236:1"
           },
           {
             "contract_path": "src/StateVariablesManipulation.sol",
-            "line_no": 263,
-            "src": "7350:1",
-            "src_char": "7350:1"
+            "line_no": 264,
+            "src": "7497:1",
+            "src_char": "7497:1"
           },
           {
             "contract_path": "src/StateVariablesManipulation.sol",
-            "line_no": 269,
-            "src": "7611:1",
-            "src_char": "7611:1"
+            "line_no": 333,
+            "src": "9506:3",
+            "src_char": "9506:3"
           },
           {
             "contract_path": "src/StateVariablesManipulation.sol",
-            "line_no": 338,
-            "src": "9620:3",
-            "src_char": "9620:3"
-          },
-          {
-            "contract_path": "src/StateVariablesManipulation.sol",
-            "line_no": 344,
-            "src": "9785:3",
-            "src_char": "9785:3"
+            "line_no": 339,
+            "src": "9671:3",
+            "src_char": "9671:3"
           },
           {
             "contract_path": "src/UncheckedReturn.sol",
