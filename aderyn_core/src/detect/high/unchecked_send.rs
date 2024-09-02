@@ -27,10 +27,9 @@ impl IssueDetector for UncheckedSendDetector {
                     .expression
                     .type_descriptions()
                     .is_some_and(|type_desc| {
-                        type_desc
-                            .type_string
-                            .as_ref()
-                            .is_some_and(|type_string| type_string.starts_with("address"))
+                        type_desc.type_string.as_ref().is_some_and(|type_string| {
+                            type_string == "address" || type_string == "address payable"
+                        })
                     })
             {
                 if let Some(ASTNode::FunctionCall(func_call)) = member_access.parent(context) {

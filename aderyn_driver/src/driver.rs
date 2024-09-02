@@ -150,7 +150,7 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
             .lock()
             .unwrap()
             .iter()
-            .map(|(key, value)| (key.to_owned(), value.lines_to_ignore.clone()))
+            .map(|(key, value)| (key.to_owned(), value.ignore_lines.clone()))
             .collect::<HashMap<_, _>>();
 
         // dbg!(&stats);
