@@ -186,6 +186,15 @@ fn is_demarcation_line(
     if line.starts_with("======= ") {
         let end_marker = line.find(" =======").unwrap();
         let filepath = &PathBuf::from(&line["======= ".len()..end_marker]);
+        if line.contains("//") {
+            // Soldiity compiler shenanigans ??
+            // In the line  `==== ??? ====` of the output, we're supposed to see the filename
+            // But sometimes solc puts filenames with path containing two forward slashes
+            // Example `contracts/templegold//AuctionBase.sol` in there
+            // Although there is a separate entry for `contracts/templegold/AuctionBase.sol`.
+            // We want to omit reading the former
+            return (true, None);
+        }
         if passes_scope(
             scope,
             utils::canonicalize(root_path.join(filepath))

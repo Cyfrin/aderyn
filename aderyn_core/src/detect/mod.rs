@@ -22,6 +22,13 @@ macro_rules! capture {
             );
         }
     };
+    ($self:ident, $context:ident, $item:expr, $hint:tt) => {
+        $self.hints.insert(
+            $context.get_node_sort_key_from_capturable(&$item.clone().into()),
+            $hint,
+        );
+        capture!($self, $context, $item);
+    };
 }
 
 #[macro_export]
