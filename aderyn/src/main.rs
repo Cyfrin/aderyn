@@ -200,6 +200,8 @@ impl LanguageServer for Backend {
                 format!("server initialized! {:?}", params),
             )
             .await;
+
+        tokio::spawn(async { for result in self.rx {} });
     }
 
     async fn did_save(&self, params: DidSaveTextDocumentParams) {
