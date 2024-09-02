@@ -8,11 +8,9 @@ use aderyn::{
     aderyn_is_currently_running_newest_version, print_all_detectors_view, print_detail_view,
 };
 use log::{info, warn, LevelFilter};
-use notify_debouncer_full::notify::{Event, RecommendedWatcher, Result as NotifyResult};
+use notify_debouncer_full::notify::RecommendedWatcher;
 use simple_logging::log_to_file;
-use tokio::sync::mpsc::Receiver;
 use tokio::sync::Mutex;
-use tokio::time::timeout;
 use tower_lsp::jsonrpc::Result;
 use tower_lsp::lsp_types::*;
 use tower_lsp::{Client, LanguageServer, LspService, Server};
@@ -162,7 +160,7 @@ fn main() {
 
 #[derive(Debug)]
 struct Backend {
-    client: Arc<Mutex<Client>>,
+    _client: Arc<Mutex<Client>>,
     // rx_arc: Arc<Mutex<Receiver<NotifyResult<Event>>>>,
 }
 
@@ -233,7 +231,7 @@ impl LanguageServer for Backend {
 fn watch_asynchronously_and_report(args: Args) {
     let rt = tokio::runtime::Runtime::new().unwrap();
     rt.block_on(async {
-        let (mut tx, rx) = tokio::sync::mpsc::channel(1);
+        let (tx, rx) = tokio::sync::mpsc::channel(1);
 
         let config = Config::default()
             .with_poll_interval(Duration::from_secs(2))
@@ -315,7 +313,7 @@ fn watch_asynchronously_and_report(args: Args) {
                 }
             });
             Backend {
-                client: c2,
+                _client: c2,
                 //  rx_arc: Arc::clone(&rx_arc),
             }
         });
