@@ -9531,6 +9531,444 @@
             "text": "solc versions below 0.5.9 contain a compiler bug leading to unexpected behavior when calling uninitialized function pointers in constructors. It is recommended to not use function pointers in constructors."
           },
           "ruleId": "function-pointer-in-constructor"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CostlyOperationsInsideLoops.sol"
+                },
+                "region": {
+                  "byteLength": 21,
+                  "byteOffset": 123
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/FunctionInitializingState.sol"
+                },
+                "region": {
+                  "byteLength": 21,
+                  "byteOffset": 108
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/FunctionInitializingState.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 176
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/FunctionInitializingState.sol"
+                },
+                "region": {
+                  "byteLength": 21,
+                  "byteOffset": 199
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/FunctionInitializingState.sol"
+                },
+                "region": {
+                  "byteLength": 21,
+                  "byteOffset": 267
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/FunctionInitializingState.sol"
+                },
+                "region": {
+                  "byteLength": 22,
+                  "byteOffset": 294
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/FunctionInitializingState.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 322
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/FunctionInitializingState.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 1603
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC20.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 101
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC20.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 144
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC20.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 177
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC20.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 211
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC20.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 1426
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC20.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 1467
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC20.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 1500
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC20.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 1535
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC721.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 102
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC721.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 143
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC721.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 4001
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC721.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 4040
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariableCouldBeDeclaredConstant.sol"
+                },
+                "region": {
+                  "byteLength": 13,
+                  "byteOffset": 211
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariableCouldBeDeclaredConstant.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 385
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariables.sol"
+                },
+                "region": {
+                  "byteLength": 27,
+                  "byteOffset": 383
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariables.sol"
+                },
+                "region": {
+                  "byteLength": 28,
+                  "byteOffset": 437
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariables.sol"
+                },
+                "region": {
+                  "byteLength": 26,
+                  "byteOffset": 490
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariablesManipulation.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 1188
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariablesManipulation.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 1221
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariablesManipulation.sol"
+                },
+                "region": {
+                  "byteLength": 13,
+                  "byteOffset": 2068
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedStateVariable.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 198
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 151
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 190
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 261
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 367
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 477
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/HeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 160
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/HeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 199
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/HeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 270
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/HeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 376
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/HeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 486
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "State variables that are not updated following deployment should be declared constant to save gas. Add the `constant` attribute to state variables that never change."
+          },
+          "ruleId": "state-variable-could-be-declared-constant"
         }
       ],
       "tool": {
