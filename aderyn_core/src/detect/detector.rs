@@ -1,5 +1,3 @@
-use costly_operations_inside_loops::CostlyOperationsInsideLoopsDetector;
-use incorrect_erc20_interface::IncorrectERC20InterfaceDetector;
 use serde::{Deserialize, Serialize};
 use strum::{Display, EnumCount, EnumIter, EnumString};
 
@@ -85,15 +83,22 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<LocalVariableShadowingDetector>::default(),
         Box::<IncorrectERC721InterfaceDetector>::default(),
         Box::<IncorrectERC20InterfaceDetector>::default(),
+        Box::<UninitializedLocalVariableDetector>::default(),
         Box::<ReturnBombDetector>::default(),
         Box::<OutOfOrderRetryableDetector>::default(),
         Box::<FunctionInitializingStateDetector>::default(),
+        Box::<DeadCodeDetector>::default(),
         Box::<CacheArrayLengthDetector>::default(),
         Box::<AssertStateChangeDetector>::default(),
         Box::<CostlyOperationsInsideLoopsDetector>::default(),
         Box::<ConstantFunctionChangingStateDetector>::default(),
         Box::<BuiltinSymbolShadowDetector>::default(),
+        Box::<VoidConstructorDetector>::default(),
         Box::<FunctionSelectorCollisionDetector>::default(),
+        Box::<UnusedImportDetector>::default(),
+        Box::<UncheckedLowLevelCallDetector>::default(),
+        Box::<FucntionPointerInConstructorDetector>::default(),
+        Box::<StateVariableCouldBeConstantDetector>::default(),
     ]
 }
 
@@ -105,6 +110,11 @@ pub fn get_all_detectors_names() -> Vec<String> {
 #[derive(Debug, PartialEq, EnumString, Display)]
 #[strum(serialize_all = "kebab-case")]
 pub(crate) enum IssueDetectorNamePool {
+    UnusedImport,
+    VoidConstructor,
+    UncheckedLowLevelCall,
+    FunctionPointerInConstructor,
+    DeadCode,
     FunctionSelectorCollision,
     CacheArrayLength,
     AssertStateChange,
@@ -180,8 +190,10 @@ pub(crate) enum IssueDetectorNamePool {
     ContractLocksEther,
     LocalVariableShadowing,
     IncorrectERC20Interface,
+    UninitializedLocalVariable,
     ReturnBomb,
     OutOfOrderRetryable,
+    StateVariableCouldBeDeclaredConstant,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -194,6 +206,15 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::LocalVariableShadowing => {
             Some(Box::<LocalVariableShadowingDetector>::default())
         }
+        IssueDetectorNamePool::UnusedImport => Some(Box::<UnusedImportDetector>::default()),
+        IssueDetectorNamePool::VoidConstructor => Some(Box::<VoidConstructorDetector>::default()),
+        IssueDetectorNamePool::StateVariableCouldBeDeclaredConstant => {
+            Some(Box::<StateVariableCouldBeConstantDetector>::default())
+        }
+        IssueDetectorNamePool::FunctionPointerInConstructor => {
+            Some(Box::<FucntionPointerInConstructorDetector>::default())
+        }
+        IssueDetectorNamePool::DeadCode => Some(Box::<DeadCodeDetector>::default()),
         IssueDetectorNamePool::FunctionSelectorCollision => {
             Some(Box::<FunctionSelectorCollisionDetector>::default())
         }
@@ -221,6 +242,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         }
         IssueDetectorNamePool::IncorrectERC20Interface => {
             Some(Box::<IncorrectERC20InterfaceDetector>::default())
+        }
+        IssueDetectorNamePool::UninitializedLocalVariable => {
+            Some(Box::<UninitializedLocalVariableDetector>::default())
         }
         IssueDetectorNamePool::ReturnBomb => Some(Box::<ReturnBombDetector>::default()),
         IssueDetectorNamePool::UnusedStateVariable => {
@@ -386,6 +410,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::ContractLocksEther => {
             Some(Box::<ContractLocksEtherDetector>::default())
         }
+        IssueDetectorNamePool::UncheckedLowLevelCall => {
+            Some(Box::<UncheckedLowLevelCallDetector>::default())
+        }
         IssueDetectorNamePool::Undecided => None,
     }
 }
@@ -441,6 +468,10 @@ pub trait IssueDetector: Send + Sync + 'static {
     // Keys are source file name, line number and source location
     // Value is ASTNode NodeID
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
+        BTreeMap::new()
+    }
+
+    fn hints(&self) -> BTreeMap<(String, usize, String), String> {
         BTreeMap::new()
     }
 }

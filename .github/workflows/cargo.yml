@@ -196,6 +196,17 @@ jobs:
           cat ./reports/ccip-functions-report-workflow.md
           diff ./reports/ccip-functions-report.md ./reports/ccip-functions-report-workflow.md
 
+      # Verify hardhat-playground-report
+      
+      - name: Generate hardhat-playground-report.md
+        run: |
+          cargo run -- tests/hardhat-js-playground -o reports/hardhat-playground-report-workflow.md --skip-update-check
+    
+      - name: Check hardhat-playground-report-workflow.md vs hardhat-playground-report.md
+        run: |
+          cat ./reports/hardhat-playground-report-workflow.md
+          diff ./reports/hardhat-playground-report.md ./reports/hardhat-playground-report-workflow.md
+
       
       # Verify prb-math-report.md (new solidity features)
       
@@ -242,6 +253,17 @@ jobs:
         run: |
           cat ./reports/ci-report.sarif
           diff ./reports/report.sarif ./reports/ci-report.sarif
+
+      # Verify empty report when ignored instances
+
+      - name: Verify Empty report
+        run: |
+          cargo run -- tests/contract-playground -o reports/empty_report_workflow.md -i IgnoreEverything.sol
+      
+      - name: Check empty report
+        run: |
+          cat ./reports/empty_report_workflow.md
+          diff ./reports/empty_report.md ./reports/empty_report_workflow.md
 
   lints:
     name: Lints
