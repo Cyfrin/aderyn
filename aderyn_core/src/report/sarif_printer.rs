@@ -209,6 +209,26 @@ fn create_sarif_results(report: &Report) -> Vec<SarifResult> {
 fn create_sarif_locations(issue: &Issue) -> Vec<Location> {
     let mut locations: Vec<Location> = Vec::new();
     for ((filename, _line_number, source_location), _value) in issue.instances.iter() {
+        let hint = issue.hints.get(&(
+            filename.to_string(),
+            *_line_number,
+            source_location.to_string(),
+        ));
+
+        let message = {
+            if hint.is_some() {
+                Some(Message {
+                    text: hint.cloned(),
+                    arguments: None,
+                    id: None,
+                    markdown: None,
+                    properties: None,
+                })
+            } else {
+                None
+            }
+        };
+
         if let Some((offset, len)) = source_location.split_once(':') {
             let location = Location {
                 physical_location: Some(PhysicalLocation {
@@ -242,7 +262,7 @@ fn create_sarif_locations(issue: &Issue) -> Vec<Location> {
                 id: None,
                 logical_locations: None,
                 relationships: None,
-                message: None,
+                message,
             };
             locations.push(location);
         }
