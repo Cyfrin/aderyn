@@ -1,15 +1,15 @@
 use std::collections::{BTreeMap, HashSet};
 use std::error::Error;
 
-use crate::ast::{Mutability, NodeID};
+use crate::ast::{FunctionCallKind, Mutability, NodeID};
 
 use crate::capture;
+use crate::context::browser::ExtractFunctionCalls;
 use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
     context::workspace_context::WorkspaceContext,
     detect::detector::{IssueDetector, IssueSeverity},
 };
-use eyre::Result;
 
 #[derive(Default)]
 pub struct StateVariableCouldBeConstantDetector {
@@ -33,11 +33,21 @@ impl IssueDetector for StateVariableCouldBeConstantDetector {
                 continue;
             }
 
+            if let Some(rhs_value) = variable.value.as_ref() {
+                let function_calls = ExtractFunctionCalls::from(rhs_value).extracted;
+                if function_calls
+                    .iter()
+                    .any(|f| f.kind == FunctionCallKind::FunctionCall)
+                {
+                    continue;
+                }
+            }
+
             if variable.mutability() == Some(&Mutability::Immutable) {
                 continue;
             }
 
-            // Do not report it if it's a struct / mapping / contract type
+            // Do not report it if it's a struct / mapping
             if variable
                 .type_descriptions
                 .type_string

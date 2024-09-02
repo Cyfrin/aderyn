@@ -9552,63 +9552,8 @@
                   "uri": "src/FunctionInitializingState.sol"
                 },
                 "region": {
-                  "byteLength": 21,
-                  "byteOffset": 108
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/FunctionInitializingState.sol"
-                },
-                "region": {
                   "byteLength": 17,
                   "byteOffset": 176
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/FunctionInitializingState.sol"
-                },
-                "region": {
-                  "byteLength": 21,
-                  "byteOffset": 199
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/FunctionInitializingState.sol"
-                },
-                "region": {
-                  "byteLength": 21,
-                  "byteOffset": 267
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/FunctionInitializingState.sol"
-                },
-                "region": {
-                  "byteLength": 22,
-                  "byteOffset": 294
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/FunctionInitializingState.sol"
-                },
-                "region": {
-                  "byteLength": 23,
-                  "byteOffset": 322
                 }
               }
             },

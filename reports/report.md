@@ -5883,7 +5883,7 @@ solc versions below 0.5.9 contain a compiler bug leading to unexpected behavior 
 
 State variables that are not updated following deployment should be declared constant to save gas. Add the `constant` attribute to state variables that never change.
 
-<details><summary>39 Found Instances</summary>
+<details><summary>34 Found Instances</summary>
 
 
 - Found in src/CostlyOperationsInsideLoops.sol [Line: 6](../tests/contract-playground/src/CostlyOperationsInsideLoops.sol#L6)
@@ -5892,40 +5892,10 @@ State variables that are not updated following deployment should be declared con
 	    uint loop_count = 100;
 	```
 
-- Found in src/FunctionInitializingState.sol [Line: 6](../tests/contract-playground/src/FunctionInitializingState.sol#L6)
-
-	```solidity
-	    uint public v = set(); // Initialize from function (sets to 77)
-	```
-
 - Found in src/FunctionInitializingState.sol [Line: 7](../tests/contract-playground/src/FunctionInitializingState.sol#L7)
 
 	```solidity
 	    uint public w = 5;
-	```
-
-- Found in src/FunctionInitializingState.sol [Line: 8](../tests/contract-playground/src/FunctionInitializingState.sol#L8)
-
-	```solidity
-	    uint public x = set(); // Initialize from function (sets to 88)
-	```
-
-- Found in src/FunctionInitializingState.sol [Line: 9](../tests/contract-playground/src/FunctionInitializingState.sol#L9)
-
-	```solidity
-	    uint public f = tes();
-	```
-
-- Found in src/FunctionInitializingState.sol [Line: 10](../tests/contract-playground/src/FunctionInitializingState.sol#L10)
-
-	```solidity
-	    uint public h = okay();
-	```
-
-- Found in src/FunctionInitializingState.sol [Line: 11](../tests/contract-playground/src/FunctionInitializingState.sol#L11)
-
-	```solidity
-	    uint public m = okay2();
 	```
 
 - Found in src/FunctionInitializingState.sol [Line: 58](../tests/contract-playground/src/FunctionInitializingState.sol#L58)

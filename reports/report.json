@@ -5783,39 +5783,9 @@
           },
           {
             "contract_path": "src/FunctionInitializingState.sol",
-            "line_no": 6,
-            "src": "108:21",
-            "src_char": "108:21"
-          },
-          {
-            "contract_path": "src/FunctionInitializingState.sol",
             "line_no": 7,
             "src": "176:17",
             "src_char": "176:17"
-          },
-          {
-            "contract_path": "src/FunctionInitializingState.sol",
-            "line_no": 8,
-            "src": "199:21",
-            "src_char": "199:21"
-          },
-          {
-            "contract_path": "src/FunctionInitializingState.sol",
-            "line_no": 9,
-            "src": "267:21",
-            "src_char": "267:21"
-          },
-          {
-            "contract_path": "src/FunctionInitializingState.sol",
-            "line_no": 10,
-            "src": "294:22",
-            "src_char": "294:22"
-          },
-          {
-            "contract_path": "src/FunctionInitializingState.sol",
-            "line_no": 11,
-            "src": "322:23",
-            "src_char": "322:23"
           },
           {
             "contract_path": "src/FunctionInitializingState.sol",
