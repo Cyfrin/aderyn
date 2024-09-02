@@ -193,6 +193,10 @@ where
 
             issue.hints = detector_hints;
 
+            if issue.instances.is_empty() {
+                return None;
+            }
+
             Some((issue, detector.severity()))
         })
         .collect();
