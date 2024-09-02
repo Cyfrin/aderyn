@@ -1784,6 +1784,28 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/LocalVariableShadow.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 129
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LocalVariableShadow.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 532
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/PublicVariableReadInExternalContext.sol"
                 },
                 "region": {
@@ -4824,6 +4846,39 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/LocalVariableShadow.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 181
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LocalVariableShadow.sol"
+                },
+                "region": {
+                  "byteLength": 26,
+                  "byteOffset": 332
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LocalVariableShadow.sol"
+                },
+                "region": {
+                  "byteLength": 18,
+                  "byteOffset": 700
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/OutOfOrderRetryable.sol"
                 },
                 "region": {
@@ -6253,6 +6308,39 @@
                 "region": {
                   "byteLength": 6,
                   "byteOffset": 1389
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LocalVariableShadow.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 251
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LocalVariableShadow.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 434
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LocalVariableShadow.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 770
                 }
               }
             },
@@ -8517,6 +8605,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/LocalVariableShadow.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 129
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/StateVariables.sol"
                 },
                 "region": {
@@ -8878,6 +8977,103 @@
             "text": "If `x` is a boolean, there is no need to do `if(x == true)` or `if(x == false)`. Just use `if(x)` and `if(!x)` respectively."
           },
           "ruleId": "boolean-equality"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/FunctionInitializingState.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 1246
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/FunctionInitializingState.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 1385
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LocalVariableShadow.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 207
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LocalVariableShadow.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 391
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LocalVariableShadow.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 727
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/OutOfOrderRetryable.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 4121
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/OutOfOrderRetryable.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 4236
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/OutOfOrderRetryable.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 4262
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Rename the local variables that shadow another component."
+          },
+          "ruleId": "local-variable-shadowing"
         },
         {
           "level": "note",

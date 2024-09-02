@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 105,
-    "total_sloc": 3447
+    "total_source_units": 106,
+    "total_sloc": 3470
   },
   "files_details": {
     "files_details": [
@@ -180,6 +180,10 @@
       {
         "file_path": "src/KeccakContract.sol",
         "n_sloc": 21
+      },
+      {
+        "file_path": "src/LocalVariableShadow.sol",
+        "n_sloc": 23
       },
       {
         "file_path": "src/MisusedBoolean.sol",
@@ -429,7 +433,7 @@
   },
   "issue_count": {
     "high": 42,
-    "low": 40
+    "low": 41
   },
   "high_issues": {
     "issues": [
@@ -1436,6 +1440,18 @@
             "line_no": 147,
             "src": "4076:11",
             "src_char": "4076:11"
+          },
+          {
+            "contract_path": "src/LocalVariableShadow.sol",
+            "line_no": 7,
+            "src": "129:5",
+            "src_char": "129:5"
+          },
+          {
+            "contract_path": "src/LocalVariableShadow.sol",
+            "line_no": 25,
+            "src": "532:4",
+            "src_char": "532:4"
           },
           {
             "contract_path": "src/PublicVariableReadInExternalContext.sol",
@@ -3170,6 +3186,24 @@
             "src_char": "1249:9"
           },
           {
+            "contract_path": "src/LocalVariableShadow.sol",
+            "line_no": 10,
+            "src": "181:17",
+            "src_char": "181:17"
+          },
+          {
+            "contract_path": "src/LocalVariableShadow.sol",
+            "line_no": 16,
+            "src": "332:26",
+            "src_char": "332:26"
+          },
+          {
+            "contract_path": "src/LocalVariableShadow.sol",
+            "line_no": 31,
+            "src": "700:18",
+            "src_char": "700:18"
+          },
+          {
             "contract_path": "src/OutOfOrderRetryable.sol",
             "line_no": 167,
             "src": "4685:13",
@@ -3957,6 +3991,24 @@
             "line_no": 40,
             "src": "1389:6",
             "src_char": "1389:6"
+          },
+          {
+            "contract_path": "src/LocalVariableShadow.sol",
+            "line_no": 12,
+            "src": "251:7",
+            "src_char": "251:7"
+          },
+          {
+            "contract_path": "src/LocalVariableShadow.sol",
+            "line_no": 19,
+            "src": "434:7",
+            "src_char": "434:7"
+          },
+          {
+            "contract_path": "src/LocalVariableShadow.sol",
+            "line_no": 33,
+            "src": "770:7",
+            "src_char": "770:7"
           },
           {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
@@ -5222,6 +5274,12 @@
             "src_char": "434:10"
           },
           {
+            "contract_path": "src/LocalVariableShadow.sol",
+            "line_no": 7,
+            "src": "129:5",
+            "src_char": "129:5"
+          },
+          {
             "contract_path": "src/StateVariables.sol",
             "line_no": 8,
             "src": "199:19",
@@ -5420,6 +5478,61 @@
             "line_no": 26,
             "src": "614:16",
             "src_char": "614:16"
+          }
+        ]
+      },
+      {
+        "title": "Local variable shadows state variables in the contract hirearchy",
+        "description": "Rename the local variables that shadow another component.",
+        "detector_name": "local-variable-shadowing",
+        "instances": [
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 41,
+            "src": "1246:6",
+            "src_char": "1246:6"
+          },
+          {
+            "contract_path": "src/FunctionInitializingState.sol",
+            "line_no": 46,
+            "src": "1385:6",
+            "src_char": "1385:6"
+          },
+          {
+            "contract_path": "src/LocalVariableShadow.sol",
+            "line_no": 10,
+            "src": "207:5",
+            "src_char": "207:5"
+          },
+          {
+            "contract_path": "src/LocalVariableShadow.sol",
+            "line_no": 17,
+            "src": "391:5",
+            "src_char": "391:5"
+          },
+          {
+            "contract_path": "src/LocalVariableShadow.sol",
+            "line_no": 31,
+            "src": "727:4",
+            "src_char": "727:4"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 144,
+            "src": "4121:17",
+            "src_char": "4121:17"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 147,
+            "src": "4236:8",
+            "src_char": "4236:8"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 148,
+            "src": "4262:12",
+            "src_char": "4262:12"
           }
         ]
       },
@@ -6126,6 +6239,7 @@
     "tx-origin-used-for-auth",
     "msg-value-in-loop",
     "contract-locks-ether",
+    "local-variable-shadowing",
     "incorrect-erc721-interface",
     "incorrect-erc20-interface",
     "uninitialized-local-variable",
