@@ -24,12 +24,11 @@ pub struct SendEtherNoChecksDetector {
 impl IssueDetector for SendEtherNoChecksDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for func in helpers::get_implemented_external_and_public_functions(context) {
-            let mut tracker = MsgSenderAndCallWithValueTracker::default();
-            let investigator =
-                CallGraph::new(context, &[&(func.into())], CallGraphDirection::Inward)?;
-            investigator.accept(context, &mut tracker)?;
+            let mut tracker = AddressChecksAndCallWithValueTracker::default();
+            let callgraph = CallGraph::new(context, &[&(func.into())], CallGraphDirection::Inward)?;
+            callgraph.accept(context, &mut tracker)?;
 
-            if tracker.sends_native_eth && !tracker.has_msg_sender_checks {
+            if tracker.sends_native_eth && !tracker.has_binary_checks_on_some_address {
                 capture!(self, context, func);
             }
         }
@@ -42,11 +41,11 @@ impl IssueDetector for SendEtherNoChecksDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Sending native Eth is not protected from these functions.")
+        String::from("Functions send eth away from contract but performs no checks on any address.")
     }
 
     fn description(&self) -> String {
-        String::from("Introduce checks for `msg.sender` in the function")
+        String::from("Consider introducing checks for `msg.sender` to ensure the recipient of the money is as intended.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -84,29 +83,21 @@ mod send_ether_no_checks_detector_tests {
             detector.severity(),
             crate::detect::detector::IssueSeverity::High
         );
-        // assert the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from("Sending native Eth is not protected from these functions.")
-        );
-        // assert the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from("Introduce checks for `msg.sender` in the function")
-        );
     }
 }
 
 #[derive(Default)]
-pub struct MsgSenderAndCallWithValueTracker {
-    pub has_msg_sender_checks: bool,
+pub struct AddressChecksAndCallWithValueTracker {
+    pub has_binary_checks_on_some_address: bool,
     pub sends_native_eth: bool,
 }
 
-impl CallGraphVisitor for MsgSenderAndCallWithValueTracker {
+impl CallGraphVisitor for AddressChecksAndCallWithValueTracker {
     fn visit_any(&mut self, node: &ASTNode) -> eyre::Result<()> {
-        if !self.has_msg_sender_checks && helpers::has_msg_sender_binary_operation(node) {
-            self.has_msg_sender_checks = true;
+        if !self.has_binary_checks_on_some_address
+            && helpers::has_binary_checks_on_some_address(node)
+        {
+            self.has_binary_checks_on_some_address = true;
         }
         if !self.sends_native_eth && helpers::has_calls_that_sends_native_eth(node) {
             self.sends_native_eth = true;

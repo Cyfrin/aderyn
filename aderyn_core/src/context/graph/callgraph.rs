@@ -1,6 +1,6 @@
 //! This module helps with strategies on performing different types of investigations.
 //!
-//! Our first kind of investigator is [`CallGraph`] it comes bundled with actions to help
+//! Our first kind of callgraph is [`CallGraph`] it comes bundled with actions to help
 //! application modules "hook in" and consume the graphs.
 //!
 //!

@@ -17,6 +17,18 @@ impl Node for UsingForDirective {
             if self.type_name.is_some() {
                 self.type_name.as_ref().unwrap().accept(visitor)?;
             }
+            if let Some(function_list) = &self.function_list {
+                for func_item in function_list {
+                    match func_item {
+                        UsingForFunctionItem::Function(function) => {
+                            function.function.accept(visitor)?;
+                        }
+                        UsingForFunctionItem::OverloadedOperator(overloaded_operator) => {
+                            overloaded_operator.definition.accept(visitor)?;
+                        }
+                    }
+                }
+            }
             self.accept_metadata(visitor)?;
         }
         visitor.end_visit_using_for_directive(self)

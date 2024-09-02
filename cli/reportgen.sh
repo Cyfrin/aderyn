@@ -27,6 +27,8 @@ cargo run -- tests/prb-math -o reports/prb-math-report.md --skip-update-check &
 # TempleGold
 cargo run -- tests/2024-07-templegold/protocol -o reports/templegold-report.md --skip-update-check &
 
+cargo run -- tests/hardhat-js-playground -o reports/hardhat-playground-report.md --skip-update-check &
+
 ##### JSON REPORTS ########
 
 # Basic report.json
