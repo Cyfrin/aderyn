@@ -1,14 +1,23 @@
 #![allow(clippy::borrowed_box)]
 
-use aderyn::{
-    aderyn_is_currently_running_newest_version, debounce_and_run, print_all_detectors_view,
-    print_detail_view,
-};
+use std::path::PathBuf;
 use std::time::Duration;
+
+use aderyn::{
+    aderyn_is_currently_running_newest_version, print_all_detectors_view, print_detail_view,
+};
+use log::{info, LevelFilter};
+use notify_debouncer_full::notify::{Event, RecommendedWatcher, Result as NotifyResult};
+use simple_logging::log_to_file;
+use tokio::sync::mpsc::Receiver;
+use tower_lsp::jsonrpc::Result;
+use tower_lsp::lsp_types::*;
+use tower_lsp::{Client, LanguageServer, LspService, Server};
 
 use aderyn_driver::driver::{self, Args};
 
 use clap::{ArgGroup, Parser, Subcommand};
+use notify_debouncer_full::notify::{Config, RecursiveMode, Watcher};
 
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
@@ -132,16 +141,7 @@ fn main() {
         // Run it once, for the first time
         driver::drive(args.clone());
 
-        println!("INFO: Aderyn is entering watch mode !");
-        // Now run it every time there is a file change
-        debounce_and_run(
-            || {
-                // Run it once
-                driver::drive(args.clone());
-            },
-            &args,
-            Duration::from_millis(50),
-        );
+        watch_asynchronously_and_report(args);
     } else {
         driver::drive(args.clone());
     }
@@ -155,4 +155,124 @@ fn main() {
             }
         }
     }
+}
+
+#[derive(Debug)]
+struct Backend {
+    client: Client,
+    rx: Receiver<NotifyResult<Event>>,
+}
+
+#[tower_lsp::async_trait]
+impl LanguageServer for Backend {
+    async fn initialize(&self, params: InitializeParams) -> Result<InitializeResult> {
+        info!("TLSP initialize");
+        info!("{:?}", params.capabilities);
+
+        self.client
+            .log_message(
+                MessageType::INFO,
+                format!("server initialized! {:#?}", params.capabilities),
+            )
+            .await;
+        Ok(InitializeResult {
+            capabilities: ServerCapabilities {
+                text_document_sync: Some(TextDocumentSyncCapability::Options(
+                    TextDocumentSyncOptions {
+                        open_close: Some(true),
+                        change: None,
+                        will_save: Some(false),
+                        will_save_wait_until: Some(false),
+                        save: Some(TextDocumentSyncSaveOptions::Supported(true)),
+                    },
+                )),
+                ..Default::default()
+            },
+            ..Default::default()
+        })
+    }
+
+    async fn initialized(&self, params: InitializedParams) {
+        info!("TLSP initialized: {:?}", params);
+        self.client
+            .log_message(
+                MessageType::INFO,
+                format!("server initialized! {:?}", params),
+            )
+            .await;
+    }
+
+    async fn did_save(&self, params: DidSaveTextDocumentParams) {
+        info!("TLSP didSave caught : {:?}", params);
+
+        let diagnostic = Diagnostic::new_simple(
+            Range {
+                start: Position {
+                    line: 1,
+                    character: 3,
+                },
+                end: Position {
+                    line: 2,
+                    character: 20,
+                },
+            },
+            "BAD CODE".to_string(),
+        );
+
+        self.client
+            .publish_diagnostics(params.text_document.uri, vec![diagnostic], None)
+            .await;
+    }
+
+    async fn shutdown(&self) -> Result<()> {
+        Ok(())
+    }
+}
+
+fn watch_asynchronously_and_report(args: Args) {
+    let rt = tokio::runtime::Runtime::new().unwrap();
+    rt.block_on(async {
+        let (mut tx, rx) = tokio::sync::mpsc::channel(1);
+
+        let config = Config::default()
+            .with_poll_interval(Duration::from_secs(2))
+            .with_compare_contents(false);
+
+        let mut watcher = RecommendedWatcher::new(
+            move |res| {
+                tx.blocking_send(res).unwrap();
+            },
+            config,
+        )
+        .unwrap();
+
+        watcher
+            .watch(
+                PathBuf::from(args.root.clone()).as_path(),
+                RecursiveMode::Recursive,
+            )
+            .unwrap();
+
+        //// Then run again only if file events are observed
+        //for result in rx {
+        //    match result {
+        //        Ok(_) => {
+        //
+        //            // do stuff here
+        //        }
+        //        Err(errors) => errors.iter().for_each(|error| println!("{error:?}")),
+        //    }
+        //    println!();
+        //}
+        _ = log_to_file(
+            "/Users/tilakmadichetti/Documents/OpenSource/my-first-vscode-lsp/lsp_server.log",
+            LevelFilter::Info,
+        );
+
+        let stdin = tokio::io::stdin();
+        let stdout = tokio::io::stdout();
+
+        let (service, socket) = LspService::new(move |client| Backend { client, rx });
+        Server::new(stdin, stdout, socket).serve(service).await;
+    });
 }

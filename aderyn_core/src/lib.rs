@@ -12,7 +12,9 @@ use detect::detector::IssueDetector;
 use eyre::Result;
 use fscloc::cloc::When;
 use prettytable::Row;
-use rayon::iter::{IntoParallelIterator, IntoParallelRefMutIterator, ParallelIterator};
+use rayon::iter::{
+    IntoParallelIterator, IntoParallelRefIterator, IntoParallelRefMutIterator, ParallelIterator,
+};
 use std::collections::btree_map::Entry;
 use std::collections::{BTreeMap, HashMap};
 use std::error::Error;
@@ -92,36 +94,20 @@ fn run_auditor_mode(contexts: &[WorkspaceContext]) -> Result<(), Box<dyn Error>>
     Ok(())
 }
 
-#[allow(clippy::too_many_arguments)]
-fn run_detector_mode<T>(
+pub fn get_report(
     contexts: &[WorkspaceContext],
-    output_file_path: String,
-    reporter: T,
-    root_rel_path: PathBuf,
-    no_snippets: bool,
-    stdout: bool,
-    mut detectors: Vec<Box<dyn IssueDetector>>,
-) -> Result<(), Box<dyn Error>>
-where
-    T: ReportPrinter<()>,
-{
+    root_rel_path: &Path,
+    detectors: Vec<Box<dyn IssueDetector>>,
+) -> Result<Report, Box<dyn Error>> {
     let mut ignore_lines = HashMap::new();
     for context in contexts {
         ignore_lines.extend(context.ignore_lines_stats.clone());
     }
 
-    println!("Get Detectors");
-
-    println!("Running {} detectors", detectors.len());
-
-    let detectors_used = &detectors
-        .iter()
-        .map(|d| (d.name(), d.severity().to_string()))
-        .collect::<Vec<_>>();
     let mut report: Report = Report::default();
 
     let issues_collection: Vec<(Issue, IssueSeverity)> = detectors
-        .par_iter_mut()
+        .par_iter()
         .flat_map(|detector| {
             let mut issue: Issue = Issue {
                 title: detector.title(),
@@ -208,7 +194,38 @@ where
         }
     }
 
+    Ok(report)
+}
+
+#[allow(clippy::too_many_arguments)]
+fn run_detector_mode<T>(
+    contexts: &[WorkspaceContext],
+    output_file_path: String,
+    reporter: T,
+    root_rel_path: PathBuf,
+    no_snippets: bool,
+    stdout: bool,
+    detectors: Vec<Box<dyn IssueDetector>>,
+) -> Result<(), Box<dyn Error>>
+where
+    T: ReportPrinter<()>,
+{
+    let mut ignore_lines = HashMap::new();
+    for context in contexts {
+        ignore_lines.extend(context.ignore_lines_stats.clone());
+    }
+
+    println!("Get Detectors");
+
+    println!("Running {} detectors", detectors.len());
+
+    let detectors_used = &detectors
+        .iter()
+        .map(|d| (d.name(), d.severity().to_string()))
+        .collect::<Vec<_>>();
     println!("Detectors run, processing found issues");
+
+    let report = get_report(contexts, &root_rel_path, detectors)?;
 
     println!("Found issues processed. Printing report");
 
