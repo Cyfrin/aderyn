@@ -28,6 +28,7 @@ dependencies = [
  "aderyn_driver",
  "clap",
  "cyfrin-foundry-compilers",
+ "lazy_static",
  "log",
  "notify-debouncer-full",
  "reqwest",

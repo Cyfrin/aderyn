@@ -1,15 +1,18 @@
 #![allow(clippy::borrowed_box)]
 
 use std::path::PathBuf;
+use std::sync::Arc;
 use std::time::Duration;
 
 use aderyn::{
     aderyn_is_currently_running_newest_version, print_all_detectors_view, print_detail_view,
 };
-use log::{info, LevelFilter};
+use log::{info, warn, LevelFilter};
 use notify_debouncer_full::notify::{Event, RecommendedWatcher, Result as NotifyResult};
 use simple_logging::log_to_file;
 use tokio::sync::mpsc::Receiver;
+use tokio::sync::Mutex;
+use tokio::time::timeout;
 use tower_lsp::jsonrpc::Result;
 use tower_lsp::lsp_types::*;
 use tower_lsp::{Client, LanguageServer, LspService, Server};
@@ -159,8 +162,8 @@ fn main() {
 
 #[derive(Debug)]
 struct Backend {
-    client: Client,
-    rx: Receiver<NotifyResult<Event>>,
+    client: Arc<Client>,
+    // rx_arc: Arc<Mutex<Receiver<NotifyResult<Event>>>>,
 }
 
 #[tower_lsp::async_trait]
@@ -200,8 +203,6 @@ impl LanguageServer for Backend {
                 format!("server initialized! {:?}", params),
             )
             .await;
-
-        tokio::spawn(async { for result in self.rx {} });
     }
 
     async fn did_save(&self, params: DidSaveTextDocumentParams) {
@@ -224,12 +225,29 @@ impl LanguageServer for Backend {
         self.client
             .publish_diagnostics(params.text_document.uri, vec![diagnostic], None)
             .await;
+
+        // let mut res = self.rx_arc.lock().await;
+
+        // Let's wait for upto 3 seconds to see if we receive the change
+        //   if let Ok(Some(Ok(event_result))) = timeout(Duration::from_secs(3), res.recv()).await {
+        // Do something
+        //   }
     }
 
     async fn shutdown(&self) -> Result<()> {
         Ok(())
     }
 }
+
+//impl Backend {
+//    async fn spawn_diagnostic_watcher(&self) {
+//        tokio::spawn(async move {
+//            let rec = Arc::clone(&self.rx_arc);
+//            let _lock = rec.lock().await;
+//            // do something
+//        });
+//    }
+//}
 
 fn watch_asynchronously_and_report(args: Args) {
     let rt = tokio::runtime::Runtime::new().unwrap();
@@ -274,7 +292,27 @@ fn watch_asynchronously_and_report(args: Args) {
         let stdin = tokio::io::stdin();
         let stdout = tokio::io::stdout();
 
-        let (service, socket) = LspService::new(move |client| Backend { client, rx });
+        let (service, socket) = LspService::new(move |client| {
+            let rx_arc = Arc::new(Mutex::new(rx));
+            let client_arc = Arc::new(client);
+            tokio::spawn(async move {
+                let t = Arc::clone(&rx_arc);
+                let mut rxer = t.lock().await;
+                while let Some(change) = rxer.recv().await {
+                    if let Ok(_event) = change {
+                        // do something
+                        driver::drive(args.clone());
+                    } else {
+                        warn!("Error from rexr receiver");
+                    }
+                }
+            });
+            Backend {
+                client: client_arc,
+                //  rx_arc: Arc::clone(&rx_arc),
+            }
+        });
+
         Server::new(stdin, stdout, socket).serve(service).await;
     });
 }
