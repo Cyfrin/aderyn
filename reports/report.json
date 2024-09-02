@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 106,
-    "total_sloc": 3470
+    "total_source_units": 107,
+    "total_sloc": 3509
   },
   "files_details": {
     "files_details": [
@@ -184,6 +184,10 @@
       {
         "file_path": "src/LocalVariableShadow.sol",
         "n_sloc": 23
+      },
+      {
+        "file_path": "src/MissingInheritance.sol",
+        "n_sloc": 39
       },
       {
         "file_path": "src/MisusedBoolean.sol",
@@ -433,7 +437,7 @@
   },
   "issue_count": {
     "high": 42,
-    "low": 41
+    "low": 42
   },
   "high_issues": {
     "issues": [
@@ -5924,6 +5928,34 @@
         ]
       },
       {
+        "title": "Potentially missing inheritance for contract.",
+        "description": "There is an interface / abstract contract that is potentially missing (not included in) the inheritance of this contract.",
+        "detector_name": "missing-inheritance",
+        "instances": [
+          {
+            "contract_path": "src/MissingInheritance.sol",
+            "line_no": 7,
+            "src": "83:25",
+            "src_char": "83:25",
+            "hint": "Is this contract supposed to implement an interface? Consider extending one of the following: IMissingInheritanceCounter"
+          },
+          {
+            "contract_path": "src/MissingInheritance.sol",
+            "line_no": 41,
+            "src": "754:16",
+            "src_char": "754:16",
+            "hint": "Is this contract supposed to implement an interface? Consider extending one of the following: IMissingChild, IMissingParent"
+          },
+          {
+            "contract_path": "src/TestERC20.sol",
+            "line_no": 4,
+            "src": "70:9",
+            "src_char": "70:9",
+            "hint": "Is this contract supposed to implement an interface? Consider extending one of the following: IERC20"
+          }
+        ]
+      },
+      {
         "title": "Unused Imports",
         "description": "Redundant import statement. Consider removing it.",
         "detector_name": "unused-import",
@@ -6254,6 +6286,7 @@
     "builtin-symbol-shadow",
     "void-constructor",
     "function-selector-collision",
+    "missing-inheritance",
     "unused-import",
     "unchecked-low-level-call",
     "function-pointer-in-constructor",

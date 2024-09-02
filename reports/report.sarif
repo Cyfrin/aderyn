@@ -9754,6 +9754,57 @@
           "level": "note",
           "locations": [
             {
+              "message": {
+                "text": "Is this contract supposed to implement an interface? Consider extending one of the following: IMissingInheritanceCounter"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MissingInheritance.sol"
+                },
+                "region": {
+                  "byteLength": 25,
+                  "byteOffset": 83
+                }
+              }
+            },
+            {
+              "message": {
+                "text": "Is this contract supposed to implement an interface? Consider extending one of the following: IMissingChild, IMissingParent"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MissingInheritance.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 754
+                }
+              }
+            },
+            {
+              "message": {
+                "text": "Is this contract supposed to implement an interface? Consider extending one of the following: IERC20"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TestERC20.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 70
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "There is an interface / abstract contract that is potentially missing (not included in) the inheritance of this contract."
+          },
+          "ruleId": "missing-inheritance"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/StateVariables.sol"

@@ -95,6 +95,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<BuiltinSymbolShadowDetector>::default(),
         Box::<VoidConstructorDetector>::default(),
         Box::<FunctionSelectorCollisionDetector>::default(),
+        Box::<MissingInheritanceDetector>::default(),
         Box::<UnusedImportDetector>::default(),
         Box::<UncheckedLowLevelCallDetector>::default(),
         Box::<FucntionPointerInConstructorDetector>::default(),
@@ -110,6 +111,7 @@ pub fn get_all_detectors_names() -> Vec<String> {
 #[derive(Debug, PartialEq, EnumString, Display)]
 #[strum(serialize_all = "kebab-case")]
 pub(crate) enum IssueDetectorNamePool {
+    MissingInheritance,
     UnusedImport,
     VoidConstructor,
     UncheckedLowLevelCall,
@@ -203,6 +205,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
     // Expects a valid detector_name
     let detector_name = IssueDetectorNamePool::from_str(detector_name).ok()?;
     match detector_name {
+        IssueDetectorNamePool::MissingInheritance => {
+            Some(Box::<MissingInheritanceDetector>::default())
+        }
         IssueDetectorNamePool::LocalVariableShadowing => {
             Some(Box::<LocalVariableShadowingDetector>::default())
         }
