@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 100,
-    "total_sloc": 3423
+    "total_source_units": 105,
+    "total_sloc": 3447
   },
   "files_details": {
     "files_details": [
@@ -274,6 +274,22 @@
         "n_sloc": 43
       },
       {
+        "file_path": "src/U2.sol",
+        "n_sloc": 3
+      },
+      {
+        "file_path": "src/U3.sol",
+        "n_sloc": 2
+      },
+      {
+        "file_path": "src/U4.sol",
+        "n_sloc": 3
+      },
+      {
+        "file_path": "src/U5.sol",
+        "n_sloc": 6
+      },
+      {
         "file_path": "src/UncheckedCalls.sol",
         "n_sloc": 24
       },
@@ -304,6 +320,10 @@
       {
         "file_path": "src/UnusedError.sol",
         "n_sloc": 19
+      },
+      {
+        "file_path": "src/UnusedImport.sol",
+        "n_sloc": 10
       },
       {
         "file_path": "src/UnusedStateVariables.sol",
@@ -409,7 +429,7 @@
   },
   "issue_count": {
     "high": 42,
-    "low": 39
+    "low": 40
   },
   "high_issues": {
     "issues": [
@@ -5791,6 +5811,31 @@
         ]
       },
       {
+        "title": "Unused Imports",
+        "description": "Redundant import statement. Consider removing it.",
+        "detector_name": "unused-import",
+        "instances": [
+          {
+            "contract_path": "src/StateVariables.sol",
+            "line_no": 4,
+            "src": "57:38",
+            "src_char": "57:38"
+          },
+          {
+            "contract_path": "src/UnusedImport.sol",
+            "line_no": 6,
+            "src": "91:18",
+            "src_char": "91:18"
+          },
+          {
+            "contract_path": "src/UnusedImport.sol",
+            "line_no": 9,
+            "src": "144:28",
+            "src_char": "144:28"
+          }
+        ]
+      },
+      {
         "title": "Function pointers used in constructors.",
         "description": "solc versions below 0.5.9 contain a compiler bug leading to unexpected behavior when calling uninitialized function pointers in constructors. It is recommended to not use function pointers in constructors.",
         "detector_name": "function-pointer-in-constructor",
@@ -6095,6 +6140,7 @@
     "builtin-symbol-shadow",
     "void-constructor",
     "function-selector-collision",
+    "unused-import",
     "unchecked-low-level-call",
     "function-pointer-in-constructor",
     "state-variable-could-be-declared-constant"
