@@ -131,7 +131,7 @@ impl IssueDetector for MissingInheritanceDetector {
                 let missing_inheritaces_string = missing_inheritances_vector.join(", ");
 
                 let hint = format!(
-                    "Consider implementing the most suitable of following inheritances : {}",
+                    "Is this contract supposed to implement an interface? Consider extending one of the following: {}",
                     missing_inheritaces_string
                 );
 

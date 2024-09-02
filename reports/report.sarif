@@ -9755,7 +9755,7 @@
           "locations": [
             {
               "message": {
-                "text": "Consider implementing the most suitable of following inheritances : IMissingInheritanceCounter"
+                "text": "Is this contract supposed to implement an interface? Consider extending one of the following: IMissingInheritanceCounter"
               },
               "physicalLocation": {
                 "artifactLocation": {
@@ -9769,7 +9769,7 @@
             },
             {
               "message": {
-                "text": "Consider implementing the most suitable of following inheritances : IMissingChild, IMissingParent"
+                "text": "Is this contract supposed to implement an interface? Consider extending one of the following: IMissingChild, IMissingParent"
               },
               "physicalLocation": {
                 "artifactLocation": {
@@ -9783,7 +9783,7 @@
             },
             {
               "message": {
-                "text": "Consider implementing the most suitable of following inheritances : IERC20"
+                "text": "Is this contract supposed to implement an interface? Consider extending one of the following: IERC20"
               },
               "physicalLocation": {
                 "artifactLocation": {

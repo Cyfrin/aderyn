@@ -6026,21 +6026,21 @@ There is an interface / abstract contract that is potentially missing (not inclu
 
 - Found in src/MissingInheritance.sol [Line: 7](../tests/contract-playground/src/MissingInheritance.sol#L7)
 
-	Consider implementing the most suitable of following inheritances : IMissingInheritanceCounter
+	Is this contract supposed to implement an interface? Consider extending one of the following: IMissingInheritanceCounter
 	```solidity
 	contract MissingInheritanceCounter {
 	```
 
 - Found in src/MissingInheritance.sol [Line: 41](../tests/contract-playground/src/MissingInheritance.sol#L41)
 
-	Consider implementing the most suitable of following inheritances : IMissingChild, IMissingParent
+	Is this contract supposed to implement an interface? Consider extending one of the following: IMissingChild, IMissingParent
 	```solidity
 	contract MissingContract2 {
 	```
 
 - Found in src/TestERC20.sol [Line: 4](../tests/contract-playground/src/TestERC20.sol#L4)
 
-	Consider implementing the most suitable of following inheritances : IERC20
+	Is this contract supposed to implement an interface? Consider extending one of the following: IERC20
 	```solidity
 	contract TestERC20 {
 	```

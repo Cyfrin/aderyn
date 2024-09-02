@@ -5937,21 +5937,21 @@
             "line_no": 7,
             "src": "83:25",
             "src_char": "83:25",
-            "hint": "Consider implementing the most suitable of following inheritances : IMissingInheritanceCounter"
+            "hint": "Is this contract supposed to implement an interface? Consider extending one of the following: IMissingInheritanceCounter"
           },
           {
             "contract_path": "src/MissingInheritance.sol",
             "line_no": 41,
             "src": "754:16",
             "src_char": "754:16",
-            "hint": "Consider implementing the most suitable of following inheritances : IMissingChild, IMissingParent"
+            "hint": "Is this contract supposed to implement an interface? Consider extending one of the following: IMissingChild, IMissingParent"
           },
           {
             "contract_path": "src/TestERC20.sol",
             "line_no": 4,
             "src": "70:9",
             "src_char": "70:9",
-            "hint": "Consider implementing the most suitable of following inheritances : IERC20"
+            "hint": "Is this contract supposed to implement an interface? Consider extending one of the following: IERC20"
           }
         ]
       },

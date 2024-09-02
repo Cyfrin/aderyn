@@ -8898,7 +8898,7 @@ There is an interface / abstract contract that is potentially missing (not inclu
 
 - Found in contracts/fakes/v2/TempleDebtTokenTestnetAdmin.sol [Line: 7](../tests/2024-07-templegold/protocol/contracts/fakes/v2/TempleDebtTokenTestnetAdmin.sol#L7)
 
-	Consider implementing the most suitable of following inheritances : AMO_IAuraToken
+	Is this contract supposed to implement an interface? Consider extending one of the following: AMO_IAuraToken
 	```solidity
 	contract TempleDebtTokenTestnetAdmin {
 	```
