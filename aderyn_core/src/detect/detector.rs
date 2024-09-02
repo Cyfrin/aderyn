@@ -80,6 +80,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<TxOriginUsedForAuthDetector>::default(),
         Box::<MsgValueUsedInLoopDetector>::default(),
         Box::<ContractLocksEtherDetector>::default(),
+        Box::<LocalVariableShadowingDetector>::default(),
         Box::<IncorrectERC721InterfaceDetector>::default(),
         Box::<IncorrectERC20InterfaceDetector>::default(),
         Box::<UninitializedLocalVariableDetector>::default(),
@@ -187,6 +188,7 @@ pub(crate) enum IssueDetectorNamePool {
     TxOriginUsedForAuth,
     MsgValueInLoop,
     ContractLocksEther,
+    LocalVariableShadowing,
     IncorrectERC20Interface,
     UninitializedLocalVariable,
     ReturnBomb,
@@ -201,6 +203,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
     // Expects a valid detector_name
     let detector_name = IssueDetectorNamePool::from_str(detector_name).ok()?;
     match detector_name {
+        IssueDetectorNamePool::LocalVariableShadowing => {
+            Some(Box::<LocalVariableShadowingDetector>::default())
+        }
         IssueDetectorNamePool::UnusedImport => Some(Box::<UnusedImportDetector>::default()),
         IssueDetectorNamePool::VoidConstructor => Some(Box::<VoidConstructorDetector>::default()),
         IssueDetectorNamePool::StateVariableCouldBeDeclaredConstant => {
