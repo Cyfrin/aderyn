@@ -138,11 +138,7 @@ fn main() {
     if cmd_args.watch {
         // Default to JSON
         args.output = "report.json".to_string();
-
-        // Run it once, for the first time
-        driver::drive(args.clone());
-
-        watch_asynchronously_and_report(args);
+        spin_up_language_server(args);
     } else {
         driver::drive(args.clone());
     }
@@ -160,22 +156,22 @@ fn main() {
 
 #[derive(Debug)]
 struct Backend {
-    _client: Arc<Mutex<Client>>,
-    // rx_arc: Arc<Mutex<Receiver<NotifyResult<Event>>>>,
+    client: Arc<Mutex<Client>>,
 }
 
 #[tower_lsp::async_trait]
 impl LanguageServer for Backend {
     async fn initialize(&self, params: InitializeParams) -> Result<InitializeResult> {
-        info!("TLSP initialize");
-        info!("{:?}", params.capabilities);
+        info!("TLSP initialize: {:?}", params.capabilities);
 
-        //self.client
-        //    .log_message(
-        //        MessageType::INFO,
-        //        format!("server initialized! {:#?}", params.capabilities),
-        //    )
-        //    .await;
+        let code_editor = self.client.lock().await;
+        code_editor
+            .log_message(
+                MessageType::INFO,
+                "Aderyn LSP received an initialization request!",
+            )
+            .await;
+
         Ok(InitializeResult {
             capabilities: ServerCapabilities {
                 text_document_sync: Some(TextDocumentSyncCapability::Options(
@@ -184,7 +180,7 @@ impl LanguageServer for Backend {
                         change: None,
                         will_save: Some(false),
                         will_save_wait_until: Some(false),
-                        save: Some(TextDocumentSyncSaveOptions::Supported(true)),
+                        save: None,
                     },
                 )),
                 ..Default::default()
@@ -195,40 +191,62 @@ impl LanguageServer for Backend {
 
     async fn initialized(&self, params: InitializedParams) {
         info!("TLSP initialized: {:?}", params);
-        //self.client
-        //    .log_message(
-        //        MessageType::INFO,
-        //        format!("server initialized! {:?}", params),
-        //    )
-        //    .await;
+
+        let code_editor = self.client.lock().await;
+        code_editor
+            .log_message(
+                MessageType::INFO,
+                "Aderyn LSP has been notified that the edtior's LSP client is initialized.",
+            )
+            .await;
     }
 
-    async fn did_save(&self, params: DidSaveTextDocumentParams) {
-        info!("TLSP didSave caught : {:?}", params);
-        // let mut res = self.rx_arc.lock().await;
+    async fn did_open(&self, params: DidOpenTextDocumentParams) {
+        info!("TLSP didOpen: {:?}", params);
 
-        // Let's wait for upto 3 seconds to see if we receive the change
-        //   if let Ok(Some(Ok(event_result))) = timeout(Duration::from_secs(3), res.recv()).await {
-        // Do something
-        //   }
+        let opened_file_uri = params.text_document.uri;
+
+        let code_editor = self.client.lock().await;
+        code_editor
+            .log_message(
+                MessageType::INFO,
+                format!(
+                    "Aderyn LSP has been notified that {} is opened",
+                    opened_file_uri
+                ),
+            )
+            .await;
+    }
+
+    async fn did_close(&self, params: DidCloseTextDocumentParams) {
+        info!("TLSP didClose: {:?}", params);
+
+        let opened_file_uri = params.text_document.uri;
+
+        let code_editor = self.client.lock().await;
+        code_editor
+            .log_message(
+                MessageType::INFO,
+                format!(
+                    "Aderyn LSP has been notified that {} is closed",
+                    opened_file_uri
+                ),
+            )
+            .await;
     }
 
     async fn shutdown(&self) -> Result<()> {
+        info!("TLSP shutdown");
+
+        let code_editor = self.client.lock().await;
+        code_editor
+            .log_message(MessageType::INFO, "Aderyn LSP has been shutdown")
+            .await;
         Ok(())
     }
 }
 
-//impl Backend {
-//    async fn spawn_diagnostic_watcher(&self) {
-//        tokio::spawn(async move {
-//            let rec = Arc::clone(&self.rx_arc);
-//            let _lock = rec.lock().await;
-//            // do something
-//        });
-//    }
-//}
-
-fn watch_asynchronously_and_report(args: Args) {
+fn spin_up_language_server(args: Args) {
     let rt = tokio::runtime::Runtime::new().unwrap();
     rt.block_on(async {
         let (tx, rx) = tokio::sync::mpsc::channel(1);
@@ -322,10 +340,7 @@ fn watch_asynchronously_and_report(args: Args) {
                     }
                 }
             });
-            Backend {
-                _client: c2,
-                //  rx_arc: Arc::clone(&rx_arc),
-            }
+            Backend { client: c2 }
         });
 
         Server::new(stdin, stdout, socket).serve(service).await;
