@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 107,
-    "total_sloc": 3509
+    "total_source_units": 108,
+    "total_sloc": 3790
   },
   "files_details": {
     "files_details": [
@@ -278,6 +278,10 @@
         "n_sloc": 62
       },
       {
+        "file_path": "src/Trump.sol",
+        "n_sloc": 281
+      },
+      {
         "file_path": "src/TxOriginUsedForAuth.sol",
         "n_sloc": 43
       },
@@ -484,6 +488,12 @@
         "description": "In the PoS model, proposers know well in advance if they will propose one or consecutive blocks ahead of time. In such a scenario, a malicious validator can hold back the transaction and execute it at a more favourable block number.Consider allowing function caller to specify swap deadline input parameter.",
         "detector_name": "block-timestamp-deadline",
         "instances": [
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 290,
+            "src": "9949:190",
+            "src_char": "9949:190"
+          },
           {
             "contract_path": "src/uniswap/UniswapV2Swapper.sol",
             "line_no": 23,
@@ -1753,8 +1763,8 @@
         ]
       },
       {
-        "title": "Sending native Eth is not protected from these functions.",
-        "description": "Introduce checks for `msg.sender` in the function",
+        "title": "Functions send eth away from contract but performs no checks on any address.",
+        "description": "Consider introducing checks for `msg.sender` to ensure the recipient of the money is as intended.",
         "detector_name": "send-ether-no-checks",
         "instances": [
           {
@@ -1828,6 +1838,12 @@
             "line_no": 99,
             "src": "1795:5",
             "src_char": "1795:5"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 321,
+            "src": "10940:10",
+            "src_char": "10940:10"
           },
           {
             "contract_path": "src/UncheckedCalls.sol",
@@ -2000,6 +2016,12 @@
             "line_no": 142,
             "src": "4146:20",
             "src_char": "4146:20"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 344,
+            "src": "11990:71",
+            "src_char": "11990:71"
           },
           {
             "contract_path": "src/UncheckedReturn.sol",
@@ -2583,6 +2605,30 @@
             "src_char": "250:9"
           },
           {
+            "contract_path": "src/Trump.sol",
+            "line_no": 92,
+            "src": "2714:9",
+            "src_char": "2714:9"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 123,
+            "src": "3592:7",
+            "src_char": "3592:7"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 299,
+            "src": "10185:9",
+            "src_char": "10185:9"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 338,
+            "src": "11494:11",
+            "src_char": "11494:11"
+          },
+          {
             "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
             "line_no": 9,
             "src": "322:7",
@@ -2753,6 +2799,36 @@
             "line_no": 22,
             "src": "368:19",
             "src_char": "368:19"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 309,
+            "src": "10512:19",
+            "src_char": "10512:19"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 310,
+            "src": "10557:20",
+            "src_char": "10557:20"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 318,
+            "src": "10869:29",
+            "src_char": "10869:29"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 324,
+            "src": "11111:28",
+            "src_char": "11111:28"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 344,
+            "src": "11990:29",
+            "src_char": "11990:29"
           },
           {
             "contract_path": "src/UninitializedStateVariable.sol",
@@ -3274,6 +3350,60 @@
             "src_char": "2539:25"
           },
           {
+            "contract_path": "src/Trump.sol",
+            "line_no": 92,
+            "src": "2679:17",
+            "src_char": "2679:17"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 180,
+            "src": "5624:4",
+            "src_char": "5624:4"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 184,
+            "src": "5711:6",
+            "src_char": "5711:6"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 188,
+            "src": "5802:8",
+            "src_char": "5802:8"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 192,
+            "src": "5889:11",
+            "src_char": "5889:11"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 200,
+            "src": "6111:8",
+            "src_char": "6111:8"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 205,
+            "src": "6281:9",
+            "src_char": "6281:9"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 209,
+            "src": "6428:7",
+            "src_char": "6428:7"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 214,
+            "src": "6592:12",
+            "src_char": "6592:12"
+          },
+          {
             "contract_path": "src/UninitializedLocalVariables.sol",
             "line_no": 7,
             "src": "121:19",
@@ -3749,6 +3879,30 @@
             "src_char": "9671:3"
           },
           {
+            "contract_path": "src/Trump.sol",
+            "line_no": 233,
+            "src": "7704:3",
+            "src_char": "7704:3"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 250,
+            "src": "8497:3",
+            "src_char": "8497:3"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 306,
+            "src": "10426:3",
+            "src_char": "10426:3"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 307,
+            "src": "10498:3",
+            "src_char": "10498:3"
+          },
+          {
             "contract_path": "src/UncheckedReturn.sol",
             "line_no": 27,
             "src": "607:7",
@@ -3918,6 +4072,36 @@
             "src_char": "413:70"
           },
           {
+            "contract_path": "src/Trump.sol",
+            "line_no": 31,
+            "src": "891:72",
+            "src_char": "891:72"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 32,
+            "src": "968:78",
+            "src_char": "968:78"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 159,
+            "src": "4970:44",
+            "src_char": "4970:44"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 160,
+            "src": "5019:33",
+            "src_char": "5019:33"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 161,
+            "src": "5057:62",
+            "src_char": "5057:62"
+          },
+          {
             "contract_path": "src/UncheckedReturn.sol",
             "line_no": 17,
             "src": "297:30",
@@ -4043,6 +4227,12 @@
             "line_no": 8,
             "src": "135:7",
             "src_char": "135:7"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 240,
+            "src": "8065:7",
+            "src_char": "8065:7"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
@@ -4270,6 +4460,12 @@
             "src_char": "32:23"
           },
           {
+            "contract_path": "src/Trump.sol",
+            "line_no": 16,
+            "src": "227:23",
+            "src_char": "227:23"
+          },
+          {
             "contract_path": "src/TxOriginUsedForAuth.sol",
             "line_no": 2,
             "src": "32:24",
@@ -4449,6 +4645,12 @@
             "line_no": 7,
             "src": "107:74",
             "src_char": "107:74"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 162,
+            "src": "5133:11",
+            "src_char": "5133:11"
           },
           {
             "contract_path": "src/UnprotectedInitialize.sol",
@@ -4817,6 +5019,24 @@
             "line_no": 51,
             "src": "1550:7",
             "src_char": "1550:7"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 145,
+            "src": "4412:8",
+            "src_char": "4412:8"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 148,
+            "src": "4579:6",
+            "src_char": "4579:6"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 151,
+            "src": "4756:6",
+            "src_char": "4756:6"
           }
         ]
       },
@@ -4916,6 +5136,18 @@
             "src_char": "388:11"
           },
           {
+            "contract_path": "src/Trump.sol",
+            "line_no": 46,
+            "src": "1403:3",
+            "src_char": "1403:3"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 65,
+            "src": "1976:3",
+            "src_char": "1976:3"
+          },
+          {
             "contract_path": "src/UncheckedSend.sol",
             "line_no": 27,
             "src": "915:65",
@@ -5012,6 +5244,12 @@
             "line_no": 6,
             "src": "133:6",
             "src_char": "133:6"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 159,
+            "src": "5000:12",
+            "src_char": "5000:12"
           },
           {
             "contract_path": "src/UninitializedLocalVariables.sol",
@@ -6135,6 +6373,72 @@
             "line_no": 72,
             "src": "2068:13",
             "src_char": "2068:13"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 130,
+            "src": "3920:20",
+            "src_char": "3920:20"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 131,
+            "src": "3967:21",
+            "src_char": "3967:21"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 135,
+            "src": "4041:14",
+            "src_char": "4041:14"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 136,
+            "src": "4080:15",
+            "src_char": "4080:15"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 137,
+            "src": "4120:12",
+            "src_char": "4120:12"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 138,
+            "src": "4156:13",
+            "src_char": "4156:13"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 139,
+            "src": "4193:15",
+            "src_char": "4193:15"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 140,
+            "src": "4233:16",
+            "src_char": "4233:16"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 141,
+            "src": "4274:18",
+            "src_char": "4274:18"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 150,
+            "src": "4682:17",
+            "src_char": "4682:17"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 151,
+            "src": "4743:11",
+            "src_char": "4743:11"
           },
           {
             "contract_path": "src/UninitializedStateVariable.sol",
