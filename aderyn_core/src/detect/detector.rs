@@ -80,6 +80,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<TxOriginUsedForAuthDetector>::default(),
         Box::<MsgValueUsedInLoopDetector>::default(),
         Box::<ContractLocksEtherDetector>::default(),
+        Box::<LocalVariableShadowingDetector>::default(),
         Box::<IncorrectERC721InterfaceDetector>::default(),
         Box::<IncorrectERC20InterfaceDetector>::default(),
         Box::<UninitializedLocalVariableDetector>::default(),
@@ -92,9 +93,13 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<CostlyOperationsInsideLoopsDetector>::default(),
         Box::<ConstantFunctionChangingStateDetector>::default(),
         Box::<BuiltinSymbolShadowDetector>::default(),
+        Box::<VoidConstructorDetector>::default(),
         Box::<FunctionSelectorCollisionDetector>::default(),
+        Box::<MissingInheritanceDetector>::default(),
+        Box::<UnusedImportDetector>::default(),
         Box::<UncheckedLowLevelCallDetector>::default(),
         Box::<FucntionPointerInConstructorDetector>::default(),
+        Box::<StateVariableCouldBeConstantDetector>::default(),
     ]
 }
 
@@ -106,6 +111,9 @@ pub fn get_all_detectors_names() -> Vec<String> {
 #[derive(Debug, PartialEq, EnumString, Display)]
 #[strum(serialize_all = "kebab-case")]
 pub(crate) enum IssueDetectorNamePool {
+    MissingInheritance,
+    UnusedImport,
+    VoidConstructor,
     UncheckedLowLevelCall,
     FunctionPointerInConstructor,
     DeadCode,
@@ -182,10 +190,12 @@ pub(crate) enum IssueDetectorNamePool {
     TxOriginUsedForAuth,
     MsgValueInLoop,
     ContractLocksEther,
+    LocalVariableShadowing,
     IncorrectERC20Interface,
     UninitializedLocalVariable,
     ReturnBomb,
     OutOfOrderRetryable,
+    StateVariableCouldBeDeclaredConstant,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -195,6 +205,17 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
     // Expects a valid detector_name
     let detector_name = IssueDetectorNamePool::from_str(detector_name).ok()?;
     match detector_name {
+        IssueDetectorNamePool::MissingInheritance => {
+            Some(Box::<MissingInheritanceDetector>::default())
+        }
+        IssueDetectorNamePool::LocalVariableShadowing => {
+            Some(Box::<LocalVariableShadowingDetector>::default())
+        }
+        IssueDetectorNamePool::UnusedImport => Some(Box::<UnusedImportDetector>::default()),
+        IssueDetectorNamePool::VoidConstructor => Some(Box::<VoidConstructorDetector>::default()),
+        IssueDetectorNamePool::StateVariableCouldBeDeclaredConstant => {
+            Some(Box::<StateVariableCouldBeConstantDetector>::default())
+        }
         IssueDetectorNamePool::FunctionPointerInConstructor => {
             Some(Box::<FucntionPointerInConstructorDetector>::default())
         }

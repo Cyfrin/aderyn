@@ -1795,6 +1795,28 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/LocalVariableShadow.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 129
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LocalVariableShadow.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 532
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/PublicVariableReadInExternalContext.sol"
                 },
                 "region": {
@@ -4509,6 +4531,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/VoidConstructor.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
                 },
                 "region": {
@@ -4939,6 +4972,39 @@
                 "region": {
                   "byteLength": 9,
                   "byteOffset": 1249
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LocalVariableShadow.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 181
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LocalVariableShadow.sol"
+                },
+                "region": {
+                  "byteLength": 26,
+                  "byteOffset": 332
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LocalVariableShadow.sol"
+                },
+                "region": {
+                  "byteLength": 18,
+                  "byteOffset": 700
                 }
               }
             },
@@ -6578,6 +6644,39 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/LocalVariableShadow.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 251
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LocalVariableShadow.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 434
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LocalVariableShadow.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 770
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/RevertsAndRequriesInLoops.sol"
                 },
                 "region": {
@@ -7082,6 +7181,17 @@
                 },
                 "region": {
                   "byteLength": 24,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/VoidConstructor.sol"
+                },
+                "region": {
+                  "byteLength": 23,
                   "byteOffset": 32
                 }
               }
@@ -8924,6 +9034,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/LocalVariableShadow.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 129
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/StateVariables.sol"
                 },
                 "region": {
@@ -9285,6 +9406,103 @@
             "text": "If `x` is a boolean, there is no need to do `if(x == true)` or `if(x == false)`. Just use `if(x)` and `if(!x)` respectively."
           },
           "ruleId": "boolean-equality"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/FunctionInitializingState.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 1246
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/FunctionInitializingState.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 1385
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LocalVariableShadow.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 207
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LocalVariableShadow.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 391
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LocalVariableShadow.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 727
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/OutOfOrderRetryable.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 4121
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/OutOfOrderRetryable.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 4236
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/OutOfOrderRetryable.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 4262
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Rename the local variables that shadow another component."
+          },
+          "ruleId": "local-variable-shadowing"
         },
         {
           "level": "note",
@@ -9947,6 +10165,119 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/VoidConstructor.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 372
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Call to a constructor that is not implemented."
+          },
+          "ruleId": "void-constructor"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "message": {
+                "text": "Is this contract supposed to implement an interface? Consider extending one of the following: IMissingInheritanceCounter"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MissingInheritance.sol"
+                },
+                "region": {
+                  "byteLength": 25,
+                  "byteOffset": 83
+                }
+              }
+            },
+            {
+              "message": {
+                "text": "Is this contract supposed to implement an interface? Consider extending one of the following: IMissingChild, IMissingParent"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MissingInheritance.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 754
+                }
+              }
+            },
+            {
+              "message": {
+                "text": "Is this contract supposed to implement an interface? Consider extending one of the following: IERC20"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TestERC20.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 70
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "There is an interface / abstract contract that is potentially missing (not included in) the inheritance of this contract."
+          },
+          "ruleId": "missing-inheritance"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariables.sol"
+                },
+                "region": {
+                  "byteLength": 38,
+                  "byteOffset": 57
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UnusedImport.sol"
+                },
+                "region": {
+                  "byteLength": 18,
+                  "byteOffset": 91
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UnusedImport.sol"
+                },
+                "region": {
+                  "byteLength": 28,
+                  "byteOffset": 144
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Redundant import statement. Consider removing it."
+          },
+          "ruleId": "unused-import"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/FunctionPointers.sol"
                 },
                 "region": {
@@ -9960,6 +10291,510 @@
             "text": "solc versions below 0.5.9 contain a compiler bug leading to unexpected behavior when calling uninitialized function pointers in constructors. It is recommended to not use function pointers in constructors."
           },
           "ruleId": "function-pointer-in-constructor"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/CostlyOperationsInsideLoops.sol"
+                },
+                "region": {
+                  "byteLength": 21,
+                  "byteOffset": 123
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/FunctionInitializingState.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 176
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/FunctionInitializingState.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 1603
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC20.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 101
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC20.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 144
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC20.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 177
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC20.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 211
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC20.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 1426
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC20.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 1467
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC20.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 1500
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC20.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 1535
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC721.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 102
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC721.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 143
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC721.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 4001
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectERC721.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 4040
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariableCouldBeDeclaredConstant.sol"
+                },
+                "region": {
+                  "byteLength": 13,
+                  "byteOffset": 211
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariableCouldBeDeclaredConstant.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 385
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariables.sol"
+                },
+                "region": {
+                  "byteLength": 27,
+                  "byteOffset": 383
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariables.sol"
+                },
+                "region": {
+                  "byteLength": 28,
+                  "byteOffset": 437
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariables.sol"
+                },
+                "region": {
+                  "byteLength": 26,
+                  "byteOffset": 490
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariablesManipulation.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 1188
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariablesManipulation.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 1221
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariablesManipulation.sol"
+                },
+                "region": {
+                  "byteLength": 13,
+                  "byteOffset": 2068
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 20,
+                  "byteOffset": 3920
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 21,
+                  "byteOffset": 3967
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 4041
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 4080
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 4120
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 13,
+                  "byteOffset": 4156
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 4193
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 4233
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 18,
+                  "byteOffset": 4274
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 4682
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 4743
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedStateVariable.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 198
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 151
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 190
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 261
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 367
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/AnotherHeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 477
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/HeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 160
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/HeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 199
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/HeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 270
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/HeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 376
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/cloc/HeavilyCommentedContract.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 486
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "State variables that are not updated following deployment should be declared constant to save gas. Add the `constant` attribute to state variables that never change."
+          },
+          "ruleId": "state-variable-could-be-declared-constant"
         }
       ],
       "tool": {
@@ -9968,8 +10803,8 @@
           "informationUri": "https://github.com/Cyfrin/aderyn",
           "name": "Aderyn",
           "organization": "Cyfrin",
-          "semanticVersion": "0.1.11",
-          "version": "0.1.11"
+          "semanticVersion": "0.2.0",
+          "version": "0.2.0"
         }
       }
     }
