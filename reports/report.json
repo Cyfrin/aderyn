@@ -401,7 +401,7 @@
   },
   "issue_count": {
     "high": 42,
-    "low": 36
+    "low": 37
   },
   "high_issues": {
     "issues": [
@@ -5745,6 +5745,37 @@
         ]
       },
       {
+        "title": "Builtin Symbol Shadowing",
+        "description": "Name clashes with a built-in-symbol. Consider renaming it.",
+        "detector_name": "builtin-symbol-shadow",
+        "instances": [
+          {
+            "contract_path": "src/BuiltinSymbolShadow.sol",
+            "line_no": 5,
+            "src": "92:8",
+            "src_char": "92:8"
+          },
+          {
+            "contract_path": "src/BuiltinSymbolShadow.sol",
+            "line_no": 8,
+            "src": "125:41",
+            "src_char": "125:41"
+          },
+          {
+            "contract_path": "src/BuiltinSymbolShadow.sol",
+            "line_no": 17,
+            "src": "358:39",
+            "src_char": "358:39"
+          },
+          {
+            "contract_path": "src/BuiltinSymbolShadow.sol",
+            "line_no": 22,
+            "src": "414:15",
+            "src_char": "414:15"
+          }
+        ]
+      },
+      {
         "title": "Function pointers used in constructors.",
         "description": "solc versions below 0.5.9 contain a compiler bug leading to unexpected behavior when calling uninitialized function pointers in constructors. It is recommended to not use function pointers in constructors.",
         "detector_name": "function-pointer-in-constructor",
@@ -5835,6 +5866,7 @@
     "assert-state-change",
     "costly-operations-inside-loops",
     "constant-function-changing-state",
+    "builtin-symbol-shadow",
     "function-selector-collision",
     "unchecked-low-level-call",
     "function-pointer-in-constructor"

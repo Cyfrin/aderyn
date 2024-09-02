@@ -9498,6 +9498,59 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/BuiltinSymbolShadow.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 92
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/BuiltinSymbolShadow.sol"
+                },
+                "region": {
+                  "byteLength": 41,
+                  "byteOffset": 125
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/BuiltinSymbolShadow.sol"
+                },
+                "region": {
+                  "byteLength": 39,
+                  "byteOffset": 358
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/BuiltinSymbolShadow.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 414
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Name clashes with a built-in-symbol. Consider renaming it."
+          },
+          "ruleId": "builtin-symbol-shadow"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/FunctionPointers.sol"
                 },
                 "region": {

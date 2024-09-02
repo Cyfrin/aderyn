@@ -91,6 +91,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<AssertStateChangeDetector>::default(),
         Box::<CostlyOperationsInsideLoopsDetector>::default(),
         Box::<ConstantFunctionChangingStateDetector>::default(),
+        Box::<BuiltinSymbolShadowDetector>::default(),
         Box::<FunctionSelectorCollisionDetector>::default(),
         Box::<UncheckedLowLevelCallDetector>::default(),
         Box::<FucntionPointerInConstructorDetector>::default(),
