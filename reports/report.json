@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 98,
-    "total_sloc": 3397
+    "total_source_units": 99,
+    "total_sloc": 3418
   },
   "files_details": {
     "files_details": [
@@ -310,6 +310,10 @@
         "n_sloc": 6
       },
       {
+        "file_path": "src/VoidConstructor.sol",
+        "n_sloc": 21
+      },
+      {
         "file_path": "src/WeakRandomness.sol",
         "n_sloc": 59
       },
@@ -401,7 +405,7 @@
   },
   "issue_count": {
     "high": 42,
-    "low": 38
+    "low": 39
   },
   "high_issues": {
     "issues": [
@@ -2894,6 +2898,12 @@
             "src_char": "32:23"
           },
           {
+            "contract_path": "src/VoidConstructor.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
             "line_no": 6,
             "src": "46:24",
@@ -4196,6 +4206,12 @@
             "line_no": 2,
             "src": "32:24",
             "src_char": "32:24"
+          },
+          {
+            "contract_path": "src/VoidConstructor.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
           },
           {
             "contract_path": "src/WeakRandomness.sol",
@@ -5758,6 +5774,19 @@
         ]
       },
       {
+        "title": "Void constructor",
+        "description": "Call to a constructor that is not implemented.",
+        "detector_name": "void-constructor",
+        "instances": [
+          {
+            "contract_path": "src/VoidConstructor.sol",
+            "line_no": 16,
+            "src": "372:17",
+            "src_char": "372:17"
+          }
+        ]
+      },
+      {
         "title": "Function pointers used in constructors.",
         "description": "solc versions below 0.5.9 contain a compiler bug leading to unexpected behavior when calling uninitialized function pointers in constructors. It is recommended to not use function pointers in constructors.",
         "detector_name": "function-pointer-in-constructor",
@@ -6060,6 +6089,7 @@
     "costly-operations-inside-loops",
     "constant-function-changing-state",
     "builtin-symbol-shadow",
+    "void-constructor",
     "function-selector-collision",
     "unchecked-low-level-call",
     "function-pointer-in-constructor",
