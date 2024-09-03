@@ -108,7 +108,10 @@ impl LanguageServer for LanguageServerBackend {
 
 pub fn spin_up_language_server(args: Args) {
     // Setup the logging file
-    _ = log_to_file("~/.aderyn/lsp_service.log", LevelFilter::Info);
+    _ = log_to_file(
+        "/Users/tilakmadichetti/Documents/OpenSource/my-first-vscode-lsp/lsp_server.log",
+        LevelFilter::Info,
+    );
 
     // Create tokio runtime to run futures
     let async_runtime = tokio::runtime::Runtime::new().expect("to not spin up tokio's runtime");
@@ -175,37 +178,26 @@ fn create_lsp_service_and_react_to_file_event(
             let mut rxer = guarded_file_change_event_receiver_clone.lock().await;
             while let Some(rxer_change) = rxer.recv().await {
                 if rxer_change.is_ok() {
+                    info!("rxer change detected");
+
                     // Generate diagnostics due to this change
                     let guarded_report_results = driver::drive_and_get_results(args.clone());
 
-                    // Extract report
+                    // Extract report from the mutex
                     let mut diagnostics_mutex = guarded_report_results.lock().await;
 
-                    if let Some(_diagnostics) = &mut *diagnostics_mutex {
-                        // Nit the diagnostics to send to LSP Server
-                        let diagnostic = Diagnostic::new_simple(
-                            Range {
-                                start: Position {
-                                    line: 1,
-                                    character: 3,
-                                },
-                                end: Position {
-                                    line: 2,
-                                    character: 20,
-                                },
-                            },
-                            "BAD CODE".to_string(),
-                        );
+                    let Some(diagnostics_report) = &mut *diagnostics_mutex else {
+                        warn!("no diagnostics report generated");
+                        continue;
+                    };
 
-                        let new_guarded_client_clone = Arc::clone(&guarded_client);
-                        let client_mutex = new_guarded_client_clone.lock().await;
+                    info!("sending diagnostics to client");
+                    let new_guarded_client_clone = Arc::clone(&guarded_client);
+                    let client_mutex = new_guarded_client_clone.lock().await;
 
+                    for (file_uri, file_diagnostics) in &diagnostics_report.diagnostics {
                         client_mutex
-                            .publish_diagnostics(
-                                Url::parse("file:///example/example.txt").unwrap(),
-                                vec![diagnostic],
-                                None,
-                            )
+                            .publish_diagnostics(file_uri.clone(), file_diagnostics.to_vec(), None)
                             .await;
                     }
                 } else {

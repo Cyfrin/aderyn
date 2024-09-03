@@ -1,6 +1,8 @@
 use crate::{
     config_helpers::{append_from_foundry_toml, derive_from_aderyn_toml},
-    ensure_valid_root_path, process_auto,
+    ensure_valid_root_path,
+    lsp_report::LspReport,
+    process_auto,
 };
 use aderyn_core::{
     context::{
@@ -10,7 +12,7 @@ use aderyn_core::{
     detect::detector::{get_all_issue_detectors, IssueDetector, IssueSeverity},
     fscloc, get_report,
     report::{
-        json_printer::JsonPrinter, markdown_printer::MarkdownReportPrinter, reporter::Report,
+        json_printer::JsonPrinter, markdown_printer::MarkdownReportPrinter,
         sarif_printer::SarifPrinter,
     },
     run,
@@ -47,7 +49,7 @@ pub fn drive(args: Args) {
     drive_with(args, detectors);
 }
 
-pub fn drive_and_get_results(args: Args) -> Arc<Mutex<Option<Report>>> {
+pub fn drive_and_get_results(args: Args) -> Arc<Mutex<Option<LspReport>>> {
     let detectors = if args.highs_only {
         get_all_issue_detectors()
             .into_iter()
@@ -59,10 +61,26 @@ pub fn drive_and_get_results(args: Args) -> Arc<Mutex<Option<Report>>> {
 
     let cx_wrapper = make_context(&args);
     let root_rel_path = cx_wrapper.root_path;
+    let file_contents = cx_wrapper
+        .contexts
+        .iter()
+        .flat_map(|context| context.source_units())
+        .map(|source_unit| {
+            (
+                source_unit.absolute_path.as_ref().unwrap().to_owned(),
+                source_unit.source.as_ref().unwrap(),
+            )
+        })
+        .collect::<HashMap<_, _>>();
 
-    Arc::new(tokio::sync::Mutex::new(
-        get_report(&cx_wrapper.contexts, &root_rel_path, detectors).ok(),
-    ))
+    if let Ok(report) = get_report(&cx_wrapper.contexts, &root_rel_path, detectors) {
+        let high_issues = report.high_issues(&file_contents);
+        let low_issues = report.low_issues(&file_contents);
+        let lsp_result = LspReport::from(low_issues, high_issues, args);
+        return Arc::new(tokio::sync::Mutex::new(Some(lsp_result)));
+    }
+
+    Arc::new(tokio::sync::Mutex::new(None))
 }
 
 pub fn drive_with(args: Args, detectors_list: Vec<Box<dyn IssueDetector>>) {
@@ -132,18 +150,18 @@ pub struct WorkspaceContextWrapper {
 }
 
 fn make_context(args: &Args) -> WorkspaceContextWrapper {
-    if !args.output.ends_with(".json") && !args.output.ends_with(".md") {
-        eprintln!("Warning: output file lacks the \".md\" or \".json\" extension in its filename.");
-    }
-
+    //if !args.output.ends_with(".json") && !args.output.ends_with(".md") {
+    //    eprintln!("Warning: output file lacks the \".md\" or \".json\" extension in its filename.");
+    //}
+    //
     let (root_path, src, exclude, remappings, include) = obtain_config_values(args).unwrap();
 
     let absolute_root_path = &ensure_valid_root_path(&root_path);
-    println!(
-        "Root: {:?}, Src: {:?}, Include: {:?}, Exclude: {:?}",
-        absolute_root_path, src, include, exclude
-    );
-
+    //println!(
+    //    "Root: {:?}, Src: {:?}, Include: {:?}, Exclude: {:?}",
+    //    absolute_root_path, src, include, exclude
+    //);
+    //
     let mut contexts: Vec<WorkspaceContext> =
         process_auto::with_project_root_at(&root_path, &src, &exclude, &remappings, &include);
 
@@ -250,7 +268,7 @@ fn obtain_config_values(
         let remappings = root_path.join("remappings");
         let remappings_txt = root_path.join("remappings.txt");
         if local_remappings.is_none() && !remappings.exists() && !remappings_txt.exists() {
-            println!("WARNING: `remappings.txt` not found.")
+            //println!("WARNING: `remappings.txt` not found.")
         }
     }
 

@@ -82,6 +82,7 @@ dependencies = [
  "serde_repr",
  "tokio",
  "toml",
+ "tower-lsp",
 ]
 
 [[package]]

@@ -1,5 +1,4 @@
 pragma solidity ^0.8.24;
-
 contract InconsistentStateVariablesContract {
     // Unsigned integer variables
     uint public uintVariable; // 1

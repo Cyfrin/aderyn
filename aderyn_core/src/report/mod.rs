@@ -67,30 +67,30 @@ pub struct IssueCount {
 
 #[derive(Serialize, Debug)]
 pub struct IssueInstance {
-    contract_path: String,
-    line_no: usize,
-    src: String,
-    src_char: String,
+    pub contract_path: String,
+    pub line_no: usize,
+    pub src: String,
+    pub src_char: String,
     #[serde(skip_serializing_if = "Option::is_none")]
-    hint: Option<String>,
+    pub hint: Option<String>,
 }
 
 #[derive(Serialize)]
 pub struct IssueBody {
-    title: String,
-    description: String,
-    detector_name: String,
-    instances: Vec<IssueInstance>,
+    pub title: String,
+    pub description: String,
+    pub detector_name: String,
+    pub instances: Vec<IssueInstance>,
 }
 
 #[derive(Serialize)]
 pub struct HighIssues {
-    issues: Vec<IssueBody>,
+    pub issues: Vec<IssueBody>,
 }
 
 #[derive(Serialize)]
 pub struct LowIssues {
-    issues: Vec<IssueBody>,
+    pub issues: Vec<IssueBody>,
 }
 
 pub fn extract_issue_bodies(
@@ -109,10 +109,22 @@ pub fn extract_issue_bodies(
                     let byte_offset: usize = byte_offset_str.parse().unwrap();
                     let byte_length: usize = byte_len_str.parse().unwrap();
                     let content = *file_contents.get(contract_path).unwrap();
+                    let mut current_line_no = 0;
+                    let mut pre_line_char_offset = 0;
                     let mut char_offset = 0;
-                    for (byte_offset_so_far, _) in content.char_indices() {
+                    let mut stop_counting_preline_offset = false;
+                    for (byte_offset_so_far, c) in content.char_indices() {
                         if byte_offset_so_far == byte_offset {
                             break;
+                        }
+                        if c == '\n' {
+                            current_line_no += 1;
+                            if current_line_no == line_no - 1 {
+                                stop_counting_preline_offset = true;
+                            }
+                        }
+                        if !stop_counting_preline_offset {
+                            pre_line_char_offset += 1;
                         }
                         char_offset += 1;
                     }
@@ -134,7 +146,7 @@ pub fn extract_issue_bodies(
                         contract_path: contract_path.clone(),
                         line_no: *line_no,
                         src: src_location.clone(),
-                        src_char: format!("{}:{}", char_offset, char_len),
+                        src_char: format!("{}:{}", char_offset - pre_line_char_offset, char_len),
                         hint: hint.cloned(),
                     }
                 })

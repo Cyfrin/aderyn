@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.19;
-
+pragma solidity 0.8.19 ;
 contract AderynCustomIgnore {
 
     // This will be reported by empty-block and useless-public-function 
