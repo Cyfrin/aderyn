@@ -18,11 +18,12 @@ impl LspReport {
 
         for issue_body in &high_issues.issues {
             for instance in &issue_body.instances {
-                let line_no = instance.line_no;
+                let line_no = instance.line_no - 1; // 0-index
                 let Some((pos_start, pos_range)) = instance.src_char.split_once(':') else {
                     continue;
                 };
-                let pos_start: u32 = pos_start.parse().unwrap_or_default();
+                let mut pos_start: u32 = pos_start.parse().unwrap_or_default();
+                pos_start -= 1; // 0-index
                 let pos_range: u32 = pos_range.parse().unwrap_or_default();
 
                 let message = format!(
@@ -47,12 +48,11 @@ impl LspReport {
                     message,
                     code: None,
                     code_description: None,
-                    source: None,
+                    source: Some("Aderyn".to_string()),
                     related_information: None,
                     tags: None,
                     data: None,
                 };
-
                 let mut full_contract_path = PathBuf::from(args.root.clone());
                 full_contract_path.push(instance.contract_path.clone());
                 let Ok(full_contract_path) = full_contract_path.canonicalize() else {
@@ -60,7 +60,8 @@ impl LspReport {
                 };
 
                 let full_contract_path_string = full_contract_path.to_string_lossy().to_string();
-                let Ok(file_uri) = Url::parse(&full_contract_path_string) else {
+                let Ok(file_uri) = Url::parse(&format!("file://{}", &full_contract_path_string))
+                else {
                     continue;
                 };
 

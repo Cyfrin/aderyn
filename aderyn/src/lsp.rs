@@ -4,6 +4,7 @@ use simple_logging::log_to_file;
 use std::path::PathBuf;
 use std::sync::Arc;
 use std::time::Duration;
+use tokio::runtime::Builder;
 use tokio::sync::mpsc::Receiver;
 use tokio::sync::Mutex;
 use tower_lsp::jsonrpc::Result;
@@ -114,12 +115,19 @@ pub fn spin_up_language_server(args: Args) {
     );
 
     // Create tokio runtime to run futures
-    let async_runtime = tokio::runtime::Runtime::new().expect("to not spin up tokio's runtime");
+    //let async_runtime = tokio::runtime::Runtime::new().expect("to not spin up tokio's runtime");
+
+    let async_runtime = Builder::new_multi_thread()
+        .worker_threads(20)
+        .thread_name("my-custom-name")
+        .thread_stack_size(3 * 1024 * 1024)
+        .build()
+        .unwrap();
 
     // Block on this function
     async_runtime.block_on(async {
         // Channel to communicate file system changes (triggered when files are added, removed, or changed)
-        let (tx_file_change_event, rx_file_change_event) = tokio::sync::mpsc::channel(1);
+        let (tx_file_change_event, rx_file_change_event) = tokio::sync::mpsc::channel(10);
 
         // Create the async watcher
         let mut file_system_watcher = RecommendedWatcher::new(
@@ -191,7 +199,10 @@ fn create_lsp_service_and_react_to_file_event(
                         continue;
                     };
 
-                    info!("sending diagnostics to client");
+                    info!(
+                        "sending diagnostics to client {:?}",
+                        &diagnostics_report.diagnostics
+                    );
                     let new_guarded_client_clone = Arc::clone(&guarded_client);
                     let client_mutex = new_guarded_client_clone.lock().await;
 
