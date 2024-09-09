@@ -1,6 +1,6 @@
 use std::{collections::BTreeMap, path::PathBuf};
 
-use aderyn_core::report::{HighIssues, LowIssues};
+use aderyn_core::report::{HighIssues, IssueBody, IssueInstance, LowIssues};
 use tower_lsp::lsp_types::{Diagnostic, DiagnosticSeverity, Position, Range, Url};
 
 use crate::driver::Args;
@@ -14,116 +14,99 @@ pub struct LspReport {
 
 impl LspReport {
     pub fn from(low_issues: LowIssues, high_issues: HighIssues, args: Args) -> Self {
+        fn create_diagnostic_from_issue(
+            args: &Args,
+            issue_body: &IssueBody,
+            instance: &IssueInstance,
+            severity: DiagnosticSeverity,
+        ) -> Option<(Url, Diagnostic)> {
+            // Line number
+            let line_no = instance.line_no.checked_sub(1)?;
+
+            // Character position and range from the start of the line number
+            let (pos_start, pos_range) = instance.src_char.split_once(':')?;
+            let pos_start = pos_start
+                .parse::<u32>()
+                .unwrap_or_default()
+                .checked_sub(1)?;
+            let pos_range = pos_range.parse::<u32>().unwrap_or_default();
+
+            // Craft the diagnostic message
+            let mut message = format!("Title: {}\n", issue_body.title.clone());
+
+            if !issue_body.description.is_empty() {
+                message.push_str(&format!("\nDesc: {}\n", issue_body.description));
+            }
+
+            if let Some(hint) = instance.hint.clone() {
+                if !hint.is_empty() {
+                    message.push_str(&format!("\nHint: {}\n", hint));
+                }
+            }
+
+            // Make the diagnostic that LSP can understand
+            let diagnostic = Diagnostic {
+                range: Range {
+                    start: Position {
+                        line: line_no as u32,
+                        character: pos_start,
+                    },
+                    end: Position {
+                        line: line_no as u32,
+                        character: pos_start + pos_range,
+                    },
+                },
+                severity: Some(severity),
+                message,
+                code: None,
+                code_description: None,
+                source: Some("Aderyn".to_string()),
+                related_information: None,
+                tags: None,
+                data: None,
+            };
+            let mut full_contract_path = PathBuf::from(args.root.clone());
+            full_contract_path.push(instance.contract_path.clone());
+            let full_contract_path = full_contract_path.canonicalize().ok()?;
+
+            let full_contract_path_string = full_contract_path.to_string_lossy().to_string();
+            let file_uri = Url::parse(&format!("file://{}", &full_contract_path_string)).ok()?;
+
+            Some((file_uri, diagnostic))
+        }
+
         let mut diagnostics = BTreeMap::new();
 
         for issue_body in &high_issues.issues {
             for instance in &issue_body.instances {
-                let line_no = instance.line_no - 1; // 0-index
-                let Some((pos_start, pos_range)) = instance.src_char.split_once(':') else {
-                    continue;
-                };
-                let mut pos_start: u32 = pos_start.parse().unwrap_or_default();
-                pos_start -= 1; // 0-index
-                let pos_range: u32 = pos_range.parse().unwrap_or_default();
-
-                let message = format!(
-                    "{} {} {}",
-                    issue_body.title,
-                    issue_body.description,
-                    instance.hint.clone().unwrap_or_default()
-                );
-
-                let diagnostic = Diagnostic {
-                    range: Range {
-                        start: Position {
-                            line: line_no as u32,
-                            character: pos_start,
-                        },
-                        end: Position {
-                            line: line_no as u32,
-                            character: pos_start + pos_range,
-                        },
-                    },
-                    severity: Some(DiagnosticSeverity::WARNING),
-                    message,
-                    code: None,
-                    code_description: None,
-                    source: Some("Aderyn".to_string()),
-                    related_information: None,
-                    tags: None,
-                    data: None,
-                };
-                let mut full_contract_path = PathBuf::from(args.root.clone());
-                full_contract_path.push(instance.contract_path.clone());
-                let Ok(full_contract_path) = full_contract_path.canonicalize() else {
-                    continue;
-                };
-
-                let full_contract_path_string = full_contract_path.to_string_lossy().to_string();
-                let Ok(file_uri) = Url::parse(&format!("file://{}", &full_contract_path_string))
-                else {
+                let Some((file_url, diagnostic)) = create_diagnostic_from_issue(
+                    &args,
+                    issue_body,
+                    instance,
+                    DiagnosticSeverity::WARNING,
+                ) else {
                     continue;
                 };
 
                 let file_diagnostics: &mut Vec<Diagnostic> =
-                    diagnostics.entry(file_uri).or_default();
+                    diagnostics.entry(file_url).or_default();
 
                 file_diagnostics.push(diagnostic);
             }
         }
         for issue_body in &low_issues.issues {
             for instance in &issue_body.instances {
-                let line_no = instance.line_no - 1; // 0-index
-                let Some((pos_start, pos_range)) = instance.src_char.split_once(':') else {
-                    continue;
-                };
-                let mut pos_start: u32 = pos_start.parse().unwrap_or_default();
-                if pos_start >= 1 {
-                    pos_start -= 1;
-                } // 0-index
-                let pos_range: u32 = pos_range.parse().unwrap_or_default();
-
-                let message = format!(
-                    "{} {} {}",
-                    issue_body.title,
-                    issue_body.description,
-                    instance.hint.clone().unwrap_or_default()
-                );
-
-                let diagnostic = Diagnostic {
-                    range: Range {
-                        start: Position {
-                            line: line_no as u32,
-                            character: pos_start,
-                        },
-                        end: Position {
-                            line: line_no as u32,
-                            character: pos_start + pos_range,
-                        },
-                    },
-                    severity: Some(DiagnosticSeverity::INFORMATION),
-                    message,
-                    code: None,
-                    code_description: None,
-                    source: Some("Aderyn".to_string()),
-                    related_information: None,
-                    tags: None,
-                    data: None,
-                };
-                let mut full_contract_path = PathBuf::from(args.root.clone());
-                full_contract_path.push(instance.contract_path.clone());
-                let Ok(full_contract_path) = full_contract_path.canonicalize() else {
-                    continue;
-                };
-
-                let full_contract_path_string = full_contract_path.to_string_lossy().to_string();
-                let Ok(file_uri) = Url::parse(&format!("file://{}", &full_contract_path_string))
-                else {
+                let Some((file_url, diagnostic)) = create_diagnostic_from_issue(
+                    &args,
+                    issue_body,
+                    instance,
+                    DiagnosticSeverity::INFORMATION,
+                ) else {
                     continue;
                 };
 
                 let file_diagnostics: &mut Vec<Diagnostic> =
-                    diagnostics.entry(file_uri).or_default();
+                    diagnostics.entry(file_url).or_default();
 
                 file_diagnostics.push(diagnostic);
             }
