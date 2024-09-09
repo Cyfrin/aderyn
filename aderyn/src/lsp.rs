@@ -1,6 +1,7 @@
 use log::{info, warn, LevelFilter};
 use notify_debouncer_full::notify::{Event, RecommendedWatcher, Result as NotifyResult};
 use simple_logging::log_to_file;
+use std::collections::HashSet;
 use std::path::PathBuf;
 use std::sync::Arc;
 use std::time::Duration;
@@ -180,7 +181,17 @@ fn create_lsp_service_and_react_to_file_event(
         let guarded_file_change_event_receiver_clone =
             Arc::clone(&guarded_file_change_event_receiver);
 
-        async fn generate_diagnostics_and_publish(args: &Args, guarded_client: Arc<Mutex<Client>>) {
+        // Create a guard that keeps track of all the files to which diagnostics were sent in the
+        // last run. This is because LSP spec expects to manually push an empty vec![] to clean up
+        // stale diagnostics. So we every time, we generate a report, we should check to see if
+        // there has been a file left out that previously had errors, if so, then clean it.
+        let seen_file_uris: Arc<Mutex<HashSet<Url>>> = Arc::new(Mutex::new(HashSet::new()));
+
+        async fn generate_diagnostics_and_publish(
+            args: &Args,
+            guarded_client: Arc<Mutex<Client>>,
+            seen_file_uris: Arc<Mutex<HashSet<Url>>>,
+        ) {
             // Generate diagnostics due to this change
             let guarded_report_results = driver::drive_and_get_results(args.clone());
 
@@ -203,12 +214,38 @@ fn create_lsp_service_and_react_to_file_event(
                     .publish_diagnostics(file_uri.clone(), file_diagnostics.to_vec(), None)
                     .await;
             }
+
+            // Clear out the diagnostics for file which had reported errors before
+            let current_run_file_uris = diagnostics_report
+                .diagnostics
+                .keys()
+                .cloned()
+                .collect::<HashSet<_>>();
+
+            let mut seen_file_uris_mutex = seen_file_uris.lock().await;
+            let seen_file_uris = &mut *seen_file_uris_mutex;
+
+            for seen_file_uri in seen_file_uris.iter() {
+                if !&current_run_file_uris.contains(seen_file_uri) {
+                    // Clear the diagnostics for this seen file uri
+                    // It had errors in the past, but not any more
+                    client_mutex
+                        .publish_diagnostics(seen_file_uri.clone(), vec![], None)
+                        .await;
+                }
+            }
+
+            // Now, update the seen_files with files reported in the current run
+            for current_run_file_uri in current_run_file_uris {
+                seen_file_uris.insert(current_run_file_uri);
+            }
         }
 
         tokio::spawn(async move {
             // For the first time, run it automaticaly
             let new_guarded_clone = Arc::clone(&guarded_client);
-            generate_diagnostics_and_publish(&args, new_guarded_clone).await;
+            let seen_files_uris_clone = Arc::clone(&seen_file_uris);
+            generate_diagnostics_and_publish(&args, new_guarded_clone, seen_files_uris_clone).await;
 
             // After that, run it only when you receive file change events from the system
             let mut rxer = guarded_file_change_event_receiver_clone.lock().await;
@@ -218,7 +255,13 @@ fn create_lsp_service_and_react_to_file_event(
                     info!("rxer change detected");
 
                     let new_guarded_clone = Arc::clone(&guarded_client);
-                    generate_diagnostics_and_publish(&args, new_guarded_clone).await;
+                    let seen_files_uris_clone = Arc::clone(&seen_file_uris);
+                    generate_diagnostics_and_publish(
+                        &args,
+                        new_guarded_clone,
+                        seen_files_uris_clone,
+                    )
+                    .await;
                 } else {
                     warn!("rxer change errored!");
                 }
