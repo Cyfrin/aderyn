@@ -165,8 +165,14 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
         );
     }
 
-    let mut contexts: Vec<WorkspaceContext> =
-        process_auto::with_project_root_at(&root_path, &src, &exclude, &remappings, &include);
+    let mut contexts: Vec<WorkspaceContext> = process_auto::with_project_root_at(
+        &root_path,
+        &src,
+        &exclude,
+        &remappings,
+        &include,
+        args.lsp,
+    );
 
     if !args.lsp && contexts.iter().all(|c| c.src_filepaths.is_empty()) {
         eprintln!("No solidity files found in given scope!");
