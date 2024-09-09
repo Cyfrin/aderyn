@@ -35,6 +35,7 @@ pub struct Args {
     pub stdout: bool,
     pub auditor_mode: bool,
     pub highs_only: bool,
+    pub lsp: bool,
 }
 
 pub fn drive(args: Args) {
@@ -150,22 +151,24 @@ pub struct WorkspaceContextWrapper {
 }
 
 fn make_context(args: &Args) -> WorkspaceContextWrapper {
-    //if !args.output.ends_with(".json") && !args.output.ends_with(".md") {
-    //    eprintln!("Warning: output file lacks the \".md\" or \".json\" extension in its filename.");
-    //}
-    //
+    if !args.lsp && !args.output.ends_with(".json") && !args.output.ends_with(".md") {
+        eprintln!("Warning: output file lacks the \".md\" or \".json\" extension in its filename.");
+    }
+
     let (root_path, src, exclude, remappings, include) = obtain_config_values(args).unwrap();
 
     let absolute_root_path = &ensure_valid_root_path(&root_path);
-    //println!(
-    //    "Root: {:?}, Src: {:?}, Include: {:?}, Exclude: {:?}",
-    //    absolute_root_path, src, include, exclude
-    //);
-    //
+    if !args.lsp {
+        println!(
+            "Root: {:?}, Src: {:?}, Include: {:?}, Exclude: {:?}",
+            absolute_root_path, src, include, exclude
+        );
+    }
+
     let mut contexts: Vec<WorkspaceContext> =
         process_auto::with_project_root_at(&root_path, &src, &exclude, &remappings, &include);
 
-    if contexts.iter().all(|c| c.src_filepaths.is_empty()) {
+    if !args.lsp && contexts.iter().all(|c| c.src_filepaths.is_empty()) {
         eprintln!("No solidity files found in given scope!");
         std::process::exit(1);
     }
@@ -267,8 +270,12 @@ fn obtain_config_values(
         // Also if there is no `remappings.txt` or `remappings` in this case, print a warning!
         let remappings = root_path.join("remappings");
         let remappings_txt = root_path.join("remappings.txt");
-        if local_remappings.is_none() && !remappings.exists() && !remappings_txt.exists() {
-            //println!("WARNING: `remappings.txt` not found.")
+        if !args.lsp
+            && local_remappings.is_none()
+            && !remappings.exists()
+            && !remappings_txt.exists()
+        {
+            println!("WARNING: `remappings.txt` not found.")
         }
     }
 

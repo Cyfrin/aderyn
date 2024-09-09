@@ -43,7 +43,7 @@ pub struct CommandLineArgs {
     #[arg(short, long, default_value = "report.md")]
     output: String,
 
-    /// Watch for file changes and continuously generate report
+    /// Start Aderyn's LSP server on stdout
     #[arg(short, long, group = "stdout_dependent")]
     lsp: bool,
 
@@ -117,6 +117,7 @@ fn main() {
         stdout: cmd_args.stdout,
         auditor_mode: cmd_args.auditor_mode,
         highs_only: cmd_args.highs_only,
+        lsp: cmd_args.lsp,
     };
 
     // Run watcher is watch mode is engaged

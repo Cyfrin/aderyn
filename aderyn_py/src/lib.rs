@@ -23,6 +23,7 @@ fn main() {
             skip_update_check: false,
             auditor_mode: false,
             highs_only: false,
+            lsp: false,
         };
 
         if let Some(kwargs) = py_kwargs {
