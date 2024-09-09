@@ -37,7 +37,7 @@ impl LanguageServer for LanguageServerBackend {
             capabilities: ServerCapabilities {
                 text_document_sync: Some(TextDocumentSyncCapability::Options(
                     TextDocumentSyncOptions {
-                        open_close: Some(true),
+                        open_close: Some(false),
                         change: None,
                         will_save: Some(false),
                         will_save_wait_until: Some(false),
@@ -58,40 +58,6 @@ impl LanguageServer for LanguageServerBackend {
             .log_message(
                 MessageType::INFO,
                 "Aderyn LSP has been notified that the edtior's LSP client is initialized.",
-            )
-            .await;
-    }
-
-    async fn did_open(&self, params: DidOpenTextDocumentParams) {
-        info!("TLSP didOpen: {:?}", params);
-
-        let opened_file_uri = params.text_document.uri;
-
-        let code_editor = self.client.lock().await;
-        code_editor
-            .log_message(
-                MessageType::INFO,
-                format!(
-                    "Aderyn LSP has been notified that {} is opened",
-                    opened_file_uri
-                ),
-            )
-            .await;
-    }
-
-    async fn did_close(&self, params: DidCloseTextDocumentParams) {
-        info!("TLSP didClose: {:?}", params);
-
-        let opened_file_uri = params.text_document.uri;
-
-        let code_editor = self.client.lock().await;
-        code_editor
-            .log_message(
-                MessageType::INFO,
-                format!(
-                    "Aderyn LSP has been notified that {} is closed",
-                    opened_file_uri
-                ),
             )
             .await;
     }
