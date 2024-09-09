@@ -1,6 +1,5 @@
-use log::{info, warn, LevelFilter};
+use log::{info, warn};
 use notify_debouncer_full::notify::{Event, RecommendedWatcher, Result as NotifyResult};
-use simple_logging::log_to_file;
 use std::collections::HashSet;
 use std::path::PathBuf;
 use std::sync::Arc;
@@ -110,10 +109,11 @@ impl LanguageServer for LanguageServerBackend {
 
 pub fn spin_up_language_server(args: Args) {
     // Setup the logging file
-    _ = log_to_file(
-        "/Users/tilakmadichetti/Documents/OpenSource/my-first-vscode-lsp/lsp_server.log",
-        LevelFilter::Info,
-    );
+    // NOTE: Uncomment this for debugging purposes
+    //_ = log_to_file(
+    //    "/Users/tilakmadichetti/Documents/OpenSource/my-first-vscode-lsp/lsp_server.log",
+    //    LevelFilter::Info,
+    //);
 
     // Create tokio runtime to run futures
 
