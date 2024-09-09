@@ -45,7 +45,7 @@ pub struct CommandLineArgs {
 
     /// Watch for file changes and continuously generate report
     #[arg(short, long, group = "stdout_dependent")]
-    watch: bool,
+    lsp: bool,
 
     /// Do not include code snippets in the report (reduces report size in large repos)
     #[arg(long)]
@@ -104,7 +104,7 @@ fn main() {
         return;
     }
 
-    let mut args: Args = Args {
+    let args: Args = Args {
         root: cmd_args.root,
         output: cmd_args.output,
         src: cmd_args.src,
@@ -120,9 +120,7 @@ fn main() {
     };
 
     // Run watcher is watch mode is engaged
-    if cmd_args.watch {
-        // Default to JSON
-        args.output = "report.json".to_string();
+    if cmd_args.lsp {
         spin_up_language_server(args);
     } else {
         driver::drive(args.clone());

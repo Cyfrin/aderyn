@@ -115,14 +115,13 @@ pub fn spin_up_language_server(args: Args) {
     );
 
     // Create tokio runtime to run futures
-    //let async_runtime = tokio::runtime::Runtime::new().expect("to not spin up tokio's runtime");
 
     let async_runtime = Builder::new_multi_thread()
         .worker_threads(20)
-        .thread_name("my-custom-name")
+        .thread_name("aderyn-async-runtime")
         .thread_stack_size(3 * 1024 * 1024)
         .build()
-        .unwrap();
+        .expect("unable to start async runtime");
 
     // Block on this function
     async_runtime.block_on(async {
