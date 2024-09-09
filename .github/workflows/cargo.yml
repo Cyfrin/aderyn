@@ -254,6 +254,17 @@ jobs:
           cat ./reports/ci-report.sarif
           diff ./reports/report.sarif ./reports/ci-report.sarif
 
+      # Verify empty report when ignored instances
+
+      - name: Verify Empty report
+        run: |
+          cargo run -- tests/contract-playground -o reports/empty_report_workflow.md -i IgnoreEverything.sol
+      
+      - name: Check empty report
+        run: |
+          cat ./reports/empty_report_workflow.md
+          diff ./reports/empty_report.md ./reports/empty_report_workflow.md
+
   lints:
     name: Lints
     runs-on: ubuntu-latest
