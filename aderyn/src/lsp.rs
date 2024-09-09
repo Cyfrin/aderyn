@@ -180,36 +180,45 @@ fn create_lsp_service_and_react_to_file_event(
         let guarded_file_change_event_receiver_clone =
             Arc::clone(&guarded_file_change_event_receiver);
 
+        async fn generate_diagnostics_and_publish(args: &Args, guarded_client: Arc<Mutex<Client>>) {
+            // Generate diagnostics due to this change
+            let guarded_report_results = driver::drive_and_get_results(args.clone());
+
+            // Extract report from the mutex
+            let mut diagnostics_mutex = guarded_report_results.lock().await;
+
+            let Some(diagnostics_report) = &mut *diagnostics_mutex else {
+                warn!("no diagnostics report generated");
+                return;
+            };
+
+            info!(
+                "sending diagnostics to client {:?}",
+                &diagnostics_report.diagnostics
+            );
+            let client_mutex = guarded_client.lock().await;
+
+            for (file_uri, file_diagnostics) in &diagnostics_report.diagnostics {
+                client_mutex
+                    .publish_diagnostics(file_uri.clone(), file_diagnostics.to_vec(), None)
+                    .await;
+            }
+        }
+
         tokio::spawn(async move {
-            // Receiver
+            // For the first time, run it automaticaly
+            let new_guarded_clone = Arc::clone(&guarded_client);
+            generate_diagnostics_and_publish(&args, new_guarded_clone).await;
+
+            // After that, run it only when you receive file change events from the system
             let mut rxer = guarded_file_change_event_receiver_clone.lock().await;
+
             while let Some(rxer_change) = rxer.recv().await {
                 if rxer_change.is_ok() {
                     info!("rxer change detected");
 
-                    // Generate diagnostics due to this change
-                    let guarded_report_results = driver::drive_and_get_results(args.clone());
-
-                    // Extract report from the mutex
-                    let mut diagnostics_mutex = guarded_report_results.lock().await;
-
-                    let Some(diagnostics_report) = &mut *diagnostics_mutex else {
-                        warn!("no diagnostics report generated");
-                        continue;
-                    };
-
-                    info!(
-                        "sending diagnostics to client {:?}",
-                        &diagnostics_report.diagnostics
-                    );
-                    let new_guarded_client_clone = Arc::clone(&guarded_client);
-                    let client_mutex = new_guarded_client_clone.lock().await;
-
-                    for (file_uri, file_diagnostics) in &diagnostics_report.diagnostics {
-                        client_mutex
-                            .publish_diagnostics(file_uri.clone(), file_diagnostics.to_vec(), None)
-                            .await;
-                    }
+                    let new_guarded_clone = Arc::clone(&guarded_client);
+                    generate_diagnostics_and_publish(&args, new_guarded_clone).await;
                 } else {
                     warn!("rxer change errored!");
                 }
