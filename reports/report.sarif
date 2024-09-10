@@ -6426,61 +6426,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/StateVariablesChangesWithoutEvents.sol"
-                },
-                "region": {
-                  "byteLength": 36,
-                  "byteOffset": 298
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesChangesWithoutEvents.sol"
-                },
-                "region": {
-                  "byteLength": 37,
-                  "byteOffset": 339
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesChangesWithoutEvents.sol"
-                },
-                "region": {
-                  "byteLength": 38,
-                  "byteOffset": 381
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesChangesWithoutEvents.sol"
-                },
-                "region": {
-                  "byteLength": 40,
-                  "byteOffset": 424
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesChangesWithoutEvents.sol"
-                },
-                "region": {
-                  "byteLength": 36,
-                  "byteOffset": 469
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/TestERC20.sol"
                 },
                 "region": {
@@ -8599,7 +8544,7 @@
                 },
                 "region": {
                   "byteLength": 1,
-                  "byteOffset": 124
+                  "byteOffset": 1671
                 }
               }
             },
@@ -8610,29 +8555,7 @@
                 },
                 "region": {
                   "byteLength": 1,
-                  "byteOffset": 140
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesChangesWithoutEvents.sol"
-                },
-                "region": {
-                  "byteLength": 6,
-                  "byteOffset": 166
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesChangesWithoutEvents.sol"
-                },
-                "region": {
-                  "byteLength": 7,
-                  "byteOffset": 325
+                  "byteOffset": 1839
                 }
               }
             },
@@ -8643,150 +8566,7 @@
                 },
                 "region": {
                   "byteLength": 1,
-                  "byteOffset": 502
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesChangesWithoutEvents.sol"
-                },
-                "region": {
-                  "byteLength": 1,
-                  "byteOffset": 552
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesChangesWithoutEvents.sol"
-                },
-                "region": {
-                  "byteLength": 1,
-                  "byteOffset": 656
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesChangesWithoutEvents.sol"
-                },
-                "region": {
-                  "byteLength": 1,
-                  "byteOffset": 1536
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesChangesWithoutEvents.sol"
-                },
-                "region": {
-                  "byteLength": 1,
-                  "byteOffset": 1544
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesChangesWithoutEvents.sol"
-                },
-                "region": {
-                  "byteLength": 1,
-                  "byteOffset": 1694
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesChangesWithoutEvents.sol"
-                },
-                "region": {
-                  "byteLength": 1,
-                  "byteOffset": 1702
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesChangesWithoutEvents.sol"
-                },
-                "region": {
-                  "byteLength": 1,
-                  "byteOffset": 1892
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesChangesWithoutEvents.sol"
-                },
-                "region": {
-                  "byteLength": 1,
-                  "byteOffset": 1900
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesChangesWithoutEvents.sol"
-                },
-                "region": {
-                  "byteLength": 1,
-                  "byteOffset": 2026
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesChangesWithoutEvents.sol"
-                },
-                "region": {
-                  "byteLength": 1,
-                  "byteOffset": 2162
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesChangesWithoutEvents.sol"
-                },
-                "region": {
-                  "byteLength": 1,
-                  "byteOffset": 2447
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesChangesWithoutEvents.sol"
-                },
-                "region": {
-                  "byteLength": 1,
-                  "byteOffset": 2588
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesChangesWithoutEvents.sol"
-                },
-                "region": {
-                  "byteLength": 1,
-                  "byteOffset": 2718
+                  "byteOffset": 2048
                 }
               }
             },
@@ -8797,18 +8577,7 @@
                 },
                 "region": {
                   "byteLength": 4,
-                  "byteOffset": 2743
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesChangesWithoutEvents.sol"
-                },
-                "region": {
-                  "byteLength": 1,
-                  "byteOffset": 2771
+                  "byteOffset": 2958
                 }
               }
             },
@@ -11829,7 +11598,7 @@
                 },
                 "region": {
                   "byteLength": 26,
-                  "byteOffset": 520
+                  "byteOffset": 574
                 }
               }
             },
@@ -11840,7 +11609,7 @@
                 },
                 "region": {
                   "byteLength": 36,
-                  "byteOffset": 614
+                  "byteOffset": 679
                 }
               }
             },
@@ -11851,7 +11620,7 @@
                 },
                 "region": {
                   "byteLength": 35,
-                  "byteOffset": 718
+                  "byteOffset": 794
                 }
               }
             },
@@ -11862,7 +11631,7 @@
                 },
                 "region": {
                   "byteLength": 36,
-                  "byteOffset": 955
+                  "byteOffset": 1047
                 }
               }
             },
@@ -11873,7 +11642,7 @@
                 },
                 "region": {
                   "byteLength": 26,
-                  "byteOffset": 1057
+                  "byteOffset": 1157
                 }
               }
             },
@@ -11884,7 +11653,7 @@
                 },
                 "region": {
                   "byteLength": 24,
-                  "byteOffset": 1158
+                  "byteOffset": 1266
                 }
               }
             },
@@ -11895,7 +11664,7 @@
                 },
                 "region": {
                   "byteLength": 33,
-                  "byteOffset": 1497
+                  "byteOffset": 1621
                 }
               }
             },
@@ -11906,7 +11675,7 @@
                 },
                 "region": {
                   "byteLength": 34,
-                  "byteOffset": 1852
+                  "byteOffset": 1997
                 }
               }
             },
