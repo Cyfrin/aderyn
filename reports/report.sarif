@@ -8543,41 +8543,8 @@
                   "uri": "src/StateVariablesChangesWithoutEvents.sol"
                 },
                 "region": {
-                  "byteLength": 1,
-                  "byteOffset": 1671
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesChangesWithoutEvents.sol"
-                },
-                "region": {
-                  "byteLength": 1,
-                  "byteOffset": 1839
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesChangesWithoutEvents.sol"
-                },
-                "region": {
-                  "byteLength": 1,
-                  "byteOffset": 2048
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesChangesWithoutEvents.sol"
-                },
-                "region": {
                   "byteLength": 4,
-                  "byteOffset": 2958
+                  "byteOffset": 2967
                 }
               }
             },
@@ -11675,7 +11642,7 @@
                 },
                 "region": {
                   "byteLength": 34,
-                  "byteOffset": 1997
+                  "byteOffset": 2003
                 }
               }
             },

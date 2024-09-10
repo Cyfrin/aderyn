@@ -65,20 +65,20 @@ contract StateVariableEvents {
         emit AddressChanged(a);
     }
 
-    function wholeStructChangedEventNotEmitted(uint256 a, uint b) external {
+    function wholeStructChangedEventNotEmitted(uint256 a, uint256 b) external {
         // bad
         MyStruct memory temp = MyStruct(a, b);
         myStruct = temp;
     }
 
-    function wholeStructChangedEventEmitted(uint256 a, uint b) external {
+    function wholeStructChangedEventEmitted(uint256 a, uint256 b) external {
         // good
         MyStruct memory temp = MyStruct(a, b);
         myStruct = temp;
         emit MyStructChanged(temp);
     }
 
-    function structMemberChangedEventNotEmitted(uint256 a, uint b) external {
+    function structMemberChangedEventNotEmitted(uint256 a, uint256 b) external {
         // bad
         myStruct.a = a;
         myStruct.b = b;

@@ -5239,27 +5239,9 @@
           },
           {
             "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
-            "line_no": 68,
-            "src": "1671:1",
-            "src_char": "1671:1"
-          },
-          {
-            "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
-            "line_no": 74,
-            "src": "1839:1",
-            "src_char": "1839:1"
-          },
-          {
-            "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
-            "line_no": 81,
-            "src": "2048:1",
-            "src_char": "2048:1"
-          },
-          {
-            "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
             "line_no": 115,
-            "src": "2958:4",
-            "src_char": "2958:4"
+            "src": "2967:4",
+            "src_char": "2967:4"
           },
           {
             "contract_path": "src/TautologicalCompare.sol",
@@ -6994,8 +6976,8 @@
           {
             "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
             "line_no": 81,
-            "src": "1997:34",
-            "src_char": "1997:34"
+            "src": "2003:34",
+            "src_char": "2003:34"
           },
           {
             "contract_path": "src/StateVariablesManipulation.sol",

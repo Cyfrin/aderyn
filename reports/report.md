@@ -5190,7 +5190,7 @@ Contract contains comments with TODOS
 
 Consider keeping the naming convention consistent in a given contract. Explicit size declarations are preferred (uint256, int256) over implicit ones (uint, int) to avoid confusion.
 
-<details><summary>32 Found Instances</summary>
+<details><summary>29 Found Instances</summary>
 
 
 - Found in src/Casting.sol [Line: 31](../tests/contract-playground/src/Casting.sol#L31)
@@ -5245,24 +5245,6 @@ Consider keeping the naming convention consistent in a given contract. Explicit 
 
 	```solidity
 	    constructor(uint _uintInitial, uint256 _uint256Initial) { // 6 4
-	```
-
-- Found in src/StateVariablesChangesWithoutEvents.sol [Line: 68](../tests/contract-playground/src/StateVariablesChangesWithoutEvents.sol#L68)
-
-	```solidity
-	    function wholeStructChangedEventNotEmitted(uint256 a, uint b) external {
-	```
-
-- Found in src/StateVariablesChangesWithoutEvents.sol [Line: 74](../tests/contract-playground/src/StateVariablesChangesWithoutEvents.sol#L74)
-
-	```solidity
-	    function wholeStructChangedEventEmitted(uint256 a, uint b) external {
-	```
-
-- Found in src/StateVariablesChangesWithoutEvents.sol [Line: 81](../tests/contract-playground/src/StateVariablesChangesWithoutEvents.sol#L81)
-
-	```solidity
-	    function structMemberChangedEventNotEmitted(uint256 a, uint b) external {
 	```
 
 - Found in src/StateVariablesChangesWithoutEvents.sol [Line: 115](../tests/contract-playground/src/StateVariablesChangesWithoutEvents.sol#L115)
@@ -7091,13 +7073,13 @@ State variable changes in this function but no event is emitted.
 - Found in src/StateVariablesChangesWithoutEvents.sol [Line: 68](../tests/contract-playground/src/StateVariablesChangesWithoutEvents.sol#L68)
 
 	```solidity
-	    function wholeStructChangedEventNotEmitted(uint256 a, uint b) external {
+	    function wholeStructChangedEventNotEmitted(uint256 a, uint256 b) external {
 	```
 
 - Found in src/StateVariablesChangesWithoutEvents.sol [Line: 81](../tests/contract-playground/src/StateVariablesChangesWithoutEvents.sol#L81)
 
 	```solidity
-	    function structMemberChangedEventNotEmitted(uint256 a, uint b) external {
+	    function structMemberChangedEventNotEmitted(uint256 a, uint256 b) external {
 	```
 
 - Found in src/StateVariablesManipulation.sol [Line: 48](../tests/contract-playground/src/StateVariablesManipulation.sol#L48)
