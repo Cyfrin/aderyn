@@ -104,7 +104,7 @@ fn main() {
         return;
     }
 
-    let args: Args = Args {
+    let mut args: Args = Args {
         root: cmd_args.root,
         output: cmd_args.output,
         src: cmd_args.src,
@@ -122,6 +122,8 @@ fn main() {
 
     // Run watcher is watch mode is engaged
     if cmd_args.lsp {
+        args.skip_cloc = true;
+        args.skip_update_check = true;
         spin_up_language_server(args);
     } else {
         driver::drive(args.clone());
