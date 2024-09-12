@@ -57,9 +57,8 @@ pub fn get_stats(r_content: &str, skip_cloc: bool) -> Stats {
 
         let insights = token_descriptors
             .iter()
-            .map(|x| {
+            .inspect(|x| {
                 content.push_str(&x.content); // will be used to verify if original content is preserved
-                x
             })
             .map(|tok_dsc| tok_dsc.into())
             .collect::<Vec<TokenInsight>>();
