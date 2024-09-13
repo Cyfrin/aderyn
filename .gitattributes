@@ -1,4 +1,5 @@
 [attr]generated linguist-generated=true diff=generated
 
-# Lock files:
 Cargo.lock generated
+reports/*.* generated
+
