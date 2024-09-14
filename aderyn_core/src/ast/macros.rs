@@ -87,11 +87,11 @@ macro_rules! expr_node {
 /// The inner value of each variant is boxed since AST types are inherently recursive.
 macro_rules! node_group {
     ($group:ident; $( $name:ident ),* $(,)*) => {
-        #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+        #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Hash)]
         #[serde(tag = "nodeType")]
         pub enum $group {
             $(
-                $name(Box<$name>),
+                $name($name),
             )*
         }
     };
