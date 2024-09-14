@@ -8,8 +8,16 @@ use notify_debouncer_full::{
 };
 use semver::Version;
 use serde_json::Value;
-use std::{path::PathBuf, time::Duration};
+use std::{fs::File, io::Write, path::PathBuf, str::FromStr, time::Duration};
 use strum::IntoEnumIterator;
+
+pub fn create_aderyn_toml_file_at(directory: String) {
+    let aderyn_toml_path = PathBuf::from_str(&directory).unwrap().join("aderyn.toml");
+    let mut file = File::create_new(aderyn_toml_path.clone()).expect("File already exists!");
+    file.write_all(include_bytes!("../templates/aderyn.toml"))
+        .expect("To write contents into aderyn.toml");
+    println!("Created aderyn.toml at {}", aderyn_toml_path.display());
+}
 
 pub fn debounce_and_run<F>(driver_func: F, args: &Args, timeout: Duration)
 where

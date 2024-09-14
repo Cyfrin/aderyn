@@ -1,8 +1,8 @@
 #![allow(clippy::borrowed_box)]
 
 use aderyn::{
-    aderyn_is_currently_running_newest_version, debounce_and_run, print_all_detectors_view,
-    print_detail_view,
+    aderyn_is_currently_running_newest_version, create_aderyn_toml_file_at, debounce_and_run,
+    print_all_detectors_view, print_detail_view,
 };
 use std::time::Duration;
 
@@ -21,6 +21,10 @@ pub struct CommandLineArgs {
     /// Foundry or Hardhat project root directory (or path to single solidity file)
     #[arg(default_value = ".")]
     root: String,
+
+    /// Initialize aderyn.toml in [ROOT] which hosts all the configuration to override defaults
+    #[arg(long)]
+    init: bool,
 
     /// Path to the source contracts. If not provided, the ROOT directory will be used.
     ///
@@ -106,6 +110,16 @@ fn main() {
                 }
             }
         }
+        return;
+    }
+
+    if cmd_args.root == "init" {
+        create_aderyn_toml_file_at(".".to_string());
+        return;
+    }
+
+    if cmd_args.init {
+        create_aderyn_toml_file_at(cmd_args.root);
         return;
     }
 
