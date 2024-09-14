@@ -498,7 +498,7 @@ pub enum LiteralKind {
 expr_node!(
     #[derive(Hash)]
     struct Literal {
-        hex_value: Option<String>, // TODO: remove "Option"
+        hex_value: String,
         value: Option<String>,
         subdenomination: Option<String>,
         kind: LiteralKind,

@@ -15,6 +15,7 @@ generate_capturable_methods! {
     EnumDefinition,
     EnumValue,
     EventDefinition,
+    ExpressionStatement,
     ErrorDefinition,
     FunctionCall,
     FunctionCallOptions,
