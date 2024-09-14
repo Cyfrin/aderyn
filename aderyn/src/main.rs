@@ -1,8 +1,8 @@
 #![allow(clippy::borrowed_box)]
 
 use aderyn::{
-    aderyn_is_currently_running_newest_version, debounce_and_run, print_all_detectors_view,
-    print_detail_view,
+    aderyn_is_currently_running_newest_version, debounce_and_run, initialize_niceties,
+    print_all_detectors_view, print_detail_view,
 };
 use std::time::Duration;
 
@@ -94,6 +94,7 @@ enum RegistryCommand {
 }
 
 fn main() {
+    initialize_niceties();
     let cmd_args = CommandLineArgs::parse();
 
     if let Some(reg) = cmd_args.registry {
