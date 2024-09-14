@@ -295,3 +295,33 @@ jobs:
         with:
           command: clippy
           args: -- -D warnings
+
+
+  validate:
+    name: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Ensure no merge commits
+        uses: NexusPHP/no-merge-commits@v2.1.0
+        if: github.event_name == 'pull_request'
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: stable
+
+      - name: Install cargo-deny
+        run: |
+          set -e
+          curl -L https://github.com/EmbarkStudios/cargo-deny/releases/download/0.14.18/cargo-deny-0.14.18-x86_64-unknown-linux-musl.tar.gz | tar xzf -
+          mv cargo-deny-*-x86_64-unknown-linux-musl/cargo-deny cargo-deny
+          echo `pwd` >> $GITHUB_PATH
+
+      - name: Validate deps
+        run: cargo deny check
