@@ -71,6 +71,7 @@ pub struct IssueInstance {
     pub line_no: usize,
     pub src: String,
     pub src_char: String,
+    pub src_char2: String,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub hint: Option<String>,
 }
@@ -146,7 +147,8 @@ pub fn extract_issue_bodies(
                         contract_path: contract_path.clone(),
                         line_no: *line_no,
                         src: src_location.clone(),
-                        src_char: format!("{}:{}", char_offset - pre_line_char_offset, char_len),
+                        src_char: format!("{}:{}", char_offset, char_len),
+                        src_char2: format!("{}:{}", char_offset - pre_line_char_offset, char_len),
                         hint: hint.cloned(),
                     }
                 })

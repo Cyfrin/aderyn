@@ -102,7 +102,8 @@
             "contract_path": "inheritance/ExtendedInheritance.sol",
             "line_no": 15,
             "src": "474:96",
-            "src_char": "41:96"
+            "src_char": "474:96",
+            "src_char2": "41:96"
           }
         ]
       },
@@ -115,31 +116,36 @@
             "contract_path": "InconsistentUints.sol",
             "line_no": 7,
             "src": "197:11",
-            "src_char": "16:11"
+            "src_char": "197:11",
+            "src_char2": "16:11"
           },
           {
             "contract_path": "InconsistentUints.sol",
             "line_no": 8,
             "src": "233:14",
-            "src_char": "19:14"
+            "src_char": "233:14",
+            "src_char2": "19:14"
           },
           {
             "contract_path": "StateVariables.sol",
             "line_no": 8,
             "src": "199:19",
-            "src_char": "21:19"
+            "src_char": "199:19",
+            "src_char2": "21:19"
           },
           {
             "contract_path": "StateVariables.sol",
             "line_no": 9,
             "src": "241:20",
-            "src_char": "22:20"
+            "src_char": "241:20",
+            "src_char2": "22:20"
           },
           {
             "contract_path": "StateVariables.sol",
             "line_no": 10,
             "src": "282:18",
-            "src_char": "20:18"
+            "src_char": "282:18",
+            "src_char2": "20:18"
           }
         ]
       },
@@ -152,7 +158,8 @@
             "contract_path": "inheritance/ExtendedInheritance.sol",
             "line_no": 14,
             "src": "391:15",
-            "src_char": "14:15"
+            "src_char": "391:15",
+            "src_char2": "14:15"
           }
         ]
       },
@@ -165,7 +172,8 @@
             "contract_path": "inheritance/ExtendedInheritance.sol",
             "line_no": 16,
             "src": "488:71",
-            "src_char": "13:71"
+            "src_char": "488:71",
+            "src_char2": "13:71"
           }
         ]
       }

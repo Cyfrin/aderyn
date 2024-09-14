@@ -24,7 +24,7 @@ impl LspReport {
             let line_no = instance.line_no.checked_sub(1)?;
 
             // Character position and range from the start of the line number
-            let (pos_start, pos_range) = instance.src_char.split_once(':')?;
+            let (pos_start, pos_range) = instance.src_char2.split_once(':')?;
             let pos_start = pos_start
                 .parse::<u32>()
                 .unwrap_or_default()
