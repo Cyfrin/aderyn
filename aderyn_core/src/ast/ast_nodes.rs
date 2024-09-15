@@ -616,7 +616,7 @@ ast_node!(
 ast_node!(
     #[derive(Hash)]
     struct EmitStatement {
-        event_call: Expression, // TODO: Change this to FunctionCall
+        event_call: FunctionCall,
     }
 );
 

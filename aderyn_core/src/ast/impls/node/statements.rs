@@ -231,9 +231,7 @@ impl Node for EmitStatement {
     }
 
     fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        if let Some(event_call_id) = self.event_call.get_node_id() {
-            visitor.visit_immediate_children(self.id, vec![event_call_id])?;
-        }
+        visitor.visit_immediate_children(self.id, vec![self.event_call.id])?;
         Ok(())
     }
 
