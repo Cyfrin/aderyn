@@ -43,6 +43,7 @@ generate_capturable_methods! {
     StructuredDocumentation,
     TupleExpression,
     UnaryOperation,
+    UncheckedBlock,
     UserDefinedValueTypeDefinition,
     UsingForDirective,
     VariableDeclaration,
