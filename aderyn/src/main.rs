@@ -43,7 +43,7 @@ pub struct CommandLineArgs {
     #[arg(short, long, default_value = "report.md")]
     output: String,
 
-    /// Start Aderyn's LSP server on stdout
+    /// [BETA] Start Aderyn's LSP server on stdout
     #[arg(short, long, group = "stdout_dependent")]
     lsp: bool,
 
