@@ -8935,14 +8935,8 @@ Redundant import statement. Consider removing it.
 
 State variable changes in this function but no event is emitted.
 
-<details><summary>71 Found Instances</summary>
+<details><summary>23 Found Instances</summary>
 
-
-- Found in contracts/admin/TempleTeamPayments.sol [Line: 18](../tests/2024-07-templegold/protocol/contracts/admin/TempleTeamPayments.sol#L18)
-
-	```solidity
-	    constructor(IERC20 _TEMPLE, uint256 paymentPeriodInSeconds, uint256 startTimestamp) Ownable(msg.sender) {
-	```
 
 - Found in contracts/admin/TempleTeamPayments.sol [Line: 29](../tests/2024-07-templegold/protocol/contracts/admin/TempleTeamPayments.sol#L29)
 
@@ -8962,22 +8956,10 @@ State variable changes in this function but no event is emitted.
 	    function pauseMember(address _address)
 	```
 
-- Found in contracts/admin/TempleTeamPaymentsFactory.sol [Line: 40](../tests/2024-07-templegold/protocol/contracts/admin/TempleTeamPaymentsFactory.sol#L40)
-
-	```solidity
-	    constructor(address _implementation, uint16 _lastPaidEpoch) Ownable(msg.sender) {
-	```
-
 - Found in contracts/admin/TempleTeamPaymentsV2.sol [Line: 25](../tests/2024-07-templegold/protocol/contracts/admin/TempleTeamPaymentsV2.sol#L25)
 
 	```solidity
 	    function initialize(IERC20 _temple) public initializer {
-	```
-
-- Found in contracts/amm/TempleStableAMMRouter.sol [Line: 37](../tests/2024-07-templegold/protocol/contracts/amm/TempleStableAMMRouter.sol#L37)
-
-	```solidity
-	    constructor(
 	```
 
 - Found in contracts/amm/TempleStableAMMRouter.sol [Line: 48](../tests/2024-07-templegold/protocol/contracts/amm/TempleStableAMMRouter.sol#L48)
@@ -8998,12 +8980,6 @@ State variable changes in this function but no event is emitted.
 	    function setDefendStable(address _defendStable) external onlyOwner {
 	```
 
-- Found in contracts/amm/TempleUniswapV2Pair.sol [Line: 67](../tests/2024-07-templegold/protocol/contracts/amm/TempleUniswapV2Pair.sol#L67)
-
-	```solidity
-	    constructor(address _owner, address _token0, address _token1) public {
-	```
-
 - Found in contracts/amm/TempleUniswapV2Pair.sol [Line: 74](../tests/2024-07-templegold/protocol/contracts/amm/TempleUniswapV2Pair.sol#L74)
 
 	```solidity
@@ -9016,52 +8992,10 @@ State variable changes in this function but no event is emitted.
 	    function skim(address to) external lock {
 	```
 
-- Found in contracts/amm/TreasuryIV.sol [Line: 18](../tests/2024-07-templegold/protocol/contracts/amm/TreasuryIV.sol#L18)
-
-	```solidity
-	    constructor(uint256 frax, uint256 temple) Ownable(msg.sender) {
-	```
-
 - Found in contracts/amm/TreasuryIV.sol [Line: 23](../tests/2024-07-templegold/protocol/contracts/amm/TreasuryIV.sol#L23)
 
 	```solidity
 	    function setIV(uint256 frax, uint256 temple) external onlyOwner {
-	```
-
-- Found in contracts/amo/AuraStaking.sol [Line: 27](../tests/2024-07-templegold/protocol/contracts/amo/AuraStaking.sol#L27)
-
-	```solidity
-	    constructor(
-	```
-
-- Found in contracts/amo/Ramos.sol [Line: 103](../tests/2024-07-templegold/protocol/contracts/amo/Ramos.sol#L103)
-
-	```solidity
-	    constructor(
-	```
-
-- Found in contracts/amo/helpers/BalancerPoolHelper.sol [Line: 35](../tests/2024-07-templegold/protocol/contracts/amo/helpers/BalancerPoolHelper.sol#L35)
-
-	```solidity
-	    constructor(
-	```
-
-- Found in contracts/amo/test/RamosTestnetAuraStaking.sol [Line: 21](../tests/2024-07-templegold/protocol/contracts/amo/test/RamosTestnetAuraStaking.sol#L21)
-
-	```solidity
-	    constructor(
-	```
-
-- Found in contracts/amo/test/RamosTestnetTempleTokenVault.sol [Line: 18](../tests/2024-07-templegold/protocol/contracts/amo/test/RamosTestnetTempleTokenVault.sol#L18)
-
-	```solidity
-	    constructor (address _templeToken, address _quoteToken) {
-	```
-
-- Found in contracts/core/Exposure.sol [Line: 40](../tests/2024-07-templegold/protocol/contracts/core/Exposure.sol#L40)
-
-	```solidity
-	    constructor(string memory _name, string memory _symbol, IERC20 _revalToken) ERC20(_name, _symbol) Ownable(msg.sender) {
 	```
 
 - Found in contracts/core/Exposure.sol [Line: 87](../tests/2024-07-templegold/protocol/contracts/core/Exposure.sol#L87)
@@ -9070,64 +9004,16 @@ State variable changes in this function but no event is emitted.
 	    function mint(address account, uint256 amount) external onlyMinter {
 	```
 
-- Found in contracts/core/JoiningFee.sol [Line: 20](../tests/2024-07-templegold/protocol/contracts/core/JoiningFee.sol#L20)
-
-	```solidity
-	    constructor(uint256 _defaultHourlyJoiningFee) Ownable(msg.sender) {
-	```
-
 - Found in contracts/core/OpsManager.sol [Line: 130](../tests/2024-07-templegold/protocol/contracts/core/OpsManager.sol#L130)
 
 	```solidity
 	    function increaseVaultTemple(Vault[] memory vaults, uint256[] memory amountsTemple) external onlyOwner {
 	```
 
-- Found in contracts/core/OtcOffer.sol [Line: 69](../tests/2024-07-templegold/protocol/contracts/core/OtcOffer.sol#L69)
-
-	```solidity
-	    constructor(
-	```
-
-- Found in contracts/core/TreasuryFarmingRevenue.sol [Line: 38](../tests/2024-07-templegold/protocol/contracts/core/TreasuryFarmingRevenue.sol#L38)
-
-	```solidity
-	    constructor(Exposure _exposure) Ownable(msg.sender) {
-	```
-
-- Found in contracts/core/Vault.sol [Line: 60](../tests/2024-07-templegold/protocol/contracts/core/Vault.sol#L60)
-
-	```solidity
-	    constructor(
-	```
-
-- Found in contracts/core/VaultEarlyWithdraw.sol [Line: 33](../tests/2024-07-templegold/protocol/contracts/core/VaultEarlyWithdraw.sol#L33)
-
-	```solidity
-	    constructor(address _templeTokenAddress, address[] memory _validVaults) Ownable(msg.sender) {
-	```
-
-- Found in contracts/core/VaultProxy.sol [Line: 25](../tests/2024-07-templegold/protocol/contracts/core/VaultProxy.sol#L25)
-
-	```solidity
-	    constructor(
-	```
-
 - Found in contracts/core/VaultProxy.sol [Line: 118](../tests/2024-07-templegold/protocol/contracts/core/VaultProxy.sol#L118)
 
 	```solidity
 	    function toggleFaithClaimEnabled() external onlyOwner {
-	```
-
-- Found in contracts/core/VaultedTemple.sol [Line: 39](../tests/2024-07-templegold/protocol/contracts/core/VaultedTemple.sol#L39)
-
-	```solidity
-	    constructor(IERC20 _templeToken, address _templeExposure) Ownable(msg.sender) {
-	```
-
-- Found in contracts/deprecated/Faith.sol [Line: 22](../tests/2024-07-templegold/protocol/contracts/deprecated/Faith.sol#L22)
-
-	```solidity
-	    constructor() Ownable(msg.sender) {
 	```
 
 - Found in contracts/deprecated/Faith.sol [Line: 50](../tests/2024-07-templegold/protocol/contracts/deprecated/Faith.sol#L50)
@@ -9142,58 +9028,10 @@ State variable changes in this function but no event is emitted.
 	    function removeManager(address account) external onlyOwner {
 	```
 
-- Found in contracts/deprecated/InstantExitQueue.sol [Line: 17](../tests/2024-07-templegold/protocol/contracts/deprecated/InstantExitQueue.sol#L17)
-
-	```solidity
-	    constructor(TempleStaking _templeStaking, TempleERC20Token _templeToken) {
-	```
-
-- Found in contracts/deprecated/LockedOGTemple.sol [Line: 26](../tests/2024-07-templegold/protocol/contracts/deprecated/LockedOGTemple.sol#L26)
-
-	```solidity
-	  constructor(OGTemple _OG_TEMPLE) {
-	```
-
-- Found in contracts/deprecated/TempleStaking.sol [Line: 45](../tests/2024-07-templegold/protocol/contracts/deprecated/TempleStaking.sol#L45)
-
-	```solidity
-	    constructor(
-	```
-
 - Found in contracts/deprecated/TempleStaking.sol [Line: 67](../tests/2024-07-templegold/protocol/contracts/deprecated/TempleStaking.sol#L67)
 
 	```solidity
 	    function setExitQueue(IExitQueue _EXIT_QUEUE) external onlyOwner {
-	```
-
-- Found in contracts/fakes/FakeERC20CustomDecimals.sol [Line: 13](../tests/2024-07-templegold/protocol/contracts/fakes/FakeERC20CustomDecimals.sol#L13)
-
-	```solidity
-	    constructor (
-	```
-
-- Found in contracts/fakes/NoopLiquidator.sol [Line: 15](../tests/2024-07-templegold/protocol/contracts/fakes/NoopLiquidator.sol#L15)
-
-	```solidity
-	    constructor(TempleERC20Token _templeToken) {
-	```
-
-- Found in contracts/fakes/NoopVaultedTempleLiquidator.sol [Line: 17](../tests/2024-07-templegold/protocol/contracts/fakes/NoopVaultedTempleLiquidator.sol#L17)
-
-	```solidity
-	    constructor(TempleERC20Token _templeToken, VaultedTemple _vaultedTemple) {
-	```
-
-- Found in contracts/fakes/UniswapV2Router02NoEth.sol [Line: 32](../tests/2024-07-templegold/protocol/contracts/fakes/UniswapV2Router02NoEth.sol#L32)
-
-	```solidity
-	    constructor(address _factory, address _WETH) public {
-	```
-
-- Found in contracts/fakes/templegold/TempleGoldStakingMock.sol [Line: 134](../tests/2024-07-templegold/protocol/contracts/fakes/templegold/TempleGoldStakingMock.sol#L134)
-
-	```solidity
-	    constructor(
 	```
 
 - Found in contracts/fakes/templegold/TempleGoldStakingMock.sol [Line: 268](../tests/2024-07-templegold/protocol/contracts/fakes/templegold/TempleGoldStakingMock.sol#L268)
@@ -9202,82 +9040,10 @@ State variable changes in this function but no event is emitted.
 	    function distributeRewards() updateReward(address(0), 0) external {
 	```
 
-- Found in contracts/fakes/v2/TempleDebtTokenTestnetAdmin.sol [Line: 11](../tests/2024-07-templegold/protocol/contracts/fakes/v2/TempleDebtTokenTestnetAdmin.sol#L11)
-
-	```solidity
-	    constructor(address _dUSD) {
-	```
-
-- Found in contracts/fakes/v2/strategies/DsrBaseStrategyTestnet.sol [Line: 30](../tests/2024-07-templegold/protocol/contracts/fakes/v2/strategies/DsrBaseStrategyTestnet.sol#L30)
-
-	```solidity
-	    constructor(
-	```
-
-- Found in contracts/governance/ElderElection.sol [Line: 57](../tests/2024-07-templegold/protocol/contracts/governance/ElderElection.sol#L57)
-
-	```solidity
-	    constructor(
-	```
-
-- Found in contracts/governance/TemplarMetadata.sol [Line: 20](../tests/2024-07-templegold/protocol/contracts/governance/TemplarMetadata.sol#L20)
-
-	```solidity
-	    constructor(Templar _templars) {
-	```
-
-- Found in contracts/templegold/DaiGoldAuction.sol [Line: 48](../tests/2024-07-templegold/protocol/contracts/templegold/DaiGoldAuction.sol#L48)
-
-	```solidity
-	    constructor(
-	```
-
-- Found in contracts/templegold/SpiceAuction.sol [Line: 56](../tests/2024-07-templegold/protocol/contracts/templegold/SpiceAuction.sol#L56)
-
-	```solidity
-	    constructor(
-	```
-
-- Found in contracts/templegold/SpiceAuctionFactory.sol [Line: 24](../tests/2024-07-templegold/protocol/contracts/templegold/SpiceAuctionFactory.sol#L24)
-
-	```solidity
-	    constructor(
-	```
-
-- Found in contracts/templegold/TempleGold.sol [Line: 66](../tests/2024-07-templegold/protocol/contracts/templegold/TempleGold.sol#L66)
-
-	```solidity
-	    constructor(
-	```
-
-- Found in contracts/templegold/TempleGoldAdmin.sol [Line: 24](../tests/2024-07-templegold/protocol/contracts/templegold/TempleGoldAdmin.sol#L24)
-
-	```solidity
-	    constructor(
-	```
-
-- Found in contracts/templegold/TempleGoldStaking.sol [Line: 81](../tests/2024-07-templegold/protocol/contracts/templegold/TempleGoldStaking.sol#L81)
-
-	```solidity
-	    constructor(
-	```
-
 - Found in contracts/templegold/TempleGoldStaking.sol [Line: 180](../tests/2024-07-templegold/protocol/contracts/templegold/TempleGoldStaking.sol#L180)
 
 	```solidity
 	    function distributeRewards() updateReward(address(0), 0) external {
-	```
-
-- Found in contracts/templegold/TempleTeleporter.sol [Line: 25](../tests/2024-07-templegold/protocol/contracts/templegold/TempleTeleporter.sol#L25)
-
-	```solidity
-	    constructor(
-	```
-
-- Found in contracts/v2/TempleDebtToken.sol [Line: 105](../tests/2024-07-templegold/protocol/contracts/v2/TempleDebtToken.sol#L105)
-
-	```solidity
-	    constructor(
 	```
 
 - Found in contracts/v2/TempleDebtToken.sol [Line: 423](../tests/2024-07-templegold/protocol/contracts/v2/TempleDebtToken.sol#L423)
@@ -9298,18 +9064,6 @@ State variable changes in this function but no event is emitted.
 	    function checkpointDebtorsInterest(address[] calldata _debtors) external override {
 	```
 
-- Found in contracts/v2/TreasuryPriceIndexOracle.sol [Line: 49](../tests/2024-07-templegold/protocol/contracts/v2/TreasuryPriceIndexOracle.sol#L49)
-
-	```solidity
-	    constructor(
-	```
-
-- Found in contracts/v2/TreasuryReservesVault.sol [Line: 95](../tests/2024-07-templegold/protocol/contracts/v2/TreasuryReservesVault.sol#L95)
-
-	```solidity
-	    constructor(
-	```
-
 - Found in contracts/v2/TreasuryReservesVault.sol [Line: 206](../tests/2024-07-templegold/protocol/contracts/v2/TreasuryReservesVault.sol#L206)
 
 	```solidity
@@ -9320,48 +9074,6 @@ State variable changes in this function but no event is emitted.
 
 	```solidity
 	    function preCheck(address /*onBehalfOf*/, uint256 amount) external override onlyElevatedAccess {
-	```
-
-- Found in contracts/v2/safeGuards/ThresholdSafeGuard.sol [Line: 60](../tests/2024-07-templegold/protocol/contracts/v2/safeGuards/ThresholdSafeGuard.sol#L60)
-
-	```solidity
-	    constructor(address _initialRescuer, address _initialExecutor, uint256 _defaultSignaturesThreshold) 
-	```
-
-- Found in contracts/v2/strategies/DsrBaseStrategy.sol [Line: 45](../tests/2024-07-templegold/protocol/contracts/v2/strategies/DsrBaseStrategy.sol#L45)
-
-	```solidity
-	    constructor(
-	```
-
-- Found in contracts/v2/strategies/GnosisStrategy.sol [Line: 36](../tests/2024-07-templegold/protocol/contracts/v2/strategies/GnosisStrategy.sol#L36)
-
-	```solidity
-	    constructor(
-	```
-
-- Found in contracts/v2/strategies/RamosStrategy.sol [Line: 54](../tests/2024-07-templegold/protocol/contracts/v2/strategies/RamosStrategy.sol#L54)
-
-	```solidity
-	    constructor(
-	```
-
-- Found in contracts/v2/strategies/TempleTokenBaseStrategy.sol [Line: 29](../tests/2024-07-templegold/protocol/contracts/v2/strategies/TempleTokenBaseStrategy.sol#L29)
-
-	```solidity
-	    constructor(
-	```
-
-- Found in contracts/v2/strategies/TlcStrategy.sol [Line: 28](../tests/2024-07-templegold/protocol/contracts/v2/strategies/TlcStrategy.sol#L28)
-
-	```solidity
-	    constructor(
-	```
-
-- Found in contracts/v2/templeLineOfCredit/TempleLineOfCredit.sol [Line: 105](../tests/2024-07-templegold/protocol/contracts/v2/templeLineOfCredit/TempleLineOfCredit.sol#L105)
-
-	```solidity
-	    constructor(
 	```
 
 </details>

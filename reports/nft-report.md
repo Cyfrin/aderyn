@@ -149,14 +149,8 @@ State variables that are not updated following deployment should be declared con
 
 State variable changes in this function but no event is emitted.
 
-<details><summary>2 Found Instances</summary>
+<details><summary>1 Found Instances</summary>
 
-
-- Found in src/BasicNft.sol [Line: 13](../tests/foundry-nft-f23/src/BasicNft.sol#L13)
-
-	```solidity
-	    constructor() ERC721(PROJECT_NAME, PROJECT_SYMBOL) {
-	```
 
 - Found in src/BasicNft.sol [Line: 18](../tests/foundry-nft-f23/src/BasicNft.sol#L18)
 

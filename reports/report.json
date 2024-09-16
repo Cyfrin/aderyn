@@ -6530,12 +6530,6 @@
             "src_char": "146:13"
           },
           {
-            "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 11,
-            "src": "231:58",
-            "src_char": "231:58"
-          },
-          {
             "contract_path": "src/AssertStateChange.sol",
             "line_no": 8,
             "src": "131:3",
@@ -6633,12 +6627,6 @@
           },
           {
             "contract_path": "src/DeadCode.sol",
-            "line_no": 7,
-            "src": "115:59",
-            "src_char": "115:59"
-          },
-          {
-            "contract_path": "src/DeadCode.sol",
             "line_no": 11,
             "src": "189:8",
             "src_char": "189:8"
@@ -6686,24 +6674,6 @@
             "src_char": "242:345"
           },
           {
-            "contract_path": "src/FunctionInitializingState.sol",
-            "line_no": 61,
-            "src": "1646:59",
-            "src_char": "1646:59"
-          },
-          {
-            "contract_path": "src/InconsistentUints.sol",
-            "line_no": 19,
-            "src": "511:150",
-            "src_char": "511:150"
-          },
-          {
-            "contract_path": "src/IncorrectERC20.sol",
-            "line_no": 13,
-            "src": "360:108",
-            "src_char": "360:108"
-          },
-          {
             "contract_path": "src/IncorrectERC20.sol",
             "line_no": 17,
             "src": "483:8",
@@ -6720,12 +6690,6 @@
             "line_no": 27,
             "src": "808:12",
             "src_char": "808:12"
-          },
-          {
-            "contract_path": "src/IncorrectERC20.sol",
-            "line_no": 56,
-            "src": "1712:67",
-            "src_char": "1712:67"
           },
           {
             "contract_path": "src/IncorrectERC20.sol",
@@ -6768,12 +6732,6 @@
             "line_no": 86,
             "src": "2439:4",
             "src_char": "2439:4"
-          },
-          {
-            "contract_path": "src/InternalFunctions.sol",
-            "line_no": 8,
-            "src": "149:49",
-            "src_char": "149:49"
           },
           {
             "contract_path": "src/InternalFunctions.sol",
@@ -6824,24 +6782,6 @@
             "src_char": "1733:3"
           },
           {
-            "contract_path": "src/MultipleConstructorSchemes.sol",
-            "line_no": 6,
-            "src": "87:43",
-            "src_char": "87:43"
-          },
-          {
-            "contract_path": "src/MultipleConstructorSchemes.sol",
-            "line_no": 10,
-            "src": "136:67",
-            "src_char": "136:67"
-          },
-          {
-            "contract_path": "src/OutOfOrderRetryable.sol",
-            "line_no": 46,
-            "src": "1219:388",
-            "src_char": "1219:388"
-          },
-          {
             "contract_path": "src/OutOfOrderRetryable.sol",
             "line_no": 63,
             "src": "1649:11",
@@ -6872,34 +6812,10 @@
             "src_char": "588:17"
           },
           {
-            "contract_path": "src/StateShadowing.sol",
-            "line_no": 17,
-            "src": "259:55",
-            "src_char": "259:55"
-          },
-          {
-            "contract_path": "src/StateVariableCouldBeDeclaredConstant.sol",
-            "line_no": 15,
-            "src": "451:49",
-            "src_char": "451:49"
-          },
-          {
-            "contract_path": "src/StateVariableCouldBeDeclaredConstant.sol",
-            "line_no": 31,
-            "src": "831:49",
-            "src_char": "831:49"
-          },
-          {
             "contract_path": "src/StateVariableCouldBeDeclaredConstant.sol",
             "line_no": 39,
             "src": "996:8",
             "src_char": "996:8"
-          },
-          {
-            "contract_path": "src/StateVariables.sol",
-            "line_no": 39,
-            "src": "1426:292",
-            "src_char": "1426:292"
           },
           {
             "contract_path": "src/StateVariables.sol",
@@ -7076,28 +6992,10 @@
             "src_char": "9896:3"
           },
           {
-            "contract_path": "src/StorageConditionals.sol",
-            "line_no": 8,
-            "src": "178:132",
-            "src_char": "178:132"
-          },
-          {
             "contract_path": "src/StorageParameters.sol",
             "line_no": 7,
             "src": "137:10",
             "src_char": "137:10"
-          },
-          {
-            "contract_path": "src/TestERC20.sol",
-            "line_no": 25,
-            "src": "666:111",
-            "src_char": "666:111"
-          },
-          {
-            "contract_path": "src/TxOriginUsedForAuth.sol",
-            "line_no": 11,
-            "src": "272:49",
-            "src_char": "272:49"
           },
           {
             "contract_path": "src/TxOriginUsedForAuth.sol",
@@ -7110,24 +7008,6 @@
             "line_no": 22,
             "src": "531:10",
             "src_char": "531:10"
-          },
-          {
-            "contract_path": "src/UninitializedStateVariable.sol",
-            "line_no": 23,
-            "src": "733:90",
-            "src_char": "733:90"
-          },
-          {
-            "contract_path": "src/UninitializedStateVariable.sol",
-            "line_no": 41,
-            "src": "1222:40",
-            "src_char": "1222:40"
-          },
-          {
-            "contract_path": "src/UnprotectedInitialize.sol",
-            "line_no": 9,
-            "src": "158:49",
-            "src_char": "158:49"
           },
           {
             "contract_path": "src/UnprotectedInitialize.sol",
@@ -7214,18 +7094,6 @@
             "src_char": "1286:4"
           },
           {
-            "contract_path": "src/auditor_mode/ExternalCalls.sol",
-            "line_no": 12,
-            "src": "272:189",
-            "src_char": "272:189"
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 68,
-            "src": "4925:270",
-            "src_char": "3437:270"
-          },
-          {
             "contract_path": "src/nested/1/Nested.sol",
             "line_no": 10,
             "src": "265:17",
@@ -7242,24 +7110,6 @@
             "line_no": 15,
             "src": "422:9",
             "src_char": "422:9"
-          },
-          {
-            "contract_path": "src/reused_contract_name/ContractA.sol",
-            "line_no": 7,
-            "src": "107:36",
-            "src_char": "107:36"
-          },
-          {
-            "contract_path": "src/reused_contract_name/ContractB.sol",
-            "line_no": 7,
-            "src": "110:45",
-            "src_char": "110:45"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 10,
-            "src": "327:62",
-            "src_char": "327:62"
           }
         ]
       }

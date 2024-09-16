@@ -509,7 +509,7 @@ State variables that are not updated following deployment should be declared con
 
 State variable changes in this function but no event is emitted.
 
-<details><summary>12 Found Instances</summary>
+<details><summary>10 Found Instances</summary>
 
 
 - Found in contracts/Counter.sol [Line: 7](../tests/hardhat-js-playground/contracts/Counter.sol#L7)
@@ -540,18 +540,6 @@ State variable changes in this function but no event is emitted.
 
 	```solidity
 	    function incrementByTwoConstant() external {
-	```
-
-- Found in contracts/Lock.sol [Line: 13](../tests/hardhat-js-playground/contracts/Lock.sol#L13)
-
-	```solidity
-	    constructor(uint _unlockTime) payable {
-	```
-
-- Found in contracts/StateVariables.sol [Line: 39](../tests/hardhat-js-playground/contracts/StateVariables.sol#L39)
-
-	```solidity
-	    constructor(uint256 _privateImmutableNumber, uint256 _internalImmutableNumber, uint256 _publicImmutableNumber) {
 	```
 
 - Found in contracts/StateVariables.sol [Line: 47](../tests/hardhat-js-playground/contracts/StateVariables.sol#L47)

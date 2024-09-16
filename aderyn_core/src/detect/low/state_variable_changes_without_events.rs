@@ -1,7 +1,7 @@
 use std::collections::BTreeMap;
 use std::error::Error;
 
-use crate::ast::NodeID;
+use crate::ast::{FunctionKind, NodeID};
 
 use crate::capture;
 use crate::context::browser::ExtractEmitStatements;
@@ -24,6 +24,9 @@ pub struct StateVariableChangesWithoutEventDetector {
 impl IssueDetector for StateVariableChangesWithoutEventDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for func in helpers::get_implemented_external_and_public_functions(context) {
+            if *func.kind() == FunctionKind::Constructor {
+                continue;
+            }
             let mut event_tracker = EventEmissionTracker {
                 does_emit_events: false,
             };

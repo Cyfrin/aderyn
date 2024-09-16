@@ -863,7 +863,7 @@ State variables that are not updated following deployment should be declared con
 
 State variable changes in this function but no event is emitted.
 
-<details><summary>14 Found Instances</summary>
+<details><summary>11 Found Instances</summary>
 
 
 - Found in Counter.sol [Line: 7](../tests/adhoc-sol-files/Counter.sol#L7)
@@ -896,28 +896,10 @@ State variable changes in this function but no event is emitted.
 	    function incrementByTwoConstant() external {
 	```
 
-- Found in InconsistentUints.sol [Line: 19](../tests/adhoc-sol-files/InconsistentUints.sol#L19)
-
-	```solidity
-	    constructor(uint _uintInitial, uint256 _uint256Initial) { // 6 4
-	```
-
-- Found in InternalFunctions.sol [Line: 8](../tests/adhoc-sol-files/InternalFunctions.sol#L8)
-
-	```solidity
-	    constructor() {
-	```
-
 - Found in InternalFunctions.sol [Line: 12](../tests/adhoc-sol-files/InternalFunctions.sol#L12)
 
 	```solidity
 	    function setValue(uint256 _newValue) external onlyOwner {
-	```
-
-- Found in StateVariables.sol [Line: 39](../tests/adhoc-sol-files/StateVariables.sol#L39)
-
-	```solidity
-	    constructor(uint256 _privateImmutableNumber, uint256 _internalImmutableNumber, uint256 _publicImmutableNumber) {
 	```
 
 - Found in StateVariables.sol [Line: 47](../tests/adhoc-sol-files/StateVariables.sol#L47)

@@ -6623,19 +6623,13 @@ State variables that are not updated following deployment should be declared con
 
 State variable changes in this function but no event is emitted.
 
-<details><summary>123 Found Instances</summary>
+<details><summary>98 Found Instances</summary>
 
 
 - Found in src/AbstractContract.sol [Line: 6](../tests/contract-playground/src/AbstractContract.sol#L6)
 
 	```solidity
 	    function transferAdmin(address newAdmin) public virtual {
-	```
-
-- Found in src/ArbitraryTransferFrom.sol [Line: 11](../tests/contract-playground/src/ArbitraryTransferFrom.sol#L11)
-
-	```solidity
-	    constructor(IERC20 token) {
 	```
 
 - Found in src/AssertStateChange.sol [Line: 8](../tests/contract-playground/src/AssertStateChange.sol#L8)
@@ -6734,12 +6728,6 @@ State variable changes in this function but no event is emitted.
 	    function incrementByTwoConstant() external {
 	```
 
-- Found in src/DeadCode.sol [Line: 7](../tests/contract-playground/src/DeadCode.sol#L7)
-
-	```solidity
-	    constructor(uint256 _value) {
-	```
-
 - Found in src/DeadCode.sol [Line: 11](../tests/contract-playground/src/DeadCode.sol#L11)
 
 	```solidity
@@ -6788,24 +6776,6 @@ State variable changes in this function but no event is emitted.
 		function badAssignment() external {
 	```
 
-- Found in src/FunctionInitializingState.sol [Line: 61](../tests/contract-playground/src/FunctionInitializingState.sol#L61)
-
-	```solidity
-	    constructor() {
-	```
-
-- Found in src/InconsistentUints.sol [Line: 19](../tests/contract-playground/src/InconsistentUints.sol#L19)
-
-	```solidity
-	    constructor(uint _uintInitial, uint256 _uint256Initial) { // 6 4
-	```
-
-- Found in src/IncorrectERC20.sol [Line: 13](../tests/contract-playground/src/IncorrectERC20.sol#L13)
-
-	```solidity
-	    constructor() {
-	```
-
 - Found in src/IncorrectERC20.sol [Line: 17](../tests/contract-playground/src/IncorrectERC20.sol#L17)
 
 	```solidity
@@ -6822,12 +6792,6 @@ State variable changes in this function but no event is emitted.
 
 	```solidity
 	    function transferFrom(address from, address to, uint256 value) public {
-	```
-
-- Found in src/IncorrectERC20.sol [Line: 56](../tests/contract-playground/src/IncorrectERC20.sol#L56)
-
-	```solidity
-	    constructor() {
 	```
 
 - Found in src/IncorrectERC20.sol [Line: 68](../tests/contract-playground/src/IncorrectERC20.sol#L68)
@@ -6870,12 +6834,6 @@ State variable changes in this function but no event is emitted.
 
 	```solidity
 	    function mint(address to, uint256 tokenId) external returns (uint72) {
-	```
-
-- Found in src/InternalFunctions.sol [Line: 8](../tests/contract-playground/src/InternalFunctions.sol#L8)
-
-	```solidity
-	    constructor() {
 	```
 
 - Found in src/InternalFunctions.sol [Line: 12](../tests/contract-playground/src/InternalFunctions.sol#L12)
@@ -6926,24 +6884,6 @@ State variable changes in this function but no event is emitted.
 	    function bad(address[] memory receivers) external payable {
 	```
 
-- Found in src/MultipleConstructorSchemes.sol [Line: 6](../tests/contract-playground/src/MultipleConstructorSchemes.sol#L6)
-
-	```solidity
-	    constructor() public {
-	```
-
-- Found in src/MultipleConstructorSchemes.sol [Line: 10](../tests/contract-playground/src/MultipleConstructorSchemes.sol#L10)
-
-	```solidity
-	    function MultipleConstructorSchemes() public {
-	```
-
-- Found in src/OutOfOrderRetryable.sol [Line: 46](../tests/contract-playground/src/OutOfOrderRetryable.sol#L46)
-
-	```solidity
-	    constructor(
-	```
-
 - Found in src/OutOfOrderRetryable.sol [Line: 63](../tests/contract-playground/src/OutOfOrderRetryable.sol#L63)
 
 	```solidity
@@ -6974,34 +6914,10 @@ State variable changes in this function but no event is emitted.
 	     function deductMassFundsV3() external returns(uint256[] memory failedIds) {
 	```
 
-- Found in src/StateShadowing.sol [Line: 17](../tests/contract-playground/src/StateShadowing.sol#L17)
-
-	```solidity
-	    constructor() public{
-	```
-
-- Found in src/StateVariableCouldBeDeclaredConstant.sol [Line: 15](../tests/contract-playground/src/StateVariableCouldBeDeclaredConstant.sol#L15)
-
-	```solidity
-	    constructor() {
-	```
-
-- Found in src/StateVariableCouldBeDeclaredConstant.sol [Line: 31](../tests/contract-playground/src/StateVariableCouldBeDeclaredConstant.sol#L31)
-
-	```solidity
-	    constructor() {
-	```
-
 - Found in src/StateVariableCouldBeDeclaredConstant.sol [Line: 39](../tests/contract-playground/src/StateVariableCouldBeDeclaredConstant.sol#L39)
 
 	```solidity
 	    function changeIt() external {
-	```
-
-- Found in src/StateVariables.sol [Line: 39](../tests/contract-playground/src/StateVariables.sol#L39)
-
-	```solidity
-	    constructor(uint256 _privateImmutableNumber, uint256 _internalImmutableNumber, uint256 _publicImmutableNumber) {
 	```
 
 - Found in src/StateVariables.sol [Line: 47](../tests/contract-playground/src/StateVariables.sol#L47)
@@ -7178,28 +7094,10 @@ State variable changes in this function but no event is emitted.
 	    function add(uint256 i) external {
 	```
 
-- Found in src/StorageConditionals.sol [Line: 8](../tests/contract-playground/src/StorageConditionals.sol#L8)
-
-	```solidity
-	    constructor(uint256 same, uint256 different) {
-	```
-
 - Found in src/StorageParameters.sol [Line: 7](../tests/contract-playground/src/StorageParameters.sol#L7)
 
 	```solidity
 	    function editArrays() external {
-	```
-
-- Found in src/TestERC20.sol [Line: 25](../tests/contract-playground/src/TestERC20.sol#L25)
-
-	```solidity
-	    constructor(string memory _symbol, string memory _name) {
-	```
-
-- Found in src/TxOriginUsedForAuth.sol [Line: 11](../tests/contract-playground/src/TxOriginUsedForAuth.sol#L11)
-
-	```solidity
-	    constructor() {
 	```
 
 - Found in src/TxOriginUsedForAuth.sol [Line: 16](../tests/contract-playground/src/TxOriginUsedForAuth.sol#L16)
@@ -7212,24 +7110,6 @@ State variable changes in this function but no event is emitted.
 
 	```solidity
 	    function revokeUser(address _user) external {
-	```
-
-- Found in src/UninitializedStateVariable.sol [Line: 23](../tests/contract-playground/src/UninitializedStateVariable.sol#L23)
-
-	```solidity
-	    constructor() {
-	```
-
-- Found in src/UninitializedStateVariable.sol [Line: 41](../tests/contract-playground/src/UninitializedStateVariable.sol#L41)
-
-	```solidity
-	    constructor() {
-	```
-
-- Found in src/UnprotectedInitialize.sol [Line: 9](../tests/contract-playground/src/UnprotectedInitialize.sol#L9)
-
-	```solidity
-	    constructor() {
 	```
 
 - Found in src/UnprotectedInitialize.sol [Line: 19](../tests/contract-playground/src/UnprotectedInitialize.sol#L19)
@@ -7316,18 +7196,6 @@ State variable changes in this function but no event is emitted.
 	    function bad3(address newAddr) external {
 	```
 
-- Found in src/auditor_mode/ExternalCalls.sol [Line: 12](../tests/contract-playground/src/auditor_mode/ExternalCalls.sol#L12)
-
-	```solidity
-	    constructor(address setTarget) {
-	```
-
-- Found in src/eth2/DepositContract.sol [Line: 68](../tests/contract-playground/src/eth2/DepositContract.sol#L68)
-
-	```solidity
-	    constructor() public {
-	```
-
 - Found in src/nested/1/Nested.sol [Line: 10](../tests/contract-playground/src/nested/1/Nested.sol#L10)
 
 	```solidity
@@ -7344,24 +7212,6 @@ State variable changes in this function but no event is emitted.
 
 	```solidity
 	    function increment(uint256 newNumber) public {
-	```
-
-- Found in src/reused_contract_name/ContractA.sol [Line: 7](../tests/contract-playground/src/reused_contract_name/ContractA.sol#L7)
-
-	```solidity
-	    constructor() {
-	```
-
-- Found in src/reused_contract_name/ContractB.sol [Line: 7](../tests/contract-playground/src/reused_contract_name/ContractB.sol#L7)
-
-	```solidity
-	    constructor() {
-	```
-
-- Found in src/uniswap/UniswapV2Swapper.sol [Line: 10](../tests/contract-playground/src/uniswap/UniswapV2Swapper.sol#L10)
-
-	```solidity
-	    constructor(address router) {
 	```
 
 </details>
