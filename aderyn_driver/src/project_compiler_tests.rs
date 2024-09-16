@@ -193,6 +193,7 @@ mod project_compiler_grouping_tests {
             &None,
             &None,
             &Some(vec!["NonExistentFile.sol".to_string()]),
+            false,
         );
         assert!(contexts.iter().all(|c| c.src_filepaths.is_empty()));
     }

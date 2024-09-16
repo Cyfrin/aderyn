@@ -11,6 +11,8 @@ use serde_json::Value;
 use std::{path::PathBuf, time::Duration};
 use strum::IntoEnumIterator;
 
+pub mod lsp;
+
 pub fn debounce_and_run<F>(driver_func: F, args: &Args, timeout: Duration)
 where
     F: Fn() + Copy + Send,
