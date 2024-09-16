@@ -5966,7 +5966,8 @@
             "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
             "line_no": 115,
             "src": "2967:4",
-            "src_char": "2967:4"
+            "src_char": "2967:4",
+            "src_char2": "30:4"
           },
           {
             "contract_path": "src/TautologicalCompare.sol",
@@ -7438,589 +7439,687 @@
             "contract_path": "src/AbstractContract.sol",
             "line_no": 6,
             "src": "146:13",
-            "src_char": "146:13"
+            "src_char": "146:13",
+            "src_char2": "14:13"
           },
           {
             "contract_path": "src/AssertStateChange.sol",
             "line_no": 8,
             "src": "131:3",
-            "src_char": "131:3"
+            "src_char": "131:3",
+            "src_char2": "14:3"
           },
           {
             "contract_path": "src/AssertStateChange.sol",
             "line_no": 12,
             "src": "199:4",
-            "src_char": "199:4"
+            "src_char": "199:4",
+            "src_char2": "14:4"
           },
           {
             "contract_path": "src/CacheArrayLength.sol",
             "line_no": 23,
             "src": "506:2",
-            "src_char": "506:2"
+            "src_char": "506:2",
+            "src_char2": "14:2"
           },
           {
             "contract_path": "src/CacheArrayLength.sol",
             "line_no": 32,
             "src": "700:2",
-            "src_char": "700:2"
+            "src_char": "700:2",
+            "src_char2": "14:2"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 30,
             "src": "860:17",
-            "src_char": "860:17"
+            "src_char": "860:17",
+            "src_char2": "14:17"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 68,
             "src": "2044:16",
-            "src_char": "2044:16"
+            "src_char": "2044:16",
+            "src_char2": "14:16"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 106,
             "src": "3160:20",
-            "src_char": "3160:20"
+            "src_char": "3160:20",
+            "src_char2": "14:20"
           },
           {
             "contract_path": "src/ConstFuncChangeState.sol",
             "line_no": 8,
             "src": "173:112",
-            "src_char": "173:112"
+            "src_char": "173:112",
+            "src_char2": "5:112"
           },
           {
             "contract_path": "src/ConstFuncChangeState.sol",
             "line_no": 14,
             "src": "339:108",
-            "src_char": "339:108"
+            "src_char": "339:108",
+            "src_char2": "5:108"
           },
           {
             "contract_path": "src/CostlyOperationsInsideLoops.sol",
             "line_no": 9,
             "src": "180:119",
-            "src_char": "180:119"
+            "src_char": "180:119",
+            "src_char2": "5:119"
           },
           {
             "contract_path": "src/CostlyOperationsInsideLoops.sol",
             "line_no": 15,
             "src": "305:207",
-            "src_char": "305:207"
+            "src_char": "305:207",
+            "src_char2": "5:207"
           },
           {
             "contract_path": "src/Counter.sol",
             "line_no": 7,
             "src": "129:9",
-            "src_char": "129:9"
+            "src_char": "129:9",
+            "src_char2": "14:9"
           },
           {
             "contract_path": "src/Counter.sol",
             "line_no": 11,
             "src": "215:9",
-            "src_char": "215:9"
+            "src_char": "215:9",
+            "src_char2": "14:9"
           },
           {
             "contract_path": "src/Counter.sol",
             "line_no": 16,
             "src": "286:13",
-            "src_char": "286:13"
+            "src_char": "286:13",
+            "src_char2": "14:13"
           },
           {
             "contract_path": "src/Counter.sol",
             "line_no": 21,
             "src": "367:19",
-            "src_char": "367:19"
+            "src_char": "367:19",
+            "src_char2": "14:19"
           },
           {
             "contract_path": "src/Counter.sol",
             "line_no": 28,
             "src": "495:22",
-            "src_char": "495:22"
+            "src_char": "495:22",
+            "src_char2": "14:22"
           },
           {
             "contract_path": "src/DeadCode.sol",
             "line_no": 11,
             "src": "189:8",
-            "src_char": "189:8"
+            "src_char": "189:8",
+            "src_char2": "14:8"
           },
           {
             "contract_path": "src/DivisionBeforeMultiplication.sol",
             "line_no": 7,
             "src": "135:14",
-            "src_char": "135:14"
+            "src_char": "135:14",
+            "src_char2": "14:14"
           },
           {
             "contract_path": "src/DivisionBeforeMultiplication.sol",
             "line_no": 11,
             "src": "254:18",
-            "src_char": "254:18"
+            "src_char": "254:18",
+            "src_char2": "14:18"
           },
           {
             "contract_path": "src/DivisionBeforeMultiplication.sol",
             "line_no": 15,
             "src": "367:11",
-            "src_char": "367:11"
+            "src_char": "367:11",
+            "src_char2": "14:11"
           },
           {
             "contract_path": "src/DivisionBeforeMultiplication.sol",
             "line_no": 19,
             "src": "465:19",
-            "src_char": "465:19"
+            "src_char": "465:19",
+            "src_char2": "14:19"
           },
           {
             "contract_path": "src/DivisionBeforeMultiplication.sol",
             "line_no": 23,
             "src": "577:16",
-            "src_char": "577:16"
+            "src_char": "577:16",
+            "src_char2": "14:16"
           },
           {
             "contract_path": "src/DivisionBeforeMultiplication.sol",
             "line_no": 27,
             "src": "690:20",
-            "src_char": "690:20"
+            "src_char": "690:20",
+            "src_char2": "14:20"
           },
           {
             "contract_path": "src/DynamicArrayLengthAssignment.sol",
             "line_no": 11,
             "src": "242:345",
-            "src_char": "242:345"
+            "src_char": "242:345",
+            "src_char2": "2:345"
           },
           {
             "contract_path": "src/IncorrectERC20.sol",
             "line_no": 17,
             "src": "483:8",
-            "src_char": "483:8"
+            "src_char": "483:8",
+            "src_char2": "14:8"
           },
           {
             "contract_path": "src/IncorrectERC20.sol",
             "line_no": 23,
             "src": "690:7",
-            "src_char": "690:7"
+            "src_char": "690:7",
+            "src_char2": "14:7"
           },
           {
             "contract_path": "src/IncorrectERC20.sol",
             "line_no": 27,
             "src": "808:12",
-            "src_char": "808:12"
+            "src_char": "808:12",
+            "src_char2": "14:12"
           },
           {
             "contract_path": "src/IncorrectERC20.sol",
             "line_no": 68,
             "src": "2007:8",
-            "src_char": "2007:8"
+            "src_char": "2007:8",
+            "src_char2": "14:8"
           },
           {
             "contract_path": "src/IncorrectERC20.sol",
             "line_no": 83,
             "src": "2352:7",
-            "src_char": "2352:7"
+            "src_char": "2352:7",
+            "src_char2": "14:7"
           },
           {
             "contract_path": "src/IncorrectERC20.sol",
             "line_no": 88,
             "src": "2507:12",
-            "src_char": "2507:12"
+            "src_char": "2507:12",
+            "src_char2": "14:12"
           },
           {
             "contract_path": "src/IncorrectERC721.sol",
             "line_no": 22,
             "src": "696:7",
-            "src_char": "696:7"
+            "src_char": "696:7",
+            "src_char2": "14:7"
           },
           {
             "contract_path": "src/IncorrectERC721.sol",
             "line_no": 41,
             "src": "1231:17",
-            "src_char": "1231:17"
+            "src_char": "1231:17",
+            "src_char2": "14:17"
           },
           {
             "contract_path": "src/IncorrectERC721.sol",
             "line_no": 56,
             "src": "1684:12",
-            "src_char": "1684:12"
+            "src_char": "1684:12",
+            "src_char2": "14:12"
           },
           {
             "contract_path": "src/IncorrectERC721.sol",
             "line_no": 86,
             "src": "2439:4",
-            "src_char": "2439:4"
+            "src_char": "2439:4",
+            "src_char2": "14:4"
           },
           {
             "contract_path": "src/InternalFunctions.sol",
             "line_no": 12,
             "src": "213:8",
-            "src_char": "213:8"
+            "src_char": "213:8",
+            "src_char2": "14:8"
           },
           {
             "contract_path": "src/MissingInheritance.sol",
             "line_no": 10,
             "src": "151:9",
-            "src_char": "151:9"
+            "src_char": "151:9",
+            "src_char2": "14:9"
           },
           {
             "contract_path": "src/MissingInheritance.sol",
             "line_no": 25,
             "src": "451:9",
-            "src_char": "451:9"
+            "src_char": "451:9",
+            "src_char2": "14:9"
           },
           {
             "contract_path": "src/MsgValueInLoop.sol",
             "line_no": 10,
             "src": "177:3",
-            "src_char": "177:3"
+            "src_char": "177:3",
+            "src_char2": "14:3"
           },
           {
             "contract_path": "src/MsgValueInLoop.sol",
             "line_no": 22,
             "src": "501:4",
-            "src_char": "501:4"
+            "src_char": "501:4",
+            "src_char2": "14:4"
           },
           {
             "contract_path": "src/MsgValueInLoop.sol",
             "line_no": 36,
             "src": "905:3",
-            "src_char": "905:3"
+            "src_char": "905:3",
+            "src_char2": "14:3"
           },
           {
             "contract_path": "src/MsgValueInLoop.sol",
             "line_no": 51,
             "src": "1307:3",
-            "src_char": "1307:3"
+            "src_char": "1307:3",
+            "src_char2": "14:3"
           },
           {
             "contract_path": "src/MsgValueInLoop.sol",
             "line_no": 68,
             "src": "1733:3",
-            "src_char": "1733:3"
+            "src_char": "1733:3",
+            "src_char2": "14:3"
           },
           {
             "contract_path": "src/OutOfOrderRetryable.sol",
             "line_no": 63,
             "src": "1649:11",
-            "src_char": "1649:11"
+            "src_char": "1649:11",
+            "src_char2": "14:11"
           },
           {
             "contract_path": "src/OutOfOrderRetryable.sol",
             "line_no": 175,
             "src": "5072:7",
-            "src_char": "5072:7"
+            "src_char": "5072:7",
+            "src_char2": "14:7"
           },
           {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
             "line_no": 9,
             "src": "188:17",
-            "src_char": "188:17"
+            "src_char": "188:17",
+            "src_char2": "14:17"
           },
           {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
             "line_no": 16,
             "src": "377:17",
-            "src_char": "377:17"
+            "src_char": "377:17",
+            "src_char2": "14:17"
           },
           {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
             "line_no": 25,
             "src": "588:17",
-            "src_char": "588:17"
+            "src_char": "588:17",
+            "src_char2": "15:17"
           },
           {
             "contract_path": "src/StateVariableCouldBeDeclaredConstant.sol",
             "line_no": 39,
             "src": "996:8",
-            "src_char": "996:8"
+            "src_char": "996:8",
+            "src_char2": "14:8"
           },
           {
             "contract_path": "src/StateVariables.sol",
             "line_no": 47,
             "src": "1764:18",
-            "src_char": "1764:18"
+            "src_char": "1764:18",
+            "src_char2": "14:18"
           },
           {
             "contract_path": "src/StateVariables.sol",
             "line_no": 52,
             "src": "1915:20",
-            "src_char": "1915:20"
+            "src_char": "1915:20",
+            "src_char2": "14:20"
           },
           {
             "contract_path": "src/StateVariables.sol",
             "line_no": 57,
             "src": "2072:14",
-            "src_char": "2072:14"
+            "src_char": "2072:14",
+            "src_char2": "14:14"
           },
           {
             "contract_path": "src/StateVariables.sol",
             "line_no": 61,
             "src": "2157:22",
-            "src_char": "2157:22"
+            "src_char": "2157:22",
+            "src_char2": "14:22"
           },
           {
             "contract_path": "src/StateVariables.sol",
             "line_no": 71,
             "src": "2539:25",
-            "src_char": "2539:25"
+            "src_char": "2539:25",
+            "src_char2": "14:25"
           },
           {
             "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
             "line_no": 23,
             "src": "574:26",
-            "src_char": "574:26"
+            "src_char": "574:26",
+            "src_char2": "14:26"
           },
           {
             "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
             "line_no": 28,
             "src": "679:36",
-            "src_char": "679:36"
+            "src_char": "679:36",
+            "src_char2": "14:36"
           },
           {
             "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
             "line_no": 33,
             "src": "794:35",
-            "src_char": "794:35"
+            "src_char": "794:35",
+            "src_char2": "14:35"
           },
           {
             "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
             "line_no": 45,
             "src": "1047:36",
-            "src_char": "1047:36"
+            "src_char": "1047:36",
+            "src_char2": "14:36"
           },
           {
             "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
             "line_no": 50,
             "src": "1157:26",
-            "src_char": "1157:26"
+            "src_char": "1157:26",
+            "src_char2": "14:26"
           },
           {
             "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
             "line_no": 55,
             "src": "1266:24",
-            "src_char": "1266:24"
+            "src_char": "1266:24",
+            "src_char2": "14:24"
           },
           {
             "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
             "line_no": 68,
             "src": "1621:33",
-            "src_char": "1621:33"
+            "src_char": "1621:33",
+            "src_char2": "14:33"
           },
           {
             "contract_path": "src/StateVariablesChangesWithoutEvents.sol",
             "line_no": 81,
             "src": "2003:34",
-            "src_char": "2003:34"
+            "src_char": "2003:34",
+            "src_char2": "14:34"
           },
           {
             "contract_path": "src/StateVariablesManipulation.sol",
             "line_no": 48,
             "src": "1463:26",
-            "src_char": "1463:26"
+            "src_char": "1463:26",
+            "src_char2": "14:26"
           },
           {
             "contract_path": "src/StateVariablesManipulation.sol",
             "line_no": 80,
             "src": "2360:18",
-            "src_char": "2360:18"
+            "src_char": "2360:18",
+            "src_char2": "14:18"
           },
           {
             "contract_path": "src/StateVariablesManipulation.sol",
             "line_no": 85,
             "src": "2519:24",
-            "src_char": "2519:24"
+            "src_char": "2519:24",
+            "src_char2": "14:24"
           },
           {
             "contract_path": "src/StateVariablesManipulation.sol",
             "line_no": 120,
             "src": "3396:24",
-            "src_char": "3396:24"
+            "src_char": "3396:24",
+            "src_char2": "14:24"
           },
           {
             "contract_path": "src/StateVariablesManipulation.sol",
             "line_no": 126,
             "src": "3566:25",
-            "src_char": "3566:25"
+            "src_char": "3566:25",
+            "src_char2": "14:25"
           },
           {
             "contract_path": "src/StateVariablesManipulation.sol",
             "line_no": 139,
             "src": "3960:25",
-            "src_char": "3960:25"
+            "src_char": "3960:25",
+            "src_char2": "14:25"
           },
           {
             "contract_path": "src/StateVariablesManipulation.sol",
             "line_no": 160,
             "src": "4556:25",
-            "src_char": "4556:25"
+            "src_char": "4556:25",
+            "src_char2": "14:25"
           },
           {
             "contract_path": "src/StateVariablesManipulation.sol",
             "line_no": 176,
             "src": "5020:25",
-            "src_char": "5020:25"
+            "src_char": "5020:25",
+            "src_char2": "14:25"
           },
           {
             "contract_path": "src/StateVariablesManipulation.sol",
             "line_no": 182,
             "src": "5159:25",
-            "src_char": "5159:25"
+            "src_char": "5159:25",
+            "src_char2": "14:25"
           },
           {
             "contract_path": "src/StateVariablesManipulation.sol",
             "line_no": 281,
             "src": "7993:18",
-            "src_char": "7993:18"
+            "src_char": "7993:18",
+            "src_char2": "14:18"
           },
           {
             "contract_path": "src/StateVariablesManipulation.sol",
             "line_no": 286,
             "src": "8121:24",
-            "src_char": "8121:24"
+            "src_char": "8121:24",
+            "src_char2": "14:24"
           },
           {
             "contract_path": "src/StateVariablesManipulation.sol",
             "line_no": 314,
             "src": "8845:18",
-            "src_char": "8845:18"
+            "src_char": "8845:18",
+            "src_char2": "14:18"
           },
           {
             "contract_path": "src/StateVariablesManipulation.sol",
             "line_no": 321,
             "src": "9054:24",
-            "src_char": "9054:24"
+            "src_char": "9054:24",
+            "src_char2": "14:24"
           },
           {
             "contract_path": "src/StateVariablesManipulation.sol",
             "line_no": 332,
             "src": "9447:25",
-            "src_char": "9447:25"
+            "src_char": "9447:25",
+            "src_char2": "14:25"
           },
           {
             "contract_path": "src/StateVariablesManipulation.sol",
             "line_no": 337,
             "src": "9572:26",
-            "src_char": "9572:26"
+            "src_char": "9572:26",
+            "src_char2": "14:26"
           },
           {
             "contract_path": "src/StateVariablesManipulation.sol",
             "line_no": 353,
             "src": "9896:3",
-            "src_char": "9896:3"
+            "src_char": "9896:3",
+            "src_char2": "14:3"
           },
           {
             "contract_path": "src/StorageParameters.sol",
             "line_no": 7,
             "src": "137:10",
-            "src_char": "137:10"
+            "src_char": "137:10",
+            "src_char2": "14:10"
           },
           {
             "contract_path": "src/TxOriginUsedForAuth.sol",
             "line_no": 16,
             "src": "348:13",
-            "src_char": "348:13"
+            "src_char": "348:13",
+            "src_char2": "14:13"
           },
           {
             "contract_path": "src/TxOriginUsedForAuth.sol",
             "line_no": 22,
             "src": "531:10",
-            "src_char": "531:10"
+            "src_char": "531:10",
+            "src_char2": "14:10"
           },
           {
             "contract_path": "src/UnprotectedInitialize.sol",
             "line_no": 19,
             "src": "354:22",
-            "src_char": "354:22"
+            "src_char": "354:22",
+            "src_char2": "14:22"
           },
           {
             "contract_path": "src/UnprotectedInitialize.sol",
             "line_no": 25,
             "src": "522:20",
-            "src_char": "522:20"
+            "src_char": "522:20",
+            "src_char2": "14:20"
           },
           {
             "contract_path": "src/UnprotectedInitialize.sol",
             "line_no": 35,
             "src": "820:33",
-            "src_char": "820:33"
+            "src_char": "820:33",
+            "src_char2": "14:33"
           },
           {
             "contract_path": "src/UnusedError.sol",
             "line_no": 15,
             "src": "309:7",
-            "src_char": "309:7"
+            "src_char": "309:7",
+            "src_char2": "14:7"
           },
           {
             "contract_path": "src/UnusedStateVariables.sol",
             "line_no": 15,
             "src": "454:8",
-            "src_char": "454:8"
+            "src_char": "454:8",
+            "src_char2": "14:8"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
             "line_no": 12,
             "src": "253:12",
-            "src_char": "253:12"
+            "src_char": "253:12",
+            "src_char2": "14:12"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
             "line_no": 17,
             "src": "383:12",
-            "src_char": "383:12"
+            "src_char": "383:12",
+            "src_char2": "14:12"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
             "line_no": 22,
             "src": "534:10",
-            "src_char": "534:10"
+            "src_char": "534:10",
+            "src_char2": "14:10"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
             "line_no": 27,
             "src": "671:10",
-            "src_char": "671:10"
+            "src_char": "671:10",
+            "src_char2": "14:10"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
             "line_no": 32,
             "src": "829:10",
-            "src_char": "829:10"
+            "src_char": "829:10",
+            "src_char2": "14:10"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
             "line_no": 37,
             "src": "990:10",
-            "src_char": "990:10"
+            "src_char": "990:10",
+            "src_char2": "14:10"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
             "line_no": 42,
             "src": "1130:4",
-            "src_char": "1130:4"
+            "src_char": "1130:4",
+            "src_char2": "14:4"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
             "line_no": 46,
             "src": "1207:4",
-            "src_char": "1207:4"
+            "src_char": "1207:4",
+            "src_char2": "14:4"
           },
           {
             "contract_path": "src/ZeroAddressCheck.sol",
             "line_no": 50,
             "src": "1286:4",
-            "src_char": "1286:4"
+            "src_char": "1286:4",
+            "src_char2": "14:4"
           },
           {
             "contract_path": "src/nested/1/Nested.sol",
             "line_no": 10,
             "src": "265:17",
-            "src_char": "265:17"
+            "src_char": "265:17",
+            "src_char2": "14:17"
           },
           {
             "contract_path": "src/nested/2/Nested.sol",
             "line_no": 10,
             "src": "272:17",
-            "src_char": "272:17"
+            "src_char": "272:17",
+            "src_char2": "14:17"
           },
           {
             "contract_path": "src/parent_chain/ParentChainContract.sol",
             "line_no": 15,
             "src": "422:9",
-            "src_char": "422:9"
+            "src_char": "422:9",
+            "src_char2": "14:9"
           }
         ]
       }
