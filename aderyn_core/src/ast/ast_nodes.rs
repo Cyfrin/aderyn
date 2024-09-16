@@ -1,78 +1,78 @@
 use std::collections::{BTreeMap, HashMap};
 
-use super::macros::{ast_node, ast_node_no_partial_eq, expr_node};
+use super::macros::{ast_node, ast_node_no_partial_eq, expr_node, node_group};
 use super::*;
 
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug, Eq, Deserialize, Serialize, PartialEq, Hash)]
-#[serde(tag = "nodeType")]
-pub enum SourceUnitNode {
-    FunctionDefinition(FunctionDefinition),
-    StructDefinition(StructDefinition),
-    ErrorDefinition(ErrorDefinition),
-    EnumDefinition(EnumDefinition),
-    VariableDeclaration(VariableDeclaration),
-    ImportDirective(ImportDirective),
-    PragmaDirective(PragmaDirective),
-    UserDefinedValueTypeDefinition(UserDefinedValueTypeDefinition),
-    UsingForDirective(UsingForDirective),
-    ContractDefinition(ContractDefinition),
-    EventDefinition(EventDefinition),
+node_group! {
+    SourceUnitNode;
+
+    FunctionDefinition,
+    StructDefinition,
+    ErrorDefinition,
+    EnumDefinition,
+    VariableDeclaration,
+    ImportDirective,
+    PragmaDirective,
+    UserDefinedValueTypeDefinition,
+    UsingForDirective,
+    ContractDefinition,
+    EventDefinition,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(tag = "nodeType")]
-pub enum Expression {
-    Literal(Literal),
-    Identifier(Identifier),
-    UnaryOperation(UnaryOperation),
-    BinaryOperation(BinaryOperation),
-    Conditional(Conditional),
-    Assignment(Assignment),
-    FunctionCall(FunctionCall),
-    FunctionCallOptions(FunctionCallOptions),
-    IndexAccess(IndexAccess),
-    IndexRangeAccess(IndexRangeAccess),
-    MemberAccess(MemberAccess),
-    ElementaryTypeNameExpression(ElementaryTypeNameExpression),
-    TupleExpression(TupleExpression),
-    NewExpression(NewExpression),
+node_group! {
+    Expression;
+
+    Literal,
+    Identifier,
+    UnaryOperation,
+    BinaryOperation,
+    Conditional,
+    Assignment,
+    FunctionCall,
+    FunctionCallOptions,
+    IndexAccess,
+    IndexRangeAccess,
+    MemberAccess,
+    ElementaryTypeNameExpression,
+    TupleExpression,
+    NewExpression,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(tag = "nodeType")]
-pub enum Statement {
-    Block(Block),
-    Break(Break),
-    Continue(Continue),
-    DoWhileStatement(DoWhileStatement),
-    PlaceholderStatement(PlaceholderStatement),
-    VariableDeclarationStatement(VariableDeclarationStatement),
-    IfStatement(IfStatement),
-    ForStatement(ForStatement),
-    WhileStatement(WhileStatement),
-    EmitStatement(EmitStatement),
-    TryStatement(TryStatement),
-    UncheckedBlock(Block),
-    Return(Return),
-    RevertStatement(RevertStatement),
-    ExpressionStatement(ExpressionStatement),
-    InlineAssembly(InlineAssembly),
+node_group! {
+    Statement;
+
+    Block,
+    Break,
+    Continue,
+    DoWhileStatement,
+    PlaceholderStatement,
+    VariableDeclarationStatement,
+    IfStatement,
+    ForStatement,
+    WhileStatement,
+    EmitStatement,
+    TryStatement,
+    UncheckedBlock,
+    Return,
+    RevertStatement,
+    ExpressionStatement,
+    InlineAssembly,
 }
 
-#[derive(Clone, Debug, Eq, Serialize, Deserialize, PartialEq, Hash)]
-#[serde(tag = "nodeType")]
-pub enum ContractDefinitionNode {
-    UsingForDirective(UsingForDirective),
-    StructDefinition(StructDefinition),
-    EnumDefinition(EnumDefinition),
-    VariableDeclaration(VariableDeclaration),
-    EventDefinition(EventDefinition),
-    FunctionDefinition(FunctionDefinition),
-    ModifierDefinition(ModifierDefinition),
-    ErrorDefinition(ErrorDefinition),
-    UserDefinedValueTypeDefinition(UserDefinedValueTypeDefinition),
+node_group! {
+    ContractDefinitionNode;
+
+    UsingForDirective,
+    StructDefinition,
+    EnumDefinition,
+    VariableDeclaration,
+    EventDefinition,
+    FunctionDefinition,
+    ModifierDefinition,
+    ErrorDefinition,
+    UserDefinedValueTypeDefinition,
 }
 
 #[derive(Clone, Debug, Eq, Serialize, PartialEq, Hash)]
@@ -148,6 +148,13 @@ impl ExpressionOrVariableDeclarationStatement {
 ast_node!(
     #[derive(Hash)]
     struct Block {
+        statements: Vec<Statement>,
+    }
+);
+
+ast_node!(
+    #[derive(Hash)]
+    struct UncheckedBlock {
         statements: Vec<Statement>,
     }
 );
