@@ -11893,6 +11893,26 @@
             "text": "State variable changes in this function but no event is emitted."
           },
           "ruleId": "state-variable-changes-without-events"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MultiplePlaceholders.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 186
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Design the modifier to only contain 1 placeholder statement. If it's not possible, split the logic into multiple modifiers."
+          },
+          "ruleId": "multiple-placeholders"
         }
       ],
       "tool": {
