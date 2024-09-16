@@ -1,15 +1,10 @@
-#![allow(clippy::borrowed_box)]
-
 use aderyn::{
-    aderyn_is_currently_running_newest_version, debounce_and_run, print_all_detectors_view,
-    print_detail_view,
+    aderyn_is_currently_running_newest_version, lsp::spin_up_language_server,
+    print_all_detectors_view, print_detail_view,
 };
-use std::time::Duration;
-
 use aderyn_driver::driver::{self, Args};
 
 use clap::{ArgGroup, Parser, Subcommand};
-
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 #[command(group(ArgGroup::new("stdout_dependent").requires("stdout")))]
@@ -48,9 +43,9 @@ pub struct CommandLineArgs {
     #[arg(short, long, default_value = "report.md")]
     output: String,
 
-    /// Watch for file changes and continuously generate report
+    /// Start Aderyn's LSP server on stdout
     #[arg(short, long, group = "stdout_dependent")]
-    watch: bool,
+    lsp: bool,
 
     /// Do not include code snippets in the report (reduces report size in large repos)
     #[arg(long)]
@@ -122,26 +117,14 @@ fn main() {
         stdout: cmd_args.stdout,
         auditor_mode: cmd_args.auditor_mode,
         highs_only: cmd_args.highs_only,
+        lsp: cmd_args.lsp,
     };
 
     // Run watcher is watch mode is engaged
-    if cmd_args.watch {
-        // Default to JSON
-        args.output = "report.json".to_string();
-
-        // Run it once, for the first time
-        driver::drive(args.clone());
-
-        println!("INFO: Aderyn is entering watch mode !");
-        // Now run it every time there is a file change
-        debounce_and_run(
-            || {
-                // Run it once
-                driver::drive(args.clone());
-            },
-            &args,
-            Duration::from_millis(50),
-        );
+    if cmd_args.lsp {
+        args.skip_cloc = true;
+        args.skip_update_check = true;
+        spin_up_language_server(args);
     } else {
         driver::drive(args.clone());
     }
