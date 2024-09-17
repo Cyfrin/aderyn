@@ -11900,11 +11900,11 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/StateVariableCouldBeDeclaredImmutable.sol"
+                  "uri": "src/InternalFunctions.sol"
                 },
                 "region": {
-                  "byteLength": 14,
-                  "byteOffset": 152
+                  "byteLength": 5,
+                  "byteOffset": 111
                 }
               }
             },
@@ -11925,8 +11925,8 @@
                   "uri": "src/UninitializedStateVariable.sol"
                 },
                 "region": {
-                  "byteLength": 5,
-                  "byteOffset": 1079
+                  "byteLength": 8,
+                  "byteOffset": 291
                 }
               }
             }

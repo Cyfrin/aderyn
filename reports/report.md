@@ -7224,19 +7224,25 @@ State variable changes in this function but no event is emitted.
 
 State variables that are should be declared immutable to save gas. Add the `immutable` attribute to state variables that are only changed in the constructor
 
-<details><summary>2 Found Instances</summary>
+<details><summary>3 Found Instances</summary>
 
 
-- Found in src/UninitializedStateVariable.sol [Line: 37](../tests/contract-playground/src/UninitializedStateVariable.sol#L37)
+- Found in src/StateVariableCouldBeDeclaredImmutable.sol [Line: 6](../tests/contract-playground/src/StateVariableCouldBeDeclaredImmutable.sol#L6)
 
 	```solidity
-	    uint256 public myVar; // initialized in extension, hence not captured
+	    uint256 public immutableValue; // It can be marked immutable
 	```
 
-- Found in src/UnprotectedInitialize.sol [Line: 7](../tests/contract-playground/src/UnprotectedInitialize.sol#L7)
+- Found in src/UninitializedStateVariable.sol [Line: 9](../tests/contract-playground/src/UninitializedStateVariable.sol#L9)
 
 	```solidity
-	    address private owner;
+	    uint256 public numPages; // GOOD (because it's initialized in constructor)
+	```
+
+- Found in src/eth2/DepositContract.sol [Line: 66](../tests/contract-playground/src/eth2/DepositContract.sol#L66)
+
+	```solidity
+	    bytes32[DEPOSIT_CONTRACT_TREE_DEPTH] zero_hashes;
 	```
 
 </details>
