@@ -11352,6 +11352,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/StateVariableCouldBeDeclaredImmutable.sol"
+                },
+                "region": {
+                  "byteLength": 19,
+                  "byteOffset": 1343
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/StateVariables.sol"
                 },
                 "region": {
@@ -11905,28 +11916,6 @@
                 "region": {
                   "byteLength": 7,
                   "byteOffset": 217
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StorageConditionals.sol"
-                },
-                "region": {
-                  "byteLength": 18,
-                  "byteOffset": 108
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StorageConditionals.sol"
-                },
-                "region": {
-                  "byteLength": 23,
-                  "byteOffset": 148
                 }
               }
             },
