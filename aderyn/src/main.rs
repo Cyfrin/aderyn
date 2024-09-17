@@ -59,10 +59,6 @@ pub struct CommandLineArgs {
     #[arg(long, name = "stdout")]
     stdout: bool,
 
-    /// Skip contract build step
-    #[arg(long)]
-    skip_build: bool,
-
     /// Skip cloc analysis (line numbers, etc.)
     #[arg(long)]
     skip_cloc: bool,
@@ -111,7 +107,6 @@ fn main() {
         path_includes: cmd_args.path_includes,
         path_excludes: cmd_args.path_excludes,
         no_snippets: cmd_args.no_snippets,
-        skip_build: cmd_args.skip_build,
         skip_cloc: cmd_args.skip_cloc,
         skip_update_check: cmd_args.skip_update_check,
         stdout: cmd_args.stdout,

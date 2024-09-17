@@ -69,8 +69,16 @@ pub struct IssueCount {
 pub struct IssueInstance {
     pub contract_path: String,
     pub line_no: usize,
+
+    /// byte_offset:byte_length
     pub src: String,
+
+    /// char_offset:char_length
+    /// Here, char_offset is counted from the beginning of the file
     pub src_char: String,
+
+    /// char_offset:char_length
+    /// Here, char_offset is counted from the beginning of the line_no
     #[serde(skip_serializing)]
     pub src_char2: String,
     #[serde(skip_serializing_if = "Option::is_none")]
