@@ -5966,6 +5966,28 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/StateVariableCouldBeDeclaredImmutable.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 582
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariableCouldBeDeclaredImmutable.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 1590
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/StateVariablesManipulation.sol"
                 },
                 "region": {
@@ -8357,6 +8379,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/StateVariableCouldBeDeclaredImmutable.sol"
+                },
+                "region": {
+                  "byteLength": 29,
+                  "byteOffset": 648
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/StorageParameters.sol"
                 },
                 "region": {
@@ -8426,6 +8459,17 @@
                 "region": {
                   "byteLength": 7,
                   "byteOffset": 74
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariableCouldBeDeclaredImmutable.sol"
+                },
+                "region": {
+                  "byteLength": 37,
+                  "byteOffset": 66
                 }
               }
             }
@@ -11900,363 +11944,11 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/ArbitraryTransferFrom.sol"
-                },
-                "region": {
-                  "byteLength": 7,
-                  "byteOffset": 217
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/FunctionInitializingState.sol"
-                },
-                "region": {
-                  "byteLength": 13,
-                  "byteOffset": 1584
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/FunctionInitializingState.sol"
-                },
-                "region": {
-                  "byteLength": 13,
-                  "byteOffset": 1626
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/InconsistentUints.sol"
-                },
-                "region": {
-                  "byteLength": 12,
-                  "byteOffset": 122
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/InconsistentUints.sol"
-                },
-                "region": {
-                  "byteLength": 15,
-                  "byteOffset": 160
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/InternalFunctions.sol"
-                },
-                "region": {
-                  "byteLength": 5,
-                  "byteOffset": 111
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/MultipleConstructorSchemes.sol"
-                },
-                "region": {
-                  "byteLength": 13,
-                  "byteOffset": 67
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/OutOfOrderRetryable.sol"
-                },
-                "region": {
-                  "byteLength": 5,
-                  "byteOffset": 1052
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/OutOfOrderRetryable.sol"
-                },
-                "region": {
-                  "byteLength": 10,
-                  "byteOffset": 1078
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/OutOfOrderRetryable.sol"
-                },
-                "region": {
-                  "byteLength": 17,
-                  "byteOffset": 1109
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/OutOfOrderRetryable.sol"
-                },
-                "region": {
-                  "byteLength": 8,
-                  "byteOffset": 1147
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/OutOfOrderRetryable.sol"
-                },
-                "region": {
-                  "byteLength": 12,
-                  "byteOffset": 1176
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/OutOfOrderRetryable.sol"
-                },
-                "region": {
-                  "byteLength": 3,
-                  "byteOffset": 1209
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateShadowing.sol"
-                },
-                "region": {
-                  "byteLength": 13,
-                  "byteOffset": 239
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariableCouldBeDeclaredConstant.sol"
-                },
-                "region": {
-                  "byteLength": 13,
-                  "byteOffset": 281
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariableCouldBeDeclaredConstant.sol"
-                },
-                "region": {
-                  "byteLength": 13,
-                  "byteOffset": 811
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariableCouldBeDeclaredImmutable.sol"
-                },
-                "region": {
-                  "byteLength": 14,
-                  "byteOffset": 125
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StorageConditionals.sol"
-                },
-                "region": {
-                  "byteLength": 18,
-                  "byteOffset": 108
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StorageConditionals.sol"
-                },
-                "region": {
-                  "byteLength": 23,
-                  "byteOffset": 148
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/TestERC20.sol"
-                },
-                "region": {
-                  "byteLength": 4,
-                  "byteOffset": 144
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/TestERC20.sol"
-                },
-                "region": {
-                  "byteLength": 6,
-                  "byteOffset": 168
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Trump.sol"
-                },
-                "region": {
-                  "byteLength": 10,
-                  "byteOffset": 3847
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Trump.sol"
-                },
-                "region": {
-                  "byteLength": 11,
-                  "byteOffset": 3887
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/TxOriginUsedForAuth.sol"
-                },
-                "region": {
-                  "byteLength": 5,
-                  "byteOffset": 107
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/UninitializedStateVariable.sol"
                 },
                 "region": {
                   "byteLength": 8,
                   "byteOffset": 291
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/UninitializedStateVariable.sol"
-                },
-                "region": {
-                  "byteLength": 5,
-                  "byteOffset": 1079
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/UnprotectedInitialize.sol"
-                },
-                "region": {
-                  "byteLength": 5,
-                  "byteOffset": 146
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/auditor_mode/ExternalCalls.sol"
-                },
-                "region": {
-                  "byteLength": 6,
-                  "byteOffset": 205
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/auditor_mode/ExternalCalls.sol"
-                },
-                "region": {
-                  "byteLength": 14,
-                  "byteOffset": 251
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/eth2/DepositContract.sol"
-                },
-                "region": {
-                  "byteLength": 11,
-                  "byteOffset": 4907
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/reused_contract_name/ContractA.sol"
-                },
-                "region": {
-                  "byteLength": 1,
-                  "byteOffset": 99
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/reused_contract_name/ContractB.sol"
-                },
-                "region": {
-                  "byteLength": 1,
-                  "byteOffset": 102
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV2Swapper.sol"
-                },
-                "region": {
-                  "byteLength": 8,
-                  "byteOffset": 312
                 }
               }
             }

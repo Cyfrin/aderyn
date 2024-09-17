@@ -6,6 +6,7 @@ use crate::ast::{FunctionKind, Mutability, NodeID};
 use crate::capture;
 use crate::context::browser::ApproximateStorageChangeFinder;
 use crate::detect::detector::IssueDetectorNamePool;
+use crate::detect::helpers;
 use crate::{
     context::workspace_context::WorkspaceContext,
     detect::detector::{IssueDetector, IssueSeverity},
@@ -66,7 +67,7 @@ impl IssueDetector for StateVariableCouldBeImmutableDetector {
 
         let mut state_var_changed_from_non_constructors =
             ApproximateStorageChangeFinder::default(context);
-        for func in context.function_definitions() {
+        for func in helpers::get_implemented_external_and_public_functions(context) {
             if *func.kind() == FunctionKind::Constructor {
                 continue;
             }
@@ -79,14 +80,18 @@ impl IssueDetector for StateVariableCouldBeImmutableDetector {
         let mut state_var_changed_from_constructors =
             ApproximateStorageChangeFinder::default(context);
 
-        for func in context.function_definitions() {
+        for func in helpers::get_implemented_external_and_public_functions(context) {
             if *func.kind() != FunctionKind::Constructor {
                 continue;
             }
-            if let Some(changes) = func.state_variable_changes(context) {
-                let new_changes = state_var_changed_from_constructors + changes;
-                state_var_changed_from_constructors = new_changes;
+            if func.compiles_for_solc_below_0_6_5(context) {
+                // The immutable keyword was introduced in 0.6.5
+                continue;
             }
+            // In the case of constructors, we shouldn't explore the callgraph due to the reasons
+            // stated in this detector's solidity test file
+            state_var_changed_from_constructors =
+                ApproximateStorageChangeFinder::from(context, func);
         }
 
         let collection_b = state_var_changed_from_non_constructors
