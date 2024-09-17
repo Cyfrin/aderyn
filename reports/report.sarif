@@ -11900,22 +11900,22 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/InconsistentUints.sol"
+                  "uri": "src/StateVariableCouldBeDeclaredImmutable.sol"
                 },
                 "region": {
-                  "byteLength": 12,
-                  "byteOffset": 122
+                  "byteLength": 14,
+                  "byteOffset": 152
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/InconsistentUints.sol"
+                  "uri": "src/TxOriginUsedForAuth.sol"
                 },
                 "region": {
-                  "byteLength": 15,
-                  "byteOffset": 160
+                  "byteLength": 5,
+                  "byteOffset": 107
                 }
               }
             },

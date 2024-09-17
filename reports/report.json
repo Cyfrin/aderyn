@@ -7123,16 +7123,52 @@
         "detector_name": "state-variable-could-be-declared-immutable",
         "instances": [
           {
-            "contract_path": "src/StateVariableCouldBeDeclaredConstant.sol",
-            "line_no": 11,
-            "src": "281:13",
-            "src_char": "281:13"
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 39,
+            "src": "1052:5",
+            "src_char": "1052:5"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 40,
+            "src": "1078:10",
+            "src_char": "1078:10"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 41,
+            "src": "1109:17",
+            "src_char": "1109:17"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 42,
+            "src": "1147:8",
+            "src_char": "1147:8"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 43,
+            "src": "1176:12",
+            "src_char": "1176:12"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 44,
+            "src": "1209:3",
+            "src_char": "1209:3"
           },
           {
             "contract_path": "src/UninitializedStateVariable.sol",
-            "line_no": 9,
-            "src": "291:8",
-            "src_char": "291:8"
+            "line_no": 37,
+            "src": "1079:5",
+            "src_char": "1079:5"
+          },
+          {
+            "contract_path": "src/UnprotectedInitialize.sol",
+            "line_no": 7,
+            "src": "146:5",
+            "src_char": "146:5"
           }
         ]
       }
