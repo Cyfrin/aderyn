@@ -1,7 +1,6 @@
-use std::collections::{BTreeMap, HashMap};
-
-use super::macros::{ast_node, ast_node_no_partial_eq, expr_node, node_group};
+use super::macros::{ast_node, ast_node_no_partial_eq, expr_node, node_group, stmt_node};
 use super::*;
+use std::collections::{BTreeMap, HashMap};
 
 use serde::{Deserialize, Serialize};
 
@@ -152,7 +151,7 @@ ast_node!(
     }
 );
 
-ast_node!(
+stmt_node!(
     #[derive(Hash)]
     struct UncheckedBlock {
         statements: Vec<Statement>,
@@ -498,7 +497,7 @@ pub enum LiteralKind {
 expr_node!(
     #[derive(Hash)]
     struct Literal {
-        hex_value: Option<String>, // TODO: remove "Option"
+        hex_value: String,
         value: Option<String>,
         subdenomination: Option<String>,
         kind: LiteralKind,
@@ -562,14 +561,14 @@ ast_node!(
     }
 );
 
-ast_node!(
+stmt_node!(
     #[derive(Hash)]
     struct ExpressionStatement {
         expression: Expression,
     }
 );
 
-ast_node!(
+stmt_node!(
     #[derive(Hash)]
     struct VariableDeclarationStatement {
         assignments: Vec<Option<NodeID>>,
@@ -585,7 +584,7 @@ pub enum BlockOrStatement {
     Statement(Box<Statement>),
 }
 
-ast_node!(
+stmt_node!(
     #[derive(Hash)]
     struct IfStatement {
         condition: Expression,
@@ -594,7 +593,7 @@ ast_node!(
     }
 );
 
-ast_node!(
+stmt_node!(
     #[derive(Hash)]
     struct ForStatement {
         initialization_expression: Option<Box<ExpressionOrVariableDeclarationStatement>>,
@@ -604,23 +603,22 @@ ast_node!(
     }
 );
 
-ast_node!(
+stmt_node!(
     #[derive(Hash)]
     struct DoWhileStatement {
-        documentation: Option<String>,
         body: Block,
         condition: Expression,
     }
 );
 
-ast_node!(
+stmt_node!(
     #[derive(Hash)]
     struct EmitStatement {
-        event_call: Expression, // TODO: Change this to FunctionCall
+        event_call: FunctionCall,
     }
 );
 
-ast_node!(
+stmt_node!(
     #[derive(Hash)]
     struct TryStatement {
         clauses: Vec<TryCatchClause>,
@@ -628,7 +626,7 @@ ast_node!(
     }
 );
 
-ast_node!(
+stmt_node!(
     #[derive(Hash)]
     struct RevertStatement {
         error_call: FunctionCall,
@@ -643,7 +641,8 @@ ast_node!(
         parameters: Option<ParameterList>,
     }
 );
-ast_node!(
+
+stmt_node!(
     #[derive(Hash)]
     struct Return {
         function_return_parameters: Option<NodeID>, // When returning in a modifier, this can be none
@@ -662,33 +661,26 @@ ast_node!(
     }
 );
 
-ast_node!(
+stmt_node!(
     #[derive(Hash)]
-    struct Break {
-        documentation: Option<String>,
-    }
+    struct Break {}
 );
 
-ast_node!(
+stmt_node!(
     #[derive(Hash)]
-    struct Continue {
-        documentation: Option<String>,
-    }
+    struct Continue {}
 );
 
-ast_node!(
+stmt_node!(
     #[derive(Hash)]
-    struct PlaceholderStatement {
-        documentation: Option<String>,
-    }
+    struct PlaceholderStatement {}
 );
 
-ast_node!(
+stmt_node!(
     #[derive(Hash)]
     struct WhileStatement {
         condition: Expression,
         body: BlockOrStatement,
-        documentation: Option<String>,
     }
 );
 
