@@ -246,10 +246,6 @@
         "n_sloc": 27
       },
       {
-        "file_path": "src/StateVariableCouldBeImmutable.sol",
-        "n_sloc": 21
-      },
-      {
         "file_path": "src/StateVariables.sol",
         "n_sloc": 58
       },
@@ -436,6 +432,10 @@
       {
         "file_path": "src/reused_contract_name/ContractB.sol",
         "n_sloc": 7
+      },
+      {
+        "file_path": "src/state_variable_changes/CouldBeImmutable.sol",
+        "n_sloc": 21
       },
       {
         "file_path": "src/uniswap/UniswapV2Swapper.sol",
@@ -7123,16 +7123,22 @@
         "detector_name": "state-variable-could-be-declared-immutable",
         "instances": [
           {
-            "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 9,
-            "src": "217:7",
-            "src_char": "217:7"
+            "contract_path": "src/TestERC20.sol",
+            "line_no": 7,
+            "src": "144:4",
+            "src_char": "144:4"
+          },
+          {
+            "contract_path": "src/TestERC20.sol",
+            "line_no": 8,
+            "src": "168:6",
+            "src_char": "168:6"
           },
           {
             "contract_path": "src/UninitializedStateVariable.sol",
-            "line_no": 9,
-            "src": "291:8",
-            "src_char": "291:8"
+            "line_no": 37,
+            "src": "1079:5",
+            "src_char": "1079:5"
           }
         ]
       }
