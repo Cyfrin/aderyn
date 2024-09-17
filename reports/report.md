@@ -7224,7 +7224,7 @@ State variable changes in this function but no event is emitted.
 
 State variables that are should be declared immutable to save gas. Add the `immutable` attribute to state variables that are only changed in the constructor
 
-<details><summary>8 Found Instances</summary>
+<details><summary>9 Found Instances</summary>
 
 
 - Found in src/OutOfOrderRetryable.sol [Line: 39](../tests/contract-playground/src/OutOfOrderRetryable.sol#L39)
@@ -7263,16 +7263,22 @@ State variables that are should be declared immutable to save gas. Add the `immu
 	    uint256 public gas;
 	```
 
+- Found in src/TestERC20.sol [Line: 7](../tests/contract-playground/src/TestERC20.sol#L7)
+
+	```solidity
+	    string public name;
+	```
+
+- Found in src/TestERC20.sol [Line: 8](../tests/contract-playground/src/TestERC20.sol#L8)
+
+	```solidity
+	    string public symbol;
+	```
+
 - Found in src/UninitializedStateVariable.sol [Line: 9](../tests/contract-playground/src/UninitializedStateVariable.sol#L9)
 
 	```solidity
 	    uint256 public numPages; // GOOD (because it's initialized in constructor)
-	```
-
-- Found in src/reused_contract_name/ContractB.sol [Line: 5](../tests/contract-playground/src/reused_contract_name/ContractB.sol#L5)
-
-	```solidity
-	    address public x;
 	```
 
 </details>
