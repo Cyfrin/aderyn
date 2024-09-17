@@ -15,7 +15,6 @@ fn main() {
             output,
             src: None,
             no_snippets: false,
-            skip_build: false,
             skip_cloc: false,
             path_includes: None,
             path_excludes: None,
