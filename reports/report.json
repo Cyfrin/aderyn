@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 110,
-    "total_sloc": 3891
+    "total_source_units": 109,
+    "total_sloc": 3870
   },
   "files_details": {
     "files_details": [
@@ -432,10 +432,6 @@
       {
         "file_path": "src/reused_contract_name/ContractB.sol",
         "n_sloc": 7
-      },
-      {
-        "file_path": "src/state_variable_changes/CouldBeImmutable.sol",
-        "n_sloc": 21
       },
       {
         "file_path": "src/uniswap/UniswapV2Swapper.sol",
@@ -7123,16 +7119,28 @@
         "detector_name": "state-variable-could-be-declared-immutable",
         "instances": [
           {
-            "contract_path": "src/UninitializedStateVariable.sol",
-            "line_no": 37,
-            "src": "1079:5",
-            "src_char": "1079:5"
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 9,
+            "src": "217:7",
+            "src_char": "217:7"
           },
           {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 66,
-            "src": "4907:11",
-            "src_char": "3419:11"
+            "contract_path": "src/InconsistentUints.sol",
+            "line_no": 5,
+            "src": "122:12",
+            "src_char": "122:12"
+          },
+          {
+            "contract_path": "src/InconsistentUints.sol",
+            "line_no": 6,
+            "src": "160:15",
+            "src_char": "160:15"
+          },
+          {
+            "contract_path": "src/UninitializedStateVariable.sol",
+            "line_no": 9,
+            "src": "291:8",
+            "src_char": "291:8"
           }
         ]
       }

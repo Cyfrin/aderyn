@@ -1,10 +1,14 @@
 {
   "files_summary": {
-    "total_source_units": 20,
-    "total_sloc": 245
+    "total_source_units": 21,
+    "total_sloc": 266
   },
   "files_details": {
     "files_details": [
+      {
+        "file_path": "CouldBeImmutable.sol",
+        "n_sloc": 21
+      },
       {
         "file_path": "Counter.sol",
         "n_sloc": 20
