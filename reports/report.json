@@ -7123,22 +7123,10 @@
         "detector_name": "state-variable-could-be-declared-immutable",
         "instances": [
           {
-            "contract_path": "src/TestERC20.sol",
-            "line_no": 7,
-            "src": "144:4",
-            "src_char": "144:4"
-          },
-          {
-            "contract_path": "src/TestERC20.sol",
-            "line_no": 8,
-            "src": "168:6",
-            "src_char": "168:6"
-          },
-          {
             "contract_path": "src/UninitializedStateVariable.sol",
-            "line_no": 37,
-            "src": "1079:5",
-            "src_char": "1079:5"
+            "line_no": 9,
+            "src": "291:8",
+            "src_char": "291:8"
           }
         ]
       }

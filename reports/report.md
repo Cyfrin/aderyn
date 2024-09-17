@@ -7224,19 +7224,25 @@ State variable changes in this function but no event is emitted.
 
 State variables that are should be declared immutable to save gas. Add the `immutable` attribute to state variables that are only changed in the constructor
 
-<details><summary>2 Found Instances</summary>
+<details><summary>3 Found Instances</summary>
 
 
-- Found in src/StateVariableCouldBeDeclaredConstant.sol [Line: 11](../tests/contract-playground/src/StateVariableCouldBeDeclaredConstant.sol#L11)
+- Found in src/TxOriginUsedForAuth.sol [Line: 5](../tests/contract-playground/src/TxOriginUsedForAuth.sol#L5)
 
 	```solidity
-	    uint256 public variableValue; // This one cannot be marked constant. (It can be marked immutable)
+	    address public owner;
 	```
 
 - Found in src/UninitializedStateVariable.sol [Line: 9](../tests/contract-playground/src/UninitializedStateVariable.sol#L9)
 
 	```solidity
 	    uint256 public numPages; // GOOD (because it's initialized in constructor)
+	```
+
+- Found in src/state_variable_changes/CouldBeImmutable.sol [Line: 6](../tests/contract-playground/src/state_variable_changes/CouldBeImmutable.sol#L6)
+
+	```solidity
+	    uint256 public immutableValue; // It can be marked immutable
 	```
 
 </details>
