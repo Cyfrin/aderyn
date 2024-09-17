@@ -7227,10 +7227,10 @@ State variables that are should be declared immutable to save gas. Add the `immu
 <details><summary>2 Found Instances</summary>
 
 
-- Found in src/TxOriginUsedForAuth.sol [Line: 5](../tests/contract-playground/src/TxOriginUsedForAuth.sol#L5)
+- Found in src/StateVariableCouldBeDeclaredConstant.sol [Line: 11](../tests/contract-playground/src/StateVariableCouldBeDeclaredConstant.sol#L11)
 
 	```solidity
-	    address public owner;
+	    uint256 public variableValue; // This one cannot be marked constant. (It can be marked immutable)
 	```
 
 - Found in src/UninitializedStateVariable.sol [Line: 9](../tests/contract-playground/src/UninitializedStateVariable.sol#L9)
