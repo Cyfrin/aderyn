@@ -1,4 +1,4 @@
-use std::collections::{BTreeMap, HashSet};
+use std::collections::BTreeMap;
 use std::error::Error;
 
 use crate::ast::{FunctionKind, Mutability, NodeID};
@@ -6,6 +6,7 @@ use crate::ast::{FunctionKind, Mutability, NodeID};
 use crate::capture;
 use crate::context::browser::ApproximateStorageChangeFinder;
 use crate::detect::detector::IssueDetectorNamePool;
+use crate::detect::helpers;
 use crate::{
     context::workspace_context::WorkspaceContext,
     detect::detector::{IssueDetector, IssueSeverity},
@@ -64,50 +65,57 @@ impl IssueDetector for StateVariableCouldBeImmutableDetector {
             }
         }
 
-        let mut state_var_changed_from_non_constructors =
-            ApproximateStorageChangeFinder::default(context);
-        for func in context.function_definitions() {
+        let mut state_var_changed_from_non_constructors = None;
+        let mut state_var_changed_from_constructors = None;
+
+        // Gather the state changes that happen from non constructor functions
+        for func in helpers::get_implemented_external_and_public_functions(context) {
             if *func.kind() == FunctionKind::Constructor {
                 continue;
             }
-            if let Some(changes) = func.state_variable_changes(context) {
-                let new_changes = state_var_changed_from_non_constructors + changes;
-                state_var_changed_from_non_constructors = new_changes;
+            // Uses callgraph to explore inward
+            if let Some(delta) = func.state_variable_changes(context) {
+                if let Some(changes) = state_var_changed_from_non_constructors {
+                    let new_changes = delta + changes;
+                    state_var_changed_from_non_constructors = Some(new_changes);
+                } else {
+                    state_var_changed_from_non_constructors = Some(delta);
+                }
             }
         }
 
-        let mut state_var_changed_from_constructors =
-            ApproximateStorageChangeFinder::default(context);
-
-        for func in context.function_definitions() {
+        // Gather state changes that happen from constructor function only
+        for func in helpers::get_implemented_external_and_public_functions(context) {
             if *func.kind() != FunctionKind::Constructor {
                 continue;
             }
-            if let Some(changes) = func.state_variable_changes(context) {
-                let new_changes = state_var_changed_from_constructors + changes;
-                state_var_changed_from_constructors = new_changes;
+            if func.compiles_for_solc_below_0_6_5(context) {
+                // The immutable keyword was introduced in 0.6.5
+                continue;
+            }
+            // In the case of constructors, we shouldn't explore the callgraph due to the reasons
+            // stated in this detector's solidity test file
+            if let Some(changes) = state_var_changed_from_constructors {
+                let new_changes = ApproximateStorageChangeFinder::from(context, func) + changes;
+                state_var_changed_from_constructors = Some(new_changes);
+            } else {
+                state_var_changed_from_constructors =
+                    Some(ApproximateStorageChangeFinder::from(context, func));
             }
         }
 
-        let collection_b = state_var_changed_from_non_constructors
-            .fetch_non_exhaustive_manipulated_state_variables();
-        let collection_b_ids: HashSet<_> = collection_b.into_iter().map(|v| v.id).collect();
-
-        let collection_c =
-            state_var_changed_from_constructors.fetch_non_exhaustive_manipulated_state_variables();
-        let collection_c_ids: HashSet<_> = collection_c.into_iter().map(|v| v.id).collect();
-
-        let collection_r1 = collection_c_ids
-            .into_iter()
-            .filter(|n| !collection_b_ids.contains(n))
-            .collect::<HashSet<_>>();
-
-        // Now to calculate collection_r2, we loop through collection_a and capture it if the ID is
-        // found in collection_r1
-
-        for state_variable in collection_a {
-            if collection_r1.contains(&state_variable.id) {
-                capture!(self, context, state_variable);
+        // Collection A intersection with (collection C - collection B)
+        if let (Some(collection_b), Some(collection_c)) = (
+            state_var_changed_from_non_constructors,
+            state_var_changed_from_constructors,
+        ) {
+            let collection_c = collection_c.fetch_non_exhaustive_manipulated_state_variables();
+            let collection_b = collection_b.fetch_non_exhaustive_manipulated_state_variables();
+            for state_variable in collection_a {
+                if collection_c.contains(&state_variable) && !collection_b.contains(&state_variable)
+                {
+                    capture!(self, context, state_variable);
+                }
             }
         }
 
@@ -151,7 +159,7 @@ mod state_variable_could_be_immutable_tests {
     #[serial]
     fn test_state_variable_could_be_declared_immutable() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
-            "../tests/contract-playground/src/StateVariableCouldBeDeclaredImmutable.sol",
+            "../tests/adhoc-sol-files/CouldBeImmutable.sol",
         );
 
         let mut detector = StateVariableCouldBeImmutableDetector::default();
