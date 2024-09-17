@@ -3815,12 +3815,6 @@
             "src_char": "745:2"
           },
           {
-            "contract_path": "src/StateVariableCouldBeDeclaredImmutable.sol",
-            "line_no": 39,
-            "src": "1716:3",
-            "src_char": "1716:3"
-          },
-          {
             "contract_path": "src/StateVariablesManipulation.sol",
             "line_no": 121,
             "src": "3471:2",
@@ -7128,6 +7122,12 @@
         "description": "State variables that are should be declared immutable to save gas. Add the `immutable` attribute to state variables that are only changed in the constructor",
         "detector_name": "state-variable-could-be-declared-immutable",
         "instances": [
+          {
+            "contract_path": "src/StateVariableCouldBeDeclaredConstant.sol",
+            "line_no": 11,
+            "src": "281:13",
+            "src_char": "281:13"
+          },
           {
             "contract_path": "src/UninitializedStateVariable.sol",
             "line_no": 9,

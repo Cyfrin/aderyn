@@ -3505,7 +3505,7 @@ Instead of marking a function as `public`, consider marking it as `external` if 
 
 If the same constant literal value is used multiple times, create a constant state variable and reference it throughout the contract.
 
-<details><summary>79 Found Instances</summary>
+<details><summary>78 Found Instances</summary>
 
 
 - Found in src/AssertStateChange.sol [Line: 9](../tests/contract-playground/src/AssertStateChange.sol#L9)
@@ -3782,12 +3782,6 @@ If the same constant literal value is used multiple times, create a constant sta
 
 	```solidity
 	        for (uint256 id = 0; id < 10; ++id) {
-	```
-
-- Found in src/StateVariableCouldBeDeclaredImmutable.sol [Line: 39](../tests/contract-playground/src/StateVariableCouldBeDeclaredImmutable.sol#L39)
-
-	```solidity
-	        seeminglyImmutableValue = 130;
 	```
 
 - Found in src/StateVariablesManipulation.sol [Line: 121](../tests/contract-playground/src/StateVariablesManipulation.sol#L121)
@@ -7233,22 +7227,22 @@ State variables that are should be declared immutable to save gas. Add the `immu
 <details><summary>3 Found Instances</summary>
 
 
+- Found in src/TestERC20.sol [Line: 7](../tests/contract-playground/src/TestERC20.sol#L7)
+
+	```solidity
+	    string public name;
+	```
+
+- Found in src/TestERC20.sol [Line: 8](../tests/contract-playground/src/TestERC20.sol#L8)
+
+	```solidity
+	    string public symbol;
+	```
+
 - Found in src/UninitializedStateVariable.sol [Line: 9](../tests/contract-playground/src/UninitializedStateVariable.sol#L9)
 
 	```solidity
 	    uint256 public numPages; // GOOD (because it's initialized in constructor)
-	```
-
-- Found in src/auditor_mode/ExternalCalls.sol [Line: 9](../tests/contract-playground/src/auditor_mode/ExternalCalls.sol#L9)
-
-	```solidity
-	    address private target;
-	```
-
-- Found in src/auditor_mode/ExternalCalls.sol [Line: 10](../tests/contract-playground/src/auditor_mode/ExternalCalls.sol#L10)
-
-	```solidity
-	    ExternalContractInterface private targetContract;
 	```
 
 </details>

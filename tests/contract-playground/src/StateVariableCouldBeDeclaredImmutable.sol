@@ -7,7 +7,7 @@ contract StateVariableCouldBeDeclaredImmutable {
     uint256 public seeminglyImmutableValue; // It cannot be marked immutable
     uint256 public variableValue;
 
-    // aderyn-ignore-next-line(state-variable-could-be-declared-constant)
+    // aderyn-ignore-next-line
     address public h = address(3); // This is a candidate for constant
 
     uint256 private immutable x;
@@ -36,7 +36,7 @@ contract StateVariableCouldBeDeclaredImmutable {
         // TODO: Future improvement:detect cases where an internal function is esclusively called by the
         // constructor and mutates a state variable and suggest that it be done in the constructor function itself
         // So this detector can then pick it up.
-        seeminglyImmutableValue = 130;
+        seeminglyImmutableValue = 130; // aderyn-ignore
     }
 
     // aderyn-ignore-next-line(state-variable-changes-without-events)

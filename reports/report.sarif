@@ -5966,17 +5966,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/StateVariableCouldBeDeclaredImmutable.sol"
-                },
-                "region": {
-                  "byteLength": 3,
-                  "byteOffset": 1716
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/StateVariablesManipulation.sol"
                 },
                 "region": {
@@ -11911,22 +11900,22 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Trump.sol"
+                  "uri": "src/InconsistentUints.sol"
                 },
                 "region": {
-                  "byteLength": 10,
-                  "byteOffset": 3847
+                  "byteLength": 12,
+                  "byteOffset": 122
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Trump.sol"
+                  "uri": "src/InconsistentUints.sol"
                 },
                 "region": {
-                  "byteLength": 11,
-                  "byteOffset": 3887
+                  "byteLength": 15,
+                  "byteOffset": 160
                 }
               }
             },
@@ -11936,19 +11925,8 @@
                   "uri": "src/UninitializedStateVariable.sol"
                 },
                 "region": {
-                  "byteLength": 8,
-                  "byteOffset": 291
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/reused_contract_name/ContractB.sol"
-                },
-                "region": {
-                  "byteLength": 1,
-                  "byteOffset": 102
+                  "byteLength": 5,
+                  "byteOffset": 1079
                 }
               }
             }
