@@ -11911,22 +11911,22 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/ArbitraryTransferFrom.sol"
+                  "uri": "src/UninitializedStateVariable.sol"
                 },
                 "region": {
-                  "byteLength": 7,
-                  "byteOffset": 217
+                  "byteLength": 5,
+                  "byteOffset": 1079
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/UninitializedStateVariable.sol"
+                  "uri": "src/reused_contract_name/ContractB.sol"
                 },
                 "region": {
-                  "byteLength": 5,
-                  "byteOffset": 1079
+                  "byteLength": 1,
+                  "byteOffset": 102
                 }
               }
             }

@@ -7230,31 +7230,37 @@ State variable changes in this function but no event is emitted.
 
 State variables that are should be declared immutable to save gas. Add the `immutable` attribute to state variables that are only changed in the constructor
 
-<details><summary>4 Found Instances</summary>
+<details><summary>5 Found Instances</summary>
 
 
-- Found in src/UninitializedStateVariable.sol [Line: 9](../tests/contract-playground/src/UninitializedStateVariable.sol#L9)
+- Found in src/InconsistentUints.sol [Line: 5](../tests/contract-playground/src/InconsistentUints.sol#L5)
 
 	```solidity
-	    uint256 public numPages; // GOOD (because it's initialized in constructor)
+	    uint public uintVariable; // 1
 	```
 
-- Found in src/auditor_mode/ExternalCalls.sol [Line: 9](../tests/contract-playground/src/auditor_mode/ExternalCalls.sol#L9)
+- Found in src/InconsistentUints.sol [Line: 6](../tests/contract-playground/src/InconsistentUints.sol#L6)
 
 	```solidity
-	    address private target;
+	    uint256 public uint256Variable; // 1
 	```
 
-- Found in src/auditor_mode/ExternalCalls.sol [Line: 10](../tests/contract-playground/src/auditor_mode/ExternalCalls.sol#L10)
+- Found in src/Trump.sol [Line: 128](../tests/contract-playground/src/Trump.sol#L128)
 
 	```solidity
-	    ExternalContractInterface private targetContract;
+	    address payable private _taxWallet;
 	```
 
-- Found in src/eth2/DepositContract.sol [Line: 66](../tests/contract-playground/src/eth2/DepositContract.sol#L66)
+- Found in src/Trump.sol [Line: 129](../tests/contract-playground/src/Trump.sol#L129)
 
 	```solidity
-	    bytes32[DEPOSIT_CONTRACT_TREE_DEPTH] zero_hashes;
+	    address payable private _teamWallet;
+	```
+
+- Found in src/UninitializedStateVariable.sol [Line: 37](../tests/contract-playground/src/UninitializedStateVariable.sol#L37)
+
+	```solidity
+	    uint256 public myVar; // initialized in extension, hence not captured
 	```
 
 </details>
