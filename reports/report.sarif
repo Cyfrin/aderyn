@@ -5970,18 +5970,7 @@
                 },
                 "region": {
                   "byteLength": 3,
-                  "byteOffset": 582
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariableCouldBeDeclaredImmutable.sol"
-                },
-                "region": {
-                  "byteLength": 3,
-                  "byteOffset": 1590
+                  "byteOffset": 1716
                 }
               }
             },
@@ -6633,22 +6622,11 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/DelegateCallWithoutAddressCheck.sol"
-                },
-                "region": {
-                  "byteLength": 7,
-                  "byteOffset": 948
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/DeprecatedOZFunctions.sol"
                 },
                 "region": {
                   "byteLength": 7,
-                  "byteOffset": 1264
+                  "byteOffset": 948
                 }
               }
             },
@@ -8379,17 +8357,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/StateVariableCouldBeDeclaredImmutable.sol"
-                },
-                "region": {
-                  "byteLength": 29,
-                  "byteOffset": 648
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/StorageParameters.sol"
                 },
                 "region": {
@@ -8459,17 +8426,6 @@
                 "region": {
                   "byteLength": 7,
                   "byteOffset": 74
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariableCouldBeDeclaredImmutable.sol"
-                },
-                "region": {
-                  "byteLength": 37,
-                  "byteOffset": 66
                 }
               }
             }
@@ -11949,6 +11905,17 @@
                 "region": {
                   "byteLength": 8,
                   "byteOffset": 291
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/reused_contract_name/ContractB.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 102
                 }
               }
             }

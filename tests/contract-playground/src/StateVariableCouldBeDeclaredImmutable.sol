@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.19;
 
+// aderyn-ignore-next-line
 contract StateVariableCouldBeDeclaredImmutable {
     uint256 public immutableValue; // It can be marked immutable
     uint256 public seeminglyImmutableValue; // It cannot be marked immutable
@@ -12,13 +13,14 @@ contract StateVariableCouldBeDeclaredImmutable {
     uint256 private immutable x;
 
     constructor() {
-        x = 103;
-        immutableValue = 50;
-        immutableValue *= 3;
-        variableValue = 130;
+        x = 103; // aderyn-ignore
+        immutableValue = 50; // aderyn-ignore
+        immutableValue *= 3; // aderyn-ignore
+        variableValue = 130; // aderyn-ignore
         changeSeeminglyImmutableValue();
     }
 
+    // aderyn-ignore-next-line
     function changeSeeminglyImmutableValue() internal {
         // When you try to initialize an immutable value in an internal function that is exclsively
         // called by the constructor, yuo get the following error:

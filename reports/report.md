@@ -3505,7 +3505,7 @@ Instead of marking a function as `public`, consider marking it as `external` if 
 
 If the same constant literal value is used multiple times, create a constant state variable and reference it throughout the contract.
 
-<details><summary>80 Found Instances</summary>
+<details><summary>79 Found Instances</summary>
 
 
 - Found in src/AssertStateChange.sol [Line: 9](../tests/contract-playground/src/AssertStateChange.sol#L9)
@@ -3784,13 +3784,7 @@ If the same constant literal value is used multiple times, create a constant sta
 	        for (uint256 id = 0; id < 10; ++id) {
 	```
 
-- Found in src/StateVariableCouldBeDeclaredImmutable.sol [Line: 18](../tests/contract-playground/src/StateVariableCouldBeDeclaredImmutable.sol#L18)
-
-	```solidity
-	        variableValue = 130;
-	```
-
-- Found in src/StateVariableCouldBeDeclaredImmutable.sol [Line: 37](../tests/contract-playground/src/StateVariableCouldBeDeclaredImmutable.sol#L37)
+- Found in src/StateVariableCouldBeDeclaredImmutable.sol [Line: 39](../tests/contract-playground/src/StateVariableCouldBeDeclaredImmutable.sol#L39)
 
 	```solidity
 	        seeminglyImmutableValue = 130;
@@ -5062,7 +5056,7 @@ Use `e` notation, for example: `1e18`, instead of its full numeric value.
 
 Instead of separating the logic into a separate function, consider inlining the logic into the calling function. This can reduce the number of function calls and improve readability.
 
-<details><summary>19 Found Instances</summary>
+<details><summary>18 Found Instances</summary>
 
 
 - Found in src/CallGraphTests.sol [Line: 6](../tests/contract-playground/src/CallGraphTests.sol#L6)
@@ -5149,12 +5143,6 @@ Instead of separating the logic into a separate function, consider inlining the 
 	    function sendBalance(address x) internal {
 	```
 
-- Found in src/StateVariableCouldBeDeclaredImmutable.sol [Line: 22](../tests/contract-playground/src/StateVariableCouldBeDeclaredImmutable.sol#L22)
-
-	```solidity
-	    function changeSeeminglyImmutableValue() internal {
-	```
-
 - Found in src/StorageParameters.sol [Line: 17](../tests/contract-playground/src/StorageParameters.sol#L17)
 
 	```solidity
@@ -5187,7 +5175,7 @@ Instead of separating the logic into a separate function, consider inlining the 
 
 Contract contains comments with TODOS
 
-<details><summary>3 Found Instances</summary>
+<details><summary>2 Found Instances</summary>
 
 
 - Found in src/ContractWithTodo.sol [Line: 4](../tests/contract-playground/src/ContractWithTodo.sol#L4)
@@ -5200,12 +5188,6 @@ Contract contains comments with TODOS
 
 	```solidity
 	contract Counter {
-	```
-
-- Found in src/StateVariableCouldBeDeclaredImmutable.sol [Line: 4](../tests/contract-playground/src/StateVariableCouldBeDeclaredImmutable.sol#L4)
-
-	```solidity
-	contract StateVariableCouldBeDeclaredImmutable {
 	```
 
 </details>
@@ -7251,16 +7233,16 @@ State variables that are should be declared immutable to save gas. Add the `immu
 <details><summary>2 Found Instances</summary>
 
 
-- Found in src/UninitializedStateVariable.sol [Line: 9](../tests/contract-playground/src/UninitializedStateVariable.sol#L9)
+- Found in src/StateVariableCouldBeDeclaredConstant.sol [Line: 11](../tests/contract-playground/src/StateVariableCouldBeDeclaredConstant.sol#L11)
 
 	```solidity
-	    uint256 public numPages; // GOOD (because it's initialized in constructor)
+	    uint256 public variableValue; // This one cannot be marked constant. (It can be marked immutable)
 	```
 
-- Found in src/reused_contract_name/ContractA.sol [Line: 5](../tests/contract-playground/src/reused_contract_name/ContractA.sol#L5)
+- Found in src/UninitializedStateVariable.sol [Line: 37](../tests/contract-playground/src/UninitializedStateVariable.sol#L37)
 
 	```solidity
-	    uint public x;
+	    uint256 public myVar; // initialized in extension, hence not captured
 	```
 
 </details>

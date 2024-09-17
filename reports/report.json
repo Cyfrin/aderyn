@@ -3816,15 +3816,9 @@
           },
           {
             "contract_path": "src/StateVariableCouldBeDeclaredImmutable.sol",
-            "line_no": 18,
-            "src": "582:3",
-            "src_char": "582:3"
-          },
-          {
-            "contract_path": "src/StateVariableCouldBeDeclaredImmutable.sol",
-            "line_no": 37,
-            "src": "1590:3",
-            "src_char": "1590:3"
+            "line_no": 39,
+            "src": "1716:3",
+            "src_char": "1716:3"
           },
           {
             "contract_path": "src/StateVariablesManipulation.sol",
@@ -5150,12 +5144,6 @@
             "src_char": "1551:11"
           },
           {
-            "contract_path": "src/StateVariableCouldBeDeclaredImmutable.sol",
-            "line_no": 22,
-            "src": "648:29",
-            "src_char": "648:29"
-          },
-          {
             "contract_path": "src/StorageParameters.sol",
             "line_no": 17,
             "src": "388:11",
@@ -5197,12 +5185,6 @@
             "line_no": 4,
             "src": "74:7",
             "src_char": "74:7"
-          },
-          {
-            "contract_path": "src/StateVariableCouldBeDeclaredImmutable.sol",
-            "line_no": 4,
-            "src": "66:37",
-            "src_char": "66:37"
           }
         ]
       },
@@ -7147,22 +7129,28 @@
         "detector_name": "state-variable-could-be-declared-immutable",
         "instances": [
           {
-            "contract_path": "src/Trump.sol",
-            "line_no": 128,
-            "src": "3847:10",
-            "src_char": "3847:10"
+            "contract_path": "src/InconsistentUints.sol",
+            "line_no": 5,
+            "src": "122:12",
+            "src_char": "122:12"
           },
           {
-            "contract_path": "src/Trump.sol",
-            "line_no": 129,
-            "src": "3887:11",
-            "src_char": "3887:11"
+            "contract_path": "src/InconsistentUints.sol",
+            "line_no": 6,
+            "src": "160:15",
+            "src_char": "160:15"
           },
           {
             "contract_path": "src/UninitializedStateVariable.sol",
             "line_no": 37,
             "src": "1079:5",
             "src_char": "1079:5"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 8,
+            "src": "312:8",
+            "src_char": "312:8"
           }
         ]
       }
