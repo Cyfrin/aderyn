@@ -11900,11 +11900,33 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 3847
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 3887
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/UninitializedStateVariable.sol"
                 },
                 "region": {
-                  "byteLength": 5,
-                  "byteOffset": 1079
+                  "byteLength": 8,
+                  "byteOffset": 291
                 }
               }
             },
