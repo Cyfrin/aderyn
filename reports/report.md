@@ -7230,19 +7230,25 @@ State variable changes in this function but no event is emitted.
 
 State variables that are should be declared immutable to save gas. Add the `immutable` attribute to state variables that are only changed in the constructor
 
-<details><summary>2 Found Instances</summary>
+<details><summary>3 Found Instances</summary>
 
 
-- Found in src/StateVariableCouldBeDeclaredConstant.sol [Line: 11](../tests/contract-playground/src/StateVariableCouldBeDeclaredConstant.sol#L11)
+- Found in src/UninitializedStateVariable.sol [Line: 9](../tests/contract-playground/src/UninitializedStateVariable.sol#L9)
 
 	```solidity
-	    uint256 public variableValue; // This one cannot be marked constant. (It can be marked immutable)
+	    uint256 public numPages; // GOOD (because it's initialized in constructor)
 	```
 
-- Found in src/UninitializedStateVariable.sol [Line: 37](../tests/contract-playground/src/UninitializedStateVariable.sol#L37)
+- Found in src/auditor_mode/ExternalCalls.sol [Line: 9](../tests/contract-playground/src/auditor_mode/ExternalCalls.sol#L9)
 
 	```solidity
-	    uint256 public myVar; // initialized in extension, hence not captured
+	    address private target;
+	```
+
+- Found in src/auditor_mode/ExternalCalls.sol [Line: 10](../tests/contract-playground/src/auditor_mode/ExternalCalls.sol#L10)
+
+	```solidity
+	    ExternalContractInterface private targetContract;
 	```
 
 </details>
