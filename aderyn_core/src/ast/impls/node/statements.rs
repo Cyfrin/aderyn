@@ -50,6 +50,7 @@ impl Node for ExpressionStatement {
         }
         Ok(())
     }
+    macros::accept_id!();
 }
 
 impl Node for VariableDeclarationStatement {
@@ -165,9 +166,7 @@ impl Node for ForStatement {
             }
         }
         if let Some(loop_expr) = &self.loop_expression {
-            if let Some(loop_id) = loop_expr.expression.get_node_id() {
-                visitor.visit_immediate_children(self.id, vec![loop_id])?;
-            }
+            visitor.visit_immediate_children(self.id, vec![loop_expr.id])?;
         }
         if let Some(body_id) = self.body.get_node_id() {
             visitor.visit_immediate_children(self.id, vec![body_id])?;
@@ -232,9 +231,7 @@ impl Node for EmitStatement {
     }
 
     fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        if let Some(event_call_id) = self.event_call.get_node_id() {
-            visitor.visit_immediate_children(self.id, vec![event_call_id])?;
-        }
+        visitor.visit_immediate_children(self.id, vec![self.event_call.id])?;
         Ok(())
     }
 
