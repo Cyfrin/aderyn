@@ -7224,13 +7224,43 @@ State variable changes in this function but no event is emitted.
 
 State variables that are should be declared immutable to save gas. Add the `immutable` attribute to state variables that are only changed in the constructor
 
-<details><summary>3 Found Instances</summary>
+<details><summary>8 Found Instances</summary>
 
 
-- Found in src/StateVariableCouldBeDeclaredImmutable.sol [Line: 6](../tests/contract-playground/src/StateVariableCouldBeDeclaredImmutable.sol#L6)
+- Found in src/OutOfOrderRetryable.sol [Line: 39](../tests/contract-playground/src/OutOfOrderRetryable.sol#L39)
 
 	```solidity
-	    uint256 public immutableValue; // It can be marked immutable
+	    address public inbox;
+	```
+
+- Found in src/OutOfOrderRetryable.sol [Line: 40](../tests/contract-playground/src/OutOfOrderRetryable.sol#L40)
+
+	```solidity
+	    address public l2contract;
+	```
+
+- Found in src/OutOfOrderRetryable.sol [Line: 41](../tests/contract-playground/src/OutOfOrderRetryable.sol#L41)
+
+	```solidity
+	    uint256 public maxSubmissionCost;
+	```
+
+- Found in src/OutOfOrderRetryable.sol [Line: 42](../tests/contract-playground/src/OutOfOrderRetryable.sol#L42)
+
+	```solidity
+	    uint256 public gasLimit;
+	```
+
+- Found in src/OutOfOrderRetryable.sol [Line: 43](../tests/contract-playground/src/OutOfOrderRetryable.sol#L43)
+
+	```solidity
+	    uint256 public maxFeePerGas;
+	```
+
+- Found in src/OutOfOrderRetryable.sol [Line: 44](../tests/contract-playground/src/OutOfOrderRetryable.sol#L44)
+
+	```solidity
+	    uint256 public gas;
 	```
 
 - Found in src/UninitializedStateVariable.sol [Line: 9](../tests/contract-playground/src/UninitializedStateVariable.sol#L9)
@@ -7239,10 +7269,10 @@ State variables that are should be declared immutable to save gas. Add the `immu
 	    uint256 public numPages; // GOOD (because it's initialized in constructor)
 	```
 
-- Found in src/eth2/DepositContract.sol [Line: 66](../tests/contract-playground/src/eth2/DepositContract.sol#L66)
+- Found in src/reused_contract_name/ContractB.sol [Line: 5](../tests/contract-playground/src/reused_contract_name/ContractB.sol#L5)
 
 	```solidity
-	    bytes32[DEPOSIT_CONTRACT_TREE_DEPTH] zero_hashes;
+	    address public x;
 	```
 
 </details>
