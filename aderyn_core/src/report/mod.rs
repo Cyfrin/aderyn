@@ -71,6 +71,7 @@ pub struct IssueInstance {
     pub line_no: usize,
     pub src: String,
     pub src_char: String,
+    #[serde(skip_serializing)]
     pub src_char2: String,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub hint: Option<String>,
