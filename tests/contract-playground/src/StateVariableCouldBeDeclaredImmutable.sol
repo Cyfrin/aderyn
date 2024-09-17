@@ -5,6 +5,7 @@ contract StateVariableCouldBeDeclaredImmutable {
     uint256 public immutableValue; // It can be marked immutable
     uint256 public variableValue;
 
+    // aderyn-ignore-next-line(state-variable-could-be-declared-constant)
     address public h = address(3); // This is a candidate for constant
 
     constructor() {
