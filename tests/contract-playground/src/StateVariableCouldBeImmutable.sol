@@ -2,10 +2,13 @@
 pragma solidity 0.8.19;
 
 // aderyn-ignore-next-line
-contract StateVariableCouldBeDeclaredImmutable {
+contract StateVarImmutable {
     uint256 public immutableValue; // It can be marked immutable
     uint256 public seeminglyImmutableValue; // It cannot be marked immutable
     uint256 public variableValue;
+
+    // aderyn-ignore-next-line(state-variable-could-be-declared-constant)
+    address public h = address(3); // This is a candidate for constant
 
     uint256 private immutable x;
 
@@ -30,10 +33,11 @@ contract StateVariableCouldBeDeclaredImmutable {
         // value is not directly assigned in the constructor definition, we must not consider that as a potentially
         // suitable immutable variable
 
-        seeminglyImmutableValue = 130; // aderyn-ignore
+        seeminglyImmutableValue *= 2; // aderyn-ignore
     }
 
-    function changeVariableValue() external {
-        variableValue += variableValue;
+    // aderyn-ignore-next-line(state-variable-changes-without-events)
+    function changeItNow() external {
+        variableValue = uint256(uint160(h));
     }
 }

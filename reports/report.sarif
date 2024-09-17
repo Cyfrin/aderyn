@@ -11352,17 +11352,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/StateVariableCouldBeDeclaredImmutable.sol"
-                },
-                "region": {
-                  "byteLength": 19,
-                  "byteOffset": 1343
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/StateVariables.sol"
                 },
                 "region": {
@@ -11911,22 +11900,22 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/UninitializedStateVariable.sol"
+                  "uri": "src/TxOriginUsedForAuth.sol"
                 },
                 "region": {
                   "byteLength": 5,
-                  "byteOffset": 1079
+                  "byteOffset": 107
                 }
               }
             },
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/reused_contract_name/ContractB.sol"
+                  "uri": "src/UninitializedStateVariable.sol"
                 },
                 "region": {
-                  "byteLength": 1,
-                  "byteOffset": 102
+                  "byteLength": 5,
+                  "byteOffset": 1079
                 }
               }
             }

@@ -156,7 +156,7 @@ mod state_variable_could_be_immutable_tests {
     #[serial]
     fn test_state_variable_could_be_declared_immutable() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
-            "../tests/contract-playground/src/StateVariableCouldBeDeclaredImmutable.sol",
+            "../tests/contract-playground/src/StateVariableCouldBeImmutable.sol",
         );
 
         let mut detector = StateVariableCouldBeImmutableDetector::default();

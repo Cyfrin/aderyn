@@ -9163,19 +9163,25 @@ State variable changes in this function but no event is emitted.
 
 State variables that are should be declared immutable to save gas. Add the `immutable` attribute to state variables that are only changed in the constructor
 
-<details><summary>2 Found Instances</summary>
+<details><summary>3 Found Instances</summary>
 
 
-- Found in contracts/deprecated/TempleStaking.sol [Line: 29](../tests/2024-07-templegold/protocol/contracts/deprecated/TempleStaking.sol#L29)
+- Found in contracts/core/OpsManager.sol [Line: 25](../tests/2024-07-templegold/protocol/contracts/core/OpsManager.sol#L25)
 
 	```solidity
-	    uint256 public epochSizeSeconds; 
+	    Exposure public templeExposure;
 	```
 
-- Found in contracts/deprecated/TempleStaking.sol [Line: 32](../tests/2024-07-templegold/protocol/contracts/deprecated/TempleStaking.sol#L32)
+- Found in contracts/core/OpsManager.sol [Line: 26](../tests/2024-07-templegold/protocol/contracts/core/OpsManager.sol#L26)
 
 	```solidity
-	    uint256 public startTimestamp;
+	    VaultedTemple public vaultedTemple;
+	```
+
+- Found in contracts/fakes/v2/strategies/DsrBaseStrategyTestnet.sol [Line: 24](../tests/2024-07-templegold/protocol/contracts/fakes/v2/strategies/DsrBaseStrategyTestnet.sol#L24)
+
+	```solidity
+	    uint256 public lastUpdatedAt;
 	```
 
 </details>

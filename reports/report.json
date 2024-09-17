@@ -1,7 +1,7 @@
 {
   "files_summary": {
     "total_source_units": 110,
-    "total_sloc": 3890
+    "total_sloc": 3891
   },
   "files_details": {
     "files_details": [
@@ -246,8 +246,8 @@
         "n_sloc": 27
       },
       {
-        "file_path": "src/StateVariableCouldBeDeclaredImmutable.sol",
-        "n_sloc": 20
+        "file_path": "src/StateVariableCouldBeImmutable.sol",
+        "n_sloc": 21
       },
       {
         "file_path": "src/StateVariables.sol",
@@ -6822,12 +6822,6 @@
             "src_char": "996:8"
           },
           {
-            "contract_path": "src/StateVariableCouldBeDeclaredImmutable.sol",
-            "line_no": 36,
-            "src": "1343:19",
-            "src_char": "1343:19"
-          },
-          {
             "contract_path": "src/StateVariables.sol",
             "line_no": 47,
             "src": "1764:18",
@@ -7129,28 +7123,16 @@
         "detector_name": "state-variable-could-be-declared-immutable",
         "instances": [
           {
-            "contract_path": "src/StorageConditionals.sol",
-            "line_no": 5,
-            "src": "108:18",
-            "src_char": "108:18"
-          },
-          {
-            "contract_path": "src/StorageConditionals.sol",
-            "line_no": 6,
-            "src": "148:23",
-            "src_char": "148:23"
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 9,
+            "src": "217:7",
+            "src_char": "217:7"
           },
           {
             "contract_path": "src/UninitializedStateVariable.sol",
             "line_no": 9,
             "src": "291:8",
             "src_char": "291:8"
-          },
-          {
-            "contract_path": "src/UnprotectedInitialize.sol",
-            "line_no": 7,
-            "src": "146:5",
-            "src_char": "146:5"
           }
         ]
       }
