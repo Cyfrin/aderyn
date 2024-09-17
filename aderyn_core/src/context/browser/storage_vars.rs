@@ -34,6 +34,17 @@ pub struct ApproximateStorageChangeFinder<'a> {
     context: &'a WorkspaceContext,
 }
 
+impl<'a> ApproximateStorageChangeFinder<'a> {
+    pub fn default(context: &'a WorkspaceContext) -> Self {
+        Self {
+            directly_manipulated_state_variables: BTreeSet::default(),
+            manipulated_storage_pointers: BTreeSet::default(),
+            state_variables_to_storage_pointers: BTreeMap::default(),
+            context,
+        }
+    }
+}
+
 /// This trait implementation will be useful when we run it through our callgraph and try to aggregate state variable changes.
 impl<'a> Add<ApproximateStorageChangeFinder<'_>> for ApproximateStorageChangeFinder<'a> {
     type Output = ApproximateStorageChangeFinder<'a>;
