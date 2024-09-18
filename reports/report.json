@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 109,
-    "total_sloc": 3870
+    "total_source_units": 110,
+    "total_sloc": 3880
   },
   "files_details": {
     "files_details": [
@@ -180,6 +180,10 @@
       {
         "file_path": "src/KeccakContract.sol",
         "n_sloc": 21
+      },
+      {
+        "file_path": "src/LatestSolidityVersionContract.sol",
+        "n_sloc": 10
       },
       {
         "file_path": "src/LocalVariableShadow.sol",
@@ -445,7 +449,7 @@
   },
   "issue_count": {
     "high": 42,
-    "low": 43
+    "low": 44
   },
   "high_issues": {
     "issues": [
@@ -6740,6 +6744,12 @@
             "src_char": "213:8"
           },
           {
+            "contract_path": "src/LatestSolidityVersionContract.sol",
+            "line_no": 11,
+            "src": "208:10",
+            "src_char": "208:10"
+          },
+          {
             "contract_path": "src/MissingInheritance.sol",
             "line_no": 10,
             "src": "151:9",
@@ -7112,6 +7122,169 @@
             "src_char": "422:9"
           }
         ]
+      },
+      {
+        "title": "PUSH0 is not supported by all chains",
+        "description": "MCOPY opcode is introduced in Solidity 0.8.23 so it's very likely that not all chains support it yet. Consider using using older version of solidity.",
+        "detector_name": "mcopy-opcode",
+        "instances": [
+          {
+            "contract_path": "src/ContractLocksEther.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/ContractWithTodo.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/Counter.sol",
+            "line_no": 2,
+            "src": "39:24",
+            "src_char": "39:24"
+          },
+          {
+            "contract_path": "src/CrazyPragma.sol",
+            "line_no": 2,
+            "src": "32:32",
+            "src_char": "32:32"
+          },
+          {
+            "contract_path": "src/DelegateCallWithoutAddressCheck.sol",
+            "line_no": 2,
+            "src": "32:21",
+            "src_char": "32:21"
+          },
+          {
+            "contract_path": "src/DeletionNestedMappingStructureContract.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/FunctionSignatureCollision.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/InconsistentUints.sol",
+            "line_no": 1,
+            "src": "0:24",
+            "src_char": "0:24"
+          },
+          {
+            "contract_path": "src/IncorrectERC20.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/IncorrectERC721.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/LatestSolidityVersionContract.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/LocalVariableShadow.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/RevertsAndRequriesInLoops.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/TxOriginUsedForAuth.sol",
+            "line_no": 2,
+            "src": "32:24",
+            "src_char": "32:24"
+          },
+          {
+            "contract_path": "src/UninitializedStateVariable.sol",
+            "line_no": 3,
+            "src": "40:23",
+            "src_char": "40:23"
+          },
+          {
+            "contract_path": "src/UnusedStateVariables.sol",
+            "line_no": 2,
+            "src": "32:24",
+            "src_char": "32:24"
+          },
+          {
+            "contract_path": "src/VoidConstructor.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/cloc/AnotherHeavilyCommentedContract.sol",
+            "line_no": 6,
+            "src": "46:24",
+            "src_char": "46:24"
+          },
+          {
+            "contract_path": "src/cloc/HeavilyCommentedContract.sol",
+            "line_no": 6,
+            "src": "46:32",
+            "src_char": "46:32"
+          },
+          {
+            "contract_path": "src/inheritance/IContractInheritance.sol",
+            "line_no": 2,
+            "src": "32:24",
+            "src_char": "32:24"
+          },
+          {
+            "contract_path": "src/inheritance/InheritanceBase.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/nested_mappings/LaterVersion.sol",
+            "line_no": 2,
+            "src": "36:23",
+            "src_char": "36:23"
+          }
+        ]
       }
     ]
   },
@@ -7200,6 +7373,7 @@
     "unchecked-low-level-call",
     "function-pointer-in-constructor",
     "state-variable-could-be-declared-constant",
-    "state-variable-changes-without-events"
+    "state-variable-changes-without-events",
+    "mcopy-opcode"
   ]
 }
