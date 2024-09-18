@@ -101,6 +101,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<FucntionPointerInConstructorDetector>::default(),
         Box::<StateVariableCouldBeConstantDetector>::default(),
         Box::<StateVariableChangesWithoutEventDetector>::default(),
+        Box::<LibrarySharesFileWithContractDetector>::default(),
     ]
 }
 
@@ -112,6 +113,7 @@ pub fn get_all_detectors_names() -> Vec<String> {
 #[derive(Debug, PartialEq, EnumString, Display)]
 #[strum(serialize_all = "kebab-case")]
 pub(crate) enum IssueDetectorNamePool {
+    LibrarySharesFileWithContract,
     StateVariableChangesWithoutEvents,
     MissingInheritance,
     UnusedImport,
@@ -215,6 +217,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         }
         IssueDetectorNamePool::LocalVariableShadowing => {
             Some(Box::<LocalVariableShadowingDetector>::default())
+        }
+        IssueDetectorNamePool::LibrarySharesFileWithContract => {
+            Some(Box::<LibrarySharesFileWithContractDetector>::default())
         }
         IssueDetectorNamePool::UnusedImport => Some(Box::<UnusedImportDetector>::default()),
         IssueDetectorNamePool::VoidConstructor => Some(Box::<VoidConstructorDetector>::default()),

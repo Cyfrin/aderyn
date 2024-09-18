@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 109,
-    "total_sloc": 3870
+    "total_source_units": 110,
+    "total_sloc": 3884
   },
   "files_details": {
     "files_details": [
@@ -180,6 +180,10 @@
       {
         "file_path": "src/KeccakContract.sol",
         "n_sloc": 21
+      },
+      {
+        "file_path": "src/LibrarySharesFileWithContract.sol",
+        "n_sloc": 14
       },
       {
         "file_path": "src/LocalVariableShadow.sol",
@@ -445,7 +449,7 @@
   },
   "issue_count": {
     "high": 42,
-    "low": 43
+    "low": 44
   },
   "high_issues": {
     "issues": [
@@ -7112,6 +7116,43 @@
             "src_char": "422:9"
           }
         ]
+      },
+      {
+        "title": "Library shares file with contracts.",
+        "description": "In Solidity, libraries are typically designed to be backward compatible, so they require flexible pragma versions to support a wide range of contracts. By placing libraries in separate files with floating pragmas, you ensure that they remain adaptable to different contract versions, while contracts in other files can stick to fixed pragma versions for stability.",
+        "detector_name": "library-shares-file-with-contract",
+        "instances": [
+          {
+            "contract_path": "src/DeadCode.sol",
+            "line_no": 32,
+            "src": "732:16",
+            "src_char": "732:16"
+          },
+          {
+            "contract_path": "src/LibrarySharesFileWithContract.sol",
+            "line_no": 20,
+            "src": "655:17",
+            "src_char": "655:17"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 188,
+            "src": "5260:21",
+            "src_char": "5260:21"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 35,
+            "src": "1058:8",
+            "src_char": "1058:8"
+          },
+          {
+            "contract_path": "src/UnusedError.sol",
+            "line_no": 4,
+            "src": "65:12",
+            "src_char": "65:12"
+          }
+        ]
       }
     ]
   },
@@ -7200,6 +7241,7 @@
     "unchecked-low-level-call",
     "function-pointer-in-constructor",
     "state-variable-could-be-declared-constant",
-    "state-variable-changes-without-events"
+    "state-variable-changes-without-events",
+    "library-shares-file-with-contract"
   ]
 }

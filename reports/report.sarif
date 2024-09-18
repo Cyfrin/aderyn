@@ -11893,6 +11893,70 @@
             "text": "State variable changes in this function but no event is emitted."
           },
           "ruleId": "state-variable-changes-without-events"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/DeadCode.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 732
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/LibrarySharesFileWithContract.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 655
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariablesManipulation.sol"
+                },
+                "region": {
+                  "byteLength": 21,
+                  "byteOffset": 5260
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 1058
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UnusedError.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 65
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "In Solidity, libraries are typically designed to be backward compatible, so they require flexible pragma versions to support a wide range of contracts. By placing libraries in separate files with floating pragmas, you ensure that they remain adaptable to different contract versions, while contracts in other files can stick to fixed pragma versions for stability."
+          },
+          "ruleId": "library-shares-file-with-contract"
         }
       ],
       "tool": {

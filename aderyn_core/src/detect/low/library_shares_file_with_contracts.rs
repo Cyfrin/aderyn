@@ -1,9 +1,10 @@
 use std::collections::BTreeMap;
 use std::error::Error;
 
-use crate::ast::NodeID;
+use crate::ast::{ContractKind, NodeID};
 
 use crate::capture;
+use crate::context::browser::ExtractContractDefinitions;
 use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
     context::workspace_context::WorkspaceContext,
@@ -27,6 +28,22 @@ impl IssueDetector for LibrarySharesFileWithContractDetector {
         // capture!(self, context, item);
         // capture!(self, context, item, "hint");
 
+        for source_unit in context.source_units() {
+            let all_contracts = ExtractContractDefinitions::from(source_unit).extracted;
+            let number_of_non_library_contracts = all_contracts
+                .iter()
+                .filter(|c| c.kind != ContractKind::Library)
+                .count();
+            if number_of_non_library_contracts > 0 {
+                for library_contract in all_contracts
+                    .iter()
+                    .filter(|c| c.kind == ContractKind::Library)
+                {
+                    capture!(self, context, library_contract);
+                }
+            }
+        }
+
         Ok(!self.found_instances.is_empty())
     }
 
@@ -35,11 +52,11 @@ impl IssueDetector for LibrarySharesFileWithContractDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Low Issue Title")
+        String::from("Library shares file with contracts.")
     }
 
     fn description(&self) -> String {
-        String::from("Description of the low issue.")
+        String::from("In Solidity, libraries are typically designed to be backward compatible, so they require flexible pragma versions to support a wide range of contracts. By placing libraries in separate files with floating pragmas, you ensure that they remain adaptable to different contract versions, while contracts in other files can stick to fixed pragma versions for stability.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -51,7 +68,7 @@ impl IssueDetector for LibrarySharesFileWithContractDetector {
     }
 
     fn name(&self) -> String {
-        format!("low-issue-template")
+        IssueDetectorNamePool::LibrarySharesFileWithContract.to_string()
     }
 }
 
@@ -66,7 +83,7 @@ mod library_shares_file_with_contracts_tests {
 
     #[test]
     #[serial]
-    fn test_template_detector() {
+    fn test_library_shares_file_with_contracts_detector() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/LibrarySharesFileWithContract.sol",
         );
