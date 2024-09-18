@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 109,
-    "total_sloc": 3870
+    "total_source_units": 110,
+    "total_sloc": 3881
   },
   "files_details": {
     "files_details": [
@@ -128,6 +128,10 @@
       {
         "file_path": "src/EnumerableSetIteration.sol",
         "n_sloc": 55
+      },
+      {
+        "file_path": "src/EventContainsPublicConstant.sol",
+        "n_sloc": 11
       },
       {
         "file_path": "src/ExperimentalEncoder.sol",
@@ -445,7 +449,7 @@
   },
   "issue_count": {
     "high": 42,
-    "low": 43
+    "low": 44
   },
   "high_issues": {
     "issues": [
@@ -7112,6 +7116,19 @@
             "src_char": "422:9"
           }
         ]
+      },
+      {
+        "title": "Emit statement contains public constant.",
+        "description": "Public constant is being emitted. This is not required because the value doesn't change after deployment.",
+        "detector_name": "event-contains-public-constant",
+        "instances": [
+          {
+            "contract_path": "src/EventContainsPublicConstant.sol",
+            "line_no": 17,
+            "src": "464:21",
+            "src_char": "464:21"
+          }
+        ]
       }
     ]
   },
@@ -7200,6 +7217,7 @@
     "unchecked-low-level-call",
     "function-pointer-in-constructor",
     "state-variable-could-be-declared-constant",
-    "state-variable-changes-without-events"
+    "state-variable-changes-without-events",
+    "event-contains-public-constant"
   ]
 }

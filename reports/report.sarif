@@ -11893,6 +11893,26 @@
             "text": "State variable changes in this function but no event is emitted."
           },
           "ruleId": "state-variable-changes-without-events"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/EventContainsPublicConstant.sol"
+                },
+                "region": {
+                  "byteLength": 21,
+                  "byteOffset": 464
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Public constant is being emitted. This is not required because the value doesn't change after deployment."
+          },
+          "ruleId": "event-contains-public-constant"
         }
       ],
       "tool": {
