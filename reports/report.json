@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 109,
-    "total_sloc": 3870
+    "total_source_units": 110,
+    "total_sloc": 3892
   },
   "files_details": {
     "files_details": [
@@ -244,6 +244,10 @@
       {
         "file_path": "src/StateVariableCouldBeDeclaredConstant.sol",
         "n_sloc": 27
+      },
+      {
+        "file_path": "src/StateVariableCouldBeDeclaredImmutable.sol",
+        "n_sloc": 22
       },
       {
         "file_path": "src/StateVariables.sol",
@@ -5134,6 +5138,12 @@
             "src_char": "1551:11"
           },
           {
+            "contract_path": "src/StateVariableCouldBeDeclaredImmutable.sol",
+            "line_no": 26,
+            "src": "706:14",
+            "src_char": "706:14"
+          },
+          {
             "contract_path": "src/StorageParameters.sol",
             "line_no": 17,
             "src": "388:11",
@@ -6818,6 +6828,12 @@
             "src_char": "996:8"
           },
           {
+            "contract_path": "src/StateVariableCouldBeDeclaredImmutable.sol",
+            "line_no": 37,
+            "src": "1455:21",
+            "src_char": "1455:21"
+          },
+          {
             "contract_path": "src/StateVariables.sol",
             "line_no": 47,
             "src": "1764:18",
@@ -7189,6 +7205,18 @@
             "line_no": 29,
             "src": "811:13",
             "src_char": "811:13"
+          },
+          {
+            "contract_path": "src/StateVariableCouldBeDeclaredImmutable.sol",
+            "line_no": 6,
+            "src": "162:24",
+            "src_char": "162:24"
+          },
+          {
+            "contract_path": "src/StateVariableCouldBeDeclaredImmutable.sol",
+            "line_no": 9,
+            "src": "245:24",
+            "src_char": "245:24"
           },
           {
             "contract_path": "src/StorageConditionals.sol",

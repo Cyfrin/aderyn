@@ -40,7 +40,22 @@ impl IssueDetector for StateVariableCouldBeImmutableDetector {
         let mut collection_a = Vec::new();
 
         for variable in context.variable_declarations() {
+            // If it's already marked immutable, ignore it!
             if variable.mutability() == Some(&Mutability::Immutable) {
+                continue;
+            }
+
+            // Doesn't make sense to look for possible immutability if it's already declared constant
+            if variable.mutability() == Some(&Mutability::Constant) {
+                continue;
+            }
+
+            // If the variable has already been initialized at it's definition then, later when
+            // it's changed in the constructor, it cannot be marked immutable.
+            //
+            // This condition is opposite for detecting potentially constant variables. Over there,
+            // we had to make sure that variable _had_ a value at the time of initializing.
+            if variable.value.is_some() {
                 continue;
             }
 
@@ -167,7 +182,7 @@ mod state_variable_could_be_immutable_tests {
         // assert that the detector found an issue
         assert!(found);
         // assert that the detector found the correct number of instances
-        assert_eq!(detector.instances().len(), 1);
+        assert_eq!(detector.instances().len(), 2);
         println!("{:?}", detector.instances());
         // assert the severity is low
         assert_eq!(

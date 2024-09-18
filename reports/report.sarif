@@ -8357,6 +8357,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/StateVariableCouldBeDeclaredImmutable.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 706
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/StorageParameters.sol"
                 },
                 "region": {
@@ -11352,6 +11363,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/StateVariableCouldBeDeclaredImmutable.sol"
+                },
+                "region": {
+                  "byteLength": 21,
+                  "byteOffset": 1455
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/StateVariables.sol"
                 },
                 "region": {
@@ -12026,6 +12048,28 @@
                 "region": {
                   "byteLength": 13,
                   "byteOffset": 811
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariableCouldBeDeclaredImmutable.sol"
+                },
+                "region": {
+                  "byteLength": 24,
+                  "byteOffset": 162
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariableCouldBeDeclaredImmutable.sol"
+                },
+                "region": {
+                  "byteLength": 24,
+                  "byteOffset": 245
                 }
               }
             },
