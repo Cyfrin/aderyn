@@ -3509,7 +3509,7 @@ Instead of marking a function as `public`, consider marking it as `external` if 
 
 If the same constant literal value is used multiple times, create a constant state variable and reference it throughout the contract.
 
-<details><summary>80 Found Instances</summary>
+<details><summary>78 Found Instances</summary>
 
 
 - Found in src/AssertStateChange.sol [Line: 9](../tests/contract-playground/src/AssertStateChange.sol#L9)
@@ -3606,18 +3606,6 @@ If the same constant literal value is used multiple times, create a constant sta
 
 	```solidity
 	        int unspecificInt = -0x1234567890abcdef;
-	```
-
-- Found in src/Casting.sol [Line: 153](../tests/contract-playground/src/Casting.sol#L153)
-
-	```solidity
-	            int256 result = x >> 64;
-	```
-
-- Found in src/Casting.sol [Line: 161](../tests/contract-playground/src/Casting.sol#L161)
-
-	```solidity
-	            int256 result = x >> 64;
 	```
 
 - Found in src/CompilerBugStorageSignedIntegerArray.sol [Line: 9](../tests/contract-playground/src/CompilerBugStorageSignedIntegerArray.sol#L9)
@@ -6006,25 +5994,13 @@ Detects the immediate initialization of state variables through function calls t
 
 Functions that are not used. Consider removing them.
 
-<details><summary>14 Found Instances</summary>
+<details><summary>12 Found Instances</summary>
 
 
 - Found in src/ArbitraryTransferFrom.sol [Line: 15](../tests/contract-playground/src/ArbitraryTransferFrom.sol#L15)
 
 	```solidity
 	    function bad1(address from, address to, uint256 amount) internal {
-	```
-
-- Found in src/Casting.sol [Line: 151](../tests/contract-playground/src/Casting.sol#L151)
-
-	```solidity
-	    function from128x128(int256 x) internal pure returns (int128) {
-	```
-
-- Found in src/Casting.sol [Line: 159](../tests/contract-playground/src/Casting.sol#L159)
-
-	```solidity
-	    function from128x128_checked(int256 x) internal pure returns (int128) {
 	```
 
 - Found in src/ContractLocksEther.sol [Line: 54](../tests/contract-playground/src/ContractLocksEther.sol#L54)

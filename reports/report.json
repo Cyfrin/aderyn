@@ -1218,8 +1218,8 @@
           {
             "contract_path": "src/Casting.sol",
             "line_no": 155,
-            "src": "4625:14",
-            "src_char": "4625:14"
+            "src": "4642:14",
+            "src_char": "4642:14"
           }
         ]
       },
@@ -3619,18 +3619,6 @@
             "src_char": "2165:18"
           },
           {
-            "contract_path": "src/Casting.sol",
-            "line_no": 153,
-            "src": "4583:2",
-            "src_char": "4583:2"
-          },
-          {
-            "contract_path": "src/Casting.sol",
-            "line_no": 161,
-            "src": "4787:2",
-            "src_char": "4787:2"
-          },
-          {
             "contract_path": "src/CompilerBugStorageSignedIntegerArray.sol",
             "line_no": 9,
             "src": "235:1",
@@ -5951,18 +5939,6 @@
             "line_no": 15,
             "src": "304:4",
             "src_char": "304:4"
-          },
-          {
-            "contract_path": "src/Casting.sol",
-            "line_no": 151,
-            "src": "4475:11",
-            "src_char": "4475:11"
-          },
-          {
-            "contract_path": "src/Casting.sol",
-            "line_no": 159,
-            "src": "4671:19",
-            "src_char": "4671:19"
           },
           {
             "contract_path": "src/ContractLocksEther.sol",

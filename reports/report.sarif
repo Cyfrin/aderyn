@@ -1390,7 +1390,7 @@
                 },
                 "region": {
                   "byteLength": 14,
-                  "byteOffset": 4625
+                  "byteOffset": 4642
                 }
               }
             }
@@ -5614,28 +5614,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "byteLength": 2,
-                  "byteOffset": 4583
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "byteLength": 2,
-                  "byteOffset": 4787
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/CompilerBugStorageSignedIntegerArray.sol"
                 },
                 "region": {
@@ -9795,28 +9773,6 @@
                 "region": {
                   "byteLength": 4,
                   "byteOffset": 304
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "byteLength": 11,
-                  "byteOffset": 4475
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Casting.sol"
-                },
-                "region": {
-                  "byteLength": 19,
-                  "byteOffset": 4671
                 }
               }
             },

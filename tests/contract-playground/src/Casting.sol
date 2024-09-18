@@ -148,19 +148,19 @@ contract Casting {
         bytes1Value = bytes1(ae);
     }
 
-    function from128x128(int256 x) internal pure returns (int128) {
+    function from128x128(int256 x) external pure returns (int128) {
         unchecked {
-            int256 result = x >> 64;
+            int256 result = x >> 64; // aderyn-ignore
             // BAD
             return int128(result);
         }
     }
 
-    function from128x128_checked(int256 x) internal pure returns (int128) {
+    function from128x128_checked(int256 x) external pure returns (int128) {
         unchecked {
-            int256 result = x >> 64;
+            int256 result = x >> 64; // aderyn-ignore
             // GOOD
-            require(result > 1 && result < 100, "BAD range given");
+            require(result > 1 && result < 100, "BAD range given"); // aderyn-ignore
             return int128(result);
         }
     }
