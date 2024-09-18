@@ -3514,7 +3514,7 @@
       {
         "title": "Define and use `constant` variables instead of using literals",
         "description": "If the same constant literal value is used multiple times, create a constant state variable and reference it throughout the contract.",
-        "detector_name": "constants-instead-of-literals",
+        "detector_name": "literal-instead-of-constant",
         "instances": [
           {
             "contract_path": "src/AssertStateChange.sol",
@@ -7126,7 +7126,7 @@
     "unspecific-solidity-pragma",
     "zero-address-check",
     "useless-public-function",
-    "constants-instead-of-literals",
+    "literal-instead-of-constant",
     "unindexed-events",
     "require-with-string",
     "non-reentrant-before-others",
