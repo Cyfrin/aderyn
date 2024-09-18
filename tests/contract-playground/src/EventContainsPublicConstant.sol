@@ -10,6 +10,12 @@ contract MyDumbEventEmittingContract {
     constructor() {
         // It's okay to emit public constants in constructor
         emit SupplySet(MAX_SUPPLY);
+        callMeFromConstructor();
+    }
+
+    function callMeFromConstructor() public {
+        // It's okay to emit event if the function has a constructor upstream
+        emit SupplySet(MAX_SUPPLY);
     }
 
     function emitSupplyEvent() external {

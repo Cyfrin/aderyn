@@ -9,6 +9,7 @@ use crate::{
 };
 use eyre::Result;
 use std::collections::BTreeMap;
+use std::convert::identity;
 use std::error::Error;
 
 #[derive(Default)]
@@ -35,6 +36,13 @@ impl IssueDetector for EventContainsPublicConstantDetector {
             };
             // It's okay to emit public constant from a constructor
             if function_definition.kind() == &FunctionKind::Constructor {
+                continue;
+            }
+            if emit_statement
+                .event_call
+                .has_constructor_upstream(context)
+                .is_some_and(identity)
+            {
                 continue;
             }
             if emit_statement.event_call.arguments.iter().any(|argument| {
@@ -83,6 +91,48 @@ impl IssueDetector for EventContainsPublicConstantDetector {
 
     fn name(&self) -> String {
         IssueDetectorNamePool::EventContainsPublicConstant.to_string()
+    }
+}
+
+pub mod function_call_information_helper {
+
+    use crate::{
+        ast::{FunctionCall, FunctionKind},
+        context::{
+            graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
+            workspace_context::WorkspaceContext,
+        },
+    };
+
+    impl FunctionCall {
+        pub fn has_constructor_upstream(&self, context: &WorkspaceContext) -> Option<bool> {
+            let callgraph =
+                CallGraph::new(context, &[&self.into()], CallGraphDirection::Outward).ok()?;
+            let mut constructor_tracker = ConstructorTracker {
+                touches_constructor: false,
+            };
+            callgraph.accept(context, &mut constructor_tracker).ok()?;
+            Some(constructor_tracker.touches_constructor)
+        }
+    }
+
+    struct ConstructorTracker {
+        touches_constructor: bool,
+    }
+
+    impl CallGraphVisitor for ConstructorTracker {
+        fn visit_outward_function_definition(
+            &mut self,
+            node: &crate::ast::FunctionDefinition,
+        ) -> eyre::Result<()> {
+            if self.touches_constructor {
+                return Ok(());
+            }
+            if node.kind() == &FunctionKind::Constructor {
+                self.touches_constructor = true;
+            }
+            Ok(())
+        }
     }
 }
 

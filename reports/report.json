@@ -1,7 +1,7 @@
 {
   "files_summary": {
     "total_source_units": 110,
-    "total_sloc": 3881
+    "total_sloc": 3885
   },
   "files_details": {
     "files_details": [
@@ -131,7 +131,7 @@
       },
       {
         "file_path": "src/EventContainsPublicConstant.sol",
-        "n_sloc": 11
+        "n_sloc": 15
       },
       {
         "file_path": "src/ExperimentalEncoder.sol",
@@ -7124,9 +7124,9 @@
         "instances": [
           {
             "contract_path": "src/EventContainsPublicConstant.sol",
-            "line_no": 17,
-            "src": "464:21",
-            "src_char": "464:21"
+            "line_no": 23,
+            "src": "664:21",
+            "src_char": "664:21"
           }
         ]
       }
