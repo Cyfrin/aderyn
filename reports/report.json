@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 109,
-    "total_sloc": 3870
+    "total_source_units": 110,
+    "total_sloc": 3872
   },
   "files_details": {
     "files_details": [
@@ -204,6 +204,10 @@
       {
         "file_path": "src/OnceModifierExample.sol",
         "n_sloc": 8
+      },
+      {
+        "file_path": "src/OnlyLibrary.sol",
+        "n_sloc": 2
       },
       {
         "file_path": "src/OutOfOrderRetryable.sol",
@@ -2980,12 +2984,6 @@
             "src_char": "32:23"
           },
           {
-            "contract_path": "src/StateVariablesManipulation.sol",
-            "line_no": 2,
-            "src": "32:23",
-            "src_char": "32:23"
-          },
-          {
             "contract_path": "src/TautologyOrContradiction.sol",
             "line_no": 2,
             "src": "32:23",
@@ -4417,6 +4415,12 @@
           },
           {
             "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/OnlyLibrary.sol",
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"

@@ -4454,17 +4454,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/StateVariablesManipulation.sol"
-                },
-                "region": {
-                  "byteLength": 23,
-                  "byteOffset": 32
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/TautologyOrContradiction.sol"
                 },
                 "region": {
@@ -7057,6 +7046,17 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/MsgValueInLoop.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/OnlyLibrary.sol"
                 },
                 "region": {
                   "byteLength": 23,
