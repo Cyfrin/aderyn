@@ -282,91 +282,13 @@ Consider protecting the initializer functions with modifiers.
 
 Downcasting int/uints in Solidity can be unsafe due to the potential for data loss and unintended behavior.When downcasting a larger integer type to a smaller one (e.g., uint256 to uint128), the value may exceed the range of the target type,leading to truncation and loss of significant digits. Use OpenZeppelin's SafeCast library to safely downcast integers.
 
-<details><summary>15 Found Instances</summary>
+<details><summary>2 Found Instances</summary>
 
-
-- Found in contracts/util/ABDKMath64x64.sol [Line: 93](../tests/2024-07-templegold/protocol/contracts/util/ABDKMath64x64.sol#L93)
-
-	```solidity
-	      return int128 (result);
-	```
-
-- Found in contracts/util/ABDKMath64x64.sol [Line: 121](../tests/2024-07-templegold/protocol/contracts/util/ABDKMath64x64.sol#L121)
-
-	```solidity
-	      return int128 (result);
-	```
-
-- Found in contracts/util/ABDKMath64x64.sol [Line: 136](../tests/2024-07-templegold/protocol/contracts/util/ABDKMath64x64.sol#L136)
-
-	```solidity
-	      return int128 (result);
-	```
-
-- Found in contracts/util/ABDKMath64x64.sol [Line: 151](../tests/2024-07-templegold/protocol/contracts/util/ABDKMath64x64.sol#L151)
-
-	```solidity
-	      return int128 (result);
-	```
-
-- Found in contracts/util/ABDKMath64x64.sol [Line: 232](../tests/2024-07-templegold/protocol/contracts/util/ABDKMath64x64.sol#L232)
-
-	```solidity
-	      return int128 (result);
-	```
-
-- Found in contracts/util/ABDKMath64x64.sol [Line: 323](../tests/2024-07-templegold/protocol/contracts/util/ABDKMath64x64.sol#L323)
-
-	```solidity
-	      return int128 (result);
-	```
-
-- Found in contracts/util/ABDKMath64x64.sol [Line: 437](../tests/2024-07-templegold/protocol/contracts/util/ABDKMath64x64.sol#L437)
-
-	```solidity
-	      return int128 (result);
-	```
 
 - Found in contracts/util/ABDKMath64x64.sol [Line: 483](../tests/2024-07-templegold/protocol/contracts/util/ABDKMath64x64.sol#L483)
 
 	```solidity
 	      return int128 (result);
-	```
-
-- Found in contracts/util/ABDKMath64x64.sol [Line: 716](../tests/2024-07-templegold/protocol/contracts/util/ABDKMath64x64.sol#L716)
-
-	```solidity
-	      return uint128 (result);
-	```
-
-- Found in contracts/util/ABDKMathQuad.sol [Line: 60](../tests/2024-07-templegold/protocol/contracts/util/ABDKMathQuad.sol#L60)
-
-	```solidity
-	        return bytes16 (uint128 (result));
-	```
-
-- Found in contracts/util/ABDKMathQuad.sol [Line: 113](../tests/2024-07-templegold/protocol/contracts/util/ABDKMathQuad.sol#L113)
-
-	```solidity
-	        return bytes16 (uint128 (result));
-	```
-
-- Found in contracts/util/ABDKMathQuad.sol [Line: 167](../tests/2024-07-templegold/protocol/contracts/util/ABDKMathQuad.sol#L167)
-
-	```solidity
-	        return bytes16 (uint128 (result));
-	```
-
-- Found in contracts/util/ABDKMathQuad.sol [Line: 223](../tests/2024-07-templegold/protocol/contracts/util/ABDKMathQuad.sol#L223)
-
-	```solidity
-	        return bytes16 (uint128 (result));
-	```
-
-- Found in contracts/util/ABDKMathQuad.sol [Line: 355](../tests/2024-07-templegold/protocol/contracts/util/ABDKMathQuad.sol#L355)
-
-	```solidity
-	      return bytes16 (uint128 (result));
 	```
 
 - Found in contracts/v2/interestRate/LinearWithKinkInterestRateModel.sol [Line: 140](../tests/2024-07-templegold/protocol/contracts/v2/interestRate/LinearWithKinkInterestRateModel.sol#L140)
