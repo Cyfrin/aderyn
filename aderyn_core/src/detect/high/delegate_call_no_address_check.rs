@@ -59,7 +59,7 @@ impl IssueDetector for DelegateCallOnUncheckedAddressDetector {
     }
 
     fn name(&self) -> String {
-        IssueDetectorNamePool::DelegateCallUncheckedAddress.to_string()
+        IssueDetectorNamePool::DelegateCallOnUncheckedAddress.to_string()
     }
 }
 
