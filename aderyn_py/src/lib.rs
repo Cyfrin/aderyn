@@ -15,7 +15,6 @@ fn main() {
             output,
             src: None,
             no_snippets: false,
-            skip_build: false,
             skip_cloc: false,
             path_includes: None,
             path_excludes: None,
@@ -23,6 +22,7 @@ fn main() {
             skip_update_check: false,
             auditor_mode: false,
             highs_only: false,
+            lsp: false,
         };
 
         if let Some(kwargs) = py_kwargs {

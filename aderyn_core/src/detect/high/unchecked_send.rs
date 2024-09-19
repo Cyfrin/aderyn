@@ -33,11 +33,15 @@ impl IssueDetector for UncheckedSendDetector {
                     })
             {
                 if let Some(ASTNode::FunctionCall(func_call)) = member_access.parent(context) {
-                    if func_call
-                        .parent(context)
-                        .is_some_and(|node| node.node_type() == NodeType::Block)
+                    if let Some(ASTNode::ExpressionStatement(expr_stmnt)) =
+                        func_call.parent(context)
                     {
-                        capture!(self, context, func_call);
+                        if expr_stmnt
+                            .parent(context)
+                            .is_some_and(|node| node.node_type() == NodeType::Block)
+                        {
+                            capture!(self, context, func_call);
+                        }
                     }
                 }
             }

@@ -151,6 +151,7 @@ impl ASTConstVisitor for WorkspaceContext {
         visit_structured_documentation | StructuredDocumentation => structured_documentations_context |,
         visit_tuple_expression | TupleExpression => tuple_expressions_context |,
         visit_unary_operation | UnaryOperation => unary_operations_context |,
+        visit_unchecked_block | UncheckedBlock => unchecked_blocks_context |,
         visit_user_defined_value_type_definition | UserDefinedValueTypeDefinition => user_defined_value_type_definitions_context |,
         visit_using_for_directive | UsingForDirective => using_for_directives_context |,
         visit_variable_declaration | VariableDeclaration => variable_declarations_context |,

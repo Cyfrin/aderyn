@@ -1,6 +1,8 @@
 use crate::{
     config_helpers::{append_from_foundry_toml, derive_from_aderyn_toml},
-    ensure_valid_root_path, process_auto,
+    ensure_valid_root_path,
+    lsp_report::LspReport,
+    process_auto,
 };
 use aderyn_core::{
     context::{
@@ -8,7 +10,7 @@ use aderyn_core::{
         workspace_context::WorkspaceContext,
     },
     detect::detector::{get_all_issue_detectors, IssueDetector, IssueSeverity},
-    fscloc,
+    fscloc, get_report,
     report::{
         json_printer::JsonPrinter, markdown_printer::MarkdownReportPrinter,
         sarif_printer::SarifPrinter,
@@ -16,7 +18,8 @@ use aderyn_core::{
     run,
 };
 use field_access::FieldAccess;
-use std::{collections::HashMap, error::Error, path::PathBuf};
+use std::{collections::HashMap, error::Error, path::PathBuf, sync::Arc};
+use tokio::sync::Mutex;
 
 #[derive(Clone, FieldAccess)]
 pub struct Args {
@@ -26,12 +29,12 @@ pub struct Args {
     pub path_excludes: Option<Vec<String>>,
     pub path_includes: Option<Vec<String>>,
     pub no_snippets: bool,
-    pub skip_build: bool,
     pub skip_cloc: bool,
     pub skip_update_check: bool,
     pub stdout: bool,
     pub auditor_mode: bool,
     pub highs_only: bool,
+    pub lsp: bool,
 }
 
 pub fn drive(args: Args) {
@@ -44,6 +47,40 @@ pub fn drive(args: Args) {
         get_all_issue_detectors()
     };
     drive_with(args, detectors);
+}
+
+pub fn drive_and_get_results(args: Args) -> Arc<Mutex<Option<LspReport>>> {
+    let detectors = if args.highs_only {
+        get_all_issue_detectors()
+            .into_iter()
+            .filter(|d| d.severity() == IssueSeverity::High)
+            .collect::<Vec<_>>()
+    } else {
+        get_all_issue_detectors()
+    };
+
+    let cx_wrapper = make_context(&args);
+    let root_rel_path = cx_wrapper.root_path;
+    let file_contents = cx_wrapper
+        .contexts
+        .iter()
+        .flat_map(|context| context.source_units())
+        .map(|source_unit| {
+            (
+                source_unit.absolute_path.as_ref().unwrap().to_owned(),
+                source_unit.source.as_ref().unwrap(),
+            )
+        })
+        .collect::<HashMap<_, _>>();
+
+    if let Ok(report) = get_report(&cx_wrapper.contexts, &root_rel_path, detectors) {
+        let high_issues = report.high_issues(&file_contents);
+        let low_issues = report.low_issues(&file_contents);
+        let lsp_result = LspReport::from(low_issues, high_issues, args);
+        return Arc::new(tokio::sync::Mutex::new(Some(lsp_result)));
+    }
+
+    Arc::new(tokio::sync::Mutex::new(None))
 }
 
 pub fn drive_with(args: Args, detectors_list: Vec<Box<dyn IssueDetector>>) {
@@ -113,22 +150,30 @@ pub struct WorkspaceContextWrapper {
 }
 
 fn make_context(args: &Args) -> WorkspaceContextWrapper {
-    if !args.output.ends_with(".json") && !args.output.ends_with(".md") {
+    if !args.lsp && !args.output.ends_with(".json") && !args.output.ends_with(".md") {
         eprintln!("Warning: output file lacks the \".md\" or \".json\" extension in its filename.");
     }
 
     let (root_path, src, exclude, remappings, include) = obtain_config_values(args).unwrap();
 
     let absolute_root_path = &ensure_valid_root_path(&root_path);
-    println!(
-        "Root: {:?}, Src: {:?}, Include: {:?}, Exclude: {:?}",
-        absolute_root_path, src, include, exclude
+    if !args.lsp {
+        println!(
+            "Root: {:?}, Src: {:?}, Include: {:?}, Exclude: {:?}",
+            absolute_root_path, src, include, exclude
+        );
+    }
+
+    let mut contexts: Vec<WorkspaceContext> = process_auto::with_project_root_at(
+        &root_path,
+        &src,
+        &exclude,
+        &remappings,
+        &include,
+        args.lsp,
     );
 
-    let mut contexts: Vec<WorkspaceContext> =
-        process_auto::with_project_root_at(&root_path, &src, &exclude, &remappings, &include);
-
-    if contexts.iter().all(|c| c.src_filepaths.is_empty()) {
+    if !args.lsp && contexts.iter().all(|c| c.src_filepaths.is_empty()) {
         eprintln!("No solidity files found in given scope!");
         std::process::exit(1);
     }
@@ -230,7 +275,11 @@ fn obtain_config_values(
         // Also if there is no `remappings.txt` or `remappings` in this case, print a warning!
         let remappings = root_path.join("remappings");
         let remappings_txt = root_path.join("remappings.txt");
-        if local_remappings.is_none() && !remappings.exists() && !remappings_txt.exists() {
+        if !args.lsp
+            && local_remappings.is_none()
+            && !remappings.exists()
+            && !remappings_txt.exists()
+        {
             println!("WARNING: `remappings.txt` not found.")
         }
     }
