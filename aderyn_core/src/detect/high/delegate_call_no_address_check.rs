@@ -47,7 +47,7 @@ impl IssueDetector for DelegateCallOnUncheckedAddressDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Delegatecall made by the function without checks on any adress.")
+        String::from("Delegatecall made by the function without checks on any address.")
     }
 
     fn description(&self) -> String {
