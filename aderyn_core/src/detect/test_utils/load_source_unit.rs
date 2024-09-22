@@ -190,6 +190,7 @@ pub fn load_multiple_solidity_source_units_into_single_context(
         let my_file_args = file_args.clone();
         let my_file_args: Vec<&str> = my_file_args.iter().map(|x| x.as_str()).collect();
 
+        #[allow(clippy::assigning_clones)]
         while idx < lines.len() {
             let line = lines[idx];
 

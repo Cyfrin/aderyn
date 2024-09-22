@@ -9,9 +9,8 @@ impl Display for Literal {
 
         if let Some(value) = self.value.as_ref() {
             f.write_str(value.as_str())?;
-        } else if let Some(hex_value) = self.hex_value.as_ref() {
-            f.write_str(hex_value.as_str())?;
         }
+        f.write_str(self.hex_value.as_str())?;
 
         if let Some(subdenomination) = self.subdenomination.as_ref() {
             subdenomination.fmt(f)?;

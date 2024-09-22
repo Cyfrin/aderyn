@@ -80,6 +80,7 @@ pub struct WorkspaceContext {
     pub(crate) try_catch_clauses_context: HashMap<TryCatchClause, NodeContext>,
     pub(crate) tuple_expressions_context: HashMap<TupleExpression, NodeContext>,
     pub(crate) unary_operations_context: HashMap<UnaryOperation, NodeContext>,
+    pub(crate) unchecked_blocks_context: HashMap<UncheckedBlock, NodeContext>,
     pub(crate) user_defined_type_names_context: HashMap<UserDefinedTypeName, NodeContext>,
     pub(crate) user_defined_value_type_definitions_context:
         HashMap<UserDefinedValueTypeDefinition, NodeContext>,

@@ -31,6 +31,13 @@ pub trait ASTConstVisitor {
         self.end_visit_node(node)
     }
 
+    fn visit_unchecked_block(&mut self, node: &UncheckedBlock) -> Result<bool> {
+        self.visit_node(node)
+    }
+    fn end_visit_unchecked_block(&mut self, node: &UncheckedBlock) -> Result<()> {
+        self.end_visit_node(node)
+    }
+
     fn visit_conditional(&mut self, node: &Conditional) -> Result<bool> {
         self.visit_node(node)
     }

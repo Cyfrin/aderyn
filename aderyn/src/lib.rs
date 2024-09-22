@@ -1,14 +1,7 @@
-use aderyn_driver::{
-    detector::{get_all_detectors_names, get_issue_detector_by_name, IssueSeverity},
-    driver::Args,
-};
-use notify_debouncer_full::{
-    new_debouncer,
-    notify::{RecursiveMode, Watcher},
-};
+use aderyn_driver::detector::{get_all_detectors_names, get_issue_detector_by_name, IssueSeverity};
 use semver::Version;
 use serde_json::Value;
-use std::{fs::File, io::Write, path::PathBuf, str::FromStr, time::Duration};
+use std::{fs::File, io::Write, path::PathBuf, str::FromStr};
 use strum::IntoEnumIterator;
 
 pub fn create_aderyn_toml_file_at(directory: String) {
@@ -19,35 +12,14 @@ pub fn create_aderyn_toml_file_at(directory: String) {
     println!("Created aderyn.toml at {}", aderyn_toml_path.display());
 }
 
-pub fn debounce_and_run<F>(driver_func: F, args: &Args, timeout: Duration)
-where
-    F: Fn() + Copy + Send,
-{
-    // setup debouncer
-    let (tx, rx) = std::sync::mpsc::channel();
+mod panic;
 
-    // no specific tickrate, max debounce time 2 seconds
-    let mut debouncer = new_debouncer(timeout, None, tx).unwrap();
-
-    debouncer
-        .watcher()
-        .watch(
-            PathBuf::from(args.root.clone()).as_path(),
-            RecursiveMode::Recursive,
-        )
-        .unwrap();
-
-    // Then run again only if file events are observed
-    for result in rx {
-        match result {
-            Ok(_) => {
-                driver_func();
-            }
-            Err(errors) => errors.iter().for_each(|error| println!("{error:?}")),
-        }
-        println!();
-    }
+pub fn initialize_niceties() {
+    // Crash with a nice message on panic
+    panic::add_handler()
 }
+
+pub mod lsp;
 
 pub fn print_detail_view(detector_name: &str) {
     let all_detector_names = get_all_detectors_names();
