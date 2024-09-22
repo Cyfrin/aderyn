@@ -73,7 +73,7 @@ impl IssueDetector for ContractsWithTodosDetector {
 }
 
 #[cfg(test)]
-mod contracts_with_todos {
+mod contracts_with_todos_tests {
     use serial_test::serial;
 
     use crate::detect::detector::IssueDetector;

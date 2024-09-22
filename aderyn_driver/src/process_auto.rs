@@ -23,6 +23,7 @@ pub fn with_project_root_at(
     exclude: &Option<Vec<String>>,
     remappings: &Option<Vec<String>>,
     scope: &Option<Vec<String>>,
+    lsp_mode: bool,
 ) -> Vec<WorkspaceContext> {
     let root = utils::canonicalize(root_path).unwrap();
     let src = src.clone().map(|sources| {
@@ -35,7 +36,9 @@ pub fn with_project_root_at(
     let solidity_files = get_compiler_input(&root);
     let sources = get_relevant_sources(&root, solidity_files, &src, scope, exclude);
 
-    println!("Resolving sources versions by graph ...");
+    if !lsp_mode {
+        println!("Resolving sources versions by graph ...");
+    }
     let (remappings, foundry_compilers_remappings) = {
         match remappings {
             None => get_remappings(&root),
@@ -52,7 +55,9 @@ pub fn with_project_root_at(
     sources_by_version
         .into_par_iter()
         .filter_map(|(solc, value)| {
-            println!("Compiling {} files with Solc {}", value.1.len(), value.0);
+            if !lsp_mode {
+                println!("Compiling {} files with Solc {}", value.1.len(), value.0);
+            }
             let pathbufs = value.1.into_keys().collect::<Vec<_>>();
             let files = get_relevant_pathbufs(&root, &pathbufs, &src, scope, exclude);
 

@@ -1,78 +1,77 @@
-use std::collections::{BTreeMap, HashMap};
-
-use super::macros::{ast_node, ast_node_no_partial_eq, expr_node};
+use super::macros::{ast_node, ast_node_no_partial_eq, expr_node, node_group, stmt_node};
 use super::*;
+use std::collections::{BTreeMap, HashMap};
 
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug, Eq, Deserialize, Serialize, PartialEq, Hash)]
-#[serde(tag = "nodeType")]
-pub enum SourceUnitNode {
-    FunctionDefinition(FunctionDefinition),
-    StructDefinition(StructDefinition),
-    ErrorDefinition(ErrorDefinition),
-    EnumDefinition(EnumDefinition),
-    VariableDeclaration(VariableDeclaration),
-    ImportDirective(ImportDirective),
-    PragmaDirective(PragmaDirective),
-    UserDefinedValueTypeDefinition(UserDefinedValueTypeDefinition),
-    UsingForDirective(UsingForDirective),
-    ContractDefinition(ContractDefinition),
-    EventDefinition(EventDefinition),
+node_group! {
+    SourceUnitNode;
+
+    FunctionDefinition,
+    StructDefinition,
+    ErrorDefinition,
+    EnumDefinition,
+    VariableDeclaration,
+    ImportDirective,
+    PragmaDirective,
+    UserDefinedValueTypeDefinition,
+    UsingForDirective,
+    ContractDefinition,
+    EventDefinition,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(tag = "nodeType")]
-pub enum Expression {
-    Literal(Literal),
-    Identifier(Identifier),
-    UnaryOperation(UnaryOperation),
-    BinaryOperation(BinaryOperation),
-    Conditional(Conditional),
-    Assignment(Assignment),
-    FunctionCall(FunctionCall),
-    FunctionCallOptions(FunctionCallOptions),
-    IndexAccess(IndexAccess),
-    IndexRangeAccess(IndexRangeAccess),
-    MemberAccess(MemberAccess),
-    ElementaryTypeNameExpression(ElementaryTypeNameExpression),
-    TupleExpression(TupleExpression),
-    NewExpression(NewExpression),
+node_group! {
+    Expression;
+
+    Literal,
+    Identifier,
+    UnaryOperation,
+    BinaryOperation,
+    Conditional,
+    Assignment,
+    FunctionCall,
+    FunctionCallOptions,
+    IndexAccess,
+    IndexRangeAccess,
+    MemberAccess,
+    ElementaryTypeNameExpression,
+    TupleExpression,
+    NewExpression,
 }
 
-#[derive(Clone, Debug, Deserialize, Eq, Serialize, PartialEq, Hash)]
-#[serde(tag = "nodeType")]
-pub enum Statement {
-    Block(Block),
-    Break(Break),
-    Continue(Continue),
-    DoWhileStatement(DoWhileStatement),
-    PlaceholderStatement(PlaceholderStatement),
-    VariableDeclarationStatement(VariableDeclarationStatement),
-    IfStatement(IfStatement),
-    ForStatement(ForStatement),
-    WhileStatement(WhileStatement),
-    EmitStatement(EmitStatement),
-    TryStatement(TryStatement),
-    UncheckedBlock(Block),
-    Return(Return),
-    RevertStatement(RevertStatement),
-    ExpressionStatement(ExpressionStatement),
-    InlineAssembly(InlineAssembly),
+node_group! {
+    Statement;
+
+    Block,
+    Break,
+    Continue,
+    DoWhileStatement,
+    PlaceholderStatement,
+    VariableDeclarationStatement,
+    IfStatement,
+    ForStatement,
+    WhileStatement,
+    EmitStatement,
+    TryStatement,
+    UncheckedBlock,
+    Return,
+    RevertStatement,
+    ExpressionStatement,
+    InlineAssembly,
 }
 
-#[derive(Clone, Debug, Eq, Serialize, Deserialize, PartialEq, Hash)]
-#[serde(tag = "nodeType")]
-pub enum ContractDefinitionNode {
-    UsingForDirective(UsingForDirective),
-    StructDefinition(StructDefinition),
-    EnumDefinition(EnumDefinition),
-    VariableDeclaration(VariableDeclaration),
-    EventDefinition(EventDefinition),
-    FunctionDefinition(FunctionDefinition),
-    ModifierDefinition(ModifierDefinition),
-    ErrorDefinition(ErrorDefinition),
-    UserDefinedValueTypeDefinition(UserDefinedValueTypeDefinition),
+node_group! {
+    ContractDefinitionNode;
+
+    UsingForDirective,
+    StructDefinition,
+    EnumDefinition,
+    VariableDeclaration,
+    EventDefinition,
+    FunctionDefinition,
+    ModifierDefinition,
+    ErrorDefinition,
+    UserDefinedValueTypeDefinition,
 }
 
 #[derive(Clone, Debug, Eq, Serialize, PartialEq, Hash)]
@@ -148,6 +147,13 @@ impl ExpressionOrVariableDeclarationStatement {
 ast_node!(
     #[derive(Hash)]
     struct Block {
+        statements: Vec<Statement>,
+    }
+);
+
+stmt_node!(
+    #[derive(Hash)]
+    struct UncheckedBlock {
         statements: Vec<Statement>,
     }
 );
@@ -491,7 +497,7 @@ pub enum LiteralKind {
 expr_node!(
     #[derive(Hash)]
     struct Literal {
-        hex_value: Option<String>, // TODO: remove "Option"
+        hex_value: String,
         value: Option<String>,
         subdenomination: Option<String>,
         kind: LiteralKind,
@@ -555,14 +561,14 @@ ast_node!(
     }
 );
 
-ast_node!(
+stmt_node!(
     #[derive(Hash)]
     struct ExpressionStatement {
         expression: Expression,
     }
 );
 
-ast_node!(
+stmt_node!(
     #[derive(Hash)]
     struct VariableDeclarationStatement {
         assignments: Vec<Option<NodeID>>,
@@ -578,7 +584,7 @@ pub enum BlockOrStatement {
     Statement(Box<Statement>),
 }
 
-ast_node!(
+stmt_node!(
     #[derive(Hash)]
     struct IfStatement {
         condition: Expression,
@@ -587,7 +593,7 @@ ast_node!(
     }
 );
 
-ast_node!(
+stmt_node!(
     #[derive(Hash)]
     struct ForStatement {
         initialization_expression: Option<Box<ExpressionOrVariableDeclarationStatement>>,
@@ -597,23 +603,22 @@ ast_node!(
     }
 );
 
-ast_node!(
+stmt_node!(
     #[derive(Hash)]
     struct DoWhileStatement {
-        documentation: Option<String>,
         body: Block,
         condition: Expression,
     }
 );
 
-ast_node!(
+stmt_node!(
     #[derive(Hash)]
     struct EmitStatement {
-        event_call: Expression, // TODO: Change this to FunctionCall
+        event_call: FunctionCall,
     }
 );
 
-ast_node!(
+stmt_node!(
     #[derive(Hash)]
     struct TryStatement {
         clauses: Vec<TryCatchClause>,
@@ -621,7 +626,7 @@ ast_node!(
     }
 );
 
-ast_node!(
+stmt_node!(
     #[derive(Hash)]
     struct RevertStatement {
         error_call: FunctionCall,
@@ -636,7 +641,8 @@ ast_node!(
         parameters: Option<ParameterList>,
     }
 );
-ast_node!(
+
+stmt_node!(
     #[derive(Hash)]
     struct Return {
         function_return_parameters: Option<NodeID>, // When returning in a modifier, this can be none
@@ -655,33 +661,26 @@ ast_node!(
     }
 );
 
-ast_node!(
+stmt_node!(
     #[derive(Hash)]
-    struct Break {
-        documentation: Option<String>,
-    }
+    struct Break {}
 );
 
-ast_node!(
+stmt_node!(
     #[derive(Hash)]
-    struct Continue {
-        documentation: Option<String>,
-    }
+    struct Continue {}
 );
 
-ast_node!(
+stmt_node!(
     #[derive(Hash)]
-    struct PlaceholderStatement {
-        documentation: Option<String>,
-    }
+    struct PlaceholderStatement {}
 );
 
-ast_node!(
+stmt_node!(
     #[derive(Hash)]
     struct WhileStatement {
         condition: Expression,
         body: BlockOrStatement,
-        documentation: Option<String>,
     }
 );
 

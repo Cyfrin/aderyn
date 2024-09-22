@@ -122,11 +122,7 @@ mod uninitialized_local_variables_detector_tests {
 
         println!(
             "Line numbers of uninitialized local variables: {:?}",
-            detector
-                .instances()
-                .into_iter()
-                .map(|(i, _)| i.1)
-                .collect::<Vec<_>>()
+            detector.instances().into_keys().collect::<Vec<_>>()
         );
 
         // assert that the detector found an issue

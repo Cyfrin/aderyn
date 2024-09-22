@@ -28,7 +28,7 @@ pub struct RedundantStatementsDetector {
 impl IssueDetector for RedundantStatementsDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for expression_statement in context.expression_statements() {
-            if let Some(parent) = expression_statement.expression.parent(context) {
+            if let Some(parent) = expression_statement.parent(context) {
                 if parent.node_type() != NodeType::Block {
                     continue;
                 }
