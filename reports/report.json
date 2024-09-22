@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 109,
-    "total_sloc": 3890
+    "total_source_units": 110,
+    "total_sloc": 3904
   },
   "files_details": {
     "files_details": [
@@ -200,6 +200,10 @@
       {
         "file_path": "src/MultipleConstructorSchemes.sol",
         "n_sloc": 10
+      },
+      {
+        "file_path": "src/MultiplePlaceholders.sol",
+        "n_sloc": 14
       },
       {
         "file_path": "src/OnceModifierExample.sol",
@@ -445,7 +449,7 @@
   },
   "issue_count": {
     "high": 42,
-    "low": 43
+    "low": 44
   },
   "high_issues": {
     "issues": [
@@ -7118,6 +7122,19 @@
             "src_char": "422:9"
           }
         ]
+      },
+      {
+        "title": "Modifier has multiple placeholders.",
+        "description": "Design the modifier to only contain 1 placeholder statement. If it's not possible, split the logic into multiple modifiers.",
+        "detector_name": "multiple-placeholders",
+        "instances": [
+          {
+            "contract_path": "src/MultiplePlaceholders.sol",
+            "line_no": 11,
+            "src": "186:10",
+            "src_char": "186:10"
+          }
+        ]
       }
     ]
   },
@@ -7206,6 +7223,7 @@
     "unchecked-low-level-call",
     "function-pointer-in-constructor",
     "state-variable-could-be-declared-constant",
-    "state-variable-changes-without-events"
+    "state-variable-changes-without-events",
+    "multiple-placeholders"
   ]
 }
