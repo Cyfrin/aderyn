@@ -230,7 +230,7 @@ fn interpret_foundry_config(
 mod tests {
     use std::path::PathBuf;
 
-    use cyfrin_foundry_config::{Config, RelativeRemapping};
+    use cyfrin_foundry_config::RelativeRemapping;
 
     #[test]
     fn test_interpret_aderyn_config_correctly_appends_and_replaces() {
@@ -288,12 +288,13 @@ mod tests {
 
     #[test]
     fn test_interpret_foundry_config_correctly_appends_and_replaces() {
-        let mut config = Config::default();
-        config.src = PathBuf::from("CONFIG_SRC");
-        config.script = PathBuf::from("CONFIG_SCRIPT".to_string());
-        config.test = PathBuf::from("CONFIG_TEST".to_string());
-        config.libs = vec![PathBuf::from("CONFIG_LIBS".to_string())];
-
+        let mut config = cyfrin_foundry_config::Config {
+            src: PathBuf::from("CONFIG_SRC"),
+            script: PathBuf::from("CONFIG_SCRIPT".to_string()),
+            test: PathBuf::from("CONFIG_TEST".to_string()),
+            libs: vec![PathBuf::from("CONFIG_LIBS".to_string())],
+            ..Default::default()
+        };
         let rel_remap = RelativeRemapping {
             context: Some("REL_REMAPPING_CONTEXT".to_string()),
             name: "REL_REMAPPING_NAME".to_string(),
