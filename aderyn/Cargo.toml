@@ -17,8 +17,9 @@ semver = "1.0.22"
 serde = { version = "1.0.160", features = ["derive"] }
 serde_json = { version = "1.0.96", features = ["preserve_order"] }
 strum = { version = "0.26", features = ["derive"] }
-notify-debouncer-full = { version = "0.3.1", default-features = false }
+notify-debouncer-full = "0.3.1"
 cyfrin-foundry-compilers = { version = "0.3.20-aderyn", features = ["svm-solc"]  }
+termcolor = "1.4.1"
 tokio = { version = "1.40.0", features = ["full"] }
 tower-lsp = "0.20.0"
 log = "0.4.22"

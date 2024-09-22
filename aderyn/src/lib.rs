@@ -3,6 +3,13 @@ use semver::Version;
 use serde_json::Value;
 use strum::IntoEnumIterator;
 
+mod panic;
+
+pub fn initialize_niceties() {
+    // Crash with a nice message on panic
+    panic::add_handler()
+}
+
 pub mod lsp;
 
 pub fn print_detail_view(detector_name: &str) {

@@ -1,5 +1,5 @@
 use aderyn::{
-    aderyn_is_currently_running_newest_version, lsp::spin_up_language_server,
+    aderyn_is_currently_running_newest_version, initialize_niceties, lsp::spin_up_language_server,
     print_all_detectors_view, print_detail_view,
 };
 use aderyn_driver::driver::{self, Args};
@@ -85,6 +85,7 @@ enum RegistryCommand {
 }
 
 fn main() {
+    initialize_niceties();
     let cmd_args = CommandLineArgs::parse();
 
     if let Some(reg) = cmd_args.registry {
