@@ -1,6 +1,6 @@
 use aderyn::{
-    aderyn_is_currently_running_newest_version, lsp::spin_up_language_server,
-    print_all_detectors_view, print_detail_view,
+    aderyn_is_currently_running_newest_version, create_aderyn_toml_file_at, initialize_niceties,
+    lsp::spin_up_language_server, print_all_detectors_view, print_detail_view,
 };
 use aderyn_driver::driver::{self, Args};
 
@@ -16,6 +16,10 @@ pub struct CommandLineArgs {
     /// Foundry or Hardhat project root directory (or path to single solidity file)
     #[arg(default_value = ".")]
     root: String,
+
+    /// Initialize aderyn.toml in [ROOT] which hosts all the configuration to override defaults
+    #[arg(long)]
+    init: bool,
 
     /// Path to the source contracts. If not provided, the ROOT directory will be used.
     ///
@@ -85,6 +89,7 @@ enum RegistryCommand {
 }
 
 fn main() {
+    initialize_niceties();
     let cmd_args = CommandLineArgs::parse();
 
     if let Some(reg) = cmd_args.registry {
@@ -97,6 +102,16 @@ fn main() {
                 }
             }
         }
+        return;
+    }
+
+    if cmd_args.root == "init" {
+        create_aderyn_toml_file_at(".".to_string());
+        return;
+    }
+
+    if cmd_args.init {
+        create_aderyn_toml_file_at(cmd_args.root);
         return;
     }
 

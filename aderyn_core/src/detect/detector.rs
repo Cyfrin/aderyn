@@ -102,6 +102,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<StateVariableCouldBeConstantDetector>::default(),
         Box::<StateVariableChangesWithoutEventDetector>::default(),
         Box::<StateVariableCouldBeImmutableDetector>::default(),
+        Box::<MultiplePlaceholdersDetector>::default(),
     ]
 }
 
@@ -114,6 +115,7 @@ pub fn get_all_detectors_names() -> Vec<String> {
 #[strum(serialize_all = "kebab-case")]
 pub(crate) enum IssueDetectorNamePool {
     StateVariableCouldBeDeclaredImmutable,
+    MultiplePlaceholders,
     StateVariableChangesWithoutEvents,
     MissingInheritance,
     UnusedImport,
@@ -211,6 +213,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
     match detector_name {
         IssueDetectorNamePool::StateVariableCouldBeDeclaredImmutable => {
             Some(Box::<StateVariableCouldBeImmutableDetector>::default())
+        }
+        IssueDetectorNamePool::MultiplePlaceholders => {
+            Some(Box::<MultiplePlaceholdersDetector>::default())
         }
         IssueDetectorNamePool::StateVariableChangesWithoutEvents => {
             Some(Box::<StateVariableChangesWithoutEventDetector>::default())
