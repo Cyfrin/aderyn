@@ -156,7 +156,7 @@ impl IssueDetector for InconsistentTypeNamesDetector {
 }
 
 #[cfg(test)]
-mod inconsistent_type_names {
+mod inconsistent_type_names_tests {
     use serial_test::serial;
 
     use crate::detect::detector::IssueDetector;

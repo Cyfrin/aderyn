@@ -1,15 +1,10 @@
-#![allow(clippy::borrowed_box)]
-
 use aderyn::{
-    aderyn_is_currently_running_newest_version, debounce_and_run, initialize_niceties,
+    aderyn_is_currently_running_newest_version, initialize_niceties, lsp::spin_up_language_server,
     print_all_detectors_view, print_detail_view,
 };
-use std::time::Duration;
-
 use aderyn_driver::driver::{self, Args};
 
 use clap::{ArgGroup, Parser, Subcommand};
-
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 #[command(group(ArgGroup::new("stdout_dependent").requires("stdout")))]
@@ -48,9 +43,9 @@ pub struct CommandLineArgs {
     #[arg(short, long, default_value = "report.md")]
     output: String,
 
-    /// Watch for file changes and continuously generate report
+    /// [BETA] Start Aderyn's LSP server on stdout
     #[arg(short, long, group = "stdout_dependent")]
-    watch: bool,
+    lsp: bool,
 
     /// Do not include code snippets in the report (reduces report size in large repos)
     #[arg(long)]
@@ -63,10 +58,6 @@ pub struct CommandLineArgs {
     /// Print the output to stdout instead of a file
     #[arg(long, name = "stdout")]
     stdout: bool,
-
-    /// Skip contract build step
-    #[arg(long)]
-    skip_build: bool,
 
     /// Skip cloc analysis (line numbers, etc.)
     #[arg(long)]
@@ -117,32 +108,19 @@ fn main() {
         path_includes: cmd_args.path_includes,
         path_excludes: cmd_args.path_excludes,
         no_snippets: cmd_args.no_snippets,
-        skip_build: cmd_args.skip_build,
         skip_cloc: cmd_args.skip_cloc,
         skip_update_check: cmd_args.skip_update_check,
         stdout: cmd_args.stdout,
         auditor_mode: cmd_args.auditor_mode,
         highs_only: cmd_args.highs_only,
+        lsp: cmd_args.lsp,
     };
 
     // Run watcher is watch mode is engaged
-    if cmd_args.watch {
-        // Default to JSON
-        args.output = "report.json".to_string();
-
-        // Run it once, for the first time
-        driver::drive(args.clone());
-
-        println!("INFO: Aderyn is entering watch mode !");
-        // Now run it every time there is a file change
-        debounce_and_run(
-            || {
-                // Run it once
-                driver::drive(args.clone());
-            },
-            &args,
-            Duration::from_millis(50),
-        );
+    if cmd_args.lsp {
+        args.skip_cloc = true;
+        args.skip_update_check = true;
+        spin_up_language_server(args);
     } else {
         driver::drive(args.clone());
     }

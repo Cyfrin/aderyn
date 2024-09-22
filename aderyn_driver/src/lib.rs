@@ -1,6 +1,7 @@
 pub(crate) mod config_helpers;
 pub mod driver;
 pub(crate) mod foundry_compiler_helpers;
+pub mod lsp_report;
 pub(crate) mod process_auto;
 pub(crate) mod project_compiler_tests;
 use std::path::Path;
