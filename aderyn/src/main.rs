@@ -1,6 +1,6 @@
 use aderyn::{
-    aderyn_is_currently_running_newest_version, lsp::spin_up_language_server,
-    print_all_detectors_view, print_detail_view,
+    aderyn_is_currently_running_newest_version, create_aderyn_toml_file_at, initialize_niceties,
+    lsp::spin_up_language_server, print_all_detectors_view, print_detail_view,
 };
 use aderyn_driver::driver::{self, Args};
 
@@ -16,6 +16,10 @@ pub struct CommandLineArgs {
     /// Foundry or Hardhat project root directory (or path to single solidity file)
     #[arg(default_value = ".")]
     root: String,
+
+    /// Initialize aderyn.toml in [ROOT] which hosts all the configuration to override defaults
+    #[arg(long)]
+    init: bool,
 
     /// Path to the source contracts. If not provided, the ROOT directory will be used.
     ///
@@ -43,7 +47,7 @@ pub struct CommandLineArgs {
     #[arg(short, long, default_value = "report.md")]
     output: String,
 
-    /// Start Aderyn's LSP server on stdout
+    /// [BETA] Start Aderyn's LSP server on stdout
     #[arg(short, long, group = "stdout_dependent")]
     lsp: bool,
 
@@ -58,10 +62,6 @@ pub struct CommandLineArgs {
     /// Print the output to stdout instead of a file
     #[arg(long, name = "stdout")]
     stdout: bool,
-
-    /// Skip contract build step
-    #[arg(long)]
-    skip_build: bool,
 
     /// Skip cloc analysis (line numbers, etc.)
     #[arg(long)]
@@ -89,6 +89,7 @@ enum RegistryCommand {
 }
 
 fn main() {
+    initialize_niceties();
     let cmd_args = CommandLineArgs::parse();
 
     if let Some(reg) = cmd_args.registry {
@@ -104,6 +105,16 @@ fn main() {
         return;
     }
 
+    if cmd_args.root == "init" {
+        create_aderyn_toml_file_at(".".to_string());
+        return;
+    }
+
+    if cmd_args.init {
+        create_aderyn_toml_file_at(cmd_args.root);
+        return;
+    }
+
     let mut args: Args = Args {
         root: cmd_args.root,
         output: cmd_args.output,
@@ -111,7 +122,6 @@ fn main() {
         path_includes: cmd_args.path_includes,
         path_excludes: cmd_args.path_excludes,
         no_snippets: cmd_args.no_snippets,
-        skip_build: cmd_args.skip_build,
         skip_cloc: cmd_args.skip_cloc,
         skip_update_check: cmd_args.skip_update_check,
         stdout: cmd_args.stdout,

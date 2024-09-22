@@ -141,6 +141,11 @@ impl WorkspaceContext {
     pub fn unary_operations(&self) -> Vec<&UnaryOperation> {
         self.unary_operations_context.keys().collect()
     }
+
+    pub fn unchecked_blocks(&self) -> Vec<&UncheckedBlock> {
+        self.unchecked_blocks_context.keys().collect()
+    }
+
     pub fn user_defined_type_names(&self) -> Vec<&UserDefinedTypeName> {
         self.user_defined_type_names_context.keys().collect()
     }
@@ -242,6 +247,7 @@ generate_get_source_unit! {
     TryCatchClause => try_catch_clauses_context,
     TupleExpression => tuple_expressions_context,
     UnaryOperation => unary_operations_context,
+    UncheckedBlock => unchecked_blocks_context,
     UserDefinedTypeName => user_defined_type_names_context,
     UserDefinedValueTypeDefinition => user_defined_value_type_definitions_context,
     UsingForDirective => using_for_directives_context,
