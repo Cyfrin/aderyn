@@ -1,7 +1,7 @@
 #![allow(clippy::collapsible_match)]
 
 #[cfg(test)]
-mod callgraph_tests {
+mod callgraph_test_functions {
     use crate::{
         ast::{FunctionDefinition, ModifierDefinition},
         context::{
