@@ -40,14 +40,24 @@ impl IssueDetector for UncheckedLowLevelCallDetector {
                     // But to cover this case - dst.call.value(msg.value)("");
                     // We need to also check for the possibility where the function call's parent is
                     // another function call and that has a direct parent of type block
-                    if func_call.parent(context).is_some_and(|node| {
-                        node.node_type() == NodeType::Block
-                            || (node.node_type() == NodeType::FunctionCall
-                                && node
-                                    .parent(context)
-                                    .is_some_and(|node| node.node_type() == NodeType::Block))
-                    }) {
-                        capture!(self, context, func_call);
+                    if let Some(ASTNode::ExpressionStatement(e)) = func_call.parent(context) {
+                        if e.parent(context)
+                            .is_some_and(|node| node.node_type() == NodeType::Block)
+                        {
+                            capture!(self, context, func_call);
+                        }
+                    }
+
+                    if let Some(ASTNode::FunctionCall(outside_parent)) = func_call.parent(context) {
+                        if let Some(ASTNode::ExpressionStatement(e)) =
+                            outside_parent.parent(context)
+                        {
+                            if e.parent(context)
+                                .is_some_and(|node| node.node_type() == NodeType::Block)
+                            {
+                                capture!(self, context, func_call);
+                            }
+                        }
                     }
                 }
             }

@@ -87,14 +87,37 @@ macro_rules! expr_node {
 /// The inner value of each variant is boxed since AST types are inherently recursive.
 macro_rules! node_group {
     ($group:ident; $( $name:ident ),* $(,)*) => {
-        #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+        #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Hash)]
         #[serde(tag = "nodeType")]
         pub enum $group {
             $(
-                $name(Box<$name>),
+                $name($name),
             )*
         }
     };
+}
+
+macro_rules! stmt_node {
+    (
+        $(#[$struct_meta:meta])*
+        struct $name:ident {
+            $(
+                $(#[$field_meta:meta])*
+                $field:ident: $ty:ty
+            ),* $(,)*
+        }
+    ) => {
+        ast_node!(
+            $(#[$struct_meta])*
+            struct $name {
+                documentation: Option<String>,
+                $(
+                    $(#[$field_meta])*
+                    $field: $ty
+                ),*
+            }
+        );
+    }
 }
 
 macro_rules! generate_ast_methods {
@@ -193,3 +216,4 @@ pub(crate) use ast_node_no_partial_eq;
 pub(crate) use expr_node;
 pub(crate) use generate_ast_methods;
 pub(crate) use node_group;
+pub(crate) use stmt_node;
