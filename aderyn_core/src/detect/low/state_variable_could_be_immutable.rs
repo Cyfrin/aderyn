@@ -5,7 +5,7 @@ use crate::ast::{FunctionKind, Mutability, NodeID};
 
 use crate::capture;
 use crate::context::browser::ApproximateStorageChangeFinder;
-use crate::detect::detector::IssueDetectorNamePool;
+use crate::detect::detector::{IssueDetectorNamePool, MergeConflictResolutionStrategy};
 use crate::detect::helpers;
 use crate::{
     context::workspace_context::WorkspaceContext,
@@ -151,6 +151,10 @@ impl IssueDetector for StateVariableCouldBeImmutableDetector {
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
         self.found_instances.clone()
+    }
+
+    fn merge_conflict_resolution_strategy(&self) -> MergeConflictResolutionStrategy {
+        MergeConflictResolutionStrategy::Intersection
     }
 
     fn name(&self) -> String {

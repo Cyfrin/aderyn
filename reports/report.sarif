@@ -12263,17 +12263,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/inheritance/InheritanceBase.sol"
-                },
-                "region": {
-                  "byteLength": 13,
-                  "byteOffset": 199
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/reused_contract_name/ContractA.sol"
                 },
                 "region": {

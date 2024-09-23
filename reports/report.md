@@ -7256,7 +7256,7 @@ State variable changes in this function but no event is emitted.
 
 State variables that are should be declared immutable to save gas. Add the `immutable` attribute to state variables that are only changed in the constructor
 
-<details><summary>32 Found Instances</summary>
+<details><summary>31 Found Instances</summary>
 
 
 - Found in src/ArbitraryTransferFrom.sol [Line: 9](../tests/contract-playground/src/ArbitraryTransferFrom.sol#L9)
@@ -7425,12 +7425,6 @@ State variables that are should be declared immutable to save gas. Add the `immu
 
 	```solidity
 	    bytes32[DEPOSIT_CONTRACT_TREE_DEPTH] zero_hashes;
-	```
-
-- Found in src/inheritance/InheritanceBase.sol [Line: 9](../tests/contract-playground/src/inheritance/InheritanceBase.sol#L9)
-
-	```solidity
-	    address public s_baseAddress;
 	```
 
 - Found in src/reused_contract_name/ContractA.sol [Line: 5](../tests/contract-playground/src/reused_contract_name/ContractA.sol#L5)
