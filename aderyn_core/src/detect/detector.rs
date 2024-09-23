@@ -447,6 +447,15 @@ pub enum IssueSeverity {
     High,
 }
 
+/// When different contexts report different number of instances for the same file, this is a merge
+/// conflict and we need a resolution strategy.
+pub enum MergeConflictResolutionStrategy {
+    /// Consider the common instances reported across all contexts
+    Intersection,
+    /// Consider all the instances reported across all contexts
+    Union,
+}
+
 impl Display for IssueSeverity {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let issue_description = match self {
@@ -493,5 +502,9 @@ pub trait IssueDetector: Send + Sync + 'static {
 
     fn hints(&self) -> BTreeMap<(String, usize, String), String> {
         BTreeMap::new()
+    }
+
+    fn merge_conflict_resolution_strategy(&self) -> MergeConflictResolutionStrategy {
+        MergeConflictResolutionStrategy::Union
     }
 }
