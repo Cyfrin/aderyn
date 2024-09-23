@@ -189,6 +189,12 @@ pub fn get_report(
                             };
                         }
 
+                        for key in src_filepaths {
+                            if let Entry::Vacant(v) = grouped_instances_context.entry(key) {
+                                v.insert(Default::default());
+                            }
+                        }
+
                         for (key, value) in grouped_instances_context {
                             match grouped_instances.entry(key.clone()) {
                                 Entry::Vacant(v) => {
@@ -196,17 +202,6 @@ pub fn get_report(
                                 }
                                 Entry::Occupied(mut o) => {
                                     o.get_mut().push(value);
-                                }
-                            }
-                        }
-
-                        for key in src_filepaths {
-                            match grouped_instances.entry(key) {
-                                Entry::Vacant(v) => {
-                                    v.insert(Default::default());
-                                }
-                                Entry::Occupied(mut o) => {
-                                    o.get_mut().push(Default::default());
                                 }
                             }
                         }

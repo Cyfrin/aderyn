@@ -7325,12 +7325,6 @@
             "src_char": "3419:11"
           },
           {
-            "contract_path": "src/inheritance/InheritanceBase.sol",
-            "line_no": 9,
-            "src": "199:13",
-            "src_char": "199:13"
-          },
-          {
             "contract_path": "src/reused_contract_name/ContractA.sol",
             "line_no": 5,
             "src": "99:1",
