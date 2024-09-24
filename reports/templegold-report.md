@@ -341,7 +341,7 @@ When compiling contracts with certain development frameworks (for example: Truff
 
 Solidity does initialize variables by default when you declare them, however it's good practice to explicitly declare an initial value. For example, if you transfer money to an address we must make sure that the address has been initialized.
 
-<details><summary>8 Found Instances</summary>
+<details><summary>7 Found Instances</summary>
 
 
 - Found in contracts/amm/TempleUniswapV2Pair.sol [Line: 29](../tests/2024-07-templegold/protocol/contracts/amm/TempleUniswapV2Pair.sol#L29)
@@ -366,12 +366,6 @@ Solidity does initialize variables by default when you declare them, however it'
 
 	```solidity
 	    uint256 public lastUpdateTime;
-	```
-
-- Found in contracts/templegold/AuctionBase.sol [Line: 13](../tests/2024-07-templegold/protocol/contracts/templegold/AuctionBase.sol#L13)
-
-	```solidity
-	    uint256 internal _currentEpochId;
 	```
 
 - Found in contracts/templegold/TempleGoldStaking.sol [Line: 40](../tests/2024-07-templegold/protocol/contracts/templegold/TempleGoldStaking.sol#L40)
@@ -8369,7 +8363,7 @@ Consider keeping the naming convention consistent in a given contract. Explicit 
 
 it is recommended that the definition be removed when custom error is unused
 
-<details><summary>25 Found Instances</summary>
+<details><summary>12 Found Instances</summary>
 
 
 - Found in contracts/amo/helpers/AMOCommon.sol [Line: 6](../tests/2024-07-templegold/protocol/contracts/amo/helpers/AMOCommon.sol#L6)
@@ -8394,24 +8388,6 @@ it is recommended that the definition be removed when custom error is unused
 
 	```solidity
 	    error Paused();
-	```
-
-- Found in contracts/common/CommonEventsAndErrors.sol [Line: 7](../tests/2024-07-templegold/protocol/contracts/common/CommonEventsAndErrors.sol#L7)
-
-	```solidity
-	    error InsufficientBalance(address token, uint256 required, uint256 balance);
-	```
-
-- Found in contracts/common/CommonEventsAndErrors.sol [Line: 11](../tests/2024-07-templegold/protocol/contracts/common/CommonEventsAndErrors.sol#L11)
-
-	```solidity
-	    error InvalidAmount(address token, uint256 amount);
-	```
-
-- Found in contracts/common/CommonEventsAndErrors.sol [Line: 13](../tests/2024-07-templegold/protocol/contracts/common/CommonEventsAndErrors.sol#L13)
-
-	```solidity
-	    error Unimplemented();
 	```
 
 - Found in contracts/core/VaultEarlyWithdraw.sol [Line: 31](../tests/2024-07-templegold/protocol/contracts/core/VaultEarlyWithdraw.sol#L31)
@@ -8444,76 +8420,16 @@ it is recommended that the definition be removed when custom error is unused
 	    error NotCandidate(uint256 discordId);
 	```
 
-- Found in contracts/interfaces/templegold/IDaiGoldAuction.sol [Line: 14](../tests/2024-07-templegold/protocol/contracts/interfaces/templegold/IDaiGoldAuction.sol#L14)
-
-	```solidity
-	    error LowGoldDistributed(uint256 epochGoldAmount);
-	```
-
 - Found in contracts/interfaces/templegold/ISpiceAuction.sol [Line: 14](../tests/2024-07-templegold/protocol/contracts/interfaces/templegold/ISpiceAuction.sol#L14)
 
 	```solidity
 	    error NoConfig();
 	```
 
-- Found in contracts/interfaces/templegold/ITempleGold.sol [Line: 47](../tests/2024-07-templegold/protocol/contracts/interfaces/templegold/ITempleGold.sol#L47)
-
-	```solidity
-	    error InvalidTotalShare();
-	```
-
-- Found in contracts/interfaces/templegold/ITempleGold.sol [Line: 48](../tests/2024-07-templegold/protocol/contracts/interfaces/templegold/ITempleGold.sol#L48)
-
-	```solidity
-	    error MissingParameter();
-	```
-
-- Found in contracts/interfaces/templegold/ITempleGold.sol [Line: 49](../tests/2024-07-templegold/protocol/contracts/interfaces/templegold/ITempleGold.sol#L49)
-
-	```solidity
-	    error NonTransferrable(address from, address to);
-	```
-
-- Found in contracts/interfaces/templegold/ITempleGold.sol [Line: 50](../tests/2024-07-templegold/protocol/contracts/interfaces/templegold/ITempleGold.sol#L50)
-
-	```solidity
-	    error WrongChain();
-	```
-
-- Found in contracts/interfaces/templegold/ITempleGold.sol [Line: 51](../tests/2024-07-templegold/protocol/contracts/interfaces/templegold/ITempleGold.sol#L51)
-
-	```solidity
-	    error CannotCompose();
-	```
-
-- Found in contracts/interfaces/templegold/ITempleGoldStaking.sol [Line: 20](../tests/2024-07-templegold/protocol/contracts/interfaces/templegold/ITempleGoldStaking.sol#L20)
-
-	```solidity
-	    error CannotDistribute();
-	```
-
 - Found in contracts/interfaces/templegold/ITempleGoldStaking.sol [Line: 21](../tests/2024-07-templegold/protocol/contracts/interfaces/templegold/ITempleGoldStaking.sol#L21)
 
 	```solidity
 	    error CannotDelegate();
-	```
-
-- Found in contracts/interfaces/templegold/ITempleGoldStaking.sol [Line: 22](../tests/2024-07-templegold/protocol/contracts/interfaces/templegold/ITempleGoldStaking.sol#L22)
-
-	```solidity
-	    error InvalidOperation();
-	```
-
-- Found in contracts/interfaces/templegold/ITempleGoldStaking.sol [Line: 23](../tests/2024-07-templegold/protocol/contracts/interfaces/templegold/ITempleGoldStaking.sol#L23)
-
-	```solidity
-	    error InvalidBlockNumber();
-	```
-
-- Found in contracts/interfaces/templegold/ITempleGoldStaking.sol [Line: 24](../tests/2024-07-templegold/protocol/contracts/interfaces/templegold/ITempleGoldStaking.sol#L24)
-
-	```solidity
-	    error NoStaker();
 	```
 
 - Found in contracts/interfaces/v2/safeGuards/IThresholdSafeGuard.sol [Line: 16](../tests/2024-07-templegold/protocol/contracts/interfaces/v2/safeGuards/IThresholdSafeGuard.sol#L16)

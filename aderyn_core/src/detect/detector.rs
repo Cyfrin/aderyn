@@ -505,6 +505,6 @@ pub trait IssueDetector: Send + Sync + 'static {
     }
 
     fn merge_conflict_resolution_strategy(&self) -> MergeConflictResolutionStrategy {
-        MergeConflictResolutionStrategy::Union
+        MergeConflictResolutionStrategy::Intersection
     }
 }
