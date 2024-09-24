@@ -1,5 +1,6 @@
 mod callgraph;
 mod callgraph_tests;
+mod serialize_callgraph;
 mod traits;
 mod workspace_callgraph;
 
