@@ -8,10 +8,7 @@ use crate::ast::*;
 pub use kind::CfgNodeKind;
 pub use reducibles::CfgBlock;
 
-use std::{
-    collections::{hash_map::Entry, HashMap, VecDeque},
-    intrinsics::unreachable,
-};
+use std::collections::{hash_map::Entry, HashMap, VecDeque};
 
 // This is done to differentiate AstNodeIDs from CfgNodeIDs
 type AstNodeId = NodeID;
@@ -33,7 +30,7 @@ impl CfgNodeId {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum CfgNodeDescriptor {
     // Void nodes
     Start,
@@ -47,7 +44,7 @@ pub enum CfgNodeDescriptor {
     Block(Box<CfgBlock>),
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct CfgNode {
     /// Node ID
     pub id: CfgNodeId,
@@ -71,6 +68,10 @@ pub struct Cfg {
     reduction_queue: VecDeque<CfgNodeId>,
 }
 
+pub trait CfgReduce {
+    fn reduce(&self, cfg: &mut Cfg) -> (CfgNodeId, CfgNodeId);
+}
+
 impl Cfg {
     pub fn new() -> Self {
         Default::default()
@@ -92,6 +93,28 @@ impl Cfg {
                 o.get_mut().push(to);
             }
         };
+    }
+    fn remove_raw_directed_edge(&mut self, from: CfgNodeId, to: CfgNodeId) {
+        let existing_nodes = self
+            .adj_list
+            .get_mut(&from)
+            .expect("Relationship doesn't exist");
+        existing_nodes.retain_mut(|x| *x != to);
+    }
+    fn raw_predecessors(&self, id: CfgNodeId) -> Vec<CfgNodeId> {
+        let mut predecessors = vec![];
+        for (from, to_list) in &self.adj_list {
+            if to_list.contains(&id) {
+                predecessors.push(*from);
+            }
+        }
+        predecessors
+    }
+    fn raw_successors(&self, id: CfgNodeId) -> Vec<CfgNodeId> {
+        let Some(successors) = self.adj_list.get(&id) else {
+            return Default::default();
+        };
+        successors.to_vec()
     }
 }
 
@@ -123,6 +146,11 @@ impl Cfg {
         node_id
     }
 
+    /// Disconnects existing relationships (mostly used during reduction)
+    pub fn remove_flow_edge(&mut self, from: CfgNodeId, to: CfgNodeId) {
+        self.remove_raw_directed_edge(from, to)
+    }
+
     /// Connects the given two given nodes in the CFG
     pub fn add_flow_edge(&mut self, from: CfgNodeId, to: CfgNodeId) {
         self.add_raw_directed_edge(from, to);
@@ -130,19 +158,54 @@ impl Cfg {
 
     /// Reduce the reducible nodes stored the queue at the time of adding nodes
     pub fn reduce(&mut self, reduction_candidate: CfgNodeId) {
+        // Step 0: Remove the node that's being reduced
         let cfg_node = self
             .nodes
-            .get(&reduction_candidate)
+            .remove(&reduction_candidate)
             .expect("Reduction candidate doesn't exist");
-        match cfg_node.nd {
-            CfgNodeDescriptor::Block(_) => {}
-            _ => unreachable!("Only reducibles should be covered !"),
+
+        // Step 1: Get the predecessors
+        let predecessors = self.raw_predecessors(reduction_candidate);
+
+        // Step 2: Get the successors
+        let successors = self.raw_successors(reduction_candidate);
+
+        // Step 3: Remove existing predecessor relationships with reduction candidate to build new ones
+        for pred in &predecessors {
+            self.remove_flow_edge(*pred, cfg_node.id);
+        }
+
+        // Step 4: Remove existing predecessor relationships with reduction candidate to build new ones
+        for succ in &successors {
+            self.remove_flow_edge(cfg_node.id, *succ);
+        }
+
+        // Step 5: Get the (start s, end e) of the reduced cfg
+        let (start_id, end_id) = match cfg_node.nd {
+            // Voids and Primitives
+            CfgNodeDescriptor::Start
+            | CfgNodeDescriptor::End
+            | CfgNodeDescriptor::VariableDeclarationStatement
+            | CfgNodeDescriptor::ExpressionStatement => unreachable!("Expect only reducible nodes"),
+
+            // Reducibles
+            CfgNodeDescriptor::Block(cfg_block) => cfg_block.reduce(self),
+        };
+
+        // Step 6: Connect all the predecessors to `s`
+        for pred in &predecessors {
+            self.add_flow_edge(*pred, start_id);
+        }
+
+        // Step 7: Connect `e` to all the successors
+        for succ in &successors {
+            self.add_flow_edge(end_id, *succ);
         }
     }
 }
 
 impl Cfg {
-    fn accept_block(&mut self, block: &Block) {
+    pub fn accept_block(&mut self, block: &Block) {
         let start = self.add_start_node();
         let end = self.add_end_node();
         let block = self.add_block_node(block);
