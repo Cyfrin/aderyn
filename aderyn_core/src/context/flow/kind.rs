@@ -55,8 +55,8 @@ impl CfgNodeDescriptor {
             CfgNodeDescriptor::End => CfgNodeKind::Void,
 
             // Primitives
-            CfgNodeDescriptor::VariableDeclarationStatement => CfgNodeKind::Primitive,
-            CfgNodeDescriptor::ExpressionStatement => CfgNodeKind::Primitive,
+            CfgNodeDescriptor::VariableDeclarationStatement(_) => CfgNodeKind::Primitive,
+            CfgNodeDescriptor::ExpressionStatement(_) => CfgNodeKind::Primitive,
 
             // Reducibles
             CfgNodeDescriptor::Block(_) => CfgNodeKind::Reducible,

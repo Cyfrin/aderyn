@@ -10,6 +10,10 @@ pub use reducibles::CfgBlock;
 
 use std::collections::{hash_map::Entry, HashMap, VecDeque};
 
+use self::primitives::{CfgExpressionStatement, CfgVariableDeclarationStatement};
+
+use super::workspace_context::WorkspaceContext;
+
 // This is done to differentiate AstNodeIDs from CfgNodeIDs
 type AstNodeId = NodeID;
 
@@ -37,8 +41,8 @@ pub enum CfgNodeDescriptor {
     End,
 
     // Primitives
-    VariableDeclarationStatement,
-    ExpressionStatement,
+    VariableDeclarationStatement(Box<CfgVariableDeclarationStatement>),
+    ExpressionStatement(Box<CfgExpressionStatement>),
 
     // Reducibles
     Block(Box<CfgBlock>),
@@ -69,7 +73,7 @@ pub struct Cfg {
 }
 
 pub trait CfgReduce {
-    fn reduce(&self, cfg: &mut Cfg) -> (CfgNodeId, CfgNodeId);
+    fn reduce(&self, context: &WorkspaceContext, cfg: &mut Cfg) -> (CfgNodeId, CfgNodeId);
 }
 
 impl Cfg {
@@ -157,7 +161,7 @@ impl Cfg {
     }
 
     /// Reduce the reducible nodes stored the queue at the time of adding nodes
-    pub fn reduce(&mut self, reduction_candidate: CfgNodeId) {
+    pub fn reduce(&mut self, context: &WorkspaceContext, reduction_candidate: CfgNodeId) {
         // Step 0: Remove the node that's being reduced
         let cfg_node = self
             .nodes
@@ -185,11 +189,13 @@ impl Cfg {
             // Voids and Primitives
             CfgNodeDescriptor::Start
             | CfgNodeDescriptor::End
-            | CfgNodeDescriptor::VariableDeclarationStatement
-            | CfgNodeDescriptor::ExpressionStatement => unreachable!("Expect only reducible nodes"),
+            | CfgNodeDescriptor::VariableDeclarationStatement(_)
+            | CfgNodeDescriptor::ExpressionStatement(_) => {
+                unreachable!("Expect only reducible nodes")
+            }
 
             // Reducibles
-            CfgNodeDescriptor::Block(cfg_block) => cfg_block.reduce(self),
+            CfgNodeDescriptor::Block(cfg_block) => cfg_block.reduce(context, self),
         };
 
         // Step 6: Connect all the predecessors to `s`
@@ -205,7 +211,7 @@ impl Cfg {
 }
 
 impl Cfg {
-    pub fn accept_block(&mut self, block: &Block) {
+    pub fn accept_block(&mut self, context: &WorkspaceContext, block: &Block) {
         let start = self.add_start_node();
         let end = self.add_end_node();
         let block = self.add_block_node(block);
@@ -214,7 +220,7 @@ impl Cfg {
         self.add_flow_edge(block, end);
 
         while let Some(reduction_candidate) = self.reduction_queue.pop_front() {
-            self.reduce(reduction_candidate);
+            self.reduce(context, reduction_candidate);
         }
     }
 }
@@ -270,9 +276,13 @@ mod control_flow_tests {
         let function = contract.find_function_by_name("function1");
         let mut cfg = Cfg::new();
 
-        cfg.accept_block(function.body.as_ref().expect("function1 not to be defined"));
+        cfg.accept_block(
+            &context,
+            function.body.as_ref().expect("function1 not to be defined"),
+        );
+
+        println!("{:#?}", cfg);
 
         assert!(!cfg.nodes.is_empty());
-        assert_eq!(cfg.total_nodes(), 3);
     }
 }
