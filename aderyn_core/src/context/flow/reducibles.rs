@@ -98,6 +98,15 @@ impl CfgReduce for CfgIfStatement {
             cfg.add_flow_edge(false_block, end_false_branch);
 
             cfg.add_flow_edge(end_false_branch, end_id);
+        } else {
+            // It's possible to skip the true branch if the false branch doesn't exist
+            let start_false_branch = cfg.add_start_if_false_branch_node();
+            let end_false_branch = cfg.add_end_if_false_branch_node();
+
+            cfg.add_flow_edge(end_cond, start_false_branch);
+            cfg.add_flow_edge(start_false_branch, end_false_branch);
+
+            cfg.add_flow_edge(end_false_branch, end_id);
         }
 
         (start_id, end_id)
