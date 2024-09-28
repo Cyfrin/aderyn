@@ -1,7 +1,9 @@
+pub mod display;
 pub mod error;
 pub mod kind;
 pub mod primitives;
 pub mod reducibles;
+pub mod visualizer;
 
 use crate::ast::*;
 
@@ -120,6 +122,15 @@ impl Cfg {
         };
         successors.to_vec()
     }
+    fn remove_raw_edges_involving(&mut self, node_id: CfgNodeId) {
+        // Remove edges starting from node_id
+        self.adj_list.remove(&node_id);
+
+        // Remove edges ending at node_id
+        for (_, to_list) in self.adj_list.iter_mut() {
+            to_list.retain_mut(|x| *x != node_id);
+        }
+    }
 }
 
 impl Cfg {
@@ -152,7 +163,7 @@ impl Cfg {
 
     /// Disconnects existing relationships (mostly used during reduction)
     pub fn remove_flow_edge(&mut self, from: CfgNodeId, to: CfgNodeId) {
-        self.remove_raw_directed_edge(from, to)
+        self.remove_raw_directed_edge(from, to);
     }
 
     /// Connects the given two given nodes in the CFG
@@ -198,12 +209,15 @@ impl Cfg {
             CfgNodeDescriptor::Block(cfg_block) => cfg_block.reduce(context, self),
         };
 
-        // Step 6: Connect all the predecessors to `s`
+        // Step 6: Remove existing connections with redution_candidate
+        self.remove_raw_edges_involving(reduction_candidate);
+
+        // Step 7: Connect all the predecessors to `s`
         for pred in &predecessors {
             self.add_flow_edge(*pred, start_id);
         }
 
-        // Step 7: Connect `e` to all the successors
+        // Step 8: Connect `e` to all the successors
         for succ in &successors {
             self.add_flow_edge(end_id, *succ);
         }
@@ -228,6 +242,7 @@ impl Cfg {
 #[cfg(test)]
 mod control_flow_tests {
     use super::*;
+    use crate::context::flow::visualizer::control_flow_tests::output_graph;
     use crate::detect::test_utils::load_solidity_source_unit;
     use serial_test::serial;
 
@@ -281,8 +296,7 @@ mod control_flow_tests {
             function.body.as_ref().expect("function1 not to be defined"),
         );
 
-        println!("{:#?}", cfg);
-
         assert!(!cfg.nodes.is_empty());
+        output_graph(&context, &cfg, "SimpleProgram_function1");
     }
 }

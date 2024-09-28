@@ -31,5 +31,6 @@ lazy-regex = "3.2.0"
 derive_more = "0.99.18"
 
 [dev-dependencies]
+petgraph = "0"
 serial_test = "3.0.0"
 once_cell = "1.19.0"
