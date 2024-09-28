@@ -2,5 +2,5 @@
 .DS_Store
 .venv
 debug/
-contract-playrgound/dot
+dot/
 !dot/.gitkeep
