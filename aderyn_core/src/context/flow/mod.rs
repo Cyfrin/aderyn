@@ -309,11 +309,12 @@ mod control_flow_tests {
                 nd: CfgNodeDescriptor::Start(_)
             }
         ));
+
         assert!(matches!(
-            cfg.nodes.get(&CfgNodeId(3)).unwrap(),
+            cfg.nodes.get(&CfgNodeId(4)).unwrap(),
             CfgNode {
                 id: _,
-                nd: CfgNodeDescriptor::Start(_)
+                nd: CfgNodeDescriptor::End(_)
             }
         ));
 
