@@ -2,4 +2,5 @@
 .DS_Store
 .venv
 debug/
-dot/*
+dot/
+!dot/.gitkeep
