@@ -51,8 +51,8 @@ impl CfgNodeDescriptor {
     pub fn kind(&self) -> CfgNodeKind {
         match self {
             // Void nodes
-            CfgNodeDescriptor::Start => CfgNodeKind::Void,
-            CfgNodeDescriptor::End => CfgNodeKind::Void,
+            CfgNodeDescriptor::Start(_) => CfgNodeKind::Void,
+            CfgNodeDescriptor::End(_) => CfgNodeKind::Void,
 
             // Primitives
             CfgNodeDescriptor::VariableDeclarationStatement(_) => CfgNodeKind::Primitive,

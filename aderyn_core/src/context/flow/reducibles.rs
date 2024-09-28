@@ -10,8 +10,8 @@ pub struct CfgBlock {
 
 impl CfgReduce for CfgBlock {
     fn reduce(&self, context: &WorkspaceContext, cfg: &mut Cfg) -> (CfgNodeId, CfgNodeId) {
-        let start_id = cfg.add_start_node();
-        let end_id = cfg.add_end_node();
+        let start_id = cfg.add_start_block_node(self.block);
+        let end_id = cfg.add_end_block_node(self.block);
 
         let mut last_link = start_id;
 

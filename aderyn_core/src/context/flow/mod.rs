@@ -4,6 +4,7 @@ pub mod kind;
 pub mod primitives;
 pub mod reducibles;
 pub mod visualizer;
+pub mod voids;
 
 use crate::ast::*;
 
@@ -12,7 +13,10 @@ pub use reducibles::CfgBlock;
 
 use std::collections::{hash_map::Entry, HashMap, VecDeque};
 
-use self::primitives::{CfgExpressionStatement, CfgVariableDeclarationStatement};
+use self::{
+    primitives::{CfgExpressionStatement, CfgVariableDeclarationStatement},
+    voids::{CfgEndNode, CfgStartNode},
+};
 
 use super::workspace_context::WorkspaceContext;
 
@@ -39,8 +43,8 @@ impl CfgNodeId {
 #[derive(Debug, Clone)]
 pub enum CfgNodeDescriptor {
     // Void nodes
-    Start,
-    End,
+    Start(Box<CfgStartNode>),
+    End(Box<CfgEndNode>),
 
     // Primitives
     VariableDeclarationStatement(Box<CfgVariableDeclarationStatement>),
@@ -198,8 +202,8 @@ impl Cfg {
         // Step 5: Get the (start s, end e) of the reduced cfg
         let (start_id, end_id) = match cfg_node.nd {
             // Voids and Primitives
-            CfgNodeDescriptor::Start
-            | CfgNodeDescriptor::End
+            CfgNodeDescriptor::Start(_)
+            | CfgNodeDescriptor::End(_)
             | CfgNodeDescriptor::VariableDeclarationStatement(_)
             | CfgNodeDescriptor::ExpressionStatement(_) => {
                 unreachable!("Expect only reducible nodes")
