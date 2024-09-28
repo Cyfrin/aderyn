@@ -351,9 +351,26 @@ mod control_flow_tests {
             function.body.as_ref().expect("function2 not to be defined"),
         );
 
-        println!("{:#?}", cfg.nodes.clone());
-
-        assert_eq!(cfg.nodes.len(), 11);
         output_graph(&context, &cfg, "SimpleProgram_function2");
+        assert_eq!(cfg.nodes.len(), 14);
+    }
+
+    #[test]
+    #[serial]
+    fn simple_program_function3() {
+        let context = load_solidity_source_unit(
+            "../tests/contract-playground/src/control_flow/SimpleProgram.sol",
+        );
+        let contract = context.find_contract_by_name("SimpleProgram");
+        let function = contract.find_function_by_name("function3");
+        let mut cfg = Cfg::new();
+
+        cfg.accept_block(
+            &context,
+            function.body.as_ref().expect("function3 not to be defined"),
+        );
+
+        output_graph(&context, &cfg, "SimpleProgram_function3");
+        assert_eq!(cfg.nodes.len(), 12);
     }
 }

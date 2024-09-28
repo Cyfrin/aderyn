@@ -9,8 +9,8 @@ impl CfgNodeDescriptor {
             CfgNodeDescriptor::End(n) => n.peek(),
             CfgNodeDescriptor::VariableDeclarationStatement(n) => n.peek(context),
             CfgNodeDescriptor::ExpressionStatement(n) => n.peek(context),
-            CfgNodeDescriptor::Block(_) => todo!(),
-            CfgNodeDescriptor::PlaceholderStatement(_) => todo!(),
+            CfgNodeDescriptor::Block(_) => String::from("REDUCIBLE BLOCK"),
+            CfgNodeDescriptor::PlaceholderStatement(n) => n.peek(),
             CfgNodeDescriptor::Break(n) => n.peek(),
             CfgNodeDescriptor::Continue(n) => n.peek(),
             CfgNodeDescriptor::Return(n) => n.peek(context),
@@ -122,6 +122,14 @@ impl CfgInlineAssemblyStatement {
                 content.push_str(&format!(": \n{}", inside));
             }
         }
+        content
+    }
+}
+
+impl CfgPlaceholderStatement {
+    pub fn peek(&self) -> String {
+        let mut content = format!("Placeholder statement ({})", self.placeholder_statement);
+        content.push_str(": \n_");
         content
     }
 }
