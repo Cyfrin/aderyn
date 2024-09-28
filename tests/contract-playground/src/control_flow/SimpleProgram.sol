@@ -7,4 +7,14 @@ contract SimpleProgram {
         c = start * times;
         c %= mod;
     }
+
+    function function2(uint256 start, uint256 times, uint256 mod) external {
+        uint256 c = start;
+        c = start * times;
+        c %= mod;
+        {
+            c = start * times;
+            c %= mod;
+        }
+    }
 }

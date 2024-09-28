@@ -320,4 +320,23 @@ mod control_flow_tests {
 
         output_graph(&context, &cfg, "SimpleProgram_function1");
     }
+
+    #[test]
+    #[serial]
+    fn simple_program_function2() {
+        let context = load_solidity_source_unit(
+            "../tests/contract-playground/src/control_flow/SimpleProgram.sol",
+        );
+        let contract = context.find_contract_by_name("SimpleProgram");
+        let function = contract.find_function_by_name("function2");
+        let mut cfg = Cfg::new();
+
+        cfg.accept_block(
+            &context,
+            function.body.as_ref().expect("function2 not to be defined"),
+        );
+
+        assert_eq!(cfg.nodes.len(), 11);
+        output_graph(&context, &cfg, "SimpleProgram_function2");
+    }
 }
