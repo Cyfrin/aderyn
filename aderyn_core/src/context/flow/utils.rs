@@ -3,13 +3,13 @@ use super::{Cfg, CfgNodeId, Statement};
 impl Cfg {
     pub fn add_statement_node(&mut self, stmt: &Statement) -> CfgNodeId {
         match stmt {
-            Statement::IfStatement(_)
-            | Statement::ForStatement(_)
+            Statement::ForStatement(_)
             | Statement::WhileStatement(_)
             | Statement::EmitStatement(_)
             | Statement::TryStatement(_)
             | Statement::UncheckedBlock(_)
             | Statement::DoWhileStatement(_) => unimplemented!(),
+            Statement::IfStatement(n) => self.add_if_statement(n),
             Statement::PlaceholderStatement(n) => self.add_placeholder_statement(n),
             Statement::RevertStatement(n) => self.add_revert_statement(n),
             Statement::Return(n) => self.add_return_statement(n),

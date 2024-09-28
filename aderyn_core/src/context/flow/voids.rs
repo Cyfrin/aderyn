@@ -5,12 +5,20 @@ use super::{AstNodeId, Cfg, CfgNodeDescriptor, CfgNodeId};
 pub enum CfgStartNode {
     Start,
     StartBlock(AstNodeId),
+    StartIf(AstNodeId),
+    StartIfCond,
+    StartIfTrue,
+    StartIfFalse,
 }
 
 #[derive(Debug, Clone)]
 pub enum CfgEndNode {
     End,
     EndBlock(AstNodeId),
+    EndIf(AstNodeId),
+    EndIfCond,
+    EndIfTrue,
+    EndIfFalse,
 }
 
 /// Helper functions
@@ -30,5 +38,37 @@ impl Cfg {
         self.add_node(CfgNodeDescriptor::End(Box::new(CfgEndNode::EndBlock(
             block,
         ))))
+    }
+    pub fn add_start_if_node(&mut self, if_stmt: AstNodeId) -> CfgNodeId {
+        self.add_node(CfgNodeDescriptor::Start(Box::new(CfgStartNode::StartIf(
+            if_stmt,
+        ))))
+    }
+    pub fn add_start_if_cond_node(&mut self) -> CfgNodeId {
+        self.add_node(CfgNodeDescriptor::Start(Box::new(
+            CfgStartNode::StartIfCond,
+        )))
+    }
+    pub fn add_start_if_true_branch_node(&mut self) -> CfgNodeId {
+        self.add_node(CfgNodeDescriptor::Start(Box::new(
+            CfgStartNode::StartIfTrue,
+        )))
+    }
+    pub fn add_start_if_false_branch_node(&mut self) -> CfgNodeId {
+        self.add_node(CfgNodeDescriptor::Start(Box::new(
+            CfgStartNode::StartIfFalse,
+        )))
+    }
+    pub fn add_end_if_node(&mut self, if_stmt: AstNodeId) -> CfgNodeId {
+        self.add_node(CfgNodeDescriptor::End(Box::new(CfgEndNode::EndIf(if_stmt))))
+    }
+    pub fn add_end_if_cond_node(&mut self) -> CfgNodeId {
+        self.add_node(CfgNodeDescriptor::End(Box::new(CfgEndNode::EndIfCond)))
+    }
+    pub fn add_end_if_true_branch_node(&mut self) -> CfgNodeId {
+        self.add_node(CfgNodeDescriptor::End(Box::new(CfgEndNode::EndIfTrue)))
+    }
+    pub fn add_end_if_false_branch_node(&mut self) -> CfgNodeId {
+        self.add_node(CfgNodeDescriptor::End(Box::new(CfgEndNode::EndIfFalse)))
     }
 }

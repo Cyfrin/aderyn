@@ -1,6 +1,6 @@
 use crate::{ast::Block, context::workspace_context::WorkspaceContext};
 
-use super::{ASTNode, AstNodeId, Cfg, CfgNodeDescriptor, CfgNodeId, CfgReduce};
+use super::{ASTNode, AstNodeId, Cfg, CfgNodeDescriptor, CfgNodeId, CfgReduce, IfStatement};
 
 // Control flow graph definitions nodes
 #[derive(Debug, Clone)]
@@ -39,6 +39,84 @@ impl CfgBlock {
 impl Cfg {
     pub fn add_block_node(&mut self, block: &Block) -> CfgNodeId {
         self.add_node(CfgNodeDescriptor::Block(Box::new(CfgBlock::from(block))))
+    }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+#[derive(Debug, Clone)]
+pub struct CfgIfStatement {
+    pub if_statement: AstNodeId,
+}
+
+impl CfgReduce for CfgIfStatement {
+    fn reduce(&self, context: &WorkspaceContext, cfg: &mut Cfg) -> (CfgNodeId, CfgNodeId) {
+        let start_id = cfg.add_start_if_node(self.if_statement);
+        let end_id = cfg.add_end_if_node(self.if_statement);
+
+        let Some(ASTNode::IfStatement(if_ast_node)) = context.nodes.get(&self.if_statement) else {
+            cfg.add_flow_edge(start_id, end_id);
+            return (start_id, end_id);
+        };
+
+        // Condition node
+        let start_cond = cfg.add_start_if_cond_node();
+        let end_cond = cfg.add_end_if_cond_node();
+        let condition = cfg.add_if_statement_condition(&if_ast_node.condition);
+
+        cfg.add_flow_edge(start_id, start_cond);
+        cfg.add_flow_edge(start_cond, condition);
+        cfg.add_flow_edge(condition, end_cond);
+
+        // True branch
+        let start_true_branch = cfg.add_start_if_true_branch_node();
+        let end_true_branch = cfg.add_end_if_true_branch_node();
+
+        let true_block = match &if_ast_node.true_body {
+            super::BlockOrStatement::Block(block) => cfg.add_block_node(block.as_ref()),
+            super::BlockOrStatement::Statement(stmt) => cfg.add_statement_node(stmt.as_ref()),
+        };
+
+        cfg.add_flow_edge(end_cond, start_true_branch);
+        cfg.add_flow_edge(start_true_branch, true_block);
+        cfg.add_flow_edge(true_block, end_true_branch);
+
+        cfg.add_flow_edge(end_true_branch, end_id);
+
+        // False branch
+        if let Some(false_body) = if_ast_node.false_body.as_ref() {
+            let start_false_branch = cfg.add_start_if_false_branch_node();
+            let end_false_branch = cfg.add_end_if_false_branch_node();
+
+            let false_block = match false_body {
+                super::BlockOrStatement::Block(block) => cfg.add_block_node(block.as_ref()),
+                super::BlockOrStatement::Statement(stmt) => cfg.add_statement_node(stmt.as_ref()),
+            };
+
+            cfg.add_flow_edge(end_cond, start_false_branch);
+            cfg.add_flow_edge(start_false_branch, false_block);
+            cfg.add_flow_edge(false_block, end_false_branch);
+
+            cfg.add_flow_edge(end_false_branch, end_id);
+        }
+
+        (start_id, end_id)
+    }
+}
+
+impl CfgIfStatement {
+    pub fn from(if_stmt: &IfStatement) -> Self {
+        Self {
+            if_statement: if_stmt.id,
+        }
+    }
+}
+
+impl Cfg {
+    pub fn add_if_statement(&mut self, if_stmt: &IfStatement) -> CfgNodeId {
+        self.add_node(CfgNodeDescriptor::IfStatement(Box::new(
+            CfgIfStatement::from(if_stmt),
+        )))
     }
 }
 

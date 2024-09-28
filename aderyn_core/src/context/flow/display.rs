@@ -5,11 +5,13 @@ use super::{primitives::*, voids::*, CfgBreakStatement, CfgNodeDescriptor};
 impl CfgNodeDescriptor {
     pub fn display(&self, context: &WorkspaceContext) -> String {
         match self {
+            // Voids
             CfgNodeDescriptor::Start(n) => n.peek(),
             CfgNodeDescriptor::End(n) => n.peek(),
+
+            // Primitives
             CfgNodeDescriptor::VariableDeclarationStatement(n) => n.peek(context),
             CfgNodeDescriptor::ExpressionStatement(n) => n.peek(context),
-            CfgNodeDescriptor::Block(_) => String::from("REDUCIBLE BLOCK"),
             CfgNodeDescriptor::PlaceholderStatement(n) => n.peek(),
             CfgNodeDescriptor::Break(n) => n.peek(),
             CfgNodeDescriptor::Continue(n) => n.peek(),
@@ -17,6 +19,11 @@ impl CfgNodeDescriptor {
             CfgNodeDescriptor::EmitStatement(n) => n.peek(context),
             CfgNodeDescriptor::RevertStatement(n) => n.peek(context),
             CfgNodeDescriptor::InlineAssembly(n) => n.peek(context),
+            CfgNodeDescriptor::IfStatementCondition(n) => n.peek(context),
+
+            // Reducibles
+            CfgNodeDescriptor::IfStatement(_) => String::from("REDUCIBLE IF-STATEMENT"),
+            CfgNodeDescriptor::Block(_) => String::from("REDUCIBLE BLOCK"),
         }
     }
 }
@@ -26,6 +33,10 @@ impl CfgStartNode {
         match self {
             CfgStartNode::Start => String::from("START"),
             CfgStartNode::StartBlock(ast_id) => format!("START BLOCK ({})", ast_id),
+            CfgStartNode::StartIf(ast_id) => format!("START IF ({})", ast_id),
+            CfgStartNode::StartIfCond => String::from("START IF COND"),
+            CfgStartNode::StartIfTrue => String::from("START IF TRUE BRANCH"),
+            CfgStartNode::StartIfFalse => String::from("START IF FALSE BRANCH"),
         }
     }
 }
@@ -35,6 +46,10 @@ impl CfgEndNode {
         match self {
             CfgEndNode::End => String::from("END"),
             CfgEndNode::EndBlock(ast_id) => format!("END BLOCK ({})", ast_id),
+            CfgEndNode::EndIf(ast_id) => format!("END IF ({})", ast_id),
+            CfgEndNode::EndIfCond => String::from("END IF COND"),
+            CfgEndNode::EndIfTrue => String::from("END IF TRUE BRANCH"),
+            CfgEndNode::EndIfFalse => String::from("END IF FALSE BRANCH"),
         }
     }
 }
@@ -130,6 +145,21 @@ impl CfgPlaceholderStatement {
     pub fn peek(&self) -> String {
         let mut content = format!("Placeholder statement ({})", self.placeholder_statement);
         content.push_str(": \n_");
+        content
+    }
+}
+
+impl CfgIfStatementCondition {
+    pub fn peek(&self, context: &WorkspaceContext) -> String {
+        let Some(if_cond) = self.if_stmt_condition else {
+            return String::from("If Cond");
+        };
+        let mut content = format!("If Cond ({})", if_cond);
+        if let Some(node) = context.nodes.get(&if_cond) {
+            if let Some(inside) = node.peek(context) {
+                content.push_str(&format!(": \n{}", inside));
+            }
+        }
         content
     }
 }

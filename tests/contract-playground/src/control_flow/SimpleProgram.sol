@@ -31,4 +31,23 @@ contract SimpleProgram {
         }
         mod = start - times;
     }
+
+    function function4(uint256 start, uint256 times, uint256 mod) external {
+        uint256 c = start;
+        c = start * times;
+        c %= mod;
+        if (start != times) {
+            c = start * times;
+            c %= mod;
+        } else c++;
+        mod = start - times;
+        if (mod > 12) mod += times;
+        mod = start - times;
+        mod = start - times;
+        mod = start - times;
+        if (mod > 12) mod += times;
+        else {
+            mod = start - times;
+        }
+    }
 }
