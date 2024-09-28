@@ -1,0 +1,15 @@
+digraph {
+    0 [ label = "Expression Stmt (19): \lc = start * times\l" ]
+    1 [ label = "END BLOCK (24)\l" ]
+    2 [ label = "END\l" ]
+    3 [ label = "Variable Decl. Stmt (13): \luint256 c = start\l" ]
+    4 [ label = "Expression Stmt (23): \lc %= mod\l" ]
+    5 [ label = "START BLOCK (24)\l" ]
+    6 [ label = "START\l" ]
+    4 -> 1 [ label = " 7-->4\l" ]
+    6 -> 5 [ label = " 0-->3\l" ]
+    0 -> 4 [ label = " 6-->7\l" ]
+    1 -> 2 [ label = " 4-->1\l" ]
+    5 -> 3 [ label = " 3-->5\l" ]
+    3 -> 0 [ label = " 5-->6\l" ]
+}
