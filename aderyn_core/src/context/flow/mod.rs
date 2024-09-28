@@ -300,7 +300,23 @@ mod control_flow_tests {
             function.body.as_ref().expect("function1 not to be defined"),
         );
 
-        assert!(!cfg.nodes.is_empty());
+        assert_eq!(cfg.nodes.len(), 7);
+
+        assert!(matches!(
+            cfg.nodes.get(&CfgNodeId(3)).unwrap(),
+            CfgNode {
+                id: _,
+                nd: CfgNodeDescriptor::Start(_)
+            }
+        ));
+        assert!(matches!(
+            cfg.nodes.get(&CfgNodeId(3)).unwrap(),
+            CfgNode {
+                id: _,
+                nd: CfgNodeDescriptor::Start(_)
+            }
+        ));
+
         output_graph(&context, &cfg, "SimpleProgram_function1");
     }
 }
