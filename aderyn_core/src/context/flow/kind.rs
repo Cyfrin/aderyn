@@ -57,6 +57,13 @@ impl CfgNodeDescriptor {
             // Primitives
             CfgNodeDescriptor::VariableDeclarationStatement(_) => CfgNodeKind::Primitive,
             CfgNodeDescriptor::ExpressionStatement(_) => CfgNodeKind::Primitive,
+            CfgNodeDescriptor::PlaceholderStatement(_) => CfgNodeKind::Primitive,
+            CfgNodeDescriptor::Break(_) => CfgNodeKind::Primitive,
+            CfgNodeDescriptor::Continue(_) => CfgNodeKind::Primitive,
+            CfgNodeDescriptor::Return(_) => CfgNodeKind::Primitive,
+            CfgNodeDescriptor::EmitStatement(_) => CfgNodeKind::Primitive,
+            CfgNodeDescriptor::RevertStatement(_) => CfgNodeKind::Primitive,
+            CfgNodeDescriptor::InlineAssembly(_) => CfgNodeKind::Primitive,
 
             // Reducibles
             CfgNodeDescriptor::Block(_) => CfgNodeKind::Reducible,

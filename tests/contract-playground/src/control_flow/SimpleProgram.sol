@@ -16,5 +16,8 @@ contract SimpleProgram {
             c = start * times;
             c %= mod;
         }
+        mod = start - times; // TODO: Debug why this statement is missing in the control flow graph
+        c = start * times;
+        c = start * times;
     }
 }

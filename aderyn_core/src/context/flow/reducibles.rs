@@ -1,6 +1,6 @@
 use crate::{ast::Block, context::workspace_context::WorkspaceContext};
 
-use super::{ASTNode, AstNodeId, Cfg, CfgNodeDescriptor, CfgNodeId, CfgReduce, Statement};
+use super::{ASTNode, AstNodeId, Cfg, CfgNodeDescriptor, CfgNodeId, CfgReduce};
 
 // Control flow graph definitions nodes
 #[derive(Debug, Clone)]
@@ -17,36 +17,9 @@ impl CfgReduce for CfgBlock {
 
         if let Some(ASTNode::Block(block)) = context.nodes.get(&self.block) {
             for statement in &block.statements {
-                match statement {
-                    Statement::IfStatement(_)
-                    | Statement::ForStatement(_)
-                    | Statement::WhileStatement(_)
-                    | Statement::EmitStatement(_)
-                    | Statement::TryStatement(_)
-                    | Statement::UncheckedBlock(_)
-                    | Statement::Return(_)
-                    | Statement::RevertStatement(_)
-                    | Statement::InlineAssembly(_)
-                    | Statement::Break(_)
-                    | Statement::Continue(_)
-                    | Statement::DoWhileStatement(_)
-                    | Statement::PlaceholderStatement(_) => unimplemented!(),
-                    Statement::Block(n) => {
-                        let node_id = cfg.add_block_node(n);
-                        cfg.add_flow_edge(last_link, node_id);
-                        last_link = node_id;
-                    }
-                    Statement::VariableDeclarationStatement(n) => {
-                        let node_id = cfg.add_variable_declaration_statement(n);
-                        cfg.add_flow_edge(last_link, node_id);
-                        last_link = node_id;
-                    }
-                    Statement::ExpressionStatement(n) => {
-                        let node_id = cfg.add_expression_statement(n);
-                        cfg.add_flow_edge(last_link, node_id);
-                        last_link = node_id;
-                    }
-                }
+                let node_id = cfg.add_statement_node(statement);
+                cfg.add_flow_edge(last_link, node_id);
+                last_link = node_id;
             }
         }
 

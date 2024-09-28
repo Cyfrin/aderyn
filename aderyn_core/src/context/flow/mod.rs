@@ -3,6 +3,7 @@ pub mod error;
 pub mod kind;
 pub mod primitives;
 pub mod reducibles;
+pub mod utils;
 pub mod visualizer;
 pub mod voids;
 
@@ -14,7 +15,7 @@ pub use reducibles::CfgBlock;
 use std::collections::{hash_map::Entry, HashMap, VecDeque};
 
 use self::{
-    primitives::{CfgExpressionStatement, CfgVariableDeclarationStatement},
+    primitives::*,
     voids::{CfgEndNode, CfgStartNode},
 };
 
@@ -49,6 +50,13 @@ pub enum CfgNodeDescriptor {
     // Primitives
     VariableDeclarationStatement(Box<CfgVariableDeclarationStatement>),
     ExpressionStatement(Box<CfgExpressionStatement>),
+    PlaceholderStatement(Box<CfgPlaceholderStatement>),
+    Break(Box<CfgBreakStatement>),
+    Continue(Box<CfgContinueStatement>),
+    Return(Box<CfgReturnStatement>),
+    EmitStatement(Box<CfgEmitStatement>),
+    RevertStatement(Box<CfgRevertStatement>),
+    InlineAssembly(Box<CfgInlineAssemblyStatement>),
 
     // Reducibles
     Block(Box<CfgBlock>),
@@ -205,6 +213,13 @@ impl Cfg {
             CfgNodeDescriptor::Start(_)
             | CfgNodeDescriptor::End(_)
             | CfgNodeDescriptor::VariableDeclarationStatement(_)
+            | CfgNodeDescriptor::Break(_)
+            | CfgNodeDescriptor::Return(_)
+            | CfgNodeDescriptor::Continue(_)
+            | CfgNodeDescriptor::RevertStatement(_)
+            | CfgNodeDescriptor::PlaceholderStatement(_)
+            | CfgNodeDescriptor::InlineAssembly(_)
+            | CfgNodeDescriptor::EmitStatement(_)
             | CfgNodeDescriptor::ExpressionStatement(_) => {
                 unreachable!("Expect only reducible nodes")
             }
@@ -213,18 +228,18 @@ impl Cfg {
             CfgNodeDescriptor::Block(cfg_block) => cfg_block.reduce(context, self),
         };
 
-        // Step 6: Remove existing connections with redution_candidate
-        self.remove_raw_edges_involving(reduction_candidate);
-
-        // Step 7: Connect all the predecessors to `s`
+        // Step 6: Connect all the predecessors to `s`
         for pred in &predecessors {
             self.add_flow_edge(*pred, start_id);
         }
 
-        // Step 8: Connect `e` to all the successors
+        // Step 7: Connect `e` to all the successors
         for succ in &successors {
             self.add_flow_edge(end_id, *succ);
         }
+
+        // Step 8: Remove existing connections with redution_candidate
+        self.remove_raw_edges_involving(reduction_candidate);
     }
 }
 
@@ -335,6 +350,8 @@ mod control_flow_tests {
             &context,
             function.body.as_ref().expect("function2 not to be defined"),
         );
+
+        println!("{:#?}", cfg.nodes.clone());
 
         assert_eq!(cfg.nodes.len(), 11);
         output_graph(&context, &cfg, "SimpleProgram_function2");
