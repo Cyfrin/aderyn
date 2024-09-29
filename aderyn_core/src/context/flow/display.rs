@@ -30,6 +30,7 @@ impl CfgNodeDescriptor {
             CfgNodeDescriptor::DoWhileStatement(_) => String::from("REDUCIBLE DO-WHILE-STATEMENT"),
             CfgNodeDescriptor::ForStatement(_) => String::from("REDUCIBLE FOR-STATEMENT"),
             CfgNodeDescriptor::Block(_) => String::from("REDUCIBLE BLOCK"),
+            CfgNodeDescriptor::UncheckedBlock(_) => String::from("REDUCIBLE UNCHECKED BLOCK"),
         }
     }
 }
@@ -39,6 +40,9 @@ impl CfgStartNode {
         match self {
             CfgStartNode::Start => String::from("START"),
             CfgStartNode::StartBlock(ast_id) => format!("START BLOCK ({})", ast_id),
+            CfgStartNode::StartUncheckedBlock(ast_id) => {
+                format!("START UNCHECKED BLOCK ({})", ast_id)
+            }
             CfgStartNode::StartIf(ast_id) => format!("START IF ({})", ast_id),
             CfgStartNode::StartIfCond => String::from("START IF COND"),
             CfgStartNode::StartIfTrue => String::from("START IF TRUE BRANCH"),
@@ -63,6 +67,7 @@ impl CfgEndNode {
         match self {
             CfgEndNode::End => String::from("END"),
             CfgEndNode::EndBlock(ast_id) => format!("END BLOCK ({})", ast_id),
+            CfgEndNode::EndUncheckedBlock(ast_id) => format!("END UNCHECKED BLOCK ({})", ast_id),
             CfgEndNode::EndIf(ast_id) => format!("END IF ({})", ast_id),
             CfgEndNode::EndIfCond => String::from("END IF COND"),
             CfgEndNode::EndIfTrue => String::from("END IF TRUE BRANCH"),

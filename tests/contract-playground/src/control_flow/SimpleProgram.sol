@@ -110,4 +110,12 @@ contract SimpleProgram {
             total *= 2;
         } while (total < 10000);
     }
+
+    function function10() external {
+        uint256 i;
+        unchecked {
+            i -= 319;
+            i -= 2 * i;
+        }
+    }
 }

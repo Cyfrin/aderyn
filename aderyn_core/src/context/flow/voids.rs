@@ -5,6 +5,7 @@ use super::{AstNodeId, Cfg, CfgNodeDescriptor, CfgNodeId};
 pub enum CfgStartNode {
     Start,
     StartBlock(AstNodeId),
+    StartUncheckedBlock(AstNodeId),
     StartIf(AstNodeId),
     StartIfCond,
     StartIfTrue,
@@ -26,6 +27,7 @@ pub enum CfgStartNode {
 pub enum CfgEndNode {
     End,
     EndBlock(AstNodeId),
+    EndUncheckedBlock(AstNodeId),
     EndIf(AstNodeId),
     EndIfCond,
     EndIfTrue,
@@ -186,5 +188,15 @@ impl Cfg {
     }
     pub fn add_end_do_while_body_node(&mut self) -> CfgNodeId {
         self.add_node(CfgNodeDescriptor::End(Box::new(CfgEndNode::EndDoWhileBody)))
+    }
+    pub fn add_start_unchecked_block_node(&mut self, unchecked_block: AstNodeId) -> CfgNodeId {
+        self.add_node(CfgNodeDescriptor::Start(Box::new(
+            CfgStartNode::StartUncheckedBlock(unchecked_block),
+        )))
+    }
+    pub fn add_end_unchecked_block_node(&mut self, unchecked_block: AstNodeId) -> CfgNodeId {
+        self.add_node(CfgNodeDescriptor::End(Box::new(
+            CfgEndNode::EndUncheckedBlock(unchecked_block),
+        )))
     }
 }

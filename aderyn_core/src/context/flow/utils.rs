@@ -3,7 +3,8 @@ use super::{Cfg, CfgNodeId, Statement};
 impl Cfg {
     pub fn add_statement_node(&mut self, stmt: &Statement) -> CfgNodeId {
         match stmt {
-            Statement::TryStatement(_) | Statement::UncheckedBlock(_) => unimplemented!(),
+            Statement::TryStatement(_) => unimplemented!(),
+            Statement::UncheckedBlock(n) => self.add_unchecked_block_node(n),
             Statement::DoWhileStatement(n) => self.add_do_while_statement(n),
             Statement::ForStatement(n) => self.add_for_statement(n),
             Statement::EmitStatement(n) => self.add_emit_statement(n),

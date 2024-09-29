@@ -71,6 +71,7 @@ impl CfgNodeDescriptor {
 
             // Reducibles
             CfgNodeDescriptor::Block(_) => CfgNodeKind::Reducible,
+            CfgNodeDescriptor::UncheckedBlock(_) => CfgNodeKind::Reducible,
             CfgNodeDescriptor::IfStatement(_) => CfgNodeKind::Reducible,
             CfgNodeDescriptor::WhileStatement(_) => CfgNodeKind::Reducible,
             CfgNodeDescriptor::ForStatement(_) => CfgNodeKind::Reducible,

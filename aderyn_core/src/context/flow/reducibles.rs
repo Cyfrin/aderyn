@@ -358,3 +358,48 @@ impl Cfg {
         )))
     }
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+#[derive(Debug, Clone)]
+pub struct CfgUncheckedBlock {
+    pub unchecked_block: AstNodeId,
+}
+
+impl CfgReduce for CfgUncheckedBlock {
+    fn reduce(&self, context: &WorkspaceContext, cfg: &mut Cfg) -> (CfgNodeId, CfgNodeId) {
+        let start_id = cfg.add_start_unchecked_block_node(self.unchecked_block);
+        let end_id = cfg.add_end_unchecked_block_node(self.unchecked_block);
+
+        let mut last_link = start_id;
+
+        if let Some(ASTNode::UncheckedBlock(block)) = context.nodes.get(&self.unchecked_block) {
+            for statement in &block.statements {
+                let node_id = cfg.add_statement_node(statement);
+                cfg.add_flow_edge(last_link, node_id);
+                last_link = node_id;
+            }
+        }
+
+        cfg.add_flow_edge(last_link, end_id);
+
+        (start_id, end_id)
+    }
+}
+
+impl CfgUncheckedBlock {
+    pub fn from(unchecked_block: &UncheckedBlock) -> Self {
+        Self {
+            unchecked_block: unchecked_block.id,
+        }
+    }
+}
+
+/// Helper functions
+impl Cfg {
+    pub fn add_unchecked_block_node(&mut self, unchecked_block: &UncheckedBlock) -> CfgNodeId {
+        self.add_node(CfgNodeDescriptor::UncheckedBlock(Box::new(
+            CfgUncheckedBlock::from(unchecked_block),
+        )))
+    }
+}

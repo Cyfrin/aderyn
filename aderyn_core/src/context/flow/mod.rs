@@ -16,7 +16,9 @@ use std::collections::{hash_map::Entry, HashMap, VecDeque};
 
 use self::{
     primitives::*,
-    reducibles::{CfgDoWhileStatement, CfgForStatement, CfgIfStatement, CfgWhileStatement},
+    reducibles::{
+        CfgDoWhileStatement, CfgForStatement, CfgIfStatement, CfgUncheckedBlock, CfgWhileStatement,
+    },
     voids::{CfgEndNode, CfgStartNode},
 };
 
@@ -65,6 +67,7 @@ pub enum CfgNodeDescriptor {
 
     // Reducibles
     Block(Box<CfgBlock>),
+    UncheckedBlock(Box<CfgUncheckedBlock>),
     IfStatement(Box<CfgIfStatement>),
     WhileStatement(Box<CfgWhileStatement>),
     ForStatement(Box<CfgForStatement>),
@@ -239,6 +242,7 @@ impl Cfg {
 
             // Reducibles
             CfgNodeDescriptor::Block(cfg_block) => cfg_block.reduce(context, self),
+            CfgNodeDescriptor::UncheckedBlock(cfg_block) => cfg_block.reduce(context, self),
             CfgNodeDescriptor::IfStatement(cfg_block) => cfg_block.reduce(context, self),
             CfgNodeDescriptor::WhileStatement(cfg_block) => cfg_block.reduce(context, self),
             CfgNodeDescriptor::ForStatement(cfg_block) => cfg_block.reduce(context, self),
@@ -502,6 +506,28 @@ mod control_flow_tests {
         );
 
         output_graph(&context, &cfg, "SimpleProgram_function9");
-        assert_eq!(cfg.nodes.len(), 100);
+        assert_eq!(cfg.nodes.len(), 15);
+    }
+
+    #[test]
+    #[serial]
+    fn simple_program_function10() {
+        let context = load_solidity_source_unit(
+            "../tests/contract-playground/src/control_flow/SimpleProgram.sol",
+        );
+        let contract = context.find_contract_by_name("SimpleProgram");
+        let function = contract.find_function_by_name("function10");
+        let mut cfg = Cfg::new();
+
+        cfg.accept_block(
+            &context,
+            function
+                .body
+                .as_ref()
+                .expect("function10 not to be defined"),
+        );
+
+        output_graph(&context, &cfg, "SimpleProgram_function10");
+        assert_eq!(cfg.nodes.len(), 9);
     }
 }
