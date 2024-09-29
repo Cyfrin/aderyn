@@ -295,3 +295,66 @@ impl Cfg {
         )))
     }
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+#[derive(Debug, Clone)]
+pub struct CfgDoWhileStatement {
+    do_while_statement: AstNodeId,
+}
+
+impl CfgReduce for CfgDoWhileStatement {
+    fn reduce(&self, context: &WorkspaceContext, cfg: &mut Cfg) -> (CfgNodeId, CfgNodeId) {
+        let start_id = cfg.add_start_do_while_node(self.do_while_statement);
+        let end_id = cfg.add_end_do_while_node(self.do_while_statement);
+
+        let Some(ASTNode::DoWhileStatement(ast_do_while_stmt)) =
+            context.nodes.get(&self.do_while_statement)
+        else {
+            cfg.add_flow_edge(start_id, end_id);
+            return (start_id, end_id);
+        };
+
+        // Loop body
+        let start_loop_body = cfg.add_start_do_while_body_node();
+        let end_loop_body = cfg.add_end_do_while_body_node();
+        let loop_body = cfg.add_block_node(&ast_do_while_stmt.body);
+
+        cfg.add_flow_edge(start_id, start_loop_body);
+        cfg.add_flow_edge(start_loop_body, loop_body);
+        cfg.add_flow_edge(loop_body, end_loop_body);
+
+        // Loop condition
+        let start_loop_cond = cfg.add_start_do_while_cond_node();
+        let end_loop_cond = cfg.add_end_do_while_cond_node();
+        let loop_cond = cfg.add_do_while_statement_condition(&ast_do_while_stmt.condition);
+
+        cfg.add_flow_edge(end_loop_body, start_loop_cond);
+        cfg.add_flow_edge(start_loop_cond, loop_cond);
+        cfg.add_flow_edge(loop_cond, end_loop_cond);
+
+        // Loop link
+        cfg.add_flow_edge(end_loop_cond, start_loop_body);
+
+        // Exit link
+        cfg.add_flow_edge(end_loop_cond, end_id);
+
+        (start_id, end_id)
+    }
+}
+
+impl CfgDoWhileStatement {
+    pub fn from(do_while_stmt: &DoWhileStatement) -> Self {
+        Self {
+            do_while_statement: do_while_stmt.id,
+        }
+    }
+}
+
+impl Cfg {
+    pub fn add_do_while_statement(&mut self, do_while_stmt: &DoWhileStatement) -> CfgNodeId {
+        self.add_node(CfgNodeDescriptor::DoWhileStatement(Box::new(
+            CfgDoWhileStatement::from(do_while_stmt),
+        )))
+    }
+}

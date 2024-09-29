@@ -67,12 +67,14 @@ impl CfgNodeDescriptor {
             CfgNodeDescriptor::IfStatementCondition(_) => CfgNodeKind::Primitive,
             CfgNodeDescriptor::WhileStatementCondition(_) => CfgNodeKind::Primitive,
             CfgNodeDescriptor::ForStatementCondition(_) => CfgNodeKind::Primitive,
+            CfgNodeDescriptor::DoWhileStatementCondition(_) => CfgNodeKind::Primitive,
 
             // Reducibles
             CfgNodeDescriptor::Block(_) => CfgNodeKind::Reducible,
             CfgNodeDescriptor::IfStatement(_) => CfgNodeKind::Reducible,
             CfgNodeDescriptor::WhileStatement(_) => CfgNodeKind::Reducible,
             CfgNodeDescriptor::ForStatement(_) => CfgNodeKind::Reducible,
+            CfgNodeDescriptor::DoWhileStatement(_) => CfgNodeKind::Reducible,
         }
     }
 }

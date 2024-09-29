@@ -103,4 +103,11 @@ contract SimpleProgram {
             }
         }
     }
+
+    function function9() external {
+        uint256 total = 0;
+        do {
+            total *= 2;
+        } while (total < 10000);
+    }
 }

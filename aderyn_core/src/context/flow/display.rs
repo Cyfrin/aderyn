@@ -22,10 +22,12 @@ impl CfgNodeDescriptor {
             CfgNodeDescriptor::IfStatementCondition(n) => n.peek(context),
             CfgNodeDescriptor::WhileStatementCondition(n) => n.peek(context),
             CfgNodeDescriptor::ForStatementCondition(n) => n.peek(context),
+            CfgNodeDescriptor::DoWhileStatementCondition(n) => n.peek(context),
 
             // Reducibles
             CfgNodeDescriptor::IfStatement(_) => String::from("REDUCIBLE IF-STATEMENT"),
             CfgNodeDescriptor::WhileStatement(_) => String::from("REDUCIBLE WHILE-STATEMENT"),
+            CfgNodeDescriptor::DoWhileStatement(_) => String::from("REDUCIBLE DO-WHILE-STATEMENT"),
             CfgNodeDescriptor::ForStatement(_) => String::from("REDUCIBLE FOR-STATEMENT"),
             CfgNodeDescriptor::Block(_) => String::from("REDUCIBLE BLOCK"),
         }
@@ -49,6 +51,9 @@ impl CfgStartNode {
             CfgStartNode::StartForCond => String::from("START FOR COND"),
             CfgStartNode::StartForLoopExp => String::from("START FOR LOOP_EXP"),
             CfgStartNode::StartForBody => String::from("START FOR BODY"),
+            CfgStartNode::StartDoWhile(ast_id) => format!("START DO WHILE ({})", ast_id),
+            CfgStartNode::StartDoWhileCond => String::from("START DO WHILE COND"),
+            CfgStartNode::StartDoWhileBody => String::from("START DO WHILE BODY"),
         }
     }
 }
@@ -70,6 +75,9 @@ impl CfgEndNode {
             CfgEndNode::EndForCond => String::from("END FOR COND"),
             CfgEndNode::EndForLoopExp => String::from("END FOR LOOP_EXP"),
             CfgEndNode::EndForBody => String::from("END FOR BODY"),
+            CfgEndNode::EndDoWhile(ast_id) => format!("END DO WHILE ({})", ast_id),
+            CfgEndNode::EndDoWhileCond => String::from("END DO WHILE COND"),
+            CfgEndNode::EndDoWhileBody => String::from("END DO WHILE BODY"),
         }
     }
 }
@@ -205,6 +213,21 @@ impl CfgForStatementCondition {
             return String::from("For Cond");
         };
         let mut content = format!("For Cond ({})", for_stmt);
+        if let Some(node) = context.nodes.get(&for_stmt) {
+            if let Some(inside) = node.peek(context) {
+                content.push_str(&format!(": \n{}", inside));
+            }
+        }
+        content
+    }
+}
+
+impl CfgDoWhileStatementCondition {
+    pub fn peek(&self, context: &WorkspaceContext) -> String {
+        let Some(for_stmt) = self.do_while_stmt_condition else {
+            return String::from("Do While Cond");
+        };
+        let mut content = format!("Do While Cond ({})", for_stmt);
         if let Some(node) = context.nodes.get(&for_stmt) {
             if let Some(inside) = node.peek(context) {
                 content.push_str(&format!(": \n{}", inside));
