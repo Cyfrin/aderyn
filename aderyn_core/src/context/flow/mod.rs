@@ -417,7 +417,7 @@ mod control_flow_tests {
         );
 
         output_graph(&context, &cfg, "SimpleProgram_function5");
-        //assert_eq!(cfg.nodes.len(), 48);
+        assert_eq!(cfg.nodes.len(), 25);
     }
 
     #[test]
@@ -436,6 +436,6 @@ mod control_flow_tests {
         );
 
         output_graph(&context, &cfg, "SimpleProgram_function6");
-        //assert_eq!(cfg.nodes.len(), 48);
+        assert_eq!(cfg.nodes.len(), 31);
     }
 }
