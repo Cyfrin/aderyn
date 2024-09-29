@@ -20,9 +20,11 @@ impl CfgNodeDescriptor {
             CfgNodeDescriptor::RevertStatement(n) => n.peek(context),
             CfgNodeDescriptor::InlineAssembly(n) => n.peek(context),
             CfgNodeDescriptor::IfStatementCondition(n) => n.peek(context),
+            CfgNodeDescriptor::WhileStatementCondition(n) => n.peek(context),
 
             // Reducibles
             CfgNodeDescriptor::IfStatement(_) => String::from("REDUCIBLE IF-STATEMENT"),
+            CfgNodeDescriptor::WhileStatement(_) => String::from("REDUCIBLE WHILE-STATEMENT"),
             CfgNodeDescriptor::Block(_) => String::from("REDUCIBLE BLOCK"),
         }
     }
@@ -37,6 +39,9 @@ impl CfgStartNode {
             CfgStartNode::StartIfCond => String::from("START IF COND"),
             CfgStartNode::StartIfTrue => String::from("START IF TRUE BRANCH"),
             CfgStartNode::StartIfFalse => String::from("START IF FALSE BRANCH"),
+            CfgStartNode::StartWhile(ast_id) => format!("START WHILE ({})", ast_id),
+            CfgStartNode::StartWhileCond => String::from("START WHILE COND"),
+            CfgStartNode::StartWhileBody => String::from("START WHILE BODY"),
         }
     }
 }
@@ -50,6 +55,9 @@ impl CfgEndNode {
             CfgEndNode::EndIfCond => String::from("END IF COND"),
             CfgEndNode::EndIfTrue => String::from("END IF TRUE BRANCH"),
             CfgEndNode::EndIfFalse => String::from("END IF FALSE BRANCH"),
+            CfgEndNode::EndWhile(ast_id) => format!("END WHILE ({})", ast_id),
+            CfgEndNode::EndWhileCond => String::from("END WHILE COND"),
+            CfgEndNode::EndWhileBody => String::from("END WHILE BODY"),
         }
     }
 }
@@ -156,6 +164,21 @@ impl CfgIfStatementCondition {
         };
         let mut content = format!("If Cond ({})", if_cond);
         if let Some(node) = context.nodes.get(&if_cond) {
+            if let Some(inside) = node.peek(context) {
+                content.push_str(&format!(": \n{}", inside));
+            }
+        }
+        content
+    }
+}
+
+impl CfgWhileStatementCondition {
+    pub fn peek(&self, context: &WorkspaceContext) -> String {
+        let Some(while_cond) = self.while_stmt_condition else {
+            return String::from("While Cond");
+        };
+        let mut content = format!("While Cond ({})", while_cond);
+        if let Some(node) = context.nodes.get(&while_cond) {
             if let Some(inside) = node.peek(context) {
                 content.push_str(&format!(": \n{}", inside));
             }

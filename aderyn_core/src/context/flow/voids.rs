@@ -9,6 +9,9 @@ pub enum CfgStartNode {
     StartIfCond,
     StartIfTrue,
     StartIfFalse,
+    StartWhile(AstNodeId),
+    StartWhileCond,
+    StartWhileBody,
 }
 
 #[derive(Debug, Clone)]
@@ -19,6 +22,9 @@ pub enum CfgEndNode {
     EndIfCond,
     EndIfTrue,
     EndIfFalse,
+    EndWhile(AstNodeId),
+    EndWhileCond,
+    EndWhileBody,
 }
 
 /// Helper functions
@@ -70,5 +76,31 @@ impl Cfg {
     }
     pub fn add_end_if_false_branch_node(&mut self) -> CfgNodeId {
         self.add_node(CfgNodeDescriptor::End(Box::new(CfgEndNode::EndIfFalse)))
+    }
+    pub fn add_start_while_node(&mut self, while_stmt: AstNodeId) -> CfgNodeId {
+        self.add_node(CfgNodeDescriptor::Start(Box::new(
+            CfgStartNode::StartWhile(while_stmt),
+        )))
+    }
+    pub fn add_start_while_cond_node(&mut self) -> CfgNodeId {
+        self.add_node(CfgNodeDescriptor::Start(Box::new(
+            CfgStartNode::StartWhileCond,
+        )))
+    }
+    pub fn add_start_while_body_node(&mut self) -> CfgNodeId {
+        self.add_node(CfgNodeDescriptor::Start(Box::new(
+            CfgStartNode::StartWhileBody,
+        )))
+    }
+    pub fn add_end_while_node(&mut self, while_stmt: AstNodeId) -> CfgNodeId {
+        self.add_node(CfgNodeDescriptor::End(Box::new(CfgEndNode::EndWhile(
+            while_stmt,
+        ))))
+    }
+    pub fn add_end_while_cond_node(&mut self) -> CfgNodeId {
+        self.add_node(CfgNodeDescriptor::End(Box::new(CfgEndNode::EndWhileCond)))
+    }
+    pub fn add_end_while_body_node(&mut self) -> CfgNodeId {
+        self.add_node(CfgNodeDescriptor::End(Box::new(CfgEndNode::EndWhileBody)))
     }
 }

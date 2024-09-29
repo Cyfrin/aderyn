@@ -232,3 +232,25 @@ impl Cfg {
         )))
     }
 }
+///////////////////////////////////////////////////////////////////////////
+
+#[derive(Debug, Clone)]
+pub struct CfgWhileStatementCondition {
+    pub while_stmt_condition: Option<AstNodeId>,
+}
+
+impl CfgWhileStatementCondition {
+    pub fn from(exp: &Expression) -> Self {
+        Self {
+            while_stmt_condition: exp.get_node_id(),
+        }
+    }
+}
+
+impl Cfg {
+    pub fn add_while_statement_condition(&mut self, exp: &Expression) -> CfgNodeId {
+        self.add_node(CfgNodeDescriptor::WhileStatementCondition(Box::new(
+            CfgWhileStatementCondition::from(exp),
+        )))
+    }
+}

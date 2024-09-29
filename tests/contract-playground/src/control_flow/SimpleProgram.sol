@@ -50,4 +50,37 @@ contract SimpleProgram {
             mod = start - times;
         }
     }
+
+    function function5(
+        uint256 num,
+        uint256 increment,
+        uint256 max
+    ) external returns (uint256) {
+        uint256 i = num;
+        while (num < max) {
+            i += increment;
+        }
+        num *= num;
+        while (--num > max) return i;
+        i *= increment;
+    }
+
+    event Hoorah(uint256 indexed f);
+
+    function function6(
+        uint256 num,
+        uint256 increment,
+        uint256 max
+    ) external returns (uint256) {
+        uint256 i = num;
+        while (num < max) {
+            if (i + increment < max) {
+                emit Hoorah(i);
+                i += increment;
+            } else {
+                i += 1;
+            }
+        }
+        return i;
+    }
 }

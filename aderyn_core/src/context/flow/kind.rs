@@ -65,10 +65,12 @@ impl CfgNodeDescriptor {
             CfgNodeDescriptor::RevertStatement(_) => CfgNodeKind::Primitive,
             CfgNodeDescriptor::InlineAssembly(_) => CfgNodeKind::Primitive,
             CfgNodeDescriptor::IfStatementCondition(_) => CfgNodeKind::Primitive,
+            CfgNodeDescriptor::WhileStatementCondition(_) => CfgNodeKind::Primitive,
 
             // Reducibles
             CfgNodeDescriptor::Block(_) => CfgNodeKind::Reducible,
             CfgNodeDescriptor::IfStatement(_) => CfgNodeKind::Reducible,
+            CfgNodeDescriptor::WhileStatement(_) => CfgNodeKind::Reducible,
         }
     }
 }

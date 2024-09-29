@@ -1,6 +1,8 @@
 use crate::{ast::Block, context::workspace_context::WorkspaceContext};
 
-use super::{ASTNode, AstNodeId, Cfg, CfgNodeDescriptor, CfgNodeId, CfgReduce, IfStatement};
+use super::{ASTNode, AstNodeId, Cfg, CfgNodeDescriptor, CfgNodeId, CfgReduce};
+
+use crate::ast::*;
 
 // Control flow graph definitions nodes
 #[derive(Debug, Clone)]
@@ -130,3 +132,64 @@ impl Cfg {
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
+
+#[derive(Debug, Clone)]
+pub struct CfgWhileStatement {
+    while_statement: AstNodeId,
+}
+
+impl CfgReduce for CfgWhileStatement {
+    fn reduce(&self, context: &WorkspaceContext, cfg: &mut Cfg) -> (CfgNodeId, CfgNodeId) {
+        let start_id = cfg.add_start_while_node(self.while_statement);
+        let end_id = cfg.add_end_while_node(self.while_statement);
+
+        let Some(ASTNode::WhileStatement(ast_while_stmt)) =
+            context.nodes.get(&self.while_statement)
+        else {
+            cfg.add_flow_edge(start_id, end_id);
+            return (start_id, end_id);
+        };
+
+        let start_cond = cfg.add_start_while_cond_node();
+        let end_cond = cfg.add_end_while_cond_node();
+        let condition = cfg.add_while_statement_condition(&ast_while_stmt.condition);
+
+        cfg.add_flow_edge(start_id, start_cond);
+        cfg.add_flow_edge(start_cond, condition);
+        cfg.add_flow_edge(condition, end_cond);
+
+        // Exit happens from the condition node
+        cfg.add_flow_edge(end_cond, end_id);
+
+        // Loop arcs around the condition
+        let start_body = cfg.add_start_while_body_node();
+        let end_body = cfg.add_end_while_body_node();
+        let body = match &ast_while_stmt.body {
+            BlockOrStatement::Block(block) => cfg.add_block_node(block),
+            BlockOrStatement::Statement(stmt) => cfg.add_statement_node(stmt),
+        };
+
+        cfg.add_flow_edge(end_cond, start_body);
+        cfg.add_flow_edge(start_body, body);
+        cfg.add_flow_edge(body, end_body);
+        cfg.add_flow_edge(end_body, start_cond);
+
+        (start_id, end_id)
+    }
+}
+
+impl CfgWhileStatement {
+    pub fn from(while_stmt: &WhileStatement) -> Self {
+        Self {
+            while_statement: while_stmt.id,
+        }
+    }
+}
+
+impl Cfg {
+    pub fn add_while_statement(&mut self, while_stmt: &WhileStatement) -> CfgNodeId {
+        self.add_node(CfgNodeDescriptor::WhileStatement(Box::new(
+            CfgWhileStatement::from(while_stmt),
+        )))
+    }
+}
