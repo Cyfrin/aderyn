@@ -254,3 +254,26 @@ impl Cfg {
         )))
     }
 }
+
+///////////////////////////////////////////////////////////////////////////
+
+#[derive(Debug, Clone)]
+pub struct CfgForStatementCondition {
+    pub for_stmt_condition: Option<AstNodeId>,
+}
+
+impl CfgForStatementCondition {
+    pub fn from(exp: &Expression) -> Self {
+        Self {
+            for_stmt_condition: exp.get_node_id(),
+        }
+    }
+}
+
+impl Cfg {
+    pub fn add_for_statement_condition(&mut self, exp: &Expression) -> CfgNodeId {
+        self.add_node(CfgNodeDescriptor::ForStatementCondition(Box::new(
+            CfgForStatementCondition::from(exp),
+        )))
+    }
+}

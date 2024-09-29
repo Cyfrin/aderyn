@@ -12,6 +12,11 @@ pub enum CfgStartNode {
     StartWhile(AstNodeId),
     StartWhileCond,
     StartWhileBody,
+    StartFor(AstNodeId),
+    StartForInitExp,
+    StartForCond,
+    StartForLoopExp,
+    StartForBody,
 }
 
 #[derive(Debug, Clone)]
@@ -25,6 +30,11 @@ pub enum CfgEndNode {
     EndWhile(AstNodeId),
     EndWhileCond,
     EndWhileBody,
+    EndFor(AstNodeId),
+    EndForInitExp,
+    EndForCond,
+    EndForLoopExp,
+    EndForBody,
 }
 
 /// Helper functions
@@ -102,5 +112,47 @@ impl Cfg {
     }
     pub fn add_end_while_body_node(&mut self) -> CfgNodeId {
         self.add_node(CfgNodeDescriptor::End(Box::new(CfgEndNode::EndWhileBody)))
+    }
+    pub fn add_start_for_node(&mut self, for_stmt: AstNodeId) -> CfgNodeId {
+        self.add_node(CfgNodeDescriptor::Start(Box::new(CfgStartNode::StartFor(
+            for_stmt,
+        ))))
+    }
+    pub fn add_start_for_init_exp_node(&mut self) -> CfgNodeId {
+        self.add_node(CfgNodeDescriptor::Start(Box::new(
+            CfgStartNode::StartForInitExp,
+        )))
+    }
+    pub fn add_start_for_cond_node(&mut self) -> CfgNodeId {
+        self.add_node(CfgNodeDescriptor::Start(Box::new(
+            CfgStartNode::StartForCond,
+        )))
+    }
+    pub fn add_start_for_exp_node(&mut self) -> CfgNodeId {
+        self.add_node(CfgNodeDescriptor::Start(Box::new(
+            CfgStartNode::StartForLoopExp,
+        )))
+    }
+    pub fn add_start_for_body_node(&mut self) -> CfgNodeId {
+        self.add_node(CfgNodeDescriptor::Start(Box::new(
+            CfgStartNode::StartForBody,
+        )))
+    }
+    pub fn add_end_for_node(&mut self, for_stmt: AstNodeId) -> CfgNodeId {
+        self.add_node(CfgNodeDescriptor::End(Box::new(CfgEndNode::EndFor(
+            for_stmt,
+        ))))
+    }
+    pub fn add_end_for_init_exp_node(&mut self) -> CfgNodeId {
+        self.add_node(CfgNodeDescriptor::End(Box::new(CfgEndNode::EndForInitExp)))
+    }
+    pub fn add_end_for_cond_node(&mut self) -> CfgNodeId {
+        self.add_node(CfgNodeDescriptor::End(Box::new(CfgEndNode::EndForCond)))
+    }
+    pub fn add_end_for_exp_node(&mut self) -> CfgNodeId {
+        self.add_node(CfgNodeDescriptor::End(Box::new(CfgEndNode::EndForLoopExp)))
+    }
+    pub fn add_end_for_body_node(&mut self) -> CfgNodeId {
+        self.add_node(CfgNodeDescriptor::End(Box::new(CfgEndNode::EndForBody)))
     }
 }

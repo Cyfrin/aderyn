@@ -83,4 +83,24 @@ contract SimpleProgram {
         }
         return i;
     }
+
+    function function7() external {
+        uint256 total = 0;
+        for (uint256 i = 0; i < 100; ++i) {
+            total += i;
+        }
+        emit Hoorah(total);
+    }
+
+    function function8() external {
+        uint256 total = 0;
+        for (uint256 i = 0; i < 100; ++i) {
+            if (total % i == 0) {
+                continue;
+            }
+            for (uint256 j = 0; j < i; ++j) {
+                total += i;
+            }
+        }
+    }
 }

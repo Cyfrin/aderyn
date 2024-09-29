@@ -3,10 +3,10 @@ use super::{Cfg, CfgNodeId, Statement};
 impl Cfg {
     pub fn add_statement_node(&mut self, stmt: &Statement) -> CfgNodeId {
         match stmt {
-            Statement::ForStatement(_)
-            | Statement::TryStatement(_)
+            Statement::TryStatement(_)
             | Statement::UncheckedBlock(_)
             | Statement::DoWhileStatement(_) => unimplemented!(),
+            Statement::ForStatement(n) => self.add_for_statement(n),
             Statement::EmitStatement(n) => self.add_emit_statement(n),
             Statement::WhileStatement(n) => self.add_while_statement(n),
             Statement::IfStatement(n) => self.add_if_statement(n),

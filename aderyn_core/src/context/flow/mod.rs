@@ -16,7 +16,7 @@ use std::collections::{hash_map::Entry, HashMap, VecDeque};
 
 use self::{
     primitives::*,
-    reducibles::{CfgIfStatement, CfgWhileStatement},
+    reducibles::{CfgForStatement, CfgIfStatement, CfgWhileStatement},
     voids::{CfgEndNode, CfgStartNode},
 };
 
@@ -60,10 +60,13 @@ pub enum CfgNodeDescriptor {
     InlineAssembly(Box<CfgInlineAssemblyStatement>),
     IfStatementCondition(Box<CfgIfStatementCondition>),
     WhileStatementCondition(Box<CfgWhileStatementCondition>),
+    ForStatementCondition(Box<CfgForStatementCondition>),
+
     // Reducibles
     Block(Box<CfgBlock>),
     IfStatement(Box<CfgIfStatement>),
     WhileStatement(Box<CfgWhileStatement>),
+    ForStatement(Box<CfgForStatement>),
 }
 
 #[derive(Debug, Clone)]
@@ -226,6 +229,7 @@ impl Cfg {
             | CfgNodeDescriptor::EmitStatement(_)
             | CfgNodeDescriptor::ExpressionStatement(_)
             | CfgNodeDescriptor::WhileStatementCondition(_)
+            | CfgNodeDescriptor::ForStatementCondition(_)
             | CfgNodeDescriptor::IfStatementCondition(_) => {
                 unreachable!("Expect only reducible nodes")
             }
@@ -234,6 +238,7 @@ impl Cfg {
             CfgNodeDescriptor::Block(cfg_block) => cfg_block.reduce(context, self),
             CfgNodeDescriptor::IfStatement(cfg_block) => cfg_block.reduce(context, self),
             CfgNodeDescriptor::WhileStatement(cfg_block) => cfg_block.reduce(context, self),
+            CfgNodeDescriptor::ForStatement(cfg_block) => cfg_block.reduce(context, self),
         };
 
         // Step 6: Connect all the predecessors to `s`
@@ -437,5 +442,43 @@ mod control_flow_tests {
 
         output_graph(&context, &cfg, "SimpleProgram_function6");
         assert_eq!(cfg.nodes.len(), 31);
+    }
+
+    #[test]
+    #[serial]
+    fn simple_program_function7() {
+        let context = load_solidity_source_unit(
+            "../tests/contract-playground/src/control_flow/SimpleProgram.sol",
+        );
+        let contract = context.find_contract_by_name("SimpleProgram");
+        let function = contract.find_function_by_name("function7");
+        let mut cfg = Cfg::new();
+
+        cfg.accept_block(
+            &context,
+            function.body.as_ref().expect("function7 not to be defined"),
+        );
+
+        output_graph(&context, &cfg, "SimpleProgram_function7");
+        assert_eq!(cfg.nodes.len(), 22);
+    }
+
+    #[test]
+    #[serial]
+    fn simple_program_function8() {
+        let context = load_solidity_source_unit(
+            "../tests/contract-playground/src/control_flow/SimpleProgram.sol",
+        );
+        let contract = context.find_contract_by_name("SimpleProgram");
+        let function = contract.find_function_by_name("function8");
+        let mut cfg = Cfg::new();
+
+        cfg.accept_block(
+            &context,
+            function.body.as_ref().expect("function8 not to be defined"),
+        );
+
+        output_graph(&context, &cfg, "SimpleProgram_function8");
+        assert_eq!(cfg.nodes.len(), 48);
     }
 }

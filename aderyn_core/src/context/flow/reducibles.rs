@@ -193,3 +193,105 @@ impl Cfg {
         )))
     }
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+#[derive(Debug, Clone)]
+pub struct CfgForStatement {
+    for_statement: AstNodeId,
+}
+
+impl CfgReduce for CfgForStatement {
+    fn reduce(&self, context: &WorkspaceContext, cfg: &mut Cfg) -> (CfgNodeId, CfgNodeId) {
+        let start_id = cfg.add_start_for_node(self.for_statement);
+        let end_id = cfg.add_end_for_node(self.for_statement);
+
+        let Some(ASTNode::ForStatement(ast_for_stmt)) = context.nodes.get(&self.for_statement)
+        else {
+            cfg.add_flow_edge(start_id, end_id);
+            return (start_id, end_id);
+        };
+
+        // First we prepare the loop initialization expression
+        let start_loop_init = cfg.add_start_for_init_exp_node();
+        let end_loop_init = cfg.add_end_for_init_exp_node();
+
+        if let Some(ast_loop_init) = ast_for_stmt.initialization_expression.as_ref() {
+            let loop_init = match ast_loop_init.as_ref() {
+                ExpressionOrVariableDeclarationStatement::ExpressionStatement(exp_stmt) => {
+                    cfg.add_expression_statement(exp_stmt)
+                }
+                ExpressionOrVariableDeclarationStatement::VariableDeclarationStatement(stmt) => {
+                    cfg.add_variable_declaration_statement(stmt)
+                }
+            };
+            cfg.add_flow_edge(start_loop_init, loop_init);
+            cfg.add_flow_edge(loop_init, end_loop_init);
+        } else {
+            // If there is not loop initialization expression, leave it blank
+            cfg.add_flow_edge(start_loop_init, end_loop_init);
+        }
+
+        // Prepare the loop condition expression
+        let start_loop_cond = cfg.add_start_for_cond_node();
+        let end_loop_cond = cfg.add_end_for_cond_node();
+
+        if let Some(ast_loop_cond) = ast_for_stmt.condition.as_ref() {
+            let loop_cond = cfg.add_for_statement_condition(ast_loop_cond);
+            cfg.add_flow_edge(start_loop_cond, loop_cond);
+            cfg.add_flow_edge(loop_cond, end_loop_cond);
+        } else {
+            cfg.add_flow_edge(start_loop_cond, end_loop_cond);
+        }
+
+        // Prepare the loop body
+        let start_loop_body = cfg.add_start_for_body_node();
+        let end_loop_body = cfg.add_end_for_body_node();
+
+        let loop_body = match &ast_for_stmt.body {
+            BlockOrStatement::Block(block) => cfg.add_block_node(block),
+            BlockOrStatement::Statement(stmt) => cfg.add_statement_node(stmt),
+        };
+
+        cfg.add_flow_edge(start_loop_body, loop_body);
+        cfg.add_flow_edge(loop_body, end_loop_body);
+
+        // Prepare the loop expression
+        let start_loop_exp = cfg.add_start_for_exp_node();
+        let end_loop_exp = cfg.add_end_for_exp_node();
+
+        if let Some(ast_loop_exp) = ast_for_stmt.loop_expression.as_ref() {
+            let loop_exp = cfg.add_expression_statement(ast_loop_exp.as_ref());
+            cfg.add_flow_edge(start_loop_exp, loop_exp);
+            cfg.add_flow_edge(loop_exp, end_loop_exp);
+        } else {
+            cfg.add_flow_edge(start_loop_exp, end_loop_exp);
+        }
+
+        // Connect all the above components
+        cfg.add_flow_edge(start_id, start_loop_init);
+        cfg.add_flow_edge(end_loop_init, start_loop_cond);
+        cfg.add_flow_edge(end_loop_cond, start_loop_body);
+        cfg.add_flow_edge(end_loop_body, start_loop_exp);
+        cfg.add_flow_edge(end_loop_exp, start_loop_cond);
+        cfg.add_flow_edge(end_loop_cond, end_id);
+
+        (start_id, end_id)
+    }
+}
+
+impl CfgForStatement {
+    pub fn from(for_stmt: &ForStatement) -> Self {
+        Self {
+            for_statement: for_stmt.id,
+        }
+    }
+}
+
+impl Cfg {
+    pub fn add_for_statement(&mut self, for_stmt: &ForStatement) -> CfgNodeId {
+        self.add_node(CfgNodeDescriptor::ForStatement(Box::new(
+            CfgForStatement::from(for_stmt),
+        )))
+    }
+}
