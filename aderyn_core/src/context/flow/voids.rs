@@ -4,21 +4,23 @@ use super::{AstNodeId, Cfg, CfgNodeDescriptor, CfgNodeId};
 #[derive(Debug, Clone)]
 pub enum CfgStartNode {
     Start,
-    StartBlock(AstNodeId),
-    StartUncheckedBlock(AstNodeId),
-    StartIf(AstNodeId),
+    StartFunctionBody(AstNodeId),   // Function Definition ID
+    StartModifierBody(AstNodeId),   // Modifier Definition ID
+    StartBlock(AstNodeId),          // Block Node ID
+    StartUncheckedBlock(AstNodeId), // Unchecked Block ID
+    StartIf(AstNodeId),             // If Statemtnt ID
     StartIfCond,
     StartIfTrue,
     StartIfFalse,
-    StartWhile(AstNodeId),
+    StartWhile(AstNodeId), // While Statement ID
     StartWhileCond,
     StartWhileBody,
-    StartFor(AstNodeId),
+    StartFor(AstNodeId), // For Statement ID
     StartForInitExp,
     StartForCond,
     StartForLoopExp,
     StartForBody,
-    StartDoWhile(AstNodeId),
+    StartDoWhile(AstNodeId), // Do While Statement ID
     StartDoWhileCond,
     StartDoWhileBody,
 }
@@ -26,6 +28,8 @@ pub enum CfgStartNode {
 #[derive(Debug, Clone)]
 pub enum CfgEndNode {
     End,
+    EndFunctionBody(AstNodeId),
+    EndModifierBody(AstNodeId),
     EndBlock(AstNodeId),
     EndUncheckedBlock(AstNodeId),
     EndIf(AstNodeId),
@@ -197,6 +201,26 @@ impl Cfg {
     pub fn add_end_unchecked_block_node(&mut self, unchecked_block: AstNodeId) -> CfgNodeId {
         self.add_node(CfgNodeDescriptor::End(Box::new(
             CfgEndNode::EndUncheckedBlock(unchecked_block),
+        )))
+    }
+    pub fn add_start_function_body_node(&mut self, function_definition_id: AstNodeId) -> CfgNodeId {
+        self.add_node(CfgNodeDescriptor::Start(Box::new(
+            CfgStartNode::StartFunctionBody(function_definition_id),
+        )))
+    }
+    pub fn add_end_function_body_node(&mut self, function_definition_id: AstNodeId) -> CfgNodeId {
+        self.add_node(CfgNodeDescriptor::End(Box::new(
+            CfgEndNode::EndFunctionBody(function_definition_id),
+        )))
+    }
+    pub fn add_start_modifier_body_node(&mut self, modifier_definition_id: AstNodeId) -> CfgNodeId {
+        self.add_node(CfgNodeDescriptor::Start(Box::new(
+            CfgStartNode::StartModifierBody(modifier_definition_id),
+        )))
+    }
+    pub fn add_end_modifier_body_node(&mut self, modifier_definition_id: AstNodeId) -> CfgNodeId {
+        self.add_node(CfgNodeDescriptor::End(Box::new(
+            CfgEndNode::EndModifierBody(modifier_definition_id),
         )))
     }
 }

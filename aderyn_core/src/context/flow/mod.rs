@@ -264,21 +264,6 @@ impl Cfg {
     }
 }
 
-impl Cfg {
-    pub fn accept_block(&mut self, context: &WorkspaceContext, block: &Block) {
-        let start = self.add_start_node();
-        let end = self.add_end_node();
-        let block = self.add_block_node(block);
-
-        self.add_flow_edge(start, block);
-        self.add_flow_edge(block, end);
-
-        while let Some(reduction_candidate) = self.reduction_queue.pop_front() {
-            self.reduce(context, reduction_candidate);
-        }
-    }
-}
-
 #[cfg(test)]
 mod control_flow_tests {
     use super::*;
@@ -286,6 +271,20 @@ mod control_flow_tests {
     use crate::detect::test_utils::load_solidity_source_unit;
     use serial_test::serial;
 
+    impl Cfg {
+        pub fn accept_block(&mut self, context: &WorkspaceContext, block: &Block) {
+            let start = self.add_start_node();
+            let end = self.add_end_node();
+            let block = self.add_block_node(block);
+
+            self.add_flow_edge(start, block);
+            self.add_flow_edge(block, end);
+
+            while let Some(reduction_candidate) = self.reduction_queue.pop_front() {
+                self.reduce(context, reduction_candidate);
+            }
+        }
+    }
     #[test]
     #[serial]
     fn simple_program_function1() {

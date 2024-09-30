@@ -43,6 +43,12 @@ impl CfgStartNode {
             CfgStartNode::StartUncheckedBlock(ast_id) => {
                 format!("START UNCHECKED BLOCK ({})", ast_id)
             }
+            CfgStartNode::StartModifierBody(ast_id) => {
+                format!("START MODIFIER BODY {}", ast_id)
+            }
+            CfgStartNode::StartFunctionBody(ast_id) => {
+                format!("START FUNCTION BODY {}", ast_id)
+            }
             CfgStartNode::StartIf(ast_id) => format!("START IF ({})", ast_id),
             CfgStartNode::StartIfCond => String::from("START IF COND"),
             CfgStartNode::StartIfTrue => String::from("START IF TRUE BRANCH"),
@@ -68,6 +74,8 @@ impl CfgEndNode {
             CfgEndNode::End => String::from("END"),
             CfgEndNode::EndBlock(ast_id) => format!("END BLOCK ({})", ast_id),
             CfgEndNode::EndUncheckedBlock(ast_id) => format!("END UNCHECKED BLOCK ({})", ast_id),
+            CfgEndNode::EndModifierBody(ast_id) => format!("END MODIFIER BODY ({})", ast_id),
+            CfgEndNode::EndFunctionBody(ast_id) => format!("END FUNCTION BODY ({})", ast_id),
             CfgEndNode::EndIf(ast_id) => format!("END IF ({})", ast_id),
             CfgEndNode::EndIfCond => String::from("END IF COND"),
             CfgEndNode::EndIfTrue => String::from("END IF TRUE BRANCH"),
