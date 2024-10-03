@@ -1,7 +1,7 @@
 {
   "files_summary": {
     "total_source_units": 110,
-    "total_sloc": 3904
+    "total_sloc": 3925
   },
   "files_details": {
     "files_details": [
@@ -67,7 +67,7 @@
       },
       {
         "file_path": "src/ContractLocksEther.sol",
-        "n_sloc": 121
+        "n_sloc": 142
       },
       {
         "file_path": "src/ContractWithTodo.sol",
