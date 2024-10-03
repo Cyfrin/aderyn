@@ -1168,7 +1168,7 @@ ERC20 functions may not behave as expected. For example: return values are not a
 
 Consider using a specific version of Solidity in your contracts instead of a wide version. For example, instead of `pragma solidity ^0.8.0;`, use `pragma solidity 0.8.0;`
 
-<details><summary>80 Found Instances</summary>
+<details><summary>71 Found Instances</summary>
 
 
 - Found in contracts/admin/TempleTeamPayments.sol [Line: 2](../tests/2024-07-templegold/protocol/contracts/admin/TempleTeamPayments.sol#L2)
@@ -1213,24 +1213,6 @@ Consider using a specific version of Solidity in your contracts instead of a wid
 	pragma solidity ^0.8.20;
 	```
 
-- Found in contracts/common/CommonEventsAndErrors.sol [Line: 1](../tests/2024-07-templegold/protocol/contracts/common/CommonEventsAndErrors.sol#L1)
-
-	```solidity
-	pragma solidity ^0.8.20;
-	```
-
-- Found in contracts/common/SafeCast.sol [Line: 1](../tests/2024-07-templegold/protocol/contracts/common/SafeCast.sol#L1)
-
-	```solidity
-	pragma solidity ^0.8.20;
-	```
-
-- Found in contracts/common/TempleMath.sol [Line: 1](../tests/2024-07-templegold/protocol/contracts/common/TempleMath.sol#L1)
-
-	```solidity
-	pragma solidity ^0.8.20;
-	```
-
 - Found in contracts/core/Exposure.sol [Line: 1](../tests/2024-07-templegold/protocol/contracts/core/Exposure.sol#L1)
 
 	```solidity
@@ -1250,12 +1232,6 @@ Consider using a specific version of Solidity in your contracts instead of a wid
 	```
 
 - Found in contracts/core/OpsManager.sol [Line: 1](../tests/2024-07-templegold/protocol/contracts/core/OpsManager.sol#L1)
-
-	```solidity
-	pragma solidity ^0.8.4;
-	```
-
-- Found in contracts/core/OpsManagerLib.sol [Line: 1](../tests/2024-07-templegold/protocol/contracts/core/OpsManagerLib.sol#L1)
 
 	```solidity
 	pragma solidity ^0.8.4;
@@ -1489,12 +1465,6 @@ Consider using a specific version of Solidity in your contracts instead of a wid
 	pragma solidity ^0.8.20;
 	```
 
-- Found in contracts/templegold/EpochLib.sol [Line: 1](../tests/2024-07-templegold/protocol/contracts/templegold/EpochLib.sol#L1)
-
-	```solidity
-	pragma solidity ^0.8.20;
-	```
-
 - Found in contracts/templegold/SpiceAuction.sol [Line: 1](../tests/2024-07-templegold/protocol/contracts/templegold/SpiceAuction.sol#L1)
 
 	```solidity
@@ -1529,18 +1499,6 @@ Consider using a specific version of Solidity in your contracts instead of a wid
 
 	```solidity
 	pragma solidity ^0.8.20;
-	```
-
-- Found in contracts/util/ABDKMath64x64.sol [Line: 6](../tests/2024-07-templegold/protocol/contracts/util/ABDKMath64x64.sol#L6)
-
-	```solidity
-	pragma solidity ^0.8.4;
-	```
-
-- Found in contracts/util/ABDKMathQuad.sol [Line: 6](../tests/2024-07-templegold/protocol/contracts/util/ABDKMathQuad.sol#L6)
-
-	```solidity
-	pragma solidity ^0.8.0;
 	```
 
 - Found in contracts/v2/TempleDebtToken.sol [Line: 1](../tests/2024-07-templegold/protocol/contracts/v2/TempleDebtToken.sol#L1)
@@ -1585,19 +1543,7 @@ Consider using a specific version of Solidity in your contracts instead of a wid
 	pragma solidity ^0.8.20;
 	```
 
-- Found in contracts/v2/interestRate/CompoundedInterest.sol [Line: 1](../tests/2024-07-templegold/protocol/contracts/v2/interestRate/CompoundedInterest.sol#L1)
-
-	```solidity
-	pragma solidity ^0.8.20;
-	```
-
 - Found in contracts/v2/interestRate/LinearWithKinkInterestRateModel.sol [Line: 1](../tests/2024-07-templegold/protocol/contracts/v2/interestRate/LinearWithKinkInterestRateModel.sol#L1)
-
-	```solidity
-	pragma solidity ^0.8.20;
-	```
-
-- Found in contracts/v2/safeGuards/SafeForked.sol [Line: 1](../tests/2024-07-templegold/protocol/contracts/v2/safeGuards/SafeForked.sol#L1)
 
 	```solidity
 	pragma solidity ^0.8.20;
