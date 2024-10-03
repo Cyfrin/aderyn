@@ -119,7 +119,7 @@ mod delegate_call_no_address_check_tests {
         // assert the title is correct
         assert_eq!(
             detector.title(),
-            String::from("Delegatecall made by the function without checks on any adress.")
+            String::from("Delegatecall made by the function without checks on any address.")
         );
         // assert the description is correct
         assert_eq!(

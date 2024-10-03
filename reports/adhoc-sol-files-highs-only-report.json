@@ -144,7 +144,7 @@
         ]
       },
       {
-        "title": "Delegatecall made by the function without checks on any adress.",
+        "title": "Delegatecall made by the function without checks on any address.",
         "description": "Introduce checks on the address",
         "detector_name": "delegate-call-unchecked-address",
         "instances": [
