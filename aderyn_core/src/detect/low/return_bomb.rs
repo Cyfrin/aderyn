@@ -1,17 +1,19 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::ast::{ASTNode, MemberAccess, NodeID};
 
-use crate::ast::NodeType;
-use crate::capture;
-use crate::context::browser::GetClosestAncestorOfTypeX;
-use crate::context::graph::{CallGraph, CallGraphDirection, CallGraphVisitor};
-use crate::detect::detector::IssueDetectorNamePool;
-use crate::detect::helpers;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    ast::NodeType,
+    capture,
+    context::{
+        browser::GetClosestAncestorOfTypeX,
+        graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
+        workspace_context::WorkspaceContext,
+    },
+    detect::{
+        detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
+        helpers,
+    },
 };
 use eyre::Result;
 
@@ -25,28 +27,34 @@ pub struct ReturnBombDetector {
 impl IssueDetector for ReturnBombDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // PLAN
-        // Look for calls on addresses that are unprotected. (non state variable address that has not undergone any binary checks)
+        // Look for calls on addresses that are unprotected. (non state variable address that has
+        // not undergone any binary checks)
 
-        // Capture the ones where no gas limit  is explicitly set *and* there is a `returndatacopy` operation
-        // Basially you are checking for the 2nd element in the tuple - (bool success, bytes memory ret) which invokes the
-        // above operation.
+        // Capture the ones where no gas limit  is explicitly set *and* there is a `returndatacopy`
+        // operation Basially you are checking for the 2nd element in the tuple - (bool
+        // success, bytes memory ret) which invokes the above operation.
 
         for func in helpers::get_implemented_external_and_public_functions(context) {
             let mut tracker = CallNoAddressChecksTracker {
                 has_address_checks: false,
-                calls_on_non_state_variable_addresses: vec![], // collection of all `address.call` Member Accesses where address is not a state variable
+                calls_on_non_state_variable_addresses: vec![], /* collection of all
+                                                                * `address.call` Member Accesses
+                                                                * where address is not a state
+                                                                * variable */
                 context,
             };
             let callgraph = CallGraph::new(context, &[&(func.into())], CallGraphDirection::Inward)?;
             callgraph.accept(context, &mut tracker)?;
 
             if !tracker.has_address_checks {
-                // Now we assume that in this region all addresses are unprotected (because they are not involved in any binary ops/checks)
+                // Now we assume that in this region all addresses are unprotected (because they are
+                // not involved in any binary ops/checks)
                 for member_access in tracker.calls_on_non_state_variable_addresses {
-                    // Now we need to see if address.call{gas: xxx}() has been called with options and if so,
-                    // scan to see if the gaslimit is set. If it is, then it is not a vulnerability because
-                    // OOG is likely not possible when there is defined gas limit
-                    // Therefore, continue the for loop and investigate other instances
+                    // Now we need to see if address.call{gas: xxx}() has been called with options
+                    // and if so, scan to see if the gaslimit is set. If it is,
+                    // then it is not a vulnerability because OOG is likely not
+                    // possible when there is defined gas limit Therefore,
+                    // continue the for loop and investigate other instances
 
                     if let Some(ASTNode::FunctionCallOptions(function_call_ops)) = member_access
                         .closest_ancestor_of_type(context, NodeType::FunctionCallOptions)
@@ -56,20 +64,23 @@ impl IssueDetector for ReturnBombDetector {
                         }
                     }
 
-                    // Here, we know that there is no gas limit set for the call. So we need to only check
-                    // for the cases where `returndatacopy` happens and then capture it.
+                    // Here, we know that there is no gas limit set for the call. So we need to only
+                    // check for the cases where `returndatacopy` happens and
+                    // then capture it.
 
                     if let Some(ASTNode::FunctionCall(function_call)) =
                         member_access.closest_ancestor_of_type(context, NodeType::FunctionCall)
                     {
-                        // In this case there are no options like gas, etc, passed to the `address.call()`
-                        // So we need to check if `returndatacopy` is triggered. If yes, then it is a problem
+                        // In this case there are no options like gas, etc, passed to the
+                        // `address.call()` So we need to check if
+                        // `returndatacopy` is triggered. If yes, then it is a problem
 
                         if let Some(ASTNode::Assignment(assignment)) =
                             function_call.closest_ancestor_of_type(context, NodeType::Assignment)
                         {
-                            // The following check will ensure that the last paramter which is `bytes memory retData`
-                            // is not unpacked. (there is nothing after comma)
+                            // The following check will ensure that the last paramter which is
+                            // `bytes memory retData` is not unpacked.
+                            // (there is nothing after comma)
                             if !assignment.left_hand_side.type_descriptions().is_some_and(
                                 |type_desc| {
                                     type_desc
@@ -155,9 +166,6 @@ mod return_bomb_detector_tests {
 
         assert_eq!(detector.instances().len(), 1);
         // assert the severity is low
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

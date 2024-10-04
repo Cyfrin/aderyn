@@ -22,10 +22,7 @@ impl IssueDetector for UnprotectedInitializerDetector {
                 let has_modifiers = !function.modifiers.is_empty();
                 if !has_modifiers {
                     let identifiers = ExtractIdentifiers::from(function).extracted;
-                    if !identifiers
-                        .iter()
-                        .any(|x| x.name == "revert" || x.name == "require")
-                    {
+                    if !identifiers.iter().any(|x| x.name == "revert" || x.name == "require") {
                         capture!(self, context, function);
                     }
                 }

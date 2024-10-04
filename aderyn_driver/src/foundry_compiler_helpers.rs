@@ -14,10 +14,8 @@ use crate::{passes_exclude, passes_scope, passes_src, read_remappings};
 /// CompilerInput is a module that allows us to locate all solidity files in a root
 pub fn get_compiler_input(root: &Path) -> CompilerInput {
     let compiler_input = CompilerInput::new(root).unwrap();
-    let solidity_files = compiler_input
-        .into_iter()
-        .filter(|c| c.language == *"Solidity")
-        .collect::<Vec<_>>();
+    let solidity_files =
+        compiler_input.into_iter().filter(|c| c.language == *"Solidity").collect::<Vec<_>>();
     if solidity_files.is_empty() {
         eprintln!("No solidity files found in {}!", root.to_string_lossy());
         exit(1);
@@ -34,34 +32,20 @@ pub fn get_remappings(root: &Path) -> (Vec<String>, Vec<Remapping>) {
         remappings.dedup();
     }
 
-    let foundry_compilers_remappings = remappings
-        .iter()
-        .filter_map(|x| Remapping::from_str(x).ok())
-        .collect::<Vec<_>>();
+    let foundry_compilers_remappings =
+        remappings.iter().filter_map(|x| Remapping::from_str(x).ok()).collect::<Vec<_>>();
 
     (remappings, foundry_compilers_remappings)
 }
 
 /// Get FC remappings
 pub fn get_fc_remappings(remappings: &[String]) -> Vec<Remapping> {
-    remappings
-        .iter()
-        .filter_map(|x| Remapping::from_str(x).ok())
-        .collect::<Vec<_>>()
+    remappings.iter().filter_map(|x| Remapping::from_str(x).ok()).collect::<Vec<_>>()
 }
 
 pub fn get_project(root: &Path, remappings: Vec<Remapping>) -> Project {
-    let paths = ProjectPathsConfig::builder()
-        .root(root)
-        .remappings(remappings)
-        .build()
-        .unwrap();
-    Project::builder()
-        .no_artifacts()
-        .paths(paths)
-        .ephemeral()
-        .build()
-        .unwrap()
+    let paths = ProjectPathsConfig::builder().root(root).remappings(remappings).build().unwrap();
+    Project::builder().no_artifacts().paths(paths).ephemeral().build().unwrap()
 }
 
 pub fn get_relevant_sources(

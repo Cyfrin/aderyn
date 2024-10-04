@@ -24,20 +24,16 @@ pub fn stderr_buffer_writer() -> BufferWriter {
 }
 
 pub fn add_handler() {
-    std::panic::set_hook(Box::new(move |info: &PanicInfo<'_>| {
-        print_compiler_bug_message(info)
-    }));
+    std::panic::set_hook(Box::new(move |info: &PanicInfo<'_>| print_compiler_bug_message(info)));
 }
 
 fn print_compiler_bug_message(info: &PanicInfo<'_>) {
-    let message = match (
-        info.payload().downcast_ref::<&str>(),
-        info.payload().downcast_ref::<String>(),
-    ) {
-        (Some(s), _) => (*s).to_string(),
-        (_, Some(s)) => s.to_string(),
-        (None, None) => "unknown error".into(),
-    };
+    let message =
+        match (info.payload().downcast_ref::<&str>(), info.payload().downcast_ref::<String>()) {
+            (Some(s), _) => (*s).to_string(),
+            (_, Some(s)) => s.to_string(),
+            (None, None) => "unknown error".into(),
+        };
 
     let location = match info.location() {
         None => "".into(),
@@ -46,9 +42,7 @@ fn print_compiler_bug_message(info: &PanicInfo<'_>) {
 
     let buffer_writer = stderr_buffer_writer();
     let mut buffer = buffer_writer.buffer();
-    buffer
-        .set_color(ColorSpec::new().set_bold(true).set_fg(Some(Color::Red)))
-        .unwrap();
+    buffer.set_color(ColorSpec::new().set_bold(true).set_fg(Some(Color::Red))).unwrap();
     write!(buffer, "error").unwrap();
     buffer.set_color(ColorSpec::new().set_bold(true)).unwrap();
     write!(buffer, ": Fatal compiler bug!\n\n").unwrap();

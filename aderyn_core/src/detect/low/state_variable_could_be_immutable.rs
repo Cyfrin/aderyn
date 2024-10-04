@@ -1,15 +1,14 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::ast::{FunctionKind, Mutability, NodeID};
 
-use crate::capture;
-use crate::context::browser::ApproximateStorageChangeFinder;
-use crate::detect::detector::IssueDetectorNamePool;
-use crate::detect::helpers;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    capture,
+    context::{browser::ApproximateStorageChangeFinder, workspace_context::WorkspaceContext},
+    detect::{
+        detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
+        helpers,
+    },
 };
 
 #[derive(Default)]
@@ -45,7 +44,8 @@ impl IssueDetector for StateVariableCouldBeImmutableDetector {
                 continue;
             }
 
-            // Doesn't make sense to look for possible immutability if it's already declared constant
+            // Doesn't make sense to look for possible immutability if it's already declared
+            // constant
             if variable.mutability() == Some(&Mutability::Constant) {
                 continue;
             }
@@ -60,14 +60,9 @@ impl IssueDetector for StateVariableCouldBeImmutableDetector {
             }
 
             // Do not report it if it's a struct / mapping
-            if variable
-                .type_descriptions
-                .type_string
-                .as_ref()
-                .is_some_and(|type_string| {
-                    type_string.starts_with("mapping") || type_string.starts_with("struct")
-                })
-            {
+            if variable.type_descriptions.type_string.as_ref().is_some_and(|type_string| {
+                type_string.starts_with("mapping") || type_string.starts_with("struct")
+            }) {
                 continue;
             }
 
@@ -120,10 +115,9 @@ impl IssueDetector for StateVariableCouldBeImmutableDetector {
         }
 
         // Collection A intersection with (collection C - collection B)
-        if let (Some(collection_b), Some(collection_c)) = (
-            state_var_changed_from_non_constructors,
-            state_var_changed_from_constructors,
-        ) {
+        if let (Some(collection_b), Some(collection_c)) =
+            (state_var_changed_from_non_constructors, state_var_changed_from_constructors)
+        {
             let collection_c = collection_c.fetch_non_exhaustive_manipulated_state_variables();
             let collection_b = collection_b.fetch_non_exhaustive_manipulated_state_variables();
             for state_variable in collection_a {
@@ -154,10 +148,7 @@ impl IssueDetector for StateVariableCouldBeImmutableDetector {
     }
 
     fn name(&self) -> String {
-        format!(
-            "{}",
-            IssueDetectorNamePool::StateVariableCouldBeDeclaredImmutable
-        )
+        format!("{}", IssueDetectorNamePool::StateVariableCouldBeDeclaredImmutable)
     }
 }
 
@@ -185,9 +176,6 @@ mod state_variable_could_be_immutable_tests {
         assert_eq!(detector.instances().len(), 2);
         println!("{:?}", detector.instances());
         // assert the severity is low
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

@@ -26,11 +26,7 @@ impl Display for Expression {
 
 impl Display for UnaryOperation {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_fmt(format_args!(
-            "{}{}",
-            self.sub_expression,
-            self.operator.as_str()
-        ))
+        f.write_fmt(format_args!("{}{}", self.sub_expression, self.operator.as_str()))
     }
 }
 
@@ -84,10 +80,7 @@ impl Display for FunctionCallOptions {
         let option_count = self.options.len();
 
         if self.names.len() != option_count {
-            eprintln!(
-                "ERROR: invalid FunctionCallOptions: {:?}, {:?}",
-                self.names, self.options
-            );
+            eprintln!("ERROR: invalid FunctionCallOptions: {:?}, {:?}", self.names, self.options);
 
             return Err(std::fmt::Error);
         }
@@ -127,10 +120,7 @@ impl Display for FunctionCallOptions {
 impl Display for IndexAccess {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         if let Some(index_expression) = &self.index_expression {
-            f.write_fmt(format_args!(
-                "{}[{}]",
-                self.base_expression, index_expression
-            ))
+            f.write_fmt(format_args!("{}[{}]", self.base_expression, index_expression))
         } else {
             f.write_fmt(format_args!("{}[]", self.base_expression))
         }

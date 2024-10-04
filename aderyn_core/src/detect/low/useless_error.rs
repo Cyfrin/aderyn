@@ -5,7 +5,10 @@ use crate::{
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
-use std::{collections::BTreeMap, collections::HashSet, error::Error};
+use std::{
+    collections::{BTreeMap, HashSet},
+    error::Error,
+};
 
 #[derive(Default)]
 pub struct UselessErrorDetector {
@@ -87,10 +90,7 @@ mod useless_error_tests {
         // Assert that the detector returns the correct number of instances
         assert_eq!(detector.instances().len(), 2);
         // Assert that the detector returns the correct severity
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // Assert that the detector returns the correct title
         assert_eq!(detector.title(), String::from("Unused Custom Error"));
         // Assert that the detector returns the correct description

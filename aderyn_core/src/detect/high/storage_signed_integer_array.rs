@@ -1,20 +1,19 @@
-use std::collections::BTreeMap;
-use std::error::Error;
-use std::str::FromStr;
+use std::{collections::BTreeMap, error::Error, str::FromStr};
 
 use crate::ast::{
     ASTNode, Expression, Identifier, NodeID, TupleExpression, TypeDescriptions, UnaryOperation,
 };
 
-use crate::capture;
-use crate::context::browser::{
-    ExtractPragmaDirectives, ExtractTupleExpressions, GetImmediateParent,
-};
-use crate::detect::detector::IssueDetectorNamePool;
-use crate::detect::helpers;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    capture,
+    context::{
+        browser::{ExtractPragmaDirectives, ExtractTupleExpressions, GetImmediateParent},
+        workspace_context::WorkspaceContext,
+    },
+    detect::{
+        detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
+        helpers,
+    },
 };
 use eyre::Result;
 use lazy_regex::regex;
@@ -127,11 +126,7 @@ fn is_tuple_being_assigned_to_storage_array(
 ) -> bool {
     if let Some(ASTNode::Assignment(assignment)) = tuple_expression.parent(context) {
         if let Expression::Identifier(Identifier {
-            type_descriptions:
-                TypeDescriptions {
-                    type_string: Some(type_string),
-                    ..
-                },
+            type_descriptions: TypeDescriptions { type_string: Some(type_string), .. },
             ..
         }) = assignment.left_hand_side.as_ref()
         {
@@ -171,10 +166,7 @@ mod storage_signed_array_detector {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
         // assert the title is correct
         assert_eq!(
             detector.title(),

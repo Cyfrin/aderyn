@@ -1,16 +1,17 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::ast::NodeID;
 
-use crate::capture;
-use crate::context::graph::{CallGraph, CallGraphDirection, CallGraphVisitor};
-use crate::context::workspace_context::ASTNode;
-use crate::detect::detector::IssueDetectorNamePool;
-use crate::detect::helpers;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    capture,
+    context::{
+        graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
+        workspace_context::{ASTNode, WorkspaceContext},
+    },
+    detect::{
+        detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
+        helpers,
+    },
 };
 use eyre::Result;
 
@@ -79,10 +80,7 @@ mod send_ether_no_checks_detector_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 3);
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
     }
 }
 

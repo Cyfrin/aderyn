@@ -1,15 +1,20 @@
-use std::collections::{BTreeMap, HashSet};
-use std::error::Error;
+use std::{
+    collections::{BTreeMap, HashSet},
+    error::Error,
+};
 
 use crate::ast::{ASTNode, NodeID};
 
-use crate::capture;
-use crate::context::browser::{ExtractIdentifiers, ExtractVariableDeclarations};
-use crate::detect::detector::IssueDetectorNamePool;
-use crate::detect::helpers;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    capture,
+    context::{
+        browser::{ExtractIdentifiers, ExtractVariableDeclarations},
+        workspace_context::WorkspaceContext,
+    },
+    detect::{
+        detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
+        helpers,
+    },
 };
 use eyre::Result;
 
@@ -29,11 +34,7 @@ pub struct PreDeclaredLocalVariableUsageDetector {
 impl IssueDetector for PreDeclaredLocalVariableUsageDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // Since this is restricted to local variables, we examine each function independently
-        for function in context
-            .function_definitions()
-            .into_iter()
-            .filter(|&f| f.implemented)
-        {
+        for function in context.function_definitions().into_iter().filter(|&f| f.implemented) {
             let local_variable_declaration_ids = ExtractVariableDeclarations::from(function)
                 .extracted
                 .iter()
@@ -45,11 +46,9 @@ impl IssueDetector for PreDeclaredLocalVariableUsageDetector {
             let used_local_variables = used_local_variables
                 .iter()
                 .filter(|identifier| {
-                    identifier
-                        .referenced_declaration
-                        .is_some_and(|referenced_declaration| {
-                            local_variable_declaration_ids.contains(&referenced_declaration)
-                        })
+                    identifier.referenced_declaration.is_some_and(|referenced_declaration| {
+                        local_variable_declaration_ids.contains(&referenced_declaration)
+                    })
                 })
                 .collect::<HashSet<_>>();
 
@@ -121,15 +120,9 @@ mod pre_declared_variable_usage_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
         // assert the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from("Usage of variable before declaration.")
-        );
+        assert_eq!(detector.title(), String::from("Usage of variable before declaration."));
         // assert the description is correct
         assert_eq!(
             detector.description(),

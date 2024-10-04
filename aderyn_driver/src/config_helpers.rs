@@ -136,13 +136,7 @@ fn interpret_aderyn_config(
         }
     }
 
-    (
-        local_root,
-        local_src,
-        local_exclude,
-        local_remappings,
-        local_include,
-    )
+    (local_root, local_src, local_exclude, local_remappings, local_include)
 }
 
 /// Append the src, remappings, and exclude from the foundry.toml file.
@@ -188,11 +182,7 @@ fn interpret_foundry_config(
     let mut local_exclude = exclude.clone();
     let script = format!("{}/", config.script.to_string_lossy());
     let test = format!("{}/", config.test.to_string_lossy());
-    let libs = config
-        .libs
-        .iter()
-        .map(|x| format!("{}/", x.to_string_lossy()))
-        .collect::<Vec<_>>();
+    let libs = config.libs.iter().map(|x| format!("{}/", x.to_string_lossy())).collect::<Vec<_>>();
     if let Some(local_exclude) = &mut local_exclude {
         local_exclude.push(test);
         local_exclude.push(script);
@@ -208,19 +198,11 @@ fn interpret_foundry_config(
     // remappings
     let mut local_remappings = remappings.clone();
     if let Some(local_remappings) = &mut local_remappings {
-        local_remappings.extend(
-            config
-                .get_all_remappings()
-                .map(|x| x.to_string())
-                .collect::<Vec<_>>(),
-        );
+        local_remappings
+            .extend(config.get_all_remappings().map(|x| x.to_string()).collect::<Vec<_>>());
     } else {
-        local_remappings = Some(
-            config
-                .get_all_remappings()
-                .map(|x| x.to_string())
-                .collect::<Vec<_>>(),
-        );
+        local_remappings =
+            Some(config.get_all_remappings().map(|x| x.to_string()).collect::<Vec<_>>());
     }
 
     (local_src, local_exclude, local_remappings)
@@ -244,22 +226,13 @@ mod tests {
 
         let root = std::path::Path::new("ARG_ROOT");
         let src = Some(vec!["ARG_SRC".to_string()]);
-        let exclude = Some(vec![
-            "ARG_EXCLUDE_1".to_string(),
-            "ARG_EXCLUDE_2".to_string(),
-        ]);
-        let remappings = Some(vec![
-            "ARG_REMAPPINGS_1".to_string(),
-            "ARG_REMAPPINGS_2".to_string(),
-        ]);
+        let exclude = Some(vec!["ARG_EXCLUDE_1".to_string(), "ARG_EXCLUDE_2".to_string()]);
+        let remappings = Some(vec!["ARG_REMAPPINGS_1".to_string(), "ARG_REMAPPINGS_2".to_string()]);
         let include = Some(vec!["ARG_SCOPE_1".to_string(), "ARG_SCOPE_2".to_string()]);
         let result =
             super::interpret_aderyn_config(config, root, &src, &exclude, &remappings, &include);
         assert_eq!(result.0, std::path::Path::new("ARG_ROOT/CONFIG_ROOT"));
-        assert_eq!(
-            result.1,
-            Some(vec!["ARG_SRC".to_string(), "CONFIG_SRC".to_string()])
-        );
+        assert_eq!(result.1, Some(vec!["ARG_SRC".to_string(), "CONFIG_SRC".to_string()]));
         assert_eq!(
             result.2,
             Some(vec![
@@ -303,14 +276,10 @@ mod tests {
         config.remappings = vec![rel_remap];
 
         let src = Some(vec!["ADERYN_SRC".to_string()]);
-        let exclude: Option<Vec<String>> = Some(vec![
-            "ADERYN_EXCLUDE_1".to_string(),
-            "ADERYN_EXCLUDE_2".to_string(),
-        ]);
-        let remappings = Some(vec![
-            "ADERYN_REMAPPINGS_1".to_string(),
-            "ADERYN_REMAPPINGS_2".to_string(),
-        ]);
+        let exclude: Option<Vec<String>> =
+            Some(vec!["ADERYN_EXCLUDE_1".to_string(), "ADERYN_EXCLUDE_2".to_string()]);
+        let remappings =
+            Some(vec!["ADERYN_REMAPPINGS_1".to_string(), "ADERYN_REMAPPINGS_2".to_string()]);
 
         let result = super::interpret_foundry_config(config, &src, &exclude, &remappings);
         assert_eq!(result.0, Some(vec!["ADERYN_SRC".to_string()]));
