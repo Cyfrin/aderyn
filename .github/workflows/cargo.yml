@@ -272,7 +272,7 @@ jobs:
         with:
           profile: minimal
           toolchain: stable 
-          components: rustfmt
+          components: clippy
           override: true
           
       - name: Install nightly toolchain
@@ -280,7 +280,7 @@ jobs:
         with:
           profile: minimal
           toolchain: nightly 
-          components: clippy
+          components: rustfmt
           override: true
 
       - name: Run cargo fmt
