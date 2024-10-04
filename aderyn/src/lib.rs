@@ -1,7 +1,7 @@
 use aderyn_driver::detector::{get_all_detectors_names, get_issue_detector_by_name, IssueSeverity};
 use semver::Version;
 use serde_json::Value;
-use std::{error::Error, fs::File, io::Write, path::PathBuf, str::FromStr};
+use std::{fs::File, io::Write, path::PathBuf, str::FromStr};
 use strum::IntoEnumIterator;
 
 pub fn create_aderyn_toml_file_at(directory: String) {
