@@ -184,7 +184,7 @@ impl IssueDetector for ZeroAddressCheckDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::ZeroAddressCheck)
+        format!("{}", IssueDetectorNamePool::NoZeroAddressCheck)
     }
 }
 

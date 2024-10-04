@@ -55,7 +55,7 @@ impl IssueDetector for AssertStateChangeDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::AssertStateChange)
+        format!("{}", IssueDetectorNamePool::StateChangeInAssert)
     }
 }
 

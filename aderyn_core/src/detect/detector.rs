@@ -26,7 +26,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<UnspecificSolidityPragmaDetector>::default(),
         Box::<ZeroAddressCheckDetector>::default(),
         Box::<UselessPublicFunctionDetector>::default(),
-        Box::<ConstantsInsteadOfLiteralsDetector>::default(),
+        Box::<LiteralsInsteadOfConstantsDetector>::default(),
         Box::<UnindexedEventsDetector>::default(),
         Box::<RequireWithStringDetector>::default(),
         Box::<NonReentrantBeforeOthersDetector>::default(),
@@ -124,8 +124,8 @@ pub(crate) enum IssueDetectorNamePool {
     FunctionPointerInConstructor,
     DeadCode,
     FunctionSelectorCollision,
-    CacheArrayLength,
-    AssertStateChange,
+    ArrayLengthNotCached,
+    StateChangeInAssert,
     CostlyOperationsInsideLoops,
     ConstantFunctionChangingState,
     BuiltinSymbolShadow,
@@ -134,18 +134,18 @@ pub(crate) enum IssueDetectorNamePool {
     DelegateCallInLoop,
     CentralizationRisk,
     SolmateSafeTransferLib,
-    AvoidAbiEncodePacked,
-    Ecrecover,
+    HashCollisionDueToAbiEncodePacked,
+    SignatureMalleabilityDueToRawEcrecover,
     DeprecatedOzFunctions,
     UnsafeERC20Functions,
     UnspecificSolidityPragma,
-    ZeroAddressCheck,
+    NoZeroAddressCheck,
     UselessPublicFunction,
-    ConstantsInsteadOfLiterals,
     UnindexedEvents,
-    RequireWithString,
-    NonReentrantBeforeOthers,
-    BlockTimestampDeadline,
+    RequireWithoutString,
+    NonReentrantIsNotBeforeOthers,
+    BlockTimestampIsWeakDeadline,
+    LiteralInsteadOfConstant,
     UnsafeOzERC721Mint,
     PushZeroOpcode,
     ArbitraryTransferFrom,
@@ -175,8 +175,8 @@ pub(crate) enum IssueDetectorNamePool {
     StateVariableShadowing,
     UncheckedSend,
     MisusedBoolean,
-    SendEtherNoChecks,
-    DelegateCallUncheckedAddress,
+    SendsEtherAwayWithoutCheckingAddress,
+    DelegateCallOnUncheckedAddress,
     TautologicalCompare,
     #[allow(clippy::upper_case_acronyms)]
     RTLO,
@@ -192,7 +192,7 @@ pub(crate) enum IssueDetectorNamePool {
     DeleteNestedMapping,
     UnusedStateVariable,
     ConstantFunctionsAssembly,
-    BooleanEquality,
+    RedundantBooleanEquality,
     TxOriginUsedForAuth,
     MsgValueInLoop,
     ContractLocksEther,
@@ -231,6 +231,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::StateVariableCouldBeDeclaredConstant => {
             Some(Box::<StateVariableCouldBeConstantDetector>::default())
         }
+        IssueDetectorNamePool::LiteralInsteadOfConstant => {
+            Some(Box::<LiteralsInsteadOfConstantsDetector>::default())
+        }
         IssueDetectorNamePool::FunctionPointerInConstructor => {
             Some(Box::<FucntionPointerInConstructorDetector>::default())
         }
@@ -238,8 +241,10 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::FunctionSelectorCollision => {
             Some(Box::<FunctionSelectorCollisionDetector>::default())
         }
-        IssueDetectorNamePool::CacheArrayLength => Some(Box::<CacheArrayLengthDetector>::default()),
-        IssueDetectorNamePool::AssertStateChange => {
+        IssueDetectorNamePool::ArrayLengthNotCached => {
+            Some(Box::<CacheArrayLengthDetector>::default())
+        }
+        IssueDetectorNamePool::StateChangeInAssert => {
             Some(Box::<AssertStateChangeDetector>::default())
         }
         IssueDetectorNamePool::CostlyOperationsInsideLoops => {
@@ -279,10 +284,12 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::SolmateSafeTransferLib => {
             Some(Box::<SolmateSafeTransferLibDetector>::default())
         }
-        IssueDetectorNamePool::AvoidAbiEncodePacked => {
+        IssueDetectorNamePool::HashCollisionDueToAbiEncodePacked => {
             Some(Box::<AvoidAbiEncodePackedDetector>::default())
         }
-        IssueDetectorNamePool::Ecrecover => Some(Box::<EcrecoverDetector>::default()),
+        IssueDetectorNamePool::SignatureMalleabilityDueToRawEcrecover => {
+            Some(Box::<EcrecoverDetector>::default())
+        }
         IssueDetectorNamePool::DeprecatedOzFunctions => {
             Some(Box::<DeprecatedOZFunctionsDetector>::default())
         }
@@ -292,21 +299,20 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::UnspecificSolidityPragma => {
             Some(Box::<UnspecificSolidityPragmaDetector>::default())
         }
-        IssueDetectorNamePool::ZeroAddressCheck => Some(Box::<ZeroAddressCheckDetector>::default()),
+        IssueDetectorNamePool::NoZeroAddressCheck => {
+            Some(Box::<ZeroAddressCheckDetector>::default())
+        }
         IssueDetectorNamePool::UselessPublicFunction => {
             Some(Box::<UselessPublicFunctionDetector>::default())
         }
-        IssueDetectorNamePool::ConstantsInsteadOfLiterals => {
-            Some(Box::<ConstantsInsteadOfLiteralsDetector>::default())
-        }
         IssueDetectorNamePool::UnindexedEvents => Some(Box::<UnindexedEventsDetector>::default()),
-        IssueDetectorNamePool::RequireWithString => {
+        IssueDetectorNamePool::RequireWithoutString => {
             Some(Box::<RequireWithStringDetector>::default())
         }
-        IssueDetectorNamePool::NonReentrantBeforeOthers => {
+        IssueDetectorNamePool::NonReentrantIsNotBeforeOthers => {
             Some(Box::<NonReentrantBeforeOthersDetector>::default())
         }
-        IssueDetectorNamePool::BlockTimestampDeadline => {
+        IssueDetectorNamePool::BlockTimestampIsWeakDeadline => {
             Some(Box::<BlockTimestampDeadlineDetector>::default())
         }
         IssueDetectorNamePool::UnsafeOzERC721Mint => {
@@ -383,10 +389,10 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         }
         IssueDetectorNamePool::UncheckedSend => Some(Box::<UncheckedSendDetector>::default()),
         IssueDetectorNamePool::MisusedBoolean => Some(Box::<MisusedBooleanDetector>::default()),
-        IssueDetectorNamePool::SendEtherNoChecks => {
+        IssueDetectorNamePool::SendsEtherAwayWithoutCheckingAddress => {
             Some(Box::<SendEtherNoChecksDetector>::default())
         }
-        IssueDetectorNamePool::DelegateCallUncheckedAddress => {
+        IssueDetectorNamePool::DelegateCallOnUncheckedAddress => {
             Some(Box::<DelegateCallOnUncheckedAddressDetector>::default())
         }
         IssueDetectorNamePool::TautologicalCompare => {
@@ -422,7 +428,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::ConstantFunctionsAssembly => {
             Some(Box::<ConstantFunctionContainsAssemblyDetector>::default())
         }
-        IssueDetectorNamePool::BooleanEquality => Some(Box::<BooleanEqualityDetector>::default()),
+        IssueDetectorNamePool::RedundantBooleanEquality => {
+            Some(Box::<BooleanEqualityDetector>::default())
+        }
         IssueDetectorNamePool::TxOriginUsedForAuth => {
             Some(Box::<TxOriginUsedForAuthDetector>::default())
         }

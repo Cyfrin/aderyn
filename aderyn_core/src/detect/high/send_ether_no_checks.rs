@@ -53,7 +53,7 @@ impl IssueDetector for SendEtherNoChecksDetector {
     }
 
     fn name(&self) -> String {
-        IssueDetectorNamePool::SendEtherNoChecks.to_string()
+        IssueDetectorNamePool::SendsEtherAwayWithoutCheckingAddress.to_string()
     }
 }
 
