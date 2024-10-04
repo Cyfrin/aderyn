@@ -94,10 +94,8 @@ pub fn aderyn_is_currently_running_newest_version() -> Option<bool> {
         .build()
         .expect("client is unable to initialize");
 
-    let latest_version_checker = client
-        .get("https://api.github.com/repos/Cyfrin/aderyn/releases/latest")
-        .send()
-        .ok()?;
+    let latest_version_checker =
+        client.get("https://api.github.com/repos/Cyfrin/aderyn/releases/latest").send().ok()?;
 
     let data = latest_version_checker.json::<Value>().ok()?;
     let version_string = data["tag_name"].as_str()?;

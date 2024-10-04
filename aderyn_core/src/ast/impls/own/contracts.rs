@@ -195,17 +195,16 @@ impl ContractDefinition {
             for &contract_id in contract_ids.iter() {
                 // Loop through all of the schema source_units in the project
                 for source_unit in source_units.iter() {
-                    // Attempt to retrieve the current contract in the inheritance hierarchy from the current schema source_unit
+                    // Attempt to retrieve the current contract in the inheritance hierarchy from
+                    // the current schema source_unit
                     let contract_definition = match source_unit.contract_definition(contract_id) {
                         Some(contract_definition) => contract_definition,
                         None => continue,
                     };
 
-                    // Attempt to retrieve the requested state variable from the current contract in the inheritance hierarchy
-                    if contract_definition
-                        .variable_declaration(state_variable_id)
-                        .is_some()
-                    {
+                    // Attempt to retrieve the requested state variable from the current contract in
+                    // the inheritance hierarchy
+                    if contract_definition.variable_declaration(state_variable_id).is_some() {
                         return true;
                     }
                 }
@@ -297,11 +296,7 @@ impl ContractDefinition {
                     if let FunctionKind::Constructor = function_definition.kind() {
                         "constructor".to_string()
                     } else {
-                        format!(
-                            "`{}` {}",
-                            function_definition.name,
-                            function_definition.kind()
-                        )
+                        format!("`{}` {}", function_definition.name, function_definition.kind())
                     },
                     self.name,
                     self.kind,

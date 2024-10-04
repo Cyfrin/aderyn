@@ -1,5 +1,4 @@
-use crate::ast::*;
-use crate::visitor::ast_visitor::*;
+use crate::{ast::*, visitor::ast_visitor::*};
 use eyre::Result;
 use macros::accept_id;
 
@@ -69,12 +68,7 @@ impl Node for VariableDeclarationStatement {
         visitor.end_visit_variable_declaration_statement(self)
     }
     fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        let declaration_ids = self
-            .declarations
-            .iter()
-            .flatten()
-            .map(|x| x.id)
-            .collect::<Vec<_>>();
+        let declaration_ids = self.declarations.iter().flatten().map(|x| x.id).collect::<Vec<_>>();
         visitor.visit_immediate_children(self.id, declaration_ids)?;
         if let Some(initial_value) = &self.initial_value {
             if let Some(id) = initial_value.get_node_id() {

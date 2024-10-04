@@ -1,6 +1,5 @@
 use crate::ast::*;
-use eyre::eyre;
-use eyre::Result;
+use eyre::{eyre, Result};
 use std::io;
 
 impl SourceUnitNode {
@@ -46,10 +45,7 @@ impl SourceUnit {
             })
             .collect();
 
-        let index = values
-            .first()
-            .and_then(|&value| value)
-            .ok_or_else(|| eyre!("not found"))?;
+        let index = values.first().and_then(|&value| value).ok_or_else(|| eyre!("not found"))?;
 
         if index > source.len() {
             return Err(eyre!("index out of bounds"));

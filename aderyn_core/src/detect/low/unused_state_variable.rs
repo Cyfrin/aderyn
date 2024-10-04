@@ -1,17 +1,20 @@
-use std::collections::{BTreeMap, BTreeSet};
-use std::convert::identity;
-use std::error::Error;
+use std::{
+    collections::{BTreeMap, BTreeSet},
+    convert::identity,
+    error::Error,
+};
 
 use crate::ast::{ASTNode, ContractKind, NodeID, NodeType, Visibility};
 
-use crate::capture;
-use crate::context::browser::{
-    ExtractReferencedDeclarations, ExtractVariableDeclarations, GetClosestAncestorOfTypeX,
-};
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    capture,
+    context::{
+        browser::{
+            ExtractReferencedDeclarations, ExtractVariableDeclarations, GetClosestAncestorOfTypeX,
+        },
+        workspace_context::WorkspaceContext,
+    },
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -53,7 +56,8 @@ impl IssueDetector for UnusedStateVariablesDetector {
                 if let Some(ASTNode::ContractDefinition(contract)) =
                     node.closest_ancestor_of_type(context, NodeType::ContractDefinition)
                 {
-                    // If this variable is defined inside a contract, make sure it's not an abstract contract before capturing it
+                    // If this variable is defined inside a contract, make sure it's not an abstract
+                    // contract before capturing it
                     if !contract.is_abstract.is_some_and(identity)
                         && contract.kind == ContractKind::Contract
                     {
@@ -113,9 +117,6 @@ mod unused_detector_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 4);
         // assert the severity is low
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

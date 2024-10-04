@@ -1,14 +1,14 @@
-use std::collections::{BTreeMap, HashSet};
-use std::error::Error;
+use std::{
+    collections::{BTreeMap, HashSet},
+    error::Error,
+};
 
 use crate::ast::{ASTNode, NodeID};
 
-use crate::capture;
-use crate::context::browser::ExtractReferencedDeclarations;
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    capture,
+    context::{browser::ExtractReferencedDeclarations, workspace_context::WorkspaceContext},
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -22,8 +22,9 @@ pub struct UninitializedLocalVariableDetector {
 impl IssueDetector for UninitializedLocalVariableDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // Assumption:
-        // VariableDeclarationStatements consists of statements that look like `uint x;` `uint y, z;`, `uint p = 12;`
-        // but are not declared at the contract level (state level) but rather within functions and modifiers
+        // VariableDeclarationStatements consists of statements that look like `uint x;` `uint y,
+        // z;`, `uint p = 12;` but are not declared at the contract level (state level) but
+        // rather within functions and modifiers
 
         let mut potentially_uninitialized_local_variables = HashSet::new();
 
@@ -33,21 +34,18 @@ impl IssueDetector for UninitializedLocalVariableDetector {
             .filter(|s| s.initial_value.is_none())
         {
             potentially_uninitialized_local_variables.extend(
-                variable_declaration_statement
-                    .declarations
-                    .iter()
-                    .flat_map(|s| {
-                        if let Some(ref s) = s {
-                            return Some(s.id);
-                        }
-                        None
-                    }),
+                variable_declaration_statement.declarations.iter().flat_map(|s| {
+                    if let Some(ref s) = s {
+                        return Some(s.id);
+                    }
+                    None
+                }),
             );
         }
 
         // We can filter out the initialized variables by looking at LHS of assignments.
-        // This trick works for local variables because it's not possible to have structs, mappings, dynamic arrays
-        // declared local to the function.
+        // This trick works for local variables because it's not possible to have structs, mappings,
+        // dynamic arrays declared local to the function.
         for assignment in context.assignments() {
             let references =
                 ExtractReferencedDeclarations::from(assignment.left_hand_side.as_ref()).extracted;
@@ -65,7 +63,8 @@ impl IssueDetector for UninitializedLocalVariableDetector {
         for id in potentially_uninitialized_local_variables {
             if let Some(ASTNode::VariableDeclaration(v)) = context.nodes.get(&id) {
                 if !blacklist_variable_names.contains(&v.name) {
-                    // Ignore memory structs because they can have an initializeMethod of their own. So not covered under the assignment operator
+                    // Ignore memory structs because they can have an initializeMethod of their own.
+                    // So not covered under the assignment operator
                     if v.type_descriptions
                         .type_string
                         .as_ref()
@@ -130,9 +129,6 @@ mod uninitialized_local_variables_detector_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 12);
         // assert the severity is low
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

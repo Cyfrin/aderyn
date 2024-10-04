@@ -27,10 +27,7 @@ impl IssueDetector for UnspecificSolidityPragmaDetector {
                 continue;
             };
             let contracts_in_source_unit = ExtractContractDefinitions::from(source_unit).extracted;
-            if contracts_in_source_unit
-                .iter()
-                .any(|c| c.kind == ContractKind::Library)
-            {
+            if contracts_in_source_unit.iter().any(|c| c.kind == ContractKind::Library) {
                 continue;
             }
             for literal in &pragma_directive.literals {
@@ -86,15 +83,9 @@ mod unspecific_solidity_pragma_tests {
         // failure0, failure1 and failure3
         assert_eq!(detector.instances().len(), 1);
         // assert that the severity is low
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert that the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from("Solidity pragma should be specific, not wide")
-        );
+        assert_eq!(detector.title(), String::from("Solidity pragma should be specific, not wide"));
         // assert that the description is correct
         assert_eq!(
             detector.description(),

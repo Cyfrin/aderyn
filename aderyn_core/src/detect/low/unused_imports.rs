@@ -1,16 +1,14 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::ast::{ASTNode, NodeID, NodeType};
 
-use crate::capture;
-use crate::context::browser::{
-    ExtractReferencedDeclarationsConditionally, GetClosestAncestorOfTypeX,
-};
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    capture,
+    context::{
+        browser::{ExtractReferencedDeclarationsConditionally, GetClosestAncestorOfTypeX},
+        workspace_context::WorkspaceContext,
+    },
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -179,17 +177,10 @@ mod source_unit_graph_analysis {
             let from_node = self
                 .source_units
                 .entry(from_source_unit)
-                .or_insert_with(|| GNode {
-                    source_unit: to_source_unit,
-                    edges: vec![],
-                });
+                .or_insert_with(|| GNode { source_unit: to_source_unit, edges: vec![] });
 
             // Create the relationship edge
-            let relationship = GEdge {
-                symbols,
-                to: to_source_unit,
-                import_statement,
-            };
+            let relationship = GEdge { symbols, to: to_source_unit, import_statement };
 
             from_node.edges.push(relationship);
 
@@ -197,10 +188,7 @@ mod source_unit_graph_analysis {
             _ = self
                 .source_units
                 .entry(to_source_unit)
-                .or_insert_with(|| GNode {
-                    source_unit: to_source_unit,
-                    edges: vec![],
-                });
+                .or_insert_with(|| GNode { source_unit: to_source_unit, edges: vec![] });
         }
 
         pub fn mark_used_pathways(
@@ -250,10 +238,7 @@ mod source_unit_graph_analysis {
 
             for node in self.source_units.values() {
                 for relationship in &node.edges {
-                    if !self
-                        .useful_symbols
-                        .contains_key(&relationship.import_statement)
-                    {
+                    if !self.useful_symbols.contains_key(&relationship.import_statement) {
                         useless_imports.push(relationship.import_statement);
                     }
                 }
@@ -289,9 +274,6 @@ mod unused_imports_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
         // assert the severity is low
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

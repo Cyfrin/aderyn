@@ -1,14 +1,14 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::ast::{BinaryOperation, NodeID, TypeDescriptions};
 
-use crate::capture;
-use crate::detect::detector::IssueDetectorNamePool;
-use crate::detect::helpers::get_literal_value_or_constant_variable_value;
 use crate::{
+    capture,
     context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    detect::{
+        detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
+        helpers::get_literal_value_or_constant_variable_value,
+    },
 };
 use eyre::Result;
 use solidity_integer_helper::{
@@ -80,15 +80,9 @@ mod tautology_or_contradiction_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
         // assert the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from("Tautology or Contradiction in comparison.")
-        );
+        assert_eq!(detector.title(), String::from("Tautology or Contradiction in comparison."));
         // assert the description is correct
         assert_eq!(
             detector.description(),
@@ -104,14 +98,8 @@ pub trait OperationIsTautologyOrContradiction {
 impl OperationIsTautologyOrContradiction for BinaryOperation {
     fn is_tautology_or_contradiction(&self, context: &WorkspaceContext) -> Option<bool> {
         if let (
-            Some(TypeDescriptions {
-                type_string: Some(lhs_type_string),
-                ..
-            }),
-            Some(TypeDescriptions {
-                type_string: Some(rhs_type_string),
-                ..
-            }),
+            Some(TypeDescriptions { type_string: Some(lhs_type_string), .. }),
+            Some(TypeDescriptions { type_string: Some(rhs_type_string), .. }),
             operator,
         ) = (
             self.left_expression.as_ref().type_descriptions(),
@@ -192,15 +180,14 @@ pub mod solidity_integer_helper {
     /// we can determine if it makes sense by calling this function
     ///     does_operation_make_sense_with_rhs_value("uint8", ">=", "300")
     ///
-    /// This function checks for the range of integer values of uint8 and returns true if it is neither a tautology
-    /// nor a contradiction.
+    /// This function checks for the range of integer values of uint8 and returns true if it is
+    /// neither a tautology nor a contradiction.
     ///
-    /// Here, I define tautology as the condition where the range Ex: (>=300) FULLY COVERS thr Range of Uint8
-    /// Contradiction: When the range Ex:(>=300) fully excludes the Range of Uint8
+    /// Here, I define tautology as the condition where the range Ex: (>=300) FULLY COVERS thr Range
+    /// of Uint8 Contradiction: When the range Ex:(>=300) fully excludes the Range of Uint8
     ///
     /// Notice how in the above example, the value is on the right hand side.
     /// Hence this function is called "does_...rhs_value".
-    ///
     ///
     pub fn does_operation_make_sense_with_rhs_value(
         type_string: &str,
@@ -213,8 +200,8 @@ pub mod solidity_integer_helper {
 
         let value_as_big_int = BigInt::parse_bytes(value.as_bytes(), 10)?;
 
-        // First and foremost if the value is out of range it's 100% either a tautology or a contradiction.
-        // Hence, return false.
+        // First and foremost if the value is out of range it's 100% either a tautology or a
+        // contradiction. Hence, return false.
         if value_as_big_int < allowed_min_val || value_as_big_int > allowed_max_val {
             return Some(false);
         }
@@ -269,7 +256,6 @@ pub mod solidity_integer_helper {
     ///     does_operation_make_sense_with_lhs_value("300", ">=", "uint8")
     ///
     /// Notice, here the value 300 is on the left hand side.
-    ///
     pub fn does_operation_make_sense_with_lhs_value(
         value: &str,
         operator: &str,
@@ -328,10 +314,7 @@ pub mod solidity_integer_helper {
     }
 
     fn find_int_min(num_of_bits: u32) -> BigInt {
-        BigInt::parse_bytes(b"2", 10)
-            .unwrap()
-            .pow(num_of_bits - 1)
-            .neg()
+        BigInt::parse_bytes(b"2", 10).unwrap().pow(num_of_bits - 1).neg()
     }
 
     #[cfg(test)]
@@ -364,11 +347,11 @@ pub mod solidity_integer_helper {
 
         #[test]
         fn can_find_max_of_uint256() {
-            // This test shows that we can calculate the biggest possible number in Solidity for uint
-            // which is 2^256 - 1.
+            // This test shows that we can calculate the biggest possible number in Solidity for
+            // uint which is 2^256 - 1.
             // hence we conclude that because we can represent 2^256 - 1, we can easily cover all
-            // the smaller variants of uint that is uint8, uint16, .... all the ay upto uint256 because they
-            // are lesser than 2^256 - 1
+            // the smaller variants of uint that is uint8, uint16, .... all the ay upto uint256
+            // because they are lesser than 2^256 - 1
             let uint256_max = BigInt::parse_bytes(b"2", 10).unwrap().pow(256) - BigInt::one();
             assert_eq!(
                 uint256_max,

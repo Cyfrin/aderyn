@@ -1,14 +1,14 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::ast::{ASTNode, NodeID, NodeType};
 
-use crate::capture;
-use crate::context::browser::{GetClosestAncestorOfTypeX, GetImmediateParent};
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    capture,
+    context::{
+        browser::{GetClosestAncestorOfTypeX, GetImmediateParent},
+        workspace_context::WorkspaceContext,
+    },
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -24,14 +24,11 @@ impl IssueDetector for UncheckedLowLevelCallDetector {
         let call_types = ["call", "staticcall", "delegatecall"];
         for member_access in context.member_accesses() {
             if call_types.iter().any(|&c| c == member_access.member_name)
-                && member_access
-                    .expression
-                    .type_descriptions()
-                    .is_some_and(|type_desc| {
-                        type_desc.type_string.as_ref().is_some_and(|type_string| {
-                            type_string == "address" || type_string == "address payable"
-                        })
+                && member_access.expression.type_descriptions().is_some_and(|type_desc| {
+                    type_desc.type_string.as_ref().is_some_and(|type_string| {
+                        type_string == "address" || type_string == "address payable"
                     })
+                })
             {
                 if let Some(ASTNode::FunctionCall(func_call)) =
                     member_access.closest_ancestor_of_type(context, NodeType::FunctionCall)
@@ -41,8 +38,7 @@ impl IssueDetector for UncheckedLowLevelCallDetector {
                     // We need to also check for the possibility where the function call's parent is
                     // another function call and that has a direct parent of type block
                     if let Some(ASTNode::ExpressionStatement(e)) = func_call.parent(context) {
-                        if e.parent(context)
-                            .is_some_and(|node| node.node_type() == NodeType::Block)
+                        if e.parent(context).is_some_and(|node| node.node_type() == NodeType::Block)
                         {
                             capture!(self, context, func_call);
                         }
@@ -112,9 +108,6 @@ mod unchecked_low_level_calls_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 9);
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
     }
 }

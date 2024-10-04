@@ -3,7 +3,6 @@
 //! Our first kind of callgraph is [`CallGraph`] it comes bundled with actions to help
 //! application modules "hook in" and consume the graphs.
 //!
-//!
 
 use std::collections::HashSet;
 
@@ -35,8 +34,9 @@ pub struct CallGraph {
     pub entry_points: Vec<NodeID>,
 
     /// Surface points are calculated based on the entry points (input)
-    /// and only consists of [`crate::ast::FunctionDefinition`] and [`crate::ast::ModifierDefinition`]
-    /// These are nodes that are the *actual* starting points for traversal in the graph
+    /// and only consists of [`crate::ast::FunctionDefinition`] and
+    /// [`crate::ast::ModifierDefinition`] These are nodes that are the *actual* starting
+    /// points for traversal in the graph
     pub inward_surface_points: Vec<NodeID>,
 
     /// Same as the inward one, but acts on reverse graph.
@@ -66,9 +66,8 @@ impl CallGraph {
 
         // Construct entry points
         for &node in nodes {
-            let node_id = node
-                .id()
-                .ok_or_else(|| super::Error::UnidentifiedEntryPointNode(node.clone()))?;
+            let node_id =
+                node.id().ok_or_else(|| super::Error::UnidentifiedEntryPointNode(node.clone()))?;
             entry_points.push(node_id);
         }
 
@@ -98,11 +97,10 @@ impl CallGraph {
                     outward_surface_points.push(id);
                 }
             } else {
-                let parent_surface_point = node
-                    .closest_ancestor_of_type(context, NodeType::FunctionDefinition)
-                    .or_else(|| {
-                        node.closest_ancestor_of_type(context, NodeType::ModifierDefinition)
-                    });
+                let parent_surface_point =
+                    node.closest_ancestor_of_type(context, NodeType::FunctionDefinition).or_else(
+                        || node.closest_ancestor_of_type(context, NodeType::ModifierDefinition),
+                    );
                 if let Some(parent_surface_point) = parent_surface_point {
                     if let Some(parent_surface_point_id) = parent_surface_point.id() {
                         outward_surface_points.push(parent_surface_point_id);
@@ -111,12 +109,7 @@ impl CallGraph {
             }
         }
 
-        Ok(CallGraph {
-            entry_points,
-            inward_surface_points,
-            outward_surface_points,
-            direction,
-        })
+        Ok(CallGraph { entry_points, inward_surface_points, outward_surface_points, direction })
     }
 
     pub fn new(
@@ -127,30 +120,24 @@ impl CallGraph {
         Self::from_nodes(context, nodes, direction)
     }
 
-    /// Visit the entry points and all the plausible function definitions and modifier definitions that
-    /// EVM may encounter during execution.
+    /// Visit the entry points and all the plausible function definitions and modifier definitions
+    /// that EVM may encounter during execution.
     pub fn accept<T>(&self, context: &WorkspaceContext, visitor: &mut T) -> super::Result<()>
     where
         T: CallGraphVisitor,
     {
         self._accept(
             context,
-            context
-                .inward_callgraph
-                .as_ref()
-                .ok_or(super::Error::InwardCallgraphNotAvailable)?,
-            context
-                .outward_callgraph
-                .as_ref()
-                .ok_or(super::Error::OutwardCallgraphNotAvailable)?,
+            context.inward_callgraph.as_ref().ok_or(super::Error::InwardCallgraphNotAvailable)?,
+            context.outward_callgraph.as_ref().ok_or(super::Error::OutwardCallgraphNotAvailable)?,
             visitor,
         )
     }
 
     /// Responsible for informing the trackers.
-    /// First, we visit the entry points. Then, we derive the subgraph from the [`WorkspaceCallGraph`]
-    /// which consists of all the nodes that can be reached by traversing the edges starting
-    /// from the surface points.
+    /// First, we visit the entry points. Then, we derive the subgraph from the
+    /// [`WorkspaceCallGraph`] which consists of all the nodes that can be reached by traversing
+    /// the edges starting from the surface points.
     fn _accept<T>(
         &self,
         context: &WorkspaceContext,
@@ -161,7 +148,8 @@ impl CallGraph {
     where
         T: CallGraphVisitor,
     {
-        // Visit entry point nodes (so that trackers can track the state across all code regions in 1 place)
+        // Visit entry point nodes (so that trackers can track the state across all code regions in
+        // 1 place)
         for entry_point_id in &self.entry_points {
             self.make_entry_point_visit_call(context, *entry_point_id, visitor)?;
         }
@@ -331,18 +319,14 @@ impl CallGraph {
                 }
                 CurrentDFSVector::OutwardSideEffect => {
                     if let ASTNode::FunctionDefinition(function) = node {
-                        visitor
-                            .visit_outward_side_effect_function_definition(function)
-                            .map_err(|_| {
-                                super::Error::OutwardSideEffectFunctionDefinitionVisitError
-                            })?;
+                        visitor.visit_outward_side_effect_function_definition(function).map_err(
+                            |_| super::Error::OutwardSideEffectFunctionDefinitionVisitError,
+                        )?;
                     }
                     if let ASTNode::ModifierDefinition(modifier) = node {
-                        visitor
-                            .visit_outward_side_effect_modifier_definition(modifier)
-                            .map_err(|_| {
-                                super::Error::OutwardSideEffectModifierDefinitionVisitError
-                            })?;
+                        visitor.visit_outward_side_effect_modifier_definition(modifier).map_err(
+                            |_| super::Error::OutwardSideEffectModifierDefinitionVisitError,
+                        )?;
                     }
                 }
             }
@@ -360,13 +344,8 @@ impl CallGraph {
     where
         T: CallGraphVisitor,
     {
-        let node = context
-            .nodes
-            .get(&node_id)
-            .ok_or(super::Error::InvalidEntryPointId(node_id))?;
-        visitor
-            .visit_entry_point(node)
-            .map_err(|_| super::Error::EntryPointVisitError)?;
+        let node = context.nodes.get(&node_id).ok_or(super::Error::InvalidEntryPointId(node_id))?;
+        visitor.visit_entry_point(node).map_err(|_| super::Error::EntryPointVisitError)?;
         Ok(())
     }
 }
