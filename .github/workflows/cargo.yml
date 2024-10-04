@@ -271,8 +271,7 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: stable
-          components: rustfmt, clippy
+          toolchain: nightly
           override: true
 
       - name: Install git submodules
