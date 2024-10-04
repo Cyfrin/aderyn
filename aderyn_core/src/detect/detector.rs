@@ -26,7 +26,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<UnspecificSolidityPragmaDetector>::default(),
         Box::<ZeroAddressCheckDetector>::default(),
         Box::<UselessPublicFunctionDetector>::default(),
-        Box::<ConstantsInsteadOfLiteralsDetector>::default(),
+        Box::<LiteralsInsteadOfConstantsDetector>::default(),
         Box::<UnindexedEventsDetector>::default(),
         Box::<RequireWithStringDetector>::default(),
         Box::<NonReentrantBeforeOthersDetector>::default(),
@@ -139,11 +139,11 @@ pub(crate) enum IssueDetectorNamePool {
     UnspecificSolidityPragma,
     NoZeroAddressCheck,
     UselessPublicFunction,
-    ConstantsInsteadOfLiterals,
     UnindexedEvents,
     RequireWithoutString,
     NonReentrantIsNotBeforeOthers,
     BlockTimestampIsWeakDeadline,
+    LiteralInsteadOfConstant,
     UnsafeOzERC721Mint,
     PushZeroOpcode,
     ArbitraryTransferFrom,
@@ -226,6 +226,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::StateVariableCouldBeDeclaredConstant => {
             Some(Box::<StateVariableCouldBeConstantDetector>::default())
         }
+        IssueDetectorNamePool::LiteralInsteadOfConstant => {
+            Some(Box::<LiteralsInsteadOfConstantsDetector>::default())
+        }
         IssueDetectorNamePool::FunctionPointerInConstructor => {
             Some(Box::<FucntionPointerInConstructorDetector>::default())
         }
@@ -296,9 +299,6 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         }
         IssueDetectorNamePool::UselessPublicFunction => {
             Some(Box::<UselessPublicFunctionDetector>::default())
-        }
-        IssueDetectorNamePool::ConstantsInsteadOfLiterals => {
-            Some(Box::<ConstantsInsteadOfLiteralsDetector>::default())
         }
         IssueDetectorNamePool::UnindexedEvents => Some(Box::<UnindexedEventsDetector>::default()),
         IssueDetectorNamePool::RequireWithoutString => {

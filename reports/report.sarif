@@ -6286,7 +6286,7 @@
           "message": {
             "text": "If the same constant literal value is used multiple times, create a constant state variable and reference it throughout the contract."
           },
-          "ruleId": "constants-instead-of-literals"
+          "ruleId": "literal-instead-of-constant"
         },
         {
           "level": "note",
