@@ -160,86 +160,80 @@ pub fn get_report(
             //
             // Alternative way would be UNION strategy
             //
-            //
 
-            match detector.merge_conflict_resolution_strategy() {
-                detect::detector::MergeConflictResolutionStrategy::Intersection => {
-                    #[allow(clippy::complexity)]
-                    let mut grouped_instances: BTreeMap<
-                        String,
-                        Vec<BTreeMap<(String, usize, String), i64>>,
-                    > = Default::default();
+            // NOTE: Intersection strategy logic
+            #[allow(clippy::complexity)]
+            let mut grouped_instances: BTreeMap<
+                String,
+                Vec<BTreeMap<(String, usize, String), i64>>,
+            > = Default::default();
 
-                    for (instances, hints, src_filepaths) in collection_of_instances {
-                        let mut grouped_instances_context: BTreeMap<
-                            String,
-                            BTreeMap<(String, usize, String), i64>,
-                        > = BTreeMap::new();
+            for (instances, hints, src_filepaths) in collection_of_instances {
+                let mut grouped_instances_context: BTreeMap<
+                    String,
+                    BTreeMap<(String, usize, String), i64>,
+                > = BTreeMap::new();
 
-                        for (key, value) in instances {
-                            match grouped_instances_context.entry(key.0.clone()) {
-                                Entry::Vacant(v) => {
-                                    let mut mini_btree = BTreeMap::new();
-                                    mini_btree.insert(key, value);
-                                    v.insert(mini_btree);
-                                }
-                                Entry::Occupied(mut o) => {
-                                    o.get_mut().insert(key, value);
-                                }
-                            };
+                for (key, value) in instances {
+                    match grouped_instances_context.entry(key.0.clone()) {
+                        Entry::Vacant(v) => {
+                            let mut mini_btree = BTreeMap::new();
+                            mini_btree.insert(key, value);
+                            v.insert(mini_btree);
                         }
-
-                        for key in src_filepaths {
-                            if let Entry::Vacant(v) = grouped_instances_context.entry(key) {
-                                v.insert(Default::default());
-                            }
+                        Entry::Occupied(mut o) => {
+                            o.get_mut().insert(key, value);
                         }
+                    };
+                }
 
-                        for (key, value) in grouped_instances_context {
-                            match grouped_instances.entry(key.clone()) {
-                                Entry::Vacant(v) => {
-                                    v.insert(vec![value]);
-                                }
-                                Entry::Occupied(mut o) => {
-                                    o.get_mut().push(value);
-                                }
-                            }
-                        }
-
-                        detector_hints.extend(hints);
-                    }
-
-                    for (_filename, value) in grouped_instances {
-                        // Find the common instances across all the contexts' BTrees.
-
-                        let mut selected_instances = BTreeMap::new();
-
-                        for instances in &value {
-                            for instance in instances {
-                                if value
-                                    .iter()
-                                    .all(|tree| tree.contains_key(&instance.0.clone()))
-                                {
-                                    selected_instances.insert(instance.0.clone(), *instance.1);
-                                }
-                            }
-                        }
-
-                        detectors_instances.extend(selected_instances);
+                for key in src_filepaths {
+                    if let Entry::Vacant(v) = grouped_instances_context.entry(key) {
+                        v.insert(Default::default());
                     }
                 }
 
-                // Default to the old way for this strategy
-                detect::detector::MergeConflictResolutionStrategy::Union => {
-                    for (instances, hints, _src_filepaths) in collection_of_instances.into_iter() {
-                        if instances.is_empty() {
-                            continue;
+                for (key, value) in grouped_instances_context {
+                    match grouped_instances.entry(key.clone()) {
+                        Entry::Vacant(v) => {
+                            v.insert(vec![value]);
                         }
-                        detectors_instances.extend(instances);
-                        detector_hints.extend(hints);
+                        Entry::Occupied(mut o) => {
+                            o.get_mut().push(value);
+                        }
                     }
                 }
+
+                detector_hints.extend(hints);
             }
+
+            for (_filename, value) in grouped_instances {
+                // Find the common instances across all the contexts' BTrees.
+
+                let mut selected_instances = BTreeMap::new();
+
+                for instances in &value {
+                    for instance in instances {
+                        if value
+                            .iter()
+                            .all(|tree| tree.contains_key(&instance.0.clone()))
+                        {
+                            selected_instances.insert(instance.0.clone(), *instance.1);
+                        }
+                    }
+                }
+
+                detectors_instances.extend(selected_instances);
+            }
+            // NOTE: Union strategy would work something like this
+            //
+            // for (instances, hints, _src_filepaths) in collection_of_instances.into_iter() {
+            //       if instances.is_empty() {
+            //           continue;
+            //       }
+            //       detectors_instances.extend(instances);
+            //       detector_hints.extend(hints);
+            //  }
 
             if detectors_instances.is_empty() {
                 return None;
