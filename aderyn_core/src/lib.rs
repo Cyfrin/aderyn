@@ -122,23 +122,118 @@ pub fn get_report(
 
             let collection_of_instances = contexts
                 .into_par_iter()
-                .flat_map(|context| {
+                .map(|context| {
                     let mut d = detector.skeletal_clone();
                     if let Ok(found) = d.detect(context) {
                         if found {
                             let instances = d.instances();
                             let hints = d.hints();
-                            return Some((instances, hints));
+                            return (instances, hints, context.src_filepaths.clone());
                         }
                     }
-                    None
+                    (
+                        Default::default(),
+                        Default::default(),
+                        context.src_filepaths.clone(),
+                    )
                 })
                 .collect::<Vec<_>>();
 
-            for (instances, hints) in collection_of_instances {
-                detectors_instances.extend(instances);
+            // Commit detector instances
+            //
+            // NOTE: Possible merge conflict here
+            //
+            // For a given detector D, in a file F,
+            //
+            // Context C1 captures instances A, B, C
+            // Context C2 captures instances B, C, D
+            //
+            // This is a conflict!
+            //
+            // We need a strategy to resolve this and it depends on the detector
+            //
+            // For example, if the detector determines that A, B, C are immutable when considering
+            // one set of files but B, C, D when considering another set of files, it is only safe
+            // to conclude that the B, C are immutable.
+            //
+            // Such a technique to resolve this conflict would be called INTERSECTION strategy
+            //
+            // Alternative way would be UNION strategy
+            //
+
+            // NOTE: Intersection strategy logic
+            #[allow(clippy::complexity)]
+            let mut grouped_instances: BTreeMap<
+                String,
+                Vec<BTreeMap<(String, usize, String), i64>>,
+            > = Default::default();
+
+            for (instances, hints, src_filepaths) in collection_of_instances {
+                let mut grouped_instances_context: BTreeMap<
+                    String,
+                    BTreeMap<(String, usize, String), i64>,
+                > = BTreeMap::new();
+
+                for (key, value) in instances {
+                    match grouped_instances_context.entry(key.0.clone()) {
+                        Entry::Vacant(v) => {
+                            let mut mini_btree = BTreeMap::new();
+                            mini_btree.insert(key, value);
+                            v.insert(mini_btree);
+                        }
+                        Entry::Occupied(mut o) => {
+                            o.get_mut().insert(key, value);
+                        }
+                    };
+                }
+
+                for key in src_filepaths {
+                    if let Entry::Vacant(v) = grouped_instances_context.entry(key) {
+                        v.insert(Default::default());
+                    }
+                }
+
+                for (key, value) in grouped_instances_context {
+                    match grouped_instances.entry(key.clone()) {
+                        Entry::Vacant(v) => {
+                            v.insert(vec![value]);
+                        }
+                        Entry::Occupied(mut o) => {
+                            o.get_mut().push(value);
+                        }
+                    }
+                }
+
                 detector_hints.extend(hints);
             }
+
+            for (_filename, value) in grouped_instances {
+                // Find the common instances across all the contexts' BTrees.
+
+                let mut selected_instances = BTreeMap::new();
+
+                for instances in &value {
+                    for instance in instances {
+                        if value
+                            .iter()
+                            .all(|tree| tree.contains_key(&instance.0.clone()))
+                        {
+                            selected_instances.insert(instance.0.clone(), *instance.1);
+                        }
+                    }
+                }
+
+                detectors_instances.extend(selected_instances);
+            }
+            // NOTE: Union strategy would work something like this
+            //
+            // for (instances, hints, _src_filepaths) in collection_of_instances.into_iter() {
+            //       if instances.is_empty() {
+            //           continue;
+            //       }
+            //       detectors_instances.extend(instances);
+            //       detector_hints.extend(hints);
+            //  }
 
             if detectors_instances.is_empty() {
                 return None;
