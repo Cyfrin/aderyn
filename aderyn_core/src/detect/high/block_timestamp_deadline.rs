@@ -110,7 +110,7 @@ impl IssueDetector for BlockTimestampDeadlineDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::BlockTimestampDeadline)
+        format!("{}", IssueDetectorNamePool::BlockTimestampIsWeakDeadline)
     }
 }
 

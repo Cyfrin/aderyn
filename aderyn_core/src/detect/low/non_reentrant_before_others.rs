@@ -52,7 +52,7 @@ impl IssueDetector for NonReentrantBeforeOthersDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::NonReentrantBeforeOthers)
+        format!("{}", IssueDetectorNamePool::NonReentrantIsNotBeforeOthers)
     }
 }
 

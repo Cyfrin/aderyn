@@ -87,7 +87,7 @@ impl IssueDetector for CacheArrayLengthDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::CacheArrayLength)
+        format!("{}", IssueDetectorNamePool::ArrayLengthNotCached)
     }
 }
 

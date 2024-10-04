@@ -51,7 +51,7 @@ impl IssueDetector for RequireWithStringDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::RequireWithString)
+        format!("{}", IssueDetectorNamePool::RequireWithoutString)
     }
 }
 

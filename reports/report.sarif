@@ -64,7 +64,7 @@
           "message": {
             "text": "Use `abi.encode()` instead which will pad items to 32 bytes, which will [prevent hash collisions](https://docs.soliditylang.org/en/v0.8.13/abi-spec.html#non-standard-packed-mode) (e.g. `abi.encodePacked(0x123,0x456)` => `0x123456` => `abi.encodePacked(0x1,0x23456)`, but `abi.encode(0x123,0x456)` => `0x0...1230...456`). Unless there is a compelling reason, `abi.encode` should be preferred. If there is only one argument to `abi.encodePacked()` it can often be cast to `bytes()` or `bytes32()` [instead](https://ethereum.stackexchange.com/questions/30912/how-to-compare-strings-in-solidity#answer-82739).\nIf all arguments are strings and or bytes, `bytes.concat()` should be used instead."
           },
-          "ruleId": "avoid-abi-encode-packed"
+          "ruleId": "hash-collision-due-to-abi-encode-packed"
         },
         {
           "level": "warning",
@@ -260,7 +260,7 @@
           "message": {
             "text": "In the PoS model, proposers know well in advance if they will propose one or consecutive blocks ahead of time. In such a scenario, a malicious validator can hold back the transaction and execute it at a more favourable block number.Consider allowing function caller to specify swap deadline input parameter."
           },
-          "ruleId": "block-timestamp-deadline"
+          "ruleId": "block-timestamp-is-weak-deadline"
         },
         {
           "level": "warning",
@@ -2576,7 +2576,7 @@
           "message": {
             "text": "Consider introducing checks for `msg.sender` to ensure the recipient of the money is as intended."
           },
-          "ruleId": "send-ether-no-checks"
+          "ruleId": "sends-ether-away-without-checking-address"
         },
         {
           "level": "warning",
@@ -2640,7 +2640,7 @@
           "message": {
             "text": "Introduce checks on the address"
           },
-          "ruleId": "delegate-call-unchecked-address"
+          "ruleId": "delegate-call-on-unchecked-address"
         },
         {
           "level": "warning",
@@ -3966,7 +3966,7 @@
           "message": {
             "text": "The `ecrecover` function is susceptible to signature malleability. This means that the same message can be signed in multiple ways, allowing an attacker to change the message signature without invalidating it. This can lead to unexpected behavior in smart contracts, such as the loss of funds or the ability to bypass access control. Consider using OpenZeppelin's ECDSA library instead of the built-in function."
           },
-          "ruleId": "ecrecover"
+          "ruleId": "signature-malleability-due-to-raw-ecrecover"
         },
         {
           "level": "note",
@@ -4717,7 +4717,7 @@
           "message": {
             "text": "Check for `address(0)` when assigning values to address state variables."
           },
-          "ruleId": "zero-address-check"
+          "ruleId": "no-zero-address-check"
         },
         {
           "level": "note",
@@ -6821,7 +6821,7 @@
           "message": {
             "text": "Use descriptive reason strings or custom errors for revert paths."
           },
-          "ruleId": "require-with-string"
+          "ruleId": "require-without-string"
         },
         {
           "level": "note",
@@ -6852,7 +6852,7 @@
           "message": {
             "text": "This is a best-practice to protect against reentrancy in other modifiers."
           },
-          "ruleId": "non-reentrant-before-others"
+          "ruleId": "non-reentrant-is-not-before-others"
         },
         {
           "level": "note",
@@ -9427,7 +9427,7 @@
           "message": {
             "text": "If `x` is a boolean, there is no need to do `if(x == true)` or `if(x == false)`. Just use `if(x)` and `if(!x)` respectively."
           },
-          "ruleId": "boolean-equality"
+          "ruleId": "redundant-boolean-equality"
         },
         {
           "level": "note",
@@ -9943,7 +9943,7 @@
           "message": {
             "text": "Cache the lengths of storage arrays if they are used and not modified in for loops."
           },
-          "ruleId": "cache-array-length"
+          "ruleId": "array-length-not-cached"
         },
         {
           "level": "note",
@@ -9963,7 +9963,7 @@
           "message": {
             "text": "Argument to `assert()` modifies the state. Use `require` for invariants modifying state."
           },
-          "ruleId": "assert-state-change"
+          "ruleId": "state-change-in-assert"
         },
         {
           "level": "note",

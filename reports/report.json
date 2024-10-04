@@ -473,7 +473,7 @@
       {
         "title": "`abi.encodePacked()` should not be used with dynamic types when passing the result to a hash function such as `keccak256()`",
         "description": "Use `abi.encode()` instead which will pad items to 32 bytes, which will [prevent hash collisions](https://docs.soliditylang.org/en/v0.8.13/abi-spec.html#non-standard-packed-mode) (e.g. `abi.encodePacked(0x123,0x456)` => `0x123456` => `abi.encodePacked(0x1,0x23456)`, but `abi.encode(0x123,0x456)` => `0x0...1230...456`). Unless there is a compelling reason, `abi.encode` should be preferred. If there is only one argument to `abi.encodePacked()` it can often be cast to `bytes()` or `bytes32()` [instead](https://ethereum.stackexchange.com/questions/30912/how-to-compare-strings-in-solidity#answer-82739).\nIf all arguments are strings and or bytes, `bytes.concat()` should be used instead.",
-        "detector_name": "avoid-abi-encode-packed",
+        "detector_name": "hash-collision-due-to-abi-encode-packed",
         "instances": [
           {
             "contract_path": "src/KeccakContract.sol",
@@ -498,7 +498,7 @@
       {
         "title": "Using `block.timestamp` for swap deadline offers no protection",
         "description": "In the PoS model, proposers know well in advance if they will propose one or consecutive blocks ahead of time. In such a scenario, a malicious validator can hold back the transaction and execute it at a more favourable block number.Consider allowing function caller to specify swap deadline input parameter.",
-        "detector_name": "block-timestamp-deadline",
+        "detector_name": "block-timestamp-is-weak-deadline",
         "instances": [
           {
             "contract_path": "src/Trump.sol",
@@ -1783,7 +1783,7 @@
       {
         "title": "Functions send eth away from contract but performs no checks on any address.",
         "description": "Consider introducing checks for `msg.sender` to ensure the recipient of the money is as intended.",
-        "detector_name": "send-ether-no-checks",
+        "detector_name": "sends-ether-away-without-checking-address",
         "instances": [
           {
             "contract_path": "src/CallGraphTests.sol",
@@ -1910,7 +1910,7 @@
       {
         "title": "Delegatecall made by the function without checks on any address.",
         "description": "Introduce checks on the address",
-        "detector_name": "delegate-call-unchecked-address",
+        "detector_name": "delegate-call-on-unchecked-address",
         "instances": [
           {
             "contract_path": "src/DelegateCallWithoutAddressCheck.sol",
@@ -2706,7 +2706,7 @@
       {
         "title": "`ecrecover` is susceptible to signature malleability",
         "description": "The `ecrecover` function is susceptible to signature malleability. This means that the same message can be signed in multiple ways, allowing an attacker to change the message signature without invalidating it. This can lead to unexpected behavior in smart contracts, such as the loss of funds or the ability to bypass access control. Consider using OpenZeppelin's ECDSA library instead of the built-in function.",
-        "detector_name": "ecrecover",
+        "detector_name": "signature-malleability-due-to-raw-ecrecover",
         "instances": [
           {
             "contract_path": "src/inheritance/ExtendedInheritance.sol",
@@ -3076,7 +3076,7 @@
       {
         "title": "Missing checks for `address(0)` when assigning values to address state variables",
         "description": "Check for `address(0)` when assigning values to address state variables.",
-        "detector_name": "zero-address-check",
+        "detector_name": "no-zero-address-check",
         "instances": [
           {
             "contract_path": "src/ArbitraryTransferFrom.sol",
@@ -4148,7 +4148,7 @@
       {
         "title": "Empty `require()` / `revert()` statements",
         "description": "Use descriptive reason strings or custom errors for revert paths.",
-        "detector_name": "require-with-string",
+        "detector_name": "require-without-string",
         "instances": [
           {
             "contract_path": "src/CallGraphTests.sol",
@@ -4293,7 +4293,7 @@
       {
         "title": "The `nonReentrant` `modifier` should occur before all other modifiers",
         "description": "This is a best-practice to protect against reentrancy in other modifiers.",
-        "detector_name": "non-reentrant-before-others",
+        "detector_name": "non-reentrant-is-not-before-others",
         "instances": [
           {
             "contract_path": "src/AdminContract.sol",
@@ -5719,7 +5719,7 @@
       {
         "title": "Boolean equality is not required.",
         "description": "If `x` is a boolean, there is no need to do `if(x == true)` or `if(x == false)`. Just use `if(x)` and `if(!x)` respectively.",
-        "detector_name": "boolean-equality",
+        "detector_name": "redundant-boolean-equality",
         "instances": [
           {
             "contract_path": "src/BooleanEquality.sol",
@@ -6019,7 +6019,7 @@
       {
         "title": "Loop condition contains `state_variable.length` that could be cached outside.",
         "description": "Cache the lengths of storage arrays if they are used and not modified in for loops.",
-        "detector_name": "cache-array-length",
+        "detector_name": "array-length-not-cached",
         "instances": [
           {
             "contract_path": "src/CacheArrayLength.sol",
@@ -6044,7 +6044,7 @@
       {
         "title": "Incorrect use of `assert()`",
         "description": "Argument to `assert()` modifies the state. Use `require` for invariants modifying state.",
-        "detector_name": "assert-state-change",
+        "detector_name": "state-change-in-assert",
         "instances": [
           {
             "contract_path": "src/AssertStateChange.sol",
@@ -7146,18 +7146,18 @@
     "delegate-call-in-loop",
     "centralization-risk",
     "solmate-safe-transfer-lib",
-    "avoid-abi-encode-packed",
-    "ecrecover",
+    "hash-collision-due-to-abi-encode-packed",
+    "signature-malleability-due-to-raw-ecrecover",
     "deprecated-oz-functions",
     "unsafe-erc20-functions",
     "unspecific-solidity-pragma",
-    "zero-address-check",
+    "no-zero-address-check",
     "useless-public-function",
     "literal-instead-of-constant",
     "unindexed-events",
-    "require-with-string",
-    "non-reentrant-before-others",
-    "block-timestamp-deadline",
+    "require-without-string",
+    "non-reentrant-is-not-before-others",
+    "block-timestamp-is-weak-deadline",
     "unsafe-oz-erc721-mint",
     "push-zero-opcode",
     "arbitrary-transfer-from",
@@ -7187,8 +7187,8 @@
     "state-variable-shadowing",
     "unchecked-send",
     "misused-boolean",
-    "send-ether-no-checks",
-    "delegate-call-unchecked-address",
+    "sends-ether-away-without-checking-address",
+    "delegate-call-on-unchecked-address",
     "tautological-compare",
     "rtlo",
     "unchecked-return",
@@ -7203,7 +7203,7 @@
     "delete-nested-mapping",
     "unused-state-variable",
     "constant-functions-assembly",
-    "boolean-equality",
+    "redundant-boolean-equality",
     "tx-origin-used-for-auth",
     "msg-value-in-loop",
     "contract-locks-ether",
@@ -7215,8 +7215,8 @@
     "out-of-order-retryable",
     "function-initializing-state",
     "dead-code",
-    "cache-array-length",
-    "assert-state-change",
+    "array-length-not-cached",
+    "state-change-in-assert",
     "costly-operations-inside-loops",
     "constant-function-changing-state",
     "builtin-symbol-shadow",

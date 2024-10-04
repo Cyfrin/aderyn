@@ -67,7 +67,10 @@ impl IssueDetector for AvoidAbiEncodePackedDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::AvoidAbiEncodePacked)
+        format!(
+            "{}",
+            IssueDetectorNamePool::HashCollisionDueToAbiEncodePacked
+        )
     }
 }
 
