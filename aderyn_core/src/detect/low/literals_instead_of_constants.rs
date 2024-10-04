@@ -37,10 +37,7 @@ impl IssueDetector for LiteralsInsteadOfConstantsDetector {
         for contract in context.contract_definitions() {
             let mut literal_values_found: HashMap<String, Vec<Literal>> = HashMap::new();
 
-            for function in ExtractFunctionDefinitions::from(contract)
-                .extracted
-                .into_iter()
-            {
+            for function in ExtractFunctionDefinitions::from(contract).extracted.into_iter() {
                 for literal in ExtractLiterals::from(&function).extracted.into_iter() {
                     if (literal.kind == LiteralKind::Number
                         && literal.value != Some(String::from("0"))
@@ -56,10 +53,7 @@ impl IssueDetector for LiteralsInsteadOfConstantsDetector {
 
                         if let Some(literal_value) = literal.value.as_ref() {
                             if literal_values_found.contains_key(literal_value) {
-                                literal_values_found
-                                    .get_mut(literal_value)
-                                    .unwrap()
-                                    .push(literal);
+                                literal_values_found.get_mut(literal_value).unwrap().push(literal);
                             } else {
                                 literal_values_found.insert(literal_value.clone(), vec![literal]);
                             }
@@ -68,10 +62,7 @@ impl IssueDetector for LiteralsInsteadOfConstantsDetector {
                 }
             }
 
-            for modifier in ExtractModifierDefinitions::from(contract)
-                .extracted
-                .into_iter()
-            {
+            for modifier in ExtractModifierDefinitions::from(contract).extracted.into_iter() {
                 for literal in ExtractLiterals::from(&modifier).extracted.into_iter() {
                     if (literal.kind == LiteralKind::Number
                         && literal.value != Some(String::from("0"))
@@ -87,10 +78,7 @@ impl IssueDetector for LiteralsInsteadOfConstantsDetector {
 
                         if let Some(literal_value) = literal.value.as_ref() {
                             if literal_values_found.contains_key(literal_value) {
-                                literal_values_found
-                                    .get_mut(literal_value)
-                                    .unwrap()
-                                    .push(literal);
+                                literal_values_found.get_mut(literal_value).unwrap().push(literal);
                             } else {
                                 literal_values_found.insert(literal_value.clone(), vec![literal]);
                             }
@@ -153,10 +141,7 @@ mod constants_instead_of_literals_tests {
         // assert that the detector finds the correct number of instances
         assert_eq!(detector.instances().len(), 8);
         // assert that the detector returns the correct severity
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert that the detector returns the correct title
         assert_eq!(
             detector.title(),

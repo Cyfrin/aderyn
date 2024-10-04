@@ -267,23 +267,26 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v2
 
+      - name: Install nightly toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: nightly 
+          components: rustfmt
+          override: true
+
+      - name: Run cargo fmt
+        run: |
+          cargo +nightly fmt --all --check 
+
       - name: Install stable toolchain
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: stable
-          components: rustfmt, clippy
+          toolchain: stable 
+          components: clippy
           override: true
 
-      - name: Install git submodules
-        run: |
-          git submodule update --init --recursive
-
-      - name: Run cargo fmt
-        uses: actions-rs/cargo@v1
-        with:
-          command: fmt
-          args: --all -- --check
 
       - name: Run cargo clippy
         uses: actions-rs/cargo@v1

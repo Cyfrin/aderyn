@@ -20,23 +20,21 @@ mod tests {
 
     #[test]
     fn can_parse_ast() {
-        fs::read_dir(PathBuf::from("../tests/ast"))
-            .unwrap()
-            .for_each(|path| {
-                let path = path.unwrap().path();
-                let path_str = path.to_string_lossy();
+        fs::read_dir(PathBuf::from("../tests/ast")).unwrap().for_each(|path| {
+            let path = path.unwrap().path();
+            let path_str = path.to_string_lossy();
 
-                let input = fs::read_to_string(&path).unwrap();
-                let result: Result<SourceUnit, _> = serde_json::from_str(&input);
-                match result {
-                    Err(e) => {
-                        println!("... {path_str} fail: {e}");
-                        panic!();
-                    }
-                    Ok(_) => {
-                        println!("... {path_str} ok");
-                    }
+            let input = fs::read_to_string(&path).unwrap();
+            let result: Result<SourceUnit, _> = serde_json::from_str(&input);
+            match result {
+                Err(e) => {
+                    println!("... {path_str} fail: {e}");
+                    panic!();
                 }
-            })
+                Ok(_) => {
+                    println!("... {path_str} ok");
+                }
+            }
+        })
     }
 }

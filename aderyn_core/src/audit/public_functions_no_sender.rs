@@ -49,15 +49,14 @@ impl AuditorDetector for PublicFunctionsNoSenderChecksDetector {
             get_implemented_external_and_public_functions(context).filter(|function_definition| {
                 // Check if the function has an owner-related modifier
                 let does_not_have_an_owner_modifier =
-                    !ExtractModifierInvocations::from(*function_definition)
-                        .extracted
-                        .iter()
-                        .any(|modifier| {
+                    !ExtractModifierInvocations::from(*function_definition).extracted.iter().any(
+                        |modifier| {
                             modifier.modifier_name.name() == "onlyOwner"
                                 || modifier.modifier_name.name() == "onlyAdmin"
                                 || modifier.modifier_name.name() == "onlyRole"
                                 || modifier.modifier_name.name() == "requiresAuth"
-                        });
+                        },
+                    );
                 // Check if the function has a `msg.sender` BinaryOperation check
                 let has_msg_sender_binary_operation =
                     has_msg_sender_binary_operation(&((*function_definition).into()));
@@ -94,11 +93,7 @@ impl AuditorDetector for PublicFunctionsNoSenderChecksDetector {
         self.found_instances
             .iter()
             .map(|instance| {
-                row![
-                    instance.contract_name,
-                    instance.function_kind,
-                    instance.function_name,
-                ]
+                row![instance.contract_name, instance.function_kind, instance.function_name,]
             })
             .collect()
     }

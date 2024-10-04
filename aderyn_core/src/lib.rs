@@ -15,19 +15,17 @@ use prettytable::Row;
 use rayon::iter::{
     IntoParallelIterator, IntoParallelRefIterator, IntoParallelRefMutIterator, ParallelIterator,
 };
-use std::collections::btree_map::Entry;
-use std::collections::{BTreeMap, HashMap};
-use std::error::Error;
-use std::fs::{remove_file, File};
-use std::io::{self};
-use std::path::{Path, PathBuf};
+use std::{
+    collections::{btree_map::Entry, BTreeMap, HashMap},
+    error::Error,
+    fs::{remove_file, File},
+    io::{self},
+    path::{Path, PathBuf},
+};
 
-use crate::context::workspace_context::WorkspaceContext;
-use crate::detect::detector::IssueSeverity;
+use crate::{context::workspace_context::WorkspaceContext, detect::detector::IssueSeverity};
 
-use crate::report::printer::ReportPrinter;
-use crate::report::reporter::Report;
-use crate::report::Issue;
+use crate::report::{printer::ReportPrinter, reporter::Report, Issue};
 
 #[allow(clippy::too_many_arguments)]
 pub fn run<T>(
@@ -131,11 +129,7 @@ pub fn get_report(
                             return (instances, hints, context.src_filepaths.clone());
                         }
                     }
-                    (
-                        Default::default(),
-                        Default::default(),
-                        context.src_filepaths.clone(),
-                    )
+                    (Default::default(), Default::default(), context.src_filepaths.clone())
                 })
                 .collect::<Vec<_>>();
 
@@ -214,10 +208,7 @@ pub fn get_report(
 
                 for instances in &value {
                     for instance in instances {
-                        if value
-                            .iter()
-                            .all(|tree| tree.contains_key(&instance.0.clone()))
-                        {
+                        if value.iter().all(|tree| tree.contains_key(&instance.0.clone())) {
                             selected_instances.insert(instance.0.clone(), *instance.1);
                         }
                     }
@@ -318,10 +309,8 @@ where
 
     println!("Running {} detectors", detectors.len());
 
-    let detectors_used = &detectors
-        .iter()
-        .map(|d| (d.name(), d.severity().to_string()))
-        .collect::<Vec<_>>();
+    let detectors_used =
+        &detectors.iter().map(|d| (d.name(), d.severity().to_string())).collect::<Vec<_>>();
     println!("Detectors run, processing found issues");
 
     let report = get_report(contexts, &root_rel_path, detectors)?;

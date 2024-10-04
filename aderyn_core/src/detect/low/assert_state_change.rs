@@ -1,14 +1,11 @@
-use std::collections::BTreeMap;
-use std::convert::identity;
-use std::error::Error;
+use std::{collections::BTreeMap, convert::identity, error::Error};
 
 use crate::ast::{Expression, Identifier, NodeID};
 
-use crate::capture;
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
+    capture,
     context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -26,9 +23,7 @@ impl IssueDetector for AssertStateChangeDetector {
                 function_call.expression.as_ref()
             {
                 if name == "assert"
-                    && function_call
-                        .arguments_change_contract_state(context)
-                        .is_some_and(identity)
+                    && function_call.arguments_change_contract_state(context).is_some_and(identity)
                 {
                     capture!(self, context, function_call);
                 }
@@ -89,17 +84,11 @@ mod assert_state_change_tracker {
 
     impl FunctionCall {
         pub fn arguments_change_contract_state(&self, context: &WorkspaceContext) -> Option<bool> {
-            let mut tracker = StateVariableChangeTracker {
-                has_some_state_variable_changed: false,
-                context,
-            };
+            let mut tracker =
+                StateVariableChangeTracker { has_some_state_variable_changed: false, context };
 
-            let arguments = self
-                .arguments
-                .clone()
-                .into_iter()
-                .map(|n| n.into())
-                .collect::<Vec<ASTNode>>();
+            let arguments =
+                self.arguments.clone().into_iter().map(|n| n.into()).collect::<Vec<ASTNode>>();
 
             let ast_nodes: &[&ASTNode] = &(arguments.iter().collect::<Vec<_>>());
 
@@ -136,9 +125,6 @@ mod asert_state_changes_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
         // assert the severity is low
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

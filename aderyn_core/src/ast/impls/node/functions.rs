@@ -1,5 +1,4 @@
-use crate::ast::*;
-use crate::visitor::ast_visitor::*;
+use crate::{ast::*, visitor::ast_visitor::*};
 use eyre::Result;
 
 impl Node for ParameterList {
@@ -36,11 +35,8 @@ impl Node for OverrideSpecifier {
         visitor.end_visit_override_specifier(self)
     }
     fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        let overrides_ids = &self
-            .overrides
-            .iter()
-            .filter_map(|x| x.get_node_id())
-            .collect::<Vec<_>>();
+        let overrides_ids =
+            &self.overrides.iter().filter_map(|x| x.get_node_id()).collect::<Vec<_>>();
         visitor.visit_immediate_children(self.id, overrides_ids.clone())?;
         Ok(())
     }
