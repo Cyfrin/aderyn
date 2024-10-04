@@ -188,7 +188,6 @@ pub mod solidity_integer_helper {
     ///
     /// Notice how in the above example, the value is on the right hand side.
     /// Hence this function is called "does_...rhs_value".
-    ///
     pub fn does_operation_make_sense_with_rhs_value(
         type_string: &str,
         operator: &str,

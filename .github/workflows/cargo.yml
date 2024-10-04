@@ -280,10 +280,8 @@ jobs:
           git submodule update --init --recursive
 
       - name: Run cargo fmt
-        uses: actions-rs/cargo@v1
-        with:
-          command: fmt
-          args: --all -- --check
+        run: |
+          cargo +nightly fmt --all --check
 
       - name: Run cargo clippy
         uses: actions-rs/cargo@v1
