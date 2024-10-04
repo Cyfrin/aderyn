@@ -146,7 +146,7 @@
       {
         "title": "Delegatecall made by the function without checks on any address.",
         "description": "Introduce checks on the address",
-        "detector_name": "delegate-call-unchecked-address",
+        "detector_name": "delegate-call-on-unchecked-address",
         "instances": [
           {
             "contract_path": "inheritance/ExtendedInheritance.sol",
@@ -176,8 +176,8 @@
   },
   "detectors_used": [
     "delegate-call-in-loop",
-    "avoid-abi-encode-packed",
-    "block-timestamp-deadline",
+    "hash-collision-due-to-abi-encode-packed",
+    "block-timestamp-is-weak-deadline",
     "arbitrary-transfer-from",
     "unprotected-initializer",
     "unsafe-casting-detector",
@@ -196,8 +196,8 @@
     "state-variable-shadowing",
     "unchecked-send",
     "misused-boolean",
-    "send-ether-no-checks",
-    "delegate-call-unchecked-address",
+    "sends-ether-away-without-checking-address",
+    "delegate-call-on-unchecked-address",
     "tautological-compare",
     "rtlo",
     "unchecked-return",
