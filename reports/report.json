@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 111,
-    "total_sloc": 3927
+    "total_source_units": 112,
+    "total_sloc": 3954
   },
   "files_details": {
     "files_details": [
@@ -254,6 +254,10 @@
         "n_sloc": 27
       },
       {
+        "file_path": "src/StateVariableCouldBeDeclaredImmutable.sol",
+        "n_sloc": 22
+      },
+      {
         "file_path": "src/StateVariables.sol",
         "n_sloc": 58
       },
@@ -403,7 +407,7 @@
       },
       {
         "file_path": "src/inheritance/ExtendedInheritance.sol",
-        "n_sloc": 17
+        "n_sloc": 18
       },
       {
         "file_path": "src/inheritance/IContractInheritance.sol",
@@ -411,7 +415,7 @@
       },
       {
         "file_path": "src/inheritance/InheritanceBase.sol",
-        "n_sloc": 8
+        "n_sloc": 12
       },
       {
         "file_path": "src/nested/1/Nested.sol",
@@ -453,7 +457,7 @@
   },
   "issue_count": {
     "high": 42,
-    "low": 44
+    "low": 45
   },
   "high_issues": {
     "issues": [
@@ -2710,9 +2714,9 @@
         "instances": [
           {
             "contract_path": "src/inheritance/ExtendedInheritance.sol",
-            "line_no": 21,
-            "src": "705:9",
-            "src_char": "705:9"
+            "line_no": 22,
+            "src": "737:9",
+            "src_char": "737:9"
           }
         ]
       },
@@ -3125,6 +3129,12 @@
             "line_no": 51,
             "src": "1327:23",
             "src_char": "1327:23"
+          },
+          {
+            "contract_path": "src/inheritance/ExtendedInheritance.sol",
+            "line_no": 18,
+            "src": "579:22",
+            "src_char": "579:22"
           },
           {
             "contract_path": "src/uniswap/UniswapV2Swapper.sol",
@@ -5148,6 +5158,12 @@
             "src_char": "1551:11"
           },
           {
+            "contract_path": "src/StateVariableCouldBeDeclaredImmutable.sol",
+            "line_no": 26,
+            "src": "706:14",
+            "src_char": "706:14"
+          },
+          {
             "contract_path": "src/StorageParameters.sol",
             "line_no": 17,
             "src": "388:11",
@@ -6832,6 +6848,12 @@
             "src_char": "996:8"
           },
           {
+            "contract_path": "src/StateVariableCouldBeDeclaredImmutable.sol",
+            "line_no": 37,
+            "src": "1455:21",
+            "src_char": "1455:21"
+          },
+          {
             "contract_path": "src/StateVariables.sol",
             "line_no": 47,
             "src": "1764:18",
@@ -7108,6 +7130,12 @@
             "src_char": "1286:4"
           },
           {
+            "contract_path": "src/inheritance/ExtendedInheritance.sol",
+            "line_no": 14,
+            "src": "391:15",
+            "src_char": "391:15"
+          },
+          {
             "contract_path": "src/nested/1/Nested.sol",
             "line_no": 10,
             "src": "265:17",
@@ -7124,6 +7152,199 @@
             "line_no": 15,
             "src": "422:9",
             "src_char": "422:9"
+          }
+        ]
+      },
+      {
+        "title": "State variable could be declared immutable",
+        "description": "State variables that are should be declared immutable to save gas. Add the `immutable` attribute to state variables that are only changed in the constructor",
+        "detector_name": "state-variable-could-be-declared-immutable",
+        "instances": [
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 9,
+            "src": "217:7",
+            "src_char": "217:7"
+          },
+          {
+            "contract_path": "src/InconsistentUints.sol",
+            "line_no": 5,
+            "src": "122:12",
+            "src_char": "122:12"
+          },
+          {
+            "contract_path": "src/InconsistentUints.sol",
+            "line_no": 6,
+            "src": "160:15",
+            "src_char": "160:15"
+          },
+          {
+            "contract_path": "src/InternalFunctions.sol",
+            "line_no": 5,
+            "src": "111:5",
+            "src_char": "111:5"
+          },
+          {
+            "contract_path": "src/MultiplePlaceholders.sol",
+            "line_no": 5,
+            "src": "110:5",
+            "src_char": "110:5"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 39,
+            "src": "1052:5",
+            "src_char": "1052:5"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 40,
+            "src": "1078:10",
+            "src_char": "1078:10"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 41,
+            "src": "1109:17",
+            "src_char": "1109:17"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 42,
+            "src": "1147:8",
+            "src_char": "1147:8"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 43,
+            "src": "1176:12",
+            "src_char": "1176:12"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 44,
+            "src": "1209:3",
+            "src_char": "1209:3"
+          },
+          {
+            "contract_path": "src/StateVariableCouldBeDeclaredConstant.sol",
+            "line_no": 11,
+            "src": "281:13",
+            "src_char": "281:13"
+          },
+          {
+            "contract_path": "src/StateVariableCouldBeDeclaredConstant.sol",
+            "line_no": 29,
+            "src": "811:13",
+            "src_char": "811:13"
+          },
+          {
+            "contract_path": "src/StateVariableCouldBeDeclaredImmutable.sol",
+            "line_no": 6,
+            "src": "162:24",
+            "src_char": "162:24"
+          },
+          {
+            "contract_path": "src/StateVariableCouldBeDeclaredImmutable.sol",
+            "line_no": 9,
+            "src": "245:24",
+            "src_char": "245:24"
+          },
+          {
+            "contract_path": "src/StorageConditionals.sol",
+            "line_no": 5,
+            "src": "108:18",
+            "src_char": "108:18"
+          },
+          {
+            "contract_path": "src/StorageConditionals.sol",
+            "line_no": 6,
+            "src": "148:23",
+            "src_char": "148:23"
+          },
+          {
+            "contract_path": "src/TestERC20.sol",
+            "line_no": 7,
+            "src": "144:4",
+            "src_char": "144:4"
+          },
+          {
+            "contract_path": "src/TestERC20.sol",
+            "line_no": 8,
+            "src": "168:6",
+            "src_char": "168:6"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 128,
+            "src": "3847:10",
+            "src_char": "3847:10"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 129,
+            "src": "3887:11",
+            "src_char": "3887:11"
+          },
+          {
+            "contract_path": "src/TxOriginUsedForAuth.sol",
+            "line_no": 5,
+            "src": "107:5",
+            "src_char": "107:5"
+          },
+          {
+            "contract_path": "src/UninitializedStateVariable.sol",
+            "line_no": 9,
+            "src": "291:8",
+            "src_char": "291:8"
+          },
+          {
+            "contract_path": "src/UninitializedStateVariable.sol",
+            "line_no": 37,
+            "src": "1079:5",
+            "src_char": "1079:5"
+          },
+          {
+            "contract_path": "src/UnprotectedInitialize.sol",
+            "line_no": 7,
+            "src": "146:5",
+            "src_char": "146:5"
+          },
+          {
+            "contract_path": "src/auditor_mode/ExternalCalls.sol",
+            "line_no": 9,
+            "src": "205:6",
+            "src_char": "205:6"
+          },
+          {
+            "contract_path": "src/auditor_mode/ExternalCalls.sol",
+            "line_no": 10,
+            "src": "251:14",
+            "src_char": "251:14"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 66,
+            "src": "4907:11",
+            "src_char": "3419:11"
+          },
+          {
+            "contract_path": "src/reused_contract_name/ContractA.sol",
+            "line_no": 5,
+            "src": "99:1",
+            "src_char": "99:1"
+          },
+          {
+            "contract_path": "src/reused_contract_name/ContractB.sol",
+            "line_no": 5,
+            "src": "102:1",
+            "src_char": "102:1"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 8,
+            "src": "312:8",
+            "src_char": "312:8"
           }
         ]
       },
@@ -7228,6 +7449,7 @@
     "function-pointer-in-constructor",
     "state-variable-could-be-declared-constant",
     "state-variable-changes-without-events",
+    "state-variable-could-be-declared-immutable",
     "multiple-placeholders"
   ]
 }

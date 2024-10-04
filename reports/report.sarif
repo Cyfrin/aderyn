@@ -3958,7 +3958,7 @@
                 },
                 "region": {
                   "byteLength": 9,
-                  "byteOffset": 705
+                  "byteOffset": 737
                 }
               }
             }
@@ -4699,6 +4699,17 @@
                 "region": {
                   "byteLength": 23,
                   "byteOffset": 1327
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/inheritance/ExtendedInheritance.sol"
+                },
+                "region": {
+                  "byteLength": 22,
+                  "byteOffset": 579
                 }
               }
             },
@@ -8368,6 +8379,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/StateVariableCouldBeDeclaredImmutable.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 706
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/StorageParameters.sol"
                 },
                 "region": {
@@ -11363,6 +11385,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/StateVariableCouldBeDeclaredImmutable.sol"
+                },
+                "region": {
+                  "byteLength": 21,
+                  "byteOffset": 1455
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/StateVariables.sol"
                 },
                 "region": {
@@ -11869,6 +11902,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/inheritance/ExtendedInheritance.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 391
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/nested/1/Nested.sol"
                 },
                 "region": {
@@ -11904,6 +11948,356 @@
             "text": "State variable changes in this function but no event is emitted."
           },
           "ruleId": "state-variable-changes-without-events"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ArbitraryTransferFrom.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 217
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/InconsistentUints.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 122
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/InconsistentUints.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 160
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/InternalFunctions.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 111
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/MultiplePlaceholders.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 110
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/OutOfOrderRetryable.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 1052
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/OutOfOrderRetryable.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 1078
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/OutOfOrderRetryable.sol"
+                },
+                "region": {
+                  "byteLength": 17,
+                  "byteOffset": 1109
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/OutOfOrderRetryable.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 1147
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/OutOfOrderRetryable.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 1176
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/OutOfOrderRetryable.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 1209
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariableCouldBeDeclaredConstant.sol"
+                },
+                "region": {
+                  "byteLength": 13,
+                  "byteOffset": 281
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariableCouldBeDeclaredConstant.sol"
+                },
+                "region": {
+                  "byteLength": 13,
+                  "byteOffset": 811
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariableCouldBeDeclaredImmutable.sol"
+                },
+                "region": {
+                  "byteLength": 24,
+                  "byteOffset": 162
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariableCouldBeDeclaredImmutable.sol"
+                },
+                "region": {
+                  "byteLength": 24,
+                  "byteOffset": 245
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StorageConditionals.sol"
+                },
+                "region": {
+                  "byteLength": 18,
+                  "byteOffset": 108
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StorageConditionals.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 148
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TestERC20.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 144
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TestERC20.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 168
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 3847
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 3887
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/TxOriginUsedForAuth.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 107
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedStateVariable.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 291
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UninitializedStateVariable.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 1079
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UnprotectedInitialize.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 146
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 205
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/auditor_mode/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 251
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/eth2/DepositContract.sol"
+                },
+                "region": {
+                  "byteLength": 11,
+                  "byteOffset": 4907
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/reused_contract_name/ContractA.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 99
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/reused_contract_name/ContractB.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 102
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV2Swapper.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 312
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "State variables that are should be declared immutable to save gas. Add the `immutable` attribute to state variables that are only changed in the constructor"
+          },
+          "ruleId": "state-variable-could-be-declared-immutable"
         },
         {
           "level": "note",
