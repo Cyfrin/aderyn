@@ -18,13 +18,13 @@ use crate::{
 use eyre::Result;
 
 #[derive(Default)]
-pub struct ConstantsInsteadOfLiteralsDetector {
+pub struct LiteralsInsteadOfConstantsDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-impl IssueDetector for ConstantsInsteadOfLiteralsDetector {
+impl IssueDetector for LiteralsInsteadOfConstantsDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // Get all contracts
         // For each contract
@@ -128,7 +128,7 @@ impl IssueDetector for ConstantsInsteadOfLiteralsDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::ConstantsInsteadOfLiterals)
+        format!("{}", IssueDetectorNamePool::LiteralInsteadOfConstant)
     }
 }
 
@@ -136,9 +136,8 @@ impl IssueDetector for ConstantsInsteadOfLiteralsDetector {
 mod constants_instead_of_literals_tests {
     use serial_test::serial;
 
+    use super::LiteralsInsteadOfConstantsDetector;
     use crate::detect::detector::IssueDetector;
-
-    use super::ConstantsInsteadOfLiteralsDetector;
 
     #[test]
     #[serial]
@@ -147,7 +146,7 @@ mod constants_instead_of_literals_tests {
             "../tests/contract-playground/src/ConstantsLiterals.sol",
         );
 
-        let mut detector = ConstantsInsteadOfLiteralsDetector::default();
+        let mut detector = LiteralsInsteadOfConstantsDetector::default();
         // assert that the detector finds the public Function
         let found = detector.detect(&context).unwrap();
         assert!(found);
