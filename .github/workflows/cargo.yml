@@ -267,14 +267,6 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v2
 
-      - name: Install stable toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable 
-          components: clippy
-          override: true
-          
       - name: Install nightly toolchain
         uses: actions-rs/toolchain@v1
         with:
@@ -285,7 +277,16 @@ jobs:
 
       - name: Run cargo fmt
         run: |
-          cargo +nightly fmt --all --check
+          cargo +nightly fmt --all --check 
+
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable 
+          components: clippy
+          override: true
+
 
       - name: Run cargo clippy
         uses: actions-rs/cargo@v1
