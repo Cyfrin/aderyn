@@ -141,7 +141,7 @@ fn main() {
 
     // Check for updates
     if !cmd_args.skip_update_check {
-        if let Ok(yes) = aderyn_is_currently_running_newest_version() {
+        if let Some(yes) = aderyn_is_currently_running_newest_version() {
             if !yes {
                 println!();
                 println!("NEW VERSION OF ADERYN AVAILABLE! Please run `cyfrinup` to upgrade.");
