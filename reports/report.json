@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 109,
-    "total_sloc": 3870
+    "total_source_units": 111,
+    "total_sloc": 3927
   },
   "files_details": {
     "files_details": [
@@ -47,7 +47,7 @@
       },
       {
         "file_path": "src/Casting.sol",
-        "n_sloc": 126
+        "n_sloc": 146
       },
       {
         "file_path": "src/CompilerBugStorageSignedIntegerArray.sol",
@@ -67,7 +67,7 @@
       },
       {
         "file_path": "src/ContractLocksEther.sol",
-        "n_sloc": 121
+        "n_sloc": 142
       },
       {
         "file_path": "src/ContractWithTodo.sol",
@@ -202,8 +202,16 @@
         "n_sloc": 10
       },
       {
+        "file_path": "src/MultiplePlaceholders.sol",
+        "n_sloc": 14
+      },
+      {
         "file_path": "src/OnceModifierExample.sol",
         "n_sloc": 8
+      },
+      {
+        "file_path": "src/OnlyLibrary.sol",
+        "n_sloc": 2
       },
       {
         "file_path": "src/OutOfOrderRetryable.sol",
@@ -445,7 +453,7 @@
   },
   "issue_count": {
     "high": 42,
-    "low": 43
+    "low": 44
   },
   "high_issues": {
     "issues": [
@@ -659,561 +667,567 @@
         "instances": [
           {
             "contract_path": "src/Casting.sol",
-            "line_no": 35,
-            "src": "1065:10",
-            "src_char": "1065:10"
-          },
-          {
-            "contract_path": "src/Casting.sol",
-            "line_no": 36,
-            "src": "1097:10",
-            "src_char": "1097:10"
-          },
-          {
-            "contract_path": "src/Casting.sol",
-            "line_no": 37,
-            "src": "1129:10",
-            "src_char": "1129:10"
-          },
-          {
-            "contract_path": "src/Casting.sol",
-            "line_no": 38,
-            "src": "1161:10",
-            "src_char": "1161:10"
-          },
-          {
-            "contract_path": "src/Casting.sol",
-            "line_no": 39,
-            "src": "1193:10",
-            "src_char": "1193:10"
-          },
-          {
-            "contract_path": "src/Casting.sol",
-            "line_no": 40,
-            "src": "1225:10",
-            "src_char": "1225:10"
-          },
-          {
-            "contract_path": "src/Casting.sol",
-            "line_no": 41,
-            "src": "1257:10",
-            "src_char": "1257:10"
-          },
-          {
-            "contract_path": "src/Casting.sol",
             "line_no": 42,
-            "src": "1289:10",
-            "src_char": "1289:10"
+            "src": "1127:10",
+            "src_char": "1127:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 43,
-            "src": "1321:10",
-            "src_char": "1321:10"
+            "src": "1159:10",
+            "src_char": "1159:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 44,
-            "src": "1353:10",
-            "src_char": "1353:10"
+            "src": "1191:10",
+            "src_char": "1191:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 45,
-            "src": "1385:10",
-            "src_char": "1385:10"
+            "src": "1223:10",
+            "src_char": "1223:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 46,
-            "src": "1417:10",
-            "src_char": "1417:10"
+            "src": "1255:10",
+            "src_char": "1255:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 47,
-            "src": "1449:10",
-            "src_char": "1449:10"
+            "src": "1287:10",
+            "src_char": "1287:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 48,
-            "src": "1481:10",
-            "src_char": "1481:10"
+            "src": "1319:10",
+            "src_char": "1319:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 49,
-            "src": "1513:10",
-            "src_char": "1513:10"
+            "src": "1351:10",
+            "src_char": "1351:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 50,
-            "src": "1545:10",
-            "src_char": "1545:10"
+            "src": "1383:10",
+            "src_char": "1383:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 51,
-            "src": "1577:10",
-            "src_char": "1577:10"
+            "src": "1415:10",
+            "src_char": "1415:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 52,
-            "src": "1609:10",
-            "src_char": "1609:10"
+            "src": "1447:10",
+            "src_char": "1447:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 53,
-            "src": "1641:10",
-            "src_char": "1641:10"
+            "src": "1479:10",
+            "src_char": "1479:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 54,
-            "src": "1672:9",
-            "src_char": "1672:9"
+            "src": "1511:10",
+            "src_char": "1511:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 55,
-            "src": "1702:9",
-            "src_char": "1702:9"
+            "src": "1543:10",
+            "src_char": "1543:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 56,
-            "src": "1732:9",
-            "src_char": "1732:9"
+            "src": "1575:10",
+            "src_char": "1575:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 57,
-            "src": "1762:9",
-            "src_char": "1762:9"
+            "src": "1607:10",
+            "src_char": "1607:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 58,
-            "src": "1792:9",
-            "src_char": "1792:9"
+            "src": "1639:10",
+            "src_char": "1639:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 59,
-            "src": "1822:9",
-            "src_char": "1822:9"
+            "src": "1671:10",
+            "src_char": "1671:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 60,
-            "src": "1853:9",
-            "src_char": "1853:9"
+            "src": "1703:10",
+            "src_char": "1703:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 61,
-            "src": "1884:10",
-            "src_char": "1884:10"
+            "src": "1734:9",
+            "src_char": "1734:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 62,
-            "src": "1916:10",
-            "src_char": "1916:10"
+            "src": "1764:9",
+            "src_char": "1764:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 63,
-            "src": "1948:10",
-            "src_char": "1948:10"
+            "src": "1794:9",
+            "src_char": "1794:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 64,
-            "src": "1980:10",
-            "src_char": "1980:10"
+            "src": "1824:9",
+            "src_char": "1824:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 65,
-            "src": "2013:9",
-            "src_char": "2013:9"
+            "src": "1854:9",
+            "src_char": "1854:9"
           },
           {
             "contract_path": "src/Casting.sol",
-            "line_no": 73,
-            "src": "2242:9",
-            "src_char": "2242:9"
+            "line_no": 66,
+            "src": "1884:9",
+            "src_char": "1884:9"
           },
           {
             "contract_path": "src/Casting.sol",
-            "line_no": 74,
-            "src": "2272:9",
-            "src_char": "2272:9"
+            "line_no": 67,
+            "src": "1915:9",
+            "src_char": "1915:9"
           },
           {
             "contract_path": "src/Casting.sol",
-            "line_no": 75,
-            "src": "2302:9",
-            "src_char": "2302:9"
+            "line_no": 68,
+            "src": "1946:10",
+            "src_char": "1946:10"
           },
           {
             "contract_path": "src/Casting.sol",
-            "line_no": 76,
-            "src": "2332:9",
-            "src_char": "2332:9"
+            "line_no": 69,
+            "src": "1978:10",
+            "src_char": "1978:10"
           },
           {
             "contract_path": "src/Casting.sol",
-            "line_no": 77,
-            "src": "2362:9",
-            "src_char": "2362:9"
+            "line_no": 70,
+            "src": "2010:10",
+            "src_char": "2010:10"
           },
           {
             "contract_path": "src/Casting.sol",
-            "line_no": 78,
-            "src": "2392:9",
-            "src_char": "2392:9"
+            "line_no": 71,
+            "src": "2042:10",
+            "src_char": "2042:10"
           },
           {
             "contract_path": "src/Casting.sol",
-            "line_no": 79,
-            "src": "2422:9",
-            "src_char": "2422:9"
+            "line_no": 72,
+            "src": "2075:9",
+            "src_char": "2075:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 80,
-            "src": "2452:9",
-            "src_char": "2452:9"
+            "src": "2304:9",
+            "src_char": "2304:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 81,
-            "src": "2482:9",
-            "src_char": "2482:9"
+            "src": "2334:9",
+            "src_char": "2334:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 82,
-            "src": "2512:9",
-            "src_char": "2512:9"
+            "src": "2364:9",
+            "src_char": "2364:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 83,
-            "src": "2542:9",
-            "src_char": "2542:9"
+            "src": "2394:9",
+            "src_char": "2394:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 84,
-            "src": "2572:9",
-            "src_char": "2572:9"
+            "src": "2424:9",
+            "src_char": "2424:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 85,
-            "src": "2602:9",
-            "src_char": "2602:9"
+            "src": "2454:9",
+            "src_char": "2454:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 86,
-            "src": "2632:9",
-            "src_char": "2632:9"
+            "src": "2484:9",
+            "src_char": "2484:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 87,
-            "src": "2662:9",
-            "src_char": "2662:9"
+            "src": "2514:9",
+            "src_char": "2514:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 88,
-            "src": "2692:9",
-            "src_char": "2692:9"
+            "src": "2544:9",
+            "src_char": "2544:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 89,
-            "src": "2722:9",
-            "src_char": "2722:9"
+            "src": "2574:9",
+            "src_char": "2574:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 90,
-            "src": "2752:9",
-            "src_char": "2752:9"
+            "src": "2604:9",
+            "src_char": "2604:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 91,
-            "src": "2782:9",
-            "src_char": "2782:9"
+            "src": "2634:9",
+            "src_char": "2634:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 92,
-            "src": "2811:8",
-            "src_char": "2811:8"
+            "src": "2664:9",
+            "src_char": "2664:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 93,
-            "src": "2839:8",
-            "src_char": "2839:8"
+            "src": "2694:9",
+            "src_char": "2694:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 94,
-            "src": "2867:8",
-            "src_char": "2867:8"
+            "src": "2724:9",
+            "src_char": "2724:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 95,
-            "src": "2895:8",
-            "src_char": "2895:8"
+            "src": "2754:9",
+            "src_char": "2754:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 96,
-            "src": "2923:8",
-            "src_char": "2923:8"
+            "src": "2784:9",
+            "src_char": "2784:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 97,
-            "src": "2951:8",
-            "src_char": "2951:8"
+            "src": "2814:9",
+            "src_char": "2814:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 98,
-            "src": "2980:8",
-            "src_char": "2980:8"
+            "src": "2844:9",
+            "src_char": "2844:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 99,
-            "src": "3009:9",
-            "src_char": "3009:9"
+            "src": "2873:8",
+            "src_char": "2873:8"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 100,
-            "src": "3039:9",
-            "src_char": "3039:9"
+            "src": "2901:8",
+            "src_char": "2901:8"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 101,
-            "src": "3069:9",
-            "src_char": "3069:9"
+            "src": "2929:8",
+            "src_char": "2929:8"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 102,
-            "src": "3099:9",
-            "src_char": "3099:9"
+            "src": "2957:8",
+            "src_char": "2957:8"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 103,
-            "src": "3130:8",
-            "src_char": "3130:8"
+            "src": "2985:8",
+            "src_char": "2985:8"
           },
           {
             "contract_path": "src/Casting.sol",
-            "line_no": 111,
-            "src": "3426:10",
-            "src_char": "3426:10"
+            "line_no": 104,
+            "src": "3013:8",
+            "src_char": "3013:8"
           },
           {
             "contract_path": "src/Casting.sol",
-            "line_no": 112,
-            "src": "3458:10",
-            "src_char": "3458:10"
+            "line_no": 105,
+            "src": "3042:8",
+            "src_char": "3042:8"
           },
           {
             "contract_path": "src/Casting.sol",
-            "line_no": 113,
-            "src": "3490:10",
-            "src_char": "3490:10"
+            "line_no": 106,
+            "src": "3071:9",
+            "src_char": "3071:9"
           },
           {
             "contract_path": "src/Casting.sol",
-            "line_no": 114,
-            "src": "3522:10",
-            "src_char": "3522:10"
+            "line_no": 107,
+            "src": "3101:9",
+            "src_char": "3101:9"
           },
           {
             "contract_path": "src/Casting.sol",
-            "line_no": 115,
-            "src": "3554:10",
-            "src_char": "3554:10"
+            "line_no": 108,
+            "src": "3131:9",
+            "src_char": "3131:9"
           },
           {
             "contract_path": "src/Casting.sol",
-            "line_no": 116,
-            "src": "3586:10",
-            "src_char": "3586:10"
+            "line_no": 109,
+            "src": "3161:9",
+            "src_char": "3161:9"
           },
           {
             "contract_path": "src/Casting.sol",
-            "line_no": 117,
-            "src": "3618:10",
-            "src_char": "3618:10"
+            "line_no": 110,
+            "src": "3192:8",
+            "src_char": "3192:8"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 118,
-            "src": "3650:10",
-            "src_char": "3650:10"
+            "src": "3488:10",
+            "src_char": "3488:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 119,
-            "src": "3682:10",
-            "src_char": "3682:10"
+            "src": "3520:10",
+            "src_char": "3520:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 120,
-            "src": "3714:10",
-            "src_char": "3714:10"
+            "src": "3552:10",
+            "src_char": "3552:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 121,
-            "src": "3746:10",
-            "src_char": "3746:10"
+            "src": "3584:10",
+            "src_char": "3584:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 122,
-            "src": "3778:10",
-            "src_char": "3778:10"
+            "src": "3616:10",
+            "src_char": "3616:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 123,
-            "src": "3810:10",
-            "src_char": "3810:10"
+            "src": "3648:10",
+            "src_char": "3648:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 124,
-            "src": "3842:10",
-            "src_char": "3842:10"
+            "src": "3680:10",
+            "src_char": "3680:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 125,
-            "src": "3874:10",
-            "src_char": "3874:10"
+            "src": "3712:10",
+            "src_char": "3712:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 126,
-            "src": "3906:10",
-            "src_char": "3906:10"
+            "src": "3744:10",
+            "src_char": "3744:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 127,
-            "src": "3938:10",
-            "src_char": "3938:10"
+            "src": "3776:10",
+            "src_char": "3776:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 128,
-            "src": "3970:10",
-            "src_char": "3970:10"
+            "src": "3808:10",
+            "src_char": "3808:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 129,
-            "src": "4002:10",
-            "src_char": "4002:10"
+            "src": "3840:10",
+            "src_char": "3840:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 130,
-            "src": "4034:10",
-            "src_char": "4034:10"
+            "src": "3872:10",
+            "src_char": "3872:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 131,
-            "src": "4066:10",
-            "src_char": "4066:10"
+            "src": "3904:10",
+            "src_char": "3904:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 132,
-            "src": "4098:10",
-            "src_char": "4098:10"
+            "src": "3936:10",
+            "src_char": "3936:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 133,
-            "src": "4129:9",
-            "src_char": "4129:9"
+            "src": "3968:10",
+            "src_char": "3968:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 134,
-            "src": "4159:9",
-            "src_char": "4159:9"
+            "src": "4000:10",
+            "src_char": "4000:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 135,
-            "src": "4189:9",
-            "src_char": "4189:9"
+            "src": "4032:10",
+            "src_char": "4032:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 136,
-            "src": "4220:9",
-            "src_char": "4220:9"
+            "src": "4064:10",
+            "src_char": "4064:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 137,
-            "src": "4251:10",
-            "src_char": "4251:10"
+            "src": "4096:10",
+            "src_char": "4096:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 138,
-            "src": "4283:10",
-            "src_char": "4283:10"
+            "src": "4128:10",
+            "src_char": "4128:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 139,
-            "src": "4315:10",
-            "src_char": "4315:10"
+            "src": "4160:10",
+            "src_char": "4160:10"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 140,
-            "src": "4347:10",
-            "src_char": "4347:10"
+            "src": "4191:9",
+            "src_char": "4191:9"
           },
           {
             "contract_path": "src/Casting.sol",
             "line_no": 141,
-            "src": "4381:10",
-            "src_char": "4381:10"
+            "src": "4221:9",
+            "src_char": "4221:9"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 142,
+            "src": "4251:9",
+            "src_char": "4251:9"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 143,
+            "src": "4282:9",
+            "src_char": "4282:9"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 144,
+            "src": "4313:10",
+            "src_char": "4313:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 145,
+            "src": "4345:10",
+            "src_char": "4345:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 146,
+            "src": "4377:10",
+            "src_char": "4377:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 147,
+            "src": "4409:10",
+            "src_char": "4409:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 148,
+            "src": "4443:10",
+            "src_char": "4443:10"
+          },
+          {
+            "contract_path": "src/Casting.sol",
+            "line_no": 155,
+            "src": "4642:14",
+            "src_char": "4642:14"
           }
         ]
       },
@@ -2980,12 +2994,6 @@
             "src_char": "32:23"
           },
           {
-            "contract_path": "src/StateVariablesManipulation.sol",
-            "line_no": 2,
-            "src": "32:23",
-            "src_char": "32:23"
-          },
-          {
             "contract_path": "src/TautologyOrContradiction.sol",
             "line_no": 2,
             "src": "32:23",
@@ -3590,27 +3598,27 @@
           },
           {
             "contract_path": "src/Casting.sol",
-            "line_no": 16,
-            "src": "483:18",
-            "src_char": "483:18"
+            "line_no": 20,
+            "src": "511:18",
+            "src_char": "511:18"
           },
           {
             "contract_path": "src/Casting.sol",
-            "line_no": 22,
-            "src": "646:18",
-            "src_char": "646:18"
+            "line_no": 26,
+            "src": "674:18",
+            "src_char": "674:18"
           },
           {
             "contract_path": "src/Casting.sol",
-            "line_no": 31,
-            "src": "921:18",
-            "src_char": "921:18"
+            "line_no": 38,
+            "src": "983:18",
+            "src_char": "983:18"
           },
           {
             "contract_path": "src/Casting.sol",
-            "line_no": 69,
-            "src": "2103:18",
-            "src_char": "2103:18"
+            "line_no": 76,
+            "src": "2165:18",
+            "src_char": "2165:18"
           },
           {
             "contract_path": "src/CompilerBugStorageSignedIntegerArray.sol",
@@ -4422,6 +4430,12 @@
             "src_char": "32:23"
           },
           {
+            "contract_path": "src/OnlyLibrary.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
             "contract_path": "src/OutOfOrderRetryable.sol",
             "line_no": 2,
             "src": "32:23",
@@ -5185,15 +5199,15 @@
         "instances": [
           {
             "contract_path": "src/Casting.sol",
-            "line_no": 31,
-            "src": "904:14",
-            "src_char": "904:14"
+            "line_no": 38,
+            "src": "966:14",
+            "src_char": "966:14"
           },
           {
             "contract_path": "src/Casting.sol",
-            "line_no": 69,
-            "src": "2086:13",
-            "src_char": "2086:13"
+            "line_no": 76,
+            "src": "2148:13",
+            "src_char": "2148:13"
           },
           {
             "contract_path": "src/InconsistentUints.sol",
@@ -6555,21 +6569,21 @@
           },
           {
             "contract_path": "src/Casting.sol",
-            "line_no": 30,
-            "src": "860:17",
-            "src_char": "860:17"
+            "line_no": 37,
+            "src": "922:17",
+            "src_char": "922:17"
           },
           {
             "contract_path": "src/Casting.sol",
-            "line_no": 68,
-            "src": "2044:16",
-            "src_char": "2044:16"
+            "line_no": 75,
+            "src": "2106:16",
+            "src_char": "2106:16"
           },
           {
             "contract_path": "src/Casting.sol",
-            "line_no": 106,
-            "src": "3160:20",
-            "src_char": "3160:20"
+            "line_no": 113,
+            "src": "3222:20",
+            "src_char": "3222:20"
           },
           {
             "contract_path": "src/ConstFuncChangeState.sol",
@@ -7112,6 +7126,19 @@
             "src_char": "422:9"
           }
         ]
+      },
+      {
+        "title": "Modifier has multiple placeholders.",
+        "description": "Design the modifier to only contain 1 placeholder statement. If it's not possible, split the logic into multiple modifiers.",
+        "detector_name": "multiple-placeholders",
+        "instances": [
+          {
+            "contract_path": "src/MultiplePlaceholders.sol",
+            "line_no": 11,
+            "src": "186:10",
+            "src_char": "186:10"
+          }
+        ]
       }
     ]
   },
@@ -7200,6 +7227,7 @@
     "unchecked-low-level-call",
     "function-pointer-in-constructor",
     "state-variable-could-be-declared-constant",
-    "state-variable-changes-without-events"
+    "state-variable-changes-without-events",
+    "multiple-placeholders"
   ]
 }

@@ -284,7 +284,7 @@ mod unsafe_casting_detector_tests {
         // assert that the detector found an issue
         assert!(found);
         // assert that the detector found the correct number of instances
-        assert_eq!(detector.instances().len(), 93);
+        assert_eq!(detector.instances().len(), 94);
         // assert the severity is high
         assert_eq!(
             detector.severity(),

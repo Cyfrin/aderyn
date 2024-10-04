@@ -100,7 +100,7 @@ impl<'a> CallGraphVisitor for StateVariableChangeTracker<'a> {
 }
 
 #[cfg(test)]
-mod costly_operations_inside_loops {
+mod costly_operations_inside_loops_tests {
     use serial_test::serial;
 
     use crate::detect::{
