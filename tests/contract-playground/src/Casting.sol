@@ -12,7 +12,11 @@ contract Casting {
     bytes1 public bytes1Value = 0x12;
 
     // All good
-    function safeCastingExamples() external pure returns (uint128 b, int128 d, uint128 x, int128 y) {
+    function safeCastingExamples()
+        external
+        pure
+        returns (uint128 b, int128 d, uint128 x, int128 y)
+    {
         uint256 a = 0x1234567890abcdef;
         if (a > type(uint128).max) {
             revert("Value too large for uint128");
@@ -20,7 +24,10 @@ contract Casting {
         b = uint128(a);
 
         int256 c = -0x1234567890abcdef;
-        require(c >= type(int128).min && c <= type(int128).max, "Value does not fit in int128");
+        require(
+            c >= type(int128).min && c <= type(int128).max,
+            "Value does not fit in int128"
+        );
         d = int128(c);
 
         x = a.toUint128();
@@ -141,4 +148,20 @@ contract Casting {
         bytes1Value = bytes1(ae);
     }
 
+    function from128x128(int256 x) external pure returns (int128) {
+        unchecked {
+            int256 result = x >> 64; // aderyn-ignore
+            // BAD
+            return int128(result);
+        }
+    }
+
+    function from128x128_checked(int256 x) external pure returns (int128) {
+        unchecked {
+            int256 result = x >> 64; // aderyn-ignore
+            // GOOD
+            require(result > 1 && result < 100, "BAD range given"); // aderyn-ignore
+            return int128(result);
+        }
+    }
 }
