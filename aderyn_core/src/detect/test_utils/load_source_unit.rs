@@ -41,7 +41,7 @@ pub fn load_solidity_source_unit(filepath: &str) -> WorkspaceContext {
     if let Ok(command) = command {
         let stdout = String::from_utf8(command.stdout).unwrap();
         let stderr = String::from_utf8(command.stderr).unwrap();
-        //println!("stderr = {}", stderr);
+        println!("stderr = {}", stderr);
 
         let mut context = WorkspaceContext::default();
         let lines = stdout.lines().collect::<Vec<_>>();
