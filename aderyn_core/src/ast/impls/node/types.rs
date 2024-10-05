@@ -1,5 +1,4 @@
-use crate::ast::*;
-use crate::visitor::ast_visitor::*;
+use crate::{ast::*, visitor::ast_visitor::*};
 use eyre::Result;
 use macros::accept_id;
 

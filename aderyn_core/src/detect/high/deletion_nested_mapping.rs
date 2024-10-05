@@ -1,16 +1,14 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::ast::{
     ASTNode, Expression, Identifier, IndexAccess, Mapping, NodeID, TypeName, UserDefinedTypeName,
     VariableDeclaration,
 };
 
-use crate::capture;
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
+    capture,
     context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -23,14 +21,11 @@ pub struct DeletionNestedMappingDetector {
 
 impl IssueDetector for DeletionNestedMappingDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        for delete_operation in context
-            .unary_operations()
-            .into_iter()
-            .filter(|op| op.operator == "delete")
+        for delete_operation in
+            context.unary_operations().into_iter().filter(|op| op.operator == "delete")
         {
-            if let Expression::IndexAccess(IndexAccess {
-                base_expression, ..
-            }) = delete_operation.sub_expression.as_ref()
+            if let Expression::IndexAccess(IndexAccess { base_expression, .. }) =
+                delete_operation.sub_expression.as_ref()
             {
                 if let Expression::Identifier(Identifier {
                     referenced_declaration: Some(referenced_id),
@@ -44,7 +39,8 @@ impl IssueDetector for DeletionNestedMappingDetector {
                         .as_ref()
                         .is_some_and(|type_string| type_string.starts_with("mapping"))
                     {
-                        // Check if the value in the mapping is of type struct that has a member which is also a mapping
+                        // Check if the value in the mapping is of type struct that has a member
+                        // which is also a mapping
                         if let Some(ASTNode::VariableDeclaration(VariableDeclaration {
                             type_name: Some(TypeName::Mapping(Mapping { value_type, .. })),
                             ..
@@ -120,15 +116,9 @@ mod deletion_nested_mapping_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
         // assert the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from("Deletion from a nested mappping.")
-        );
+        assert_eq!(detector.title(), String::from("Deletion from a nested mappping."));
         // assert the description is correct
         assert_eq!(
             detector.description(),

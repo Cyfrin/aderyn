@@ -15,6 +15,7 @@ contract ExtendedInheritance is InheritanceBase {
         for (uint256 i = 0; i < 3; i++) {
             target.delegatecall(abi.encodeWithSignature("doSomething(uint256)", i));
         }
+        s_baseAddress = target;
     }
 
     function recoverThatThang(uint8 v, bytes32 r, bytes32 s, bytes32 theHash) external pure returns (address) {

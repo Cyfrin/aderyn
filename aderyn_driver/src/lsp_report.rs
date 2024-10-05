@@ -25,10 +25,7 @@ impl LspReport {
 
             // Character position and range from the start of the line number
             let (pos_start, pos_range) = instance.src_char2.split_once(':')?;
-            let pos_start = pos_start
-                .parse::<u32>()
-                .unwrap_or_default()
-                .checked_sub(1)?;
+            let pos_start = pos_start.parse::<u32>().unwrap_or_default().checked_sub(1)?;
             let pos_range = pos_range.parse::<u32>().unwrap_or_default();
 
             // Craft the diagnostic message
@@ -53,14 +50,8 @@ impl LspReport {
             // Make the diagnostic that LSP can understand
             let diagnostic = Diagnostic {
                 range: Range {
-                    start: Position {
-                        line: line_no as u32,
-                        character: pos_start,
-                    },
-                    end: Position {
-                        line: line_no as u32,
-                        character: pos_start + pos_range,
-                    },
+                    start: Position { line: line_no as u32, character: pos_start },
+                    end: Position { line: line_no as u32, character: pos_start + pos_range },
                 },
                 severity: Some(severity),
                 message,
@@ -117,10 +108,6 @@ impl LspReport {
                 file_diagnostics.push(diagnostic);
             }
         }
-        Self {
-            low_issues,
-            high_issues,
-            diagnostics,
-        }
+        Self { low_issues, high_issues, diagnostics }
     }
 }

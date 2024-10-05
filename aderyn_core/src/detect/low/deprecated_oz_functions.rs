@@ -104,10 +104,7 @@ mod deprecated_oz_functions_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
         // assert that the severity is low
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert that the title is correct
         assert_eq!(
             detector.title(),

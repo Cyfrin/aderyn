@@ -33,16 +33,8 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
         let output_rel_path = output_rel_path.unwrap();
 
         let all_issues = vec![
-            (
-                report.high_issues(file_contents).issues,
-                "# High Issues\n",
-                "H",
-            ),
-            (
-                report.low_issues(file_contents).issues,
-                "# Low Issues\n",
-                "L",
-            ),
+            (report.high_issues(file_contents).issues, "# High Issues\n", "H"),
+            (report.low_issues(file_contents).issues, "# Low Issues\n", "L"),
         ];
 
         for (issues, heading, severity) in all_issues {
@@ -118,11 +110,7 @@ impl MarkdownReportPrinter {
             // Start the markdown table
             writeln!(writer, "| Key | Value |")?;
             writeln!(writer, "| --- | --- |")?;
-            writeln!(
-                writer,
-                "| .sol Files | {} |",
-                all_files_summary.total_source_units
-            )?;
+            writeln!(writer, "| .sol Files | {} |", all_files_summary.total_source_units)?;
             writeln!(writer, "| Total nSLOC | {} |", all_files_summary.total_sloc)?;
 
             writeln!(writer, "\n")?; // Add an extra newline for spacing
@@ -137,19 +125,13 @@ impl MarkdownReportPrinter {
             writeln!(writer, "| --- | --- |")?;
 
             let mut files_details = all_files_details;
-            files_details
-                .files_details
-                .sort_by(|a, b| a.file_path.cmp(&b.file_path));
+            files_details.files_details.sort_by(|a, b| a.file_path.cmp(&b.file_path));
 
             files_details.files_details.iter().for_each(|detail| {
                 writeln!(writer, "| {} | {} |", detail.file_path, detail.n_sloc).unwrap();
             });
 
-            writeln!(
-                writer,
-                "| **Total** | **{}** |",
-                all_files_summary.total_sloc
-            )?;
+            writeln!(writer, "| **Total** | **{}** |", all_files_summary.total_sloc)?;
             writeln!(writer, "\n")?; // Add an extra newline for spacing
         }
 
@@ -287,12 +269,7 @@ impl MarkdownReportPrinter {
 
             let line = file_data.get(&instance.contract_path).unwrap();
 
-            let line_preview = line
-                .split('\n')
-                .skip(instance.line_no - 1)
-                .take(1)
-                .next()
-                .unwrap();
+            let line_preview = line.split('\n').skip(instance.line_no - 1).take(1).next().unwrap();
 
             if let Some(hint) = instance.hint.as_ref() {
                 writeln!(

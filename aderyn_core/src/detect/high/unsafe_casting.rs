@@ -1,17 +1,14 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::ast::{Expression, FunctionCall, FunctionCallKind, NodeID, NodeType};
 
-use crate::capture;
-use crate::context::browser::{
-    ExtractBinaryOperations, ExtractIdentifiers, GetClosestAncestorOfTypeX,
-};
-use crate::context::workspace_context::ASTNode;
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    capture,
+    context::{
+        browser::{ExtractBinaryOperations, ExtractIdentifiers, GetClosestAncestorOfTypeX},
+        workspace_context::{ASTNode, WorkspaceContext},
+    },
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 use phf::phf_map;
@@ -48,13 +45,11 @@ impl IssueDetector for UnsafeCastingDetector {
                     &*function_call.expression
                 {
                     if let Some(argument_types) = &to_expression.argument_types {
-                        let casting_from_type = match argument_types
-                            .first()
-                            .and_then(|arg| arg.type_string.as_ref())
-                        {
-                            Some(t) => t,
-                            None => continue,
-                        };
+                        let casting_from_type =
+                            match argument_types.first().and_then(|arg| arg.type_string.as_ref()) {
+                                Some(t) => t,
+                                None => continue,
+                            };
 
                         let casting_map = if casting_from_type.contains("uint") {
                             &UINT_CASTING_MAP
@@ -142,21 +137,13 @@ fn has_binary_operation_checks(
     identifier_reference_declaration_id: &NodeID,
 ) -> bool {
     if let Some(ASTNode::ContractDefinition(contract)) = contract {
-        return ExtractBinaryOperations::from(contract)
-            .extracted
-            .iter()
-            .any(|binary_operation| {
-                ExtractIdentifiers::from(binary_operation)
-                    .extracted
-                    .into_iter()
-                    .any(|identifier| {
-                        identifier
-                            .referenced_declaration
-                            .is_some_and(|reference_id| {
-                                *identifier_reference_declaration_id == reference_id
-                            })
-                    })
-            });
+        return ExtractBinaryOperations::from(contract).extracted.iter().any(|binary_operation| {
+            ExtractIdentifiers::from(binary_operation).extracted.into_iter().any(|identifier| {
+                identifier.referenced_declaration.is_some_and(|reference_id| {
+                    *identifier_reference_declaration_id == reference_id
+                })
+            })
+        });
     }
     false
 }
@@ -286,9 +273,6 @@ mod unsafe_casting_detector_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 94);
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
     }
 }

@@ -1,15 +1,13 @@
 use log::{info, warn};
 use notify_debouncer_full::notify::{Event, RecommendedWatcher, Result as NotifyResult};
-use std::collections::HashSet;
-use std::path::PathBuf;
-use std::sync::Arc;
-use std::time::Duration;
-use tokio::runtime::Builder;
-use tokio::sync::mpsc::Receiver;
-use tokio::sync::Mutex;
-use tower_lsp::jsonrpc::Result;
-use tower_lsp::{lsp_types::*, ClientSocket};
-use tower_lsp::{Client, LanguageServer, LspService, Server};
+use std::{collections::HashSet, path::PathBuf, sync::Arc, time::Duration};
+use tokio::{
+    runtime::Builder,
+    sync::{mpsc::Receiver, Mutex},
+};
+use tower_lsp::{
+    jsonrpc::Result, lsp_types::*, Client, ClientSocket, LanguageServer, LspService, Server,
+};
 
 use aderyn_driver::driver::{self, Args};
 
@@ -27,10 +25,7 @@ impl LanguageServer for LanguageServerBackend {
 
         let code_editor = self.client.lock().await;
         code_editor
-            .log_message(
-                MessageType::INFO,
-                "Aderyn LSP received an initialization request!",
-            )
+            .log_message(MessageType::INFO, "Aderyn LSP received an initialization request!")
             .await;
 
         Ok(InitializeResult {
@@ -66,9 +61,7 @@ impl LanguageServer for LanguageServerBackend {
         info!("TLSP shutdown");
 
         let code_editor = self.client.lock().await;
-        code_editor
-            .log_message(MessageType::INFO, "Aderyn LSP has been shutdown")
-            .await;
+        code_editor.log_message(MessageType::INFO, "Aderyn LSP has been shutdown").await;
         Ok(())
     }
 }
@@ -92,7 +85,8 @@ pub fn spin_up_language_server(args: Args) {
 
     // Block on this function
     async_runtime.block_on(async {
-        // Channel to communicate file system changes (triggered when files are added, removed, or changed)
+        // Channel to communicate file system changes (triggered when files are added, removed, or
+        // changed)
         let (tx_file_change_event, rx_file_change_event) = tokio::sync::mpsc::channel(10);
 
         // Create the async watcher
@@ -110,10 +104,7 @@ pub fn spin_up_language_server(args: Args) {
 
         // Watch for file changes
         file_system_watcher
-            .watch(
-                PathBuf::from(args.root.clone()).as_path(),
-                RecursiveMode::Recursive,
-            )
+            .watch(PathBuf::from(args.root.clone()).as_path(), RecursiveMode::Recursive)
             .expect("unable to watch for file changes");
 
         // Most editor's LSP clients communicate through stdout/stdin channels. Theefore use
@@ -169,10 +160,7 @@ fn create_lsp_service_and_react_to_file_event(
                 return;
             };
 
-            info!(
-                "sending diagnostics to client {:?}",
-                &diagnostics_report.diagnostics
-            );
+            info!("sending diagnostics to client {:?}", &diagnostics_report.diagnostics);
             let client_mutex = guarded_client.lock().await;
 
             for (file_uri, file_diagnostics) in &diagnostics_report.diagnostics {
@@ -182,11 +170,8 @@ fn create_lsp_service_and_react_to_file_event(
             }
 
             // Clear out the diagnostics for file which had reported errors before
-            let current_run_file_uris = diagnostics_report
-                .diagnostics
-                .keys()
-                .cloned()
-                .collect::<HashSet<_>>();
+            let current_run_file_uris =
+                diagnostics_report.diagnostics.keys().cloned().collect::<HashSet<_>>();
 
             let mut seen_file_uris_mutex = seen_file_uris.lock().await;
             let seen_file_uris = &mut *seen_file_uris_mutex;
@@ -195,9 +180,7 @@ fn create_lsp_service_and_react_to_file_event(
                 if !&current_run_file_uris.contains(seen_file_uri) {
                     // Clear the diagnostics for this seen file uri
                     // It had errors in the past, but not any more
-                    client_mutex
-                        .publish_diagnostics(seen_file_uri.clone(), vec![], None)
-                        .await;
+                    client_mutex.publish_diagnostics(seen_file_uri.clone(), vec![], None).await;
                 }
             }
 
@@ -234,9 +217,7 @@ fn create_lsp_service_and_react_to_file_event(
             }
         });
 
-        LanguageServerBackend {
-            client: guarded_client_clone,
-        }
+        LanguageServerBackend { client: guarded_client_clone }
     });
     (service, socket)
 }

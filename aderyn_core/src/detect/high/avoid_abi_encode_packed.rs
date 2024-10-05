@@ -18,24 +18,18 @@ pub struct AvoidAbiEncodePackedDetector {
 impl IssueDetector for AvoidAbiEncodePackedDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for member_access in context.member_accesses() {
-            // If the member_access's member_name = "encodePacked", loop through the argument_types and count how many of them contain any of the following in type_strings:
+            // If the member_access's member_name = "encodePacked", loop through the argument_types
+            // and count how many of them contain any of the following in type_strings:
             // ["bytes ", "[]", "string"]
-            // If the count is greater than 1, add the member_access to the found_abi_encode_packed vector
+            // If the count is greater than 1, add the member_access to the found_abi_encode_packed
+            // vector
             if member_access.member_name == "encodePacked" {
                 let mut count = 0;
                 let argument_types = member_access.argument_types.as_ref().unwrap();
                 for argument_type in argument_types {
-                    if argument_type
-                        .type_string
-                        .as_ref()
-                        .unwrap()
-                        .contains("bytes ")
+                    if argument_type.type_string.as_ref().unwrap().contains("bytes ")
                         || argument_type.type_string.as_ref().unwrap().contains("[]")
-                        || argument_type
-                            .type_string
-                            .as_ref()
-                            .unwrap()
-                            .contains("string")
+                        || argument_type.type_string.as_ref().unwrap().contains("string")
                     {
                         count += 1;
                     }
@@ -67,7 +61,7 @@ impl IssueDetector for AvoidAbiEncodePackedDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::AvoidAbiEncodePacked)
+        format!("{}", IssueDetectorNamePool::HashCollisionDueToAbiEncodePacked)
     }
 }
 
@@ -94,10 +88,7 @@ mod avoid_abi_encode_packed_tests {
         // failure0, failure1 and failure3
         assert_eq!(detector.instances().len(), 3);
         // assert that the severity is low
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
         // assert that the title is correct
         assert_eq!(
             detector.title(),

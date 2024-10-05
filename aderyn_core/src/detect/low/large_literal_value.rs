@@ -17,11 +17,7 @@ pub struct LargeLiteralValueDetector {
 
 impl IssueDetector for LargeLiteralValueDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        for numeric_literal in context
-            .literals()
-            .iter()
-            .filter(|x| x.kind == LiteralKind::Number)
-        {
+        for numeric_literal in context.literals().iter().filter(|x| x.kind == LiteralKind::Number) {
             if let Some(value) = numeric_literal.value.clone() {
                 // Strip any underscore separators
                 let value_no_underscores = value.replace('_', "");
@@ -82,10 +78,7 @@ mod large_literal_values {
         // assert that the detector finds the correct number of instances
         assert_eq!(detector.instances().len(), 22);
         // assert that the detector returns the correct severity
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert that the detector returns the correct title
         assert_eq!(
             detector.title(),

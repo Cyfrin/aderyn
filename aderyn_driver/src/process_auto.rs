@@ -67,10 +67,7 @@ pub fn with_project_root_at(
                 .args(remappings.clone())
                 .arg("--ast-compact-json")
                 .args(
-                    files
-                        .iter()
-                        .map(|x| x.strip_prefix(root.clone()).unwrap())
-                        .collect::<Vec<_>>(),
+                    files.iter().map(|x| x.strip_prefix(root.clone()).unwrap()).collect::<Vec<_>>(),
                 )
                 .args(solc.args.clone()) // --allowed-paths <root> for older versions of sol
                 .current_dir(root.clone())
@@ -88,7 +85,8 @@ pub fn with_project_root_at(
                         eprintln!("cwd = {}", root.display());
                         // print_running_command(solc_bin, &remappings, &files, &root);
                         eprintln!("Error running solc command ^^^");
-                        // For now, we do not panic because it will prevent us from analyzing other contexts which can compile successfully
+                        // For now, we do not panic because it will prevent us from analyzing other
+                        // contexts which can compile successfully
                     } else {
                         let context = create_workspace_context_from_stdout(
                             stdout, &src, scope, exclude, root_path,
@@ -114,9 +112,7 @@ fn create_workspace_context_from_stdout(
     exclude: &Option<Vec<String>>,
     root_path: &Path,
 ) -> WorkspaceContext {
-    let absolute_root_path_str = &ensure_valid_root_path(root_path)
-        .to_string_lossy()
-        .to_string();
+    let absolute_root_path_str = &ensure_valid_root_path(root_path).to_string_lossy().to_string();
 
     let mut context = WorkspaceContext::default();
     // dbg!(&stdout)
@@ -202,22 +198,14 @@ fn is_demarcation_line(
         }
         if passes_scope(
             scope,
-            utils::canonicalize(root_path.join(filepath))
-                .unwrap()
-                .as_path(),
+            utils::canonicalize(root_path.join(filepath)).unwrap().as_path(),
             absolute_root_path_str,
         ) && passes_exclude(
             exclude,
-            utils::canonicalize(root_path.join(filepath))
-                .unwrap()
-                .as_path(),
+            utils::canonicalize(root_path.join(filepath)).unwrap().as_path(),
             absolute_root_path_str,
-        ) && passes_src(
-            src,
-            utils::canonicalize(root_path.join(filepath))
-                .unwrap()
-                .as_path(),
-        ) {
+        ) && passes_src(src, utils::canonicalize(root_path.join(filepath)).unwrap().as_path())
+        {
             return (true, Some(filepath.to_string_lossy().to_string()));
         }
         return (true, None);

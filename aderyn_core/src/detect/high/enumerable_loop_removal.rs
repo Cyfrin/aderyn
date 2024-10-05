@@ -1,14 +1,14 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::ast::{NodeID, NodeType};
 
-use crate::capture;
-use crate::context::browser::{ExtractMemberAccesses, GetClosestAncestorOfTypeX};
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    capture,
+    context::{
+        browser::{ExtractMemberAccesses, GetClosestAncestorOfTypeX},
+        workspace_context::WorkspaceContext,
+    },
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -21,8 +21,8 @@ pub struct EnumerableLoopRemovalDetector {
 
 impl IssueDetector for EnumerableLoopRemovalDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        // Find MemberAccesses with name `remove` and typeDescriptions.typeString.contains(EnumerableSet)
-        // for each one
+        // Find MemberAccesses with name `remove` and
+        // typeDescriptions.typeString.contains(EnumerableSet) for each one
         // Find the closest ancestor of a loop
         // if it exists, extract all `at` member accesses on the enumerableset
         // If an `at` memberaccess also exists in the loop, add the remove to found_instances
@@ -45,14 +45,13 @@ impl IssueDetector for EnumerableLoopRemovalDetector {
                     member_access.closest_ancestor_of_type(context, NodeType::DoWhileStatement),
                 ];
                 for parent_loop in parent_loops.into_iter().flatten() {
-                    ExtractMemberAccesses::from(parent_loop)
-                        .extracted
-                        .into_iter()
-                        .for_each(|at_member_access| {
+                    ExtractMemberAccesses::from(parent_loop).extracted.into_iter().for_each(
+                        |at_member_access| {
                             if at_member_access.member_name == "at" {
                                 capture!(self, context, member_access);
                             }
-                        });
+                        },
+                    );
                 }
             });
 
@@ -101,9 +100,6 @@ mod enuemrable_loop_removal_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 5);
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
     }
 }

@@ -141,11 +141,7 @@ impl<'a> ExtractReferencedDeclarationsConditionally<'a> {
         condition: Box<dyn Fn(NodeID, &'a WorkspaceContext) -> bool>,
     ) -> Self {
         let mut extractor: ExtractReferencedDeclarationsConditionally =
-            ExtractReferencedDeclarationsConditionally {
-                extracted: vec![],
-                condition,
-                context,
-            };
+            ExtractReferencedDeclarationsConditionally { extracted: vec![], condition, context };
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
