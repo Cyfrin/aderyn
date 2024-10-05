@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 112,
-    "total_sloc": 3954
+    "total_source_units": 113,
+    "total_sloc": 4063
   },
   "files_details": {
     "files_details": [
@@ -400,6 +400,10 @@
       {
         "file_path": "src/cloc/HeavilyCommentedContract.sol",
         "n_sloc": 21
+      },
+      {
+        "file_path": "src/control_flow/SimpleProgram.sol",
+        "n_sloc": 109
       },
       {
         "file_path": "src/eth2/DepositContract.sol",
@@ -3991,6 +3995,30 @@
             "src_char": "1441:2"
           },
           {
+            "contract_path": "src/control_flow/SimpleProgram.sol",
+            "line_no": 44,
+            "src": "1107:2",
+            "src_char": "1107:2"
+          },
+          {
+            "contract_path": "src/control_flow/SimpleProgram.sol",
+            "line_no": 48,
+            "src": "1230:2",
+            "src_char": "1230:2"
+          },
+          {
+            "contract_path": "src/control_flow/SimpleProgram.sol",
+            "line_no": 89,
+            "src": "2130:3",
+            "src_char": "2130:3"
+          },
+          {
+            "contract_path": "src/control_flow/SimpleProgram.sol",
+            "line_no": 97,
+            "src": "2306:3",
+            "src_char": "2306:3"
+          },
+          {
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 113,
             "src": "7252:2",
@@ -5065,6 +5093,12 @@
             "line_no": 151,
             "src": "4756:6",
             "src_char": "4756:6"
+          },
+          {
+            "contract_path": "src/control_flow/SimpleProgram.sol",
+            "line_no": 111,
+            "src": "2622:5",
+            "src_char": "2622:5"
           }
         ]
       },

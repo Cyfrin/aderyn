@@ -6274,6 +6274,50 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/control_flow/SimpleProgram.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 1107
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/control_flow/SimpleProgram.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 1230
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/control_flow/SimpleProgram.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 2130
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/control_flow/SimpleProgram.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 2306
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/eth2/DepositContract.sol"
                 },
                 "region": {
@@ -8210,6 +8254,17 @@
                 "region": {
                   "byteLength": 6,
                   "byteOffset": 4756
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/control_flow/SimpleProgram.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 2622
                 }
               }
             }

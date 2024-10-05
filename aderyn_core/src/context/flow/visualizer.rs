@@ -47,9 +47,10 @@ pub mod control_flow_tests {
 
         let mut cmd = Command::new("dot");
         cmd.args(["-Tsvg", &dot_file_path]);
-        let raw_output = cmd.output().expect("dot failed");
-        let output_svg = String::from_utf8(raw_output.stdout).unwrap();
-
-        _ = std::fs::write(Path::new(&svg_file_path), output_svg);
+        if let Ok(raw_output) = cmd.output() {
+            if let Ok(output_svg) = String::from_utf8(raw_output.stdout) {
+                _ = std::fs::write(Path::new(&svg_file_path), output_svg);
+            }
+        }
     }
 }
