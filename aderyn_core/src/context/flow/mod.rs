@@ -125,10 +125,7 @@ impl Cfg {
         };
     }
     fn remove_raw_directed_edge(&mut self, from: CfgNodeId, to: CfgNodeId) {
-        let existing_nodes = self
-            .adj_list
-            .get_mut(&from)
-            .expect("Relationship doesn't exist");
+        let existing_nodes = self.adj_list.get_mut(&from).expect("Relationship doesn't exist");
         existing_nodes.retain_mut(|x| *x != to);
     }
     fn raw_predecessors(&self, id: CfgNodeId) -> Vec<CfgNodeId> {
@@ -198,10 +195,8 @@ impl Cfg {
     /// Reduce the reducible nodes stored the queue at the time of adding nodes
     pub fn reduce(&mut self, context: &WorkspaceContext, reduction_candidate: CfgNodeId) {
         // Step 0: Remove the node that's being reduced
-        let cfg_node = self
-            .nodes
-            .remove(&reduction_candidate)
-            .expect("Reduction candidate doesn't exist");
+        let cfg_node =
+            self.nodes.remove(&reduction_candidate).expect("Reduction candidate doesn't exist");
 
         // Step 1: Get the predecessors
         let predecessors = self.raw_predecessors(reduction_candidate);
@@ -209,12 +204,14 @@ impl Cfg {
         // Step 2: Get the successors
         let successors = self.raw_successors(reduction_candidate);
 
-        // Step 3: Remove existing predecessor relationships with reduction candidate to build new ones
+        // Step 3: Remove existing predecessor relationships with reduction candidate to build new
+        // ones
         for pred in &predecessors {
             self.remove_flow_edge(*pred, cfg_node.id);
         }
 
-        // Step 4: Remove existing predecessor relationships with reduction candidate to build new ones
+        // Step 4: Remove existing predecessor relationships with reduction candidate to build new
+        // ones
         for succ in &successors {
             self.remove_flow_edge(cfg_node.id, *succ);
         }
@@ -267,8 +264,10 @@ impl Cfg {
 #[cfg(test)]
 mod control_flow_tests {
     use super::*;
-    use crate::context::flow::visualizer::control_flow_tests::output_graph;
-    use crate::detect::test_utils::load_solidity_source_unit;
+    use crate::{
+        context::flow::visualizer::control_flow_tests::output_graph,
+        detect::test_utils::load_solidity_source_unit,
+    };
     use serial_test::serial;
 
     impl Cfg {
@@ -330,27 +329,18 @@ mod control_flow_tests {
         let function = contract.find_function_by_name("function1");
         let mut cfg = Cfg::new();
 
-        cfg.accept_block(
-            &context,
-            function.body.as_ref().expect("function1 not to be defined"),
-        );
+        cfg.accept_block(&context, function.body.as_ref().expect("function1 not to be defined"));
 
         assert_eq!(cfg.nodes.len(), 7);
 
         assert!(matches!(
             cfg.nodes.get(&CfgNodeId(3)).unwrap(),
-            CfgNode {
-                id: _,
-                nd: CfgNodeDescriptor::Start(_)
-            }
+            CfgNode { id: _, nd: CfgNodeDescriptor::Start(_) }
         ));
 
         assert!(matches!(
             cfg.nodes.get(&CfgNodeId(4)).unwrap(),
-            CfgNode {
-                id: _,
-                nd: CfgNodeDescriptor::End(_)
-            }
+            CfgNode { id: _, nd: CfgNodeDescriptor::End(_) }
         ));
 
         output_graph(&context, &cfg, "SimpleProgram_function1");
@@ -366,10 +356,7 @@ mod control_flow_tests {
         let function = contract.find_function_by_name("function2");
         let mut cfg = Cfg::new();
 
-        cfg.accept_block(
-            &context,
-            function.body.as_ref().expect("function2 not to be defined"),
-        );
+        cfg.accept_block(&context, function.body.as_ref().expect("function2 not to be defined"));
 
         output_graph(&context, &cfg, "SimpleProgram_function2");
         assert_eq!(cfg.nodes.len(), 14);
@@ -385,10 +372,7 @@ mod control_flow_tests {
         let function = contract.find_function_by_name("function3");
         let mut cfg = Cfg::new();
 
-        cfg.accept_block(
-            &context,
-            function.body.as_ref().expect("function3 not to be defined"),
-        );
+        cfg.accept_block(&context, function.body.as_ref().expect("function3 not to be defined"));
 
         output_graph(&context, &cfg, "SimpleProgram_function3");
         assert_eq!(cfg.nodes.len(), 12);
@@ -404,10 +388,7 @@ mod control_flow_tests {
         let function = contract.find_function_by_name("function4");
         let mut cfg = Cfg::new();
 
-        cfg.accept_block(
-            &context,
-            function.body.as_ref().expect("function4 not to be defined"),
-        );
+        cfg.accept_block(&context, function.body.as_ref().expect("function4 not to be defined"));
 
         output_graph(&context, &cfg, "SimpleProgram_function4");
         assert_eq!(cfg.nodes.len(), 48);
@@ -423,10 +404,7 @@ mod control_flow_tests {
         let function = contract.find_function_by_name("function5");
         let mut cfg = Cfg::new();
 
-        cfg.accept_block(
-            &context,
-            function.body.as_ref().expect("function5 not to be defined"),
-        );
+        cfg.accept_block(&context, function.body.as_ref().expect("function5 not to be defined"));
 
         output_graph(&context, &cfg, "SimpleProgram_function5");
         assert_eq!(cfg.nodes.len(), 25);
@@ -442,10 +420,7 @@ mod control_flow_tests {
         let function = contract.find_function_by_name("function6");
         let mut cfg = Cfg::new();
 
-        cfg.accept_block(
-            &context,
-            function.body.as_ref().expect("function6 not to be defined"),
-        );
+        cfg.accept_block(&context, function.body.as_ref().expect("function6 not to be defined"));
 
         output_graph(&context, &cfg, "SimpleProgram_function6");
         assert_eq!(cfg.nodes.len(), 31);
@@ -461,10 +436,7 @@ mod control_flow_tests {
         let function = contract.find_function_by_name("function7");
         let mut cfg = Cfg::new();
 
-        cfg.accept_block(
-            &context,
-            function.body.as_ref().expect("function7 not to be defined"),
-        );
+        cfg.accept_block(&context, function.body.as_ref().expect("function7 not to be defined"));
 
         output_graph(&context, &cfg, "SimpleProgram_function7");
         assert_eq!(cfg.nodes.len(), 22);
@@ -480,10 +452,7 @@ mod control_flow_tests {
         let function = contract.find_function_by_name("function8");
         let mut cfg = Cfg::new();
 
-        cfg.accept_block(
-            &context,
-            function.body.as_ref().expect("function8 not to be defined"),
-        );
+        cfg.accept_block(&context, function.body.as_ref().expect("function8 not to be defined"));
 
         output_graph(&context, &cfg, "SimpleProgram_function8");
         assert_eq!(cfg.nodes.len(), 48);
@@ -499,10 +468,7 @@ mod control_flow_tests {
         let function = contract.find_function_by_name("function9");
         let mut cfg = Cfg::new();
 
-        cfg.accept_block(
-            &context,
-            function.body.as_ref().expect("function9 not to be defined"),
-        );
+        cfg.accept_block(&context, function.body.as_ref().expect("function9 not to be defined"));
 
         output_graph(&context, &cfg, "SimpleProgram_function9");
         assert_eq!(cfg.nodes.len(), 15);
@@ -518,13 +484,7 @@ mod control_flow_tests {
         let function = contract.find_function_by_name("function10");
         let mut cfg = Cfg::new();
 
-        cfg.accept_block(
-            &context,
-            function
-                .body
-                .as_ref()
-                .expect("function10 not to be defined"),
-        );
+        cfg.accept_block(&context, function.body.as_ref().expect("function10 not to be defined"));
 
         output_graph(&context, &cfg, "SimpleProgram_function10");
         assert_eq!(cfg.nodes.len(), 9);

@@ -117,17 +117,13 @@ impl CfgReduce for CfgIfStatement {
 
 impl CfgIfStatement {
     pub fn from(if_stmt: &IfStatement) -> Self {
-        Self {
-            if_statement: if_stmt.id,
-        }
+        Self { if_statement: if_stmt.id }
     }
 }
 
 impl Cfg {
     pub fn add_if_statement(&mut self, if_stmt: &IfStatement) -> CfgNodeId {
-        self.add_node(CfgNodeDescriptor::IfStatement(Box::new(
-            CfgIfStatement::from(if_stmt),
-        )))
+        self.add_node(CfgNodeDescriptor::IfStatement(Box::new(CfgIfStatement::from(if_stmt))))
     }
 }
 
@@ -180,17 +176,15 @@ impl CfgReduce for CfgWhileStatement {
 
 impl CfgWhileStatement {
     pub fn from(while_stmt: &WhileStatement) -> Self {
-        Self {
-            while_statement: while_stmt.id,
-        }
+        Self { while_statement: while_stmt.id }
     }
 }
 
 impl Cfg {
     pub fn add_while_statement(&mut self, while_stmt: &WhileStatement) -> CfgNodeId {
-        self.add_node(CfgNodeDescriptor::WhileStatement(Box::new(
-            CfgWhileStatement::from(while_stmt),
-        )))
+        self.add_node(CfgNodeDescriptor::WhileStatement(Box::new(CfgWhileStatement::from(
+            while_stmt,
+        ))))
     }
 }
 
@@ -282,17 +276,13 @@ impl CfgReduce for CfgForStatement {
 
 impl CfgForStatement {
     pub fn from(for_stmt: &ForStatement) -> Self {
-        Self {
-            for_statement: for_stmt.id,
-        }
+        Self { for_statement: for_stmt.id }
     }
 }
 
 impl Cfg {
     pub fn add_for_statement(&mut self, for_stmt: &ForStatement) -> CfgNodeId {
-        self.add_node(CfgNodeDescriptor::ForStatement(Box::new(
-            CfgForStatement::from(for_stmt),
-        )))
+        self.add_node(CfgNodeDescriptor::ForStatement(Box::new(CfgForStatement::from(for_stmt))))
     }
 }
 
@@ -345,17 +335,15 @@ impl CfgReduce for CfgDoWhileStatement {
 
 impl CfgDoWhileStatement {
     pub fn from(do_while_stmt: &DoWhileStatement) -> Self {
-        Self {
-            do_while_statement: do_while_stmt.id,
-        }
+        Self { do_while_statement: do_while_stmt.id }
     }
 }
 
 impl Cfg {
     pub fn add_do_while_statement(&mut self, do_while_stmt: &DoWhileStatement) -> CfgNodeId {
-        self.add_node(CfgNodeDescriptor::DoWhileStatement(Box::new(
-            CfgDoWhileStatement::from(do_while_stmt),
-        )))
+        self.add_node(CfgNodeDescriptor::DoWhileStatement(Box::new(CfgDoWhileStatement::from(
+            do_while_stmt,
+        ))))
     }
 }
 
@@ -389,17 +377,15 @@ impl CfgReduce for CfgUncheckedBlock {
 
 impl CfgUncheckedBlock {
     pub fn from(unchecked_block: &UncheckedBlock) -> Self {
-        Self {
-            unchecked_block: unchecked_block.id,
-        }
+        Self { unchecked_block: unchecked_block.id }
     }
 }
 
 /// Helper functions
 impl Cfg {
     pub fn add_unchecked_block_node(&mut self, unchecked_block: &UncheckedBlock) -> CfgNodeId {
-        self.add_node(CfgNodeDescriptor::UncheckedBlock(Box::new(
-            CfgUncheckedBlock::from(unchecked_block),
-        )))
+        self.add_node(CfgNodeDescriptor::UncheckedBlock(Box::new(CfgUncheckedBlock::from(
+            unchecked_block,
+        ))))
     }
 }

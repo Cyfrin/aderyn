@@ -9,9 +9,7 @@ pub struct CfgVariableDeclarationStatement {
 
 impl CfgVariableDeclarationStatement {
     pub fn from(stmt: &VariableDeclarationStatement) -> Self {
-        Self {
-            variable_declaration_statement: stmt.id,
-        }
+        Self { variable_declaration_statement: stmt.id }
     }
 }
 
@@ -35,9 +33,7 @@ pub struct CfgExpressionStatement {
 
 impl CfgExpressionStatement {
     pub fn from(stmt: &ExpressionStatement) -> Self {
-        Self {
-            expression_statement: stmt.id,
-        }
+        Self { expression_statement: stmt.id }
     }
 }
 
@@ -58,9 +54,7 @@ pub struct CfgPlaceholderStatement {
 
 impl CfgPlaceholderStatement {
     pub fn from(stmt: &PlaceholderStatement) -> Self {
-        Self {
-            placeholder_statement: stmt.id,
-        }
+        Self { placeholder_statement: stmt.id }
     }
 }
 
@@ -81,17 +75,13 @@ pub struct CfgBreakStatement {
 
 impl CfgBreakStatement {
     pub fn from(stmt: &Break) -> Self {
-        Self {
-            break_statement: stmt.id,
-        }
+        Self { break_statement: stmt.id }
     }
 }
 
 impl Cfg {
     pub fn add_break_statement(&mut self, stmt: &Break) -> CfgNodeId {
-        self.add_node(CfgNodeDescriptor::Break(Box::new(CfgBreakStatement::from(
-            stmt,
-        ))))
+        self.add_node(CfgNodeDescriptor::Break(Box::new(CfgBreakStatement::from(stmt))))
     }
 }
 
@@ -104,17 +94,13 @@ pub struct CfgContinueStatement {
 
 impl CfgContinueStatement {
     pub fn from(stmt: &Continue) -> Self {
-        Self {
-            continue_statement: stmt.id,
-        }
+        Self { continue_statement: stmt.id }
     }
 }
 
 impl Cfg {
     pub fn add_continue_statement(&mut self, stmt: &Continue) -> CfgNodeId {
-        self.add_node(CfgNodeDescriptor::Continue(Box::new(
-            CfgContinueStatement::from(stmt),
-        )))
+        self.add_node(CfgNodeDescriptor::Continue(Box::new(CfgContinueStatement::from(stmt))))
     }
 }
 
@@ -127,17 +113,13 @@ pub struct CfgReturnStatement {
 
 impl CfgReturnStatement {
     pub fn from(stmt: &Return) -> Self {
-        Self {
-            return_statement: stmt.id,
-        }
+        Self { return_statement: stmt.id }
     }
 }
 
 impl Cfg {
     pub fn add_return_statement(&mut self, stmt: &Return) -> CfgNodeId {
-        self.add_node(CfgNodeDescriptor::Return(Box::new(
-            CfgReturnStatement::from(stmt),
-        )))
+        self.add_node(CfgNodeDescriptor::Return(Box::new(CfgReturnStatement::from(stmt))))
     }
 }
 
@@ -150,17 +132,13 @@ pub struct CfgEmitStatement {
 
 impl CfgEmitStatement {
     pub fn from(stmt: &EmitStatement) -> Self {
-        Self {
-            emit_statement: stmt.id,
-        }
+        Self { emit_statement: stmt.id }
     }
 }
 
 impl Cfg {
     pub fn add_emit_statement(&mut self, stmt: &EmitStatement) -> CfgNodeId {
-        self.add_node(CfgNodeDescriptor::EmitStatement(Box::new(
-            CfgEmitStatement::from(stmt),
-        )))
+        self.add_node(CfgNodeDescriptor::EmitStatement(Box::new(CfgEmitStatement::from(stmt))))
     }
 }
 
@@ -173,17 +151,13 @@ pub struct CfgRevertStatement {
 
 impl CfgRevertStatement {
     pub fn from(stmt: &RevertStatement) -> Self {
-        Self {
-            revert_statement: stmt.id,
-        }
+        Self { revert_statement: stmt.id }
     }
 }
 
 impl Cfg {
     pub fn add_revert_statement(&mut self, stmt: &RevertStatement) -> CfgNodeId {
-        self.add_node(CfgNodeDescriptor::RevertStatement(Box::new(
-            CfgRevertStatement::from(stmt),
-        )))
+        self.add_node(CfgNodeDescriptor::RevertStatement(Box::new(CfgRevertStatement::from(stmt))))
     }
 }
 
@@ -196,9 +170,7 @@ pub struct CfgInlineAssemblyStatement {
 
 impl CfgInlineAssemblyStatement {
     pub fn from(stmt: &InlineAssembly) -> Self {
-        Self {
-            inline_assembly_statement: stmt.id,
-        }
+        Self { inline_assembly_statement: stmt.id }
     }
 }
 
@@ -219,9 +191,7 @@ pub struct CfgIfStatementCondition {
 
 impl CfgIfStatementCondition {
     pub fn from(exp: &Expression) -> Self {
-        Self {
-            if_stmt_condition: exp.get_node_id(),
-        }
+        Self { if_stmt_condition: exp.get_node_id() }
     }
 }
 
@@ -241,9 +211,7 @@ pub struct CfgWhileStatementCondition {
 
 impl CfgWhileStatementCondition {
     pub fn from(exp: &Expression) -> Self {
-        Self {
-            while_stmt_condition: exp.get_node_id(),
-        }
+        Self { while_stmt_condition: exp.get_node_id() }
     }
 }
 
@@ -264,9 +232,7 @@ pub struct CfgForStatementCondition {
 
 impl CfgForStatementCondition {
     pub fn from(exp: &Expression) -> Self {
-        Self {
-            for_stmt_condition: exp.get_node_id(),
-        }
+        Self { for_stmt_condition: exp.get_node_id() }
     }
 }
 
@@ -287,9 +253,7 @@ pub struct CfgDoWhileStatementCondition {
 
 impl CfgDoWhileStatementCondition {
     pub fn from(exp: &Expression) -> Self {
-        Self {
-            do_while_stmt_condition: exp.get_node_id(),
-        }
+        Self { do_while_stmt_condition: exp.get_node_id() }
     }
 }
 

@@ -97,10 +97,7 @@ impl CfgEndNode {
 
 impl CfgVariableDeclarationStatement {
     pub fn peek(&self, context: &WorkspaceContext) -> String {
-        let mut content = format!(
-            "Variable Decl. Stmt ({})",
-            self.variable_declaration_statement
-        );
+        let mut content = format!("Variable Decl. Stmt ({})", self.variable_declaration_statement);
         if let Some(node) = context.nodes.get(&self.variable_declaration_statement) {
             if let Some(inside) = node.peek(context) {
                 content.push_str(&format!(": \n{}", inside));
