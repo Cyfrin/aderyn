@@ -49,7 +49,7 @@ fn print_compiler_bug_message(info: &PanicInfo<'_>) {
     buffer.set_color(&ColorSpec::new()).unwrap();
     writeln!(
         buffer,
-        "This is a fatal bug in the Aderyn, sorry!
+        "This is a fatal bug in Aderyn, sorry!
 
 Please report this crash to https://github.com/cyfrin/aderyn/issues/new and include this error message with your report.
 
