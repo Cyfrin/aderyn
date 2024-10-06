@@ -3755,6 +3755,81 @@
           "ruleId": "unchecked-low-level-call"
         },
         {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateChangeAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 588
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateChangeAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 735
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateChangeAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 1272
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 110,
+                  "byteOffset": 11731
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 129,
+                  "byteOffset": 11851
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 71,
+                  "byteOffset": 11990
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "In most cases it is a best practice to perform the state change before making an external call to avoid a potential re-entrancy attack."
+          },
+          "ruleId": "state-change-after-external-call"
+        },
+        {
           "level": "note",
           "locations": [
             {
@@ -6803,6 +6878,17 @@
                 "region": {
                   "byteLength": 6,
                   "byteOffset": 920
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateChangeAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 428
                 }
               }
             },
@@ -10191,6 +10277,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/StateChangeAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 154,
+                  "byteOffset": 1144
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/eth2/DepositContract.sol"
                 },
                 "region": {
@@ -11539,6 +11636,61 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/StateChangeAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 13,
+                  "byteOffset": 530
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateChangeAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 13,
+                  "byteOffset": 677
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateChangeAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 13,
+                  "byteOffset": 885
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateChangeAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 1331
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateChangeAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 1480
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/StateVariableCouldBeDeclaredConstant.sol"
                 },
                 "region": {
@@ -12246,6 +12398,17 @@
                 "region": {
                   "byteLength": 3,
                   "byteOffset": 1209
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateChangeAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 377
                 }
               }
             },

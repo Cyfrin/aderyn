@@ -216,6 +216,7 @@
     "out-of-order-retryable",
     "constant-function-changing-state",
     "function-selector-collision",
-    "unchecked-low-level-call"
+    "unchecked-low-level-call",
+    "state-change-after-external-call"
   ]
 }

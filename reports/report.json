@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 114,
-    "total_sloc": 4202
+    "total_source_units": 115,
+    "total_sloc": 4244
   },
   "files_details": {
     "files_details": [
@@ -250,6 +250,10 @@
         "n_sloc": 58
       },
       {
+        "file_path": "src/StateChangeAfterExternalCall.sol",
+        "n_sloc": 42
+      },
+      {
         "file_path": "src/StateShadowing.sol",
         "n_sloc": 17
       },
@@ -464,7 +468,7 @@
     ]
   },
   "issue_count": {
-    "high": 42,
+    "high": 43,
     "low": 45
   },
   "high_issues": {
@@ -2600,6 +2604,49 @@
             "src_char": "488:71"
           }
         ]
+      },
+      {
+        "title": "External call is followed by a state variable change",
+        "description": "In most cases it is a best practice to perform the state change before making an external call to avoid a potential re-entrancy attack.",
+        "detector_name": "state-change-after-external-call",
+        "instances": [
+          {
+            "contract_path": "src/StateChangeAfterExternalCall.sol",
+            "line_no": 24,
+            "src": "588:15",
+            "src_char": "588:15"
+          },
+          {
+            "contract_path": "src/StateChangeAfterExternalCall.sol",
+            "line_no": 33,
+            "src": "735:15",
+            "src_char": "735:15"
+          },
+          {
+            "contract_path": "src/StateChangeAfterExternalCall.sol",
+            "line_no": 52,
+            "src": "1272:15",
+            "src_char": "1272:15"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 342,
+            "src": "11731:110",
+            "src_char": "11731:110"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 343,
+            "src": "11851:129",
+            "src_char": "11851:129"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 344,
+            "src": "11990:71",
+            "src_char": "11990:71"
+          }
+        ]
       }
     ]
   },
@@ -4293,6 +4340,12 @@
             "line_no": 43,
             "src": "920:6",
             "src_char": "920:6"
+          },
+          {
+            "contract_path": "src/StateChangeAfterExternalCall.sol",
+            "line_no": 17,
+            "src": "428:7",
+            "src_char": "428:7"
           },
           {
             "contract_path": "src/StateShadowing.sol",
@@ -6192,6 +6245,12 @@
             "src_char": "719:159"
           },
           {
+            "contract_path": "src/StateChangeAfterExternalCall.sol",
+            "line_no": 47,
+            "src": "1144:154",
+            "src_char": "1144:154"
+          },
+          {
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 70,
             "src": "5010:178",
@@ -6940,6 +6999,36 @@
             "src_char": "588:17"
           },
           {
+            "contract_path": "src/StateChangeAfterExternalCall.sol",
+            "line_no": 22,
+            "src": "530:13",
+            "src_char": "530:13"
+          },
+          {
+            "contract_path": "src/StateChangeAfterExternalCall.sol",
+            "line_no": 31,
+            "src": "677:13",
+            "src_char": "677:13"
+          },
+          {
+            "contract_path": "src/StateChangeAfterExternalCall.sol",
+            "line_no": 42,
+            "src": "885:13",
+            "src_char": "885:13"
+          },
+          {
+            "contract_path": "src/StateChangeAfterExternalCall.sol",
+            "line_no": 57,
+            "src": "1331:14",
+            "src_char": "1331:14"
+          },
+          {
+            "contract_path": "src/StateChangeAfterExternalCall.sol",
+            "line_no": 66,
+            "src": "1480:14",
+            "src_char": "1480:14"
+          },
+          {
             "contract_path": "src/StateVariableCouldBeDeclaredConstant.sol",
             "line_no": 39,
             "src": "996:8",
@@ -7331,6 +7420,12 @@
             "src_char": "1209:3"
           },
           {
+            "contract_path": "src/StateChangeAfterExternalCall.sol",
+            "line_no": 14,
+            "src": "377:7",
+            "src_char": "377:7"
+          },
+          {
             "contract_path": "src/StateVariableCouldBeDeclaredConstant.sol",
             "line_no": 11,
             "src": "281:13",
@@ -7554,6 +7649,7 @@
     "state-variable-could-be-declared-constant",
     "state-variable-changes-without-events",
     "state-variable-could-be-declared-immutable",
-    "multiple-placeholders"
+    "multiple-placeholders",
+    "state-change-after-external-call"
   ]
 }
