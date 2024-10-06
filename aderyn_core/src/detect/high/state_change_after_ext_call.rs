@@ -1,16 +1,21 @@
-use std::collections::{BTreeMap, HashSet};
-use std::error::Error;
+use std::{
+    collections::{BTreeMap, HashSet},
+    error::Error,
+};
 
 use crate::ast::NodeID;
 
-use crate::capture;
-use crate::context::browser::{ApproximateStorageChangeFinder, ExtractFunctionCalls};
-use crate::context::flow::{Cfg, CfgNodeId};
-use crate::detect::detector::IssueDetectorNamePool;
-use crate::detect::helpers;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    capture,
+    context::{
+        browser::{ApproximateStorageChangeFinder, ExtractFunctionCalls},
+        flow::{Cfg, CfgNodeId},
+        workspace_context::WorkspaceContext,
+    },
+    detect::{
+        detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
+        helpers,
+    },
 };
 use eyre::{eyre, Result};
 
