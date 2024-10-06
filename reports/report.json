@@ -1,7 +1,7 @@
 {
   "files_summary": {
     "total_source_units": 113,
-    "total_sloc": 4141
+    "total_sloc": 4142
   },
   "files_details": {
     "files_details": [
@@ -403,7 +403,7 @@
       },
       {
         "file_path": "src/control_flow/SimpleProgram.sol",
-        "n_sloc": 187
+        "n_sloc": 188
       },
       {
         "file_path": "src/eth2/DepositContract.sol",
@@ -3995,204 +3995,6 @@
             "src_char": "1441:2"
           },
           {
-            "contract_path": "src/control_flow/SimpleProgram.sol",
-            "line_no": 44,
-            "src": "1107:2",
-            "src_char": "1107:2"
-          },
-          {
-            "contract_path": "src/control_flow/SimpleProgram.sol",
-            "line_no": 48,
-            "src": "1230:2",
-            "src_char": "1230:2"
-          },
-          {
-            "contract_path": "src/control_flow/SimpleProgram.sol",
-            "line_no": 89,
-            "src": "2130:3",
-            "src_char": "2130:3"
-          },
-          {
-            "contract_path": "src/control_flow/SimpleProgram.sol",
-            "line_no": 97,
-            "src": "2306:3",
-            "src_char": "2306:3"
-          },
-          {
-            "contract_path": "src/control_flow/SimpleProgram.sol",
-            "line_no": 111,
-            "src": "2622:5",
-            "src_char": "2622:5"
-          },
-          {
-            "contract_path": "src/control_flow/SimpleProgram.sol",
-            "line_no": 126,
-            "src": "2901:3",
-            "src_char": "2901:3"
-          },
-          {
-            "contract_path": "src/control_flow/SimpleProgram.sol",
-            "line_no": 127,
-            "src": "2934:1",
-            "src_char": "2934:1"
-          },
-          {
-            "contract_path": "src/control_flow/SimpleProgram.sol",
-            "line_no": 128,
-            "src": "2962:5",
-            "src_char": "2962:5"
-          },
-          {
-            "contract_path": "src/control_flow/SimpleProgram.sol",
-            "line_no": 135,
-            "src": "3114:3",
-            "src_char": "3114:3"
-          },
-          {
-            "contract_path": "src/control_flow/SimpleProgram.sol",
-            "line_no": 136,
-            "src": "3154:3",
-            "src_char": "3154:3"
-          },
-          {
-            "contract_path": "src/control_flow/SimpleProgram.sol",
-            "line_no": 137,
-            "src": "3191:1",
-            "src_char": "3191:1"
-          },
-          {
-            "contract_path": "src/control_flow/SimpleProgram.sol",
-            "line_no": 139,
-            "src": "3229:1",
-            "src_char": "3229:1"
-          },
-          {
-            "contract_path": "src/control_flow/SimpleProgram.sol",
-            "line_no": 140,
-            "src": "3257:5",
-            "src_char": "3257:5"
-          },
-          {
-            "contract_path": "src/control_flow/SimpleProgram.sol",
-            "line_no": 147,
-            "src": "3400:3",
-            "src_char": "3400:3"
-          },
-          {
-            "contract_path": "src/control_flow/SimpleProgram.sol",
-            "line_no": 148,
-            "src": "3435:3",
-            "src_char": "3435:3"
-          },
-          {
-            "contract_path": "src/control_flow/SimpleProgram.sol",
-            "line_no": 149,
-            "src": "3472:1",
-            "src_char": "3472:1"
-          },
-          {
-            "contract_path": "src/control_flow/SimpleProgram.sol",
-            "line_no": 151,
-            "src": "3510:1",
-            "src_char": "3510:1"
-          },
-          {
-            "contract_path": "src/control_flow/SimpleProgram.sol",
-            "line_no": 152,
-            "src": "3538:5",
-            "src_char": "3538:5"
-          },
-          {
-            "contract_path": "src/control_flow/SimpleProgram.sol",
-            "line_no": 159,
-            "src": "3681:3",
-            "src_char": "3681:3"
-          },
-          {
-            "contract_path": "src/control_flow/SimpleProgram.sol",
-            "line_no": 160,
-            "src": "3716:3",
-            "src_char": "3716:3"
-          },
-          {
-            "contract_path": "src/control_flow/SimpleProgram.sol",
-            "line_no": 161,
-            "src": "3756:1",
-            "src_char": "3756:1"
-          },
-          {
-            "contract_path": "src/control_flow/SimpleProgram.sol",
-            "line_no": 164,
-            "src": "3832:1",
-            "src_char": "3832:1"
-          },
-          {
-            "contract_path": "src/control_flow/SimpleProgram.sol",
-            "line_no": 165,
-            "src": "3860:5",
-            "src_char": "3860:5"
-          },
-          {
-            "contract_path": "src/control_flow/SimpleProgram.sol",
-            "line_no": 172,
-            "src": "4003:3",
-            "src_char": "4003:3"
-          },
-          {
-            "contract_path": "src/control_flow/SimpleProgram.sol",
-            "line_no": 173,
-            "src": "4038:3",
-            "src_char": "4038:3"
-          },
-          {
-            "contract_path": "src/control_flow/SimpleProgram.sol",
-            "line_no": 174,
-            "src": "4075:1",
-            "src_char": "4075:1"
-          },
-          {
-            "contract_path": "src/control_flow/SimpleProgram.sol",
-            "line_no": 177,
-            "src": "4151:1",
-            "src_char": "4151:1"
-          },
-          {
-            "contract_path": "src/control_flow/SimpleProgram.sol",
-            "line_no": 183,
-            "src": "4298:5",
-            "src_char": "4298:5"
-          },
-          {
-            "contract_path": "src/control_flow/SimpleProgram.sol",
-            "line_no": 190,
-            "src": "4441:3",
-            "src_char": "4441:3"
-          },
-          {
-            "contract_path": "src/control_flow/SimpleProgram.sol",
-            "line_no": 191,
-            "src": "4476:3",
-            "src_char": "4476:3"
-          },
-          {
-            "contract_path": "src/control_flow/SimpleProgram.sol",
-            "line_no": 192,
-            "src": "4513:1",
-            "src_char": "4513:1"
-          },
-          {
-            "contract_path": "src/control_flow/SimpleProgram.sol",
-            "line_no": 195,
-            "src": "4589:1",
-            "src_char": "4589:1"
-          },
-          {
-            "contract_path": "src/control_flow/SimpleProgram.sol",
-            "line_no": 204,
-            "src": "4806:5",
-            "src_char": "4806:5"
-          },
-          {
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 113,
             "src": "7252:2",
@@ -5267,48 +5069,6 @@
             "line_no": 151,
             "src": "4756:6",
             "src_char": "4756:6"
-          },
-          {
-            "contract_path": "src/control_flow/SimpleProgram.sol",
-            "line_no": 111,
-            "src": "2622:5",
-            "src_char": "2622:5"
-          },
-          {
-            "contract_path": "src/control_flow/SimpleProgram.sol",
-            "line_no": 128,
-            "src": "2962:5",
-            "src_char": "2962:5"
-          },
-          {
-            "contract_path": "src/control_flow/SimpleProgram.sol",
-            "line_no": 140,
-            "src": "3257:5",
-            "src_char": "3257:5"
-          },
-          {
-            "contract_path": "src/control_flow/SimpleProgram.sol",
-            "line_no": 152,
-            "src": "3538:5",
-            "src_char": "3538:5"
-          },
-          {
-            "contract_path": "src/control_flow/SimpleProgram.sol",
-            "line_no": 165,
-            "src": "3860:5",
-            "src_char": "3860:5"
-          },
-          {
-            "contract_path": "src/control_flow/SimpleProgram.sol",
-            "line_no": 183,
-            "src": "4298:5",
-            "src_char": "4298:5"
-          },
-          {
-            "contract_path": "src/control_flow/SimpleProgram.sol",
-            "line_no": 204,
-            "src": "4806:5",
-            "src_char": "4806:5"
           }
         ]
       },
