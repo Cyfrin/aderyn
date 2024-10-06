@@ -1,6 +1,7 @@
 use std::collections::HashSet;
 
-use super::{voids::CfgEndNode, AstNodeId, Cfg, CfgNodeDescriptor, CfgNodeId, Statement};
+use super::{voids::CfgEndNode, ASTNode, Cfg, CfgNode, CfgNodeDescriptor, CfgNodeId, Statement};
+use crate::context::workspace_context::WorkspaceContext;
 
 impl Cfg {
     pub fn add_statement_node(&mut self, stmt: &Statement) -> CfgNodeId {
@@ -184,8 +185,8 @@ impl Cfg {
 }
 
 impl CfgNodeDescriptor {
-    pub fn reflect(&self) -> Option<AstNodeId> {
-        match self {
+    pub fn reflect<'a>(&self, context: &'a WorkspaceContext) -> Option<&'a ASTNode> {
+        let ast_node_id = match self {
             CfgNodeDescriptor::Start(_) => None,
             CfgNodeDescriptor::End(_) => None,
             CfgNodeDescriptor::VariableDeclarationStatement(n) => {
@@ -210,6 +211,13 @@ impl CfgNodeDescriptor {
             CfgNodeDescriptor::ForStatement(n) => Some(n.for_statement),
             CfgNodeDescriptor::DoWhileStatement(n) => Some(n.do_while_statement),
             CfgNodeDescriptor::TryStatement(n) => Some(n.try_statement),
-        }
+        };
+        context.nodes.get(&ast_node_id?)
+    }
+}
+
+impl CfgNode {
+    pub fn reflect<'a>(&self, context: &'a WorkspaceContext) -> Option<&'a ASTNode> {
+        self.nd.reflect(context)
     }
 }
