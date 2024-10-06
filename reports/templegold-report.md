@@ -607,14 +607,14 @@ In most cases it is a best practice to perform the state change before making an
 
 - Found in contracts/governance/ElderElection.sol [Line: 74](../tests/2024-07-templegold/protocol/contracts/governance/ElderElection.sol#L74)
 
-	State is changed at: `numCandidates += 1`
+	State is changed at: `candidates[discordId] = true`, `numCandidates += 1`
 	```solidity
 	        templars.checkExists(discordId);
 	```
 
 - Found in contracts/governance/ElderElection.sol [Line: 87](../tests/2024-07-templegold/protocol/contracts/governance/ElderElection.sol#L87)
 
-	State is changed at: `numCandidates -= 1`
+	State is changed at: `candidates[discordId] = false`, `numCandidates -= 1`
 	```solidity
 	        templars.checkExists(discordId);
 	```
@@ -628,7 +628,7 @@ In most cases it is a best practice to perform the state change before making an
 
 - Found in contracts/templegold/SpiceAuction.sol [Line: 159](../tests/2024-07-templegold/protocol/contracts/templegold/SpiceAuction.sol#L159)
 
-	State is changed at: `uint128 endTime = info.endTime = startTime + config.duration`
+	State is changed at: `uint128 startTime = info.startTime = uint128(block.timestamp) + config.startCooldown`, `uint128 endTime = info.endTime = startTime + config.duration`, `info.totalAuctionTokenAmount = epochAuctionTokenAmount`, `_totalAuctionTokenAllocation[auctionToken] = totalAuctionTokenAllocation + epochAuctionTokenAmount`
 	```solidity
 	        uint256 balance = IERC20(auctionToken).balanceOf(address(this));
 	```
@@ -656,14 +656,14 @@ In most cases it is a best practice to perform the state change before making an
 
 - Found in contracts/v2/TreasuryReservesVault.sol [Line: 296](../tests/2024-07-templegold/protocol/contracts/v2/TreasuryReservesVault.sol#L296)
 
-	State is changed at: `delete strategies[strategy]`
+	State is changed at: `delete strategies[strategy]`, `delete _strategyConfig.debtCeiling[_token]`, `delete _strategyConfig.enabledBorrowTokens[_token]`, `delete credits[_token]`
 	```solidity
 	            _outstandingDebt = borrowTokens[_token].dToken.burnAll(strategy);
 	```
 
 - Found in contracts/v2/strategies/DsrBaseStrategy.sol [Line: 55](../tests/2024-07-templegold/protocol/contracts/v2/strategies/DsrBaseStrategy.sol#L55)
 
-	State is changed at: `pot = IMakerDaoPotLike(_pot)`
+	State is changed at: `pot = IMakerDaoPotLike(_pot)`, `daiToken = IERC20(_daiToken)`
 	```solidity
 	        IMakerDaoVatLike vat = IMakerDaoVatLike(daiJoin.vat());
 	```
@@ -684,14 +684,14 @@ In most cases it is a best practice to perform the state change before making an
 
 - Found in contracts/v2/templeLineOfCredit/TempleLineOfCredit.sol [Line: 173](../tests/2024-07-templegold/protocol/contracts/v2/templeLineOfCredit/TempleLineOfCredit.sol#L173)
 
-	State is changed at: `totalCollateral -= amount`
+	State is changed at: `_accountData.collateral = _collateral - amount`, `totalCollateral -= amount`
 	```solidity
 	        circuitBreakerProxy.preCheck(
 	```
 
 - Found in contracts/v2/templeLineOfCredit/TempleLineOfCredit.sol [Line: 213](../tests/2024-07-templegold/protocol/contracts/v2/templeLineOfCredit/TempleLineOfCredit.sol#L213)
 
-	State is changed at: `debtTokenData.totalDebt = _cache.totalDebt = _cache.totalDebt + amount`
+	State is changed at: `_accountData.debtCheckpoint = _totalDebt`, `_accountData.interestAccumulator = _cache.interestAccumulator`, `debtTokenData.totalDebt = _cache.totalDebt = _cache.totalDebt + amount`
 	```solidity
 	        circuitBreakerProxy.preCheck(
 	```

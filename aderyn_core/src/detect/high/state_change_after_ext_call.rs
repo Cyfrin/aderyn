@@ -1,5 +1,5 @@
 use std::{
-    collections::{BTreeMap, HashSet},
+    collections::{BTreeMap, BTreeSet, HashSet},
     error::Error,
 };
 
@@ -44,36 +44,44 @@ impl IssueDetector for StateChangeAfterExternalCallDetector {
 
             // For each external call, figure out if it's followed by a state change
             for external_call_site in external_call_sites {
+                // Capture the external call
+                let external_call_cfg_node =
+                    cfg.nodes.get(&external_call_site).expect("cfg is corrupted!");
+
+                let Some(external_call_ast_node) = external_call_cfg_node.reflect(context) else {
+                    continue;
+                };
+
                 // Discover state changes that follow the external call
                 let state_changes = find_state_change_sites(context, &cfg, external_call_site);
+                let mut hint = "State is changed at: ".to_string();
+                let mut state_changes_found = false;
 
                 for state_change in state_changes {
                     // There is no way to tell is the state change took place after the event if
                     // both are found at the same place
                     if state_change != external_call_site {
-                        // Capture the external call
-                        let external_call_cfg_node =
-                            cfg.nodes.get(&external_call_site).expect("cfg is corrupted!");
+                        state_changes_found = true;
+                        let state_change_cfg_node =
+                            cfg.nodes.get(&state_change).expect("cfg is corrupted");
 
-                        if let Some(external_call_ast_node) =
-                            external_call_cfg_node.reflect(context)
+                        if let Some(state_change_ast_node) = state_change_cfg_node.reflect(context)
                         {
-                            let state_change_cfg_node =
-                                cfg.nodes.get(&state_change).expect("cfg is corrupted");
-
-                            if let Some(state_change_ast_node) =
-                                state_change_cfg_node.reflect(context)
-                            {
-                                if let Some(state_change_code) = state_change_ast_node.peek(context)
-                                {
-                                    let hint =
-                                        format!("State is changed at: `{}`", state_change_code);
-
-                                    capture!(self, context, external_call_ast_node, hint);
-                                }
+                            if let Some(state_change_code) = state_change_ast_node.peek(context) {
+                                hint.push('`');
+                                hint.push_str(&state_change_code);
+                                hint.push('`');
+                                hint.push_str(", ");
                             }
                         }
                     }
+                }
+
+                if state_changes_found {
+                    hint.pop();
+                    hint.pop();
+
+                    capture!(self, context, external_call_ast_node, hint);
                 }
             }
         }
@@ -110,7 +118,7 @@ fn find_state_change_sites(
     context: &WorkspaceContext,
     cfg: &Cfg,
     start_node: CfgNodeId,
-) -> HashSet<CfgNodeId> {
+) -> BTreeSet<CfgNodeId> {
     let mut visited = Default::default();
     let mut state_change_sites = Default::default();
 
@@ -155,14 +163,14 @@ fn find_state_change_sites(
         &mut state_change_sites,
     );
 
-    state_change_sites
+    state_change_sites.into_iter().collect()
 }
 
 fn find_external_call_sites(
     context: &WorkspaceContext,
     cfg: &Cfg,
     start_node: CfgNodeId,
-) -> HashSet<CfgNodeId> {
+) -> BTreeSet<CfgNodeId> {
     let mut visited = Default::default();
     let mut external_call_sites = Default::default();
 
@@ -201,7 +209,7 @@ fn find_external_call_sites(
 
     _find_external_call_sites(context, cfg, &mut visited, start_node, &mut external_call_sites);
 
-    external_call_sites
+    external_call_sites.into_iter().collect()
 }
 
 #[cfg(test)]

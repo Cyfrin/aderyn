@@ -2636,21 +2636,21 @@
             "line_no": 342,
             "src": "11731:110",
             "src_char": "11731:110",
-            "hint": "State is changed at: `tradingOpen = true`"
+            "hint": "State is changed at: `swapEnabled = true`, `tradingOpen = true`, `firstBlock = block.number`"
           },
           {
             "contract_path": "src/Trump.sol",
             "line_no": 343,
             "src": "11851:129",
             "src_char": "11851:129",
-            "hint": "State is changed at: `tradingOpen = true`"
+            "hint": "State is changed at: `swapEnabled = true`, `tradingOpen = true`, `firstBlock = block.number`"
           },
           {
             "contract_path": "src/Trump.sol",
             "line_no": 344,
             "src": "11990:71",
             "src_char": "11990:71",
-            "hint": "State is changed at: `firstBlock = block.number`"
+            "hint": "State is changed at: `swapEnabled = true`, `tradingOpen = true`, `firstBlock = block.number`"
           }
         ]
       }

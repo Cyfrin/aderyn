@@ -509,7 +509,7 @@ In most cases it is a best practice to perform the state change before making an
 
 - Found in src/v0.8/functions/dev/v1_X/FunctionsSubscriptions.sol [Line: 519](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/FunctionsSubscriptions.sol#L519)
 
-	State is changed at: `delete s_requestCommitments[requestId]`
+	State is changed at: `s_subscriptions[subscriptionId].blockedBalance -= request.estimatedTotalCostJuels`, `s_consumers[request.client][subscriptionId].completedRequests += 1`, `delete s_requestCommitments[requestId]`
 	```solidity
 	      IFunctionsBilling(request.coordinator).deleteCommitment(requestId);
 	```
@@ -523,7 +523,7 @@ In most cases it is a best practice to perform the state change before making an
 
 - Found in src/v0.8/functions/v1_0_0/FunctionsSubscriptions.sol [Line: 519](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/FunctionsSubscriptions.sol#L519)
 
-	State is changed at: `s_subscriptions[subscriptionId].blockedBalance -= request.estimatedTotalCostJuels`
+	State is changed at: `s_subscriptions[subscriptionId].blockedBalance -= request.estimatedTotalCostJuels`, `s_consumers[request.client][subscriptionId].completedRequests += 1`, `delete s_requestCommitments[requestId]`
 	```solidity
 	      IFunctionsBilling(request.coordinator).deleteCommitment(requestId);
 	```

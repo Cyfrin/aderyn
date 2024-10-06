@@ -31,7 +31,7 @@ use super::workspace_context::WorkspaceContext;
 // This is done to differentiate AstNodeIDs from CfgNodeIDs
 type AstNodeId = NodeID;
 
-#[derive(Eq, Hash, Default, PartialEq, Clone, Copy, Debug)]
+#[derive(Eq, Hash, Default, PartialEq, Clone, Copy, Debug, PartialOrd, Ord)]
 pub struct CfgNodeId(usize);
 
 impl CfgNodeId {

@@ -3801,7 +3801,7 @@
             },
             {
               "message": {
-                "text": "State is changed at: `swapEnabled = true`"
+                "text": "State is changed at: `swapEnabled = true`, `tradingOpen = true`, `firstBlock = block.number`"
               },
               "physicalLocation": {
                 "artifactLocation": {
@@ -3815,7 +3815,7 @@
             },
             {
               "message": {
-                "text": "State is changed at: `firstBlock = block.number`"
+                "text": "State is changed at: `swapEnabled = true`, `tradingOpen = true`, `firstBlock = block.number`"
               },
               "physicalLocation": {
                 "artifactLocation": {
@@ -3829,7 +3829,7 @@
             },
             {
               "message": {
-                "text": "State is changed at: `firstBlock = block.number`"
+                "text": "State is changed at: `swapEnabled = true`, `tradingOpen = true`, `firstBlock = block.number`"
               },
               "physicalLocation": {
                 "artifactLocation": {

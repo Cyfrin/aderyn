@@ -2575,21 +2575,21 @@ In most cases it is a best practice to perform the state change before making an
 
 - Found in src/Trump.sol [Line: 342](../tests/contract-playground/src/Trump.sol#L342)
 
-	State is changed at: `swapEnabled = true`
+	State is changed at: `swapEnabled = true`, `tradingOpen = true`, `firstBlock = block.number`
 	```solidity
 	        uniswapV2Pair = IUniswapV2Factory(uniswapV2Router.factory()).createPair(address(this), uniswapV2Router.WETH());
 	```
 
 - Found in src/Trump.sol [Line: 343](../tests/contract-playground/src/Trump.sol#L343)
 
-	State is changed at: `firstBlock = block.number`
+	State is changed at: `swapEnabled = true`, `tradingOpen = true`, `firstBlock = block.number`
 	```solidity
 	        uniswapV2Router.addLiquidityETH{value: address(this).balance}(address(this),balanceOf(address(this)),0,0,owner(),block.timestamp);
 	```
 
 - Found in src/Trump.sol [Line: 344](../tests/contract-playground/src/Trump.sol#L344)
 
-	State is changed at: `firstBlock = block.number`
+	State is changed at: `swapEnabled = true`, `tradingOpen = true`, `firstBlock = block.number`
 	```solidity
 	        IERC20(uniswapV2Pair).approve(address(uniswapV2Router), type(uint).max);
 	```
