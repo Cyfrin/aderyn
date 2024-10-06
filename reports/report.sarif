@@ -3758,6 +3758,9 @@
           "level": "warning",
           "locations": [
             {
+              "message": {
+                "text": "State is changed at: `s_useMe += 1`"
+              },
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/StateChangeAfterExternalCall.sol"
@@ -3769,6 +3772,9 @@
               }
             },
             {
+              "message": {
+                "text": "State is changed at: `s_useMe -= 1`"
+              },
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/StateChangeAfterExternalCall.sol"
@@ -3780,6 +3786,9 @@
               }
             },
             {
+              "message": {
+                "text": "State is changed at: `s_useMe += 4`"
+              },
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/StateChangeAfterExternalCall.sol"
@@ -3791,6 +3800,9 @@
               }
             },
             {
+              "message": {
+                "text": "State is changed at: `swapEnabled = true`"
+              },
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/Trump.sol"
@@ -3802,6 +3814,9 @@
               }
             },
             {
+              "message": {
+                "text": "State is changed at: `firstBlock = block.number`"
+              },
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/Trump.sol"
@@ -3813,6 +3828,9 @@
               }
             },
             {
+              "message": {
+                "text": "State is changed at: `firstBlock = block.number`"
+              },
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "src/Trump.sol"

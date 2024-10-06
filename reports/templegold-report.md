@@ -558,138 +558,161 @@ In most cases it is a best practice to perform the state change before making an
 
 - Found in contracts/amo/Ramos.sol [Line: 195](../tests/2024-07-templegold/protocol/contracts/amo/Ramos.sol#L195)
 
+	State is changed at: `tokenVault = IRamosTokenVault(vault)`
 	```solidity
 	            protocolToken.approve(previousVault, 0);
 	```
 
 - Found in contracts/amo/Ramos.sol [Line: 196](../tests/2024-07-templegold/protocol/contracts/amo/Ramos.sol#L196)
 
+	State is changed at: `tokenVault = IRamosTokenVault(vault)`
 	```solidity
 	            quoteToken.approve(previousVault, 0);
 	```
 
 - Found in contracts/core/MultiOtcOffer.sol [Line: 68](../tests/2024-07-templegold/protocol/contracts/core/MultiOtcOffer.sol#L68)
 
+	State is changed at: `marketInfo.scalar = 10 ** scaleDecimals`
 	```solidity
 	        uint256 scaleDecimals = marketInfo.offerPricingToken == OfferPricingToken.UserBuyToken
 	```
 
 - Found in contracts/core/OpsManager.sol [Line: 36](../tests/2024-07-templegold/protocol/contracts/core/OpsManager.sol#L36)
 
+	State is changed at: `vaultedTemple = new VaultedTemple(_templeToken, address(templeExposure))`
 	```solidity
 	        templeExposure.setMinterState(address(this), true);
 	```
 
 - Found in contracts/core/OtcOffer.sol [Line: 91](../tests/2024-07-templegold/protocol/contracts/core/OtcOffer.sol#L91)
 
+	State is changed at: `scalar = 10 ** scaleDecimals`
 	```solidity
 	        uint256 scaleDecimals = offerPricingToken == OfferPricingToken.UserBuyToken
 	```
 
 - Found in contracts/fakes/templegold/TempleGoldStakingMock.sol [Line: 158](../tests/2024-07-templegold/protocol/contracts/fakes/templegold/TempleGoldStakingMock.sol#L158)
 
+	State is changed at: `_accountLastStakeIndex[msg.sender] = ++_lastIndex`
 	```solidity
 	        uint256 amount = previousStaking.migrateWithdraw(msg.sender, index);
 	```
 
 - Found in contracts/fakes/v2/strategies/DsrBaseStrategyTestnet.sol [Line: 52](../tests/2024-07-templegold/protocol/contracts/fakes/v2/strategies/DsrBaseStrategyTestnet.sol#L52)
 
+	State is changed at: `daiSavingsRate = _newRate`
 	```solidity
 	        _checkpointDaiBalance(daiToken.balanceOf(address(this)));
 	```
 
 - Found in contracts/governance/ElderElection.sol [Line: 74](../tests/2024-07-templegold/protocol/contracts/governance/ElderElection.sol#L74)
 
+	State is changed at: `numCandidates += 1`
 	```solidity
 	        templars.checkExists(discordId);
 	```
 
 - Found in contracts/governance/ElderElection.sol [Line: 87](../tests/2024-07-templegold/protocol/contracts/governance/ElderElection.sol#L87)
 
+	State is changed at: `numCandidates -= 1`
 	```solidity
 	        templars.checkExists(discordId);
 	```
 
 - Found in contracts/governance/TemplarMetadata.sol [Line: 32](../tests/2024-07-templegold/protocol/contracts/governance/TemplarMetadata.sol#L32)
 
+	State is changed at: `templeRole[discordId] = _templeRole`
 	```solidity
 	        templars.checkExists(discordId);
 	```
 
 - Found in contracts/templegold/SpiceAuction.sol [Line: 159](../tests/2024-07-templegold/protocol/contracts/templegold/SpiceAuction.sol#L159)
 
+	State is changed at: `uint128 endTime = info.endTime = startTime + config.duration`
 	```solidity
 	        uint256 balance = IERC20(auctionToken).balanceOf(address(this));
 	```
 
 - Found in contracts/templegold/SpiceAuction.sol [Line: 194](../tests/2024-07-templegold/protocol/contracts/templegold/SpiceAuction.sol#L194)
 
+	State is changed at: `info.totalBidTokenAmount += amount`
 	```solidity
 	        uint256 _bidTokenAmountBefore = IERC20(bidToken).balanceOf(_recipient);
 	```
 
 - Found in contracts/templegold/SpiceAuction.sol [Line: 196](../tests/2024-07-templegold/protocol/contracts/templegold/SpiceAuction.sol#L196)
 
+	State is changed at: `info.totalBidTokenAmount += amount`
 	```solidity
 	        uint256 _bidTokenAmountAfter = IERC20(bidToken).balanceOf(_recipient);
 	```
 
 - Found in contracts/v2/TreasuryReservesVault.sol [Line: 148](../tests/2024-07-templegold/protocol/contracts/v2/TreasuryReservesVault.sol#L148)
 
+	State is changed at: `tpiOracle = _tpiOracle`
 	```solidity
 	        if (_tpiOracle.treasuryPriceIndex() == 0) revert CommonEventsAndErrors.InvalidParam();
 	```
 
 - Found in contracts/v2/TreasuryReservesVault.sol [Line: 296](../tests/2024-07-templegold/protocol/contracts/v2/TreasuryReservesVault.sol#L296)
 
+	State is changed at: `delete strategies[strategy]`
 	```solidity
 	            _outstandingDebt = borrowTokens[_token].dToken.burnAll(strategy);
 	```
 
 - Found in contracts/v2/strategies/DsrBaseStrategy.sol [Line: 55](../tests/2024-07-templegold/protocol/contracts/v2/strategies/DsrBaseStrategy.sol#L55)
 
+	State is changed at: `pot = IMakerDaoPotLike(_pot)`
 	```solidity
 	        IMakerDaoVatLike vat = IMakerDaoVatLike(daiJoin.vat());
 	```
 
 - Found in contracts/v2/strategies/DsrBaseStrategy.sol [Line: 57](../tests/2024-07-templegold/protocol/contracts/v2/strategies/DsrBaseStrategy.sol#L57)
 
+	State is changed at: `daiToken = IERC20(_daiToken)`
 	```solidity
 	        vat.hope(address(daiJoin));
 	```
 
 - Found in contracts/v2/strategies/DsrBaseStrategy.sol [Line: 58](../tests/2024-07-templegold/protocol/contracts/v2/strategies/DsrBaseStrategy.sol#L58)
 
+	State is changed at: `daiToken = IERC20(_daiToken)`
 	```solidity
 	        vat.hope(address(pot));
 	```
 
 - Found in contracts/v2/templeLineOfCredit/TempleLineOfCredit.sol [Line: 173](../tests/2024-07-templegold/protocol/contracts/v2/templeLineOfCredit/TempleLineOfCredit.sol#L173)
 
+	State is changed at: `totalCollateral -= amount`
 	```solidity
 	        circuitBreakerProxy.preCheck(
 	```
 
 - Found in contracts/v2/templeLineOfCredit/TempleLineOfCredit.sol [Line: 213](../tests/2024-07-templegold/protocol/contracts/v2/templeLineOfCredit/TempleLineOfCredit.sol#L213)
 
+	State is changed at: `debtTokenData.totalDebt = _cache.totalDebt = _cache.totalDebt + amount`
 	```solidity
 	        circuitBreakerProxy.preCheck(
 	```
 
 - Found in contracts/v2/templeLineOfCredit/TempleLineOfCredit.sol [Line: 351](../tests/2024-07-templegold/protocol/contracts/v2/templeLineOfCredit/TempleLineOfCredit.sol#L351)
 
+	State is changed at: `totalCollateral -= totalCollateralClaimed`
 	```solidity
 	            treasuryReservesVault.repay(templeToken, totalCollateralClaimed, address(tlcStrategy));
 	```
 
 - Found in contracts/v2/templeLineOfCredit/TempleLineOfCredit.sol [Line: 394](../tests/2024-07-templegold/protocol/contracts/v2/templeLineOfCredit/TempleLineOfCredit.sol#L394)
 
+	State is changed at: `treasuryReservesVault = ITreasuryReservesVault(_trv)`
 	```solidity
 	            daiToken.approve(previousTrv, 0);
 	```
 
 - Found in contracts/v2/templeLineOfCredit/TempleLineOfCredit.sol [Line: 397](../tests/2024-07-templegold/protocol/contracts/v2/templeLineOfCredit/TempleLineOfCredit.sol#L397)
 
+	State is changed at: `treasuryReservesVault = ITreasuryReservesVault(_trv)`
 	```solidity
 	        address _trv = address(tlcStrategy.treasuryReservesVault());
 	```

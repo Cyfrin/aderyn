@@ -502,36 +502,42 @@ In most cases it is a best practice to perform the state change before making an
 
 - Found in src/v0.8/functions/dev/v1_X/FunctionsBilling.sol [Line: 403](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/FunctionsBilling.sol#L403)
 
+	State is changed at: `s_withdrawableTokens[transmitters[i]] = 0`
 	```solidity
 	        IFunctionsSubscriptions(address(_getRouter())).oracleWithdraw(transmitters[i], balance);
 	```
 
 - Found in src/v0.8/functions/dev/v1_X/FunctionsSubscriptions.sol [Line: 519](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/FunctionsSubscriptions.sol#L519)
 
+	State is changed at: `delete s_requestCommitments[requestId]`
 	```solidity
 	      IFunctionsBilling(request.coordinator).deleteCommitment(requestId);
 	```
 
 - Found in src/v0.8/functions/v1_0_0/FunctionsBilling.sol [Line: 342](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/FunctionsBilling.sol#L342)
 
+	State is changed at: `s_withdrawableTokens[transmitters[i]] = 0`
 	```solidity
 	        IFunctionsSubscriptions(address(_getRouter())).oracleWithdraw(transmitters[i], balance);
 	```
 
 - Found in src/v0.8/functions/v1_0_0/FunctionsSubscriptions.sol [Line: 519](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/FunctionsSubscriptions.sol#L519)
 
+	State is changed at: `s_subscriptions[subscriptionId].blockedBalance -= request.estimatedTotalCostJuels`
 	```solidity
 	      IFunctionsBilling(request.coordinator).deleteCommitment(requestId);
 	```
 
 - Found in src/v0.8/functions/v1_1_0/FunctionsBilling.sol [Line: 360](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_1_0/FunctionsBilling.sol#L360)
 
+	State is changed at: `s_withdrawableTokens[transmitters[i]] = 0`
 	```solidity
 	        IFunctionsSubscriptions(address(_getRouter())).oracleWithdraw(transmitters[i], balance);
 	```
 
 - Found in src/v0.8/functions/v1_3_0/FunctionsBilling.sol [Line: 401](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_3_0/FunctionsBilling.sol#L401)
 
+	State is changed at: `s_withdrawableTokens[transmitters[i]] = 0`
 	```solidity
 	        IFunctionsSubscriptions(address(_getRouter())).oracleWithdraw(transmitters[i], balance);
 	```

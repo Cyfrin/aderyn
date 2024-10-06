@@ -2614,37 +2614,43 @@
             "contract_path": "src/StateChangeAfterExternalCall.sol",
             "line_no": 24,
             "src": "588:15",
-            "src_char": "588:15"
+            "src_char": "588:15",
+            "hint": "State is changed at: `s_useMe += 1`"
           },
           {
             "contract_path": "src/StateChangeAfterExternalCall.sol",
             "line_no": 33,
             "src": "735:15",
-            "src_char": "735:15"
+            "src_char": "735:15",
+            "hint": "State is changed at: `s_useMe -= 1`"
           },
           {
             "contract_path": "src/StateChangeAfterExternalCall.sol",
             "line_no": 52,
             "src": "1272:15",
-            "src_char": "1272:15"
+            "src_char": "1272:15",
+            "hint": "State is changed at: `s_useMe += 4`"
           },
           {
             "contract_path": "src/Trump.sol",
             "line_no": 342,
             "src": "11731:110",
-            "src_char": "11731:110"
+            "src_char": "11731:110",
+            "hint": "State is changed at: `tradingOpen = true`"
           },
           {
             "contract_path": "src/Trump.sol",
             "line_no": 343,
             "src": "11851:129",
-            "src_char": "11851:129"
+            "src_char": "11851:129",
+            "hint": "State is changed at: `tradingOpen = true`"
           },
           {
             "contract_path": "src/Trump.sol",
             "line_no": 344,
             "src": "11990:71",
-            "src_char": "11990:71"
+            "src_char": "11990:71",
+            "hint": "State is changed at: `firstBlock = block.number`"
           }
         ]
       }

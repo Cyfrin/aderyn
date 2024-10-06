@@ -3,7 +3,7 @@ use std::{
     error::Error,
 };
 
-use crate::ast::NodeID;
+use crate::{ast::NodeID, context::browser::Peek};
 
 use crate::{
     capture,
@@ -58,7 +58,20 @@ impl IssueDetector for StateChangeAfterExternalCallDetector {
                         if let Some(external_call_ast_node) =
                             external_call_cfg_node.reflect(context)
                         {
-                            capture!(self, context, external_call_ast_node);
+                            let state_change_cfg_node =
+                                cfg.nodes.get(&state_change).expect("cfg is corrupted");
+
+                            if let Some(state_change_ast_node) =
+                                state_change_cfg_node.reflect(context)
+                            {
+                                if let Some(state_change_code) = state_change_ast_node.peek(context)
+                                {
+                                    let hint =
+                                        format!("State is changed at: `{}`", state_change_code);
+
+                                    capture!(self, context, external_call_ast_node, hint);
+                                }
+                            }
                         }
                     }
                 }
