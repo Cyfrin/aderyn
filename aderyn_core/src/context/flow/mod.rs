@@ -373,6 +373,7 @@ impl Cfg {
 impl Cfg {
     /// Creates a new CFG from a given FunctionDefinition's body
     ///
+    /// * Returns - Tuple containing Cfg, Start Node, End Node
     ///
     /// We don't yet have the ability to derive a CFG for the whole function because that involves
     /// combining modifiers with the function body plus resolving internal functions, etc.
@@ -381,7 +382,7 @@ impl Cfg {
     pub fn from_function_body(
         context: &WorkspaceContext,
         function_definition: &FunctionDefinition,
-    ) -> Option<Cfg> {
+    ) -> Option<(Cfg, CfgNodeId, CfgNodeId)> {
         // Verify that the function has a body
         let function_body_block = function_definition.body.as_ref()?;
 
@@ -409,7 +410,21 @@ impl Cfg {
         cfg.callibrate_jump_statements_in_body(start, end);
 
         // Return the CFG
-        Some(cfg)
+        Some((cfg, start, end))
+    }
+}
+
+// These methods help with recursion for detectors using the library
+impl CfgNodeId {
+    pub fn children(&self, cfg: &Cfg) -> Vec<CfgNodeId> {
+        cfg.raw_successors(*self)
+    }
+}
+
+impl CfgNode {
+    pub fn children<'a>(&self, cfg: &'a Cfg) -> Vec<&'a CfgNode> {
+        let children_ids = cfg.raw_successors(self.id);
+        children_ids.into_iter().map(|c| cfg.nodes.get(&c).expect("cfg invalid!")).collect()
     }
 }
 
@@ -655,7 +670,7 @@ mod control_flow_tests {
         );
         let contract = context.find_contract_by_name("SimpleProgram");
         let function = contract.find_function_by_name("function11");
-        let cfg = Cfg::from_function_body(&context, function).unwrap();
+        let (cfg, _, _) = Cfg::from_function_body(&context, function).unwrap();
 
         output_graph(&context, &cfg, "SimpleProgram_function11");
         assert_eq!(cfg.nodes.len(), 26);
@@ -670,7 +685,7 @@ mod control_flow_tests {
         );
         let contract = context.find_contract_by_name("SimpleProgram");
         let function = contract.find_function_by_name("function12");
-        let cfg = Cfg::from_function_body(&context, function).unwrap();
+        let (cfg, _, _) = Cfg::from_function_body(&context, function).unwrap();
 
         output_graph(&context, &cfg, "SimpleProgram_function12");
         assert_eq!(cfg.nodes.len(), 42);
@@ -685,7 +700,7 @@ mod control_flow_tests {
         );
         let contract = context.find_contract_by_name("SimpleProgram");
         let function = contract.find_function_by_name("function13");
-        let cfg = Cfg::from_function_body(&context, function).unwrap();
+        let (cfg, _, _) = Cfg::from_function_body(&context, function).unwrap();
 
         output_graph(&context, &cfg, "SimpleProgram_function13");
         assert_eq!(cfg.nodes.len(), 36);
@@ -700,7 +715,7 @@ mod control_flow_tests {
         );
         let contract = context.find_contract_by_name("SimpleProgram");
         let function = contract.find_function_by_name("function14");
-        let cfg = Cfg::from_function_body(&context, function).unwrap();
+        let (cfg, _, _) = Cfg::from_function_body(&context, function).unwrap();
 
         output_graph(&context, &cfg, "SimpleProgram_function14");
         assert_eq!(cfg.nodes.len(), 46);
@@ -715,7 +730,7 @@ mod control_flow_tests {
         );
         let contract = context.find_contract_by_name("SimpleProgram");
         let function = contract.find_function_by_name("function15");
-        let cfg = Cfg::from_function_body(&context, function).unwrap();
+        let (cfg, _, _) = Cfg::from_function_body(&context, function).unwrap();
 
         output_graph(&context, &cfg, "SimpleProgram_function15");
         assert_eq!(cfg.nodes.len(), 70);
@@ -730,7 +745,7 @@ mod control_flow_tests {
         );
         let contract = context.find_contract_by_name("SimpleProgram");
         let function = contract.find_function_by_name("function16");
-        let cfg = Cfg::from_function_body(&context, function).unwrap();
+        let (cfg, _, _) = Cfg::from_function_body(&context, function).unwrap();
 
         output_graph(&context, &cfg, "SimpleProgram_function16");
         assert_eq!(cfg.nodes.len(), 82);

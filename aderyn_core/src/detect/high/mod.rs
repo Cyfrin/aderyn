@@ -26,6 +26,7 @@ pub(crate) mod reused_contract_name;
 pub(crate) mod rtlo;
 pub(crate) mod selfdestruct;
 pub(crate) mod send_ether_no_checks;
+pub(crate) mod state_change_after_ext_call;
 pub(crate) mod state_variable_shadowing;
 pub(crate) mod storage_array_edit_with_memory;
 pub(crate) mod storage_signed_integer_array;
