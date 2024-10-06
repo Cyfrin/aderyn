@@ -2410,6 +2410,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 1218
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/OutOfOrderRetryable.sol"
                 },
                 "region": {
@@ -3245,6 +3256,17 @@
                 "region": {
                   "byteLength": 11,
                   "byteOffset": 630
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 139
                 }
               }
             },
@@ -4628,6 +4650,28 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 347
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 459
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/OutOfOrderRetryable.sol"
                 },
                 "region": {
@@ -4928,6 +4972,28 @@
                 "region": {
                   "byteLength": 9,
                   "byteOffset": 129
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 194
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 309
                 }
               }
             },
@@ -6649,6 +6715,17 @@
                 "region": {
                   "byteLength": 6,
                   "byteOffset": 1389
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 1381
                 }
               }
             },
@@ -11121,6 +11198,94 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 194
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 309
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 530
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 599
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 884
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 955
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 1470
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 1548
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/IncorrectERC20.sol"
                 },
                 "region": {
@@ -11960,6 +12125,17 @@
                 "region": {
                   "byteLength": 7,
                   "byteOffset": 217
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 416
                 }
               }
             },
