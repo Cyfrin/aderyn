@@ -118,4 +118,89 @@ contract SimpleProgram {
             i -= 2 * i;
         }
     }
+
+    function function11() external {
+        uint256 total = 0;
+        do {
+            total *= 2;
+            if (total < 300) break;
+            total *= 3;
+        } while (total < 10000);
+    }
+
+    function function12() external {
+        uint256 total = 0;
+        do {
+            total *= 2;
+            for (uint256 i = 0; i < 100; ++i) {
+                if (total < 300) break;
+                total -= 3;
+            }
+            total *= 3;
+        } while (total < 10000);
+    }
+
+    function function13() external {
+        uint256 total = 0;
+        do {
+            total *= 2;
+            while (total < 100) {
+                if (total < 300) break;
+                total -= 3;
+            }
+            total *= 3;
+        } while (total < 10000);
+    }
+
+    function function14() external {
+        uint256 total = 0;
+        do {
+            total *= 2;
+            while (total < 100) {
+                if (total < 300) continue;
+                total -= 3;
+            }
+            if (total == 2) continue;
+            total *= 3;
+        } while (total < 10000);
+    }
+
+    function function15() external {
+        uint256 total = 0;
+        do {
+            total *= 2;
+            while (total < 100) {
+                if (total < 300) break;
+                total -= 3;
+            }
+            if (total == 2) continue;
+            total *= 3;
+            for (;;) {
+                if (total == 1) {
+                    continue;
+                }
+            }
+        } while (total < 10000);
+    }
+
+    function function16() external {
+        uint256 total = 0;
+        do {
+            total *= 2;
+            while (total < 100) {
+                if (total < 300) break;
+                total -= 3;
+            }
+            if (total == 2) continue;
+            total *= 3;
+
+            for (;;) {
+                if (total == 5) {
+                    return;
+                } else if (total == 1) {
+                    continue;
+                }
+            }
+        } while (total < 10000);
+    }
 }

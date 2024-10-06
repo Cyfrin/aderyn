@@ -14,6 +14,7 @@ impl CfgReduce for CfgBlock {
     fn reduce(&self, context: &WorkspaceContext, cfg: &mut Cfg) -> (CfgNodeId, CfgNodeId) {
         let start_id = cfg.add_start_block_node(self.block);
         let end_id = cfg.add_end_block_node(self.block);
+        cfg.start_end_pairs.insert(start_id, end_id);
 
         let mut last_link = start_id;
 
@@ -55,6 +56,7 @@ impl CfgReduce for CfgIfStatement {
     fn reduce(&self, context: &WorkspaceContext, cfg: &mut Cfg) -> (CfgNodeId, CfgNodeId) {
         let start_id = cfg.add_start_if_node(self.if_statement);
         let end_id = cfg.add_end_if_node(self.if_statement);
+        cfg.start_end_pairs.insert(start_id, end_id);
 
         let Some(ASTNode::IfStatement(if_ast_node)) = context.nodes.get(&self.if_statement) else {
             cfg.add_flow_edge(start_id, end_id);
@@ -64,6 +66,8 @@ impl CfgReduce for CfgIfStatement {
         // Condition node
         let start_cond = cfg.add_start_if_cond_node();
         let end_cond = cfg.add_end_if_cond_node();
+        cfg.start_end_pairs.insert(start_id, end_id);
+
         let condition = cfg.add_if_statement_condition(&if_ast_node.condition);
 
         cfg.add_flow_edge(start_id, start_cond);
@@ -73,6 +77,7 @@ impl CfgReduce for CfgIfStatement {
         // True branch
         let start_true_branch = cfg.add_start_if_true_branch_node();
         let end_true_branch = cfg.add_end_if_true_branch_node();
+        cfg.start_end_pairs.insert(start_true_branch, end_true_branch);
 
         let true_block = match &if_ast_node.true_body {
             super::BlockOrStatement::Block(block) => cfg.add_block_node(block.as_ref()),
@@ -89,6 +94,7 @@ impl CfgReduce for CfgIfStatement {
         if let Some(false_body) = if_ast_node.false_body.as_ref() {
             let start_false_branch = cfg.add_start_if_false_branch_node();
             let end_false_branch = cfg.add_end_if_false_branch_node();
+            cfg.start_end_pairs.insert(start_false_branch, end_false_branch);
 
             let false_block = match false_body {
                 super::BlockOrStatement::Block(block) => cfg.add_block_node(block.as_ref()),
@@ -104,6 +110,7 @@ impl CfgReduce for CfgIfStatement {
             // It's possible to skip the true branch if the false branch doesn't exist
             let start_false_branch = cfg.add_start_if_false_branch_node();
             let end_false_branch = cfg.add_end_if_false_branch_node();
+            cfg.start_end_pairs.insert(start_false_branch, end_false_branch);
 
             cfg.add_flow_edge(end_cond, start_false_branch);
             cfg.add_flow_edge(start_false_branch, end_false_branch);
@@ -131,13 +138,14 @@ impl Cfg {
 
 #[derive(Debug, Clone)]
 pub struct CfgWhileStatement {
-    while_statement: AstNodeId,
+    pub while_statement: AstNodeId,
 }
 
 impl CfgReduce for CfgWhileStatement {
     fn reduce(&self, context: &WorkspaceContext, cfg: &mut Cfg) -> (CfgNodeId, CfgNodeId) {
         let start_id = cfg.add_start_while_node(self.while_statement);
         let end_id = cfg.add_end_while_node(self.while_statement);
+        cfg.start_end_pairs.insert(start_id, end_id);
 
         let Some(ASTNode::WhileStatement(ast_while_stmt)) =
             context.nodes.get(&self.while_statement)
@@ -148,6 +156,10 @@ impl CfgReduce for CfgWhileStatement {
 
         let start_cond = cfg.add_start_while_cond_node();
         let end_cond = cfg.add_end_while_cond_node();
+        cfg.start_end_pairs.insert(start_cond, end_cond);
+        cfg.start_cond_pairs.insert(start_id, start_cond);
+        cfg.cond_start_pairs.insert(end_cond, start_id);
+
         let condition = cfg.add_while_statement_condition(&ast_while_stmt.condition);
 
         cfg.add_flow_edge(start_id, start_cond);
@@ -160,6 +172,8 @@ impl CfgReduce for CfgWhileStatement {
         // Loop arcs around the condition
         let start_body = cfg.add_start_while_body_node();
         let end_body = cfg.add_end_while_body_node();
+        cfg.start_end_pairs.insert(start_body, end_body);
+
         let body = match &ast_while_stmt.body {
             BlockOrStatement::Block(block) => cfg.add_block_node(block),
             BlockOrStatement::Statement(stmt) => cfg.add_statement_node(stmt),
@@ -192,13 +206,14 @@ impl Cfg {
 
 #[derive(Debug, Clone)]
 pub struct CfgForStatement {
-    for_statement: AstNodeId,
+    pub for_statement: AstNodeId,
 }
 
 impl CfgReduce for CfgForStatement {
     fn reduce(&self, context: &WorkspaceContext, cfg: &mut Cfg) -> (CfgNodeId, CfgNodeId) {
         let start_id = cfg.add_start_for_node(self.for_statement);
         let end_id = cfg.add_end_for_node(self.for_statement);
+        cfg.start_end_pairs.insert(start_id, end_id);
 
         let Some(ASTNode::ForStatement(ast_for_stmt)) = context.nodes.get(&self.for_statement)
         else {
@@ -209,6 +224,7 @@ impl CfgReduce for CfgForStatement {
         // First we prepare the loop initialization expression
         let start_loop_init = cfg.add_start_for_init_exp_node();
         let end_loop_init = cfg.add_end_for_init_exp_node();
+        cfg.start_end_pairs.insert(start_loop_init, end_loop_init);
 
         if let Some(ast_loop_init) = ast_for_stmt.initialization_expression.as_ref() {
             let loop_init = match ast_loop_init.as_ref() {
@@ -229,6 +245,8 @@ impl CfgReduce for CfgForStatement {
         // Prepare the loop condition expression
         let start_loop_cond = cfg.add_start_for_cond_node();
         let end_loop_cond = cfg.add_end_for_cond_node();
+        cfg.start_end_pairs.insert(start_loop_cond, end_loop_cond);
+        cfg.start_cond_pairs.insert(start_id, start_loop_cond);
 
         if let Some(ast_loop_cond) = ast_for_stmt.condition.as_ref() {
             let loop_cond = cfg.add_for_statement_condition(ast_loop_cond);
@@ -241,6 +259,7 @@ impl CfgReduce for CfgForStatement {
         // Prepare the loop body
         let start_loop_body = cfg.add_start_for_body_node();
         let end_loop_body = cfg.add_end_for_body_node();
+        cfg.start_end_pairs.insert(start_loop_body, end_loop_body);
 
         let loop_body = match &ast_for_stmt.body {
             BlockOrStatement::Block(block) => cfg.add_block_node(block),
@@ -253,6 +272,9 @@ impl CfgReduce for CfgForStatement {
         // Prepare the loop expression
         let start_loop_exp = cfg.add_start_for_exp_node();
         let end_loop_exp = cfg.add_end_for_exp_node();
+        cfg.start_end_pairs.insert(start_loop_exp, end_loop_exp);
+        cfg.start_loop_expr.insert(start_id, start_loop_exp);
+        cfg.loop_expr_start.insert(end_loop_exp, start_id);
 
         if let Some(ast_loop_exp) = ast_for_stmt.loop_expression.as_ref() {
             let loop_exp = cfg.add_expression_statement(ast_loop_exp.as_ref());
@@ -290,13 +312,14 @@ impl Cfg {
 
 #[derive(Debug, Clone)]
 pub struct CfgDoWhileStatement {
-    do_while_statement: AstNodeId,
+    pub do_while_statement: AstNodeId,
 }
 
 impl CfgReduce for CfgDoWhileStatement {
     fn reduce(&self, context: &WorkspaceContext, cfg: &mut Cfg) -> (CfgNodeId, CfgNodeId) {
         let start_id = cfg.add_start_do_while_node(self.do_while_statement);
         let end_id = cfg.add_end_do_while_node(self.do_while_statement);
+        cfg.start_end_pairs.insert(start_id, end_id);
 
         let Some(ASTNode::DoWhileStatement(ast_do_while_stmt)) =
             context.nodes.get(&self.do_while_statement)
@@ -308,6 +331,8 @@ impl CfgReduce for CfgDoWhileStatement {
         // Loop body
         let start_loop_body = cfg.add_start_do_while_body_node();
         let end_loop_body = cfg.add_end_do_while_body_node();
+        cfg.start_end_pairs.insert(start_loop_body, end_loop_body);
+
         let loop_body = cfg.add_block_node(&ast_do_while_stmt.body);
 
         cfg.add_flow_edge(start_id, start_loop_body);
@@ -317,6 +342,10 @@ impl CfgReduce for CfgDoWhileStatement {
         // Loop condition
         let start_loop_cond = cfg.add_start_do_while_cond_node();
         let end_loop_cond = cfg.add_end_do_while_cond_node();
+        cfg.start_end_pairs.insert(start_loop_cond, end_loop_cond);
+        cfg.start_cond_pairs.insert(start_id, start_loop_cond);
+        cfg.cond_start_pairs.insert(end_loop_cond, start_id);
+
         let loop_cond = cfg.add_do_while_statement_condition(&ast_do_while_stmt.condition);
 
         cfg.add_flow_edge(end_loop_body, start_loop_cond);
@@ -358,6 +387,7 @@ impl CfgReduce for CfgUncheckedBlock {
     fn reduce(&self, context: &WorkspaceContext, cfg: &mut Cfg) -> (CfgNodeId, CfgNodeId) {
         let start_id = cfg.add_start_unchecked_block_node(self.unchecked_block);
         let end_id = cfg.add_end_unchecked_block_node(self.unchecked_block);
+        cfg.start_end_pairs.insert(start_id, end_id);
 
         let mut last_link = start_id;
 
