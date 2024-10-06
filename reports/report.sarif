@@ -6318,6 +6318,325 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/control_flow/SimpleProgram.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 2622
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/control_flow/SimpleProgram.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 2901
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/control_flow/SimpleProgram.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 2934
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/control_flow/SimpleProgram.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 2962
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/control_flow/SimpleProgram.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 3114
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/control_flow/SimpleProgram.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 3154
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/control_flow/SimpleProgram.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 3191
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/control_flow/SimpleProgram.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 3229
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/control_flow/SimpleProgram.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 3257
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/control_flow/SimpleProgram.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 3400
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/control_flow/SimpleProgram.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 3435
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/control_flow/SimpleProgram.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 3472
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/control_flow/SimpleProgram.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 3510
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/control_flow/SimpleProgram.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 3538
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/control_flow/SimpleProgram.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 3681
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/control_flow/SimpleProgram.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 3716
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/control_flow/SimpleProgram.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 3756
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/control_flow/SimpleProgram.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 3832
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/control_flow/SimpleProgram.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 3860
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/control_flow/SimpleProgram.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 4003
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/control_flow/SimpleProgram.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 4038
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/control_flow/SimpleProgram.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 4075
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/control_flow/SimpleProgram.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 4151
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/control_flow/SimpleProgram.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 4298
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/control_flow/SimpleProgram.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 4441
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/control_flow/SimpleProgram.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 4476
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/control_flow/SimpleProgram.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 4513
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/control_flow/SimpleProgram.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 4589
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/control_flow/SimpleProgram.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 4806
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/eth2/DepositContract.sol"
                 },
                 "region": {
@@ -8265,6 +8584,72 @@
                 "region": {
                   "byteLength": 5,
                   "byteOffset": 2622
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/control_flow/SimpleProgram.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 2962
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/control_flow/SimpleProgram.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 3257
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/control_flow/SimpleProgram.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 3538
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/control_flow/SimpleProgram.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 3860
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/control_flow/SimpleProgram.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 4298
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/control_flow/SimpleProgram.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 4806
                 }
               }
             }
