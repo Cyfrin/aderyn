@@ -4125,7 +4125,7 @@ Index event fields make the field more quickly accessible to off-chain tools tha
 
 Use descriptive reason strings or custom errors for revert paths.
 
-<details><summary>22 Found Instances</summary>
+<details><summary>23 Found Instances</summary>
 
 
 - Found in src/CallGraphTests.sol [Line: 7](../tests/contract-playground/src/CallGraphTests.sol#L7)
@@ -4171,6 +4171,12 @@ Use descriptive reason strings or custom errors for revert paths.
 	```
 
 - Found in src/LocalVariableShadow.sol [Line: 12](../tests/contract-playground/src/LocalVariableShadow.sol#L12)
+
+	```solidity
+	        require(owner == msg.sender);
+	```
+
+- Found in src/LocalVariableShadow.sol [Line: 19](../tests/contract-playground/src/LocalVariableShadow.sol#L19)
 
 	```solidity
 	        require(owner == msg.sender);
