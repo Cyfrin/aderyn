@@ -5,7 +5,7 @@ use super::{voids::CfgEndNode, AstNodeId, Cfg, CfgNodeDescriptor, CfgNodeId, Sta
 impl Cfg {
     pub fn add_statement_node(&mut self, stmt: &Statement) -> CfgNodeId {
         match stmt {
-            Statement::TryStatement(_) => unimplemented!(),
+            Statement::TryStatement(n) => self.add_try_statement(n),
             Statement::UncheckedBlock(n) => self.add_unchecked_block_node(n),
             Statement::DoWhileStatement(n) => self.add_do_while_statement(n),
             Statement::ForStatement(n) => self.add_for_statement(n),
@@ -209,6 +209,7 @@ impl CfgNodeDescriptor {
             CfgNodeDescriptor::WhileStatement(n) => Some(n.while_statement),
             CfgNodeDescriptor::ForStatement(n) => Some(n.for_statement),
             CfgNodeDescriptor::DoWhileStatement(n) => Some(n.do_while_statement),
+            CfgNodeDescriptor::TryStatement(n) => Some(n.try_statement),
         }
     }
 }

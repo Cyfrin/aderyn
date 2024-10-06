@@ -264,3 +264,22 @@ impl Cfg {
         )))
     }
 }
+
+///////////////////////////////////////////////////////////////////////////
+
+#[derive(Debug, Clone)]
+pub struct CfgTryStatement {
+    pub try_statement: AstNodeId,
+}
+
+impl CfgTryStatement {
+    pub fn from(try_stmt: &TryStatement) -> Self {
+        Self { try_statement: try_stmt.id }
+    }
+}
+
+impl Cfg {
+    pub fn add_try_statement(&mut self, try_stmt: &TryStatement) -> CfgNodeId {
+        self.add_node(CfgNodeDescriptor::TryStatement(Box::new(CfgTryStatement::from(try_stmt))))
+    }
+}

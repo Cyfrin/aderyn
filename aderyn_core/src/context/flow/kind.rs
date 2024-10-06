@@ -64,6 +64,7 @@ impl CfgNodeDescriptor {
             CfgNodeDescriptor::EmitStatement(_) => CfgNodeKind::Primitive,
             CfgNodeDescriptor::RevertStatement(_) => CfgNodeKind::Primitive,
             CfgNodeDescriptor::InlineAssembly(_) => CfgNodeKind::Primitive,
+            CfgNodeDescriptor::TryStatement(_) => CfgNodeKind::Primitive,
             CfgNodeDescriptor::IfStatementCondition(_) => CfgNodeKind::Primitive,
             CfgNodeDescriptor::WhileStatementCondition(_) => CfgNodeKind::Primitive,
             CfgNodeDescriptor::ForStatementCondition(_) => CfgNodeKind::Primitive,

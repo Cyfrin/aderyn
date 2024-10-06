@@ -63,6 +63,7 @@ pub enum CfgNodeDescriptor {
     Return(Box<CfgReturnStatement>),
     EmitStatement(Box<CfgEmitStatement>),
     RevertStatement(Box<CfgRevertStatement>),
+    TryStatement(Box<CfgTryStatement>),
     InlineAssembly(Box<CfgInlineAssemblyStatement>),
     IfStatementCondition(Box<CfgIfStatementCondition>),
     WhileStatementCondition(Box<CfgWhileStatementCondition>),
@@ -260,6 +261,7 @@ impl Cfg {
             | CfgNodeDescriptor::RevertStatement(_)
             | CfgNodeDescriptor::PlaceholderStatement(_)
             | CfgNodeDescriptor::InlineAssembly(_)
+            | CfgNodeDescriptor::TryStatement(_)
             | CfgNodeDescriptor::EmitStatement(_)
             | CfgNodeDescriptor::ExpressionStatement(_)
             | CfgNodeDescriptor::WhileStatementCondition(_)

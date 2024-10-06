@@ -19,6 +19,7 @@ impl CfgNodeDescriptor {
             CfgNodeDescriptor::EmitStatement(n) => n.peek(context),
             CfgNodeDescriptor::RevertStatement(n) => n.peek(context),
             CfgNodeDescriptor::InlineAssembly(n) => n.peek(context),
+            CfgNodeDescriptor::TryStatement(n) => n.peek(context),
             CfgNodeDescriptor::IfStatementCondition(n) => n.peek(context),
             CfgNodeDescriptor::WhileStatementCondition(n) => n.peek(context),
             CfgNodeDescriptor::ForStatementCondition(n) => n.peek(context),
@@ -239,6 +240,18 @@ impl CfgDoWhileStatementCondition {
         };
         let mut content = format!("Do While Cond ({})", for_stmt);
         if let Some(node) = context.nodes.get(&for_stmt) {
+            if let Some(inside) = node.peek(context) {
+                content.push_str(&format!(": \n{}", inside));
+            }
+        }
+        content
+    }
+}
+
+impl CfgTryStatement {
+    pub fn peek(&self, context: &WorkspaceContext) -> String {
+        let mut content = format!("Try Stmt ({})", self.try_statement);
+        if let Some(node) = context.nodes.get(&self.try_statement) {
             if let Some(inside) = node.peek(context) {
                 content.push_str(&format!(": \n{}", inside));
             }
