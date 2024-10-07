@@ -1561,6 +1561,28 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/EmitAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 66
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateChangeAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 66
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/nested/1/Nested.sol"
                 },
                 "region": {
@@ -2879,6 +2901,17 @@
         {
           "level": "warning",
           "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/EmitAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 1168
+                }
+              }
+            },
             {
               "physicalLocation": {
                 "artifactLocation": {
@@ -6808,6 +6841,17 @@
                 "region": {
                   "byteLength": 6,
                   "byteOffset": 1389
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/EmitAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 424
                 }
               }
             },
@@ -12301,6 +12345,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/EmitAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 373
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/ExternalCalls.sol"
                 },
                 "region": {
@@ -12675,6 +12730,71 @@
             "text": "Design the modifier to only contain 1 placeholder statement. If it's not possible, split the logic into multiple modifiers."
           },
           "ruleId": "multiple-placeholders"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "message": {
+                "text": "Emission happens at: `emit SomeEvent()`"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/EmitAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 584
+                }
+              }
+            },
+            {
+              "message": {
+                "text": "Emission happens at: `emit SomeEvent()`"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/EmitAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 735
+                }
+              }
+            },
+            {
+              "message": {
+                "text": "Emission happens at: `emit SomeEvent()`"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/EmitAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 1274
+                }
+              }
+            },
+            {
+              "message": {
+                "text": "Emission happens at: `emit ClearToken(tokenAddress, tokens)`"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 54,
+                  "byteOffset": 10741
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "In most cases it is a best practice to perform the emit before making an external call to avoid a potential read only re-entrancy attack."
+          },
+          "ruleId": "emit-after-external-call"
         }
       ],
       "tool": {
