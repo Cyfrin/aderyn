@@ -70,6 +70,7 @@ pub use reused_contract_name::ReusedContractNameDetector;
 pub use rtlo::RTLODetector;
 pub use selfdestruct::SelfdestructIdentifierDetector;
 pub use send_ether_no_checks::SendEtherNoChecksDetector;
+pub use state_change_after_ext_call::StateChangeAfterExternalCallDetector;
 pub use state_variable_shadowing::StateVariableShadowingDetector;
 pub use storage_array_edit_with_memory::StorageArrayEditWithMemoryDetector;
 pub use storage_signed_integer_array::StorageSignedIntegerArrayDetector;

@@ -14,8 +14,6 @@ use std::{
     str::FromStr,
 };
 
-use self::state_change_after_ext_call::StateChangeAfterExternalCallDetector;
-
 pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
     vec![
         Box::<DelegateCallInLoopDetector>::default(),
@@ -107,6 +105,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<MultiplePlaceholdersDetector>::default(),
         Box::<StateChangeAfterExternalCallDetector>::default(),
         Box::<EmitAfterExternalCallDetector>::default(),
+        Box::<IncorrectUseOfModifierDetector>::default(),
     ]
 }
 
@@ -118,6 +117,7 @@ pub fn get_all_detectors_names() -> Vec<String> {
 #[derive(Debug, PartialEq, EnumString, Display)]
 #[strum(serialize_all = "kebab-case")]
 pub(crate) enum IssueDetectorNamePool {
+    IncorrectUseOfModifier,
     EmitAfterExternalCall,
     StateChangeAfterExternalCall,
     StateVariableCouldBeDeclaredImmutable,
@@ -222,6 +222,9 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         }
         IssueDetectorNamePool::StateChangeAfterExternalCall => {
             Some(Box::<StateChangeAfterExternalCallDetector>::default())
+        }
+        IssueDetectorNamePool::IncorrectUseOfModifier => {
+            Some(Box::<IncorrectUseOfModifierDetector>::default())
         }
         IssueDetectorNamePool::StateVariableCouldBeDeclaredImmutable => {
             Some(Box::<StateVariableCouldBeImmutableDetector>::default())

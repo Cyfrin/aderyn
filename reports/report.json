@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 116,
-    "total_sloc": 4286
+    "total_source_units": 117,
+    "total_sloc": 4351
   },
   "files_details": {
     "files_details": [
@@ -176,6 +176,10 @@
       {
         "file_path": "src/IncorrectERC721.sol",
         "n_sloc": 238
+      },
+      {
+        "file_path": "src/IncorrectModifier.sol",
+        "n_sloc": 65
       },
       {
         "file_path": "src/IncorrectShift.sol",
@@ -473,7 +477,7 @@
   },
   "issue_count": {
     "high": 43,
-    "low": 46
+    "low": 47
   },
   "high_issues": {
     "issues": [
@@ -2894,6 +2898,12 @@
             "src_char": "1598:18"
           },
           {
+            "contract_path": "src/IncorrectModifier.sol",
+            "line_no": 83,
+            "src": "2103:23",
+            "src_char": "2103:23"
+          },
+          {
             "contract_path": "src/OutOfOrderRetryable.sol",
             "line_no": 171,
             "src": "4927:28",
@@ -4332,6 +4342,12 @@
             "line_no": 72,
             "src": "1381:6",
             "src_char": "1381:6"
+          },
+          {
+            "contract_path": "src/IncorrectModifier.sol",
+            "line_no": 49,
+            "src": "1334:6",
+            "src_char": "1334:6"
           },
           {
             "contract_path": "src/LocalVariableShadow.sol",
@@ -7634,6 +7650,25 @@
             "hint": "Emission happens at: `emit ClearToken(tokenAddress, tokens)`"
           }
         ]
+      },
+      {
+        "title": "Incorrect Use Of Modifier",
+        "description": "If a modifier does not execute `_` or revert, the execution of the function will return the default value, which can be misleading for the caller. It is recommended that all the paths in a modifier must execute _ or revert.",
+        "detector_name": "incorrect-use-of-modifier",
+        "instances": [
+          {
+            "contract_path": "src/IncorrectModifier.sol",
+            "line_no": 22,
+            "src": "645:16",
+            "src_char": "645:16"
+          },
+          {
+            "contract_path": "src/IncorrectModifier.sol",
+            "line_no": 30,
+            "src": "763:18",
+            "src_char": "763:18"
+          }
+        ]
       }
     ]
   },
@@ -7726,6 +7761,7 @@
     "state-variable-could-be-declared-immutable",
     "multiple-placeholders",
     "state-change-after-external-call",
-    "emit-after-external-call"
+    "emit-after-external-call",
+    "incorrect-use-of-modifier"
   ]
 }

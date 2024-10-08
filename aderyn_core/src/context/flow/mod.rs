@@ -413,6 +413,41 @@ impl Cfg {
         // Return the CFG
         Some((cfg, start, end))
     }
+
+    /// Same as [`Self::from_function_body`] but for modifiers
+    pub fn from_modifier_body(
+        context: &WorkspaceContext,
+        modifier_definition: &ModifierDefinition,
+    ) -> Option<(Cfg, CfgNodeId, CfgNodeId)> {
+        // Verify that the function has a body
+        let modifier_body_block = &modifier_definition.body;
+
+        // Create an empty Cfg
+        let mut cfg = Self::new();
+
+        // Add the starters for function body
+        let start = cfg.add_start_modifier_body_node(modifier_definition.id);
+        let end = cfg.add_end_modifier_body_node(modifier_definition.id);
+        cfg.start_end_pairs.insert(start, end);
+
+        // Add the actual function body
+        let block = cfg.add_block_node(modifier_body_block);
+
+        // Connect tht flow edges
+        cfg.add_flow_edge(start, block);
+        cfg.add_flow_edge(block, end);
+
+        // Reduction step (Standard thing to do after you assemble your Cfg skeleton)
+        while let Some(reduction_candidate) = cfg.reduction_queue.pop_front() {
+            cfg.reduce(context, reduction_candidate);
+        }
+
+        // Callibration step (Standard thing to do after you reduce your CFG)
+        cfg.callibrate_jump_statements_in_body(start, end);
+
+        // Return the CFG
+        Some((cfg, start, end))
+    }
 }
 
 // These methods help with recursion for detectors using the library
