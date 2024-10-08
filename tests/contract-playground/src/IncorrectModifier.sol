@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity 0.8.19;
 
 contract IncorrectModifierContract {
-    address public owner;
-    bool public isPaused;
+    uint256 public constant USEME = 100;
+    address public immutable owner;
+    bool public immutable isPaused;
 
     error StreamError();
 
@@ -37,8 +38,15 @@ contract IncorrectModifierContract {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
     modifier notNullGOOD(uint256 streamId) {
-        if (streamId > 100) {
+        if (streamId > USEME) {
             revert StreamError();
+        }
+        _;
+    }
+
+    modifier notNull2GOOD(uint256 streamId) {
+        if (streamId > USEME) {
+            revert();
         }
         _;
     }
@@ -47,28 +55,36 @@ contract IncorrectModifierContract {
         _;
     }
 
-    // // Modifier to check if the caller is the owner
-    // modifier onlyOwnerGOOD() {
-    //     require(msg.sender == owner, "Not the owner");
-    //     _; // Continue execution if the condition is met
-    // }
-    //
-    // // Modifier to check if the contract is not paused
-    // modifier whenNotPausedGOOD() {
-    //     require(!isPaused, "Contract is paused");
-    //     _; // Continue execution if the condition is met
-    // }
-    //
-    // // Modifier to ensure the contract is in a specific state (example: not paused)
-    // modifier whenPausedGOOD() {
-    //     _checkInternallyForPaused();
-    //     _; // Continue execution if the condition is met
-    // }
-    //
-    // modifier revertsButWithoutUsingRevertKeyword() {
-    //     payable(address(0x3000)).transfer(130);
-    //     _; // Continue execution if the condition is met
-    // }
+    // Modifier to check if the caller is the owner
+    modifier onlyOwnerGOOD() {
+        require(msg.sender == owner, "Not the owner");
+        _; // Continue execution if the condition is met
+    }
+
+    // Modifier to check if the contract is not paused
+    modifier whenNotPausedGOOD() {
+        if (msg.sender != owner) {
+            require(!isPaused, "Contract is paused");
+            return;
+        }
+        _;
+    }
+
+    modifier whenPausedGOOD() {
+        if (msg.sender != owner) {
+            _checkInternallyForPaused();
+            return;
+        }
+        _;
+    }
+
+    modifier revertsButWithoutUsingRevertKeyword() {
+        if (msg.sender != owner) {
+            payable(owner).transfer(USEME);
+            return;
+        }
+        _;
+    }
 
     //////////////////////////// FUNCTIONS //////////////////////////////////////////////////////////////////////
 

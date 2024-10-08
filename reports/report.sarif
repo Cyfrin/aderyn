@@ -3881,6 +3881,37 @@
           "ruleId": "state-change-after-external-call"
         },
         {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectModifier.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 645
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectModifier.sol"
+                },
+                "region": {
+                  "byteLength": 18,
+                  "byteOffset": 763
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "If a modifier does not execute `_` or revert, the execution of the function will return the default value, which can be misleading for the caller. It is recommended that all the paths in a modifier must execute _ or revert."
+          },
+          "ruleId": "incorrect-use-of-modifier"
+        },
+        {
           "level": "note",
           "locations": [
             {
@@ -4246,6 +4277,17 @@
                 "region": {
                   "byteLength": 18,
                   "byteOffset": 1598
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectModifier.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 2103
                 }
               }
             },
@@ -6863,6 +6905,17 @@
                 "region": {
                   "byteLength": 6,
                   "byteOffset": 1381
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectModifier.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 1334
                 }
               }
             },

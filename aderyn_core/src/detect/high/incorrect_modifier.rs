@@ -7,7 +7,7 @@ use crate::{
     ast::NodeID,
     capture,
     context::{
-        browser::{ExtractPlaceholderStatements, ExtractRevertStatements},
+        browser::{ExtractFunctionCalls, ExtractPlaceholderStatements, ExtractRevertStatements},
         flow::{Cfg, CfgNodeId},
         workspace_context::WorkspaceContext,
     },
@@ -92,8 +92,8 @@ fn all_paths_have_revert_or_placeholder(
     fn _all_paths_have_revert_or_placeholder(
         context: &WorkspaceContext,
         cfg: &Cfg,
-        visited: &mut HashMap<CfgNodeId, [bool; 4]>,
-        answers: &mut HashMap<CfgNodeId, [bool; 4]>,
+        visited: &mut HashMap<CfgNodeId, Vec<bool>>,
+        answers: &mut HashMap<CfgNodeId, Vec<bool>>,
         curr_node: CfgNodeId,
         so_far: SoFar,
     ) -> bool {
@@ -116,20 +116,27 @@ fn all_paths_have_revert_or_placeholder(
                 inc |= 1 << 1;
             }
 
-            // Check for revert statements in the current node
-            let reverts = ExtractRevertStatements::from(curr_ast_node).extracted;
+            if (1 & inc) == 0 {
+                // Check for possibility of revert
 
-            if !reverts.is_empty() {
-                inc |= 1;
+                let func_calls = ExtractFunctionCalls::from(curr_ast_node).extracted;
+                if !func_calls.is_empty() {
+                    inc |= 1;
+                }
+
+                let revert_stmts = ExtractRevertStatements::from(curr_ast_node).extracted;
+                if !revert_stmts.is_empty() {
+                    inc |= 1;
+                }
             }
         }
 
         // At least one of placeholders/revert is present
         if inc != 0 {
-            let visited_node = visited.entry(curr_node).or_default();
+            let visited_node = visited.entry(curr_node).or_insert_with(|| vec![false; 4]);
             visited_node[so_far] = true;
 
-            let answer_node = answers.entry(curr_node).or_default();
+            let answer_node = answers.entry(curr_node).or_insert_with(|| vec![false; 4]);
             answer_node[so_far] = true;
 
             return true;
@@ -138,10 +145,10 @@ fn all_paths_have_revert_or_placeholder(
         let children = curr_node.children(cfg);
 
         if children.is_empty() {
-            let visited_node = visited.entry(curr_node).or_default();
+            let visited_node = visited.entry(curr_node).or_insert_with(|| vec![false; 4]);
             visited_node[so_far] = true;
 
-            let answer_node = answers.entry(curr_node).or_default();
+            let answer_node = answers.entry(curr_node).or_insert_with(|| vec![false; 4]);
             answer_node[so_far] = false;
 
             return false;
@@ -154,10 +161,10 @@ fn all_paths_have_revert_or_placeholder(
                 _all_paths_have_revert_or_placeholder(context, cfg, visited, answers, child, inc);
         }
 
-        let visited_node = visited.entry(curr_node).or_default();
+        let visited_node = visited.entry(curr_node).or_insert_with(|| vec![false; 4]);
         visited_node[so_far] = true;
 
-        let answer_node = answers.entry(curr_node).or_default();
+        let answer_node = answers.entry(curr_node).or_insert_with(|| vec![false; 4]);
         answer_node[so_far] = answer;
 
         answer
@@ -189,8 +196,6 @@ mod test_incorrect_modifier {
         let found = detector.detect(&context).unwrap();
         // assert that the detector found an issue
         assert!(found);
-
-        println!("Instances {:?}", detector.instances());
 
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
