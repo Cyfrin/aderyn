@@ -45,7 +45,7 @@ impl IssueDetector for IncorrectUseOfModifierDetector {
     }
 
     fn severity(&self) -> IssueSeverity {
-        IssueSeverity::High
+        IssueSeverity::Low
     }
 
     fn title(&self) -> String {
@@ -183,7 +183,7 @@ mod test_incorrect_modifier {
     use serial_test::serial;
 
     use crate::detect::{
-        detector::IssueDetector, high::incorrect_modifier::IncorrectUseOfModifierDetector,
+        detector::IssueDetector, low::incorrect_modifier::IncorrectUseOfModifierDetector,
     };
 
     #[test]
@@ -200,6 +200,6 @@ mod test_incorrect_modifier {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
         // assert the severity is high
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

@@ -3881,37 +3881,6 @@
           "ruleId": "state-change-after-external-call"
         },
         {
-          "level": "warning",
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectModifier.sol"
-                },
-                "region": {
-                  "byteLength": 16,
-                  "byteOffset": 645
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectModifier.sol"
-                },
-                "region": {
-                  "byteLength": 18,
-                  "byteOffset": 763
-                }
-              }
-            }
-          ],
-          "message": {
-            "text": "If a modifier does not execute `_` or revert, the execution of the function will return the default value, which can be misleading for the caller. It is recommended that all the paths in a modifier must execute _ or revert."
-          },
-          "ruleId": "incorrect-use-of-modifier"
-        },
-        {
           "level": "note",
           "locations": [
             {
@@ -12848,6 +12817,37 @@
             "text": "In most cases it is a best practice to perform the emit before making an external call to avoid a potential read only re-entrancy attack."
           },
           "ruleId": "emit-after-external-call"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectModifier.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 645
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectModifier.sol"
+                },
+                "region": {
+                  "byteLength": 18,
+                  "byteOffset": 763
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "If a modifier does not execute `_` or revert, the execution of the function will return the default value, which can be misleading for the caller. It is recommended that all the paths in a modifier must execute _ or revert."
+          },
+          "ruleId": "incorrect-use-of-modifier"
         }
       ],
       "tool": {

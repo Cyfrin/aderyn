@@ -476,8 +476,8 @@
     ]
   },
   "issue_count": {
-    "high": 44,
-    "low": 46
+    "high": 43,
+    "low": 47
   },
   "high_issues": {
     "issues": [
@@ -2677,25 +2677,6 @@
             "src": "11990:71",
             "src_char": "11990:71",
             "hint": "State is changed at: `swapEnabled = true`, `tradingOpen = true`, `firstBlock = block.number`"
-          }
-        ]
-      },
-      {
-        "title": "Incorrect Use Of Modifier",
-        "description": "If a modifier does not execute `_` or revert, the execution of the function will return the default value, which can be misleading for the caller. It is recommended that all the paths in a modifier must execute _ or revert.",
-        "detector_name": "incorrect-use-of-modifier",
-        "instances": [
-          {
-            "contract_path": "src/IncorrectModifier.sol",
-            "line_no": 22,
-            "src": "645:16",
-            "src_char": "645:16"
-          },
-          {
-            "contract_path": "src/IncorrectModifier.sol",
-            "line_no": 30,
-            "src": "763:18",
-            "src_char": "763:18"
           }
         ]
       }
@@ -7667,6 +7648,25 @@
             "src": "10741:54",
             "src_char": "10741:54",
             "hint": "Emission happens at: `emit ClearToken(tokenAddress, tokens)`"
+          }
+        ]
+      },
+      {
+        "title": "Incorrect Use Of Modifier",
+        "description": "If a modifier does not execute `_` or revert, the execution of the function will return the default value, which can be misleading for the caller. It is recommended that all the paths in a modifier must execute _ or revert.",
+        "detector_name": "incorrect-use-of-modifier",
+        "instances": [
+          {
+            "contract_path": "src/IncorrectModifier.sol",
+            "line_no": 22,
+            "src": "645:16",
+            "src_char": "645:16"
+          },
+          {
+            "contract_path": "src/IncorrectModifier.sol",
+            "line_no": 30,
+            "src": "763:18",
+            "src_char": "763:18"
           }
         ]
       }
