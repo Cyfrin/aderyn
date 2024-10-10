@@ -41,11 +41,7 @@ impl Add<&FilesDetails> for FilesDetails {
     type Output = FilesDetails;
     fn add(mut self, rhs: &FilesDetails) -> Self::Output {
         for fd in &rhs.files_details {
-            if self
-                .files_details
-                .iter()
-                .all(|x| x.file_path != fd.file_path)
-            {
+            if self.files_details.iter().all(|x| x.file_path != fd.file_path) {
                 self.files_details.push(fd.clone());
             }
         }
@@ -192,10 +188,7 @@ impl WorkspaceContext {
                 let filepath = source_unit.absolute_path.as_ref()?;
                 if seen_paths.insert(filepath.clone()) {
                     let report = sloc_stats.iter().find(|r| r.0.contains(filepath))?;
-                    Some(FilesDetail {
-                        file_path: filepath.to_owned(),
-                        n_sloc: *report.1,
-                    })
+                    Some(FilesDetail { file_path: filepath.to_owned(), n_sloc: *report.1 })
                 } else {
                     None
                 }

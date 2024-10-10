@@ -145,7 +145,7 @@ The caret operator is usually mistakenly thought of as an exponentiation operato
 
 Consider using a specific version of Solidity in your contracts instead of a wide version. For example, instead of `pragma solidity ^0.8.0;`, use `pragma solidity 0.8.0;`
 
-<details><summary>30 Found Instances</summary>
+<details><summary>27 Found Instances</summary>
 
 
 - Found in src/Common.sol [Line: 2](../tests/prb-math/src/Common.sol#L2)
@@ -173,24 +173,6 @@ Consider using a specific version of Solidity in your contracts instead of a wid
 	```
 
 - Found in src/UD60x18.sol [Line: 2](../tests/prb-math/src/UD60x18.sol#L2)
-
-	```solidity
-	pragma solidity >=0.8.19;
-	```
-
-- Found in src/casting/Uint128.sol [Line: 2](../tests/prb-math/src/casting/Uint128.sol#L2)
-
-	```solidity
-	pragma solidity >=0.8.19;
-	```
-
-- Found in src/casting/Uint256.sol [Line: 2](../tests/prb-math/src/casting/Uint256.sol#L2)
-
-	```solidity
-	pragma solidity >=0.8.19;
-	```
-
-- Found in src/casting/Uint40.sol [Line: 2](../tests/prb-math/src/casting/Uint40.sol#L2)
 
 	```solidity
 	pragma solidity >=0.8.19;

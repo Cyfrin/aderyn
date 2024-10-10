@@ -44,3 +44,4 @@ cargo run --  ./tests/adhoc-sol-files -o ./reports/adhoc-sol-files-highs-only-re
 cargo run -- ./tests/contract-playground -o ./reports/report.sarif --skip-update-check &
 
 wait
+

@@ -19,14 +19,16 @@ impl IssueDetector for BlockTimestampDeadlineDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for call in context.function_calls() {
             // Uniswap V2 - Function Calls
-            // For each FunctionCall, if the Expression is a MemberAccess that is named any of the following:
-            // [
-            //  swapExactTokensForTokens, swapTokensForExactTokens, swapExactETHForTokens, swapTokensForExactETH,
-            //  swapExactTokensForETH, swapETHForExactTokens, swapExactTokensForTokensSupportingFeeOnTransferTokens,
-            //  swapExactETHForTokensSupportingFeeOnTransferTokens, swapExactTokensForETHSupportingFeeOnTransferTokens
-            // ]
-            // If the last FunctionCall argument is a MemberAccess identifier with member_name "timestamp",
-            // and the MemberAccess expression.name is "block", add the node to the found_block_timestamp_deadlines vector.
+            // For each FunctionCall, if the Expression is a MemberAccess that is named any of the
+            // following: [
+            //  swapExactTokensForTokens, swapTokensForExactTokens, swapExactETHForTokens,
+            // swapTokensForExactETH,  swapExactTokensForETH, swapETHForExactTokens,
+            // swapExactTokensForTokensSupportingFeeOnTransferTokens,
+            //  swapExactETHForTokensSupportingFeeOnTransferTokens,
+            // swapExactTokensForETHSupportingFeeOnTransferTokens ]
+            // If the last FunctionCall argument is a MemberAccess identifier with member_name
+            // "timestamp", and the MemberAccess expression.name is "block", add the
+            // node to the found_block_timestamp_deadlines vector.
             if let Expression::MemberAccess(ref member_access) = *call.expression {
                 if member_access.member_name == "swapExactTokensForTokens"
                     || member_access.member_name == "swapTokensForExactTokens"
@@ -57,12 +59,13 @@ impl IssueDetector for BlockTimestampDeadlineDetector {
                 }
             }
             // Uniswap V3 - Function Calls
-            // For each FunctionCall, if it is of kind StructConstructorCall, where the call's Expression has a name of any of the following:
-            // [
+            // For each FunctionCall, if it is of kind StructConstructorCall, where the call's
+            // Expression has a name of any of the following: [
             //  ExactInputSingleParams, ExactInputParams, ExactOutputSingleParams, ExactOutputParams
             // ]
-            // If any of the call's arguments is a MemberAccess identifier with member_name "timestamp",
-            // and the MemberAccess expression.name is "block", add the node to the found_block_timestamp_deadlines vector.
+            // If any of the call's arguments is a MemberAccess identifier with member_name
+            // "timestamp", and the MemberAccess expression.name is "block", add the
+            // node to the found_block_timestamp_deadlines vector.
             if call.kind == FunctionCallKind::StructConstructorCall {
                 if let Expression::Identifier(ref identifier) = *call.expression {
                     if identifier.name == "ExactInputSingleParams"
@@ -110,7 +113,7 @@ impl IssueDetector for BlockTimestampDeadlineDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::BlockTimestampDeadline)
+        format!("{}", IssueDetectorNamePool::BlockTimestampIsWeakDeadline)
     }
 }
 
@@ -134,10 +137,7 @@ mod block_timestamp_deadline_detector_tests {
         // assert that the number of instances found is correct
         assert_eq!(detector.instances().len(), 9);
         // assert that the severity is High
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
         // assert that the title is correct
         assert_eq!(
             detector.title(),
@@ -167,10 +167,7 @@ mod block_timestamp_deadline_detector_tests {
         // assert that the number of instances found is correct
         assert_eq!(detector.instances().len(), 8);
         // assert that the severity is High
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
         // assert that the title is correct
         assert_eq!(
             detector.title(),

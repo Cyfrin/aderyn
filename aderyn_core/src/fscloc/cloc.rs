@@ -35,18 +35,13 @@ pub struct TokenInsightGroup {
 
 impl TokenInsightGroup {
     fn last_token_insight_has_code_in_its_last_line(&self) -> bool {
-        self.token_insights
-            .last()
-            .is_some_and(|insight| insight.code_lines.last_line_has_code)
+        self.token_insights.last().is_some_and(|insight| insight.code_lines.last_line_has_code)
     }
 }
 
 pub fn get_stats(r_content: &str, skip_cloc: bool) -> Stats {
     if r_content.is_empty() {
-        return Stats {
-            code: 0,
-            ignore_lines: vec![],
-        };
+        return Stats { code: 0, ignore_lines: vec![] };
     }
 
     let token_descriptors = tokenize(r_content);
@@ -58,7 +53,8 @@ pub fn get_stats(r_content: &str, skip_cloc: bool) -> Stats {
         let insights = token_descriptors
             .iter()
             .inspect(|x| {
-                content.push_str(&x.content); // will be used to verify if original content is preserved
+                content.push_str(&x.content); // will be used to verify if original content is
+                                              // preserved
             })
             .map(|tok_dsc| tok_dsc.into())
             .collect::<Vec<TokenInsight>>();
@@ -132,10 +128,7 @@ pub fn get_stats(r_content: &str, skip_cloc: bool) -> Stats {
         let len = groups.len();
 
         if len == 0 {
-            return Stats {
-                code: 0,
-                ignore_lines: vec![],
-            };
+            return Stats { code: 0, ignore_lines: vec![] };
         }
 
         let mut prev = &groups[0];
@@ -164,10 +157,7 @@ pub fn get_stats(r_content: &str, skip_cloc: bool) -> Stats {
 
     let ignore_lines = get_lines_to_ignore(&token_descriptors);
 
-    Stats {
-        code: code_lines,
-        ignore_lines,
-    }
+    Stats { code: code_lines, ignore_lines }
 }
 
 fn get_lines_to_ignore(token_descriptors: &Vec<TokenDescriptor>) -> Vec<IgnoreLine> {
@@ -209,15 +199,9 @@ fn get_lines_to_ignore(token_descriptors: &Vec<TokenDescriptor>) -> Vec<IgnoreLi
                     which: line_number,
                 });
             } else if token.content.contains("aderyn-ignore-next-line") {
-                break Some(IgnoreLine {
-                    when: When::Always,
-                    which: token.end_line + 1,
-                });
+                break Some(IgnoreLine { when: When::Always, which: token.end_line + 1 });
             } else if token.content.contains("aderyn-ignore") {
-                break Some(IgnoreLine {
-                    when: When::Always,
-                    which: token.end_line,
-                });
+                break Some(IgnoreLine { when: When::Always, which: token.end_line });
             }
             break None;
         } {

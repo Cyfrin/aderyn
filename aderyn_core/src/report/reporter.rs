@@ -10,21 +10,14 @@ pub struct Report {
 
 impl Report {
     pub fn issue_count(&self) -> IssueCount {
-        IssueCount {
-            high: self.highs.len(),
-            low: self.lows.len(),
-        }
+        IssueCount { high: self.highs.len(), low: self.lows.len() }
     }
 
     pub fn high_issues(&self, file_contents: &HashMap<String, &String>) -> HighIssues {
-        HighIssues {
-            issues: extract_issue_bodies(&self.highs, file_contents),
-        }
+        HighIssues { issues: extract_issue_bodies(&self.highs, file_contents) }
     }
 
     pub fn low_issues(&self, file_contents: &HashMap<String, &String>) -> LowIssues {
-        LowIssues {
-            issues: extract_issue_bodies(&self.lows, file_contents),
-        }
+        LowIssues { issues: extract_issue_bodies(&self.lows, file_contents) }
     }
 }

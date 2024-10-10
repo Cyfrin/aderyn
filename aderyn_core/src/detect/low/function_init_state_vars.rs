@@ -1,15 +1,15 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::ast::{ASTNode, Expression, FunctionCall, Identifier, NodeID};
 
-use crate::capture;
-use crate::context::browser::ExtractReferencedDeclarations;
-use crate::context::graph::{CallGraph, CallGraphDirection, CallGraphVisitor};
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    capture,
+    context::{
+        browser::ExtractReferencedDeclarations,
+        graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
+        workspace_context::WorkspaceContext,
+    },
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -24,13 +24,12 @@ impl IssueDetector for FunctionInitializingStateDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // PLAN
         // Capture state variables that are initialized directly by calling a non constant function.
-        // Go throough state variable declarations with initial value (this will be true when value is set outside constructor)
-        // See if the function references non-constant state variables. If it does, then capture it
+        // Go throough state variable declarations with initial value (this will be true when value
+        // is set outside constructor) See if the function references non-constant state
+        // variables. If it does, then capture it
 
-        for variable_declaration in context
-            .variable_declarations()
-            .into_iter()
-            .filter(|v| v.state_variable)
+        for variable_declaration in
+            context.variable_declarations().into_iter().filter(|v| v.state_variable)
         {
             if let Some(Expression::FunctionCall(FunctionCall { expression, .. })) =
                 variable_declaration.value.as_ref()
@@ -90,10 +89,7 @@ struct NonConstantStateVariableReferenceDeclarationTracker<'a> {
 
 impl<'a> NonConstantStateVariableReferenceDeclarationTracker<'a> {
     fn new(context: &'a WorkspaceContext) -> Self {
-        Self {
-            makes_a_reference: false,
-            context,
-        }
+        Self { makes_a_reference: false, context }
     }
 }
 
@@ -142,9 +138,6 @@ mod function_initializing_state_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 3);
         // assert the severity is low
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

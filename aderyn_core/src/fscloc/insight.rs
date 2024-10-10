@@ -80,11 +80,7 @@ impl TokenType {
                     count += 1;
                 }
 
-                CodeLines {
-                    info_lines: non_blank_lines,
-                    actual_first_line,
-                    last_line_has_code,
-                }
+                CodeLines { info_lines: non_blank_lines, actual_first_line, last_line_has_code }
             }
             _ => CodeLines {
                 info_lines: 0, // we don't care about these values

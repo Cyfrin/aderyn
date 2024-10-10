@@ -10,10 +10,7 @@ impl Node for Documentation {
             }
             Documentation::Structured(opt_structured_documentation) => {
                 if opt_structured_documentation.is_some() {
-                    opt_structured_documentation
-                        .as_ref()
-                        .unwrap()
-                        .accept(visitor)?;
+                    opt_structured_documentation.as_ref().unwrap().accept(visitor)?;
                 }
                 Ok(())
             }

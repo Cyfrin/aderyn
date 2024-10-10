@@ -1,16 +1,18 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::ast::{NodeID, StateMutability};
 
-use crate::capture;
-use crate::context::browser::ApproximateStorageChangeFinder;
-use crate::context::graph::{CallGraph, CallGraphDirection, CallGraphVisitor};
-use crate::detect::detector::IssueDetectorNamePool;
-use crate::detect::helpers;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    capture,
+    context::{
+        browser::ApproximateStorageChangeFinder,
+        graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
+        workspace_context::WorkspaceContext,
+    },
+    detect::{
+        detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
+        helpers,
+    },
 };
 use eyre::Result;
 
@@ -33,10 +35,7 @@ impl IssueDetector for ConstantFunctionChangingStateDetector {
                 continue;
             }
             // Now, investigate the function to see if there is scope for any state variable changes
-            let mut tracker = StateVariableChangeTracker {
-                state_var_has_changed: false,
-                context,
-            };
+            let mut tracker = StateVariableChangeTracker { state_var_has_changed: false, context };
 
             let callgraph = CallGraph::new(context, &[&(func.into())], CallGraphDirection::Inward)?;
             callgraph.accept(context, &mut tracker)?;
@@ -159,9 +158,6 @@ mod constant_func_changing_state {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
     }
 }
