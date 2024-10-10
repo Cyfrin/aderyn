@@ -120,7 +120,7 @@ pub(crate) enum IssueDetectorNamePool {
     IncorrectUseOfModifier,
     EmitAfterExternalCall,
     StateChangeAfterExternalCall,
-    StateVariableCouldBeDeclaredImmutable,
+    StateVariableCouldBeImmutable,
     MultiplePlaceholders,
     StateVariableChangesWithoutEvents,
     MissingInheritance,
@@ -141,7 +141,7 @@ pub(crate) enum IssueDetectorNamePool {
     CentralizationRisk,
     SolmateSafeTransferLib,
     HashCollisionDueToAbiEncodePacked,
-    SignatureMalleabilityDueToRawEcrecover,
+    RawEcrecover,
     DeprecatedOzFunctions,
     UnsafeERC20Functions,
     UnspecificSolidityPragma,
@@ -189,7 +189,7 @@ pub(crate) enum IssueDetectorNamePool {
     UncheckedReturn,
     DangerousUnaryOperator,
     TautologyOrContradiction,
-    DangerousStrictEquailtyOnContractBalance,
+    StrictEquailtyCheckOnContractBalance,
     SignedStorageArray,
     RedundantStatements,
     PublicVariableReadInExternalContext,
@@ -207,7 +207,7 @@ pub(crate) enum IssueDetectorNamePool {
     UninitializedLocalVariable,
     ReturnBomb,
     OutOfOrderRetryable,
-    StateVariableCouldBeDeclaredConstant,
+    StateVariableCouldBeConstant,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -226,7 +226,7 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::IncorrectUseOfModifier => {
             Some(Box::<IncorrectUseOfModifierDetector>::default())
         }
-        IssueDetectorNamePool::StateVariableCouldBeDeclaredImmutable => {
+        IssueDetectorNamePool::StateVariableCouldBeImmutable => {
             Some(Box::<StateVariableCouldBeImmutableDetector>::default())
         }
         IssueDetectorNamePool::MultiplePlaceholders => {
@@ -243,7 +243,7 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         }
         IssueDetectorNamePool::UnusedImport => Some(Box::<UnusedImportDetector>::default()),
         IssueDetectorNamePool::VoidConstructor => Some(Box::<VoidConstructorDetector>::default()),
-        IssueDetectorNamePool::StateVariableCouldBeDeclaredConstant => {
+        IssueDetectorNamePool::StateVariableCouldBeConstant => {
             Some(Box::<StateVariableCouldBeConstantDetector>::default())
         }
         IssueDetectorNamePool::LiteralInsteadOfConstant => {
@@ -302,9 +302,7 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::HashCollisionDueToAbiEncodePacked => {
             Some(Box::<AvoidAbiEncodePackedDetector>::default())
         }
-        IssueDetectorNamePool::SignatureMalleabilityDueToRawEcrecover => {
-            Some(Box::<EcrecoverDetector>::default())
-        }
+        IssueDetectorNamePool::RawEcrecover => Some(Box::<EcrecoverDetector>::default()),
         IssueDetectorNamePool::DeprecatedOzFunctions => {
             Some(Box::<DeprecatedOZFunctionsDetector>::default())
         }
@@ -421,7 +419,7 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::TautologyOrContradiction => {
             Some(Box::<TautologyOrContraditionDetector>::default())
         }
-        IssueDetectorNamePool::DangerousStrictEquailtyOnContractBalance => {
+        IssueDetectorNamePool::StrictEquailtyCheckOnContractBalance => {
             Some(Box::<DangerousStrictEqualityOnBalanceDetector>::default())
         }
         IssueDetectorNamePool::SignedStorageArray => {

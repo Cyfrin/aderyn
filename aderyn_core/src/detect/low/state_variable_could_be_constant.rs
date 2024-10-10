@@ -106,7 +106,7 @@ impl IssueDetector for StateVariableCouldBeConstantDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::StateVariableCouldBeDeclaredConstant)
+        format!("{}", IssueDetectorNamePool::StateVariableCouldBeConstant)
     }
 }
 

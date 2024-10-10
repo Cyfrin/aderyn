@@ -203,7 +203,7 @@
     "unchecked-return",
     "dangerous-unary-operator",
     "tautology-or-contradiction",
-    "dangerous-strict-equailty-on-contract-balance",
+    "strict-equailty-check-on-contract-balance",
     "signed-storage-array",
     "weak-randomness",
     "pre-declared-local-variable-usage",
