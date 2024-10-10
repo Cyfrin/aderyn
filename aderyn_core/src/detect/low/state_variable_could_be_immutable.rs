@@ -148,7 +148,7 @@ impl IssueDetector for StateVariableCouldBeImmutableDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::StateVariableCouldBeDeclaredImmutable)
+        format!("{}", IssueDetectorNamePool::StateVariableCouldBeImmutable)
     }
 }
 

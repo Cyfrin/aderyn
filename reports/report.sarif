@@ -2936,7 +2936,7 @@
           "message": {
             "text": "A contract's balance can be forcibly manipulated by another selfdestructing contract. Therefore, it's recommended to use >, <, >= or <= instead of strict equality."
           },
-          "ruleId": "dangerous-strict-equailty-on-contract-balance"
+          "ruleId": "strict-equailty-check-on-contract-balance"
         },
         {
           "level": "warning",
@@ -3966,7 +3966,7 @@
           "message": {
             "text": "The `ecrecover` function is susceptible to signature malleability. This means that the same message can be signed in multiple ways, allowing an attacker to change the message signature without invalidating it. This can lead to unexpected behavior in smart contracts, such as the loss of funds or the ability to bypass access control. Consider using OpenZeppelin's ECDSA library instead of the built-in function."
           },
-          "ruleId": "signature-malleability-due-to-raw-ecrecover"
+          "ruleId": "raw-ecrecover"
         },
         {
           "level": "note",
@@ -10838,7 +10838,7 @@
           "message": {
             "text": "State variables that are not updated following deployment should be declared constant to save gas. Add the `constant` attribute to state variables that never change."
           },
-          "ruleId": "state-variable-could-be-declared-constant"
+          "ruleId": "state-variable-could-be-constant"
         },
         {
           "level": "note",
@@ -12297,7 +12297,7 @@
           "message": {
             "text": "State variables that are should be declared immutable to save gas. Add the `immutable` attribute to state variables that are only changed in the constructor"
           },
-          "ruleId": "state-variable-could-be-declared-immutable"
+          "ruleId": "state-variable-could-be-immutable"
         },
         {
           "level": "note",
