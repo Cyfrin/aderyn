@@ -2100,7 +2100,7 @@
       {
         "title": "Dangerous strict equality checks on contract balances.",
         "description": "A contract's balance can be forcibly manipulated by another selfdestructing contract. Therefore, it's recommended to use >, <, >= or <= instead of strict equality.",
-        "detector_name": "dangerous-strict-equailty-on-contract-balance",
+        "detector_name": "strict-equailty-check-on-contract-balance",
         "instances": [
           {
             "contract_path": "src/DangerousStrictEquality1.sol",
@@ -2710,7 +2710,7 @@
       {
         "title": "`ecrecover` is susceptible to signature malleability",
         "description": "The `ecrecover` function is susceptible to signature malleability. This means that the same message can be signed in multiple ways, allowing an attacker to change the message signature without invalidating it. This can lead to unexpected behavior in smart contracts, such as the loss of funds or the ability to bypass access control. Consider using OpenZeppelin's ECDSA library instead of the built-in function.",
-        "detector_name": "signature-malleability-due-to-raw-ecrecover",
+        "detector_name": "raw-ecrecover",
         "instances": [
           {
             "contract_path": "src/inheritance/ExtendedInheritance.sol",
@@ -6274,7 +6274,7 @@
       {
         "title": "State variable could be declared constant",
         "description": "State variables that are not updated following deployment should be declared constant to save gas. Add the `constant` attribute to state variables that never change.",
-        "detector_name": "state-variable-could-be-declared-constant",
+        "detector_name": "state-variable-could-be-constant",
         "instances": [
           {
             "contract_path": "src/CostlyOperationsInsideLoops.sol",
@@ -7158,7 +7158,7 @@
       {
         "title": "State variable could be declared immutable",
         "description": "State variables that are should be declared immutable to save gas. Add the `immutable` attribute to state variables that are only changed in the constructor",
-        "detector_name": "state-variable-could-be-declared-immutable",
+        "detector_name": "state-variable-could-be-immutable",
         "instances": [
           {
             "contract_path": "src/ArbitraryTransferFrom.sol",
@@ -7368,7 +7368,7 @@
     "centralization-risk",
     "solmate-safe-transfer-lib",
     "hash-collision-due-to-abi-encode-packed",
-    "signature-malleability-due-to-raw-ecrecover",
+    "raw-ecrecover",
     "deprecated-oz-functions",
     "unsafe-erc20-functions",
     "unspecific-solidity-pragma",
@@ -7415,7 +7415,7 @@
     "unchecked-return",
     "dangerous-unary-operator",
     "tautology-or-contradiction",
-    "dangerous-strict-equailty-on-contract-balance",
+    "strict-equailty-check-on-contract-balance",
     "signed-storage-array",
     "redundant-statements",
     "public-variable-read-in-external-context",
@@ -7447,9 +7447,9 @@
     "unused-import",
     "unchecked-low-level-call",
     "function-pointer-in-constructor",
-    "state-variable-could-be-declared-constant",
+    "state-variable-could-be-constant",
     "state-variable-changes-without-events",
-    "state-variable-could-be-declared-immutable",
+    "state-variable-could-be-immutable",
     "multiple-placeholders"
   ]
 }

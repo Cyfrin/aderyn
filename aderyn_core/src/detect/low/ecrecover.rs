@@ -49,7 +49,7 @@ impl IssueDetector for EcrecoverDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::SignatureMalleabilityDueToRawEcrecover)
+        format!("{}", IssueDetectorNamePool::RawEcrecover)
     }
 }
 
