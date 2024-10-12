@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 112,
-    "total_sloc": 3954
+    "total_source_units": 117,
+    "total_sloc": 4351
   },
   "files_details": {
     "files_details": [
@@ -122,6 +122,10 @@
         "n_sloc": 16
       },
       {
+        "file_path": "src/EmitAfterExternalCall.sol",
+        "n_sloc": 42
+      },
+      {
         "file_path": "src/EmptyBlocks.sol",
         "n_sloc": 48
       },
@@ -132,6 +136,10 @@
       {
         "file_path": "src/ExperimentalEncoder.sol",
         "n_sloc": 4
+      },
+      {
+        "file_path": "src/ExternalCalls.sol",
+        "n_sloc": 60
       },
       {
         "file_path": "src/FunctionInitializingState.sol",
@@ -168,6 +176,10 @@
       {
         "file_path": "src/IncorrectERC721.sol",
         "n_sloc": 238
+      },
+      {
+        "file_path": "src/IncorrectModifier.sol",
+        "n_sloc": 65
       },
       {
         "file_path": "src/IncorrectShift.sol",
@@ -244,6 +256,10 @@
       {
         "file_path": "src/SendEtherNoChecks.sol",
         "n_sloc": 58
+      },
+      {
+        "file_path": "src/StateChangeAfterExternalCall.sol",
+        "n_sloc": 42
       },
       {
         "file_path": "src/StateShadowing.sol",
@@ -402,6 +418,10 @@
         "n_sloc": 21
       },
       {
+        "file_path": "src/control_flow/SimpleProgram.sol",
+        "n_sloc": 188
+      },
+      {
         "file_path": "src/eth2/DepositContract.sol",
         "n_sloc": 96
       },
@@ -456,8 +476,8 @@
     ]
   },
   "issue_count": {
-    "high": 42,
-    "low": 45
+    "high": 43,
+    "low": 47
   },
   "high_issues": {
     "issues": [
@@ -1336,6 +1356,18 @@
         "detector_name": "reused-contract-name",
         "instances": [
           {
+            "contract_path": "src/EmitAfterExternalCall.sol",
+            "line_no": 4,
+            "src": "66:14",
+            "src_char": "66:14"
+          },
+          {
+            "contract_path": "src/StateChangeAfterExternalCall.sol",
+            "line_no": 4,
+            "src": "66:14",
+            "src_char": "66:14"
+          },
+          {
             "contract_path": "src/nested/1/Nested.sol",
             "line_no": 7,
             "src": "214:6",
@@ -1820,6 +1852,12 @@
             "src_char": "6342:11"
           },
           {
+            "contract_path": "src/ExternalCalls.sol",
+            "line_no": 67,
+            "src": "1218:4",
+            "src_char": "1218:4"
+          },
+          {
             "contract_path": "src/OutOfOrderRetryable.sol",
             "line_no": 63,
             "src": "1649:11",
@@ -2084,6 +2122,12 @@
         "detector_name": "tautology-or-contradiction",
         "instances": [
           {
+            "contract_path": "src/EmitAfterExternalCall.sol",
+            "line_no": 48,
+            "src": "1168:5",
+            "src_char": "1168:5"
+          },
+          {
             "contract_path": "src/TautologyOrContradiction.sol",
             "line_no": 13,
             "src": "296:7",
@@ -2306,6 +2350,12 @@
             "line_no": 44,
             "src": "630:11",
             "src_char": "630:11"
+          },
+          {
+            "contract_path": "src/ExternalCalls.sol",
+            "line_no": 8,
+            "src": "139:8",
+            "src_char": "139:8"
           },
           {
             "contract_path": "src/MsgValueInLoop.sol",
@@ -2580,6 +2630,55 @@
             "src_char": "488:71"
           }
         ]
+      },
+      {
+        "title": "External call is followed by a state variable change",
+        "description": "In most cases it is a best practice to perform the state change before making an external call to avoid a potential re-entrancy attack.",
+        "detector_name": "state-change-after-external-call",
+        "instances": [
+          {
+            "contract_path": "src/StateChangeAfterExternalCall.sol",
+            "line_no": 24,
+            "src": "588:15",
+            "src_char": "588:15",
+            "hint": "State is changed at: `s_useMe += 1`"
+          },
+          {
+            "contract_path": "src/StateChangeAfterExternalCall.sol",
+            "line_no": 33,
+            "src": "735:15",
+            "src_char": "735:15",
+            "hint": "State is changed at: `s_useMe -= 1`"
+          },
+          {
+            "contract_path": "src/StateChangeAfterExternalCall.sol",
+            "line_no": 52,
+            "src": "1272:15",
+            "src_char": "1272:15",
+            "hint": "State is changed at: `s_useMe += 4`"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 342,
+            "src": "11731:110",
+            "src_char": "11731:110",
+            "hint": "State is changed at: `swapEnabled = true`, `tradingOpen = true`, `firstBlock = block.number`"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 343,
+            "src": "11851:129",
+            "src_char": "11851:129",
+            "hint": "State is changed at: `swapEnabled = true`, `tradingOpen = true`, `firstBlock = block.number`"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 344,
+            "src": "11990:71",
+            "src_char": "11990:71",
+            "hint": "State is changed at: `swapEnabled = true`, `tradingOpen = true`, `firstBlock = block.number`"
+          }
+        ]
       }
     ]
   },
@@ -2797,6 +2896,12 @@
             "line_no": 47,
             "src": "1598:18",
             "src_char": "1598:18"
+          },
+          {
+            "contract_path": "src/IncorrectModifier.sol",
+            "line_no": 83,
+            "src": "2103:23",
+            "src_char": "2103:23"
           },
           {
             "contract_path": "src/OutOfOrderRetryable.sol",
@@ -3089,6 +3194,18 @@
             "src_char": "267:15"
           },
           {
+            "contract_path": "src/ExternalCalls.sol",
+            "line_no": 20,
+            "src": "347:16",
+            "src_char": "347:16"
+          },
+          {
+            "contract_path": "src/ExternalCalls.sol",
+            "line_no": 28,
+            "src": "459:6",
+            "src_char": "459:6"
+          },
+          {
             "contract_path": "src/OutOfOrderRetryable.sol",
             "line_no": 54,
             "src": "1416:14",
@@ -3256,6 +3373,18 @@
             "line_no": 7,
             "src": "129:9",
             "src_char": "129:9"
+          },
+          {
+            "contract_path": "src/ExternalCalls.sol",
+            "line_no": 11,
+            "src": "194:7",
+            "src_char": "194:7"
+          },
+          {
+            "contract_path": "src/ExternalCalls.sol",
+            "line_no": 19,
+            "src": "309:9",
+            "src_char": "309:9"
           },
           {
             "contract_path": "src/IncorrectERC20.sol",
@@ -4203,6 +4332,24 @@
             "src_char": "1389:6"
           },
           {
+            "contract_path": "src/EmitAfterExternalCall.sol",
+            "line_no": 18,
+            "src": "424:7",
+            "src_char": "424:7"
+          },
+          {
+            "contract_path": "src/ExternalCalls.sol",
+            "line_no": 72,
+            "src": "1381:6",
+            "src_char": "1381:6"
+          },
+          {
+            "contract_path": "src/IncorrectModifier.sol",
+            "line_no": 49,
+            "src": "1334:6",
+            "src_char": "1334:6"
+          },
+          {
             "contract_path": "src/LocalVariableShadow.sol",
             "line_no": 12,
             "src": "251:7",
@@ -4243,6 +4390,12 @@
             "line_no": 43,
             "src": "920:6",
             "src_char": "920:6"
+          },
+          {
+            "contract_path": "src/StateChangeAfterExternalCall.sol",
+            "line_no": 17,
+            "src": "428:7",
+            "src_char": "428:7"
           },
           {
             "contract_path": "src/StateShadowing.sol",
@@ -6142,6 +6295,12 @@
             "src_char": "719:159"
           },
           {
+            "contract_path": "src/StateChangeAfterExternalCall.sol",
+            "line_no": 47,
+            "src": "1144:154",
+            "src_char": "1144:154"
+          },
+          {
             "contract_path": "src/eth2/DepositContract.sol",
             "line_no": 70,
             "src": "5010:178",
@@ -6704,6 +6863,54 @@
             "src_char": "242:345"
           },
           {
+            "contract_path": "src/ExternalCalls.sol",
+            "line_no": 11,
+            "src": "194:7",
+            "src_char": "194:7"
+          },
+          {
+            "contract_path": "src/ExternalCalls.sol",
+            "line_no": 19,
+            "src": "309:9",
+            "src_char": "309:9"
+          },
+          {
+            "contract_path": "src/ExternalCalls.sol",
+            "line_no": 33,
+            "src": "530:4",
+            "src_char": "530:4"
+          },
+          {
+            "contract_path": "src/ExternalCalls.sol",
+            "line_no": 37,
+            "src": "599:4",
+            "src_char": "599:4"
+          },
+          {
+            "contract_path": "src/ExternalCalls.sol",
+            "line_no": 51,
+            "src": "884:4",
+            "src_char": "884:4"
+          },
+          {
+            "contract_path": "src/ExternalCalls.sol",
+            "line_no": 55,
+            "src": "955:4",
+            "src_char": "955:4"
+          },
+          {
+            "contract_path": "src/ExternalCalls.sol",
+            "line_no": 78,
+            "src": "1470:7",
+            "src_char": "1470:7"
+          },
+          {
+            "contract_path": "src/ExternalCalls.sol",
+            "line_no": 82,
+            "src": "1548:7",
+            "src_char": "1548:7"
+          },
+          {
             "contract_path": "src/IncorrectERC20.sol",
             "line_no": 17,
             "src": "483:8",
@@ -6840,6 +7047,36 @@
             "line_no": 25,
             "src": "588:17",
             "src_char": "588:17"
+          },
+          {
+            "contract_path": "src/StateChangeAfterExternalCall.sol",
+            "line_no": 22,
+            "src": "530:13",
+            "src_char": "530:13"
+          },
+          {
+            "contract_path": "src/StateChangeAfterExternalCall.sol",
+            "line_no": 31,
+            "src": "677:13",
+            "src_char": "677:13"
+          },
+          {
+            "contract_path": "src/StateChangeAfterExternalCall.sol",
+            "line_no": 42,
+            "src": "885:13",
+            "src_char": "885:13"
+          },
+          {
+            "contract_path": "src/StateChangeAfterExternalCall.sol",
+            "line_no": 57,
+            "src": "1331:14",
+            "src_char": "1331:14"
+          },
+          {
+            "contract_path": "src/StateChangeAfterExternalCall.sol",
+            "line_no": 66,
+            "src": "1480:14",
+            "src_char": "1480:14"
           },
           {
             "contract_path": "src/StateVariableCouldBeDeclaredConstant.sol",
@@ -7167,6 +7404,18 @@
             "src_char": "217:7"
           },
           {
+            "contract_path": "src/EmitAfterExternalCall.sol",
+            "line_no": 15,
+            "src": "373:7",
+            "src_char": "373:7"
+          },
+          {
+            "contract_path": "src/ExternalCalls.sol",
+            "line_no": 25,
+            "src": "416:2",
+            "src_char": "416:2"
+          },
+          {
             "contract_path": "src/InconsistentUints.sol",
             "line_no": 5,
             "src": "122:12",
@@ -7225,6 +7474,12 @@
             "line_no": 44,
             "src": "1209:3",
             "src_char": "1209:3"
+          },
+          {
+            "contract_path": "src/StateChangeAfterExternalCall.sol",
+            "line_no": 14,
+            "src": "377:7",
+            "src_char": "377:7"
           },
           {
             "contract_path": "src/StateVariableCouldBeDeclaredConstant.sol",
@@ -7360,6 +7615,60 @@
             "src_char": "186:10"
           }
         ]
+      },
+      {
+        "title": "External call is followed by an emit statement",
+        "description": "In most cases it is a best practice to perform the emit before making an external call to avoid a potential read only re-entrancy attack.",
+        "detector_name": "emit-after-external-call",
+        "instances": [
+          {
+            "contract_path": "src/EmitAfterExternalCall.sol",
+            "line_no": 25,
+            "src": "584:15",
+            "src_char": "584:15",
+            "hint": "Emission happens at: `emit SomeEvent()`"
+          },
+          {
+            "contract_path": "src/EmitAfterExternalCall.sol",
+            "line_no": 34,
+            "src": "735:15",
+            "src_char": "735:15",
+            "hint": "Emission happens at: `emit SomeEvent()`"
+          },
+          {
+            "contract_path": "src/EmitAfterExternalCall.sol",
+            "line_no": 53,
+            "src": "1274:15",
+            "src_char": "1274:15",
+            "hint": "Emission happens at: `emit SomeEvent()`"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 315,
+            "src": "10741:54",
+            "src_char": "10741:54",
+            "hint": "Emission happens at: `emit ClearToken(tokenAddress, tokens)`"
+          }
+        ]
+      },
+      {
+        "title": "Incorrect Use Of Modifier",
+        "description": "If a modifier does not execute `_` or revert, the execution of the function will return the default value, which can be misleading for the caller. It is recommended that all the paths in a modifier must execute _ or revert.",
+        "detector_name": "incorrect-use-of-modifier",
+        "instances": [
+          {
+            "contract_path": "src/IncorrectModifier.sol",
+            "line_no": 22,
+            "src": "645:16",
+            "src_char": "645:16"
+          },
+          {
+            "contract_path": "src/IncorrectModifier.sol",
+            "line_no": 30,
+            "src": "763:18",
+            "src_char": "763:18"
+          }
+        ]
       }
     ]
   },
@@ -7450,6 +7759,9 @@
     "state-variable-could-be-constant",
     "state-variable-changes-without-events",
     "state-variable-could-be-immutable",
-    "multiple-placeholders"
+    "multiple-placeholders",
+    "state-change-after-external-call",
+    "emit-after-external-call",
+    "incorrect-use-of-modifier"
   ]
 }
