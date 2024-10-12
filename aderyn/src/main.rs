@@ -1,6 +1,9 @@
+use std::path::PathBuf;
+
 use aderyn::{
     aderyn_is_currently_running_newest_version, create_aderyn_toml_file_at, initialize_niceties,
     lsp::spin_up_language_server, print_all_detectors_view, print_detail_view,
+    validate_path_for_file_creation,
 };
 use aderyn_driver::driver::{self, Args};
 
@@ -10,8 +13,8 @@ use clap::{ArgGroup, Parser, Subcommand};
 #[command(group(ArgGroup::new("stdout_dependent").requires("stdout")))]
 pub struct CommandLineArgs {
     /// Print every detector available
-    #[clap(subcommand, name = "registry")]
-    registry: Option<RegistryCommand>,
+    #[clap(subcommand)]
+    subcommand: Option<Command>,
 
     /// Foundry or Hardhat project root directory (or path to single solidity file)
     #[arg(default_value = ".")]
@@ -77,7 +80,7 @@ pub struct CommandLineArgs {
 }
 
 #[derive(Debug, Subcommand)]
-enum RegistryCommand {
+enum Command {
     /// Browse detector registry
     Registry {
         /// all    - View all available detectors
@@ -86,27 +89,45 @@ enum RegistryCommand {
         #[arg(default_value = "all")]
         detector: String,
     },
+    /// Initialize aderyn.toml in the root directory or in an optional subdirectory
+    Init {
+        /// Optional path inside root where aderyn.toml will be created
+        path: Option<String>,
+    },
 }
 
 fn main() {
     initialize_niceties();
     let cmd_args = CommandLineArgs::parse();
 
-    if let Some(reg) = cmd_args.registry {
-        match reg {
-            RegistryCommand::Registry { detector } => {
+    if let Some(subcommand) = cmd_args.subcommand {
+        match subcommand {
+            Command::Registry { detector } => {
                 if detector == "all" {
                     print_all_detectors_view();
                 } else {
                     print_detail_view(&detector);
                 }
             }
-        }
-        return;
-    }
+            Command::Init { path } => {
+                let creation_path = match path {
+                    Some(optional_path) => {
+                        let mut target_dir = PathBuf::from(&cmd_args.root);
+                        target_dir.push(optional_path);
 
-    if cmd_args.root == "init" {
-        create_aderyn_toml_file_at(".".to_string());
+                        validate_path_for_file_creation(&target_dir)
+                            .expect("Error - Cannot create aderyn.toml")
+                            .to_string_lossy()
+                            .into_owned()
+                    }
+                    None => cmd_args.root,
+                };
+
+                // Create aderyn.toml at the target directory
+                create_aderyn_toml_file_at(creation_path);
+            }
+        }
+
         return;
     }
 
