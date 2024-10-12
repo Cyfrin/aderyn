@@ -1,9 +1,11 @@
 use aderyn_driver::detector::{get_all_detectors_names, get_issue_detector_by_name, IssueSeverity};
 use semver::Version;
 use serde_json::Value;
-use std::fs;
 use std::{fs::File, io::Write, path::PathBuf, str::FromStr};
 use strum::IntoEnumIterator;
+
+pub mod lsp;
+mod panic;
 
 pub fn create_aderyn_toml_file_at(directory: String) {
     let aderyn_toml_path = PathBuf::from_str(&directory).unwrap().join("aderyn.toml");
@@ -13,26 +15,10 @@ pub fn create_aderyn_toml_file_at(directory: String) {
     println!("Created aderyn.toml at {}", aderyn_toml_path.display());
 }
 
-pub fn validate_path_for_file_creation(path: &PathBuf) -> Result<&PathBuf, String> {
-    if !path.exists() {
-        return Err(format!("The directory '{}' does not exist.", path.display()));
-    }
-
-    if !fs::metadata(path).map(|meta| meta.is_dir()).unwrap_or(false) {
-        return Err(format!("The path '{}' is not a directory.", path.display()));
-    }
-
-    Ok(path)
-}
-
-mod panic;
-
 pub fn initialize_niceties() {
     // Crash with a nice message on panic
     panic::add_handler()
 }
-
-pub mod lsp;
 
 pub fn print_detail_view(detector_name: &str) {
     let all_detector_names = get_all_detectors_names();

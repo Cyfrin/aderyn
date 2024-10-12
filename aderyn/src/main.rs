@@ -3,7 +3,6 @@ use std::path::PathBuf;
 use aderyn::{
     aderyn_is_currently_running_newest_version, create_aderyn_toml_file_at, initialize_niceties,
     lsp::spin_up_language_server, print_all_detectors_view, print_detail_view,
-    validate_path_for_file_creation,
 };
 use aderyn_driver::driver::{self, Args};
 
@@ -12,17 +11,13 @@ use clap::{ArgGroup, Parser, Subcommand};
 #[command(author, version, about, long_about = None)]
 #[command(group(ArgGroup::new("stdout_dependent").requires("stdout")))]
 pub struct CommandLineArgs {
-    /// Print every detector available
+    /// Commands to initialize a config file for aderyn [BETA] and other utils
     #[clap(subcommand)]
     subcommand: Option<Command>,
 
     /// Foundry or Hardhat project root directory (or path to single solidity file)
     #[arg(default_value = ".")]
     root: String,
-
-    /// Initialize aderyn.toml in [ROOT] which hosts all the configuration to override defaults
-    #[arg(long)]
-    init: bool,
 
     /// Path to the source contracts. If not provided, the ROOT directory will be used.
     ///
@@ -115,10 +110,15 @@ fn main() {
                         let mut target_dir = PathBuf::from(&cmd_args.root);
                         target_dir.push(optional_path);
 
-                        validate_path_for_file_creation(&target_dir)
-                            .expect("Error - Cannot create aderyn.toml")
-                            .to_string_lossy()
-                            .into_owned()
+                        let can_initialize = target_dir.exists()
+                            && std::fs::metadata(&target_dir).is_ok_and(|p| p.is_dir());
+
+                        if !can_initialize {
+                            eprintln!("Failed to initialize aderyn.toml in non-existent directory");
+                            std::process::exit(1);
+                        }
+
+                        target_dir.to_string_lossy().to_string()
                     }
                     None => cmd_args.root,
                 };
@@ -128,11 +128,6 @@ fn main() {
             }
         }
 
-        return;
-    }
-
-    if cmd_args.init {
-        create_aderyn_toml_file_at(cmd_args.root);
         return;
     }
 
