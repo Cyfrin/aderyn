@@ -22,7 +22,7 @@ pub struct CommandLineArgs {
     /// Path to the source contracts.
     /// Used to avoid analyzing libraries, tests or scripts and focus on the contracts.
     ///
-    /// In Foundry projects, it's auto-captured by foundry.toml and is usually
+    /// In Foundry projects, it's auto-captured by foundry.toml and it's usually
     /// not necessary to provide it.
     ///
     /// In a Hardhat project:
