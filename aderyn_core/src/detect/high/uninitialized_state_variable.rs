@@ -1,13 +1,14 @@
-use std::collections::{BTreeMap, HashSet};
-use std::error::Error;
+use std::{
+    collections::{BTreeMap, HashSet},
+    error::Error,
+};
 
 use crate::ast::{Expression, NodeID};
 
-use crate::capture;
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
+    capture,
     context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -25,8 +26,8 @@ impl IssueDetector for UninitializedStateVariableDetector {
          *  - Gather all the storage variables (VariableDeclarations)
          *  - Fitler out / Remove the ones where `value` property is not `None`
          *  - Fitler out / Remove the ones that are arrays, mappings and structs
-         *  - Now, we're left with state variables that are not initialized at the same
-         *    line where they are declared.
+         *  - Now, we're left with state variables that are not initialized at the same line
+         *    where they are declared.
          *  - Gather all the `Assignments` and collect all the `referencedDeclarations` on
          *    `Identifier` expressions when they appear on LHS of the assginments
          *  - Remove the above ids from the initial storage variables list
@@ -70,10 +71,7 @@ impl IssueDetector for UninitializedStateVariableDetector {
         }
 
         for id in state_variable_ids {
-            context
-                .nodes
-                .get(&id)
-                .inspect(|&x| capture!(self, context, x));
+            context.nodes.get(&id).inspect(|&x| capture!(self, context, x));
         }
 
         Ok(!self.found_instances.is_empty())
@@ -131,15 +129,9 @@ mod uninitialized_state_variable_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
         // assert the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from("Uninitialized State Variables")
-        );
+        assert_eq!(detector.title(), String::from("Uninitialized State Variables"));
         // assert the description is correct
         assert_eq!(
             detector.description(),

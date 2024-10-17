@@ -1,13 +1,16 @@
-use super::ast_visitor::ASTConstVisitor;
-use super::macros::generate_visit_methods_for_workspace_context_with_insert_node;
-use crate::ast::*;
-use crate::context::workspace_context::{NodeContext, WorkspaceContext};
+use super::{
+    ast_visitor::ASTConstVisitor,
+    macros::generate_visit_methods_for_workspace_context_with_insert_node,
+};
+use crate::{
+    ast::*,
+    context::workspace_context::{NodeContext, WorkspaceContext},
+};
 use eyre::Result;
 
 impl ASTConstVisitor for WorkspaceContext {
     fn visit_contract_definition(&mut self, node: &ContractDefinition) -> Result<bool> {
-        self.nodes
-            .insert(node.id, ASTNode::ContractDefinition(node.clone()));
+        self.nodes.insert(node.id, ASTNode::ContractDefinition(node.clone()));
         self.contract_definitions_context.insert(
             node.clone(),
             NodeContext {
@@ -27,8 +30,7 @@ impl ASTConstVisitor for WorkspaceContext {
     }
 
     fn visit_function_definition(&mut self, node: &FunctionDefinition) -> Result<bool> {
-        self.nodes
-            .insert(node.id, ASTNode::FunctionDefinition(node.clone()));
+        self.nodes.insert(node.id, ASTNode::FunctionDefinition(node.clone()));
         self.function_definitions_context.insert(
             node.clone(),
             NodeContext {
@@ -48,8 +50,7 @@ impl ASTConstVisitor for WorkspaceContext {
     }
 
     fn visit_modifier_definition(&mut self, node: &ModifierDefinition) -> Result<bool> {
-        self.nodes
-            .insert(node.id, ASTNode::ModifierDefinition(node.clone()));
+        self.nodes.insert(node.id, ASTNode::ModifierDefinition(node.clone()));
         self.modifier_definitions_context.insert(
             node.clone(),
             NodeContext {
@@ -69,8 +70,7 @@ impl ASTConstVisitor for WorkspaceContext {
     }
 
     fn visit_source_unit(&mut self, node: &SourceUnit) -> Result<bool> {
-        self.nodes
-            .insert(node.id, ASTNode::SourceUnit(node.clone()));
+        self.nodes.insert(node.id, ASTNode::SourceUnit(node.clone()));
         self.source_units_context.push(node.clone());
         self.last_source_unit_id = node.id;
         Ok(true)

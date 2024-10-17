@@ -1,13 +1,11 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::ast::{Expression, NodeID};
 
-use crate::capture;
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
+    capture,
     context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -36,19 +34,18 @@ impl IssueDetector for DangerousStrictEqualityOnBalanceDetector {
             ] {
                 if let Expression::MemberAccess(member_access) = expr {
                     if member_access.member_name == "balance"
-                        && member_access
-                            .expression
-                            .as_ref()
-                            .type_descriptions()
-                            .is_some_and(|type_desc| {
+                        && member_access.expression.as_ref().type_descriptions().is_some_and(
+                            |type_desc| {
                                 type_desc.type_string.as_ref().is_some_and(|type_string| {
-                                    // For older solc versions when you say this.balance, "this" is of type contract XXX
+                                    // For older solc versions when you say this.balance, "this" is
+                                    // of type contract XXX
                                     type_string.starts_with("contract ")
                                     // In newers solidity versions, you say adddress(this).balance or payable(address(this)).balance
                                         || type_string == "address"
                                         || type_string == "address payable"
                                 })
-                            })
+                            },
+                        )
                     {
                         capture!(self, context, binary_operation);
                     }
@@ -76,7 +73,7 @@ impl IssueDetector for DangerousStrictEqualityOnBalanceDetector {
     }
 
     fn name(&self) -> String {
-        IssueDetectorNamePool::DangerousStrictEquailtyOnContractBalance.to_string()
+        IssueDetectorNamePool::StrictEquailtyCheckOnContractBalance.to_string()
     }
 }
 
@@ -103,10 +100,7 @@ mod dangerous_strict_equality_balance_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
     }
 
     #[test]
@@ -122,9 +116,6 @@ mod dangerous_strict_equality_balance_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
     }
 }

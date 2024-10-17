@@ -16,8 +16,9 @@ pub struct WorkspaceCallGraph {
 }
 
 /**
-* Every NodeID in RawCallGraph should corresponds to [`crate::ast::FunctionDefinition`] or [`crate::ast::ModifierDefinition`]
-*/
+ * Every NodeID in RawCallGraph should corresponds to [`crate::ast::FunctionDefinition`] or
+ * [`crate::ast::ModifierDefinition`]
+ */
 pub type RawCallGraph = HashMap<NodeID, Vec<NodeID>>;
 
 impl WorkspaceCallGraph {
@@ -48,8 +49,8 @@ impl WorkspaceCallGraph {
     }
 }
 
-/// Make connections from each of the nodes of [`crate::ast::FunctionDefinition`] and [`crate::ast::ModifierDefinition`]
-/// with their connected counterparts.
+/// Make connections from each of the nodes of [`crate::ast::FunctionDefinition`] and
+/// [`crate::ast::ModifierDefinition`] with their connected counterparts.
 fn dfs_to_create_graph(
     id: NodeID,
     raw_callgraph: &mut RawCallGraph,
@@ -128,7 +129,8 @@ fn create_connection_if_not_exsits(
 ) {
     match raw_callgraph.entry(from_id) {
         hash_map::Entry::Occupied(mut o) => {
-            // Performance Tip: Maybe later use binary search (it requires keeping ascending order while inserting tho)
+            // Performance Tip: Maybe later use binary search (it requires keeping ascending order
+            // while inserting tho)
             if !o.get().contains(&to_id) {
                 o.get_mut().push(to_id);
             }

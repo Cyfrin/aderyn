@@ -772,7 +772,7 @@ The `ecrecover` function is susceptible to signature malleability. This means th
 
 Consider using a specific version of Solidity in your contracts instead of a wide version. For example, instead of `pragma solidity ^0.8.0;`, use `pragma solidity 0.8.0;`
 
-<details><summary>52 Found Instances</summary>
+<details><summary>46 Found Instances</summary>
 
 
 - Found in src/v0.8/functions/dev/v1_X/FunctionsBilling.sol [Line: 2](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/FunctionsBilling.sol#L2)
@@ -860,24 +860,6 @@ Consider using a specific version of Solidity in your contracts instead of a wid
 	```
 
 - Found in src/v0.8/functions/dev/v1_X/interfaces/IOwnableFunctionsRouter.sol [Line: 2](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/interfaces/IOwnableFunctionsRouter.sol#L2)
-
-	```solidity
-	pragma solidity ^0.8.19;
-	```
-
-- Found in src/v0.8/functions/dev/v1_X/libraries/ChainSpecificUtil.sol [Line: 2](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/libraries/ChainSpecificUtil.sol#L2)
-
-	```solidity
-	pragma solidity ^0.8.19;
-	```
-
-- Found in src/v0.8/functions/dev/v1_X/libraries/FunctionsRequest.sol [Line: 2](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/libraries/FunctionsRequest.sol#L2)
-
-	```solidity
-	pragma solidity ^0.8.19;
-	```
-
-- Found in src/v0.8/functions/dev/v1_X/libraries/FunctionsResponse.sol [Line: 2](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/libraries/FunctionsResponse.sol#L2)
 
 	```solidity
 	pragma solidity ^0.8.19;
@@ -985,18 +967,6 @@ Consider using a specific version of Solidity in your contracts instead of a wid
 	pragma solidity ^0.8.19;
 	```
 
-- Found in src/v0.8/functions/v1_0_0/libraries/FunctionsRequest.sol [Line: 2](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/libraries/FunctionsRequest.sol#L2)
-
-	```solidity
-	pragma solidity ^0.8.19;
-	```
-
-- Found in src/v0.8/functions/v1_0_0/libraries/FunctionsResponse.sol [Line: 2](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/libraries/FunctionsResponse.sol#L2)
-
-	```solidity
-	pragma solidity ^0.8.19;
-	```
-
 - Found in src/v0.8/functions/v1_0_0/ocr/OCR2Abstract.sol [Line: 2](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/ocr/OCR2Abstract.sol#L2)
 
 	```solidity
@@ -1016,12 +986,6 @@ Consider using a specific version of Solidity in your contracts instead of a wid
 	```
 
 - Found in src/v0.8/functions/v1_1_0/FunctionsCoordinator.sol [Line: 2](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_1_0/FunctionsCoordinator.sol#L2)
-
-	```solidity
-	pragma solidity ^0.8.19;
-	```
-
-- Found in src/v0.8/functions/v1_1_0/libraries/ChainSpecificUtil.sol [Line: 2](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_1_0/libraries/ChainSpecificUtil.sol#L2)
 
 	```solidity
 	pragma solidity ^0.8.19;

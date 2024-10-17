@@ -1,6 +1,7 @@
-use crate::ast::*;
-use crate::visitor::ast_visitor::ASTConstVisitor;
-use crate::visitor::ast_visitor::Node;
+use crate::{
+    ast::*,
+    visitor::ast_visitor::{ASTConstVisitor, Node},
+};
 use eyre::Result;
 
 impl Node for UserDefinedValueTypeDefinition {

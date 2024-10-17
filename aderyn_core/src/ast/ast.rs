@@ -1,6 +1,5 @@
 use crate::{
-    ast::macros::*,
-    ast::*,
+    ast::{macros::*, *},
     visitor::ast_visitor::{ASTConstVisitor, Node},
 };
 use eyre::Result;

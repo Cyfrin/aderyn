@@ -1,16 +1,17 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::ast::{NodeID, NodeType, TypeName};
 
-use crate::capture;
-use crate::context::browser::ExtractPragmaDirectives;
-use crate::context::workspace_context::ASTNode;
-use crate::detect::detector::IssueDetectorNamePool;
-use crate::detect::helpers::pragma_directive_to_semver;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    capture,
+    context::{
+        browser::ExtractPragmaDirectives,
+        workspace_context::{ASTNode, WorkspaceContext},
+    },
+    detect::{
+        detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
+        helpers::pragma_directive_to_semver,
+    },
 };
 use eyre::Result;
 use semver::VersionReq;
@@ -61,7 +62,8 @@ impl IssueDetector for NestedStructInMappingDetector {
                             if let Some(member_type_string) = &member.type_descriptions.type_string
                             {
                                 if member_type_string.contains("struct") {
-                                    // Check if the contract that this is in allows for solidity pragma below 0.5.0
+                                    // Check if the contract that this is in allows for solidity
+                                    // pragma below 0.5.0
                                     let source_unit_ast_node = context
                                         .get_closest_ancestor(mapping.id, NodeType::SourceUnit);
                                     if let Some(source_unit_ast_node) = source_unit_ast_node {
@@ -127,15 +129,9 @@ mod nested_struct_in_mapping_detector_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
         // assert the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from("Nested Structs in Mappings pre-0.5.0")
-        );
+        assert_eq!(detector.title(), String::from("Nested Structs in Mappings pre-0.5.0"));
         // assert the description is correct
         assert_eq!(
             detector.description(),
