@@ -19,25 +19,31 @@ pub struct CommandLineArgs {
     #[arg(default_value = ".")]
     root: String,
 
-    /// Path to the source contracts. If not provided, the ROOT directory will be used.
+    /// Path to the source contracts.
+    /// Used to avoid analyzing libraries, tests or scripts and focus on the contracts.
     ///
-    /// For example, in a foundry repo:
+    /// In Foundry projects, it's auto-captured by foundry.toml and it's usually
+    /// not necessary to provide it.
     ///
-    ///     --src=src/
-    ///
-    /// In a hardhat repo:
+    /// In a Hardhat project:
     ///
     ///    --src=contracts/
     #[clap(short, long, use_value_delimiter = true)]
     src: Option<Vec<String>>,
 
     /// List of path strings to include, delimited by comma (no spaces).
-    /// Any solidity file path not containing these strings will be ignored
+    ///
+    /// It allows to include only one or more specific contracts in the analysis:
+    ///     aderyn -i src/MyContract.sol
+    ///     aderyn -i src/MyContract.sol,src/MyOtherContract.sol
     #[clap(short = 'i', long, use_value_delimiter = true)]
     path_includes: Option<Vec<String>>,
 
     /// List of path strings to exclude, delimited by comma (no spaces).
-    /// Any solidity file path containing these strings will be ignored
+    ///
+    /// It allows to exclude one or more specific contracts from the analysis:
+    ///     aderyn -x src/MyContract.sol
+    ///     aderyn -x src/MyContract.sol,src/MyOtherContract.sol
     #[clap(short = 'x', long, use_value_delimiter = true)]
     path_excludes: Option<Vec<String>>,
 
