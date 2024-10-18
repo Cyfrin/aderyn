@@ -88,24 +88,11 @@
     ]
   },
   "issue_count": {
-    "high": 3,
+    "high": 2,
     "low": 0
   },
   "high_issues": {
     "issues": [
-      {
-        "title": "Using `delegatecall` in loop",
-        "description": "When calling `delegatecall` the same `msg.value` amount will be accredited multiple times.",
-        "detector_name": "delegate-call-in-loop",
-        "instances": [
-          {
-            "contract_path": "inheritance/ExtendedInheritance.sol",
-            "line_no": 15,
-            "src": "474:96",
-            "src_char": "474:96"
-          }
-        ]
-      },
       {
         "title": "Delegatecall made by the function without checks on any address.",
         "description": "Introduce checks on the address",
@@ -138,7 +125,6 @@
     "issues": []
   },
   "detectors_used": [
-    "delegate-call-in-loop",
     "hash-collision-due-to-abi-encode-packed",
     "arbitrary-transfer-from",
     "unprotected-initializer",
