@@ -58,7 +58,7 @@ impl IssueDetector for UncheckedReturnDetector {
     }
 
     fn severity(&self) -> IssueSeverity {
-        IssueSeverity::High
+        IssueSeverity::Low
     }
 
     fn title(&self) -> String {

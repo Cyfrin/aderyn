@@ -200,7 +200,6 @@
     "delegate-call-on-unchecked-address",
     "tautological-compare",
     "rtlo",
-    "unchecked-return",
     "dangerous-unary-operator",
     "tautology-or-contradiction",
     "strict-equailty-check-on-contract-balance",

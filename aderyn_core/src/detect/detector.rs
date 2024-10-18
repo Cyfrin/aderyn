@@ -64,7 +64,6 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<DelegateCallOnUncheckedAddressDetector>::default(),
         Box::<TautologicalCompareDetector>::default(),
         Box::<RTLODetector>::default(),
-        Box::<UncheckedReturnDetector>::default(),
         Box::<DangerousUnaryOperatorDetector>::default(),
         Box::<TautologyOrContraditionDetector>::default(),
         Box::<DangerousStrictEqualityOnBalanceDetector>::default(),
@@ -103,6 +102,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<StateVariableChangesWithoutEventDetector>::default(),
         Box::<StateVariableCouldBeImmutableDetector>::default(),
         Box::<MultiplePlaceholdersDetector>::default(),
+        Box::<UncheckedReturnDetector>::default(),
     ]
 }
 

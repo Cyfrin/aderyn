@@ -456,8 +456,8 @@
     ]
   },
   "issue_count": {
-    "high": 42,
-    "low": 45
+    "high": 41,
+    "low": 46
   },
   "high_issues": {
     "issues": [
@@ -1989,73 +1989,6 @@
             "line_no": 3,
             "src": "33:157",
             "src_char": "33:155"
-          }
-        ]
-      },
-      {
-        "title": "Return value of the function call is not checked.",
-        "description": "Function returns a value but it is ignored.",
-        "detector_name": "unchecked-return",
-        "instances": [
-          {
-            "contract_path": "src/OutOfOrderRetryable.sol",
-            "line_no": 65,
-            "src": "1705:390",
-            "src_char": "1705:390"
-          },
-          {
-            "contract_path": "src/OutOfOrderRetryable.sol",
-            "line_no": 77,
-            "src": "2129:379",
-            "src_char": "2129:379"
-          },
-          {
-            "contract_path": "src/OutOfOrderRetryable.sol",
-            "line_no": 92,
-            "src": "2624:390",
-            "src_char": "2624:390"
-          },
-          {
-            "contract_path": "src/OutOfOrderRetryable.sol",
-            "line_no": 107,
-            "src": "3107:379",
-            "src_char": "3107:379"
-          },
-          {
-            "contract_path": "src/OutOfOrderRetryable.sol",
-            "line_no": 129,
-            "src": "3777:208",
-            "src_char": "3777:208"
-          },
-          {
-            "contract_path": "src/OutOfOrderRetryable.sol",
-            "line_no": 151,
-            "src": "4337:261",
-            "src_char": "4337:261"
-          },
-          {
-            "contract_path": "src/StateVariablesManipulation.sol",
-            "line_no": 142,
-            "src": "4146:20",
-            "src_char": "4146:20"
-          },
-          {
-            "contract_path": "src/Trump.sol",
-            "line_no": 344,
-            "src": "11990:71",
-            "src_char": "11990:71"
-          },
-          {
-            "contract_path": "src/UncheckedReturn.sol",
-            "line_no": 14,
-            "src": "279:5",
-            "src_char": "279:5"
-          },
-          {
-            "contract_path": "src/UncheckedReturn.sol",
-            "line_no": 27,
-            "src": "575:47",
-            "src_char": "575:47"
           }
         ]
       },
@@ -7360,6 +7293,73 @@
             "src_char": "186:10"
           }
         ]
+      },
+      {
+        "title": "Return value of the function call is not checked.",
+        "description": "Function returns a value but it is ignored.",
+        "detector_name": "unchecked-return",
+        "instances": [
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 65,
+            "src": "1705:390",
+            "src_char": "1705:390"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 77,
+            "src": "2129:379",
+            "src_char": "2129:379"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 92,
+            "src": "2624:390",
+            "src_char": "2624:390"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 107,
+            "src": "3107:379",
+            "src_char": "3107:379"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 129,
+            "src": "3777:208",
+            "src_char": "3777:208"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 151,
+            "src": "4337:261",
+            "src_char": "4337:261"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 142,
+            "src": "4146:20",
+            "src_char": "4146:20"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 344,
+            "src": "11990:71",
+            "src_char": "11990:71"
+          },
+          {
+            "contract_path": "src/UncheckedReturn.sol",
+            "line_no": 14,
+            "src": "279:5",
+            "src_char": "279:5"
+          },
+          {
+            "contract_path": "src/UncheckedReturn.sol",
+            "line_no": 27,
+            "src": "575:47",
+            "src_char": "575:47"
+          }
+        ]
       }
     ]
   },
@@ -7412,7 +7412,6 @@
     "delegate-call-on-unchecked-address",
     "tautological-compare",
     "rtlo",
-    "unchecked-return",
     "dangerous-unary-operator",
     "tautology-or-contradiction",
     "strict-equailty-check-on-contract-balance",
@@ -7450,6 +7449,7 @@
     "state-variable-could-be-constant",
     "state-variable-changes-without-events",
     "state-variable-could-be-immutable",
-    "multiple-placeholders"
+    "multiple-placeholders",
+    "unchecked-return"
   ]
 }
