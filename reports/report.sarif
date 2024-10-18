@@ -151,7 +151,7 @@
                 },
                 "region": {
                   "byteLength": 33,
-                  "byteOffset": 820
+                  "byteOffset": 916
                 }
               }
             }
@@ -7401,7 +7401,7 @@
                 },
                 "region": {
                   "byteLength": 21,
-                  "byteOffset": 222
+                  "byteOffset": 320
                 }
               }
             }
@@ -7686,6 +7686,17 @@
                 "region": {
                   "byteLength": 65,
                   "byteOffset": 915
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UnprotectedInitialize.sol"
+                },
+                "region": {
+                  "byteLength": 38,
+                  "byteOffset": 1071
                 }
               }
             },
@@ -11633,7 +11644,7 @@
                 },
                 "region": {
                   "byteLength": 22,
-                  "byteOffset": 354
+                  "byteOffset": 452
                 }
               }
             },
@@ -11644,7 +11655,7 @@
                 },
                 "region": {
                   "byteLength": 20,
-                  "byteOffset": 522
+                  "byteOffset": 618
                 }
               }
             },
@@ -11655,7 +11666,7 @@
                 },
                 "region": {
                   "byteLength": 33,
-                  "byteOffset": 820
+                  "byteOffset": 916
                 }
               }
             },
@@ -12104,7 +12115,7 @@
                 },
                 "region": {
                   "byteLength": 5,
-                  "byteOffset": 146
+                  "byteOffset": 244
                 }
               }
             },
