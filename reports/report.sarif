@@ -2721,125 +2721,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/OutOfOrderRetryable.sol"
-                },
-                "region": {
-                  "byteLength": 390,
-                  "byteOffset": 1705
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/OutOfOrderRetryable.sol"
-                },
-                "region": {
-                  "byteLength": 379,
-                  "byteOffset": 2129
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/OutOfOrderRetryable.sol"
-                },
-                "region": {
-                  "byteLength": 390,
-                  "byteOffset": 2624
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/OutOfOrderRetryable.sol"
-                },
-                "region": {
-                  "byteLength": 379,
-                  "byteOffset": 3107
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/OutOfOrderRetryable.sol"
-                },
-                "region": {
-                  "byteLength": 208,
-                  "byteOffset": 3777
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/OutOfOrderRetryable.sol"
-                },
-                "region": {
-                  "byteLength": 261,
-                  "byteOffset": 4337
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/StateVariablesManipulation.sol"
-                },
-                "region": {
-                  "byteLength": 20,
-                  "byteOffset": 4146
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Trump.sol"
-                },
-                "region": {
-                  "byteLength": 71,
-                  "byteOffset": 11990
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/UncheckedReturn.sol"
-                },
-                "region": {
-                  "byteLength": 5,
-                  "byteOffset": 279
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/UncheckedReturn.sol"
-                },
-                "region": {
-                  "byteLength": 47,
-                  "byteOffset": 575
-                }
-              }
-            }
-          ],
-          "message": {
-            "text": "Function returns a value but it is ignored."
-          },
-          "ruleId": "unchecked-return"
-        },
-        {
-          "level": "warning",
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/DangerousUnaryOperator.sol"
                 },
                 "region": {
@@ -12318,6 +12199,125 @@
             "text": "Design the modifier to only contain 1 placeholder statement. If it's not possible, split the logic into multiple modifiers."
           },
           "ruleId": "multiple-placeholders"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/OutOfOrderRetryable.sol"
+                },
+                "region": {
+                  "byteLength": 390,
+                  "byteOffset": 1705
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/OutOfOrderRetryable.sol"
+                },
+                "region": {
+                  "byteLength": 379,
+                  "byteOffset": 2129
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/OutOfOrderRetryable.sol"
+                },
+                "region": {
+                  "byteLength": 390,
+                  "byteOffset": 2624
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/OutOfOrderRetryable.sol"
+                },
+                "region": {
+                  "byteLength": 379,
+                  "byteOffset": 3107
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/OutOfOrderRetryable.sol"
+                },
+                "region": {
+                  "byteLength": 208,
+                  "byteOffset": 3777
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/OutOfOrderRetryable.sol"
+                },
+                "region": {
+                  "byteLength": 261,
+                  "byteOffset": 4337
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateVariablesManipulation.sol"
+                },
+                "region": {
+                  "byteLength": 20,
+                  "byteOffset": 4146
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 71,
+                  "byteOffset": 11990
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedReturn.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 279
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UncheckedReturn.sol"
+                },
+                "region": {
+                  "byteLength": 47,
+                  "byteOffset": 575
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Function returns a value but it is ignored."
+          },
+          "ruleId": "unchecked-return"
         }
       ],
       "tool": {
