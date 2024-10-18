@@ -1,14 +1,11 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::ast::{ASTNode, NodeID, Visibility};
 
-use crate::capture;
-use crate::context::browser::ExtractFunctionDefinitions;
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    capture,
+    context::{browser::ExtractFunctionDefinitions, workspace_context::WorkspaceContext},
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -163,10 +160,8 @@ mod erc721_matching_function_signature_helper {
     // ERC721 function signature matching
     impl FunctionDefinition {
         pub fn represents_erc721_get_approved(&self) -> bool {
-            let satisifer = SignatureMatcher {
-                name: "getApproved",
-                paramter_types: vec!["uint256"],
-            };
+            let satisifer =
+                SignatureMatcher { name: "getApproved", paramter_types: vec!["uint256"] };
             satisifer.satisfies(self)
         }
 
@@ -179,10 +174,8 @@ mod erc721_matching_function_signature_helper {
         }
 
         pub fn represents_erc721_approve(&self) -> bool {
-            let satisifer = SignatureMatcher {
-                name: "approve",
-                paramter_types: vec!["address", "uint256"],
-            };
+            let satisifer =
+                SignatureMatcher { name: "approve", paramter_types: vec!["address", "uint256"] };
             satisifer.satisfies(self)
         }
 
@@ -195,18 +188,12 @@ mod erc721_matching_function_signature_helper {
         }
 
         pub fn represents_erc721_balance_of(&self) -> bool {
-            let satisifer = SignatureMatcher {
-                name: "balanceOf",
-                paramter_types: vec!["address"],
-            };
+            let satisifer = SignatureMatcher { name: "balanceOf", paramter_types: vec!["address"] };
             satisifer.satisfies(self)
         }
 
         pub fn represents_erc721_owner_of(&self) -> bool {
-            let satisifer = SignatureMatcher {
-                name: "ownerOf",
-                paramter_types: vec!["uint256"],
-            };
+            let satisifer = SignatureMatcher { name: "ownerOf", paramter_types: vec!["uint256"] };
             satisifer.satisfies(self)
         }
 
@@ -262,13 +249,9 @@ mod erc721_matching_function_signature_helper {
         pub fn returns_address(&self) -> bool {
             let params = &self.return_parameters.parameters;
             params.len() == 1
-                && params[0]
-                    .type_descriptions
-                    .type_string
-                    .as_ref()
-                    .is_some_and(|type_string| {
-                        type_string == "address" || type_string == "address payable"
-                    })
+                && params[0].type_descriptions.type_string.as_ref().is_some_and(|type_string| {
+                    type_string == "address" || type_string == "address payable"
+                })
         }
     }
 }
@@ -291,7 +274,8 @@ mod incorrect_erc721_tests {
         let mut detector = IncorrectERC721InterfaceDetector::default();
         let found = detector.detect(&context).unwrap();
 
-        // We capture every faulty method in the IncorrectERC721 contract that has the wrong return type
+        // We capture every faulty method in the IncorrectERC721 contract that has the wrong return
+        // type
         println!("{:#?}", detector.instances());
 
         // assert that the detector found an issue
@@ -301,9 +285,6 @@ mod incorrect_erc721_tests {
         assert_eq!(detector.instances().len(), 8);
 
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
     }
 }

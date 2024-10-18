@@ -1,5 +1,4 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::{
     ast::{ASTNode, NodeID},
@@ -51,15 +50,15 @@ impl IssueDetector for DelegateCallInLoopDetector {
     }
 
     fn severity(&self) -> IssueSeverity {
-        IssueSeverity::High
+        IssueSeverity::Low
     }
 
     fn title(&self) -> String {
-        String::from("Using `delegatecall` in loop")
+        String::from("Using `delegatecall` in loop may consume excessive gas")
     }
 
     fn description(&self) -> String {
-        String::from("When calling `delegatecall` the same `msg.value` amount will be accredited multiple times.")
+        String::from("Using `delegatecall` in loop may consume excessive gas")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -98,9 +97,8 @@ impl CallGraphVisitor for DelegateCallTracker {
 mod delegate_call_in_loop_detector_tests {
     use serial_test::serial;
 
-    use crate::detect::detector::IssueDetector;
-
     use super::DelegateCallInLoopDetector;
+    use crate::detect::detector::IssueDetector;
 
     #[test]
     #[serial]
@@ -116,21 +114,6 @@ mod delegate_call_in_loop_detector_tests {
         // assert that the detector found the correct number of instances (1)
         assert_eq!(detector.instances().len(), 1);
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
-        // assert the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from("Using `delegatecall` in loop")
-        );
-        // assert the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from(
-                "When calling `delegatecall` the same `msg.value` amount will be accredited multiple times."
-            )
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

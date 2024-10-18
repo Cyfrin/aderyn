@@ -34,12 +34,7 @@ impl FunctionDefinition {
         match expression {
             Expression::Identifier(identifier) => {
                 if let Some(reference_id) = identifier.referenced_declaration {
-                    if self
-                        .return_parameters
-                        .parameters
-                        .iter()
-                        .any(|p| p.id == reference_id)
-                    {
+                    if self.return_parameters.parameters.iter().any(|p| p.id == reference_id) {
                         ids.push(reference_id);
                     }
                 }

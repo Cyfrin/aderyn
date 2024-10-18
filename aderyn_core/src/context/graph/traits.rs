@@ -16,22 +16,26 @@ pub trait CallGraphVisitor {
         self.visit_any(node)
     }
 
-    /// Meant to be invoked while traversing [`crate::context::workspace_context::WorkspaceContext::inward_callgraph`]
+    /// Meant to be invoked while traversing
+    /// [`crate::context::workspace_context::WorkspaceContext::inward_callgraph`]
     fn visit_inward_function_definition(&mut self, node: &FunctionDefinition) -> eyre::Result<()> {
         self.visit_any(&(node.into()))
     }
 
-    /// Meant to be invoked while traversing [`crate::context::workspace_context::WorkspaceContext::outward_callgraph`]
+    /// Meant to be invoked while traversing
+    /// [`crate::context::workspace_context::WorkspaceContext::outward_callgraph`]
     fn visit_outward_function_definition(&mut self, node: &FunctionDefinition) -> eyre::Result<()> {
         self.visit_any(&(node.into()))
     }
 
-    /// Meant to be invoked while traversing [`crate::context::workspace_context::WorkspaceContext::inward_callgraph`]
+    /// Meant to be invoked while traversing
+    /// [`crate::context::workspace_context::WorkspaceContext::inward_callgraph`]
     fn visit_inward_modifier_definition(&mut self, node: &ModifierDefinition) -> eyre::Result<()> {
         self.visit_any(&(node.into()))
     }
 
-    /// Meant to be invoked while traversing [`crate::context::workspace_context::WorkspaceContext::outward_callgraph`]
+    /// Meant to be invoked while traversing
+    /// [`crate::context::workspace_context::WorkspaceContext::outward_callgraph`]
     fn visit_outward_modifier_definition(&mut self, node: &ModifierDefinition) -> eyre::Result<()> {
         self.visit_any(&(node.into()))
     }

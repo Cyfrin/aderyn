@@ -203,18 +203,14 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
         context.set_ignore_lines_stats(ignore_line_stats);
 
         let inward_callgraph = WorkspaceCallGraph::from_context(context).unwrap();
-        let outward_callgraph = WorkspaceCallGraph {
-            raw_callgraph: inward_callgraph.raw_callgraph.reverse(),
-        };
+        let outward_callgraph =
+            WorkspaceCallGraph { raw_callgraph: inward_callgraph.raw_callgraph.reverse() };
         context.inward_callgraph = Some(inward_callgraph);
         context.outward_callgraph = Some(outward_callgraph);
     }
     // Using the source path, calculate the sloc
 
-    WorkspaceContextWrapper {
-        contexts,
-        root_path,
-    }
+    WorkspaceContextWrapper { contexts, root_path }
 }
 
 /// Supplement the arguments with values from aderyn.toml and foundry.toml
@@ -222,13 +218,7 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
 fn obtain_config_values(
     args: &Args,
 ) -> Result<
-    (
-        PathBuf,
-        Option<Vec<String>>,
-        Option<Vec<String>>,
-        Option<Vec<String>>,
-        Option<Vec<String>>,
-    ),
+    (PathBuf, Option<Vec<String>>, Option<Vec<String>>, Option<Vec<String>>, Option<Vec<String>>),
     Box<dyn Error>,
 > {
     let mut root_path = PathBuf::from(&args.root);
@@ -241,19 +231,14 @@ fn obtain_config_values(
     let aderyn_path = root_path.join("aderyn.toml");
     // Process aderyn.toml if it exists
     if aderyn_path.exists() {
-        (
-            root_path,
-            local_src,
-            local_exclude,
-            local_remappings,
-            local_include,
-        ) = derive_from_aderyn_toml(
-            &root_path,
-            &local_src,
-            &local_exclude,
-            &local_remappings,
-            &local_include,
-        );
+        (root_path, local_src, local_exclude, local_remappings, local_include) =
+            derive_from_aderyn_toml(
+                &root_path,
+                &local_src,
+                &local_exclude,
+                &local_remappings,
+                &local_include,
+            );
     }
 
     let foundry_path = root_path.join("foundry.toml");
@@ -262,7 +247,8 @@ fn obtain_config_values(
         (local_src, local_exclude, local_remappings) =
             append_from_foundry_toml(&root_path, &local_src, &local_exclude, &local_remappings);
     } else {
-        // If foundry.toml wasn't found see if it makes sense to set src as `contracts/` for hardhat projects
+        // If foundry.toml wasn't found see if it makes sense to set src as `contracts/` for hardhat
+        // projects
         let hardhat_config_js_path = root_path.join("hardhat.config.js");
         let hardhat_config_ts_path = root_path.join("hardhat.config.ts");
 
@@ -284,11 +270,5 @@ fn obtain_config_values(
         }
     }
 
-    Ok((
-        root_path,
-        local_src,
-        local_exclude,
-        local_remappings,
-        local_include,
-    ))
+    Ok((root_path, local_src, local_exclude, local_remappings, local_include))
 }

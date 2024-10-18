@@ -1,16 +1,18 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::ast::NodeID;
 
 use crate::capture;
 
-use crate::context::graph::{CallGraph, CallGraphDirection, CallGraphVisitor};
-use crate::detect::detector::IssueDetectorNamePool;
-use crate::detect::helpers;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    context::{
+        graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
+        workspace_context::WorkspaceContext,
+    },
+    detect::{
+        detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
+        helpers,
+    },
 };
 use eyre::Result;
 
@@ -47,7 +49,7 @@ impl IssueDetector for DelegateCallOnUncheckedAddressDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Delegatecall made by the function without checks on any adress.")
+        String::from("Delegatecall made by the function without checks on any address.")
     }
 
     fn description(&self) -> String {
@@ -59,7 +61,7 @@ impl IssueDetector for DelegateCallOnUncheckedAddressDetector {
     }
 
     fn name(&self) -> String {
-        IssueDetectorNamePool::DelegateCallUncheckedAddress.to_string()
+        IssueDetectorNamePool::DelegateCallOnUncheckedAddress.to_string()
     }
 }
 
@@ -111,20 +113,14 @@ mod delegate_call_no_address_check_tests {
         assert_eq!(detector.instances().len(), 1);
 
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
 
         // assert the title is correct
         assert_eq!(
             detector.title(),
-            String::from("Delegatecall made by the function without checks on any adress.")
+            String::from("Delegatecall made by the function without checks on any address.")
         );
         // assert the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from("Introduce checks on the address")
-        );
+        assert_eq!(detector.description(), String::from("Introduce checks on the address"));
     }
 }

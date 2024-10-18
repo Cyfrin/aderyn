@@ -52,9 +52,7 @@ fn sort_by_src_position<'a>(
     // Now sort them
     let mut nodes = nodes.to_vec();
     nodes.sort_by(|a, b| {
-        context
-            .get_relative_location_of_nodes(a.id().unwrap(), b.id().unwrap())
-            .unwrap()
+        context.get_relative_location_of_nodes(a.id().unwrap(), b.id().unwrap()).unwrap()
     });
     Some(nodes)
 }

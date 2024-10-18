@@ -1,14 +1,11 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::ast::{ASTNode, Expression, Identifier, MemberAccess, NodeID, NodeType};
 
-use crate::capture;
-use crate::context::browser::GetImmediateParent;
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    capture,
+    context::{browser::GetImmediateParent, workspace_context::WorkspaceContext},
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -27,15 +24,12 @@ impl IssueDetector for UncheckedReturnDetector {
         // capture!(self, context, item);
 
         for function_call in context.function_calls() {
-            // Find the ID of FunctionDefinition that we're calling so that we may identify if there are returned params
+            // Find the ID of FunctionDefinition that we're calling so that we may identify if there
+            // are returned params
             match function_call.expression.as_ref() {
-                Expression::Identifier(Identifier {
-                    referenced_declaration: Some(id),
-                    ..
-                })
+                Expression::Identifier(Identifier { referenced_declaration: Some(id), .. })
                 | Expression::MemberAccess(MemberAccess {
-                    referenced_declaration: Some(id),
-                    ..
+                    referenced_declaration: Some(id), ..
                 }) => {
                     if let Some(ASTNode::ExpressionStatement(func_call_parent)) =
                         function_call.parent(context)
@@ -64,7 +58,7 @@ impl IssueDetector for UncheckedReturnDetector {
     }
 
     fn severity(&self) -> IssueSeverity {
-        IssueSeverity::High
+        IssueSeverity::Low
     }
 
     fn title(&self) -> String {
@@ -88,7 +82,7 @@ impl IssueDetector for UncheckedReturnDetector {
 mod unchecked_return_tests {
     use serial_test::serial;
 
-    use crate::detect::{detector::IssueDetector, high::unchecked_return::UncheckedReturnDetector};
+    use crate::detect::{detector::IssueDetector, low::unchecked_return::UncheckedReturnDetector};
 
     #[test]
     #[serial]
@@ -107,10 +101,7 @@ mod unchecked_return_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert the title is correct
         assert_eq!(
             detector.title(),

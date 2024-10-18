@@ -1,14 +1,11 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::ast::{Expression, LiteralKind, Mutability, NodeID};
 
-use crate::capture;
-use crate::context::workspace_context::ASTNode;
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    capture,
+    context::workspace_context::{ASTNode, WorkspaceContext},
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -22,13 +19,12 @@ pub struct IncorrectUseOfCaretOperatorDetector {
 impl IssueDetector for IncorrectUseOfCaretOperatorDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // Copied Heuristic from Slither:
-        // look for binary expressions with ^ operator where at least one of the operands is a constant, and
-        // # the constant is not in hex, because hex typically is used with bitwise xor and not exponentiation
+        // look for binary expressions with ^ operator where at least one of the operands is a
+        // constant, and # the constant is not in hex, because hex typically is used with
+        // bitwise xor and not exponentiation
 
-        for binary_operation in context
-            .binary_operations()
-            .into_iter()
-            .filter(|op| op.operator == "^")
+        for binary_operation in
+            context.binary_operations().into_iter().filter(|op| op.operator == "^")
         {
             for expr in [
                 binary_operation.left_expression.as_ref(),
@@ -110,10 +106,7 @@ mod incorrect_use_of_caret_operator_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 5);
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
         // assert the title is correct
         assert_eq!(
             detector.title(),

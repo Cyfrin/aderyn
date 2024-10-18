@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: No License
 
+import "../lib/openzeppelin-contracts/contracts/proxy/utils/Initializable.sol";
+
 pragma solidity 0.8.19;
 
-contract InitializedContract {
+contract InitializedContract is Initializable {
     bool private initialized;
     address private owner;
 
@@ -16,7 +18,7 @@ contract InitializedContract {
     }
 
     // GOOD
-    function initializeWithModifier() external firstTimeInitializing() {
+    function initializeWithModifier() external firstTimeInitializing {
         initialized = true;
         // Additional initialization logic here
     }
@@ -34,6 +36,11 @@ contract InitializedContract {
     // BAD
     function initializeWithoutModifierOrRevert() external {
         initialized = true;
+        // Additional initialization logic here
+    }
+
+    // GOOD
+    function initializeWithModifierNamedInitiliazer() external initializer {
         // Additional initialization logic here
     }
 }
