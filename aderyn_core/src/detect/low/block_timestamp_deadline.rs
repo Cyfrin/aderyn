@@ -96,7 +96,7 @@ impl IssueDetector for BlockTimestampDeadlineDetector {
     }
 
     fn severity(&self) -> IssueSeverity {
-        IssueSeverity::High
+        IssueSeverity::Low
     }
 
     fn title(&self) -> String {

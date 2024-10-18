@@ -1,4 +1,5 @@
 pub(crate) mod assert_state_change;
+pub(crate) mod block_timestamp_deadline;
 pub(crate) mod boolean_equality;
 pub(crate) mod builtin_symbol_shadowing;
 pub(crate) mod cache_array_length;
@@ -46,6 +47,7 @@ pub(crate) mod void_constructor;
 pub(crate) mod zero_address_check;
 
 pub use assert_state_change::AssertStateChangeDetector;
+pub use block_timestamp_deadline::BlockTimestampDeadlineDetector;
 pub use boolean_equality::BooleanEqualityDetector;
 pub use builtin_symbol_shadowing::BuiltinSymbolShadowDetector;
 pub use cache_array_length::CacheArrayLengthDetector;
