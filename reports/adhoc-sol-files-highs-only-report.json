@@ -177,7 +177,6 @@
   "detectors_used": [
     "delegate-call-in-loop",
     "hash-collision-due-to-abi-encode-packed",
-    "block-timestamp-is-weak-deadline",
     "arbitrary-transfer-from",
     "unprotected-initializer",
     "unsafe-casting-detector",
