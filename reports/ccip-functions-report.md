@@ -2340,8 +2340,62 @@ it is recommended that the definition be removed when custom error is unused
 
 Avoid `require` / `revert` statements in a loop because a single bad item can cause the whole transaction to fail. It's better to forgive on fail and return failed elements post processing of the loop
 
-<details><summary>2 Found Instances</summary>
+<details><summary>18 Found Instances</summary>
 
+
+- Found in src/v0.8/functions/dev/v1_X/FunctionsCoordinator.sol [Line: 194](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/FunctionsCoordinator.sol#L194)
+
+	```solidity
+	    for (uint256 i = 0; i < numberOfFulfillments; ++i) {
+	```
+
+- Found in src/v0.8/functions/dev/v1_X/FunctionsRouter.sol [Line: 518](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/FunctionsRouter.sol#L518)
+
+	```solidity
+	    for (uint256 i = 0; i < idsArrayLength; ++i) {
+	```
+
+- Found in src/v0.8/functions/dev/v1_X/FunctionsSubscriptions.sol [Line: 503](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/FunctionsSubscriptions.sol#L503)
+
+	```solidity
+	    for (uint256 i = 0; i < requestsToTimeoutByCommitment.length; ++i) {
+	```
+
+- Found in src/v0.8/functions/dev/v1_X/accessControl/TermsOfServiceAllowList.sol [Line: 52](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/accessControl/TermsOfServiceAllowList.sol#L52)
+
+	```solidity
+	    for (uint256 j = 0; j < initialBlockedSenders.length; ++j) {
+	```
+
+- Found in src/v0.8/functions/dev/v1_X/ocr/OCR2Base.sol [Line: 147](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/ocr/OCR2Base.sol#L147)
+
+	```solidity
+	    for (uint256 i = 0; i < args.signers.length; i++) {
+	```
+
+- Found in src/v0.8/functions/dev/v1_X/ocr/OCR2Base.sol [Line: 345](../tests/ccip-contracts/contracts/src/v0.8/functions/dev/v1_X/ocr/OCR2Base.sol#L345)
+
+	```solidity
+	      for (uint256 i = 0; i < rs.length; ++i) {
+	```
+
+- Found in src/v0.8/functions/v1_0_0/FunctionsCoordinator.sol [Line: 155](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/FunctionsCoordinator.sol#L155)
+
+	```solidity
+	    for (uint256 i = 0; i < requestIds.length; ++i) {
+	```
+
+- Found in src/v0.8/functions/v1_0_0/FunctionsRouter.sol [Line: 516](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/FunctionsRouter.sol#L516)
+
+	```solidity
+	    for (uint256 i = 0; i < idsArrayLength; ++i) {
+	```
+
+- Found in src/v0.8/functions/v1_0_0/FunctionsSubscriptions.sol [Line: 503](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/FunctionsSubscriptions.sol#L503)
+
+	```solidity
+	    for (uint256 i = 0; i < requestsToTimeoutByCommitment.length; ++i) {
+	```
 
 - Found in src/v0.8/functions/v1_0_0/ocr/OCR2Base.sol [Line: 145](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/ocr/OCR2Base.sol#L145)
 
@@ -2350,6 +2404,48 @@ Avoid `require` / `revert` statements in a loop because a single bad item can ca
 	```
 
 - Found in src/v0.8/functions/v1_0_0/ocr/OCR2Base.sol [Line: 349](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_0_0/ocr/OCR2Base.sol#L349)
+
+	```solidity
+	      for (uint256 i = 0; i < rs.length; ++i) {
+	```
+
+- Found in src/v0.8/functions/v1_1_0/FunctionsCoordinator.sol [Line: 155](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_1_0/FunctionsCoordinator.sol#L155)
+
+	```solidity
+	    for (uint256 i = 0; i < numberOfFulfillments; ++i) {
+	```
+
+- Found in src/v0.8/functions/v1_1_0/ocr/OCR2Base.sol [Line: 139](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_1_0/ocr/OCR2Base.sol#L139)
+
+	```solidity
+	    for (uint256 i = 0; i < args.signers.length; i++) {
+	```
+
+- Found in src/v0.8/functions/v1_1_0/ocr/OCR2Base.sol [Line: 339](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_1_0/ocr/OCR2Base.sol#L339)
+
+	```solidity
+	      for (uint256 i = 0; i < rs.length; ++i) {
+	```
+
+- Found in src/v0.8/functions/v1_3_0/FunctionsCoordinator.sol [Line: 195](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_3_0/FunctionsCoordinator.sol#L195)
+
+	```solidity
+	    for (uint256 i = 0; i < numberOfFulfillments; ++i) {
+	```
+
+- Found in src/v0.8/functions/v1_3_0/accessControl/TermsOfServiceAllowList.sol [Line: 53](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_3_0/accessControl/TermsOfServiceAllowList.sol#L53)
+
+	```solidity
+	    for (uint256 j = 0; j < initialBlockedSenders.length; ++j) {
+	```
+
+- Found in src/v0.8/functions/v1_3_0/ocr/OCR2Base.sol [Line: 147](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_3_0/ocr/OCR2Base.sol#L147)
+
+	```solidity
+	    for (uint256 i = 0; i < args.signers.length; i++) {
+	```
+
+- Found in src/v0.8/functions/v1_3_0/ocr/OCR2Base.sol [Line: 345](../tests/ccip-contracts/contracts/src/v0.8/functions/v1_3_0/ocr/OCR2Base.sol#L345)
 
 	```solidity
 	      for (uint256 i = 0; i < rs.length; ++i) {

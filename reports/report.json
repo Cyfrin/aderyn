@@ -5144,14 +5144,14 @@
           {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
             "line_no": 10,
-            "src": "227:129",
-            "src_char": "227:129"
+            "src": "263:93",
+            "src_char": "263:93"
           },
           {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
             "line_no": 17,
-            "src": "416:150",
-            "src_char": "416:150"
+            "src": "452:114",
+            "src_char": "452:114"
           }
         ]
       },
