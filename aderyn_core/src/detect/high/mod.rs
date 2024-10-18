@@ -1,6 +1,5 @@
 pub(crate) mod arbitrary_transfer_from;
 pub(crate) mod avoid_abi_encode_packed;
-pub(crate) mod block_timestamp_deadline;
 pub(crate) mod const_func_change_state;
 pub(crate) mod contract_locks_ether;
 pub(crate) mod dangerous_strict_equality_balance;
@@ -42,7 +41,6 @@ pub(crate) mod yul_return;
 
 pub use arbitrary_transfer_from::ArbitraryTransferFromDetector;
 pub use avoid_abi_encode_packed::AvoidAbiEncodePackedDetector;
-pub use block_timestamp_deadline::BlockTimestampDeadlineDetector;
 pub use const_func_change_state::ConstantFunctionChangingStateDetector;
 pub use contract_locks_ether::ContractLocksEtherDetector;
 pub use dangerous_strict_equality_balance::DangerousStrictEqualityOnBalanceDetector;

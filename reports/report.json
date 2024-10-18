@@ -456,8 +456,8 @@
     ]
   },
   "issue_count": {
-    "high": 41,
-    "low": 46
+    "high": 40,
+    "low": 47
   },
   "high_issues": {
     "issues": [
@@ -496,115 +496,6 @@
             "line_no": 26,
             "src": "887:16",
             "src_char": "887:16"
-          }
-        ]
-      },
-      {
-        "title": "Using `block.timestamp` for swap deadline offers no protection",
-        "description": "In the PoS model, proposers know well in advance if they will propose one or consecutive blocks ahead of time. In such a scenario, a malicious validator can hold back the transaction and execute it at a more favourable block number.Consider allowing function caller to specify swap deadline input parameter.",
-        "detector_name": "block-timestamp-is-weak-deadline",
-        "instances": [
-          {
-            "contract_path": "src/Trump.sol",
-            "line_no": 290,
-            "src": "9949:190",
-            "src_char": "9949:190"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 23,
-            "src": "670:83",
-            "src_char": "670:83"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 24,
-            "src": "763:83",
-            "src_char": "763:83"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 25,
-            "src": "856:70",
-            "src_char": "856:70"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 26,
-            "src": "936:80",
-            "src_char": "936:80"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 27,
-            "src": "1026:80",
-            "src_char": "1026:80"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 31,
-            "src": "1278:112",
-            "src_char": "1278:112"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 32,
-            "src": "1400:99",
-            "src_char": "1400:99"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 33,
-            "src": "1509:109",
-            "src_char": "1509:109"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
-            "line_no": 52,
-            "src": "1115:143",
-            "src_char": "1115:143"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
-            "line_no": 55,
-            "src": "1293:321",
-            "src_char": "1293:321"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
-            "line_no": 66,
-            "src": "1668:131",
-            "src_char": "1668:131"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
-            "line_no": 69,
-            "src": "1828:236",
-            "src_char": "1828:236"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
-            "line_no": 77,
-            "src": "2132:144",
-            "src_char": "2132:144"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
-            "line_no": 80,
-            "src": "2312:322",
-            "src_char": "2312:322"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
-            "line_no": 91,
-            "src": "2690:132",
-            "src_char": "2690:132"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
-            "line_no": 94,
-            "src": "2852:237",
-            "src_char": "2852:237"
           }
         ]
       },
@@ -4249,6 +4140,115 @@
             "line_no": 28,
             "src": "735:12",
             "src_char": "735:12"
+          }
+        ]
+      },
+      {
+        "title": "Using `block.timestamp` for swap deadline offers no protection",
+        "description": "In the PoS model, proposers know well in advance if they will propose one or consecutive blocks ahead of time. In such a scenario, a malicious validator can hold back the transaction and execute it at a more favourable block number.Consider allowing function caller to specify swap deadline input parameter.",
+        "detector_name": "block-timestamp-is-weak-deadline",
+        "instances": [
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 290,
+            "src": "9949:190",
+            "src_char": "9949:190"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 23,
+            "src": "670:83",
+            "src_char": "670:83"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 24,
+            "src": "763:83",
+            "src_char": "763:83"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 25,
+            "src": "856:70",
+            "src_char": "856:70"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 26,
+            "src": "936:80",
+            "src_char": "936:80"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 27,
+            "src": "1026:80",
+            "src_char": "1026:80"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 31,
+            "src": "1278:112",
+            "src_char": "1278:112"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 32,
+            "src": "1400:99",
+            "src_char": "1400:99"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 33,
+            "src": "1509:109",
+            "src_char": "1509:109"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 52,
+            "src": "1115:143",
+            "src_char": "1115:143"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 55,
+            "src": "1293:321",
+            "src_char": "1293:321"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 66,
+            "src": "1668:131",
+            "src_char": "1668:131"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 69,
+            "src": "1828:236",
+            "src_char": "1828:236"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 77,
+            "src": "2132:144",
+            "src_char": "2132:144"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 80,
+            "src": "2312:322",
+            "src_char": "2312:322"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 91,
+            "src": "2690:132",
+            "src_char": "2690:132"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 94,
+            "src": "2852:237",
+            "src_char": "2852:237"
           }
         ]
       },

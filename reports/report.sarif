@@ -72,202 +72,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/Trump.sol"
-                },
-                "region": {
-                  "byteLength": 190,
-                  "byteOffset": 9949
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV2Swapper.sol"
-                },
-                "region": {
-                  "byteLength": 83,
-                  "byteOffset": 670
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV2Swapper.sol"
-                },
-                "region": {
-                  "byteLength": 83,
-                  "byteOffset": 763
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV2Swapper.sol"
-                },
-                "region": {
-                  "byteLength": 70,
-                  "byteOffset": 856
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV2Swapper.sol"
-                },
-                "region": {
-                  "byteLength": 80,
-                  "byteOffset": 936
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV2Swapper.sol"
-                },
-                "region": {
-                  "byteLength": 80,
-                  "byteOffset": 1026
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV2Swapper.sol"
-                },
-                "region": {
-                  "byteLength": 112,
-                  "byteOffset": 1278
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV2Swapper.sol"
-                },
-                "region": {
-                  "byteLength": 99,
-                  "byteOffset": 1400
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV2Swapper.sol"
-                },
-                "region": {
-                  "byteLength": 109,
-                  "byteOffset": 1509
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV3Swapper.sol"
-                },
-                "region": {
-                  "byteLength": 143,
-                  "byteOffset": 1115
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV3Swapper.sol"
-                },
-                "region": {
-                  "byteLength": 321,
-                  "byteOffset": 1293
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV3Swapper.sol"
-                },
-                "region": {
-                  "byteLength": 131,
-                  "byteOffset": 1668
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV3Swapper.sol"
-                },
-                "region": {
-                  "byteLength": 236,
-                  "byteOffset": 1828
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV3Swapper.sol"
-                },
-                "region": {
-                  "byteLength": 144,
-                  "byteOffset": 2132
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV3Swapper.sol"
-                },
-                "region": {
-                  "byteLength": 322,
-                  "byteOffset": 2312
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV3Swapper.sol"
-                },
-                "region": {
-                  "byteLength": 132,
-                  "byteOffset": 2690
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/uniswap/UniswapV3Swapper.sol"
-                },
-                "region": {
-                  "byteLength": 237,
-                  "byteOffset": 2852
-                }
-              }
-            }
-          ],
-          "message": {
-            "text": "In the PoS model, proposers know well in advance if they will propose one or consecutive blocks ahead of time. In such a scenario, a malicious validator can hold back the transaction and execute it at a more favourable block number.Consider allowing function caller to specify swap deadline input parameter."
-          },
-          "ruleId": "block-timestamp-is-weak-deadline"
-        },
-        {
-          "level": "warning",
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/ArbitraryTransferFrom.sol"
                 },
                 "region": {
@@ -6745,6 +6549,202 @@
             "text": "This is a best-practice to protect against reentrancy in other modifiers."
           },
           "ruleId": "non-reentrant-is-not-before-others"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 190,
+                  "byteOffset": 9949
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV2Swapper.sol"
+                },
+                "region": {
+                  "byteLength": 83,
+                  "byteOffset": 670
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV2Swapper.sol"
+                },
+                "region": {
+                  "byteLength": 83,
+                  "byteOffset": 763
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV2Swapper.sol"
+                },
+                "region": {
+                  "byteLength": 70,
+                  "byteOffset": 856
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV2Swapper.sol"
+                },
+                "region": {
+                  "byteLength": 80,
+                  "byteOffset": 936
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV2Swapper.sol"
+                },
+                "region": {
+                  "byteLength": 80,
+                  "byteOffset": 1026
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV2Swapper.sol"
+                },
+                "region": {
+                  "byteLength": 112,
+                  "byteOffset": 1278
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV2Swapper.sol"
+                },
+                "region": {
+                  "byteLength": 99,
+                  "byteOffset": 1400
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV2Swapper.sol"
+                },
+                "region": {
+                  "byteLength": 109,
+                  "byteOffset": 1509
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV3Swapper.sol"
+                },
+                "region": {
+                  "byteLength": 143,
+                  "byteOffset": 1115
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV3Swapper.sol"
+                },
+                "region": {
+                  "byteLength": 321,
+                  "byteOffset": 1293
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV3Swapper.sol"
+                },
+                "region": {
+                  "byteLength": 131,
+                  "byteOffset": 1668
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV3Swapper.sol"
+                },
+                "region": {
+                  "byteLength": 236,
+                  "byteOffset": 1828
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV3Swapper.sol"
+                },
+                "region": {
+                  "byteLength": 144,
+                  "byteOffset": 2132
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV3Swapper.sol"
+                },
+                "region": {
+                  "byteLength": 322,
+                  "byteOffset": 2312
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV3Swapper.sol"
+                },
+                "region": {
+                  "byteLength": 132,
+                  "byteOffset": 2690
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/uniswap/UniswapV3Swapper.sol"
+                },
+                "region": {
+                  "byteLength": 237,
+                  "byteOffset": 2852
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "In the PoS model, proposers know well in advance if they will propose one or consecutive blocks ahead of time. In such a scenario, a malicious validator can hold back the transaction and execute it at a more favourable block number.Consider allowing function caller to specify swap deadline input parameter."
+          },
+          "ruleId": "block-timestamp-is-weak-deadline"
         },
         {
           "level": "note",
