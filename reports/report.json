@@ -1,7 +1,7 @@
 {
   "files_summary": {
     "total_source_units": 112,
-    "total_sloc": 3954
+    "total_sloc": 3957
   },
   "files_details": {
     "files_details": [
@@ -339,7 +339,7 @@
       },
       {
         "file_path": "src/UnprotectedInitialize.sol",
-        "n_sloc": 25
+        "n_sloc": 28
       },
       {
         "file_path": "src/UnsafeERC721Mint.sol",
@@ -549,9 +549,9 @@
         "instances": [
           {
             "contract_path": "src/UnprotectedInitialize.sol",
-            "line_no": 35,
-            "src": "820:33",
-            "src_char": "820:33"
+            "line_no": 37,
+            "src": "916:33",
+            "src_char": "916:33"
           }
         ]
       },
@@ -4398,9 +4398,9 @@
           },
           {
             "contract_path": "src/UnprotectedInitialize.sol",
-            "line_no": 13,
-            "src": "222:21",
-            "src_char": "222:21"
+            "line_no": 15,
+            "src": "320:21",
+            "src_char": "320:21"
           }
         ]
       },
@@ -4558,6 +4558,12 @@
             "line_no": 27,
             "src": "915:65",
             "src_char": "915:65"
+          },
+          {
+            "contract_path": "src/UnprotectedInitialize.sol",
+            "line_no": 43,
+            "src": "1071:38",
+            "src_char": "1071:38"
           },
           {
             "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
@@ -6763,21 +6769,21 @@
           },
           {
             "contract_path": "src/UnprotectedInitialize.sol",
-            "line_no": 19,
-            "src": "354:22",
-            "src_char": "354:22"
+            "line_no": 21,
+            "src": "452:22",
+            "src_char": "452:22"
           },
           {
             "contract_path": "src/UnprotectedInitialize.sol",
-            "line_no": 25,
-            "src": "522:20",
-            "src_char": "522:20"
+            "line_no": 27,
+            "src": "618:20",
+            "src_char": "618:20"
           },
           {
             "contract_path": "src/UnprotectedInitialize.sol",
-            "line_no": 35,
-            "src": "820:33",
-            "src_char": "820:33"
+            "line_no": 37,
+            "src": "916:33",
+            "src_char": "916:33"
           },
           {
             "contract_path": "src/UnusedError.sol",
@@ -7022,9 +7028,9 @@
           },
           {
             "contract_path": "src/UnprotectedInitialize.sol",
-            "line_no": 7,
-            "src": "146:5",
-            "src_char": "146:5"
+            "line_no": 9,
+            "src": "244:5",
+            "src_char": "244:5"
           },
           {
             "contract_path": "src/auditor_mode/ExternalCalls.sol",
