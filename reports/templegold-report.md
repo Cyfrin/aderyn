@@ -8207,13 +8207,25 @@ it is recommended that the definition be removed when custom error is unused
 
 Avoid `require` / `revert` statements in a loop because a single bad item can cause the whole transaction to fail. It's better to forgive on fail and return failed elements post processing of the loop
 
-<details><summary>6 Found Instances</summary>
+<details><summary>11 Found Instances</summary>
 
 
 - Found in contracts/admin/TempleTeamPayments.sol [Line: 38](../tests/2024-07-templegold/protocol/contracts/admin/TempleTeamPayments.sol#L38)
 
 	```solidity
 	        for (uint256 i = 0; i < _addresses.length; i++) {
+	```
+
+- Found in contracts/admin/TempleTeamPaymentsFactory.sol [Line: 128](../tests/2024-07-templegold/protocol/contracts/admin/TempleTeamPaymentsFactory.sol#L128)
+
+	```solidity
+	        for (uint256 i; i < _dests.length; ) {
+	```
+
+- Found in contracts/admin/TempleTeamPaymentsV2.sol [Line: 50](../tests/2024-07-templegold/protocol/contracts/admin/TempleTeamPaymentsV2.sol#L50)
+
+	```solidity
+	        for (uint256 i; i < _addresses.length; ) {
 	```
 
 - Found in contracts/core/OpsManager.sol [Line: 97](../tests/2024-07-templegold/protocol/contracts/core/OpsManager.sol#L97)
@@ -8234,10 +8246,28 @@ Avoid `require` / `revert` statements in a loop because a single bad item can ca
 	        for (uint256 i = 0; i < vaults.length; i++) {
 	```
 
+- Found in contracts/fakes/UniswapV2Router02NoEth.sol [Line: 362](../tests/2024-07-templegold/protocol/contracts/fakes/UniswapV2Router02NoEth.sol#L362)
+
+	```solidity
+	        for (uint i; i < path.length - 1; i++) {
+	```
+
 - Found in contracts/util/ABDKMath64x64.sol [Line: 411](../tests/2024-07-templegold/protocol/contracts/util/ABDKMath64x64.sol#L411)
 
 	```solidity
 	        while (y != 0) {
+	```
+
+- Found in contracts/v2/TreasuryReservesVault.sol [Line: 187](../tests/2024-07-templegold/protocol/contracts/v2/TreasuryReservesVault.sol#L187)
+
+	```solidity
+	        for (uint256 i; i < _length; ++i) {
+	```
+
+- Found in contracts/v2/TreasuryReservesVault.sol [Line: 216](../tests/2024-07-templegold/protocol/contracts/v2/TreasuryReservesVault.sol#L216)
+
+	```solidity
+	        for (; i < _length; ++i) {
 	```
 
 - Found in contracts/v2/safeGuards/SafeForked.sol [Line: 78](../tests/2024-07-templegold/protocol/contracts/v2/safeGuards/SafeForked.sol#L78)
