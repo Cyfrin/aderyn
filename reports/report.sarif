@@ -10,26 +10,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/inheritance/ExtendedInheritance.sol"
-                },
-                "region": {
-                  "byteLength": 96,
-                  "byteOffset": 474
-                }
-              }
-            }
-          ],
-          "message": {
-            "text": "When calling `delegatecall` the same `msg.value` amount will be accredited multiple times."
-          },
-          "ruleId": "delegate-call-in-loop"
-        },
-        {
-          "level": "warning",
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/KeccakContract.sol"
                 },
                 "region": {
@@ -3022,6 +3002,26 @@
             "text": "The return value of the low-level call is not checked, so if the call fails, the Ether will be locked in the contract. If the low level is used to prevent blocking operations, consider logging failed calls. Ensure that the return value of a low-level call is checked or logged."
           },
           "ruleId": "unchecked-low-level-call"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/inheritance/ExtendedInheritance.sol"
+                },
+                "region": {
+                  "byteLength": 96,
+                  "byteOffset": 474
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Using `delegatecall` in loop may consume excessive gas"
+          },
+          "ruleId": "delegate-call-in-loop"
         },
         {
           "level": "note",
