@@ -1,11 +1,18 @@
 use std::{collections::BTreeMap, error::Error};
 
-use crate::ast::{NodeID, NodeType};
+use crate::ast::NodeID;
 
 use crate::{
     capture,
-    context::{browser::GetClosestAncestorOfTypeX, workspace_context::WorkspaceContext},
-    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
+    context::{
+        browser::{ExtractIdentifiers, ExtractRevertStatements},
+        graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
+        workspace_context::WorkspaceContext,
+    },
+    detect::{
+        detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
+        helpers::get_explore_centers_of_loops,
+    },
 };
 use eyre::Result;
 
@@ -18,21 +25,15 @@ pub struct RevertsAndRequiresInLoopsDetector {
 
 impl IssueDetector for RevertsAndRequiresInLoopsDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        // Collect all require statements
-        let requires_and_reverts = context
-            .identifiers()
-            .into_iter()
-            .filter(|&id| id.name == "revert" || id.name == "require")
-            .collect::<Vec<_>>();
+        let loop_explore_centers = get_explore_centers_of_loops(context);
 
-        for item in requires_and_reverts {
-            if let Some(for_loop) = item.closest_ancestor_of_type(context, NodeType::ForStatement) {
-                capture!(self, context, for_loop);
-            }
-            if let Some(while_loop) =
-                item.closest_ancestor_of_type(context, NodeType::WhileStatement)
-            {
-                capture!(self, context, while_loop);
+        for l in loop_explore_centers {
+            let callgraph = CallGraph::new(context, &[l], CallGraphDirection::Inward)?;
+            let mut tracker = RevertAndRequireTracker::default();
+            callgraph.accept(context, &mut tracker)?;
+
+            if tracker.has_require_or_revert || tracker.has_revert_statement {
+                capture!(self, context, l);
             }
         }
 
@@ -57,6 +58,34 @@ impl IssueDetector for RevertsAndRequiresInLoopsDetector {
 
     fn name(&self) -> String {
         format!("{}", IssueDetectorNamePool::RevertsAndRequiresInLoops)
+    }
+}
+
+#[derive(Default)]
+struct RevertAndRequireTracker {
+    has_require_or_revert: bool,
+    has_revert_statement: bool,
+}
+
+impl CallGraphVisitor for RevertAndRequireTracker {
+    fn visit_any(&mut self, node: &crate::ast::ASTNode) -> eyre::Result<()> {
+        // Check for revert() and require() calls
+        let identifiers = ExtractIdentifiers::from(node).extracted;
+
+        let requires_and_reverts_are_present =
+            identifiers.iter().any(|id| id.name == "revert" || id.name == "require");
+
+        if requires_and_reverts_are_present {
+            self.has_require_or_revert = true;
+        }
+
+        // Check for revert statements
+        let revert_statements = ExtractRevertStatements::from(node).extracted;
+
+        if !revert_statements.is_empty() {
+            self.has_revert_statement = true;
+        }
+        Ok(())
     }
 }
 

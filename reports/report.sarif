@@ -8345,8 +8345,8 @@
                   "uri": "src/RevertsAndRequriesInLoops.sol"
                 },
                 "region": {
-                  "byteLength": 129,
-                  "byteOffset": 227
+                  "byteLength": 93,
+                  "byteOffset": 263
                 }
               }
             },
@@ -8356,8 +8356,8 @@
                   "uri": "src/RevertsAndRequriesInLoops.sol"
                 },
                 "region": {
-                  "byteLength": 150,
-                  "byteOffset": 416
+                  "byteLength": 114,
+                  "byteOffset": 452
                 }
               }
             }
