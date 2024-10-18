@@ -1,6 +1,6 @@
 use std::{collections::BTreeMap, error::Error};
 
-use crate::ast::{ASTNode, ContractKind, NodeID, NodeType, Visibility};
+use crate::ast::{ASTNode, ContractKind, FunctionKind, NodeID, NodeType, Visibility};
 
 use crate::{
     capture,
@@ -34,7 +34,7 @@ impl IssueDetector for DeadCodeDetector {
                 f.overrides.is_none()
                     && f.implemented
                     && f.visibility == Visibility::Internal
-                    && !f.is_constructor
+                    && f.kind() != &FunctionKind::Constructor
             })
             .filter(|&f| {
                 if let Some(ASTNode::ContractDefinition(contract)) =
