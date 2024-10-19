@@ -493,27 +493,15 @@
         "instances": [
           {
             "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 16,
-            "src": "370:38",
-            "src_char": "370:38"
-          },
-          {
-            "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 20,
-            "src": "496:42",
-            "src_char": "496:42"
-          },
-          {
-            "contract_path": "src/ArbitraryTransferFrom.sol",
             "line_no": 24,
-            "src": "634:53",
-            "src_char": "634:53"
+            "src": "738:42",
+            "src_char": "738:42"
           },
           {
             "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 30,
-            "src": "864:44",
-            "src_char": "864:44"
+            "line_no": 29,
+            "src": "879:53",
+            "src_char": "879:53"
           },
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
@@ -2353,21 +2341,21 @@
         "instances": [
           {
             "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 16,
-            "src": "370:20",
-            "src_char": "370:20"
+            "line_no": 19,
+            "src": "601:20",
+            "src_char": "601:20"
           },
           {
             "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 30,
-            "src": "864:20",
-            "src_char": "864:20"
+            "line_no": 34,
+            "src": "1046:20",
+            "src_char": "1046:20"
           },
           {
             "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 50,
-            "src": "1517:20",
-            "src_char": "1517:20"
+            "line_no": 54,
+            "src": "1699:20",
+            "src_char": "1699:20"
           },
           {
             "contract_path": "src/ContractLocksEther.sol",
@@ -2770,9 +2758,9 @@
           },
           {
             "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 28,
-            "src": "772:5",
-            "src_char": "772:5"
+            "line_no": 32,
+            "src": "954:5",
+            "src_char": "954:5"
           },
           {
             "contract_path": "src/AssemblyExample.sol",
@@ -5682,9 +5670,9 @@
         "instances": [
           {
             "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 15,
-            "src": "304:4",
-            "src_char": "304:4"
+            "line_no": 18,
+            "src": "535:4",
+            "src_char": "535:4"
           },
           {
             "contract_path": "src/ContractLocksEther.sol",
