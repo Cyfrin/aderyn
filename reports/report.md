@@ -270,31 +270,19 @@ If all arguments are strings and or bytes, `bytes.concat()` should be used inste
 
 Passing an arbitrary `from` address to `transferFrom` (or `safeTransferFrom`) can lead to loss of funds, because anyone can transfer tokens from the `from` address if an approval is made.  
 
-<details><summary>6 Found Instances</summary>
+<details><summary>4 Found Instances</summary>
 
 
-- Found in src/ArbitraryTransferFrom.sol [Line: 16](../tests/contract-playground/src/ArbitraryTransferFrom.sol#L16)
-
-	```solidity
-	        s_token.transferFrom(from, to, amount);
-	```
-
-- Found in src/ArbitraryTransferFrom.sol [Line: 20](../tests/contract-playground/src/ArbitraryTransferFrom.sol#L20)
+- Found in src/ArbitraryTransferFrom.sol [Line: 24](../tests/contract-playground/src/ArbitraryTransferFrom.sol#L24)
 
 	```solidity
 	        s_token.safeTransferFrom(from, to, amount);
 	```
 
-- Found in src/ArbitraryTransferFrom.sol [Line: 24](../tests/contract-playground/src/ArbitraryTransferFrom.sol#L24)
+- Found in src/ArbitraryTransferFrom.sol [Line: 29](../tests/contract-playground/src/ArbitraryTransferFrom.sol#L29)
 
 	```solidity
 	        SafeERC20.safeTransferFrom(s_token, from, to, amount);
-	```
-
-- Found in src/ArbitraryTransferFrom.sol [Line: 30](../tests/contract-playground/src/ArbitraryTransferFrom.sol#L30)
-
-	```solidity
-	        s_token.transferFrom(from_msgsender, to, am);
 	```
 
 - Found in src/DeprecatedOZFunctions.sol [Line: 17](../tests/contract-playground/src/DeprecatedOZFunctions.sol#L17)
@@ -2305,19 +2293,19 @@ ERC20 functions may not behave as expected. For example: return values are not a
 <details><summary>19 Found Instances</summary>
 
 
-- Found in src/ArbitraryTransferFrom.sol [Line: 16](../tests/contract-playground/src/ArbitraryTransferFrom.sol#L16)
+- Found in src/ArbitraryTransferFrom.sol [Line: 19](../tests/contract-playground/src/ArbitraryTransferFrom.sol#L19)
 
 	```solidity
 	        s_token.transferFrom(from, to, amount);
 	```
 
-- Found in src/ArbitraryTransferFrom.sol [Line: 30](../tests/contract-playground/src/ArbitraryTransferFrom.sol#L30)
+- Found in src/ArbitraryTransferFrom.sol [Line: 34](../tests/contract-playground/src/ArbitraryTransferFrom.sol#L34)
 
 	```solidity
 	        s_token.transferFrom(from_msgsender, to, am);
 	```
 
-- Found in src/ArbitraryTransferFrom.sol [Line: 50](../tests/contract-playground/src/ArbitraryTransferFrom.sol#L50)
+- Found in src/ArbitraryTransferFrom.sol [Line: 54](../tests/contract-playground/src/ArbitraryTransferFrom.sol#L54)
 
 	```solidity
 	        s_token.transferFrom(msg.sender, to, amount);
@@ -2734,7 +2722,7 @@ Instead of marking a function as `public`, consider marking it as `external` if 
 	    function f4() public {
 	```
 
-- Found in src/ArbitraryTransferFrom.sol [Line: 28](../tests/contract-playground/src/ArbitraryTransferFrom.sol#L28)
+- Found in src/ArbitraryTransferFrom.sol [Line: 32](../tests/contract-playground/src/ArbitraryTransferFrom.sol#L32)
 
 	```solidity
 	    function good1(address to, uint256 am) public {
@@ -5727,7 +5715,7 @@ Functions that are not used. Consider removing them.
 <details><summary>12 Found Instances</summary>
 
 
-- Found in src/ArbitraryTransferFrom.sol [Line: 15](../tests/contract-playground/src/ArbitraryTransferFrom.sol#L15)
+- Found in src/ArbitraryTransferFrom.sol [Line: 18](../tests/contract-playground/src/ArbitraryTransferFrom.sol#L18)
 
 	```solidity
 	    function bad1(address from, address to, uint256 amount) internal {
