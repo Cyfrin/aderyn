@@ -1,16 +1,18 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::ast::{FunctionKind, NodeID};
 
-use crate::capture;
-use crate::context::browser::ExtractEmitStatements;
-use crate::context::graph::{CallGraph, CallGraphDirection, CallGraphVisitor};
-use crate::detect::detector::IssueDetectorNamePool;
-use crate::detect::helpers;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    capture,
+    context::{
+        browser::ExtractEmitStatements,
+        graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
+        workspace_context::WorkspaceContext,
+    },
+    detect::{
+        detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
+        helpers,
+    },
 };
 use eyre::Result;
 
@@ -27,9 +29,7 @@ impl IssueDetector for StateVariableChangesWithoutEventDetector {
             if *func.kind() == FunctionKind::Constructor {
                 continue;
             }
-            let mut event_tracker = EventEmissionTracker {
-                does_emit_events: false,
-            };
+            let mut event_tracker = EventEmissionTracker { does_emit_events: false };
             let investigator =
                 CallGraph::new(context, &[&(func.into())], CallGraphDirection::Inward)?;
 
@@ -67,10 +67,7 @@ impl IssueDetector for StateVariableChangesWithoutEventDetector {
     }
 
     fn name(&self) -> String {
-        format!(
-            "{}",
-            IssueDetectorNamePool::StateVariableChangesWithoutEvents
-        )
+        format!("{}", IssueDetectorNamePool::StateVariableChangesWithoutEvents)
     }
 }
 
@@ -122,9 +119,6 @@ mod state_variable_changes_without_events_tests {
 
         println!("{:?}", detector.instances());
         // assert the severity is low
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

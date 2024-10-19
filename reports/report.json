@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 110,
-    "total_sloc": 3904
+    "total_source_units": 112,
+    "total_sloc": 3957
   },
   "files_details": {
     "files_details": [
@@ -67,7 +67,7 @@
       },
       {
         "file_path": "src/ContractLocksEther.sol",
-        "n_sloc": 121
+        "n_sloc": 142
       },
       {
         "file_path": "src/ContractWithTodo.sol",
@@ -210,6 +210,10 @@
         "n_sloc": 8
       },
       {
+        "file_path": "src/OnlyLibrary.sol",
+        "n_sloc": 2
+      },
+      {
         "file_path": "src/OutOfOrderRetryable.sol",
         "n_sloc": 165
       },
@@ -248,6 +252,10 @@
       {
         "file_path": "src/StateVariableCouldBeDeclaredConstant.sol",
         "n_sloc": 27
+      },
+      {
+        "file_path": "src/StateVariableCouldBeDeclaredImmutable.sol",
+        "n_sloc": 22
       },
       {
         "file_path": "src/StateVariables.sol",
@@ -331,7 +339,7 @@
       },
       {
         "file_path": "src/UnprotectedInitialize.sol",
-        "n_sloc": 25
+        "n_sloc": 28
       },
       {
         "file_path": "src/UnsafeERC721Mint.sol",
@@ -399,7 +407,7 @@
       },
       {
         "file_path": "src/inheritance/ExtendedInheritance.sol",
-        "n_sloc": 17
+        "n_sloc": 18
       },
       {
         "file_path": "src/inheritance/IContractInheritance.sol",
@@ -407,7 +415,7 @@
       },
       {
         "file_path": "src/inheritance/InheritanceBase.sol",
-        "n_sloc": 8
+        "n_sloc": 12
       },
       {
         "file_path": "src/nested/1/Nested.sol",
@@ -448,28 +456,15 @@
     ]
   },
   "issue_count": {
-    "high": 42,
-    "low": 44
+    "high": 38,
+    "low": 48
   },
   "high_issues": {
     "issues": [
       {
-        "title": "Using `delegatecall` in loop",
-        "description": "When calling `delegatecall` the same `msg.value` amount will be accredited multiple times.",
-        "detector_name": "delegate-call-in-loop",
-        "instances": [
-          {
-            "contract_path": "src/inheritance/ExtendedInheritance.sol",
-            "line_no": 15,
-            "src": "474:96",
-            "src_char": "474:96"
-          }
-        ]
-      },
-      {
         "title": "`abi.encodePacked()` should not be used with dynamic types when passing the result to a hash function such as `keccak256()`",
         "description": "Use `abi.encode()` instead which will pad items to 32 bytes, which will [prevent hash collisions](https://docs.soliditylang.org/en/v0.8.13/abi-spec.html#non-standard-packed-mode) (e.g. `abi.encodePacked(0x123,0x456)` => `0x123456` => `abi.encodePacked(0x1,0x23456)`, but `abi.encode(0x123,0x456)` => `0x0...1230...456`). Unless there is a compelling reason, `abi.encode` should be preferred. If there is only one argument to `abi.encodePacked()` it can often be cast to `bytes()` or `bytes32()` [instead](https://ethereum.stackexchange.com/questions/30912/how-to-compare-strings-in-solidity#answer-82739).\nIf all arguments are strings and or bytes, `bytes.concat()` should be used instead.",
-        "detector_name": "avoid-abi-encode-packed",
+        "detector_name": "hash-collision-due-to-abi-encode-packed",
         "instances": [
           {
             "contract_path": "src/KeccakContract.sol",
@@ -492,142 +487,21 @@
         ]
       },
       {
-        "title": "Using `block.timestamp` for swap deadline offers no protection",
-        "description": "In the PoS model, proposers know well in advance if they will propose one or consecutive blocks ahead of time. In such a scenario, a malicious validator can hold back the transaction and execute it at a more favourable block number.Consider allowing function caller to specify swap deadline input parameter.",
-        "detector_name": "block-timestamp-deadline",
-        "instances": [
-          {
-            "contract_path": "src/Trump.sol",
-            "line_no": 290,
-            "src": "9949:190",
-            "src_char": "9949:190"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 23,
-            "src": "670:83",
-            "src_char": "670:83"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 24,
-            "src": "763:83",
-            "src_char": "763:83"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 25,
-            "src": "856:70",
-            "src_char": "856:70"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 26,
-            "src": "936:80",
-            "src_char": "936:80"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 27,
-            "src": "1026:80",
-            "src_char": "1026:80"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 31,
-            "src": "1278:112",
-            "src_char": "1278:112"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 32,
-            "src": "1400:99",
-            "src_char": "1400:99"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
-            "line_no": 33,
-            "src": "1509:109",
-            "src_char": "1509:109"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
-            "line_no": 52,
-            "src": "1115:143",
-            "src_char": "1115:143"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
-            "line_no": 55,
-            "src": "1293:321",
-            "src_char": "1293:321"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
-            "line_no": 66,
-            "src": "1668:131",
-            "src_char": "1668:131"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
-            "line_no": 69,
-            "src": "1828:236",
-            "src_char": "1828:236"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
-            "line_no": 77,
-            "src": "2132:144",
-            "src_char": "2132:144"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
-            "line_no": 80,
-            "src": "2312:322",
-            "src_char": "2312:322"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
-            "line_no": 91,
-            "src": "2690:132",
-            "src_char": "2690:132"
-          },
-          {
-            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
-            "line_no": 94,
-            "src": "2852:237",
-            "src_char": "2852:237"
-          }
-        ]
-      },
-      {
         "title": "Arbitrary `from` passed to `transferFrom` (or `safeTransferFrom`)",
         "description": "Passing an arbitrary `from` address to `transferFrom` (or `safeTransferFrom`) can lead to loss of funds, because anyone can transfer tokens from the `from` address if an approval is made.  ",
         "detector_name": "arbitrary-transfer-from",
         "instances": [
           {
             "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 16,
-            "src": "370:38",
-            "src_char": "370:38"
-          },
-          {
-            "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 20,
-            "src": "496:42",
-            "src_char": "496:42"
-          },
-          {
-            "contract_path": "src/ArbitraryTransferFrom.sol",
             "line_no": 24,
-            "src": "634:53",
-            "src_char": "634:53"
+            "src": "738:42",
+            "src_char": "738:42"
           },
           {
             "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 30,
-            "src": "864:44",
-            "src_char": "864:44"
+            "line_no": 29,
+            "src": "879:53",
+            "src_char": "879:53"
           },
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
@@ -650,9 +524,9 @@
         "instances": [
           {
             "contract_path": "src/UnprotectedInitialize.sol",
-            "line_no": 35,
-            "src": "820:33",
-            "src_char": "820:33"
+            "line_no": 37,
+            "src": "916:33",
+            "src_char": "916:33"
           }
         ]
       },
@@ -1417,223 +1291,6 @@
         ]
       },
       {
-        "title": "Uninitialized State Variables",
-        "description": "Solidity does initialize variables by default when you declare them, however it's good practice to explicitly declare an initial value. For example, if you transfer money to an address we must make sure that the address has been initialized.",
-        "detector_name": "uninitialized-state-variable",
-        "instances": [
-          {
-            "contract_path": "src/AssemblyExample.sol",
-            "line_no": 5,
-            "src": "97:1",
-            "src_char": "97:1"
-          },
-          {
-            "contract_path": "src/BuiltinSymbolShadow.sol",
-            "line_no": 5,
-            "src": "92:8",
-            "src_char": "92:8"
-          },
-          {
-            "contract_path": "src/ConstantFuncsAssembly.sol",
-            "line_no": 6,
-            "src": "110:20",
-            "src_char": "110:20"
-          },
-          {
-            "contract_path": "src/DelegateCallWithoutAddressCheck.sol",
-            "line_no": 9,
-            "src": "337:7",
-            "src_char": "337:7"
-          },
-          {
-            "contract_path": "src/InconsistentUints.sol",
-            "line_no": 7,
-            "src": "197:11",
-            "src_char": "197:11"
-          },
-          {
-            "contract_path": "src/InconsistentUints.sol",
-            "line_no": 8,
-            "src": "233:14",
-            "src_char": "233:14"
-          },
-          {
-            "contract_path": "src/IncorrectCaretOperator.sol",
-            "line_no": 10,
-            "src": "355:7",
-            "src_char": "355:7"
-          },
-          {
-            "contract_path": "src/IncorrectERC721.sol",
-            "line_no": 147,
-            "src": "4076:11",
-            "src_char": "4076:11"
-          },
-          {
-            "contract_path": "src/LocalVariableShadow.sol",
-            "line_no": 7,
-            "src": "129:5",
-            "src_char": "129:5"
-          },
-          {
-            "contract_path": "src/LocalVariableShadow.sol",
-            "line_no": 25,
-            "src": "532:4",
-            "src_char": "532:4"
-          },
-          {
-            "contract_path": "src/PublicVariableReadInExternalContext.sol",
-            "line_no": 6,
-            "src": "130:26",
-            "src_char": "130:26"
-          },
-          {
-            "contract_path": "src/ReturnBomb.sol",
-            "line_no": 61,
-            "src": "1623:7",
-            "src_char": "1623:7"
-          },
-          {
-            "contract_path": "src/StateShadowing.sol",
-            "line_no": 5,
-            "src": "87:13",
-            "src_char": "87:13"
-          },
-          {
-            "contract_path": "src/StateVariables.sol",
-            "line_no": 8,
-            "src": "199:19",
-            "src_char": "199:19"
-          },
-          {
-            "contract_path": "src/StateVariables.sol",
-            "line_no": 9,
-            "src": "241:20",
-            "src_char": "241:20"
-          },
-          {
-            "contract_path": "src/StateVariables.sol",
-            "line_no": 10,
-            "src": "282:18",
-            "src_char": "282:18"
-          },
-          {
-            "contract_path": "src/StateVariablesManipulation.sol",
-            "line_no": 8,
-            "src": "184:10",
-            "src_char": "184:10"
-          },
-          {
-            "contract_path": "src/StateVariablesManipulation.sol",
-            "line_no": 9,
-            "src": "214:9",
-            "src_char": "214:9"
-          },
-          {
-            "contract_path": "src/StateVariablesManipulation.sol",
-            "line_no": 10,
-            "src": "241:10",
-            "src_char": "241:10"
-          },
-          {
-            "contract_path": "src/StateVariablesManipulation.sol",
-            "line_no": 11,
-            "src": "272:13",
-            "src_char": "272:13"
-          },
-          {
-            "contract_path": "src/StateVariablesManipulation.sol",
-            "line_no": 12,
-            "src": "314:20",
-            "src_char": "314:20"
-          },
-          {
-            "contract_path": "src/StateVariablesManipulation.sol",
-            "line_no": 13,
-            "src": "354:12",
-            "src_char": "354:12"
-          },
-          {
-            "contract_path": "src/StateVariablesManipulation.sol",
-            "line_no": 14,
-            "src": "385:11",
-            "src_char": "385:11"
-          },
-          {
-            "contract_path": "src/TautologyOrContradiction.sol",
-            "line_no": 6,
-            "src": "133:6",
-            "src_char": "133:6"
-          },
-          {
-            "contract_path": "src/TautologyOrContradiction.sol",
-            "line_no": 7,
-            "src": "145:9",
-            "src_char": "145:9"
-          },
-          {
-            "contract_path": "src/UninitializedLocalVariables.sol",
-            "line_no": 5,
-            "src": "93:12",
-            "src_char": "93:12"
-          },
-          {
-            "contract_path": "src/UninitializedStateVariable.sol",
-            "line_no": 7,
-            "src": "122:8",
-            "src_char": "122:8"
-          },
-          {
-            "contract_path": "src/UninitializedStateVariable.sol",
-            "line_no": 15,
-            "src": "529:11",
-            "src_char": "529:11"
-          },
-          {
-            "contract_path": "src/UnusedStateVariables.sol",
-            "line_no": 6,
-            "src": "147:13",
-            "src_char": "147:13"
-          },
-          {
-            "contract_path": "src/UnusedStateVariables.sol",
-            "line_no": 7,
-            "src": "183:13",
-            "src_char": "183:13"
-          },
-          {
-            "contract_path": "src/UnusedStateVariables.sol",
-            "line_no": 8,
-            "src": "215:10",
-            "src_char": "215:10"
-          },
-          {
-            "contract_path": "src/UnusedStateVariables.sol",
-            "line_no": 9,
-            "src": "246:12",
-            "src_char": "246:12"
-          },
-          {
-            "contract_path": "src/UnusedStateVariables.sol",
-            "line_no": 12,
-            "src": "314:11",
-            "src_char": "314:11"
-          },
-          {
-            "contract_path": "src/WrongOrderOfLayout.sol",
-            "line_no": 11,
-            "src": "257:10",
-            "src_char": "257:10"
-          },
-          {
-            "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
-            "line_no": 68,
-            "src": "1971:5",
-            "src_char": "1971:5"
-          }
-        ]
-      },
-      {
         "title": "Incorrect use of caret operator on a non hexadcimal constant",
         "description": "The caret operator is usually mistakenly thought of as an exponentiation operator but actually, it's a bitwise xor operator.",
         "detector_name": "incorrect-caret-operator",
@@ -1779,7 +1436,7 @@
       {
         "title": "Functions send eth away from contract but performs no checks on any address.",
         "description": "Consider introducing checks for `msg.sender` to ensure the recipient of the money is as intended.",
-        "detector_name": "send-ether-no-checks",
+        "detector_name": "sends-ether-away-without-checking-address",
         "instances": [
           {
             "contract_path": "src/CallGraphTests.sol",
@@ -1904,9 +1561,9 @@
         ]
       },
       {
-        "title": "Delegatecall made by the function without checks on any adress.",
+        "title": "Delegatecall made by the function without checks on any address.",
         "description": "Introduce checks on the address",
-        "detector_name": "delegate-call-unchecked-address",
+        "detector_name": "delegate-call-on-unchecked-address",
         "instances": [
           {
             "contract_path": "src/DelegateCallWithoutAddressCheck.sol",
@@ -1985,73 +1642,6 @@
         ]
       },
       {
-        "title": "Return value of the function call is not checked.",
-        "description": "Function returns a value but it is ignored.",
-        "detector_name": "unchecked-return",
-        "instances": [
-          {
-            "contract_path": "src/OutOfOrderRetryable.sol",
-            "line_no": 65,
-            "src": "1705:390",
-            "src_char": "1705:390"
-          },
-          {
-            "contract_path": "src/OutOfOrderRetryable.sol",
-            "line_no": 77,
-            "src": "2129:379",
-            "src_char": "2129:379"
-          },
-          {
-            "contract_path": "src/OutOfOrderRetryable.sol",
-            "line_no": 92,
-            "src": "2624:390",
-            "src_char": "2624:390"
-          },
-          {
-            "contract_path": "src/OutOfOrderRetryable.sol",
-            "line_no": 107,
-            "src": "3107:379",
-            "src_char": "3107:379"
-          },
-          {
-            "contract_path": "src/OutOfOrderRetryable.sol",
-            "line_no": 129,
-            "src": "3777:208",
-            "src_char": "3777:208"
-          },
-          {
-            "contract_path": "src/OutOfOrderRetryable.sol",
-            "line_no": 151,
-            "src": "4337:261",
-            "src_char": "4337:261"
-          },
-          {
-            "contract_path": "src/StateVariablesManipulation.sol",
-            "line_no": 142,
-            "src": "4146:20",
-            "src_char": "4146:20"
-          },
-          {
-            "contract_path": "src/Trump.sol",
-            "line_no": 344,
-            "src": "11990:71",
-            "src_char": "11990:71"
-          },
-          {
-            "contract_path": "src/UncheckedReturn.sol",
-            "line_no": 14,
-            "src": "279:5",
-            "src_char": "279:5"
-          },
-          {
-            "contract_path": "src/UncheckedReturn.sol",
-            "line_no": 27,
-            "src": "575:47",
-            "src_char": "575:47"
-          }
-        ]
-      },
-      {
         "title": "Dangerous unary operator found in assignment.",
         "description": "Potentially mistakened `=+` for `+=` or `=-` for `-=`. Please include a space in between.",
         "detector_name": "dangerous-unary-operator",
@@ -2092,7 +1682,7 @@
       {
         "title": "Dangerous strict equality checks on contract balances.",
         "description": "A contract's balance can be forcibly manipulated by another selfdestructing contract. Therefore, it's recommended to use >, <, >= or <= instead of strict equality.",
-        "detector_name": "dangerous-strict-equailty-on-contract-balance",
+        "detector_name": "strict-equailty-check-on-contract-balance",
         "instances": [
           {
             "contract_path": "src/DangerousStrictEquality1.sol",
@@ -2578,6 +2168,19 @@
   "low_issues": {
     "issues": [
       {
+        "title": "Using `delegatecall` in loop may consume excessive gas",
+        "description": "Using `delegatecall` in loop may consume excessive gas",
+        "detector_name": "delegate-call-in-loop",
+        "instances": [
+          {
+            "contract_path": "src/inheritance/ExtendedInheritance.sol",
+            "line_no": 15,
+            "src": "474:96",
+            "src_char": "474:96"
+          }
+        ]
+      },
+      {
         "title": "Centralization Risk for trusted owners",
         "description": "Contracts have owners with privileged rights to perform admin tasks and need to be trusted to not perform malicious updates or drain funds.",
         "detector_name": "centralization-risk",
@@ -2702,13 +2305,13 @@
       {
         "title": "`ecrecover` is susceptible to signature malleability",
         "description": "The `ecrecover` function is susceptible to signature malleability. This means that the same message can be signed in multiple ways, allowing an attacker to change the message signature without invalidating it. This can lead to unexpected behavior in smart contracts, such as the loss of funds or the ability to bypass access control. Consider using OpenZeppelin's ECDSA library instead of the built-in function.",
-        "detector_name": "ecrecover",
+        "detector_name": "raw-ecrecover",
         "instances": [
           {
             "contract_path": "src/inheritance/ExtendedInheritance.sol",
-            "line_no": 21,
-            "src": "705:9",
-            "src_char": "705:9"
+            "line_no": 22,
+            "src": "737:9",
+            "src_char": "737:9"
           }
         ]
       },
@@ -2738,21 +2341,21 @@
         "instances": [
           {
             "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 16,
-            "src": "370:20",
-            "src_char": "370:20"
+            "line_no": 19,
+            "src": "601:20",
+            "src_char": "601:20"
           },
           {
             "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 30,
-            "src": "864:20",
-            "src_char": "864:20"
+            "line_no": 34,
+            "src": "1046:20",
+            "src_char": "1046:20"
           },
           {
             "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 50,
-            "src": "1517:20",
-            "src_char": "1517:20"
+            "line_no": 54,
+            "src": "1699:20",
+            "src_char": "1699:20"
           },
           {
             "contract_path": "src/ContractLocksEther.sol",
@@ -2990,12 +2593,6 @@
             "src_char": "32:23"
           },
           {
-            "contract_path": "src/StateVariablesManipulation.sol",
-            "line_no": 2,
-            "src": "32:23",
-            "src_char": "32:23"
-          },
-          {
             "contract_path": "src/TautologyOrContradiction.sol",
             "line_no": 2,
             "src": "32:23",
@@ -3078,7 +2675,7 @@
       {
         "title": "Missing checks for `address(0)` when assigning values to address state variables",
         "description": "Check for `address(0)` when assigning values to address state variables.",
-        "detector_name": "zero-address-check",
+        "detector_name": "no-zero-address-check",
         "instances": [
           {
             "contract_path": "src/ArbitraryTransferFrom.sol",
@@ -3129,6 +2726,12 @@
             "src_char": "1327:23"
           },
           {
+            "contract_path": "src/inheritance/ExtendedInheritance.sol",
+            "line_no": 18,
+            "src": "579:22",
+            "src_char": "579:22"
+          },
+          {
             "contract_path": "src/uniswap/UniswapV2Swapper.sol",
             "line_no": 11,
             "src": "365:17",
@@ -3155,9 +2758,9 @@
           },
           {
             "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 28,
-            "src": "772:5",
-            "src_char": "772:5"
+            "line_no": 32,
+            "src": "954:5",
+            "src_char": "954:5"
           },
           {
             "contract_path": "src/AssemblyExample.sol",
@@ -3524,7 +3127,7 @@
       {
         "title": "Define and use `constant` variables instead of using literals",
         "description": "If the same constant literal value is used multiple times, create a constant state variable and reference it throughout the contract.",
-        "detector_name": "constants-instead-of-literals",
+        "detector_name": "literal-instead-of-constant",
         "instances": [
           {
             "contract_path": "src/AssertStateChange.sol",
@@ -4150,7 +3753,7 @@
       {
         "title": "Empty `require()` / `revert()` statements",
         "description": "Use descriptive reason strings or custom errors for revert paths.",
-        "detector_name": "require-with-string",
+        "detector_name": "require-without-string",
         "instances": [
           {
             "contract_path": "src/CallGraphTests.sol",
@@ -4295,7 +3898,7 @@
       {
         "title": "The `nonReentrant` `modifier` should occur before all other modifiers",
         "description": "This is a best-practice to protect against reentrancy in other modifiers.",
-        "detector_name": "non-reentrant-before-others",
+        "detector_name": "non-reentrant-is-not-before-others",
         "instances": [
           {
             "contract_path": "src/AdminContract.sol",
@@ -4308,6 +3911,115 @@
             "line_no": 28,
             "src": "735:12",
             "src_char": "735:12"
+          }
+        ]
+      },
+      {
+        "title": "Using `block.timestamp` for swap deadline offers no protection",
+        "description": "In the PoS model, proposers know well in advance if they will propose one or consecutive blocks ahead of time. In such a scenario, a malicious validator can hold back the transaction and execute it at a more favourable block number.Consider allowing function caller to specify swap deadline input parameter.",
+        "detector_name": "block-timestamp-is-weak-deadline",
+        "instances": [
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 290,
+            "src": "9949:190",
+            "src_char": "9949:190"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 23,
+            "src": "670:83",
+            "src_char": "670:83"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 24,
+            "src": "763:83",
+            "src_char": "763:83"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 25,
+            "src": "856:70",
+            "src_char": "856:70"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 26,
+            "src": "936:80",
+            "src_char": "936:80"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 27,
+            "src": "1026:80",
+            "src_char": "1026:80"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 31,
+            "src": "1278:112",
+            "src_char": "1278:112"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 32,
+            "src": "1400:99",
+            "src_char": "1400:99"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 33,
+            "src": "1509:109",
+            "src_char": "1509:109"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 52,
+            "src": "1115:143",
+            "src_char": "1115:143"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 55,
+            "src": "1293:321",
+            "src_char": "1293:321"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 66,
+            "src": "1668:131",
+            "src_char": "1668:131"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 69,
+            "src": "1828:236",
+            "src_char": "1828:236"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 77,
+            "src": "2132:144",
+            "src_char": "2132:144"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 80,
+            "src": "2312:322",
+            "src_char": "2312:322"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 91,
+            "src": "2690:132",
+            "src_char": "2690:132"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV3Swapper.sol",
+            "line_no": 94,
+            "src": "2852:237",
+            "src_char": "2852:237"
           }
         ]
       },
@@ -4427,6 +4139,12 @@
           },
           {
             "contract_path": "src/MsgValueInLoop.sol",
+            "line_no": 2,
+            "src": "32:23",
+            "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/OnlyLibrary.sol",
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
@@ -4668,9 +4386,9 @@
           },
           {
             "contract_path": "src/UnprotectedInitialize.sol",
-            "line_no": 13,
-            "src": "222:21",
-            "src_char": "222:21"
+            "line_no": 15,
+            "src": "320:21",
+            "src_char": "320:21"
           }
         ]
       },
@@ -4828,6 +4546,12 @@
             "line_no": 27,
             "src": "915:65",
             "src_char": "915:65"
+          },
+          {
+            "contract_path": "src/UnprotectedInitialize.sol",
+            "line_no": 43,
+            "src": "1071:38",
+            "src_char": "1071:38"
           },
           {
             "contract_path": "src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
@@ -5144,6 +4868,12 @@
             "src_char": "1551:11"
           },
           {
+            "contract_path": "src/StateVariableCouldBeDeclaredImmutable.sol",
+            "line_no": 26,
+            "src": "706:14",
+            "src_char": "706:14"
+          },
+          {
             "contract_path": "src/StorageParameters.sol",
             "line_no": 17,
             "src": "388:11",
@@ -5402,14 +5132,14 @@
           {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
             "line_no": 10,
-            "src": "227:129",
-            "src_char": "227:129"
+            "src": "263:93",
+            "src_char": "263:93"
           },
           {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
             "line_no": 17,
-            "src": "416:150",
-            "src_char": "416:150"
+            "src": "452:114",
+            "src_char": "452:114"
           }
         ]
       },
@@ -5715,7 +5445,7 @@
       {
         "title": "Boolean equality is not required.",
         "description": "If `x` is a boolean, there is no need to do `if(x == true)` or `if(x == false)`. Just use `if(x)` and `if(!x)` respectively.",
-        "detector_name": "boolean-equality",
+        "detector_name": "redundant-boolean-equality",
         "instances": [
           {
             "contract_path": "src/BooleanEquality.sol",
@@ -5940,9 +5670,9 @@
         "instances": [
           {
             "contract_path": "src/ArbitraryTransferFrom.sol",
-            "line_no": 15,
-            "src": "304:4",
-            "src_char": "304:4"
+            "line_no": 18,
+            "src": "535:4",
+            "src_char": "535:4"
           },
           {
             "contract_path": "src/ContractLocksEther.sol",
@@ -6015,7 +5745,7 @@
       {
         "title": "Loop condition contains `state_variable.length` that could be cached outside.",
         "description": "Cache the lengths of storage arrays if they are used and not modified in for loops.",
-        "detector_name": "cache-array-length",
+        "detector_name": "array-length-not-cached",
         "instances": [
           {
             "contract_path": "src/CacheArrayLength.sol",
@@ -6040,7 +5770,7 @@
       {
         "title": "Incorrect use of `assert()`",
         "description": "Argument to `assert()` modifies the state. Use `require` for invariants modifying state.",
-        "detector_name": "assert-state-change",
+        "detector_name": "state-change-in-assert",
         "instances": [
           {
             "contract_path": "src/AssertStateChange.sol",
@@ -6254,7 +5984,7 @@
       {
         "title": "State variable could be declared constant",
         "description": "State variables that are not updated following deployment should be declared constant to save gas. Add the `constant` attribute to state variables that never change.",
-        "detector_name": "state-variable-could-be-declared-constant",
+        "detector_name": "state-variable-could-be-constant",
         "instances": [
           {
             "contract_path": "src/CostlyOperationsInsideLoops.sol",
@@ -6828,6 +6558,12 @@
             "src_char": "996:8"
           },
           {
+            "contract_path": "src/StateVariableCouldBeDeclaredImmutable.sol",
+            "line_no": 37,
+            "src": "1455:21",
+            "src_char": "1455:21"
+          },
+          {
             "contract_path": "src/StateVariables.sol",
             "line_no": 47,
             "src": "1764:18",
@@ -7021,21 +6757,21 @@
           },
           {
             "contract_path": "src/UnprotectedInitialize.sol",
-            "line_no": 19,
-            "src": "354:22",
-            "src_char": "354:22"
+            "line_no": 21,
+            "src": "452:22",
+            "src_char": "452:22"
           },
           {
             "contract_path": "src/UnprotectedInitialize.sol",
-            "line_no": 25,
-            "src": "522:20",
-            "src_char": "522:20"
+            "line_no": 27,
+            "src": "618:20",
+            "src_char": "618:20"
           },
           {
             "contract_path": "src/UnprotectedInitialize.sol",
-            "line_no": 35,
-            "src": "820:33",
-            "src_char": "820:33"
+            "line_no": 37,
+            "src": "916:33",
+            "src_char": "916:33"
           },
           {
             "contract_path": "src/UnusedError.sol",
@@ -7104,6 +6840,12 @@
             "src_char": "1286:4"
           },
           {
+            "contract_path": "src/inheritance/ExtendedInheritance.sol",
+            "line_no": 14,
+            "src": "391:15",
+            "src_char": "391:15"
+          },
+          {
             "contract_path": "src/nested/1/Nested.sol",
             "line_no": 10,
             "src": "265:17",
@@ -7124,6 +6866,199 @@
         ]
       },
       {
+        "title": "State variable could be declared immutable",
+        "description": "State variables that are should be declared immutable to save gas. Add the `immutable` attribute to state variables that are only changed in the constructor",
+        "detector_name": "state-variable-could-be-immutable",
+        "instances": [
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 9,
+            "src": "217:7",
+            "src_char": "217:7"
+          },
+          {
+            "contract_path": "src/InconsistentUints.sol",
+            "line_no": 5,
+            "src": "122:12",
+            "src_char": "122:12"
+          },
+          {
+            "contract_path": "src/InconsistentUints.sol",
+            "line_no": 6,
+            "src": "160:15",
+            "src_char": "160:15"
+          },
+          {
+            "contract_path": "src/InternalFunctions.sol",
+            "line_no": 5,
+            "src": "111:5",
+            "src_char": "111:5"
+          },
+          {
+            "contract_path": "src/MultiplePlaceholders.sol",
+            "line_no": 5,
+            "src": "110:5",
+            "src_char": "110:5"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 39,
+            "src": "1052:5",
+            "src_char": "1052:5"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 40,
+            "src": "1078:10",
+            "src_char": "1078:10"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 41,
+            "src": "1109:17",
+            "src_char": "1109:17"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 42,
+            "src": "1147:8",
+            "src_char": "1147:8"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 43,
+            "src": "1176:12",
+            "src_char": "1176:12"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 44,
+            "src": "1209:3",
+            "src_char": "1209:3"
+          },
+          {
+            "contract_path": "src/StateVariableCouldBeDeclaredConstant.sol",
+            "line_no": 11,
+            "src": "281:13",
+            "src_char": "281:13"
+          },
+          {
+            "contract_path": "src/StateVariableCouldBeDeclaredConstant.sol",
+            "line_no": 29,
+            "src": "811:13",
+            "src_char": "811:13"
+          },
+          {
+            "contract_path": "src/StateVariableCouldBeDeclaredImmutable.sol",
+            "line_no": 6,
+            "src": "162:24",
+            "src_char": "162:24"
+          },
+          {
+            "contract_path": "src/StateVariableCouldBeDeclaredImmutable.sol",
+            "line_no": 9,
+            "src": "245:24",
+            "src_char": "245:24"
+          },
+          {
+            "contract_path": "src/StorageConditionals.sol",
+            "line_no": 5,
+            "src": "108:18",
+            "src_char": "108:18"
+          },
+          {
+            "contract_path": "src/StorageConditionals.sol",
+            "line_no": 6,
+            "src": "148:23",
+            "src_char": "148:23"
+          },
+          {
+            "contract_path": "src/TestERC20.sol",
+            "line_no": 7,
+            "src": "144:4",
+            "src_char": "144:4"
+          },
+          {
+            "contract_path": "src/TestERC20.sol",
+            "line_no": 8,
+            "src": "168:6",
+            "src_char": "168:6"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 128,
+            "src": "3847:10",
+            "src_char": "3847:10"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 129,
+            "src": "3887:11",
+            "src_char": "3887:11"
+          },
+          {
+            "contract_path": "src/TxOriginUsedForAuth.sol",
+            "line_no": 5,
+            "src": "107:5",
+            "src_char": "107:5"
+          },
+          {
+            "contract_path": "src/UninitializedStateVariable.sol",
+            "line_no": 9,
+            "src": "291:8",
+            "src_char": "291:8"
+          },
+          {
+            "contract_path": "src/UninitializedStateVariable.sol",
+            "line_no": 37,
+            "src": "1079:5",
+            "src_char": "1079:5"
+          },
+          {
+            "contract_path": "src/UnprotectedInitialize.sol",
+            "line_no": 9,
+            "src": "244:5",
+            "src_char": "244:5"
+          },
+          {
+            "contract_path": "src/auditor_mode/ExternalCalls.sol",
+            "line_no": 9,
+            "src": "205:6",
+            "src_char": "205:6"
+          },
+          {
+            "contract_path": "src/auditor_mode/ExternalCalls.sol",
+            "line_no": 10,
+            "src": "251:14",
+            "src_char": "251:14"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 66,
+            "src": "4907:11",
+            "src_char": "3419:11"
+          },
+          {
+            "contract_path": "src/reused_contract_name/ContractA.sol",
+            "line_no": 5,
+            "src": "99:1",
+            "src_char": "99:1"
+          },
+          {
+            "contract_path": "src/reused_contract_name/ContractB.sol",
+            "line_no": 5,
+            "src": "102:1",
+            "src_char": "102:1"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 8,
+            "src": "312:8",
+            "src_char": "312:8"
+          }
+        ]
+      },
+      {
         "title": "Modifier has multiple placeholders.",
         "description": "Design the modifier to only contain 1 placeholder statement. If it's not possible, split the logic into multiple modifiers.",
         "detector_name": "multiple-placeholders",
@@ -7135,6 +7070,73 @@
             "src_char": "186:10"
           }
         ]
+      },
+      {
+        "title": "Return value of the function call is not checked.",
+        "description": "Function returns a value but it is ignored.",
+        "detector_name": "unchecked-return",
+        "instances": [
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 65,
+            "src": "1705:390",
+            "src_char": "1705:390"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 77,
+            "src": "2129:379",
+            "src_char": "2129:379"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 92,
+            "src": "2624:390",
+            "src_char": "2624:390"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 107,
+            "src": "3107:379",
+            "src_char": "3107:379"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 129,
+            "src": "3777:208",
+            "src_char": "3777:208"
+          },
+          {
+            "contract_path": "src/OutOfOrderRetryable.sol",
+            "line_no": 151,
+            "src": "4337:261",
+            "src_char": "4337:261"
+          },
+          {
+            "contract_path": "src/StateVariablesManipulation.sol",
+            "line_no": 142,
+            "src": "4146:20",
+            "src_char": "4146:20"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 344,
+            "src": "11990:71",
+            "src_char": "11990:71"
+          },
+          {
+            "contract_path": "src/UncheckedReturn.sol",
+            "line_no": 14,
+            "src": "279:5",
+            "src_char": "279:5"
+          },
+          {
+            "contract_path": "src/UncheckedReturn.sol",
+            "line_no": 27,
+            "src": "575:47",
+            "src_char": "575:47"
+          }
+        ]
       }
     ]
   },
@@ -7142,18 +7144,18 @@
     "delegate-call-in-loop",
     "centralization-risk",
     "solmate-safe-transfer-lib",
-    "avoid-abi-encode-packed",
-    "ecrecover",
+    "hash-collision-due-to-abi-encode-packed",
+    "raw-ecrecover",
     "deprecated-oz-functions",
     "unsafe-erc20-functions",
     "unspecific-solidity-pragma",
-    "zero-address-check",
+    "no-zero-address-check",
     "useless-public-function",
-    "constants-instead-of-literals",
+    "literal-instead-of-constant",
     "unindexed-events",
-    "require-with-string",
-    "non-reentrant-before-others",
-    "block-timestamp-deadline",
+    "require-without-string",
+    "non-reentrant-is-not-before-others",
+    "block-timestamp-is-weak-deadline",
     "unsafe-oz-erc721-mint",
     "push-zero-opcode",
     "arbitrary-transfer-from",
@@ -7177,20 +7179,18 @@
     "nested-struct-in-mapping",
     "selfdestruct-identifier",
     "dynamic-array-length-assignment",
-    "uninitialized-state-variable",
     "incorrect-caret-operator",
     "yul-return",
     "state-variable-shadowing",
     "unchecked-send",
     "misused-boolean",
-    "send-ether-no-checks",
-    "delegate-call-unchecked-address",
+    "sends-ether-away-without-checking-address",
+    "delegate-call-on-unchecked-address",
     "tautological-compare",
     "rtlo",
-    "unchecked-return",
     "dangerous-unary-operator",
     "tautology-or-contradiction",
-    "dangerous-strict-equailty-on-contract-balance",
+    "strict-equailty-check-on-contract-balance",
     "signed-storage-array",
     "redundant-statements",
     "public-variable-read-in-external-context",
@@ -7199,7 +7199,7 @@
     "delete-nested-mapping",
     "unused-state-variable",
     "constant-functions-assembly",
-    "boolean-equality",
+    "redundant-boolean-equality",
     "tx-origin-used-for-auth",
     "msg-value-in-loop",
     "contract-locks-ether",
@@ -7211,8 +7211,8 @@
     "out-of-order-retryable",
     "function-initializing-state",
     "dead-code",
-    "cache-array-length",
-    "assert-state-change",
+    "array-length-not-cached",
+    "state-change-in-assert",
     "costly-operations-inside-loops",
     "constant-function-changing-state",
     "builtin-symbol-shadow",
@@ -7222,8 +7222,10 @@
     "unused-import",
     "unchecked-low-level-call",
     "function-pointer-in-constructor",
-    "state-variable-could-be-declared-constant",
+    "state-variable-could-be-constant",
     "state-variable-changes-without-events",
-    "multiple-placeholders"
+    "state-variable-could-be-immutable",
+    "multiple-placeholders",
+    "unchecked-return"
   ]
 }

@@ -88,65 +88,15 @@
     ]
   },
   "issue_count": {
-    "high": 4,
+    "high": 2,
     "low": 0
   },
   "high_issues": {
     "issues": [
       {
-        "title": "Using `delegatecall` in loop",
-        "description": "When calling `delegatecall` the same `msg.value` amount will be accredited multiple times.",
-        "detector_name": "delegate-call-in-loop",
-        "instances": [
-          {
-            "contract_path": "inheritance/ExtendedInheritance.sol",
-            "line_no": 15,
-            "src": "474:96",
-            "src_char": "474:96"
-          }
-        ]
-      },
-      {
-        "title": "Uninitialized State Variables",
-        "description": "Solidity does initialize variables by default when you declare them, however it's good practice to explicitly declare an initial value. For example, if you transfer money to an address we must make sure that the address has been initialized.",
-        "detector_name": "uninitialized-state-variable",
-        "instances": [
-          {
-            "contract_path": "InconsistentUints.sol",
-            "line_no": 7,
-            "src": "197:11",
-            "src_char": "197:11"
-          },
-          {
-            "contract_path": "InconsistentUints.sol",
-            "line_no": 8,
-            "src": "233:14",
-            "src_char": "233:14"
-          },
-          {
-            "contract_path": "StateVariables.sol",
-            "line_no": 8,
-            "src": "199:19",
-            "src_char": "199:19"
-          },
-          {
-            "contract_path": "StateVariables.sol",
-            "line_no": 9,
-            "src": "241:20",
-            "src_char": "241:20"
-          },
-          {
-            "contract_path": "StateVariables.sol",
-            "line_no": 10,
-            "src": "282:18",
-            "src_char": "282:18"
-          }
-        ]
-      },
-      {
-        "title": "Delegatecall made by the function without checks on any adress.",
+        "title": "Delegatecall made by the function without checks on any address.",
         "description": "Introduce checks on the address",
-        "detector_name": "delegate-call-unchecked-address",
+        "detector_name": "delegate-call-on-unchecked-address",
         "instances": [
           {
             "contract_path": "inheritance/ExtendedInheritance.sol",
@@ -175,9 +125,7 @@
     "issues": []
   },
   "detectors_used": [
-    "delegate-call-in-loop",
-    "avoid-abi-encode-packed",
-    "block-timestamp-deadline",
+    "hash-collision-due-to-abi-encode-packed",
     "arbitrary-transfer-from",
     "unprotected-initializer",
     "unsafe-casting-detector",
@@ -190,20 +138,18 @@
     "nested-struct-in-mapping",
     "selfdestruct-identifier",
     "dynamic-array-length-assignment",
-    "uninitialized-state-variable",
     "incorrect-caret-operator",
     "yul-return",
     "state-variable-shadowing",
     "unchecked-send",
     "misused-boolean",
-    "send-ether-no-checks",
-    "delegate-call-unchecked-address",
+    "sends-ether-away-without-checking-address",
+    "delegate-call-on-unchecked-address",
     "tautological-compare",
     "rtlo",
-    "unchecked-return",
     "dangerous-unary-operator",
     "tautology-or-contradiction",
-    "dangerous-strict-equailty-on-contract-balance",
+    "strict-equailty-check-on-contract-balance",
     "signed-storage-array",
     "weak-randomness",
     "pre-declared-local-variable-usage",

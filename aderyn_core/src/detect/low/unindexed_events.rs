@@ -82,10 +82,7 @@ mod unindexed_event_tests {
         // assert that the detector finds the correct number of unindexed events
         assert_eq!(detector.instances().len(), 1);
         // assert that the detector returns the correct severity
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert that the detector returns the correct title
         assert_eq!(detector.title(), "Event is missing `indexed` fields");
         // assert that the detector returns the correct description

@@ -49,7 +49,7 @@ impl IssueDetector for EcrecoverDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::Ecrecover)
+        format!("{}", IssueDetectorNamePool::RawEcrecover)
     }
 }
 
@@ -76,10 +76,7 @@ mod ecrecover_tests {
         // assert that the detector found the correct ecrecover
         assert_eq!(detector.instances().len(), 1);
         // assert that the severity is low
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert that the title is correct
         assert_eq!(
             detector.title(),

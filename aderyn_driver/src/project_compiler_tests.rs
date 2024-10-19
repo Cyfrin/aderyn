@@ -66,10 +66,7 @@ mod project_compiler_grouping_tests {
                 .args(remappings.clone())
                 .arg("--ast-compact-json")
                 .args(
-                    files
-                        .iter()
-                        .map(|x| x.strip_prefix(root.clone()).unwrap())
-                        .collect::<Vec<_>>(),
+                    files.iter().map(|x| x.strip_prefix(root.clone()).unwrap()).collect::<Vec<_>>(),
                 )
                 .args(solc.args.clone()) // --allowed-paths <root> for older versions of sol
                 .current_dir(root.clone())
@@ -90,7 +87,8 @@ mod project_compiler_grouping_tests {
                             &root,
                         );
                         eprintln!("Error running solc command ^^^");
-                        // For now, we do not panic because it will prevent us from analyzing other contexts which can compile successfully
+                        // For now, we do not panic because it will prevent us from analyzing other
+                        // contexts which can compile successfully
                     } else {
                         // TODO: Create workspace context from stdout
                     }
@@ -116,10 +114,7 @@ mod project_compiler_grouping_tests {
             command.push_str(&format!("{} ", remap));
         }
         for file in files {
-            command.push_str(&format!(
-                "{} ",
-                file.strip_prefix(root).unwrap().to_string_lossy()
-            ));
+            command.push_str(&format!("{} ", file.strip_prefix(root).unwrap().to_string_lossy()));
         }
         eprintln!("{}", command);
     }
@@ -168,11 +163,7 @@ mod project_compiler_grouping_tests {
         let command_result = Command::new(solc.solc)
             .args(remappings.clone())
             .arg("--ast-compact-json")
-            .args([
-                "src/BasicNft.sol",
-                "src/inner-core-modules/ICM.sol",
-                "src/Initializer.sol",
-            ])
+            .args(["src/BasicNft.sol", "src/inner-core-modules/ICM.sol", "src/Initializer.sol"])
             .current_dir(root.clone())
             .stdout(Stdio::piped())
             .output()
@@ -186,9 +177,7 @@ mod project_compiler_grouping_tests {
     #[test]
     fn test_no_files_found_in_scope_id_detected_by_context_src_filepaths() {
         let contexts = process_auto::with_project_root_at(
-            &PathBuf::from("../tests/contract-playground")
-                .canonicalize()
-                .unwrap(),
+            &PathBuf::from("../tests/contract-playground").canonicalize().unwrap(),
             &None,
             &None,
             &None,
@@ -201,10 +190,8 @@ mod project_compiler_grouping_tests {
     #[test]
     fn test_compiler_input_returns_empty_vector_when_no_solidity_files_present() {
         let compiler_input = CompilerInput::new("../tests/no-sol-files").unwrap();
-        let solidity_files = compiler_input
-            .into_iter()
-            .filter(|c| c.language == *"Solidity")
-            .collect::<Vec<_>>();
+        let solidity_files =
+            compiler_input.into_iter().filter(|c| c.language == *"Solidity").collect::<Vec<_>>();
         assert!(solidity_files.is_empty());
     }
 }

@@ -178,10 +178,7 @@ mod inconsistent_type_names_tests {
 
         assert_eq!(detector.instances().len(), 7);
         // assert that the detector returns the correct severity
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 
     #[test]
@@ -199,9 +196,6 @@ mod inconsistent_type_names_tests {
 
         assert_eq!(detector.instances().len(), 2);
         // assert that the detector returns the correct severity
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

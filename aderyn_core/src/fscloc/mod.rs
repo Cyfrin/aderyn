@@ -29,9 +29,7 @@ mod cloc_tests {
             false,
         );
         let result = sol.lock().unwrap();
-        result
-            .iter()
-            .for_each(|element| println!("{} - {}", element.0, element.1.code));
+        result.iter().for_each(|element| println!("{} - {}", element.0, element.1.code));
         assert_eq!(
             result
                 .get("../tests/contract-playground/src/cloc/HeavilyCommentedContract.sol")

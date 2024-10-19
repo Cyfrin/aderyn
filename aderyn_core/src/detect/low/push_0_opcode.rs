@@ -109,15 +109,9 @@ mod unspecific_solidity_pragma_tests {
         // assert that the number of instances is correct
         assert_eq!(detector.instances().len(), 1);
         // assert that the severity is low
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert that the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from("PUSH0 is not supported by all chains")
-        );
+        assert_eq!(detector.title(), String::from("PUSH0 is not supported by all chains"));
         // assert that the description is correct
         assert_eq!(
             detector.description(),
@@ -141,15 +135,9 @@ mod unspecific_solidity_pragma_tests {
         // assert that the number of instances is correct
         assert_eq!(detector.instances().len(), 1);
         // assert that the severity is low
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert that the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from("PUSH0 is not supported by all chains")
-        );
+        assert_eq!(detector.title(), String::from("PUSH0 is not supported by all chains"));
         // assert that the description is correct
         assert_eq!(
             detector.description(),

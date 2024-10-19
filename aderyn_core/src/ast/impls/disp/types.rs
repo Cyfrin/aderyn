@@ -54,9 +54,6 @@ impl Display for ArrayTypeName {
 
 impl Display for Mapping {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_fmt(format_args!(
-            "mapping({} => {})",
-            self.key_type, self.value_type
-        ))
+        f.write_fmt(format_args!("mapping({} => {})", self.key_type, self.value_type))
     }
 }

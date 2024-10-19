@@ -7,9 +7,12 @@ use std::{
 
 use crate::{
     ast::SourceUnit,
-    context::{graph::Transpose, workspace_context::WorkspaceContext},
+    context::{
+        graph::{Transpose, WorkspaceCallGraph},
+        workspace_context::WorkspaceContext,
+    },
+    visitor::ast_visitor::Node,
 };
-use crate::{context::graph::WorkspaceCallGraph, visitor::ast_visitor::Node};
 
 use super::ensure_valid_solidity_file;
 
@@ -21,21 +24,13 @@ pub fn load_solidity_source_unit(filepath: &str) -> WorkspaceContext {
     let compiler_input = CompilerInput::new(solidity_file.as_path()).unwrap();
     let compiler_input = compiler_input.first().unwrap(); // There's only 1 file in the path
 
-    let version = Solc::detect_version(&Source {
-        content: Arc::new(solidity_content.clone()),
-    })
-    .unwrap();
+    let version =
+        Solc::detect_version(&Source { content: Arc::new(solidity_content.clone()) }).unwrap();
 
     let solc = Solc::find_or_install_svm_version(format!("{}", version)).unwrap();
     let solc_bin = solc.solc.to_str().unwrap();
 
-    let file_arg = compiler_input
-        .sources
-        .first_key_value()
-        .unwrap()
-        .0
-        .to_str()
-        .unwrap();
+    let file_arg = compiler_input.sources.first_key_value().unwrap().0.to_str().unwrap();
 
     let command = Command::new(solc_bin)
         .args(["--ast-compact-json", file_arg])
@@ -93,9 +88,8 @@ pub fn load_solidity_source_unit(filepath: &str) -> WorkspaceContext {
 
 fn load_callgraphs(context: &mut WorkspaceContext) {
     let inward_callgraph = WorkspaceCallGraph::from_context(context).unwrap();
-    let outward_callgraph = WorkspaceCallGraph {
-        raw_callgraph: inward_callgraph.raw_callgraph.reverse(),
-    };
+    let outward_callgraph =
+        WorkspaceCallGraph { raw_callgraph: inward_callgraph.raw_callgraph.reverse() };
     context.inward_callgraph = Some(inward_callgraph);
     context.outward_callgraph = Some(outward_callgraph);
 }
@@ -149,10 +143,9 @@ pub fn load_multiple_solidity_source_units_into_single_context(
         let file_arg = std::fs::canonicalize(solidity_file).unwrap();
         let file_arg = file_arg.to_string_lossy().to_string();
 
-        let version = Solc::detect_version(&Source {
-            content: Arc::new(this_solidity_content.clone()),
-        })
-        .unwrap();
+        let version =
+            Solc::detect_version(&Source { content: Arc::new(this_solidity_content.clone()) })
+                .unwrap();
 
         let solc = Solc::find_or_install_svm_version(format!("{}", version)).unwrap();
         let this_solc_bin = solc.solc.to_string_lossy().to_string();
