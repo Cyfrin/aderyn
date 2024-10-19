@@ -901,7 +901,7 @@ The `ecrecover` function is susceptible to signature malleability. This means th
 
 ERC20 functions may not behave as expected. For example: return values are not always meaningful. It is recommended to use OpenZeppelin's SafeERC20 library.
 
-<details><summary>5 Found Instances</summary>
+<details><summary>4 Found Instances</summary>
 
 
 - Found in contracts/amo/Ramos.sol [Line: 195](../tests/2024-07-templegold/protocol/contracts/amo/Ramos.sol#L195)
@@ -920,12 +920,6 @@ ERC20 functions may not behave as expected. For example: return values are not a
 
 	```solidity
 	                quoteToken.approve(address(balancerVault), 0);
-	```
-
-- Found in contracts/fakes/UniswapV2Router02NoEth.sol [Line: 108](../tests/2024-07-templegold/protocol/contracts/fakes/UniswapV2Router02NoEth.sol#L108)
-
-	```solidity
-	        IUniswapV2Pair(pair).transferFrom(msg.sender, pair, liquidity); // send liquidity to pair
 	```
 
 - Found in contracts/v2/templeLineOfCredit/TempleLineOfCredit.sol [Line: 394](../tests/2024-07-templegold/protocol/contracts/v2/templeLineOfCredit/TempleLineOfCredit.sol#L394)
