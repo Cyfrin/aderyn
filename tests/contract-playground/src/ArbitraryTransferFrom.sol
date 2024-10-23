@@ -12,19 +12,23 @@ contract ArbitraryTransferFrom {
         s_token = token;
     }
 
+    // This maybe bad but it's not safe to conclude because it's an internal function
+    // Parameters of this function could be vetted before calling. @devtooligan suggested to stick
+    // to public & etxernal functions for now
     function bad1(address from, address to, uint256 amount) internal {
         s_token.transferFrom(from, to, amount);
     }
 
+    // BAD
     function bad2(address from, address to, uint256 amount) external {
         s_token.safeTransferFrom(from, to, amount);
-    }    
-    
+    }
+
+    // BAD
     function bad3(address from, address to, uint256 amount) external {
         SafeERC20.safeTransferFrom(s_token, from, to, amount);
     }
 
-    // ArbitraryTransferFromDetector has a false positive here
     function good1(address to, uint256 am) public {
         address from_msgsender = msg.sender;
         s_token.transferFrom(from_msgsender, to, am);
@@ -49,5 +53,5 @@ contract ArbitraryTransferFrom {
     function good6(address to, uint256 amount) external {
         s_token.transferFrom(msg.sender, to, amount);
     }
-
 }
+

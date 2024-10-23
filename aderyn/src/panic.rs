@@ -1,5 +1,5 @@
 #![allow(clippy::unwrap_used)]
-use std::{io::Write, panic::PanicInfo};
+use std::{io::Write, panic::PanicHookInfo};
 use termcolor::{Color, ColorSpec, WriteColor};
 
 use std::io::IsTerminal;
@@ -24,10 +24,12 @@ pub fn stderr_buffer_writer() -> BufferWriter {
 }
 
 pub fn add_handler() {
-    std::panic::set_hook(Box::new(move |info: &PanicInfo<'_>| print_compiler_bug_message(info)));
+    std::panic::set_hook(Box::new(move |info: &PanicHookInfo<'_>| {
+        print_compiler_bug_message(info)
+    }));
 }
 
-fn print_compiler_bug_message(info: &PanicInfo<'_>) {
+fn print_compiler_bug_message(info: &PanicHookInfo<'_>) {
     let message =
         match (info.payload().downcast_ref::<&str>(), info.payload().downcast_ref::<String>()) {
             (Some(s), _) => (*s).to_string(),
