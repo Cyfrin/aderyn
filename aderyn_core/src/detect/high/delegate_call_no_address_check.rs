@@ -71,7 +71,7 @@ struct DelegateCallNoAddressChecksTracker<'a> {
     context: &'a WorkspaceContext,
 }
 
-impl<'a> CallGraphVisitor for DelegateCallNoAddressChecksTracker<'a> {
+impl CallGraphVisitor for DelegateCallNoAddressChecksTracker<'_> {
     fn visit_any(&mut self, node: &crate::context::workspace_context::ASTNode) -> eyre::Result<()> {
         if !self.has_address_checks && helpers::has_binary_checks_on_some_address(node) {
             self.has_address_checks = true;

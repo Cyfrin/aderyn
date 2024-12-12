@@ -24,17 +24,6 @@ pub struct JsonContent {
 
 pub struct JsonPrinter;
 
-/**
- * JSON should mimick MD
-    {
-        "files_summary": {...},
-        "files_details": {...},
-        "issue_summary": {...},
-        "high_issues": {...},
-    ...
-    }
-*/
-
 impl ReportPrinter<()> for JsonPrinter {
     fn print_report<W: Write>(
         &self,

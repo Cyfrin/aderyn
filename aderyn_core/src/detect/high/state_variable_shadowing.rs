@@ -107,7 +107,7 @@ fn allows_below_0_6_0(version_req: &VersionReq) -> bool {
     }
 
     let comparator = &version_req.comparators[0];
-    comparator.major == 0 && comparator.minor.map_or(false, |m| m < 6)
+    comparator.major == 0 && comparator.minor.is_some_and(|m| m < 6)
 }
 
 impl IssueDetector for StateVariableShadowingDetector {

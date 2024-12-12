@@ -69,7 +69,7 @@ mod assert_state_change_tracker {
         context: &'a WorkspaceContext,
     }
 
-    impl<'a> CallGraphVisitor for StateVariableChangeTracker<'a> {
+    impl CallGraphVisitor for StateVariableChangeTracker<'_> {
         fn visit_any(&mut self, node: &crate::ast::ASTNode) -> eyre::Result<()> {
             if self.has_some_state_variable_changed {
                 return Ok(());

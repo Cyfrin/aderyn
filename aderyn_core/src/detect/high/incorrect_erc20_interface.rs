@@ -113,7 +113,7 @@ mod erc_matching_function_signature_helper {
     }
 
     // Helps with checking if a function definition satisifed a signature matcher
-    impl<'a> SignatureMatcher<'a> {
+    impl SignatureMatcher<'_> {
         fn satisfies(&self, func: &FunctionDefinition) -> Option<bool> {
             if func.name != self.name {
                 return Some(false);
