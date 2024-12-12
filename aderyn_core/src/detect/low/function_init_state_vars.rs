@@ -93,7 +93,7 @@ impl<'a> NonConstantStateVariableReferenceDeclarationTracker<'a> {
     }
 }
 
-impl<'a> CallGraphVisitor for NonConstantStateVariableReferenceDeclarationTracker<'a> {
+impl CallGraphVisitor for NonConstantStateVariableReferenceDeclarationTracker<'_> {
     fn visit_any(&mut self, node: &ASTNode) -> eyre::Result<()> {
         // We already know the condition is satisifed
         if self.makes_a_reference {
