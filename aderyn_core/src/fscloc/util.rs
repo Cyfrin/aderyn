@@ -50,10 +50,6 @@ impl FromStr for CodeIterator {
     type Err = usize;
 
     fn from_str(code: &str) -> Result<Self, <Self as FromStr>::Err> {
-        Ok(CodeIterator {
-            content: code.chars().collect::<Vec<_>>(),
-            curr_pos: 0,
-            line_no: 1,
-        })
+        Ok(CodeIterator { content: code.chars().collect::<Vec<_>>(), curr_pos: 0, line_no: 1 })
     }
 }
