@@ -4,13 +4,9 @@ pub(crate) mod foundry_compiler_helpers;
 pub mod lsp_report;
 pub(crate) mod process_auto;
 pub(crate) mod project_compiler_tests;
-use std::path::Path;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
-pub use aderyn_core::ast as core_ast;
-pub use aderyn_core::context;
-pub use aderyn_core::detect as detection_modules;
-pub use aderyn_core::detect::detector;
+pub use aderyn_core::{ast as core_ast, context, detect as detection_modules, detect::detector};
 use cyfrin_foundry_compilers::utils;
 pub use foundry_compiler_helpers::*;
 pub use process_auto::with_project_root_at;
@@ -73,7 +69,8 @@ fn passes_exclude(
 // Return a list of remappings in the format ["a=b", "c=d", "e=f"]
 // where direct imports a,c,e map to b,d,f
 fn read_remappings(root_path: &Path) -> Option<Vec<String>> {
-    // Look for a file called `remappings` in the project root. If not present, assume project doesn't require remappings
+    // Look for a file called `remappings` in the project root. If not present, assume project
+    // doesn't require remappings
     let remappings_file = root_path.join("remappings");
     let remappings_txt_file = root_path.join("remappings.txt");
 
@@ -92,13 +89,7 @@ fn read_remappings(root_path: &Path) -> Option<Vec<String>> {
     Some(
         remappings_content
             .lines()
-            .filter_map(|x| {
-                if !x.is_empty() {
-                    Some(x.to_owned())
-                } else {
-                    None
-                }
-            })
+            .filter_map(|x| if !x.is_empty() { Some(x.to_owned()) } else { None })
             .collect(),
     )
 }

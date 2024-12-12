@@ -18,8 +18,7 @@ impl Hash for ElementaryTypeName {
 
 impl PartialEq for UserDefinedTypeName {
     fn eq(&self, other: &Self) -> bool {
-        self.referenced_declaration
-            .eq(&other.referenced_declaration)
+        self.referenced_declaration.eq(&other.referenced_declaration)
     }
 }
 

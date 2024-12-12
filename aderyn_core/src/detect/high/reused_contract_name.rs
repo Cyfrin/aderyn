@@ -1,13 +1,14 @@
-use std::collections::{BTreeMap, HashMap};
-use std::error::Error;
+use std::{
+    collections::{BTreeMap, HashMap},
+    error::Error,
+};
 
 use crate::ast::{ContractDefinition, NodeID};
 
-use crate::capture;
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
+    capture,
     context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -24,10 +25,7 @@ impl IssueDetector for ReusedContractNameDetector {
 
         // Simplify the map filling process using the Entry API
         for contract in context.contract_definitions() {
-            contract_names
-                .entry(&contract.name)
-                .or_default()
-                .push(contract);
+            contract_names.entry(&contract.name).or_default().push(contract);
         }
 
         // Process duplicate contracts
@@ -85,15 +83,9 @@ mod reused_contract_name_detector_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
         // assert the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from("Contract Name Reused in Different Files")
-        );
+        assert_eq!(detector.title(), String::from("Contract Name Reused in Different Files"));
         // assert the description is correct
         assert_eq!(
             detector.description(),

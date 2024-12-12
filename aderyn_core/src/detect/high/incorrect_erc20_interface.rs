@@ -1,15 +1,11 @@
-use std::collections::BTreeMap;
-use std::convert::identity;
-use std::error::Error;
+use std::{collections::BTreeMap, convert::identity, error::Error};
 
 use crate::ast::{ASTNode, NodeID, Visibility};
 
-use crate::capture;
-use crate::context::browser::ExtractFunctionDefinitions;
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    capture,
+    context::{browser::ExtractFunctionDefinitions, workspace_context::WorkspaceContext},
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -150,10 +146,8 @@ mod erc_matching_function_signature_helper {
     // ERC20 function signature matching
     impl FunctionDefinition {
         pub fn represents_erc20_transfer(&self) -> Option<bool> {
-            let satisifer = SignatureMatcher {
-                name: "transfer",
-                paramter_types: vec!["address", "uint256"],
-            };
+            let satisifer =
+                SignatureMatcher { name: "transfer", paramter_types: vec!["address", "uint256"] };
             satisifer.satisfies(self)
         }
 
@@ -166,34 +160,24 @@ mod erc_matching_function_signature_helper {
         }
 
         pub fn represents_erc20_approve(&self) -> Option<bool> {
-            let satisifer = SignatureMatcher {
-                name: "approve",
-                paramter_types: vec!["address", "uint256"],
-            };
+            let satisifer =
+                SignatureMatcher { name: "approve", paramter_types: vec!["address", "uint256"] };
             satisifer.satisfies(self)
         }
 
         pub fn represents_erc20_allowance(&self) -> Option<bool> {
-            let satisifer = SignatureMatcher {
-                name: "allowance",
-                paramter_types: vec!["address", "address"],
-            };
+            let satisifer =
+                SignatureMatcher { name: "allowance", paramter_types: vec!["address", "address"] };
             satisifer.satisfies(self)
         }
 
         pub fn represents_erc20_balance_of(&self) -> Option<bool> {
-            let satisifer = SignatureMatcher {
-                name: "balanceOf",
-                paramter_types: vec!["address"],
-            };
+            let satisifer = SignatureMatcher { name: "balanceOf", paramter_types: vec!["address"] };
             satisifer.satisfies(self)
         }
 
         pub fn represents_erc20_total_supply(&self) -> Option<bool> {
-            let satisifer = SignatureMatcher {
-                name: "totalSupply",
-                paramter_types: vec![],
-            };
+            let satisifer = SignatureMatcher { name: "totalSupply", paramter_types: vec![] };
             satisifer.satisfies(self)
         }
     }
@@ -221,9 +205,6 @@ mod incorrect_erc20_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 5);
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
     }
 }

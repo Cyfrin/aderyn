@@ -1,11 +1,7 @@
-use crate::ast::*;
-use crate::fscloc::cloc::IgnoreLine;
-use std::cmp::Ordering;
-use std::collections::HashMap;
+use crate::{ast::*, fscloc::cloc::IgnoreLine};
+use std::{cmp::Ordering, collections::HashMap};
 
-use super::browser::GetImmediateParent;
-use super::capturable::Capturable;
-use super::graph::WorkspaceCallGraph;
+use super::{browser::GetImmediateParent, capturable::Capturable, graph::WorkspaceCallGraph};
 pub use crate::ast::ASTNode;
 
 #[derive(Default, Debug, Clone, PartialEq, Eq, Hash)]
@@ -237,10 +233,8 @@ impl WorkspaceContext {
     pub fn get_node_sort_key(&self, node: &ASTNode) -> (String, usize, String) {
         let source_unit = self.get_source_unit_from_child_node(node).unwrap();
         let absolute_path = source_unit.absolute_path.as_ref().unwrap().clone();
-        let source_line = node
-            .src()
-            .map(|src| source_unit.source_line(src).unwrap_or(0))
-            .unwrap_or(0);
+        let source_line =
+            node.src().map(|src| source_unit.source_line(src).unwrap_or(0)).unwrap_or(0);
 
         let src_location = match node {
             ASTNode::ContractDefinition(contract_node) => contract_node

@@ -4,8 +4,10 @@ use aderyn_driver::driver;
 use field_access::{FieldAccess, FieldMut};
 
 fn main() {
-    use pyo3::prelude::*;
-    use pyo3::types::{PyBool, PyDict};
+    use pyo3::{
+        prelude::*,
+        types::{PyBool, PyDict},
+    };
 
     #[pyfunction]
     #[pyo3(signature = (root, output, **py_kwargs))]

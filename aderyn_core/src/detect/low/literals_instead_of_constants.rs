@@ -18,13 +18,13 @@ use crate::{
 use eyre::Result;
 
 #[derive(Default)]
-pub struct ConstantsInsteadOfLiteralsDetector {
+pub struct LiteralsInsteadOfConstantsDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-impl IssueDetector for ConstantsInsteadOfLiteralsDetector {
+impl IssueDetector for LiteralsInsteadOfConstantsDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // Get all contracts
         // For each contract
@@ -37,10 +37,7 @@ impl IssueDetector for ConstantsInsteadOfLiteralsDetector {
         for contract in context.contract_definitions() {
             let mut literal_values_found: HashMap<String, Vec<Literal>> = HashMap::new();
 
-            for function in ExtractFunctionDefinitions::from(contract)
-                .extracted
-                .into_iter()
-            {
+            for function in ExtractFunctionDefinitions::from(contract).extracted.into_iter() {
                 for literal in ExtractLiterals::from(&function).extracted.into_iter() {
                     if (literal.kind == LiteralKind::Number
                         && literal.value != Some(String::from("0"))
@@ -56,10 +53,7 @@ impl IssueDetector for ConstantsInsteadOfLiteralsDetector {
 
                         if let Some(literal_value) = literal.value.as_ref() {
                             if literal_values_found.contains_key(literal_value) {
-                                literal_values_found
-                                    .get_mut(literal_value)
-                                    .unwrap()
-                                    .push(literal);
+                                literal_values_found.get_mut(literal_value).unwrap().push(literal);
                             } else {
                                 literal_values_found.insert(literal_value.clone(), vec![literal]);
                             }
@@ -68,10 +62,7 @@ impl IssueDetector for ConstantsInsteadOfLiteralsDetector {
                 }
             }
 
-            for modifier in ExtractModifierDefinitions::from(contract)
-                .extracted
-                .into_iter()
-            {
+            for modifier in ExtractModifierDefinitions::from(contract).extracted.into_iter() {
                 for literal in ExtractLiterals::from(&modifier).extracted.into_iter() {
                     if (literal.kind == LiteralKind::Number
                         && literal.value != Some(String::from("0"))
@@ -87,10 +78,7 @@ impl IssueDetector for ConstantsInsteadOfLiteralsDetector {
 
                         if let Some(literal_value) = literal.value.as_ref() {
                             if literal_values_found.contains_key(literal_value) {
-                                literal_values_found
-                                    .get_mut(literal_value)
-                                    .unwrap()
-                                    .push(literal);
+                                literal_values_found.get_mut(literal_value).unwrap().push(literal);
                             } else {
                                 literal_values_found.insert(literal_value.clone(), vec![literal]);
                             }
@@ -128,7 +116,7 @@ impl IssueDetector for ConstantsInsteadOfLiteralsDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::ConstantsInsteadOfLiterals)
+        format!("{}", IssueDetectorNamePool::LiteralInsteadOfConstant)
     }
 }
 
@@ -136,9 +124,8 @@ impl IssueDetector for ConstantsInsteadOfLiteralsDetector {
 mod constants_instead_of_literals_tests {
     use serial_test::serial;
 
+    use super::LiteralsInsteadOfConstantsDetector;
     use crate::detect::detector::IssueDetector;
-
-    use super::ConstantsInsteadOfLiteralsDetector;
 
     #[test]
     #[serial]
@@ -147,17 +134,14 @@ mod constants_instead_of_literals_tests {
             "../tests/contract-playground/src/ConstantsLiterals.sol",
         );
 
-        let mut detector = ConstantsInsteadOfLiteralsDetector::default();
+        let mut detector = LiteralsInsteadOfConstantsDetector::default();
         // assert that the detector finds the public Function
         let found = detector.detect(&context).unwrap();
         assert!(found);
         // assert that the detector finds the correct number of instances
         assert_eq!(detector.instances().len(), 8);
         // assert that the detector returns the correct severity
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert that the detector returns the correct title
         assert_eq!(
             detector.title(),

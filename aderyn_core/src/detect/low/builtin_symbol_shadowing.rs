@@ -1,10 +1,8 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::ast::NodeID;
 
-use crate::capture;
-use crate::detect::detector::IssueDetectorNamePool;
+use crate::{capture, detect::detector::IssueDetectorNamePool};
 use phf::phf_set;
 
 use crate::{
@@ -158,9 +156,6 @@ mod builtin_symbol_shadowing_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 4);
         // assert the severity is low
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

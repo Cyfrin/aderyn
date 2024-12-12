@@ -1,14 +1,11 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::ast::NodeID;
 
-use crate::capture;
-use crate::context::browser::Peek;
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    capture,
+    context::{browser::Peek, workspace_context::WorkspaceContext},
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -78,15 +75,9 @@ mod dangerous_unary_expression_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
         // assert the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from("Dangerous unary operator found in assignment.")
-        );
+        assert_eq!(detector.title(), String::from("Dangerous unary operator found in assignment."));
         // assert the description is correct
         assert_eq!(
             detector.description(),
