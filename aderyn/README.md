@@ -132,11 +132,11 @@ Usage: `aderyn [OPTIONS] <ROOT>`
 `<ROOT>`: The path to the root of the codebase to be analyzed. Defaults to the current directory.
 
 Options:
-  - `-s`, `--src`: Path to the source contracts. If not provided, or if aderyn can't find famous files to read (like `foundry.toml`, which it automatically searches for) the ROOT directory will be used.
+  - `-s`, `--src`: Path to the source contracts. Used to avoid analyzing libraries, tests or scripts and focus on the contracts. If not provided, or if aderyn can't find famous files to read (like `foundry.toml`, which it automatically searches for) the ROOT directory will be used.
     - In foundry projects, this is usually the `src/` folder unless stated otherwise in `foundry.toml`.
     - In Hardhat projects, this is usually the `contracts/` folder unless stated otherwise in the config.
-  - `-i`, `--path-includes <PATH_INCLUDES>`: List of path strings to include, delimited by comma (no spaces). Any solidity file path not containing these strings will be ignored
-  - `-x`, `--path-excludes <PATH_EXCLUDES>`: List of path strings to exclude, delimited by comma (no spaces). Any solidity file path containing these strings will be ignored
+  - `-i`, `--path-includes <PATH_INCLUDES>`: List of path strings to include, delimited by comma (no spaces). It allows to include only one or more specific contracts in the analysis. Any solidity file path not containing these strings will be ignored.
+  - `-x`, `--path-excludes <PATH_EXCLUDES>`: List of path strings to exclude, delimited by comma (no spaces). It allows to exclude one or more specific contracts from the analysis. Any solidity file path containing these strings will be ignored
   - `-o`, `--output <OUTPUT>`: Desired file path for the final report (will overwrite the existing one) [default: report.md]
   - `-n`, `--no-snippets`: Do not include code snippets in the report (reduces report size in large repos)
   - `-h`, `--help`: Print help
