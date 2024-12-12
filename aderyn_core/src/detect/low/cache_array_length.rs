@@ -160,7 +160,7 @@ mod loop_investigation_helper {
         changes: Option<ApproximateStorageChangeFinder<'a>>,
     }
 
-    impl<'a> CallGraphVisitor for StateVariableChangeTracker<'a> {
+    impl CallGraphVisitor for StateVariableChangeTracker<'_> {
         fn visit_any(&mut self, node: &ASTNode) -> eyre::Result<()> {
             let changes = ApproximateStorageChangeFinder::from(self.context, node);
             if self.changes.is_none() {

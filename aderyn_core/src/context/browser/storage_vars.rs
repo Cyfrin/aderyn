@@ -61,7 +61,7 @@ impl<'a> Add<ApproximateStorageChangeFinder<'_>> for ApproximateStorageChangeFin
     }
 }
 
-impl<'a> Debug for ApproximateStorageChangeFinder<'a> {
+impl Debug for ApproximateStorageChangeFinder<'_> {
     // Do not print context. Hence, debug is custom derived for this struct
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         writeln!(f, "Manipulated directly: {:?}", self.directly_manipulated_state_variables)?;
@@ -213,7 +213,7 @@ impl<'a> ApproximateStorageChangeFinder<'a> {
     }
 }
 
-impl<'a> ASTConstVisitor for ApproximateStorageChangeFinder<'a> {
+impl ASTConstVisitor for ApproximateStorageChangeFinder<'_> {
     fn visit_unary_operation(&mut self, node: &UnaryOperation) -> Result<bool> {
         // WRITE HEURISTICS
         // Catch unary operations that manipulate variables
