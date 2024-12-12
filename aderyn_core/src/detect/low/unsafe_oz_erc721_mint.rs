@@ -31,7 +31,7 @@ impl IssueDetector for UnsafeERC721MintDetector {
                     directive
                         .absolute_path
                         .as_ref()
-                        .map_or(false, |path| path.contains("openzeppelin"))
+                        .is_some_and(|path| path.contains("openzeppelin"))
                 }) && identifier.name == "_mint"
                 {
                     let this_contract_definition = identifier
