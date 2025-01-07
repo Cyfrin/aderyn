@@ -71,6 +71,9 @@ Cyfrinup is a CLI tool that simplifies the installation and management of Cyfrin
 curl -L https://raw.githubusercontent.com/Cyfrin/aderyn/dev/cyfrinup/install | bash
 ```
 
+If you get a `failed writing body` error in Windows, it's most likely because you don't have Windows Distribution system.
+
+You can fix this by going to Microsoft Store, download Ubuntu, and have it running.
 #### Step 2: Update Path
 
 The installer will prompt you to run a `source` command. Either run this command, or reload your terminal.
