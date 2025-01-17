@@ -54,7 +54,6 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<NestedStructInMappingDetector>::default(),
         Box::<SelfdestructIdentifierDetector>::default(),
         Box::<DynamicArrayLengthAssignmentDetector>::default(),
-        Box::<UninitializedStateVariableDetector>::default(),
         Box::<IncorrectUseOfCaretOperatorDetector>::default(),
         Box::<YulReturnDetector>::default(),
         Box::<StateVariableShadowingDetector>::default(),
@@ -64,7 +63,6 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<DelegateCallOnUncheckedAddressDetector>::default(),
         Box::<TautologicalCompareDetector>::default(),
         Box::<RTLODetector>::default(),
-        Box::<UncheckedReturnDetector>::default(),
         Box::<DangerousUnaryOperatorDetector>::default(),
         Box::<TautologyOrContraditionDetector>::default(),
         Box::<DangerousStrictEqualityOnBalanceDetector>::default(),
@@ -103,6 +101,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<StateVariableChangesWithoutEventDetector>::default(),
         Box::<StateVariableCouldBeImmutableDetector>::default(),
         Box::<MultiplePlaceholdersDetector>::default(),
+        Box::<UncheckedReturnDetector>::default(),
     ]
 }
 
@@ -114,7 +113,7 @@ pub fn get_all_detectors_names() -> Vec<String> {
 #[derive(Debug, PartialEq, EnumString, Display)]
 #[strum(serialize_all = "kebab-case")]
 pub(crate) enum IssueDetectorNamePool {
-    StateVariableCouldBeDeclaredImmutable,
+    StateVariableCouldBeImmutable,
     MultiplePlaceholders,
     StateVariableChangesWithoutEvents,
     MissingInheritance,
@@ -135,7 +134,7 @@ pub(crate) enum IssueDetectorNamePool {
     CentralizationRisk,
     SolmateSafeTransferLib,
     HashCollisionDueToAbiEncodePacked,
-    SignatureMalleabilityDueToRawEcrecover,
+    RawEcrecover,
     DeprecatedOzFunctions,
     UnsafeERC20Functions,
     UnspecificSolidityPragma,
@@ -169,7 +168,6 @@ pub(crate) enum IssueDetectorNamePool {
     NestedStructInMapping,
     SelfdestructIdentifier,
     DynamicArrayLengthAssignment,
-    UninitializedStateVariable,
     IncorrectCaretOperator,
     YulReturn,
     StateVariableShadowing,
@@ -183,7 +181,7 @@ pub(crate) enum IssueDetectorNamePool {
     UncheckedReturn,
     DangerousUnaryOperator,
     TautologyOrContradiction,
-    DangerousStrictEquailtyOnContractBalance,
+    StrictEquailtyCheckOnContractBalance,
     SignedStorageArray,
     RedundantStatements,
     PublicVariableReadInExternalContext,
@@ -201,7 +199,7 @@ pub(crate) enum IssueDetectorNamePool {
     UninitializedLocalVariable,
     ReturnBomb,
     OutOfOrderRetryable,
-    StateVariableCouldBeDeclaredConstant,
+    StateVariableCouldBeConstant,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -211,7 +209,7 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
     // Expects a valid detector_name
     let detector_name = IssueDetectorNamePool::from_str(detector_name).ok()?;
     match detector_name {
-        IssueDetectorNamePool::StateVariableCouldBeDeclaredImmutable => {
+        IssueDetectorNamePool::StateVariableCouldBeImmutable => {
             Some(Box::<StateVariableCouldBeImmutableDetector>::default())
         }
         IssueDetectorNamePool::MultiplePlaceholders => {
@@ -228,7 +226,7 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         }
         IssueDetectorNamePool::UnusedImport => Some(Box::<UnusedImportDetector>::default()),
         IssueDetectorNamePool::VoidConstructor => Some(Box::<VoidConstructorDetector>::default()),
-        IssueDetectorNamePool::StateVariableCouldBeDeclaredConstant => {
+        IssueDetectorNamePool::StateVariableCouldBeConstant => {
             Some(Box::<StateVariableCouldBeConstantDetector>::default())
         }
         IssueDetectorNamePool::LiteralInsteadOfConstant => {
@@ -287,9 +285,7 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::HashCollisionDueToAbiEncodePacked => {
             Some(Box::<AvoidAbiEncodePackedDetector>::default())
         }
-        IssueDetectorNamePool::SignatureMalleabilityDueToRawEcrecover => {
-            Some(Box::<EcrecoverDetector>::default())
-        }
+        IssueDetectorNamePool::RawEcrecover => Some(Box::<EcrecoverDetector>::default()),
         IssueDetectorNamePool::DeprecatedOzFunctions => {
             Some(Box::<DeprecatedOZFunctionsDetector>::default())
         }
@@ -377,9 +373,6 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
             Some(Box::<DynamicArrayLengthAssignmentDetector>::default())
         }
 
-        IssueDetectorNamePool::UninitializedStateVariable => {
-            Some(Box::<UninitializedStateVariableDetector>::default())
-        }
         IssueDetectorNamePool::IncorrectCaretOperator => {
             Some(Box::<IncorrectUseOfCaretOperatorDetector>::default())
         }
@@ -406,7 +399,7 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::TautologyOrContradiction => {
             Some(Box::<TautologyOrContraditionDetector>::default())
         }
-        IssueDetectorNamePool::DangerousStrictEquailtyOnContractBalance => {
+        IssueDetectorNamePool::StrictEquailtyCheckOnContractBalance => {
             Some(Box::<DangerousStrictEqualityOnBalanceDetector>::default())
         }
         IssueDetectorNamePool::SignedStorageArray => {

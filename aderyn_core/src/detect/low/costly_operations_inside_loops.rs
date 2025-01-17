@@ -80,7 +80,7 @@ struct StateVariableChangeTracker<'a> {
     context: &'a WorkspaceContext,
 }
 
-impl<'a> CallGraphVisitor for StateVariableChangeTracker<'a> {
+impl CallGraphVisitor for StateVariableChangeTracker<'_> {
     fn visit_any(&mut self, node: &crate::ast::ASTNode) -> eyre::Result<()> {
         if self.state_var_has_changed {
             return Ok(());

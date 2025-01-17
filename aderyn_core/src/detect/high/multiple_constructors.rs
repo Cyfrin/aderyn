@@ -1,6 +1,6 @@
 use std::{collections::BTreeMap, error::Error};
 
-use crate::ast::NodeID;
+use crate::ast::{FunctionKind, NodeID};
 
 use crate::{
     capture,
@@ -25,7 +25,7 @@ impl IssueDetector for MultipleConstructorsDetector {
                 ExtractFunctionDefinitions::from(contract)
                     .extracted
                     .iter()
-                    .filter(|function| function.is_constructor)
+                    .filter(|function| function.kind() == &FunctionKind::Constructor)
                     .count()
                     > 1
             })
