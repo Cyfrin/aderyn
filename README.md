@@ -17,7 +17,7 @@
 
 
 <p align="center">
-<a href="https://docs.cyfrin.io">Docs</a>
+<a href="https://support.cyfrin.io/en/collections/11474635-aderyn">Docs</a>
 <a href="https://discord.gg/cyfrin">Get support</a>
 <a href="https://cyfrin.io">Website</a>
 <a href="https://twitter.com/cyfrinaudits">Twitter</a>
