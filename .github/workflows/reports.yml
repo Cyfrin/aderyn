@@ -24,8 +24,6 @@ jobs:
 
       - name: Cache Rust Dependencies
         uses: Swatinem/rust-cache@v2
-        run: |
-          cargo build
 
       - name: Checkout Submodules
         run: git submodule update --init --recursive
