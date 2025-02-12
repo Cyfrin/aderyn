@@ -99,6 +99,9 @@ To update Aderyn to the latest version, you can run the cyfrinup:
 cyfrinup
 ```
 
+Cyfrinup will replace the existing version with the latest one.
+
+
 ### Using Homebrew
 
 ```
@@ -111,7 +114,9 @@ brew install cyfrin/tap/aderyn
 npm install @cyfrin/aderyn -g
 ```
 
-Cyfrinup will replace the existing version with the latest one.
+If you are an existing user, with homebrew and npm, make sure that the correct version of `aderyn` in path is from the node or the brew directory.
+If not, delete the existing / old version of aderyn by `rm -f ~/.cyfrin/bin/aderyn` as that is no longer the default installation location.
+
 ## Quick Start
 Once Aderyn is installed on your system, you can run it against your Foundry-based codebase to find vulnerabilities in your code.
 
