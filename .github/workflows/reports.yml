@@ -48,8 +48,8 @@ jobs:
 
       - name: Install JS Dependencies
         run: |
-          pnpm install --frozen-lockfile --prefix tests/2024-05-Sablier/v2-core
-          pnpm install --frozen-lockfile --prefix tests/prb-math/
+          pnpm install --prefix tests/2024-05-Sablier/v2-core
+          pnpm install --prefix tests/prb-math/
 
   reports-build:
     name: Build & Generate Reports
