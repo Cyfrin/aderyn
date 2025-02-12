@@ -1,11 +1,13 @@
 [package]
 name = "aderyn"
-version = "0.3.3"
+version = "0.3.4"
 edition = "2021"
 authors = ["Cyfrin <aderyn@cyfrin.io>"]
 description = "Rust based Solidity AST analyzer"
 license = "MIT"
 default-run = "aderyn"
+repository = "https://github.com/cyfrin/aderyn"
+homepage = "https://github.com/cyfrin/aderyn"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
