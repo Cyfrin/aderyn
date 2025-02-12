@@ -15,8 +15,6 @@ on:
   # Note that the "Deploy to Github Pages" step won't run in this mode,
   # so this won't have any side-effects. But it will tell you if a PR
   # completely broke oranda/mdbook. Sadly we don't provide previews (yet)!
-  pull_request:
-
   # Whenever something gets pushed to main, update the docs!
   # This is great for getting docs changes live without cutting a full release.
   #
@@ -30,9 +28,10 @@ on:
   # If you only want docs to update with releases, disable this, or change it to
   # a "release" branch. You can, of course, also manually trigger a workflow run
   # when you want the docs to update.
+  pull_request:
   push:
-    branches:
-      - master
+    tags:
+      - '**[0-9]+.[0-9]+.[0-9]+*'
 
   # Whenever a workflow called "Release" completes, update the docs!
   #
@@ -79,8 +78,8 @@ jobs:
       # The other defaults work fine.
       - name: Deploy to Github Pages
         uses: JamesIves/github-pages-deploy-action@v4.4.1
-        # ONLY if we're on main (so no PRs or feature branches allowed!)
-        if: ${{ github.ref == 'refs/heads/master' }}
+        # ONLY if we're on dev (so no PRs or feature branches allowed!)
+        if: ${{ github.ref == 'refs/heads/dev' }}
         with:
           branch: gh-pages
           # Gotta tell the action where to find oranda's output

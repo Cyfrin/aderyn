@@ -1,0 +1,132 @@
+on: [push, pull_request, workflow_dispatch]
+
+name: Reports Workflow
+
+jobs:
+  reports-setup:
+    name: Setup Reports Toolchains & Dependencies
+    runs-on: ubuntu-latest
+    outputs:
+      rust-nightly: nightly-2025-01-01
+    steps:
+      - name: Install Foundry Toolchain
+        uses: foundry-rs/foundry-toolchain@v1.2.0
+
+      - name: Checkout Sources
+        uses: actions/checkout@v4
+
+      - name: Install Rust Toolchains (Stable & Nightly)
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+
+      - name: Install Rust Nightly (2025-01-01)
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: nightly-2025-01-01
+          override: false
+
+      - name: Cache Rust Dependencies
+        uses: Swatinem/rust-cache@v2
+
+      - name: Checkout Submodules
+        run: git submodule update --init --recursive
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8
+
+      - name: Install JS Dependencies
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm install --frozen-lockfile --prefix tests/2024-05-Sablier/v2-core
+          pnpm install --frozen-lockfile --prefix tests/prb-math/
+
+  reports-build:
+    name: Build & Generate Reports
+    runs-on: ubuntu-latest
+    needs: reports-setup
+    strategy:
+      matrix:
+        task:
+          - report-workflow
+          - uniswap_profile-workflow
+          - sablier
+          - adhoc-sol-files-workflow
+          - nft-workflow
+          - ccip-functions-report
+          - hardhat-playground-report
+          - prb-math-report
+          - report-json
+          - adhoc-sol-files-highs-only-json
+          - sarif-report
+          - empty-report
+    steps:
+      - name: Checkout Sources
+        uses: actions/checkout@v4
+
+      - name: Restore Rust Cache
+        uses: Swatinem/rust-cache@v2
+
+      - name: Generate Report (${{ matrix.task }})
+        run: |
+          case "${{ matrix.task }}" in
+            report-workflow)
+              cargo run -- -o ./reports/report-workflow.md  --src src/ ./tests/contract-playground/ --skip-update-check
+              diff ./reports/report.md ./reports/report-workflow.md
+              ;;
+            uniswap_profile-workflow)
+              FOUNDRY_PROFILE=uniswap cargo run -- -o ./reports/uniswap_profile-workflow.md ./tests/contract-playground/ --skip-update-check
+              diff reports/uniswap_profile.md reports/uniswap_profile-workflow.md
+              ;;
+            sablier)
+              FOUNDRY_PROFILE=uniswap cargo run -- -o ./reports/sablier.md ./tests/2024-05-Sablier --skip-update-check
+              diff reports/sablier-aderyn-toml-nested-root.md reports/sablier.md
+              ;;
+            adhoc-sol-files-workflow)
+              cargo run -- -o ./reports/adhoc-sol-files-report-workflow.md ./tests/adhoc-sol-files --skip-update-check
+              diff ./reports/adhoc-sol-files-report.md ./reports/adhoc-sol-files-report-workflow.md
+              ;;
+            nft-workflow)
+              cargo run -- -o ./reports/nft-workflow-report.md --src src/ ./tests/foundry-nft-f23 --skip-update-check
+              diff ./reports/nft-report.md ./reports/nft-workflow-report.md
+              ;;
+            ccip-functions-report)
+              cargo run -- -o reports/ccip-functions-report-workflow.md tests/ccip-contracts/contracts --src src/v0.8/functions/ -x "tests/,test/,mocks/"  --skip-update-check
+              diff ./reports/ccip-functions-report.md ./reports/ccip-functions-report-workflow.md
+              ;;
+            hardhat-playground-report)
+              cargo run -- tests/hardhat-js-playground -o reports/hardhat-playground-report-workflow.md --skip-update-check
+              diff ./reports/hardhat-playground-report.md ./reports/hardhat-playground-report-workflow.md
+              ;;
+            prb-math-report)
+              cargo run -- ./tests/prb-math -o ./reports/prb-math-report-workflow.md --skip-update-check
+              diff ./reports/prb-math-report.md ./reports/prb-math-report-workflow.md
+              ;;
+            report-json)
+              cargo run -- -o ./reports/report-workflow.json -i src/ -x lib/ ./tests/contract-playground/ --skip-update-check
+              diff ./reports/report.json ./reports/report-workflow.json
+              ;;
+            adhoc-sol-files-highs-only-json)
+              cargo run -- -o ./reports/adhoc-sol-files-highs-only-report-workflow.json ./tests/adhoc-sol-files --skip-update-check --highs-only
+              diff ./reports/adhoc-sol-files-highs-only-report.json ./reports/adhoc-sol-files-highs-only-report-workflow.json
+              ;;
+            sarif-report)
+              cargo run -- -o ./reports/ci-report.sarif ./tests/contract-playground/ --skip-update-check
+              diff ./reports/report.sarif ./reports/ci-report.sarif
+              ;;
+            empty-report)
+              cargo run -- tests/contract-playground -o reports/empty_report_workflow.md -i IgnoreEverything.sol
+              diff ./reports/empty_report.md ./reports/empty_report_workflow.md
+              ;;
+          esac
