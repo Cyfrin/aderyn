@@ -55,9 +55,7 @@ You can read the [Cyfrin official documentation](https://docs.cyfrin.io) for an 
 
 ## Installation
 
-**Suggested VSCode extensions:**
-[rust-analyzer](https://marketplace.visualstudio.com/items?itemName=dustypomerleau.rust-syntax) - Rust language support for Visual Studio Code
-[Rust Syntax](https://marketplace.visualstudio.com/items?itemName=dustypomerleau.rust-syntax) - Improved Rust syntax highlighting
+> **NOTE** Windows users must have WSL installed
 
 ### Using Cyfrinup
 
@@ -203,6 +201,11 @@ To build Aderyn locally:
 2. Clone this repo and `cd aderyn/`,
 3. `make`,
 4. Use [`cargo`](https://doc.rust-lang.org/cargo/getting-started/first-steps.html) commands to build, test and run locally.
+
+**Suggested VSCode extensions:**
+[rust-analyzer](https://marketplace.visualstudio.com/items?itemName=dustypomerleau.rust-syntax) - Rust language support for Visual Studio Code
+[Rust Syntax](https://marketplace.visualstudio.com/items?itemName=dustypomerleau.rust-syntax) - Improved Rust syntax highlighting
+
 
 ## Credits
 
