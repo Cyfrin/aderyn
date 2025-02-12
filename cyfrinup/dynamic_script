@@ -7,7 +7,7 @@ main() {
   say "installing latest aderyn"
 
   ensure curl --proto '=https' --tlsv1.2 -LsSf https://github.com/cyfrin/aderyn/releases/latest/download/aderyn-installer.sh | bash
-  rm ~/.cargo/bin/aderyn
+  rm -f ~/.cargo/bin/aderyn
 
   say "done!"
 }
