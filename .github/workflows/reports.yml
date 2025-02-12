@@ -4,10 +4,27 @@ name: Reports Workflow
 
 jobs:
   reports-setup:
-    name:  Reports 
+    name:  Check Reports 
     runs-on: ubuntu-latest
     outputs:
       rust-nightly: nightly-2025-01-01
+    
+    strategy:
+      matrix:
+        task:
+          - report-workflow
+          - uniswap_profile-workflow
+          - sablier
+          - adhoc-sol-files-workflow
+          - nft-workflow
+          - ccip-functions-report
+          - hardhat-playground-report
+          - prb-math-report
+          - report-json
+          - adhoc-sol-files-highs-only-json
+          - sarif-report
+          - empty-report
+
     steps:
       - name: Install Foundry Toolchain
         uses: foundry-rs/foundry-toolchain@v1.2.0
@@ -44,22 +61,6 @@ jobs:
           pnpm install --prefix tests/2024-05-Sablier/v2-core
           pnpm install --prefix tests/prb-math/
 
-    strategy:
-      matrix:
-        task:
-          - report-workflow
-          - uniswap_profile-workflow
-          - sablier
-          - adhoc-sol-files-workflow
-          - nft-workflow
-          - ccip-functions-report
-          - hardhat-playground-report
-          - prb-math-report
-          - report-json
-          - adhoc-sol-files-highs-only-json
-          - sarif-report
-          - empty-report
-    steps:
       - name: Checkout Sources
         uses: actions/checkout@v4
 
