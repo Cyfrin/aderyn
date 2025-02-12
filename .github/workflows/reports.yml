@@ -48,7 +48,6 @@ jobs:
 
       - name: Install JS Dependencies
         run: |
-          pnpm install --frozen-lockfile
           pnpm install --frozen-lockfile --prefix tests/2024-05-Sablier/v2-core
           pnpm install --frozen-lockfile --prefix tests/prb-math/
 
