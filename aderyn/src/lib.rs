@@ -97,7 +97,7 @@ pub fn aderyn_is_currently_running_newest_version() -> Option<bool> {
         client.get("https://api.github.com/repos/Cyfrin/aderyn/releases/latest").send().ok()?;
 
     let data = latest_version_checker.json::<Value>().ok()?;
-    let version_string = data["tag_name"].as_str()?;
+    let version_string = data.get("tag_name")?.as_str()?;
     let newest = Version::parse(version_string.replace('v', "").as_str()).ok()?;
     let current = Version::parse(env!("CARGO_PKG_VERSION")).expect("Pkg version not available");
 

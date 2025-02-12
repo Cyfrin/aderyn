@@ -3,7 +3,6 @@ members = [
     "aderyn",
     "aderyn_core",
     "aderyn_driver",
-    "aderyn_py",
 ]
 
 resolver="1"
@@ -19,3 +18,8 @@ lto = true
 
 [profile.dev.package."*"]
 opt-level = 3
+
+# The profile that 'dist' will build with
+[profile.dist]
+inherits = "release"
+lto = "thin"
