@@ -59,8 +59,6 @@ You can read the [Cyfrin official documentation](https://docs.cyfrin.io) for an 
 
 ### Using Cyfrinup
 
-> Note: If you previously installed aderyn using cargo, run `cargo uninstall aderyn` before using `cyfrinup` to avoid conflicts.
-
 #### Step 1: Install Cyfrinup
 
 Cyfrinup is a CLI tool that simplifies the installation and management of Cyfrin tools. To install Cyfrinup, run the following command in your terminal:
