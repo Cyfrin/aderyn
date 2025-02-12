@@ -1,16 +1,18 @@
 [package]
 name = "aderyn"
-version = "0.3.3"
+version = "0.4.0"
 edition = "2021"
 authors = ["Cyfrin <aderyn@cyfrin.io>"]
 description = "Rust based Solidity AST analyzer"
 license = "MIT"
 default-run = "aderyn"
+repository = "https://github.com/cyfrin/aderyn"
+homepage = "https://github.com/cyfrin/aderyn"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-aderyn_driver = { path  = "../aderyn_driver", version = "0.3.3" }
+aderyn_driver = { path  = "../aderyn_driver", version = "0.4.0" }
 clap = { version = "4.4.6", features = ["derive"] }
 reqwest = { version = "0.12.2", default-features = false, features = ["blocking", "json", "rustls-tls"] }
 semver = "1.0.22"
