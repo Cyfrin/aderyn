@@ -114,8 +114,7 @@ brew install cyfrin/tap/aderyn
 npm install @cyfrin/aderyn -g
 ```
 
-If you are an existing user, with homebrew and npm, make sure that the correct version of `aderyn` in path is from the node or the brew directory.
-If not, delete the existing / old version of aderyn by `rm -f ~/.cyfrin/bin/aderyn` as that is no longer the default installation location.
+If you have Homebrew and npm installed, ensure that the correct version of Aderyn in your path comes from either the Homebrew or npm directory. If an older version exists at `~/.cyfrin/bin/aderyn`, remove it using `rm -f ~/.cyfrin/bin/aderyn`, as this is no longer the default installation location.
 
 ## Quick Start
 Once Aderyn is installed on your system, you can run it against your Foundry-based codebase to find vulnerabilities in your code.
