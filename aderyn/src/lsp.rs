@@ -80,7 +80,7 @@ pub fn spin_up_language_server(args: Args) {
         .worker_threads(20)
         .thread_name("aderyn-async-runtime")
         .thread_stack_size(3 * 1024 * 1024)
-        .enable_io()
+        .enable_all()
         .build()
         .expect("unable to start async runtime");
 
