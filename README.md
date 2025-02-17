@@ -55,13 +55,9 @@ You can read the [Cyfrin official documentation](https://docs.cyfrin.io) for an 
 
 ## Installation
 
-**Suggested VSCode extensions:**
-[rust-analyzer](https://marketplace.visualstudio.com/items?itemName=dustypomerleau.rust-syntax) - Rust language support for Visual Studio Code
-[Rust Syntax](https://marketplace.visualstudio.com/items?itemName=dustypomerleau.rust-syntax) - Improved Rust syntax highlighting
+> **NOTE** Windows users must have WSL installed
 
 ### Using Cyfrinup
-
-> Note: If you previously installed aderyn using cargo, run `cargo uninstall aderyn` before using `cyfrinup` to avoid conflicts.
 
 #### Step 1: Install Cyfrinup
 
@@ -98,7 +94,24 @@ To update Aderyn to the latest version, you can run the cyfrinup:
 ```sh
 cyfrinup
 ```
+
 Cyfrinup will replace the existing version with the latest one.
+
+
+### Using Homebrew
+
+```
+brew install cyfrin/tap/aderyn
+```
+
+### Using npm 
+
+```
+npm install @cyfrin/aderyn -g
+```
+
+If you are installing with Homebrew or npm, ensure that the correct version of Aderyn in your path comes from either the Homebrew or npm global packages directory. If an older version exists at `~/.cyfrin/bin/aderyn`, remove it using `rm -f ~/.cyfrin/bin/aderyn`, as this is no longer the default installation location.
+
 ## Quick Start
 Once Aderyn is installed on your system, you can run it against your Foundry-based codebase to find vulnerabilities in your code.
 
@@ -186,6 +199,11 @@ To build Aderyn locally:
 2. Clone this repo and `cd aderyn/`,
 3. `make`,
 4. Use [`cargo`](https://doc.rust-lang.org/cargo/getting-started/first-steps.html) commands to build, test and run locally.
+
+**Suggested VSCode extensions:**
+[rust-analyzer](https://marketplace.visualstudio.com/items?itemName=dustypomerleau.rust-syntax) - Rust language support for Visual Studio Code
+[Rust Syntax](https://marketplace.visualstudio.com/items?itemName=dustypomerleau.rust-syntax) - Improved Rust syntax highlighting
+
 
 ## Credits
 
