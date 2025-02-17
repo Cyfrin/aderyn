@@ -16,8 +16,11 @@ exclude = [
 codegen-units = 1
 lto = true
 
-[profile.dev.package."*"]
-opt-level = 3
+[profile.lspdev]
+inherits = "dist"
+
+[profile.lspdev.package."*"]
+inherits = "dist"
 
 # The profile that 'dist' will build with
 [profile.dist]
