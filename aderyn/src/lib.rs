@@ -98,7 +98,7 @@ pub fn aderyn_is_currently_running_newest_version() -> Option<bool> {
 
     let data = latest_version_checker.json::<Value>().ok()?;
     let version_string = data.get("tag_name")?.as_str()?;
-    let newest = Version::parse(version_string.replace('v', "").as_str()).ok()?;
+    let newest = Version::parse(version_string.replace("aderyn-v", "").as_str()).ok()?;
     let current = Version::parse(env!("CARGO_PKG_VERSION")).expect("Pkg version not available");
 
     Some(current >= newest)
@@ -108,7 +108,6 @@ pub fn aderyn_is_currently_running_newest_version() -> Option<bool> {
 mod latest_version_checker_tests {
     use super::*;
 
-    #[ignore = "TODO later in the interest of time"]
     #[test]
     fn can_get_latest_version_from_crate_registry() {
         assert!(aderyn_is_currently_running_newest_version().is_some())
