@@ -10,6 +10,7 @@ jobs:
       rust-nightly: nightly-2025-01-01
     
     strategy:
+      fail-fast: false
       matrix:
         task:
           - report-workflow
