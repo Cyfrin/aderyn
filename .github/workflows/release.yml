@@ -44,6 +44,10 @@ on:
     tags:
       - '**[0-9]+.[0-9]+.[0-9]+*'
 
+concurrency:
+  group: ci-${{ github.ref }}-release
+  cancel-in-progress: true
+
 jobs:
   # Run 'dist plan' (or host) to determine what tasks we need to do
   plan:

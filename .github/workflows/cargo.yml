@@ -2,6 +2,10 @@ on: [push, pull_request, workflow_dispatch]
 
 name: Aderyn
 
+concurrency:
+  group: ci-${{ github.ref }}-cargo
+  cancel-in-progress: true
+
 jobs:
   check:
     name: Check
