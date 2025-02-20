@@ -1,5 +1,7 @@
 # Aderyn Configuration File
 # Help Aderyn work with more granular control
+
+# DO NOT CHANGE version below. As of now, only 1 is supported
 version = 1
 
 # Read the description carefully and uncomment the examples in each paragraph should you consider using them.
