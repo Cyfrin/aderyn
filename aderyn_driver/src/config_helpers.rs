@@ -223,7 +223,7 @@ mod tests {
     #[test]
     fn test_interpret_aderyn_config_correctly_appends_and_replaces() {
         let config = super::AderynConfig {
-            version: 1,
+            version: Some(1),
             root: Some("CONFIG_ROOT".to_string()),
             src: Some("CONFIG_SRC".to_string()),
             exclude: Some(vec!["CONFIG_EXCLUDE".to_string()]),
