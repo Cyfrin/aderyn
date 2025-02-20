@@ -29,7 +29,7 @@ fn load_aderyn_config(root: &Path) -> Result<AderynConfig, String> {
     let mut config: AderynConfig =
         toml::from_str(&content).map_err(|err| format!("Error parsing config file: {}", err))?;
 
-    if config.version.is_none_or(|v| v != 1) {
+    if config.version.is_some_and(|v| v != 1) {
         return Err("aderyn.toml version not supported".to_owned());
     }
 
