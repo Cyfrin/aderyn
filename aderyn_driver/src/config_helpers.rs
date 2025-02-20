@@ -9,7 +9,8 @@ use serde::Deserialize;
 /// aderyn.toml structure
 #[derive(Deserialize, Clone)]
 pub struct AderynConfig {
-    pub version: usize,
+    /// By default we'll assume it's version 1
+    pub version: Option<usize>,
     pub root: Option<String>,
     pub src: Option<String>,
     pub exclude: Option<Vec<String>>,
@@ -28,7 +29,7 @@ fn load_aderyn_config(root: &Path) -> Result<AderynConfig, String> {
     let mut config: AderynConfig =
         toml::from_str(&content).map_err(|err| format!("Error parsing config file: {}", err))?;
 
-    if config.version != 1 {
+    if config.version.is_none_or(|v| v != 1) {
         return Err("aderyn.toml version not supported".to_owned());
     }
 
