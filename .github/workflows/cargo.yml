@@ -44,17 +44,16 @@ jobs:
           toolchain: nightly-2025-01-01
           override: true
 
-      - name: Cache Rust Dependencies
-        uses: Swatinem/rust-cache@v2
-
       - name: Checkout Submodules
         run: git submodule update --init --recursive
 
-      - uses: taiki-e/install-action@nextest
-      - name: Run nextest
+      - name: Restore Rust Cache
+        uses: Swatinem/rust-cache@v2
+
+      - name: Run tests
         run: |
           cargo build
-          cargo nextest run
+          cargo test -- --nocapture
 
   lints:
     name: Lints
