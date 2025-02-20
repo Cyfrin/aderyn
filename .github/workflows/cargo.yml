@@ -31,8 +31,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - name: foundry-toolchain
+      - name: Install Foundry Toolchain
         uses: foundry-rs/foundry-toolchain@v1.2.0
+
+      - name: Checkout Sources
+        uses: actions/checkout@v4
 
       - name: Install Rust Nightly (2025-01-01)
         uses: actions-rs/toolchain@v1
@@ -44,9 +47,8 @@ jobs:
       - name: Cache Rust Dependencies
         uses: Swatinem/rust-cache@v2
 
-      - name: Submodule init
-        run: |
-          git submodule update --init --recursive
+      - name: Checkout Submodules
+        run: git submodule update --init --recursive
 
       - uses: taiki-e/install-action@nextest
       - name: Install nextest
