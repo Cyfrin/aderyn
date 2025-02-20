@@ -1,27 +1,33 @@
 # Aderyn Configuration File
-# This is a sample configuration for Aderyn
+# Help Aderyn work with more granular control
 
-# The root directory of smart contracts
-# root = "."
+# DO NOT CHANGE version below. As of now, only 1 is supported
+version = 1
 
-# By default, aderyn will try to extract the following values based on the framework that is being used.
-# However, if you want to be explicit consider mentioning them.
+# Read the description carefully and uncomment the examples in each paragraph should you consider using them.
 
-# The source directory containing the Solidity contracts.
-# This is often "contracts/" or "src/"
+# Base path for resolving remappings and compiling smart contracts, relative to workspace-root (directory in which the editor is open)
+# Most of the time, you want to point it to the directory containing foundry.toml or hardhat.config.js/ts. 
+root = "."
+
+# Path of source directory containing the contracts, relative to root (above)
+# Aderyn traverse all the nested files inside scanning for vulnerabilities
+# If not specified, Aderyn will try to extract it from the framework that is being used. (Foundry / Hardhat)
+# That would be "contracts/" in case of Hardhat and in case of Foundry, it depends on foundry's config file and
+# many other factors like FOUNDRY_PROFILE environment variable, etc. used.
+# Please specify explicitly in case it's not Foundry / Hardhat project.
+# Example:
 # src = "src/"
 
-# Contract files to include in the analysis.
-# This is a list of strings representing the file paths of the contracts to include.
+# Path segments of contract files to include in the analysis.
 # It can be a partial match like "/interfaces/", which will include all files with "/interfaces/" in the file path.
-# Or it can be a full match like "Counter.sol", which will include only the file with the exact file.
+# Or it can be a full match like "counters/Counter.sol", which will include only the file with the exact file.
 # If not specified, all contract files in the source directory will be included.
 # Example:
-# include = ["Counter.sol"]
+# include = ["counters/Counter.sol"]
 # include = []
 
-# Contract files to exclude from the analysis.
-# This is a list of strings representing the file paths of the contracts to exclude.
+# Path segments of contract files to exclude in the analysis.
 # It can be a partial match like "/interfaces/", which will exclude all files with "/interfaces/" in the file path.
 # Or it can be a full match like "Counter.sol", which will exclude only the file with the exact file.
 # If not specified, no contract files will be excluded.
@@ -29,6 +35,8 @@
 # exclude = ["/interfaces/"]
 # exclude = []
 
-## Remappings used for compiling the contracts.
+# Remappings used for compiling the contracts.
+# If not specified, Aderyn will try to derive the values from foundry's config file (if present.) 
+# That would be the result of calling `foundry remappings` 
 # Example:
 # remappings = ["@oz/contracts=lib/openzeppelin-contracts/contracts"]
