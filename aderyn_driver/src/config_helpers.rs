@@ -9,6 +9,7 @@ use serde::Deserialize;
 /// aderyn.toml structure
 #[derive(Deserialize, Clone)]
 pub struct AderynConfig {
+    pub version: usize,
     pub root: Option<String>,
     pub src: Option<String>,
     pub exclude: Option<Vec<String>>,
@@ -26,6 +27,10 @@ fn load_aderyn_config(root: &Path) -> Result<AderynConfig, String> {
     // Deserialize the TOML string to AderynConfig
     let mut config: AderynConfig =
         toml::from_str(&content).map_err(|err| format!("Error parsing config file: {}", err))?;
+
+    if config.version != 1 {
+        return Err("aderyn.toml version not supported".to_owned());
+    }
 
     // Clear empty vectors
     clear_empty_vectors(&mut config.exclude);
