@@ -51,10 +51,10 @@ jobs:
         run: git submodule update --init --recursive
 
       - uses: taiki-e/install-action@nextest
-      - name: Install nextest
+      - name: Run nextest
         run: |
           cargo build
-          cargo nextest
+          cargo nextest run
 
   lints:
     name: Lints
