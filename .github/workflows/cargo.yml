@@ -47,6 +47,9 @@ jobs:
       - name: Checkout Submodules
         run: git submodule update --init --recursive
 
+      - name: Checkout Sources
+        uses: actions/checkout@v4
+
       - name: Restore Rust Cache
         uses: Swatinem/rust-cache@v2
 
