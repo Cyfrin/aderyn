@@ -34,31 +34,15 @@ jobs:
       - name: foundry-toolchain
         uses: foundry-rs/foundry-toolchain@v1.2.0
 
-      - name: Checkout sources
-        uses: actions/checkout@v4
-
-      - name: Install stable toolchain
+      - name: Install Rust Nightly (2025-01-01)
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: stable
+          toolchain: nightly-2025-01-01
           override: true
-          
-      - uses: Swatinem/rust-cache@v2
-      - name: Run cargo build
-        run: |
-          cargo build
-          
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 8
-          run_install: false
-      
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
+
+      - name: Cache Rust Dependencies
+        uses: Swatinem/rust-cache@v2
 
       - name: Submodule init
         run: |
@@ -67,6 +51,7 @@ jobs:
       - uses: taiki-e/install-action@nextest
       - name: Install nextest
         run: |
+          cargo build
           cargo nextest
 
   lints:
