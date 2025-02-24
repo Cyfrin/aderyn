@@ -17,6 +17,6 @@ permissions:
 
 jobs:
   update:
-    uses: ithacaxyz/ci/.github/workflows/cargo-update-pr.yml@main
+    uses: ithacaxyz/ci/.github/workflows/cargo-update-pr.yml@dev
     secrets:
       token: ${{ secrets.GITHUB_TOKEN }}
