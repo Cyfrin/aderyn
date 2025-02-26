@@ -76,7 +76,7 @@ pub fn drive_and_get_results(args: Args) -> Arc<Mutex<Option<LspReport>>> {
     if let Ok(report) = get_report(&cx_wrapper.contexts, &root_rel_path, detectors) {
         let high_issues = report.high_issues(&file_contents);
         let low_issues = report.low_issues(&file_contents);
-        let lsp_result = LspReport::from(low_issues, high_issues, args);
+        let lsp_result = LspReport::from(low_issues, high_issues, &root_rel_path);
         return Arc::new(tokio::sync::Mutex::new(Some(lsp_result)));
     }
 
