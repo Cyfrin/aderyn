@@ -2,6 +2,10 @@ on: [push, pull_request, workflow_dispatch]
 
 name: Reports Workflow
 
+concurrency:
+  group: ci-${{ github.ref }}-reports
+  cancel-in-progress: true
+
 jobs:
   reports-setup:
     name:  Check Reports 
@@ -10,6 +14,7 @@ jobs:
       rust-nightly: nightly-2025-01-01
     
     strategy:
+      fail-fast: false
       matrix:
         task:
           - report-workflow

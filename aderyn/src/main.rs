@@ -166,7 +166,8 @@ fn main() {
         if let Some(yes) = aderyn_is_currently_running_newest_version() {
             if !yes {
                 println!();
-                println!("NEW VERSION OF ADERYN AVAILABLE! Please run `cyfrinup` to upgrade.");
+                println!("NEW VERSION OF ADERYN AVAILABLE! Please upgrade aderyn by following the instruction here - https://github.com/cyfrin/aderyn");
+                println!("NOTE: You can skip this check by passing --skip-update-check flag");
             }
         }
     }

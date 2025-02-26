@@ -2,6 +2,10 @@ on: [push, pull_request, workflow_dispatch]
 
 name: Aderyn
 
+concurrency:
+  group: ci-${{ github.ref }}-cargo
+  cancel-in-progress: true
+
 jobs:
   check:
     name: Check
@@ -31,42 +35,31 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - name: foundry-toolchain
+      - name: Install Foundry Toolchain
         uses: foundry-rs/foundry-toolchain@v1.2.0
 
-      - name: Checkout sources
+      - name: Checkout Sources
         uses: actions/checkout@v4
 
-      - name: Install stable toolchain
+      - name: Install Rust Nightly (2025-01-01)
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: stable
+          toolchain: nightly-2025-01-01
           override: true
-          
-      - uses: Swatinem/rust-cache@v2
-      - name: Run cargo build
+
+      - name: Checkout Submodules
+        run: git submodule update --init --recursive
+
+      - name: Checkout Sources
+        uses: actions/checkout@v4
+
+      - name: Restore Rust Cache
+        uses: Swatinem/rust-cache@v2
+
+      - name: Run tests
         run: |
           cargo build
-          
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 8
-          run_install: false
-      
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-
-      - name: Submodule init
-        run: |
-          git submodule update --init --recursive
-
-      - uses: Swatinem/rust-cache@v2
-      - name: Run cargo test 
-        run: |
           cargo test -- --nocapture
 
   lints:
