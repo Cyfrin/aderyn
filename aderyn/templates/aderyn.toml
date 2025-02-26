@@ -7,7 +7,7 @@ version = 1
 # Read the description carefully and uncomment the examples in each paragraph should you consider using them.
 
 # Base path for resolving remappings and compiling smart contracts, relative to workspace-root (directory in which the editor is open)
-# Most of the time, you want to point it to the directory containing foundry.toml or hardhat.config.js/ts. 
+# Most of the time, you want to point it to the directory containing foundry.toml or hardhat.config.js/ts.
 root = "."
 
 # Path of source directory containing the contracts, relative to root (above)
@@ -36,7 +36,7 @@ root = "."
 # exclude = ["/interfaces/"]
 
 # Remappings used for compiling the contracts.
-# If not specified, Aderyn will try to derive the values from foundry.toml (if present.) 
-# That would be the result of calling `foundry remappings` 
+# If not specified, Aderyn will try to derive the values from foundry.toml (if present.)
+# That would be the result of calling `foundry remappings`
 # Example:
 # remappings = ["@oz/contracts=lib/openzeppelin-contracts/contracts"]
