@@ -56,61 +56,46 @@ You can read the [Cyfrin official documentation](https://docs.cyfrin.io) for an 
 ## Installation
 
 > **NOTE** Windows users must have WSL installed
-
 ### Using Cyfrinup
 
 #### Step 1: Install Cyfrinup
-
 Cyfrinup is a CLI tool that simplifies the installation and management of Cyfrin tools. To install Cyfrinup, run the following command in your terminal:
-
 ```sh
 curl -L https://raw.githubusercontent.com/Cyfrin/aderyn/dev/cyfrinup/install | bash
 ```
+If you get a `failed writing body` error in Windows, it's most likely because you are not using Windows Subsytem for Linux.
 
-If you get a `failed writing body` error in Windows, it's most likely because you don't have Windows Distribution system.
-
-You can fix this by going to Microsoft Store, download Ubuntu, and have it running.
 #### Step 2: Update Path
-
 The installer will prompt you to run a `source` command. Either run this command, or reload your terminal.
 
 #### Step 3: Install Aderyn using Cyfrinup
-
 After installing Cyfrinup, you can use it to install Aderyn. Run the following command in your terminal:
-
 ```sh
 cyfrinup
 ```
+Verify the installation by running `aderyn --version`
 
-#### Step 4: Verify installation
+##### Upgrade older versions by (re)running: `cyfrinup`
 
-```sh
-aderyn --version
-```
-
-#### Future Updates
-
-To update Aderyn to the latest version, you can run the cyfrinup:
-```sh
-cyfrinup
-```
-
-Cyfrinup will replace the existing version with the latest one.
-
+----------
 
 ### Using Homebrew
-
-```
+```sh
 brew install cyfrin/tap/aderyn
 ```
+##### Upgrade older versions by running: `brew upgrade cyfrin/tap/aderyn`
 
+----------
 ### Using npm 
-
-```
+```sh
 npm install @cyfrin/aderyn -g
 ```
+##### Upgrade older versions by (re)running: `npm install @cyfrin/aderyn -g`
+
+-----------
 
 If you are installing with Homebrew or npm, ensure that the correct version of Aderyn in your path comes from either the Homebrew or npm global packages directory. If an older version exists at `~/.cyfrin/bin/aderyn`, remove it using `rm -f ~/.cyfrin/bin/aderyn`, as this is no longer the default installation location.
+
 
 ## Quick Start
 Once Aderyn is installed on your system, you can run it against your Foundry-based codebase to find vulnerabilities in your code.

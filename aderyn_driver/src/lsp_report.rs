@@ -1,9 +1,6 @@
-use std::{collections::BTreeMap, path::PathBuf};
-
 use aderyn_core::report::{HighIssues, IssueBody, IssueInstance, LowIssues};
+use std::{collections::BTreeMap, path::Path};
 use tower_lsp::lsp_types::{Diagnostic, DiagnosticSeverity, Position, Range, Url};
-
-use crate::driver::Args;
 
 /// Report structure that is tailored to aid LSP
 pub struct LspReport {
@@ -13,12 +10,12 @@ pub struct LspReport {
 }
 
 impl LspReport {
-    pub fn from(low_issues: LowIssues, high_issues: HighIssues, args: Args) -> Self {
+    pub fn from(low_issues: LowIssues, high_issues: HighIssues, root_rel_path: &Path) -> Self {
         fn create_diagnostic_from_issue(
-            args: &Args,
             issue_body: &IssueBody,
             instance: &IssueInstance,
             severity: DiagnosticSeverity,
+            root_rel_path: &Path,
         ) -> Option<(Url, Diagnostic)> {
             // Line number
             let line_no = instance.line_no.checked_sub(1)?;
@@ -62,10 +59,9 @@ impl LspReport {
                 tags: None,
                 data: None,
             };
-            let mut full_contract_path = PathBuf::from(args.root.clone());
+            let mut full_contract_path = root_rel_path.to_path_buf();
             full_contract_path.push(instance.contract_path.clone());
             let full_contract_path = full_contract_path.canonicalize().ok()?;
-
             let full_contract_path_string = full_contract_path.to_string_lossy().to_string();
             let file_uri = Url::parse(&format!("file://{}", &full_contract_path_string)).ok()?;
 
@@ -77,10 +73,10 @@ impl LspReport {
         for issue_body in &high_issues.issues {
             for instance in &issue_body.instances {
                 let Some((file_url, diagnostic)) = create_diagnostic_from_issue(
-                    &args,
                     issue_body,
                     instance,
                     DiagnosticSeverity::WARNING,
+                    root_rel_path,
                 ) else {
                     continue;
                 };
@@ -94,10 +90,10 @@ impl LspReport {
         for issue_body in &low_issues.issues {
             for instance in &issue_body.instances {
                 let Some((file_url, diagnostic)) = create_diagnostic_from_issue(
-                    &args,
                     issue_body,
                     instance,
                     DiagnosticSeverity::INFORMATION,
+                    root_rel_path,
                 ) else {
                     continue;
                 };
