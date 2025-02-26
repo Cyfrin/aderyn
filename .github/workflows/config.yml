@@ -50,4 +50,4 @@ jobs:
           mkdir config-test
           cd config-test
           cargo run -- init
-          diff ./aderyn.toml ./aderyn/templates/aderyn.toml
+          diff ./aderyn.toml ../aderyn/templates/aderyn.toml
