@@ -1,5 +1,5 @@
 use aderyn_core::report::{HighIssues, IssueBody, IssueInstance, LowIssues};
-use std::{collections::BTreeMap, path::PathBuf};
+use std::{collections::BTreeMap, path::Path};
 use tower_lsp::lsp_types::{Diagnostic, DiagnosticSeverity, Position, Range, Url};
 
 /// Report structure that is tailored to aid LSP
@@ -10,12 +10,12 @@ pub struct LspReport {
 }
 
 impl LspReport {
-    pub fn from(low_issues: LowIssues, high_issues: HighIssues, root_rel_path: &PathBuf) -> Self {
+    pub fn from(low_issues: LowIssues, high_issues: HighIssues, root_rel_path: &Path) -> Self {
         fn create_diagnostic_from_issue(
             issue_body: &IssueBody,
             instance: &IssueInstance,
             severity: DiagnosticSeverity,
-            root_rel_path: &PathBuf,
+            root_rel_path: &Path,
         ) -> Option<(Url, Diagnostic)> {
             // Line number
             let line_no = instance.line_no.checked_sub(1)?;
@@ -59,7 +59,7 @@ impl LspReport {
                 tags: None,
                 data: None,
             };
-            let mut full_contract_path = root_rel_path.clone();
+            let mut full_contract_path = root_rel_path.to_path_buf();
             full_contract_path.push(instance.contract_path.clone());
             let full_contract_path = full_contract_path.canonicalize().ok()?;
             let full_contract_path_string = full_contract_path.to_string_lossy().to_string();
