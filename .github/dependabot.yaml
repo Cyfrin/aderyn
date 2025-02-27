@@ -1,0 +1,22 @@
+version: 2
+enable-beta-ecosystems: true
+updates:
+  - package-ecosystem: "cargo"
+    directory: "/aderyn/aderyn"
+    schedule:
+      interval: monthly
+
+  - package-ecosystem: "cargo"
+    directory: "/aderyn/aderyn_core"
+    schedule:
+      interval: monthly
+
+  - package-ecosystem: "cargo"
+    directory: "/aderyn/aderyn_driver"
+    schedule:
+      interval: monthly
+
+  - package-ecosystem: "cargo"
+    directory: "/aderyn/aderyn_py"
+    schedule:
+      interval: monthly
