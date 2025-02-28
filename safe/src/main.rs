@@ -168,7 +168,7 @@ fn calculate_domain_hash(
     };
 
     let hash = keccak256(encoded);
-    Ok(format!("0x{}", hex::encode(hash).to_uppercase()))
+    Ok(format!("0x{}", hex::encode(hash)))
 }
 
 /// Helper function to calculate the message hash based on transaction parameters
@@ -233,7 +233,7 @@ fn calculate_message_hash(
     ]);
 
     let hash = keccak256(encoded);
-    Ok(format!("0x{}", hex::encode(hash).to_uppercase()))
+    Ok(format!("0x{}", hex::encode(hash)))
 }
 
 /// Helper function to calculate the final safe transaction hash
@@ -241,8 +241,20 @@ fn calculate_final_hash(
     domain_hash: &str,
     message_hash: &str,
 ) -> Result<String, Box<dyn std::error::Error>> {
-    // TODO: Implement final hash calculation
-    Ok("0x0000000000000000000000000000000000000000000000000000000000000000".to_string())
+    // Convert domain and message hashes from hex to bytes
+    let domain_hash_bytes = hex::decode(&domain_hash[2..])?;
+    let message_hash_bytes = hex::decode(&message_hash[2..])?;
+
+    // Create the buffer with the required prefix bytes and hashes
+    let mut buffer = vec![];
+    buffer.push(0x19); // bytes1(0x19)
+    buffer.push(0x01); // bytes1(0x01)
+    buffer.extend_from_slice(&domain_hash_bytes); // bytes32(domain_hash)
+    buffer.extend_from_slice(&message_hash_bytes); // bytes32(message_hash)
+
+    // Calculate the final hash
+    let hash = keccak256(buffer);
+    Ok(format!("0x{}", hex::encode(hash)))
 }
 
 /// Helper function to format the hash output
@@ -315,7 +327,7 @@ mod tests {
         let domain_hash = calculate_domain_hash(chain_id, address, version)?;
         assert_eq!(
             domain_hash,
-            "0x1655E94A9BCC5A957DAA1ACAE692B4C22E7AAF146B4DEB9194F8221D2F09D8C3"
+            "0x1655e94a9bcc5a957daa1acae692b4c22e7aaf146b4deb9194f8221d2f09d8c3"
         );
         Ok(())
     }
@@ -353,7 +365,20 @@ mod tests {
 
         assert_eq!(
             message_hash,
-            "0xF22754EBA5A2B230714534B4657195268F00DC0031296DE4B835D82E7AA1E574"
+            "0xf22754eba5a2b230714534b4657195268f00dc0031296de4b835d82e7aa1e574"
+        );
+        Ok(())
+    }
+
+    #[test]
+    fn test_calculate_final_hash() -> Result<(), Box<dyn std::error::Error>> {
+        let domain_hash = "0x1655e94a9bcc5a957daa1acae692b4c22e7aaf146b4deb9194f8221d2f09d8c3";
+        let message_hash = "0xf22754eba5a2b230714534b4657195268f00dc0031296de4b835d82e7aa1e574";
+
+        let safe_tx_hash = calculate_final_hash(domain_hash, message_hash)?;
+        assert_eq!(
+            safe_tx_hash,
+            "0xad06b099fca34e51e4886643d95d9a19ace2cd024065efb66662a876e8c40343"
         );
         Ok(())
     }
