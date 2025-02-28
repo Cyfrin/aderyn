@@ -3,6 +3,7 @@ members = [
     "aderyn",
     "aderyn_core",
     "aderyn_driver",
+    "safe",
 ]
 
 resolver="1"
