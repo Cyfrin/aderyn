@@ -168,7 +168,7 @@ fn calculate_domain_hash(
     };
 
     let hash = keccak256(encoded);
-    Ok(format!("0x{}", hex::encode(hash)))
+    Ok(format!("0x{}", hex::encode(hash).to_uppercase()))
 }
 
 /// Helper function to calculate the message hash based on transaction parameters
@@ -315,7 +315,7 @@ mod tests {
         let domain_hash = calculate_domain_hash(chain_id, address, version)?;
         assert_eq!(
             domain_hash,
-            "0x1655e94a9bcc5a957daa1acae692b4c22e7aaf146b4deb9194f8221d2f09d8c3"
+            "0x1655E94A9BCC5A957DAA1ACAE692B4C22E7AAF146B4DEB9194F8221D2F09D8C3"
         );
         Ok(())
     }
