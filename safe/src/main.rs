@@ -1,5 +1,11 @@
 use clap::{Parser, ValueEnum};
-use std::collections::HashMap;
+use ethers_core::{
+    abi::{encode, Token},
+    types::{Address, U256},
+    utils::keccak256,
+};
+use semver::Version;
+use std::str::FromStr;
 
 // Type hash constants
 const DOMAIN_SEPARATOR_TYPEHASH: &str =
@@ -131,6 +137,80 @@ fn validate_ethereum_address(address: &str) -> Result<(), Box<dyn std::error::Er
     Ok(())
 }
 
+/// Helper function to calculate the domain hash based on chain ID and verifying contract
+fn calculate_domain_hash(
+    chain_id: u64,
+    address: &str,
+    version: &str,
+) -> Result<String, Box<dyn std::error::Error>> {
+    // Parse the version string
+    let version = Version::parse(version)?;
+    let clean_version = Version::new(version.major, version.minor, version.patch);
+    let version_1_2_0 = Version::new(1, 2, 0);
+
+    // Parse the address
+    let safe_address = Address::from_str(address)?;
+
+    // Choose the appropriate typehash and encode parameters based on version
+    let encoded = if clean_version <= version_1_2_0 {
+        // Legacy format without chainId
+        encode(&[
+            Token::FixedBytes(hex::decode(&DOMAIN_SEPARATOR_TYPEHASH_OLD[2..])?.try_into()?),
+            Token::Address(safe_address),
+        ])
+    } else {
+        // New format with chainId
+        encode(&[
+            Token::FixedBytes(hex::decode(&DOMAIN_SEPARATOR_TYPEHASH[2..])?.try_into()?),
+            Token::Uint(U256::from(chain_id)),
+            Token::Address(safe_address),
+        ])
+    };
+
+    let hash = keccak256(encoded);
+    Ok(format!("0x{}", hex::encode(hash)))
+}
+
+/// Helper function to calculate the message hash based on transaction parameters
+fn calculate_message_hash(
+    to: &str,
+    value: &str,
+    data: &str,
+    operation: &str,
+    safe_tx_gas: &str,
+    base_gas: &str,
+    gas_price: &str,
+    gas_token: &str,
+    refund_receiver: &str,
+    nonce: u64,
+    version: &str,
+) -> Result<String, Box<dyn std::error::Error>> {
+    // TODO: Implement message hash calculation
+    Ok("0x0000000000000000000000000000000000000000000000000000000000000000".to_string())
+}
+
+/// Helper function to calculate the final safe transaction hash
+fn calculate_final_hash(
+    domain_hash: &str,
+    message_hash: &str,
+) -> Result<String, Box<dyn std::error::Error>> {
+    // TODO: Implement final hash calculation
+    Ok("0x0000000000000000000000000000000000000000000000000000000000000000".to_string())
+}
+
+/// Helper function to format the hash output
+fn format_hash_output(
+    domain_hash: &str,
+    message_hash: &str,
+    safe_tx_hash: &str,
+) -> Result<(), Box<dyn std::error::Error>> {
+    // TODO: Implement proper formatting of the hashes
+    println!("Domain hash: {}", domain_hash);
+    println!("Message hash: {}", message_hash);
+    println!("Safe transaction hash: {}", safe_tx_hash);
+    Ok(())
+}
+
 fn calculate_safe_hashes(args: Args) -> Result<(), Box<dyn std::error::Error>> {
     // Validate Ethereum addresses
     validate_ethereum_address(&args.address)?;
@@ -138,12 +218,30 @@ fn calculate_safe_hashes(args: Args) -> Result<(), Box<dyn std::error::Error>> {
     validate_ethereum_address(&args.gas_token)?;
     validate_ethereum_address(&args.refund_receiver)?;
 
-    // TODO: Implement the actual hash calculation logic
-    // This will include:
-    // 1. Calculate domain hash based on chain ID and verifying contract
-    // 2. Calculate message hash based on transaction parameters
-    // 3. Calculate final safe transaction hash
-    // 4. Print results in the same format as the bash script
+    // Calculate domain hash
+    let domain_hash =
+        calculate_domain_hash(args.network.chain_id(), &args.address, &args.safe_version)?;
+
+    // Calculate message hash
+    let message_hash = calculate_message_hash(
+        &args.to,
+        &args.value,
+        &args.data,
+        &args.operation,
+        &args.safe_tx_gas,
+        &args.base_gas,
+        &args.gas_price,
+        &args.gas_token,
+        &args.refund_receiver,
+        args.nonce,
+        &args.safe_version,
+    )?;
+
+    // Calculate final safe transaction hash
+    let safe_tx_hash = calculate_final_hash(&domain_hash, &message_hash)?;
+
+    // Format and print the results
+    format_hash_output(&domain_hash, &message_hash, &safe_tx_hash)?;
 
     Ok(())
 }
@@ -154,5 +252,24 @@ fn main() {
     if let Err(e) = calculate_safe_hashes(args) {
         eprintln!("Error: {}", e);
         std::process::exit(1);
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_calculate_domain_hash() -> Result<(), Box<dyn std::error::Error>> {
+        let chain_id = Network::Ethereum.chain_id();
+        let address = "0x1c694Fc3006D81ff4a56F97E1b99529066a23725";
+        let version = "1.3.0"; // Default version from Args struct
+
+        let domain_hash = calculate_domain_hash(chain_id, address, version)?;
+        assert_eq!(
+            domain_hash,
+            "0x1655e94a9bcc5a957daa1acae692b4c22e7aaf146b4deb9194f8221d2f09d8c3"
+        );
+        Ok(())
     }
 }
