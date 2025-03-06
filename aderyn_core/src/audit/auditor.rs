@@ -5,15 +5,16 @@ use strum::{Display, EnumString};
 
 use crate::{
     audit::{
-        attack_surface::AttackSurfaceDetector, entry_points::EntryPointsDetector,
+        entry_points::EntryPointsDetector,
         public_functions_no_sender::PublicFunctionsNoSenderChecksDetector,
+        raw_calls::RawCallsDetector,
     },
     context::workspace_context::WorkspaceContext,
 };
 
 pub fn get_all_auditor_detectors() -> Vec<Box<dyn AuditorDetector>> {
     vec![
-        Box::<AttackSurfaceDetector>::default(),
+        Box::<RawCallsDetector>::default(),
         Box::<PublicFunctionsNoSenderChecksDetector>::default(),
         Box::<EntryPointsDetector>::default(),
     ]
@@ -26,7 +27,7 @@ pub fn get_all_auditor_detectors_names() -> Vec<String> {
 #[derive(Debug, PartialEq, EnumString, Display)]
 #[strum(serialize_all = "kebab-case")]
 pub(crate) enum AuditorDetectorNamePool {
-    AttackSurface,
+    RawCalls,
     NoSenderChecks,
     EntryPoints,
     // NOTE: `Undecided` will be the default name (for new bots).
@@ -38,12 +39,12 @@ pub fn get_auditor_detector_by_name(name: &str) -> Box<dyn AuditorDetector> {
     // Expects a valid detector_name
     let detector_name = AuditorDetectorNamePool::from_str(name).unwrap();
     match detector_name {
-        AuditorDetectorNamePool::AttackSurface => Box::<AttackSurfaceDetector>::default(),
+        AuditorDetectorNamePool::RawCalls => Box::<RawCallsDetector>::default(),
         AuditorDetectorNamePool::NoSenderChecks => {
             Box::<PublicFunctionsNoSenderChecksDetector>::default()
         }
         AuditorDetectorNamePool::EntryPoints => Box::<EntryPointsDetector>::default(),
-        AuditorDetectorNamePool::Undecided => Box::<AttackSurfaceDetector>::default(),
+        AuditorDetectorNamePool::Undecided => Box::<RawCallsDetector>::default(),
     }
 }
 
