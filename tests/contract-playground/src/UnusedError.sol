@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.19;
+pragma solidity 0.8.27;
 
 library ErrorLibrary {
     error UnusedLibraryError();
+    error UsedInARequire();
     error LibraryError();
 }
 
@@ -22,5 +23,9 @@ contract UnusedError {
 
     function goodLibraryError() external pure {
         revert ErrorLibrary.LibraryError();
+    }
+
+    function goodRequire() external pure {
+        require(false, ErrorLibrary.UsedInARequire());
     }
 }

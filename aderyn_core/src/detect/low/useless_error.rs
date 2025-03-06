@@ -19,27 +19,24 @@ pub struct UselessErrorDetector {
 impl IssueDetector for UselessErrorDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         let error_definitions = context.error_definitions().into_iter().collect::<Vec<_>>();
-        let mut used_errors = HashSet::new();
+        let mut referenced_ids = HashSet::new();
 
-        // Collect all used errors from revert statements
-        for revert_stmt in context.revert_statements() {
-            //  extract the ids directly from the expression of the function call
-            if let Expression::Identifier(identifier) = &*revert_stmt.error_call.expression {
-                if let Some(reference_id) = identifier.referenced_declaration {
-                    used_errors.insert(reference_id);
-                }
-            } else if let Expression::MemberAccess(member_access) =
-                &*revert_stmt.error_call.expression
-            {
-                if let Some(reference_id) = member_access.referenced_declaration {
-                    used_errors.insert(reference_id);
-                }
+        //Get all MemberAccess and Identifier nodes where the referenced_declaration is an ID of an
+        // error definition
+        for identifier in context.identifiers() {
+            if let Some(reference_id) = identifier.referenced_declaration {
+                referenced_ids.insert(reference_id);
+            }
+        }
+        for member_access in context.member_accesses() {
+            if let Some(reference_id) = member_access.referenced_declaration {
+                referenced_ids.insert(reference_id);
             }
         }
 
         // Identify unused errors by comparing defined and used error IDs
         for error_def in error_definitions {
-            if !used_errors.contains(&error_def.id) {
+            if !referenced_ids.contains(&error_def.id) {
                 // Capture unused error instances
                 capture!(self, context, error_def);
             }
