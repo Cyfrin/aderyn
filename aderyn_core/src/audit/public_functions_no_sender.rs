@@ -106,6 +106,8 @@ impl AuditorDetector for PublicFunctionsNoSenderChecksDetector {
 
 #[cfg(test)]
 mod public_functions_no_sender_checks {
+    use serial_test::serial;
+
     use crate::{
         audit::{
             auditor::AuditorDetector,
@@ -115,6 +117,7 @@ mod public_functions_no_sender_checks {
     };
 
     #[test]
+    #[serial]
     fn test_public_functions_no_sender_checks() {
         let context = load_solidity_source_unit(
             "../tests/contract-playground/src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",

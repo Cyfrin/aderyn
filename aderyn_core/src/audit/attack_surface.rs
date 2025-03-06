@@ -201,9 +201,12 @@ fn find_address_source_if_function_call(
 
 #[cfg(test)]
 mod attack_surface_detector_tests {
+    use serial_test::serial;
+
     use crate::audit::{attack_surface::AttackSurfaceDetector, auditor::AuditorDetector};
 
     #[test]
+    #[serial]
     fn test_attack_surface_detector() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/auditor_mode/ExternalCalls.sol",

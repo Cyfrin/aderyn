@@ -82,12 +82,15 @@ impl AuditorDetector for EntryPointsDetector {
 
 #[cfg(test)]
 mod entry_points_test {
+    use serial_test::serial;
+
     use crate::{
         audit::{auditor::AuditorDetector, entry_points::EntryPointsDetector},
         detect::test_utils::load_solidity_source_unit,
     };
 
     #[test]
+    #[serial]
     fn test_entry_points() {
         let context = load_solidity_source_unit(
             "../tests/contract-playground/src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
