@@ -40,7 +40,7 @@ fn bench_aderyn_on_contract_playground(c: &mut Criterion) {
                 path_includes: None,
                 src: None,
                 stdout: false,
-                auditor_mode: false,
+                audit: None,
                 highs_only: false,
                 lsp: false,
             });

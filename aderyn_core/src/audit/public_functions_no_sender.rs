@@ -3,6 +3,7 @@ use prettytable::{row, Row};
 use super::auditor::AuditorDetector;
 use crate::{
     ast::{FunctionKind, NodeType},
+    audit::auditor::AuditorDetectorNamePool,
     context::{
         browser::ExtractModifierInvocations,
         workspace_context::{ASTNode, WorkspaceContext},
@@ -98,8 +99,8 @@ impl AuditorDetector for PublicFunctionsNoSenderChecksDetector {
             .collect()
     }
 
-    fn skeletal_clone(&self) -> Box<dyn AuditorDetector> {
-        Box::<PublicFunctionsNoSenderChecksDetector>::default()
+    fn name(&self) -> String {
+        format!("{}", AuditorDetectorNamePool::NoSenderChecks)
     }
 }
 

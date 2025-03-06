@@ -3,6 +3,7 @@ use prettytable::{row, Row};
 use super::auditor::AuditorDetector;
 use crate::{
     ast::{FunctionKind, NodeType},
+    audit::auditor::AuditorDetectorNamePool,
     context::workspace_context::{ASTNode, WorkspaceContext},
     detect::helpers::get_implemented_external_and_public_functions,
 };
@@ -61,8 +62,8 @@ impl AuditorDetector for EntryPointsDetector {
         String::from("Contract Entry Points")
     }
 
-    fn skeletal_clone(&self) -> Box<dyn AuditorDetector> {
-        Box::<EntryPointsDetector>::default()
+    fn name(&self) -> String {
+        format!("{}", AuditorDetectorNamePool::EntryPoints)
     }
 
     fn table_titles(&self) -> Row {

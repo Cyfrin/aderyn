@@ -6,7 +6,9 @@ pub mod fscloc;
 pub mod report;
 pub mod visitor;
 
-use audit::auditor::{get_auditor_detectors, AuditorPrinter, BasicAuditorPrinter};
+use audit::auditor::{
+    get_all_auditor_detectors, get_auditor_detector_by_name, AuditorPrinter, BasicAuditorPrinter,
+};
 use cyfrin_foundry_compilers::utils::canonicalize;
 use detect::detector::IssueDetector;
 use eyre::Result;
@@ -35,13 +37,16 @@ pub fn run<T>(
     root_rel_path: PathBuf,
     no_snippets: bool,
     stdout: bool,
-    auditor_mode: bool,
+    audit: Option<String>,
     detectors: Vec<Box<dyn IssueDetector>>,
 ) -> Result<(), Box<dyn Error>>
 where
     T: ReportPrinter<()>,
 {
-    if !auditor_mode {
+    // --audit                  Some("all")
+    // --audit entry-points     Some("entry-points")
+    // [no flag]                None
+    if audit.is_none() {
         return run_detector_mode(
             contexts,
             output_file_path,
@@ -52,34 +57,57 @@ where
             detectors,
         );
     }
-    run_auditor_mode(contexts)
+    run_auditor_mode(contexts, audit.unwrap())
 }
 
-fn run_auditor_mode(contexts: &[WorkspaceContext]) -> Result<(), Box<dyn Error>> {
-    let audit_detectors_with_output = get_auditor_detectors()
-        .par_iter_mut()
-        .flat_map(|detector| {
-            // Keys -> detector's title
-            // Value -> (table titles, table rows)
-            let mut grouped_instances: BTreeMap<String, (Row, Vec<Row>)> = BTreeMap::new();
+fn run_auditor_mode(
+    contexts: &[WorkspaceContext],
+    audit_detector: String,
+) -> Result<(), Box<dyn Error>> {
+    let mut audit_detectors_with_output = Vec::new();
+    if audit_detector == "all" {
+        audit_detectors_with_output = get_all_auditor_detectors()
+            .par_iter_mut()
+            .flat_map(|detector| {
+                // Keys -> detector's title
+                // Value -> (table titles, table rows)
+                let mut grouped_instances: BTreeMap<String, (Row, Vec<Row>)> = BTreeMap::new();
 
-            for context in contexts {
-                let mut d = detector.skeletal_clone();
-                if let Ok(found) = d.detect(context) {
-                    if found {
-                        match grouped_instances.entry(d.title()) {
-                            Entry::Occupied(o) => o.into_mut().1.extend(d.table_rows()),
-                            Entry::Vacant(v) => {
-                                v.insert((d.table_titles(), d.table_rows()));
-                            }
-                        };
+                for context in contexts {
+                    let mut d = detector.skeletal_clone();
+                    if let Ok(found) = d.detect(context) {
+                        if found {
+                            match grouped_instances.entry(d.title()) {
+                                Entry::Occupied(o) => o.into_mut().1.extend(d.table_rows()),
+                                Entry::Vacant(v) => {
+                                    v.insert((d.table_titles(), d.table_rows()));
+                                }
+                            };
+                        }
                     }
                 }
-            }
+                grouped_instances
+            })
+            .collect::<Vec<_>>();
+    } else {
+        let detector = get_auditor_detector_by_name(&audit_detector);
+        let mut grouped_instances: BTreeMap<String, (Row, Vec<Row>)> = BTreeMap::new();
 
-            grouped_instances
-        })
-        .collect::<Vec<_>>();
+        for context in contexts {
+            let mut d = detector.skeletal_clone();
+            if let Ok(found) = d.detect(context) {
+                if found {
+                    match grouped_instances.entry(d.title()) {
+                        Entry::Occupied(o) => o.into_mut().1.extend(d.table_rows()),
+                        Entry::Vacant(v) => {
+                            v.insert((d.table_titles(), d.table_rows()));
+                        }
+                    };
+                }
+            }
+        }
+        audit_detectors_with_output.extend(grouped_instances.into_iter());
+    }
 
     for (title, (table_titles, table_rows)) in audit_detectors_with_output {
         let num_instances = table_rows.len();

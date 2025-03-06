@@ -3,6 +3,7 @@ use prettytable::{row, Row};
 use super::auditor::AuditorDetector;
 use crate::{
     ast::{Expression, FunctionCallKind, MemberAccess, NodeID, NodeType, TypeName},
+    audit::auditor::AuditorDetectorNamePool,
     context::{
         browser::{GetClosestAncestorOfTypeX, Peek},
         workspace_context::{ASTNode, WorkspaceContext},
@@ -111,8 +112,8 @@ impl AuditorDetector for AttackSurfaceDetector {
             .collect()
     }
 
-    fn skeletal_clone(&self) -> Box<dyn AuditorDetector> {
-        Box::<AttackSurfaceDetector>::default()
+    fn name(&self) -> String {
+        format!("{}", AuditorDetectorNamePool::AttackSurface)
     }
 }
 
