@@ -27,8 +27,8 @@ impl IssueDetector for UselessPublicFunctionDetector {
             context.function_definitions().into_iter().filter(|&function| {
                 matches!(function.visibility, Visibility::Public)
                     && !matches!(function.kind(), &FunctionKind::Constructor)
-                    && !matches!(function.overrides, Some(_))
-                    && !matches!(function.is_virtual, true)
+                    && function.overrides.is_none()
+                    && !function.is_virtual
                     && count_identifiers_that_reference_an_id(context, function.id) == 0
             });
 
