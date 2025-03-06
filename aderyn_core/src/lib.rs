@@ -106,7 +106,7 @@ fn run_auditor_mode(
                 }
             }
         }
-        audit_detectors_with_output.extend(grouped_instances.into_iter());
+        audit_detectors_with_output.extend(grouped_instances);
     }
 
     for (title, (table_titles, table_rows)) in audit_detectors_with_output {

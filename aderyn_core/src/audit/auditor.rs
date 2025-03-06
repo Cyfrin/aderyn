@@ -1,4 +1,4 @@
-use std::{error::Error, fmt::Display, str::FromStr};
+use std::{error::Error, str::FromStr};
 
 use prettytable::{format, Row, Table};
 use strum::{Display, EnumString};
