@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 112,
-    "total_sloc": 3957
+    "total_source_units": 113,
+    "total_sloc": 3972
   },
   "files_details": {
     "files_details": [
@@ -220,6 +220,10 @@
       {
         "file_path": "src/PreDeclaredVarUsage.sol",
         "n_sloc": 9
+      },
+      {
+        "file_path": "src/PublicFunction.sol",
+        "n_sloc": 15
       },
       {
         "file_path": "src/PublicVariableReadInExternalContext.sol",
@@ -2968,12 +2972,6 @@
           },
           {
             "contract_path": "src/Trump.sol",
-            "line_no": 92,
-            "src": "2679:17",
-            "src_char": "2679:17"
-          },
-          {
-            "contract_path": "src/Trump.sol",
             "line_no": 180,
             "src": "5624:4",
             "src_char": "5624:4"
@@ -2989,36 +2987,6 @@
             "line_no": 188,
             "src": "5802:8",
             "src_char": "5802:8"
-          },
-          {
-            "contract_path": "src/Trump.sol",
-            "line_no": 192,
-            "src": "5889:11",
-            "src_char": "5889:11"
-          },
-          {
-            "contract_path": "src/Trump.sol",
-            "line_no": 200,
-            "src": "6111:8",
-            "src_char": "6111:8"
-          },
-          {
-            "contract_path": "src/Trump.sol",
-            "line_no": 205,
-            "src": "6281:9",
-            "src_char": "6281:9"
-          },
-          {
-            "contract_path": "src/Trump.sol",
-            "line_no": 209,
-            "src": "6428:7",
-            "src_char": "6428:7"
-          },
-          {
-            "contract_path": "src/Trump.sol",
-            "line_no": 214,
-            "src": "6592:12",
-            "src_char": "6592:12"
           },
           {
             "contract_path": "src/UninitializedLocalVariables.sol",

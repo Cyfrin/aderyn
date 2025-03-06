@@ -4415,17 +4415,6 @@
                   "uri": "src/Trump.sol"
                 },
                 "region": {
-                  "byteLength": 17,
-                  "byteOffset": 2679
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Trump.sol"
-                },
-                "region": {
                   "byteLength": 4,
                   "byteOffset": 5624
                 }
@@ -4450,61 +4439,6 @@
                 "region": {
                   "byteLength": 8,
                   "byteOffset": 5802
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Trump.sol"
-                },
-                "region": {
-                  "byteLength": 11,
-                  "byteOffset": 5889
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Trump.sol"
-                },
-                "region": {
-                  "byteLength": 8,
-                  "byteOffset": 6111
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Trump.sol"
-                },
-                "region": {
-                  "byteLength": 9,
-                  "byteOffset": 6281
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Trump.sol"
-                },
-                "region": {
-                  "byteLength": 7,
-                  "byteOffset": 6428
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Trump.sol"
-                },
-                "region": {
-                  "byteLength": 12,
-                  "byteOffset": 6592
                 }
               }
             },
