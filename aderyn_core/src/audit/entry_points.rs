@@ -81,14 +81,14 @@ impl AuditorDetector for EntryPointsDetector {
 }
 
 #[cfg(test)]
-mod public_functions_no_sender_checks {
+mod entry_points_test {
     use crate::{
         audit::{auditor::AuditorDetector, entry_points::EntryPointsDetector},
         detect::test_utils::load_solidity_source_unit,
     };
 
     #[test]
-    fn test_public_functions_no_sender_checks() {
+    fn test_entry_points() {
         let context = load_solidity_source_unit(
             "../tests/contract-playground/src/auditor_mode/PublicFunctionsWithoutSenderCheck.sol",
         );
