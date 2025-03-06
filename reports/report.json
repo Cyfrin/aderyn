@@ -1,7 +1,7 @@
 {
   "files_summary": {
     "total_source_units": 112,
-    "total_sloc": 3957
+    "total_sloc": 3961
   },
   "files_details": {
     "files_details": [
@@ -347,7 +347,7 @@
       },
       {
         "file_path": "src/UnusedError.sol",
-        "n_sloc": 19
+        "n_sloc": 23
       },
       {
         "file_path": "src/UnusedImport.sol",
@@ -5112,9 +5112,9 @@
           },
           {
             "contract_path": "src/UnusedError.sol",
-            "line_no": 13,
-            "src": "258:36",
-            "src_char": "258:36"
+            "line_no": 14,
+            "src": "286:36",
+            "src_char": "286:36"
           },
           {
             "contract_path": "src/WrongOrderOfLayout.sol",
@@ -6775,9 +6775,9 @@
           },
           {
             "contract_path": "src/UnusedError.sol",
-            "line_no": 15,
-            "src": "309:7",
-            "src_char": "309:7"
+            "line_no": 16,
+            "src": "337:7",
+            "src_char": "337:7"
           },
           {
             "contract_path": "src/UnusedStateVariables.sol",
