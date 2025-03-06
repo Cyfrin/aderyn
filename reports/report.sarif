@@ -3073,6 +3073,50 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/SendEtherNoChecksLibImport.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 276
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SendEtherNoChecksLibImport.sol"
+                },
+                "region": {
+                  "byteLength": 13,
+                  "byteOffset": 285
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SendEtherNoChecksLibImport.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 516
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SendEtherNoChecksLibImport.sol"
+                },
+                "region": {
+                  "byteLength": 28,
+                  "byteOffset": 614
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/Trump.sol"
                 },
                 "region": {
@@ -5929,6 +5973,17 @@
                 "region": {
                   "byteLength": 6,
                   "byteOffset": 920
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/SendEtherNoChecksLibImport.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 451
                 }
               }
             },

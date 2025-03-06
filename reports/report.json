@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 113,
-    "total_sloc": 3976
+    "total_source_units": 114,
+    "total_sloc": 3993
   },
   "files_details": {
     "files_details": [
@@ -248,6 +248,10 @@
       {
         "file_path": "src/SendEtherNoChecks.sol",
         "n_sloc": 58
+      },
+      {
+        "file_path": "src/SendEtherNoChecksLibImport.sol",
+        "n_sloc": 17
       },
       {
         "file_path": "src/StateShadowing.sol",
@@ -2226,6 +2230,30 @@
             "src_char": "250:9"
           },
           {
+            "contract_path": "src/SendEtherNoChecksLibImport.sol",
+            "line_no": 7,
+            "src": "276:7",
+            "src_char": "276:7"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecksLibImport.sol",
+            "line_no": 7,
+            "src": "285:13",
+            "src_char": "285:13"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecksLibImport.sol",
+            "line_no": 16,
+            "src": "516:9",
+            "src_char": "516:9"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecksLibImport.sol",
+            "line_no": 20,
+            "src": "614:28",
+            "src_char": "614:28"
+          },
+          {
             "contract_path": "src/Trump.sol",
             "line_no": 92,
             "src": "2714:9",
@@ -3806,6 +3834,12 @@
             "line_no": 43,
             "src": "920:6",
             "src_char": "920:6"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecksLibImport.sol",
+            "line_no": 12,
+            "src": "451:6",
+            "src_char": "451:6"
           },
           {
             "contract_path": "src/StateShadowing.sol",
