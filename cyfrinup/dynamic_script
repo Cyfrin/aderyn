@@ -1,28 +1,12 @@
 #!/usr/bin/env bash
 set -e
 
+DYNAMIC_SCRIPT_URL="https://raw.githubusercontent.com/Cyfrin/up/main/dynamic_script"
+
+# Keep it minimal
 main() {
   need_cmd curl
-
-  say "installing latest aderyn"
-
-  ensure curl --proto '=https' --tlsv1.2 -LsSf https://github.com/cyfrin/aderyn/releases/latest/download/aderyn-installer.sh | bash
-  rm -f ~/.cyfrin/bin/aderyn
-
-  say "done!"
-}
-
-say() {
-  printf 'cyfrinup: %s\n' "$1"
-}
-
-warn() {
-  say "warning: ${1}" >&2
-}
-
-err() {
-  say "$1" >&2
-  exit 1
+  ensure curl -L "$DYNAMIC_SCRIPT_URL" | bash
 }
 
 need_cmd() {
