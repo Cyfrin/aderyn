@@ -3,6 +3,7 @@ use prettytable::{row, Row};
 use super::auditor::AuditorDetector;
 use crate::{
     ast::{Expression, FunctionCallKind, MemberAccess, NodeID, NodeType, TypeName},
+    audit::auditor::AuditorDetectorNamePool,
     context::{
         browser::{GetClosestAncestorOfTypeX, Peek},
         workspace_context::{ASTNode, WorkspaceContext},
@@ -21,7 +22,7 @@ pub enum AddressSource {
 }
 
 #[derive(Clone, Eq, PartialEq)]
-pub struct AttackSurfaceInstance {
+pub struct RawCallsInstance {
     pub contract_name: String,
     pub function_name: String,
     pub source_code: String,
@@ -30,7 +31,7 @@ pub struct AttackSurfaceInstance {
 
 use std::cmp::{Ord, Ordering, PartialOrd};
 
-impl Ord for AttackSurfaceInstance {
+impl Ord for RawCallsInstance {
     fn cmp(&self, other: &Self) -> Ordering {
         let by_contract = self.contract_name.cmp(&other.contract_name);
         if by_contract != Ordering::Equal {
@@ -51,7 +52,7 @@ impl Ord for AttackSurfaceInstance {
     }
 }
 
-impl PartialOrd for AttackSurfaceInstance {
+impl PartialOrd for RawCallsInstance {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
         Some(self.cmp(other))
     }
@@ -68,11 +69,11 @@ impl Display for AddressSource {
 }
 
 #[derive(Default)]
-pub struct AttackSurfaceDetector {
-    found_instances: BTreeSet<AttackSurfaceInstance>,
+pub struct RawCallsDetector {
+    found_instances: BTreeSet<RawCallsInstance>,
 }
 
-impl AuditorDetector for AttackSurfaceDetector {
+impl AuditorDetector for RawCallsDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         let mut surface_points: BTreeMap<NodeID, AddressSource> = BTreeMap::new();
 
@@ -111,16 +112,16 @@ impl AuditorDetector for AttackSurfaceDetector {
             .collect()
     }
 
-    fn skeletal_clone(&self) -> Box<dyn AuditorDetector> {
-        Box::<AttackSurfaceDetector>::default()
+    fn name(&self) -> String {
+        format!("{}", AuditorDetectorNamePool::RawCalls)
     }
 }
 
 fn transform_surface_points(
     context: &WorkspaceContext,
     surface_points: &BTreeMap<NodeID, AddressSource>,
-) -> BTreeSet<AttackSurfaceInstance> {
-    let mut auditor_instances: BTreeSet<AttackSurfaceInstance> = BTreeSet::new();
+) -> BTreeSet<RawCallsInstance> {
+    let mut auditor_instances: BTreeSet<RawCallsInstance> = BTreeSet::new();
 
     for (id, address_storage) in surface_points {
         if let Some(ast_node) = context.nodes.get(id) {
@@ -131,7 +132,7 @@ fn transform_surface_points(
                     if let Some(source_code) = ast_node.peek(context) {
                         let contract_name = contract.name.to_string();
                         let function_name = function.name.to_string();
-                        auditor_instances.insert(AttackSurfaceInstance {
+                        auditor_instances.insert(RawCallsInstance {
                             contract_name,
                             function_name,
                             source_code,
@@ -200,15 +201,18 @@ fn find_address_source_if_function_call(
 
 #[cfg(test)]
 mod attack_surface_detector_tests {
-    use crate::audit::{attack_surface::AttackSurfaceDetector, auditor::AuditorDetector};
+    use serial_test::serial;
+
+    use crate::audit::{auditor::AuditorDetector, raw_calls::RawCallsDetector};
 
     #[test]
+    #[serial]
     fn test_attack_surface_detector() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/auditor_mode/ExternalCalls.sol",
         );
 
-        let mut detector = AttackSurfaceDetector::default();
+        let mut detector = RawCallsDetector::default();
         let found = detector.detect(&context).unwrap();
         // assert that the detector found an issue
         assert!(found);
