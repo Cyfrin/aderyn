@@ -22,6 +22,7 @@ jobs:
           - sablier
           - adhoc-sol-files-workflow
           - nft-workflow
+          - nft-workflow-env
           - ccip-functions-report
           - hardhat-playground-report
           - prb-math-report
@@ -92,6 +93,10 @@ jobs:
               diff ./reports/adhoc-sol-files-report.md ./reports/adhoc-sol-files-report-workflow.md
               ;;
             nft-workflow)
+              cargo run -- -o ./reports/nft-workflow-report-icm.md  ./tests/foundry-nft-f23-icm  --skip-update-check
+              diff ./reports/nft-report-icm.md /reports/nft-workflow-report-icm.md
+              ;;
+            nft-workflow-env)
               cargo run -- -o ./reports/nft-workflow-report.md --src src/ ./tests/foundry-nft-f23 --skip-update-check
               diff ./reports/nft-report.md ./reports/nft-workflow-report.md
               ;;
