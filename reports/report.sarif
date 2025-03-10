@@ -1160,7 +1160,7 @@
           "message": {
             "text": "Downcasting int/uints in Solidity can be unsafe due to the potential for data loss and unintended behavior.When downcasting a larger integer type to a smaller one (e.g., uint256 to uint128), the value may exceed the range of the target type,leading to truncation and loss of significant digits. Use OpenZeppelin's SafeCast library to safely downcast integers."
           },
-          "ruleId": "unsafe-casting-detector"
+          "ruleId": "unsafe-cast"
         },
         {
           "level": "warning",

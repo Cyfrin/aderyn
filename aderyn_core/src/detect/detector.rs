@@ -158,7 +158,7 @@ pub(crate) enum IssueDetectorNamePool {
     UnprotectedInitializer,
     RevertsAndRequiresInLoops,
     DivisionBeforeMultiplication,
-    UnsafeCastingDetector,
+    UnsafeCast,
     EnumerableLoopRemoval,
     ExperimentalEncoder,
     IncorrectShiftOrder,
@@ -342,9 +342,7 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::DivisionBeforeMultiplication => {
             Some(Box::<DivisionBeforeMultiplicationDetector>::default())
         }
-        IssueDetectorNamePool::UnsafeCastingDetector => {
-            Some(Box::<UnsafeCastingDetector>::default())
-        }
+        IssueDetectorNamePool::UnsafeCast => Some(Box::<UnsafeCastingDetector>::default()),
         IssueDetectorNamePool::EnumerableLoopRemoval => {
             Some(Box::<EnumerableLoopRemovalDetector>::default())
         }

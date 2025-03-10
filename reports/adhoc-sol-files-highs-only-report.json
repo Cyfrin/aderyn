@@ -128,7 +128,7 @@
     "hash-collision-due-to-abi-encode-packed",
     "arbitrary-transfer-from",
     "unprotected-initializer",
-    "unsafe-casting-detector",
+    "unsafe-cast",
     "enumerable-loop-removal",
     "experimental-encoder",
     "incorrect-shift-order",
