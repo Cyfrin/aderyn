@@ -60,7 +60,7 @@ jobs:
       - name: Run tests
         run: |
           cargo build
-          cargo test -- --nocapture
+          cargo test
 
   lints:
     name: Lints
