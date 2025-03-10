@@ -32,7 +32,7 @@ pub struct Args {
     pub skip_cloc: bool,
     pub skip_update_check: bool,
     pub stdout: bool,
-    pub auditor_mode: bool,
+    pub audit: Option<String>,
     pub highs_only: bool,
     pub lsp: bool,
 }
@@ -97,7 +97,7 @@ pub fn drive_with(args: Args, detectors_list: Vec<Box<dyn IssueDetector>>) {
             root_rel_path,
             args.no_snippets,
             args.stdout,
-            args.auditor_mode,
+            args.audit,
             detectors_list,
         )
         .unwrap_or_else(|err| {
@@ -114,7 +114,7 @@ pub fn drive_with(args: Args, detectors_list: Vec<Box<dyn IssueDetector>>) {
             root_rel_path,
             args.no_snippets,
             args.stdout,
-            args.auditor_mode,
+            args.audit,
             detectors_list,
         )
         .unwrap_or_else(|err| {
@@ -132,7 +132,7 @@ pub fn drive_with(args: Args, detectors_list: Vec<Box<dyn IssueDetector>>) {
             root_rel_path,
             args.no_snippets,
             args.stdout,
-            args.auditor_mode,
+            args.audit,
             detectors_list,
         )
         .unwrap_or_else(|err| {
