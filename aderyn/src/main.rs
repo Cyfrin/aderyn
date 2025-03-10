@@ -1,3 +1,5 @@
+use std::path::PathBuf;
+
 use aderyn::{
     aderyn_is_currently_running_newest_version, create_aderyn_toml_file_at, initialize_niceties,
     lsp::spin_up_language_server, print_all_detectors_view, print_detail_view,
@@ -9,37 +11,39 @@ use clap::{ArgGroup, Parser, Subcommand};
 #[command(author, version, about, long_about = None)]
 #[command(group(ArgGroup::new("stdout_dependent").requires("stdout")))]
 pub struct CommandLineArgs {
-    /// Print every detector available
-    #[clap(subcommand, name = "registry")]
-    registry: Option<RegistryCommand>,
+    /// Commands to initialize a config file for aderyn [BETA] and other utils
+    #[clap(subcommand)]
+    subcommand: Option<Command>,
 
     /// Foundry or Hardhat project root directory (or path to single solidity file)
     #[arg(default_value = ".")]
     root: String,
 
-    /// Initialize aderyn.toml in [ROOT] which hosts all the configuration to override defaults
-    #[arg(long)]
-    init: bool,
-
-    /// Path to the source contracts. If not provided, the ROOT directory will be used.
+    /// Path to the source contracts.
+    /// Used to avoid analyzing libraries, tests or scripts and focus on the contracts.
     ///
-    /// For example, in a foundry repo:
+    /// In Foundry projects, it's auto-captured by foundry.toml and it's usually
+    /// not necessary to provide it.
     ///
-    ///     --src=src/
-    ///
-    /// In a hardhat repo:
+    /// In a Hardhat project:
     ///
     ///    --src=contracts/
     #[clap(short, long, use_value_delimiter = true)]
     src: Option<Vec<String>>,
 
     /// List of path strings to include, delimited by comma (no spaces).
-    /// Any solidity file path not containing these strings will be ignored
+    ///
+    /// It allows to include only one or more specific contracts in the analysis:
+    ///     aderyn -i src/MyContract.sol
+    ///     aderyn -i src/MyContract.sol,src/MyOtherContract.sol
     #[clap(short = 'i', long, use_value_delimiter = true)]
     path_includes: Option<Vec<String>>,
 
     /// List of path strings to exclude, delimited by comma (no spaces).
-    /// Any solidity file path containing these strings will be ignored
+    ///
+    /// It allows to exclude one or more specific contracts from the analysis:
+    ///     aderyn -x src/MyContract.sol
+    ///     aderyn -x src/MyContract.sol,src/MyOtherContract.sol
     #[clap(short = 'x', long, use_value_delimiter = true)]
     path_excludes: Option<Vec<String>>,
 
@@ -77,7 +81,7 @@ pub struct CommandLineArgs {
 }
 
 #[derive(Debug, Subcommand)]
-enum RegistryCommand {
+enum Command {
     /// Browse detector registry
     Registry {
         /// all    - View all available detectors
@@ -86,32 +90,50 @@ enum RegistryCommand {
         #[arg(default_value = "all")]
         detector: String,
     },
+    /// Initialize aderyn.toml in the root directory or in an optional subdirectory
+    Init {
+        /// Optional path inside root where aderyn.toml will be created
+        path: Option<String>,
+    },
 }
 
 fn main() {
     initialize_niceties();
     let cmd_args = CommandLineArgs::parse();
 
-    if let Some(reg) = cmd_args.registry {
-        match reg {
-            RegistryCommand::Registry { detector } => {
+    if let Some(subcommand) = cmd_args.subcommand {
+        match subcommand {
+            Command::Registry { detector } => {
                 if detector == "all" {
                     print_all_detectors_view();
                 } else {
                     print_detail_view(&detector);
                 }
             }
+            Command::Init { path } => {
+                let creation_path = match path {
+                    Some(optional_path) => {
+                        let mut target_dir = PathBuf::from(&cmd_args.root);
+                        target_dir.push(optional_path);
+
+                        let can_initialize = target_dir.exists()
+                            && std::fs::metadata(&target_dir).is_ok_and(|p| p.is_dir());
+
+                        if !can_initialize {
+                            eprintln!("Failed to initialize aderyn.toml in non-existent directory");
+                            std::process::exit(1);
+                        }
+
+                        target_dir.to_string_lossy().to_string()
+                    }
+                    None => cmd_args.root,
+                };
+
+                // Create aderyn.toml at the target directory
+                create_aderyn_toml_file_at(creation_path);
+            }
         }
-        return;
-    }
 
-    if cmd_args.root == "init" {
-        create_aderyn_toml_file_at(".".to_string());
-        return;
-    }
-
-    if cmd_args.init {
-        create_aderyn_toml_file_at(cmd_args.root);
         return;
     }
 
@@ -144,7 +166,8 @@ fn main() {
         if let Some(yes) = aderyn_is_currently_running_newest_version() {
             if !yes {
                 println!();
-                println!("NEW VERSION OF ADERYN AVAILABLE! Please run `cyfrinup` to upgrade.");
+                println!("NEW VERSION OF ADERYN AVAILABLE! Please upgrade aderyn by following the instruction here - https://github.com/cyfrin/aderyn");
+                println!("NOTE: You can skip this check by passing --skip-update-check flag");
             }
         }
     }

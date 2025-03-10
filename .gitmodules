@@ -31,3 +31,9 @@
 [submodule "tests/2024-07-templegold"]
 	path = tests/2024-07-templegold
 	url = https://github.com/Cyfrin/2024-07-templegold.git
+[submodule "tests/foundry-nft-f23-icm/lib/forge-std"]
+	path = tests/foundry-nft-f23-icm/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
+[submodule "tests/foundry-nft-f23-icm/lib/openzeppelin-contracts"]
+	path = tests/foundry-nft-f23-icm/lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts

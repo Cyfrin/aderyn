@@ -58,7 +58,7 @@ impl IssueDetector for UncheckedReturnDetector {
     }
 
     fn severity(&self) -> IssueSeverity {
-        IssueSeverity::High
+        IssueSeverity::Low
     }
 
     fn title(&self) -> String {
@@ -82,7 +82,7 @@ impl IssueDetector for UncheckedReturnDetector {
 mod unchecked_return_tests {
     use serial_test::serial;
 
-    use crate::detect::{detector::IssueDetector, high::unchecked_return::UncheckedReturnDetector};
+    use crate::detect::{detector::IssueDetector, low::unchecked_return::UncheckedReturnDetector};
 
     #[test]
     #[serial]
@@ -101,7 +101,7 @@ mod unchecked_return_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
         // assert the severity is high
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert the title is correct
         assert_eq!(
             detector.title(),

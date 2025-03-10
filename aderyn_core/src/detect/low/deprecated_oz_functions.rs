@@ -31,7 +31,7 @@ impl IssueDetector for DeprecatedOZFunctionsDetector {
                     directive
                         .absolute_path
                         .as_ref()
-                        .map_or(false, |path| path.contains("openzeppelin"))
+                        .is_some_and(|path| path.contains("openzeppelin"))
                 }) && identifier.name == "_setupRole"
                 {
                     capture!(self, context, identifier);
@@ -51,7 +51,7 @@ impl IssueDetector for DeprecatedOZFunctionsDetector {
                     directive
                         .absolute_path
                         .as_ref()
-                        .map_or(false, |path| path.contains("openzeppelin"))
+                        .is_some_and(|path| path.contains("openzeppelin"))
                 }) && member_access.member_name == "safeApprove"
                 {
                     capture!(self, context, member_access);

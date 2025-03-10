@@ -147,7 +147,7 @@ impl<'a> ExtractReferencedDeclarationsConditionally<'a> {
     }
 }
 
-impl<'a> ASTConstVisitor for ExtractReferencedDeclarationsConditionally<'a> {
+impl ASTConstVisitor for ExtractReferencedDeclarationsConditionally<'_> {
     fn visit_member_access(&mut self, node: &MemberAccess) -> Result<bool> {
         if !self.condition.as_ref()(node.id, self.context) {
             return Ok(true);

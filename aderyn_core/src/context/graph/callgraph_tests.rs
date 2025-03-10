@@ -157,7 +157,7 @@ mod callgraph_test_functions {
         outward_side_effects_modifier_definitions_names: Vec<String>,
     }
 
-    impl<'a> Tracker<'a> {
+    impl Tracker<'_> {
         fn new(context: &WorkspaceContext) -> Tracker {
             Tracker {
                 context,

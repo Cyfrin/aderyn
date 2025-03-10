@@ -27,6 +27,8 @@ impl IssueDetector for UselessPublicFunctionDetector {
             context.function_definitions().into_iter().filter(|&function| {
                 matches!(function.visibility, Visibility::Public)
                     && !matches!(function.kind(), &FunctionKind::Constructor)
+                    && function.overrides.is_none()
+                    && !function.is_virtual
                     && count_identifiers_that_reference_an_id(context, function.id) == 0
             });
 
@@ -103,6 +105,21 @@ mod useless_public_function_tests {
     fn test_useless_public_functions_does_not_capture_abstract_contract_functions() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/AbstractContract.sol",
+        );
+
+        let mut detector = UselessPublicFunctionDetector::default();
+        // assert that the detector finds the public Function
+        let found = detector.detect(&context).unwrap();
+        assert!(!found);
+        // assert that the detector returns the correct number of instances
+        assert_eq!(detector.instances().len(), 0);
+    }
+
+    #[test]
+    #[serial]
+    fn test_useless_public_functions_does_not_capture_virtual_or_overriding_functions() {
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/PublicFunction.sol",
         );
 
         let mut detector = UselessPublicFunctionDetector::default();

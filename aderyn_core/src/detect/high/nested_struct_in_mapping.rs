@@ -29,7 +29,7 @@ fn version_req_allows_below_0_5_0(version_req: &VersionReq) -> bool {
     }
 
     let comparator = &version_req.comparators[0];
-    comparator.major == 0 && comparator.minor.map_or(false, |m| m < 5)
+    comparator.major == 0 && comparator.minor.is_some_and(|m| m < 5)
 }
 
 impl IssueDetector for NestedStructInMappingDetector {

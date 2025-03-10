@@ -54,7 +54,6 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<NestedStructInMappingDetector>::default(),
         Box::<SelfdestructIdentifierDetector>::default(),
         Box::<DynamicArrayLengthAssignmentDetector>::default(),
-        Box::<UninitializedStateVariableDetector>::default(),
         Box::<IncorrectUseOfCaretOperatorDetector>::default(),
         Box::<YulReturnDetector>::default(),
         Box::<StateVariableShadowingDetector>::default(),
@@ -64,7 +63,6 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<DelegateCallOnUncheckedAddressDetector>::default(),
         Box::<TautologicalCompareDetector>::default(),
         Box::<RTLODetector>::default(),
-        Box::<UncheckedReturnDetector>::default(),
         Box::<DangerousUnaryOperatorDetector>::default(),
         Box::<TautologyOrContraditionDetector>::default(),
         Box::<DangerousStrictEqualityOnBalanceDetector>::default(),
@@ -106,6 +104,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<StateChangeAfterExternalCallDetector>::default(),
         Box::<EmitAfterExternalCallDetector>::default(),
         Box::<IncorrectUseOfModifierDetector>::default(),
+        Box::<UncheckedReturnDetector>::default(),
     ]
 }
 
@@ -149,7 +148,7 @@ pub(crate) enum IssueDetectorNamePool {
     UselessPublicFunction,
     UnindexedEvents,
     RequireWithoutString,
-    NonReentrantIsNotBeforeOthers,
+    NonReentrantNotFirstModifier,
     BlockTimestampIsWeakDeadline,
     LiteralInsteadOfConstant,
     UnsafeOzERC721Mint,
@@ -165,7 +164,7 @@ pub(crate) enum IssueDetectorNamePool {
     UnprotectedInitializer,
     RevertsAndRequiresInLoops,
     DivisionBeforeMultiplication,
-    UnsafeCastingDetector,
+    UnsafeCast,
     EnumerableLoopRemoval,
     ExperimentalEncoder,
     IncorrectShiftOrder,
@@ -175,7 +174,6 @@ pub(crate) enum IssueDetectorNamePool {
     NestedStructInMapping,
     SelfdestructIdentifier,
     DynamicArrayLengthAssignment,
-    UninitializedStateVariable,
     IncorrectCaretOperator,
     YulReturn,
     StateVariableShadowing,
@@ -322,7 +320,7 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::RequireWithoutString => {
             Some(Box::<RequireWithStringDetector>::default())
         }
-        IssueDetectorNamePool::NonReentrantIsNotBeforeOthers => {
+        IssueDetectorNamePool::NonReentrantNotFirstModifier => {
             Some(Box::<NonReentrantBeforeOthersDetector>::default())
         }
         IssueDetectorNamePool::BlockTimestampIsWeakDeadline => {
@@ -359,9 +357,7 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::DivisionBeforeMultiplication => {
             Some(Box::<DivisionBeforeMultiplicationDetector>::default())
         }
-        IssueDetectorNamePool::UnsafeCastingDetector => {
-            Some(Box::<UnsafeCastingDetector>::default())
-        }
+        IssueDetectorNamePool::UnsafeCast => Some(Box::<UnsafeCastingDetector>::default()),
         IssueDetectorNamePool::EnumerableLoopRemoval => {
             Some(Box::<EnumerableLoopRemovalDetector>::default())
         }
@@ -390,9 +386,6 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
             Some(Box::<DynamicArrayLengthAssignmentDetector>::default())
         }
 
-        IssueDetectorNamePool::UninitializedStateVariable => {
-            Some(Box::<UninitializedStateVariableDetector>::default())
-        }
         IssueDetectorNamePool::IncorrectCaretOperator => {
             Some(Box::<IncorrectUseOfCaretOperatorDetector>::default())
         }

@@ -3,7 +3,6 @@ members = [
     "aderyn",
     "aderyn_core",
     "aderyn_driver",
-    "aderyn_py",
 ]
 
 resolver="1"
@@ -17,5 +16,13 @@ exclude = [
 codegen-units = 1
 lto = true
 
-[profile.dev.package."*"]
-opt-level = 3
+[profile.lspdev]
+inherits = "dist"
+
+[profile.lspdev.package."*"]
+inherits = "dist"
+
+# The profile that 'dist' will build with
+[profile.dist]
+inherits = "release"
+lto = "thin"

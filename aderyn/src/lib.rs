@@ -4,22 +4,21 @@ use serde_json::Value;
 use std::{fs::File, io::Write, path::PathBuf, str::FromStr};
 use strum::IntoEnumIterator;
 
+pub mod lsp;
+mod panic;
+
 pub fn create_aderyn_toml_file_at(directory: String) {
     let aderyn_toml_path = PathBuf::from_str(&directory).unwrap().join("aderyn.toml");
     let mut file = File::create_new(aderyn_toml_path.clone()).expect("File already exists!");
     file.write_all(include_bytes!("../templates/aderyn.toml"))
-        .expect("To write contents into aderyn.toml");
+        .expect("unable to write to aderyn.toml");
     println!("Created aderyn.toml at {}", aderyn_toml_path.display());
 }
-
-mod panic;
 
 pub fn initialize_niceties() {
     // Crash with a nice message on panic
     panic::add_handler()
 }
-
-pub mod lsp;
 
 pub fn print_detail_view(detector_name: &str) {
     let all_detector_names = get_all_detectors_names();
@@ -98,8 +97,8 @@ pub fn aderyn_is_currently_running_newest_version() -> Option<bool> {
         client.get("https://api.github.com/repos/Cyfrin/aderyn/releases/latest").send().ok()?;
 
     let data = latest_version_checker.json::<Value>().ok()?;
-    let version_string = data["tag_name"].as_str()?;
-    let newest = Version::parse(version_string.replace('v', "").as_str()).ok()?;
+    let version_string = data.get("tag_name")?.as_str()?;
+    let newest = Version::parse(version_string.replace("aderyn-v", "").as_str()).ok()?;
     let current = Version::parse(env!("CARGO_PKG_VERSION")).expect("Pkg version not available");
 
     Some(current >= newest)
@@ -110,7 +109,8 @@ mod latest_version_checker_tests {
     use super::*;
 
     #[test]
-    fn can_get_latest_version_from_crate_registry() {
+    #[ignore = "fails when frequently run as github will rate limit"]
+    fn can_get_latest_version_from_github_releases() {
         assert!(aderyn_is_currently_running_newest_version().is_some())
     }
 }
