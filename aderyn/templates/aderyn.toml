@@ -35,14 +35,16 @@ root = "."
 # exclude = ["src/counters/Counter.sol", "src/others/"]
 # exclude = ["/interfaces/"]
 
-# NOTE: (advanced use case)
-# Remappings used for compiling the contracts.
+# For advanced use cases, leverage the following
+
+# Remappings 
 # It can be specified in `remappings.txt` within the root folder of the project.
 # If not specified, Aderyn will try to derive the values from foundry.toml (if present.)
 
 # Environment
 # These are ususally all the FOUNDRY_, DAPP_ environment variables that are used during development.
 # For example, if different profiles have different `src` declaration in `foundry.toml`, FOUNDRY_PROFILE can dictate the correct `src` value.
+# These values can be specified below.
 
 [env]
 # Example:
