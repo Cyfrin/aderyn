@@ -15,6 +15,7 @@ root = "."
 # - If not specified, Aderyn will try to extract it from the framework that is being used. (Foundry / Hardhat). 
 #   That would be "contracts/" in case of Hardhat and in case of Foundry, it depends on foundry.toml and
 #   many other factors like FOUNDRY_PROFILE environment variable, etc.
+# - If specified, Aderyn will override the above found `src`.
 # Example:
 # src = "src/"
 
