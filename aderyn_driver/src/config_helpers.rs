@@ -1,5 +1,6 @@
 use std::{
-    fs,
+    collections::HashMap,
+    env, fs,
     path::{Path, PathBuf},
 };
 
@@ -16,6 +17,7 @@ pub struct AderynConfig {
     pub exclude: Option<Vec<String>>,
     pub remappings: Option<Vec<String>>,
     pub include: Option<Vec<String>>,
+    pub env: Option<HashMap<String, String>>,
 }
 
 /// Load the aderyn.toml file and deserialize it to AderynConfig
@@ -38,7 +40,18 @@ fn load_aderyn_config(root: &Path) -> Result<AderynConfig, String> {
     clear_empty_vectors(&mut config.remappings);
     clear_empty_vectors(&mut config.include);
 
+    load_env_variables_from_config(&config);
+
     Ok(config)
+}
+
+fn load_env_variables_from_config(config: &AderynConfig) {
+    // Load env variables
+    if let Some(map) = config.env.clone() {
+        map.iter().for_each(|(k, v)| {
+            env::set_var(k, v);
+        })
+    }
 }
 
 fn clear_empty_vectors<T>(vec: &mut Option<Vec<T>>) {
@@ -216,12 +229,17 @@ fn interpret_foundry_config(
 
 #[cfg(test)]
 mod tests {
-    use std::path::PathBuf;
+    use std::{collections::HashMap, env, path::PathBuf};
 
     use cyfrin_foundry_config::RelativeRemapping;
 
+    use crate::config_helpers::load_env_variables_from_config;
+
     #[test]
     fn test_interpret_aderyn_config_correctly_appends_and_replaces() {
+        let env =
+            HashMap::from_iter(vec![("FOUNDRY_PROFILE".to_string(), "ENV_VAR_VALUE".to_string())]);
+
         let config = super::AderynConfig {
             version: 1,
             root: Some("CONFIG_ROOT".to_string()),
@@ -229,6 +247,7 @@ mod tests {
             exclude: Some(vec!["CONFIG_EXCLUDE".to_string()]),
             remappings: Some(vec!["CONFIG_REMAPPINGS".to_string()]),
             include: Some(vec!["CONFIG_SCOPE".to_string()]),
+            env: Some(env),
         };
 
         let root = std::path::Path::new("ARG_ROOT");
@@ -236,6 +255,8 @@ mod tests {
         let exclude = Some(vec!["ARG_EXCLUDE_1".to_string(), "ARG_EXCLUDE_2".to_string()]);
         let remappings = Some(vec!["ARG_REMAPPINGS_1".to_string(), "ARG_REMAPPINGS_2".to_string()]);
         let include = Some(vec!["ARG_SCOPE_1".to_string(), "ARG_SCOPE_2".to_string()]);
+
+        load_env_variables_from_config(&config);
         let result =
             super::interpret_aderyn_config(config, root, &src, &exclude, &remappings, &include);
         assert_eq!(result.0, std::path::Path::new("ARG_ROOT/CONFIG_ROOT"));
@@ -264,6 +285,8 @@ mod tests {
                 "CONFIG_SCOPE".to_string()
             ])
         );
+
+        assert_eq!(env::var("FOUNDRY_PROFILE").unwrap(), "ENV_VAR_VALUE");
     }
 
     #[test]
