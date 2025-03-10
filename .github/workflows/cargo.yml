@@ -60,7 +60,7 @@ jobs:
       - name: Run tests
         run: |
           cargo build
-          cargo test -- --test-threads 5
+          cargo test -- --test-threads 1
 
   lints:
     name: Lints
