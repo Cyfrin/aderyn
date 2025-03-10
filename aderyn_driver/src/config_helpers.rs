@@ -47,11 +47,11 @@ fn load_aderyn_config(root: &Path) -> Result<AderynConfig, String> {
 
 fn load_env_variables_from_config(config: &AderynConfig) {
     // Load env variables
-    config.env.clone().map(|map| {
+    if let Some(map) = config.env.clone() {
         map.iter().for_each(|(k, v)| {
             env::set_var(k, v);
         })
-    });
+    }
 }
 
 fn clear_empty_vectors<T>(vec: &mut Option<Vec<T>>) {
