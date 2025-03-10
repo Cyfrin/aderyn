@@ -94,11 +94,11 @@ jobs:
               ;;
             nft-workflow)
               cargo run -- -o ./reports/nft-workflow-report-icm.md  ./tests/foundry-nft-f23-icm  --skip-update-check
-              diff ./reports/nft-report-icm.md /reports/nft-workflow-report-icm.md
+              diff ./reports/nft-report.md ./reports/nft-workflow-report.md
               ;;
             nft-workflow-env)
               cargo run -- -o ./reports/nft-workflow-report.md --src src/ ./tests/foundry-nft-f23 --skip-update-check
-              diff ./reports/nft-report.md ./reports/nft-workflow-report.md
+              diff ./reports/nft-report-icm.md /reports/nft-workflow-report-icm.md
               ;;
             ccip-functions-report)
               cargo run -- -o reports/ccip-functions-report-workflow.md tests/ccip-contracts/contracts --src src/v0.8/functions/ -x "tests/,test/,mocks/"  --skip-update-check
