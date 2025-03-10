@@ -35,8 +35,6 @@ root = "."
 # exclude = ["src/counters/Counter.sol", "src/others/"]
 # exclude = ["/interfaces/"]
 
-# Remappings used for compiling the contracts.
-# If not specified, Aderyn will try to derive the values from foundry.toml (if present.)
-# That would be the result of calling `foundry remappings`
-# Example:
-# remappings = ["@oz/contracts=lib/openzeppelin-contracts/contracts"]
+# Remappings used for compiling the contracts
+# Aderyn will try to derive the values from foundry.toml (if present.) and `remappings.txt`
+# Specify the remappings in `remappings.txt` and place the file at the `root` indicated above.
