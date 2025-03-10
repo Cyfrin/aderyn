@@ -6121,7 +6121,7 @@
           "message": {
             "text": "This is a best-practice to protect against reentrancy in other modifiers."
           },
-          "ruleId": "non-reentrant-is-not-before-others"
+          "ruleId": "non-reentrant-not-first-modifier"
         },
         {
           "level": "note",

@@ -142,7 +142,7 @@ pub(crate) enum IssueDetectorNamePool {
     UselessPublicFunction,
     UnindexedEvents,
     RequireWithoutString,
-    NonReentrantIsNotBeforeOthers,
+    NonReentrantNotFirstModifier,
     BlockTimestampIsWeakDeadline,
     LiteralInsteadOfConstant,
     UnsafeOzERC721Mint,
@@ -305,7 +305,7 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::RequireWithoutString => {
             Some(Box::<RequireWithStringDetector>::default())
         }
-        IssueDetectorNamePool::NonReentrantIsNotBeforeOthers => {
+        IssueDetectorNamePool::NonReentrantNotFirstModifier => {
             Some(Box::<NonReentrantBeforeOthersDetector>::default())
         }
         IssueDetectorNamePool::BlockTimestampIsWeakDeadline => {

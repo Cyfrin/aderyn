@@ -3900,7 +3900,7 @@
       {
         "title": "The `nonReentrant` `modifier` should occur before all other modifiers",
         "description": "This is a best-practice to protect against reentrancy in other modifiers.",
-        "detector_name": "non-reentrant-is-not-before-others",
+        "detector_name": "non-reentrant-not-first-modifier",
         "instances": [
           {
             "contract_path": "src/AdminContract.sol",
@@ -7156,7 +7156,7 @@
     "literal-instead-of-constant",
     "unindexed-events",
     "require-without-string",
-    "non-reentrant-is-not-before-others",
+    "non-reentrant-not-first-modifier",
     "block-timestamp-is-weak-deadline",
     "unsafe-oz-erc721-mint",
     "push-zero-opcode",
