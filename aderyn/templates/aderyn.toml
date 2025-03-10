@@ -40,3 +40,9 @@ root = "."
 # That would be the result of calling `foundry remappings`
 # Example:
 # remappings = ["@oz/contracts=lib/openzeppelin-contracts/contracts"]
+
+# Environment variables that would help aderyn detect src, etc.
+# In a medium sized foundry project, the profile can determine the values to be read from `foundry.toml`. For example, if different profiles have different src declaration in `foundry.toml`, these env variables can help decide which ones to read.
+
+[env]
+# FOUNDRY_PROFILE = "profile_name"
