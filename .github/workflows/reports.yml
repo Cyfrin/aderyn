@@ -97,7 +97,7 @@ jobs:
               diff ./reports/nft-report.md ./reports/nft-workflow-report.md
               ;;
             nft-workflow-env)
-              cargo run -- -o ./reports/nft-workflow-report.md --src src/ ./tests/foundry-nft-f23 --skip-update-check
+              cargo run -- -o ./reports/nft-workflow-report-icm.md ./tests/foundry-nft-f23-icm --skip-update-check
               diff ./reports/nft-report-icm.md ./reports/nft-workflow-report-icm.md
               ;;
             ccip-functions-report)
