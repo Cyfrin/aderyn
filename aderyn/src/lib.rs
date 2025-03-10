@@ -109,7 +109,8 @@ mod latest_version_checker_tests {
     use super::*;
 
     #[test]
-    fn can_get_latest_version_from_crate_registry() {
+    #[ignore = "fails when frequently run as github will rate limit"]
+    fn can_get_latest_version_from_github_releases() {
         assert!(aderyn_is_currently_running_newest_version().is_some())
     }
 }

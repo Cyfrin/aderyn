@@ -58,22 +58,12 @@ You can read the [Cyfrin official documentation](https://docs.cyfrin.io) for an 
 > **NOTE** Windows users must have WSL installed
 ### Using Cyfrinup
 
-#### Step 1: Install Cyfrinup
-Cyfrinup is a CLI tool that simplifies the installation and management of Cyfrin tools. To install Cyfrinup, run the following command in your terminal:
-```sh
-curl -L https://raw.githubusercontent.com/Cyfrin/aderyn/dev/cyfrinup/install | bash
-```
-If you get a `failed writing body` error in Windows, it's most likely because you are not using Windows Subsytem for Linux.
+**Cyfrinup** simplifies the installation and management of Cyfrin tools.
 
-#### Step 2: Update Path
-The installer will prompt you to run a `source` command. Either run this command, or reload your terminal.
+Follow the instructions to install [here](https://github.com/Cyfrin/up).
 
-#### Step 3: Install Aderyn using Cyfrinup
-After installing Cyfrinup, you can use it to install Aderyn. Run the following command in your terminal:
-```sh
-cyfrinup
-```
-Verify the installation by running `aderyn --version`
+Run `aderyn --version` to check the installation.
+
 
 ##### Upgrade older versions by (re)running: `cyfrinup`
 

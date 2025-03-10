@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 112,
-    "total_sloc": 3957
+    "total_source_units": 114,
+    "total_sloc": 3993
   },
   "files_details": {
     "files_details": [
@@ -222,6 +222,10 @@
         "n_sloc": 9
       },
       {
+        "file_path": "src/PublicFunction.sol",
+        "n_sloc": 15
+      },
+      {
         "file_path": "src/PublicVariableReadInExternalContext.sol",
         "n_sloc": 32
       },
@@ -244,6 +248,10 @@
       {
         "file_path": "src/SendEtherNoChecks.sol",
         "n_sloc": 58
+      },
+      {
+        "file_path": "src/SendEtherNoChecksLibImport.sol",
+        "n_sloc": 17
       },
       {
         "file_path": "src/StateShadowing.sol",
@@ -347,7 +355,7 @@
       },
       {
         "file_path": "src/UnusedError.sol",
-        "n_sloc": 19
+        "n_sloc": 23
       },
       {
         "file_path": "src/UnusedImport.sol",
@@ -531,9 +539,9 @@
         ]
       },
       {
-        "title": "Unsafe Casting",
+        "title": "Unsafe Casting of integers can lead to truncation and loss of significant digits.",
         "description": "Downcasting int/uints in Solidity can be unsafe due to the potential for data loss and unintended behavior.When downcasting a larger integer type to a smaller one (e.g., uint256 to uint128), the value may exceed the range of the target type,leading to truncation and loss of significant digits. Use OpenZeppelin's SafeCast library to safely downcast integers.",
-        "detector_name": "unsafe-casting-detector",
+        "detector_name": "unsafe-cast",
         "instances": [
           {
             "contract_path": "src/Casting.sol",
@@ -2222,6 +2230,30 @@
             "src_char": "250:9"
           },
           {
+            "contract_path": "src/SendEtherNoChecksLibImport.sol",
+            "line_no": 7,
+            "src": "276:7",
+            "src_char": "276:7"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecksLibImport.sol",
+            "line_no": 7,
+            "src": "285:13",
+            "src_char": "285:13"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecksLibImport.sol",
+            "line_no": 16,
+            "src": "516:9",
+            "src_char": "516:9"
+          },
+          {
+            "contract_path": "src/SendEtherNoChecksLibImport.sol",
+            "line_no": 20,
+            "src": "614:28",
+            "src_char": "614:28"
+          },
+          {
             "contract_path": "src/Trump.sol",
             "line_no": 92,
             "src": "2714:9",
@@ -2968,12 +3000,6 @@
           },
           {
             "contract_path": "src/Trump.sol",
-            "line_no": 92,
-            "src": "2679:17",
-            "src_char": "2679:17"
-          },
-          {
-            "contract_path": "src/Trump.sol",
             "line_no": 180,
             "src": "5624:4",
             "src_char": "5624:4"
@@ -2989,36 +3015,6 @@
             "line_no": 188,
             "src": "5802:8",
             "src_char": "5802:8"
-          },
-          {
-            "contract_path": "src/Trump.sol",
-            "line_no": 192,
-            "src": "5889:11",
-            "src_char": "5889:11"
-          },
-          {
-            "contract_path": "src/Trump.sol",
-            "line_no": 200,
-            "src": "6111:8",
-            "src_char": "6111:8"
-          },
-          {
-            "contract_path": "src/Trump.sol",
-            "line_no": 205,
-            "src": "6281:9",
-            "src_char": "6281:9"
-          },
-          {
-            "contract_path": "src/Trump.sol",
-            "line_no": 209,
-            "src": "6428:7",
-            "src_char": "6428:7"
-          },
-          {
-            "contract_path": "src/Trump.sol",
-            "line_no": 214,
-            "src": "6592:12",
-            "src_char": "6592:12"
           },
           {
             "contract_path": "src/UninitializedLocalVariables.sol",
@@ -3840,6 +3836,12 @@
             "src_char": "920:6"
           },
           {
+            "contract_path": "src/SendEtherNoChecksLibImport.sol",
+            "line_no": 12,
+            "src": "451:6",
+            "src_char": "451:6"
+          },
+          {
             "contract_path": "src/StateShadowing.sol",
             "line_no": 8,
             "src": "135:7",
@@ -3898,7 +3900,7 @@
       {
         "title": "The `nonReentrant` `modifier` should occur before all other modifiers",
         "description": "This is a best-practice to protect against reentrancy in other modifiers.",
-        "detector_name": "non-reentrant-is-not-before-others",
+        "detector_name": "non-reentrant-not-first-modifier",
         "instances": [
           {
             "contract_path": "src/AdminContract.sol",
@@ -5112,9 +5114,9 @@
           },
           {
             "contract_path": "src/UnusedError.sol",
-            "line_no": 13,
-            "src": "258:36",
-            "src_char": "258:36"
+            "line_no": 14,
+            "src": "286:36",
+            "src_char": "286:36"
           },
           {
             "contract_path": "src/WrongOrderOfLayout.sol",
@@ -6775,9 +6777,9 @@
           },
           {
             "contract_path": "src/UnusedError.sol",
-            "line_no": 15,
-            "src": "309:7",
-            "src_char": "309:7"
+            "line_no": 16,
+            "src": "337:7",
+            "src_char": "337:7"
           },
           {
             "contract_path": "src/UnusedStateVariables.sol",
@@ -7154,7 +7156,7 @@
     "literal-instead-of-constant",
     "unindexed-events",
     "require-without-string",
-    "non-reentrant-is-not-before-others",
+    "non-reentrant-not-first-modifier",
     "block-timestamp-is-weak-deadline",
     "unsafe-oz-erc721-mint",
     "push-zero-opcode",
@@ -7169,7 +7171,7 @@
     "useless-error",
     "reverts-and-requires-in-loops",
     "division-before-multiplication",
-    "unsafe-casting-detector",
+    "unsafe-cast",
     "enumerable-loop-removal",
     "experimental-encoder",
     "incorrect-shift-order",
