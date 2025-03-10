@@ -11,11 +11,10 @@ version = 1
 root = "."
 
 # Path of source directory containing the contracts, relative to root (above)
-# Aderyn traverse all the nested files inside scanning for vulnerabilities
+# Aderyn will traverse all the nested files inside to scan and report vulnerabilities found inside.
 # If not specified, Aderyn will try to extract it from the framework that is being used. (Foundry / Hardhat)
 # That would be "contracts/" in case of Hardhat and in case of Foundry, it depends on foundry.toml and
-# many other factors like FOUNDRY_PROFILE environment variable set below, etc.
-# Please feel free to always specify the values explicitly.
+# many other factors like FOUNDRY_PROFILE environment variable, etc.
 # Example:
 # src = "src/"
 
