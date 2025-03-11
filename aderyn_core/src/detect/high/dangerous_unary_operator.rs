@@ -34,7 +34,7 @@ impl IssueDetector for DangerousUnaryOperatorDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Dangerous unary operator.")
+        String::from("Dangerous unary operator")
     }
 
     fn description(&self) -> String {
@@ -78,11 +78,12 @@ mod dangerous_unary_expression_tests {
         // assert the severity is high
         assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
         // assert the title is correct
-        assert_eq!(detector.title(), String::from("Dangerous unary operator found in assignment."));
+        assert_eq!(detector.title(), String::from("Dangerous unary operator"));
         // assert the description is correct
         assert_eq!(
             detector.description(),
-            String::from("Potentially mistakened `=+` for `+=` or `=-` for `-=`. Please include a space in between.")
+            String::from("Potentially mistaken `=+` for `+=` or `=-` for `-=`. This acts as an assignment instead of an increment or decrement.\
+            Use the correct operator to increment or decrement a variable.")
         );
     }
 }

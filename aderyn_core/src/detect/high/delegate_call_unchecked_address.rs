@@ -49,7 +49,7 @@ impl IssueDetector for DelegateCallUncheckedAddressDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Delegatecall made to an arbitrary address.")
+        String::from("Delegatecall made to an arbitrary address")
     }
 
     fn description(&self) -> String {
@@ -91,7 +91,7 @@ mod delegate_call_no_address_check_tests {
 
     use crate::detect::{
         detector::IssueDetector,
-        high::delegate_call_no_address_check::DelegateCallUncheckedAddressDetector,
+        high::delegate_call_unchecked_address::DelegateCallUncheckedAddressDetector,
     };
 
     #[test]
@@ -116,11 +116,8 @@ mod delegate_call_no_address_check_tests {
         assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
 
         // assert the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from("Delegatecall made by the function without checks on any address.")
-        );
+        assert_eq!(detector.title(), String::from("Delegatecall made to an arbitrary address"));
         // assert the description is correct
-        assert_eq!(detector.description(), String::from("Introduce checks on the address"));
+        assert_eq!(detector.description(), String::from("Making a delegatecall to an arbitrary address without any checks is dangerous. Consider adding requirements on the target address."));
     }
 }

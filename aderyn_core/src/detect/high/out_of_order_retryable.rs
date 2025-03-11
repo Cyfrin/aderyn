@@ -42,7 +42,7 @@ impl IssueDetector for OutOfOrderRetryableDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Out of order retryable transactions.")
+        String::from("Out of order retryable transactions")
     }
 
     fn description(&self) -> String {

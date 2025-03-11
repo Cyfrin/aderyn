@@ -88,7 +88,7 @@ mod unchecked_low_level_calls_tests {
     use serial_test::serial;
 
     use crate::detect::{
-        detector::IssueDetector, high::unchecked_calls::UncheckedLowLevelCallDetector,
+        detector::IssueDetector, high::unchecked_low_level_call::UncheckedLowLevelCallDetector,
     };
 
     #[test]

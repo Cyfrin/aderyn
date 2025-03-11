@@ -136,6 +136,6 @@ mod arbitrary_transfer_from_tests {
             String::from("Arbitrary `from` passed to `transferFrom` (or `safeTransferFrom`)")
         );
         // assert the description is correct
-        assert_eq!(detector.description(), String::from("Passing an arbitrary `from` address to `transferFrom` (or `safeTransferFrom`) can lead to loss of funds, because anyone can transfer tokens from the `from` address if an approval is made.  "));
+        assert_eq!(detector.description(), String::from("Passing an arbitrary `from` address to `transferFrom` (or `safeTransferFrom`) can lead to loss of funds, because anyone can transfer tokens from the `from` address if an approval is made."));
     }
 }

@@ -61,7 +61,7 @@ impl IssueDetector for DangerousStrictEqualityOnBalanceDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Dangerous strict equality checks on contract balances.")
+        String::from("Dangerous strict equality checks on contract balances")
     }
 
     fn description(&self) -> String {
@@ -78,17 +78,17 @@ impl IssueDetector for DangerousStrictEqualityOnBalanceDetector {
 }
 
 #[cfg(test)]
-mod dangerous_strict_equality_balance_tests {
+mod strict_equality_contract_balance_tests {
     use serial_test::serial;
 
     use crate::detect::{
         detector::IssueDetector,
-        high::dangerous_strict_equality_balance::DangerousStrictEqualityOnBalanceDetector,
+        high::strict_equality_contract_balance::DangerousStrictEqualityOnBalanceDetector,
     };
 
     #[test]
     #[serial]
-    fn test_dangerous_strict_equality_balance1() {
+    fn test_strict_equality_contract_balance1() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/DangerousStrictEquality1.sol",
         );
@@ -104,7 +104,7 @@ mod dangerous_strict_equality_balance_tests {
     }
 
     #[test]
-    fn test_dangerous_strict_equality_balance2() {
+    fn test_strict_equality_contract_balance2() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/DangerousStrictEquality2.sol",
         );

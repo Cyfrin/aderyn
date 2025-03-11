@@ -96,7 +96,7 @@ impl IssueDetector for IncorrectERC721InterfaceDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Incorrect ERC721 interface.")
+        String::from("Incorrect ERC721 interface")
     }
 
     fn description(&self) -> String {

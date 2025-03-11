@@ -51,7 +51,7 @@ impl IssueDetector for MsgValueUsedInLoopDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Loop contains `msg.value`.")
+        String::from("Loop contains `msg.value`")
     }
 
     fn description(&self) -> String {

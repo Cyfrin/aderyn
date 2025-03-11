@@ -76,14 +76,12 @@ impl IssueDetector for StorageSignedIntegerArrayDetector {
     }
 
     fn title(&self) -> String {
-        String::from(
-            "Compiler Bug: Signed array in storage detected for compiler version `<0.5.10`",
-        )
+        String::from("Signed integer array in storage (solc `<0.5.10`)")
     }
 
     fn description(&self) -> String {
-        String::from("If you want to leverage signed arrays in storage by assigning a literal array with at least one negative \
-            number, then you mus use solidity version 0.5.10 or above. This is because of a bug in older compilers.")
+        String::from("solc versions 0.4.7-0.5.9 contain a compiler bug leading to incorrect values in signed integer arrays.\
+            Use solidity version 0.5.10 or above.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -91,7 +89,7 @@ impl IssueDetector for StorageSignedIntegerArrayDetector {
     }
 
     fn name(&self) -> String {
-        IssueDetectorNamePool::SignedStorageArray.to_string()
+        IssueDetectorNamePool::SignedIntegerStorageArray.to_string()
     }
 }
 
@@ -144,7 +142,7 @@ mod storage_signed_array_detector {
 
     use crate::detect::{
         detector::IssueDetector,
-        high::storage_signed_integer_array::{
+        high::signed_integer_storage_array::{
             StorageSignedIntegerArrayDetector, SIGNED_STORAGE_ARRAY_POINTER,
         },
     };
@@ -170,15 +168,13 @@ mod storage_signed_array_detector {
         // assert the title is correct
         assert_eq!(
             detector.title(),
-            String::from(
-                "Compiler Bug: Signed array in storage detected for compiler version `<0.5.10`",
-            )
+            String::from("Signed integer array in storage (solc `<0.5.10`)")
         );
         // assert the description is correct
         assert_eq!(
             detector.description(),
-            String::from("If you want to leverage signed arrays in storage by assigning a literal array with at least one negative \
-                number, then you mus use solidity version 0.5.10 or above. This is because of a bug in older compilers.")
+            String::from("solc versions 0.4.7-0.5.9 contain a compiler bug leading to incorrect values in signed integer arrays.\
+            Use solidity version 0.5.10 or above.")
         );
     }
 

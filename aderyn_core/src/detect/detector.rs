@@ -48,11 +48,11 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<EnumerableLoopRemovalDetector>::default(),
         Box::<ExperimentalEncoderDetector>::default(),
         Box::<IncorrectShiftOrderDetector>::default(),
-        Box::<StorageArrayEditWithMemoryDetector>::default(),
+        Box::<StorageArrayMemoryEditDetector>::default(),
         Box::<MultipleConstructorsDetector>::default(),
         Box::<ReusedContractNameDetector>::default(),
         Box::<NestedStructInMappingDetector>::default(),
-        Box::<SelfdestructIdentifierDetector>::default(),
+        Box::<SelfdestructDetector>::default(),
         Box::<DynamicArrayLengthAssignmentDetector>::default(),
         Box::<IncorrectUseOfCaretOperatorDetector>::default(),
         Box::<YulReturnDetector>::default(),
@@ -158,22 +158,22 @@ pub(crate) enum IssueDetectorNamePool {
     UnprotectedInitializer,
     RevertsAndRequiresInLoops,
     DivisionBeforeMultiplication,
-    UnsafeCast,
+    UnsafeCasting,
     EnumerableLoopRemoval,
     ExperimentalEncoder,
     IncorrectShiftOrder,
-    StorageArrayEditWithMemory,
+    StorageArrayMemoryEdit,
     MultipleConstructors,
     ReusedContractName,
     NestedStructInMapping,
-    SelfdestructIdentifier,
+    Selfdestruct,
     DynamicArrayLengthAssignment,
     IncorrectCaretOperator,
     YulReturn,
     StateVariableShadowing,
     UncheckedSend,
     MisusedBoolean,
-    SendsEtherAwayWithoutCheckingAddress,
+    EthSendUncheckedAddress,
     DelegateCallUncheckedAddress,
     TautologicalCompare,
     #[allow(clippy::upper_case_acronyms)]
@@ -182,7 +182,7 @@ pub(crate) enum IssueDetectorNamePool {
     DangerousUnaryOperator,
     TautologyOrContradiction,
     StrictEquailtyContractBalance,
-    SignedStorageArray,
+    SignedIntegerStorageArray,
     RedundantStatements,
     PublicVariableReadInExternalContext,
     WeakRandomness,
@@ -342,7 +342,7 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::DivisionBeforeMultiplication => {
             Some(Box::<DivisionBeforeMultiplicationDetector>::default())
         }
-        IssueDetectorNamePool::UnsafeCast => Some(Box::<UnsafeCastingDetector>::default()),
+        IssueDetectorNamePool::UnsafeCasting => Some(Box::<UnsafeCastingDetector>::default()),
         IssueDetectorNamePool::EnumerableLoopRemoval => {
             Some(Box::<EnumerableLoopRemovalDetector>::default())
         }
@@ -352,8 +352,8 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::IncorrectShiftOrder => {
             Some(Box::<IncorrectShiftOrderDetector>::default())
         }
-        IssueDetectorNamePool::StorageArrayEditWithMemory => {
-            Some(Box::<StorageArrayEditWithMemoryDetector>::default())
+        IssueDetectorNamePool::StorageArrayMemoryEdit => {
+            Some(Box::<StorageArrayMemoryEditDetector>::default())
         }
         IssueDetectorNamePool::MultipleConstructors => {
             Some(Box::<MultipleConstructorsDetector>::default())
@@ -364,9 +364,7 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::NestedStructInMapping => {
             Some(Box::<NestedStructInMappingDetector>::default())
         }
-        IssueDetectorNamePool::SelfdestructIdentifier => {
-            Some(Box::<SelfdestructIdentifierDetector>::default())
-        }
+        IssueDetectorNamePool::Selfdestruct => Some(Box::<SelfdestructDetector>::default()),
         IssueDetectorNamePool::DynamicArrayLengthAssignment => {
             Some(Box::<DynamicArrayLengthAssignmentDetector>::default())
         }
@@ -380,7 +378,7 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         }
         IssueDetectorNamePool::UncheckedSend => Some(Box::<UncheckedSendDetector>::default()),
         IssueDetectorNamePool::MisusedBoolean => Some(Box::<MisusedBooleanDetector>::default()),
-        IssueDetectorNamePool::SendsEtherAwayWithoutCheckingAddress => {
+        IssueDetectorNamePool::EthSendUncheckedAddress => {
             Some(Box::<SendEtherNoChecksDetector>::default())
         }
         IssueDetectorNamePool::DelegateCallUncheckedAddress => {
@@ -400,7 +398,7 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::StrictEquailtyContractBalance => {
             Some(Box::<DangerousStrictEqualityOnBalanceDetector>::default())
         }
-        IssueDetectorNamePool::SignedStorageArray => {
+        IssueDetectorNamePool::SignedIntegerStorageArray => {
             Some(Box::<StorageSignedIntegerArrayDetector>::default())
         }
         IssueDetectorNamePool::RedundantStatements => {

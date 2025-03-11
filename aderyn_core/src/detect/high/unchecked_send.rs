@@ -49,13 +49,13 @@ impl IssueDetector for UncheckedSendDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Unchecked `bool success` value for send call.")
+        String::from("Unchecked `bool success` value for ETH send")
     }
 
     fn description(&self) -> String {
-        String::from("The transaction `address(payable?).send(address)` may fail because of reasons like out-of-gas, \
-        invalid receipient address or revert from the recipient. Therefore, the boolean returned by this function call must be checked \
-        to be `true` in order to verify that the transaction was successful")
+        String::from("The call `address(payable?).send(address)` may fail because of reasons like out-of-gas, \
+        invalid receipient address or revert from the recipient, but not revert the transaction. Therefore, the boolean returned by this function call must be checked \
+        to be `true` in order to verify that the transaction was successful.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -92,13 +92,13 @@ mod unchecked_send_tests {
         // assert the severity is high
         assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
         // assert the title is correct
-        assert_eq!(detector.title(), String::from("Unchecked `bool success` value for send call."));
+        assert_eq!(detector.title(), String::from("Unchecked `bool success` value for ETH send"));
         // assert the description is correct
         assert_eq!(
             detector.description(),
-            String::from("The transaction `address(payable?).send(address)` may fail because of reasons like out-of-gas, \
-            invalid receipient address or revert from the recipient. Therefore, the boolean returned by this function call must be checked \
-            to be `true` in order to verify that the transaction was successful")
+            String::from("The call `address(payable?).send(address)` may fail because of reasons like out-of-gas, \
+        invalid receipient address or revert from the recipient, but not revert the transaction. Therefore, the boolean returned by this function call must be checked \
+        to be `true` in order to verify that the transaction was successful.")
         );
     }
 }

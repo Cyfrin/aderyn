@@ -10,13 +10,13 @@ use crate::{
 use eyre::Result;
 
 #[derive(Default)]
-pub struct StorageArrayEditWithMemoryDetector {
+pub struct StorageArrayMemoryEditDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-impl IssueDetector for StorageArrayEditWithMemoryDetector {
+impl IssueDetector for StorageArrayMemoryEditDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // get all Identifiers with argumentTypes
         // If any of them are of the type storage,
@@ -72,7 +72,7 @@ impl IssueDetector for StorageArrayEditWithMemoryDetector {
     }
 
     fn name(&self) -> String {
-        IssueDetectorNamePool::StorageArrayEditWithMemory.to_string()
+        IssueDetectorNamePool::StorageArrayMemoryEdit.to_string()
     }
 }
 
@@ -81,8 +81,7 @@ mod storage_array_edit_with_memory_tests {
     use serial_test::serial;
 
     use crate::detect::{
-        detector::IssueDetector,
-        high::storage_array_edit_with_memory::StorageArrayEditWithMemoryDetector,
+        detector::IssueDetector, high::storage_array_memory_edit::StorageArrayMemoryEditDetector,
     };
 
     #[test]
@@ -92,7 +91,7 @@ mod storage_array_edit_with_memory_tests {
             "../tests/contract-playground/src/StorageParameters.sol",
         );
 
-        let mut detector = StorageArrayEditWithMemoryDetector::default();
+        let mut detector = StorageArrayMemoryEditDetector::default();
         let found = detector.detect(&context).unwrap();
         // assert that the detector found an issue
         assert!(found);

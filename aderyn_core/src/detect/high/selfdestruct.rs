@@ -10,13 +10,13 @@ use crate::{
 use eyre::Result;
 
 #[derive(Default)]
-pub struct SelfdestructIdentifierDetector {
+pub struct SelfdestructDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-impl IssueDetector for SelfdestructIdentifierDetector {
+impl IssueDetector for SelfdestructDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for identifier in context.identifiers() {
             if identifier.name == "selfdestruct" {
@@ -31,7 +31,7 @@ impl IssueDetector for SelfdestructIdentifierDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Depracated EVM Instruction for `selfdestruct` should not be used.")
+        String::from("Depracated EVM Instruction for `selfdestruct` should not be used")
     }
 
     fn description(&self) -> String {
@@ -43,7 +43,7 @@ impl IssueDetector for SelfdestructIdentifierDetector {
     }
 
     fn name(&self) -> String {
-        IssueDetectorNamePool::SelfdestructIdentifier.to_string()
+        IssueDetectorNamePool::Selfdestruct.to_string()
     }
 }
 
@@ -51,7 +51,7 @@ impl IssueDetector for SelfdestructIdentifierDetector {
 mod selfdestruct_identifier_tests {
     use serial_test::serial;
 
-    use crate::detect::{detector::IssueDetector, high::SelfdestructIdentifierDetector};
+    use crate::detect::{detector::IssueDetector, high::SelfdestructDetector};
 
     #[test]
     #[serial]
@@ -60,7 +60,7 @@ mod selfdestruct_identifier_tests {
             "../tests/contract-playground/src/UsingSelfdestruct.sol",
         );
 
-        let mut detector = SelfdestructIdentifierDetector::default();
+        let mut detector = SelfdestructDetector::default();
         let found = detector.detect(&context).unwrap();
         // assert that the detector found an issue
         assert!(found);
@@ -71,7 +71,7 @@ mod selfdestruct_identifier_tests {
         // assert the title is correct
         assert_eq!(
             detector.title(),
-            String::from("Depracated EVM Instruction for `selfdestruct` should not be used.")
+            String::from("Depracated EVM Instruction for `selfdestruct` should not be used")
         );
         // assert the description is correct
         assert_eq!(detector.description(), String::from(""));

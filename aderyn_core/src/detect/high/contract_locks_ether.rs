@@ -37,7 +37,7 @@ impl IssueDetector for ContractLocksEtherDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Contract locks Ether without a withdraw function.")
+        String::from("Contract locks Ether without a withdraw function")
     }
 
     fn description(&self) -> String {

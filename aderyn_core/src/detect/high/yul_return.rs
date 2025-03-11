@@ -32,11 +32,11 @@ impl IssueDetector for YulReturnDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Yul block contains `return` function call.")
+        String::from("Yul block contains `return`")
     }
 
     fn description(&self) -> String {
-        String::from("Remove this, as this causes execution to halt. Nothing after that call will execute, including code following the assembly block.")
+        String::from("This causes the transaction execution to halt, and nothing after that call will execute including code following the assembly block.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -73,11 +73,11 @@ mod yul_return_detector_tests {
         // assert the severity is high
         assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
         // assert the title is correct
-        assert_eq!(detector.title(), String::from("Yul block contains `return` function call."));
+        assert_eq!(detector.title(), String::from("Yul block contains `return`"));
         // assert the description is correct
         assert_eq!(
             detector.description(),
-            String::from("Remove this, as this causes execution to halt. Nothing after that call will execute, including code following the assembly block.")
+            String::from("This causes the transaction execution to halt, and nothing after that call will execute including code following the assembly block.")
         );
     }
 }
