@@ -71,4 +71,21 @@ contract StateChangeAfterExternalCall {
 
         s_useMe += 1;
     }
+
+    modifier onlyOwner() {
+        require(msg.sender == address(123), "Not allowed");
+        _;
+    }
+
+    // BAD
+    function badSituation4() external onlyOwner {
+        s_actor.hello();
+        s_useMe += 1;
+    }
+
+    // GOOD
+    function goodSituation3() external onlyOwner {
+        s_useMe += 1;
+        s_actor.hello();
+    }
 }

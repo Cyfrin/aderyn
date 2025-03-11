@@ -3083,6 +3083,20 @@
             },
             {
               "message": {
+                "text": "State is changed at: `s_useMe += 1`"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateChangeAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 1814
+                }
+              }
+            },
+            {
+              "message": {
                 "text": "State is changed at: `swapEnabled = true`, `tradingOpen = true`, `firstBlock = block.number`"
               },
               "physicalLocation": {
@@ -3259,6 +3273,28 @@
                 "region": {
                   "byteLength": 28,
                   "byteOffset": 614
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateChangeAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 1794
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateChangeAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 1911
                 }
               }
             },
@@ -11267,6 +11303,28 @@
                 "region": {
                   "byteLength": 14,
                   "byteOffset": 1480
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateChangeAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 13,
+                  "byteOffset": 1769
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateChangeAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 1885
                 }
               }
             },

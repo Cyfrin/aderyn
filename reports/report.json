@@ -1,7 +1,7 @@
 {
   "files_summary": {
     "total_source_units": 119,
-    "total_sloc": 4415
+    "total_sloc": 4427
   },
   "files_details": {
     "files_details": [
@@ -267,7 +267,7 @@
       },
       {
         "file_path": "src/StateChangeAfterExternalCall.sol",
-        "n_sloc": 42
+        "n_sloc": 54
       },
       {
         "file_path": "src/StateShadowing.sol",
@@ -2248,6 +2248,13 @@
             "hint": "State is changed at: `s_useMe += 4`"
           },
           {
+            "contract_path": "src/StateChangeAfterExternalCall.sol",
+            "line_no": 82,
+            "src": "1814:15",
+            "src_char": "1814:15",
+            "hint": "State is changed at: `s_useMe += 1`"
+          },
+          {
             "contract_path": "src/Trump.sol",
             "line_no": 342,
             "src": "11731:110",
@@ -2351,6 +2358,18 @@
             "line_no": 20,
             "src": "614:28",
             "src_char": "614:28"
+          },
+          {
+            "contract_path": "src/StateChangeAfterExternalCall.sol",
+            "line_no": 81,
+            "src": "1794:9",
+            "src_char": "1794:9"
+          },
+          {
+            "contract_path": "src/StateChangeAfterExternalCall.sol",
+            "line_no": 87,
+            "src": "1911:9",
+            "src_char": "1911:9"
           },
           {
             "contract_path": "src/Trump.sol",
@@ -6807,6 +6826,18 @@
             "line_no": 66,
             "src": "1480:14",
             "src_char": "1480:14"
+          },
+          {
+            "contract_path": "src/StateChangeAfterExternalCall.sol",
+            "line_no": 81,
+            "src": "1769:13",
+            "src_char": "1769:13"
+          },
+          {
+            "contract_path": "src/StateChangeAfterExternalCall.sol",
+            "line_no": 87,
+            "src": "1885:14",
+            "src_char": "1885:14"
           },
           {
             "contract_path": "src/StateVariableCouldBeDeclaredConstant.sol",
