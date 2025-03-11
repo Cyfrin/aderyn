@@ -472,7 +472,7 @@
       {
         "title": "`abi.encodePacked()` should not be used with dynamic types when passing the result to a hash function such as `keccak256()`",
         "description": "Use `abi.encode()` instead which will pad items to 32 bytes, which will [prevent hash collisions](https://docs.soliditylang.org/en/v0.8.13/abi-spec.html#non-standard-packed-mode) (e.g. `abi.encodePacked(0x123,0x456)` => `0x123456` => `abi.encodePacked(0x1,0x23456)`, but `abi.encode(0x123,0x456)` => `0x0...1230...456`). Unless there is a compelling reason, `abi.encode` should be preferred. If there is only one argument to `abi.encodePacked()` it can often be cast to `bytes()` or `bytes32()` [instead](https://ethereum.stackexchange.com/questions/30912/how-to-compare-strings-in-solidity#answer-82739).\nIf all arguments are strings and or bytes, `bytes.concat()` should be used instead.",
-        "detector_name": "hash-collision-due-to-abi-encode-packed",
+        "detector_name": "abi-encode-packed-hash-collision",
         "instances": [
           {
             "contract_path": "src/KeccakContract.sol",
@@ -496,7 +496,7 @@
       },
       {
         "title": "Arbitrary `from` passed to `transferFrom` (or `safeTransferFrom`)",
-        "description": "Passing an arbitrary `from` address to `transferFrom` (or `safeTransferFrom`) can lead to loss of funds, because anyone can transfer tokens from the `from` address if an approval is made.  ",
+        "description": "Passing an arbitrary `from` address to `transferFrom` (or `safeTransferFrom`) can lead to loss of funds, because anyone can transfer tokens from the `from` address if an approval is made.",
         "detector_name": "arbitrary-transfer-from",
         "instances": [
           {
@@ -539,9 +539,9 @@
         ]
       },
       {
-        "title": "Unsafe Casting of integers can lead to truncation and loss of significant digits.",
+        "title": "Unsafe Casting of integers",
         "description": "Downcasting int/uints in Solidity can be unsafe due to the potential for data loss and unintended behavior.When downcasting a larger integer type to a smaller one (e.g., uint256 to uint128), the value may exceed the range of the target type,leading to truncation and loss of significant digits. Use OpenZeppelin's SafeCast library to safely downcast integers.",
-        "detector_name": "unsafe-cast",
+        "detector_name": "unsafe-casting",
         "instances": [
           {
             "contract_path": "src/Casting.sol",
@@ -1110,7 +1110,7 @@
         ]
       },
       {
-        "title": "EnumerableSet.remove in loop corrupts the set order.",
+        "title": "EnumerableSet.remove in loop corrupts the order",
         "description": "If the order of an EnumerableSet is required, removing items in a loop using `at` and `remove` corrupts this order.\nConsider using a different data structure or removing items by collecting them during the loop, then removing after the loop.",
         "detector_name": "enumerable-loop-removal",
         "instances": [
@@ -1181,7 +1181,7 @@
       {
         "title": "Storage Array Edited with Memory",
         "description": "Storage reference is passed to a function with a memory parameter. This will not update the storage variable as expected. Consider using storage parameters instead.",
-        "detector_name": "storage-array-edit-with-memory",
+        "detector_name": "storage-array-memory-edit",
         "instances": [
           {
             "contract_path": "src/StorageParameters.sol",
@@ -1249,9 +1249,9 @@
         ]
       },
       {
-        "title": "Depracated EVM Instruction for `selfdestruct` should not be used.",
+        "title": "Depracated EVM Instruction for `selfdestruct` should not be used",
         "description": "",
-        "detector_name": "selfdestruct-identifier",
+        "detector_name": "selfdestruct",
         "instances": [
           {
             "contract_path": "src/UsingSelfdestruct.sol",
@@ -1262,8 +1262,8 @@
         ]
       },
       {
-        "title": "Array length value has a direct assignment.",
-        "description": "If the length of a dynamic array (storage variable) directly assigned to, it may allow access to other storage slots by tweaking it's value. This practice has been depracated in newer Solidity versions",
+        "title": "Direct assignment of array length",
+        "description": "If the length of a dynamic array (storage variable) is directly assigned to, it may allow access to other storage slots by tweaking it's value. This practice has been depracated in newer Solidity versions",
         "detector_name": "dynamic-array-length-assignment",
         "instances": [
           {
@@ -1299,7 +1299,7 @@
         ]
       },
       {
-        "title": "Incorrect use of caret operator on a non hexadcimal constant",
+        "title": "Incorrect use of caret operator",
         "description": "The caret operator is usually mistakenly thought of as an exponentiation operator but actually, it's a bitwise xor operator.",
         "detector_name": "incorrect-caret-operator",
         "instances": [
@@ -1336,8 +1336,8 @@
         ]
       },
       {
-        "title": "Yul block contains `return` function call.",
-        "description": "Remove this, as this causes execution to halt. Nothing after that call will execute, including code following the assembly block.",
+        "title": "Yul block contains `return`",
+        "description": "This causes the transaction execution to halt, and nothing after that call will execute including code following the assembly block.",
         "detector_name": "yul-return",
         "instances": [
           {
@@ -1362,8 +1362,8 @@
         ]
       },
       {
-        "title": "Unchecked `bool success` value for send call.",
-        "description": "The transaction `address(payable?).send(address)` may fail because of reasons like out-of-gas, invalid receipient address or revert from the recipient. Therefore, the boolean returned by this function call must be checked to be `true` in order to verify that the transaction was successful",
+        "title": "Unchecked `bool success` value for ETH send",
+        "description": "The call `address(payable?).send(address)` may fail because of reasons like out-of-gas, invalid receipient address or revert from the recipient, but not revert the transaction. Therefore, the boolean returned by this function call must be checked to be `true` in order to verify that the transaction was successful.",
         "detector_name": "unchecked-send",
         "instances": [
           {
@@ -1442,9 +1442,9 @@
         ]
       },
       {
-        "title": "Functions send eth away from contract but performs no checks on any address.",
+        "title": "ETH transfered without address checks",
         "description": "Consider introducing checks for `msg.sender` to ensure the recipient of the money is as intended.",
-        "detector_name": "sends-ether-away-without-checking-address",
+        "detector_name": "eth-send-unchecked-address",
         "instances": [
           {
             "contract_path": "src/CallGraphTests.sol",
@@ -1569,9 +1569,9 @@
         ]
       },
       {
-        "title": "Delegatecall made by the function without checks on any address.",
-        "description": "Introduce checks on the address",
-        "detector_name": "delegate-call-on-unchecked-address",
+        "title": "Delegatecall made to an arbitrary address",
+        "description": "Making a delegatecall to an arbitrary address without any checks is dangerous. Consider adding requirements on the target address.",
+        "detector_name": "delegate-call-unchecked-address",
         "instances": [
           {
             "contract_path": "src/DelegateCallWithoutAddressCheck.sol",
@@ -1606,7 +1606,7 @@
         ]
       },
       {
-        "title": "Tautological comparison.",
+        "title": "Tautological comparison",
         "description": "The left hand side and the right hand side of the binary operation has the same value. This makes the condition always true or always false.",
         "detector_name": "tautological-compare",
         "instances": [
@@ -1637,8 +1637,8 @@
         ]
       },
       {
-        "title": "RTLO character detected in file. \\u{202e}",
-        "description": "Right to left override character may be misledaing and cause potential attacks by visually misordering method arguments!",
+        "title": "RTLO character detected in file: \\u{202e}",
+        "description": "The right to left override character may be misleading and cause potential attacks by visually misordering method arguments.",
         "detector_name": "rtlo",
         "instances": [
           {
@@ -1650,8 +1650,8 @@
         ]
       },
       {
-        "title": "Dangerous unary operator found in assignment.",
-        "description": "Potentially mistakened `=+` for `+=` or `=-` for `-=`. Please include a space in between.",
+        "title": "Dangerous unary operator",
+        "description": "Potentially mistaken `=+` for `+=` or `=-` for `-=`. This acts as an assignment instead of an increment or decrement.Use the correct operator to increment or decrement a variable.",
         "detector_name": "dangerous-unary-operator",
         "instances": [
           {
@@ -1669,7 +1669,7 @@
         ]
       },
       {
-        "title": "Tautology or Contradiction in comparison.",
+        "title": "Tautology or Contradiction in comparison",
         "description": "The condition has been determined to be either always true or always false due to the integer range in which we're operating.",
         "detector_name": "tautology-or-contradiction",
         "instances": [
@@ -1688,9 +1688,9 @@
         ]
       },
       {
-        "title": "Dangerous strict equality checks on contract balances.",
+        "title": "Dangerous strict equality checks on contract balances",
         "description": "A contract's balance can be forcibly manipulated by another selfdestructing contract. Therefore, it's recommended to use >, <, >= or <= instead of strict equality.",
-        "detector_name": "strict-equailty-check-on-contract-balance",
+        "detector_name": "strict-equailty-contract-balance",
         "instances": [
           {
             "contract_path": "src/DangerousStrictEquality1.sol",
@@ -1713,9 +1713,9 @@
         ]
       },
       {
-        "title": "Compiler Bug: Signed array in storage detected for compiler version `<0.5.10`",
-        "description": "If you want to leverage signed arrays in storage by assigning a literal array with at least one negative number, then you mus use solidity version 0.5.10 or above. This is because of a bug in older compilers.",
-        "detector_name": "signed-storage-array",
+        "title": "Signed integer array in storage (solc `<0.5.10`)",
+        "description": "solc versions 0.4.7-0.5.9 contain a compiler bug leading to incorrect values in signed integer arrays.Use solidity version 0.5.10 or above.",
+        "detector_name": "signed-integer-storage-array",
         "instances": [
           {
             "contract_path": "src/CompilerBugStorageSignedIntegerArray.sol",
@@ -1787,8 +1787,8 @@
         ]
       },
       {
-        "title": "Usage of variable before declaration.",
-        "description": "This is a bad practice that may lead to unintended consequences. Please declare the variable before using it.",
+        "title": "Usage of variable before declaration",
+        "description": "Declare the variable before using it to avoid unintended consequences.",
         "detector_name": "pre-declared-local-variable-usage",
         "instances": [
           {
@@ -1800,7 +1800,7 @@
         ]
       },
       {
-        "title": "Deletion from a nested mappping.",
+        "title": "Deletion from a nested mapping",
         "description": "A deletion in a structure containing a mapping will not delete the mapping. The remaining data may be used to compromise the contract.",
         "detector_name": "delete-nested-mapping",
         "instances": [
@@ -1813,7 +1813,7 @@
         ]
       },
       {
-        "title": "Potential use of `tx.origin` for authentication.",
+        "title": "Potential use of `tx.origin` for authentication",
         "description": "Using `tx.origin` may lead to problems when users are interacting via smart contract with your protocol. It is recommended to use `msg.sender` for authentication.",
         "detector_name": "tx-origin-used-for-auth",
         "instances": [
@@ -1838,7 +1838,7 @@
         ]
       },
       {
-        "title": "Loop contains `msg.value`.",
+        "title": "Loop contains `msg.value`",
         "description": "Provide an explicit array of amounts alongside the receivers array, and check that the sum of all amounts matches `msg.value`.",
         "detector_name": "msg-value-in-loop",
         "instances": [
@@ -1869,7 +1869,7 @@
         ]
       },
       {
-        "title": "Contract locks Ether without a withdraw function.",
+        "title": "Contract locks Ether without a withdraw function",
         "description": "It appears that the contract includes a payable function to accept Ether but lacks a corresponding function to withdraw it, which leads to the Ether being locked in the contract. To resolve this issue, please implement a public or external function that allows for the withdrawal of Ether from the contract.",
         "detector_name": "contract-locks-ether",
         "instances": [
@@ -1936,7 +1936,7 @@
         ]
       },
       {
-        "title": "Incorrect ERC721 interface.",
+        "title": "Incorrect ERC721 interface",
         "description": "Incorrect return values for ERC721 functions. A contract compiled with Solidity > 0.4.22 interacting with these functions will fail to execute them, as the return value is missing. Set the appropriate return values and types for the defined ERC721 functions.",
         "detector_name": "incorrect-erc721-interface",
         "instances": [
@@ -1991,7 +1991,7 @@
         ]
       },
       {
-        "title": "Incorrect ERC20 interface.",
+        "title": "Incorrect ERC20 interface",
         "description": "Incorrect return values for ERC20 functions. A contract compiled with Solidity > 0.4.22 interacting with these functions will fail to execute them, as the return value is missing. Set the appropriate return values and types for the defined ERC20 functions.",
         "detector_name": "incorrect-erc20-interface",
         "instances": [
@@ -2028,7 +2028,7 @@
         ]
       },
       {
-        "title": "Out of order retryable transactions.",
+        "title": "Out of order retryable transactions",
         "description": "Do not rely on the order or successful execution of retryable tickets. Functions like createRetryableTicket, outboundTransferCustomRefund, unsafeCreateRetryableTicket are free to be re-tried in any\n            order if they fail in the first go. Since this operation happens off chain, the sequencer is in control of the\n            order of these transactions. Therefore, restrict the use to at most 1 ticket call per function.",
         "detector_name": "out-of-order-retryable",
         "instances": [
@@ -2047,9 +2047,9 @@
         ]
       },
       {
-        "title": "Constant functions changing state",
+        "title": "Constant functions changes state",
         "description": "Function is declared constant/view but it changes state. Ensure that the attributes of contract compiled prior to 0.5 are correct.",
-        "detector_name": "constant-function-changing-state",
+        "detector_name": "constant-function-changes-state",
         "instances": [
           {
             "contract_path": "src/ConstFuncChangeState.sol",
@@ -7146,7 +7146,7 @@
     "delegate-call-in-loop",
     "centralization-risk",
     "solmate-safe-transfer-lib",
-    "hash-collision-due-to-abi-encode-packed",
+    "abi-encode-packed-hash-collision",
     "raw-ecrecover",
     "deprecated-oz-functions",
     "unsafe-erc20-functions",
@@ -7171,29 +7171,29 @@
     "useless-error",
     "reverts-and-requires-in-loops",
     "division-before-multiplication",
-    "unsafe-cast",
+    "unsafe-casting",
     "enumerable-loop-removal",
     "experimental-encoder",
     "incorrect-shift-order",
-    "storage-array-edit-with-memory",
+    "storage-array-memory-edit",
     "multiple-constructors",
     "reused-contract-name",
     "nested-struct-in-mapping",
-    "selfdestruct-identifier",
+    "selfdestruct",
     "dynamic-array-length-assignment",
     "incorrect-caret-operator",
     "yul-return",
     "state-variable-shadowing",
     "unchecked-send",
     "misused-boolean",
-    "sends-ether-away-without-checking-address",
-    "delegate-call-on-unchecked-address",
+    "eth-send-unchecked-address",
+    "delegate-call-unchecked-address",
     "tautological-compare",
     "rtlo",
     "dangerous-unary-operator",
     "tautology-or-contradiction",
-    "strict-equailty-check-on-contract-balance",
-    "signed-storage-array",
+    "strict-equailty-contract-balance",
+    "signed-integer-storage-array",
     "redundant-statements",
     "public-variable-read-in-external-context",
     "weak-randomness",
@@ -7216,7 +7216,7 @@
     "array-length-not-cached",
     "state-change-in-assert",
     "costly-operations-inside-loops",
-    "constant-function-changing-state",
+    "constant-function-changes-state",
     "builtin-symbol-shadow",
     "void-constructor",
     "function-selector-collision",

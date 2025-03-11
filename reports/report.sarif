@@ -44,7 +44,7 @@
           "message": {
             "text": "Use `abi.encode()` instead which will pad items to 32 bytes, which will [prevent hash collisions](https://docs.soliditylang.org/en/v0.8.13/abi-spec.html#non-standard-packed-mode) (e.g. `abi.encodePacked(0x123,0x456)` => `0x123456` => `abi.encodePacked(0x1,0x23456)`, but `abi.encode(0x123,0x456)` => `0x0...1230...456`). Unless there is a compelling reason, `abi.encode` should be preferred. If there is only one argument to `abi.encodePacked()` it can often be cast to `bytes()` or `bytes32()` [instead](https://ethereum.stackexchange.com/questions/30912/how-to-compare-strings-in-solidity#answer-82739).\nIf all arguments are strings and or bytes, `bytes.concat()` should be used instead."
           },
-          "ruleId": "hash-collision-due-to-abi-encode-packed"
+          "ruleId": "abi-encode-packed-hash-collision"
         },
         {
           "level": "warning",
@@ -95,7 +95,7 @@
             }
           ],
           "message": {
-            "text": "Passing an arbitrary `from` address to `transferFrom` (or `safeTransferFrom`) can lead to loss of funds, because anyone can transfer tokens from the `from` address if an approval is made.  "
+            "text": "Passing an arbitrary `from` address to `transferFrom` (or `safeTransferFrom`) can lead to loss of funds, because anyone can transfer tokens from the `from` address if an approval is made."
           },
           "ruleId": "arbitrary-transfer-from"
         },
@@ -1160,7 +1160,7 @@
           "message": {
             "text": "Downcasting int/uints in Solidity can be unsafe due to the potential for data loss and unintended behavior.When downcasting a larger integer type to a smaller one (e.g., uint256 to uint128), the value may exceed the range of the target type,leading to truncation and loss of significant digits. Use OpenZeppelin's SafeCast library to safely downcast integers."
           },
-          "ruleId": "unsafe-cast"
+          "ruleId": "unsafe-casting"
         },
         {
           "level": "warning",
@@ -1295,7 +1295,7 @@
           "message": {
             "text": "Storage reference is passed to a function with a memory parameter. This will not update the storage variable as expected. Consider using storage parameters instead."
           },
-          "ruleId": "storage-array-edit-with-memory"
+          "ruleId": "storage-array-memory-edit"
         },
         {
           "level": "warning",
@@ -1408,7 +1408,7 @@
           "message": {
             "text": ""
           },
-          "ruleId": "selfdestruct-identifier"
+          "ruleId": "selfdestruct"
         },
         {
           "level": "warning",
@@ -1470,7 +1470,7 @@
             }
           ],
           "message": {
-            "text": "If the length of a dynamic array (storage variable) directly assigned to, it may allow access to other storage slots by tweaking it's value. This practice has been depracated in newer Solidity versions"
+            "text": "If the length of a dynamic array (storage variable) is directly assigned to, it may allow access to other storage slots by tweaking it's value. This practice has been depracated in newer Solidity versions"
           },
           "ruleId": "dynamic-array-length-assignment"
         },
@@ -1554,7 +1554,7 @@
             }
           ],
           "message": {
-            "text": "Remove this, as this causes execution to halt. Nothing after that call will execute, including code following the assembly block."
+            "text": "This causes the transaction execution to halt, and nothing after that call will execute including code following the assembly block."
           },
           "ruleId": "yul-return"
         },
@@ -1594,7 +1594,7 @@
             }
           ],
           "message": {
-            "text": "The transaction `address(payable?).send(address)` may fail because of reasons like out-of-gas, invalid receipient address or revert from the recipient. Therefore, the boolean returned by this function call must be checked to be `true` in order to verify that the transaction was successful"
+            "text": "The call `address(payable?).send(address)` may fail because of reasons like out-of-gas, invalid receipient address or revert from the recipient, but not revert the transaction. Therefore, the boolean returned by this function call must be checked to be `true` in order to verify that the transaction was successful."
           },
           "ruleId": "unchecked-send"
         },
@@ -1944,7 +1944,7 @@
           "message": {
             "text": "Consider introducing checks for `msg.sender` to ensure the recipient of the money is as intended."
           },
-          "ruleId": "sends-ether-away-without-checking-address"
+          "ruleId": "eth-send-unchecked-address"
         },
         {
           "level": "warning",
@@ -2006,9 +2006,9 @@
             }
           ],
           "message": {
-            "text": "Introduce checks on the address"
+            "text": "Making a delegatecall to an arbitrary address without any checks is dangerous. Consider adding requirements on the target address."
           },
-          "ruleId": "delegate-call-on-unchecked-address"
+          "ruleId": "delegate-call-unchecked-address"
         },
         {
           "level": "warning",
@@ -2079,7 +2079,7 @@
             }
           ],
           "message": {
-            "text": "Right to left override character may be misledaing and cause potential attacks by visually misordering method arguments!"
+            "text": "The right to left override character may be misleading and cause potential attacks by visually misordering method arguments."
           },
           "ruleId": "rtlo"
         },
@@ -2110,7 +2110,7 @@
             }
           ],
           "message": {
-            "text": "Potentially mistakened `=+` for `+=` or `=-` for `-=`. Please include a space in between."
+            "text": "Potentially mistaken `=+` for `+=` or `=-` for `-=`. This acts as an assignment instead of an increment or decrement.Use the correct operator to increment or decrement a variable."
           },
           "ruleId": "dangerous-unary-operator"
         },
@@ -2185,7 +2185,7 @@
           "message": {
             "text": "A contract's balance can be forcibly manipulated by another selfdestructing contract. Therefore, it's recommended to use >, <, >= or <= instead of strict equality."
           },
-          "ruleId": "strict-equailty-check-on-contract-balance"
+          "ruleId": "strict-equailty-contract-balance"
         },
         {
           "level": "warning",
@@ -2203,9 +2203,9 @@
             }
           ],
           "message": {
-            "text": "If you want to leverage signed arrays in storage by assigning a literal array with at least one negative number, then you mus use solidity version 0.5.10 or above. This is because of a bug in older compilers."
+            "text": "solc versions 0.4.7-0.5.9 contain a compiler bug leading to incorrect values in signed integer arrays.Use solidity version 0.5.10 or above."
           },
-          "ruleId": "signed-storage-array"
+          "ruleId": "signed-integer-storage-array"
         },
         {
           "level": "warning",
@@ -2331,7 +2331,7 @@
             }
           ],
           "message": {
-            "text": "This is a bad practice that may lead to unintended consequences. Please declare the variable before using it."
+            "text": "Declare the variable before using it to avoid unintended consequences."
           },
           "ruleId": "pre-declared-local-variable-usage"
         },
@@ -2779,7 +2779,7 @@
           "message": {
             "text": "Function is declared constant/view but it changes state. Ensure that the attributes of contract compiled prior to 0.5 are correct."
           },
-          "ruleId": "constant-function-changing-state"
+          "ruleId": "constant-function-changes-state"
         },
         {
           "level": "warning",
