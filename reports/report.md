@@ -3728,7 +3728,7 @@ Index event fields make the field more quickly accessible to off-chain tools tha
 - Found in src/EmitAfterExternalCall.sol [Line: 86](../tests/contract-playground/src/EmitAfterExternalCall.sol#L86)
 
 	```solidity
-		event Counter(uint);
+		event CounterEvent(uint);
 	```
 
 - Found in src/IncorrectERC721.sol [Line: 112](../tests/contract-playground/src/IncorrectERC721.sol#L112)
@@ -3817,7 +3817,7 @@ Index event fields make the field more quickly accessible to off-chain tools tha
 
 Use descriptive reason strings or custom errors for revert paths.
 
-<details><summary>27 Found Instances</summary>
+<details><summary>28 Found Instances</summary>
 
 
 - Found in src/CallGraphTests.sol [Line: 7](../tests/contract-playground/src/CallGraphTests.sol#L7)
@@ -3881,6 +3881,12 @@ Use descriptive reason strings or custom errors for revert paths.
 	```
 
 - Found in src/LocalVariableShadow.sol [Line: 12](../tests/contract-playground/src/LocalVariableShadow.sol#L12)
+
+	```solidity
+	        require(owner == msg.sender);
+	```
+
+- Found in src/LocalVariableShadow.sol [Line: 19](../tests/contract-playground/src/LocalVariableShadow.sol#L19)
 
 	```solidity
 	        require(owner == msg.sender);
@@ -7447,7 +7453,7 @@ In most cases it is a best practice to perform the emit before making an externa
 
 - Found in src/EmitAfterExternalCall.sol [Line: 93](../tests/contract-playground/src/EmitAfterExternalCall.sol#L93)
 
-	Emission happens at: `emit Counter(counter)`
+	Emission happens at: `emit CounterEvent(counter)`
 	```solidity
 	        d.f();
 	```

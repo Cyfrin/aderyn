@@ -83,7 +83,7 @@ contract ReentrantContract {
 }
 contract Counter {
 	uint public counter;
-	event Counter(uint);
+	event CounterEvent(uint);
 
 }
 // BAD
@@ -91,14 +91,14 @@ contract BugReentrancyEvents is Counter {
     function count(ReentrantContract d) external {
         counter += 1;
         d.f();
-        emit Counter(counter);
+        emit CounterEvent(counter);
     }
 }
 // GOOD
 contract NoReentrancyEvents is Counter {
 	function count(ReentrantContract d) external {
         counter += 1;
-        emit Counter(counter);
+        emit CounterEvent(counter);
         d.f();
     }
 }

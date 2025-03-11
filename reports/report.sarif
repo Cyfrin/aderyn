@@ -5879,7 +5879,7 @@
                   "uri": "src/EmitAfterExternalCall.sol"
                 },
                 "region": {
-                  "byteLength": 20,
+                  "byteLength": 25,
                   "byteOffset": 1861
                 }
               }
@@ -12298,7 +12298,7 @@
             },
             {
               "message": {
-                "text": "Emission happens at: `emit Counter(counter)`"
+                "text": "Emission happens at: `emit CounterEvent(counter)`"
               },
               "physicalLocation": {
                 "artifactLocation": {
@@ -12306,7 +12306,7 @@
                 },
                 "region": {
                   "byteLength": 5,
-                  "byteOffset": 2015
+                  "byteOffset": 2020
                 }
               }
             },

@@ -3798,8 +3798,8 @@
           {
             "contract_path": "src/EmitAfterExternalCall.sol",
             "line_no": 86,
-            "src": "1861:20",
-            "src_char": "1861:20"
+            "src": "1861:25",
+            "src_char": "1861:25"
           },
           {
             "contract_path": "src/IncorrectERC721.sol",
@@ -7375,9 +7375,9 @@
           {
             "contract_path": "src/EmitAfterExternalCall.sol",
             "line_no": 93,
-            "src": "2015:5",
-            "src_char": "2015:5",
-            "hint": "Emission happens at: `emit Counter(counter)`"
+            "src": "2020:5",
+            "src_char": "2020:5",
+            "hint": "Emission happens at: `emit CounterEvent(counter)`"
           },
           {
             "contract_path": "src/Trump.sol",
