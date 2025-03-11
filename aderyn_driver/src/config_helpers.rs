@@ -15,7 +15,6 @@ pub struct AderynConfig {
     pub root: Option<String>,
     pub src: Option<String>,
     pub exclude: Option<Vec<String>>,
-    pub remappings: Option<Vec<String>>,
     pub include: Option<Vec<String>>,
     pub env: Option<HashMap<String, String>>,
 }
@@ -37,7 +36,6 @@ fn load_aderyn_config(root: &Path) -> Result<AderynConfig, String> {
 
     // Clear empty vectors
     clear_empty_vectors(&mut config.exclude);
-    clear_empty_vectors(&mut config.remappings);
     clear_empty_vectors(&mut config.include);
 
     load_env_variables_from_config(&config);
@@ -127,19 +125,7 @@ fn interpret_aderyn_config(
         }
     }
 
-    // If config.remappings is some, append each value to remappings if it is not already present
-    let mut local_remappings = remappings.clone();
-    if let Some(config_remappings) = &config.remappings {
-        if let Some(local_remappings) = &mut local_remappings {
-            for item in config_remappings {
-                if !local_remappings.contains(item) {
-                    local_remappings.push(item.clone());
-                }
-            }
-        } else {
-            local_remappings = Some(config_remappings.clone());
-        }
-    }
+    let local_remappings = remappings.clone();
 
     // If config.include is some, append each value to include if it is not already present
     let mut local_include = include.clone();
@@ -245,7 +231,6 @@ mod tests {
             root: Some("CONFIG_ROOT".to_string()),
             src: Some("CONFIG_SRC".to_string()),
             exclude: Some(vec!["CONFIG_EXCLUDE".to_string()]),
-            remappings: Some(vec!["CONFIG_REMAPPINGS".to_string()]),
             include: Some(vec!["CONFIG_SCOPE".to_string()]),
             env: Some(env),
         };
@@ -271,11 +256,7 @@ mod tests {
         );
         assert_eq!(
             result.3,
-            Some(vec![
-                "ARG_REMAPPINGS_1".to_string(),
-                "ARG_REMAPPINGS_2".to_string(),
-                "CONFIG_REMAPPINGS".to_string()
-            ])
+            Some(vec!["ARG_REMAPPINGS_1".to_string(), "ARG_REMAPPINGS_2".to_string()])
         );
         assert_eq!(
             result.4,
