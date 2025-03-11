@@ -29,6 +29,8 @@ cargo run -- tests/2024-07-templegold/protocol -o reports/templegold-report.md -
 
 cargo run -- tests/hardhat-js-playground -o reports/hardhat-playground-report.md --skip-update-check &
 
+cargo run --  ./tests/foundry-nft-f23-icm -o ./reports/nft-report-icm.md --skip-update-check &
+
 ##### JSON REPORTS ########
 
 # Basic report.json
