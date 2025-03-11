@@ -13,14 +13,14 @@ use crate::{
 use eyre::Result;
 
 #[derive(Default)]
-pub struct ContractsWithTodosDetector {
+pub struct TodoDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
     hints: BTreeMap<(String, usize, String), String>,
 }
 
-impl IssueDetector for ContractsWithTodosDetector {
+impl IssueDetector for TodoDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for contract in context.contract_definitions() {
             let contract_as_ast: ASTNode = contract.into();
@@ -48,11 +48,13 @@ impl IssueDetector for ContractsWithTodosDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Contract still has TODOs")
+        String::from("Contract has TODO Comments")
     }
 
     fn description(&self) -> String {
-        String::from("Contract contains comments with TODOS")
+        String::from(
+            "Contract contains comments with TODOS. Consider implementing or removing them.",
+        )
     }
 
     fn severity(&self) -> IssueSeverity {
@@ -68,7 +70,7 @@ impl IssueDetector for ContractsWithTodosDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::ContractWithTodos)
+        format!("{}", IssueDetectorNamePool::Todo)
     }
 }
 
@@ -78,7 +80,7 @@ mod contracts_with_todos_tests {
 
     use crate::detect::detector::IssueDetector;
 
-    use super::ContractsWithTodosDetector;
+    use super::TodoDetector;
 
     #[test]
     #[serial]
@@ -87,7 +89,7 @@ mod contracts_with_todos_tests {
             "../tests/contract-playground/src/ContractWithTodo.sol",
         );
 
-        let mut detector = ContractsWithTodosDetector::default();
+        let mut detector = TodoDetector::default();
         let found = detector.detect(&context).unwrap();
 
         assert!(found);

@@ -16,13 +16,13 @@ use crate::{
 use eyre::Result;
 
 #[derive(Default)]
-pub struct DelegateCallInLoopDetector {
+pub struct DelegatecallInLoopDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-impl IssueDetector for DelegateCallInLoopDetector {
+impl IssueDetector for DelegatecallInLoopDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // PLAN
         // Explore inward from loops and track all the `delegatecall` that you come across
@@ -54,11 +54,11 @@ impl IssueDetector for DelegateCallInLoopDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Using `delegatecall` in loop may consume excessive gas")
+        String::from("`delegatecall` in loop")
     }
 
     fn description(&self) -> String {
-        String::from("Using `delegatecall` in loop may consume excessive gas")
+        String::from("Using `delegatecall` in loop may consume excessive gas, or worse, lead to more severe issues.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -66,7 +66,7 @@ impl IssueDetector for DelegateCallInLoopDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::DelegateCallInLoop)
+        format!("{}", IssueDetectorNamePool::DelegatecallInLoop)
     }
 }
 
@@ -97,7 +97,7 @@ impl CallGraphVisitor for DelegateCallTracker {
 mod delegate_call_in_loop_detector_tests {
     use serial_test::serial;
 
-    use super::DelegateCallInLoopDetector;
+    use super::DelegatecallInLoopDetector;
     use crate::detect::detector::IssueDetector;
 
     #[test]
@@ -107,7 +107,7 @@ mod delegate_call_in_loop_detector_tests {
             "../tests/contract-playground/src/inheritance/ExtendedInheritance.sol",
         );
 
-        let mut detector = DelegateCallInLoopDetector::default();
+        let mut detector = DelegatecallInLoopDetector::default();
         let found = detector.detect(&context).unwrap();
         // assert that the detector found a delegate call in a loop
         assert!(found);

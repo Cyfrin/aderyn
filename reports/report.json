@@ -2176,9 +2176,9 @@
   "low_issues": {
     "issues": [
       {
-        "title": "Using `delegatecall` in loop may consume excessive gas",
-        "description": "Using `delegatecall` in loop may consume excessive gas",
-        "detector_name": "delegate-call-in-loop",
+        "title": "`delegatecall` in loop",
+        "description": "Using `delegatecall` in loop may consume excessive gas, or worse, lead to more severe issues.",
+        "detector_name": "delegatecall-in-loop",
         "instances": [
           {
             "contract_path": "src/inheritance/ExtendedInheritance.sol",
@@ -2189,7 +2189,7 @@
         ]
       },
       {
-        "title": "Centralization Risk for trusted owners",
+        "title": "Centralization Risk",
         "description": "Contracts have owners with privileged rights to perform admin tasks and need to be trusted to not perform malicious updates or drain funds.",
         "detector_name": "centralization-risk",
         "instances": [
@@ -2335,9 +2335,9 @@
         ]
       },
       {
-        "title": "`ecrecover` is susceptible to signature malleability",
+        "title": "`ecrecover` is Susceptible to Signature Malleability",
         "description": "The `ecrecover` function is susceptible to signature malleability. This means that the same message can be signed in multiple ways, allowing an attacker to change the message signature without invalidating it. This can lead to unexpected behavior in smart contracts, such as the loss of funds or the ability to bypass access control. Consider using OpenZeppelin's ECDSA library instead of the built-in function.",
-        "detector_name": "raw-ecrecover",
+        "detector_name": "ecrecover",
         "instances": [
           {
             "contract_path": "src/inheritance/ExtendedInheritance.sol",
@@ -2348,9 +2348,9 @@
         ]
       },
       {
-        "title": "Deprecated OpenZeppelin functions should not be used",
+        "title": "Deprecated OpenZeppelin Function",
         "description": "Openzeppelin has deprecated several functions and replaced with newer versions. Please consult https://docs.openzeppelin.com/",
-        "detector_name": "deprecated-oz-functions",
+        "detector_name": "deprecated-oz-function",
         "instances": [
           {
             "contract_path": "src/DeprecatedOZFunctions.sol",
@@ -3121,8 +3121,8 @@
         ]
       },
       {
-        "title": "Define and use `constant` variables instead of using literals",
-        "description": "If the same constant literal value is used multiple times, create a constant state variable and reference it throughout the contract.",
+        "title": "Literal Instead of Constant",
+        "description": "Define and use `constant` variables instead of using literals. If the same constant literal value is used multiple times, create a constant state variable and reference it throughout the contract.",
         "detector_name": "literal-instead-of-constant",
         "instances": [
           {
@@ -3919,7 +3919,7 @@
       {
         "title": "Using `block.timestamp` for swap deadline offers no protection",
         "description": "In the PoS model, proposers know well in advance if they will propose one or consecutive blocks ahead of time. In such a scenario, a malicious validator can hold back the transaction and execute it at a more favourable block number.Consider allowing function caller to specify swap deadline input parameter.",
-        "detector_name": "block-timestamp-is-weak-deadline",
+        "detector_name": "block-timestamp-deadline",
         "instances": [
           {
             "contract_path": "src/Trump.sol",
@@ -4612,8 +4612,8 @@
         ]
       },
       {
-        "title": "Large literal values multiples of 10000 can be replaced with scientific notation",
-        "description": "Use `e` notation, for example: `1e18`, instead of its full numeric value.",
+        "title": "Large Numeric Literal",
+        "description": "Large literal values multiples of 10000 can be replaced with scientific notation.Use `e` notation, for example: `1e18`, instead of its full numeric value.",
         "detector_name": "large-numeric-literal",
         "instances": [
           {
@@ -4902,9 +4902,9 @@
         ]
       },
       {
-        "title": "Contract still has TODOs",
-        "description": "Contract contains comments with TODOS",
-        "detector_name": "contract-with-todos",
+        "title": "Contract has TODO Comments",
+        "description": "Contract contains comments with TODOS. Consider implementing or removing them.",
+        "detector_name": "todo",
         "instances": [
           {
             "contract_path": "src/ContractWithTodo.sol",
@@ -4921,8 +4921,8 @@
         ]
       },
       {
-        "title": "Inconsistency in declaring uint256/uint (or) int256/int variables within a contract. Use explicit size declarations (uint256 or int256).",
-        "description": "Consider keeping the naming convention consistent in a given contract. Explicit size declarations are preferred (uint256, int256) over implicit ones (uint, int) to avoid confusion.",
+        "title": "Inconsistent uint256/uint (or) int256/int types",
+        "description": "Inconsistency in declaring uint256/uint (or) int256/int variables within a contract. Use explicit size declarations (uint256 or int256). Consider keeping the naming convention consistent in a given contract. Explicit size declarations are preferred (uint256, int256) over implicit ones (uint, int) to avoid confusion.",
         "detector_name": "inconsistent-type-names",
         "instances": [
           {
@@ -5147,7 +5147,7 @@
       },
       {
         "title": "Incorrect Order of Division and Multiplication",
-        "description": "Division operations followed directly by multiplication operations can lead to precision loss due to the way integer arithmetic is handled in Solidity.",
+        "description": "Division operations followed directly by multiplication operations can lead to precision loss due to the way integer arithmetic is handled in Solidity./\n        Consider Multiplication before Division.",
         "detector_name": "division-before-multiplication",
         "instances": [
           {
@@ -5420,9 +5420,9 @@
         ]
       },
       {
-        "title": "Functions declared `pure` / `view` but contains assembly",
-        "description": "If the assembly code contains bugs or unintended side effects, it can lead to incorrect results or vulnerabilities, which are hard to debug and resolve, especially when the function is meant to be simple and predictable.",
-        "detector_name": "constant-functions-assembly",
+        "title": "Constant Function Contains Assembly",
+        "description": "constant/pure/view was not enforced prior to Solidity 0.5. Starting from Solidity 0.5, a call to a constant/pure/view function uses the STATICCALL opcode, which reverts in case of state modification. As a result, a call to an incorrectly labeled function may trap a contract compiled with Solidity 0.5. https://docs.soliditylang.org/en/develop/050-breaking-changes.html#interoperability-with-older-contracts",
+        "detector_name": "constant-function-contains-assembly",
         "instances": [
           {
             "contract_path": "src/ConstantFuncsAssembly.sol",
@@ -5445,9 +5445,9 @@
         ]
       },
       {
-        "title": "Boolean equality is not required.",
-        "description": "If `x` is a boolean, there is no need to do `if(x == true)` or `if(x == false)`. Just use `if(x)` and `if(!x)` respectively.",
-        "detector_name": "redundant-boolean-equality",
+        "title": "Boolean equality is not required",
+        "description": "If `x` is a boolean, use `if(x)` and `if(!x)` instead of `if(x == true)` or `if(x == false)`.",
+        "detector_name": "boolean-equality",
         "instances": [
           {
             "contract_path": "src/BooleanEquality.sol",
@@ -5476,8 +5476,8 @@
         ]
       },
       {
-        "title": "Local variable shadows state variables in the contract hirearchy",
-        "description": "Rename the local variables that shadow another component.",
+        "title": "Local Variable Shadows State Variable",
+        "description": "Rename the local variable that shadows another state variable.",
         "detector_name": "local-variable-shadowing",
         "instances": [
           {
@@ -5641,8 +5641,8 @@
         ]
       },
       {
-        "title": "Function initializing state.",
-        "description": "Detects the immediate initialization of state variables through function calls that are not pure/constant, or that use non-constant state variable. Remove any initialization of state variables via non-constant state variables or function calls. If variables must be set upon contract deployment, locate initialization in the constructor instead.",
+        "title": "Function Used to Initialize State Variable",
+        "description": "Instead of using a function to initialize a state variable in its declaration; declare the state variable and initialize it in the constructor.",
         "detector_name": "function-initializing-state",
         "instances": [
           {
@@ -5745,9 +5745,9 @@
         ]
       },
       {
-        "title": "Loop condition contains `state_variable.length` that could be cached outside.",
-        "description": "Cache the lengths of storage arrays if they are used and not modified in for loops.",
-        "detector_name": "array-length-not-cached",
+        "title": "Storage Array Length not Cached",
+        "description": "Calling `.length` on a storage array in a loop condition is expensive. Consider caching the length in a local variable in memory before the loop and reusing it.",
+        "detector_name": "storage-array-length-not-cached",
         "instances": [
           {
             "contract_path": "src/CacheArrayLength.sol",
@@ -5770,9 +5770,9 @@
         ]
       },
       {
-        "title": "Incorrect use of `assert()`",
-        "description": "Argument to `assert()` modifies the state. Use `require` for invariants modifying state.",
-        "detector_name": "state-change-in-assert",
+        "title": "State change in `assert()` statement",
+        "description": "An argument to `assert()` modifies the state. Use `require` for invariants modifying state.",
+        "detector_name": "assert-state-change",
         "instances": [
           {
             "contract_path": "src/AssertStateChange.sol",
@@ -5783,9 +5783,9 @@
         ]
       },
       {
-        "title": "Costly operations inside loops.",
-        "description": "Invoking `SSTORE`operations in loops may lead to Out-of-gas errors. Use a local variable to hold the loop computation result.",
-        "detector_name": "costly-operations-inside-loops",
+        "title": "Costly operations inside loop",
+        "description": "Invoking `SSTORE` operations in loops may waste gas. Use a local variable to hold the loop computation result.",
+        "detector_name": "costly-loop",
         "instances": [
           {
             "contract_path": "src/CacheArrayLength.sol",
@@ -5876,7 +5876,7 @@
       {
         "title": "Builtin Symbol Shadowing",
         "description": "Name clashes with a built-in-symbol. Consider renaming it.",
-        "detector_name": "builtin-symbol-shadow",
+        "detector_name": "builtin-symbol-shadowing",
         "instances": [
           {
             "contract_path": "src/BuiltinSymbolShadow.sol",
@@ -5918,7 +5918,7 @@
         ]
       },
       {
-        "title": "Potentially missing inheritance for contract.",
+        "title": "Missing Inheritance",
         "description": "There is an interface / abstract contract that is potentially missing (not included in) the inheritance of this contract.",
         "detector_name": "missing-inheritance",
         "instances": [
@@ -5971,7 +5971,7 @@
         ]
       },
       {
-        "title": "Function pointers used in constructors.",
+        "title": "Function Pointer in Constructor",
         "description": "solc versions below 0.5.9 contain a compiler bug leading to unexpected behavior when calling uninitialized function pointers in constructors. It is recommended to not use function pointers in constructors.",
         "detector_name": "function-pointer-in-constructor",
         "instances": [
@@ -7143,12 +7143,12 @@
     ]
   },
   "detectors_used": [
-    "delegate-call-in-loop",
+    "delegatecall-in-loop",
     "centralization-risk",
     "solmate-safe-transfer-lib",
     "abi-encode-packed-hash-collision",
-    "raw-ecrecover",
-    "deprecated-oz-functions",
+    "ecrecover",
+    "deprecated-oz-function",
     "unsafe-erc20-functions",
     "unspecific-solidity-pragma",
     "no-zero-address-check",
@@ -7157,7 +7157,7 @@
     "unindexed-events",
     "require-without-string",
     "non-reentrant-not-first-modifier",
-    "block-timestamp-is-weak-deadline",
+    "block-timestamp-deadline",
     "unsafe-oz-erc721-mint",
     "push-zero-opcode",
     "arbitrary-transfer-from",
@@ -7165,7 +7165,7 @@
     "empty-block",
     "large-numeric-literal",
     "useless-internal-function",
-    "contract-with-todos",
+    "todo",
     "inconsistent-type-names",
     "unprotected-initializer",
     "useless-error",
@@ -7200,8 +7200,8 @@
     "pre-declared-local-variable-usage",
     "delete-nested-mapping",
     "unused-state-variable",
-    "constant-functions-assembly",
-    "redundant-boolean-equality",
+    "constant-function-contains-assembly",
+    "boolean-equality",
     "tx-origin-used-for-auth",
     "msg-value-in-loop",
     "contract-locks-ether",
@@ -7213,11 +7213,11 @@
     "out-of-order-retryable",
     "function-initializing-state",
     "dead-code",
-    "array-length-not-cached",
-    "state-change-in-assert",
-    "costly-operations-inside-loops",
+    "storage-array-length-not-cached",
+    "assert-state-change",
+    "costly-loop",
     "constant-function-changes-state",
-    "builtin-symbol-shadow",
+    "builtin-symbol-shadowing",
     "void-constructor",
     "function-selector-collision",
     "missing-inheritance",

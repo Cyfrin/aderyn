@@ -38,11 +38,11 @@ impl IssueDetector for AssertStateChangeDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Incorrect use of `assert()`")
+        String::from("State change in `assert()` statement")
     }
 
     fn description(&self) -> String {
-        String::from("Argument to `assert()` modifies the state. Use `require` for invariants modifying state.")
+        String::from("An argument to `assert()` modifies the state. Use `require` for invariants modifying state.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -50,7 +50,7 @@ impl IssueDetector for AssertStateChangeDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::StateChangeInAssert)
+        format!("{}", IssueDetectorNamePool::AssertStateChange)
     }
 }
 

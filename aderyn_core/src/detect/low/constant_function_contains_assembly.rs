@@ -75,13 +75,13 @@ impl IssueDetector for ConstantFunctionContainsAssemblyDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Functions declared `pure` / `view` but contains assembly")
+        String::from("Constant Function Contains Assembly")
     }
 
     fn description(&self) -> String {
-        String::from("If the assembly code contains bugs or unintended side effects, it can lead to incorrect results \
-            or vulnerabilities, which are hard to debug and resolve, especially when the function is meant to be simple \
-            and predictable.")
+        String::from("constant/pure/view was not enforced prior to Solidity 0.5. Starting from Solidity 0.5, a call to a constant/pure/view function uses the STATICCALL opcode, \
+        which reverts in case of state modification. As a result, a call to an incorrectly labeled function may trap a contract compiled with Solidity 0.5. \
+        https://docs.soliditylang.org/en/develop/050-breaking-changes.html#interoperability-with-older-contracts")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -89,7 +89,7 @@ impl IssueDetector for ConstantFunctionContainsAssemblyDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::ConstantFunctionsAssembly)
+        format!("{}", IssueDetectorNamePool::ConstantFunctionContainsAssembly)
     }
 }
 
@@ -142,7 +142,7 @@ mod constant_functions_assembly_detector {
 
     use crate::detect::{
         detector::IssueDetector,
-        low::constant_funcs_assembly::ConstantFunctionContainsAssemblyDetector,
+        low::constant_function_contains_assembly::ConstantFunctionContainsAssemblyDetector,
     };
 
     #[test]

@@ -34,13 +34,11 @@ impl IssueDetector for LargeLiteralValueDetector {
     }
 
     fn title(&self) -> String {
-        String::from(
-            "Large literal values multiples of 10000 can be replaced with scientific notation",
-        )
+        String::from("Large Numeric Literal")
     }
 
     fn description(&self) -> String {
-        String::from("Use `e` notation, for example: `1e18`, instead of its full numeric value.")
+        String::from("Large literal values multiples of 10000 can be replaced with scientific notation.Use `e` notation, for example: `1e18`, instead of its full numeric value.")
     }
 
     fn severity(&self) -> IssueSeverity {
@@ -80,17 +78,12 @@ mod large_literal_values {
         // assert that the detector returns the correct severity
         assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert that the detector returns the correct title
-        assert_eq!(
-            detector.title(),
-            String::from(
-                "Large literal values multiples of 10000 can be replaced with scientific notation"
-            )
-        );
+        assert_eq!(detector.title(), String::from("Large Numeric Literal"));
         // assert that the detector returns the correct description
         assert_eq!(
             detector.description(),
             String::from(
-                "Use `e` notation, for example: `1e18`, instead of its full numeric value."
+                "Large literal values multiples of 10000 can be replaced with scientific notation.Use `e` notation, for example: `1e18`, instead of its full numeric value."
             )
         );
     }

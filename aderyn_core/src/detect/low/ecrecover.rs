@@ -26,7 +26,7 @@ impl IssueDetector for EcrecoverDetector {
     }
 
     fn title(&self) -> String {
-        String::from("`ecrecover` is susceptible to signature malleability")
+        String::from("`ecrecover` is Susceptible to Signature Malleability")
     }
 
     fn description(&self) -> String {
@@ -49,7 +49,7 @@ impl IssueDetector for EcrecoverDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::RawEcrecover)
+        format!("{}", IssueDetectorNamePool::Ecrecover)
     }
 }
 
@@ -80,7 +80,7 @@ mod ecrecover_tests {
         // assert that the title is correct
         assert_eq!(
             detector.title(),
-            String::from("`ecrecover` is susceptible to signature malleability")
+            String::from("`ecrecover` is Susceptible to Signature Malleability")
         );
         // assert that the description is correct
         assert_eq!(

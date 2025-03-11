@@ -12,13 +12,13 @@ use crate::{
 use eyre::Result;
 
 #[derive(Default)]
-pub struct DeprecatedOZFunctionsDetector {
+pub struct DeprecatedOZFunctionDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-impl IssueDetector for DeprecatedOZFunctionsDetector {
+impl IssueDetector for DeprecatedOZFunctionDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for identifier in context.identifiers() {
             // if source_unit has any ImportDirectives with absolute_path containing "openzeppelin"
@@ -62,7 +62,7 @@ impl IssueDetector for DeprecatedOZFunctionsDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Deprecated OpenZeppelin functions should not be used")
+        String::from("Deprecated OpenZeppelin Function")
     }
 
     fn description(&self) -> String {
@@ -78,7 +78,7 @@ impl IssueDetector for DeprecatedOZFunctionsDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::DeprecatedOzFunctions)
+        format!("{}", IssueDetectorNamePool::DeprecatedOzFunction)
     }
 }
 
@@ -88,7 +88,7 @@ mod deprecated_oz_functions_tests {
 
     use crate::detect::detector::IssueDetector;
 
-    use super::DeprecatedOZFunctionsDetector;
+    use super::DeprecatedOZFunctionDetector;
 
     #[test]
     #[serial]
@@ -97,7 +97,7 @@ mod deprecated_oz_functions_tests {
             "../tests/contract-playground/src/DeprecatedOZFunctions.sol",
         );
 
-        let mut detector = DeprecatedOZFunctionsDetector::default();
+        let mut detector = DeprecatedOZFunctionDetector::default();
         let found = detector.detect(&context).unwrap();
         // assert that the detector found an abi encode packed
         assert!(found);
@@ -106,10 +106,7 @@ mod deprecated_oz_functions_tests {
         // assert that the severity is low
         assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert that the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from("Deprecated OpenZeppelin functions should not be used")
-        );
+        assert_eq!(detector.title(), String::from("Deprecated OpenZeppelin Function"));
         // assert that the description is correct
         assert_eq!(
             detector.description(),

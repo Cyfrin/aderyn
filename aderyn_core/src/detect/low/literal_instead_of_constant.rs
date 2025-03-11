@@ -100,11 +100,11 @@ impl IssueDetector for LiteralsInsteadOfConstantsDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Define and use `constant` variables instead of using literals")
+        String::from("Literal Instead of Constant")
     }
 
     fn description(&self) -> String {
-        String::from("If the same constant literal value is used multiple times, create a constant state variable and reference it throughout the contract.")
+        String::from("Define and use `constant` variables instead of using literals. If the same constant literal value is used multiple times, create a constant state variable and reference it throughout the contract.")
     }
 
     fn severity(&self) -> IssueSeverity {
@@ -143,15 +143,12 @@ mod constants_instead_of_literals_tests {
         // assert that the detector returns the correct severity
         assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert that the detector returns the correct title
-        assert_eq!(
-            detector.title(),
-            String::from("Define and use `constant` variables instead of using literals")
-        );
+        assert_eq!(detector.title(), String::from("Literal Instead of Constant"));
         // assert that the detector returns the correct description
         assert_eq!(
             detector.description(),
             String::from(
-                "If the same constant literal value is used multiple times, create a constant state variable and reference it throughout the contract."
+                "Define and use `constant` variables instead of using literals. If the same constant literal value is used multiple times, create a constant state variable and reference it throughout the contract."
             )
         );
     }

@@ -64,13 +64,11 @@ impl IssueDetector for FunctionInitializingStateDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Function initializing state.")
+        String::from("Function Used to Initialize State Variable")
     }
 
     fn description(&self) -> String {
-        String::from("Detects the immediate initialization of state variables through function calls that are not pure/constant, or that use \
-            non-constant state variable. Remove any initialization of state variables via non-constant state variables or function calls. If variables \
-            must be set upon contract deployment, locate initialization in the constructor instead.")
+        String::from("Instead of using a function to initialize a state variable in its declaration; declare the state variable and initialize it in the constructor.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -121,7 +119,8 @@ mod function_initializing_state_tests {
     use serial_test::serial;
 
     use crate::detect::{
-        detector::IssueDetector, low::function_init_state_vars::FunctionInitializingStateDetector,
+        detector::IssueDetector,
+        low::function_initializing_state::FunctionInitializingStateDetector,
     };
 
     #[test]

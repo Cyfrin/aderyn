@@ -14,13 +14,13 @@ use crate::{
 use eyre::Result;
 
 #[derive(Default)]
-pub struct CostlyOperationsInsideLoopsDetector {
+pub struct CostlyLoopDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-impl IssueDetector for CostlyOperationsInsideLoopsDetector {
+impl IssueDetector for CostlyLoopDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // Investigate for loops to check for storage writes
         for for_statement in context.for_statements() {
@@ -51,11 +51,11 @@ impl IssueDetector for CostlyOperationsInsideLoopsDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Costly operations inside loops.")
+        String::from("Costly operations inside loop")
     }
 
     fn description(&self) -> String {
-        String::from("Invoking `SSTORE`operations in loops may lead to Out-of-gas errors. Use a local variable to hold the loop computation result.")
+        String::from("Invoking `SSTORE` operations in loops may waste gas. Use a local variable to hold the loop computation result.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -63,7 +63,7 @@ impl IssueDetector for CostlyOperationsInsideLoopsDetector {
     }
 
     fn name(&self) -> String {
-        IssueDetectorNamePool::CostlyOperationsInsideLoops.to_string()
+        IssueDetectorNamePool::CostlyLoop.to_string()
     }
 }
 
@@ -99,8 +99,7 @@ mod costly_operations_inside_loops_tests {
     use serial_test::serial;
 
     use crate::detect::{
-        detector::IssueDetector,
-        low::costly_operations_inside_loops::CostlyOperationsInsideLoopsDetector,
+        detector::IssueDetector, low::costly_loop::CostlyLoopDetector,
     };
 
     #[test]
@@ -110,7 +109,7 @@ mod costly_operations_inside_loops_tests {
             "../tests/contract-playground/src/CostlyOperationsInsideLoops.sol",
         );
 
-        let mut detector = CostlyOperationsInsideLoopsDetector::default();
+        let mut detector = CostlyLoopDetector::default();
         let found = detector.detect(&context).unwrap();
         // assert that the detector found an issue
         assert!(found);

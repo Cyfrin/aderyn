@@ -2997,9 +2997,9 @@
             }
           ],
           "message": {
-            "text": "Using `delegatecall` in loop may consume excessive gas"
+            "text": "Using `delegatecall` in loop may consume excessive gas, or worse, lead to more severe issues."
           },
-          "ruleId": "delegate-call-in-loop"
+          "ruleId": "delegatecall-in-loop"
         },
         {
           "level": "note",
@@ -3279,7 +3279,7 @@
           "message": {
             "text": "The `ecrecover` function is susceptible to signature malleability. This means that the same message can be signed in multiple ways, allowing an attacker to change the message signature without invalidating it. This can lead to unexpected behavior in smart contracts, such as the loss of funds or the ability to bypass access control. Consider using OpenZeppelin's ECDSA library instead of the built-in function."
           },
-          "ruleId": "raw-ecrecover"
+          "ruleId": "ecrecover"
         },
         {
           "level": "note",
@@ -3310,7 +3310,7 @@
           "message": {
             "text": "Openzeppelin has deprecated several functions and replaced with newer versions. Please consult https://docs.openzeppelin.com/"
           },
-          "ruleId": "deprecated-oz-functions"
+          "ruleId": "deprecated-oz-function"
         },
         {
           "level": "note",
@@ -5542,7 +5542,7 @@
             }
           ],
           "message": {
-            "text": "If the same constant literal value is used multiple times, create a constant state variable and reference it throughout the contract."
+            "text": "Define and use `constant` variables instead of using literals. If the same constant literal value is used multiple times, create a constant state variable and reference it throughout the contract."
           },
           "ruleId": "literal-instead-of-constant"
         },
@@ -6317,7 +6317,7 @@
           "message": {
             "text": "In the PoS model, proposers know well in advance if they will propose one or consecutive blocks ahead of time. In such a scenario, a malicious validator can hold back the transaction and execute it at a more favourable block number.Consider allowing function caller to specify swap deadline input parameter."
           },
-          "ruleId": "block-timestamp-is-weak-deadline"
+          "ruleId": "block-timestamp-deadline"
         },
         {
           "level": "note",
@@ -7680,7 +7680,7 @@
             }
           ],
           "message": {
-            "text": "Use `e` notation, for example: `1e18`, instead of its full numeric value."
+            "text": "Large literal values multiples of 10000 can be replaced with scientific notation.Use `e` notation, for example: `1e18`, instead of its full numeric value."
           },
           "ruleId": "large-numeric-literal"
         },
@@ -7929,9 +7929,9 @@
             }
           ],
           "message": {
-            "text": "Contract contains comments with TODOS"
+            "text": "Contract contains comments with TODOS. Consider implementing or removing them."
           },
-          "ruleId": "contract-with-todos"
+          "ruleId": "todo"
         },
         {
           "level": "note",
@@ -8257,7 +8257,7 @@
             }
           ],
           "message": {
-            "text": "Consider keeping the naming convention consistent in a given contract. Explicit size declarations are preferred (uint256, int256) over implicit ones (uint, int) to avoid confusion."
+            "text": "Inconsistency in declaring uint256/uint (or) int256/int variables within a contract. Use explicit size declarations (uint256 or int256). Consider keeping the naming convention consistent in a given contract. Explicit size declarations are preferred (uint256, int256) over implicit ones (uint, int) to avoid confusion."
           },
           "ruleId": "inconsistent-type-names"
         },
@@ -8383,7 +8383,7 @@
             }
           ],
           "message": {
-            "text": "Division operations followed directly by multiplication operations can lead to precision loss due to the way integer arithmetic is handled in Solidity."
+            "text": "Division operations followed directly by multiplication operations can lead to precision loss due to the way integer arithmetic is handled in Solidity./\n        Consider Multiplication before Division."
           },
           "ruleId": "division-before-multiplication"
         },
@@ -8859,9 +8859,9 @@
             }
           ],
           "message": {
-            "text": "If the assembly code contains bugs or unintended side effects, it can lead to incorrect results or vulnerabilities, which are hard to debug and resolve, especially when the function is meant to be simple and predictable."
+            "text": "constant/pure/view was not enforced prior to Solidity 0.5. Starting from Solidity 0.5, a call to a constant/pure/view function uses the STATICCALL opcode, which reverts in case of state modification. As a result, a call to an incorrectly labeled function may trap a contract compiled with Solidity 0.5. https://docs.soliditylang.org/en/develop/050-breaking-changes.html#interoperability-with-older-contracts"
           },
-          "ruleId": "constant-functions-assembly"
+          "ruleId": "constant-function-contains-assembly"
         },
         {
           "level": "note",
@@ -8912,9 +8912,9 @@
             }
           ],
           "message": {
-            "text": "If `x` is a boolean, there is no need to do `if(x == true)` or `if(x == false)`. Just use `if(x)` and `if(!x)` respectively."
+            "text": "If `x` is a boolean, use `if(x)` and `if(!x)` instead of `if(x == true)` or `if(x == false)`."
           },
-          "ruleId": "redundant-boolean-equality"
+          "ruleId": "boolean-equality"
         },
         {
           "level": "note",
@@ -9009,7 +9009,7 @@
             }
           ],
           "message": {
-            "text": "Rename the local variables that shadow another component."
+            "text": "Rename the local variable that shadows another state variable."
           },
           "ruleId": "local-variable-shadowing"
         },
@@ -9245,7 +9245,7 @@
             }
           ],
           "message": {
-            "text": "Detects the immediate initialization of state variables through function calls that are not pure/constant, or that use non-constant state variable. Remove any initialization of state variables via non-constant state variables or function calls. If variables must be set upon contract deployment, locate initialization in the constructor instead."
+            "text": "Instead of using a function to initialize a state variable in its declaration; declare the state variable and initialize it in the constructor."
           },
           "ruleId": "function-initializing-state"
         },
@@ -9428,9 +9428,9 @@
             }
           ],
           "message": {
-            "text": "Cache the lengths of storage arrays if they are used and not modified in for loops."
+            "text": "Calling `.length` on a storage array in a loop condition is expensive. Consider caching the length in a local variable in memory before the loop and reusing it."
           },
-          "ruleId": "array-length-not-cached"
+          "ruleId": "storage-array-length-not-cached"
         },
         {
           "level": "note",
@@ -9448,9 +9448,9 @@
             }
           ],
           "message": {
-            "text": "Argument to `assert()` modifies the state. Use `require` for invariants modifying state."
+            "text": "An argument to `assert()` modifies the state. Use `require` for invariants modifying state."
           },
-          "ruleId": "state-change-in-assert"
+          "ruleId": "assert-state-change"
         },
         {
           "level": "note",
@@ -9611,9 +9611,9 @@
             }
           ],
           "message": {
-            "text": "Invoking `SSTORE`operations in loops may lead to Out-of-gas errors. Use a local variable to hold the loop computation result."
+            "text": "Invoking `SSTORE` operations in loops may waste gas. Use a local variable to hold the loop computation result."
           },
-          "ruleId": "costly-operations-inside-loops"
+          "ruleId": "costly-loop"
         },
         {
           "level": "note",
@@ -9666,7 +9666,7 @@
           "message": {
             "text": "Name clashes with a built-in-symbol. Consider renaming it."
           },
-          "ruleId": "builtin-symbol-shadow"
+          "ruleId": "builtin-symbol-shadowing"
         },
         {
           "level": "note",

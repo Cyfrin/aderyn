@@ -71,14 +71,12 @@ impl IssueDetector for CacheArrayLengthDetector {
     }
 
     fn title(&self) -> String {
-        String::from(
-            "Loop condition contains `state_variable.length` that could be cached outside.",
-        )
+        String::from("Storage Array Length not Cached")
     }
 
     fn description(&self) -> String {
         String::from(
-            "Cache the lengths of storage arrays if they are used and not modified in for loops.",
+            "Calling `.length` on a storage array in a loop condition is expensive. Consider caching the length in a local variable in memory before the loop and reusing it.",
         )
     }
 
@@ -87,7 +85,7 @@ impl IssueDetector for CacheArrayLengthDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::ArrayLengthNotCached)
+        format!("{}", IssueDetectorNamePool::StorageArrayLengthNotCached)
     }
 }
 
@@ -179,7 +177,7 @@ mod cahce_array_length_tests {
     use serial_test::serial;
 
     use crate::detect::{
-        detector::IssueDetector, low::cache_array_length::CacheArrayLengthDetector,
+        detector::IssueDetector, low::storage_array_length_not_cached::CacheArrayLengthDetector,
     };
 
     #[test]

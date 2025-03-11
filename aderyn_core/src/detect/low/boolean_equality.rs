@@ -5,9 +5,9 @@ issue_detector! {
     BooleanEqualityDetector;
 
     severity: Low,
-    title: "Boolean equality is not required.",
-    desc: "If `x` is a boolean, there is no need to do `if(x == true)` or `if(x == false)`. Just use `if(x)` and `if(!x)` respectively.",
-    name: RedundantBooleanEquality,
+    title: "Boolean equality is not required",
+    desc: "If `x` is a boolean, use `if(x)` and `if(!x)` instead of `if(x == true)` or `if(x == false)`.",
+    name: BooleanEquality,
 
     |context| {
         for binary_operation in context.binary_operations() {
