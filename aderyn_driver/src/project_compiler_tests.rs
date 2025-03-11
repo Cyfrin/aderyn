@@ -12,7 +12,7 @@ mod project_compiler_grouping_tests {
     #[test]
     fn foundry_nft_f23() {
         let project_root_str = "../tests/foundry-nft-f23";
-        let src = &Some(vec![PathBuf::from_str("src/").unwrap()]);
+        let src = &Some(PathBuf::from_str("src/").unwrap());
         test_grouping_files_to_compile(project_root_str, src, &None, &None);
     }
 
@@ -25,20 +25,20 @@ mod project_compiler_grouping_tests {
     #[test]
     fn contract_playground() {
         let project_root_str = "../tests/contract-playground";
-        let src = &Some(vec![PathBuf::from_str("src/").unwrap()]);
+        let src = &Some(PathBuf::from_str("src/").unwrap());
         test_grouping_files_to_compile(project_root_str, src, &None, &None);
     }
 
     #[test]
     fn ccip_develop() {
         let project_root_str = "../tests/ccip-contracts/contracts";
-        let src = &Some(vec![PathBuf::from_str("src/v0.8/").unwrap()]);
+        let src = &Some(PathBuf::from_str("src/v0.8/").unwrap());
         test_grouping_files_to_compile(project_root_str, src, &None, &None);
     }
 
     fn test_grouping_files_to_compile(
         project_root_str: &str,
-        src: &Option<Vec<PathBuf>>,
+        src: &Option<PathBuf>,
         scope: &Option<Vec<String>>,
         exclude: &Option<Vec<String>>,
     ) {

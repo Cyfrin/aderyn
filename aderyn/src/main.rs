@@ -29,7 +29,7 @@ pub struct CommandLineArgs {
     ///
     ///    --src=contracts/
     #[clap(short, long, use_value_delimiter = true)]
-    src: Option<Vec<String>>,
+    src: Option<String>,
 
     /// List of path strings to include, delimited by comma (no spaces).
     ///
