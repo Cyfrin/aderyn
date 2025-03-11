@@ -19,19 +19,14 @@ use crate::ensure_valid_root_path;
 
 pub fn with_project_root_at(
     root_path: &Path,
-    src: &Option<Vec<String>>,
+    src: &Option<String>,
     exclude: &Option<Vec<String>>,
     remappings: &Option<Vec<String>>,
     scope: &Option<Vec<String>>,
     lsp_mode: bool,
 ) -> Vec<WorkspaceContext> {
     let root = utils::canonicalize(root_path).unwrap();
-    let src = src.clone().map(|sources| {
-        sources
-            .into_iter()
-            .map(|source| utils::canonicalize(root.join(source)).unwrap())
-            .collect::<Vec<_>>()
-    });
+    let src = src.clone().map(|source| utils::canonicalize(root.join(source)).unwrap());
 
     let solidity_files = get_compiler_input(&root);
     let sources = get_relevant_sources(&root, solidity_files, &src, scope, exclude);
@@ -107,7 +102,7 @@ pub fn with_project_root_at(
 
 fn create_workspace_context_from_stdout(
     stdout: String,
-    src: &Option<Vec<PathBuf>>,
+    src: &Option<PathBuf>,
     scope: &Option<Vec<String>>,
     exclude: &Option<Vec<String>>,
     root_path: &Path,
@@ -181,7 +176,7 @@ fn is_demarcation_line(
     scope: &Option<Vec<String>>,
     exclude: &Option<Vec<String>>,
     root_path: &Path,
-    src: &Option<Vec<PathBuf>>,
+    src: &Option<PathBuf>,
     absolute_root_path_str: &str,
 ) -> (bool, Option<String>) {
     if line.starts_with("======= ") {

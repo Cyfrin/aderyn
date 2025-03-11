@@ -51,7 +51,7 @@ pub fn get_project(root: &Path, remappings: Vec<Remapping>) -> Project {
 pub fn get_relevant_sources(
     root: &Path,
     solidity_files: CompilerInput,
-    src: &Option<Vec<PathBuf>>,
+    src: &Option<PathBuf>,
     scope: &Option<Vec<String>>,
     exclude: &Option<Vec<String>>,
 ) -> BTreeMap<PathBuf, Source> {
@@ -82,7 +82,7 @@ pub fn get_relevant_sources(
 pub fn get_relevant_pathbufs(
     root: &Path,
     pathbufs: &[PathBuf],
-    src: &Option<Vec<PathBuf>>,
+    src: &Option<PathBuf>,
     scope: &Option<Vec<String>>,
     exclude: &Option<Vec<String>>,
 ) -> Vec<PathBuf> {
