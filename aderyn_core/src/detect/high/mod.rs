@@ -1,6 +1,6 @@
+pub(crate) mod abi_encode_packed_hash_collision;
 pub(crate) mod arbitrary_transfer_from;
-pub(crate) mod avoid_abi_encode_packed;
-pub(crate) mod const_func_change_state;
+pub(crate) mod const_func_changes_state;
 pub(crate) mod contract_locks_ether;
 pub(crate) mod dangerous_strict_equality_balance;
 pub(crate) mod dangerous_unary_operator;
@@ -37,13 +37,13 @@ pub(crate) mod unsafe_casting;
 pub(crate) mod weak_randomness;
 pub(crate) mod yul_return;
 
+pub use abi_encode_packed_hash_collision::AvoidAbiEncodePackedDetector;
 pub use arbitrary_transfer_from::ArbitraryTransferFromDetector;
-pub use avoid_abi_encode_packed::AvoidAbiEncodePackedDetector;
-pub use const_func_change_state::ConstantFunctionChangingStateDetector;
+pub use const_func_changes_state::ConstantFunctionChangesStateDetector;
 pub use contract_locks_ether::ContractLocksEtherDetector;
 pub use dangerous_strict_equality_balance::DangerousStrictEqualityOnBalanceDetector;
 pub use dangerous_unary_operator::DangerousUnaryOperatorDetector;
-pub use delegate_call_no_address_check::DelegateCallOnUncheckedAddressDetector;
+pub use delegate_call_no_address_check::DelegateCallUncheckedAddressDetector;
 pub use deletion_nested_mapping::DeletionNestedMappingDetector;
 pub use dynamic_array_length_assignment::DynamicArrayLengthAssignmentDetector;
 pub use enumerable_loop_removal::EnumerableLoopRemovalDetector;

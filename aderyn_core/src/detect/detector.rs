@@ -60,7 +60,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<UncheckedSendDetector>::default(),
         Box::<MisusedBooleanDetector>::default(),
         Box::<SendEtherNoChecksDetector>::default(),
-        Box::<DelegateCallOnUncheckedAddressDetector>::default(),
+        Box::<DelegateCallUncheckedAddressDetector>::default(),
         Box::<TautologicalCompareDetector>::default(),
         Box::<RTLODetector>::default(),
         Box::<DangerousUnaryOperatorDetector>::default(),
@@ -89,7 +89,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<CacheArrayLengthDetector>::default(),
         Box::<AssertStateChangeDetector>::default(),
         Box::<CostlyOperationsInsideLoopsDetector>::default(),
-        Box::<ConstantFunctionChangingStateDetector>::default(),
+        Box::<ConstantFunctionChangesStateDetector>::default(),
         Box::<BuiltinSymbolShadowDetector>::default(),
         Box::<VoidConstructorDetector>::default(),
         Box::<FunctionSelectorCollisionDetector>::default(),
@@ -126,14 +126,14 @@ pub(crate) enum IssueDetectorNamePool {
     ArrayLengthNotCached,
     StateChangeInAssert,
     CostlyOperationsInsideLoops,
-    ConstantFunctionChangingState,
+    ConstantFunctionChangesState,
     BuiltinSymbolShadow,
     IncorrectERC721Interface,
     FunctionInitializingState,
     DelegateCallInLoop,
     CentralizationRisk,
     SolmateSafeTransferLib,
-    HashCollisionDueToAbiEncodePacked,
+    AbiEncodePackedHashCollision,
     RawEcrecover,
     DeprecatedOzFunctions,
     UnsafeERC20Functions,
@@ -174,14 +174,14 @@ pub(crate) enum IssueDetectorNamePool {
     UncheckedSend,
     MisusedBoolean,
     SendsEtherAwayWithoutCheckingAddress,
-    DelegateCallOnUncheckedAddress,
+    DelegateCallUncheckedAddress,
     TautologicalCompare,
     #[allow(clippy::upper_case_acronyms)]
     RTLO,
     UncheckedReturn,
     DangerousUnaryOperator,
     TautologyOrContradiction,
-    StrictEquailtyCheckOnContractBalance,
+    StrictEquailtyContractBalance,
     SignedStorageArray,
     RedundantStatements,
     PublicVariableReadInExternalContext,
@@ -248,8 +248,8 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::CostlyOperationsInsideLoops => {
             Some(Box::<CostlyOperationsInsideLoopsDetector>::default())
         }
-        IssueDetectorNamePool::ConstantFunctionChangingState => {
-            Some(Box::<ConstantFunctionChangingStateDetector>::default())
+        IssueDetectorNamePool::ConstantFunctionChangesState => {
+            Some(Box::<ConstantFunctionChangesStateDetector>::default())
         }
         IssueDetectorNamePool::BuiltinSymbolShadow => {
             Some(Box::<BuiltinSymbolShadowDetector>::default())
@@ -282,7 +282,7 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::SolmateSafeTransferLib => {
             Some(Box::<SolmateSafeTransferLibDetector>::default())
         }
-        IssueDetectorNamePool::HashCollisionDueToAbiEncodePacked => {
+        IssueDetectorNamePool::AbiEncodePackedHashCollision => {
             Some(Box::<AvoidAbiEncodePackedDetector>::default())
         }
         IssueDetectorNamePool::RawEcrecover => Some(Box::<EcrecoverDetector>::default()),
@@ -383,8 +383,8 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::SendsEtherAwayWithoutCheckingAddress => {
             Some(Box::<SendEtherNoChecksDetector>::default())
         }
-        IssueDetectorNamePool::DelegateCallOnUncheckedAddress => {
-            Some(Box::<DelegateCallOnUncheckedAddressDetector>::default())
+        IssueDetectorNamePool::DelegateCallUncheckedAddress => {
+            Some(Box::<DelegateCallUncheckedAddressDetector>::default())
         }
         IssueDetectorNamePool::TautologicalCompare => {
             Some(Box::<TautologicalCompareDetector>::default())
@@ -397,7 +397,7 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::TautologyOrContradiction => {
             Some(Box::<TautologyOrContraditionDetector>::default())
         }
-        IssueDetectorNamePool::StrictEquailtyCheckOnContractBalance => {
+        IssueDetectorNamePool::StrictEquailtyContractBalance => {
             Some(Box::<DangerousStrictEqualityOnBalanceDetector>::default())
         }
         IssueDetectorNamePool::SignedStorageArray => {

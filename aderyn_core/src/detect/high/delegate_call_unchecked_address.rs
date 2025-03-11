@@ -17,13 +17,13 @@ use crate::{
 use eyre::Result;
 
 #[derive(Default)]
-pub struct DelegateCallOnUncheckedAddressDetector {
+pub struct DelegateCallUncheckedAddressDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-impl IssueDetector for DelegateCallOnUncheckedAddressDetector {
+impl IssueDetector for DelegateCallUncheckedAddressDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for func in helpers::get_implemented_external_and_public_functions(context) {
             let mut tracker = DelegateCallNoAddressChecksTracker {
@@ -49,11 +49,11 @@ impl IssueDetector for DelegateCallOnUncheckedAddressDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Delegatecall made by the function without checks on any address.")
+        String::from("Delegatecall made to an arbitrary address.")
     }
 
     fn description(&self) -> String {
-        String::from("Introduce checks on the address")
+        String::from("Making a delegatecall to an arbitrary address without any checks is dangerous. Consider adding requirements on the target address.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -61,7 +61,7 @@ impl IssueDetector for DelegateCallOnUncheckedAddressDetector {
     }
 
     fn name(&self) -> String {
-        IssueDetectorNamePool::DelegateCallOnUncheckedAddress.to_string()
+        IssueDetectorNamePool::DelegateCallUncheckedAddress.to_string()
     }
 }
 
@@ -91,7 +91,7 @@ mod delegate_call_no_address_check_tests {
 
     use crate::detect::{
         detector::IssueDetector,
-        high::delegate_call_no_address_check::DelegateCallOnUncheckedAddressDetector,
+        high::delegate_call_no_address_check::DelegateCallUncheckedAddressDetector,
     };
 
     #[test]
@@ -101,7 +101,7 @@ mod delegate_call_no_address_check_tests {
             "../tests/contract-playground/src/DelegateCallWithoutAddressCheck.sol",
         );
 
-        let mut detector = DelegateCallOnUncheckedAddressDetector::default();
+        let mut detector = DelegateCallUncheckedAddressDetector::default();
         let found = detector.detect(&context).unwrap();
 
         println!("{:#?}", detector.found_instances);

@@ -73,7 +73,7 @@ impl IssueDetector for DangerousStrictEqualityOnBalanceDetector {
     }
 
     fn name(&self) -> String {
-        IssueDetectorNamePool::StrictEquailtyCheckOnContractBalance.to_string()
+        IssueDetectorNamePool::StrictEquailtyContractBalance.to_string()
     }
 }
 

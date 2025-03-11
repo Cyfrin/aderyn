@@ -95,7 +95,7 @@ impl IssueDetector for ArbitraryTransferFromDetector {
     }
 
     fn description(&self) -> String {
-        String::from("Passing an arbitrary `from` address to `transferFrom` (or `safeTransferFrom`) can lead to loss of funds, because anyone can transfer tokens from the `from` address if an approval is made.  ")
+        String::from("Passing an arbitrary `from` address to `transferFrom` (or `safeTransferFrom`) can lead to loss of funds, because anyone can transfer tokens from the `from` address if an approval is made.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

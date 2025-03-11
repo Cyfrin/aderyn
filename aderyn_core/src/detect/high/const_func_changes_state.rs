@@ -17,13 +17,13 @@ use crate::{
 use eyre::Result;
 
 #[derive(Default)]
-pub struct ConstantFunctionChangingStateDetector {
+pub struct ConstantFunctionChangesStateDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-impl IssueDetector for ConstantFunctionChangingStateDetector {
+impl IssueDetector for ConstantFunctionChangesStateDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for func in helpers::get_implemented_external_and_public_functions(context) {
             // Rule applies to only view functions, so ignore the rest
@@ -53,7 +53,7 @@ impl IssueDetector for ConstantFunctionChangingStateDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Constant functions changing state")
+        String::from("Constant functions changes state")
     }
 
     fn description(&self) -> String {
@@ -65,7 +65,7 @@ impl IssueDetector for ConstantFunctionChangingStateDetector {
     }
 
     fn name(&self) -> String {
-        IssueDetectorNamePool::ConstantFunctionChangingState.to_string()
+        IssueDetectorNamePool::ConstantFunctionChangesState.to_string()
     }
 }
 
@@ -141,7 +141,7 @@ mod constant_func_changing_state {
 
     use crate::detect::{
         detector::IssueDetector,
-        high::const_func_change_state::ConstantFunctionChangingStateDetector,
+        high::const_func_changes_state::ConstantFunctionChangesStateDetector,
     };
 
     #[test]
@@ -151,7 +151,7 @@ mod constant_func_changing_state {
             "../tests/contract-playground/src/ConstFuncChangeState.sol",
         );
 
-        let mut detector = ConstantFunctionChangingStateDetector::default();
+        let mut detector = ConstantFunctionChangesStateDetector::default();
         let found = detector.detect(&context).unwrap();
         // assert that the detector found an issue
         assert!(found);

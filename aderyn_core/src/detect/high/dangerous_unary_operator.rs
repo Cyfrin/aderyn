@@ -34,11 +34,12 @@ impl IssueDetector for DangerousUnaryOperatorDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Dangerous unary operator found in assignment.")
+        String::from("Dangerous unary operator.")
     }
 
     fn description(&self) -> String {
-        String::from("Potentially mistakened `=+` for `+=` or `=-` for `-=`. Please include a space in between.")
+        String::from("Potentially mistaken `=+` for `+=` or `=-` for `-=`. This acts as an assignment instead of an increment or decrement.\
+        Use the correct operator to increment or decrement a variable.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
