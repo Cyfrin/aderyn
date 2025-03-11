@@ -89,7 +89,7 @@ impl IssueDetector for FunctionSelectorCollisionDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Function selector collides with other functions")
+        String::from("Function Selector Collision")
     }
 
     fn description(&self) -> String {

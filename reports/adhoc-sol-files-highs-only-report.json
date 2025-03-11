@@ -94,8 +94,8 @@
   "high_issues": {
     "issues": [
       {
-        "title": "Delegatecall made to an arbitrary address",
-        "description": "Making a delegatecall to an arbitrary address without any checks is dangerous. Consider adding requirements on the target address.",
+        "title": "`delegatecall` to an Arbitrary Address",
+        "description": "Making a `delegatecall` to an arbitrary address without any checks is dangerous. Consider adding requirements on the target address.",
         "detector_name": "delegate-call-unchecked-address",
         "instances": [
           {

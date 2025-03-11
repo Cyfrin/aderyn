@@ -31,11 +31,11 @@ impl IssueDetector for SelfdestructDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Depracated EVM Instruction for `selfdestruct` should not be used")
+        String::from("`selfdestruct` is Deprecated")
     }
 
     fn description(&self) -> String {
-        String::from("")
+        String::from("Remove the `selfdestruct` instruction from the code.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -69,11 +69,11 @@ mod selfdestruct_identifier_tests {
         // assert the severity is high
         assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
         // assert the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from("Depracated EVM Instruction for `selfdestruct` should not be used")
-        );
+        assert_eq!(detector.title(), String::from("`selfdestruct` is Deprecated"));
         // assert the description is correct
-        assert_eq!(detector.description(), String::from(""));
+        assert_eq!(
+            detector.description(),
+            String::from("Remove the `selfdestruct` instruction from the code.")
+        );
     }
 }

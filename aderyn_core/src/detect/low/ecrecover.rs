@@ -26,7 +26,7 @@ impl IssueDetector for EcrecoverDetector {
     }
 
     fn title(&self) -> String {
-        String::from("`ecrecover` is Susceptible to Signature Malleability")
+        String::from("`ecrecover` Signature Malleability")
     }
 
     fn description(&self) -> String {
@@ -78,10 +78,7 @@ mod ecrecover_tests {
         // assert that the severity is low
         assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert that the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from("`ecrecover` is Susceptible to Signature Malleability")
-        );
+        assert_eq!(detector.title(), String::from("`ecrecover` Signature Malleability"));
         // assert that the description is correct
         assert_eq!(
             detector.description(),

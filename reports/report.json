@@ -470,8 +470,8 @@
   "high_issues": {
     "issues": [
       {
-        "title": "`abi.encodePacked()` should not be used with dynamic types when passing the result to a hash function such as `keccak256()`",
-        "description": "Use `abi.encode()` instead which will pad items to 32 bytes, which will [prevent hash collisions](https://docs.soliditylang.org/en/v0.8.13/abi-spec.html#non-standard-packed-mode) (e.g. `abi.encodePacked(0x123,0x456)` => `0x123456` => `abi.encodePacked(0x1,0x23456)`, but `abi.encode(0x123,0x456)` => `0x0...1230...456`). Unless there is a compelling reason, `abi.encode` should be preferred. If there is only one argument to `abi.encodePacked()` it can often be cast to `bytes()` or `bytes32()` [instead](https://ethereum.stackexchange.com/questions/30912/how-to-compare-strings-in-solidity#answer-82739).\nIf all arguments are strings and or bytes, `bytes.concat()` should be used instead.",
+        "title": "`abi.encodePacked()` Hash Collision",
+        "description": "abi.encodePacked() should not be used with dynamic types when passing the result to a hash function such as `keccak256()`. Use `abi.encode()` instead which will pad items to 32 bytes, preventing hash collisions: https://docs.soliditylang.org/en/v0.8.13/abi-spec.html#non-standard-packed-mode. (e.g. `abi.encodePacked(0x123,0x456)` => `0x123456` => `abi.encodePacked(0x1,0x23456)`, but `abi.encode(0x123,0x456)` => `0x0...1230...456`). Unless there is a compelling reason, `abi.encode` should be preferred. If there is only one argument to `abi.encodePacked()` it can often be cast to `bytes()` or `bytes32()` instead: https://ethereum.stackexchange.com/questions/30912/how-to-compare-strings-in-solidity#answer-82739. If all arguments are strings and or bytes, `bytes.concat()` should be used instead.",
         "detector_name": "abi-encode-packed-hash-collision",
         "instances": [
           {
@@ -495,7 +495,7 @@
         ]
       },
       {
-        "title": "Arbitrary `from` passed to `transferFrom` (or `safeTransferFrom`)",
+        "title": "Arbitrary `from` Passed to `transferFrom`",
         "description": "Passing an arbitrary `from` address to `transferFrom` (or `safeTransferFrom`) can lead to loss of funds, because anyone can transfer tokens from the `from` address if an approval is made.",
         "detector_name": "arbitrary-transfer-from",
         "instances": [
@@ -1110,7 +1110,7 @@
         ]
       },
       {
-        "title": "EnumerableSet.remove in loop corrupts the order",
+        "title": "EnumerableSet.remove Corrupts Order",
         "description": "If the order of an EnumerableSet is required, removing items in a loop using `at` and `remove` corrupts this order.\nConsider using a different data structure or removing items by collecting them during the loop, then removing after the loop.",
         "detector_name": "enumerable-loop-removal",
         "instances": [
@@ -1249,8 +1249,8 @@
         ]
       },
       {
-        "title": "Depracated EVM Instruction for `selfdestruct` should not be used",
-        "description": "",
+        "title": "`selfdestruct` is Deprecated",
+        "description": "Remove the `selfdestruct` instruction from the code.",
         "detector_name": "selfdestruct",
         "instances": [
           {
@@ -1349,7 +1349,7 @@
         ]
       },
       {
-        "title": "Shadowed State Variables in Inheritance Hierarchy",
+        "title": "Shadowed State Variable",
         "description": "This vulnerability arises when a derived contract unintentionally shadows a state variable from a parent contract by declaring a variable with the same name. This can be misleading. To prevent this, ensure variable names are unique across the inheritance hierarchy or use proper visibility and scope controls.",
         "detector_name": "state-variable-shadowing",
         "instances": [
@@ -1569,8 +1569,8 @@
         ]
       },
       {
-        "title": "Delegatecall made to an arbitrary address",
-        "description": "Making a delegatecall to an arbitrary address without any checks is dangerous. Consider adding requirements on the target address.",
+        "title": "`delegatecall` to an Arbitrary Address",
+        "description": "Making a `delegatecall` to an arbitrary address without any checks is dangerous. Consider adding requirements on the target address.",
         "detector_name": "delegate-call-unchecked-address",
         "instances": [
           {
@@ -1813,7 +1813,7 @@
         ]
       },
       {
-        "title": "Potential use of `tx.origin` for authentication",
+        "title": "Use of `tx.origin` for authentication",
         "description": "Using `tx.origin` may lead to problems when users are interacting via smart contract with your protocol. It is recommended to use `msg.sender` for authentication.",
         "detector_name": "tx-origin-used-for-auth",
         "instances": [
@@ -2028,7 +2028,7 @@
         ]
       },
       {
-        "title": "Out of order retryable transactions",
+        "title": "Out of Order Retryable Transaction",
         "description": "Do not rely on the order or successful execution of retryable tickets. Functions like createRetryableTicket, outboundTransferCustomRefund, unsafeCreateRetryableTicket are free to be re-tried in any\n            order if they fail in the first go. Since this operation happens off chain, the sequencer is in control of the\n            order of these transactions. Therefore, restrict the use to at most 1 ticket call per function.",
         "detector_name": "out-of-order-retryable",
         "instances": [
@@ -2060,7 +2060,7 @@
         ]
       },
       {
-        "title": "Function selector collides with other functions",
+        "title": "Function Selector Collision",
         "description": "Function selector collides with other functions. This may cause the solidity function dispatcher to invoke the wrong function if the functions happen to be included in the same contract through an inheritance hirearchy later down the line. It is recommended to rename this function or change its parameters.",
         "detector_name": "function-selector-collision",
         "instances": [
@@ -2335,7 +2335,7 @@
         ]
       },
       {
-        "title": "`ecrecover` is Susceptible to Signature Malleability",
+        "title": "`ecrecover` Signature Malleability",
         "description": "The `ecrecover` function is susceptible to signature malleability. This means that the same message can be signed in multiple ways, allowing an attacker to change the message signature without invalidating it. This can lead to unexpected behavior in smart contracts, such as the loss of funds or the ability to bypass access control. Consider using OpenZeppelin's ECDSA library instead of the built-in function.",
         "detector_name": "ecrecover",
         "instances": [
@@ -2889,12 +2889,6 @@
             "line_no": 7,
             "src": "129:9",
             "src_char": "129:9"
-          },
-          {
-            "contract_path": "src/IgnoreEverything.sol",
-            "line_no": 7,
-            "src": "226:2",
-            "src_char": "226:2"
           },
           {
             "contract_path": "src/IncorrectERC20.sol",

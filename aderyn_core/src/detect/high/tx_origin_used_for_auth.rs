@@ -57,7 +57,7 @@ impl IssueDetector for TxOriginUsedForAuthDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Potential use of `tx.origin` for authentication")
+        String::from("Use of `tx.origin` for authentication")
     }
 
     fn description(&self) -> String {

@@ -63,7 +63,7 @@ impl IssueDetector for EnumerableLoopRemovalDetector {
     }
 
     fn title(&self) -> String {
-        String::from("EnumerableSet.remove in loop corrupts the order")
+        String::from("EnumerableSet.remove Corrupts Order")
     }
 
     fn description(&self) -> String {

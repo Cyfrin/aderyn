@@ -42,7 +42,7 @@
             }
           ],
           "message": {
-            "text": "Use `abi.encode()` instead which will pad items to 32 bytes, which will [prevent hash collisions](https://docs.soliditylang.org/en/v0.8.13/abi-spec.html#non-standard-packed-mode) (e.g. `abi.encodePacked(0x123,0x456)` => `0x123456` => `abi.encodePacked(0x1,0x23456)`, but `abi.encode(0x123,0x456)` => `0x0...1230...456`). Unless there is a compelling reason, `abi.encode` should be preferred. If there is only one argument to `abi.encodePacked()` it can often be cast to `bytes()` or `bytes32()` [instead](https://ethereum.stackexchange.com/questions/30912/how-to-compare-strings-in-solidity#answer-82739).\nIf all arguments are strings and or bytes, `bytes.concat()` should be used instead."
+            "text": "abi.encodePacked() should not be used with dynamic types when passing the result to a hash function such as `keccak256()`. Use `abi.encode()` instead which will pad items to 32 bytes, preventing hash collisions: https://docs.soliditylang.org/en/v0.8.13/abi-spec.html#non-standard-packed-mode. (e.g. `abi.encodePacked(0x123,0x456)` => `0x123456` => `abi.encodePacked(0x1,0x23456)`, but `abi.encode(0x123,0x456)` => `0x0...1230...456`). Unless there is a compelling reason, `abi.encode` should be preferred. If there is only one argument to `abi.encodePacked()` it can often be cast to `bytes()` or `bytes32()` instead: https://ethereum.stackexchange.com/questions/30912/how-to-compare-strings-in-solidity#answer-82739. If all arguments are strings and or bytes, `bytes.concat()` should be used instead."
           },
           "ruleId": "abi-encode-packed-hash-collision"
         },
@@ -1406,7 +1406,7 @@
             }
           ],
           "message": {
-            "text": ""
+            "text": "Remove the `selfdestruct` instruction from the code."
           },
           "ruleId": "selfdestruct"
         },
@@ -2006,7 +2006,7 @@
             }
           ],
           "message": {
-            "text": "Making a delegatecall to an arbitrary address without any checks is dangerous. Consider adding requirements on the target address."
+            "text": "Making a `delegatecall` to an arbitrary address without any checks is dangerous. Consider adding requirements on the target address."
           },
           "ruleId": "delegate-call-unchecked-address"
         },
@@ -4252,17 +4252,6 @@
                 "region": {
                   "byteLength": 9,
                   "byteOffset": 129
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IgnoreEverything.sol"
-                },
-                "region": {
-                  "byteLength": 2,
-                  "byteOffset": 226
                 }
               }
             },
