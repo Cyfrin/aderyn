@@ -9,13 +9,13 @@ use crate::{
 use eyre::Result;
 
 #[derive(Default)]
-pub struct UnsafeERC20FunctionsDetector {
+pub struct UnsafeERC20OperationDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-impl IssueDetector for UnsafeERC20FunctionsDetector {
+impl IssueDetector for UnsafeERC20OperationDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for member_access in context.member_accesses() {
             if member_access.expression.as_ref().type_descriptions().is_some_and(|desc| {
@@ -31,7 +31,7 @@ impl IssueDetector for UnsafeERC20FunctionsDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Unsafe ERC20 Operations should not be used")
+        String::from("Unsafe ERC20 Operation")
     }
 
     fn description(&self) -> String {
@@ -47,7 +47,7 @@ impl IssueDetector for UnsafeERC20FunctionsDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::UnsafeERC20Functions)
+        format!("{}", IssueDetectorNamePool::UnsafeERC20Operation)
     }
 }
 
@@ -55,7 +55,7 @@ impl IssueDetector for UnsafeERC20FunctionsDetector {
 mod unsafe_erc20_functions_tests {
     use crate::detect::detector::IssueDetector;
 
-    use super::UnsafeERC20FunctionsDetector;
+    use super::UnsafeERC20OperationDetector;
     use serial_test::serial;
 
     #[test]
@@ -65,7 +65,7 @@ mod unsafe_erc20_functions_tests {
             "../tests/contract-playground/src/DeprecatedOZFunctions.sol",
         );
 
-        let mut detector = UnsafeERC20FunctionsDetector::default();
+        let mut detector = UnsafeERC20OperationDetector::default();
         let found = detector.detect(&context).unwrap();
         // assert that the detector found an abi encode packed
         assert!(found);
@@ -75,7 +75,7 @@ mod unsafe_erc20_functions_tests {
         // assert that the severity is low
         assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert that the title is correct
-        assert_eq!(detector.title(), String::from("Unsafe ERC20 Operations should not be used"));
+        assert_eq!(detector.title(), String::from("Unsafe ERC20 Operation"));
         // assert that the description is correct
         assert_eq!(
             detector.description(),

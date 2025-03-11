@@ -15,7 +15,7 @@ use crate::{
 use eyre::Result;
 
 #[derive(Default)]
-pub struct ZeroAddressCheckDetector {
+pub struct StateNoAddressCheckDetector {
     // All the state variables, set at the beginning of the detect Function
     mutable_address_state_variables: HashMap<i64, VariableDeclaration>,
 
@@ -24,7 +24,7 @@ pub struct ZeroAddressCheckDetector {
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-impl IssueDetector for ZeroAddressCheckDetector {
+impl IssueDetector for StateNoAddressCheckDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // Get all address state variables
         self.mutable_address_state_variables = context
@@ -158,9 +158,7 @@ impl IssueDetector for ZeroAddressCheckDetector {
     }
 
     fn title(&self) -> String {
-        String::from(
-            "Missing checks for `address(0)` when assigning values to address state variables",
-        )
+        String::from("Address State Variable Set Without Checks")
     }
 
     fn description(&self) -> String {
@@ -176,7 +174,7 @@ impl IssueDetector for ZeroAddressCheckDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::NoZeroAddressCheck)
+        format!("{}", IssueDetectorNamePool::StateNoAddressCheck)
     }
 }
 
@@ -185,7 +183,7 @@ mod zero_address_check_tests {
     use crate::{
         ast::NodeType,
         context::{browser::GetClosestAncestorOfTypeX, workspace_context::ASTNode},
-        detect::{detector::IssueDetector, low::ZeroAddressCheckDetector},
+        detect::{detector::IssueDetector, low::StateNoAddressCheckDetector},
     };
     use serial_test::serial;
 
@@ -195,7 +193,7 @@ mod zero_address_check_tests {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/TestERC20.sol",
         );
-        let mut detector = ZeroAddressCheckDetector::default();
+        let mut detector = StateNoAddressCheckDetector::default();
         let found = detector.detect(&context).unwrap();
         // assert that nothing was found
         assert!(!found);
@@ -208,7 +206,7 @@ mod zero_address_check_tests {
             "../tests/contract-playground/src/ZeroAddressCheck.sol",
         );
 
-        let mut detector = ZeroAddressCheckDetector::default();
+        let mut detector = StateNoAddressCheckDetector::default();
         let found = detector.detect(&context).unwrap();
         // assert that the detector found the issue
         assert!(found);

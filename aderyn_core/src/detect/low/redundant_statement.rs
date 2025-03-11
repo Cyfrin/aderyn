@@ -11,18 +11,18 @@ use eyre::Result;
 
 // HOW TO USE THIS TEMPLATE:
 // 1. Copy this file and rename it to the snake_case version of the issue you are detecting.
-// 2. Rename the RedundantStatementsDetector struct and impl to your new issue name.
+// 2. Rename the RedundantStatementDetector struct and impl to your new issue name.
 // 3. Add this file and detector struct to the mod.rs file in the same directory.
 // 4. Implement the detect function to find instances of the issue.
 
 #[derive(Default)]
-pub struct RedundantStatementsDetector {
+pub struct RedundantStatementDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-impl IssueDetector for RedundantStatementsDetector {
+impl IssueDetector for RedundantStatementDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for expression_statement in context.expression_statements() {
             if let Some(parent) = expression_statement.parent(context) {
@@ -50,11 +50,11 @@ impl IssueDetector for RedundantStatementsDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Redundant statements have no effect.")
+        String::from("Redundant Statement")
     }
 
     fn description(&self) -> String {
-        String::from("Remove the redundant statements because no code will be generated and it just congests the codebase.")
+        String::from("Remove the redundant statement.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -62,7 +62,7 @@ impl IssueDetector for RedundantStatementsDetector {
     }
 
     fn name(&self) -> String {
-        IssueDetectorNamePool::RedundantStatements.to_string()
+        IssueDetectorNamePool::RedundantStatement.to_string()
     }
 }
 
@@ -71,7 +71,7 @@ mod redundant_statements_detector {
     use serial_test::serial;
 
     use crate::detect::{
-        detector::IssueDetector, low::redundant_statements::RedundantStatementsDetector,
+        detector::IssueDetector, low::redundant_statement::RedundantStatementDetector,
     };
 
     #[test]
@@ -81,23 +81,17 @@ mod redundant_statements_detector {
             "../tests/contract-playground/src/RedundantStatements.sol",
         );
 
-        let mut detector = RedundantStatementsDetector::default();
+        let mut detector = RedundantStatementDetector::default();
         let found = detector.detect(&context).unwrap();
         // assert that the detector found an issue
         assert!(found);
-
-        println!("{:#?}", detector.instances());
-
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 6);
         // assert the severity is low
         assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert the title is correct
-        assert_eq!(detector.title(), String::from("Redundant statements have no effect."));
+        assert_eq!(detector.title(), String::from("Redundant Statement"));
         // assert the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from("Remove the redundant statements because no code will be generated and it just congests the codebase.")
-        );
+        assert_eq!(detector.description(), String::from("Remove the redundant statement."));
     }
 }

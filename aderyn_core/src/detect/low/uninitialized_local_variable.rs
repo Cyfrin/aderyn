@@ -84,7 +84,7 @@ impl IssueDetector for UninitializedLocalVariableDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Uninitialized local variables.")
+        String::from("Uninitialized Local Variable")
     }
 
     fn description(&self) -> String {
@@ -106,7 +106,7 @@ mod uninitialized_local_variables_detector_tests {
 
     use crate::detect::{
         detector::IssueDetector,
-        low::uninitialized_local_variables::UninitializedLocalVariableDetector,
+        low::uninitialized_local_variable::UninitializedLocalVariableDetector,
     };
 
     #[test]
@@ -118,11 +118,6 @@ mod uninitialized_local_variables_detector_tests {
 
         let mut detector = UninitializedLocalVariableDetector::default();
         let found = detector.detect(&context).unwrap();
-
-        println!(
-            "Line numbers of uninitialized local variables: {:?}",
-            detector.instances().into_keys().collect::<Vec<_>>()
-        );
 
         // assert that the detector found an issue
         assert!(found);

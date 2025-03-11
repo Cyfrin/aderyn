@@ -12,13 +12,13 @@ use crate::{
 use eyre::Result;
 
 #[derive(Default)]
-pub struct UselessInternalFunctionDetector {
+pub struct InternalFunctionUsedOnceDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-impl IssueDetector for UselessInternalFunctionDetector {
+impl IssueDetector for InternalFunctionUsedOnceDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         let internal_functions = context.function_definitions().into_iter().filter(|&function| {
             matches!(function.visibility, Visibility::Internal) && !function.name.starts_with('_')
@@ -34,7 +34,7 @@ impl IssueDetector for UselessInternalFunctionDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Internal functions called only once can be inlined")
+        String::from("Internal Function Used Only Once")
     }
 
     fn description(&self) -> String {
@@ -50,7 +50,7 @@ impl IssueDetector for UselessInternalFunctionDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::UselessInternalFunction)
+        format!("{}", IssueDetectorNamePool::InternalFunctionUsedOnce)
     }
 }
 
@@ -58,7 +58,7 @@ impl IssueDetector for UselessInternalFunctionDetector {
 mod uselss_internal_function {
     use crate::detect::detector::IssueDetector;
 
-    use super::UselessInternalFunctionDetector;
+    use super::InternalFunctionUsedOnceDetector;
     use serial_test::serial;
 
     #[test]
@@ -68,7 +68,7 @@ mod uselss_internal_function {
             "../tests/contract-playground/src/InternalFunctions.sol",
         );
 
-        let mut detector = UselessInternalFunctionDetector::default();
+        let mut detector = InternalFunctionUsedOnceDetector::default();
         // assert that the detector finds the public Function
         let found = detector.detect(&context).unwrap();
         assert!(found);

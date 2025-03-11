@@ -17,13 +17,13 @@ use crate::{
 use eyre::Result;
 
 #[derive(Default)]
-pub struct RevertsAndRequiresInLoopsDetector {
+pub struct RequireRevertInLoopDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-impl IssueDetector for RevertsAndRequiresInLoopsDetector {
+impl IssueDetector for RequireRevertInLoopDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         let loop_explore_centers = get_explore_centers_of_loops(context);
 
@@ -45,7 +45,7 @@ impl IssueDetector for RevertsAndRequiresInLoopsDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Loop contains `require`/`revert` statements")
+        String::from("Loop Contains `require`/`revert`")
     }
 
     fn description(&self) -> String {
@@ -57,7 +57,7 @@ impl IssueDetector for RevertsAndRequiresInLoopsDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::RevertsAndRequiresInLoops)
+        format!("{}", IssueDetectorNamePool::RequireRevertInLoop)
     }
 }
 
@@ -94,8 +94,7 @@ mod reevrts_and_requires_in_loops {
     use serial_test::serial;
 
     use crate::detect::{
-        detector::IssueDetector,
-        low::reverts_and_requries_in_loops::RevertsAndRequiresInLoopsDetector,
+        detector::IssueDetector, low::require_revert_in_loop::RequireRevertInLoopDetector,
     };
 
     #[test]
@@ -105,7 +104,7 @@ mod reevrts_and_requires_in_loops {
             "../tests/contract-playground/src/RevertsAndRequriesInLoops.sol",
         );
 
-        let mut detector = RevertsAndRequiresInLoopsDetector::default();
+        let mut detector = RequireRevertInLoopDetector::default();
         let found = detector.detect(&context).unwrap();
 
         // println!("{:?}", detector.instances());

@@ -11,12 +11,12 @@ use std::{
 };
 
 #[derive(Default)]
-pub struct UselessErrorDetector {
+pub struct UnusedErrorDetector {
     // Keys are source file name and line number
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-impl IssueDetector for UselessErrorDetector {
+impl IssueDetector for UnusedErrorDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         let error_definitions = context.error_definitions().into_iter().collect::<Vec<_>>();
         let mut referenced_ids = HashSet::new();
@@ -45,11 +45,11 @@ impl IssueDetector for UselessErrorDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Unused Custom Error")
+        String::from("Unused Error")
     }
 
     fn description(&self) -> String {
-        String::from("it is recommended that the definition be removed when custom error is unused")
+        String::from("Consider using or removing the unused error.")
     }
 
     fn severity(&self) -> IssueSeverity {
@@ -61,17 +61,17 @@ impl IssueDetector for UselessErrorDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::UselessError)
+        format!("{}", IssueDetectorNamePool::UnusedError)
     }
 }
 
 #[cfg(test)]
-mod useless_error_tests {
+mod unused_error_tests {
     use serial_test::serial;
 
     use crate::detect::detector::IssueDetector;
 
-    use super::UselessErrorDetector;
+    use super::UnusedErrorDetector;
 
     #[test]
     #[serial]
@@ -80,7 +80,7 @@ mod useless_error_tests {
             "../tests/contract-playground/src/UnusedError.sol",
         );
 
-        let mut detector = UselessErrorDetector::default();
+        let mut detector = UnusedErrorDetector::default();
         // Assert that the detector finds the unused error
         let found = detector.detect(&context).unwrap();
         assert!(found);
@@ -89,13 +89,11 @@ mod useless_error_tests {
         // Assert that the detector returns the correct severity
         assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // Assert that the detector returns the correct title
-        assert_eq!(detector.title(), String::from("Unused Custom Error"));
+        assert_eq!(detector.title(), String::from("Unused Error"));
         // Assert that the detector returns the correct description
         assert_eq!(
             detector.description(),
-            String::from(
-                "it is recommended that the definition be removed when custom error is unused"
-            )
+            String::from("Consider using or removing the unused error.")
         );
     }
 }

@@ -9,13 +9,13 @@ use crate::{
 use eyre::Result;
 
 #[derive(Default)]
-pub struct RequireWithStringDetector {
+pub struct EmptyRequireRevertDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-impl IssueDetector for RequireWithStringDetector {
+impl IssueDetector for EmptyRequireRevertDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // Collect all require statements without a string literal.
         let requires_and_reverts = context
@@ -35,7 +35,7 @@ impl IssueDetector for RequireWithStringDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Empty `require()` / `revert()` statements")
+        String::from("Empty `require()` / `revert()` Statement")
     }
 
     fn description(&self) -> String {
@@ -51,7 +51,7 @@ impl IssueDetector for RequireWithStringDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::RequireWithoutString)
+        format!("{}", IssueDetectorNamePool::EmptyRequireRevert)
     }
 }
 
@@ -61,7 +61,7 @@ mod require_with_string_tests {
 
     use crate::detect::detector::IssueDetector;
 
-    use super::RequireWithStringDetector;
+    use super::EmptyRequireRevertDetector;
 
     #[test]
     #[serial]
@@ -70,7 +70,7 @@ mod require_with_string_tests {
             "../tests/contract-playground/src/DeprecatedOZFunctions.sol",
         );
 
-        let mut detector = RequireWithStringDetector::default();
+        let mut detector = EmptyRequireRevertDetector::default();
         // assert that the detector finds something
         let found = detector.detect(&context).unwrap();
         assert!(found);
@@ -85,5 +85,18 @@ mod require_with_string_tests {
             detector.description(),
             String::from("Use descriptive reason strings or custom errors for revert paths.")
         );
+    }
+
+    #[test]
+    #[serial]
+    fn test_require_with_custom_error_by_loading_contract_directly() {
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/UnusedError.sol",
+        );
+
+        let mut detector = EmptyRequireRevertDetector::default();
+        // assert that the detector finds something
+        let found = detector.detect(&context).unwrap();
+        assert!(!found);
     }
 }

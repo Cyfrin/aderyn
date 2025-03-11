@@ -18,13 +18,13 @@ use crate::{
 use eyre::{eyre, Result};
 
 #[derive(Default)]
-pub struct PublicVariableReadInExternalContextDetector {
+pub struct StateVariableReadExternalDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-impl IssueDetector for PublicVariableReadInExternalContextDetector {
+impl IssueDetector for StateVariableReadExternalDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for contract in context.contract_definitions() {
             // Public state variables including the base contracts
@@ -53,12 +53,12 @@ impl IssueDetector for PublicVariableReadInExternalContextDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Public variables of a contract read in an external context (using `this`).")
+        String::from("State Variable is Read as External")
     }
 
     fn description(&self) -> String {
         String::from(
-            "The contract reads it's own variable using `this` which adds an unnecessary STATICCALL. Remove `this` and access the variable like storage.",
+            "The contract reads it's own state variable using `this` which adds an unnecessary STATICCALL. Consider removing `this` to access the variable from storage.",
         )
     }
 
@@ -67,7 +67,7 @@ impl IssueDetector for PublicVariableReadInExternalContextDetector {
     }
 
     fn name(&self) -> String {
-        IssueDetectorNamePool::PublicVariableReadInExternalContext.to_string()
+        IssueDetectorNamePool::StateVariableReadExternal.to_string()
     }
 }
 
@@ -133,7 +133,7 @@ mod public_variable_read_in_external_context_detector_tests {
 
     use crate::detect::{
         detector::IssueDetector,
-        low::public_variable_read_in_external_context::PublicVariableReadInExternalContextDetector,
+        low::state_variable_read_external::StateVariableReadExternalDetector,
     };
 
     #[test]
@@ -143,7 +143,7 @@ mod public_variable_read_in_external_context_detector_tests {
             "../tests/contract-playground/src/PublicVariableReadInExternalContext.sol",
         );
 
-        let mut detector = PublicVariableReadInExternalContextDetector::default();
+        let mut detector = StateVariableReadExternalDetector::default();
         let found = detector.detect(&context).unwrap();
         // assert that the detector found an issue
         assert!(found);
@@ -152,17 +152,12 @@ mod public_variable_read_in_external_context_detector_tests {
         // assert the severity is low
         assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from(
-                "Public variables of a contract read in an external context (using `this`)."
-            )
-        );
+        assert_eq!(detector.title(), String::from("State Variable is Read as External"));
         // assert the description is correct
         assert_eq!(
             detector.description(),
             String::from(
-                "The contract reads it's own variable using `this` which adds an unnecessary STATICCALL. Remove `this` and access the variable like storage.",
+                "The contract reads it's own state variable using `this` which adds an unnecessary STATICCALL. Consider removing `this` to access the variable from storage.",
             )
         );
     }

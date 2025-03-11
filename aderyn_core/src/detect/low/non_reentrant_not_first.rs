@@ -32,11 +32,11 @@ impl IssueDetector for NonReentrantBeforeOthersDetector {
     }
 
     fn title(&self) -> String {
-        String::from("The `nonReentrant` `modifier` should occur before all other modifiers")
+        String::from("`nonReentrant` is Not the First Modifier")
     }
 
     fn description(&self) -> String {
-        String::from("This is a best-practice to protect against reentrancy in other modifiers.")
+        String::from("To protect against reentrancy in other modifiers, the `nonReentrant` modifier should be the first modifier in the list of modifiers.")
     }
 
     fn severity(&self) -> IssueSeverity {
@@ -48,7 +48,7 @@ impl IssueDetector for NonReentrantBeforeOthersDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::NonReentrantNotFirstModifier)
+        format!("{}", IssueDetectorNamePool::NonReentrantNotFirst)
     }
 }
 
@@ -78,14 +78,11 @@ mod non_reentrant_before_others_tests {
         // assert that the detector returns the correct severity
         assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert that the detector returns the correct title
-        assert_eq!(
-            detector.title(),
-            "The `nonReentrant` `modifier` should occur before all other modifiers"
-        );
+        assert_eq!(detector.title(), "`nonReentrant` is Not the First Modifier");
         // assert that the detector returns the correct description
         assert_eq!(
             detector.description(),
-            "This is a best-practice to protect against reentrancy in other modifiers."
+            "To protect against reentrancy in other modifiers, the `nonReentrant` modifier should be the first modifier in the list of modifiers."
         );
     }
 }

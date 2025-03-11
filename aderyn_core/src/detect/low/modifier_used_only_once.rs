@@ -12,13 +12,13 @@ use crate::{
 use eyre::Result;
 
 #[derive(Default)]
-pub struct UselessModifierDetector {
+pub struct ModifierUsedOnlyOnceDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-impl IssueDetector for UselessModifierDetector {
+impl IssueDetector for ModifierUsedOnlyOnceDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         let mut invocations: HashMap<i64, usize> = HashMap::new();
 
@@ -44,11 +44,13 @@ impl IssueDetector for UselessModifierDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Modifiers invoked only once can be shoe-horned into the function")
+        String::from("Modifier Invoked Only Once")
     }
 
     fn description(&self) -> String {
-        String::from("")
+        String::from(
+            "Consider removing the modifier or inlining the logic into the calling function.",
+        )
     }
 
     fn severity(&self) -> IssueSeverity {
@@ -60,7 +62,7 @@ impl IssueDetector for UselessModifierDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::UselessModifier)
+        format!("{}", IssueDetectorNamePool::ModifierUsedOnlyOnce)
     }
 }
 
@@ -68,7 +70,7 @@ impl IssueDetector for UselessModifierDetector {
 mod useless_modifier_tests {
     use crate::detect::detector::IssueDetector;
 
-    use super::UselessModifierDetector;
+    use super::ModifierUsedOnlyOnceDetector;
     use serial_test::serial;
 
     #[test]
@@ -78,7 +80,7 @@ mod useless_modifier_tests {
             "../tests/contract-playground/src/OnceModifierExample.sol",
         );
 
-        let mut detector = UselessModifierDetector::default();
+        let mut detector = ModifierUsedOnlyOnceDetector::default();
         // assert that the detector finds the public Function
         let found = detector.detect(&context).unwrap();
         assert!(found);
@@ -87,11 +89,13 @@ mod useless_modifier_tests {
         // assert that the detector returns the correct severity
         assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert that the detector returns the correct title
-        assert_eq!(
-            detector.title(),
-            String::from("Modifiers invoked only once can be shoe-horned into the function")
-        );
+        assert_eq!(detector.title(), String::from("Modifier Invoked Only Once"));
         // assert that the detector returns the correct description
-        assert_eq!(detector.description(), String::from(""));
+        assert_eq!(
+            detector.description(),
+            String::from(
+                "Consider removing the modifier or inlining the logic into the calling function."
+            )
+        );
     }
 }

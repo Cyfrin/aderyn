@@ -22,27 +22,26 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<AvoidAbiEncodePackedDetector>::default(),
         Box::<EcrecoverDetector>::default(),
         Box::<DeprecatedOZFunctionDetector>::default(),
-        Box::<UnsafeERC20FunctionsDetector>::default(),
+        Box::<UnsafeERC20OperationDetector>::default(),
         Box::<UnspecificSolidityPragmaDetector>::default(),
-        Box::<ZeroAddressCheckDetector>::default(),
-        Box::<UselessPublicFunctionDetector>::default(),
+        Box::<StateNoAddressCheckDetector>::default(),
+        Box::<UnusedPublicFunctionDetector>::default(),
         Box::<LiteralsInsteadOfConstantsDetector>::default(),
-        Box::<UnindexedEventsDetector>::default(),
-        Box::<RequireWithStringDetector>::default(),
+        Box::<EmptyRequireRevertDetector>::default(),
         Box::<NonReentrantBeforeOthersDetector>::default(),
         Box::<BlockTimestampDeadlineDetector>::default(),
         Box::<UnsafeERC721MintDetector>::default(),
         Box::<PushZeroOpcodeDetector>::default(),
         Box::<ArbitraryTransferFromDetector>::default(),
-        Box::<UselessModifierDetector>::default(),
+        Box::<ModifierUsedOnlyOnceDetector>::default(),
         Box::<EmptyBlockDetector>::default(),
         Box::<LargeLiteralValueDetector>::default(),
-        Box::<UselessInternalFunctionDetector>::default(),
+        Box::<InternalFunctionUsedOnceDetector>::default(),
         Box::<TodoDetector>::default(),
         Box::<InconsistentTypeNamesDetector>::default(),
         Box::<UnprotectedInitializerDetector>::default(),
-        Box::<UselessErrorDetector>::default(),
-        Box::<RevertsAndRequiresInLoopsDetector>::default(),
+        Box::<UnusedErrorDetector>::default(),
+        Box::<RequireRevertInLoopDetector>::default(),
         Box::<DivisionBeforeMultiplicationDetector>::default(),
         Box::<UnsafeCastingDetector>::default(),
         Box::<EnumerableLoopRemovalDetector>::default(),
@@ -67,8 +66,8 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<TautologyOrContraditionDetector>::default(),
         Box::<DangerousStrictEqualityOnBalanceDetector>::default(),
         Box::<StorageSignedIntegerArrayDetector>::default(),
-        Box::<RedundantStatementsDetector>::default(),
-        Box::<PublicVariableReadInExternalContextDetector>::default(),
+        Box::<RedundantStatementDetector>::default(),
+        Box::<StateVariableReadExternalDetector>::default(),
         Box::<WeakRandomnessDetector>::default(),
         Box::<PreDeclaredLocalVariableUsageDetector>::default(),
         Box::<DeletionNestedMappingDetector>::default(),
@@ -115,7 +114,7 @@ pub fn get_all_detectors_names() -> Vec<String> {
 pub(crate) enum IssueDetectorNamePool {
     StateVariableCouldBeImmutable,
     MultiplePlaceholders,
-    StateVariableChangesWithoutEvents,
+    StateChangeWithoutEvent,
     MissingInheritance,
     UnusedImport,
     VoidConstructor,
@@ -136,27 +135,26 @@ pub(crate) enum IssueDetectorNamePool {
     AbiEncodePackedHashCollision,
     Ecrecover,
     DeprecatedOzFunction,
-    UnsafeERC20Functions,
+    UnsafeERC20Operation,
     UnspecificSolidityPragma,
-    NoZeroAddressCheck,
-    UselessPublicFunction,
-    UnindexedEvents,
-    RequireWithoutString,
-    NonReentrantNotFirstModifier,
+    StateNoAddressCheck,
+    UnusedPublicFunction,
+    EmptyRequireRevert,
+    NonReentrantNotFirst,
     BlockTimestampDeadline,
     LiteralInsteadOfConstant,
     UnsafeOzERC721Mint,
     PushZeroOpcode,
     ArbitraryTransferFrom,
-    UselessModifier,
-    UselessError,
+    ModifierUsedOnlyOnce,
+    UnusedError,
     LargeNumericLiteral,
-    UselessInternalFunction,
+    InternalFunctionUsedOnce,
     EmptyBlock,
     Todo,
     InconsistentTypeNames,
     UnprotectedInitializer,
-    RevertsAndRequiresInLoops,
+    RequireRevertInLoop,
     DivisionBeforeMultiplication,
     UnsafeCasting,
     EnumerableLoopRemoval,
@@ -183,8 +181,8 @@ pub(crate) enum IssueDetectorNamePool {
     TautologyOrContradiction,
     StrictEquailtyContractBalance,
     SignedIntegerStorageArray,
-    RedundantStatements,
-    PublicVariableReadInExternalContext,
+    RedundantStatement,
+    StateVariableReadExternal,
     WeakRandomness,
     PreDeclaredLocalVariableUsage,
     DeleteNestedMapping,
@@ -215,7 +213,7 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::MultiplePlaceholders => {
             Some(Box::<MultiplePlaceholdersDetector>::default())
         }
-        IssueDetectorNamePool::StateVariableChangesWithoutEvents => {
+        IssueDetectorNamePool::StateChangeWithoutEvent => {
             Some(Box::<StateVariableChangesWithoutEventDetector>::default())
         }
         IssueDetectorNamePool::MissingInheritance => {
@@ -287,23 +285,22 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::DeprecatedOzFunction => {
             Some(Box::<DeprecatedOZFunctionDetector>::default())
         }
-        IssueDetectorNamePool::UnsafeERC20Functions => {
-            Some(Box::<UnsafeERC20FunctionsDetector>::default())
+        IssueDetectorNamePool::UnsafeERC20Operation => {
+            Some(Box::<UnsafeERC20OperationDetector>::default())
         }
         IssueDetectorNamePool::UnspecificSolidityPragma => {
             Some(Box::<UnspecificSolidityPragmaDetector>::default())
         }
-        IssueDetectorNamePool::NoZeroAddressCheck => {
-            Some(Box::<ZeroAddressCheckDetector>::default())
+        IssueDetectorNamePool::StateNoAddressCheck => {
+            Some(Box::<StateNoAddressCheckDetector>::default())
         }
-        IssueDetectorNamePool::UselessPublicFunction => {
-            Some(Box::<UselessPublicFunctionDetector>::default())
+        IssueDetectorNamePool::UnusedPublicFunction => {
+            Some(Box::<UnusedPublicFunctionDetector>::default())
         }
-        IssueDetectorNamePool::UnindexedEvents => Some(Box::<UnindexedEventsDetector>::default()),
-        IssueDetectorNamePool::RequireWithoutString => {
-            Some(Box::<RequireWithStringDetector>::default())
+        IssueDetectorNamePool::EmptyRequireRevert => {
+            Some(Box::<EmptyRequireRevertDetector>::default())
         }
-        IssueDetectorNamePool::NonReentrantNotFirstModifier => {
+        IssueDetectorNamePool::NonReentrantNotFirst => {
             Some(Box::<NonReentrantBeforeOthersDetector>::default())
         }
         IssueDetectorNamePool::BlockTimestampDeadline => {
@@ -316,12 +313,14 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::ArbitraryTransferFrom => {
             Some(Box::<ArbitraryTransferFromDetector>::default())
         }
-        IssueDetectorNamePool::UselessModifier => Some(Box::<UselessModifierDetector>::default()),
+        IssueDetectorNamePool::ModifierUsedOnlyOnce => {
+            Some(Box::<ModifierUsedOnlyOnceDetector>::default())
+        }
         IssueDetectorNamePool::LargeNumericLiteral => {
             Some(Box::<LargeLiteralValueDetector>::default())
         }
-        IssueDetectorNamePool::UselessInternalFunction => {
-            Some(Box::<UselessInternalFunctionDetector>::default())
+        IssueDetectorNamePool::InternalFunctionUsedOnce => {
+            Some(Box::<InternalFunctionUsedOnceDetector>::default())
         }
         IssueDetectorNamePool::EmptyBlock => Some(Box::<EmptyBlockDetector>::default()),
         IssueDetectorNamePool::Todo => Some(Box::<TodoDetector>::default()),
@@ -331,10 +330,10 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::UnprotectedInitializer => {
             Some(Box::<UnprotectedInitializerDetector>::default())
         }
-        IssueDetectorNamePool::RevertsAndRequiresInLoops => {
-            Some(Box::<RevertsAndRequiresInLoopsDetector>::default())
+        IssueDetectorNamePool::RequireRevertInLoop => {
+            Some(Box::<RequireRevertInLoopDetector>::default())
         }
-        IssueDetectorNamePool::UselessError => Some(Box::<UselessErrorDetector>::default()),
+        IssueDetectorNamePool::UnusedError => Some(Box::<UnusedErrorDetector>::default()),
         IssueDetectorNamePool::DivisionBeforeMultiplication => {
             Some(Box::<DivisionBeforeMultiplicationDetector>::default())
         }
@@ -397,11 +396,11 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::SignedIntegerStorageArray => {
             Some(Box::<StorageSignedIntegerArrayDetector>::default())
         }
-        IssueDetectorNamePool::RedundantStatements => {
-            Some(Box::<RedundantStatementsDetector>::default())
+        IssueDetectorNamePool::RedundantStatement => {
+            Some(Box::<RedundantStatementDetector>::default())
         }
-        IssueDetectorNamePool::PublicVariableReadInExternalContext => {
-            Some(Box::<PublicVariableReadInExternalContextDetector>::default())
+        IssueDetectorNamePool::StateVariableReadExternal => {
+            Some(Box::<StateVariableReadExternalDetector>::default())
         }
         IssueDetectorNamePool::WeakRandomness => Some(Box::<WeakRandomnessDetector>::default()),
         IssueDetectorNamePool::PreDeclaredLocalVariableUsage => {

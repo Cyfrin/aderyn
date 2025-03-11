@@ -107,7 +107,7 @@ impl IssueDetector for UnusedImportDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Unused Imports")
+        String::from("Unused Import")
     }
 
     fn description(&self) -> String {
@@ -253,7 +253,7 @@ mod source_unit_graph_analysis {
 mod unused_imports_tests {
     use serial_test::serial;
 
-    use crate::detect::{detector::IssueDetector, low::unused_imports::UnusedImportDetector};
+    use crate::detect::{detector::IssueDetector, low::unused_import::UnusedImportDetector};
 
     #[test]
     #[serial]

@@ -55,11 +55,11 @@ impl IssueDetector for StateVariableChangesWithoutEventDetector {
     }
 
     fn title(&self) -> String {
-        String::from("State variable changes but no event is emitted.")
+        String::from("State Change Without Event")
     }
 
     fn description(&self) -> String {
-        String::from("State variable changes in this function but no event is emitted.")
+        String::from("There are state variable changes in this function but no event is emitted. Consider emitting an event to enable offchain indexers to track the changes.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -67,7 +67,7 @@ impl IssueDetector for StateVariableChangesWithoutEventDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::StateVariableChangesWithoutEvents)
+        format!("{}", IssueDetectorNamePool::StateChangeWithoutEvent)
     }
 }
 
@@ -97,7 +97,7 @@ mod state_variable_changes_without_events_tests {
 
     use crate::detect::{
         detector::IssueDetector,
-        low::state_variable_changes_without_events::StateVariableChangesWithoutEventDetector,
+        low::state_change_without_event::StateVariableChangesWithoutEventDetector,
     };
 
     #[test]

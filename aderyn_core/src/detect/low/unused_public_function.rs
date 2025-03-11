@@ -15,13 +15,13 @@ use crate::{
 use eyre::Result;
 
 #[derive(Default)]
-pub struct UselessPublicFunctionDetector {
+pub struct UnusedPublicFunctionDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-impl IssueDetector for UselessPublicFunctionDetector {
+impl IssueDetector for UnusedPublicFunctionDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         let unreferenced_public_functions =
             context.function_definitions().into_iter().filter(|&function| {
@@ -49,11 +49,11 @@ impl IssueDetector for UselessPublicFunctionDetector {
     }
 
     fn title(&self) -> String {
-        String::from("`public` functions not used internally could be marked `external`")
+        String::from("Public Function Not Used Internally")
     }
 
     fn description(&self) -> String {
-        String::from("Instead of marking a function as `public`, consider marking it as `external` if it is not used internally.")
+        String::from("If a function is marked public but is not used internall, consider marking it as `external`.")
     }
 
     fn severity(&self) -> IssueSeverity {
@@ -65,7 +65,7 @@ impl IssueDetector for UselessPublicFunctionDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::UselessPublicFunction)
+        format!("{}", IssueDetectorNamePool::UnusedPublicFunction)
     }
 }
 
@@ -73,7 +73,7 @@ impl IssueDetector for UselessPublicFunctionDetector {
 mod useless_public_function_tests {
     use crate::detect::detector::IssueDetector;
 
-    use super::UselessPublicFunctionDetector;
+    use super::UnusedPublicFunctionDetector;
     use serial_test::serial;
 
     #[test]
@@ -83,7 +83,7 @@ mod useless_public_function_tests {
             "../tests/contract-playground/src/Counter.sol",
         );
 
-        let mut detector = UselessPublicFunctionDetector::default();
+        let mut detector = UnusedPublicFunctionDetector::default();
         // assert that the detector finds the public Function
         let found = detector.detect(&context).unwrap();
         assert!(found);
@@ -92,12 +92,9 @@ mod useless_public_function_tests {
         // assert that the detector returns the correct severity
         assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert that the detector returns the correct title
-        assert_eq!(
-            detector.title(),
-            String::from("`public` functions not used internally could be marked `external`")
-        );
+        assert_eq!(detector.title(), String::from("Public Function Not Used Internally"));
         // assert that the detector returns the correct description
-        assert_eq!(detector.description(), String::from("Instead of marking a function as `public`, consider marking it as `external` if it is not used internally."));
+        assert_eq!(detector.description(), String::from("If a function is marked public but is not used internall, consider marking it as `external`."));
     }
 
     #[test]
@@ -107,7 +104,7 @@ mod useless_public_function_tests {
             "../tests/contract-playground/src/AbstractContract.sol",
         );
 
-        let mut detector = UselessPublicFunctionDetector::default();
+        let mut detector = UnusedPublicFunctionDetector::default();
         // assert that the detector finds the public Function
         let found = detector.detect(&context).unwrap();
         assert!(!found);
@@ -122,7 +119,7 @@ mod useless_public_function_tests {
             "../tests/contract-playground/src/PublicFunction.sol",
         );
 
-        let mut detector = UselessPublicFunctionDetector::default();
+        let mut detector = UnusedPublicFunctionDetector::default();
         // assert that the detector finds the public Function
         let found = detector.detect(&context).unwrap();
         assert!(!found);

@@ -35,7 +35,7 @@ impl IssueDetector for SolmateSafeTransferLibDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Solmate\'s SafeTransferLib does not check for token contract\'s existence")
+        String::from("Solmate\'s SafeTransferLib")
     }
 
     fn description(&self) -> String {
@@ -73,12 +73,7 @@ mod solmate_safe_transfer_lib_tests {
         // assert the severity is Low
         assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from(
-                "Solmate\'s SafeTransferLib does not check for token contract\'s existence"
-            )
-        );
+        assert_eq!(detector.title(), String::from("Solmate\'s SafeTransferLib"));
         // assert the description is correct
         assert_eq!(
             detector.description(),
