@@ -1,7 +1,7 @@
 {
   "files_summary": {
     "total_source_units": 119,
-    "total_sloc": 4390
+    "total_sloc": 4415
   },
   "files_details": {
     "files_details": [
@@ -123,7 +123,7 @@
       },
       {
         "file_path": "src/EmitAfterExternalCall.sol",
-        "n_sloc": 42
+        "n_sloc": 67
       },
       {
         "file_path": "src/EmptyBlocks.sol",
@@ -3796,6 +3796,12 @@
             "src_char": "5655:54"
           },
           {
+            "contract_path": "src/EmitAfterExternalCall.sol",
+            "line_no": 86,
+            "src": "1861:20",
+            "src_char": "1861:20"
+          },
+          {
             "contract_path": "src/IncorrectERC721.sol",
             "line_no": 112,
             "src": "3122:115",
@@ -7365,6 +7371,13 @@
             "src": "1274:15",
             "src_char": "1274:15",
             "hint": "Emission happens at: `emit SomeEvent()`"
+          },
+          {
+            "contract_path": "src/EmitAfterExternalCall.sol",
+            "line_no": 93,
+            "src": "2015:5",
+            "src_char": "2015:5",
+            "hint": "Emission happens at: `emit Counter(counter)`"
           },
           {
             "contract_path": "src/Trump.sol",

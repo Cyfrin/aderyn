@@ -73,3 +73,32 @@ contract EmitAfterExternalCall {
         emit SomeEvent();
     }
 }
+
+contract ReentrantContract {
+	function f() external {
+		if (BugReentrancyEvents(msg.sender).counter() == 1) {
+			BugReentrancyEvents(msg.sender).count(this);
+		}
+	}
+}
+contract Counter {
+	uint public counter;
+	event Counter(uint);
+
+}
+// BAD
+contract BugReentrancyEvents is Counter {
+    function count(ReentrantContract d) external {
+        counter += 1;
+        d.f();
+        emit Counter(counter);
+    }
+}
+// GOOD
+contract NoReentrancyEvents is Counter {
+	function count(ReentrantContract d) external {
+        counter += 1;
+        emit Counter(counter);
+        d.f();
+    }
+}

@@ -5876,6 +5876,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/EmitAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 20,
+                  "byteOffset": 1861
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/IncorrectERC721.sol"
                 },
                 "region": {
@@ -12282,6 +12293,20 @@
                 "region": {
                   "byteLength": 15,
                   "byteOffset": 1274
+                }
+              }
+            },
+            {
+              "message": {
+                "text": "Emission happens at: `emit Counter(counter)`"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/EmitAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 2015
                 }
               }
             },
