@@ -3528,7 +3528,7 @@
           "message": {
             "text": "ERC20 functions may not behave as expected. For example: return values are not always meaningful. It is recommended to use OpenZeppelin's SafeERC20 library."
           },
-          "ruleId": "unsafe-erc20-functions"
+          "ruleId": "unsafe-erc20-operation"
         },
         {
           "level": "note",
@@ -4041,7 +4041,7 @@
           "message": {
             "text": "Check for `address(0)` when assigning values to address state variables."
           },
-          "ruleId": "no-zero-address-check"
+          "ruleId": "state-no-address-check"
         },
         {
           "level": "note",
@@ -4054,6 +4054,17 @@
                 "region": {
                   "byteLength": 2,
                   "byteOffset": 174
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/AderynIgnoreCustomDetectors.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 343
                 }
               }
             },
@@ -4241,6 +4252,17 @@
                 "region": {
                   "byteLength": 9,
                   "byteOffset": 129
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IgnoreEverything.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 226
                 }
               }
             },
@@ -4675,9 +4697,9 @@
             }
           ],
           "message": {
-            "text": "Instead of marking a function as `public`, consider marking it as `external` if it is not used internally."
+            "text": "If a function is marked public but is not used internall, consider marking it as `external`."
           },
-          "ruleId": "useless-public-function"
+          "ruleId": "unused-public-function"
         },
         {
           "level": "note",
@@ -5552,279 +5574,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/ContractLocksEther.sol"
-                },
-                "region": {
-                  "byteLength": 56,
-                  "byteOffset": 119
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ContractLocksEther.sol"
-                },
-                "region": {
-                  "byteLength": 56,
-                  "byteOffset": 869
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ContractLocksEther.sol"
-                },
-                "region": {
-                  "byteLength": 54,
-                  "byteOffset": 961
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ContractLocksEther.sol"
-                },
-                "region": {
-                  "byteLength": 56,
-                  "byteOffset": 1904
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ContractLocksEther.sol"
-                },
-                "region": {
-                  "byteLength": 54,
-                  "byteOffset": 1996
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ContractLocksEther.sol"
-                },
-                "region": {
-                  "byteLength": 56,
-                  "byteOffset": 3143
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ContractLocksEther.sol"
-                },
-                "region": {
-                  "byteLength": 54,
-                  "byteOffset": 3235
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ContractLocksEther.sol"
-                },
-                "region": {
-                  "byteLength": 56,
-                  "byteOffset": 4367
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ContractLocksEther.sol"
-                },
-                "region": {
-                  "byteLength": 54,
-                  "byteOffset": 4459
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ContractLocksEther.sol"
-                },
-                "region": {
-                  "byteLength": 56,
-                  "byteOffset": 5563
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ContractLocksEther.sol"
-                },
-                "region": {
-                  "byteLength": 54,
-                  "byteOffset": 5655
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectERC721.sol"
-                },
-                "region": {
-                  "byteLength": 115,
-                  "byteOffset": 3122
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/TestERC20.sol"
-                },
-                "region": {
-                  "byteLength": 70,
-                  "byteOffset": 338
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/TestERC20.sol"
-                },
-                "region": {
-                  "byteLength": 70,
-                  "byteOffset": 413
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Trump.sol"
-                },
-                "region": {
-                  "byteLength": 72,
-                  "byteOffset": 891
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Trump.sol"
-                },
-                "region": {
-                  "byteLength": 78,
-                  "byteOffset": 968
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Trump.sol"
-                },
-                "region": {
-                  "byteLength": 44,
-                  "byteOffset": 4970
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Trump.sol"
-                },
-                "region": {
-                  "byteLength": 33,
-                  "byteOffset": 5019
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Trump.sol"
-                },
-                "region": {
-                  "byteLength": 62,
-                  "byteOffset": 5057
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/UncheckedReturn.sol"
-                },
-                "region": {
-                  "byteLength": 30,
-                  "byteOffset": 297
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/UninitializedStateVariable.sol"
-                },
-                "region": {
-                  "byteLength": 27,
-                  "byteOffset": 700
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/eth2/DepositContract.sol"
-                },
-                "region": {
-                  "byteLength": 107,
-                  "byteOffset": 2641
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/inheritance/ExtendedInheritance.sol"
-                },
-                "region": {
-                  "byteLength": 45,
-                  "byteOffset": 144
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/inheritance/InheritanceBase.sol"
-                },
-                "region": {
-                  "byteLength": 28,
-                  "byteOffset": 150
-                }
-              }
-            }
-          ],
-          "message": {
-            "text": "Index event fields make the field more quickly accessible to off-chain tools that parse events. However, note that each index field costs extra gas during emission, so it's not necessarily best to index the maximum allowed per event (three fields). Each event should use three indexed fields if there are three or more fields, and gas usage is not particularly of concern for the events in question. If there are fewer than three fields, all of the fields should be indexed."
-          },
-          "ruleId": "unindexed-events"
-        },
-        {
-          "level": "note",
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/CallGraphTests.sol"
                 },
                 "region": {
@@ -6090,7 +5839,7 @@
           "message": {
             "text": "Use descriptive reason strings or custom errors for revert paths."
           },
-          "ruleId": "require-without-string"
+          "ruleId": "empty-require-revert"
         },
         {
           "level": "note",
@@ -6119,9 +5868,9 @@
             }
           ],
           "message": {
-            "text": "This is a best-practice to protect against reentrancy in other modifiers."
+            "text": "To protect against reentrancy in other modifiers, the `nonReentrant` modifier should be the first modifier in the list of modifiers."
           },
-          "ruleId": "non-reentrant-not-first-modifier"
+          "ruleId": "non-reentrant-not-first"
         },
         {
           "level": "note",
@@ -6335,7 +6084,7 @@
             }
           ],
           "message": {
-            "text": "Using `ERC721::_mint()` can mint ERC721 tokens to addresses which don't support ERC721 tokens. Use `_safeMint()` instead of `_mint()` for ERC721."
+            "text": "Using `ERC721::_mint()` can mint ERC721 tokens to addresses which don't support ERC721 tokens. Use `_safeMint()` instead of `_mint()` for ERC721 tokens."
           },
           "ruleId": "unsafe-oz-erc721-mint"
         },
@@ -6980,9 +6729,9 @@
             }
           ],
           "message": {
-            "text": ""
+            "text": "Consider removing the modifier or inlining the logic into the calling function."
           },
-          "ruleId": "useless-modifier"
+          "ruleId": "modifier-used-only-once"
         },
         {
           "level": "note",
@@ -7900,7 +7649,7 @@
           "message": {
             "text": "Instead of separating the logic into a separate function, consider inlining the logic into the calling function. This can reduce the number of function calls and improve readability."
           },
-          "ruleId": "useless-internal-function"
+          "ruleId": "internal-function-used-once"
         },
         {
           "level": "note",
@@ -8299,9 +8048,9 @@
             }
           ],
           "message": {
-            "text": "it is recommended that the definition be removed when custom error is unused"
+            "text": "Consider using or removing the unused error."
           },
-          "ruleId": "useless-error"
+          "ruleId": "unused-error"
         },
         {
           "level": "note",
@@ -8332,7 +8081,7 @@
           "message": {
             "text": "Avoid `require` / `revert` statements in a loop because a single bad item can cause the whole transaction to fail. It's better to forgive on fail and return failed elements post processing of the loop"
           },
-          "ruleId": "reverts-and-requires-in-loops"
+          "ruleId": "require-revert-in-loop"
         },
         {
           "level": "note",
@@ -8458,9 +8207,9 @@
             }
           ],
           "message": {
-            "text": "Remove the redundant statements because no code will be generated and it just congests the codebase."
+            "text": "Remove the redundant statement."
           },
-          "ruleId": "redundant-statements"
+          "ruleId": "redundant-statement"
         },
         {
           "level": "note",
@@ -8511,9 +8260,9 @@
             }
           ],
           "message": {
-            "text": "The contract reads it's own variable using `this` which adds an unnecessary STATICCALL. Remove `this` and access the variable like storage."
+            "text": "The contract reads it's own state variable using `this` which adds an unnecessary STATICCALL. Consider removing `this` to access the variable from storage."
           },
-          "ruleId": "public-variable-read-in-external-context"
+          "ruleId": "state-variable-read-external"
         },
         {
           "level": "note",
@@ -8817,7 +8566,7 @@
             }
           ],
           "message": {
-            "text": "State variable appears to be unused. No analysis has been performed to see if any inilne assembly references it. So if that's not the case, consider removing this unused variable."
+            "text": "State variable appears to be unused. No analysis has been performed to see if any inilne assembly references it. Consider removing this unused variable."
           },
           "ruleId": "unused-state-variable"
         },
@@ -11410,9 +11159,9 @@
             }
           ],
           "message": {
-            "text": "State variable changes in this function but no event is emitted."
+            "text": "There are state variable changes in this function but no event is emitted. Consider emitting an event to enable offchain indexers to track the changes."
           },
-          "ruleId": "state-variable-changes-without-events"
+          "ruleId": "state-change-without-event"
         },
         {
           "level": "note",
@@ -11760,7 +11509,7 @@
             }
           ],
           "message": {
-            "text": "State variables that are should be declared immutable to save gas. Add the `immutable` attribute to state variables that are only changed in the constructor"
+            "text": "State variables that are only changed in the constructor should be declared immutable to save gas. Add the `immutable` attribute to state variables that are only changed in the constructor"
           },
           "ruleId": "state-variable-could-be-immutable"
         },
@@ -11780,7 +11529,7 @@
             }
           ],
           "message": {
-            "text": "Design the modifier to only contain 1 placeholder statement. If it's not possible, split the logic into multiple modifiers."
+            "text": "Design the modifier to only contain 1 placeholder statement. If that is not possible, split the logic into multiple modifiers."
           },
           "ruleId": "multiple-placeholders"
         },
@@ -11899,7 +11648,7 @@
             }
           ],
           "message": {
-            "text": "Function returns a value but it is ignored."
+            "text": "Function returns a value but it is ignored. Consider checking the return value."
           },
           "ruleId": "unchecked-return"
         }

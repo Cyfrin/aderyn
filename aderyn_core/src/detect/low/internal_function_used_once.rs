@@ -78,10 +78,7 @@ mod uselss_internal_function {
         // assert that the detector returns the correct severity
         assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert that the detector returns the correct title
-        assert_eq!(
-            detector.title(),
-            String::from("Internal functions called only once can be inlined")
-        );
+        assert_eq!(detector.title(), String::from("Internal Function Used Only Once"));
         // assert that the detector returns the correct description
         assert_eq!(detector.description(), String::from("Instead of separating the logic into a separate function, consider inlining the logic into the calling function. This can reduce the number of function calls and improve readability."));
     }

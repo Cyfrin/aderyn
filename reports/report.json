@@ -465,7 +465,7 @@
   },
   "issue_count": {
     "high": 38,
-    "low": 48
+    "low": 47
   },
   "high_issues": {
     "issues": [
@@ -2322,7 +2322,7 @@
         ]
       },
       {
-        "title": "Solmate's SafeTransferLib does not check for token contract's existence",
+        "title": "Solmate's SafeTransferLib",
         "description": "There is a subtle difference between the implementation of solmate's SafeTransferLib and OZ's SafeERC20: OZ's SafeERC20 checks if the token is a contract or not, solmate's SafeTransferLib does not.\nhttps://github.com/transmissions11/solmate/blob/main/src/utils/SafeTransferLib.sol#L9 \n`@dev Note that none of the functions in this library check that a token has code at all! That responsibility is delegated to the caller`\n",
         "detector_name": "solmate-safe-transfer-lib",
         "instances": [
@@ -2367,9 +2367,9 @@
         ]
       },
       {
-        "title": "Unsafe ERC20 Operations should not be used",
+        "title": "Unsafe ERC20 Operation",
         "description": "ERC20 functions may not behave as expected. For example: return values are not always meaningful. It is recommended to use OpenZeppelin's SafeERC20 library.",
-        "detector_name": "unsafe-erc20-functions",
+        "detector_name": "unsafe-erc20-operation",
         "instances": [
           {
             "contract_path": "src/ArbitraryTransferFrom.sol",
@@ -2488,7 +2488,7 @@
         ]
       },
       {
-        "title": "Solidity pragma should be specific, not wide",
+        "title": "Unspecific Solidity Pragma",
         "description": "Consider using a specific version of Solidity in your contracts instead of a wide version. For example, instead of `pragma solidity ^0.8.0;`, use `pragma solidity 0.8.0;`",
         "detector_name": "unspecific-solidity-pragma",
         "instances": [
@@ -2705,9 +2705,9 @@
         ]
       },
       {
-        "title": "Missing checks for `address(0)` when assigning values to address state variables",
+        "title": "Address State Variable Set Without Checks",
         "description": "Check for `address(0)` when assigning values to address state variables.",
-        "detector_name": "no-zero-address-check",
+        "detector_name": "state-no-address-check",
         "instances": [
           {
             "contract_path": "src/ArbitraryTransferFrom.sol",
@@ -2772,15 +2772,21 @@
         ]
       },
       {
-        "title": "`public` functions not used internally could be marked `external`",
-        "description": "Instead of marking a function as `public`, consider marking it as `external` if it is not used internally.",
-        "detector_name": "useless-public-function",
+        "title": "Public Function Not Used Internally",
+        "description": "If a function is marked public but is not used internall, consider marking it as `external`.",
+        "detector_name": "unused-public-function",
         "instances": [
           {
             "contract_path": "src/AderynIgnoreCustomDetectors.sol",
             "line_no": 7,
             "src": "174:2",
             "src_char": "174:2"
+          },
+          {
+            "contract_path": "src/AderynIgnoreCustomDetectors.sol",
+            "line_no": 14,
+            "src": "343:2",
+            "src_char": "343:2"
           },
           {
             "contract_path": "src/AderynIgnoreCustomDetectors.sol",
@@ -2883,6 +2889,12 @@
             "line_no": 7,
             "src": "129:9",
             "src_char": "129:9"
+          },
+          {
+            "contract_path": "src/IgnoreEverything.sol",
+            "line_no": 7,
+            "src": "226:2",
+            "src_char": "226:2"
           },
           {
             "contract_path": "src/IncorrectERC20.sol",
@@ -3596,160 +3608,9 @@
         ]
       },
       {
-        "title": "Event is missing `indexed` fields",
-        "description": "Index event fields make the field more quickly accessible to off-chain tools that parse events. However, note that each index field costs extra gas during emission, so it's not necessarily best to index the maximum allowed per event (three fields). Each event should use three indexed fields if there are three or more fields, and gas usage is not particularly of concern for the events in question. If there are fewer than three fields, all of the fields should be indexed.",
-        "detector_name": "unindexed-events",
-        "instances": [
-          {
-            "contract_path": "src/ContractLocksEther.sol",
-            "line_no": 7,
-            "src": "119:56",
-            "src_char": "119:56"
-          },
-          {
-            "contract_path": "src/ContractLocksEther.sol",
-            "line_no": 33,
-            "src": "869:56",
-            "src_char": "869:56"
-          },
-          {
-            "contract_path": "src/ContractLocksEther.sol",
-            "line_no": 36,
-            "src": "961:54",
-            "src_char": "961:54"
-          },
-          {
-            "contract_path": "src/ContractLocksEther.sol",
-            "line_no": 65,
-            "src": "1904:56",
-            "src_char": "1904:56"
-          },
-          {
-            "contract_path": "src/ContractLocksEther.sol",
-            "line_no": 68,
-            "src": "1996:54",
-            "src_char": "1996:54"
-          },
-          {
-            "contract_path": "src/ContractLocksEther.sol",
-            "line_no": 102,
-            "src": "3143:56",
-            "src_char": "3143:56"
-          },
-          {
-            "contract_path": "src/ContractLocksEther.sol",
-            "line_no": 105,
-            "src": "3235:54",
-            "src_char": "3235:54"
-          },
-          {
-            "contract_path": "src/ContractLocksEther.sol",
-            "line_no": 139,
-            "src": "4367:56",
-            "src_char": "4367:56"
-          },
-          {
-            "contract_path": "src/ContractLocksEther.sol",
-            "line_no": 142,
-            "src": "4459:54",
-            "src_char": "4459:54"
-          },
-          {
-            "contract_path": "src/ContractLocksEther.sol",
-            "line_no": 175,
-            "src": "5563:56",
-            "src_char": "5563:56"
-          },
-          {
-            "contract_path": "src/ContractLocksEther.sol",
-            "line_no": 178,
-            "src": "5655:54",
-            "src_char": "5655:54"
-          },
-          {
-            "contract_path": "src/IncorrectERC721.sol",
-            "line_no": 112,
-            "src": "3122:115",
-            "src_char": "3122:115"
-          },
-          {
-            "contract_path": "src/TestERC20.sol",
-            "line_no": 14,
-            "src": "338:70",
-            "src_char": "338:70"
-          },
-          {
-            "contract_path": "src/TestERC20.sol",
-            "line_no": 15,
-            "src": "413:70",
-            "src_char": "413:70"
-          },
-          {
-            "contract_path": "src/Trump.sol",
-            "line_no": 31,
-            "src": "891:72",
-            "src_char": "891:72"
-          },
-          {
-            "contract_path": "src/Trump.sol",
-            "line_no": 32,
-            "src": "968:78",
-            "src_char": "968:78"
-          },
-          {
-            "contract_path": "src/Trump.sol",
-            "line_no": 159,
-            "src": "4970:44",
-            "src_char": "4970:44"
-          },
-          {
-            "contract_path": "src/Trump.sol",
-            "line_no": 160,
-            "src": "5019:33",
-            "src_char": "5019:33"
-          },
-          {
-            "contract_path": "src/Trump.sol",
-            "line_no": 161,
-            "src": "5057:62",
-            "src_char": "5057:62"
-          },
-          {
-            "contract_path": "src/UncheckedReturn.sol",
-            "line_no": 17,
-            "src": "297:30",
-            "src_char": "297:30"
-          },
-          {
-            "contract_path": "src/UninitializedStateVariable.sol",
-            "line_no": 21,
-            "src": "700:27",
-            "src_char": "700:27"
-          },
-          {
-            "contract_path": "src/eth2/DepositContract.sol",
-            "line_no": 19,
-            "src": "2641:107",
-            "src_char": "1153:107"
-          },
-          {
-            "contract_path": "src/inheritance/ExtendedInheritance.sol",
-            "line_no": 7,
-            "src": "144:45",
-            "src_char": "144:45"
-          },
-          {
-            "contract_path": "src/inheritance/InheritanceBase.sol",
-            "line_no": 7,
-            "src": "150:28",
-            "src_char": "150:28"
-          }
-        ]
-      },
-      {
-        "title": "Empty `require()` / `revert()` statements",
+        "title": "Empty `require()` / `revert()` Statement",
         "description": "Use descriptive reason strings or custom errors for revert paths.",
-        "detector_name": "require-without-string",
+        "detector_name": "empty-require-revert",
         "instances": [
           {
             "contract_path": "src/CallGraphTests.sol",
@@ -3898,9 +3759,9 @@
         ]
       },
       {
-        "title": "The `nonReentrant` `modifier` should occur before all other modifiers",
-        "description": "This is a best-practice to protect against reentrancy in other modifiers.",
-        "detector_name": "non-reentrant-not-first-modifier",
+        "title": "`nonReentrant` is Not the First Modifier",
+        "description": "To protect against reentrancy in other modifiers, the `nonReentrant` modifier should be the first modifier in the list of modifiers.",
+        "detector_name": "non-reentrant-not-first",
         "instances": [
           {
             "contract_path": "src/AdminContract.sol",
@@ -4026,8 +3887,8 @@
         ]
       },
       {
-        "title": "Using `ERC721::_mint()` can be dangerous",
-        "description": "Using `ERC721::_mint()` can mint ERC721 tokens to addresses which don't support ERC721 tokens. Use `_safeMint()` instead of `_mint()` for ERC721.",
+        "title": "Unsafe `ERC721::_mint()`",
+        "description": "Using `ERC721::_mint()` can mint ERC721 tokens to addresses which don't support ERC721 tokens. Use `_safeMint()` instead of `_mint()` for ERC721 tokens.",
         "detector_name": "unsafe-oz-erc721-mint",
         "instances": [
           {
@@ -4039,7 +3900,7 @@
         ]
       },
       {
-        "title": "PUSH0 is not supported by all chains",
+        "title": "PUSH0 Opcode",
         "description": "Solc compiler version 0.8.20 switches the default target EVM version to Shanghai, which means that the generated bytecode will include PUSH0 opcodes. Be sure to select the appropriate EVM version in case you intend to deploy on a chain other than mainnet like L2 chains that may not support PUSH0, otherwise deployment of your contracts will fail.",
         "detector_name": "push-zero-opcode",
         "instances": [
@@ -4304,9 +4165,9 @@
         ]
       },
       {
-        "title": "Modifiers invoked only once can be shoe-horned into the function",
-        "description": "",
-        "detector_name": "useless-modifier",
+        "title": "Modifier Invoked Only Once",
+        "description": "Consider removing the modifier or inlining the logic into the calling function.",
+        "detector_name": "modifier-used-only-once",
         "instances": [
           {
             "contract_path": "src/BuiltinSymbolShadow.sol",
@@ -4781,9 +4642,9 @@
         ]
       },
       {
-        "title": "Internal functions called only once can be inlined",
+        "title": "Internal Function Used Only Once",
         "description": "Instead of separating the logic into a separate function, consider inlining the logic into the calling function. This can reduce the number of function calls and improve readability.",
-        "detector_name": "useless-internal-function",
+        "detector_name": "internal-function-used-once",
         "instances": [
           {
             "contract_path": "src/CallGraphTests.sol",
@@ -5102,9 +4963,9 @@
         ]
       },
       {
-        "title": "Unused Custom Error",
-        "description": "it is recommended that the definition be removed when custom error is unused",
-        "detector_name": "useless-error",
+        "title": "Unused Error",
+        "description": "Consider using or removing the unused error.",
+        "detector_name": "unused-error",
         "instances": [
           {
             "contract_path": "src/UnusedError.sol",
@@ -5127,9 +4988,9 @@
         ]
       },
       {
-        "title": "Loop contains `require`/`revert` statements",
+        "title": "Loop Contains `require`/`revert`",
         "description": "Avoid `require` / `revert` statements in a loop because a single bad item can cause the whole transaction to fail. It's better to forgive on fail and return failed elements post processing of the loop",
-        "detector_name": "reverts-and-requires-in-loops",
+        "detector_name": "require-revert-in-loop",
         "instances": [
           {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
@@ -5177,9 +5038,9 @@
         ]
       },
       {
-        "title": "Redundant statements have no effect.",
-        "description": "Remove the redundant statements because no code will be generated and it just congests the codebase.",
-        "detector_name": "redundant-statements",
+        "title": "Redundant Statement",
+        "description": "Remove the redundant statement.",
+        "detector_name": "redundant-statement",
         "instances": [
           {
             "contract_path": "src/RedundantStatements.sol",
@@ -5220,9 +5081,9 @@
         ]
       },
       {
-        "title": "Public variables of a contract read in an external context (using `this`).",
-        "description": "The contract reads it's own variable using `this` which adds an unnecessary STATICCALL. Remove `this` and access the variable like storage.",
-        "detector_name": "public-variable-read-in-external-context",
+        "title": "State Variable is Read as External",
+        "description": "The contract reads it's own state variable using `this` which adds an unnecessary STATICCALL. Consider removing `this` to access the variable from storage.",
+        "detector_name": "state-variable-read-external",
         "instances": [
           {
             "contract_path": "src/PublicVariableReadInExternalContext.sol",
@@ -5251,8 +5112,8 @@
         ]
       },
       {
-        "title": "Potentially unused `private` / `internal` state variables found.",
-        "description": "State variable appears to be unused. No analysis has been performed to see if any inilne assembly references it. So if that's not the case, consider removing this unused variable.",
+        "title": "Unused State Variable",
+        "description": "State variable appears to be unused. No analysis has been performed to see if any inilne assembly references it. Consider removing this unused variable.",
         "detector_name": "unused-state-variable",
         "instances": [
           {
@@ -5531,7 +5392,7 @@
         ]
       },
       {
-        "title": "Uninitialized local variables.",
+        "title": "Uninitialized Local Variable",
         "description": "Initialize all the variables. If a variable is meant to be initialized to zero, explicitly set it to zero to improve code readability.",
         "detector_name": "uninitialized-local-variable",
         "instances": [
@@ -5946,7 +5807,7 @@
         ]
       },
       {
-        "title": "Unused Imports",
+        "title": "Unused Import",
         "description": "Redundant import statement. Consider removing it.",
         "detector_name": "unused-import",
         "instances": [
@@ -5984,7 +5845,7 @@
         ]
       },
       {
-        "title": "State variable could be declared constant",
+        "title": "State Variable Could Be Constant",
         "description": "State variables that are not updated following deployment should be declared constant to save gas. Add the `constant` attribute to state variables that never change.",
         "detector_name": "state-variable-could-be-constant",
         "instances": [
@@ -6261,9 +6122,9 @@
         ]
       },
       {
-        "title": "State variable changes but no event is emitted.",
-        "description": "State variable changes in this function but no event is emitted.",
-        "detector_name": "state-variable-changes-without-events",
+        "title": "State Change Without Event",
+        "description": "There are state variable changes in this function but no event is emitted. Consider emitting an event to enable offchain indexers to track the changes.",
+        "detector_name": "state-change-without-event",
         "instances": [
           {
             "contract_path": "src/AbstractContract.sol",
@@ -6868,8 +6729,8 @@
         ]
       },
       {
-        "title": "State variable could be declared immutable",
-        "description": "State variables that are should be declared immutable to save gas. Add the `immutable` attribute to state variables that are only changed in the constructor",
+        "title": "State Variable Could Be Immutable",
+        "description": "State variables that are only changed in the constructor should be declared immutable to save gas. Add the `immutable` attribute to state variables that are only changed in the constructor",
         "detector_name": "state-variable-could-be-immutable",
         "instances": [
           {
@@ -7061,8 +6922,8 @@
         ]
       },
       {
-        "title": "Modifier has multiple placeholders.",
-        "description": "Design the modifier to only contain 1 placeholder statement. If it's not possible, split the logic into multiple modifiers.",
+        "title": "Multiple Placeholders in Modifier",
+        "description": "Design the modifier to only contain 1 placeholder statement. If that is not possible, split the logic into multiple modifiers.",
         "detector_name": "multiple-placeholders",
         "instances": [
           {
@@ -7074,8 +6935,8 @@
         ]
       },
       {
-        "title": "Return value of the function call is not checked.",
-        "description": "Function returns a value but it is ignored.",
+        "title": "Unchecked Return",
+        "description": "Function returns a value but it is ignored. Consider checking the return value.",
         "detector_name": "unchecked-return",
         "instances": [
           {
@@ -7149,27 +7010,26 @@
     "abi-encode-packed-hash-collision",
     "ecrecover",
     "deprecated-oz-function",
-    "unsafe-erc20-functions",
+    "unsafe-erc20-operation",
     "unspecific-solidity-pragma",
-    "no-zero-address-check",
-    "useless-public-function",
+    "state-no-address-check",
+    "unused-public-function",
     "literal-instead-of-constant",
-    "unindexed-events",
-    "require-without-string",
-    "non-reentrant-not-first-modifier",
+    "empty-require-revert",
+    "non-reentrant-not-first",
     "block-timestamp-deadline",
     "unsafe-oz-erc721-mint",
     "push-zero-opcode",
     "arbitrary-transfer-from",
-    "useless-modifier",
+    "modifier-used-only-once",
     "empty-block",
     "large-numeric-literal",
-    "useless-internal-function",
+    "internal-function-used-once",
     "todo",
     "inconsistent-type-names",
     "unprotected-initializer",
-    "useless-error",
-    "reverts-and-requires-in-loops",
+    "unused-error",
+    "require-revert-in-loop",
     "division-before-multiplication",
     "unsafe-casting",
     "enumerable-loop-removal",
@@ -7194,8 +7054,8 @@
     "tautology-or-contradiction",
     "strict-equailty-contract-balance",
     "signed-integer-storage-array",
-    "redundant-statements",
-    "public-variable-read-in-external-context",
+    "redundant-statement",
+    "state-variable-read-external",
     "weak-randomness",
     "pre-declared-local-variable-usage",
     "delete-nested-mapping",
@@ -7225,7 +7085,7 @@
     "unchecked-low-level-call",
     "function-pointer-in-constructor",
     "state-variable-could-be-constant",
-    "state-variable-changes-without-events",
+    "state-change-without-event",
     "state-variable-could-be-immutable",
     "multiple-placeholders",
     "unchecked-return"

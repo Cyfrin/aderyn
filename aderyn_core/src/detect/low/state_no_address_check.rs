@@ -229,12 +229,7 @@ mod zero_address_check_tests {
         // assert that the severity is Low
         assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert that the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from(
-                "Missing checks for `address(0)` when assigning values to address state variables"
-            )
-        );
+        assert_eq!(detector.title(), String::from("Address State Variable Set Without Checks"));
         // assert that the description is correct
         assert_eq!(
             detector.description(),

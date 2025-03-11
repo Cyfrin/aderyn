@@ -98,9 +98,7 @@ impl CallGraphVisitor for StateVariableChangeTracker<'_> {
 mod costly_operations_inside_loops_tests {
     use serial_test::serial;
 
-    use crate::detect::{
-        detector::IssueDetector, low::costly_loop::CostlyLoopDetector,
-    };
+    use crate::detect::{detector::IssueDetector, low::costly_loop::CostlyLoopDetector};
 
     #[test]
     #[serial]
