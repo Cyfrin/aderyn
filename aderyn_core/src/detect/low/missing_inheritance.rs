@@ -143,7 +143,7 @@ impl IssueDetector for MissingInheritanceDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Potentially missing inheritance for contract.")
+        String::from("Missing Inheritance")
     }
 
     fn description(&self) -> String {

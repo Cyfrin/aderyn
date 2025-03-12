@@ -86,7 +86,7 @@ impl IssueDetector for UnsafeCastingDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Unsafe Casting")
+        String::from("Unsafe Casting of integers")
     }
 
     fn description(&self) -> String {
@@ -100,7 +100,7 @@ impl IssueDetector for UnsafeCastingDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::UnsafeCastingDetector)
+        format!("{}", IssueDetectorNamePool::UnsafeCasting)
     }
 }
 

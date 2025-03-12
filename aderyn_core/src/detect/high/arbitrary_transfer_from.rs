@@ -91,11 +91,11 @@ impl IssueDetector for ArbitraryTransferFromDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Arbitrary `from` passed to `transferFrom` (or `safeTransferFrom`)")
+        String::from("Arbitrary `from` Passed to `transferFrom`")
     }
 
     fn description(&self) -> String {
-        String::from("Passing an arbitrary `from` address to `transferFrom` (or `safeTransferFrom`) can lead to loss of funds, because anyone can transfer tokens from the `from` address if an approval is made.  ")
+        String::from("Passing an arbitrary `from` address to `transferFrom` (or `safeTransferFrom`) can lead to loss of funds, because anyone can transfer tokens from the `from` address if an approval is made.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -131,11 +131,8 @@ mod arbitrary_transfer_from_tests {
         // assert the severity is high
         assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
         // assert the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from("Arbitrary `from` passed to `transferFrom` (or `safeTransferFrom`)")
-        );
+        assert_eq!(detector.title(), String::from("Arbitrary `from` Passed to `transferFrom`"));
         // assert the description is correct
-        assert_eq!(detector.description(), String::from("Passing an arbitrary `from` address to `transferFrom` (or `safeTransferFrom`) can lead to loss of funds, because anyone can transfer tokens from the `from` address if an approval is made.  "));
+        assert_eq!(detector.description(), String::from("Passing an arbitrary `from` address to `transferFrom` (or `safeTransferFrom`) can lead to loss of funds, because anyone can transfer tokens from the `from` address if an approval is made."));
     }
 }

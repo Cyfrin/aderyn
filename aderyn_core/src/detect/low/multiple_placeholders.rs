@@ -39,11 +39,11 @@ impl IssueDetector for MultiplePlaceholdersDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Modifier has multiple placeholders.")
+        String::from("Multiple Placeholders in Modifier")
     }
 
     fn description(&self) -> String {
-        String::from("Design the modifier to only contain 1 placeholder statement. If it's not possible, split the logic into multiple modifiers.")
+        String::from("Design the modifier to only contain 1 placeholder statement. If that is not possible, split the logic into multiple modifiers.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

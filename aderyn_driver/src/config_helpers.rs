@@ -1,5 +1,6 @@
 use std::{
-    fs,
+    collections::HashMap,
+    env, fs,
     path::{Path, PathBuf},
 };
 
@@ -14,8 +15,8 @@ pub struct AderynConfig {
     pub root: Option<String>,
     pub src: Option<String>,
     pub exclude: Option<Vec<String>>,
-    pub remappings: Option<Vec<String>>,
     pub include: Option<Vec<String>>,
+    pub env: Option<HashMap<String, String>>,
 }
 
 /// Load the aderyn.toml file and deserialize it to AderynConfig
@@ -35,10 +36,20 @@ fn load_aderyn_config(root: &Path) -> Result<AderynConfig, String> {
 
     // Clear empty vectors
     clear_empty_vectors(&mut config.exclude);
-    clear_empty_vectors(&mut config.remappings);
     clear_empty_vectors(&mut config.include);
 
+    load_env_variables_from_config(&config);
+
     Ok(config)
+}
+
+fn load_env_variables_from_config(config: &AderynConfig) {
+    // Load env variables
+    if let Some(map) = config.env.clone() {
+        map.iter().for_each(|(k, v)| {
+            env::set_var(k, v);
+        })
+    }
 }
 
 fn clear_empty_vectors<T>(vec: &mut Option<Vec<T>>) {
@@ -52,13 +63,13 @@ fn clear_empty_vectors<T>(vec: &mut Option<Vec<T>>) {
 #[allow(clippy::type_complexity)]
 pub fn derive_from_aderyn_toml(
     root: &Path,
-    src: &Option<Vec<String>>,
+    src: &Option<String>,
     exclude: &Option<Vec<String>>,
     remappings: &Option<Vec<String>>,
     include: &Option<Vec<String>>,
 ) -> (
     PathBuf,             // Root
-    Option<Vec<String>>, // Src
+    Option<String>,      // Src
     Option<Vec<String>>, // Exclude
     Option<Vec<String>>, // Remappings
     Option<Vec<String>>, // Scope
@@ -71,13 +82,13 @@ pub fn derive_from_aderyn_toml(
 fn interpret_aderyn_config(
     config: AderynConfig,
     root: &Path,
-    src: &Option<Vec<String>>,
+    src: &Option<String>,
     exclude: &Option<Vec<String>>,
     remappings: &Option<Vec<String>>,
     include: &Option<Vec<String>>,
 ) -> (
     PathBuf,             // Root
-    Option<Vec<String>>, // Src
+    Option<String>,      // Src
     Option<Vec<String>>, // Exclude
     Option<Vec<String>>, // Remappings
     Option<Vec<String>>, // Scope
@@ -88,15 +99,11 @@ fn interpret_aderyn_config(
         local_root.push(config_root);
     }
 
-    // If config.src is some, append src if it is not already present
-    let mut local_src: Option<Vec<String>> = src.clone();
+    // If config.src is some, command line arg src overrides config.src
+    let mut local_src: Option<String> = src.clone();
     if let Some(config_src) = &config.src {
-        if let Some(local_src) = &mut local_src {
-            if !local_src.contains(config_src) {
-                local_src.push(config_src.clone());
-            }
-        } else {
-            local_src = Some(vec![config_src.clone()]);
+        if local_src.is_none() {
+            local_src = Some(config_src.clone());
         }
     }
 
@@ -114,19 +121,7 @@ fn interpret_aderyn_config(
         }
     }
 
-    // If config.remappings is some, append each value to remappings if it is not already present
-    let mut local_remappings = remappings.clone();
-    if let Some(config_remappings) = &config.remappings {
-        if let Some(local_remappings) = &mut local_remappings {
-            for item in config_remappings {
-                if !local_remappings.contains(item) {
-                    local_remappings.push(item.clone());
-                }
-            }
-        } else {
-            local_remappings = Some(config_remappings.clone());
-        }
-    }
+    let local_remappings = remappings.clone();
 
     // If config.include is some, append each value to include if it is not already present
     let mut local_include = include.clone();
@@ -151,11 +146,11 @@ fn interpret_aderyn_config(
 #[allow(clippy::type_complexity)]
 pub fn append_from_foundry_toml(
     root: &Path,
-    src: &Option<Vec<String>>,
+    src: &Option<String>,
     exclude: &Option<Vec<String>>,
     remappings: &Option<Vec<String>>,
 ) -> (
-    Option<Vec<String>>, // Src
+    Option<String>,      // Src
     Option<Vec<String>>, // Exclude
     Option<Vec<String>>, // Remappings
 ) {
@@ -166,11 +161,11 @@ pub fn append_from_foundry_toml(
 #[allow(clippy::type_complexity)]
 fn interpret_foundry_config(
     config: Config,
-    src: &Option<Vec<String>>,
+    src: &Option<String>,
     exclude: &Option<Vec<String>>,
     remappings: &Option<Vec<String>>,
 ) -> (
-    Option<Vec<String>>, // Src
+    Option<String>,      // Src
     Option<Vec<String>>, // Exclude
     Option<Vec<String>>, // Remappings
 ) {
@@ -180,7 +175,7 @@ fn interpret_foundry_config(
     match local_src {
         Some(_) => (),
         None => {
-            local_src = Some(vec![config.src.to_string_lossy().to_string()]);
+            local_src = Some(config.src.to_string_lossy().to_string());
         }
     }
 
@@ -216,30 +211,37 @@ fn interpret_foundry_config(
 
 #[cfg(test)]
 mod tests {
-    use std::path::PathBuf;
+    use std::{collections::HashMap, env, path::PathBuf};
 
     use cyfrin_foundry_config::RelativeRemapping;
 
+    use crate::config_helpers::load_env_variables_from_config;
+
     #[test]
     fn test_interpret_aderyn_config_correctly_appends_and_replaces() {
+        let env =
+            HashMap::from_iter(vec![("FOUNDRY_PROFILE".to_string(), "ENV_VAR_VALUE".to_string())]);
+
         let config = super::AderynConfig {
             version: 1,
             root: Some("CONFIG_ROOT".to_string()),
             src: Some("CONFIG_SRC".to_string()),
             exclude: Some(vec!["CONFIG_EXCLUDE".to_string()]),
-            remappings: Some(vec!["CONFIG_REMAPPINGS".to_string()]),
             include: Some(vec!["CONFIG_SCOPE".to_string()]),
+            env: Some(env),
         };
 
         let root = std::path::Path::new("ARG_ROOT");
-        let src = Some(vec!["ARG_SRC".to_string()]);
+        let src = Some("ARG_SRC".to_string());
         let exclude = Some(vec!["ARG_EXCLUDE_1".to_string(), "ARG_EXCLUDE_2".to_string()]);
         let remappings = Some(vec!["ARG_REMAPPINGS_1".to_string(), "ARG_REMAPPINGS_2".to_string()]);
         let include = Some(vec!["ARG_SCOPE_1".to_string(), "ARG_SCOPE_2".to_string()]);
+
+        load_env_variables_from_config(&config);
         let result =
             super::interpret_aderyn_config(config, root, &src, &exclude, &remappings, &include);
         assert_eq!(result.0, std::path::Path::new("ARG_ROOT/CONFIG_ROOT"));
-        assert_eq!(result.1, Some(vec!["ARG_SRC".to_string(), "CONFIG_SRC".to_string()]));
+        assert_eq!(result.1, Some("ARG_SRC".to_string()));
         assert_eq!(
             result.2,
             Some(vec![
@@ -250,11 +252,7 @@ mod tests {
         );
         assert_eq!(
             result.3,
-            Some(vec![
-                "ARG_REMAPPINGS_1".to_string(),
-                "ARG_REMAPPINGS_2".to_string(),
-                "CONFIG_REMAPPINGS".to_string()
-            ])
+            Some(vec!["ARG_REMAPPINGS_1".to_string(), "ARG_REMAPPINGS_2".to_string()])
         );
         assert_eq!(
             result.4,
@@ -264,6 +262,8 @@ mod tests {
                 "CONFIG_SCOPE".to_string()
             ])
         );
+
+        assert_eq!(env::var("FOUNDRY_PROFILE").unwrap(), "ENV_VAR_VALUE");
     }
 
     #[test]
@@ -282,14 +282,14 @@ mod tests {
         };
         config.remappings = vec![rel_remap];
 
-        let src = Some(vec!["ADERYN_SRC".to_string()]);
+        let src = Some("ADERYN_SRC".to_string());
         let exclude: Option<Vec<String>> =
             Some(vec!["ADERYN_EXCLUDE_1".to_string(), "ADERYN_EXCLUDE_2".to_string()]);
         let remappings =
             Some(vec!["ADERYN_REMAPPINGS_1".to_string(), "ADERYN_REMAPPINGS_2".to_string()]);
 
         let result = super::interpret_foundry_config(config, &src, &exclude, &remappings);
-        assert_eq!(result.0, Some(vec!["ADERYN_SRC".to_string()]));
+        assert_eq!(result.0, Some("ADERYN_SRC".to_string()));
         assert_eq!(
             result.1,
             Some(vec![

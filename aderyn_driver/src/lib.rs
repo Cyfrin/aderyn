@@ -19,9 +19,9 @@ fn ensure_valid_root_path(root_path: &Path) -> PathBuf {
     utils::canonicalize(root_path).unwrap()
 }
 
-fn passes_src(src: &Option<Vec<PathBuf>>, solidity_file: &Path) -> bool {
-    if let Some(sources) = src {
-        return sources.iter().any(|s| solidity_file.starts_with(s));
+fn passes_src(src: &Option<PathBuf>, solidity_file: &Path) -> bool {
+    if let Some(source) = src {
+        return solidity_file.starts_with(source);
     }
     true
 }

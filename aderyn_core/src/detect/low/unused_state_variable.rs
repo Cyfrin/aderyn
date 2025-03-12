@@ -78,12 +78,12 @@ impl IssueDetector for UnusedStateVariablesDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Potentially unused `private` / `internal` state variables found.")
+        String::from("Unused State Variable")
     }
 
     fn description(&self) -> String {
         String::from("State variable appears to be unused. No analysis has been performed to see if any inilne assembly \
-            references it. So if that's not the case, consider removing this unused variable.")
+            references it. Consider removing this unused variable.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

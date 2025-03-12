@@ -54,7 +54,7 @@ impl IssueDetector for CentralizationRiskDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Centralization Risk for trusted owners")
+        String::from("Centralization Risk")
     }
 
     fn description(&self) -> String {
@@ -94,7 +94,7 @@ mod centralization_risk_detector_tests {
         // assert that the severity is Low
         assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert that the title is correct
-        assert_eq!(detector.title(), String::from("Centralization Risk for trusted owners"));
+        assert_eq!(detector.title(), String::from("Centralization Risk"));
         // assert that the description is correct
         assert_eq!(
             detector.description(),
