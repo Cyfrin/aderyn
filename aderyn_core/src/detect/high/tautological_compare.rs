@@ -143,7 +143,7 @@ impl IssueDetector for TautologicalCompareDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Tautological comparison.")
+        String::from("Tautological comparison")
     }
 
     fn description(&self) -> String {
@@ -183,7 +183,7 @@ mod tautological_compare_tests {
         // assert the severity is high
         assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
         // assert the title is correct
-        assert_eq!(detector.title(), String::from("Tautological comparison."));
+        assert_eq!(detector.title(), String::from("Tautological comparison"));
         // assert the description is correct
         assert_eq!(
             detector.description(),

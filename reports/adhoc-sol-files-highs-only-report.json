@@ -94,9 +94,9 @@
   "high_issues": {
     "issues": [
       {
-        "title": "Delegatecall made by the function without checks on any address.",
-        "description": "Introduce checks on the address",
-        "detector_name": "delegate-call-on-unchecked-address",
+        "title": "`delegatecall` to an Arbitrary Address",
+        "description": "Making a `delegatecall` to an arbitrary address without any checks is dangerous. Consider adding requirements on the target address.",
+        "detector_name": "delegate-call-unchecked-address",
         "instances": [
           {
             "contract_path": "inheritance/ExtendedInheritance.sol",
@@ -125,32 +125,32 @@
     "issues": []
   },
   "detectors_used": [
-    "hash-collision-due-to-abi-encode-packed",
+    "abi-encode-packed-hash-collision",
     "arbitrary-transfer-from",
     "unprotected-initializer",
-    "unsafe-casting-detector",
+    "unsafe-casting",
     "enumerable-loop-removal",
     "experimental-encoder",
     "incorrect-shift-order",
-    "storage-array-edit-with-memory",
+    "storage-array-memory-edit",
     "multiple-constructors",
     "reused-contract-name",
     "nested-struct-in-mapping",
-    "selfdestruct-identifier",
+    "selfdestruct",
     "dynamic-array-length-assignment",
     "incorrect-caret-operator",
     "yul-return",
     "state-variable-shadowing",
     "unchecked-send",
     "misused-boolean",
-    "sends-ether-away-without-checking-address",
-    "delegate-call-on-unchecked-address",
+    "eth-send-unchecked-address",
+    "delegate-call-unchecked-address",
     "tautological-compare",
     "rtlo",
     "dangerous-unary-operator",
     "tautology-or-contradiction",
-    "strict-equailty-check-on-contract-balance",
-    "signed-storage-array",
+    "strict-equailty-contract-balance",
+    "signed-integer-storage-array",
     "weak-randomness",
     "pre-declared-local-variable-usage",
     "delete-nested-mapping",
@@ -160,7 +160,7 @@
     "incorrect-erc721-interface",
     "incorrect-erc20-interface",
     "out-of-order-retryable",
-    "constant-function-changing-state",
+    "constant-function-changes-state",
     "function-selector-collision",
     "unchecked-low-level-call"
   ]

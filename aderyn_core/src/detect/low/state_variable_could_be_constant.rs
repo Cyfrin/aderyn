@@ -94,7 +94,7 @@ impl IssueDetector for StateVariableCouldBeConstantDetector {
     }
 
     fn title(&self) -> String {
-        String::from("State variable could be declared constant")
+        String::from("State Variable Could Be Constant")
     }
 
     fn description(&self) -> String {

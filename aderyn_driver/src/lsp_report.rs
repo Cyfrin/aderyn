@@ -29,7 +29,7 @@ impl LspReport {
             let mut message = format!("Title: {}\n", issue_body.title);
 
             if !issue_body.description.is_empty() {
-                message.push_str(&format!("\nDesc: {}\n", issue_body.description));
+                message.push_str(&format!("\nDescription: {}\n", issue_body.description));
             }
 
             if let Some(hint) = instance.hint.clone() {
@@ -39,7 +39,7 @@ impl LspReport {
             }
 
             message.push_str(&format!(
-                "\nAdd the following the comment to disable this warning: \n// aderyn-ignore-next-line({})\n or if there's any existing comment put a comma next to it and add this rule's name. Like this - // aderyn-ingore-next-line(existing-rule, {})\n",
+               "\nTo ignore this warning, add:\n\n// aderyn-ignore-next-line({})\n\nor append to existing list:\n\n// aderyn-ignore-next-line(existing-rule, {})\n\n",
                 issue_body.detector_name,
                 issue_body.detector_name,
             ));

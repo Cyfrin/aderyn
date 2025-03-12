@@ -25,7 +25,7 @@ use tokio::sync::Mutex;
 pub struct Args {
     pub root: String,
     pub output: String,
-    pub src: Option<Vec<String>>,
+    pub src: Option<String>,
     pub path_excludes: Option<Vec<String>>,
     pub path_includes: Option<Vec<String>>,
     pub no_snippets: bool,
@@ -218,7 +218,7 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
 fn obtain_config_values(
     args: &Args,
 ) -> Result<
-    (PathBuf, Option<Vec<String>>, Option<Vec<String>>, Option<Vec<String>>, Option<Vec<String>>),
+    (PathBuf, Option<String>, Option<Vec<String>>, Option<Vec<String>>, Option<Vec<String>>),
     Box<dyn Error>,
 > {
     let mut root_path = PathBuf::from(&args.root);
@@ -255,7 +255,7 @@ fn obtain_config_values(
         if local_src.is_none()
             && (hardhat_config_js_path.exists() || hardhat_config_ts_path.exists())
         {
-            local_src = Some(vec![String::from("contracts")])
+            local_src = Some(String::from("contracts"));
         }
 
         // Also if there is no `remappings.txt` or `remappings` in this case, print a warning!
