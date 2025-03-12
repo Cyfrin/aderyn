@@ -20,40 +20,29 @@ pub struct PushZeroOpcodeDetector {
 }
 
 fn version_req_allows_above_0_8_19(version_req: &VersionReq) -> bool {
-    // Simplified logic to check if version_req allows versions above 0.8.19
-    // Note: This is a basic example and might not cover all complex semver cases.
-    if version_req.comparators.len() == 1 {
-        let comparator = &version_req.comparators[0];
-        match comparator.op {
-            Op::Tilde | Op::Caret => {
-                if comparator.major > 0 || comparator.minor >= Some(8) {
-                    return true;
-                }
+    match version_req.comparators.len() {
+        1 => {
+            let comp = &version_req.comparators[0];
+            match comp.op {
+                Op::Tilde | Op::Caret => comp.major > 0 || comp.minor >= Some(8),
+                Op::Greater | Op::GreaterEq => true,
+                Op::Exact => comp.major == 0 && comp.minor == Some(8) && comp.patch == Some(20),
+                _ => false,
             }
-            Op::Greater | Op::GreaterEq => {
-                return true;
-            }
-            Op::Exact => {
-                if comparator.major == 0
-                    && comparator.minor == Some(8)
-                    && comparator.patch == Some(20)
-                {
-                    return true;
-                }
-            }
-            _ => {}
         }
-    } else if version_req.comparators.len() == 2 {
-        let comparator_2 = &version_req.comparators[1];
-        if comparator_2.major > 0
-            || (comparator_2.minor >= Some(8))
-            || (comparator_2.minor == Some(8) && comparator_2.patch >= Some(20))
-        {
-            return true;
+        2 => {
+            let comp = &version_req.comparators[1];
+            match comp.op {
+                Op::Less | Op::LessEq => {
+                    comp.major > 0
+                        || comp.minor > Some(8)
+                        || (comp.minor == Some(8) && comp.patch >= Some(20))
+                }
+                _ => false,
+            }
         }
+        _ => false,
     }
-
-    false
 }
 
 impl IssueDetector for PushZeroOpcodeDetector {
@@ -181,5 +170,18 @@ mod unspecific_solidity_pragma_tests {
         assert!(found);
         // assert that the number of instances is correct
         assert_eq!(detector.instances().len(), 1);
+    }
+
+    #[test]
+    #[serial]
+    fn test_push_0_opcode_detector_on_pragma_range_by_loading_contract_directly() {
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/PragmaRange.sol",
+        );
+
+        let mut detector = super::PushZeroOpcodeDetector::default();
+        let found = detector.detect(&context).unwrap();
+        // assert that it found nothing
+        assert!(!found);
     }
 }
