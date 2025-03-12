@@ -205,7 +205,7 @@ mod unspecific_solidity_pragma_tests {
 
         let mut detector = super::PushZeroOpcodeDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that it found something
+        // assert that it found nothing
         assert!(!found);
     }
 }
