@@ -179,7 +179,7 @@ impl IssueDetector for StateVariableShadowingDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Shadowed State Variables in Inheritance Hierarchy")
+        String::from("Shadowed State Variable")
     }
 
     fn description(&self) -> String {
@@ -222,10 +222,7 @@ mod state_variable_shadowing_detector_tests {
         // assert the severity is high
         assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
         // assert the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from("Shadowed State Variables in Inheritance Hierarchy")
-        );
+        assert_eq!(detector.title(), String::from("Shadowed State Variable"));
         // assert the description is correct
         assert_eq!(
             detector.description(),

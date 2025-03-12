@@ -49,7 +49,7 @@ impl IssueDetector for FucntionPointerInConstructorDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Function pointers used in constructors.")
+        String::from("Function Pointer in Constructor")
     }
 
     fn description(&self) -> String {

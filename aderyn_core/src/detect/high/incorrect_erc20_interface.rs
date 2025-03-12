@@ -82,7 +82,7 @@ impl IssueDetector for IncorrectERC20InterfaceDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Incorrect ERC20 interface.")
+        String::from("Incorrect ERC20 interface")
     }
 
     fn description(&self) -> String {

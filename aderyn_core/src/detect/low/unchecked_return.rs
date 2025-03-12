@@ -62,11 +62,13 @@ impl IssueDetector for UncheckedReturnDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Return value of the function call is not checked.")
+        String::from("Unchecked Return")
     }
 
     fn description(&self) -> String {
-        String::from("Function returns a value but it is ignored.")
+        String::from(
+            "Function returns a value but it is ignored. Consider checking the return value.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -103,14 +105,13 @@ mod unchecked_return_tests {
         // assert the severity is high
         assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from("Return value of the function call is not checked.")
-        );
+        assert_eq!(detector.title(), String::from("Unchecked Return"));
         // assert the description is correct
         assert_eq!(
             detector.description(),
-            String::from("Function returns a value but it is ignored.")
+            String::from(
+                "Function returns a value but it is ignored. Consider checking the return value."
+            )
         );
     }
 }

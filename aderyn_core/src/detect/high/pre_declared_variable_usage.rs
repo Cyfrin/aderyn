@@ -81,11 +81,11 @@ impl IssueDetector for PreDeclaredLocalVariableUsageDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Usage of variable before declaration.")
+        String::from("Usage of variable before declaration")
     }
 
     fn description(&self) -> String {
-        String::from("This is a bad practice that may lead to unintended consequences. Please declare the variable before using it.")
+        String::from("Declare the variable before using it to avoid unintended consequences.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -122,11 +122,11 @@ mod pre_declared_variable_usage_tests {
         // assert the severity is high
         assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
         // assert the title is correct
-        assert_eq!(detector.title(), String::from("Usage of variable before declaration."));
+        assert_eq!(detector.title(), String::from("Usage of variable before declaration"));
         // assert the description is correct
         assert_eq!(
             detector.description(),
-            String::from("This is a bad practice that may lead to unintended consequences. Please declare the variable before using it.")
+            String::from("Declare the variable before using it to avoid unintended consequences.")
         );
     }
 }
