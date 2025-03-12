@@ -45,11 +45,24 @@ fn version_req_allows_above_0_8_19(version_req: &VersionReq) -> bool {
         }
     } else if version_req.comparators.len() == 2 {
         let comparator_2 = &version_req.comparators[1];
-        if comparator_2.major > 0
-            || (comparator_2.minor >= Some(8))
-            || (comparator_2.minor == Some(8) && comparator_2.patch >= Some(20))
-        {
-            return true;
+        match comparator_2.op {
+            Op::Less => {
+                if comparator_2.major > 0
+                    || (comparator_2.minor > Some(8))
+                    || (comparator_2.minor == Some(8) && comparator_2.patch > Some(20))
+                {
+                    return true;
+                }
+            }
+            Op::LessEq => {
+                if comparator_2.major > 0
+                    || (comparator_2.minor > Some(8))
+                    || (comparator_2.minor == Some(8) && comparator_2.patch >= Some(20))
+                {
+                    return true;
+                }
+            }
+            _ => {}
         }
     }
 
@@ -181,5 +194,18 @@ mod unspecific_solidity_pragma_tests {
         assert!(found);
         // assert that the number of instances is correct
         assert_eq!(detector.instances().len(), 1);
+    }
+
+    #[test]
+    #[serial]
+    fn test_push_0_opcode_detector_on_pragma_range_by_loading_contract_directly() {
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/PragmaRange.sol",
+        );
+
+        let mut detector = super::PushZeroOpcodeDetector::default();
+        let found = detector.detect(&context).unwrap();
+        // assert that it found something
+        assert!(!found);
     }
 }

@@ -3756,6 +3756,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/PragmaRange.sol"
+                },
+                "region": {
+                  "byteLength": 31,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/PreDeclaredVarUsage.sol"
                 },
                 "region": {

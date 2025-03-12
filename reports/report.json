@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 114,
-    "total_sloc": 3993
+    "total_source_units": 115,
+    "total_sloc": 3999
   },
   "files_details": {
     "files_details": [
@@ -216,6 +216,10 @@
       {
         "file_path": "src/OutOfOrderRetryable.sol",
         "n_sloc": 165
+      },
+      {
+        "file_path": "src/PragmaRange.sol",
+        "n_sloc": 6
       },
       {
         "file_path": "src/PreDeclaredVarUsage.sol",
@@ -2611,6 +2615,12 @@
             "line_no": 2,
             "src": "32:23",
             "src_char": "32:23"
+          },
+          {
+            "contract_path": "src/PragmaRange.sol",
+            "line_no": 2,
+            "src": "32:31",
+            "src_char": "32:31"
           },
           {
             "contract_path": "src/PreDeclaredVarUsage.sol",
