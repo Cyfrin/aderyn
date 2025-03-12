@@ -41,7 +41,7 @@ impl IssueDetector for UnspecificSolidityPragmaDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Solidity pragma should be specific, not wide")
+        String::from("Unspecific Solidity Pragma")
     }
 
     fn description(&self) -> String {
@@ -85,7 +85,7 @@ mod unspecific_solidity_pragma_tests {
         // assert that the severity is low
         assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert that the title is correct
-        assert_eq!(detector.title(), String::from("Solidity pragma should be specific, not wide"));
+        assert_eq!(detector.title(), String::from("Unspecific Solidity Pragma"));
         // assert that the description is correct
         assert_eq!(
             detector.description(),

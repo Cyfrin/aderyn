@@ -38,7 +38,8 @@ impl IssueDetector for DivisionBeforeMultiplicationDetector {
     }
 
     fn description(&self) -> String {
-        String::from("Division operations followed directly by multiplication operations can lead to precision loss due to the way integer arithmetic is handled in Solidity.")
+        String::from("Division operations followed directly by multiplication operations can lead to precision loss due to the way integer arithmetic is handled in Solidity./
+        Consider Multiplication before Division.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -75,7 +76,8 @@ mod division_before_multiplication_detector_tests {
         );
         assert_eq!(
             detector.description(),
-            String::from("Division operations followed directly by multiplication operations can lead to precision loss due to the way integer arithmetic is handled in Solidity.")
+            String::from("Division operations followed directly by multiplication operations can lead to precision loss due to the way integer arithmetic is handled in Solidity./
+        Consider Multiplication before Division.")
         );
     }
 }
