@@ -26,20 +26,20 @@ impl LspReport {
             let pos_range = pos_range.parse::<u32>().unwrap_or_default();
 
             // Craft the diagnostic message
-            let mut message = format!("Title: {}\n", issue_body.title);
+            let mut message = format!("ISSUE {}\n", issue_body.title);
 
             if !issue_body.description.is_empty() {
-                message.push_str(&format!("\nDesc: {}\n", issue_body.description));
+                message.push_str(&format!("\n{}\n", issue_body.description));
             }
 
             if let Some(hint) = instance.hint.clone() {
                 if !hint.is_empty() {
-                    message.push_str(&format!("\nHint: {}\n", hint));
+                    message.push_str(&format!("\n{}\n", hint));
                 }
             }
 
             message.push_str(&format!(
-                "\nAdd the following the comment to disable this warning: \n// aderyn-ignore-next-line({})\n or if there's any existing comment put a comma next to it and add this rule's name. Like this - // aderyn-ingore-next-line(existing-rule, {})\n",
+                "\nTo ignore this warning, add the following comment:\n// aderyn-ignore-next-line({})\n or if there's any existing comment put a comma next to it and add this rule's name. Like this - // aderyn-ingore-next-line(existing-rule, {})\n",
                 issue_body.detector_name,
                 issue_body.detector_name,
             ));
