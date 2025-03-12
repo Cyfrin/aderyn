@@ -39,7 +39,7 @@ impl LspReport {
             }
 
             message.push_str(&format!(
-                "\nTo ignore this warning, add the following comment:\n// aderyn-ignore-next-line({})\n or if there's any existing comment put a comma next to it and add this rule's name. Like this - // aderyn-ingore-next-line(existing-rule, {})\n",
+               "\nTo ignore this warning, add:\n// aderyn-ignore-next-line({})\nor append to existing list: // aderyn-ignore-next-line(existing-rule, {})\n",
                 issue_body.detector_name,
                 issue_body.detector_name,
             ));
