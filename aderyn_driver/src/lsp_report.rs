@@ -26,7 +26,7 @@ impl LspReport {
             let pos_range = pos_range.parse::<u32>().unwrap_or_default();
 
             // Craft the diagnostic message
-            let mut message = format!("ISSUE {}\n", issue_body.title);
+            let mut message = format!("ISSUE: {}\n", issue_body.title);
 
             if !issue_body.description.is_empty() {
                 message.push_str(&format!("\n{}\n", issue_body.description));
