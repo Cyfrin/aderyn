@@ -95,7 +95,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<MissingInheritanceDetector>::default(),
         Box::<UnusedImportDetector>::default(),
         Box::<UncheckedLowLevelCallDetector>::default(),
-        Box::<FucntionPointerInConstructorDetector>::default(),
+        Box::<FunctionPointerInConstructorDetector>::default(),
         Box::<StateVariableCouldBeConstantDetector>::default(),
         Box::<StateVariableChangesWithoutEventDetector>::default(),
         Box::<StateVariableCouldBeImmutableDetector>::default(),
@@ -179,7 +179,7 @@ pub(crate) enum IssueDetectorNamePool {
     UncheckedReturn,
     DangerousUnaryOperator,
     TautologyOrContradiction,
-    StrictEquailtyContractBalance,
+    StrictEqualityContractBalance,
     SignedIntegerStorageArray,
     RedundantStatement,
     StateVariableReadExternal,
@@ -231,7 +231,7 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
             Some(Box::<LiteralsInsteadOfConstantsDetector>::default())
         }
         IssueDetectorNamePool::FunctionPointerInConstructor => {
-            Some(Box::<FucntionPointerInConstructorDetector>::default())
+            Some(Box::<FunctionPointerInConstructorDetector>::default())
         }
         IssueDetectorNamePool::DeadCode => Some(Box::<DeadCodeDetector>::default()),
         IssueDetectorNamePool::FunctionSelectorCollision => {
@@ -390,7 +390,7 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::TautologyOrContradiction => {
             Some(Box::<TautologyOrContraditionDetector>::default())
         }
-        IssueDetectorNamePool::StrictEquailtyContractBalance => {
+        IssueDetectorNamePool::StrictEqualityContractBalance => {
             Some(Box::<DangerousStrictEqualityOnBalanceDetector>::default())
         }
         IssueDetectorNamePool::SignedIntegerStorageArray => {

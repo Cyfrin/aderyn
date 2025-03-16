@@ -149,7 +149,7 @@
     "rtlo",
     "dangerous-unary-operator",
     "tautology-or-contradiction",
-    "strict-equailty-contract-balance",
+    "strict-equality-contract-balance",
     "signed-integer-storage-array",
     "weak-randomness",
     "pre-declared-local-variable-usage",

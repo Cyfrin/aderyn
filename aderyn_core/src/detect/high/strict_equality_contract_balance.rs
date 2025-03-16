@@ -40,7 +40,7 @@ impl IssueDetector for DangerousStrictEqualityOnBalanceDetector {
                                     // For older solc versions when you say this.balance, "this" is
                                     // of type contract XXX
                                     type_string.starts_with("contract ")
-                                    // In newers solidity versions, you say adddress(this).balance or payable(address(this)).balance
+                                    // In newers solidity versions, you say address(this).balance or payable(address(this)).balance
                                         || type_string == "address"
                                         || type_string == "address payable"
                                 })
@@ -73,7 +73,7 @@ impl IssueDetector for DangerousStrictEqualityOnBalanceDetector {
     }
 
     fn name(&self) -> String {
-        IssueDetectorNamePool::StrictEquailtyContractBalance.to_string()
+        IssueDetectorNamePool::StrictEqualityContractBalance.to_string()
     }
 }
 

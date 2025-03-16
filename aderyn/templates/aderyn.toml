@@ -42,7 +42,7 @@ root = "."
 # - If not specified, Aderyn will try to derive the values from foundry.toml (if present.)
 
 # Environment
-# - These are ususally all the FOUNDRY_, DAPP_ environment variables that are used during development.
+# - These are usually all the FOUNDRY_, DAPP_ environment variables that are used during development.
 # - For example, if different profiles have different `src` declaration in `foundry.toml`, FOUNDRY_PROFILE can dictate the correct `src` value.
 #   Env variables and their values can be specified below.
 

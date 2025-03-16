@@ -31,7 +31,7 @@ impl IssueDetector for CacheArrayLengthDetector {
         for for_loop in context.for_statements() {
             if let Some(changes) = for_loop.state_variable_changes(context) {
                 // Find all the storage arrays on which `.length` is checked in for loop's
-                // conidition
+                // condition
                 let state_vars =
                     for_loop.state_variables_lengths_that_are_referenced_in_condition(context);
 
@@ -173,7 +173,7 @@ mod loop_investigation_helper {
 }
 
 #[cfg(test)]
-mod cahce_array_length_tests {
+mod cache_array_length_tests {
     use serial_test::serial;
 
     use crate::detect::{
