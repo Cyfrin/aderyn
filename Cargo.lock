@@ -1587,7 +1587,7 @@ dependencies = [
 [[package]]
 name = "foundry-compilers-aletheia"
 version = "0.0.1"
-source = "git+https://github.com/Cyfrin/foundry-compilers-aletheia?tag=v0.0.1#53d739606239802e611c52832f851e8ff14b5fc9"
+source = "git+https://github.com/Cyfrin/foundry-compilers-aletheia?tag=v0.0.1-alpha.2#017827b3042391aa8f8a498236b7da29c0d78beb"
 dependencies = [
  "foundry-compilers",
  "foundry-config",

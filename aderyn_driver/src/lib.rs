@@ -2,7 +2,6 @@ pub(crate) mod config_helpers;
 pub mod driver;
 pub mod lsp_report;
 pub(crate) mod process_auto;
-pub(crate) mod project_compiler_tests;
 use std::path::{Path, PathBuf};
 
 pub use aderyn_core::{ast as core_ast, context, detect as detection_modules, detect::detector};

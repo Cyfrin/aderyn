@@ -2,7 +2,7 @@
 mod project_compiler_grouping_tests {
     use std::{env::set_var, path::PathBuf, str::FromStr};
 
-    use crate::process_auto;
+    use aderyn_driver::with_project_root_at;
 
     // Tester function
     fn test_grouping_files_to_compile(
@@ -18,13 +18,7 @@ mod project_compiler_grouping_tests {
             None
         };
 
-        let contexts = process_auto::with_project_root_at(
-            root_path.as_path(),
-            &source,
-            exclude,
-            include,
-            false,
-        );
+        let contexts = with_project_root_at(root_path.as_path(), &source, exclude, include, false);
 
         assert!(!contexts.is_empty());
         contexts.iter().for_each(|c| {
@@ -59,16 +53,19 @@ mod project_compiler_grouping_tests {
         test_grouping_files_to_compile(project_root_str, src, &None, &None);
     }
 
-    #[test]
-    fn ccip_develop() {
-        let project_root_str = "../tests/ccip-contracts/contracts";
-        set_var("FOUNDRY_PROFILE", "vrfv2plus_coordinator");
-        test_grouping_files_to_compile(project_root_str, &None, &None, &None);
-    }
+    // INFO: This CCIP unit test takes too much time to run. Since we already have
+    // an integration test, let's not have this.
+    //
+    //#[test]
+    //fn ccip_develop() {
+    //    let project_root_str = "../tests/ccip-contracts/contracts";
+    //    set_var("FOUNDRY_PROFILE", "vrfv2plus_coordinator");
+    //    test_grouping_files_to_compile(project_root_str, &None, &None, &None);
+    //}
 
     #[test]
     fn test_no_files_found_in_scope_id_detected_by_context_src_filepaths() {
-        let contexts = process_auto::with_project_root_at(
+        let contexts = with_project_root_at(
             &PathBuf::from("../tests/contract-playground").canonicalize().unwrap(),
             &None,
             &None,
