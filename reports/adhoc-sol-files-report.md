@@ -650,7 +650,7 @@ Consider using or removing the unused error.
 
 ## L-17: Unused State Variable
 
-State variable appears to be unused. No analysis has been performed to see if any inilne assembly references it. Consider removing this unused variable.
+State variable appears to be unused. No analysis has been performed to see if any inline assembly references it. Consider removing this unused variable.
 
 <details><summary>7 Found Instances</summary>
 

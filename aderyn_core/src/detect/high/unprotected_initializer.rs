@@ -82,7 +82,7 @@ impl CallGraphVisitor for UnprotectedInitializationTracker {
         }
 
         // Check if modifier name is "initialized" and assume it works
-        // This is done becauase often times initialized comes from openzeppelin and it is out of
+        // This is done because often times initialized comes from openzeppelin and it is out of
         // scope when running aderyn due to it being a library
 
         let modifier_invocations = ExtractModifierInvocations::from(node).extracted;

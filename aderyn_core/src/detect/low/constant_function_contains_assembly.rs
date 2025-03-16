@@ -5,7 +5,7 @@ use crate::ast::{ASTNode, NodeID, NodeType, StateMutability};
 use crate::{
     capture,
     context::browser::{
-        ExtractInlineAssemblys, ExtractPragmaDirectives, GetClosestAncestorOfTypeX,
+        ExtractInlineAssemblies, ExtractPragmaDirectives, GetClosestAncestorOfTypeX,
     },
 };
 
@@ -112,7 +112,7 @@ struct AssemblyTracker {
 
 impl CallGraphVisitor for AssemblyTracker {
     fn visit_any(&mut self, node: &crate::ast::ASTNode) -> eyre::Result<()> {
-        // If we are already satisifed, do not bother checking
+        // If we are already satisfied, do not bother checking
         if self.has_assembly {
             return Ok(());
         }
@@ -121,14 +121,14 @@ impl CallGraphVisitor for AssemblyTracker {
             // Ignore checking functions that start with `_`
             // Example - templegold contains math functions like `_rpow()`, etc that are used by
             // view functions That should be okay .. I guess? (idk ... it's open for
-            // dicussion)
+            // discussion)
             if function.name.starts_with('_') {
                 return Ok(());
             }
         }
 
         // Check if this node has assembly code
-        let assemblies = ExtractInlineAssemblys::from(node).extracted;
+        let assemblies = ExtractInlineAssemblies::from(node).extracted;
         if !assemblies.is_empty() {
             self.has_assembly = true;
         }

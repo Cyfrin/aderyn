@@ -84,8 +84,8 @@ fn find_all_public_member_names_called_using_this_keyword_in_contract<'a>(
         {
             if let Expression::Identifier(Identifier { name, .. }) = expression.as_ref() {
                 if name == "this" {
-                    if let Some(ASTNode::MemberAccess(member_acess)) = context.nodes.get(id) {
-                        member_names.push(member_acess)
+                    if let Some(ASTNode::MemberAccess(member_access)) = context.nodes.get(id) {
+                        member_names.push(member_access)
                     }
                 }
             }
@@ -108,10 +108,10 @@ fn find_all_public_state_variables_names_for_contract(
         .iter()
         .flat_map(|ancestor_id| {
             if let Some(ancestor) = context.nodes.get(ancestor_id) {
-                let public_variable_declaraions =
+                let public_variable_declarations =
                     ExtractVariableDeclarations::from(ancestor).extracted;
                 return Some(
-                    public_variable_declaraions
+                    public_variable_declarations
                         .into_iter()
                         .filter(|declaration| {
                             declaration.state_variable

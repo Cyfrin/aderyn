@@ -78,7 +78,7 @@ impl IssueDetector for ReturnBombDetector {
                         if let Some(ASTNode::Assignment(assignment)) =
                             function_call.closest_ancestor_of_type(context, NodeType::Assignment)
                         {
-                            // The following check will ensure that the last paramter which is
+                            // The following check will ensure that the last parameter which is
                             // `bytes memory retData` is not unpacked.
                             // (there is nothing after comma)
                             if !assignment.left_hand_side.type_descriptions().is_some_and(
@@ -111,7 +111,7 @@ impl IssueDetector for ReturnBombDetector {
     fn description(&self) -> String {
         String::from("A low level callee may consume all callers gas unexpectedly. Avoid unlimited implicit decoding of returndata on \
             calls to unchecked addresses. You can limit the gas by passing a gas limit as an option to the call. For example, \
-            `unknownAdress.call{gas: gasLimitHere}(\"calldata\")` That would act as a safety net from OOG errors.
+            `unknownAddress.call{gas: gasLimitHere}(\"calldata\")` That would act as a safety net from OOG errors.
         ")
     }
 
