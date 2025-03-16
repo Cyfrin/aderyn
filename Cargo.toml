@@ -1,15 +1,10 @@
 [workspace]
+resolver="2"
+
 members = [
     "aderyn",
     "aderyn_core",
     "aderyn_driver",
-]
-
-resolver="1"
-
-exclude = [
-    "bot_ci_cd",
-    "foundry",
 ]
 
 [workspace.dependencies]
