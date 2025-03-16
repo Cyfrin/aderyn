@@ -39,15 +39,15 @@ impl<T: Node + ?Sized> PeekUnder for T {
         if let Some(next_sibling) = self.next_sibling(context) {
             let (next_offset, _) = context.get_offset_and_length_of_node(next_sibling.id()?)?;
             if curr_offset + curr_len < next_offset && next_offset < content.len() {
-                let requried_content = &content[curr_offset + curr_len..next_offset];
-                return Some(requried_content.to_string());
+                let required_content = &content[curr_offset + curr_len..next_offset];
+                return Some(required_content.to_string());
             } else {
                 return None;
             }
         }
 
         // If there is no next sibling we must content til the bottom of the file
-        let requried_content = &content[curr_offset + curr_len..];
-        Some(requried_content.to_string())
+        let required_content = &content[curr_offset + curr_len..];
+        Some(required_content.to_string())
     }
 }

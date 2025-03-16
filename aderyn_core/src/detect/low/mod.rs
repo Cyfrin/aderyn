@@ -61,7 +61,7 @@ pub use ecrecover::EcrecoverDetector;
 pub use empty_block::EmptyBlockDetector;
 pub use empty_require_revert::EmptyRequireRevertDetector;
 pub use function_initializing_state::FunctionInitializingStateDetector;
-pub use function_pointer_in_constructor::FucntionPointerInConstructorDetector;
+pub use function_pointer_in_constructor::FunctionPointerInConstructorDetector;
 pub use inconsistent_type_names::InconsistentTypeNamesDetector;
 pub use internal_function_used_once::InternalFunctionUsedOnceDetector;
 pub use large_numeric_literal::LargeLiteralValueDetector;

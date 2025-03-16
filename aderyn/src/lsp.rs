@@ -192,7 +192,7 @@ fn create_lsp_service_and_react_to_file_event(
         }
 
         tokio::spawn(async move {
-            // For the first time, run it automaticaly
+            // For the first time, run it automatically
             let new_guarded_clone = Arc::clone(&guarded_client);
             let seen_files_uris_clone = Arc::clone(&seen_file_uris);
             generate_diagnostics_and_publish(&args, new_guarded_clone, seen_files_uris_clone).await;

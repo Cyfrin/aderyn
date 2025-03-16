@@ -56,7 +56,7 @@ impl IssueDetector for SendEtherNoChecksDetector {
     }
 
     fn title(&self) -> String {
-        String::from("ETH transfered without address checks")
+        String::from("ETH transferred without address checks")
     }
 
     fn description(&self) -> String {
@@ -97,7 +97,7 @@ mod send_ether_no_checks_detector_tests {
     use serial_test::serial;
 
     use crate::detect::{
-        detector::IssueDetector, high::eth_send_uncehcked_address::SendEtherNoChecksDetector,
+        detector::IssueDetector, high::eth_send_unchecked_address::SendEtherNoChecksDetector,
     };
 
     #[test]

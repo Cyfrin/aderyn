@@ -24,7 +24,7 @@ impl IssueDetector for FunctionInitializingStateDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // PLAN
         // Capture state variables that are initialized directly by calling a non constant function.
-        // Go throough state variable declarations with initial value (this will be true when value
+        // Go thorough state variable declarations with initial value (this will be true when value
         // is set outside constructor) See if the function references non-constant state
         // variables. If it does, then capture it
 
@@ -93,7 +93,7 @@ impl<'a> NonConstantStateVariableReferenceDeclarationTracker<'a> {
 
 impl CallGraphVisitor for NonConstantStateVariableReferenceDeclarationTracker<'_> {
     fn visit_any(&mut self, node: &ASTNode) -> eyre::Result<()> {
-        // We already know the condition is satisifed
+        // We already know the condition is satisfied
         if self.makes_a_reference {
             return Ok(());
         }
