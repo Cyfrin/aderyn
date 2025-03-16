@@ -75,8 +75,11 @@ mod project_compiler_grouping_tests {
         assert!(contexts.iter().all(|c| c.src_filepaths.is_empty()));
     }
 
-    //#[test]
-    //fn test_compiler_input_returns_empty_vector_when_no_solidity_files_present() {
-    //    todo!("../tests/no-sol-files")
-    //}
+    #[test]
+    fn test_compiler_input_returns_empty_vector_when_no_solidity_files_present() {
+        let project_root_str = "../tests/no-sol-files";
+        let root_path = PathBuf::from_str(project_root_str).unwrap();
+        let contexts = with_project_root_at(root_path.as_path(), &None, &None, &None, false);
+        assert!(contexts.is_empty());
+    }
 }
