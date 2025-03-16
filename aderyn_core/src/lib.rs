@@ -7,7 +7,6 @@ pub mod report;
 pub mod visitor;
 
 use audit::auditor::{get_auditor_detectors, AuditorPrinter, BasicAuditorPrinter};
-use cyfrin_foundry_compilers::utils::canonicalize;
 use detect::detector::IssueDetector;
 use eyre::Result;
 use fscloc::cloc::When;
@@ -235,7 +234,7 @@ pub fn get_report(
                 .filter(|(instance, _)| {
                     let lines_to_ignore_in_file = ignore_lines
                         .get(
-                            &canonicalize(root_rel_path.join(&instance.0))
+                            &dunce::canonicalize(root_rel_path.join(&instance.0).as_path())
                                 .unwrap()
                                 .to_string_lossy()
                                 .to_string(),
