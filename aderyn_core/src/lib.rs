@@ -7,7 +7,6 @@ pub mod report;
 pub mod visitor;
 
 use audit::auditor::{get_auditor_detectors, AuditorPrinter, BasicAuditorPrinter};
-use cyfrin_foundry_compilers::utils::canonicalize;
 use detect::detector::IssueDetector;
 use eyre::Result;
 use fscloc::cloc::When;
@@ -26,6 +25,13 @@ use std::{
 use crate::{context::workspace_context::WorkspaceContext, detect::detector::IssueSeverity};
 
 use crate::report::{printer::ReportPrinter, reporter::Report, Issue};
+
+pub fn canonicalize(
+    path: impl AsRef<Path>,
+) -> Result<PathBuf, Box<dyn std::error::Error + 'static>> {
+    let path = path.as_ref();
+    Ok(dunce::canonicalize(path)?)
+}
 
 #[allow(clippy::too_many_arguments)]
 pub fn run<T>(
