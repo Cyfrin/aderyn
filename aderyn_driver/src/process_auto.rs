@@ -28,7 +28,7 @@ pub fn with_project_root_at(
 
     if let Some(src) = src {
         project_config_builder = project_config_builder.with_sources(SourcesConfig::Specific(
-            PathBuf::from_str(src).expect(&format!("{} is not a valid path", src)),
+            PathBuf::from_str(src).unwrap_or_else(|_| panic!("{} is not a valid path", src)),
         ));
     }
 
@@ -47,7 +47,7 @@ pub fn with_project_root_at(
     let mut contexts = vec![];
 
     let absolute_root_path = std::fs::canonicalize(root_path)
-        .expect(&format!("Root path: {:?} is unable to be canonicalized", root_path));
+        .unwrap_or_else(|_| panic!("Root path: {:?} is unable to be canonicalized", root_path));
 
     for ast_info in retrieved_info.versioned_asts {
         let mut context = WorkspaceContext::default();
