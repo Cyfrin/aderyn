@@ -27,7 +27,7 @@ pub struct UnusedStateVariablesDetector {
 
 impl IssueDetector for UnusedStateVariablesDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        // Collect all referencedDeclaration IDs adn StateVariableDeclarationIDs
+        // Collect all referencedDeclaration IDs and StateVariableDeclarationIDs
         let mut all_referenced_declarations = BTreeSet::new();
         let mut all_state_variable_declarations = BTreeSet::new();
 
@@ -82,7 +82,7 @@ impl IssueDetector for UnusedStateVariablesDetector {
     }
 
     fn description(&self) -> String {
-        String::from("State variable appears to be unused. No analysis has been performed to see if any inilne assembly \
+        String::from("State variable appears to be unused. No analysis has been performed to see if any inline assembly \
             references it. Consider removing this unused variable.")
     }
 

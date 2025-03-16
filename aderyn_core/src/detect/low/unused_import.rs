@@ -163,7 +163,7 @@ mod source_unit_graph_analysis {
         }
 
         /// Each relationship edge corresponds to an import statement in `from` source unit that
-        /// imports symbols `symbols` from `to` souce unit
+        /// imports symbols `symbols` from `to` source unit
         pub fn create_relationship_for_symbols(
             &mut self,
             from_source_unit: NodeID,

@@ -1267,7 +1267,7 @@
       },
       {
         "title": "Direct assignment of array length",
-        "description": "If the length of a dynamic array (storage variable) is directly assigned to, it may allow access to other storage slots by tweaking it's value. This practice has been depracated in newer Solidity versions",
+        "description": "If the length of a dynamic array (storage variable) is directly assigned to, it may allow access to other storage slots by tweaking it's value. This practice has been deprecated in newer Solidity versions",
         "detector_name": "dynamic-array-length-assignment",
         "instances": [
           {
@@ -1367,7 +1367,7 @@
       },
       {
         "title": "Unchecked `bool success` value for ETH send",
-        "description": "The call `address(payable?).send(address)` may fail because of reasons like out-of-gas, invalid receipient address or revert from the recipient, but not revert the transaction. Therefore, the boolean returned by this function call must be checked to be `true` in order to verify that the transaction was successful.",
+        "description": "The call `address(payable?).send(address)` may fail because of reasons like out-of-gas, invalid recipient address or revert from the recipient, but not revert the transaction. Therefore, the boolean returned by this function call must be checked to be `true` in order to verify that the transaction was successful.",
         "detector_name": "unchecked-send",
         "instances": [
           {
@@ -1446,7 +1446,7 @@
         ]
       },
       {
-        "title": "ETH transfered without address checks",
+        "title": "ETH transferred without address checks",
         "description": "Consider introducing checks for `msg.sender` to ensure the recipient of the money is as intended.",
         "detector_name": "eth-send-unchecked-address",
         "instances": [
@@ -1694,7 +1694,7 @@
       {
         "title": "Dangerous strict equality checks on contract balances",
         "description": "A contract's balance can be forcibly manipulated by another selfdestructing contract. Therefore, it's recommended to use >, <, >= or <= instead of strict equality.",
-        "detector_name": "strict-equailty-contract-balance",
+        "detector_name": "strict-equality-contract-balance",
         "instances": [
           {
             "contract_path": "src/DangerousStrictEquality1.sol",
@@ -2065,7 +2065,7 @@
       },
       {
         "title": "Function Selector Collision",
-        "description": "Function selector collides with other functions. This may cause the solidity function dispatcher to invoke the wrong function if the functions happen to be included in the same contract through an inheritance hirearchy later down the line. It is recommended to rename this function or change its parameters.",
+        "description": "Function selector collides with other functions. This may cause the solidity function dispatcher to invoke the wrong function if the functions happen to be included in the same contract through an inheritance hierarchy later down the line. It is recommended to rename this function or change its parameters.",
         "detector_name": "function-selector-collision",
         "instances": [
           {
@@ -5117,7 +5117,7 @@
       },
       {
         "title": "Unused State Variable",
-        "description": "State variable appears to be unused. No analysis has been performed to see if any inilne assembly references it. Consider removing this unused variable.",
+        "description": "State variable appears to be unused. No analysis has been performed to see if any inline assembly references it. Consider removing this unused variable.",
         "detector_name": "unused-state-variable",
         "instances": [
           {
@@ -5494,7 +5494,7 @@
       },
       {
         "title": "Return Bomb",
-        "description": "A low level callee may consume all callers gas unexpectedly. Avoid unlimited implicit decoding of returndata on calls to unchecked addresses. You can limit the gas by passing a gas limit as an option to the call. For example, `unknownAdress.call{gas: gasLimitHere}(\"calldata\")` That would act as a safety net from OOG errors.\n        ",
+        "description": "A low level callee may consume all callers gas unexpectedly. Avoid unlimited implicit decoding of returndata on calls to unchecked addresses. You can limit the gas by passing a gas limit as an option to the call. For example, `unknownAddress.call{gas: gasLimitHere}(\"calldata\")` That would act as a safety net from OOG errors.\n        ",
         "detector_name": "return-bomb",
         "instances": [
           {
@@ -7056,7 +7056,7 @@
     "rtlo",
     "dangerous-unary-operator",
     "tautology-or-contradiction",
-    "strict-equailty-contract-balance",
+    "strict-equality-contract-balance",
     "signed-integer-storage-array",
     "redundant-statement",
     "state-variable-read-external",

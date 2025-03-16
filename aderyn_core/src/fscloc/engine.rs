@@ -50,7 +50,7 @@ pub fn count_lines_of_code_and_collect_line_numbers_to_ignore(
         });
     }
 
-    drop(tx); // without this, the program would not terminate .. becoz receiver would
+    drop(tx); // without this, the program would not terminate .. because receiver would
               // think that the `tx` is still waiting to send something.. but we're done
               // the clones have been dropped but not the original
               // refer rust docs for more on automatic garbage collection :)
