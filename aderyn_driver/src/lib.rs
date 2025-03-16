@@ -71,13 +71,10 @@ fn passes_exclude(
 fn read_remappings(root_path: &Path) -> Option<Vec<String>> {
     // Look for a file called `remappings` in the project root. If not present, assume project
     // doesn't require remappings
-    let remappings_file = root_path.join("remappings");
     let remappings_txt_file = root_path.join("remappings.txt");
 
     let r = {
-        if remappings_file.exists() {
-            remappings_file
-        } else if remappings_txt_file.exists() {
+        if remappings_txt_file.exists() {
             remappings_txt_file
         } else {
             return None;

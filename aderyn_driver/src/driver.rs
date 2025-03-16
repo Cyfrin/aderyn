@@ -258,14 +258,9 @@ fn obtain_config_values(
             local_src = Some(String::from("contracts"));
         }
 
-        // Also if there is no `remappings.txt` or `remappings` in this case, print a warning!
-        let remappings = root_path.join("remappings");
+        // Also if there is no `remappings.txt` in this case, print a warning!
         let remappings_txt = root_path.join("remappings.txt");
-        if !args.lsp
-            && local_remappings.is_none()
-            && !remappings.exists()
-            && !remappings_txt.exists()
-        {
+        if !args.lsp && local_remappings.is_none() && !remappings_txt.exists() {
             println!("WARNING: `remappings.txt` not found.")
         }
     }
