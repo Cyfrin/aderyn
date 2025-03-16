@@ -172,7 +172,8 @@ mod erc_matching_function_signature_helper {
         }
 
         pub fn represents_erc20_balance_of(&self) -> Option<bool> {
-            let satisifer = SignatureMatcher { name: "balanceOf", parameter_types: vec!["address"] };
+            let satisifer =
+                SignatureMatcher { name: "balanceOf", parameter_types: vec!["address"] };
             satisifer.satisfies(self)
         }
 

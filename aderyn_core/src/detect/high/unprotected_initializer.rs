@@ -107,7 +107,7 @@ impl CallGraphVisitor for UnprotectedInitializationTracker {
 }
 
 #[cfg(test)]
-mod unprotected_initializer {
+mod unprotected_initializer_tests {
     use serial_test::serial;
 
     use crate::detect::detector::IssueDetector;

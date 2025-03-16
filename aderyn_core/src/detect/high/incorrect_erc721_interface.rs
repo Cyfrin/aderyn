@@ -188,7 +188,8 @@ mod erc721_matching_function_signature_helper {
         }
 
         pub fn represents_erc721_balance_of(&self) -> bool {
-            let satisifer = SignatureMatcher { name: "balanceOf", parameter_types: vec!["address"] };
+            let satisifer =
+                SignatureMatcher { name: "balanceOf", parameter_types: vec!["address"] };
             satisifer.satisfies(self)
         }
 
