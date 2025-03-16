@@ -47,8 +47,8 @@ name = "aderyn_core"
 version = "0.5.0"
 dependencies = [
  "crossbeam-channel",
+ "cyfrin-foundry-compilers",
  "derive_more",
- "dunce",
  "eyre",
  "ignore",
  "lazy-regex",
