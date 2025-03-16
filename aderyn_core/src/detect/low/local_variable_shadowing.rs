@@ -78,7 +78,7 @@ impl IssueDetector for LocalVariableShadowingDetector {
     }
 }
 
-mod contract_hirearchy_variable_helpers {
+mod contract_hierarchy_variable_helpers {
     use crate::{
         ast::{ASTNode, ContractDefinition, VariableDeclaration},
         context::{browser::ExtractVariableDeclarations, workspace_context::WorkspaceContext},

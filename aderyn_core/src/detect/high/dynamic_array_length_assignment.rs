@@ -21,7 +21,7 @@ impl IssueDetector for DynamicArrayLengthAssignmentDetector {
         for member_access in context
             .member_accesses()
             .into_iter()
-            .filter(|member_acces| member_acces.l_value_requested)
+            .filter(|member_access| member_access.l_value_requested)
         {
             let assignment_to = member_access.expression.type_descriptions();
 
@@ -54,7 +54,7 @@ impl IssueDetector for DynamicArrayLengthAssignmentDetector {
         String::from(
             "If the length of a dynamic array (storage variable) is directly assigned to, \
         it may allow access to other storage slots by tweaking it's value. This practice has \
-        been depracated in newer Solidity versions",
+        been deprecated in newer Solidity versions",
         )
     }
 
@@ -102,7 +102,7 @@ mod dynamic_array_length_assignment_tests {
             String::from(
                 "If the length of a dynamic array (storage variable) is directly assigned to, \
         it may allow access to other storage slots by tweaking it's value. This practice has \
-        been depracated in newer Solidity versions"
+        been deprecated in newer Solidity versions"
             )
         );
     }

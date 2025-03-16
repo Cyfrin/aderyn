@@ -147,7 +147,7 @@ pub fn has_calls_that_sends_native_eth(ast_node: &ASTNode) -> bool {
 /// x.delegatecall("...") where x is not a state variable
 /// That means, it can be
 /// a) An Identifier that references a variable declaration which is not `state_variable`
-/// b) A literal adresss
+/// b) A literal address
 pub fn has_delegate_calls_on_non_state_variables(
     ast_node: &ASTNode,
     context: &WorkspaceContext,
@@ -175,7 +175,7 @@ pub fn has_delegate_calls_on_non_state_variables(
 /// x.call("...") where x is not a state variable
 /// That means, it can be
 /// a) An Identifier that references a variable declaration which is not `state_variable`
-/// b) A literal adresss
+/// b) A literal address
 pub fn get_low_level_calls_on_non_state_variable_addresses(
     ast_node: &ASTNode,
     context: &WorkspaceContext,

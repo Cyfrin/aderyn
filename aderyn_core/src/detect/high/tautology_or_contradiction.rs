@@ -183,7 +183,7 @@ pub mod solidity_integer_helper {
     /// This function checks for the range of integer values of uint8 and returns true if it is
     /// neither a tautology nor a contradiction.
     ///
-    /// Here, I define tautology as the condition where the range Ex: (>=300) FULLY COVERS thr Range
+    /// Here, I define tautology as the condition where the range Ex: (>=300) FULLY COVERS the Range
     /// of Uint8 Contradiction: When the range Ex:(>=300) fully excludes the Range of Uint8
     ///
     /// Notice how in the above example, the value is on the right hand side.

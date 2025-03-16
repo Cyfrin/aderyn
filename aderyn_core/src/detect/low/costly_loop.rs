@@ -102,7 +102,7 @@ mod costly_operations_inside_loops_tests {
 
     #[test]
     #[serial]
-    fn test_constly_operations_inside_loops() {
+    fn test_costly_operations_inside_loops() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/CostlyOperationsInsideLoops.sol",
         );
