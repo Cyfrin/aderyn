@@ -1,7 +1,5 @@
 use crate::{
-    config_helpers::{append_from_foundry_toml, derive_from_aderyn_toml},
-    ensure_valid_root_path,
-    lsp_report::LspReport,
+    config_helpers::derive_from_aderyn_toml, ensure_valid_root_path, lsp_report::LspReport,
     process_auto,
 };
 use aderyn_core::{
@@ -154,24 +152,16 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
         eprintln!("Warning: output file lacks the \".md\" or \".json\" extension in its filename.");
     }
 
-    let (root_path, src, exclude, remappings, include) = obtain_config_values(args).unwrap();
+    let (root_path, src, exclude, include) = obtain_config_values(args).unwrap();
 
     let absolute_root_path = &ensure_valid_root_path(&root_path);
-    if !args.lsp {
-        println!(
-            "Root: {:?}, Src: {:?}, Include: {:?}, Exclude: {:?}",
-            absolute_root_path, src, include, exclude
-        );
-    }
-
-    let mut contexts: Vec<WorkspaceContext> = process_auto::with_project_root_at(
-        &root_path,
-        &src,
-        &exclude,
-        &remappings,
-        &include,
-        args.lsp,
+    eprintln!(
+        "Root: {:?}, Src: {:?}, Include: {:?}, Exclude: {:?}",
+        absolute_root_path, src, include, exclude
     );
+
+    let mut contexts: Vec<WorkspaceContext> =
+        process_auto::with_project_root_at(&root_path, &src, &exclude, &include, args.lsp);
 
     if !args.lsp && contexts.iter().all(|c| c.src_filepaths.is_empty()) {
         eprintln!("No solidity files found in given scope!");
@@ -217,53 +207,19 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
 #[allow(clippy::type_complexity)]
 fn obtain_config_values(
     args: &Args,
-) -> Result<
-    (PathBuf, Option<String>, Option<Vec<String>>, Option<Vec<String>>, Option<Vec<String>>),
-    Box<dyn Error>,
-> {
+) -> Result<(PathBuf, Option<String>, Option<Vec<String>>, Option<Vec<String>>), Box<dyn Error>> {
     let mut root_path = PathBuf::from(&args.root);
 
     let mut local_src = args.src.clone();
     let mut local_exclude = args.path_excludes.clone();
-    let mut local_remappings = None;
     let mut local_include = args.path_includes.clone();
 
     let aderyn_path = root_path.join("aderyn.toml");
     // Process aderyn.toml if it exists
     if aderyn_path.exists() {
-        (root_path, local_src, local_exclude, local_remappings, local_include) =
-            derive_from_aderyn_toml(
-                &root_path,
-                &local_src,
-                &local_exclude,
-                &local_remappings,
-                &local_include,
-            );
+        (root_path, local_src, local_exclude, local_include) =
+            derive_from_aderyn_toml(&root_path, &local_src, &local_exclude, &local_include);
     }
 
-    let foundry_path = root_path.join("foundry.toml");
-    // Process foundry.toml if it exists
-    if foundry_path.exists() {
-        (local_src, local_exclude, local_remappings) =
-            append_from_foundry_toml(&root_path, &local_src, &local_exclude, &local_remappings);
-    } else {
-        // If foundry.toml wasn't found see if it makes sense to set src as `contracts/` for hardhat
-        // projects
-        let hardhat_config_js_path = root_path.join("hardhat.config.js");
-        let hardhat_config_ts_path = root_path.join("hardhat.config.ts");
-
-        if local_src.is_none()
-            && (hardhat_config_js_path.exists() || hardhat_config_ts_path.exists())
-        {
-            local_src = Some(String::from("contracts"));
-        }
-
-        // Also if there is no `remappings.txt` in this case, print a warning!
-        let remappings_txt = root_path.join("remappings.txt");
-        if !args.lsp && local_remappings.is_none() && !remappings_txt.exists() {
-            println!("WARNING: `remappings.txt` not found.")
-        }
-    }
-
-    Ok((root_path, local_src, local_exclude, local_remappings, local_include))
+    Ok((root_path, local_src, local_exclude, local_include))
 }

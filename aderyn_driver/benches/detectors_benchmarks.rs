@@ -10,8 +10,7 @@ use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
 
 fn bench_individual_detectors_on_contract_playground(c: &mut Criterion) {
     let root_path = PathBuf::from("../tests/contract-playground");
-    let contexts =
-        aderyn_driver::with_project_root_at(&root_path, &None, &None, &None, &None, false);
+    let contexts = aderyn_driver::with_project_root_at(&root_path, &None, &None, &None, false);
 
     for detector in get_all_issue_detectors() {
         c.bench_function(detector.name().as_str(), |b| {

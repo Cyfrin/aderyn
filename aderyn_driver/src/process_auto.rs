@@ -1,167 +1,91 @@
 use std::{
     path::{Path, PathBuf},
-    process::{Command, Stdio},
+    str::FromStr,
 };
 
 use aderyn_core::{
     ast::SourceUnit, context::workspace_context::WorkspaceContext, visitor::ast_visitor::Node,
 };
-
-use cyfrin_foundry_compilers::{utils, Graph};
-use rayon::iter::{IntoParallelIterator, ParallelIterator};
-
-use crate::{
-    get_compiler_input, get_fc_remappings, get_project, get_relevant_pathbufs,
-    get_relevant_sources, get_remappings, passes_exclude, passes_scope, passes_src,
+use foundry_compilers_aletheia::{
+    derive_ast_and_evm_info, AstSourceFile, ExcludeConfig, IncludeConfig,
+    ProjectConfigInputBuilder, SourcesConfig,
 };
-
-use crate::ensure_valid_root_path;
 
 pub fn with_project_root_at(
     root_path: &Path,
     src: &Option<String>,
     exclude: &Option<Vec<String>>,
-    remappings: &Option<Vec<String>>,
-    scope: &Option<Vec<String>>,
+    include: &Option<Vec<String>>,
     lsp_mode: bool,
 ) -> Vec<WorkspaceContext> {
-    let root = utils::canonicalize(root_path).unwrap();
-    let src = src.clone().map(|source| utils::canonicalize(root.join(source)).unwrap());
-
-    let solidity_files = get_compiler_input(&root);
-    let sources = get_relevant_sources(&root, solidity_files, &src, scope, exclude);
-
-    if !lsp_mode {
-        println!("Resolving sources versions by graph ...");
-    }
-    let (remappings, foundry_compilers_remappings) = {
-        match remappings {
-            None => get_remappings(&root),
-            Some(remappings) => (remappings.clone(), get_fc_remappings(remappings)),
+    let say = |message: &str| {
+        if !lsp_mode {
+            println!("{}", message);
         }
     };
-    let project = get_project(&root, foundry_compilers_remappings);
 
-    let graph = Graph::resolve_sources(&project.paths, sources).unwrap();
-    let (versions, _) = graph.into_sources_by_version(false).unwrap();
+    let mut project_config_builder = ProjectConfigInputBuilder::new(root_path);
 
-    let sources_by_version = versions.get(&project).unwrap();
+    if let Some(src) = src {
+        project_config_builder = project_config_builder.with_sources(SourcesConfig::Specific(
+            PathBuf::from_str(src).expect(&format!("{} is not a valid path", src)),
+        ));
+    }
 
-    sources_by_version
-        .into_par_iter()
-        .filter_map(|(solc, value)| {
-            if !lsp_mode {
-                println!("Compiling {} files with Solc {}", value.1.len(), value.0);
+    if let Some(exclude_containing) = exclude {
+        project_config_builder = project_config_builder
+            .with_exclude(ExcludeConfig::Specific(exclude_containing.to_vec()));
+    }
+
+    if let Some(include_containing) = include {
+        project_config_builder = project_config_builder
+            .with_include(IncludeConfig::Specific(include_containing.to_vec()));
+    }
+
+    let retrieved_info = derive_ast_and_evm_info(&project_config_builder.build().unwrap()).unwrap();
+
+    let mut contexts = vec![];
+
+    for ast_info in retrieved_info.versioned_asts {
+        let sources = ast_info.compiler_output.sources;
+        let included = ast_info.included_files;
+
+        dbg!(included.clone());
+
+        say(&format!(
+            "Compiling {} contracts using solc version: {}",
+            sources.len(),
+            ast_info.version
+        ));
+
+        //let compilation_errors = ast_info.compiler_output.errors;
+        //if !compilation_errors.is_empty() {
+        //    eprintln!("{:?}", compilation_errors);
+        //    std::process::exit(1);
+        //}
+
+        let mut context = WorkspaceContext::default();
+
+        for (source_path, ast_source_file) in sources {
+            if included.contains(&source_path) {
+                absorb_ast_content_into_context(ast_source_file, &mut context);
             }
-            let pathbufs = value.1.into_keys().collect::<Vec<_>>();
-            let files = get_relevant_pathbufs(&root, &pathbufs, &src, scope, exclude);
-
-            assert!(solc.solc.exists());
-
-            let command_result = Command::new(solc.solc.clone())
-                .args(remappings.clone())
-                .arg("--ast-compact-json")
-                .args(
-                    files.iter().map(|x| x.strip_prefix(root.clone()).unwrap()).collect::<Vec<_>>(),
-                )
-                .args(solc.args.clone()) // --allowed-paths <root> for older versions of sol
-                .current_dir(root.clone())
-                .stdout(Stdio::piped())
-                .stderr(Stdio::piped())
-                .spawn();
-
-            match command_result {
-                Ok(child) => {
-                    let output = child.wait_with_output().unwrap();
-                    let stdout = String::from_utf8(output.stdout).unwrap();
-                    if !output.status.success() {
-                        let msg = String::from_utf8(output.stderr).unwrap();
-                        eprintln!("stderr = {}", msg);
-                        eprintln!("cwd = {}", root.display());
-                        // print_running_command(solc_bin, &remappings, &files, &root);
-                        eprintln!("Error running solc command ^^^");
-                        // For now, we do not panic because it will prevent us from analyzing other
-                        // contexts which can compile successfully
-                    } else {
-                        let context = create_workspace_context_from_stdout(
-                            stdout, &src, scope, exclude, root_path,
-                        );
-                        return Some(context);
-                    }
-                }
-                Err(e) => {
-                    println!("{:?}", e);
-                    panic!("Error running solc command");
-                }
-            }
-
-            None
-        })
-        .collect()
-}
-
-fn create_workspace_context_from_stdout(
-    stdout: String,
-    src: &Option<PathBuf>,
-    scope: &Option<Vec<String>>,
-    exclude: &Option<Vec<String>>,
-    root_path: &Path,
-) -> WorkspaceContext {
-    let absolute_root_path_str = &ensure_valid_root_path(root_path).to_string_lossy().to_string();
-
-    let mut context = WorkspaceContext::default();
-    // dbg!(&stdout)
-
-    // let mut pick_next_line = false;
-    let mut src_filepaths = vec![];
-
-    let lines = stdout.lines().collect::<Vec<_>>();
-
-    let mut idx = 0;
-    let mut keep_picking = false;
-    let mut ast_content = String::new();
-
-    while idx < lines.len() {
-        let line = lines[idx];
-
-        let (separation, filename) =
-            is_demarcation_line(line, scope, exclude, root_path, src, absolute_root_path_str);
-
-        if separation {
-            if !ast_content.is_empty() {
-                absorb_ast_content_into_context(&ast_content, root_path, &mut context);
-            }
-            ast_content = String::new();
-            keep_picking = false;
-
-            if let Some(filepath) = filename {
-                src_filepaths.push(filepath);
-                keep_picking = true;
-            }
-        } else if keep_picking {
-            ast_content.push_str(line);
         }
 
-        idx += 1;
+        contexts.push(context);
     }
 
-    if !ast_content.is_empty() {
-        absorb_ast_content_into_context(&ast_content, root_path, &mut context);
-    }
-
-    context.src_filepaths = src_filepaths;
-    context
+    contexts
 }
 
-fn absorb_ast_content_into_context(
-    ast_content: &str,
-    root_path: &Path,
-    context: &mut WorkspaceContext,
-) {
-    let mut source_unit: SourceUnit = serde_json::from_str(ast_content).unwrap();
+fn absorb_ast_content_into_context(ast_source_file: AstSourceFile, context: &mut WorkspaceContext) {
+    let Some(ast_content) = ast_source_file.ast else {
+        return;
+    };
+
+    let source_unit: SourceUnit = serde_json::from_str(&ast_content).unwrap();
     let filepath = source_unit.absolute_path.as_ref().unwrap();
-    source_unit.source = std::fs::read_to_string(root_path.join(filepath)).ok();
-    source_unit.absolute_path = Some(filepath.to_string());
+    eprintln!("Absorbing: {}", filepath);
 
     source_unit.accept(context).unwrap_or_else(|err| {
         // Exit with a non-zero exit code
@@ -169,41 +93,4 @@ fn absorb_ast_content_into_context(
         eprintln!("{:?}", err);
         std::process::exit(1);
     });
-}
-
-fn is_demarcation_line(
-    line: &str,
-    scope: &Option<Vec<String>>,
-    exclude: &Option<Vec<String>>,
-    root_path: &Path,
-    src: &Option<PathBuf>,
-    absolute_root_path_str: &str,
-) -> (bool, Option<String>) {
-    if line.starts_with("======= ") {
-        let end_marker = line.find(" =======").unwrap();
-        let filepath = &PathBuf::from(&line["======= ".len()..end_marker]);
-        if line.contains("//") {
-            // Soldiity compiler shenanigans ??
-            // In the line  `==== ??? ====` of the output, we're supposed to see the filename
-            // But sometimes solc puts filenames with path containing two forward slashes
-            // Example `contracts/templegold//AuctionBase.sol` in there
-            // Although there is a separate entry for `contracts/templegold/AuctionBase.sol`.
-            // We want to omit reading the former
-            return (true, None);
-        }
-        if passes_scope(
-            scope,
-            utils::canonicalize(root_path.join(filepath)).unwrap().as_path(),
-            absolute_root_path_str,
-        ) && passes_exclude(
-            exclude,
-            utils::canonicalize(root_path.join(filepath)).unwrap().as_path(),
-            absolute_root_path_str,
-        ) && passes_src(src, utils::canonicalize(root_path.join(filepath)).unwrap().as_path())
-        {
-            return (true, Some(filepath.to_string_lossy().to_string()));
-        }
-        return (true, None);
-    }
-    (false, None)
 }
