@@ -13,8 +13,6 @@ aderyn_driver = { version = "0.5.1", path = "aderyn_driver" }
 clap = "4.4.6"
 criterion = "0.5.1"
 crossbeam-channel = "0.5.9"
-cyfrin-foundry-compilers = "0.3.20-aderyn"
-cyfrin-foundry-config = "0.2.1"
 derive_more = "0.99.18"
 eyre = "0.6.12"
 field_access = "0.1.8"
