@@ -78,6 +78,8 @@ pub fn with_project_root_at(
                     content,
                     &absolute_root_path,
                 );
+                let relative_suffix = source_path.strip_prefix(&absolute_root_path).unwrap();
+                context.src_filepaths.push(relative_suffix.to_string_lossy().to_string());
             }
         }
         contexts.push(context);
