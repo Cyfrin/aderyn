@@ -112,7 +112,7 @@ fn absorb_ast_content_into_context(
     // Adjust the asbolute filepath to be relative
     let filepath = source_unit.absolute_path.as_ref().unwrap();
     let relative_path = PathBuf::from_str(filepath).unwrap();
-    relative_path
+    let relative_path = relative_path
         .strip_prefix(absolute_root_path)
         .expect("filepath in AST output is not absolute!");
 
