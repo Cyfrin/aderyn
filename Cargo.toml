@@ -42,7 +42,6 @@ termcolor = "1.4.1"
 tokio = "1.40.0"
 toml = "0.8.13"
 tower-lsp = "0.20.0"
-dunce = "1.0.4"
 
 [profile.release]
 codegen-units = 1
