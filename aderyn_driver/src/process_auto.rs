@@ -50,8 +50,6 @@ pub fn with_project_root_at(
         let sources = ast_info.compiler_output.sources;
         let included = ast_info.included_files;
 
-        dbg!(included.clone());
-
         say(&format!(
             "Compiling {} contracts using solc version: {}",
             sources.len(),
@@ -83,9 +81,14 @@ fn absorb_ast_content_into_context(ast_source_file: AstSourceFile, context: &mut
         return;
     };
 
-    let source_unit: SourceUnit = serde_json::from_str(&ast_content).unwrap();
-    let filepath = source_unit.absolute_path.as_ref().unwrap();
-    eprintln!("Absorbing: {}", filepath);
+    let Ok(source_unit) = serde_json::from_str::<SourceUnit>(&ast_content) else {
+        eprintln!("Unable to serialize Source Unit from AST - \n{}\n", &ast_content);
+        let error = serde_json::from_str::<SourceUnit>(&ast_content).unwrap_err();
+        eprintln!("{:?}", error);
+        std::process::exit(1);
+    };
+
+    //let filepath = source_unit.absolute_path.as_ref().unwrap();
 
     source_unit.accept(context).unwrap_or_else(|err| {
         // Exit with a non-zero exit code

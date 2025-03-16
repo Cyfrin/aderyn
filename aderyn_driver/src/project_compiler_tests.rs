@@ -26,17 +26,24 @@ mod project_compiler_grouping_tests {
             false,
         );
 
-        for context in contexts {
-            eprintln!("Source Units collected: {}", context.source_units().len());
-            assert!(!context.source_units().is_empty());
-        }
+        assert!(!contexts.is_empty());
+        contexts.iter().for_each(|c| {
+            assert!(!c.source_units().is_empty());
+        });
     }
 
     #[test]
-    fn foundry_nft_f23() {
+    fn foundry_nft_f23_only() {
         let project_root_str = "../tests/foundry-nft-f23";
         let src = &Some(PathBuf::from_str("src/").unwrap());
         test_grouping_files_to_compile(project_root_str, src, &None, &None);
+    }
+
+    #[test]
+    fn foundry_nft_f23_icm() {
+        let project_root_str = "../tests/foundry-nft-f23-icm";
+        set_var("FOUNDRY_PROFILE", "icm");
+        test_grouping_files_to_compile(project_root_str, &None, &None, &None);
     }
 
     #[test]
@@ -55,10 +62,8 @@ mod project_compiler_grouping_tests {
     #[test]
     fn ccip_develop() {
         let project_root_str = "../tests/ccip-contracts/contracts";
-        let src = &Some(PathBuf::from_str("src/v0.8/ccip").unwrap());
-        let exclude = &Some(vec!["src/v0.8/ccip/test".to_string()]);
-        let include = &Some(vec!["src/v0.8/ccip".to_string()]);
-        test_grouping_files_to_compile(project_root_str, src, include, exclude);
+        set_var("FOUNDRY_PROFILE", "vrfv2plus_coordinator");
+        test_grouping_files_to_compile(project_root_str, &None, &None, &None);
     }
 
     #[test]
