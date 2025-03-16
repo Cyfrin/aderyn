@@ -12,6 +12,42 @@ exclude = [
     "foundry",
 ]
 
+[workspace.dependencies]
+aderyn_core = { version = "0.5.0", path = "aderyn_core" }
+aderyn_driver = { version = "0.5.0", path = "aderyn_driver" }
+clap = "4.4.6"
+criterion = "0.5.1"
+crossbeam-channel = "0.5.9"
+cyfrin-foundry-compilers = "0.3.20-aderyn"
+cyfrin-foundry-config = "0.2.1"
+derive_more = "0.99.18"
+eyre = "0.6.12"
+field_access = "0.1.8"
+ignore = "0.4.21"
+lazy-regex = "3.2.0"
+lazy_static = "1.5.0"
+log = "0.4.22"
+notify-debouncer-full = "0.3.1"
+num-bigint = "0.4"
+num-traits = "0.2"
+once_cell = "1.19.0"
+phf = "0.11.2"
+prettytable = "0.10.0"
+rayon = "1.8.0"
+reqwest = { version = "0.12.2", default-features = false }
+semver = "1.0.22"
+serde = "1.0.160"
+serde-sarif = "0.4.2"
+serde_json = "1.0.96"
+serde_repr = "0.1.12"
+serial_test = "3.0.0"
+simple-logging = "2.0.2"
+strum = "0.26"
+termcolor = "1.4.1"
+tokio = "1.40.0"
+toml = "0.8.13"
+tower-lsp = "0.20.0"
+
 [profile.release]
 codegen-units = 1
 lto = true
