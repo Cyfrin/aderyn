@@ -63,7 +63,7 @@ pub fn project(
                     sources_ast.keys().filter(|&key| included.contains(key)).collect();
 
                 say(&format!(
-                    "Ingesting {} compiled files [solc version: {}]",
+                    "Ingesting {} compiled files [solc : v{}]",
                     ingestion_keys.len(),
                     ast_info.version
                 ));
