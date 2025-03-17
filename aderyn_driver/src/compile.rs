@@ -25,30 +25,27 @@ pub fn project(
         }
     };
 
-    let mut project_config_builder = ProjectConfigInputBuilder::new(root_path);
-
-    if let Some(src) = src {
-        project_config_builder = project_config_builder.with_sources(SourcesConfig::Specific(
-            PathBuf::from_str(src).unwrap_or_else(|_| panic!("{} is not a valid path", src)),
-        ));
-    }
-
-    if let Some(exclude_containing) = exclude {
-        project_config_builder = project_config_builder
-            .with_exclude(ExcludeConfig::Specific(exclude_containing.to_vec()));
-    }
-
-    if let Some(include_containing) = include {
-        project_config_builder = project_config_builder
-            .with_include(IncludeConfig::Specific(include_containing.to_vec()));
-    }
-
-    let retrieved_info = derive_ast_and_evm_info(&project_config_builder.build().unwrap()).unwrap();
-
     let absolute_root_path = std::fs::canonicalize(root_path)
         .unwrap_or_else(|_| panic!("Root path: {:?} is unable to be canonicalized", root_path));
 
-    retrieved_info
+    let project_config = ProjectConfigInputBuilder::new(root_path)
+        .with_sources(match src {
+            Some(src) => SourcesConfig::Specific(PathBuf::from_str(src).unwrap()),
+            None => SourcesConfig::AutoDetect,
+        })
+        .with_exclude(match exclude {
+            Some(exclude_containing) => ExcludeConfig::Specific(exclude_containing.to_vec()),
+            None => ExcludeConfig::None,
+        })
+        .with_include(match include {
+            Some(include_containing) => IncludeConfig::Specific(include_containing.to_vec()),
+            None => IncludeConfig::All,
+        })
+        .build()
+        .unwrap();
+
+    derive_ast_and_evm_info(&project_config)
+        .unwrap()
         .versioned_asts
         .into_par_iter()
         .map(|ast_info| {
@@ -59,7 +56,7 @@ pub fn project(
             let included = ast_info.included_files;
 
             say(&format!(
-                "Compiling {} contracts using solc version: {}",
+                "Ingesting {} compiled contracts [solc version: {}]",
                 sources_ast.len(),
                 ast_info.version
             ));
