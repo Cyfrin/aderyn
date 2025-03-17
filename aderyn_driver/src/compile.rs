@@ -5,7 +5,6 @@ use foundry_compilers_aletheia::{
     derive_ast_and_evm_info, AstSourceFile, ExcludeConfig, IncludeConfig,
     ProjectConfigInputBuilder, Source, SourcesConfig,
 };
-use rayon::iter::{IntoParallelIterator, ParallelIterator};
 use std::{
     path::{Path, PathBuf},
     str::FromStr,
@@ -48,7 +47,7 @@ pub fn project(
     derive_ast_and_evm_info(&project_config)
         .unwrap()
         .versioned_asts
-        .into_par_iter()
+        .into_iter() // TODO: this is faster than into_par_iter() ... Bench it properly
         .map(|ast_info| {
             let mut context = WorkspaceContext::default();
 
