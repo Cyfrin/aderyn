@@ -18,9 +18,7 @@ toml = { workspace = true }
 field_access = { workspace = true }
 tokio = { workspace = true, features = ["full"] }
 tower-lsp = { workspace = true }
-
-# Cyfrin managed github repository
-foundry_compilers_aletheia = { git = "https://github.com/Cyfrin/foundry-compilers-aletheia", tag = "v0.0.1-alpha.2", package = "foundry-compilers-aletheia" }
+foundry_compilers_aletheia = { workspace = true }
 
 [dev-dependencies]
 criterion = { workspace = true }

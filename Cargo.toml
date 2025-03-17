@@ -42,6 +42,9 @@ toml = "0.8.13"
 tower-lsp = "0.20.0"
 dunce = "1.0.4"
 
+# Cyfrin managed github repository
+foundry_compilers_aletheia = { git = "https://github.com/Cyfrin/foundry-compilers-aletheia", tag = "v0.0.1-alpha.3", package = "foundry-compilers-aletheia" }
+
 [profile.release]
 codegen-units = 1
 lto = true
