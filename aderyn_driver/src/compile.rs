@@ -24,8 +24,10 @@ pub fn project(
         }
     };
 
-    let absolute_root_path = std::fs::canonicalize(root_path)
-        .unwrap_or_else(|_| panic!("Root path: {:?} is unable to be canonicalized", root_path));
+    let absolute_root_path = std::fs::canonicalize(root_path).unwrap_or_else(|_| {
+        eprintln!("Root path: {:?} is unable to be canonicalized. Make sure it exists.", root_path);
+        std::process::exit(1);
+    });
 
     let project_config = ProjectConfigInputBuilder::new(root_path)
         .with_sources(match src {
