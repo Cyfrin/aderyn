@@ -10,6 +10,7 @@ use foundry_compilers_aletheia::{
     derive_ast_and_evm_info, AstSourceFile, ExcludeConfig, IncludeConfig,
     ProjectConfigInputBuilder, Source, SourcesConfig,
 };
+use rayon::iter::{IntoParallelIterator, ParallelIterator};
 
 pub fn project(
     root_path: &Path,
@@ -44,48 +45,48 @@ pub fn project(
 
     let retrieved_info = derive_ast_and_evm_info(&project_config_builder.build().unwrap()).unwrap();
 
-    let mut contexts = vec![];
-
     let absolute_root_path = std::fs::canonicalize(root_path)
         .unwrap_or_else(|_| panic!("Root path: {:?} is unable to be canonicalized", root_path));
 
-    for ast_info in retrieved_info.versioned_asts {
-        let mut context = WorkspaceContext::default();
+    retrieved_info
+        .versioned_asts
+        .into_par_iter()
+        .map(|ast_info| {
+            let mut context = WorkspaceContext::default();
 
-        let sources = ast_info.sources.0;
-        let sources_ast = ast_info.compiler_output.sources;
-        let included = ast_info.included_files;
+            let sources = ast_info.sources.0;
+            let sources_ast = ast_info.compiler_output.sources;
+            let included = ast_info.included_files;
 
-        say(&format!(
-            "Compiling {} contracts using solc version: {}",
-            sources_ast.len(),
-            ast_info.version
-        ));
+            say(&format!(
+                "Compiling {} contracts using solc version: {}",
+                sources_ast.len(),
+                ast_info.version
+            ));
 
-        for cerror in ast_info.compiler_output.errors {
-            if cerror.severity.is_error() {
-                eprintln!("Compilation Error: {}", cerror);
-                std::process::exit(1);
+            for cerror in ast_info.compiler_output.errors {
+                if cerror.severity.is_error() {
+                    eprintln!("Compilation Error: {}", cerror);
+                    std::process::exit(1);
+                }
             }
-        }
 
-        for (source_path, ast_source_file) in sources_ast {
-            if included.contains(&source_path) {
-                let content = sources.get(&source_path).cloned().expect("content not found");
-                absorb_ast_content_into_context(
-                    ast_source_file,
-                    &mut context,
-                    content,
-                    &absolute_root_path,
-                );
-                let relative_suffix = source_path.strip_prefix(&absolute_root_path).unwrap();
-                context.src_filepaths.push(relative_suffix.to_string_lossy().to_string());
+            for (source_path, ast_source_file) in sources_ast {
+                if included.contains(&source_path) {
+                    let content = sources.get(&source_path).cloned().expect("content not found");
+                    absorb_ast_content_into_context(
+                        ast_source_file,
+                        &mut context,
+                        content,
+                        &absolute_root_path,
+                    );
+                    let relative_suffix = source_path.strip_prefix(&absolute_root_path).unwrap();
+                    context.src_filepaths.push(relative_suffix.to_string_lossy().to_string());
+                }
             }
-        }
-        contexts.push(context);
-    }
-
-    contexts
+            context
+        })
+        .collect()
 }
 
 fn absorb_ast_content_into_context(
