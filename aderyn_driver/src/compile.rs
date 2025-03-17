@@ -45,6 +45,8 @@ pub fn project(
         .build()
         .unwrap();
 
+    say("Compiling contracts ...");
+
     derive_ast_and_evm_info(&project_config)
         .unwrap()
         .versioned_asts
