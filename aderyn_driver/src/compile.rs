@@ -62,7 +62,7 @@ pub fn project(
                 let ingestion_keys: Vec<_> =
                     sources_ast.keys().filter(|&key| included.contains(key)).collect();
 
-                if ingestion_keys.len() > 0 {
+                if !ingestion_keys.is_empty() {
                     say(&format!(
                         "Ingesting {} compiled files [solc : v{}]",
                         ingestion_keys.len(),
