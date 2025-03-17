@@ -1,8 +1,3 @@
-use std::{
-    path::{Path, PathBuf},
-    str::FromStr,
-};
-
 use aderyn_core::{
     ast::SourceUnit, context::workspace_context::WorkspaceContext, visitor::ast_visitor::Node,
 };
@@ -11,6 +6,10 @@ use foundry_compilers_aletheia::{
     ProjectConfigInputBuilder, Source, SourcesConfig,
 };
 use rayon::iter::{IntoParallelIterator, ParallelIterator};
+use std::{
+    path::{Path, PathBuf},
+    str::FromStr,
+};
 
 pub fn project(
     root_path: &Path,
