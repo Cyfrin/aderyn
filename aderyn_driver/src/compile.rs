@@ -11,7 +11,7 @@ use foundry_compilers_aletheia::{
     ProjectConfigInputBuilder, Source, SourcesConfig,
 };
 
-pub fn with_project_root_at(
+pub fn project(
     root_path: &Path,
     src: &Option<String>,
     exclude: &Option<Vec<String>>,

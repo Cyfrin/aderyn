@@ -1,6 +1,5 @@
 use crate::{
-    config_helpers::derive_from_aderyn_toml, ensure_valid_root_path, lsp_report::LspReport,
-    process_auto,
+    compile, config_helpers::derive_from_aderyn_toml, ensure_valid_root_path, lsp_report::LspReport,
 };
 use aderyn_core::{
     context::{
@@ -161,7 +160,7 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
     );
 
     let mut contexts: Vec<WorkspaceContext> =
-        process_auto::with_project_root_at(&root_path, &src, &exclude, &include, args.lsp);
+        compile::project(&root_path, &src, &exclude, &include, args.lsp);
 
     if !args.lsp && contexts.iter().all(|c| c.src_filepaths.is_empty()) {
         eprintln!("No solidity files found in given scope!");

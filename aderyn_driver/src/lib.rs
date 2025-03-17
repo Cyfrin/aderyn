@@ -1,11 +1,12 @@
 pub(crate) mod config_helpers;
+
+pub mod compile;
 pub mod driver;
 pub mod lsp_report;
-pub(crate) mod process_auto;
+
 use std::path::{Path, PathBuf};
 
 pub use aderyn_core::{ast as core_ast, context, detect as detection_modules, detect::detector};
-pub use process_auto::with_project_root_at;
 
 fn ensure_valid_root_path(root_path: &Path) -> PathBuf {
     if !root_path.exists() {
