@@ -62,11 +62,15 @@ pub fn project(
                 let ingestion_keys: Vec<_> =
                     sources_ast.keys().filter(|&key| included.contains(key)).collect();
 
-                say(&format!(
-                    "Ingesting {} compiled files [solc : v{}]",
-                    ingestion_keys.len(),
-                    ast_info.version
-                ));
+                if ingestion_keys.len() > 0 {
+                    say(&format!(
+                        "Ingesting {} compiled files [solc : v{}]",
+                        ingestion_keys.len(),
+                        ast_info.version
+                    ));
+                } else {
+                    say(&format!("Compiler selected [solc : v{}]", ast_info.version));
+                }
             }
 
             for cerror in ast_info.compiler_output.errors {
