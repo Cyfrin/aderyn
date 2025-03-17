@@ -7,8 +7,8 @@ use aderyn_core::{
     ast::SourceUnit, context::workspace_context::WorkspaceContext, visitor::ast_visitor::Node,
 };
 use foundry_compilers_aletheia::{
-    artifacts::Source, derive_ast_and_evm_info, AstSourceFile, ExcludeConfig, IncludeConfig,
-    ProjectConfigInputBuilder, SourcesConfig,
+    derive_ast_and_evm_info, AstSourceFile, ExcludeConfig, IncludeConfig,
+    ProjectConfigInputBuilder, Source, SourcesConfig,
 };
 
 pub fn with_project_root_at(
