@@ -47,7 +47,7 @@ pub fn project(
 
     say("Compiling contracts ...");
 
-    derive_ast_and_evm_info(&project_config)
+    let contexts_results = derive_ast_and_evm_info(&project_config)
         .unwrap()
         .versioned_asts
         .into_par_iter() // TODO: Bench to see which is faster - iter() or par_iter()?
@@ -72,7 +72,7 @@ pub fn project(
             for cerror in ast_info.compiler_output.errors {
                 if cerror.severity.is_error() {
                     eprintln!("Compilation Error: {}", cerror);
-                    std::process::exit(1);
+                    return None;
                 }
             }
 
@@ -89,9 +89,19 @@ pub fn project(
                     context.src_filepaths.push(relative_suffix.to_string_lossy().to_string());
                 }
             }
-            context
+            Some(context)
         })
-        .collect()
+        .collect::<Vec<_>>();
+
+    if !lsp_mode {
+        // In LSP mode, don't shutdown the service due to an intermediate state that has
+        // erroneous code.
+        if contexts_results.iter().any(|c| c.is_none()) {
+            std::process::exit(1);
+        }
+    }
+
+    contexts_results.into_iter().flatten().collect()
 }
 
 fn absorb_ast_content_into_context(
