@@ -303,9 +303,6 @@ where
     for context in contexts {
         ignore_lines.extend(context.ignore_lines_stats.clone());
     }
-
-    println!("Get Detectors");
-
     println!("Running {} detectors", detectors.len());
 
     let detectors_used =
