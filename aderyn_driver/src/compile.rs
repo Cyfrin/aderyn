@@ -56,11 +56,16 @@ pub fn project(
             let sources_ast = ast_info.compiler_output.sources;
             let included = ast_info.included_files;
 
-            say(&format!(
-                "Ingesting {} compiled contracts [solc version: {}]",
-                sources_ast.len(),
-                ast_info.version
-            ));
+            if !lsp_mode {
+                let ingestion_keys: Vec<_> =
+                    sources_ast.keys().filter(|&key| included.contains(key)).collect();
+
+                say(&format!(
+                    "Ingesting {} compiled source units [solc version: {}]",
+                    ingestion_keys.len(),
+                    ast_info.version
+                ));
+            }
 
             for cerror in ast_info.compiler_output.errors {
                 if cerror.severity.is_error() {
