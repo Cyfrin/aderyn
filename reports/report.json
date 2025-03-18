@@ -2783,7 +2783,7 @@
       },
       {
         "title": "Public Function Not Used Internally",
-        "description": "If a function is marked public but is not used internall, consider marking it as `external`.",
+        "description": "If a function is marked public but is not used internally, consider marking it as `external`.",
         "detector_name": "unused-public-function",
         "instances": [
           {

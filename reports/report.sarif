@@ -4697,7 +4697,7 @@
             }
           ],
           "message": {
-            "text": "If a function is marked public but is not used internall, consider marking it as `external`."
+            "text": "If a function is marked public but is not used internally, consider marking it as `external`."
           },
           "ruleId": "unused-public-function"
         },

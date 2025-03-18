@@ -67,7 +67,7 @@ Consider using a specific version of Solidity in your contracts instead of a wid
 
 ## L-2: Public Function Not Used Internally
 
-If a function is marked public but is not used internall, consider marking it as `external`.
+If a function is marked public but is not used internally, consider marking it as `external`.
 
 <details><summary>2 Found Instances</summary>
 
