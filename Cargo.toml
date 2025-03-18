@@ -5,6 +5,7 @@ members = [
     "aderyn",
     "aderyn_core",
     "aderyn_driver",
+    "tools/*",
 ]
 
 [workspace.dependencies]
