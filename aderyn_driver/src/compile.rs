@@ -151,7 +151,7 @@ fn absorb_ast_content_into_context(
 }
 
 fn display_configuration_info(project_config: &ProjectConfigInput, lsp_mode: bool) {
-    if !lsp_mode {
+    if lsp_mode {
         return; // Optimize to save Cycles
     }
 
