@@ -162,7 +162,16 @@ fn display_configuration_info(project_config: &ProjectConfigInput, lsp_mode: boo
     say(&format!("Source - {}", project_config.project_paths.sources.display()));
     say(&format!(
         "Remappings - {:#?}",
-        project_config.project_paths.remappings.iter().map(|r| r.to_string()).collect::<Vec<_>>()
+        project_config
+            .project_paths
+            .remappings
+            .iter()
+            .map(|r| {
+                let mut rel = r.clone();
+                rel.strip_prefix(&project_config.project_paths.root);
+                rel.to_string()
+            })
+            .collect::<Vec<_>>()
     ));
     if project_config.include_containing.clone() != vec!["".to_string()] {
         say(&format!("Include Containing - {:#?}", project_config.include_containing));
