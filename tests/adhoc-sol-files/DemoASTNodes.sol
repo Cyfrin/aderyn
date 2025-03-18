@@ -27,7 +27,7 @@ contract DemoNewASTNodes {
         
     }
 
-    function calculateSumUsingDoWhilwLoop() internal pure returns(uint256 sum) {
+    function calculateSumUsingDoWhileLoop() internal pure returns(uint256 sum) {
         uint256[] memory numbers = new uint256[](5);
         numbers[0] = 0;
         numbers[1] = 1;

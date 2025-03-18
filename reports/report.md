@@ -2730,7 +2730,7 @@ Check for `address(0)` when assigning values to address state variables.
 
 ## L-9: Public Function Not Used Internally
 
-If a function is marked public but is not used internall, consider marking it as `external`.
+If a function is marked public but is not used internally, consider marking it as `external`.
 
 <details><summary>58 Found Instances</summary>
 
