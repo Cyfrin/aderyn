@@ -2,7 +2,7 @@ use aderyn_core::{
     ast::SourceUnit, context::workspace_context::WorkspaceContext, visitor::ast_visitor::Node,
 };
 use foundry_compilers_aletheia::{
-    derive_ast_and_evm_info, AstSourceFile, ExcludeConfig, IncludeConfig,
+    derive_ast_and_evm_info, AstSourceFile, ExcludeConfig, IncludeConfig, ProjectConfigInput,
     ProjectConfigInputBuilder, Source, SourcesConfig,
 };
 use rayon::iter::{IntoParallelIterator, ParallelIterator};
@@ -45,7 +45,7 @@ pub fn project(
         .build()
         .unwrap();
 
-    say("Compiling contracts ...");
+    display_configuration_info(&project_config, lsp_mode);
 
     let contexts_results = derive_ast_and_evm_info(&project_config)
         .unwrap()
@@ -148,4 +148,38 @@ fn absorb_ast_content_into_context(
         eprintln!("{:?}", err);
         std::process::exit(1);
     });
+}
+
+fn display_configuration_info(project_config: &ProjectConfigInput, lsp_mode: bool) {
+    let say = |message: &str| {
+        if !lsp_mode {
+            println!("{}", message);
+        }
+    };
+
+    say("Compiling contracts ...");
+    say(&format!("Root - {}", project_config.project_paths.root.display()));
+    say(&format!("Source - {}", project_config.project_paths.sources.display()));
+    say(&format!(
+        "Remappings - {:#?}",
+        project_config.project_paths.remappings.iter().map(|r| r.to_string()).collect::<Vec<_>>()
+    ));
+    if project_config.include_containing.clone() != vec!["".to_string()] {
+        say(&format!("Include Containing - {:#?}", project_config.include_containing));
+    }
+    if !project_config.exclude_containing.is_empty() {
+        say(&format!("Exclude Containing - {:#?}", project_config.exclude_containing));
+    }
+    if !project_config.exclude_starting.is_empty() {
+        say(&format!(
+            "Auto excluding - {:#?}",
+            project_config
+                .exclude_starting
+                .iter()
+                .map(|r| r.display().to_string())
+                .collect::<Vec<_>>()
+                .join(",")
+        ));
+    }
+    say(&format!("EVM version - {}", project_config.evm_version));
 }
