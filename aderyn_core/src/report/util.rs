@@ -50,7 +50,7 @@ pub fn carve_shortest_path(from_file: PathBuf, to_file: PathBuf) -> PathBuf {
     // Calculate '../' count
     let mut count_back = 0;
 
-    // Keep looking foreward until you reach the to_file
+    // Keep looking forward until you reach the to_file
     while let Some(ffc) = curr_ffc {
         buffer.push(ffc);
         if let Component::Normal(_) = ffc {
