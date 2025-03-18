@@ -151,6 +151,10 @@ fn absorb_ast_content_into_context(
 }
 
 fn display_configuration_info(project_config: &ProjectConfigInput, lsp_mode: bool) {
+    if !lsp_mode {
+        return; // Optimize to save Cycles
+    }
+
     let say = |message: &str| {
         if !lsp_mode {
             println!("{}", message);
@@ -181,13 +185,17 @@ fn display_configuration_info(project_config: &ProjectConfigInput, lsp_mode: boo
     }
     if !project_config.exclude_starting.is_empty() {
         say(&format!(
-            "Auto excluding - {:#?}",
+            "Auto Excluding in Source -  {:#?}",
             project_config
                 .exclude_starting
                 .iter()
-                .map(|r| r.display().to_string())
+                .map(|r| {
+                    r.strip_prefix(&project_config.project_paths.sources)
+                        .unwrap_or(r)
+                        .to_string_lossy()
+                        .to_string()
+                })
                 .collect::<Vec<_>>()
-                .join(",")
         ));
     }
     say(&format!("EVM version - {}", project_config.evm_version));
