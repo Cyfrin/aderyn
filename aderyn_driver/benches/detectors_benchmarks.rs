@@ -2,7 +2,8 @@ use std::path::PathBuf;
 
 use aderyn_driver::{
     detector::get_all_issue_detectors,
-    driver::{drive, Args, PreprocessedConfig},
+    driver::{drive, Args},
+    preprocess::PreprocessedConfig,
 };
 
 use criterion::{criterion_group, criterion_main, Criterion};

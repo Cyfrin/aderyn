@@ -11,7 +11,7 @@ use std::{
     str::FromStr,
 };
 
-use crate::{display::display_configuration_info, driver::PreprocessedConfig};
+use crate::{display::display_configuration_info, preprocess::PreprocessedConfig};
 
 pub fn project(preprocessed_config: PreprocessedConfig, lsp_mode: bool) -> Vec<WorkspaceContext> {
     let PreprocessedConfig { root_path, src, include, exclude } = preprocessed_config;
