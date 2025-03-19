@@ -1,6 +1,6 @@
 mod load_source_unit;
+mod load_source_unit_exp;
 
-use cyfrin_foundry_compilers::utils;
 use once_cell::sync::Lazy;
 use std::path::PathBuf;
 
@@ -32,5 +32,5 @@ fn ensure_valid_solidity_file(filepath: &str) -> PathBuf {
         std::process::exit(1);
     }
 
-    utils::canonicalize(filepath).unwrap()
+    std::fs::canonicalize(filepath).unwrap()
 }
