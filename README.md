@@ -48,6 +48,8 @@ You can read the [Cyfrin official documentation](https://support.cyfrin.io/en) f
 - AST Traversal
 - Markdown reports
 
+![Aderyn Demo](.github/images/demo.gif)
+
 ## Installation
 
 > **NOTE** Windows users must have WSL installed
