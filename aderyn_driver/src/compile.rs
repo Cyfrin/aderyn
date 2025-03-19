@@ -58,7 +58,7 @@ pub fn project(
         display_configuration_info(&project_config);
     }
 
-    say_header("Compiling ASTs");
+    say_header("Compiling Abstract Syntax Trees");
 
     let contexts_results = derive_ast_and_evm_info(&project_config)
         .unwrap()
