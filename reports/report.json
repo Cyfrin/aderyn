@@ -2226,8 +2226,8 @@
         ]
       },
       {
-        "title": "External call is followed by a state variable change",
-        "description": "In most cases it is a best practice to perform the state change before making an external call to avoid a potential re-entrancy attack.",
+        "title": "Reentrancy: State change after external call",
+        "description": "Changing state after an external call can lead to re-entrancy attacks.Use the checks-effects-interactions pattern to avoid this issue.",
         "detector_name": "reentrancy-state-change",
         "instances": [
           {

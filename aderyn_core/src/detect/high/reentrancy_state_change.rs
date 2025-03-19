@@ -94,11 +94,14 @@ impl IssueDetector for ReentrancyStateChangeDetector {
     }
 
     fn title(&self) -> String {
-        String::from("External call is followed by a state variable change")
+        String::from("Reentrancy: State change after external call")
     }
 
     fn description(&self) -> String {
-        String::from("In most cases it is a best practice to perform the state change before making an external call to avoid a potential re-entrancy attack.")
+        String::from(
+            "Changing state after an external call can lead to re-entrancy attacks.\
+        Use the checks-effects-interactions pattern to avoid this issue.",
+        )
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

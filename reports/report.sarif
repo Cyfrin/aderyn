@@ -3139,7 +3139,7 @@
             }
           ],
           "message": {
-            "text": "In most cases it is a best practice to perform the state change before making an external call to avoid a potential re-entrancy attack."
+            "text": "Changing state after an external call can lead to re-entrancy attacks.Use the checks-effects-interactions pattern to avoid this issue."
           },
           "ruleId": "reentrancy-state-change"
         },
