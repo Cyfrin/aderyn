@@ -36,7 +36,8 @@ pub fn load_multiple_solidity_source_units_into_single_context(
     filepaths: &[&str],
     version: Version,
 ) -> WorkspaceContext {
-    let root = std::fs::canonicalize(Path::new("../tests/contract-playground")).unwrap();
+    assert!(filepaths.len() > 0);
+    let root = guess_root(filepaths[0]);
 
     let mut suffixes = vec![];
 
