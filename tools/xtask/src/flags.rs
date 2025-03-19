@@ -34,6 +34,9 @@ xflags::xflags! {
 
             /// PRB Math
             optional -y, --prb-math
+
+            /// Run in release mode
+            optional --release
         }
     }
 }
@@ -64,6 +67,7 @@ pub struct R {
     pub cpgu: bool,
     pub hhpg: bool,
     pub prb_math: bool,
+    pub release: bool,
 }
 
 impl Xtask {
