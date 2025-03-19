@@ -11,23 +11,19 @@ use std::{
     str::FromStr,
 };
 
-use crate::display::display_configuration_info;
+use crate::{display::display_configuration_info, driver::PreprocessedConfig};
 
-pub fn project(
-    root_path: &Path,
-    src: &Option<String>,
-    exclude: &Option<Vec<String>>,
-    include: &Option<Vec<String>>,
-    lsp_mode: bool,
-) -> Vec<WorkspaceContext> {
-    let absolute_root_path = std::fs::canonicalize(root_path).unwrap_or_else(|_| {
+pub fn project(preprocessed_config: PreprocessedConfig, lsp_mode: bool) -> Vec<WorkspaceContext> {
+    let PreprocessedConfig { root_path, src, include, exclude } = preprocessed_config;
+
+    let absolute_root_path = std::fs::canonicalize(&root_path).unwrap_or_else(|_| {
         eprintln!("Root path: {:?} is unable to be canonicalized. Make sure it exists.", root_path);
         std::process::exit(1);
     });
 
-    let project_config = ProjectConfigInputBuilder::new(root_path)
+    let processed_config = ProjectConfigInputBuilder::new(&root_path)
         .with_sources(match src {
-            Some(src) => SourcesConfig::Specific(PathBuf::from_str(src).unwrap()),
+            Some(src) => SourcesConfig::Specific(PathBuf::from_str(&src).unwrap()),
             None => SourcesConfig::AutoDetect,
         })
         .with_exclude(match exclude {
@@ -46,18 +42,18 @@ pub fn project(
     };
 
     let say_header = |message: &str| {
-        let longest_str_len = project_config.project_paths.sources.display().to_string().len();
+        let longest_str_len = processed_config.project_paths.sources.display().to_string().len();
         say(&format!("---------{}", &"-".repeat(longest_str_len)));
         say(&format!("# {}", message));
         say(&format!("---------{}", &"-".repeat(longest_str_len)));
     };
 
     if !lsp_mode {
-        display_configuration_info(&project_config);
+        display_configuration_info(&processed_config);
         say_header("Compiling Abstract Syntax Trees");
     }
 
-    let contexts_results = derive_ast_and_evm_info(&project_config)
+    let contexts_results = derive_ast_and_evm_info(&processed_config)
         .unwrap()
         .versioned_asts
         .into_par_iter() // TODO: Bench to see which is faster - iter() or par_iter()?

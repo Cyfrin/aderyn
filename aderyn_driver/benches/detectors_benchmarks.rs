@@ -2,7 +2,7 @@ use std::path::PathBuf;
 
 use aderyn_driver::{
     detector::get_all_issue_detectors,
-    driver::{drive, Args},
+    driver::{drive, Args, PreprocessedConfig},
 };
 
 use criterion::{criterion_group, criterion_main, Criterion};
@@ -10,7 +10,9 @@ use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
 
 fn bench_individual_detectors_on_contract_playground(c: &mut Criterion) {
     let root_path = PathBuf::from("../tests/contract-playground");
-    let contexts = aderyn_driver::project(&root_path, &None, &None, &None, false);
+    let preprocessed_config =
+        PreprocessedConfig { root_path, src: None, include: None, exclude: None };
+    let contexts = aderyn_driver::compile::project(preprocessed_config, false);
 
     for detector in get_all_issue_detectors() {
         c.bench_function(detector.name().as_str(), |b| {

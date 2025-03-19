@@ -2,7 +2,7 @@
 mod project_compiler_grouping_tests {
     use std::{env::set_var, path::PathBuf, str::FromStr};
 
-    use aderyn_driver::compile;
+    use aderyn_driver::{compile, driver::PreprocessedConfig};
 
     // Tester function
     fn test_grouping_files_to_compile(
@@ -18,7 +18,13 @@ mod project_compiler_grouping_tests {
             None
         };
 
-        let contexts = compile::project(root_path.as_path(), &source, exclude, include, false);
+        let preprocessed_config = PreprocessedConfig {
+            root_path,
+            src: source,
+            include: include.clone(),
+            exclude: exclude.clone(),
+        };
+        let contexts = compile::project(preprocessed_config, false);
 
         assert!(!contexts.is_empty());
         contexts.iter().for_each(|c| {
@@ -65,21 +71,25 @@ mod project_compiler_grouping_tests {
 
     #[test]
     fn test_no_files_found_in_scope_id_detected_by_context_src_filepaths() {
-        let contexts = compile::project(
-            &PathBuf::from("../tests/contract-playground").canonicalize().unwrap(),
-            &None,
-            &None,
-            &Some(vec!["NonExistentFile.sol".to_string()]),
-            false,
-        );
+        let preprocessed_config = PreprocessedConfig {
+            root_path: PathBuf::from("../tests/contract-playground").canonicalize().unwrap(),
+            src: None,
+            include: Some(vec!["NonExistentFile.sol".to_string()]),
+            exclude: None,
+        };
+        let contexts = compile::project(preprocessed_config, false);
         assert!(contexts.iter().all(|c| c.src_filepaths.is_empty()));
     }
 
     #[test]
     fn test_compiler_input_returns_empty_vector_when_no_solidity_files_present() {
-        let project_root_str = "../tests/no-sol-files";
-        let root_path = PathBuf::from_str(project_root_str).unwrap();
-        let contexts = compile::project(root_path.as_path(), &None, &None, &None, false);
+        let preprocessed_config = PreprocessedConfig {
+            root_path: PathBuf::from_str("../tests/no-sol-files").unwrap(),
+            src: None,
+            include: None,
+            exclude: Some(vec!["NonExistentFile.sol".to_string()]),
+        };
+        let contexts = compile::project(preprocessed_config, false);
         assert!(contexts.is_empty());
     }
 }
