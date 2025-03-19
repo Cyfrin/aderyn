@@ -27,8 +27,6 @@ pub fn load_solidity_source_unit(filepath: &str) -> WorkspaceContext {
         todo!("add more roots as you see fit");
     };
 
-    println!("{:?} - {:?}", solidity_file, root);
-
     let suffix = solidity_file.strip_prefix(&root).unwrap();
 
     let project_config = ProjectConfigInputBuilder::new(&root)
