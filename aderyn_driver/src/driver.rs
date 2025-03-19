@@ -92,9 +92,15 @@ pub fn drive_and_get_results(args: Args) -> Arc<Mutex<Option<LspReport>>> {
     // Choose the detectors
     let detectors = detector_list(&args);
 
-    let cx_wrapper = make_context(&args).expect("context creation failed");
-    let root_rel_path = cx_wrapper.root_path;
-    let file_contents = cx_wrapper
+    let ctx_wrapper = match make_context(&args) {
+        Ok(ctx_wrapper) => ctx_wrapper,
+        Err(_) => {
+            return Arc::new(tokio::sync::Mutex::new(None));
+        }
+    };
+
+    let root_rel_path = ctx_wrapper.root_path;
+    let file_contents = ctx_wrapper
         .contexts
         .iter()
         .flat_map(|context| context.source_units())
@@ -106,7 +112,7 @@ pub fn drive_and_get_results(args: Args) -> Arc<Mutex<Option<LspReport>>> {
         })
         .collect::<HashMap<_, _>>();
 
-    let lsp_report = match get_report(&cx_wrapper.contexts, &root_rel_path, detectors) {
+    let lsp_report = match get_report(&ctx_wrapper.contexts, &root_rel_path, detectors) {
         Ok(report) => {
             let high_issues = report.high_issues(&file_contents);
             let low_issues = report.low_issues(&file_contents);
