@@ -1,7 +1,7 @@
-pub(crate) mod config_helpers;
 mod display;
 
 pub mod compile;
+pub mod config;
 pub mod driver;
 pub mod lsp_report;
 

@@ -1,5 +1,5 @@
 use crate::{
-    compile, config_helpers::supplement_values_from_aderyn_toml, ensure_valid_root_path,
+    compile, config::supplement_values_from_aderyn_toml, ensure_valid_root_path,
     lsp_report::LspReport,
 };
 use aderyn_core::{
