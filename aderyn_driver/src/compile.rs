@@ -42,9 +42,7 @@ pub fn project(
         .unwrap();
 
     let say = |message: &str| {
-        if !lsp_mode {
-            println!("{}", message);
-        }
+        println!("{}", message);
     };
 
     let say_header = |message: &str| {
@@ -56,9 +54,8 @@ pub fn project(
 
     if !lsp_mode {
         display_configuration_info(&project_config);
+        say_header("Compiling Abstract Syntax Trees");
     }
-
-    say_header("Compiling Abstract Syntax Trees");
 
     let contexts_results = derive_ast_and_evm_info(&project_config)
         .unwrap()
@@ -116,9 +113,8 @@ pub fn project(
         if contexts_results.iter().any(|c| c.is_none()) {
             std::process::exit(1);
         }
+        say_header("Scanning Contracts");
     }
-
-    say_header("Scanning Contracts");
 
     contexts_results.into_iter().flatten().collect()
 }
