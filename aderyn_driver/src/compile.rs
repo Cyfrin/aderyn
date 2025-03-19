@@ -11,7 +11,10 @@ use std::{
     str::FromStr,
 };
 
-use crate::{display::display_configuration_info, preprocess::PreprocessedConfig};
+use crate::{
+    display::{display_configuration_info, display_header},
+    preprocess::PreprocessedConfig,
+};
 
 pub fn project(preprocessed_config: PreprocessedConfig, lsp_mode: bool) -> Vec<WorkspaceContext> {
     let PreprocessedConfig { root_path, src, include, exclude } = preprocessed_config;
@@ -37,20 +40,9 @@ pub fn project(preprocessed_config: PreprocessedConfig, lsp_mode: bool) -> Vec<W
         .build()
         .unwrap();
 
-    let say = |message: &str| {
-        println!("{}", message);
-    };
-
-    let say_header = |message: &str| {
-        let longest_str_len = processed_config.project_paths.sources.display().to_string().len();
-        say(&format!("---------{}", &"-".repeat(longest_str_len)));
-        say(&format!("# {}", message));
-        say(&format!("---------{}", &"-".repeat(longest_str_len)));
-    };
-
     if !lsp_mode {
         display_configuration_info(&processed_config);
-        say_header("Compiling Abstract Syntax Trees");
+        display_header(&processed_config, "Compiling Abstract Syntax Trees");
     }
 
     let contexts_results = derive_ast_and_evm_info(&processed_config)
@@ -64,25 +56,24 @@ pub fn project(preprocessed_config: PreprocessedConfig, lsp_mode: bool) -> Vec<W
             let sources_ast = ast_info.compiler_output.sources;
             let included = ast_info.included_files;
 
-            if !lsp_mode {
-                let ingestion_keys: Vec<_> =
-                    sources_ast.keys().filter(|&key| included.contains(key)).collect();
-
-                if !ingestion_keys.is_empty() {
-                    say(&format!(
-                        "Ingesting {} compiled files [solc : v{}]",
-                        ingestion_keys.len(),
-                        ast_info.version
-                    ));
-                } else {
-                    say(&format!("Compiler selected [solc : v{}]", ast_info.version));
-                }
-            }
-
             for cerror in ast_info.compiler_output.errors {
                 if cerror.severity.is_error() {
                     eprintln!("Compilation Error: {}", cerror);
                     return None;
+                }
+            }
+
+            if !lsp_mode {
+                let ingestion_keys =
+                    sources_ast.keys().filter(|&key| included.contains(key)).count();
+
+                if ingestion_keys > 0 {
+                    println!(
+                        "Ingesting {} compiled files [solc : v{}]",
+                        ingestion_keys, ast_info.version
+                    );
+                } else {
+                    eprintln!("No files found for context [solc : v{}]", ast_info.version);
                 }
             }
 
@@ -99,6 +90,7 @@ pub fn project(preprocessed_config: PreprocessedConfig, lsp_mode: bool) -> Vec<W
                     context.src_filepaths.push(relative_suffix.to_string_lossy().to_string());
                 }
             }
+
             Some(context)
         })
         .collect::<Vec<_>>();
@@ -109,7 +101,7 @@ pub fn project(preprocessed_config: PreprocessedConfig, lsp_mode: bool) -> Vec<W
         if contexts_results.iter().any(|c| c.is_none()) {
             std::process::exit(1);
         }
-        say_header("Scanning Contracts");
+        display_header(&processed_config, "Scanning Contracts");
     }
 
     contexts_results.into_iter().flatten().collect()

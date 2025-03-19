@@ -1,5 +1,18 @@
 use foundry_compilers_aletheia::ProjectConfigInput;
 
+pub fn display_header(project_config: &ProjectConfigInput, header: &str) {
+    let say_header = |message: &str| {
+        let say = |message: &str| {
+            println!("{}", message);
+        };
+        let longest_str_len = project_config.project_paths.sources.display().to_string().len();
+        say(&format!("---------{}", &"-".repeat(longest_str_len)));
+        say(&format!("# {}", message));
+        say(&format!("---------{}", &"-".repeat(longest_str_len)));
+    };
+    say_header(header);
+}
+
 pub fn display_configuration_info(project_config: &ProjectConfigInput) {
     let say = |message: &str| {
         println!("{}", message);
