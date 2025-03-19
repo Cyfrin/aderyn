@@ -1,4 +1,5 @@
 pub(crate) mod config_helpers;
+mod display;
 
 pub mod compile;
 pub mod driver;

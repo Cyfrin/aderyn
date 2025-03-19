@@ -2,7 +2,7 @@ use aderyn_core::{
     ast::SourceUnit, context::workspace_context::WorkspaceContext, visitor::ast_visitor::Node,
 };
 use foundry_compilers_aletheia::{
-    derive_ast_and_evm_info, AstSourceFile, ExcludeConfig, IncludeConfig, ProjectConfigInput,
+    derive_ast_and_evm_info, AstSourceFile, ExcludeConfig, IncludeConfig,
     ProjectConfigInputBuilder, Source, SourcesConfig,
 };
 use rayon::iter::{IntoParallelIterator, ParallelIterator};
@@ -11,6 +11,8 @@ use std::{
     str::FromStr,
 };
 
+use crate::display::display_configuration_info;
+
 pub fn project(
     root_path: &Path,
     src: &Option<String>,
@@ -18,12 +20,6 @@ pub fn project(
     include: &Option<Vec<String>>,
     lsp_mode: bool,
 ) -> Vec<WorkspaceContext> {
-    let say = |message: &str| {
-        if !lsp_mode {
-            println!("{}", message);
-        }
-    };
-
     let absolute_root_path = std::fs::canonicalize(root_path).unwrap_or_else(|_| {
         eprintln!("Root path: {:?} is unable to be canonicalized. Make sure it exists.", root_path);
         std::process::exit(1);
@@ -45,7 +41,24 @@ pub fn project(
         .build()
         .unwrap();
 
-    display_configuration_info(&project_config, lsp_mode);
+    let say = |message: &str| {
+        if !lsp_mode {
+            println!("{}", message);
+        }
+    };
+
+    let say_header = |message: &str| {
+        let longest_str_len = project_config.project_paths.sources.display().to_string().len();
+        say(&format!("---------{}", &"-".repeat(longest_str_len)));
+        say(&format!("# {}", message));
+        say(&format!("---------{}", &"-".repeat(longest_str_len)));
+    };
+
+    if !lsp_mode {
+        display_configuration_info(&project_config);
+    }
+
+    say_header("Compiling ASTs");
 
     let contexts_results = derive_ast_and_evm_info(&project_config)
         .unwrap()
@@ -105,6 +118,8 @@ pub fn project(
         }
     }
 
+    say_header("Scanning Contracts");
+
     contexts_results.into_iter().flatten().collect()
 }
 
@@ -148,55 +163,4 @@ fn absorb_ast_content_into_context(
         eprintln!("{:?}", err);
         std::process::exit(1);
     });
-}
-
-fn display_configuration_info(project_config: &ProjectConfigInput, lsp_mode: bool) {
-    if lsp_mode {
-        return; // Optimize to save Cycles
-    }
-
-    let say = |message: &str| {
-        if !lsp_mode {
-            println!("{}", message);
-        }
-    };
-
-    say("Compiling contracts ...");
-    say(&format!("Root - {}", project_config.project_paths.root.display()));
-    say(&format!("Source - {}", project_config.project_paths.sources.display()));
-    say(&format!(
-        "Remappings - {:#?}",
-        project_config
-            .project_paths
-            .remappings
-            .iter()
-            .map(|r| {
-                let mut rel = r.clone();
-                rel.strip_prefix(&project_config.project_paths.root);
-                rel.to_string()
-            })
-            .collect::<Vec<_>>()
-    ));
-    if project_config.include_containing.clone() != vec!["".to_string()] {
-        say(&format!("Include Containing - {:#?}", project_config.include_containing));
-    }
-    if !project_config.exclude_containing.is_empty() {
-        say(&format!("Exclude Containing - {:#?}", project_config.exclude_containing));
-    }
-    if !project_config.exclude_starting.is_empty() {
-        say(&format!(
-            "Auto Excluding in Source -  {:#?}",
-            project_config
-                .exclude_starting
-                .iter()
-                .map(|r| {
-                    r.strip_prefix(&project_config.project_paths.sources)
-                        .unwrap_or(r)
-                        .to_string_lossy()
-                        .to_string()
-                })
-                .collect::<Vec<_>>()
-        ));
-    }
-    say(&format!("EVM version - {}", project_config.evm_version));
 }

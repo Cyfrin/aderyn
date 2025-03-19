@@ -154,6 +154,7 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
     let (root_path, src, exclude, include) = obtain_config_values(args).unwrap();
 
     let absolute_root_path = &ensure_valid_root_path(&root_path);
+
     let mut contexts: Vec<WorkspaceContext> =
         compile::project(&root_path, &src, &exclude, &include, args.lsp);
 
