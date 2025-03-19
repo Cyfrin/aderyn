@@ -200,7 +200,6 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
         context.inward_callgraph = Some(inward_callgraph);
         context.outward_callgraph = Some(outward_callgraph);
     }
-    // Using the source path, calculate the sloc
 
     WorkspaceContextWrapper { contexts, root_path }
 }
