@@ -17,16 +17,8 @@ use super::ensure_valid_solidity_file;
 
 pub fn load_solidity_source_unit(filepath: &str) -> WorkspaceContext {
     let solidity_file = &ensure_valid_solidity_file(filepath);
-    let solidity_file_path_string = solidity_file.display().to_string();
 
-    let root = if solidity_file_path_string.contains("contract-playground") {
-        std::fs::canonicalize(Path::new("../tests/contract-playground")).unwrap()
-    } else if solidity_file_path_string.contains("adhoc-sol-files") {
-        std::fs::canonicalize(Path::new("../tests/adhoc-sol-files")).unwrap()
-    } else {
-        todo!("add more roots as you see fit");
-    };
-
+    let root = guess_root(&solidity_file.display().to_string());
     let suffix = solidity_file.strip_prefix(&root).unwrap();
 
     let project_config = ProjectConfigInputBuilder::new(&root)
@@ -37,6 +29,7 @@ pub fn load_solidity_source_unit(filepath: &str) -> WorkspaceContext {
     make_context(&project_config)
 }
 
+/// Make sure all files belong to contract-playground
 /// This function is dangerous to use because we force all the sol files into 1 Workspace Context.
 /// As a result, we may override Node IDs. Therefore, this function is only available in cfg(test)
 pub fn load_multiple_solidity_source_units_into_single_context(
@@ -60,6 +53,22 @@ pub fn load_multiple_solidity_source_units_into_single_context(
         .unwrap();
 
     make_context(&project_config)
+}
+
+fn guess_root(chunk: &str) -> PathBuf {
+    if chunk.contains("contract-playground") {
+        std::fs::canonicalize(Path::new("../tests/contract-playground")).unwrap()
+    } else if chunk.contains("adhoc-sol-files") {
+        std::fs::canonicalize(Path::new("../tests/adhoc-sol-files")).unwrap()
+    } else if chunk.contains("2024-07-templegold") {
+        std::fs::canonicalize(Path::new("../tests/2024-07-templegold/protocol")).unwrap()
+    } else if chunk.contains("hardhat-js-playground") {
+        std::fs::canonicalize(Path::new("../tests/hardhat-js-playground")).unwrap()
+    } else if chunk.contains("ccip-contracts") {
+        std::fs::canonicalize(Path::new("../tests/ccip-contracts")).unwrap()
+    } else {
+        todo!("add more roots as you see fit");
+    }
 }
 
 fn make_context(project_config: &ProjectConfigInput) -> WorkspaceContext {
