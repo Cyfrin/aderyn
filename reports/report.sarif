@@ -42,9 +42,9 @@
             }
           ],
           "message": {
-            "text": "Use `abi.encode()` instead which will pad items to 32 bytes, which will [prevent hash collisions](https://docs.soliditylang.org/en/v0.8.13/abi-spec.html#non-standard-packed-mode) (e.g. `abi.encodePacked(0x123,0x456)` => `0x123456` => `abi.encodePacked(0x1,0x23456)`, but `abi.encode(0x123,0x456)` => `0x0...1230...456`). Unless there is a compelling reason, `abi.encode` should be preferred. If there is only one argument to `abi.encodePacked()` it can often be cast to `bytes()` or `bytes32()` [instead](https://ethereum.stackexchange.com/questions/30912/how-to-compare-strings-in-solidity#answer-82739).\nIf all arguments are strings and or bytes, `bytes.concat()` should be used instead."
+            "text": "abi.encodePacked() should not be used with dynamic types when passing the result to a hash function such as `keccak256()`. Use `abi.encode()` instead which will pad items to 32 bytes, preventing hash collisions: https://docs.soliditylang.org/en/v0.8.13/abi-spec.html#non-standard-packed-mode. (e.g. `abi.encodePacked(0x123,0x456)` => `0x123456` => `abi.encodePacked(0x1,0x23456)`, but `abi.encode(0x123,0x456)` => `0x0...1230...456`). Unless there is a compelling reason, `abi.encode` should be preferred. If there is only one argument to `abi.encodePacked()` it can often be cast to `bytes()` or `bytes32()` instead: https://ethereum.stackexchange.com/questions/30912/how-to-compare-strings-in-solidity#answer-82739. If all arguments are strings and or bytes, `bytes.concat()` should be used instead."
           },
-          "ruleId": "hash-collision-due-to-abi-encode-packed"
+          "ruleId": "abi-encode-packed-hash-collision"
         },
         {
           "level": "warning",
@@ -95,7 +95,7 @@
             }
           ],
           "message": {
-            "text": "Passing an arbitrary `from` address to `transferFrom` (or `safeTransferFrom`) can lead to loss of funds, because anyone can transfer tokens from the `from` address if an approval is made.  "
+            "text": "Passing an arbitrary `from` address to `transferFrom` (or `safeTransferFrom`) can lead to loss of funds, because anyone can transfer tokens from the `from` address if an approval is made."
           },
           "ruleId": "arbitrary-transfer-from"
         },
@@ -1160,7 +1160,7 @@
           "message": {
             "text": "Downcasting int/uints in Solidity can be unsafe due to the potential for data loss and unintended behavior.When downcasting a larger integer type to a smaller one (e.g., uint256 to uint128), the value may exceed the range of the target type,leading to truncation and loss of significant digits. Use OpenZeppelin's SafeCast library to safely downcast integers."
           },
-          "ruleId": "unsafe-cast"
+          "ruleId": "unsafe-casting"
         },
         {
           "level": "warning",
@@ -1295,7 +1295,7 @@
           "message": {
             "text": "Storage reference is passed to a function with a memory parameter. This will not update the storage variable as expected. Consider using storage parameters instead."
           },
-          "ruleId": "storage-array-edit-with-memory"
+          "ruleId": "storage-array-memory-edit"
         },
         {
           "level": "warning",
@@ -1428,9 +1428,9 @@
             }
           ],
           "message": {
-            "text": ""
+            "text": "Remove the `selfdestruct` instruction from the code."
           },
-          "ruleId": "selfdestruct-identifier"
+          "ruleId": "selfdestruct"
         },
         {
           "level": "warning",
@@ -1492,7 +1492,7 @@
             }
           ],
           "message": {
-            "text": "If the length of a dynamic array (storage variable) directly assigned to, it may allow access to other storage slots by tweaking it's value. This practice has been depracated in newer Solidity versions"
+            "text": "If the length of a dynamic array (storage variable) is directly assigned to, it may allow access to other storage slots by tweaking it's value. This practice has been deprecated in newer Solidity versions"
           },
           "ruleId": "dynamic-array-length-assignment"
         },
@@ -1576,7 +1576,7 @@
             }
           ],
           "message": {
-            "text": "Remove this, as this causes execution to halt. Nothing after that call will execute, including code following the assembly block."
+            "text": "This causes the transaction execution to halt, and nothing after that call will execute including code following the assembly block."
           },
           "ruleId": "yul-return"
         },
@@ -1616,7 +1616,7 @@
             }
           ],
           "message": {
-            "text": "The transaction `address(payable?).send(address)` may fail because of reasons like out-of-gas, invalid receipient address or revert from the recipient. Therefore, the boolean returned by this function call must be checked to be `true` in order to verify that the transaction was successful"
+            "text": "The call `address(payable?).send(address)` may fail because of reasons like out-of-gas, invalid recipient address or revert from the recipient, but not revert the transaction. Therefore, the boolean returned by this function call must be checked to be `true` in order to verify that the transaction was successful."
           },
           "ruleId": "unchecked-send"
         },
@@ -1977,7 +1977,7 @@
           "message": {
             "text": "Consider introducing checks for `msg.sender` to ensure the recipient of the money is as intended."
           },
-          "ruleId": "sends-ether-away-without-checking-address"
+          "ruleId": "eth-send-unchecked-address"
         },
         {
           "level": "warning",
@@ -2039,9 +2039,9 @@
             }
           ],
           "message": {
-            "text": "Introduce checks on the address"
+            "text": "Making a `delegatecall` to an arbitrary address without any checks is dangerous. Consider adding requirements on the target address."
           },
-          "ruleId": "delegate-call-on-unchecked-address"
+          "ruleId": "delegate-call-unchecked-address"
         },
         {
           "level": "warning",
@@ -2112,7 +2112,7 @@
             }
           ],
           "message": {
-            "text": "Right to left override character may be misledaing and cause potential attacks by visually misordering method arguments!"
+            "text": "The right to left override character may be misleading and cause potential attacks by visually misordering method arguments."
           },
           "ruleId": "rtlo"
         },
@@ -2143,7 +2143,7 @@
             }
           ],
           "message": {
-            "text": "Potentially mistakened `=+` for `+=` or `=-` for `-=`. Please include a space in between."
+            "text": "Potentially mistaken `=+` for `+=` or `=-` for `-=`. This acts as an assignment instead of an increment or decrement.Use the correct operator to increment or decrement a variable."
           },
           "ruleId": "dangerous-unary-operator"
         },
@@ -2229,7 +2229,7 @@
           "message": {
             "text": "A contract's balance can be forcibly manipulated by another selfdestructing contract. Therefore, it's recommended to use >, <, >= or <= instead of strict equality."
           },
-          "ruleId": "strict-equailty-check-on-contract-balance"
+          "ruleId": "strict-equality-contract-balance"
         },
         {
           "level": "warning",
@@ -2247,9 +2247,9 @@
             }
           ],
           "message": {
-            "text": "If you want to leverage signed arrays in storage by assigning a literal array with at least one negative number, then you mus use solidity version 0.5.10 or above. This is because of a bug in older compilers."
+            "text": "solc versions 0.4.7-0.5.9 contain a compiler bug leading to incorrect values in signed integer arrays.Use solidity version 0.5.10 or above."
           },
-          "ruleId": "signed-storage-array"
+          "ruleId": "signed-integer-storage-array"
         },
         {
           "level": "warning",
@@ -2375,7 +2375,7 @@
             }
           ],
           "message": {
-            "text": "This is a bad practice that may lead to unintended consequences. Please declare the variable before using it."
+            "text": "Declare the variable before using it to avoid unintended consequences."
           },
           "ruleId": "pre-declared-local-variable-usage"
         },
@@ -2834,7 +2834,7 @@
           "message": {
             "text": "Function is declared constant/view but it changes state. Ensure that the attributes of contract compiled prior to 0.5 are correct."
           },
-          "ruleId": "constant-function-changing-state"
+          "ruleId": "constant-function-changes-state"
         },
         {
           "level": "warning",
@@ -2869,7 +2869,7 @@
             }
           ],
           "message": {
-            "text": "Function selector collides with other functions. This may cause the solidity function dispatcher to invoke the wrong function if the functions happen to be included in the same contract through an inheritance hirearchy later down the line. It is recommended to rename this function or change its parameters."
+            "text": "Function selector collides with other functions. This may cause the solidity function dispatcher to invoke the wrong function if the functions happen to be included in the same contract through an inheritance hierarchy later down the line. It is recommended to rename this function or change its parameters."
           },
           "ruleId": "function-selector-collision"
         },
@@ -3159,9 +3159,9 @@
             }
           ],
           "message": {
-            "text": "Using `delegatecall` in loop may consume excessive gas"
+            "text": "Using `delegatecall` in loop may consume excessive gas, or worse, lead to more severe issues."
           },
-          "ruleId": "delegate-call-in-loop"
+          "ruleId": "delegatecall-in-loop"
         },
         {
           "level": "note",
@@ -3463,7 +3463,7 @@
           "message": {
             "text": "The `ecrecover` function is susceptible to signature malleability. This means that the same message can be signed in multiple ways, allowing an attacker to change the message signature without invalidating it. This can lead to unexpected behavior in smart contracts, such as the loss of funds or the ability to bypass access control. Consider using OpenZeppelin's ECDSA library instead of the built-in function."
           },
-          "ruleId": "raw-ecrecover"
+          "ruleId": "ecrecover"
         },
         {
           "level": "note",
@@ -3494,7 +3494,7 @@
           "message": {
             "text": "Openzeppelin has deprecated several functions and replaced with newer versions. Please consult https://docs.openzeppelin.com/"
           },
-          "ruleId": "deprecated-oz-functions"
+          "ruleId": "deprecated-oz-function"
         },
         {
           "level": "note",
@@ -3723,7 +3723,7 @@
           "message": {
             "text": "ERC20 functions may not behave as expected. For example: return values are not always meaningful. It is recommended to use OpenZeppelin's SafeERC20 library."
           },
-          "ruleId": "unsafe-erc20-functions"
+          "ruleId": "unsafe-erc20-operation"
         },
         {
           "level": "note",
@@ -3944,6 +3944,17 @@
                 },
                 "region": {
                   "byteLength": 23,
+                  "byteOffset": 32
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/PragmaRange.sol"
+                },
+                "region": {
+                  "byteLength": 31,
                   "byteOffset": 32
                 }
               }
@@ -4258,7 +4269,7 @@
           "message": {
             "text": "Check for `address(0)` when assigning values to address state variables."
           },
-          "ruleId": "no-zero-address-check"
+          "ruleId": "state-no-address-check"
         },
         {
           "level": "note",
@@ -4271,6 +4282,17 @@
                 "region": {
                   "byteLength": 2,
                   "byteOffset": 174
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/AderynIgnoreCustomDetectors.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 343
                 }
               }
             },
@@ -4914,9 +4936,9 @@
             }
           ],
           "message": {
-            "text": "Instead of marking a function as `public`, consider marking it as `external` if it is not used internally."
+            "text": "If a function is marked public but is not used internally, consider marking it as `external`."
           },
-          "ruleId": "useless-public-function"
+          "ruleId": "unused-public-function"
         },
         {
           "level": "note",
@@ -5781,293 +5803,9 @@
             }
           ],
           "message": {
-            "text": "If the same constant literal value is used multiple times, create a constant state variable and reference it throughout the contract."
+            "text": "Define and use `constant` variables instead of using literals. If the same constant literal value is used multiple times, create a constant state variable and reference it throughout the contract."
           },
           "ruleId": "literal-instead-of-constant"
-        },
-        {
-          "level": "note",
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ContractLocksEther.sol"
-                },
-                "region": {
-                  "byteLength": 56,
-                  "byteOffset": 119
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ContractLocksEther.sol"
-                },
-                "region": {
-                  "byteLength": 56,
-                  "byteOffset": 869
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ContractLocksEther.sol"
-                },
-                "region": {
-                  "byteLength": 54,
-                  "byteOffset": 961
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ContractLocksEther.sol"
-                },
-                "region": {
-                  "byteLength": 56,
-                  "byteOffset": 1904
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ContractLocksEther.sol"
-                },
-                "region": {
-                  "byteLength": 54,
-                  "byteOffset": 1996
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ContractLocksEther.sol"
-                },
-                "region": {
-                  "byteLength": 56,
-                  "byteOffset": 3143
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ContractLocksEther.sol"
-                },
-                "region": {
-                  "byteLength": 54,
-                  "byteOffset": 3235
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ContractLocksEther.sol"
-                },
-                "region": {
-                  "byteLength": 56,
-                  "byteOffset": 4367
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ContractLocksEther.sol"
-                },
-                "region": {
-                  "byteLength": 54,
-                  "byteOffset": 4459
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ContractLocksEther.sol"
-                },
-                "region": {
-                  "byteLength": 56,
-                  "byteOffset": 5563
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ContractLocksEther.sol"
-                },
-                "region": {
-                  "byteLength": 54,
-                  "byteOffset": 5655
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/EmitAfterExternalCall.sol"
-                },
-                "region": {
-                  "byteLength": 25,
-                  "byteOffset": 1861
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/IncorrectERC721.sol"
-                },
-                "region": {
-                  "byteLength": 115,
-                  "byteOffset": 3122
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/TestERC20.sol"
-                },
-                "region": {
-                  "byteLength": 70,
-                  "byteOffset": 338
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/TestERC20.sol"
-                },
-                "region": {
-                  "byteLength": 70,
-                  "byteOffset": 413
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Trump.sol"
-                },
-                "region": {
-                  "byteLength": 72,
-                  "byteOffset": 891
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Trump.sol"
-                },
-                "region": {
-                  "byteLength": 78,
-                  "byteOffset": 968
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Trump.sol"
-                },
-                "region": {
-                  "byteLength": 44,
-                  "byteOffset": 4970
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Trump.sol"
-                },
-                "region": {
-                  "byteLength": 33,
-                  "byteOffset": 5019
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/Trump.sol"
-                },
-                "region": {
-                  "byteLength": 62,
-                  "byteOffset": 5057
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/UncheckedReturn.sol"
-                },
-                "region": {
-                  "byteLength": 30,
-                  "byteOffset": 297
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/UninitializedStateVariable.sol"
-                },
-                "region": {
-                  "byteLength": 27,
-                  "byteOffset": 700
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/eth2/DepositContract.sol"
-                },
-                "region": {
-                  "byteLength": 107,
-                  "byteOffset": 2641
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/inheritance/ExtendedInheritance.sol"
-                },
-                "region": {
-                  "byteLength": 45,
-                  "byteOffset": 144
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/inheritance/InheritanceBase.sol"
-                },
-                "region": {
-                  "byteLength": 28,
-                  "byteOffset": 150
-                }
-              }
-            }
-          ],
-          "message": {
-            "text": "Index event fields make the field more quickly accessible to off-chain tools that parse events. However, note that each index field costs extra gas during emission, so it's not necessarily best to index the maximum allowed per event (three fields). Each event should use three indexed fields if there are three or more fields, and gas usage is not particularly of concern for the events in question. If there are fewer than three fields, all of the fields should be indexed."
-          },
-          "ruleId": "unindexed-events"
         },
         {
           "level": "note",
@@ -6384,7 +6122,7 @@
           "message": {
             "text": "Use descriptive reason strings or custom errors for revert paths."
           },
-          "ruleId": "require-without-string"
+          "ruleId": "empty-require-revert"
         },
         {
           "level": "note",
@@ -6413,9 +6151,9 @@
             }
           ],
           "message": {
-            "text": "This is a best-practice to protect against reentrancy in other modifiers."
+            "text": "To protect against reentrancy in other modifiers, the `nonReentrant` modifier should be the first modifier in the list of modifiers."
           },
-          "ruleId": "non-reentrant-not-first-modifier"
+          "ruleId": "non-reentrant-not-first"
         },
         {
           "level": "note",
@@ -6611,7 +6349,7 @@
           "message": {
             "text": "In the PoS model, proposers know well in advance if they will propose one or consecutive blocks ahead of time. In such a scenario, a malicious validator can hold back the transaction and execute it at a more favourable block number.Consider allowing function caller to specify swap deadline input parameter."
           },
-          "ruleId": "block-timestamp-is-weak-deadline"
+          "ruleId": "block-timestamp-deadline"
         },
         {
           "level": "note",
@@ -6629,7 +6367,7 @@
             }
           ],
           "message": {
-            "text": "Using `ERC721::_mint()` can mint ERC721 tokens to addresses which don't support ERC721 tokens. Use `_safeMint()` instead of `_mint()` for ERC721."
+            "text": "Using `ERC721::_mint()` can mint ERC721 tokens to addresses which don't support ERC721 tokens. Use `_safeMint()` instead of `_mint()` for ERC721 tokens."
           },
           "ruleId": "unsafe-oz-erc721-mint"
         },
@@ -7274,9 +7012,9 @@
             }
           ],
           "message": {
-            "text": ""
+            "text": "Consider removing the modifier or inlining the logic into the calling function."
           },
-          "ruleId": "useless-modifier"
+          "ruleId": "modifier-used-only-once"
         },
         {
           "level": "note",
@@ -7974,7 +7712,7 @@
             }
           ],
           "message": {
-            "text": "Use `e` notation, for example: `1e18`, instead of its full numeric value."
+            "text": "Large literal values multiples of 10000 can be replaced with scientific notation.Use `e` notation, for example: `1e18`, instead of its full numeric value."
           },
           "ruleId": "large-numeric-literal"
         },
@@ -8194,7 +7932,7 @@
           "message": {
             "text": "Instead of separating the logic into a separate function, consider inlining the logic into the calling function. This can reduce the number of function calls and improve readability."
           },
-          "ruleId": "useless-internal-function"
+          "ruleId": "internal-function-used-once"
         },
         {
           "level": "note",
@@ -8223,9 +7961,9 @@
             }
           ],
           "message": {
-            "text": "Contract contains comments with TODOS"
+            "text": "Contract contains comments with TODOS. Consider implementing or removing them."
           },
-          "ruleId": "contract-with-todos"
+          "ruleId": "todo"
         },
         {
           "level": "note",
@@ -8551,7 +8289,7 @@
             }
           ],
           "message": {
-            "text": "Consider keeping the naming convention consistent in a given contract. Explicit size declarations are preferred (uint256, int256) over implicit ones (uint, int) to avoid confusion."
+            "text": "Inconsistency in declaring uint256/uint (or) int256/int variables within a contract. Use explicit size declarations (uint256 or int256). Consider keeping the naming convention consistent in a given contract. Explicit size declarations are preferred (uint256, int256) over implicit ones (uint, int) to avoid confusion."
           },
           "ruleId": "inconsistent-type-names"
         },
@@ -8593,9 +8331,9 @@
             }
           ],
           "message": {
-            "text": "it is recommended that the definition be removed when custom error is unused"
+            "text": "Consider using or removing the unused error."
           },
-          "ruleId": "useless-error"
+          "ruleId": "unused-error"
         },
         {
           "level": "note",
@@ -8648,7 +8386,7 @@
           "message": {
             "text": "Avoid `require` / `revert` statements in a loop because a single bad item can cause the whole transaction to fail. It's better to forgive on fail and return failed elements post processing of the loop"
           },
-          "ruleId": "reverts-and-requires-in-loops"
+          "ruleId": "require-revert-in-loop"
         },
         {
           "level": "note",
@@ -8699,7 +8437,7 @@
             }
           ],
           "message": {
-            "text": "Division operations followed directly by multiplication operations can lead to precision loss due to the way integer arithmetic is handled in Solidity."
+            "text": "Division operations followed directly by multiplication operations can lead to precision loss due to the way integer arithmetic is handled in Solidity./\n        Consider Multiplication before Division."
           },
           "ruleId": "division-before-multiplication"
         },
@@ -8774,9 +8512,9 @@
             }
           ],
           "message": {
-            "text": "Remove the redundant statements because no code will be generated and it just congests the codebase."
+            "text": "Remove the redundant statement."
           },
-          "ruleId": "redundant-statements"
+          "ruleId": "redundant-statement"
         },
         {
           "level": "note",
@@ -8827,9 +8565,9 @@
             }
           ],
           "message": {
-            "text": "The contract reads it's own variable using `this` which adds an unnecessary STATICCALL. Remove `this` and access the variable like storage."
+            "text": "The contract reads it's own state variable using `this` which adds an unnecessary STATICCALL. Consider removing `this` to access the variable from storage."
           },
-          "ruleId": "public-variable-read-in-external-context"
+          "ruleId": "state-variable-read-external"
         },
         {
           "level": "note",
@@ -9133,7 +8871,7 @@
             }
           ],
           "message": {
-            "text": "State variable appears to be unused. No analysis has been performed to see if any inilne assembly references it. So if that's not the case, consider removing this unused variable."
+            "text": "State variable appears to be unused. No analysis has been performed to see if any inline assembly references it. Consider removing this unused variable."
           },
           "ruleId": "unused-state-variable"
         },
@@ -9175,9 +8913,9 @@
             }
           ],
           "message": {
-            "text": "If the assembly code contains bugs or unintended side effects, it can lead to incorrect results or vulnerabilities, which are hard to debug and resolve, especially when the function is meant to be simple and predictable."
+            "text": "constant/pure/view was not enforced prior to Solidity 0.5. Starting from Solidity 0.5, a call to a constant/pure/view function uses the STATICCALL opcode, which reverts in case of state modification. As a result, a call to an incorrectly labeled function may trap a contract compiled with Solidity 0.5. https://docs.soliditylang.org/en/develop/050-breaking-changes.html#interoperability-with-older-contracts"
           },
-          "ruleId": "constant-functions-assembly"
+          "ruleId": "constant-function-contains-assembly"
         },
         {
           "level": "note",
@@ -9228,9 +8966,9 @@
             }
           ],
           "message": {
-            "text": "If `x` is a boolean, there is no need to do `if(x == true)` or `if(x == false)`. Just use `if(x)` and `if(!x)` respectively."
+            "text": "If `x` is a boolean, use `if(x)` and `if(!x)` instead of `if(x == true)` or `if(x == false)`."
           },
-          "ruleId": "redundant-boolean-equality"
+          "ruleId": "boolean-equality"
         },
         {
           "level": "note",
@@ -9325,7 +9063,7 @@
             }
           ],
           "message": {
-            "text": "Rename the local variables that shadow another component."
+            "text": "Rename the local variable that shadows another state variable."
           },
           "ruleId": "local-variable-shadowing"
         },
@@ -9519,7 +9257,7 @@
             }
           ],
           "message": {
-            "text": "A low level callee may consume all callers gas unexpectedly. Avoid unlimited implicit decoding of returndata on calls to unchecked addresses. You can limit the gas by passing a gas limit as an option to the call. For example, `unknownAdress.call{gas: gasLimitHere}(\"calldata\")` That would act as a safety net from OOG errors.\n        "
+            "text": "A low level callee may consume all callers gas unexpectedly. Avoid unlimited implicit decoding of returndata on calls to unchecked addresses. You can limit the gas by passing a gas limit as an option to the call. For example, `unknownAddress.call{gas: gasLimitHere}(\"calldata\")` That would act as a safety net from OOG errors.\n        "
           },
           "ruleId": "return-bomb"
         },
@@ -9561,7 +9299,7 @@
             }
           ],
           "message": {
-            "text": "Detects the immediate initialization of state variables through function calls that are not pure/constant, or that use non-constant state variable. Remove any initialization of state variables via non-constant state variables or function calls. If variables must be set upon contract deployment, locate initialization in the constructor instead."
+            "text": "Instead of using a function to initialize a state variable in its declaration; declare the state variable and initialize it in the constructor."
           },
           "ruleId": "function-initializing-state"
         },
@@ -9744,9 +9482,9 @@
             }
           ],
           "message": {
-            "text": "Cache the lengths of storage arrays if they are used and not modified in for loops."
+            "text": "Calling `.length` on a storage array in a loop condition is expensive. Consider caching the length in a local variable in memory before the loop and reusing it."
           },
-          "ruleId": "array-length-not-cached"
+          "ruleId": "storage-array-length-not-cached"
         },
         {
           "level": "note",
@@ -9764,9 +9502,9 @@
             }
           ],
           "message": {
-            "text": "Argument to `assert()` modifies the state. Use `require` for invariants modifying state."
+            "text": "An argument to `assert()` modifies the state. Use `require` for invariants modifying state."
           },
-          "ruleId": "state-change-in-assert"
+          "ruleId": "assert-state-change"
         },
         {
           "level": "note",
@@ -9938,9 +9676,9 @@
             }
           ],
           "message": {
-            "text": "Invoking `SSTORE`operations in loops may lead to Out-of-gas errors. Use a local variable to hold the loop computation result."
+            "text": "Invoking `SSTORE` operations in loops may waste gas. Use a local variable to hold the loop computation result."
           },
-          "ruleId": "costly-operations-inside-loops"
+          "ruleId": "costly-loop"
         },
         {
           "level": "note",
@@ -9993,7 +9731,7 @@
           "message": {
             "text": "Name clashes with a built-in-symbol. Consider renaming it."
           },
-          "ruleId": "builtin-symbol-shadow"
+          "ruleId": "builtin-symbol-shadowing"
         },
         {
           "level": "note",
@@ -11902,9 +11640,9 @@
             }
           ],
           "message": {
-            "text": "State variable changes in this function but no event is emitted."
+            "text": "There are state variable changes in this function but no event is emitted. Consider emitting an event to enable offchain indexers to track the changes."
           },
-          "ruleId": "state-variable-changes-without-events"
+          "ruleId": "state-change-without-event"
         },
         {
           "level": "note",
@@ -12285,7 +12023,7 @@
             }
           ],
           "message": {
-            "text": "State variables that are should be declared immutable to save gas. Add the `immutable` attribute to state variables that are only changed in the constructor"
+            "text": "State variables that are only changed in the constructor should be declared immutable to save gas. Add the `immutable` attribute to state variables that are only changed in the constructor"
           },
           "ruleId": "state-variable-could-be-immutable"
         },
@@ -12305,7 +12043,7 @@
             }
           ],
           "message": {
-            "text": "Design the modifier to only contain 1 placeholder statement. If it's not possible, split the logic into multiple modifiers."
+            "text": "Design the modifier to only contain 1 placeholder statement. If that is not possible, split the logic into multiple modifiers."
           },
           "ruleId": "multiple-placeholders"
         },
@@ -12534,7 +12272,7 @@
             }
           ],
           "message": {
-            "text": "Function returns a value but it is ignored."
+            "text": "Function returns a value but it is ignored. Consider checking the return value."
           },
           "ruleId": "unchecked-return"
         }
@@ -12545,8 +12283,8 @@
           "informationUri": "https://github.com/Cyfrin/aderyn",
           "name": "Aderyn",
           "organization": "Cyfrin",
-          "semanticVersion": "0.4.3",
-          "version": "0.4.3"
+          "semanticVersion": "0.5.1",
+          "version": "0.5.1"
         }
       }
     }
