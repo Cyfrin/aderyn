@@ -62,11 +62,11 @@ impl IssueDetector for LocalVariableShadowingDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Local variable shadows state variables in the contract hirearchy")
+        String::from("Local Variable Shadows State Variable")
     }
 
     fn description(&self) -> String {
-        String::from("Rename the local variables that shadow another component.")
+        String::from("Rename the local variable that shadows another state variable.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -78,7 +78,7 @@ impl IssueDetector for LocalVariableShadowingDetector {
     }
 }
 
-mod contract_hirearchy_variable_helpers {
+mod contract_hierarchy_variable_helpers {
     use crate::{
         ast::{ASTNode, ContractDefinition, VariableDeclaration},
         context::{browser::ExtractVariableDeclarations, workspace_context::WorkspaceContext},

@@ -57,7 +57,7 @@ impl IssueDetector for TxOriginUsedForAuthDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Potential use of `tx.origin` for authentication.")
+        String::from("Use of `tx.origin` for authentication")
     }
 
     fn description(&self) -> String {
@@ -86,7 +86,7 @@ impl TxOriginUsedForAuthDetector {
         let callgraph = CallGraph::new(context, check_nodes, CallGraphDirection::Inward)?;
         callgraph.accept(context, &mut tracker)?;
 
-        if tracker.satisifed() {
+        if tracker.satisfied() {
             capture!(self, context, capture_node);
         }
         Ok(())
@@ -102,7 +102,7 @@ struct MsgSenderAndTxOriginTracker {
 impl MsgSenderAndTxOriginTracker {
     /// To avoid FP (msg.sender == tx.origin) we require that tx.origin is present and msg.sender is
     /// absent for it to be considered satisfied
-    fn satisifed(&self) -> bool {
+    fn satisfied(&self) -> bool {
         self.reads_tx_origin && !self.reads_msg_sender
     }
 }

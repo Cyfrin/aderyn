@@ -86,9 +86,7 @@ impl IssueDetector for UnsafeCastingDetector {
     }
 
     fn title(&self) -> String {
-        String::from(
-            "Unsafe Casting of integers can lead to truncation and loss of significant digits.",
-        )
+        String::from("Unsafe Casting of integers")
     }
 
     fn description(&self) -> String {
@@ -102,7 +100,7 @@ impl IssueDetector for UnsafeCastingDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::UnsafeCast)
+        format!("{}", IssueDetectorNamePool::UnsafeCasting)
     }
 }
 

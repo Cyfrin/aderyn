@@ -37,7 +37,7 @@ impl IssueDetector for ContractLocksEtherDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Contract locks Ether without a withdraw function.")
+        String::from("Contract locks Ether without a withdraw function")
     }
 
     fn description(&self) -> String {
@@ -88,7 +88,7 @@ mod contract_eth_helper {
 
         pub fn allows_withdrawal_of_eth(&self, context: &WorkspaceContext) -> Option<bool> {
             /*
-                For all the contracts in the hirearchy try and see if there is exists a public/external function that
+                For all the contracts in the hierarchy try and see if there is exists a public/external function that
                 can be called which takes the execution flow in a path where there is possibility to send back eth away from
                 the contract using the low level `call{value: XXX}` or `transfer` or `send`.
             */
@@ -123,7 +123,7 @@ mod contract_eth_helper {
                 }
             }
             // At this point we have successfully gone through all the contracts in the inheritance
-            // heirarchy but tracker has determined that none of them have have calls
+            // hierarchy but tracker has determined that none of them have have calls
             // that sends native eth Even if they are by some chance, they are not
             // reachable from external & public functions
             Some(false)

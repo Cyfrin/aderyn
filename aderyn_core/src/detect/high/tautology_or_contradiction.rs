@@ -42,7 +42,7 @@ impl IssueDetector for TautologyOrContraditionDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Tautology or Contradiction in comparison.")
+        String::from("Tautology or Contradiction in comparison")
     }
 
     fn description(&self) -> String {
@@ -82,7 +82,7 @@ mod tautology_or_contradiction_tests {
         // assert the severity is high
         assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
         // assert the title is correct
-        assert_eq!(detector.title(), String::from("Tautology or Contradiction in comparison."));
+        assert_eq!(detector.title(), String::from("Tautology or Contradiction in comparison"));
         // assert the description is correct
         assert_eq!(
             detector.description(),
@@ -183,7 +183,7 @@ pub mod solidity_integer_helper {
     /// This function checks for the range of integer values of uint8 and returns true if it is
     /// neither a tautology nor a contradiction.
     ///
-    /// Here, I define tautology as the condition where the range Ex: (>=300) FULLY COVERS thr Range
+    /// Here, I define tautology as the condition where the range Ex: (>=300) FULLY COVERS the Range
     /// of Uint8 Contradiction: When the range Ex:(>=300) fully excludes the Range of Uint8
     ///
     /// Notice how in the above example, the value is on the right hand side.

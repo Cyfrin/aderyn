@@ -1,0 +1,4 @@
+[alias]
+42 = "xtask 42"
+xtask = "run --package xtask --bin xtask --"
+prep = "xtask r"

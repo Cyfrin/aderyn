@@ -20,7 +20,7 @@ impl IssueDetector for IncorrectERC721InterfaceDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // Analyze each contract in context
         for current_contract in context.contract_definitions() {
-            // Look through it's inheritance heirarchy to determine if it's an ERC721
+            // Look through it's inheritance hierarchy to determine if it's an ERC721
             if let Some(contract_ids) = current_contract.linearized_base_contracts.as_ref() {
                 let current_contract_is_erc721 = contract_ids.iter().any(|i| {
                     context.nodes.get(i).is_some_and(|c| {
@@ -96,7 +96,7 @@ impl IssueDetector for IncorrectERC721InterfaceDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Incorrect ERC721 interface.")
+        String::from("Incorrect ERC721 interface")
     }
 
     fn description(&self) -> String {
@@ -123,23 +123,23 @@ mod erc721_matching_function_signature_helper {
 
     struct SignatureMatcher<'a> {
         name: &'a str,
-        paramter_types: Vec<&'a str>,
+        parameter_types: Vec<&'a str>,
     }
 
-    // Helps with checking if a function definition satisifed a signature matcher
+    // Helps with checking if a function definition satisfied a signature matcher
     impl SignatureMatcher<'_> {
         fn satisfies(&self, func: &FunctionDefinition) -> bool {
             if func.name != self.name {
                 return false;
             }
             let params = &func.parameters.parameters;
-            if params.len() != self.paramter_types.len() {
+            if params.len() != self.parameter_types.len() {
                 return false;
             }
             #[allow(clippy::needless_range_loop)]
             for idx in 0..params.len() {
                 if let Some(func_param_type) = params[idx].type_descriptions.type_string.as_ref() {
-                    let target = &self.paramter_types[idx];
+                    let target = &self.parameter_types[idx];
                     if *target == "address" {
                         if func_param_type == "address" || func_param_type == "address payable" {
                             continue;
@@ -161,51 +161,52 @@ mod erc721_matching_function_signature_helper {
     impl FunctionDefinition {
         pub fn represents_erc721_get_approved(&self) -> bool {
             let satisifer =
-                SignatureMatcher { name: "getApproved", paramter_types: vec!["uint256"] };
+                SignatureMatcher { name: "getApproved", parameter_types: vec!["uint256"] };
             satisifer.satisfies(self)
         }
 
         pub fn represents_erc721_transfer_from(&self) -> bool {
             let satisifer = SignatureMatcher {
                 name: "transferFrom",
-                paramter_types: vec!["address", "address", "uint256"],
+                parameter_types: vec!["address", "address", "uint256"],
             };
             satisifer.satisfies(self)
         }
 
         pub fn represents_erc721_approve(&self) -> bool {
             let satisifer =
-                SignatureMatcher { name: "approve", paramter_types: vec!["address", "uint256"] };
+                SignatureMatcher { name: "approve", parameter_types: vec!["address", "uint256"] };
             satisifer.satisfies(self)
         }
 
         pub fn represents_erc721_is_approved_for_all(&self) -> bool {
             let satisifer = SignatureMatcher {
                 name: "isApprovedForAll",
-                paramter_types: vec!["address", "address"],
+                parameter_types: vec!["address", "address"],
             };
             satisifer.satisfies(self)
         }
 
         pub fn represents_erc721_balance_of(&self) -> bool {
-            let satisifer = SignatureMatcher { name: "balanceOf", paramter_types: vec!["address"] };
+            let satisifer =
+                SignatureMatcher { name: "balanceOf", parameter_types: vec!["address"] };
             satisifer.satisfies(self)
         }
 
         pub fn represents_erc721_owner_of(&self) -> bool {
-            let satisifer = SignatureMatcher { name: "ownerOf", paramter_types: vec!["uint256"] };
+            let satisifer = SignatureMatcher { name: "ownerOf", parameter_types: vec!["uint256"] };
             satisifer.satisfies(self)
         }
 
         pub fn represents_erc721_safe_transfer_from(&self) -> bool {
             let type_1_staisfier = SignatureMatcher {
                 name: "safeTransferFrom",
-                paramter_types: vec!["address", "address", "uint256", "bytes"],
+                parameter_types: vec!["address", "address", "uint256", "bytes"],
             };
 
             let type_2_satisifer = SignatureMatcher {
                 name: "safeTransferFrom",
-                paramter_types: vec!["address", "address", "uint256"],
+                parameter_types: vec!["address", "address", "uint256"],
             };
 
             type_1_staisfier.satisfies(self) || type_2_satisifer.satisfies(self)
@@ -214,7 +215,7 @@ mod erc721_matching_function_signature_helper {
         pub fn represents_erc721_set_approval_for_all(&self) -> bool {
             let satisfier = SignatureMatcher {
                 name: "setApprovalForAll",
-                paramter_types: vec!["address", "bool"],
+                parameter_types: vec!["address", "bool"],
             };
             satisfier.satisfies(self)
         }

@@ -26,7 +26,7 @@ impl IssueDetector for MissingInheritanceDetector {
         // Key -> Contract ID, Value -> Collection of function selectors in the contract
         let mut contract_function_selectors: HashMap<NodeID, Vec<String>> = Default::default();
 
-        // Key -> Contract ID, Value -> Set of contract/interface IDs in it's heirarchy
+        // Key -> Contract ID, Value -> Set of contract/interface IDs in it's hierarchy
         let mut inheritance_map: HashMap<NodeID, Vec<NodeID>> = Default::default();
 
         for contract in context.contract_definitions() {
@@ -143,7 +143,7 @@ impl IssueDetector for MissingInheritanceDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Potentially missing inheritance for contract.")
+        String::from("Missing Inheritance")
     }
 
     fn description(&self) -> String {

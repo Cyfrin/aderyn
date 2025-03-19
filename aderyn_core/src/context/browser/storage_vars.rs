@@ -19,7 +19,7 @@ use std::{
 /// determine the exact state variables these storage pointers would be pointing to, in the context
 /// of the block-flow.
 ///
-/// NOTE - Asignment is not the only avenue for manipulating state variables, but also operations
+/// NOTE - Assignment is not the only avenue for manipulating state variables, but also operations
 /// like `push()` and `pop()` on arrays, `M[i] = x` on mappings, `delete X` imply the same.
 ///
 /// Here, the term manipulation covers all kinds of changes discussed above.
@@ -73,7 +73,7 @@ impl Debug for ApproximateStorageChangeFinder<'_> {
                     let loc_info = self.context.get_node_sort_key(node);
                     writeln!(f, "Line {:?}", (loc_info.1, loc_info.2))?;
                 } else {
-                    writeln!(f, "<uknown_node_id_{}>\n", id)?;
+                    writeln!(f, "<unknown_node_id_{}>\n", id)?;
                 }
             }
             writeln!(f)?;
@@ -92,7 +92,7 @@ impl Debug for ApproximateStorageChangeFinder<'_> {
                     let loc_info = self.context.get_node_sort_key(node);
                     writeln!(f, "Line {:?}", (loc_info.1, loc_info.2))?;
                 } else {
-                    writeln!(f, "<uknown_node_id_{}>", id)?;
+                    writeln!(f, "<unknown_node_id_{}>", id)?;
                 }
             }
             writeln!(f)?;
@@ -115,7 +115,7 @@ impl Debug for ApproximateStorageChangeFinder<'_> {
                         }
                     }
                 } else {
-                    writeln!(f, "<uknown_node_id_{}>", state_variable_id)?;
+                    writeln!(f, "<unknown_node_id_{}>", state_variable_id)?;
                 }
             }
             writeln!(f)?;
@@ -331,7 +331,7 @@ impl ASTConstVisitor for ApproximateStorageChangeFinder<'_> {
         // the LHS is memory, you are performing "sload"! But again, this logic changes
         // based on type of value in RHS. If it's a function call you should look at
         // return values and nature of the corresponding variable where that value will be stored.
-        // Likewise, differernt for different nodes albeit identifier one is probably the
+        // Likewise, different for different nodes albeit identifier one is probably the
         // most straightforward if left_node_ids.len() == right_node_ids.len() {}
 
         Ok(true)
@@ -368,7 +368,7 @@ impl ASTConstVisitor for ApproximateStorageChangeFinder<'_> {
                 //
                 // TODO: Write tests for these
                 // Then creates `passes_read_check()` before matching the var id on extracting
-                // refernce declarations Then replicate the logic for assignments
+                // reference declarations Then replicate the logic for assignments
                 // use lvaluerequested = false and islvalue = true to check if it's being read
                 // in case of visiting indexaccess, memberaccess, etc (expr_node! variants)
                 // So that it can detect stuff outside of just assignments. Example -
@@ -1024,7 +1024,7 @@ mod approximate_storage_change_finder_tests {
 #[cfg(test)]
 mod storage_vars_tests_helper {
 
-    // Using unwraps here are OK *only* becuase it's compiled with #[cfg(test)]
+    // Using unwraps here are OK *only* because it's compiled with #[cfg(test)]
 
     use crate::context::{
         browser::ExtractVariableDeclarations, workspace_context::WorkspaceContext,

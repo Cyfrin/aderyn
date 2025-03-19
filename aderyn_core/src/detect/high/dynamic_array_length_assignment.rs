@@ -21,7 +21,7 @@ impl IssueDetector for DynamicArrayLengthAssignmentDetector {
         for member_access in context
             .member_accesses()
             .into_iter()
-            .filter(|member_acces| member_acces.l_value_requested)
+            .filter(|member_access| member_access.l_value_requested)
         {
             let assignment_to = member_access.expression.type_descriptions();
 
@@ -47,14 +47,14 @@ impl IssueDetector for DynamicArrayLengthAssignmentDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Array length value has a direct assignment.")
+        String::from("Direct assignment of array length")
     }
 
     fn description(&self) -> String {
         String::from(
-            "If the length of a dynamic array (storage variable) directly assigned to, \
+            "If the length of a dynamic array (storage variable) is directly assigned to, \
         it may allow access to other storage slots by tweaking it's value. This practice has \
-        been depracated in newer Solidity versions",
+        been deprecated in newer Solidity versions",
         )
     }
 
@@ -78,7 +78,7 @@ mod dynamic_array_length_assignment_tests {
 
     #[test]
     #[serial]
-    fn test_reused_contract_name_detector() {
+    fn test_dynamic_array_length_assignment() {
         let context = load_solidity_source_unit(
             "../tests/contract-playground/src/DynamicArrayLengthAssignment.sol",
         );
@@ -95,14 +95,14 @@ mod dynamic_array_length_assignment_tests {
         // assert the severity is high
         assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
         // assert the title is correct
-        assert_eq!(detector.title(), String::from("Array length value has a direct assignment."));
+        assert_eq!(detector.title(), String::from("Direct assignment of array length"));
         // assert the description is correct
         assert_eq!(
             detector.description(),
             String::from(
-                "If the length of a dynamic array (storage variable) directly assigned to, \
-            it may allow access to other storage slots by tweaking it's value. This practice has \
-            been depracated in newer Solidity versions",
+                "If the length of a dynamic array (storage variable) is directly assigned to, \
+        it may allow access to other storage slots by tweaking it's value. This practice has \
+        been deprecated in newer Solidity versions"
             )
         );
     }

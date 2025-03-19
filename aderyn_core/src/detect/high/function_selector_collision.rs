@@ -89,11 +89,11 @@ impl IssueDetector for FunctionSelectorCollisionDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Function selector collides with other functions")
+        String::from("Function Selector Collision")
     }
 
     fn description(&self) -> String {
-        String::from("Function selector collides with other functions. This may cause the solidity function dispatcher to invoke the wrong function if the functions happen to be included in the same contract through an inheritance hirearchy later down the line. It is recommended to rename this function or change its parameters.")
+        String::from("Function selector collides with other functions. This may cause the solidity function dispatcher to invoke the wrong function if the functions happen to be included in the same contract through an inheritance hierarchy later down the line. It is recommended to rename this function or change its parameters.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {

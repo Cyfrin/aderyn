@@ -10,13 +10,13 @@ use crate::{
 use eyre::Result;
 
 #[derive(Default)]
-pub struct FucntionPointerInConstructorDetector {
+pub struct FunctionPointerInConstructorDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-impl IssueDetector for FucntionPointerInConstructorDetector {
+impl IssueDetector for FunctionPointerInConstructorDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // PLAN:
         // Catch all the function pointers in constructors that compile below 0.5.9
@@ -49,7 +49,7 @@ impl IssueDetector for FucntionPointerInConstructorDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Function pointers used in constructors.")
+        String::from("Function Pointer in Constructor")
     }
 
     fn description(&self) -> String {
@@ -169,7 +169,7 @@ mod function_pointers_tests {
 
     use crate::detect::{
         detector::IssueDetector,
-        low::function_pointer_in_constructor::FucntionPointerInConstructorDetector,
+        low::function_pointer_in_constructor::FunctionPointerInConstructorDetector,
     };
 
     #[test]
@@ -179,7 +179,7 @@ mod function_pointers_tests {
             "../tests/contract-playground/src/FunctionPointers.sol",
         );
 
-        let mut detector = FucntionPointerInConstructorDetector::default();
+        let mut detector = FunctionPointerInConstructorDetector::default();
         let found = detector.detect(&context).unwrap();
         // assert that the detector found an issue
         assert!(found);
