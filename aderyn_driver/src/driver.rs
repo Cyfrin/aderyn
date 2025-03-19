@@ -191,7 +191,6 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
             .map(|(key, value)| (key.to_owned(), value.ignore_lines.clone()))
             .collect::<HashMap<_, _>>();
 
-        // dbg!(&stats);
         context.set_sloc_stats(sloc_stats);
         context.set_ignore_lines_stats(ignore_line_stats);
 
