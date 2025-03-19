@@ -489,7 +489,7 @@
   },
   "issue_count": {
     "high": 39,
-    "low": 49
+    "low": 48
   },
   "high_issues": {
     "issues": [
@@ -7237,48 +7237,6 @@
         ]
       },
       {
-        "title": "External call is followed by an emit statement",
-        "description": "In most cases it is a best practice to perform the emit before making an external call to avoid a potential read only re-entrancy attack.",
-        "detector_name": "emit-after-external-call",
-        "instances": [
-          {
-            "contract_path": "src/EmitAfterExternalCall.sol",
-            "line_no": 25,
-            "src": "584:15",
-            "src_char": "584:15",
-            "hint": "Emission happens at: `emit SomeEvent()`"
-          },
-          {
-            "contract_path": "src/EmitAfterExternalCall.sol",
-            "line_no": 34,
-            "src": "735:15",
-            "src_char": "735:15",
-            "hint": "Emission happens at: `emit SomeEvent()`"
-          },
-          {
-            "contract_path": "src/EmitAfterExternalCall.sol",
-            "line_no": 53,
-            "src": "1274:15",
-            "src_char": "1274:15",
-            "hint": "Emission happens at: `emit SomeEvent()`"
-          },
-          {
-            "contract_path": "src/EmitAfterExternalCall.sol",
-            "line_no": 93,
-            "src": "2020:5",
-            "src_char": "2020:5",
-            "hint": "Emission happens at: `emit CounterEvent(counter)`"
-          },
-          {
-            "contract_path": "src/Trump.sol",
-            "line_no": 315,
-            "src": "10741:54",
-            "src_char": "10741:54",
-            "hint": "Emission happens at: `emit ClearToken(tokenAddress, tokens)`"
-          }
-        ]
-      },
-      {
         "title": "Incorrect Use Of Modifier",
         "description": "If a modifier does not execute `_` or revert, the execution of the function will return the default value, which can be misleading for the caller. It is recommended that all the paths in a modifier must execute _ or revert.",
         "detector_name": "incorrect-use-of-modifier",
@@ -7452,7 +7410,6 @@
     "state-variable-could-be-immutable",
     "multiple-placeholders",
     "state-change-after-external-call",
-    "emit-after-external-call",
     "incorrect-use-of-modifier",
     "unchecked-return"
   ]
