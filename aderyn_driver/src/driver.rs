@@ -35,7 +35,10 @@ pub fn drive(args: Args) {
 
     let run_pipeline = || -> Result<(), Box<dyn std::error::Error>> {
         let output = args.output.clone();
-        let cx_wrapper = make_context(&args)?;
+        let cx_wrapper = make_context(&args).unwrap_or_else(|e| {
+            eprintln!("Error making context: {}", e);
+            std::process::exit(1);
+        });
         let root_rel_path = cx_wrapper.root_path;
 
         if args.output.ends_with(".json") {

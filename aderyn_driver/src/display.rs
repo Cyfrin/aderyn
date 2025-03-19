@@ -1,4 +1,9 @@
-use foundry_compilers_aletheia::ProjectConfigInput;
+use std::{
+    collections::{BTreeMap, HashSet},
+    path::PathBuf,
+};
+
+use foundry_compilers_aletheia::{AstSourceFile, ProjectConfigInput};
 
 pub fn display_header(project_config: &ProjectConfigInput, header: &str) {
     let say_header = |message: &str| {
@@ -11,6 +16,20 @@ pub fn display_header(project_config: &ProjectConfigInput, header: &str) {
         say(&format!("---------{}", &"-".repeat(longest_str_len)));
     };
     say_header(header);
+}
+
+pub fn display_ingesting_message(
+    sources_ast: &BTreeMap<PathBuf, AstSourceFile>,
+    included: &HashSet<PathBuf>,
+    solc_version: &str,
+) {
+    let ingestion_keys = sources_ast.keys().filter(|&key| included.contains(key)).count();
+
+    if ingestion_keys > 0 {
+        println!("Ingesting {} compiled files [solc : v{}]", ingestion_keys, solc_version);
+    } else {
+        eprintln!("No files found for context [solc : v{}]", solc_version);
+    }
 }
 
 pub fn display_configuration_info(project_config: &ProjectConfigInput) {

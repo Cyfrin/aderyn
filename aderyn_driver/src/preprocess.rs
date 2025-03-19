@@ -8,7 +8,7 @@ use aderyn_core::{
     },
     fscloc,
 };
-use std::{collections::HashMap, error::Error, path::PathBuf};
+use std::{collections::HashMap, path::PathBuf};
 
 pub struct WorkspaceContextWrapper {
     pub contexts: Vec<WorkspaceContext>,
@@ -22,7 +22,9 @@ pub struct PreprocessedConfig {
     pub exclude: Option<Vec<String>>,
 }
 
-pub fn make_context(args: &Args) -> Result<WorkspaceContextWrapper, Box<dyn std::error::Error>> {
+pub fn make_context(
+    args: &Args,
+) -> Result<WorkspaceContextWrapper, Box<dyn std::error::Error + Send + Sync>> {
     if !args.output.ends_with(".json") && !args.output.ends_with(".md") {
         eprintln!("Warning: output file lacks the \".md\" or \".json\" extension in its filename.");
     }
@@ -36,7 +38,7 @@ pub fn make_context(args: &Args) -> Result<WorkspaceContextWrapper, Box<dyn std:
     // Compilation steps:
     // 1. Processes the config by translating them to runtime values (foundry-compilers-aletheia)
     // 2. Parse those files and prepare ASTs.
-    let mut contexts: Vec<WorkspaceContext> = compile::project(preprocessed_config, is_lsp_mode);
+    let mut contexts: Vec<WorkspaceContext> = compile::project(preprocessed_config, is_lsp_mode)?;
 
     // Only make this an error when it's not in LSP mode
     if !is_lsp_mode && contexts.iter().all(|c| c.src_filepaths.is_empty()) {
@@ -85,7 +87,9 @@ pub fn make_context(args: &Args) -> Result<WorkspaceContextWrapper, Box<dyn std:
 }
 
 /// Supplement the CLI arguments with values from aderyn.toml
-fn obtain_config_values(args: Args) -> Result<PreprocessedConfig, Box<dyn Error>> {
+fn obtain_config_values(
+    args: Args,
+) -> Result<PreprocessedConfig, Box<dyn std::error::Error + Send + Sync>> {
     let root_path = PathBuf::from(&args.root);
     let aderyn_path = root_path.join("aderyn.toml");
 

@@ -22,7 +22,7 @@ pub struct AderynConfig {
 
 pub fn supplement_values_from_aderyn_toml(
     current: PreprocessedConfig,
-) -> Result<PreprocessedConfig, Box<dyn std::error::Error>> {
+) -> Result<PreprocessedConfig, Box<dyn std::error::Error + Send + Sync>> {
     let root_path = current.root_path.clone();
     Ok(supplement(current, aderyn_toml_config(&root_path)?))
 }

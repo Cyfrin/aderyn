@@ -12,11 +12,15 @@ use std::{
 };
 
 use crate::{
-    display::{display_configuration_info, display_header},
+    display::{display_configuration_info, display_header, display_ingesting_message},
     preprocess::PreprocessedConfig,
 };
 
-pub fn project(preprocessed_config: PreprocessedConfig, lsp_mode: bool) -> Vec<WorkspaceContext> {
+pub fn project(
+    preprocessed_config: PreprocessedConfig,
+    lsp_mode: bool,
+) -> Result<Vec<WorkspaceContext>, Box<dyn std::error::Error + Sync + Send>> {
+    // Decompose pre-processed config
     let PreprocessedConfig { root_path, src, include, exclude } = preprocessed_config;
 
     let absolute_root_path = std::fs::canonicalize(&root_path).unwrap_or_else(|_| {
@@ -24,6 +28,7 @@ pub fn project(preprocessed_config: PreprocessedConfig, lsp_mode: bool) -> Vec<W
         std::process::exit(1);
     });
 
+    // Process the raw-config using foundry-compilers-aletheia to transalate to runtime values
     let processed_config = ProjectConfigInputBuilder::new(&root_path)
         .with_sources(match src {
             Some(src) => SourcesConfig::Specific(PathBuf::from_str(&src).unwrap()),
@@ -37,16 +42,24 @@ pub fn project(preprocessed_config: PreprocessedConfig, lsp_mode: bool) -> Vec<W
             Some(include_containing) => IncludeConfig::Specific(include_containing.to_vec()),
             None => IncludeConfig::All,
         })
-        .build()
-        .unwrap();
+        .build()?;
 
     if !lsp_mode {
         display_configuration_info(&processed_config);
         display_header(&processed_config, "Compiling Abstract Syntax Trees");
     }
 
-    let contexts_results = derive_ast_and_evm_info(&processed_config)
-        .unwrap()
+    // Derive the raw AST content from the source files as per the processed config
+    let derived_ast_evm_info = match derive_ast_and_evm_info(&processed_config) {
+        Ok(results) => results,
+        Err(e) => {
+            eprintln!("Failed to Derive AST & EVM Info: {}", e);
+            return Err("Failed to Derive AST / EVM info".into());
+        }
+    };
+
+    // Parse the AST content into WorkspaceContexts
+    let contexts_results = derived_ast_evm_info
         .versioned_asts
         .into_par_iter() // TODO: Bench to see which is faster - iter() or par_iter()?
         .map(|ast_info| {
@@ -64,17 +77,7 @@ pub fn project(preprocessed_config: PreprocessedConfig, lsp_mode: bool) -> Vec<W
             }
 
             if !lsp_mode {
-                let ingestion_keys =
-                    sources_ast.keys().filter(|&key| included.contains(key)).count();
-
-                if ingestion_keys > 0 {
-                    println!(
-                        "Ingesting {} compiled files [solc : v{}]",
-                        ingestion_keys, ast_info.version
-                    );
-                } else {
-                    eprintln!("No files found for context [solc : v{}]", ast_info.version);
-                }
+                display_ingesting_message(&sources_ast, &included, &ast_info.version.to_string());
             }
 
             for (source_path, ast_source_file) in sources_ast {
@@ -95,16 +98,16 @@ pub fn project(preprocessed_config: PreprocessedConfig, lsp_mode: bool) -> Vec<W
         })
         .collect::<Vec<_>>();
 
+    // Only when not in LSP mode, error out if some context had compilation errors
     if !lsp_mode {
-        // In LSP mode, don't shutdown the service due to an intermediate state that has
-        // erroneous code.
         if contexts_results.iter().any(|c| c.is_none()) {
             std::process::exit(1);
         }
         display_header(&processed_config, "Scanning Contracts");
     }
 
-    contexts_results.into_iter().flatten().collect()
+    // Return the parsed ASTs as a vector of Workspace Contexts
+    Ok(contexts_results.into_iter().flatten().collect())
 }
 
 fn absorb_ast_content_into_context(
