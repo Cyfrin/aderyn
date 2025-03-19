@@ -100,7 +100,7 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<StateVariableChangesWithoutEventDetector>::default(),
         Box::<StateVariableCouldBeImmutableDetector>::default(),
         Box::<MultiplePlaceholdersDetector>::default(),
-        Box::<StateChangeAfterExternalCallDetector>::default(),
+        Box::<ReentrancyStateChangeDetector>::default(),
         Box::<IncorrectUseOfModifierDetector>::default(),
         Box::<UncheckedReturnDetector>::default(),
     ]
@@ -115,7 +115,7 @@ pub fn get_all_detectors_names() -> Vec<String> {
 #[strum(serialize_all = "kebab-case")]
 pub(crate) enum IssueDetectorNamePool {
     IncorrectUseOfModifier,
-    StateChangeAfterExternalCall,
+    ReentrancyStateChange,
     StateVariableCouldBeImmutable,
     MultiplePlaceholders,
     StateChangeWithoutEvent,
@@ -211,8 +211,8 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
     // Expects a valid detector_name
     let detector_name = IssueDetectorNamePool::from_str(detector_name).ok()?;
     match detector_name {
-        IssueDetectorNamePool::StateChangeAfterExternalCall => {
-            Some(Box::<StateChangeAfterExternalCallDetector>::default())
+        IssueDetectorNamePool::ReentrancyStateChange => {
+            Some(Box::<ReentrancyStateChangeDetector>::default())
         }
         IssueDetectorNamePool::IncorrectUseOfModifier => {
             Some(Box::<IncorrectUseOfModifierDetector>::default())

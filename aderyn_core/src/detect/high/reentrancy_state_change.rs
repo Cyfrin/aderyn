@@ -20,14 +20,14 @@ use crate::{
 use eyre::{eyre, Result};
 
 #[derive(Default)]
-pub struct StateChangeAfterExternalCallDetector {
+pub struct ReentrancyStateChangeDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
     hints: BTreeMap<(String, usize, String), String>,
 }
 
-impl IssueDetector for StateChangeAfterExternalCallDetector {
+impl IssueDetector for ReentrancyStateChangeDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // When you have found an instance of the issue,
         // use the following macro to add it to `found_instances`:
@@ -110,7 +110,7 @@ impl IssueDetector for StateChangeAfterExternalCallDetector {
     }
 
     fn name(&self) -> String {
-        IssueDetectorNamePool::StateChangeAfterExternalCall.to_string()
+        IssueDetectorNamePool::ReentrancyStateChange.to_string()
     }
 }
 
@@ -217,8 +217,7 @@ mod state_change_after_external_call_tests {
     use serial_test::serial;
 
     use crate::detect::{
-        detector::IssueDetector,
-        high::state_change_after_ext_call::StateChangeAfterExternalCallDetector,
+        detector::IssueDetector, high::reentrancy_state_change::ReentrancyStateChangeDetector,
     };
 
     #[test]
@@ -228,7 +227,7 @@ mod state_change_after_external_call_tests {
             "../tests/contract-playground/src/StateChangeAfterExternalCall.sol",
         );
 
-        let mut detector = StateChangeAfterExternalCallDetector::default();
+        let mut detector = ReentrancyStateChangeDetector::default();
         let found = detector.detect(&context).unwrap();
         // assert that the detector found an issue
         assert!(found);
