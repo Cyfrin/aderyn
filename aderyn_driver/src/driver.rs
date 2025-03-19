@@ -165,7 +165,7 @@ fn make_context(args: &Args) -> WorkspaceContextWrapper {
 
     let mut contexts: Vec<WorkspaceContext> = compile::project(preprocessed_config, is_lsp_mode);
 
-    if contexts.iter().all(|c| c.src_filepaths.is_empty()) {
+    if !is_lsp_mode && contexts.iter().all(|c| c.src_filepaths.is_empty()) {
         eprintln!("No solidity files found in given scope!");
         std::process::exit(1);
     }
