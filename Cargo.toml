@@ -44,6 +44,7 @@ tokio = "1.40.0"
 toml = "0.8.13"
 tower-lsp = "0.20.0"
 dunce = "=1.0.4"
+petgraph = "0"
 
 [profile.release]
 codegen-units = 1
