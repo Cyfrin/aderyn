@@ -118,7 +118,12 @@ Replace [OPTIONS] with specific command-line arguments as needed.
 
 For an in-depth walkthrough on how to get started using Aderyn, check the [Cyfrin official docs](https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli/readme)
 
-### Arguments
+## VS Code extension
+
+Officially supported [VSCode extension](https://github.com/Cyfrin/vscode-aderyn/) for Aderyn. 
+Download from [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=Cyfrin.aderyn&ssr=false#overview)
+
+## Aderyn CLI Menu
 
 Usage: `aderyn [OPTIONS] <ROOT>`
 
@@ -174,6 +179,7 @@ Run with flags:
 ```sh
   docker run -v /path/to/project/root/:/share aderyn -h
 ```
+
 
 ## Contributing & License
 
