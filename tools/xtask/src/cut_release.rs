@@ -9,6 +9,7 @@ pub fn cut_release(cut_release: CutRelease) -> anyhow::Result<()> {
 
     // Sanity checks and syncs
     sync_tags(&sh)?;
+    // TODO:
     //perform_prechecks(&sh)?;
 
     // Release process
@@ -32,7 +33,18 @@ fn kick_off_release(sh: &Shell, cut_release: &CutRelease) -> anyhow::Result<()> 
     } else {
         unreachable!()
     };
-    execute_cmd.run()?;
+
+    println!("Kick off the release process?\n[y/n]");
+    let mut line = String::new();
+    let stdin = std::io::stdin();
+    stdin.lock().read_line(&mut line).unwrap();
+
+    if line.to_lowercase().contains("y") {
+        execute_cmd.run()?;
+        _ = execute_cmd.stdin("n\n");
+    } else {
+        eprintln!("Declined to kick off release process. Stopped!");
+    }
     Ok(())
 }
 
