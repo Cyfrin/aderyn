@@ -4,13 +4,6 @@ pub fn fixpr() -> anyhow::Result<()> {
     let sh = Shell::new()?;
     sh.change_dir(env!("CARGO_MANIFEST_DIR"));
     sh.change_dir("../../");
-    // Push changes
-    let cmd = cmd!(sh, "git add .");
-    cmd.run()?;
-    let cmd = cmd!(sh, "git commit -am").arg("chore: cargo fixpr");
-    cmd.run()?;
-    let cmd = cmd!(sh, "git push");
-    cmd.run()?;
 
     // Run cargo build (sanity test)
     let cmd = cmd!(sh, "cargo build");
@@ -38,11 +31,11 @@ pub fn fixpr() -> anyhow::Result<()> {
     cmd.run()?;
 
     // Push changes
-    let cmd = cmd!(
-        sh,
-        "git add . && git commit -am \"chore: cargo fixpr\" && git
-     push"
-    );
+    let cmd = cmd!(sh, "git add .");
+    cmd.run()?;
+    let cmd = cmd!(sh, "git commit -am").arg("chore: cargo fixpr");
+    cmd.run()?;
+    let cmd = cmd!(sh, "git push");
     cmd.run()?;
 
     Ok(())
