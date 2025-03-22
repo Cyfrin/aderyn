@@ -1,7 +1,7 @@
 [package]
 name = "xtask"
 description = "Auxiliary build tool"
-version = "0.1.0"
+version = "0.5.2"
 edition = "2024"
 publish = false
 

@@ -23,7 +23,7 @@ dependencies = [
 
 [[package]]
 name = "aderyn"
-version = "0.5.1"
+version = "0.5.2"
 dependencies = [
  "aderyn_driver",
  "clap",
@@ -43,7 +43,7 @@ dependencies = [
 
 [[package]]
 name = "aderyn_core"
-version = "0.5.1"
+version = "0.5.2"
 dependencies = [
  "crossbeam-channel",
  "derive_more 0.99.18",
@@ -71,7 +71,7 @@ dependencies = [
 
 [[package]]
 name = "aderyn_driver"
-version = "0.5.1"
+version = "0.5.2"
 dependencies = [
  "aderyn_core",
  "criterion",
@@ -4681,7 +4681,7 @@ checksum = "32ac00cd3f8ec9c1d33fb3e7958a82df6989c42d747bd326c822b1d625283547"
 
 [[package]]
 name = "xtask"
-version = "0.1.0"
+version = "0.5.2"
 dependencies = [
  "anyhow",
  "xflags",

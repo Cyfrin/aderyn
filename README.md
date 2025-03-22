@@ -14,7 +14,7 @@
 </p>
 
 <p align="center">
-<a href="https://support.cyfrin.io/en/collections/11474635-aderyn">Docs</a>
+<a href="https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli/readme">Docs</a>
 <a href="https://discord.gg/cyfrin">Get support</a>
 <a href="https://cyfrin.io">Website</a>
 <a href="https://twitter.com/cyfrinaudits">Twitter</a>
@@ -40,6 +40,8 @@ Thanks to its collection of static vulnerability detectors, running Cyfrin Adery
 Built using **Rust**, Aderyn integrates seamlessly into small and **enterprise-level development workflows**, offering lighting-fast command-line functionality and a framework to [build custom detectors](https://support.cyfrin.io/en/articles/10455808-what-is-a-detector) to adapt to your codebase.
 
 You can read the [Cyfrin official documentation](https://support.cyfrin.io/en) for an in-depth look at Aderyn's functionalities.
+
+There is also an officially supported [VSCode extension](https://github.com/Cyfrin/vscode-aderyn/) for Aderyn. Download from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=Cyfrin.aderyn&ssr=false#overview) and start identifying vulnerabilities in your Solidity code with ease.  
 
 ## Features
 
@@ -116,9 +118,14 @@ aderyn [OPTIONS] path/to/your/project
 
 Replace [OPTIONS] with specific command-line arguments as needed.
 
-For an in-depth walkthrough on how to get started using Aderyn, check the [Cyfrin official docs](https://support.cyfrin.io/en/articles/10456310-quickstart)
+For an in-depth walkthrough on how to get started using Aderyn, check the [Cyfrin official docs](https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli/readme)
 
-### Arguments
+## VS Code extension
+
+Officially supported [VSCode extension](https://github.com/Cyfrin/vscode-aderyn/) for Aderyn. 
+Download from [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=Cyfrin.aderyn&ssr=false#overview)
+
+## Aderyn CLI Menu
 
 Usage: `aderyn [OPTIONS] <ROOT>`
 
@@ -144,12 +151,12 @@ Examples:
 aderyn /path/to/your/foundry/project/root/directory/
 ```
 
-Find more examples on the official [Cyfrin Docs](https://support.cyfrin.io/en/)
+Find more examples on the official  [Cyfrin Docs](https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli/quickstart)
 
 ## Building a custom Aderyn detector
 
 Aderyn makes it easy to build Static Analysis detectors that can adapt to any Solidity codebase and protocol. This guide will teach you how to build, test, and run your custom Aderyn detectors.
-To learn how to create your custom Aderyn detectors, [checkout the official docs](https://support.cyfrin.io/en/articles/10456310-quickstart)
+To learn how to create your custom Aderyn detectors, [checkout the official docs](https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli/detectors-quickstart)
 
 ## Docker
 
@@ -174,6 +181,7 @@ Run with flags:
 ```sh
   docker run -v /path/to/project/root/:/share aderyn -h
 ```
+
 
 ## Contributing & License
 

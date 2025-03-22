@@ -9,6 +9,9 @@ changed or not.
 ## Requirements
 
 - [cargo-release](https://github.com/crate-ci/cargo-release): `cargo install cargo-release`
+- [gh](https://cli.github.com/): `brew install gh`
+
+Stay logged in with `gh auth login`
 
 ## Pre-requisites
 
@@ -17,23 +20,27 @@ changed or not.
 
 ## Steps
 
-- [ ] Cut a release from `dev` branch.
-    - [ ] Run `git checkout dev`
-    - [ ] Run `cargo release patch --no-publish` to see a dry run of all the incremented versions.
-    - [ ] Run `cargo release patch --no-publish --execute` and expect the following in CI:
-        - [ ] Sarif report tests fail because of version mismatch.
-        - [ ] After the building of global artifacts, library crates fail to publish.
-        - [ ] Binary crate `aderyn` is successfully published.
-    - [ ] Wait for the CI/CD process to be over. (Important before proceeding)
-    - [ ] Run `cli/reportgen.sh` to regenerate sarif-report locally, then commit & push.
-    - [ ] Verify now that all the tests pass.
+- [ ] Cut a release.
+    - [ ] Switch to dev branch and pull latest changes.
+    - [ ] Run `cargo patch` . It waits till the release process is over.
+    - [ ] Run `cargo fixpr` to regenerate sarif report and push the changes.
+    - [ ] Generate Release Notes in the Github's Release page
+
+- **NOTE: Expect the following in CI**:
+  * Sarif report tests fail because of version mismatch.
+  * After the building of global artifacts, library crates fail to publish.
+  * Binary crate `aderyn` is successfully published.
+
 - [ ] Create a checkpoint on `master`.
-    - [ ] Run `git checkout master`
+    - [ ] Run `git checkout master && git pull`
     - [ ] Run `git checkout -b master-merge-<version-to-be-released>`.
     - [ ] Merge `dev` into it and preserve all changes in `dev`. `git merge --squash -X theirs dev`.
+    - [ ] Sometimes if conflicts are not auto-resolved, pick to keep all the changes from `dev`
+    - [ ] Merge it back to master by creating a PR (Verify CI tests)
+
 - [ ] Switch back to `dev` branch with `git checkout dev`.
 
-> NOTE: Replace `patch` with `minor` or `major` based on the needs.
+> NOTE: Replace `patch` with `minor` based on the needs.
 
 ## Breaking change
 

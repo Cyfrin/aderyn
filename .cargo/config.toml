@@ -1,4 +1,7 @@
 [alias]
 42 = "xtask 42"
 xtask = "run --package xtask --bin xtask --"
-prep = "xtask r"
+prep = "xtask reportgen"
+patch = "xtask cut-release --patch"
+minor = "xtask cut-release --minor"
+fixpr = "xtask fixpr"
