@@ -3837,6 +3837,12 @@
             "src_char": "434:7"
           },
           {
+            "contract_path": "src/LocalVariableShadow.sol",
+            "line_no": 33,
+            "src": "770:7",
+            "src_char": "770:7"
+          },
+          {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
             "line_no": 19,
             "src": "503:6",
