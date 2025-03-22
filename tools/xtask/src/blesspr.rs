@@ -26,9 +26,7 @@ pub fn blesspr() -> anyhow::Result<()> {
     cmd.run()?;
 
     // Create reportgen
-    let cmd = cmd!(sh, "chmod +x ./cli/reportgen.sh");
-    cmd.run()?;
-    let cmd = cmd!(sh, "./cli/reportgen.sh");
+    let cmd = cmd!(sh, "cargo prep --all --parallel");
     cmd.run()?;
 
     // Push changes

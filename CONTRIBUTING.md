@@ -91,3 +91,13 @@ Once the PR is approved, we'll "squash-and-merge" to keep the git commit history
 3. Run `cargo prep --cpg` to generate the report for the same.
 4. Once happy with the work, run `cargo blesspr` to "polish" your PR so CI can be happy.
 5. Create a pull request to `dev` branch here. The maintainers will be notified. Either @alexroan or @TilakMaddy will reach out to you.
+
+### Advanced Setup
+1. Install [Bacon](https://dystroy.org/bacon/)
+2. Run `bacon` at the root
+3. Press
+  * `t` for tests
+  * `r` for generating a report on contract-playground. Shorthand for `cargo prep --cfg`
+  * `a` for generating all reports. Shorthand for `cargo prep --all --parallel`
+  * `b` for "blessing" the PR. Shorthand for `cargo blesspr`
+

@@ -32,6 +32,18 @@ fn run_command_with_env(args: &str, key: &str, val: &str, release: bool) -> anyh
 }
 
 pub fn reportgen(choice: Reportgen) -> anyhow::Result<()> {
+    if choice.all && choice.parallel {
+        let sh = Shell::new()?;
+        sh.change_dir(env!("CARGO_MANIFEST_DIR"));
+        sh.change_dir("../../");
+
+        let cmd = cmd!(sh, "chmod +x ./cli/reportgen.sh");
+        cmd.run()?;
+        let cmd = cmd!(sh, "./cli/reportgen.sh");
+        cmd.run()?;
+
+        return Ok(())
+    }
     if choice.cpg || choice.all {
         run_command(
             "-i src/ -x lib/ ./tests/contract-playground -o ./reports/report.md",
