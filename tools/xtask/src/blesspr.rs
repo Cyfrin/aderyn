@@ -1,6 +1,6 @@
 use xshell::{Shell, cmd};
 
-pub fn fixpr() -> anyhow::Result<()> {
+pub fn blesspr() -> anyhow::Result<()> {
     let sh = Shell::new()?;
     sh.change_dir(env!("CARGO_MANIFEST_DIR"));
     sh.change_dir("../../");
