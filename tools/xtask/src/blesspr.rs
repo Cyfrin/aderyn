@@ -39,6 +39,8 @@ pub fn blesspr() -> anyhow::Result<()> {
     cmd.run()?;
     let cmd = cmd!(sh, "git commit -am").arg("chore: cargo blesspr");
     cmd.run()?;
+    let cmd = cmd!(sh, "git config push.autoSetupRemote true");
+    cmd.run()?;
     let cmd = cmd!(sh, "git push");
     cmd.run()?;
 
