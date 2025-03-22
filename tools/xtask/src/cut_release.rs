@@ -34,17 +34,12 @@ fn kick_off_release(sh: &Shell, cut_release: &CutRelease) -> anyhow::Result<()> 
         unreachable!()
     };
 
-    println!("Kick off the release process?\n[y/n]");
+    println!("Kick off the release process\n\taderyn\n?[y/N]");
     let mut line = String::new();
     let stdin = std::io::stdin();
     stdin.lock().read_line(&mut line).unwrap();
-
-    if line.to_lowercase().contains("y") {
-        execute_cmd.run()?;
-        _ = execute_cmd.stdin("n\n");
-    } else {
-        eprintln!("Declined to kick off release process. Stopped!");
-    }
+    let d = execute_cmd.stdin(line);
+    d.run()?;
     Ok(())
 }
 
