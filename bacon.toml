@@ -38,6 +38,7 @@ command = [
     # put launch parameters for your program behind a `--` separator
 ]
 need_stdout = true
+need_stderr = true
 allow_warnings = true
 background = false
 on_change_strategy = "kill_then_restart"
