@@ -33,7 +33,6 @@ fn wait_for_release_completion(sh: &Shell) -> anyhow::Result<()> {
     // Check if actions are still pending
     let actions_completed = {
         let cmd = cmd!(sh, "gh run list --workflow release.yml");
-        cmd.run()?;
         let x = cmd.output()?.stdout.to_vec();
         let stdout = String::from_utf8_lossy(&x);
         stdout.lines().filter(|l| !l.is_empty()).all(|l| l.starts_with("completed"))
