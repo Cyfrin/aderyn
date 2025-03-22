@@ -19,8 +19,8 @@ changed or not.
 
 - [ ] Cut a release from `dev` branch.
     - [ ] Run `git checkout dev && git pull`
-    - [ ] Run `cargo release --no-publish --exclude xtask --no-tag` to see a dry run of all the incremented versions.
-    - [ ] Run `cargo release --no-publish --exclude xtask --execute` and expect the following in CI:
+    - [ ] Run `cargo release patch --no-publish --exclude xtask --no-tag` to see a dry run of all the incremented versions.
+    - [ ] Run `cargo release patch --no-publish --exclude xtask --execute` and expect the following in CI:
         - [ ] Sarif report tests fail because of version mismatch.
         - [ ] After the building of global artifacts, library crates fail to publish.
         - [ ] Binary crate `aderyn` is successfully published.
