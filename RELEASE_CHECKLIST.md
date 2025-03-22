@@ -22,7 +22,7 @@ Stay logged in with `gh auth login`
 
 - [ ] Cut a release.
     - [ ] Switch to dev branch and pull latest changes.
-    - [ ] Run `cargo patch` and wait for the release process to bo over. (Important before proceeding)
+    - [ ] Run `cargo patch` . It waits till the release process is over.
     - [ ] Run `cargo fixpr` to regenerate sarif report and push the changes.
     - [ ] Generate Release Notes in the Github's Release page
 
