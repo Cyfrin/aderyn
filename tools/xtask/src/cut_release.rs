@@ -120,7 +120,7 @@ fn perform_prechecks(sh: &Shell) -> anyhow::Result<()> {
         String::from_utf8(output.stdout)?
     };
     let remote_commit_hash = {
-        let cmd = cmd!(sh, "git rev-parse dev");
+        let cmd = cmd!(sh, "git rev-parse origin/dev");
         let output = cmd.output()?;
         String::from_utf8(output.stdout)?
     };
