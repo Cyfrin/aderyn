@@ -9,6 +9,9 @@ pub fn cut_release(cut_release: CutRelease) -> anyhow::Result<()> {
     sh.change_dir(env!("CARGO_MANIFEST_DIR"));
     sh.change_dir("../../");
 
+    // Wait for existing release completion
+    wait_for_release_completion(&sh)?;
+
     // Sanity checks and syncs
     sync_tags(&sh)?;
     perform_prechecks(&sh)?;
@@ -25,11 +28,12 @@ pub fn cut_release(cut_release: CutRelease) -> anyhow::Result<()> {
 
 fn wait_for_release_completion(sh: &Shell) -> anyhow::Result<()> {
     let poll_time = Duration::from_secs(12);
-    println!("Relase is in progress ... [next poll: {}s]", poll_time.as_secs());
+    println!("A relase is in progress ... [next poll: {}s]", poll_time.as_secs());
 
     // Check if actions are still pending
     let actions_completed = {
         let cmd = cmd!(sh, "gh run list --workflow release.yml");
+        cmd.run()?;
         let x = cmd.output()?.stdout.to_vec();
         let stdout = String::from_utf8_lossy(&x);
         stdout.lines().filter(|l| !l.is_empty()).all(|l| l.starts_with("completed"))
