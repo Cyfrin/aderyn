@@ -5,11 +5,12 @@ members = [
     "aderyn",
     "aderyn_core",
     "aderyn_driver",
+    "tools/*",
 ]
 
 [workspace.dependencies]
-aderyn_core = { version = "0.5.1", path = "aderyn_core" }
-aderyn_driver = { version = "0.5.1", path = "aderyn_driver" }
+aderyn_core = { version = "0.5.2", path = "aderyn_core" }
+aderyn_driver = { version = "0.5.2", path = "aderyn_driver" }
 clap = "4.4.6"
 criterion = "0.5.1"
 crossbeam-channel = "0.5.9"
@@ -42,6 +43,8 @@ termcolor = "1.4.1"
 tokio = "1.40.0"
 toml = "0.8.13"
 tower-lsp = "0.20.0"
+dunce = "=1.0.4"
+petgraph = "0"
 
 [profile.release]
 codegen-units = 1

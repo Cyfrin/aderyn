@@ -53,7 +53,7 @@ impl IssueDetector for UnusedPublicFunctionDetector {
     }
 
     fn description(&self) -> String {
-        String::from("If a function is marked public but is not used internall, consider marking it as `external`.")
+        String::from("If a function is marked public but is not used internally, consider marking it as `external`.")
     }
 
     fn severity(&self) -> IssueSeverity {
@@ -94,7 +94,7 @@ mod useless_public_function_tests {
         // assert that the detector returns the correct title
         assert_eq!(detector.title(), String::from("Public Function Not Used Internally"));
         // assert that the detector returns the correct description
-        assert_eq!(detector.description(), String::from("If a function is marked public but is not used internall, consider marking it as `external`."));
+        assert_eq!(detector.description(), String::from("If a function is marked public but is not used internally, consider marking it as `external`."));
     }
 
     #[test]
