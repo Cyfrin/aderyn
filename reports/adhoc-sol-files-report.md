@@ -295,7 +295,7 @@ Check for `address(0)` when assigning values to address state variables.
 
 ## L-6: Public Function Not Used Internally
 
-If a function is marked public but is not used internall, consider marking it as `external`.
+If a function is marked public but is not used internally, consider marking it as `external`.
 
 <details><summary>6 Found Instances</summary>
 
@@ -717,7 +717,7 @@ Functions that are not used. Consider removing them.
 - Found in DemoASTNodes.sol [Line: 30](../tests/adhoc-sol-files/DemoASTNodes.sol#L30)
 
 	```solidity
-	    function calculateSumUsingDoWhilwLoop() internal pure returns(uint256 sum) {
+	    function calculateSumUsingDoWhileLoop() internal pure returns(uint256 sum) {
 	```
 
 </details>

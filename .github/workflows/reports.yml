@@ -73,6 +73,10 @@ jobs:
       - name: Restore Rust Cache
         uses: Swatinem/rust-cache@v2
 
+      - name: Prebuild (${{ matrix.task }})
+        run: |
+          cargo build
+
       - name: Generate Report (${{ matrix.task }})
         run: |
           case "${{ matrix.task }}" in

@@ -1323,6 +1323,28 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/EmitAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 66
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateChangeAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 66
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/nested/1/Nested.sol"
                 },
                 "region": {
@@ -1778,6 +1800,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 1218
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/OutOfOrderRetryable.sol"
                 },
                 "region": {
@@ -2117,6 +2150,17 @@
         {
           "level": "warning",
           "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/EmitAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 1168
+                }
+              }
+            },
             {
               "physicalLocation": {
                 "artifactLocation": {
@@ -2494,6 +2538,17 @@
                 "region": {
                   "byteLength": 11,
                   "byteOffset": 630
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 8,
+                  "byteOffset": 139
                 }
               }
             },
@@ -2982,6 +3037,113 @@
           "ruleId": "unchecked-low-level-call"
         },
         {
+          "level": "warning",
+          "locations": [
+            {
+              "message": {
+                "text": "State is changed at: `s_useMe += 1`"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateChangeAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 588
+                }
+              }
+            },
+            {
+              "message": {
+                "text": "State is changed at: `s_useMe -= 1`"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateChangeAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 735
+                }
+              }
+            },
+            {
+              "message": {
+                "text": "State is changed at: `s_useMe += 4`"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateChangeAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 1272
+                }
+              }
+            },
+            {
+              "message": {
+                "text": "State is changed at: `s_useMe += 1`"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateChangeAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 15,
+                  "byteOffset": 1814
+                }
+              }
+            },
+            {
+              "message": {
+                "text": "State is changed at: `swapEnabled = true`, `tradingOpen = true`, `firstBlock = block.number`"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 110,
+                  "byteOffset": 11731
+                }
+              }
+            },
+            {
+              "message": {
+                "text": "State is changed at: `swapEnabled = true`, `tradingOpen = true`, `firstBlock = block.number`"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 129,
+                  "byteOffset": 11851
+                }
+              }
+            },
+            {
+              "message": {
+                "text": "State is changed at: `swapEnabled = true`, `tradingOpen = true`, `firstBlock = block.number`"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/Trump.sol"
+                },
+                "region": {
+                  "byteLength": 71,
+                  "byteOffset": 11990
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Changing state after an external call can lead to re-entrancy attacks.Use the checks-effects-interactions pattern to avoid this issue."
+          },
+          "ruleId": "reentrancy-state-change"
+        },
+        {
           "level": "note",
           "locations": [
             {
@@ -3111,6 +3273,28 @@
                 "region": {
                   "byteLength": 28,
                   "byteOffset": 614
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateChangeAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 1794
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateChangeAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 1911
                 }
               }
             },
@@ -3411,6 +3595,17 @@
                 "region": {
                   "byteLength": 18,
                   "byteOffset": 1598
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectModifier.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 2103
                 }
               }
             },
@@ -3952,6 +4147,28 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 347
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 459
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/OutOfOrderRetryable.sol"
                 },
                 "region": {
@@ -4263,6 +4480,28 @@
                 "region": {
                   "byteLength": 9,
                   "byteOffset": 129
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 194
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 309
                 }
               }
             },
@@ -4697,7 +4936,7 @@
             }
           ],
           "message": {
-            "text": "If a function is marked public but is not used internall, consider marking it as `external`."
+            "text": "If a function is marked public but is not used internally, consider marking it as `external`."
           },
           "ruleId": "unused-public-function"
         },
@@ -5651,6 +5890,39 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/EmitAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 424
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 1381
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectModifier.sol"
+                },
+                "region": {
+                  "byteLength": 6,
+                  "byteOffset": 1334
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/LocalVariableShadow.sol"
                 },
                 "region": {
@@ -5733,6 +6005,17 @@
                 "region": {
                   "byteLength": 6,
                   "byteOffset": 451
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateChangeAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 428
                 }
               }
             },
@@ -8058,6 +8341,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/EmitAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 120,
+                  "byteOffset": 1180
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/RevertsAndRequriesInLoops.sol"
                 },
                 "region": {
@@ -8074,6 +8368,17 @@
                 "region": {
                   "byteLength": 114,
                   "byteOffset": 452
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateChangeAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 116,
+                  "byteOffset": 1182
                 }
               }
             }
@@ -9328,6 +9633,17 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/StateChangeAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 154,
+                  "byteOffset": 1144
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/eth2/DepositContract.sol"
                 },
                 "region": {
@@ -10335,6 +10651,94 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 194
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 9,
+                  "byteOffset": 309
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 530
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 599
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 884
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 955
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 1470
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 1548
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/IncorrectERC20.sol"
                 },
                 "region": {
@@ -10582,6 +10986,83 @@
                 "region": {
                   "byteLength": 17,
                   "byteOffset": 588
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateChangeAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 13,
+                  "byteOffset": 530
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateChangeAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 13,
+                  "byteOffset": 677
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateChangeAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 13,
+                  "byteOffset": 885
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateChangeAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 1331
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateChangeAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 1480
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateChangeAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 13,
+                  "byteOffset": 1769
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateChangeAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 14,
+                  "byteOffset": 1885
                 }
               }
             },
@@ -11180,6 +11661,28 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/EmitAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 373
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 416
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/InconsistentUints.sol"
                 },
                 "region": {
@@ -11284,6 +11787,17 @@
                 "region": {
                   "byteLength": 3,
                   "byteOffset": 1209
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/StateChangeAfterExternalCall.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 377
                 }
               }
             },
@@ -11539,6 +12053,37 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/IncorrectModifier.sol"
+                },
+                "region": {
+                  "byteLength": 16,
+                  "byteOffset": 645
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/IncorrectModifier.sol"
+                },
+                "region": {
+                  "byteLength": 18,
+                  "byteOffset": 763
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "If a modifier does not execute `_` or revert, the execution of the function will return the default value, which can be misleading for the caller. It is recommended that all the paths in a modifier must execute _ or revert."
+          },
+          "ruleId": "incorrect-use-of-modifier"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/OutOfOrderRetryable.sol"
                 },
                 "region": {
@@ -11659,8 +12204,8 @@
           "informationUri": "https://github.com/Cyfrin/aderyn",
           "name": "Aderyn",
           "organization": "Cyfrin",
-          "semanticVersion": "0.5.1",
-          "version": "0.5.1"
+          "semanticVersion": "0.5.2",
+          "version": "0.5.2"
         }
       }
     }

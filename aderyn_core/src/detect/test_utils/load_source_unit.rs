@@ -1,3 +1,4 @@
+#[cfg(test)]
 use cyfrin_foundry_compilers::{artifacts::Source, CompilerInput, Solc};
 
 use std::{
@@ -16,7 +17,6 @@ use crate::{
 
 use super::ensure_valid_solidity_file;
 
-#[cfg(test)]
 pub fn load_solidity_source_unit(filepath: &str) -> WorkspaceContext {
     let solidity_file = &ensure_valid_solidity_file(filepath);
     let solidity_content = std::fs::read_to_string(solidity_file).unwrap();
@@ -40,8 +40,8 @@ pub fn load_solidity_source_unit(filepath: &str) -> WorkspaceContext {
 
     if let Ok(command) = command {
         let stdout = String::from_utf8(command.stdout).unwrap();
-        let stderr = String::from_utf8(command.stderr).unwrap();
-        println!("stderr = {}", stderr);
+        let _stderr = String::from_utf8(command.stderr).unwrap();
+        //println!("stderr = {}", stderr);
 
         let mut context = WorkspaceContext::default();
         let lines = stdout.lines().collect::<Vec<_>>();
@@ -122,7 +122,6 @@ fn is_demarcation_line(line: &str, file_args: Vec<&str>) -> (bool, Option<String
     (false, None)
 }
 
-#[cfg(test)]
 /// This function is dangerous to use because we force all the sol files into 1 Workspace Context.
 /// As a result, we may override Node IDs. Therefore, this function is only available in cfg(test)
 #[allow(dead_code)]
