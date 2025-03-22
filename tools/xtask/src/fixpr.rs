@@ -7,7 +7,7 @@ pub fn fixpr() -> anyhow::Result<()> {
     // Push changes
     let cmd = cmd!(sh, "git add .");
     cmd.run()?;
-    let cmd = cmd!(sh, "git commit -am \"cargo fixpr\"");
+    let cmd = cmd!(sh, "git commit -am").arg("chore: cargo fixpr");
     cmd.run()?;
     let cmd = cmd!(sh, "git push");
     cmd.run()?;
