@@ -2,7 +2,16 @@ xflags::xflags! {
     src "./src/flags.rs"
 
     cmd xtask {
-        cmd r {
+        cmd cut-release {
+            /// Cut a patch release
+            optional -p, --patch
+
+            /// Cut a minor release
+            optional -m, --minor
+        }
+        cmd fixpr {
+        }
+        cmd reportgen {
             optional -a, --all
 
             /// Sablier
@@ -51,11 +60,22 @@ pub struct Xtask {
 
 #[derive(Debug)]
 pub enum XtaskCmd {
-    R(R),
+    CutRelease(CutRelease),
+    Fixpr(Fixpr),
+    Reportgen(Reportgen),
 }
 
 #[derive(Debug)]
-pub struct R {
+pub struct CutRelease {
+    pub patch: bool,
+    pub minor: bool,
+}
+
+#[derive(Debug)]
+pub struct Fixpr;
+
+#[derive(Debug)]
+pub struct Reportgen {
     pub all: bool,
     pub sablier: bool,
     pub tg: bool,
