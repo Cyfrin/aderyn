@@ -10,18 +10,15 @@ pub fn blesspr() -> anyhow::Result<()> {
     cmd.run()?;
 
     // Fix format
-    let cmd = cmd!(sh, "cargo +nightly fmt --all");
+    let cmd = cmd!(sh, "cargo fixfmt");
     cmd.run()?;
 
     // Check fixed format
-    let cmd = cmd!(sh, "cargo +nightly fmt --all --check");
+    let cmd = cmd!(sh, "cargo fmt --all --check");
     cmd.run()?;
 
     // Fix clippy
-    let cmd = cmd!(
-        sh,
-        "cargo clippy --quiet --workspace --all-targets --all-features --allow-dirty --fix"
-    );
+    let cmd = cmd!(sh, "cargo fixclippy");
     cmd.run()?;
 
     // Check clippy
