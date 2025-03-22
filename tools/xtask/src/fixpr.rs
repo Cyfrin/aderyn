@@ -24,6 +24,10 @@ pub fn fixpr() -> anyhow::Result<()> {
     );
     cmd.run()?;
 
+    // Check clippy
+    let cmd = cmd!(sh, "cargo clippy").arg("--").arg("-D").arg("warnings");
+    cmd.run()?;
+
     // Create reportgen
     let cmd = cmd!(sh, "chmod +x ./cli/reportgen.sh");
     cmd.run()?;
