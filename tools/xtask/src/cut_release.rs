@@ -35,13 +35,13 @@ fn kick_off_release(sh: &Shell, cut_release: &CutRelease) -> anyhow::Result<()> 
 
     println!("Kick off the release process\n\taderyn\n?[y/N]");
     let mut line = String::new();
-    let stdin = std::io::stdin();
-    stdin.lock().read_line(&mut line).unwrap();
-    let d = execute_cmd.stdin(line.clone());
-    d.run()?;
 
     if line.contains("y") {
         println!("Kicked-off release process!");
+        let stdin = std::io::stdin();
+        stdin.lock().read_line(&mut line).unwrap();
+        let d = execute_cmd.stdin(line.clone());
+        d.run()?;
     } else {
         println!("Declined release process!");
     }
