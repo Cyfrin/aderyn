@@ -26,17 +26,12 @@ pub fn cut_release(cut_release: CutRelease) -> anyhow::Result<()> {
 
 fn kick_off_release(sh: &Shell, cut_release: &CutRelease) -> anyhow::Result<()> {
     let execute_cmd = if cut_release.patch {
-        cmd!(sh, "cargo release patch --no-publish  xtask --execute")
+        cmd!(sh, "cargo release patch --no-publish --exclude xtask --execute")
     } else if cut_release.minor {
-        cmd!(sh, "cargo release minor --no-publish  xtask --execute")
+        cmd!(sh, "cargo release minor --no-publish --exclude xtask --execute")
     } else {
         unreachable!()
     };
-
-    let mut line = String::new();
-    let stdin = std::io::stdin();
-    stdin.lock().read_line(&mut line).unwrap();
-
     execute_cmd.run()?;
     Ok(())
 }
