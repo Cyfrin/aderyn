@@ -3,3 +3,4 @@
 xtask = "run --package xtask --bin xtask --"
 prep = "xtask reportgen"
 patch-release = "xtask cut-release --patch"
+minor-release = "xtask cut-release --minor"
