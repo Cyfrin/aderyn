@@ -27,10 +27,10 @@ num-traits = { workspace = true }
 lazy-regex = { workspace = true }
 derive_more = { workspace = true }
 dunce = { workspace = true }
+foundry_compilers_aletheia = { workspace = true }
 
 [dev-dependencies]
 petgraph = { workspace = true }
-cyfrin-foundry-compilers = { workspace = true, features = ["svm-solc"] }
 serial_test = { workspace = true }
 once_cell = { workspace = true }
 

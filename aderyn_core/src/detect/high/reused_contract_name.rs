@@ -61,6 +61,7 @@ impl IssueDetector for ReusedContractNameDetector {
 
 #[cfg(test)]
 mod reused_contract_name_detector_tests {
+    use semver::Version;
     use serial_test::serial;
 
     use crate::detect::{
@@ -71,10 +72,13 @@ mod reused_contract_name_detector_tests {
     #[test]
     #[serial]
     fn test_reused_contract_name_detector() {
-        let context = load_multiple_solidity_source_units_into_single_context(&[
-            "../tests/contract-playground/src/reused_contract_name/ContractA.sol",
-            "../tests/contract-playground/src/reused_contract_name/ContractB.sol",
-        ]);
+        let context = load_multiple_solidity_source_units_into_single_context(
+            &[
+                "../tests/contract-playground/src/reused_contract_name/ContractA.sol",
+                "../tests/contract-playground/src/reused_contract_name/ContractB.sol",
+            ],
+            Version::new(0, 8, 19),
+        );
 
         let mut detector = ReusedContractNameDetector::default();
         let found = detector.detect(&context).unwrap();
