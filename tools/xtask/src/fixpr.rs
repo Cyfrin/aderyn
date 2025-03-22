@@ -4,6 +4,13 @@ pub fn fixpr() -> anyhow::Result<()> {
     let sh = Shell::new()?;
     sh.change_dir(env!("CARGO_MANIFEST_DIR"));
     sh.change_dir("../../");
+    // Push changes
+    let cmd = cmd!(sh, "git add .");
+    cmd.run()?;
+    let cmd = cmd!(sh, "git commit -am \"cargo fixpr\"");
+    cmd.run()?;
+    let cmd = cmd!(sh, "git push");
+    cmd.run()?;
 
     // Run cargo build (sanity test)
     let cmd = cmd!(sh, "cargo build");
