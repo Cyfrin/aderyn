@@ -25,10 +25,10 @@ Stay logged in with `gh auth login`
     - [ ] Run `cargo patch` and wait for the release process to bo over. (Important before proceeding)
     - [ ] Run `cargo fixpr` to regenerate sarif report and push the changes.
 
-    - NOTE: Expect the following in CI:
-        - [ ] Sarif report tests fail because of version mismatch.
-        - [ ] After the building of global artifacts, library crates fail to publish.
-        - [ ] Binary crate `aderyn` is successfully published.
+- **NOTE: Expect the following in CI**:
+  - Sarif report tests fail because of version mismatch.
+  - After the building of global artifacts, library crates fail to publish.
+  - Binary crate `aderyn` is successfully published.
 
 - [ ] Create a checkpoint on `master`.
     - [ ] Run `git checkout master && git pull`
