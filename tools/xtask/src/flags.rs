@@ -9,6 +9,8 @@ xflags::xflags! {
             /// Cut a minor release
             optional -m, --minor
         }
+        cmd fixpr {
+        }
         cmd reportgen {
             optional -a, --all
 
@@ -59,6 +61,7 @@ pub struct Xtask {
 #[derive(Debug)]
 pub enum XtaskCmd {
     CutRelease(CutRelease),
+    Fixpr(Fixpr),
     Reportgen(Reportgen),
 }
 
@@ -67,6 +70,9 @@ pub struct CutRelease {
     pub patch: bool,
     pub minor: bool,
 }
+
+#[derive(Debug)]
+pub struct Fixpr;
 
 #[derive(Debug)]
 pub struct Reportgen {
