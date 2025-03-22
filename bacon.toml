@@ -30,6 +30,27 @@ need_stdout = false
 
 # Non background jobs / ACTIONS
 
+# Run aderyn on all integration tests
+[jobs.generate-all-reports]
+command = [
+    "cargo", "prep", "--all", "--parallel"
+]
+need_stdout = true
+need_stderr = true
+allow_warnings = true
+background = false
+on_change_strategy = "kill_then_restart"
+
+# Bless PR
+[jobs.blesspr]
+command = [
+    "cargo", "blesspr"
+]
+need_stdout = true
+need_stderr = true
+allow_warnings = true
+background = false
+
 ## Run aderyn on Contract playground
 
 [jobs.contract-playground]
@@ -73,3 +94,5 @@ r = "job:contract-playground"
 alt-t = "job:test-report-time"
 t = "job:test"
 d = "job:doc-open"
+a = "job:generate-all-reports"
+alt-b = "job:blesspr"

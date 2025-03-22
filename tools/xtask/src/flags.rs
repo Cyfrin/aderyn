@@ -11,7 +11,11 @@ xflags::xflags! {
         }
         cmd blesspr {}
         cmd reportgen {
+            /// Run all integration tests
             optional -a, --all
+
+            /// Parallel
+            optional --parallel
 
             /// Sablier
             optional -s, --sablier
@@ -76,6 +80,7 @@ pub struct Blesspr;
 #[derive(Debug)]
 pub struct Reportgen {
     pub all: bool,
+    pub parallel: bool,
     pub sablier: bool,
     pub tg: bool,
     pub adhoc: bool,
