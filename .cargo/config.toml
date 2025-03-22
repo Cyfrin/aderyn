@@ -2,5 +2,5 @@
 42 = "xtask 42"
 xtask = "run --package xtask --bin xtask --"
 prep = "xtask reportgen"
-patch-release = "xtask cut-release --patch"
-minor-release = "xtask cut-release --minor"
+patch = "xtask cut-release --patch"
+minor = "xtask cut-release --minor"
