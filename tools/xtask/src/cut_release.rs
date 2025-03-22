@@ -1,4 +1,4 @@
-use std::io::BufRead;
+use std::{io::BufRead, time::Duration};
 
 use xshell::{Shell, cmd};
 
@@ -14,6 +14,30 @@ pub fn cut_release(cut_release: CutRelease) -> anyhow::Result<()> {
     // Release process
     dry_run(&sh, &cut_release)?;
     kick_off_release(&sh, &cut_release)?;
+
+    // Wait for release completion
+    wait_for_release_completion(&sh)?;
+
+    Ok(())
+}
+
+fn wait_for_release_completion(sh: &Shell) -> anyhow::Result<()> {
+    let poll_time = Duration::from_secs(12);
+    println!("Relase is in progress ... [next poll: {}s]", poll_time.as_secs());
+
+    // Check if actions are still pending
+    let actions_completed = {
+        let cmd = cmd!(sh, "gh run list --workflow release.yml");
+        let x = cmd.output()?.stdout.to_vec();
+        let stdout = String::from_utf8_lossy(&x);
+        stdout.lines().filter(|l| !l.is_empty()).all(|l| l.starts_with("completed"))
+    };
+
+    if !actions_completed {
+        std::thread::sleep(Duration::from_secs(12));
+        wait_for_release_completion(sh)?;
+        return Ok(());
+    }
 
     Ok(())
 }
