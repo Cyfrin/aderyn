@@ -16,7 +16,6 @@ pub fn cut_release(cut_release: CutRelease) -> anyhow::Result<()> {
     if cut_release.execute {
         dry_run(&sh, &cut_release)?;
         kick_off_release(&sh, &cut_release)?;
-        println!("Kicked-off release process!");
     } else {
         dry_run(&sh, &cut_release)?;
         println!("If everything looks good, rerun with `--execute` flag!");
@@ -38,8 +37,15 @@ fn kick_off_release(sh: &Shell, cut_release: &CutRelease) -> anyhow::Result<()> 
     let mut line = String::new();
     let stdin = std::io::stdin();
     stdin.lock().read_line(&mut line).unwrap();
-    let d = execute_cmd.stdin(line);
+    let d = execute_cmd.stdin(line.clone());
     d.run()?;
+
+    if line.contains("y") {
+        println!("Kicked-off release process!");
+    } else {
+        println!("Declined release process!");
+    }
+
     Ok(())
 }
 
