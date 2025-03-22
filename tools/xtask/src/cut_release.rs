@@ -6,6 +6,8 @@ use crate::flags::CutRelease;
 
 pub fn cut_release(cut_release: CutRelease) -> anyhow::Result<()> {
     let sh = Shell::new()?;
+    sh.change_dir(env!("CARGO_MANIFEST_DIR"));
+    sh.change_dir("../../");
 
     // Sanity checks and syncs
     sync_tags(&sh)?;

@@ -4,6 +4,9 @@ use crate::flags::Reportgen;
 
 fn run_command(args: &str, release: bool) -> anyhow::Result<()> {
     let sh = Shell::new()?;
+    sh.change_dir(env!("CARGO_MANIFEST_DIR"));
+    sh.change_dir("../../");
+
     let mut cmd = cmd!(sh, "cargo run");
     if release {
         cmd = cmd.arg("--release");
@@ -15,6 +18,9 @@ fn run_command(args: &str, release: bool) -> anyhow::Result<()> {
 
 fn run_command_with_env(args: &str, key: &str, val: &str, release: bool) -> anyhow::Result<()> {
     let sh = Shell::new()?;
+    sh.change_dir(env!("CARGO_MANIFEST_DIR"));
+    sh.change_dir("../../");
+
     let mut cmd = cmd!(sh, "cargo run");
     cmd = cmd.env(key, val);
     if release {
