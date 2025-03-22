@@ -28,7 +28,7 @@ pub fn cut_release(cut_release: CutRelease) -> anyhow::Result<()> {
 
 fn wait_for_release_completion(sh: &Shell) -> anyhow::Result<()> {
     let poll_time = Duration::from_secs(12);
-    println!("A relase is in progress ... [next poll: {}s]", poll_time.as_secs());
+    println!("A relase or a release plan is in progress ... [next poll: {}s]", poll_time.as_secs());
 
     // Check if actions are still pending
     let actions_completed = {
