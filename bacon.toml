@@ -13,7 +13,7 @@ env.CARGO_TERM_COLOR = "always"
 # Lints
 
 [jobs.clippy-display-warnings]
-command = ["cargo", "clippy", "--", "-D", "--warnings"]
+command = ["cargo", "clippy"]
 need_stdout = false
 
 [jobs.fmt-display-warnings]
