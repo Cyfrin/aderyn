@@ -101,3 +101,5 @@ Once the PR is approved, we'll "squash-and-merge" to keep the git commit history
   * `a` for generating all reports. Shorthand for `cargo prep --all --parallel`
   * `b` for "blessing" the PR. Shorthand for `cargo blesspr`
 
+### Tips
+Feel free to reach out to `cargo fixfmt` and `cargo fixclippy` to apply quick fixes on code quality.
