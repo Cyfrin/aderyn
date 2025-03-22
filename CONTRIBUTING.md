@@ -83,3 +83,11 @@ Once you submit your PR:
 - As you update your PR and apply changes, mark each conversation resolved.
 
 Once the PR is approved, we'll "squash-and-merge" to keep the git commit history clean.
+
+### Developer environment setup
+
+1. Run `make` . Make sure to have tools listed at the top of the Makefile installed in your computer.
+2. Work on the issue, write unit tests. Use `cargo test <test-name>` to test. Feel free to sdd solidity files to `tests/contract-playground`.
+3. Run `cargo prep --cpg` to generate the report for the same.
+4. Once happy with the work, run `cargo blesspr` to "polish" your PR so CI can be happy.
+5. Create a pull request to `dev` branch here. The maintainers will be notified. Either @alexroan or @TilakMaddy will reach out to you.
