@@ -9,17 +9,11 @@ pub fn cut_release(cut_release: CutRelease) -> anyhow::Result<()> {
 
     // Sanity checks and syncs
     sync_tags(&sh)?;
-    // TODO:
-    //perform_prechecks(&sh)?;
+    perform_prechecks(&sh)?;
 
     // Release process
-    if cut_release.execute {
-        dry_run(&sh, &cut_release)?;
-        kick_off_release(&sh, &cut_release)?;
-    } else {
-        dry_run(&sh, &cut_release)?;
-        println!("If everything looks good, rerun with `--execute` flag!");
-    }
+    dry_run(&sh, &cut_release)?;
+    kick_off_release(&sh, &cut_release)?;
 
     Ok(())
 }
