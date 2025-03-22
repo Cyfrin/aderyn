@@ -27,9 +27,9 @@ Stay logged in with `gh auth login`
     - [ ] Generate Release Notes in the Github's Release page
 
 - **NOTE: Expect the following in CI**:
-  - Sarif report tests fail because of version mismatch.
-  - After the building of global artifacts, library crates fail to publish.
-  - Binary crate `aderyn` is successfully published.
+  * Sarif report tests fail because of version mismatch.
+  * After the building of global artifacts, library crates fail to publish.
+  * Binary crate `aderyn` is successfully published.
 
 - [ ] Create a checkpoint on `master`.
     - [ ] Run `git checkout master && git pull`
