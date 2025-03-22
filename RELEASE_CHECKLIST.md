@@ -18,9 +18,9 @@ changed or not.
 ## Steps
 
 - [ ] Cut a release from `dev` branch.
-    - [ ] Run `git checkout dev`
-    - [ ] Run `cargo release patch --no-publish` to see a dry run of all the incremented versions.
-    - [ ] Run `cargo release patch --no-publish --execute` and expect the following in CI:
+    - [ ] Run `git checkout dev && git pull`
+    - [ ] Run `cargo release --no-publish --exclude xtask` to see a dry run of all the incremented versions.
+    - [ ] Run `ccargo release --no-publish --exclude xtask --execute` and expect the following in CI:
         - [ ] Sarif report tests fail because of version mismatch.
         - [ ] After the building of global artifacts, library crates fail to publish.
         - [ ] Binary crate `aderyn` is successfully published.
@@ -28,9 +28,10 @@ changed or not.
     - [ ] Run `cli/reportgen.sh` to regenerate sarif-report locally, then commit & push.
     - [ ] Verify now that all the tests pass.
 - [ ] Create a checkpoint on `master`.
-    - [ ] Run `git checkout master`
+    - [ ] Run `git checkout master && git pull`
     - [ ] Run `git checkout -b master-merge-<version-to-be-released>`.
     - [ ] Merge `dev` into it and preserve all changes in `dev`. `git merge --squash -X theirs dev`.
+    - [ ] Merge it back to master by creating a PR (Verify CI tests)
 - [ ] Switch back to `dev` branch with `git checkout dev`.
 
 > NOTE: Replace `patch` with `minor` or `major` based on the needs.
