@@ -7,8 +7,8 @@
 
 #![allow(unreachable_pub, unexpected_cfgs)]
 
+mod blesspr;
 mod cut_release;
-mod fixpr;
 mod flags;
 mod reportgen;
 
@@ -17,6 +17,6 @@ fn main() -> anyhow::Result<()> {
     match flags.subcommand {
         flags::XtaskCmd::Reportgen(choice) => reportgen::reportgen(choice),
         flags::XtaskCmd::CutRelease(cut_release) => cut_release::cut_release(cut_release),
-        flags::XtaskCmd::Fixpr(..) => fixpr::fixpr(),
+        flags::XtaskCmd::Blesspr(..) => blesspr::blesspr(),
     }
 }

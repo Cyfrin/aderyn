@@ -1,6 +1,6 @@
 use xshell::{Shell, cmd};
 
-pub fn fixpr() -> anyhow::Result<()> {
+pub fn blesspr() -> anyhow::Result<()> {
     let sh = Shell::new()?;
     sh.change_dir(env!("CARGO_MANIFEST_DIR"));
     sh.change_dir("../../");
@@ -37,7 +37,9 @@ pub fn fixpr() -> anyhow::Result<()> {
     // Push changes
     let cmd = cmd!(sh, "git add .");
     cmd.run()?;
-    let cmd = cmd!(sh, "git commit -am").arg("chore: cargo fixpr");
+    let cmd = cmd!(sh, "git commit -am").arg("chore: cargo blesspr");
+    cmd.run()?;
+    let cmd = cmd!(sh, "git config push.autoSetupRemote true");
     cmd.run()?;
     let cmd = cmd!(sh, "git push");
     cmd.run()?;
