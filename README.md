@@ -39,7 +39,7 @@ Thanks to its collection of static vulnerability detectors, running Cyfrin Adery
 
 Built using **Rust**, Aderyn integrates seamlessly into small and **enterprise-level development workflows**, offering lighting-fast command-line functionality and a framework to [build custom detectors](https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli/detectors-quickstart) to adapt to your codebase.
 
-You can read the [Cyfrin official documentation]([Cyfrin official docs](https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli/readme)) for an in-depth look at Aderyn's functionalities.
+You can read the [Cyfrin official documentation](https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli/readme) for an in-depth look at Aderyn's functionalities.
 
 There is also an officially supported [VSCode extension](https://github.com/Cyfrin/vscode-aderyn/) for Aderyn. Download from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=Cyfrin.aderyn&ssr=false#overview) and start identifying vulnerabilities in your Solidity code with ease.  
 
