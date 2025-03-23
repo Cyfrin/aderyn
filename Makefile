@@ -1,11 +1,3 @@
-##################
-# Pre-requisites
-# - Foundry
-# - pnpm
-# - yarn
-# - cargo-clippy
-##################
-
 # Tools required for the setup
 REQUIRED_TOOLS := forge pnpm yarn cargo-clippy
 
@@ -57,20 +49,18 @@ check-tools: ## Check if all required tools are installed
 .PHONY: setup
 setup: check-tools ## Set up the project for the first time
 	@echo "$(YELLOW)Setting up the project...$(NC)"
+
 	@echo "$(YELLOW)Updating git submodules...$(NC)"
 	git submodule update --init --recursive
 
 	@echo "$(YELLOW)Installing dependencies for ccip-contracts...$(NC)"
-	pnpm install --prefix tests/ccip-contracts/contracts/
+	pnpm install --prefix tests/ccip-contracts/contracts/ --frozen-lockfile
 
 	@echo "$(YELLOW)Installing dependencies for 2024-05-Sablier...$(NC)"
-	pnpm install --prefix tests/2024-05-Sablier/v2-core
+	pnpm install --prefix tests/2024-05-Sablier/v2-core --frozen-lockfile
 
 	@echo "$(YELLOW)Installing dependencies for prb-math...$(NC)"
-	pnpm install --prefix tests/prb-math
-
-	@echo "$(YELLOW)Installing dependencies for 2024-07-templegold...$(NC)"
-	pnpm install --prefix tests/2024-07-templegold/protocol
+	pnpm install --prefix tests/prb-math --frozen-lockfile
 
 	@echo "$(GREEN)Project setup complete!$(NC)"
 
