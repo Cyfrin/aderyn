@@ -35,15 +35,26 @@ jobs:
       - name: Checkout Sources
         uses: actions/checkout@v4
 
+      - name: Checkout repository with submodules
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Cache submodules
+        id: cache-submodules
+        uses: actions/cache@v3
+        with:
+          path: .git/modules
+          key: submodules-${{ runner.os }}-${{ hashFiles('.gitmodules') }}
+          restore-keys: |
+            submodules-${{ runner.os }}-${{ hashFiles('.gitmodules') }}
+
       - name: Install Rust Nightly (2025-01-01)
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
           toolchain: nightly-2025-01-01
           override: true
-
-      - name: Checkout Submodules
-        run: git submodule update --init --recursive
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
