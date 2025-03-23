@@ -25,6 +25,8 @@ pub fn cut_release(cut_release: CutRelease) -> anyhow::Result<()> {
     std::thread::sleep(Duration::from_secs(10 * 60));
     wait_for_release_completion(&sh)?;
 
+    // Regenerate sarif report (it would be broken because version number is contained)
+    regenerate_sarif_report(&sh)?;
     Ok(())
 }
 
@@ -92,6 +94,12 @@ fn dry_run(sh: &Shell, cut_release: &CutRelease) -> anyhow::Result<()> {
 fn sync_tags(sh: &Shell) -> anyhow::Result<()> {
     let sync = cmd!(sh, "git fetch --prune-tags origin");
     sync.run()?;
+    Ok(())
+}
+
+fn regenerate_sarif_report(sh: &Shell) -> anyhow::Result<()> {
+    let regen = cmd!(sh, "cargo blesspr");
+    regen.run()?;
     Ok(())
 }
 
