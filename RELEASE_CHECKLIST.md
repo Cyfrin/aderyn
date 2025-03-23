@@ -22,7 +22,7 @@ Stay logged in with `gh auth login`
 
 - [ ] Cut a release.
     - [ ] Switch to dev branch and pull latest changes.
-    - [ ] Run `cargo patch`. Waits till the command is fully done running.
+    - [ ] Run `cargo patch`. Wait until the command is fully done.
     - [ ] Generate Release Notes in the Github's Release page
 
 - **NOTE: Expect the following in CI**:
