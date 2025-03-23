@@ -1,0 +1,98 @@
+# This is a configuration file for the bacon tool
+#
+# Complete help on configuration: https://dystroy.org/bacon/config/
+#
+# You may check the current default at
+#   https://github.com/Canop/bacon/blob/main/defaults/default-bacon.toml
+
+default_job = "clippy-display-warnings"
+env.CARGO_TERM_COLOR = "always"
+
+# Background jobs
+
+# Lints
+
+[jobs.clippy-display-warnings]
+command = ["cargo", "clippy"]
+need_stdout = false
+
+[jobs.fmt-display-warnings]
+command = ["cargo", "fmt", "--all", "--check"]
+need_stdout = false
+
+# Test
+
+[job.test]
+command = ["cargo", "test"]
+need_stdout = false
+
+# ===
+
+# Non background jobs / ACTIONS
+
+# Run aderyn on all integration tests
+[jobs.generate-all-reports]
+command = [
+    "cargo", "prep", "--all", "--parallel"
+]
+need_stdout = true
+need_stderr = true
+allow_warnings = true
+background = false
+on_change_strategy = "kill_then_restart"
+
+# Bless PR
+[jobs.blesspr]
+command = [
+    "cargo", "blesspr"
+]
+need_stdout = true
+need_stderr = true
+allow_warnings = true
+background = false
+
+## Run aderyn on Contract playground
+
+[jobs.contract-playground]
+command = [
+    "cargo", "prep", "--cpg"
+    # put launch parameters for your program behind a `--` separator
+]
+need_stdout = true
+need_stderr = true
+allow_warnings = true
+background = false
+on_change_strategy = "kill_then_restart"
+
+## Run Tests and report time
+
+[jobs.test-report-time]
+command = ["cargo", "test", "--", "-Zunstable-options", "--report-time"]
+need_stdout = true
+background = false
+
+[jobs.nextest]
+command = [
+    "cargo", "nextest", "run",
+    "--hide-progress-bar", "--failure-output", "final"
+]
+need_stdout = true
+analyzer = "nextest"
+background = false
+
+## Compile Docs and open
+[jobs.doc-open]
+command = ["cargo", "doc", "--no-deps", "--open"]
+need_stdout = false
+background = false
+on_success = "back" # so that we don't open the browser at each change
+
+[keybindings]
+c = "job:clippy-display-warnings"
+f = "job:fmt-display-warnings"
+r = "job:contract-playground"
+alt-t = "job:test-report-time"
+t = "job:test"
+d = "job:doc-open"
+a = "job:generate-all-reports"
+alt-b = "job:blesspr"
