@@ -21,6 +21,7 @@ pub fn cut_release(cut_release: CutRelease) -> anyhow::Result<()> {
     kick_off_release(&sh, &cut_release)?;
 
     // Wait for release completion
+    println!("Waiting for release completion...");
     std::thread::sleep(Duration::from_secs(10 * 60));
     wait_for_release_completion(&sh)?;
 
