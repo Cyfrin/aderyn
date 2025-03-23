@@ -97,8 +97,8 @@ fn perform_prechecks(sh: &Shell) -> anyhow::Result<()> {
         let output = cmd.output()?;
         String::from_utf8(output.stdout)?
     };
-    if curr_branch != "dev" {
-        eprintln!("Please switch to dev branch and retry!");
+    if curr_branch.trim() != "dev" {
+        eprintln!("Please switch to dev branch and retry!. Curr branch: {}", curr_branch.trim());
         std::process::exit(1);
     }
 
