@@ -45,9 +45,6 @@ jobs:
           toolchain: nightly-2025-01-01
           override: true
 
-      - name: Cache Rust Dependencies
-        uses: Swatinem/rust-cache@v2
-
       - name: Checkout Submodules
         run: git submodule update --init --recursive
 
@@ -66,9 +63,6 @@ jobs:
         run: |
           pnpm install --prefix tests/2024-05-Sablier/v2-core
           pnpm install --prefix tests/prb-math/
-
-      - name: Checkout Sources
-        uses: actions/checkout@v4
 
       - name: Restore Rust Cache
         uses: Swatinem/rust-cache@v2
