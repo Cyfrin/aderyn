@@ -440,7 +440,6 @@ ast_node!(
         return_parameters: ParameterList,
         scope: NodeID,
         super_function: Option<NodeID>,
-        r#virtual: Option<bool>,
         visibility: Visibility,
     }
 );
