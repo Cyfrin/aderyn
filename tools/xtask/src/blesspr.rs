@@ -1,6 +1,6 @@
 use xshell::{Shell, cmd};
 
-pub fn fixpr() -> anyhow::Result<()> {
+pub fn blesspr() -> anyhow::Result<()> {
     let sh = Shell::new()?;
     sh.change_dir(env!("CARGO_MANIFEST_DIR"));
     sh.change_dir("../../");
@@ -10,18 +10,15 @@ pub fn fixpr() -> anyhow::Result<()> {
     cmd.run()?;
 
     // Fix format
-    let cmd = cmd!(sh, "cargo +nightly fmt --all");
+    let cmd = cmd!(sh, "cargo fixfmt");
     cmd.run()?;
 
     // Check fixed format
-    let cmd = cmd!(sh, "cargo +nightly fmt --all --check");
+    let cmd = cmd!(sh, "cargo fmt --all --check");
     cmd.run()?;
 
     // Fix clippy
-    let cmd = cmd!(
-        sh,
-        "cargo clippy --quiet --workspace --all-targets --all-features --allow-dirty --fix"
-    );
+    let cmd = cmd!(sh, "cargo fixclippy");
     cmd.run()?;
 
     // Check clippy
@@ -29,15 +26,15 @@ pub fn fixpr() -> anyhow::Result<()> {
     cmd.run()?;
 
     // Create reportgen
-    let cmd = cmd!(sh, "chmod +x ./cli/reportgen.sh");
-    cmd.run()?;
-    let cmd = cmd!(sh, "./cli/reportgen.sh");
+    let cmd = cmd!(sh, "cargo prep --all --parallel");
     cmd.run()?;
 
     // Push changes
     let cmd = cmd!(sh, "git add .");
     cmd.run()?;
-    let cmd = cmd!(sh, "git commit -am").arg("chore: cargo fixpr");
+    let cmd = cmd!(sh, "git commit -am").arg("chore: cargo blesspr");
+    cmd.run()?;
+    let cmd = cmd!(sh, "git config push.autoSetupRemote true");
     cmd.run()?;
     let cmd = cmd!(sh, "git push");
     cmd.run()?;

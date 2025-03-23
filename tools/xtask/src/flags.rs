@@ -9,10 +9,13 @@ xflags::xflags! {
             /// Cut a minor release
             optional -m, --minor
         }
-        cmd fixpr {
-        }
+        cmd blesspr {}
         cmd reportgen {
+            /// Run all integration tests
             optional -a, --all
+
+            /// Parallel
+            optional --parallel
 
             /// Sablier
             optional -s, --sablier
@@ -61,7 +64,7 @@ pub struct Xtask {
 #[derive(Debug)]
 pub enum XtaskCmd {
     CutRelease(CutRelease),
-    Fixpr(Fixpr),
+    Blesspr(Blesspr),
     Reportgen(Reportgen),
 }
 
@@ -72,11 +75,12 @@ pub struct CutRelease {
 }
 
 #[derive(Debug)]
-pub struct Fixpr;
+pub struct Blesspr;
 
 #[derive(Debug)]
 pub struct Reportgen {
     pub all: bool,
+    pub parallel: bool,
     pub sablier: bool,
     pub tg: bool,
     pub adhoc: bool,
