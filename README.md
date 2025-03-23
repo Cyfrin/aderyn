@@ -96,23 +96,17 @@ If you are installing with Homebrew or npm, ensure that the correct version of A
 aderyn path/to/foundry/project/root
 ```
 
+For browsing more options, see
+```
+aderyn --help
+```
+
+More details and examples in [docs](https://cyfrin.gitbook.io/cyfrin-docs/cli-options)
+
 ## VS Code extension
 
 Officially supported [VSCode extension](https://github.com/Cyfrin/vscode-aderyn/) for Aderyn. 
 Download from [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=Cyfrin.aderyn&ssr=false#overview)
-
-## Aderyn CLI Options
-
-Run the help command to view the options.
-```
-aderyn --help
-```
-More details and examples in [docs](https://cyfrin.gitbook.io/cyfrin-docs/cli-options)
-
-## Building a custom Aderyn detector
-
-Aderyn makes it easy to build Static Analysis detectors that can adapt to any Solidity codebase and protocol. This guide will teach you how to build, test, and run your custom Aderyn detectors.
-To learn how to create your custom Aderyn detectors, [checkout the official docs](https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli/detectors-quickstart)
 
 ## Docker
 
@@ -145,6 +139,12 @@ To build Aderyn locally:
 **Suggested VSCode extensions:**
 [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=dustypomerleau.rust-syntax) - Rust language support for Visual Studio Code
 [Rust Syntax](https://marketplace.visualstudio.com/items?itemName=dustypomerleau.rust-syntax) - Improved Rust syntax highlighting
+
+## Building a custom Aderyn detector
+
+Aderyn makes it easy to build Static Analysis detectors that can adapt to any Solidity codebase and protocol. This guide will teach you how to build, test, and run your custom Aderyn detectors.
+To learn how to create your custom Aderyn detectors, [checkout the official docs](https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli/detectors-quickstart)
+
 
 ## Credits
 
