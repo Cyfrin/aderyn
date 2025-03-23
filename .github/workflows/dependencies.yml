@@ -1,6 +1,4 @@
 # Runs `cargo update` periodically.
-# Reference:
-# https://github.com/paradigmxyz/solar/blob/main/.github/workflows/dependencies.yml
 
 name: Dependencies
 
@@ -17,6 +15,6 @@ permissions:
 
 jobs:
   update:
-    uses: ithacaxyz/ci/.github/workflows/cargo-update-pr.yml@dev
+    uses: ithacaxyz/ci/.github/workflows/cargo-update-pr.yml@main
     secrets:
       token: ${{ secrets.GITHUB_TOKEN }}
