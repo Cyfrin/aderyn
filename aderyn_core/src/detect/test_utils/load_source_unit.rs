@@ -36,7 +36,7 @@ pub fn load_multiple_solidity_source_units_into_single_context(
     filepaths: &[&str],
     version: Version,
 ) -> WorkspaceContext {
-    assert!(filepaths.len() > 0);
+    assert!(!filepaths.is_empty());
     let root = guess_root(filepaths[0]);
 
     let mut suffixes = vec![];

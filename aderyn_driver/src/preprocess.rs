@@ -1,6 +1,4 @@
-use crate::{
-    compile, config::supplement_values_from_aderyn_toml, driver::Args, ensure_valid_root_path,
-};
+use crate::{compile, config::supplement_values_from_aderyn_toml, driver::Args};
 use aderyn_core::{
     context::{
         graph::{Transpose, WorkspaceCallGraph},
@@ -8,7 +6,10 @@ use aderyn_core::{
     },
     fscloc,
 };
-use std::{collections::HashMap, path::PathBuf};
+use std::{
+    collections::HashMap,
+    path::{Path, PathBuf},
+};
 
 pub struct WorkspaceContextWrapper {
     pub contexts: Vec<WorkspaceContext>,
@@ -105,4 +106,12 @@ fn obtain_config_values(
         return supplement_values_from_aderyn_toml(current);
     }
     Ok(current)
+}
+
+fn ensure_valid_root_path(root_path: &Path) -> PathBuf {
+    if !root_path.exists() {
+        eprintln!("{} does not exist!", root_path.to_string_lossy());
+        std::process::exit(1);
+    }
+    std::fs::canonicalize(root_path).unwrap()
 }
