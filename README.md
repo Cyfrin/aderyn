@@ -126,7 +126,7 @@ Run Aderyn from docker:
 
 ## Contributing & License
 
-Help us build Aderyn 🦜 Please see our [contribution guidelines](./CONTRIBUTING.md).
+Help us build Aderyn 🦜 Please see our [contribution guidelines](./CONTRIBUTING.md) for PR approval process and in-depth developer environment setup.
 Aderyn is an open-source software licensed under the [GPL-3.0 License](./LICENSE).
 
 To build Aderyn locally:
@@ -157,6 +157,7 @@ This project exists thanks to all the people who [contribute](/CONTRIBUTING.md).
 ## Attribution
 
 - AST Visitor code from [solc-ast-rs](https://github.com/hrkrshnn/solc-ast-rs).
+- Foundry Compilers for backend AST generation [foundry-compilers](https://github.com/foundry-rs/compilers)
 - Original detectors based on [4naly3er](https://github.com/Picodes/4naly3er) detectors.
 - Shoutout to the original king of static analysis [slither](https://github.com/crytic/slither).
 
