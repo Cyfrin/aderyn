@@ -7,6 +7,9 @@ YELLOW = \033[0;33m
 RED = \033[0;31m
 NC = \033[0m # No Color
 
+.PHONY: default
+default: setup ## Run `make setup` by default
+
 .PHONY: help
 help: ## Display this help message
 	@awk 'BEGIN {FS = ":.*?## "}; /^[a-zA-Z_-]+:.*?## / {printf "$(GREEN)%-30s$(NC) %s\n", $$1, $$2}' $(MAKEFILE_LIST)
