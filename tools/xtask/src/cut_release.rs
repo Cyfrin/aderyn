@@ -21,6 +21,8 @@ pub fn cut_release(cut_release: CutRelease) -> anyhow::Result<()> {
     kick_off_release(&sh, &cut_release)?;
 
     // Wait for release completion
+    println!("Waiting for release completion...");
+    std::thread::sleep(Duration::from_secs(10 * 60));
     wait_for_release_completion(&sh)?;
 
     Ok(())
@@ -28,7 +30,6 @@ pub fn cut_release(cut_release: CutRelease) -> anyhow::Result<()> {
 
 fn wait_for_release_completion(sh: &Shell) -> anyhow::Result<()> {
     let poll_time = Duration::from_secs(12);
-    println!("A relase or a release plan is in progress ... [next poll: {}s]", poll_time.as_secs());
 
     // Check if actions are still pending
     let actions_completed = {
@@ -39,6 +40,10 @@ fn wait_for_release_completion(sh: &Shell) -> anyhow::Result<()> {
     };
 
     if !actions_completed {
+        println!(
+            "A relase or a release plan is in progress ... [next poll: {}s]",
+            poll_time.as_secs()
+        );
         std::thread::sleep(Duration::from_secs(12));
         wait_for_release_completion(sh)?;
         return Ok(());
@@ -97,8 +102,8 @@ fn perform_prechecks(sh: &Shell) -> anyhow::Result<()> {
         let output = cmd.output()?;
         String::from_utf8(output.stdout)?
     };
-    if curr_branch != "dev" {
-        eprintln!("Please switch to dev branch and retry!");
+    if curr_branch.trim() != "dev" {
+        eprintln!("Please switch to dev branch and retry!. Curr branch: {}", curr_branch.trim());
         std::process::exit(1);
     }
 
