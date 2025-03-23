@@ -37,9 +37,9 @@
 
 Thanks to its collection of static vulnerability detectors, running Cyfrin Aderyn on your Solidity codebase will **highlight potential vulnerabilities**, drastically reducing the potential for unknown issues in your Solidity code and giving you the time to focus on more complex problems.
 
-Built using **Rust**, Aderyn integrates seamlessly into small and **enterprise-level development workflows**, offering lighting-fast command-line functionality and a framework to [build custom detectors](https://support.cyfrin.io/en/articles/10455808-what-is-a-detector) to adapt to your codebase.
+Built using **Rust**, Aderyn integrates seamlessly into small and **enterprise-level development workflows**, offering lighting-fast command-line functionality and a framework to [build custom detectors](https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli/detectors-quickstart) to adapt to your codebase.
 
-You can read the [Cyfrin official documentation](https://support.cyfrin.io/en) for an in-depth look at Aderyn's functionalities.
+You can read the [Cyfrin official documentation]([Cyfrin official docs](https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli/readme)) for an in-depth look at Aderyn's functionalities.
 
 There is also an officially supported [VSCode extension](https://github.com/Cyfrin/vscode-aderyn/) for Aderyn. Download from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=Cyfrin.aderyn&ssr=false#overview) and start identifying vulnerabilities in your Solidity code with ease.  
 
@@ -90,11 +90,7 @@ If you are installing with Homebrew or npm, ensure that the correct version of A
 
 ## Quick Start
 
-Refer [Guide](https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli/quickstart)
-
-By default, if no options are specified, Aderyn tries to pick the best possible options for the given project.
-
-For an in-depth walkthrough on how to get started using Aderyn, check the [Cyfrin official docs](https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli/readme)
+[Quick Start](https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli/quickstart) example with video guide.
 
 ## VS Code extension
 
