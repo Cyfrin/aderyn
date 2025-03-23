@@ -80,7 +80,7 @@ jobs:
 
       - name: Run cargo fmt
         run: |
-          cargo +nightly fmt --all --check 
+          cargo fmt --all --check
 
       - name: Run cargo clippy
         run: |
