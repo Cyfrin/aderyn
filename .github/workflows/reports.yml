@@ -59,11 +59,6 @@ jobs:
         with:
           version: 8
 
-      - name: Install JS Dependencies
-        run: |
-          pnpm install --prefix tests/2024-05-Sablier/v2-core
-          pnpm install --prefix tests/prb-math/
-
       - name: Restore Rust Cache
         uses: Swatinem/rust-cache@v2
 
@@ -83,6 +78,7 @@ jobs:
               diff reports/uniswap_profile.md reports/uniswap_profile-workflow.md
               ;;
             sablier)
+              pnpm install --prefix tests/2024-05-Sablier/v2-core
               FOUNDRY_PROFILE=uniswap cargo run -- -o ./reports/sablier.md ./tests/2024-05-Sablier --skip-update-check
               diff reports/sablier-aderyn-toml-nested-root.md reports/sablier.md
               ;;
@@ -107,6 +103,7 @@ jobs:
               diff ./reports/hardhat-playground-report.md ./reports/hardhat-playground-report-workflow.md
               ;;
             prb-math-report)
+              pnpm install --prefix tests/prb-math/
               cargo run -- ./tests/prb-math -o ./reports/prb-math-report-workflow.md --skip-update-check
               diff ./reports/prb-math-report.md ./reports/prb-math-report-workflow.md
               ;;
