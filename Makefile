@@ -65,6 +65,9 @@ setup: check-tools ## Set up the project for the first time
 	@echo "$(YELLOW)Installing dependencies for prb-math...$(NC)"
 	pnpm install --prefix tests/prb-math --frozen-lockfile
 
+	@echo "$(YELLOW)Installing dependencies for 2024-07-templegold...$(NC)"
+	cd tests/2024-07-templegold && yarn install --immutable && git restore package.json
+
 	@echo "$(GREEN)Project setup complete!$(NC)"
 
 # Debug: Print the value of a variable with `make print-VAR_NAME`
