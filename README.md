@@ -90,33 +90,9 @@ If you are installing with Homebrew or npm, ensure that the correct version of A
 
 ## Quick Start
 
-Once Aderyn is installed on your system, you can run it against your Foundry-based codebase to find vulnerabilities in your code.
+Refer [Guide](https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli/quickstart)
 
-We will use the [aderyn-contracts-playground](https://github.com/Cyfrin/aderyn-contracts-playground) repository in this example. You can follow along by cloning it to your system:
-
-```sh
-git clone https://github.com/Cyfrin/aderyn-contracts-playground.git
-```
-
-Navigate inside the repository:
-
-```sh
-cd aderyn-contracts-playground
-```
-
-We usually use several smart contracts and tests to try new detectors. Build the contracts by running:
-
-```sh
-forge build
-```
-
-Once your smart contracts have been successfully compiled, run Aderyn using the following command:
-
-```sh
-aderyn [OPTIONS] path/to/your/project
-```
-
-Replace [OPTIONS] with specific command-line arguments as needed.
+By default, if no options are specified, Aderyn tries to pick the best possible options for the given project.
 
 For an in-depth walkthrough on how to get started using Aderyn, check the [Cyfrin official docs](https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli/readme)
 
@@ -125,33 +101,13 @@ For an in-depth walkthrough on how to get started using Aderyn, check the [Cyfri
 Officially supported [VSCode extension](https://github.com/Cyfrin/vscode-aderyn/) for Aderyn. 
 Download from [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=Cyfrin.aderyn&ssr=false#overview)
 
-## Aderyn CLI Menu
+## Aderyn CLI Options
 
-Usage: `aderyn [OPTIONS] <ROOT>`
-
-`<ROOT>`: The path to the root of the codebase to be analyzed. Defaults to the current directory.
-
-Options:
-
-- `-s`, `--src`: Path to the source contracts. Used to avoid analyzing libraries, tests or scripts and focus on the contracts. If not provided, or if aderyn can't find famous files to read (like `foundry.toml`, which it automatically searches for) the ROOT directory will be used.
-  - In foundry projects, this is usually the `src/` folder unless stated otherwise in `foundry.toml`.
-  - In Hardhat projects, this is usually the `contracts/` folder unless stated otherwise in the config.
-- `-i`, `--path-includes <PATH_INCLUDES>`: List of path strings to include, delimited by comma (no spaces). It allows to include only one or more specific contracts in the analysis. Any solidity file path not containing these strings will be ignored.
-- `-x`, `--path-excludes <PATH_EXCLUDES>`: List of path strings to exclude, delimited by comma (no spaces). It allows to exclude one or more specific contracts from the analysis. Any solidity file path containing these strings will be ignored
-- `-o`, `--output <OUTPUT>`: Desired file path for the final report (will overwrite the existing one) [default: report.md]
-- `-n`, `--no-snippets`: Do not include code snippets in the report (reduces report size in large repos)
-- `-h`, `--help`: Print help
-- `-V`, `--version`: Print version
-
-You must provide the root directory of the repo you want to analyze. Alternatively, you can provide a single Solidity file path (this mode requires [Foundry](https://book.getfoundry.sh/) to be installed).
-
-Examples:
-
-```sh
-aderyn /path/to/your/foundry/project/root/directory/
+Run the help command to view the options.
 ```
-
-Find more examples on the official  [Cyfrin Docs](https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli/quickstart)
+aderyn --help
+```
+More details and examples in [docs](https://cyfrin.gitbook.io/cyfrin-docs/cli-options)
 
 ## Building a custom Aderyn detector
 
@@ -163,25 +119,16 @@ To learn how to create your custom Aderyn detectors, [checkout the official docs
 You can run Aderyn from a Docker container.
 
 Build the image:
-
 ```sh
   docker build -t aderyn .
 ```
 
 `/path/to/project/root` should be the path to your Foundry or Hardhat project root directory and it will be mounted to `/share` in the container.
 
-Run Aderyn:
-
+Run
 ```sh
   docker run -v /path/to/project/root/:/share aderyn
 ```
-
-Run with flags:
-
-```sh
-  docker run -v /path/to/project/root/:/share aderyn -h
-```
-
 
 ## Contributing & License
 
