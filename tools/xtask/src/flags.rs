@@ -2,8 +2,20 @@ xflags::xflags! {
     src "./src/flags.rs"
 
     cmd xtask {
-        cmd r {
+        cmd cut-release {
+            /// Cut a patch release
+            optional -p, --patch
+
+            /// Cut a minor release
+            optional -m, --minor
+        }
+        cmd blesspr {}
+        cmd reportgen {
+            /// Run all integration tests
             optional -a, --all
+
+            /// Parallel
+            optional --parallel
 
             /// Sablier
             optional -s, --sablier
@@ -51,12 +63,24 @@ pub struct Xtask {
 
 #[derive(Debug)]
 pub enum XtaskCmd {
-    R(R),
+    CutRelease(CutRelease),
+    Blesspr(Blesspr),
+    Reportgen(Reportgen),
 }
 
 #[derive(Debug)]
-pub struct R {
+pub struct CutRelease {
+    pub patch: bool,
+    pub minor: bool,
+}
+
+#[derive(Debug)]
+pub struct Blesspr;
+
+#[derive(Debug)]
+pub struct Reportgen {
     pub all: bool,
+    pub parallel: bool,
     pub sablier: bool,
     pub tg: bool,
     pub adhoc: bool,
