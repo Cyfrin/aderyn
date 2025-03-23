@@ -8,10 +8,9 @@ use serde::Deserialize;
 
 use crate::preprocess::PreprocessedConfig;
 
-/// aderyn.toml structure
+/// `aderyn.toml` file structure
 #[derive(Deserialize, Clone)]
 pub struct AderynConfig {
-    /// By default we'll assume it's version 1
     pub version: usize,
     pub root: Option<String>,
     pub src: Option<String>,
