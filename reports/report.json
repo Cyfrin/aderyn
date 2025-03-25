@@ -2929,6 +2929,12 @@
             "src_char": "174:2"
           },
           {
+            "contract_path": "src/AderynIgnoreCustomDetectors.sol",
+            "line_no": 26,
+            "src": "583:2",
+            "src_char": "583:2"
+          },
+          {
             "contract_path": "src/ArbitraryTransferFrom.sol",
             "line_no": 32,
             "src": "954:5",
@@ -4429,12 +4435,6 @@
             "line_no": 7,
             "src": "174:2",
             "src_char": "174:2"
-          },
-          {
-            "contract_path": "src/AderynIgnoreCustomDetectors.sol",
-            "line_no": 26,
-            "src": "594:2",
-            "src_char": "594:2"
           },
           {
             "contract_path": "src/AdminContract.sol",

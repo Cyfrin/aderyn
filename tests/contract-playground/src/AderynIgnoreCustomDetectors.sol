@@ -22,7 +22,7 @@ contract AderynCustomIgnore {
     }
 
     // This will be reported only by unused-public-function 
-    // aderyn-ignore-next-line(unused-public-function)
+    // aderyn-ignore-next-line(empty-block)
     function f4() public {
 
     }

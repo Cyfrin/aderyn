@@ -2859,13 +2859,19 @@ Check for `address(0)` when assigning values to address state variables.
 
 If a function is marked public but is not used internally, consider marking it as `external`.
 
-<details><summary>58 Found Instances</summary>
+<details><summary>59 Found Instances</summary>
 
 
 - Found in src/AderynIgnoreCustomDetectors.sol [Line: 7](../tests/contract-playground/src/AderynIgnoreCustomDetectors.sol#L7)
 
 	```solidity
 	    function f1() public {
+	```
+
+- Found in src/AderynIgnoreCustomDetectors.sol [Line: 26](../tests/contract-playground/src/AderynIgnoreCustomDetectors.sol#L26)
+
+	```solidity
+	    function f4() public {
 	```
 
 - Found in src/ArbitraryTransferFrom.sol [Line: 32](../tests/contract-playground/src/ArbitraryTransferFrom.sol#L32)
@@ -4369,19 +4375,13 @@ Consider removing the modifier or inlining the logic into the calling function.
 
 Consider removing empty blocks.
 
-<details><summary>36 Found Instances</summary>
+<details><summary>35 Found Instances</summary>
 
 
 - Found in src/AderynIgnoreCustomDetectors.sol [Line: 7](../tests/contract-playground/src/AderynIgnoreCustomDetectors.sol#L7)
 
 	```solidity
 	    function f1() public {
-	```
-
-- Found in src/AderynIgnoreCustomDetectors.sol [Line: 26](../tests/contract-playground/src/AderynIgnoreCustomDetectors.sol#L26)
-
-	```solidity
-	    function f4() public {
 	```
 
 - Found in src/AdminContract.sol [Line: 14](../tests/contract-playground/src/AdminContract.sol#L14)
