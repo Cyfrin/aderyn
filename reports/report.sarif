@@ -4292,18 +4292,7 @@
                 },
                 "region": {
                   "byteLength": 2,
-                  "byteOffset": 343
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/AderynIgnoreCustomDetectors.sol"
-                },
-                "region": {
-                  "byteLength": 2,
-                  "byteOffset": 586
+                  "byteOffset": 585
                 }
               }
             },

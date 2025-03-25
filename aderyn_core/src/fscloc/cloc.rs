@@ -172,6 +172,14 @@ fn get_lines_to_ignore(token_descriptors: &Vec<TokenDescriptor>) -> Vec<IgnoreLi
             continue;
         }
 
+        let should_ignore_next_line = |content: &str| -> bool {
+            content.contains("aderyn-ignore-next-line") || content.contains("aderyn-fp-next-line")
+        };
+
+        let should_ignore_line = |content: &str| -> bool {
+            content.contains("aderyn-ignore") || content.contains("aderyn-fp")
+        };
+
         #[allow(clippy::never_loop)]
         if let Some(ignore_line) = loop {
             // Check if we have a specific set of detectors only, for which we want to ignore.
@@ -198,11 +206,12 @@ fn get_lines_to_ignore(token_descriptors: &Vec<TokenDescriptor>) -> Vec<IgnoreLi
                     when: When::ForDetectorsWithNames(detector_names),
                     which: line_number,
                 });
-            } else if token.content.contains("aderyn-ignore-next-line") {
+            } else if should_ignore_next_line(&token.content) {
                 break Some(IgnoreLine { when: When::Always, which: token.end_line + 1 });
-            } else if token.content.contains("aderyn-ignore") {
+            } else if should_ignore_line(&token.content) {
                 break Some(IgnoreLine { when: When::Always, which: token.end_line });
             }
+
             break None;
         } {
             ignore_lines.push(ignore_line);
@@ -212,7 +221,7 @@ fn get_lines_to_ignore(token_descriptors: &Vec<TokenDescriptor>) -> Vec<IgnoreLi
 }
 
 static ADERYN_IGNORE_REGEX: Lazy<Regex> =
-    lazy_regex!(r"aderyn-ignore(\-next\-line)?\s*\((\s*[a-zA-Z\-\s,]*)\)");
+    lazy_regex!(r"aderyn-(?:ignore|fp)(\-next\-line)?\s*\((\s*[a-zA-Z\-\s,]*)\)");
 
 #[derive(Debug, Clone)]
 pub enum When {
@@ -306,6 +315,68 @@ mod parse_comments_to_rightfully_ignore_lines {
         );
 
         let positive_example_7 = ADERYN_IGNORE_REGEX.captures(positive_examples[6]).unwrap();
+        assert!(positive_example_7.get(1).is_some());
+        assert!(
+            positive_example_6.get(2).unwrap().as_str()
+                == " name-a, name-b,
+                name-c "
+        );
+
+        let false_positive_examples = [
+            r#"""
+                aderyn-fp ( name-a, name-b,name-c) solhint-disable 
+            """#,
+            r#"""
+                aderyn-fp ( name-a, name-b,name-c ) 
+            """#,
+            r#"""
+                aderyn-fp(name-c)
+            """#,
+            r#"""
+                aderyn-fp()
+            """#,
+            r#"""
+                aderyn-fp(  )
+            """#,
+            r#"""
+                aderyn-fp ( name-a, name-b,
+                name-c ) 
+            """#,
+            r#"""
+                aderyn-fp-next-line ( name-a, name-b,
+                name-c ) 
+            """#,
+        ];
+
+        let positive_example_1 = ADERYN_IGNORE_REGEX.captures(false_positive_examples[0]).unwrap();
+        assert!(positive_example_1.get(1).is_none());
+        assert!(positive_example_1.get(2).unwrap().as_str() == " name-a, name-b,name-c");
+
+        let positive_example_2 = ADERYN_IGNORE_REGEX.captures(false_positive_examples[1]).unwrap();
+        assert!(positive_example_2.get(1).is_none());
+        assert!(positive_example_2.get(2).unwrap().as_str() == " name-a, name-b,name-c ");
+
+        let positive_example_3 = ADERYN_IGNORE_REGEX.captures(false_positive_examples[2]).unwrap();
+        assert!(positive_example_3.get(1).is_none());
+        assert!(positive_example_3.get(2).unwrap().as_str() == "name-c");
+
+        let positive_example_4 = ADERYN_IGNORE_REGEX.captures(false_positive_examples[3]).unwrap();
+        assert!(positive_example_4.get(1).is_none());
+        assert!(positive_example_4.get(2).unwrap().as_str() == "");
+
+        let positive_example_5 = ADERYN_IGNORE_REGEX.captures(false_positive_examples[4]).unwrap();
+        assert!(positive_example_5.get(1).is_none());
+        assert!(positive_example_5.get(2).unwrap().as_str() == "  ");
+
+        let positive_example_6 = ADERYN_IGNORE_REGEX.captures(false_positive_examples[5]).unwrap();
+        assert!(positive_example_6.get(1).is_none());
+        assert!(
+            positive_example_6.get(2).unwrap().as_str()
+                == " name-a, name-b,
+                name-c "
+        );
+
+        let positive_example_7 = ADERYN_IGNORE_REGEX.captures(false_positive_examples[6]).unwrap();
         assert!(positive_example_7.get(1).is_some());
         assert!(
             positive_example_6.get(2).unwrap().as_str()
