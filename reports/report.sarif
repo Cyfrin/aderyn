@@ -4288,17 +4288,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/AderynIgnoreCustomDetectors.sol"
-                },
-                "region": {
-                  "byteLength": 2,
-                  "byteOffset": 585
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/ArbitraryTransferFrom.sol"
                 },
                 "region": {
@@ -7016,6 +7005,17 @@
                 "region": {
                   "byteLength": 2,
                   "byteOffset": 174
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/AderynIgnoreCustomDetectors.sol"
+                },
+                "region": {
+                  "byteLength": 2,
+                  "byteOffset": 594
                 }
               }
             },
