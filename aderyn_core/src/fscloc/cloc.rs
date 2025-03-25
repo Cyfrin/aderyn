@@ -180,43 +180,43 @@ fn get_lines_to_ignore(token_descriptors: &Vec<TokenDescriptor>) -> Vec<IgnoreLi
             content.contains("aderyn-ignore") || content.contains("aderyn-fp")
         };
 
-        #[allow(clippy::never_loop)]
-        if let Some(ignore_line) = loop {
-            // Check if we have a specific set of detectors only, for which we want to ignore.
-            if let Some(captures) = ADERYN_IGNORE_REGEX.captures(&token.content) {
-                let line_number = {
-                    if captures.get(1).is_none() {
-                        token.end_line
-                    } else {
-                        token.end_line + 1
-                    }
-                };
-                let detector_names = captures
-                    .get(2)
-                    .map(|m| m.as_str())
-                    .map(|names| {
-                        names
-                            .split(',')
-                            .map(|name| name.trim().to_string())
-                            .filter(|name| !name.is_empty())
-                            .collect::<Vec<_>>()
-                    })
-                    .unwrap_or_default();
-                break Some(IgnoreLine {
-                    when: When::ForDetectorsWithNames(detector_names),
-                    which: line_number,
-                });
-            } else if should_ignore_next_line(&token.content) {
-                break Some(IgnoreLine { when: When::Always, which: token.end_line + 1 });
-            } else if should_ignore_line(&token.content) {
-                break Some(IgnoreLine { when: When::Always, which: token.end_line });
-            }
+        let mut found = false;
 
-            break None;
-        } {
-            ignore_lines.push(ignore_line);
+        // Check if we have a specific set of detectors only, for which we want to ignore.
+        for capture in ADERYN_IGNORE_REGEX.captures_iter(&token.content) {
+            let line_number = {
+                if capture.get(1).is_none() {
+                    token.end_line
+                } else {
+                    token.end_line + 1
+                }
+            };
+            let detector_names = capture
+                .get(2)
+                .map(|m| m.as_str())
+                .map(|names| {
+                    names
+                        .split(',')
+                        .map(|name| name.trim().to_string())
+                        .filter(|name| !name.is_empty())
+                        .collect::<Vec<_>>()
+                })
+                .unwrap_or_default();
+            ignore_lines.push(IgnoreLine {
+                when: When::ForDetectorsWithNames(detector_names.clone()),
+                which: line_number,
+            });
+            found = true;
+        }
+        if !found {
+            if should_ignore_next_line(&token.content) {
+                ignore_lines.push(IgnoreLine { when: When::Always, which: token.end_line + 1 });
+            } else if should_ignore_line(&token.content) {
+                ignore_lines.push(IgnoreLine { when: When::Always, which: token.end_line });
+            }
         }
     }
+
     ignore_lines
 }
 
