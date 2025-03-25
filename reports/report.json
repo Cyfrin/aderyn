@@ -1,7 +1,7 @@
 {
   "files_summary": {
     "total_source_units": 120,
-    "total_sloc": 4437
+    "total_sloc": 4439
   },
   "files_details": {
     "files_details": [
@@ -11,7 +11,7 @@
       },
       {
         "file_path": "src/AderynIgnoreCustomDetectors.sol",
-        "n_sloc": 15
+        "n_sloc": 17
       },
       {
         "file_path": "src/AdminContract.sol",
@@ -2931,8 +2931,8 @@
           {
             "contract_path": "src/AderynIgnoreCustomDetectors.sol",
             "line_no": 26,
-            "src": "585:2",
-            "src_char": "585:2"
+            "src": "583:2",
+            "src_char": "583:2"
           },
           {
             "contract_path": "src/ArbitraryTransferFrom.sol",
