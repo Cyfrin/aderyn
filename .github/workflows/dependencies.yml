@@ -1,13 +1,11 @@
 # Runs `cargo update` periodically.
-# Reference:
-# https://github.com/paradigmxyz/solar/blob/main/.github/workflows/dependencies.yml
 
 name: Dependencies
 
 on:
   schedule:
     # Run weekly
-    - cron: "0 0 * * SUN"
+    - cron: "0 13 * * SUN"
   workflow_dispatch:
     # Needed so we can run it manually
 
@@ -17,6 +15,6 @@ permissions:
 
 jobs:
   update:
-    uses: ithacaxyz/ci/.github/workflows/cargo-update-pr.yml@dev
+    uses: cyfrin/ci/.github/workflows/cargo-update-pr.yml@main
     secrets:
       token: ${{ secrets.GITHUB_TOKEN }}

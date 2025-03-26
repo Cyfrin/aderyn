@@ -4292,18 +4292,7 @@
                 },
                 "region": {
                   "byteLength": 2,
-                  "byteOffset": 343
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/AderynIgnoreCustomDetectors.sol"
-                },
-                "region": {
-                  "byteLength": 2,
-                  "byteOffset": 586
+                  "byteOffset": 583
                 }
               }
             },
@@ -12204,8 +12193,8 @@
           "informationUri": "https://github.com/Cyfrin/aderyn",
           "name": "Aderyn",
           "organization": "Cyfrin",
-          "semanticVersion": "0.5.2",
-          "version": "0.5.2"
+          "semanticVersion": "0.5.3",
+          "version": "0.5.3"
         }
       }
     }

@@ -22,13 +22,12 @@ Stay logged in with `gh auth login`
 
 - [ ] Cut a release.
     - [ ] Switch to dev branch and pull latest changes.
-    - [ ] Run `cargo patch` . It waits till the release process is over.
-    - [ ] Run `cargo blesspr` to regenerate sarif report and push the changes.
+    - [ ] Run `cargo patch`. Wait until the command is fully done.
     - [ ] Generate Release Notes in the Github's Release page
 
 - **NOTE: Expect the following in CI**:
   * Sarif report tests fail because of version mismatch.
-  * After the building of global artifacts, library crates fail to publish.
+  * After the building of global artifacts, `aderyn_driver` and `aderyn_core` crates fail to publish.
   * Binary crate `aderyn` is successfully published.
 
 - [ ] Create a checkpoint on `master`.
