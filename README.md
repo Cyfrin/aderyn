@@ -45,7 +45,8 @@ There is also an officially supported [VSCode extension](https://github.com/Cyfr
 
 ## Features
 
-- Supports any development framework (Foundry/Hardhat/Truffle/etc)
+- Off the shelf support for Foundry and Hardhat projects
+- Configuration file (`adeyrn.toml`) needed to support custom frameworks.
 - Modular [detectors](./aderyn_core/src/detect/)
 - AST Traversal
 - Markdown reports
@@ -93,16 +94,11 @@ If you are installing with Homebrew or npm, ensure that the correct version of A
 [Quick Start](https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli/quickstart) example with video guide.
 
 ```
-cd path/to/foundry/project/root
+cd path/to/solidity/project/root
 aderyn
 ```
 
-For browsing more options, see
-```
-aderyn --help
-```
-
-More details and examples in [docs](https://cyfrin.gitbook.io/cyfrin-docs/cli-options)
+See examples using more CLI options [here](https://cyfrin.gitbook.io/cyfrin-docs/cli-options)
 
 ## VS Code extension
 
