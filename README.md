@@ -93,7 +93,8 @@ If you are installing with Homebrew or npm, ensure that the correct version of A
 [Quick Start](https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli/quickstart) example with video guide.
 
 ```
-aderyn path/to/foundry/project/root
+cd path/to/foundry/project/root
+aderyn
 ```
 
 For browsing more options, see
