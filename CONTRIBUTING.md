@@ -34,7 +34,9 @@ Contributions are made via Issues and Pull Requests (PRs). A few general guideli
 
 ## Getting started
 
-### Developer environment setup
+### Pull Requests
+
+#### Developer environment setup
 
 1. Run `make` . Make sure to have tools listed at the top of the Makefile installed in your computer.
 2. Work on the issue, write unit tests. Use `cargo test <test-name>` to test. Feel free to add solidity files to `tests/contract-playground`.
@@ -42,7 +44,7 @@ Contributions are made via Issues and Pull Requests (PRs). A few general guideli
 4. Once happy with the work, run `cargo blesspr` to "polish" your PR so CI can be happy.
 5. Create a pull request to `dev` branch here. The maintainers will be notified. Either @alexroan or @TilakMaddy will reach out to you.
 
-### Advanced Setup
+#### Advanced Setup
 1. Install [Bacon](https://dystroy.org/bacon/)
 2. Run `bacon` at the root
 3. Press
@@ -51,30 +53,8 @@ Contributions are made via Issues and Pull Requests (PRs). A few general guideli
   * `a` for generating all reports. Shorthand for `cargo prep --all --parallel`
   * `Alt-b` or `⌥-b` (Option-B on Mac) for "blessing" the PR. Shorthand for `cargo blesspr`
 
-### Tips
+#### Tips
 Feel free to reach out to `cargo fixfmt` and `cargo fixclippy` to apply quick fixes on code quality.
-
-### Issues
-
-Issues should be used to report problems, request a new feature, or discuss potential changes before a PR is created.
-
-#### Solve an issue
-
-Please review our [existing issues](https://github.com/cyfrin/aderyn/issues) to find one that interests you.
-
-If a contributor is working on the issue, they will be assigned to the individual. If you find an issue to work on, you can assign it to yourself and open a PR with a fix.
-
-#### Report Bugs
-
-If a related issue doesn't exist, you can open a new issue.
-
-Some tips to follow when you are creating an issue:
-
-- Provide as much context as possible. Over-communicate to give the most details to the reader.
-- Include the steps to reproduce the issue or the reason for adding the feature.
-- Screenshots, videos, etc., are highly appreciated.
-
-### Pull Requests
 
 #### Pull Request Process
 
@@ -100,3 +80,24 @@ Once you submit your PR:
 - As you update your PR and apply changes, mark each conversation resolved.
 
 Once the PR is approved, we'll "squash-and-merge" to keep the git commit history clean.
+
+### Issues
+
+Issues should be used to report problems, request a new feature, or discuss potential changes before a PR is created.
+
+#### Solve an issue
+
+Please review our [existing issues](https://github.com/cyfrin/aderyn/issues) to find one that interests you.
+
+If a contributor is working on the issue, they will be assigned to the individual. If you find an issue to work on, you can assign it to yourself and open a PR with a fix.
+
+#### Report Bugs
+
+If a related issue doesn't exist, you can open a new issue.
+
+Some tips to follow when you are creating an issue:
+
+- Provide as much context as possible. Over-communicate to give the most details to the reader.
+- Include the steps to reproduce the issue or the reason for adding the feature.
+- Screenshots, videos, etc., are highly appreciated.
+
