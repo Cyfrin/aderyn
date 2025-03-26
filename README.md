@@ -109,22 +109,6 @@ More details and examples in [docs](https://cyfrin.gitbook.io/cyfrin-docs/cli-op
 Officially supported [VSCode extension](https://github.com/Cyfrin/vscode-aderyn/) for Aderyn. 
 Download from [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=Cyfrin.aderyn&ssr=false#overview)
 
-## Docker
-
-You can run Aderyn from a Docker container.
-
-Build the image:
-```sh
-  docker build -t aderyn .
-```
-
-`/path/to/project/root` should be the path to your Foundry or Hardhat project root directory and it will be mounted to `/share` in the container.
-
-Run Aderyn from docker:
-```sh
-  docker run -v /path/to/project/root/:/share aderyn
-```
-
 ## Contributing & License
 
 Help us build Aderyn 🦜 Please see our [contribution guidelines](./CONTRIBUTING.md) for PR approval process and in-depth developer environment setup.
