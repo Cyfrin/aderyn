@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 121,
-    "total_sloc": 4457
+    "total_source_units": 120,
+    "total_sloc": 4455
   },
   "files_details": {
     "files_details": [
@@ -254,10 +254,6 @@
         "n_sloc": 14
       },
       {
-        "file_path": "src/ReinitializerTest.sol",
-        "n_sloc": 18
-      },
-      {
         "file_path": "src/ReturnBomb.sol",
         "n_sloc": 44
       },
@@ -371,7 +367,7 @@
       },
       {
         "file_path": "src/UnprotectedInitialize.sol",
-        "n_sloc": 28
+        "n_sloc": 44
       },
       {
         "file_path": "src/UnsafeERC721Mint.sol",
@@ -559,16 +555,16 @@
         "detector_name": "unprotected-initializer",
         "instances": [
           {
-            "contract_path": "src/ReinitializerTest.sol",
-            "line_no": 29,
-            "src": "762:27",
-            "src_char": "762:27"
-          },
-          {
             "contract_path": "src/UnprotectedInitialize.sol",
             "line_no": 37,
             "src": "916:33",
             "src_char": "916:33"
+          },
+          {
+            "contract_path": "src/UnprotectedInitialize.sol",
+            "line_no": 70,
+            "src": "1798:27",
+            "src_char": "1798:27"
           }
         ]
       },
@@ -6643,24 +6639,6 @@
             "src_char": "5072:7"
           },
           {
-            "contract_path": "src/ReinitializerTest.sol",
-            "line_no": 17,
-            "src": "472:10",
-            "src_char": "472:10"
-          },
-          {
-            "contract_path": "src/ReinitializerTest.sol",
-            "line_no": 23,
-            "src": "602:12",
-            "src_char": "602:12"
-          },
-          {
-            "contract_path": "src/ReinitializerTest.sol",
-            "line_no": 29,
-            "src": "762:27",
-            "src_char": "762:27"
-          },
-          {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
             "line_no": 9,
             "src": "188:17",
@@ -6941,6 +6919,24 @@
             "line_no": 37,
             "src": "916:33",
             "src_char": "916:33"
+          },
+          {
+            "contract_path": "src/UnprotectedInitialize.sol",
+            "line_no": 58,
+            "src": "1508:10",
+            "src_char": "1508:10"
+          },
+          {
+            "contract_path": "src/UnprotectedInitialize.sol",
+            "line_no": 64,
+            "src": "1638:12",
+            "src_char": "1638:12"
+          },
+          {
+            "contract_path": "src/UnprotectedInitialize.sol",
+            "line_no": 70,
+            "src": "1798:27",
+            "src_char": "1798:27"
           },
           {
             "contract_path": "src/UnusedError.sol",

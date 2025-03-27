@@ -105,11 +105,11 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/ReinitializerTest.sol"
+                  "uri": "src/UnprotectedInitialize.sol"
                 },
                 "region": {
-                  "byteLength": 27,
-                  "byteOffset": 762
+                  "byteLength": 33,
+                  "byteOffset": 916
                 }
               }
             },
@@ -119,8 +119,8 @@
                   "uri": "src/UnprotectedInitialize.sol"
                 },
                 "region": {
-                  "byteLength": 33,
-                  "byteOffset": 916
+                  "byteLength": 27,
+                  "byteOffset": 1798
                 }
               }
             }
@@ -10959,39 +10959,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/ReinitializerTest.sol"
-                },
-                "region": {
-                  "byteLength": 10,
-                  "byteOffset": 472
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ReinitializerTest.sol"
-                },
-                "region": {
-                  "byteLength": 12,
-                  "byteOffset": 602
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ReinitializerTest.sol"
-                },
-                "region": {
-                  "byteLength": 27,
-                  "byteOffset": 762
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/RevertsAndRequriesInLoops.sol"
                 },
                 "region": {
@@ -11503,6 +11470,39 @@
                 "region": {
                   "byteLength": 33,
                   "byteOffset": 916
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UnprotectedInitialize.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 1508
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UnprotectedInitialize.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 1638
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UnprotectedInitialize.sol"
+                },
+                "region": {
+                  "byteLength": 27,
+                  "byteOffset": 1798
                 }
               }
             },
