@@ -129,28 +129,4 @@ mod unprotected_initializer_tests {
                                                    // InitializedContract and one in
                                                    // ReinitializerContract
     }
-
-    #[test]
-    #[serial]
-    fn test_reinitializer_protection() {
-        let context = crate::detect::test_utils::load_solidity_source_unit(
-            "../tests/contract-playground/src/UnprotectedInitialize.sol",
-        );
-
-        let mut detector = UnprotectedInitializerDetector::default();
-        let found = detector.detect(&context).unwrap();
-        assert!(found);
-
-        // The detector should find unprotected functions
-        let instances = detector.instances();
-
-        // We should find 2 unprotected functions:
-        // 1. initializeWithoutModifierOrRevert in InitializedContract
-        // 2. initializeWithoutProtection in ReinitializerContract
-        assert_eq!(instances.len(), 2);
-
-        // We shouldn't detect the initialize() and reinitialize() functions in
-        // ReinitializerContract as they are protected with initializer and reinitializer
-        // modifiers
-    }
 }
