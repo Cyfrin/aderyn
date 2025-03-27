@@ -81,7 +81,7 @@ impl CallGraphVisitor for UnprotectedInitializationTracker {
             self.has_require_or_revert = true;
         }
 
-        // Check if modifier name is "initialized" and assume it works
+        // Check if modifier name is "initializer" or "reinitializer" and assume it works
         // This is done because often times initialized comes from openzeppelin and it is out of
         // scope when running aderyn due to it being a library
 
@@ -90,12 +90,12 @@ impl CallGraphVisitor for UnprotectedInitializationTracker {
         for inv in modifier_invocations {
             match inv.modifier_name {
                 crate::ast::IdentifierOrIdentifierPath::Identifier(n) => {
-                    if n.name == "initializer" {
+                    if n.name == "initializer" || n.name.starts_with("reinitializer") {
                         self.has_initializer_modifier = true;
                     }
                 }
                 crate::ast::IdentifierOrIdentifierPath::IdentifierPath(n) => {
-                    if n.name == "initializer" {
+                    if n.name == "initializer" || n.name.starts_with("reinitializer") {
                         self.has_initializer_modifier = true;
                     }
                 }
@@ -126,5 +126,30 @@ mod unprotected_initializer_tests {
         assert!(found);
         // println!("{:?}", detector.instances());
         assert_eq!(detector.instances().len(), 1);
+    }
+
+    #[test]
+    #[serial]
+    fn test_reinitializer_protection() {
+        let context = crate::detect::test_utils::load_solidity_source_unit(
+            "../tests/contract-playground/src/ReinitializerTest.sol",
+        );
+
+        let mut detector = UnprotectedInitializerDetector::default();
+        let found = detector.detect(&context).unwrap();
+        assert!(found);
+
+        // The detector should only find the unprotected function, not the ones with initializer or
+        // reinitializer
+        let instances = detector.instances();
+        assert_eq!(instances.len(), 1);
+
+        // Our contract has 3 functions:
+        // 1. initialize() with initializer modifier - should not be detected as unprotected
+        // 2. reinitialize() with reinitializer(2) modifier - should not be detected as unprotected
+        // 3. initializeWithoutProtection() with no protection - should be detected as unprotected
+
+        // Since we found exactly 1 function and the only one without protection is
+        // initializeWithoutProtection, the detector is working as expected
     }
 }
