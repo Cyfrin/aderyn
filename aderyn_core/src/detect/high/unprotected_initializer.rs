@@ -125,31 +125,32 @@ mod unprotected_initializer_tests {
         let found = detector.detect(&context).unwrap(); // assert that the detector found an abi encode packed
         assert!(found);
         // println!("{:?}", detector.instances());
-        assert_eq!(detector.instances().len(), 1);
+        assert_eq!(detector.instances().len(), 2); // Now there are two instances: one in
+                                                   // InitializedContract and one in
+                                                   // ReinitializerContract
     }
 
     #[test]
     #[serial]
     fn test_reinitializer_protection() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
-            "../tests/contract-playground/src/ReinitializerTest.sol",
+            "../tests/contract-playground/src/UnprotectedInitialize.sol",
         );
 
         let mut detector = UnprotectedInitializerDetector::default();
         let found = detector.detect(&context).unwrap();
         assert!(found);
 
-        // The detector should only find the unprotected function, not the ones with initializer or
-        // reinitializer
+        // The detector should find unprotected functions
         let instances = detector.instances();
-        assert_eq!(instances.len(), 1);
 
-        // Our contract has 3 functions:
-        // 1. initialize() with initializer modifier - should not be detected as unprotected
-        // 2. reinitialize() with reinitializer(2) modifier - should not be detected as unprotected
-        // 3. initializeWithoutProtection() with no protection - should be detected as unprotected
+        // We should find 2 unprotected functions:
+        // 1. initializeWithoutModifierOrRevert in InitializedContract
+        // 2. initializeWithoutProtection in ReinitializerContract
+        assert_eq!(instances.len(), 2);
 
-        // Since we found exactly 1 function and the only one without protection is
-        // initializeWithoutProtection, the detector is working as expected
+        // We shouldn't detect the initialize() and reinitialize() functions in
+        // ReinitializerContract as they are protected with initializer and reinitializer
+        // modifiers
     }
 }
