@@ -90,12 +90,12 @@ impl CallGraphVisitor for UnprotectedInitializationTracker {
         for inv in modifier_invocations {
             match inv.modifier_name {
                 crate::ast::IdentifierOrIdentifierPath::Identifier(n) => {
-                    if n.name == "initializer" || n.name.starts_with("reinitializer") {
+                    if n.name == "initializer" || n.name == "reinitializer" {
                         self.has_initializer_modifier = true;
                     }
                 }
                 crate::ast::IdentifierOrIdentifierPath::IdentifierPath(n) => {
-                    if n.name == "initializer" || n.name.starts_with("reinitializer") {
+                    if n.name == "initializer" || n.name == "reinitializer" {
                         self.has_initializer_modifier = true;
                     }
                 }
