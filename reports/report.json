@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 120,
-    "total_sloc": 4439
+    "total_source_units": 121,
+    "total_sloc": 4470
   },
   "files_details": {
     "files_details": [
@@ -252,6 +252,10 @@
       {
         "file_path": "src/RedundantStatements.sol",
         "n_sloc": 14
+      },
+      {
+        "file_path": "src/ReinitializerTest.sol",
+        "n_sloc": 31
       },
       {
         "file_path": "src/ReturnBomb.sol",
@@ -554,6 +558,12 @@
         "description": "Consider protecting the initializer functions with modifiers.",
         "detector_name": "unprotected-initializer",
         "instances": [
+          {
+            "contract_path": "src/ReinitializerTest.sol",
+            "line_no": 55,
+            "src": "1515:27",
+            "src_char": "1515:27"
+          },
           {
             "contract_path": "src/UnprotectedInitialize.sol",
             "line_no": 37,
@@ -4382,6 +4392,18 @@
             "src_char": "103:8"
           },
           {
+            "contract_path": "src/ReinitializerTest.sol",
+            "line_no": 20,
+            "src": "507:11",
+            "src_char": "507:11"
+          },
+          {
+            "contract_path": "src/ReinitializerTest.sol",
+            "line_no": 31,
+            "src": "873:13",
+            "src_char": "873:13"
+          },
+          {
             "contract_path": "src/SendEtherNoChecks.sol",
             "line_no": 16,
             "src": "308:4",
@@ -6631,6 +6653,24 @@
             "line_no": 175,
             "src": "5072:7",
             "src_char": "5072:7"
+          },
+          {
+            "contract_path": "src/ReinitializerTest.sol",
+            "line_no": 43,
+            "src": "1225:10",
+            "src_char": "1225:10"
+          },
+          {
+            "contract_path": "src/ReinitializerTest.sol",
+            "line_no": 49,
+            "src": "1355:12",
+            "src_char": "1355:12"
+          },
+          {
+            "contract_path": "src/ReinitializerTest.sol",
+            "line_no": 55,
+            "src": "1515:27",
+            "src_char": "1515:27"
           },
           {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",
