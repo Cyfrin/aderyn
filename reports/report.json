@@ -1,7 +1,7 @@
 {
   "files_summary": {
     "total_source_units": 121,
-    "total_sloc": 4470
+    "total_sloc": 4457
   },
   "files_details": {
     "files_details": [
@@ -255,7 +255,7 @@
       },
       {
         "file_path": "src/ReinitializerTest.sol",
-        "n_sloc": 31
+        "n_sloc": 18
       },
       {
         "file_path": "src/ReturnBomb.sol",
@@ -560,9 +560,9 @@
         "instances": [
           {
             "contract_path": "src/ReinitializerTest.sol",
-            "line_no": 55,
-            "src": "1515:27",
-            "src_char": "1515:27"
+            "line_no": 29,
+            "src": "762:27",
+            "src_char": "762:27"
           },
           {
             "contract_path": "src/UnprotectedInitialize.sol",
@@ -4392,18 +4392,6 @@
             "src_char": "103:8"
           },
           {
-            "contract_path": "src/ReinitializerTest.sol",
-            "line_no": 20,
-            "src": "507:11",
-            "src_char": "507:11"
-          },
-          {
-            "contract_path": "src/ReinitializerTest.sol",
-            "line_no": 31,
-            "src": "873:13",
-            "src_char": "873:13"
-          },
-          {
             "contract_path": "src/SendEtherNoChecks.sol",
             "line_no": 16,
             "src": "308:4",
@@ -6656,21 +6644,21 @@
           },
           {
             "contract_path": "src/ReinitializerTest.sol",
-            "line_no": 43,
-            "src": "1225:10",
-            "src_char": "1225:10"
+            "line_no": 17,
+            "src": "472:10",
+            "src_char": "472:10"
           },
           {
             "contract_path": "src/ReinitializerTest.sol",
-            "line_no": 49,
-            "src": "1355:12",
-            "src_char": "1355:12"
+            "line_no": 23,
+            "src": "602:12",
+            "src_char": "602:12"
           },
           {
             "contract_path": "src/ReinitializerTest.sol",
-            "line_no": 55,
-            "src": "1515:27",
-            "src_char": "1515:27"
+            "line_no": 29,
+            "src": "762:27",
+            "src_char": "762:27"
           },
           {
             "contract_path": "src/RevertsAndRequriesInLoops.sol",

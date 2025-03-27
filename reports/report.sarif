@@ -109,7 +109,7 @@
                 },
                 "region": {
                   "byteLength": 27,
-                  "byteOffset": 1515
+                  "byteOffset": 762
                 }
               }
             },
@@ -6936,28 +6936,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/ReinitializerTest.sol"
-                },
-                "region": {
-                  "byteLength": 11,
-                  "byteOffset": 507
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ReinitializerTest.sol"
-                },
-                "region": {
-                  "byteLength": 13,
-                  "byteOffset": 873
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/SendEtherNoChecks.sol"
                 },
                 "region": {
@@ -10985,7 +10963,7 @@
                 },
                 "region": {
                   "byteLength": 10,
-                  "byteOffset": 1225
+                  "byteOffset": 472
                 }
               }
             },
@@ -10996,7 +10974,7 @@
                 },
                 "region": {
                   "byteLength": 12,
-                  "byteOffset": 1355
+                  "byteOffset": 602
                 }
               }
             },
@@ -11007,7 +10985,7 @@
                 },
                 "region": {
                   "byteLength": 27,
-                  "byteOffset": 1515
+                  "byteOffset": 762
                 }
               }
             },
