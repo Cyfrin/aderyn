@@ -45,7 +45,8 @@ There is also an officially supported [VSCode extension](https://github.com/Cyfr
 
 ## Features
 
-- Off the shelf support for Foundry and Hardhat projects
+- Off the shelf support for Foundry projects.
+- Off the shelf support for Hardhat projects. (Sometimes `remappings.txt` maybe required)
 - Configuration file (`adeyrn.toml`) needed to support custom frameworks.
 - Modular [detectors](./aderyn_core/src/detect/)
 - AST Traversal
