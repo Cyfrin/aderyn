@@ -3685,7 +3685,7 @@ Define and use `constant` variables instead of using literals. If the same const
 
 Use descriptive reason strings or custom errors for revert paths.
 
-<details><summary>27 Found Instances</summary>
+<details><summary>28 Found Instances</summary>
 
 
 - Found in src/CallGraphTests.sol [Line: 7](../tests/contract-playground/src/CallGraphTests.sol#L7)
@@ -3758,6 +3758,12 @@ Use descriptive reason strings or custom errors for revert paths.
 
 	```solidity
 	        require(owner == msg.sender);
+	```
+
+- Found in src/LocalVariableShadow.sol [Line: 33](../tests/contract-playground/src/LocalVariableShadow.sol#L33)
+
+	```solidity
+	        require(roll == msg.sender);
 	```
 
 - Found in src/RevertsAndRequriesInLoops.sol [Line: 19](../tests/contract-playground/src/RevertsAndRequriesInLoops.sol#L19)
