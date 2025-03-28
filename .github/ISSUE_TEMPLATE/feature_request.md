@@ -7,7 +7,8 @@ assignees: ''
 
 ---
 
-Consider opening a [discussion](https://github.com/Cyfrin/aderyn/discussions) for this.
+## Consider opening a [discussion](https://github.com/Cyfrin/aderyn/discussions) instead of an issue for this.
+
 
 Try answering the follows:
 
