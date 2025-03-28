@@ -112,6 +112,17 @@
                   "byteOffset": 916
                 }
               }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UnprotectedInitialize.sol"
+                },
+                "region": {
+                  "byteLength": 27,
+                  "byteOffset": 1798
+                }
+              }
             }
           ],
           "message": {
@@ -4292,18 +4303,7 @@
                 },
                 "region": {
                   "byteLength": 2,
-                  "byteOffset": 343
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/AderynIgnoreCustomDetectors.sol"
-                },
-                "region": {
-                  "byteLength": 2,
-                  "byteOffset": 586
+                  "byteOffset": 583
                 }
               }
             },
@@ -11470,6 +11470,39 @@
                 "region": {
                   "byteLength": 33,
                   "byteOffset": 916
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UnprotectedInitialize.sol"
+                },
+                "region": {
+                  "byteLength": 10,
+                  "byteOffset": 1508
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UnprotectedInitialize.sol"
+                },
+                "region": {
+                  "byteLength": 12,
+                  "byteOffset": 1638
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/UnprotectedInitialize.sol"
+                },
+                "region": {
+                  "byteLength": 27,
+                  "byteOffset": 1798
                 }
               }
             },
