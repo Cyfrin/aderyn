@@ -232,14 +232,22 @@ pub fn get_report(
             issue.instances = detectors_instances
                 .into_iter()
                 .filter(|(instance, _)| {
-                    let lines_to_ignore_in_file = ignore_lines
-                        .get(
-                            &dunce::canonicalize(root_rel_path.join(&instance.0).as_path())
-                                .unwrap()
-                                .to_string_lossy()
-                                .to_string(),
-                        )
-                        .unwrap();
+                    let Some(lines_to_ignore_in_file) = ignore_lines.get(
+                        &dunce::canonicalize(root_rel_path.join(&instance.0).as_path())
+                            .unwrap()
+                            .to_string_lossy()
+                            .to_string(),
+                    ) else {
+                        //panic!(
+                        //    "{}",
+                        //    &dunce::canonicalize(root_rel_path.join(&instance.0).as_path())
+                        //        .unwrap()
+                        //        .to_string_lossy()
+                        //        .to_string()
+                        //);
+                        return false;
+                    };
+
                     if lines_to_ignore_in_file.is_empty() {
                         return true;
                     }
