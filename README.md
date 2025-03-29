@@ -128,10 +128,6 @@ Aderyn makes it easy to build Static Analysis detectors that can adapt to any So
 To learn how to create your custom Aderyn detectors, [checkout the official docs](https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli/detectors-quickstart)
 
 
-**Suggested VSCode extensions:**
-[rust-analyzer](https://marketplace.visualstudio.com/items?itemName=dustypomerleau.rust-syntax) - Rust language support for Visual Studio Code
-[Rust Syntax](https://marketplace.visualstudio.com/items?itemName=dustypomerleau.rust-syntax) - Improved Rust syntax highlighting
-
 ## Credits
 
 This project exists thanks to all the people who [contribute](/CONTRIBUTING.md).<br>
