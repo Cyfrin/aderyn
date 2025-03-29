@@ -5490,7 +5490,7 @@ Define and use `constant` variables instead of using literals. If the same const
 
 Use descriptive reason strings or custom errors for revert paths.
 
-<details><summary>54 Found Instances</summary>
+<details><summary>55 Found Instances</summary>
 
 
 - Found in contracts/core/OpsManager.sol [Line: 50](../tests/2024-07-templegold/protocol/contracts/core/OpsManager.sol#L50)
@@ -5587,6 +5587,12 @@ Use descriptive reason strings or custom errors for revert paths.
 
 	```solidity
 	      require (result >= MIN_64x64 && result <= MAX_64x64);
+	```
+
+- Found in contracts/util/ABDKMath64x64.sol [Line: 246](../tests/2024-07-templegold/protocol/contracts/util/ABDKMath64x64.sol#L246)
+
+	```solidity
+	      require (y != 0);
 	```
 
 - Found in contracts/util/ABDKMath64x64.sol [Line: 259](../tests/2024-07-templegold/protocol/contracts/util/ABDKMath64x64.sol#L259)
