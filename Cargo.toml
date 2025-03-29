@@ -44,12 +44,12 @@ tower-lsp = "0.20.0"
 dunce = "=1.0.4"
 petgraph = "0"
 
-# Uncomment in Production (after merging to dev)
+# Uncomment in Production (just before merging to dev)
 # Cyfrin managed github repository
-foundry_compilers_aletheia = { git = "https://github.com/Cyfrin/foundry-compilers-aletheia", tag = "v0.0.1-alpha.6", package = "foundry-compilers-aletheia" }
+# foundry_compilers_aletheia = { git = "https://github.com/Cyfrin/foundry-compilers-aletheia", tag = "v0.0.1-alpha.6", package = "foundry-compilers-aletheia" }
 
 # Uncomment when debugging in branch (PR)
-# foundry_compilers_aletheia = { git = "https://github.com/Cyfrin/foundry-compilers-aletheia", branch = "feat/xyz", package = "foundry-compilers-aletheia" }
+foundry_compilers_aletheia = { git = "https://github.com/Cyfrin/foundry-compilers-aletheia", branch = "main", package = "foundry-compilers-aletheia" }
 
 # Uncomment when debuggin locally
 # foundry_compilers_aletheia = { path = "../foundry-compilers-aletheia", package = "foundry-compilers-aletheia"}

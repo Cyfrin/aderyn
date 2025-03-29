@@ -6,10 +6,7 @@ use foundry_compilers_aletheia::{
     ProjectConfigInputBuilder, Source, SourcesConfig,
 };
 use rayon::iter::{IntoParallelIterator, ParallelIterator};
-use std::{
-    path::{Path, PathBuf},
-    str::FromStr,
-};
+use std::{path::PathBuf, str::FromStr};
 
 use crate::{
     display::{display_configuration_info, display_header, display_ingesting_message},
@@ -22,11 +19,6 @@ pub fn project(
 ) -> Result<Vec<WorkspaceContext>, Box<dyn std::error::Error + Sync + Send>> {
     // Decompose pre-processed config
     let PreprocessedConfig { root_path, src, include, exclude } = preprocessed_config;
-
-    let absolute_root_path = std::fs::canonicalize(&root_path).unwrap_or_else(|_| {
-        eprintln!("Root path: {:?} is unable to be canonicalized. Make sure it exists.", root_path);
-        std::process::exit(1);
-    });
 
     // Process the raw-config using foundry-compilers-aletheia to transalate to runtime values
     let processed_config = ProjectConfigInputBuilder::new(&root_path)
@@ -79,18 +71,11 @@ pub fn project(
             if !lsp_mode {
                 display_ingesting_message(&sources_ast, &included, &ast_info.version.to_string());
             }
-
             for (source_path, ast_source_file) in sources_ast {
                 if included.contains(&source_path) {
                     let content = sources.get(&source_path).cloned().expect("content not found");
-                    absorb_ast_content_into_context(
-                        ast_source_file,
-                        &mut context,
-                        content,
-                        &absolute_root_path,
-                    );
-                    let relative_suffix = source_path.strip_prefix(&absolute_root_path).unwrap();
-                    context.src_filepaths.push(relative_suffix.to_string_lossy().to_string());
+                    absorb_ast_content_into_context(ast_source_file, &mut context, content);
+                    context.src_filepaths.push(source_path.display().to_string());
                 }
             }
 
@@ -114,7 +99,6 @@ fn absorb_ast_content_into_context(
     ast_source_file: AstSourceFile,
     context: &mut WorkspaceContext,
     content: Source,
-    absolute_root_path: &Path,
 ) {
     let Some(ast_content) = ast_source_file.ast else {
         eprintln!("Warning: AST not found in output");
@@ -131,15 +115,11 @@ fn absorb_ast_content_into_context(
     // Set the source
     source_unit.source = Some(content.content.to_string());
 
-    // Adjust the asbolute filepath to be relative
+    // Read the relative filepath
     let filepath = source_unit.absolute_path.as_ref().unwrap();
-    let relative_path = PathBuf::from_str(filepath).unwrap();
-    let relative_path = relative_path
-        .strip_prefix(absolute_root_path)
-        .expect("filepath in AST output is not absolute!");
 
     // Reset absolute path.
-    source_unit.absolute_path = Some(relative_path.to_string_lossy().to_string());
+    source_unit.absolute_path = Some(filepath.to_string());
 
     // TODO: Change absolute_path to type Path instead of String so we don't lose any unicode
     // characters (in the minority of cases)

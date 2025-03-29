@@ -1512,7 +1512,7 @@ dependencies = [
 [[package]]
 name = "foundry-compilers-aletheia"
 version = "0.0.1"
-source = "git+https://github.com/Cyfrin/foundry-compilers-aletheia?tag=v0.0.1-alpha.6#a01f5a20aa5178aafb5d51e082cdf256983b2dc1"
+source = "git+https://github.com/Cyfrin/foundry-compilers-aletheia?branch=main#c315c0dd73ace090f910f286a1e97dab111e7df2"
 dependencies = [
  "foundry-compilers",
  "foundry-config",
@@ -1594,7 +1594,7 @@ dependencies = [
 [[package]]
 name = "foundry-config"
 version = "1.0.0"
-source = "git+https://github.com/foundry-rs/foundry?branch=master#c9bc31e71e9f87c4c9afd3a4534590f42b7303b7"
+source = "git+https://github.com/foundry-rs/foundry?tag=nightly-539fd9611e213c0e72e5524b6030d00bf21c9587#539fd9611e213c0e72e5524b6030d00bf21c9587"
 dependencies = [
  "Inflector",
  "alloy-chains",

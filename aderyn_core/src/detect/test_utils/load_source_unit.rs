@@ -8,10 +8,7 @@ use foundry_compilers_aletheia::{
     ProjectConfigInputBuilder, SolcVersionConfig, Source,
 };
 use semver::Version;
-use std::{
-    path::{Path, PathBuf},
-    str::FromStr,
-};
+use std::path::{Path, PathBuf};
 
 use super::ensure_valid_solidity_file;
 
@@ -91,15 +88,8 @@ fn make_context(project_config: &ProjectConfigInput) -> WorkspaceContext {
     for (source_path, ast_source_file) in sources_ast {
         if included.contains(&source_path) {
             let content = sources.get(&source_path).cloned().expect("content not found");
-            absorb_ast_content_into_context(
-                ast_source_file,
-                &mut context,
-                content,
-                &project_config.project_paths.root,
-            );
-            let relative_suffix =
-                source_path.strip_prefix(&project_config.project_paths.root).unwrap();
-            context.src_filepaths.push(relative_suffix.to_string_lossy().to_string());
+            absorb_ast_content_into_context(ast_source_file, &mut context, content);
+            context.src_filepaths.push(source_path.display().to_string());
         }
     }
 
@@ -120,7 +110,6 @@ fn absorb_ast_content_into_context(
     ast_source_file: AstSourceFile,
     context: &mut WorkspaceContext,
     content: Source,
-    absolute_root_path: &Path,
 ) {
     let Some(ast_content) = ast_source_file.ast else {
         eprintln!("Warning: AST not found in output");
@@ -139,13 +128,7 @@ fn absorb_ast_content_into_context(
 
     // Adjust the asbolute filepath to be relative
     let filepath = source_unit.absolute_path.as_ref().unwrap();
-    let relative_path = PathBuf::from_str(filepath).unwrap();
-    let relative_path = relative_path
-        .strip_prefix(absolute_root_path)
-        .expect("filepath in AST output is not absolute!");
-
-    // Reset absolute path.
-    source_unit.absolute_path = Some(relative_path.to_string_lossy().to_string());
+    source_unit.absolute_path = Some(filepath.to_string());
 
     // TODO: Change absolute_path to type Path instead of String so we don't lose any unicode
     // characters (in the minority of cases)
