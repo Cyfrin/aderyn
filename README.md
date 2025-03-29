@@ -52,6 +52,8 @@ There is also an officially supported [VSCode extension](https://github.com/Cyfr
 - AST Traversal
 - Markdown reports
 
+![Aderyn Demo](.github/images/demo.gif)
+
 ## Installation
 
 > **NOTE** Windows users must have WSL installed
