@@ -20,7 +20,7 @@ pub fn project(
     // Decompose pre-processed config
     let PreprocessedConfig { root_path, src, include, exclude } = preprocessed_config;
 
-    // Process the raw-config using foundry-compilers-aletheia to transalate to runtime values
+    // Process the pre-processed config using aletheia to transalate to runtime values
     let processed_config = ProjectConfigInputBuilder::new(&root_path)
         .with_sources(match src {
             Some(src) => SourcesConfig::Specific(PathBuf::from_str(&src).unwrap()),
