@@ -1,7 +1,7 @@
 {
   "files_summary": {
     "total_source_units": 120,
-    "total_sloc": 4433
+    "total_sloc": 4455
   },
   "files_details": {
     "files_details": [
@@ -11,7 +11,7 @@
       },
       {
         "file_path": "src/AderynIgnoreCustomDetectors.sol",
-        "n_sloc": 11
+        "n_sloc": 17
       },
       {
         "file_path": "src/AdminContract.sol",
@@ -367,7 +367,7 @@
       },
       {
         "file_path": "src/UnprotectedInitialize.sol",
-        "n_sloc": 28
+        "n_sloc": 44
       },
       {
         "file_path": "src/UnsafeERC721Mint.sol",
@@ -559,6 +559,12 @@
             "line_no": 37,
             "src": "916:33",
             "src_char": "916:33"
+          },
+          {
+            "contract_path": "src/UnprotectedInitialize.sol",
+            "line_no": 70,
+            "src": "1798:27",
+            "src_char": "1798:27"
           }
         ]
       },
@@ -2937,8 +2943,8 @@
           {
             "contract_path": "src/AderynIgnoreCustomDetectors.sol",
             "line_no": 26,
-            "src": "586:2",
-            "src_char": "586:2"
+            "src": "583:2",
+            "src_char": "583:2"
           },
           {
             "contract_path": "src/ArbitraryTransferFrom.sol",
@@ -6919,6 +6925,24 @@
             "line_no": 37,
             "src": "916:33",
             "src_char": "916:33"
+          },
+          {
+            "contract_path": "src/UnprotectedInitialize.sol",
+            "line_no": 58,
+            "src": "1508:10",
+            "src_char": "1508:10"
+          },
+          {
+            "contract_path": "src/UnprotectedInitialize.sol",
+            "line_no": 64,
+            "src": "1638:12",
+            "src_char": "1638:12"
+          },
+          {
+            "contract_path": "src/UnprotectedInitialize.sol",
+            "line_no": 70,
+            "src": "1798:27",
+            "src_char": "1798:27"
           },
           {
             "contract_path": "src/UnusedError.sol",
