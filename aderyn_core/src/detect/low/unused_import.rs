@@ -251,6 +251,7 @@ mod source_unit_graph_analysis {
 
 #[cfg(test)]
 mod unused_imports_tests {
+    use semver::Version;
     use serial_test::serial;
 
     use crate::detect::{detector::IssueDetector, low::unused_import::UnusedImportDetector};
@@ -259,13 +260,16 @@ mod unused_imports_tests {
     #[serial]
     fn test_unused_imports() {
         let context =
-            crate::detect::test_utils::load_multiple_solidity_source_units_into_single_context(&[
-                "../tests/contract-playground/src/UnusedImport.sol",
-                "../tests/contract-playground/src/U2.sol",
-                "../tests/contract-playground/src/U3.sol",
-                "../tests/contract-playground/src/U4.sol",
-                "../tests/contract-playground/src/U5.sol",
-            ]);
+            crate::detect::test_utils::load_multiple_solidity_source_units_into_single_context(
+                &[
+                    "../tests/contract-playground/src/UnusedImport.sol",
+                    "../tests/contract-playground/src/U2.sol",
+                    "../tests/contract-playground/src/U3.sol",
+                    "../tests/contract-playground/src/U4.sol",
+                    "../tests/contract-playground/src/U5.sol",
+                ],
+                Version::new(0, 8, 19),
+            );
 
         let mut detector = UnusedImportDetector::default();
         let found = detector.detect(&context).unwrap();

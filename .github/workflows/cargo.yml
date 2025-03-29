@@ -11,33 +11,6 @@ jobs:
     name: Check
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout sources
-        uses: actions/checkout@v4
-
-      - name: Install stable toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
-
-      - name: Install git submodules
-        run: |
-          git submodule update --init --recursive
-
-      - name: Run cargo check
-        uses: actions-rs/cargo@v1
-        with:
-          command: check
-
-  test:
-    name: Tests
-    runs-on: ubuntu-latest
-    steps:
-
-      - name: Install Foundry Toolchain
-        uses: foundry-rs/foundry-toolchain@v1.2.0
-
       - name: Checkout Sources
         uses: actions/checkout@v4
 
@@ -48,11 +21,40 @@ jobs:
           toolchain: nightly-2025-01-01
           override: true
 
-      - name: Checkout Submodules
-        run: git submodule update --init --recursive
+      - name: Restore Rust Cache
+        uses: Swatinem/rust-cache@v2
 
+      - name: Run checks
+        run: |
+          cargo check
+
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
       - name: Checkout Sources
         uses: actions/checkout@v4
+
+      - name: Checkout repository with submodules
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Cache submodules
+        id: cache-submodules
+        uses: actions/cache@v3
+        with:
+          path: .git/modules
+          key: submodules-${{ runner.os }}-${{ hashFiles('.gitmodules') }}
+          restore-keys: |
+            submodules-${{ runner.os }}-${{ hashFiles('.gitmodules') }}
+
+      - name: Install Rust Nightly (2025-01-01)
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: nightly-2025-01-01
+          override: true
 
       - name: Restore Rust Cache
         uses: Swatinem/rust-cache@v2
@@ -66,32 +68,43 @@ jobs:
     name: Lints
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout sources
+      - name: Checkout Sources
         uses: actions/checkout@v4
 
-      - name: Install nightly toolchain
+      - name: Install Rust Nightly (2025-01-01)
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: nightly 
-          components: rustfmt
+          toolchain: nightly-2025-01-01
           override: true
 
       - name: Run cargo fmt
         run: |
-          cargo +nightly fmt --all --check 
+          cargo fmt --all --check
 
-      - name: Install stable toolchain
+      - name: Run cargo clippy
+        run: |
+          cargo clippy -- -D warnings
+
+
+  decline-openssl-dependencies:
+    name: Decline openssl
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Install Rust Nightly (2025-01-01)
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: stable 
-          components: clippy
+          toolchain: nightly-2025-01-01
           override: true
 
+      - name: Checkout Sources
+        uses: actions/checkout@v4
 
-      - name: Run cargo clippy
-        uses: actions-rs/cargo@v1
-        with:
-          command: clippy
-          args: -- -D warnings
+      - name: Restore Rust Cache
+        uses: Swatinem/rust-cache@v2
+
+      - name: Run tests
+        run: |
+          ! cargo tree -i openssl --target all

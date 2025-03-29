@@ -10,7 +10,7 @@ contract AderynCustomIgnore {
 
 
     // This will be not reported by either of the detectors
-    // aderyn-ignore-next-line(useless-public-function ,    empty-block)
+    // aderyn-ignore-next-line(unused-public-function ,    empty-block)
     function f2() public {
 
     }
@@ -21,10 +21,28 @@ contract AderynCustomIgnore {
 
     }
 
-    // This will be reported only by useless-public-function 
-    // aderyn-ignore-next-line (empty-block)
+    // This will be reported only by unused-public-function 
+    // aderyn-ignore-next-line(empty-block)
     function f4() public {
 
     }
 
+    // This will be not reported by either of the detectors
+    // aderyn-fp-next-line(unused-public-function ,    empty-block)
+    function f5() public {
+
+    }
+
+
+    // This will be not reported by either of the detectors
+    // aderyn-fp-next-line
+    function f7() public {
+
+    }
+
+    // This will be not reported by either of the detectors
+    // aderyn-fp-next-line(unused-public-function) aderyn-ignore-next-line(empty-block)
+    function f8() public {
+
+    }
 }

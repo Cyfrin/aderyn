@@ -81,7 +81,7 @@ impl CallGraphVisitor for UnprotectedInitializationTracker {
             self.has_require_or_revert = true;
         }
 
-        // Check if modifier name is "initialized" and assume it works
+        // Check if modifier name is "initializer" or "reinitializer" and assume it works
         // This is done because often times initialized comes from openzeppelin and it is out of
         // scope when running aderyn due to it being a library
 
@@ -90,12 +90,12 @@ impl CallGraphVisitor for UnprotectedInitializationTracker {
         for inv in modifier_invocations {
             match inv.modifier_name {
                 crate::ast::IdentifierOrIdentifierPath::Identifier(n) => {
-                    if n.name == "initializer" {
+                    if n.name == "initializer" || n.name == "reinitializer" {
                         self.has_initializer_modifier = true;
                     }
                 }
                 crate::ast::IdentifierOrIdentifierPath::IdentifierPath(n) => {
-                    if n.name == "initializer" {
+                    if n.name == "initializer" || n.name == "reinitializer" {
                         self.has_initializer_modifier = true;
                     }
                 }
@@ -125,6 +125,8 @@ mod unprotected_initializer_tests {
         let found = detector.detect(&context).unwrap(); // assert that the detector found an abi encode packed
         assert!(found);
         // println!("{:?}", detector.instances());
-        assert_eq!(detector.instances().len(), 1);
+        assert_eq!(detector.instances().len(), 2); // Now there are two instances: one in
+                                                   // InitializedContract and one in
+                                                   // ReinitializerContract
     }
 }

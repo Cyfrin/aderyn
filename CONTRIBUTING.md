@@ -20,10 +20,6 @@ Cyfrin Aderyn aims to give engineers and smart contract security researchers rel
 
 The project is under active development.
 
-You can view the open issues, follow the development process, and contribute to the project.
-
-## Getting started
-
 You can contribute to this repo in many ways:
 
 - Solve open issues
@@ -35,29 +31,30 @@ Contributions are made via Issues and Pull Requests (PRs). A few general guideli
 - Search for existing Issues and PRs before creating your own.
 - Contributions should only fix/add the functionality in the issue OR address style issues, not both.
 - If you're running into an error, please give context. Explain what you're trying to do and how to reproduce the error.
-- If applicable, please edit the README.md file to reflect the changes.
 
-### Issues
-
-Issues should be used to report problems, request a new feature, or discuss potential changes before a PR is created.
-
-#### Solve an issue
-
-Please review our [existing issues](https://github.com/cyfrin/aderyn/issues) to find one that interests you.
-
-If a contributor is working on the issue, they will be assigned to the individual. If you find an issue to work on, you can assign it to yourself and open a PR with a fix.
-
-#### Create a new issue
-
-If a related issue doesn't exist, you can open a new issue.
-
-Some tips to follow when you are creating an issue:
-
-- Provide as much context as possible. Over-communicate to give the most details to the reader.
-- Include the steps to reproduce the issue or the reason for adding the feature.
-- Screenshots, videos, etc., are highly appreciated.
+## Getting started
 
 ### Pull Requests
+
+#### Developer environment setup
+
+1. Run `make` . Make sure to have tools listed at the top of the Makefile installed in your computer.
+2. Work on the issue, write unit tests. Use `cargo test <test-name>` to test. Feel free to add solidity files to `tests/contract-playground`.
+3. Run `cargo prep --cpg` to generate the report for the same.
+4. Once happy with the work, run `cargo blesspr` to "polish" your PR so CI can be happy.
+5. Create a pull request to `dev` branch here. The maintainers will be notified. Either @alexroan or @TilakMaddy will reach out to you.
+
+#### Advanced Setup
+1. Install [Bacon](https://dystroy.org/bacon/)
+2. Run `bacon` at the root
+3. Press
+  * `t` for tests
+  * `r` for generating a report on contract-playground. Shorthand for `cargo prep --cfg`
+  * `a` for generating all reports. Shorthand for `cargo prep --all --parallel`
+  * `Alt-b` or `⌥-b` (Option-B on Mac) for "blessing" the PR. Shorthand for `cargo blesspr`
+
+#### Tips
+Feel free to reach out to `cargo fixfmt` and `cargo fixclippy` to apply quick fixes on code quality.
 
 #### Pull Request Process
 
@@ -84,22 +81,23 @@ Once you submit your PR:
 
 Once the PR is approved, we'll "squash-and-merge" to keep the git commit history clean.
 
-### Developer environment setup
+### Issues
 
-1. Run `make` . Make sure to have tools listed at the top of the Makefile installed in your computer.
-2. Work on the issue, write unit tests. Use `cargo test <test-name>` to test. Feel free to sdd solidity files to `tests/contract-playground`.
-3. Run `cargo prep --cpg` to generate the report for the same.
-4. Once happy with the work, run `cargo blesspr` to "polish" your PR so CI can be happy.
-5. Create a pull request to `dev` branch here. The maintainers will be notified. Either @alexroan or @TilakMaddy will reach out to you.
+Issues should be used to report problems, request a new feature, or discuss potential changes before a PR is created.
 
-### Advanced Setup
-1. Install [Bacon](https://dystroy.org/bacon/)
-2. Run `bacon` at the root
-3. Press
-  * `t` for tests
-  * `r` for generating a report on contract-playground. Shorthand for `cargo prep --cfg`
-  * `a` for generating all reports. Shorthand for `cargo prep --all --parallel`
-  * `Alt-b` or `⌥-b` (Option-B on Mac) for "blessing" the PR. Shorthand for `cargo blesspr`
+#### Solve an issue
 
-### Tips
-Feel free to reach out to `cargo fixfmt` and `cargo fixclippy` to apply quick fixes on code quality.
+Please review our [existing issues](https://github.com/cyfrin/aderyn/issues) to find one that interests you.
+
+If a contributor is working on the issue, they will be assigned to the individual. If you find an issue to work on, you can assign it to yourself and open a PR with a fix.
+
+#### Report Bugs
+
+If a related issue doesn't exist, you can open a new issue.
+
+Some tips to follow when you are creating an issue:
+
+- Provide as much context as possible. Over-communicate to give the most details to the reader.
+- Include the steps to reproduce the issue or the reason for adding the feature.
+- Screenshots, videos, etc., are highly appreciated.
+
