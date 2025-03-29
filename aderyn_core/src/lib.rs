@@ -245,7 +245,7 @@ pub fn get_report(
                         //        .to_string_lossy()
                         //        .to_string()
                         //);
-                        return false;
+                        return true;
                     };
 
                     if lines_to_ignore_in_file.is_empty() {
