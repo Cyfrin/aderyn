@@ -232,14 +232,21 @@ pub fn get_report(
             issue.instances = detectors_instances
                 .into_iter()
                 .filter(|(instance, _)| {
-                    let lines_to_ignore_in_file = ignore_lines
-                        .get(
+                    let Some(lines_to_ignore_in_file) = ignore_lines.get(
+                        &dunce::canonicalize(root_rel_path.join(&instance.0).as_path())
+                            .unwrap()
+                            .to_string_lossy()
+                            .to_string(),
+                    ) else {
+                        panic!(
+                            "File Not Found in Ignore stats: {}",
                             &dunce::canonicalize(root_rel_path.join(&instance.0).as_path())
                                 .unwrap()
                                 .to_string_lossy()
-                                .to_string(),
-                        )
-                        .unwrap();
+                                .to_string()
+                        );
+                    };
+
                     if lines_to_ignore_in_file.is_empty() {
                         return true;
                     }
@@ -303,9 +310,6 @@ where
     for context in contexts {
         ignore_lines.extend(context.ignore_lines_stats.clone());
     }
-
-    println!("Get Detectors");
-
     println!("Running {} detectors", detectors.len());
 
     let detectors_used =

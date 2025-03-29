@@ -1,223 +1,142 @@
 #[cfg(test)]
-use cyfrin_foundry_compilers::{artifacts::Source, CompilerInput, Solc};
-
-use std::{
-    process::{Command, Stdio},
-    sync::Arc,
-};
-
+use crate::context::graph::{Transpose, WorkspaceCallGraph};
 use crate::{
-    ast::SourceUnit,
-    context::{
-        graph::{Transpose, WorkspaceCallGraph},
-        workspace_context::WorkspaceContext,
-    },
-    visitor::ast_visitor::Node,
+    ast::SourceUnit, context::workspace_context::WorkspaceContext, visitor::ast_visitor::Node,
 };
+use foundry_compilers_aletheia::{
+    derive_ast_and_evm_info, AstSourceFile, IncludeConfig, ProjectConfigInput,
+    ProjectConfigInputBuilder, SolcVersionConfig, Source,
+};
+use semver::Version;
+use std::path::{Path, PathBuf};
 
 use super::ensure_valid_solidity_file;
 
 pub fn load_solidity_source_unit(filepath: &str) -> WorkspaceContext {
     let solidity_file = &ensure_valid_solidity_file(filepath);
-    let solidity_content = std::fs::read_to_string(solidity_file).unwrap();
 
-    let compiler_input = CompilerInput::new(solidity_file.as_path()).unwrap();
-    let compiler_input = compiler_input.first().unwrap(); // There's only 1 file in the path
+    let root = guess_root(&solidity_file.display().to_string());
+    let suffix = solidity_file.strip_prefix(&root).unwrap();
 
-    let version =
-        Solc::detect_version(&Source { content: Arc::new(solidity_content.clone()) }).unwrap();
+    let project_config = ProjectConfigInputBuilder::new(&root)
+        .with_include(IncludeConfig::Specific(vec![suffix.display().to_string()]))
+        .build()
+        .unwrap();
 
-    let solc = Solc::find_or_install_svm_version(format!("{}", version)).unwrap();
-    let solc_bin = solc.solc.to_str().unwrap();
+    make_context(&project_config)
+}
 
-    let file_arg = compiler_input.sources.first_key_value().unwrap().0.to_str().unwrap();
+/// Make sure all files belong to contract-playground
+/// This function is dangerous to use because we force all the sol files into 1 Workspace Context.
+/// As a result, we may override Node IDs. Therefore, this function is only available in cfg(test)
+pub fn load_multiple_solidity_source_units_into_single_context(
+    filepaths: &[&str],
+    version: Version,
+) -> WorkspaceContext {
+    assert!(!filepaths.is_empty());
+    let root = guess_root(filepaths[0]);
 
-    let command = Command::new(solc_bin)
-        .args(["--ast-compact-json", file_arg])
-        .current_dir("/")
-        .stdout(Stdio::piped())
-        .output();
+    let mut suffixes = vec![];
 
-    if let Ok(command) = command {
-        let stdout = String::from_utf8(command.stdout).unwrap();
-        let _stderr = String::from_utf8(command.stderr).unwrap();
-        //println!("stderr = {}", stderr);
+    for filepath in filepaths {
+        let solidity_file = &ensure_valid_solidity_file(filepath);
+        let suffix = solidity_file.strip_prefix(&root).unwrap();
+        suffixes.push(suffix.display().to_string());
+    }
 
-        let mut context = WorkspaceContext::default();
-        let lines = stdout.lines().collect::<Vec<_>>();
-        let mut idx = 0;
-        let mut keep_picking = false;
-        let mut ast_content = String::new();
+    let project_config = ProjectConfigInputBuilder::new(&root)
+        .with_include(IncludeConfig::Specific(suffixes))
+        .with_solc_version(SolcVersionConfig::Specific(version))
+        .build()
+        .unwrap();
 
-        while idx < lines.len() {
-            let line = lines[idx];
+    make_context(&project_config)
+}
 
-            let (separation, filename) = is_demarcation_line(line, vec![file_arg]);
-
-            if separation {
-                if !ast_content.is_empty() {
-                    absorb_ast_content_into_context(
-                        &ast_content,
-                        solidity_content.clone(),
-                        &mut context,
-                    );
-                }
-                ast_content = String::new();
-                keep_picking = false;
-
-                if filename.is_some() {
-                    keep_picking = true;
-                }
-            } else if keep_picking {
-                ast_content.push_str(line);
-            }
-
-            idx += 1;
-        }
-
-        if !ast_content.is_empty() {
-            absorb_ast_content_into_context(&ast_content, solidity_content.clone(), &mut context);
-        }
-
-        context
+fn guess_root(chunk: &str) -> PathBuf {
+    if chunk.contains("contract-playground") {
+        std::fs::canonicalize(Path::new("../tests/contract-playground")).unwrap()
+    } else if chunk.contains("adhoc-sol-files") {
+        std::fs::canonicalize(Path::new("../tests/adhoc-sol-files")).unwrap()
+    } else if chunk.contains("2024-07-templegold") {
+        std::fs::canonicalize(Path::new("../tests/2024-07-templegold/protocol")).unwrap()
+    } else if chunk.contains("hardhat-js-playground") {
+        std::fs::canonicalize(Path::new("../tests/hardhat-js-playground")).unwrap()
+    } else if chunk.contains("ccip-contracts") {
+        std::fs::canonicalize(Path::new("../tests/ccip-contracts")).unwrap()
     } else {
-        eprintln!("Error running solc command");
-        std::process::exit(1);
+        todo!("add more roots as you see fit");
     }
 }
 
-fn load_callgraphs(context: &mut WorkspaceContext) {
-    let inward_callgraph = WorkspaceCallGraph::from_context(context).unwrap();
-    let outward_callgraph =
-        WorkspaceCallGraph { raw_callgraph: inward_callgraph.raw_callgraph.reverse() };
-    context.inward_callgraph = Some(inward_callgraph);
-    context.outward_callgraph = Some(outward_callgraph);
+fn make_context(project_config: &ProjectConfigInput) -> WorkspaceContext {
+    let ast_evm_info = derive_ast_and_evm_info(project_config).unwrap();
+    let ast_info = ast_evm_info.versioned_asts.first().unwrap();
+
+    let mut context = WorkspaceContext::default();
+
+    let sources = ast_info.sources.0.clone();
+    let sources_ast = ast_info.compiler_output.sources.clone();
+    let included = ast_info.included_files.clone();
+
+    for cerror in ast_info.compiler_output.errors.clone() {
+        if cerror.severity.is_error() {
+            panic!("Compilation Error: {}", cerror);
+        }
+    }
+
+    for (source_path, ast_source_file) in sources_ast {
+        if included.contains(&source_path) {
+            let content = sources.get(&source_path).cloned().expect("content not found");
+            absorb_ast_content_into_context(ast_source_file, &mut context, content);
+            context.src_filepaths.push(source_path.display().to_string());
+        }
+    }
+
+    fn load_callgraphs(context: &mut WorkspaceContext) {
+        let inward_callgraph = WorkspaceCallGraph::from_context(context).unwrap();
+        let outward_callgraph =
+            WorkspaceCallGraph { raw_callgraph: inward_callgraph.raw_callgraph.reverse() };
+        context.inward_callgraph = Some(inward_callgraph);
+        context.outward_callgraph = Some(outward_callgraph);
+    }
+
+    load_callgraphs(&mut context);
+
+    context
 }
 
 fn absorb_ast_content_into_context(
-    ast_content: &str,
-    solidity_content: String,
+    ast_source_file: AstSourceFile,
     context: &mut WorkspaceContext,
+    content: Source,
 ) {
-    let mut source_unit: SourceUnit = serde_json::from_str(ast_content).unwrap();
-    source_unit.source = Some(solidity_content);
+    let Some(ast_content) = ast_source_file.ast else {
+        eprintln!("Warning: AST not found in output");
+        return;
+    };
+
+    let Ok(mut source_unit) = serde_json::from_str::<SourceUnit>(&ast_content) else {
+        eprintln!("Unable to serialize Source Unit from AST - \n{}\n", &ast_content);
+        let error = serde_json::from_str::<SourceUnit>(&ast_content).unwrap_err();
+        eprintln!("{:?}", error);
+        std::process::exit(1);
+    };
+
+    // Set the source
+    source_unit.source = Some(content.content.to_string());
+
+    // Adjust the asbolute filepath to be relative
+    let filepath = source_unit.absolute_path.as_ref().unwrap();
+    source_unit.absolute_path = Some(filepath.to_string());
+
+    // TODO: Change absolute_path to type Path instead of String so we don't lose any unicode
+    // characters (in the minority of cases)
+
     source_unit.accept(context).unwrap_or_else(|err| {
         // Exit with a non-zero exit code
         eprintln!("Error loading AST into WorkspaceContext");
         eprintln!("{:?}", err);
         std::process::exit(1);
     });
-    load_callgraphs(context);
-}
-
-fn is_demarcation_line(line: &str, file_args: Vec<&str>) -> (bool, Option<String>) {
-    if line.starts_with("======= ") {
-        let end_marker = line.find(" =======").unwrap();
-        let filepath = &line["======= ".len()..end_marker];
-        if file_args.iter().any(|file_arg| file_arg.contains(filepath)) {
-            return (true, Some(filepath.to_string()));
-        }
-        return (true, None);
-    }
-    (false, None)
-}
-
-/// This function is dangerous to use because we force all the sol files into 1 Workspace Context.
-/// As a result, we may override Node IDs. Therefore, this function is only available in cfg(test)
-#[allow(dead_code)]
-pub fn load_multiple_solidity_source_units_into_single_context(
-    filepaths: &[&str],
-) -> WorkspaceContext {
-    use std::collections::HashMap;
-
-    let mut context = WorkspaceContext::default();
-    let mut file_args = vec![];
-    let mut solc_bin: Option<String> = None;
-    let mut solidity_content = HashMap::new();
-
-    for &filepath in filepaths {
-        let solidity_file = &ensure_valid_solidity_file(filepath);
-        let this_solidity_content = std::fs::read_to_string(solidity_file).unwrap();
-
-        let file_arg = std::fs::canonicalize(solidity_file).unwrap();
-        let file_arg = file_arg.to_string_lossy().to_string();
-
-        let version =
-            Solc::detect_version(&Source { content: Arc::new(this_solidity_content.clone()) })
-                .unwrap();
-
-        let solc = Solc::find_or_install_svm_version(format!("{}", version)).unwrap();
-        let this_solc_bin = solc.solc.to_string_lossy().to_string();
-
-        if solc_bin.is_none() {
-            solc_bin = Some(this_solc_bin.clone());
-        } else if solc_bin.clone().unwrap() != this_solc_bin {
-            panic!(
-                "Multiple solidity versions not supported yet in the test architecture because \
-                they demand creation of multiple contexts!"
-            );
-        }
-        solidity_content.insert(file_arg.clone(), this_solidity_content);
-        file_args.push(file_arg.clone());
-    }
-
-    let command = Command::new(solc_bin.clone().unwrap().clone())
-        .arg("--ast-compact-json")
-        .args(file_args.clone())
-        .current_dir("/")
-        .stdout(Stdio::piped())
-        .output();
-
-    if let Ok(command) = command {
-        let stdout = String::from_utf8(command.stdout).unwrap();
-        let stderr = String::from_utf8(command.stderr).unwrap();
-        println!("stderr = {}", stderr);
-
-        let lines = stdout.lines().collect::<Vec<_>>();
-        let mut idx = 0;
-        let mut keep_picking = false;
-        let mut ast_content = String::new();
-        let mut sol_content = String::new();
-
-        let my_file_args = file_args.clone();
-        let my_file_args: Vec<&str> = my_file_args.iter().map(|x| x.as_str()).collect();
-
-        #[allow(clippy::assigning_clones)]
-        while idx < lines.len() {
-            let line = lines[idx];
-
-            let (separation, filename) = is_demarcation_line(line, my_file_args.clone());
-
-            if separation {
-                if !ast_content.is_empty() {
-                    absorb_ast_content_into_context(
-                        &ast_content,
-                        sol_content.clone(),
-                        &mut context,
-                    );
-                }
-                ast_content = String::new();
-                keep_picking = false;
-
-                if let Some(name) = filename {
-                    keep_picking = true;
-                    let mut lookup = "/".to_string();
-                    lookup.push_str(&name);
-                    sol_content = solidity_content.get(lookup.as_str()).unwrap().clone();
-                }
-            } else if keep_picking {
-                ast_content.push_str(line);
-            }
-
-            idx += 1;
-        }
-
-        if !ast_content.is_empty() {
-            absorb_ast_content_into_context(&ast_content, sol_content, &mut context);
-        }
-    } else {
-        eprintln!("Error running solc command");
-        std::process::exit(1);
-    }
-    context
 }

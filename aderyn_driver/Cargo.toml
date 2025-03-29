@@ -11,19 +11,18 @@ license = "MIT"
 [dependencies]
 aderyn_core = { workspace = true }
 rayon = { workspace = true }
-cyfrin-foundry-compilers = { workspace = true, features = ["svm-solc"] }
 serde_json = { workspace = true, features = ["preserve_order"] }
 serde = { workspace = true, features = ["derive"] }
 serde_repr = { workspace = true }
-cyfrin-foundry-config = { workspace = true }
 toml = { workspace = true }
 field_access = { workspace = true }
 tokio = { workspace = true, features = ["full"] }
 tower-lsp = { workspace = true }
+foundry_compilers_aletheia = { workspace = true }
 
 [dev-dependencies]
 criterion = { workspace = true }
 
 [[bench]]
-name = "detectors_benchmarks"
+name = "detectors"
 harness = false
