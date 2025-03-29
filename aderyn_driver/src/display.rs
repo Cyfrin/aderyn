@@ -63,21 +63,21 @@ pub fn display_configuration_info(project_config: &ProjectConfigInput) {
     ));
     say(&format!("EVM version - {}", project_config.evm_version));
 
-    say_header("Scope");
+    say_header("Source Scope");
     if project_config.include_containing.clone() != vec!["".to_string()] {
-        say(&format!("Include Containing - {:#?}", project_config.include_containing));
+        say(&format!("Include Filepaths Containing - {:#?}", project_config.include_containing));
     } else {
-        say("Include Containing - No specific criteria");
+        say("Include Filepaths Containing - No specific criteria.");
     }
     if !project_config.exclude_containing.is_empty() {
-        say(&format!("Exclude Containing - {:#?}", project_config.exclude_containing));
+        say(&format!("Exclude Filepaths Containing - {:#?}", project_config.exclude_containing));
     } else {
-        say("Exclude Containing - No specific criteria");
+        say("Exclude Filepaths Containing - No specific criteria.");
     }
 
     if !project_config.exclude_starting.is_empty() {
         say(&format!(
-            "Auto Excluding in Source -  {:#?}",
+            "Auto Excluding Files - {:#?}",
             project_config
                 .exclude_starting
                 .iter()
@@ -90,6 +90,6 @@ pub fn display_configuration_info(project_config: &ProjectConfigInput) {
                 .collect::<Vec<_>>()
         ));
     } else {
-        say("Auto Excluding - No Files");
+        say("Auto Excluding - No Files.");
     }
 }
