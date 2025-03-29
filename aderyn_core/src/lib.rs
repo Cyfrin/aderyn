@@ -238,19 +238,13 @@ pub fn get_report(
                             .to_string_lossy()
                             .to_string(),
                     ) else {
-                        //panic!(
-                        //    "{}",
-                        //    &dunce::canonicalize(root_rel_path.join(&instance.0).as_path())
-                        //        .unwrap()
-                        //        .to_string_lossy()
-                        //        .to_string()
-                        //);
-                        for k in ignore_lines.keys() {
-                            if k.contains("AuctionBase") {
-                                println!("FOUND: {:?}", k);
-                            }
-                        }
-                        return true;
+                        panic!(
+                            "File Not Found in Ignore stats: {}",
+                            &dunce::canonicalize(root_rel_path.join(&instance.0).as_path())
+                                .unwrap()
+                                .to_string_lossy()
+                                .to_string()
+                        );
                     };
 
                     if lines_to_ignore_in_file.is_empty() {
