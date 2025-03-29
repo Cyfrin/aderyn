@@ -245,6 +245,11 @@ pub fn get_report(
                         //        .to_string_lossy()
                         //        .to_string()
                         //);
+                        for k in ignore_lines.keys() {
+                            if k.contains("AuctionBase") {
+                                println!("FOUND: {:?}", k);
+                            }
+                        }
                         return true;
                     };
 
