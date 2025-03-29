@@ -85,3 +85,26 @@ jobs:
       - name: Run cargo clippy
         run: |
           cargo clippy -- -D warnings
+
+
+  decline-openssl-dependencies:
+    name: Decline openssl
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Install Rust Nightly (2025-01-01)
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: nightly-2025-01-01
+          override: true
+
+      - name: Checkout Sources
+        uses: actions/checkout@v4
+
+      - name: Restore Rust Cache
+        uses: Swatinem/rust-cache@v2
+
+      - name: Run tests
+        run: |
+          ! cargo tree -i openssl --target all
