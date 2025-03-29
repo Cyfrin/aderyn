@@ -46,7 +46,7 @@ petgraph = "0"
 
 # Uncomment in Production (just before merging to dev)
 # Cyfrin managed github repository
-foundry_compilers_aletheia = { git = "https://github.com/Cyfrin/foundry-compilers-aletheia", tag = "v0.0.1-alpha.beta", package = "foundry-compilers-aletheia" }
+foundry_compilers_aletheia = { git = "https://github.com/Cyfrin/foundry-compilers-aletheia", tag = "v0.0.1-alpha.beta.1", package = "foundry-compilers-aletheia" }
 
 # Uncomment when debugging in branch (PR)
 # foundry_compilers_aletheia = { git = "https://github.com/Cyfrin/foundry-compilers-aletheia", branch = "main", package = "foundry-compilers-aletheia" }
