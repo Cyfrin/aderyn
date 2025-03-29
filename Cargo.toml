@@ -14,8 +14,6 @@ aderyn_driver = { version = "0.5.3", path = "aderyn_driver" }
 clap = "4.4.6"
 criterion = "0.5.1"
 crossbeam-channel = "0.5.9"
-cyfrin-foundry-compilers = "0.3.20-aderyn"
-cyfrin-foundry-config = "0.2.1"
 derive_more = "0.99.18"
 eyre = "0.6.12"
 field_access = "0.1.8"
@@ -31,7 +29,7 @@ phf = "0.11.2"
 prettytable = "0.10.0"
 rayon = "1.8.0"
 reqwest = { version = "0.12.2", default-features = false }
-semver = "1.0.22"
+semver = "1.0.26"
 serde = "1.0.160"
 serde-sarif = "0.4.2"
 serde_json = "1.0.96"
@@ -45,6 +43,16 @@ toml = "0.8.13"
 tower-lsp = "0.20.0"
 dunce = "=1.0.4"
 petgraph = "0"
+
+# Uncomment in Production (just before merging to dev)
+# Cyfrin managed github repository
+foundry_compilers_aletheia = { git = "https://github.com/Cyfrin/foundry-compilers-aletheia", tag = "v0.0.1-alpha.beta", package = "foundry-compilers-aletheia" }
+
+# Uncomment when debugging in branch (PR)
+# foundry_compilers_aletheia = { git = "https://github.com/Cyfrin/foundry-compilers-aletheia", branch = "main", package = "foundry-compilers-aletheia" }
+
+# Uncomment when debuggin locally
+# foundry_compilers_aletheia = { path = "../foundry-compilers-aletheia", package = "foundry-compilers-aletheia"}
 
 [profile.release]
 codegen-units = 1
