@@ -79,7 +79,6 @@ pub fn project(
             if !lsp_mode {
                 display_ingesting_message(&sources_ast, &included, &ast_info.version.to_string());
             }
-
             for (source_path, ast_source_file) in sources_ast {
                 if included.contains(&source_path) {
                     let content = sources.get(&source_path).cloned().expect("content not found");
@@ -89,8 +88,7 @@ pub fn project(
                         content,
                         &absolute_root_path,
                     );
-                    let relative_suffix = source_path.strip_prefix(&absolute_root_path).unwrap();
-                    context.src_filepaths.push(relative_suffix.to_string_lossy().to_string());
+                    context.src_filepaths.push(source_path.display().to_string());
                 }
             }
 
@@ -131,15 +129,11 @@ fn absorb_ast_content_into_context(
     // Set the source
     source_unit.source = Some(content.content.to_string());
 
-    // Adjust the asbolute filepath to be relative
+    // Read the relative filepath
     let filepath = source_unit.absolute_path.as_ref().unwrap();
-    let relative_path = PathBuf::from_str(filepath).unwrap();
-    let relative_path = relative_path
-        .strip_prefix(absolute_root_path)
-        .expect("filepath in AST output is not absolute!");
 
     // Reset absolute path.
-    source_unit.absolute_path = Some(relative_path.to_string_lossy().to_string());
+    source_unit.absolute_path = Some(filepath.to_string());
 
     // TODO: Change absolute_path to type Path instead of String so we don't lose any unicode
     // characters (in the minority of cases)
