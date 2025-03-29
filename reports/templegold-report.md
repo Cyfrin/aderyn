@@ -5490,7 +5490,7 @@ Define and use `constant` variables instead of using literals. If the same const
 
 Use descriptive reason strings or custom errors for revert paths.
 
-<details><summary>55 Found Instances</summary>
+<details><summary>54 Found Instances</summary>
 
 
 - Found in contracts/core/OpsManager.sol [Line: 50](../tests/2024-07-templegold/protocol/contracts/core/OpsManager.sol#L50)
@@ -5545,12 +5545,6 @@ Use descriptive reason strings or custom errors for revert paths.
 
 	```solidity
 	        require (y >= -0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF &&
-	```
-
-- Found in contracts/util/ABDKMath64x64.sol [Line: 181](../tests/2024-07-templegold/protocol/contracts/util/ABDKMath64x64.sol#L181)
-
-	```solidity
-	          require (absoluteResult <=
 	```
 
 - Found in contracts/util/ABDKMath64x64.sol [Line: 185](../tests/2024-07-templegold/protocol/contracts/util/ABDKMath64x64.sol#L185)
@@ -5757,6 +5751,12 @@ Use descriptive reason strings or custom errors for revert paths.
 	      require (exponent <= 16638); // Overflow
 	```
 
+- Found in contracts/util/ABDKMathQuad.sol [Line: 179](../tests/2024-07-templegold/protocol/contracts/util/ABDKMathQuad.sol#L179)
+
+	```solidity
+	  function to128x128 (bytes16 x) internal pure returns (int256) {
+	```
+
 - Found in contracts/util/ABDKMathQuad.sol [Line: 183](../tests/2024-07-templegold/protocol/contracts/util/ABDKMathQuad.sol#L183)
 
 	```solidity
@@ -5809,12 +5809,6 @@ Use descriptive reason strings or custom errors for revert paths.
 
 	```solidity
 	      require (absoluteY <= 0x7FFF0000000000000000000000000000); // Not NaN
-	```
-
-- Found in contracts/util/ABDKMathQuad.sol [Line: 467](../tests/2024-07-templegold/protocol/contracts/util/ABDKMathQuad.sol#L467)
-
-	```solidity
-	      require (x != y || absoluteX < 0x7FFF0000000000000000000000000000);
 	```
 
 - Found in contracts/util/ABDKMathQuad.sol [Line: 1199](../tests/2024-07-templegold/protocol/contracts/util/ABDKMathQuad.sol#L1199)

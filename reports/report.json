@@ -2936,12 +2936,6 @@
           },
           {
             "contract_path": "src/AderynIgnoreCustomDetectors.sol",
-            "line_no": 14,
-            "src": "343:2",
-            "src_char": "343:2"
-          },
-          {
-            "contract_path": "src/AderynIgnoreCustomDetectors.sol",
             "line_no": 26,
             "src": "583:2",
             "src_char": "583:2"

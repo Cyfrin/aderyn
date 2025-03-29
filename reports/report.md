@@ -2874,12 +2874,6 @@ If a function is marked public but is not used internally, consider marking it a
 	    function f1() public {
 	```
 
-- Found in src/AderynIgnoreCustomDetectors.sol [Line: 14](../tests/contract-playground/src/AderynIgnoreCustomDetectors.sol#L14)
-
-	```solidity
-	    function f2() public {
-	```
-
 - Found in src/AderynIgnoreCustomDetectors.sol [Line: 26](../tests/contract-playground/src/AderynIgnoreCustomDetectors.sol#L26)
 
 	```solidity
