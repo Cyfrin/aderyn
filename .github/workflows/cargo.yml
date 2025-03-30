@@ -131,4 +131,6 @@ jobs:
           mv cargo-deny-*-x86_64-unknown-linux-musl/cargo-deny cargo-deny
           echo `pwd` >> $GITHUB_PATH
       - name: Validate deps
-        run: cargo deny check
+        run: |
+          cargo deny check bans
+          cargo deny check sources
