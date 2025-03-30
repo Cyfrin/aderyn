@@ -1,5 +1,4 @@
-use crate::ast::*;
-use crate::visitor::ast_visitor::*;
+use crate::{ast::*, visitor::ast_visitor::*};
 use eyre::Result;
 use macros::accept_id;
 
@@ -50,6 +49,7 @@ impl Node for ExpressionStatement {
         }
         Ok(())
     }
+    macros::accept_id!();
 }
 
 impl Node for VariableDeclarationStatement {
@@ -68,12 +68,7 @@ impl Node for VariableDeclarationStatement {
         visitor.end_visit_variable_declaration_statement(self)
     }
     fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        let declaration_ids = self
-            .declarations
-            .iter()
-            .flatten()
-            .map(|x| x.id)
-            .collect::<Vec<_>>();
+        let declaration_ids = self.declarations.iter().flatten().map(|x| x.id).collect::<Vec<_>>();
         visitor.visit_immediate_children(self.id, declaration_ids)?;
         if let Some(initial_value) = &self.initial_value {
             if let Some(id) = initial_value.get_node_id() {
@@ -165,9 +160,7 @@ impl Node for ForStatement {
             }
         }
         if let Some(loop_expr) = &self.loop_expression {
-            if let Some(loop_id) = loop_expr.expression.get_node_id() {
-                visitor.visit_immediate_children(self.id, vec![loop_id])?;
-            }
+            visitor.visit_immediate_children(self.id, vec![loop_expr.id])?;
         }
         if let Some(body_id) = self.body.get_node_id() {
             visitor.visit_immediate_children(self.id, vec![body_id])?;
@@ -232,9 +225,7 @@ impl Node for EmitStatement {
     }
 
     fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        if let Some(event_call_id) = self.event_call.get_node_id() {
-            visitor.visit_immediate_children(self.id, vec![event_call_id])?;
-        }
+        visitor.visit_immediate_children(self.id, vec![self.event_call.id])?;
         Ok(())
     }
 

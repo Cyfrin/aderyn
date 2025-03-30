@@ -1,17 +1,20 @@
-use std::collections::{BTreeMap, BTreeSet};
-use std::convert::identity;
-use std::error::Error;
+use std::{
+    collections::{BTreeMap, BTreeSet},
+    convert::identity,
+    error::Error,
+};
 
 use crate::ast::{ASTNode, ContractKind, NodeID, NodeType, Visibility};
 
-use crate::capture;
-use crate::context::browser::{
-    ExtractReferencedDeclarations, ExtractVariableDeclarations, GetClosestAncestorOfTypeX,
-};
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    capture,
+    context::{
+        browser::{
+            ExtractReferencedDeclarations, ExtractVariableDeclarations, GetClosestAncestorOfTypeX,
+        },
+        workspace_context::WorkspaceContext,
+    },
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -24,7 +27,7 @@ pub struct UnusedStateVariablesDetector {
 
 impl IssueDetector for UnusedStateVariablesDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        // Collect all referencedDeclaration IDs adn StateVariableDeclarationIDs
+        // Collect all referencedDeclaration IDs and StateVariableDeclarationIDs
         let mut all_referenced_declarations = BTreeSet::new();
         let mut all_state_variable_declarations = BTreeSet::new();
 
@@ -53,7 +56,8 @@ impl IssueDetector for UnusedStateVariablesDetector {
                 if let Some(ASTNode::ContractDefinition(contract)) =
                     node.closest_ancestor_of_type(context, NodeType::ContractDefinition)
                 {
-                    // If this variable is defined inside a contract, make sure it's not an abstract contract before capturing it
+                    // If this variable is defined inside a contract, make sure it's not an abstract
+                    // contract before capturing it
                     if !contract.is_abstract.is_some_and(identity)
                         && contract.kind == ContractKind::Contract
                     {
@@ -74,12 +78,12 @@ impl IssueDetector for UnusedStateVariablesDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Potentially unused `private` / `internal` state variables found.")
+        String::from("Unused State Variable")
     }
 
     fn description(&self) -> String {
-        String::from("State variable appears to be unused. No analysis has been performed to see if any inilne assembly \
-            references it. So if that's not the case, consider removing this unused variable.")
+        String::from("State variable appears to be unused. No analysis has been performed to see if any inline assembly \
+            references it. Consider removing this unused variable.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -113,9 +117,6 @@ mod unused_detector_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 4);
         // assert the severity is low
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

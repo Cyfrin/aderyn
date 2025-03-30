@@ -13,9 +13,7 @@ impl Statement {
             Statement::UncheckedBlock(unchecked_statement) => Some(unchecked_statement.id),
             Statement::Return(return_statement) => Some(return_statement.id),
             Statement::RevertStatement(revert_statement) => Some(revert_statement.error_call.id),
-            Statement::ExpressionStatement(expression_statement) => {
-                expression_statement.expression.get_node_id()
-            }
+            Statement::ExpressionStatement(expression_statement) => Some(expression_statement.id),
             Statement::InlineAssembly(inline_assembly) => Some(inline_assembly.id),
             Statement::TryStatement(try_statement) => Some(try_statement.id),
             Statement::Block(block) => Some(block.id),
@@ -54,11 +52,7 @@ impl BlockOrStatement {
             BlockOrStatement::Statement(statement) => match statement.as_ref() {
                 Statement::Return(Return { .. }) => true,
 
-                Statement::IfStatement(IfStatement {
-                    true_body,
-                    false_body,
-                    ..
-                }) => {
+                Statement::IfStatement(IfStatement { true_body, false_body, .. }) => {
                     if !true_body.contains_returns() {
                         return false;
                     }

@@ -1,14 +1,12 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::ast::NodeID;
 
-use crate::capture;
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
     ast::Expression,
+    capture,
     context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -20,11 +18,7 @@ pub struct DivisionBeforeMultiplicationDetector {
 
 impl IssueDetector for DivisionBeforeMultiplicationDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        for op in context
-            .binary_operations()
-            .iter()
-            .filter(|op| op.operator == "*")
-        {
+        for op in context.binary_operations().iter().filter(|op| op.operator == "*") {
             if let Expression::BinaryOperation(left_op) = op.left_expression.as_ref() {
                 if left_op.operator == "/" {
                     capture!(self, context, left_op)
@@ -44,7 +38,8 @@ impl IssueDetector for DivisionBeforeMultiplicationDetector {
     }
 
     fn description(&self) -> String {
-        String::from("Division operations followed directly by multiplication operations can lead to precision loss due to the way integer arithmetic is handled in Solidity.")
+        String::from("Division operations followed directly by multiplication operations can lead to precision loss due to the way integer arithmetic is handled in Solidity./
+        Consider Multiplication before Division.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -74,17 +69,15 @@ mod division_before_multiplication_detector_tests {
         let found = detector.detect(&context).unwrap();
         assert!(found);
         assert_eq!(detector.instances().len(), 4);
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         assert_eq!(
             detector.title(),
             String::from("Incorrect Order of Division and Multiplication")
         );
         assert_eq!(
             detector.description(),
-            String::from("Division operations followed directly by multiplication operations can lead to precision loss due to the way integer arithmetic is handled in Solidity.")
+            String::from("Division operations followed directly by multiplication operations can lead to precision loss due to the way integer arithmetic is handled in Solidity./
+        Consider Multiplication before Division.")
         );
     }
 }

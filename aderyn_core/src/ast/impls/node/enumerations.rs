@@ -1,5 +1,4 @@
-use crate::ast::*;
-use crate::visitor::ast_visitor::*;
+use crate::{ast::*, visitor::ast_visitor::*};
 use eyre::Result;
 use macros::accept_id;
 
@@ -20,12 +19,7 @@ impl Node for EnumDefinition {
         visitor.end_visit_enum_definition(self)
     }
     fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        let member_ids = &self
-            .members
-            .iter()
-            .map(|x| x.id)
-            .collect::<Vec<_>>()
-            .clone();
+        let member_ids = &self.members.iter().map(|x| x.id).collect::<Vec<_>>().clone();
         visitor.visit_immediate_children(self.id, member_ids.clone())?;
         Ok(())
     }

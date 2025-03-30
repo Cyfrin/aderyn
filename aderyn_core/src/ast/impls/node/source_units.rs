@@ -1,5 +1,4 @@
-use crate::ast::*;
-use crate::visitor::ast_visitor::*;
+use crate::{ast::*, visitor::ast_visitor::*};
 use eyre::Result;
 
 impl Node for SourceUnitNode {
@@ -25,7 +24,7 @@ impl Node for SourceUnitNode {
             SourceUnitNode::UsingForDirective(using_for_directive) => {
                 using_for_directive.accept(visitor)
             }
-            SourceUnitNode::EventDefinition(event_defintion) => event_defintion.accept(visitor),
+            SourceUnitNode::EventDefinition(event_definition) => event_definition.accept(visitor),
         }
     }
     fn accept_id(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
@@ -43,11 +42,7 @@ impl Node for SourceUnit {
         visitor.end_visit_source_unit(self)
     }
     fn accept_metadata(&self, visitor: &mut impl ASTConstVisitor) -> Result<()> {
-        let node_ids = &self
-            .nodes
-            .iter()
-            .flat_map(|x| x.get_node_id())
-            .collect::<Vec<_>>();
+        let node_ids = &self.nodes.iter().flat_map(|x| x.get_node_id()).collect::<Vec<_>>();
         visitor.visit_immediate_children(self.id, node_ids.clone())?;
         Ok(())
     }

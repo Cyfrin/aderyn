@@ -18,17 +18,10 @@ pub struct SolmateSafeTransferLibDetector {
 impl IssueDetector for SolmateSafeTransferLibDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for import_directive in context.import_directives() {
-            // If the import directive absolute_path contains the strings "solmate" and "SafeTransferLib", flip the found_solmate_import flag to true
-            if import_directive
-                .absolute_path
-                .as_ref()
-                .unwrap()
-                .contains("solmate")
-                && import_directive
-                    .absolute_path
-                    .as_ref()
-                    .unwrap()
-                    .contains("SafeTransferLib")
+            // If the import directive absolute_path contains the strings "solmate" and
+            // "SafeTransferLib", flip the found_solmate_import flag to true
+            if import_directive.absolute_path.as_ref().unwrap().contains("solmate")
+                && import_directive.absolute_path.as_ref().unwrap().contains("SafeTransferLib")
             {
                 capture!(self, context, import_directive);
             }
@@ -42,7 +35,7 @@ impl IssueDetector for SolmateSafeTransferLibDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Solmate\'s SafeTransferLib does not check for token contract\'s existence")
+        String::from("Solmate\'s SafeTransferLib")
     }
 
     fn description(&self) -> String {
@@ -78,17 +71,9 @@ mod solmate_safe_transfer_lib_tests {
         // assert that the detector found the correct number of instances (1)
         assert_eq!(detector.instances().len(), 1);
         // assert the severity is Low
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from(
-                "Solmate\'s SafeTransferLib does not check for token contract\'s existence"
-            )
-        );
+        assert_eq!(detector.title(), String::from("Solmate\'s SafeTransferLib"));
         // assert the description is correct
         assert_eq!(
             detector.description(),

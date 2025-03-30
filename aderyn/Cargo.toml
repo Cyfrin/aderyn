@@ -1,21 +1,26 @@
 [package]
 name = "aderyn"
-version = "0.2.0"
+version = "0.5.5"
 edition = "2021"
 authors = ["Cyfrin <aderyn@cyfrin.io>"]
 description = "Rust based Solidity AST analyzer"
 license = "MIT"
 default-run = "aderyn"
+repository = "https://github.com/cyfrin/aderyn"
+homepage = "https://github.com/cyfrin/aderyn"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-aderyn_driver = { path  = "../aderyn_driver", version = "0.2.0" }
-clap = { version = "4.4.6", features = ["derive"] }
-reqwest = { version = "0.12.2", default-features = false, features = ["blocking", "json", "rustls-tls"] }
-semver = "1.0.22"
-serde = { version = "1.0.160", features = ["derive"] }
-serde_json = { version = "1.0.96", features = ["preserve_order"] }
-strum = { version = "0.26", features = ["derive"] }
-notify-debouncer-full = "0.3.1"
-cyfrin-foundry-compilers = { version = "0.3.20-aderyn", features = ["svm-solc"]  }
+aderyn_driver = { workspace = true }
+clap = { workspace = true, features = ["derive"] }
+reqwest = { workspace = true, features = ["blocking", "json", "rustls-tls"] }
+semver = { workspace = true }
+serde = { workspace = true, features = ["derive"] }
+serde_json = { workspace = true, features = ["preserve_order"] }
+strum = { workspace = true, features = ["derive"] }
+notify-debouncer-full = { workspace = true }
+termcolor = { workspace = true }
+tokio = { workspace = true, features = ["full"] }
+tower-lsp = { workspace = true }
+log = { workspace = true }

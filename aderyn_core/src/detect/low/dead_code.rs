@@ -1,15 +1,14 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
-use crate::ast::{ASTNode, ContractKind, NodeID, NodeType, Visibility};
+use crate::ast::{ASTNode, ContractKind, FunctionKind, NodeID, NodeType, Visibility};
 
-use crate::capture;
-use crate::context::browser::GetClosestAncestorOfTypeX;
-use crate::detect::detector::IssueDetectorNamePool;
-use crate::detect::helpers;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    capture,
+    context::{browser::GetClosestAncestorOfTypeX, workspace_context::WorkspaceContext},
+    detect::{
+        detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
+        helpers,
+    },
 };
 use eyre::Result;
 
@@ -23,8 +22,9 @@ pub struct DeadCodeDetector {
 impl IssueDetector for DeadCodeDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // Heuristic:
-        // Internal non overriding functions inside of non abstract contracts that have a body (implemented) and are not used
-        // If an internal function is marked override then, it may still be used even if it doesn't have a direct referencedDeclaration
+        // Internal non overriding functions inside of non abstract contracts that have a body
+        // (implemented) and are not used If an internal function is marked override then,
+        // it may still be used even if it doesn't have a direct referencedDeclaration
         // pointing to it.
 
         for func in context
@@ -34,7 +34,7 @@ impl IssueDetector for DeadCodeDetector {
                 f.overrides.is_none()
                     && f.implemented
                     && f.visibility == Visibility::Internal
-                    && !f.is_constructor
+                    && f.kind() != &FunctionKind::Constructor
             })
             .filter(|&f| {
                 if let Some(ASTNode::ContractDefinition(contract)) =
@@ -101,9 +101,6 @@ mod dead_code_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
         // assert the severity is low
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

@@ -1,13 +1,14 @@
-use std::collections::{BTreeMap, HashMap};
-use std::error::Error;
+use std::{
+    collections::{BTreeMap, HashMap},
+    error::Error,
+};
 
 use crate::ast::{ContractDefinition, NodeID};
 
-use crate::capture;
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
+    capture,
     context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -24,10 +25,7 @@ impl IssueDetector for ReusedContractNameDetector {
 
         // Simplify the map filling process using the Entry API
         for contract in context.contract_definitions() {
-            contract_names
-                .entry(&contract.name)
-                .or_default()
-                .push(contract);
+            contract_names.entry(&contract.name).or_default().push(contract);
         }
 
         // Process duplicate contracts
@@ -63,6 +61,7 @@ impl IssueDetector for ReusedContractNameDetector {
 
 #[cfg(test)]
 mod reused_contract_name_detector_tests {
+    use semver::Version;
     use serial_test::serial;
 
     use crate::detect::{
@@ -73,10 +72,13 @@ mod reused_contract_name_detector_tests {
     #[test]
     #[serial]
     fn test_reused_contract_name_detector() {
-        let context = load_multiple_solidity_source_units_into_single_context(&[
-            "../tests/contract-playground/src/reused_contract_name/ContractA.sol",
-            "../tests/contract-playground/src/reused_contract_name/ContractB.sol",
-        ]);
+        let context = load_multiple_solidity_source_units_into_single_context(
+            &[
+                "../tests/contract-playground/src/reused_contract_name/ContractA.sol",
+                "../tests/contract-playground/src/reused_contract_name/ContractB.sol",
+            ],
+            Version::new(0, 8, 19),
+        );
 
         let mut detector = ReusedContractNameDetector::default();
         let found = detector.detect(&context).unwrap();
@@ -85,15 +87,9 @@ mod reused_contract_name_detector_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
         // assert the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from("Contract Name Reused in Different Files")
-        );
+        assert_eq!(detector.title(), String::from("Contract Name Reused in Different Files"));
         // assert the description is correct
         assert_eq!(
             detector.description(),

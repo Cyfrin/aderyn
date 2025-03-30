@@ -1,0 +1,14 @@
+{
+  "build": {
+    "path_prefix": "aderyn"
+  },
+  "styles": {
+    "favicon": "https://www.axo.dev/favicon.ico",
+    "theme": "axo_dark"
+  },
+  "components": {
+    "artifacts": {
+      "cargo_dist": true
+    }
+  }
+}

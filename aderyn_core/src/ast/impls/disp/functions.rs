@@ -61,7 +61,7 @@ impl Display for FunctionDefinition {
             }
         }
 
-        if let Some(true) = self.r#virtual {
+        if self.is_virtual {
             f.write_str(" virtual")?;
         }
 

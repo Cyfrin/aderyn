@@ -88,64 +88,14 @@
     ]
   },
   "issue_count": {
-    "high": 4,
+    "high": 2,
     "low": 0
   },
   "high_issues": {
     "issues": [
       {
-        "title": "Using `delegatecall` in loop",
-        "description": "When calling `delegatecall` the same `msg.value` amount will be accredited multiple times.",
-        "detector_name": "delegate-call-in-loop",
-        "instances": [
-          {
-            "contract_path": "inheritance/ExtendedInheritance.sol",
-            "line_no": 15,
-            "src": "474:96",
-            "src_char": "474:96"
-          }
-        ]
-      },
-      {
-        "title": "Uninitialized State Variables",
-        "description": "Solidity does initialize variables by default when you declare them, however it's good practice to explicitly declare an initial value. For example, if you transfer money to an address we must make sure that the address has been initialized.",
-        "detector_name": "uninitialized-state-variable",
-        "instances": [
-          {
-            "contract_path": "InconsistentUints.sol",
-            "line_no": 7,
-            "src": "197:11",
-            "src_char": "197:11"
-          },
-          {
-            "contract_path": "InconsistentUints.sol",
-            "line_no": 8,
-            "src": "233:14",
-            "src_char": "233:14"
-          },
-          {
-            "contract_path": "StateVariables.sol",
-            "line_no": 8,
-            "src": "199:19",
-            "src_char": "199:19"
-          },
-          {
-            "contract_path": "StateVariables.sol",
-            "line_no": 9,
-            "src": "241:20",
-            "src_char": "241:20"
-          },
-          {
-            "contract_path": "StateVariables.sol",
-            "line_no": 10,
-            "src": "282:18",
-            "src_char": "282:18"
-          }
-        ]
-      },
-      {
-        "title": "Delegatecall made by the function without checks on any adress.",
-        "description": "Introduce checks on the address",
+        "title": "`delegatecall` to an Arbitrary Address",
+        "description": "Making a `delegatecall` to an arbitrary address without any checks is dangerous. Consider adding requirements on the target address.",
         "detector_name": "delegate-call-unchecked-address",
         "instances": [
           {
@@ -175,36 +125,32 @@
     "issues": []
   },
   "detectors_used": [
-    "delegate-call-in-loop",
-    "avoid-abi-encode-packed",
-    "block-timestamp-deadline",
+    "abi-encode-packed-hash-collision",
     "arbitrary-transfer-from",
     "unprotected-initializer",
-    "unsafe-casting-detector",
+    "unsafe-casting",
     "enumerable-loop-removal",
     "experimental-encoder",
     "incorrect-shift-order",
-    "storage-array-edit-with-memory",
+    "storage-array-memory-edit",
     "multiple-constructors",
     "reused-contract-name",
     "nested-struct-in-mapping",
-    "selfdestruct-identifier",
+    "selfdestruct",
     "dynamic-array-length-assignment",
-    "uninitialized-state-variable",
     "incorrect-caret-operator",
     "yul-return",
     "state-variable-shadowing",
     "unchecked-send",
     "misused-boolean",
-    "send-ether-no-checks",
+    "eth-send-unchecked-address",
     "delegate-call-unchecked-address",
     "tautological-compare",
     "rtlo",
-    "unchecked-return",
     "dangerous-unary-operator",
     "tautology-or-contradiction",
-    "dangerous-strict-equailty-on-contract-balance",
-    "signed-storage-array",
+    "strict-equality-contract-balance",
+    "signed-integer-storage-array",
     "weak-randomness",
     "pre-declared-local-variable-usage",
     "delete-nested-mapping",
@@ -214,8 +160,9 @@
     "incorrect-erc721-interface",
     "incorrect-erc20-interface",
     "out-of-order-retryable",
-    "constant-function-changing-state",
+    "constant-function-changes-state",
     "function-selector-collision",
-    "unchecked-low-level-call"
+    "unchecked-low-level-call",
+    "reentrancy-state-change"
   ]
 }

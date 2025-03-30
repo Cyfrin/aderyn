@@ -1,15 +1,15 @@
-use std::collections::{BTreeMap, BTreeSet, HashMap};
-use std::convert::identity;
-use std::error::Error;
+use std::{
+    collections::{BTreeMap, BTreeSet, HashMap},
+    convert::identity,
+    error::Error,
+};
 
 use crate::ast::{ASTNode, ContractKind, NodeID};
 
-use crate::capture;
-use crate::context::browser::ExtractVariableDeclarations;
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    capture,
+    context::{browser::ExtractVariableDeclarations, workspace_context::WorkspaceContext},
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -26,7 +26,7 @@ impl IssueDetector for MissingInheritanceDetector {
         // Key -> Contract ID, Value -> Collection of function selectors in the contract
         let mut contract_function_selectors: HashMap<NodeID, Vec<String>> = Default::default();
 
-        // Key -> Contract ID, Value -> Set of contract/interface IDs in it's heirarchy
+        // Key -> Contract ID, Value -> Set of contract/interface IDs in it's hierarchy
         let mut inheritance_map: HashMap<NodeID, Vec<NodeID>> = Default::default();
 
         for contract in context.contract_definitions() {
@@ -74,7 +74,7 @@ impl IssueDetector for MissingInheritanceDetector {
                 continue;
             }
             if let Some(ASTNode::ContractDefinition(c)) = context.nodes.get(contract_id) {
-                if c.kind != ContractKind::Contract || c.is_abstract.map_or(false, identity) {
+                if c.kind != ContractKind::Contract || c.is_abstract.is_some_and(identity) {
                     continue;
                 }
             }
@@ -100,16 +100,11 @@ impl IssueDetector for MissingInheritanceDetector {
                 if let Some(ASTNode::ContractDefinition(c)) =
                     context.nodes.get(potentially_missing_inheritance)
                 {
-                    if c.kind == ContractKind::Interface || c.is_abstract.map_or(false, identity) {
+                    if c.kind == ContractKind::Interface || c.is_abstract.is_some_and(identity) {
                         // Check that the contract is compatible with the missing inheritance
-                        if missing_function_selectors
-                            .iter()
-                            .all(|s| contract_selectors.contains(s))
+                        if missing_function_selectors.iter().all(|s| contract_selectors.contains(s))
                         {
-                            results
-                                .entry(*contract_id)
-                                .or_default()
-                                .insert(c.name.clone());
+                            results.entry(*contract_id).or_default().insert(c.name.clone());
                         }
                     }
                 }
@@ -120,10 +115,7 @@ impl IssueDetector for MissingInheritanceDetector {
             if let Some(ASTNode::ContractDefinition(c)) = context.nodes.get(&contract) {
                 // If the contract c already has some inheritance, don't report it because we want
                 // to respect the developer's choice.
-                if c.linearized_base_contracts
-                    .as_ref()
-                    .is_some_and(|chain| chain.len() != 1)
-                {
+                if c.linearized_base_contracts.as_ref().is_some_and(|chain| chain.len() != 1) {
                     continue;
                 }
                 let missing_inheritances_vector =
@@ -151,7 +143,7 @@ impl IssueDetector for MissingInheritanceDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Potentially missing inheritance for contract.")
+        String::from("Missing Inheritance")
     }
 
     fn description(&self) -> String {
@@ -192,9 +184,6 @@ mod missing_inheritance_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
         // assert the severity is low
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

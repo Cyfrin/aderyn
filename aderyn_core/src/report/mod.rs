@@ -41,11 +41,7 @@ impl Add<&FilesDetails> for FilesDetails {
     type Output = FilesDetails;
     fn add(mut self, rhs: &FilesDetails) -> Self::Output {
         for fd in &rhs.files_details {
-            if self
-                .files_details
-                .iter()
-                .all(|x| x.file_path != fd.file_path)
-            {
+            if self.files_details.iter().all(|x| x.file_path != fd.file_path) {
                 self.files_details.push(fd.clone());
             }
         }
@@ -67,30 +63,40 @@ pub struct IssueCount {
 
 #[derive(Serialize, Debug)]
 pub struct IssueInstance {
-    contract_path: String,
-    line_no: usize,
-    src: String,
-    src_char: String,
+    pub contract_path: String,
+    pub line_no: usize,
+
+    /// byte_offset:byte_length
+    pub src: String,
+
+    /// char_offset:char_length
+    /// Here, char_offset is counted from the beginning of the file
+    pub src_char: String,
+
+    /// char_offset:char_length
+    /// Here, char_offset is counted from the beginning of the line_no
+    #[serde(skip_serializing)]
+    pub src_char2: String,
     #[serde(skip_serializing_if = "Option::is_none")]
-    hint: Option<String>,
+    pub hint: Option<String>,
 }
 
 #[derive(Serialize)]
 pub struct IssueBody {
-    title: String,
-    description: String,
-    detector_name: String,
-    instances: Vec<IssueInstance>,
+    pub title: String,
+    pub description: String,
+    pub detector_name: String,
+    pub instances: Vec<IssueInstance>,
 }
 
 #[derive(Serialize)]
 pub struct HighIssues {
-    issues: Vec<IssueBody>,
+    pub issues: Vec<IssueBody>,
 }
 
 #[derive(Serialize)]
 pub struct LowIssues {
-    issues: Vec<IssueBody>,
+    pub issues: Vec<IssueBody>,
 }
 
 pub fn extract_issue_bodies(
@@ -109,10 +115,22 @@ pub fn extract_issue_bodies(
                     let byte_offset: usize = byte_offset_str.parse().unwrap();
                     let byte_length: usize = byte_len_str.parse().unwrap();
                     let content = *file_contents.get(contract_path).unwrap();
+                    let mut current_line_no = 0;
+                    let mut pre_line_char_offset = 0;
                     let mut char_offset = 0;
-                    for (byte_offset_so_far, _) in content.char_indices() {
+                    let mut stop_counting_preline_offset = false;
+                    for (byte_offset_so_far, c) in content.char_indices() {
                         if byte_offset_so_far == byte_offset {
                             break;
+                        }
+                        if c == '\n' {
+                            current_line_no += 1;
+                            if current_line_no == line_no - 1 {
+                                stop_counting_preline_offset = true;
+                            }
+                        }
+                        if !stop_counting_preline_offset {
+                            pre_line_char_offset += 1;
                         }
                         char_offset += 1;
                     }
@@ -135,6 +153,7 @@ pub fn extract_issue_bodies(
                         line_no: *line_no,
                         src: src_location.clone(),
                         src_char: format!("{}:{}", char_offset, char_len),
+                        src_char2: format!("{}:{}", char_offset - pre_line_char_offset, char_len),
                         hint: hint.cloned(),
                     }
                 })
@@ -169,10 +188,7 @@ impl WorkspaceContext {
                 let filepath = source_unit.absolute_path.as_ref()?;
                 if seen_paths.insert(filepath.clone()) {
                     let report = sloc_stats.iter().find(|r| r.0.contains(filepath))?;
-                    Some(FilesDetail {
-                        file_path: filepath.to_owned(),
-                        n_sloc: *report.1,
-                    })
+                    Some(FilesDetail { file_path: filepath.to_owned(), n_sloc: *report.1 })
                 } else {
                     None
                 }

@@ -1,0 +1,53 @@
+on: [push, pull_request, workflow_dispatch]
+
+name: Config
+
+concurrency:
+  group: ci-${{ github.ref }}-config
+  cancel-in-progress: true
+
+jobs:
+  reports-setup:
+    name:  Check Config
+    runs-on: ubuntu-latest
+    outputs:
+      rust-nightly: nightly-2025-01-01
+
+    steps:
+      - name: Install Foundry Toolchain
+        uses: foundry-rs/foundry-toolchain@v1.2.0
+
+      - name: Checkout Sources
+        uses: actions/checkout@v4
+
+      - name: Install Rust Nightly (2025-01-01)
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: nightly-2025-01-01
+          override: true
+
+      - name: Cache Rust Dependencies
+        uses: Swatinem/rust-cache@v2
+
+      - name: Checkout Submodules
+        run: git submodule update --init --recursive
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Checkout Sources
+        uses: actions/checkout@v4
+
+      - name: Restore Rust Cache
+        uses: Swatinem/rust-cache@v2
+
+      - name: Initialize config 
+        run: |
+          mkdir config-test
+          cd config-test
+          cargo run -- init
+          diff ./aderyn.toml ../aderyn/templates/aderyn.toml

@@ -1,16 +1,15 @@
-use std::collections::BTreeMap;
-use std::convert::identity;
-use std::error::Error;
+use std::{collections::BTreeMap, convert::identity, error::Error};
 
 use crate::ast::{ASTNode, Expression, NodeID};
 
-use crate::capture;
-use crate::context::browser::ExtractMemberAccesses;
-use crate::context::graph::{CallGraph, CallGraphDirection, CallGraphVisitor};
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    capture,
+    context::{
+        browser::ExtractMemberAccesses,
+        graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
+        workspace_context::WorkspaceContext,
+    },
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -52,7 +51,7 @@ impl IssueDetector for MsgValueUsedInLoopDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Loop contains `msg.value`.")
+        String::from("Loop contains `msg.value`")
     }
 
     fn description(&self) -> String {
@@ -84,19 +83,15 @@ struct MsgValueTracker {
 impl CallGraphVisitor for MsgValueTracker {
     fn visit_any(&mut self, node: &crate::ast::ASTNode) -> eyre::Result<()> {
         if !self.has_msg_value
-            && ExtractMemberAccesses::from(node)
-                .extracted
-                .iter()
-                .any(|member_access| {
-                    member_access.member_name == "value"
-                        && if let Expression::Identifier(identifier) =
-                            member_access.expression.as_ref()
-                        {
-                            identifier.name == "msg"
-                        } else {
-                            false
-                        }
-                })
+            && ExtractMemberAccesses::from(node).extracted.iter().any(|member_access| {
+                member_access.member_name == "value"
+                    && if let Expression::Identifier(identifier) = member_access.expression.as_ref()
+                    {
+                        identifier.name == "msg"
+                    } else {
+                        false
+                    }
+            })
         {
             self.has_msg_value = true;
         }
@@ -127,9 +122,6 @@ mod msg_value_in_loop_detector {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 4);
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
     }
 }

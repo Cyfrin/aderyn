@@ -1,15 +1,11 @@
-use std::collections::BTreeMap;
-use std::convert::identity;
-use std::error::Error;
+use std::{collections::BTreeMap, convert::identity, error::Error};
 
 use crate::ast::{ASTNode, NodeID, Visibility};
 
-use crate::capture;
-use crate::context::browser::ExtractFunctionDefinitions;
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    capture,
+    context::{browser::ExtractFunctionDefinitions, workspace_context::WorkspaceContext},
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -24,7 +20,7 @@ impl IssueDetector for IncorrectERC20InterfaceDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // Analyze each contract in context
         for current_contract in context.contract_definitions() {
-            // Look through it's inheritance heirarchy to determine if it's an ERC20
+            // Look through it's inheritance hierarchy to determine if it's an ERC20
             if let Some(contract_ids) = current_contract.linearized_base_contracts.as_ref() {
                 let current_contract_is_erc20 = contract_ids.iter().any(|i| {
                     context.nodes.get(i).is_some_and(|c| {
@@ -86,7 +82,7 @@ impl IssueDetector for IncorrectERC20InterfaceDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Incorrect ERC20 interface.")
+        String::from("Incorrect ERC20 interface")
     }
 
     fn description(&self) -> String {
@@ -113,23 +109,23 @@ mod erc_matching_function_signature_helper {
 
     struct SignatureMatcher<'a> {
         name: &'a str,
-        paramter_types: Vec<&'a str>,
+        parameter_types: Vec<&'a str>,
     }
 
-    // Helps with checking if a function definition satisifed a signature matcher
-    impl<'a> SignatureMatcher<'a> {
+    // Helps with checking if a function definition satisfied a signature matcher
+    impl SignatureMatcher<'_> {
         fn satisfies(&self, func: &FunctionDefinition) -> Option<bool> {
             if func.name != self.name {
                 return Some(false);
             }
             let params = &func.parameters.parameters;
-            if params.len() != self.paramter_types.len() {
+            if params.len() != self.parameter_types.len() {
                 return Some(false);
             }
             #[allow(clippy::needless_range_loop)]
             for idx in 0..params.len() {
                 if let Some(func_param_type) = params[idx].type_descriptions.type_string.as_ref() {
-                    let target = &self.paramter_types[idx];
+                    let target = &self.parameter_types[idx];
                     if *target == "address" {
                         if func_param_type == "address" || func_param_type == "address payable" {
                             continue;
@@ -150,50 +146,39 @@ mod erc_matching_function_signature_helper {
     // ERC20 function signature matching
     impl FunctionDefinition {
         pub fn represents_erc20_transfer(&self) -> Option<bool> {
-            let satisifer = SignatureMatcher {
-                name: "transfer",
-                paramter_types: vec!["address", "uint256"],
-            };
+            let satisifer =
+                SignatureMatcher { name: "transfer", parameter_types: vec!["address", "uint256"] };
             satisifer.satisfies(self)
         }
 
         pub fn represents_erc20_transfer_from(&self) -> Option<bool> {
             let satisifer = SignatureMatcher {
                 name: "transferFrom",
-                paramter_types: vec!["address", "address", "uint256"],
+                parameter_types: vec!["address", "address", "uint256"],
             };
             satisifer.satisfies(self)
         }
 
         pub fn represents_erc20_approve(&self) -> Option<bool> {
-            let satisifer = SignatureMatcher {
-                name: "approve",
-                paramter_types: vec!["address", "uint256"],
-            };
+            let satisifer =
+                SignatureMatcher { name: "approve", parameter_types: vec!["address", "uint256"] };
             satisifer.satisfies(self)
         }
 
         pub fn represents_erc20_allowance(&self) -> Option<bool> {
-            let satisifer = SignatureMatcher {
-                name: "allowance",
-                paramter_types: vec!["address", "address"],
-            };
+            let satisifer =
+                SignatureMatcher { name: "allowance", parameter_types: vec!["address", "address"] };
             satisifer.satisfies(self)
         }
 
         pub fn represents_erc20_balance_of(&self) -> Option<bool> {
-            let satisifer = SignatureMatcher {
-                name: "balanceOf",
-                paramter_types: vec!["address"],
-            };
+            let satisifer =
+                SignatureMatcher { name: "balanceOf", parameter_types: vec!["address"] };
             satisifer.satisfies(self)
         }
 
         pub fn represents_erc20_total_supply(&self) -> Option<bool> {
-            let satisifer = SignatureMatcher {
-                name: "totalSupply",
-                paramter_types: vec![],
-            };
+            let satisifer = SignatureMatcher { name: "totalSupply", parameter_types: vec![] };
             satisifer.satisfies(self)
         }
     }
@@ -221,9 +206,6 @@ mod incorrect_erc20_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 5);
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
     }
 }

@@ -1,15 +1,15 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::ast::{ASTNode, Expression, Identifier, NodeID};
 
-use crate::capture;
-use crate::context::browser::ExtractMemberAccesses;
-use crate::context::graph::{CallGraph, CallGraphDirection, CallGraphVisitor};
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    capture,
+    context::{
+        browser::ExtractMemberAccesses,
+        graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
+        workspace_context::WorkspaceContext,
+    },
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -57,7 +57,7 @@ impl IssueDetector for TxOriginUsedForAuthDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Potential use of `tx.origin` for authentication.")
+        String::from("Use of `tx.origin` for authentication")
     }
 
     fn description(&self) -> String {
@@ -86,7 +86,7 @@ impl TxOriginUsedForAuthDetector {
         let callgraph = CallGraph::new(context, check_nodes, CallGraphDirection::Inward)?;
         callgraph.accept(context, &mut tracker)?;
 
-        if tracker.satisifed() {
+        if tracker.satisfied() {
             capture!(self, context, capture_node);
         }
         Ok(())
@@ -100,9 +100,9 @@ struct MsgSenderAndTxOriginTracker {
 }
 
 impl MsgSenderAndTxOriginTracker {
-    /// To avoid FP (msg.sender == tx.origin) we require that tx.origin is present and msg.sender is absent
-    /// for it to be considered satisfied
-    fn satisifed(&self) -> bool {
+    /// To avoid FP (msg.sender == tx.origin) we require that tx.origin is present and msg.sender is
+    /// absent for it to be considered satisfied
+    fn satisfied(&self) -> bool {
         self.reads_tx_origin && !self.reads_msg_sender
     }
 }
@@ -157,9 +157,6 @@ mod tx_origin_used_for_auth_detector {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 3);
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
     }
 }

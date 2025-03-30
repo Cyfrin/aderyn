@@ -1,12 +1,12 @@
 mod load_source_unit;
 
-use cyfrin_foundry_compilers::utils;
 use once_cell::sync::Lazy;
 use std::path::PathBuf;
 
 // Using `solc` to read AST given a source unit (i.e Solidity file)
-pub use load_source_unit::load_multiple_solidity_source_units_into_single_context;
-pub use load_source_unit::load_solidity_source_unit;
+pub use load_source_unit::{
+    load_multiple_solidity_source_units_into_single_context, load_solidity_source_unit,
+};
 
 pub(crate) fn take_loader_lock() -> impl Drop {
     static LOCK: Lazy<std::sync::Mutex<()>> = Lazy::new(|| std::sync::Mutex::new(()));
@@ -27,12 +27,9 @@ fn ensure_valid_solidity_file(filepath: &str) -> PathBuf {
     });
 
     if extension != "sol" {
-        eprintln!(
-            "Please make sure {} represents a solidity file!",
-            filepath.to_string_lossy()
-        );
+        eprintln!("Please make sure {} represents a solidity file!", filepath.to_string_lossy());
         std::process::exit(1);
     }
 
-    utils::canonicalize(filepath).unwrap()
+    std::fs::canonicalize(filepath).unwrap()
 }

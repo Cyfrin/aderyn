@@ -16,61 +16,58 @@ use std::{
 
 pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
     vec![
-        Box::<DelegateCallInLoopDetector>::default(),
+        Box::<DelegatecallInLoopDetector>::default(),
         Box::<CentralizationRiskDetector>::default(),
         Box::<SolmateSafeTransferLibDetector>::default(),
         Box::<AvoidAbiEncodePackedDetector>::default(),
         Box::<EcrecoverDetector>::default(),
-        Box::<DeprecatedOZFunctionsDetector>::default(),
-        Box::<UnsafeERC20FunctionsDetector>::default(),
+        Box::<DeprecatedOZFunctionDetector>::default(),
+        Box::<UnsafeERC20OperationDetector>::default(),
         Box::<UnspecificSolidityPragmaDetector>::default(),
-        Box::<ZeroAddressCheckDetector>::default(),
-        Box::<UselessPublicFunctionDetector>::default(),
-        Box::<ConstantsInsteadOfLiteralsDetector>::default(),
-        Box::<UnindexedEventsDetector>::default(),
-        Box::<RequireWithStringDetector>::default(),
+        Box::<StateNoAddressCheckDetector>::default(),
+        Box::<UnusedPublicFunctionDetector>::default(),
+        Box::<LiteralsInsteadOfConstantsDetector>::default(),
+        Box::<EmptyRequireRevertDetector>::default(),
         Box::<NonReentrantBeforeOthersDetector>::default(),
         Box::<BlockTimestampDeadlineDetector>::default(),
         Box::<UnsafeERC721MintDetector>::default(),
         Box::<PushZeroOpcodeDetector>::default(),
         Box::<ArbitraryTransferFromDetector>::default(),
-        Box::<UselessModifierDetector>::default(),
+        Box::<ModifierUsedOnlyOnceDetector>::default(),
         Box::<EmptyBlockDetector>::default(),
         Box::<LargeLiteralValueDetector>::default(),
-        Box::<UselessInternalFunctionDetector>::default(),
-        Box::<ContractsWithTodosDetector>::default(),
+        Box::<InternalFunctionUsedOnceDetector>::default(),
+        Box::<TodoDetector>::default(),
         Box::<InconsistentTypeNamesDetector>::default(),
         Box::<UnprotectedInitializerDetector>::default(),
-        Box::<UselessErrorDetector>::default(),
-        Box::<RevertsAndRequiresInLoopsDetector>::default(),
+        Box::<UnusedErrorDetector>::default(),
+        Box::<RequireRevertInLoopDetector>::default(),
         Box::<DivisionBeforeMultiplicationDetector>::default(),
         Box::<UnsafeCastingDetector>::default(),
         Box::<EnumerableLoopRemovalDetector>::default(),
         Box::<ExperimentalEncoderDetector>::default(),
         Box::<IncorrectShiftOrderDetector>::default(),
-        Box::<StorageArrayEditWithMemoryDetector>::default(),
+        Box::<StorageArrayMemoryEditDetector>::default(),
         Box::<MultipleConstructorsDetector>::default(),
         Box::<ReusedContractNameDetector>::default(),
         Box::<NestedStructInMappingDetector>::default(),
-        Box::<SelfdestructIdentifierDetector>::default(),
+        Box::<SelfdestructDetector>::default(),
         Box::<DynamicArrayLengthAssignmentDetector>::default(),
-        Box::<UninitializedStateVariableDetector>::default(),
         Box::<IncorrectUseOfCaretOperatorDetector>::default(),
         Box::<YulReturnDetector>::default(),
         Box::<StateVariableShadowingDetector>::default(),
         Box::<UncheckedSendDetector>::default(),
         Box::<MisusedBooleanDetector>::default(),
         Box::<SendEtherNoChecksDetector>::default(),
-        Box::<DelegateCallOnUncheckedAddressDetector>::default(),
+        Box::<DelegateCallUncheckedAddressDetector>::default(),
         Box::<TautologicalCompareDetector>::default(),
         Box::<RTLODetector>::default(),
-        Box::<UncheckedReturnDetector>::default(),
         Box::<DangerousUnaryOperatorDetector>::default(),
         Box::<TautologyOrContraditionDetector>::default(),
         Box::<DangerousStrictEqualityOnBalanceDetector>::default(),
         Box::<StorageSignedIntegerArrayDetector>::default(),
-        Box::<RedundantStatementsDetector>::default(),
-        Box::<PublicVariableReadInExternalContextDetector>::default(),
+        Box::<RedundantStatementDetector>::default(),
+        Box::<StateVariableReadExternalDetector>::default(),
         Box::<WeakRandomnessDetector>::default(),
         Box::<PreDeclaredLocalVariableUsageDetector>::default(),
         Box::<DeletionNestedMappingDetector>::default(),
@@ -90,16 +87,22 @@ pub fn get_all_issue_detectors() -> Vec<Box<dyn IssueDetector>> {
         Box::<DeadCodeDetector>::default(),
         Box::<CacheArrayLengthDetector>::default(),
         Box::<AssertStateChangeDetector>::default(),
-        Box::<CostlyOperationsInsideLoopsDetector>::default(),
-        Box::<ConstantFunctionChangingStateDetector>::default(),
-        Box::<BuiltinSymbolShadowDetector>::default(),
+        Box::<CostlyLoopDetector>::default(),
+        Box::<ConstantFunctionChangesStateDetector>::default(),
+        Box::<BuiltinSymbolShadowingDetector>::default(),
         Box::<VoidConstructorDetector>::default(),
         Box::<FunctionSelectorCollisionDetector>::default(),
         Box::<MissingInheritanceDetector>::default(),
         Box::<UnusedImportDetector>::default(),
         Box::<UncheckedLowLevelCallDetector>::default(),
-        Box::<FucntionPointerInConstructorDetector>::default(),
+        Box::<FunctionPointerInConstructorDetector>::default(),
         Box::<StateVariableCouldBeConstantDetector>::default(),
+        Box::<StateVariableChangesWithoutEventDetector>::default(),
+        Box::<StateVariableCouldBeImmutableDetector>::default(),
+        Box::<MultiplePlaceholdersDetector>::default(),
+        Box::<ReentrancyStateChangeDetector>::default(),
+        Box::<IncorrectUseOfModifierDetector>::default(),
+        Box::<UncheckedReturnDetector>::default(),
     ]
 }
 
@@ -111,6 +114,11 @@ pub fn get_all_detectors_names() -> Vec<String> {
 #[derive(Debug, PartialEq, EnumString, Display)]
 #[strum(serialize_all = "kebab-case")]
 pub(crate) enum IssueDetectorNamePool {
+    IncorrectUseOfModifier,
+    ReentrancyStateChange,
+    StateVariableCouldBeImmutable,
+    MultiplePlaceholders,
+    StateChangeWithoutEvent,
     MissingInheritance,
     UnusedImport,
     VoidConstructor,
@@ -118,58 +126,56 @@ pub(crate) enum IssueDetectorNamePool {
     FunctionPointerInConstructor,
     DeadCode,
     FunctionSelectorCollision,
-    CacheArrayLength,
+    StorageArrayLengthNotCached,
     AssertStateChange,
-    CostlyOperationsInsideLoops,
-    ConstantFunctionChangingState,
-    BuiltinSymbolShadow,
+    CostlyLoop,
+    ConstantFunctionChangesState,
+    BuiltinSymbolShadowing,
     IncorrectERC721Interface,
     FunctionInitializingState,
-    DelegateCallInLoop,
+    DelegatecallInLoop,
     CentralizationRisk,
     SolmateSafeTransferLib,
-    AvoidAbiEncodePacked,
+    AbiEncodePackedHashCollision,
     Ecrecover,
-    DeprecatedOzFunctions,
-    UnsafeERC20Functions,
+    DeprecatedOzFunction,
+    UnsafeERC20Operation,
     UnspecificSolidityPragma,
-    ZeroAddressCheck,
-    UselessPublicFunction,
-    ConstantsInsteadOfLiterals,
-    UnindexedEvents,
-    RequireWithString,
-    NonReentrantBeforeOthers,
+    StateNoAddressCheck,
+    UnusedPublicFunction,
+    EmptyRequireRevert,
+    NonReentrantNotFirst,
     BlockTimestampDeadline,
+    LiteralInsteadOfConstant,
     UnsafeOzERC721Mint,
     PushZeroOpcode,
     ArbitraryTransferFrom,
-    UselessModifier,
-    UselessError,
+    ModifierUsedOnlyOnce,
+    UnusedError,
     LargeNumericLiteral,
-    UselessInternalFunction,
+    InternalFunctionUsedOnce,
     EmptyBlock,
-    ContractWithTodos,
+    Todo,
     InconsistentTypeNames,
     UnprotectedInitializer,
-    RevertsAndRequiresInLoops,
+    RequireRevertInLoop,
     DivisionBeforeMultiplication,
-    UnsafeCastingDetector,
+    UnsafeCasting,
     EnumerableLoopRemoval,
     ExperimentalEncoder,
     IncorrectShiftOrder,
-    StorageArrayEditWithMemory,
+    StorageArrayMemoryEdit,
     MultipleConstructors,
     ReusedContractName,
     NestedStructInMapping,
-    SelfdestructIdentifier,
+    Selfdestruct,
     DynamicArrayLengthAssignment,
-    UninitializedStateVariable,
     IncorrectCaretOperator,
     YulReturn,
     StateVariableShadowing,
     UncheckedSend,
     MisusedBoolean,
-    SendEtherNoChecks,
+    EthSendUncheckedAddress,
     DelegateCallUncheckedAddress,
     TautologicalCompare,
     #[allow(clippy::upper_case_acronyms)]
@@ -177,15 +183,15 @@ pub(crate) enum IssueDetectorNamePool {
     UncheckedReturn,
     DangerousUnaryOperator,
     TautologyOrContradiction,
-    DangerousStrictEquailtyOnContractBalance,
-    SignedStorageArray,
-    RedundantStatements,
-    PublicVariableReadInExternalContext,
+    StrictEqualityContractBalance,
+    SignedIntegerStorageArray,
+    RedundantStatement,
+    StateVariableReadExternal,
     WeakRandomness,
     PreDeclaredLocalVariableUsage,
     DeleteNestedMapping,
     UnusedStateVariable,
-    ConstantFunctionsAssembly,
+    ConstantFunctionContainsAssembly,
     BooleanEquality,
     TxOriginUsedForAuth,
     MsgValueInLoop,
@@ -195,7 +201,7 @@ pub(crate) enum IssueDetectorNamePool {
     UninitializedLocalVariable,
     ReturnBomb,
     OutOfOrderRetryable,
-    StateVariableCouldBeDeclaredConstant,
+    StateVariableCouldBeConstant,
     // NOTE: `Undecided` will be the default name (for new bots).
     // If it's accepted, a new variant will be added to this enum before normalizing it in aderyn
     Undecided,
@@ -205,6 +211,21 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
     // Expects a valid detector_name
     let detector_name = IssueDetectorNamePool::from_str(detector_name).ok()?;
     match detector_name {
+        IssueDetectorNamePool::ReentrancyStateChange => {
+            Some(Box::<ReentrancyStateChangeDetector>::default())
+        }
+        IssueDetectorNamePool::IncorrectUseOfModifier => {
+            Some(Box::<IncorrectUseOfModifierDetector>::default())
+        }
+        IssueDetectorNamePool::StateVariableCouldBeImmutable => {
+            Some(Box::<StateVariableCouldBeImmutableDetector>::default())
+        }
+        IssueDetectorNamePool::MultiplePlaceholders => {
+            Some(Box::<MultiplePlaceholdersDetector>::default())
+        }
+        IssueDetectorNamePool::StateChangeWithoutEvent => {
+            Some(Box::<StateVariableChangesWithoutEventDetector>::default())
+        }
         IssueDetectorNamePool::MissingInheritance => {
             Some(Box::<MissingInheritanceDetector>::default())
         }
@@ -213,28 +234,31 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         }
         IssueDetectorNamePool::UnusedImport => Some(Box::<UnusedImportDetector>::default()),
         IssueDetectorNamePool::VoidConstructor => Some(Box::<VoidConstructorDetector>::default()),
-        IssueDetectorNamePool::StateVariableCouldBeDeclaredConstant => {
+        IssueDetectorNamePool::StateVariableCouldBeConstant => {
             Some(Box::<StateVariableCouldBeConstantDetector>::default())
         }
+        IssueDetectorNamePool::LiteralInsteadOfConstant => {
+            Some(Box::<LiteralsInsteadOfConstantsDetector>::default())
+        }
         IssueDetectorNamePool::FunctionPointerInConstructor => {
-            Some(Box::<FucntionPointerInConstructorDetector>::default())
+            Some(Box::<FunctionPointerInConstructorDetector>::default())
         }
         IssueDetectorNamePool::DeadCode => Some(Box::<DeadCodeDetector>::default()),
         IssueDetectorNamePool::FunctionSelectorCollision => {
             Some(Box::<FunctionSelectorCollisionDetector>::default())
         }
-        IssueDetectorNamePool::CacheArrayLength => Some(Box::<CacheArrayLengthDetector>::default()),
+        IssueDetectorNamePool::StorageArrayLengthNotCached => {
+            Some(Box::<CacheArrayLengthDetector>::default())
+        }
         IssueDetectorNamePool::AssertStateChange => {
             Some(Box::<AssertStateChangeDetector>::default())
         }
-        IssueDetectorNamePool::CostlyOperationsInsideLoops => {
-            Some(Box::<CostlyOperationsInsideLoopsDetector>::default())
+        IssueDetectorNamePool::CostlyLoop => Some(Box::<CostlyLoopDetector>::default()),
+        IssueDetectorNamePool::ConstantFunctionChangesState => {
+            Some(Box::<ConstantFunctionChangesStateDetector>::default())
         }
-        IssueDetectorNamePool::ConstantFunctionChangingState => {
-            Some(Box::<ConstantFunctionChangingStateDetector>::default())
-        }
-        IssueDetectorNamePool::BuiltinSymbolShadow => {
-            Some(Box::<BuiltinSymbolShadowDetector>::default())
+        IssueDetectorNamePool::BuiltinSymbolShadowing => {
+            Some(Box::<BuiltinSymbolShadowingDetector>::default())
         }
         IssueDetectorNamePool::IncorrectERC721Interface => {
             Some(Box::<IncorrectERC721InterfaceDetector>::default())
@@ -255,8 +279,8 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::UnusedStateVariable => {
             Some(Box::<UnusedStateVariablesDetector>::default())
         }
-        IssueDetectorNamePool::DelegateCallInLoop => {
-            Some(Box::<DelegateCallInLoopDetector>::default())
+        IssueDetectorNamePool::DelegatecallInLoop => {
+            Some(Box::<DelegatecallInLoopDetector>::default())
         }
         IssueDetectorNamePool::CentralizationRisk => {
             Some(Box::<CentralizationRiskDetector>::default())
@@ -264,31 +288,29 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::SolmateSafeTransferLib => {
             Some(Box::<SolmateSafeTransferLibDetector>::default())
         }
-        IssueDetectorNamePool::AvoidAbiEncodePacked => {
+        IssueDetectorNamePool::AbiEncodePackedHashCollision => {
             Some(Box::<AvoidAbiEncodePackedDetector>::default())
         }
         IssueDetectorNamePool::Ecrecover => Some(Box::<EcrecoverDetector>::default()),
-        IssueDetectorNamePool::DeprecatedOzFunctions => {
-            Some(Box::<DeprecatedOZFunctionsDetector>::default())
+        IssueDetectorNamePool::DeprecatedOzFunction => {
+            Some(Box::<DeprecatedOZFunctionDetector>::default())
         }
-        IssueDetectorNamePool::UnsafeERC20Functions => {
-            Some(Box::<UnsafeERC20FunctionsDetector>::default())
+        IssueDetectorNamePool::UnsafeERC20Operation => {
+            Some(Box::<UnsafeERC20OperationDetector>::default())
         }
         IssueDetectorNamePool::UnspecificSolidityPragma => {
             Some(Box::<UnspecificSolidityPragmaDetector>::default())
         }
-        IssueDetectorNamePool::ZeroAddressCheck => Some(Box::<ZeroAddressCheckDetector>::default()),
-        IssueDetectorNamePool::UselessPublicFunction => {
-            Some(Box::<UselessPublicFunctionDetector>::default())
+        IssueDetectorNamePool::StateNoAddressCheck => {
+            Some(Box::<StateNoAddressCheckDetector>::default())
         }
-        IssueDetectorNamePool::ConstantsInsteadOfLiterals => {
-            Some(Box::<ConstantsInsteadOfLiteralsDetector>::default())
+        IssueDetectorNamePool::UnusedPublicFunction => {
+            Some(Box::<UnusedPublicFunctionDetector>::default())
         }
-        IssueDetectorNamePool::UnindexedEvents => Some(Box::<UnindexedEventsDetector>::default()),
-        IssueDetectorNamePool::RequireWithString => {
-            Some(Box::<RequireWithStringDetector>::default())
+        IssueDetectorNamePool::EmptyRequireRevert => {
+            Some(Box::<EmptyRequireRevertDetector>::default())
         }
-        IssueDetectorNamePool::NonReentrantBeforeOthers => {
+        IssueDetectorNamePool::NonReentrantNotFirst => {
             Some(Box::<NonReentrantBeforeOthersDetector>::default())
         }
         IssueDetectorNamePool::BlockTimestampDeadline => {
@@ -301,33 +323,31 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::ArbitraryTransferFrom => {
             Some(Box::<ArbitraryTransferFromDetector>::default())
         }
-        IssueDetectorNamePool::UselessModifier => Some(Box::<UselessModifierDetector>::default()),
+        IssueDetectorNamePool::ModifierUsedOnlyOnce => {
+            Some(Box::<ModifierUsedOnlyOnceDetector>::default())
+        }
         IssueDetectorNamePool::LargeNumericLiteral => {
             Some(Box::<LargeLiteralValueDetector>::default())
         }
-        IssueDetectorNamePool::UselessInternalFunction => {
-            Some(Box::<UselessInternalFunctionDetector>::default())
+        IssueDetectorNamePool::InternalFunctionUsedOnce => {
+            Some(Box::<InternalFunctionUsedOnceDetector>::default())
         }
         IssueDetectorNamePool::EmptyBlock => Some(Box::<EmptyBlockDetector>::default()),
-        IssueDetectorNamePool::ContractWithTodos => {
-            Some(Box::<ContractsWithTodosDetector>::default())
-        }
+        IssueDetectorNamePool::Todo => Some(Box::<TodoDetector>::default()),
         IssueDetectorNamePool::InconsistentTypeNames => {
             Some(Box::<InconsistentTypeNamesDetector>::default())
         }
         IssueDetectorNamePool::UnprotectedInitializer => {
             Some(Box::<UnprotectedInitializerDetector>::default())
         }
-        IssueDetectorNamePool::RevertsAndRequiresInLoops => {
-            Some(Box::<RevertsAndRequiresInLoopsDetector>::default())
+        IssueDetectorNamePool::RequireRevertInLoop => {
+            Some(Box::<RequireRevertInLoopDetector>::default())
         }
-        IssueDetectorNamePool::UselessError => Some(Box::<UselessErrorDetector>::default()),
+        IssueDetectorNamePool::UnusedError => Some(Box::<UnusedErrorDetector>::default()),
         IssueDetectorNamePool::DivisionBeforeMultiplication => {
             Some(Box::<DivisionBeforeMultiplicationDetector>::default())
         }
-        IssueDetectorNamePool::UnsafeCastingDetector => {
-            Some(Box::<UnsafeCastingDetector>::default())
-        }
+        IssueDetectorNamePool::UnsafeCasting => Some(Box::<UnsafeCastingDetector>::default()),
         IssueDetectorNamePool::EnumerableLoopRemoval => {
             Some(Box::<EnumerableLoopRemovalDetector>::default())
         }
@@ -337,8 +357,8 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::IncorrectShiftOrder => {
             Some(Box::<IncorrectShiftOrderDetector>::default())
         }
-        IssueDetectorNamePool::StorageArrayEditWithMemory => {
-            Some(Box::<StorageArrayEditWithMemoryDetector>::default())
+        IssueDetectorNamePool::StorageArrayMemoryEdit => {
+            Some(Box::<StorageArrayMemoryEditDetector>::default())
         }
         IssueDetectorNamePool::MultipleConstructors => {
             Some(Box::<MultipleConstructorsDetector>::default())
@@ -349,16 +369,11 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::NestedStructInMapping => {
             Some(Box::<NestedStructInMappingDetector>::default())
         }
-        IssueDetectorNamePool::SelfdestructIdentifier => {
-            Some(Box::<SelfdestructIdentifierDetector>::default())
-        }
+        IssueDetectorNamePool::Selfdestruct => Some(Box::<SelfdestructDetector>::default()),
         IssueDetectorNamePool::DynamicArrayLengthAssignment => {
             Some(Box::<DynamicArrayLengthAssignmentDetector>::default())
         }
 
-        IssueDetectorNamePool::UninitializedStateVariable => {
-            Some(Box::<UninitializedStateVariableDetector>::default())
-        }
         IssueDetectorNamePool::IncorrectCaretOperator => {
             Some(Box::<IncorrectUseOfCaretOperatorDetector>::default())
         }
@@ -368,11 +383,11 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         }
         IssueDetectorNamePool::UncheckedSend => Some(Box::<UncheckedSendDetector>::default()),
         IssueDetectorNamePool::MisusedBoolean => Some(Box::<MisusedBooleanDetector>::default()),
-        IssueDetectorNamePool::SendEtherNoChecks => {
+        IssueDetectorNamePool::EthSendUncheckedAddress => {
             Some(Box::<SendEtherNoChecksDetector>::default())
         }
         IssueDetectorNamePool::DelegateCallUncheckedAddress => {
-            Some(Box::<DelegateCallOnUncheckedAddressDetector>::default())
+            Some(Box::<DelegateCallUncheckedAddressDetector>::default())
         }
         IssueDetectorNamePool::TautologicalCompare => {
             Some(Box::<TautologicalCompareDetector>::default())
@@ -385,17 +400,17 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::TautologyOrContradiction => {
             Some(Box::<TautologyOrContraditionDetector>::default())
         }
-        IssueDetectorNamePool::DangerousStrictEquailtyOnContractBalance => {
+        IssueDetectorNamePool::StrictEqualityContractBalance => {
             Some(Box::<DangerousStrictEqualityOnBalanceDetector>::default())
         }
-        IssueDetectorNamePool::SignedStorageArray => {
+        IssueDetectorNamePool::SignedIntegerStorageArray => {
             Some(Box::<StorageSignedIntegerArrayDetector>::default())
         }
-        IssueDetectorNamePool::RedundantStatements => {
-            Some(Box::<RedundantStatementsDetector>::default())
+        IssueDetectorNamePool::RedundantStatement => {
+            Some(Box::<RedundantStatementDetector>::default())
         }
-        IssueDetectorNamePool::PublicVariableReadInExternalContext => {
-            Some(Box::<PublicVariableReadInExternalContextDetector>::default())
+        IssueDetectorNamePool::StateVariableReadExternal => {
+            Some(Box::<StateVariableReadExternalDetector>::default())
         }
         IssueDetectorNamePool::WeakRandomness => Some(Box::<WeakRandomnessDetector>::default()),
         IssueDetectorNamePool::PreDeclaredLocalVariableUsage => {
@@ -404,7 +419,7 @@ pub fn request_issue_detector_by_name(detector_name: &str) -> Option<Box<dyn Iss
         IssueDetectorNamePool::DeleteNestedMapping => {
             Some(Box::<DeletionNestedMappingDetector>::default())
         }
-        IssueDetectorNamePool::ConstantFunctionsAssembly => {
+        IssueDetectorNamePool::ConstantFunctionContainsAssembly => {
             Some(Box::<ConstantFunctionContainsAssemblyDetector>::default())
         }
         IssueDetectorNamePool::BooleanEquality => Some(Box::<BooleanEqualityDetector>::default()),

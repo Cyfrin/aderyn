@@ -1,13 +1,12 @@
-use crate::detect::helpers::is_constant_boolean;
-use crate::issue_detector;
+use crate::{detect::helpers::is_constant_boolean, issue_detector};
 use eyre::Result;
 
 issue_detector! {
     BooleanEqualityDetector;
 
     severity: Low,
-    title: "Boolean equality is not required.",
-    desc: "If `x` is a boolean, there is no need to do `if(x == true)` or `if(x == false)`. Just use `if(x)` and `if(!x)` respectively.",
+    title: "Boolean equality is not required",
+    desc: "If `x` is a boolean, use `if(x)` and `if(!x)` instead of `if(x == true)` or `if(x == false)`.",
     name: BooleanEquality,
 
     |context| {
