@@ -1,10 +1,8 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::ast::NodeID;
 
-use crate::capture;
-use crate::detect::detector::IssueDetectorNamePool;
+use crate::{capture, detect::detector::IssueDetectorNamePool};
 use phf::phf_set;
 
 use crate::{
@@ -14,13 +12,13 @@ use crate::{
 use eyre::Result;
 
 #[derive(Default)]
-pub struct BuiltinSymbolShadowDetector {
+pub struct BuiltinSymbolShadowingDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-impl IssueDetector for BuiltinSymbolShadowDetector {
+impl IssueDetector for BuiltinSymbolShadowingDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // Variable Declaration names
         for variable_declaration in context.variable_declarations() {
@@ -70,7 +68,7 @@ impl IssueDetector for BuiltinSymbolShadowDetector {
     }
 
     fn name(&self) -> String {
-        format!("{}", IssueDetectorNamePool::BuiltinSymbolShadow)
+        format!("{}", IssueDetectorNamePool::BuiltinSymbolShadowing)
     }
 }
 
@@ -141,7 +139,7 @@ mod builtin_symbol_shadowing_tests {
     use serial_test::serial;
 
     use crate::detect::{
-        detector::IssueDetector, low::builtin_symbol_shadowing::BuiltinSymbolShadowDetector,
+        detector::IssueDetector, low::builtin_symbol_shadowing::BuiltinSymbolShadowingDetector,
     };
 
     #[test]
@@ -151,16 +149,13 @@ mod builtin_symbol_shadowing_tests {
             "../tests/contract-playground/src/BuiltinSymbolShadow.sol",
         );
 
-        let mut detector = BuiltinSymbolShadowDetector::default();
+        let mut detector = BuiltinSymbolShadowingDetector::default();
         let found = detector.detect(&context).unwrap();
         // assert that the detector found an issue
         assert!(found);
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 4);
         // assert the severity is low
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

@@ -1,21 +1,25 @@
-use std::collections::{BTreeMap, HashMap};
-use std::error::Error;
+use std::{
+    collections::{BTreeMap, HashMap},
+    error::Error,
+};
 
 use crate::ast::{
     ContractDefinition, Mutability, NodeID, NodeType, UserDefinedTypeNameOrIdentifierPath,
     VariableDeclaration,
 };
 
-use crate::capture;
-use crate::context::browser::{
-    ExtractPragmaDirectives, ExtractVariableDeclarations, GetClosestAncestorOfTypeX,
-};
-use crate::context::workspace_context::ASTNode;
-use crate::detect::detector::IssueDetectorNamePool;
-use crate::detect::helpers::pragma_directive_to_semver;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    capture,
+    context::{
+        browser::{
+            ExtractPragmaDirectives, ExtractVariableDeclarations, GetClosestAncestorOfTypeX,
+        },
+        workspace_context::{ASTNode, WorkspaceContext},
+    },
+    detect::{
+        detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
+        helpers::pragma_directive_to_semver,
+    },
 };
 use eyre::Result;
 use semver::VersionReq;
@@ -26,7 +30,8 @@ use semver::VersionReq;
 
 // Preprocessing that would make this detector more efficient:
 // 1. Inheritance/Extension Tree
-// 2. Solc version based detector assignment (if solc version < 0.6.0, run this detector on the workspace context)
+// 2. Solc version based detector assignment (if solc version < 0.6.0, run this detector on the
+//    workspace context)
 
 #[derive(Default)]
 pub struct StateVariableShadowingDetector {
@@ -41,15 +46,11 @@ fn are_duplicate_names_in_inherited_contracts(
     contract_definition: &ContractDefinition, // Use reference to avoid cloning
 ) -> bool {
     // Check for duplicate variable names in the current contract
-    if ExtractVariableDeclarations::from(contract_definition)
-        .extracted
-        .iter()
-        .any(|vd| {
-            vd.state_variable
-                && vd.mutability() != Some(&Mutability::Constant)
-                && vd.name == variable_name
-        })
-    {
+    if ExtractVariableDeclarations::from(contract_definition).extracted.iter().any(|vd| {
+        vd.state_variable
+            && vd.mutability() != Some(&Mutability::Constant)
+            && vd.name == variable_name
+    }) {
         return true; // Return immediately if a duplicate is found
     }
 
@@ -67,9 +68,8 @@ fn are_duplicate_names_in_inherited_contracts(
                 }
             }
             UserDefinedTypeNameOrIdentifierPath::IdentifierPath(identifier_path) => {
-                if let Some(ASTNode::ContractDefinition(contract)) = context
-                    .nodes
-                    .get(&(identifier_path.referenced_declaration as i64))
+                if let Some(ASTNode::ContractDefinition(contract)) =
+                    context.nodes.get(&(identifier_path.referenced_declaration as i64))
                 {
                     if are_duplicate_names_in_inherited_contracts(context, variable_name, contract)
                     {
@@ -107,7 +107,7 @@ fn allows_below_0_6_0(version_req: &VersionReq) -> bool {
     }
 
     let comparator = &version_req.comparators[0];
-    comparator.major == 0 && comparator.minor.map_or(false, |m| m < 6)
+    comparator.major == 0 && comparator.minor.is_some_and(|m| m < 6)
 }
 
 impl IssueDetector for StateVariableShadowingDetector {
@@ -179,7 +179,7 @@ impl IssueDetector for StateVariableShadowingDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Shadowed State Variables in Inheritance Hierarchy")
+        String::from("Shadowed State Variable")
     }
 
     fn description(&self) -> String {
@@ -220,15 +220,9 @@ mod state_variable_shadowing_detector_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
         // assert the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from("Shadowed State Variables in Inheritance Hierarchy")
-        );
+        assert_eq!(detector.title(), String::from("Shadowed State Variable"));
         // assert the description is correct
         assert_eq!(
             detector.description(),

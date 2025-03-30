@@ -1,13 +1,11 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::ast::NodeID;
 
-use crate::capture;
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
+    capture,
     context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -34,11 +32,11 @@ impl IssueDetector for YulReturnDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Yul block contains `return` function call.")
+        String::from("Yul block contains `return`")
     }
 
     fn description(&self) -> String {
-        String::from("Remove this, as this causes execution to halt. Nothing after that call will execute, including code following the assembly block.")
+        String::from("This causes the transaction execution to halt, and nothing after that call will execute including code following the assembly block.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -73,19 +71,13 @@ mod yul_return_detector_tests {
 
         assert_eq!(detector.instances().len(), 1);
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
         // assert the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from("Yul block contains `return` function call.")
-        );
+        assert_eq!(detector.title(), String::from("Yul block contains `return`"));
         // assert the description is correct
         assert_eq!(
             detector.description(),
-            String::from("Remove this, as this causes execution to halt. Nothing after that call will execute, including code following the assembly block.")
+            String::from("This causes the transaction execution to halt, and nothing after that call will execute including code following the assembly block.")
         );
     }
 }

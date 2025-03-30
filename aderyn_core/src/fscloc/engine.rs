@@ -20,13 +20,16 @@ pub fn count_lines_of_code_and_collect_line_numbers_to_ignore(
         // Although there is a separate entry for `contracts/templegold/AuctionBase.sol`.
         // We want to omit reading the former
         if path.contains("//") {
-            None
+            // When using foundry-compilers-aletheia, there is no separate entry so we'll
+            // adjust the same entry
+            let adjusted_path = path.replace("//", "/");
+            Path::new(&src).join(adjusted_path)
         } else {
-            Some(Path::new(&src).join(path))
+            Path::new(&src).join(path)
         }
     };
 
-    let src_filepaths_as_paths = src_filepaths.iter().flat_map(form_path).collect::<Vec<_>>();
+    let src_filepaths_as_paths = src_filepaths.iter().map(form_path).collect::<Vec<_>>();
 
     if !src_filepaths_as_paths.is_empty() {
         // Only add the paths to WalkBuilder that we want to do analysis on.
@@ -50,7 +53,7 @@ pub fn count_lines_of_code_and_collect_line_numbers_to_ignore(
         });
     }
 
-    drop(tx); // without this, the program would not terminate .. becoz receiver would
+    drop(tx); // without this, the program would not terminate .. because receiver would
               // think that the `tx` is still waiting to send something.. but we're done
               // the clones have been dropped but not the original
               // refer rust docs for more on automatic garbage collection :)

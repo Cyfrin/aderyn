@@ -1,15 +1,13 @@
 use std::collections::BTreeMap;
 
-use std::convert::identity;
-use std::error::Error;
+use std::{convert::identity, error::Error};
 
 use crate::ast::NodeID;
 
-use crate::capture;
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
+    capture,
     context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 
 use eyre::Result;
@@ -26,9 +24,7 @@ impl IssueDetector for ContractLocksEtherDetector {
         for contract in context.contract_definitions() {
             // If a contract can accept eth, but doesn't allow for withdrawal capture it!
             if contract.can_accept_eth(context).is_some_and(identity)
-                && !contract
-                    .allows_withdrawal_of_eth(context)
-                    .is_some_and(identity)
+                && !contract.allows_withdrawal_of_eth(context).is_some_and(identity)
             {
                 capture!(self, context, contract);
             }
@@ -41,7 +37,7 @@ impl IssueDetector for ContractLocksEtherDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Contract locks Ether without a withdraw function.")
+        String::from("Contract locks Ether without a withdraw function")
     }
 
     fn description(&self) -> String {
@@ -92,7 +88,7 @@ mod contract_eth_helper {
 
         pub fn allows_withdrawal_of_eth(&self, context: &WorkspaceContext) -> Option<bool> {
             /*
-                For all the contracts in the hirearchy try and see if there is exists a public/external function that
+                For all the contracts in the hierarchy try and see if there is exists a public/external function that
                 can be called which takes the execution flow in a path where there is possibility to send back eth away from
                 the contract using the low level `call{value: XXX}` or `transfer` or `send`.
             */
@@ -126,9 +122,10 @@ mod contract_eth_helper {
                     }
                 }
             }
-            // At this point we have successfully gone through all the contracts in the inheritance heirarchy
-            // but tracker has determined that none of them have have calls that sends native eth Even if they are by
-            // some chance, they are not reachable from external & public functions
+            // At this point we have successfully gone through all the contracts in the inheritance
+            // hierarchy but tracker has determined that none of them have have calls
+            // that sends native eth Even if they are by some chance, they are not
+            // reachable from external & public functions
             Some(false)
         }
     }
@@ -175,9 +172,6 @@ mod contract_locks_ether_detector_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
     }
 }

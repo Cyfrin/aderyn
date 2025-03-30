@@ -1,14 +1,14 @@
-use std::collections::{BTreeMap, HashSet};
-use std::error::Error;
+use std::{
+    collections::{BTreeMap, HashSet},
+    error::Error,
+};
 
 use crate::ast::{FunctionCallKind, Mutability, NodeID};
 
-use crate::capture;
-use crate::context::browser::ExtractFunctionCalls;
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    capture,
+    context::{browser::ExtractFunctionCalls, workspace_context::WorkspaceContext},
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 
 #[derive(Default)]
@@ -21,8 +21,10 @@ pub struct StateVariableCouldBeConstantDetector {
 impl IssueDetector for StateVariableCouldBeConstantDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // PLAN
-        // 1. Collect all state variables that are not marked constant or immutable and are also not structs/mappings/contracts (collection A)
-        // 2. Investigate every function and collect all the state variables that could change (collection B)
+        // 1. Collect all state variables that are not marked constant or immutable and are also not
+        //    structs/mappings/contracts (collection A)
+        // 2. Investigate every function and collect all the state variables that could change
+        //    (collection B)
         // 3. Result = collection A - collection B
 
         let mut collection_a = Vec::new();
@@ -35,10 +37,7 @@ impl IssueDetector for StateVariableCouldBeConstantDetector {
 
             if let Some(rhs_value) = variable.value.as_ref() {
                 let function_calls = ExtractFunctionCalls::from(rhs_value).extracted;
-                if function_calls
-                    .iter()
-                    .any(|f| f.kind == FunctionCallKind::FunctionCall)
-                {
+                if function_calls.iter().any(|f| f.kind == FunctionCallKind::FunctionCall) {
                     continue;
                 }
             }
@@ -48,14 +47,9 @@ impl IssueDetector for StateVariableCouldBeConstantDetector {
             }
 
             // Do not report it if it's a struct / mapping
-            if variable
-                .type_descriptions
-                .type_string
-                .as_ref()
-                .is_some_and(|type_string| {
-                    type_string.starts_with("mapping") || type_string.starts_with("struct")
-                })
-            {
+            if variable.type_descriptions.type_string.as_ref().is_some_and(|type_string| {
+                type_string.starts_with("mapping") || type_string.starts_with("struct")
+            }) {
                 continue;
             }
 
@@ -100,7 +94,7 @@ impl IssueDetector for StateVariableCouldBeConstantDetector {
     }
 
     fn title(&self) -> String {
-        String::from("State variable could be declared constant")
+        String::from("State Variable Could Be Constant")
     }
 
     fn description(&self) -> String {
@@ -112,10 +106,7 @@ impl IssueDetector for StateVariableCouldBeConstantDetector {
     }
 
     fn name(&self) -> String {
-        format!(
-            "{}",
-            IssueDetectorNamePool::StateVariableCouldBeDeclaredConstant
-        )
+        format!("{}", IssueDetectorNamePool::StateVariableCouldBeConstant)
     }
 }
 
@@ -130,16 +121,13 @@ mod function_state_changes_finder_helper {
     };
 
     impl FunctionDefinition {
-        /// Investigates the function with the help callgraph and accumulates all the state variables
-        /// that have been changed.
+        /// Investigates the function with the help callgraph and accumulates all the state
+        /// variables that have been changed.
         pub fn state_variable_changes<'a>(
             &self,
             context: &'a WorkspaceContext,
         ) -> Option<ApproximateStorageChangeFinder<'a>> {
-            let mut tracker = StateVariableChangeTracker {
-                changes: None,
-                context,
-            };
+            let mut tracker = StateVariableChangeTracker { changes: None, context };
 
             let investigator =
                 CallGraph::new(context, &[&(self.into())], CallGraphDirection::Inward).ok()?;
@@ -154,7 +142,7 @@ mod function_state_changes_finder_helper {
         changes: Option<ApproximateStorageChangeFinder<'a>>,
     }
 
-    impl<'a> CallGraphVisitor for StateVariableChangeTracker<'a> {
+    impl CallGraphVisitor for StateVariableChangeTracker<'_> {
         fn visit_any(&mut self, node: &ASTNode) -> eyre::Result<()> {
             let changes = ApproximateStorageChangeFinder::from(self.context, node);
             if self.changes.is_none() {
@@ -193,9 +181,6 @@ mod state_variable_could_be_constant_tests {
 
         println!("{:?}", detector.instances());
         // assert the severity is low
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

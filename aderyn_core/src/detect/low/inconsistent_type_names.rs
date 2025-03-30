@@ -133,13 +133,12 @@ impl IssueDetector for InconsistentTypeNamesDetector {
     }
 
     fn title(&self) -> String {
-        String::from(
-            "Inconsistency in declaring uint256/uint (or) int256/int variables within a contract. Use explicit size declarations (uint256 or int256).",
-        )
+        String::from("Inconsistent uint256/uint (or) int256/int types")
     }
 
     fn description(&self) -> String {
-        String::from("Consider keeping the naming convention consistent in a given contract. Explicit size declarations are preferred (uint256, int256) over implicit ones (uint, int) to avoid confusion.")
+        String::from("Inconsistency in declaring uint256/uint (or) int256/int variables within a contract. Use explicit size declarations (uint256 or int256). \
+        Consider keeping the naming convention consistent in a given contract. Explicit size declarations are preferred (uint256, int256) over implicit ones (uint, int) to avoid confusion.")
     }
 
     fn severity(&self) -> IssueSeverity {
@@ -156,7 +155,7 @@ impl IssueDetector for InconsistentTypeNamesDetector {
 }
 
 #[cfg(test)]
-mod inconsistent_type_names {
+mod inconsistent_type_names_tests {
     use serial_test::serial;
 
     use crate::detect::detector::IssueDetector;
@@ -178,10 +177,7 @@ mod inconsistent_type_names {
 
         assert_eq!(detector.instances().len(), 7);
         // assert that the detector returns the correct severity
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 
     #[test]
@@ -199,9 +195,6 @@ mod inconsistent_type_names {
 
         assert_eq!(detector.instances().len(), 2);
         // assert that the detector returns the correct severity
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

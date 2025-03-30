@@ -2,7 +2,10 @@
 use crate::visitor::ast_visitor::{list_accept, ASTConstVisitor, Node};
 use eyre::Result;
 use serde::{Deserialize, Serialize};
-use std::{collections::HashMap, hash::Hash, hash::Hasher};
+use std::{
+    collections::HashMap,
+    hash::{Hash, Hasher},
+};
 
 use super::*;
 

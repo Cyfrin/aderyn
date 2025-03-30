@@ -30,15 +30,14 @@ impl IssueDetector for ImmediateParentDemonstrator {
             println!("0 {}", assignment);
             capture!(self, context, assignment);
             if let Some(first_parent) = assignment.parent(context) {
-                if let ASTNode::Block(block) = first_parent {
-                    println!("1 {}", block);
-                    capture!(self, context, first_parent);
+                if let ASTNode::ExpressionStatement(expr_stmnt) = first_parent {
+                    println!("1 {}", expr_stmnt);
                     if let Some(second_parent) = first_parent.parent(context) {
-                        if let ASTNode::ForStatement(for_statement) = second_parent {
+                        if let ASTNode::Block(for_statement) = second_parent {
                             println!("2 {}", for_statement);
                             capture!(self, context, second_parent);
                             if let Some(third_parent) = for_statement.parent(context) {
-                                if let ASTNode::Block(block) = third_parent {
+                                if let ASTNode::ForStatement(block) = third_parent {
                                     println!("3 {}", block);
                                     capture!(self, context, third_parent);
                                 }
@@ -49,7 +48,7 @@ impl IssueDetector for ImmediateParentDemonstrator {
                                 assert!(first_parent
                                     .appears_after(context, for_statement)
                                     .unwrap());
-                                assert!(block.appears_after(context, for_statement).unwrap());
+                                assert!(expr_stmnt.appears_after(context, for_statement).unwrap());
                                 assert!(second_parent
                                     .appears_after(context, third_parent)
                                     .unwrap());
@@ -110,10 +109,7 @@ mod parent_chain_demo_tests {
         assert!(found);
 
         println!("{:?}", detector.instances());
-        println!(
-            "Total number of instances: {:?}",
-            detector.instances().len()
-        );
-        assert!(detector.instances().len() == 4);
+        println!("Total number of instances: {:?}", detector.instances().len());
+        assert!(detector.instances().len() == 3);
     }
 }

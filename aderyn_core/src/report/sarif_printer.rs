@@ -209,11 +209,8 @@ fn create_sarif_results(report: &Report) -> Vec<SarifResult> {
 fn create_sarif_locations(issue: &Issue) -> Vec<Location> {
     let mut locations: Vec<Location> = Vec::new();
     for ((filename, _line_number, source_location), _value) in issue.instances.iter() {
-        let hint = issue.hints.get(&(
-            filename.to_string(),
-            *_line_number,
-            source_location.to_string(),
-        ));
+        let hint =
+            issue.hints.get(&(filename.to_string(), *_line_number, source_location.to_string()));
 
         let message = {
             if hint.is_some() {

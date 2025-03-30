@@ -4,8 +4,7 @@ use crate::{
     visitor::ast_visitor::{ASTConstVisitor, Node},
 };
 
-use super::GetImmediateChildren;
-use super::SortNodeReferencesToSequence;
+use super::{GetImmediateChildren, SortNodeReferencesToSequence};
 
 pub trait GetNextSibling {
     /// Get the next sibling an ASTNode

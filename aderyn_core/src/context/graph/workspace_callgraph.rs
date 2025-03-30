@@ -16,8 +16,9 @@ pub struct WorkspaceCallGraph {
 }
 
 /**
-* Every NodeID in RawCallGraph should corresponds to [`crate::ast::FunctionDefinition`] or [`crate::ast::ModifierDefinition`]
-*/
+ * Every NodeID in RawCallGraph should corresponds to [`crate::ast::FunctionDefinition`] or
+ * [`crate::ast::ModifierDefinition`]
+ */
 pub type RawCallGraph = HashMap<NodeID, Vec<NodeID>>;
 
 impl WorkspaceCallGraph {
@@ -48,8 +49,8 @@ impl WorkspaceCallGraph {
     }
 }
 
-/// Make connections from each of the nodes of [`crate::ast::FunctionDefinition`] and [`crate::ast::ModifierDefinition`]
-/// with their connected counterparts.
+/// Make connections from each of the nodes of [`crate::ast::FunctionDefinition`] and
+/// [`crate::ast::ModifierDefinition`] with their connected counterparts.
 fn dfs_to_create_graph(
     id: NodeID,
     raw_callgraph: &mut RawCallGraph,
@@ -76,7 +77,7 @@ fn dfs_to_create_graph(
         for function_call in function_calls {
             if let Expression::Identifier(identifier) = function_call.expression.as_ref() {
                 if let Some(referenced_function_id) = identifier.referenced_declaration {
-                    create_connection_if_not_exsits(id, referenced_function_id, raw_callgraph);
+                    create_connection_if_not_exists(id, referenced_function_id, raw_callgraph);
                     dfs_to_create_graph(referenced_function_id, raw_callgraph, visited, context)?;
                 }
             }
@@ -88,7 +89,7 @@ fn dfs_to_create_graph(
             match &modifier_invocation.modifier_name {
                 IdentifierOrIdentifierPath::Identifier(identifier) => {
                     if let Some(reference_modifier_id) = identifier.referenced_declaration {
-                        create_connection_if_not_exsits(id, reference_modifier_id, raw_callgraph);
+                        create_connection_if_not_exists(id, reference_modifier_id, raw_callgraph);
                         dfs_to_create_graph(
                             reference_modifier_id,
                             raw_callgraph,
@@ -99,7 +100,7 @@ fn dfs_to_create_graph(
                 }
                 IdentifierOrIdentifierPath::IdentifierPath(identifier_path) => {
                     let referenced_modifier_id = identifier_path.referenced_declaration;
-                    create_connection_if_not_exsits(
+                    create_connection_if_not_exists(
                         id,
                         referenced_modifier_id as i64,
                         raw_callgraph,
@@ -121,14 +122,15 @@ fn dfs_to_create_graph(
     Ok(())
 }
 
-fn create_connection_if_not_exsits(
+fn create_connection_if_not_exists(
     from_id: NodeID,
     to_id: NodeID,
     raw_callgraph: &mut RawCallGraph,
 ) {
     match raw_callgraph.entry(from_id) {
         hash_map::Entry::Occupied(mut o) => {
-            // Performance Tip: Maybe later use binary search (it requires keeping ascending order while inserting tho)
+            // Performance Tip: Maybe later use binary search (it requires keeping ascending order
+            // while inserting tho)
             if !o.get().contains(&to_id) {
                 o.get_mut().push(to_id);
             }
@@ -144,7 +146,7 @@ impl Transpose for RawCallGraph {
         let mut reversed_callgraph = RawCallGraph::default();
         for (from_id, tos) in self {
             for to_id in tos {
-                create_connection_if_not_exsits(*to_id, *from_id, &mut reversed_callgraph);
+                create_connection_if_not_exists(*to_id, *from_id, &mut reversed_callgraph);
             }
         }
         reversed_callgraph

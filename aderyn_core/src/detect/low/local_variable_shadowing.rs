@@ -1,15 +1,14 @@
-use std::collections::BTreeMap;
-use std::convert::identity;
-use std::error::Error;
+use std::{collections::BTreeMap, convert::identity, error::Error};
 
 use crate::ast::{ContractKind, NodeID, NodeType};
 
-use crate::capture;
-use crate::context::browser::{ExtractVariableDeclarations, GetClosestAncestorOfTypeX};
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    capture,
+    context::{
+        browser::{ExtractVariableDeclarations, GetClosestAncestorOfTypeX},
+        workspace_context::WorkspaceContext,
+    },
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -36,11 +35,9 @@ impl IssueDetector for LocalVariableShadowingDetector {
                 contract.get_all_state_variables_in_linearized_base_contracts_chain(context)
             {
                 for local_contract_variable in local_contract_variables {
-                    if state_variables
-                        .iter()
-                        .any(|v| v.name == local_contract_variable.name)
-                    {
-                        // It's okay to allow EventDefinitions/ ErrorDefinitions to shadow the state variable name
+                    if state_variables.iter().any(|v| v.name == local_contract_variable.name) {
+                        // It's okay to allow EventDefinitions/ ErrorDefinitions to shadow the state
+                        // variable name
                         if local_contract_variable
                             .closest_ancestor_of_type(context, NodeType::EventDefinition)
                             .is_some()
@@ -65,11 +62,11 @@ impl IssueDetector for LocalVariableShadowingDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Local variable shadows state variables in the contract hirearchy")
+        String::from("Local Variable Shadows State Variable")
     }
 
     fn description(&self) -> String {
-        String::from("Rename the local variables that shadow another component.")
+        String::from("Rename the local variable that shadows another state variable.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -81,7 +78,7 @@ impl IssueDetector for LocalVariableShadowingDetector {
     }
 }
 
-mod contract_hirearchy_variable_helpers {
+mod contract_hierarchy_variable_helpers {
     use crate::{
         ast::{ASTNode, ContractDefinition, VariableDeclaration},
         context::{browser::ExtractVariableDeclarations, workspace_context::WorkspaceContext},
@@ -97,11 +94,8 @@ mod contract_hirearchy_variable_helpers {
             for contract_id in contracts {
                 if let ASTNode::ContractDefinition(c) = context.nodes.get(contract_id)? {
                     let variable_declarations = ExtractVariableDeclarations::from(c).extracted;
-                    all_state_variable_ids.extend(
-                        variable_declarations
-                            .into_iter()
-                            .filter(|v| v.state_variable),
-                    )
+                    all_state_variable_ids
+                        .extend(variable_declarations.into_iter().filter(|v| v.state_variable))
                 }
             }
             Some(all_state_variable_ids)
@@ -134,9 +128,6 @@ mod local_variable_shadowing_tests {
 
         assert_eq!(detector.instances().len(), 3);
         // assert the severity is low
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

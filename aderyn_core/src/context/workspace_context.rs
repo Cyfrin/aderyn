@@ -1,11 +1,9 @@
-use crate::ast::*;
-use crate::fscloc::cloc::IgnoreLine;
-use std::cmp::Ordering;
-use std::collections::HashMap;
+use foundry_compilers_aletheia::EvmVersion;
 
-use super::browser::GetImmediateParent;
-use super::capturable::Capturable;
-use super::graph::WorkspaceCallGraph;
+use crate::{ast::*, fscloc::cloc::IgnoreLine};
+use std::{cmp::Ordering, collections::HashMap};
+
+use super::{browser::GetImmediateParent, capturable::Capturable, graph::WorkspaceCallGraph};
 pub use crate::ast::ASTNode;
 
 #[derive(Default, Debug, Clone, PartialEq, Eq, Hash)]
@@ -24,6 +22,7 @@ pub struct WorkspaceContext {
     pub last_modifier_definition_id: Option<NodeID>,
 
     pub parent_link: HashMap<NodeID, NodeID>,
+    pub evm_version: EvmVersion,
 
     // relative source filepaths
     pub src_filepaths: Vec<String>,
@@ -80,6 +79,7 @@ pub struct WorkspaceContext {
     pub(crate) try_catch_clauses_context: HashMap<TryCatchClause, NodeContext>,
     pub(crate) tuple_expressions_context: HashMap<TupleExpression, NodeContext>,
     pub(crate) unary_operations_context: HashMap<UnaryOperation, NodeContext>,
+    pub(crate) unchecked_blocks_context: HashMap<UncheckedBlock, NodeContext>,
     pub(crate) user_defined_type_names_context: HashMap<UserDefinedTypeName, NodeContext>,
     pub(crate) user_defined_value_type_definitions_context:
         HashMap<UserDefinedValueTypeDefinition, NodeContext>,
@@ -151,8 +151,8 @@ impl WorkspaceContext {
             let len: usize = len.parse().ok()?;
             if let Some(content) = source_unit.source.as_ref() {
                 if offset + len < content.len() {
-                    let requried_content = &content[offset..offset + len];
-                    return Some(requried_content.to_string());
+                    let required_content = &content[offset..offset + len];
+                    return Some(required_content.to_string());
                 }
             }
         }
@@ -236,10 +236,8 @@ impl WorkspaceContext {
     pub fn get_node_sort_key(&self, node: &ASTNode) -> (String, usize, String) {
         let source_unit = self.get_source_unit_from_child_node(node).unwrap();
         let absolute_path = source_unit.absolute_path.as_ref().unwrap().clone();
-        let source_line = node
-            .src()
-            .map(|src| source_unit.source_line(src).unwrap_or(0))
-            .unwrap_or(0);
+        let source_line =
+            node.src().map(|src| source_unit.source_line(src).unwrap_or(0)).unwrap_or(0);
 
         let src_location = match node {
             ASTNode::ContractDefinition(contract_node) => contract_node

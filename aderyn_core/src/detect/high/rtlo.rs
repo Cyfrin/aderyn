@@ -1,13 +1,11 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::ast::NodeID;
 
-use crate::capture;
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
+    capture,
     context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -41,11 +39,11 @@ impl IssueDetector for RTLODetector {
     }
 
     fn title(&self) -> String {
-        String::from("RTLO character detected in file. \\u{202e}")
+        String::from("RTLO character detected in file: \\u{202e}")
     }
 
     fn description(&self) -> String {
-        String::from("Right to left override character may be misledaing and cause potential attacks by visually misordering method arguments!")
+        String::from("The right to left override character may be misleading and cause potential attacks by visually misordering method arguments.")
     }
 
     fn instances(&self) -> BTreeMap<(String, usize, String), NodeID> {
@@ -65,7 +63,7 @@ mod rtlo_detector_tests {
 
     #[test]
     #[serial]
-    fn c() {
+    fn test_rtlo_detector() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/RTLO.sol",
         );
@@ -77,19 +75,13 @@ mod rtlo_detector_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
         // assert the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from("RTLO character detected in file. \\u{202e}")
-        );
+        assert_eq!(detector.title(), String::from("RTLO character detected in file: \\u{202e}"));
         // assert the description is correct
         assert_eq!(
             detector.description(),
-            String::from("Right to left override character may be misledaing and cause potential attacks by visually misordering method arguments!")
+            String::from("The right to left override character may be misleading and cause potential attacks by visually misordering method arguments.")
         );
     }
 }

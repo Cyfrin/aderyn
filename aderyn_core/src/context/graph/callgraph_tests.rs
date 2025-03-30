@@ -1,7 +1,7 @@
 #![allow(clippy::collapsible_match)]
 
 #[cfg(test)]
-mod callgraph_tests {
+mod callgraph_test_functions {
     use crate::{
         ast::{FunctionDefinition, ModifierDefinition},
         context::{
@@ -15,21 +15,13 @@ mod callgraph_tests {
 
     fn get_function_by_name(context: &WorkspaceContext, name: &str) -> ASTNode {
         ASTNode::from(
-            context
-                .function_definitions()
-                .into_iter()
-                .find(|&x| x.name == *name)
-                .unwrap(),
+            context.function_definitions().into_iter().find(|&x| x.name == *name).unwrap(),
         )
     }
 
     fn get_modifier_definition_by_name(context: &WorkspaceContext, name: &str) -> ASTNode {
         ASTNode::from(
-            context
-                .modifier_definitions()
-                .into_iter()
-                .find(|&x| x.name == *name)
-                .unwrap(),
+            context.modifier_definitions().into_iter().find(|&x| x.name == *name).unwrap(),
         )
     }
 
@@ -165,7 +157,7 @@ mod callgraph_tests {
         outward_side_effects_modifier_definitions_names: Vec<String>,
     }
 
-    impl<'a> Tracker<'a> {
+    impl Tracker<'_> {
         fn new(context: &WorkspaceContext) -> Tracker {
             Tracker {
                 context,
@@ -181,91 +173,75 @@ mod callgraph_tests {
 
         // inward functions
         fn has_found_inward_functions_with_names(&self, name: &[&str]) -> bool {
-            name.iter()
-                .all(|&n| self.inward_func_definitions_names.contains(&n.to_string()))
+            name.iter().all(|&n| self.inward_func_definitions_names.contains(&n.to_string()))
         }
 
         // outward functions
         fn has_found_outward_functions_with_names(&self, name: &[&str]) -> bool {
-            name.iter()
-                .all(|&n| self.outward_func_definitions_names.contains(&n.to_string()))
+            name.iter().all(|&n| self.outward_func_definitions_names.contains(&n.to_string()))
         }
 
         fn has_not_found_any_outward_functions_with_name(&self, name: &str) -> bool {
-            !self
-                .outward_func_definitions_names
-                .contains(&name.to_string())
+            !self.outward_func_definitions_names.contains(&name.to_string())
         }
 
         // outward modifiers
         fn has_found_outward_modifiers_with_names(&self, name: &[&str]) -> bool {
-            name.iter().all(|&n| {
-                self.outward_modifier_definitions_names
-                    .contains(&n.to_string())
-            })
+            name.iter().all(|&n| self.outward_modifier_definitions_names.contains(&n.to_string()))
         }
 
         // outward side effects
         fn has_found_outward_side_effect_functions_with_name(&self, name: &[&str]) -> bool {
-            name.iter().all(|&n| {
-                self.outward_side_effects_func_definitions_names
-                    .contains(&n.to_string())
-            })
+            name.iter()
+                .all(|&n| self.outward_side_effects_func_definitions_names.contains(&n.to_string()))
         }
     }
 
     impl CallGraphVisitor for Tracker<'_> {
         fn visit_entry_point(&mut self, node: &ASTNode) -> eyre::Result<()> {
-            self.entry_points
-                .push(self.context.get_node_sort_key_pure(node));
+            self.entry_points.push(self.context.get_node_sort_key_pure(node));
             Ok(())
         }
         fn visit_inward_function_definition(
             &mut self,
             node: &crate::ast::FunctionDefinition,
         ) -> eyre::Result<()> {
-            self.inward_func_definitions_names
-                .push(node.name.to_string());
+            self.inward_func_definitions_names.push(node.name.to_string());
             Ok(())
         }
         fn visit_inward_modifier_definition(
             &mut self,
             node: &crate::ast::ModifierDefinition,
         ) -> eyre::Result<()> {
-            self.inward_modifier_definitions_names
-                .push(node.name.to_string());
+            self.inward_modifier_definitions_names.push(node.name.to_string());
             Ok(())
         }
         fn visit_outward_function_definition(
             &mut self,
             node: &crate::ast::FunctionDefinition,
         ) -> eyre::Result<()> {
-            self.outward_func_definitions_names
-                .push(node.name.to_string());
+            self.outward_func_definitions_names.push(node.name.to_string());
             Ok(())
         }
         fn visit_outward_modifier_definition(
             &mut self,
             node: &crate::ast::ModifierDefinition,
         ) -> eyre::Result<()> {
-            self.outward_modifier_definitions_names
-                .push(node.name.to_string());
+            self.outward_modifier_definitions_names.push(node.name.to_string());
             Ok(())
         }
         fn visit_outward_side_effect_function_definition(
             &mut self,
             node: &FunctionDefinition,
         ) -> eyre::Result<()> {
-            self.outward_side_effects_func_definitions_names
-                .push(node.name.to_string());
+            self.outward_side_effects_func_definitions_names.push(node.name.to_string());
             Ok(())
         }
         fn visit_outward_side_effect_modifier_definition(
             &mut self,
             node: &ModifierDefinition,
         ) -> eyre::Result<()> {
-            self.outward_side_effects_modifier_definitions_names
-                .push(node.name.to_string());
+            self.outward_side_effects_modifier_definitions_names.push(node.name.to_string());
             Ok(())
         }
     }

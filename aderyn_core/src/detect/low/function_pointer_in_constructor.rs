@@ -1,25 +1,22 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::ast::{FunctionKind, NodeID};
 
-use crate::capture;
-use crate::context::browser::ExtractVariableDeclarations;
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    capture,
+    context::{browser::ExtractVariableDeclarations, workspace_context::WorkspaceContext},
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
 #[derive(Default)]
-pub struct FucntionPointerInConstructorDetector {
+pub struct FunctionPointerInConstructorDetector {
     // Keys are: [0] source file name, [1] line number, [2] character location of node.
     // Do not add items manually, use `capture!` to add nodes to this BTreeMap.
     found_instances: BTreeMap<(String, usize, String), NodeID>,
 }
 
-impl IssueDetector for FucntionPointerInConstructorDetector {
+impl IssueDetector for FunctionPointerInConstructorDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         // PLAN:
         // Catch all the function pointers in constructors that compile below 0.5.9
@@ -52,7 +49,7 @@ impl IssueDetector for FucntionPointerInConstructorDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Function pointers used in constructors.")
+        String::from("Function Pointer in Constructor")
     }
 
     fn description(&self) -> String {
@@ -99,6 +96,22 @@ mod func_compilation_solc_pragma_helper {
             }
             false
         }
+        pub fn compiles_for_solc_below_0_6_5(&self, context: &WorkspaceContext) -> bool {
+            if let Some(source_unit) = self.closest_ancestor_of_type(context, NodeType::SourceUnit)
+            {
+                let pragma_directives = ExtractPragmaDirectives::from(source_unit).extracted;
+
+                if let Some(pragma_directive) = pragma_directives.first() {
+                    if let Ok(pragma_semver) = helpers::pragma_directive_to_semver(pragma_directive)
+                    {
+                        if version_req_allows_below_0_6_5(&pragma_semver) {
+                            return true;
+                        }
+                    }
+                }
+            }
+            false
+        }
     }
 
     fn version_req_allows_below_0_5_9(version_req: &VersionReq) -> bool {
@@ -121,6 +134,33 @@ mod func_compilation_solc_pragma_helper {
         // Else, return false
         false
     }
+    fn version_req_allows_below_0_6_5(version_req: &VersionReq) -> bool {
+        // If it matches any 0.4.0 to 0.4.26, return true
+        for i in 0..=26 {
+            let version = Version::from_str(&format!("0.4.{}", i)).unwrap();
+            if version_req.matches(&version) {
+                return true;
+            }
+        }
+
+        // If it matches any 0.5.0 to 0.5.17, return true
+        for i in 0..=17 {
+            let version = Version::from_str(&format!("0.5.{}", i)).unwrap();
+            if version_req.matches(&version) {
+                return true;
+            }
+        }
+
+        // If it matches any 0.6.0 to 0.6.4, return true
+        for i in 0..=4 {
+            let version = Version::from_str(&format!("0.4.{}", i)).unwrap();
+            if version_req.matches(&version) {
+                return true;
+            }
+        }
+        // Else, return false
+        false
+    }
 }
 
 #[cfg(test)]
@@ -129,7 +169,7 @@ mod function_pointers_tests {
 
     use crate::detect::{
         detector::IssueDetector,
-        low::function_pointer_in_constructor::FucntionPointerInConstructorDetector,
+        low::function_pointer_in_constructor::FunctionPointerInConstructorDetector,
     };
 
     #[test]
@@ -139,16 +179,13 @@ mod function_pointers_tests {
             "../tests/contract-playground/src/FunctionPointers.sol",
         );
 
-        let mut detector = FucntionPointerInConstructorDetector::default();
+        let mut detector = FunctionPointerInConstructorDetector::default();
         let found = detector.detect(&context).unwrap();
         // assert that the detector found an issue
         assert!(found);
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
         // assert the severity is low
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

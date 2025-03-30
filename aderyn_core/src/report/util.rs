@@ -41,17 +41,16 @@ pub fn carve_shortest_path(from_file: PathBuf, to_file: PathBuf) -> PathBuf {
     // Now, we are at the common place
 
     // High level 2 step plan to get to the `to_file`
-    // 1. Do '../' until you reach a common place
-    //     |==> you can reverse this problem (since we only care about no. of steps)
-    //     |==> ask how many directories forward you should go to reach `from_file`
-    //     |==> That's how many times you must come back!
+    // 1. Do '../' until you reach a common place |==> you can reverse this problem (since we only
+    //    care about no. of steps) |==> ask how many directories forward you should go to reach
+    //    `from_file` |==> That's how many times you must come back!
     // 2. Now, go forward till you reach the `to_file`
 
     // STEP 1
     // Calculate '../' count
     let mut count_back = 0;
 
-    // Keep looking foreward until you reach the to_file
+    // Keep looking forward until you reach the to_file
     while let Some(ffc) = curr_ffc {
         buffer.push(ffc);
         if let Component::Normal(_) = ffc {
@@ -63,9 +62,7 @@ pub fn carve_shortest_path(from_file: PathBuf, to_file: PathBuf) -> PathBuf {
         curr_ffc = from_file_comps.next();
     }
 
-    let mut backward_comps = (0..count_back)
-        .map(|_| Component::ParentDir)
-        .collect::<Vec<_>>();
+    let mut backward_comps = (0..count_back).map(|_| Component::ParentDir).collect::<Vec<_>>();
 
     // STEP 2
     // Now, let's capture the forward path for  `to_file`
@@ -78,10 +75,7 @@ pub fn carve_shortest_path(from_file: PathBuf, to_file: PathBuf) -> PathBuf {
 
     // Finally, concatenate both components
     backward_comps.extend(forward_comps.iter());
-    let final_route = backward_comps
-        .iter()
-        .map(|c| c.as_os_str())
-        .collect::<PathBuf>();
+    let final_route = backward_comps.iter().map(|c| c.as_os_str()).collect::<PathBuf>();
 
     final_route
 }

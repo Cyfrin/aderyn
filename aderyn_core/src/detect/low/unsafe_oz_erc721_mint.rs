@@ -31,7 +31,7 @@ impl IssueDetector for UnsafeERC721MintDetector {
                     directive
                         .absolute_path
                         .as_ref()
-                        .map_or(false, |path| path.contains("openzeppelin"))
+                        .is_some_and(|path| path.contains("openzeppelin"))
                 }) && identifier.name == "_mint"
                 {
                     let this_contract_definition = identifier
@@ -55,12 +55,12 @@ impl IssueDetector for UnsafeERC721MintDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Using `ERC721::_mint()` can be dangerous")
+        String::from("Unsafe `ERC721::_mint()`")
     }
 
     fn description(&self) -> String {
         String::from(
-            "Using `ERC721::_mint()` can mint ERC721 tokens to addresses which don't support ERC721 tokens. Use `_safeMint()` instead of `_mint()` for ERC721.",
+            "Using `ERC721::_mint()` can mint ERC721 tokens to addresses which don't support ERC721 tokens. Use `_safeMint()` instead of `_mint()` for ERC721 tokens.",
         )
     }
 
@@ -96,20 +96,14 @@ mod unsafe_erc721_mint_tests {
         // assert that the detector found the correct number of instance
         assert_eq!(detector.instances().len(), 1);
         // assert that the severity is Low
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert that the title is correct
-        assert_eq!(
-            detector.title(),
-            String::from("Using `ERC721::_mint()` can be dangerous")
-        );
+        assert_eq!(detector.title(), String::from("Unsafe `ERC721::_mint()`"));
         // assert that the description is correct
         assert_eq!(
             detector.description(),
             String::from(
-                "Using `ERC721::_mint()` can mint ERC721 tokens to addresses which don't support ERC721 tokens. Use `_safeMint()` instead of `_mint()` for ERC721."
+                "Using `ERC721::_mint()` can mint ERC721 tokens to addresses which don't support ERC721 tokens. Use `_safeMint()` instead of `_mint()` for ERC721 tokens."
             )
         );
     }

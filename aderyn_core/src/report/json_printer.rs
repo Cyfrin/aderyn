@@ -24,17 +24,6 @@ pub struct JsonContent {
 
 pub struct JsonPrinter;
 
-/**
- * JSON should mimick MD
-    {
-        "files_summary": {...},
-        "files_details": {...},
-        "issue_summary": {...},
-        "high_issues": {...},
-    ...
-    }
-*/
-
 impl ReportPrinter<()> for JsonPrinter {
     fn print_report<W: Write>(
         &self,
@@ -53,9 +42,7 @@ impl ReportPrinter<()> for JsonPrinter {
             all_files_details = all_files_details + &context.files_details();
         }
 
-        all_files_details
-            .files_details
-            .sort_by(|a, b| a.file_path.cmp(&b.file_path));
+        all_files_details.files_details.sort_by(|a, b| a.file_path.cmp(&b.file_path));
 
         let mut all_files_summary = FilesSummary::default();
         for details in &all_files_details.files_details {

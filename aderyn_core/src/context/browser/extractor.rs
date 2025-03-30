@@ -35,7 +35,7 @@ generate_extraction_library! {
     ExtractIndexAccesses | visit_index_access => IndexAccess |,
     ExtractIndexRangeAccesses | visit_index_range_access => IndexRangeAccess |,
     ExtractInheritanceSpecifiers | visit_inheritance_specifier => InheritanceSpecifier |,
-    ExtractInlineAssemblys | visit_inline_assembly => InlineAssembly |,
+    ExtractInlineAssemblies | visit_inline_assembly => InlineAssembly |,
     ExtractLiterals | visit_literal => Literal |,
     ExtractMemberAccesses | visit_member_access => MemberAccess |,
     ExtractNewExpressions | visit_new_expression => NewExpression |,
@@ -141,17 +141,13 @@ impl<'a> ExtractReferencedDeclarationsConditionally<'a> {
         condition: Box<dyn Fn(NodeID, &'a WorkspaceContext) -> bool>,
     ) -> Self {
         let mut extractor: ExtractReferencedDeclarationsConditionally =
-            ExtractReferencedDeclarationsConditionally {
-                extracted: vec![],
-                condition,
-                context,
-            };
+            ExtractReferencedDeclarationsConditionally { extracted: vec![], condition, context };
         node.accept(&mut extractor).unwrap_or_default();
         extractor
     }
 }
 
-impl<'a> ASTConstVisitor for ExtractReferencedDeclarationsConditionally<'a> {
+impl ASTConstVisitor for ExtractReferencedDeclarationsConditionally<'_> {
     fn visit_member_access(&mut self, node: &MemberAccess) -> Result<bool> {
         if !self.condition.as_ref()(node.id, self.context) {
             return Ok(true);

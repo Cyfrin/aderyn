@@ -1,16 +1,18 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::ast::{Expression, MemberAccess, NodeID};
 
-use crate::capture;
-use crate::context::browser::ExtractFunctionCalls;
-use crate::context::graph::{CallGraph, CallGraphDirection, CallGraphVisitor};
-use crate::detect::detector::IssueDetectorNamePool;
-use crate::detect::helpers;
 use crate::{
-    context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    capture,
+    context::{
+        browser::ExtractFunctionCalls,
+        graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
+        workspace_context::WorkspaceContext,
+    },
+    detect::{
+        detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
+        helpers,
+    },
 };
 use eyre::Result;
 
@@ -24,9 +26,7 @@ pub struct OutOfOrderRetryableDetector {
 impl IssueDetector for OutOfOrderRetryableDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for func in helpers::get_implemented_external_and_public_functions(context) {
-            let mut tracker = OutOfOrderRetryableTracker {
-                number_of_retry_calls: 0,
-            };
+            let mut tracker = OutOfOrderRetryableTracker { number_of_retry_calls: 0 };
             let callgraph = CallGraph::new(context, &[&(func.into())], CallGraphDirection::Inward)?;
             callgraph.accept(context, &mut tracker)?;
             if tracker.number_of_retry_calls >= 2 {
@@ -42,7 +42,7 @@ impl IssueDetector for OutOfOrderRetryableDetector {
     }
 
     fn title(&self) -> String {
-        String::from("Out of order retryable transactions.")
+        String::from("Out of Order Retryable Transaction")
     }
 
     fn description(&self) -> String {
@@ -65,11 +65,8 @@ struct OutOfOrderRetryableTracker {
     number_of_retry_calls: usize,
 }
 
-const SEQUENCER_FUNCTIONS: [&str; 3] = [
-    "createRetryableTicket",
-    "outboundTransferCustomRefund",
-    "unsafeCreateRetryableTicket",
-];
+const SEQUENCER_FUNCTIONS: [&str; 3] =
+    ["createRetryableTicket", "outboundTransferCustomRefund", "unsafeCreateRetryableTicket"];
 
 impl CallGraphVisitor for OutOfOrderRetryableTracker {
     fn visit_any(&mut self, node: &crate::ast::ASTNode) -> eyre::Result<()> {
@@ -112,9 +109,6 @@ mod out_of_order_retryable_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
     }
 }
