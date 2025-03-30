@@ -22,18 +22,15 @@ pub fn project(
 
     // Process the pre-processed config using aletheia to transalate to runtime values
     let processed_config = ProjectConfigInputBuilder::new(&root_path)
-        .with_sources(match src {
-            Some(src) => SourcesConfig::Specific(PathBuf::from_str(&src).unwrap()),
-            None => SourcesConfig::AutoDetect,
-        })
-        .with_exclude(match exclude {
-            Some(exclude_containing) => ExcludeConfig::Specific(exclude_containing.to_vec()),
-            None => ExcludeConfig::None,
-        })
-        .with_include(match include {
-            Some(include_containing) => IncludeConfig::Specific(include_containing.to_vec()),
-            None => IncludeConfig::All,
-        })
+        .with_sources(src.map_or(Default::default(), |src| {
+            SourcesConfig::Specific(PathBuf::from_str(&src).unwrap())
+        }))
+        .with_exclude(exclude.map_or(Default::default(), |exclude_containing| {
+            ExcludeConfig::Specific(exclude_containing.to_vec())
+        }))
+        .with_include(include.map_or(Default::default(), |include_containing| {
+            IncludeConfig::Specific(include_containing.to_vec())
+        }))
         .build()?;
 
     if !lsp_mode {
@@ -78,6 +75,8 @@ pub fn project(
                     context.src_filepaths.push(source_path.display().to_string());
                 }
             }
+
+            context.evm_version = derived_ast_evm_info.evm_version;
 
             Some(context)
         })
