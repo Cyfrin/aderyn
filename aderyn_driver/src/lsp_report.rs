@@ -39,7 +39,7 @@ impl LspReport {
             }
 
             message.push_str(&format!(
-               "\nTo ignore this warning, add:\n\n// aderyn-ignore-next-line({})\n\nor append to existing list:\n\n// aderyn-ignore-next-line(existing-rule, {})\n\n",
+               "\nTo ignore this warning, add:\n\n// aderyn-ignore-next-line({})\n\nor mark as false positive:\n\n// aderyn-fp-next-line({})\n\n",
                 issue_body.detector_name,
                 issue_body.detector_name,
             ));
