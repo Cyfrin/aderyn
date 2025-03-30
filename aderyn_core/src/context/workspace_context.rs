@@ -1,3 +1,5 @@
+use foundry_compilers_aletheia::EvmVersion;
+
 use crate::{ast::*, fscloc::cloc::IgnoreLine};
 use std::{cmp::Ordering, collections::HashMap};
 
@@ -20,6 +22,7 @@ pub struct WorkspaceContext {
     pub last_modifier_definition_id: Option<NodeID>,
 
     pub parent_link: HashMap<NodeID, NodeID>,
+    pub evm_version: EvmVersion,
 
     // relative source filepaths
     pub src_filepaths: Vec<String>,
