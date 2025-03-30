@@ -95,8 +95,6 @@ jobs:
       - name: Install Rust Nightly (2025-01-01)
         uses: actions-rs/toolchain@v1
         with:
-          command: clippy
-          args: -- -D warnings
           profile: minimal
           toolchain: nightly-2025-01-01
           override: true
@@ -106,7 +104,6 @@ jobs:
 
       - name: Restore Rust Cache
         uses: Swatinem/rust-cache@v2
-
       - name: Run tests
         run: |
           ! cargo tree -i openssl --target all
