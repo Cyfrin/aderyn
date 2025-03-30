@@ -27,7 +27,6 @@ version = "0.5.5"
 dependencies = [
  "aderyn_driver",
  "clap",
- "lazy_static",
  "log",
  "notify-debouncer-full",
  "reqwest",

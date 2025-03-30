@@ -24,4 +24,3 @@ termcolor = { workspace = true }
 tokio = { workspace = true, features = ["full"] }
 tower-lsp = { workspace = true }
 log = { workspace = true }
-lazy_static = { workspace = true }
