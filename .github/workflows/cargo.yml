@@ -117,16 +117,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Ensure no merge commits
-        uses: NexusPHP/no-merge-commits@v2.1.0
-        if: github.event_name == 'pull_request'
+      - name: Install Rust Nightly (2025-01-01)
+        uses: actions-rs/toolchain@v1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Install Rust toolchain
-        uses: dtolnay/rust-toolchain@stable
-        with:
-          toolchain: stable
+          profile: minimal
+          toolchain: nightly-2025-01-01
+          override: true
 
       - name: Install cargo-deny
         run: |
