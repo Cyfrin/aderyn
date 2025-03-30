@@ -10,6 +10,7 @@ use crate::{
     },
 };
 use eyre::Result;
+use foundry_compilers_aletheia::EvmVersion;
 use semver::{Op, VersionReq};
 
 #[derive(Default)]
@@ -47,13 +48,14 @@ fn version_req_allows_above_0_8_19(version_req: &VersionReq) -> bool {
 
 impl IssueDetector for PushZeroOpcodeDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
-        for pragma_directive in context.pragma_directives() {
-            let req = pragma_directive_to_semver(pragma_directive)?;
-            if version_req_allows_above_0_8_19(&req) {
-                capture!(self, context, pragma_directive);
+        if context.evm_version >= EvmVersion::Shanghai {
+            for pragma_directive in context.pragma_directives() {
+                let req = pragma_directive_to_semver(pragma_directive)?;
+                if version_req_allows_above_0_8_19(&req) {
+                    capture!(self, context, pragma_directive);
+                }
             }
         }
-
         Ok(!self.found_instances.is_empty())
     }
 
