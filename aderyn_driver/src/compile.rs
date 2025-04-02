@@ -11,6 +11,7 @@ use std::{path::PathBuf, str::FromStr};
 use crate::{
     display::{display_configuration_info, display_header, display_ingesting_message},
     preprocess::PreprocessedConfig,
+    MapOrDefault,
 };
 
 pub fn project(
@@ -21,16 +22,11 @@ pub fn project(
     let PreprocessedConfig { root_path, src, include, exclude } = preprocessed_config;
 
     // Process the pre-processed config using aletheia to transalate to runtime values
+    let path_form_src = |src: &str| -> PathBuf { PathBuf::from_str(&src).unwrap() };
     let processed_config = ProjectConfigInputBuilder::new(&root_path)
-        .with_sources(src.map_or(Default::default(), |src| {
-            SourcesConfig::Specific(PathBuf::from_str(&src).unwrap())
-        }))
-        .with_exclude(exclude.map_or(Default::default(), |exclude_containing| {
-            ExcludeConfig::Specific(exclude_containing.to_vec())
-        }))
-        .with_include(include.map_or(Default::default(), |include_containing| {
-            IncludeConfig::Specific(include_containing.to_vec())
-        }))
+        .with_sources(src.map_or_default(|src| SourcesConfig::Specific(path_form_src(&src))))
+        .with_exclude(exclude.map_or_default(|exclude| ExcludeConfig::Specific(exclude.to_vec())))
+        .with_include(include.map_or_default(|include| IncludeConfig::Specific(include.to_vec())))
         .build()?;
 
     if !lsp_mode {
