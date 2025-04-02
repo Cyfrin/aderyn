@@ -22,7 +22,7 @@ pub fn project(
     let PreprocessedConfig { root_path, src, include, exclude } = preprocessed_config;
 
     // Process the pre-processed config using aletheia to transalate to runtime values
-    let path_form_src = |src: &str| -> PathBuf { PathBuf::from_str(&src).unwrap() };
+    let path_form_src = |src: &str| -> PathBuf { PathBuf::from_str(src).unwrap() };
     let processed_config = ProjectConfigInputBuilder::new(&root_path)
         .with_sources(src.map_or_default(|src| SourcesConfig::Specific(path_form_src(&src))))
         .with_exclude(exclude.map_or_default(|exclude| ExcludeConfig::Specific(exclude.to_vec())))
