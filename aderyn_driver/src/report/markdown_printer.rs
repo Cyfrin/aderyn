@@ -32,10 +32,11 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
         self.print_contract_summary(&mut writer, report, contexts)?;
 
         let output_rel_path = output_rel_path.unwrap();
+        let (high_issues, low_issues) = report.detailed_issues(contexts);
 
         let all_issues = vec![
-            (report.high_issues(file_contents).issues, "# High Issues\n", "H"),
-            (report.low_issues(file_contents).issues, "# Low Issues\n", "L"),
+            (high_issues.issues, "# High Issues\n", "H"),
+            (low_issues.issues, "# Low Issues\n", "L"),
         ];
 
         for (issues, heading, severity) in all_issues {

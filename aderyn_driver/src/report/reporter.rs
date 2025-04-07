@@ -1,5 +1,7 @@
 use std::collections::HashMap;
 
+use aderyn_core::context::workspace_context::WorkspaceContext;
+
 use super::{extract_issue_bodies, HighIssues, Issue, IssueCount, LowIssues};
 
 #[derive(Default, PartialEq)]
@@ -13,11 +15,23 @@ impl Report {
         IssueCount { high: self.highs.len(), low: self.lows.len() }
     }
 
-    pub fn high_issues(&self, file_contents: &HashMap<String, &String>) -> HighIssues {
-        HighIssues { issues: extract_issue_bodies(&self.highs, file_contents) }
-    }
+    pub fn detailed_issues(
+        &self,
+        contexts: &[WorkspaceContext],
+    ) -> (HighIssues, LowIssues) {
+        let file_contents = contexts
+            .iter()
+            .flat_map(|context| context.source_units())
+            .map(|source_unit| {
+                (
+                    source_unit.absolute_path.as_ref().unwrap().to_owned(),
+                    source_unit.source.as_ref().unwrap(),
+                )
+            })
+            .collect::<HashMap<_, _>>();
 
-    pub fn low_issues(&self, file_contents: &HashMap<String, &String>) -> LowIssues {
-        LowIssues { issues: extract_issue_bodies(&self.lows, file_contents) }
+        let high_issues = HighIssues { issues: extract_issue_bodies(&self.highs, &file_contents) };
+        let low_issues = LowIssues { issues: extract_issue_bodies(&self.lows, &file_contents) };
+        (high_issues, low_issues)
     }
 }

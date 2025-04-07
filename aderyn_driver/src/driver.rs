@@ -108,20 +108,7 @@ pub fn drive_and_get_results(args: Args) -> Arc<Mutex<Option<LspReport>>> {
 
     let lsp_report = match get_report(&contexts, &root_rel_path, detectors) {
         Ok(report) => {
-            let file_contents = contexts
-                .iter()
-                .flat_map(|context| context.source_units())
-                .map(|source_unit| {
-                    (
-                        source_unit.absolute_path.as_ref().unwrap().to_owned(),
-                        source_unit.source.as_ref().unwrap(),
-                    )
-                })
-                .collect();
-
-            let high_issues = report.high_issues(&file_contents);
-            let low_issues = report.low_issues(&file_contents);
-
+            let (high_issues, low_issues) = report.detailed_issues(&contexts);
             Some(LspReport::from(low_issues, high_issues, &root_rel_path))
         }
         Err(_) => None,
