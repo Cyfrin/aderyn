@@ -151,7 +151,7 @@ fn create_lsp_service_and_react_to_file_event(
             seen_file_uris: Arc<Mutex<HashSet<Url>>>,
         ) {
             // Generate diagnostics due to this change
-            let guarded_report_results = driver::drive_and_get_results(args.clone());
+            let guarded_report_results = driver::fetch_lsp_report(args.clone());
 
             // Extract report from the mutex
             let mut diagnostics_mutex = guarded_report_results.lock().await;

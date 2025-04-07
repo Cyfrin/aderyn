@@ -2,7 +2,7 @@ use std::path::PathBuf;
 
 use aderyn_driver::{
     detector::get_all_issue_detectors,
-    driver::{drive, Args},
+    driver::{kick_off_report_creation, Args},
     preprocess::PreprocessedConfig,
 };
 
@@ -32,7 +32,7 @@ fn bench_aderyn_on_contract_playground(c: &mut Criterion) {
 
     c.bench_function("aderyn", |b| {
         b.iter(|| {
-            drive(Args {
+            kick_off_report_creation(Args {
                 root: root_path.to_string_lossy().to_string(),
                 output: String::from("aderyn-report-for-bench.md"),
                 no_snippets: false,

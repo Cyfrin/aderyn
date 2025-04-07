@@ -27,7 +27,7 @@ pub struct Args {
 }
 
 /// One way pipeline. Used by CLI
-pub fn drive(args: Args) {
+pub fn kick_off_report_creation(args: Args) {
     // Choose the detectors
     let detectors = detector_list(&args);
 
@@ -88,7 +88,7 @@ pub fn drive(args: Args) {
 }
 
 /// Drives and returns results. Used by LSP
-pub fn drive_and_get_results(args: Args) -> Arc<Mutex<Option<LspReport>>> {
+pub fn fetch_lsp_report(args: Args) -> Arc<Mutex<Option<LspReport>>> {
     // Choose the detectors
     let detectors = detector_list(&args);
 
