@@ -15,10 +15,7 @@ impl Report {
         IssueCount { high: self.highs.len(), low: self.lows.len() }
     }
 
-    pub fn detailed_issues(
-        &self,
-        contexts: &[WorkspaceContext],
-    ) -> (HighIssues, LowIssues) {
+    pub fn detailed_issues(&self, contexts: &[WorkspaceContext]) -> (HighIssues, LowIssues) {
         let file_contents = contexts
             .iter()
             .flat_map(|context| context.source_units())
