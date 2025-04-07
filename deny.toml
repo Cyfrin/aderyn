@@ -19,4 +19,4 @@ deny = [ "openssl" ]
 unknown-registry = "deny"
 allow-registry = ["https://github.com/rust-lang/crates.io-index"]
 unknown-git = "deny"
-allow-git = ["https://github.com/Cyfrin/foundry-compilers-aletheia", "https://github.com/foundry-rs/foundry"]
+allow-git = ["https://github.com/Cyfrin/solidity-ast-rs", "https://github.com/foundry-rs/foundry"]

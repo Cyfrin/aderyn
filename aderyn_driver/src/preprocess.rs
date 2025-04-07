@@ -37,7 +37,7 @@ pub fn make_context(
     let root_path = preprocessed_config.root_path.clone();
 
     // Compilation steps:
-    // 1. Processes the config by translating them to runtime values (foundry-compilers-aletheia)
+    // 1. Processes the config by translating them to runtime values (Cyfrin/solidity-ast-rs)
     // 2. Parse those files and prepare ASTs.
     let mut contexts: Vec<WorkspaceContext> = compile::project(preprocessed_config, is_lsp_mode)?;
 
