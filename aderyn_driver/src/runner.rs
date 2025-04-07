@@ -3,7 +3,7 @@ use std::{
     collections::HashMap,
     error::Error,
     fs::{remove_file, File},
-    io::{self},
+    io::{self, Write},
     path::{Path, PathBuf},
 };
 
@@ -26,10 +26,10 @@ where
 
     let detectors_used =
         &detectors.iter().map(|d| (d.name(), d.severity().to_string())).collect::<Vec<_>>();
-    println!("Detectors run, processing found issues");
 
     let report = get_report(contexts, &root_rel_path, detectors)?;
 
+    println!("Detectors run, processing found issues");
     println!("Found issues processed. Printing report");
 
     let file_contents = contexts
