@@ -10,8 +10,8 @@ use crate::{
     },
 };
 use eyre::Result;
-use foundry_compilers_aletheia::EvmVersion;
 use semver::{Op, VersionReq};
+use solidity_ast::EvmVersion;
 
 #[derive(Default)]
 pub struct PushZeroOpcodeDetector {

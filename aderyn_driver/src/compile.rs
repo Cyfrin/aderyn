@@ -1,11 +1,11 @@
 use aderyn_core::{
     ast::SourceUnit, context::workspace_context::WorkspaceContext, visitor::ast_visitor::Node,
 };
-use foundry_compilers_aletheia::{
+use rayon::iter::{IntoParallelIterator, ParallelIterator};
+use solidity_ast::{
     derive_ast_and_evm_info, AstSourceFile, ExcludeConfig, IncludeConfig,
     ProjectConfigInputBuilder, Source, SourcesConfig,
 };
-use rayon::iter::{IntoParallelIterator, ParallelIterator};
 use std::{path::PathBuf, str::FromStr};
 
 use crate::{
@@ -21,7 +21,7 @@ pub fn project(
     // Decompose pre-processed config
     let PreprocessedConfig { root_path, src, include, exclude } = preprocessed_config;
 
-    // Process the pre-processed config using aletheia to transalate to runtime values
+    // Process the pre-processed config using Cyfrin/solidity-ast-rs to transalate to runtime values
     let path_form_src = |src: &str| -> PathBuf { PathBuf::from_str(src).unwrap() };
     let processed_config = ProjectConfigInputBuilder::new(&root_path)
         .with_sources(src.map_or_default(|src| SourcesConfig::Specific(path_form_src(&src))))

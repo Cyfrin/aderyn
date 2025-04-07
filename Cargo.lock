@@ -47,7 +47,6 @@ dependencies = [
  "derive_more 0.99.19",
  "dunce",
  "eyre",
- "foundry-compilers-aletheia",
  "ignore",
  "lazy-regex",
  "num-bigint",
@@ -63,6 +62,7 @@ dependencies = [
  "serde_json",
  "serde_repr",
  "serial_test",
+ "solidity-ast",
  "strum 0.26.3",
 ]
 
@@ -73,11 +73,11 @@ dependencies = [
  "aderyn_core",
  "criterion",
  "field_access",
- "foundry-compilers-aletheia",
  "rayon",
  "serde",
  "serde_json",
  "serde_repr",
+ "solidity-ast",
  "tokio",
  "toml",
  "tower-lsp",
@@ -1504,21 +1504,6 @@ dependencies = [
  "tracing",
  "winnow",
  "yansi",
-]
-
-[[package]]
-name = "foundry-compilers-aletheia"
-version = "0.0.1"
-source = "git+https://github.com/Cyfrin/foundry-compilers-aletheia?tag=v0.0.1-alpha.beta.2#b80cd11251db0eff8013b02ab291560d5d629e4c"
-dependencies = [
- "foundry-compilers",
- "foundry-config",
- "itertools 0.14.0",
- "rayon",
- "semver 1.0.26",
- "serde",
- "serde_json",
- "walkdir",
 ]
 
 [[package]]
@@ -3928,6 +3913,21 @@ dependencies = [
  "solar-data-structures",
  "solar-interface",
  "tracing",
+]
+
+[[package]]
+name = "solidity-ast"
+version = "0.0.1"
+source = "git+https://github.com/Cyfrin/solidity-ast-rs?tag=v0.0.1-alpha.beta.3#f3b05e48f4c24eaefb147de4bfde244325d301d9"
+dependencies = [
+ "foundry-compilers",
+ "foundry-config",
+ "itertools 0.14.0",
+ "rayon",
+ "semver 1.0.26",
+ "serde",
+ "serde_json",
+ "walkdir",
 ]
 
 [[package]]

@@ -3,7 +3,7 @@ use std::{
     path::PathBuf,
 };
 
-use foundry_compilers_aletheia::{AstSourceFile, ProjectConfigInput};
+use solidity_ast::{AstSourceFile, ProjectConfigInput};
 
 pub fn display_header(project_config: &ProjectConfigInput, header: &str) {
     let say_header = |message: &str| {
