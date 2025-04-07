@@ -1,6 +1,7 @@
-use aderyn_core::report::{HighIssues, IssueBody, IssueInstance, LowIssues};
 use std::{collections::BTreeMap, path::Path};
 use tower_lsp::lsp_types::{Diagnostic, DiagnosticSeverity, Position, Range, Url};
+
+use crate::report::{HighIssues, IssueBody, IssueInstance, LowIssues};
 
 /// Report structure that is tailored to aid LSP
 pub struct LspReport {

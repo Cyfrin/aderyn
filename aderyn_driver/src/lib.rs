@@ -1,4 +1,6 @@
 mod display;
+mod report;
+mod runner;
 
 pub mod compile;
 pub mod config;

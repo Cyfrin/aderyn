@@ -32,6 +32,9 @@ pub struct WorkspaceContext {
     pub outward_callgraph: Option<WorkspaceCallGraph>,
     pub nodes: HashMap<NodeID, ASTNode>,
 
+    // Source units
+    pub source_units_context: Vec<SourceUnit>,
+
     // Hashmaps of all nodes => source_unit_id
     pub(crate) array_type_names_context: HashMap<ArrayTypeName, NodeContext>,
     pub(crate) assignments_context: HashMap<Assignment, NodeContext>,
@@ -72,7 +75,6 @@ pub struct WorkspaceContext {
     pub(crate) pragma_directives_context: HashMap<PragmaDirective, NodeContext>,
     pub(crate) returns_context: HashMap<Return, NodeContext>,
     pub(crate) revert_statements_context: HashMap<RevertStatement, NodeContext>,
-    pub(crate) source_units_context: Vec<SourceUnit>,
     pub(crate) struct_definitions_context: HashMap<StructDefinition, NodeContext>,
     pub(crate) structured_documentations_context: HashMap<StructuredDocumentation, NodeContext>,
     pub(crate) try_statements_context: HashMap<TryStatement, NodeContext>,
