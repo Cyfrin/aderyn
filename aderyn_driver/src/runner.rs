@@ -22,10 +22,6 @@ pub fn run_detector_mode<T>(
 where
     T: ReportPrinter<()>,
 {
-    let mut ignore_lines = HashMap::new();
-    for context in contexts {
-        ignore_lines.extend(context.ignore_lines_stats.clone());
-    }
     println!("Running {} detectors", detectors.len());
 
     let detectors_used =
