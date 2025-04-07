@@ -3,7 +3,7 @@ use std::{
     collections::HashMap,
     error::Error,
     fs::{remove_file, File},
-    io::{self},
+    io,
     path::{Path, PathBuf},
 };
 
@@ -22,18 +22,14 @@ pub fn run_detector_mode<T>(
 where
     T: ReportPrinter<()>,
 {
-    let mut ignore_lines = HashMap::new();
-    for context in contexts {
-        ignore_lines.extend(context.ignore_lines_stats.clone());
-    }
     println!("Running {} detectors", detectors.len());
 
     let detectors_used =
         &detectors.iter().map(|d| (d.name(), d.severity().to_string())).collect::<Vec<_>>();
-    println!("Detectors run, processing found issues");
 
     let report = get_report(contexts, &root_rel_path, detectors)?;
 
+    println!("Detectors run, processing found issues");
     println!("Found issues processed. Printing report");
 
     let file_contents = contexts
