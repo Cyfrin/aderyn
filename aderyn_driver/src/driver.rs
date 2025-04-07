@@ -1,13 +1,13 @@
-use crate::{lsp_report::LspReport, preprocess::make_context};
-use aderyn_core::{
-    detect::detector::{get_all_issue_detectors, IssueDetector, IssueSeverity},
-    get_report,
+use crate::{
+    lsp_report::LspReport,
+    preprocess::make_context,
     report::{
         json_printer::JsonPrinter, markdown_printer::MarkdownReportPrinter,
         sarif_printer::SarifPrinter,
     },
-    run,
+    runner::{get_report, run},
 };
+use aderyn_core::detect::detector::{get_all_issue_detectors, IssueDetector, IssueSeverity};
 use field_access::FieldAccess;
 use std::{collections::HashMap, sync::Arc};
 use tokio::sync::Mutex;
