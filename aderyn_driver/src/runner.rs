@@ -6,7 +6,8 @@ use std::{
     path::{Path, PathBuf},
 };
 
-use crate::report::{get_report, printer::ReportPrinter};
+use aderyn_core::report::*;
+use crate::report::printer::ReportPrinter;
 
 #[allow(clippy::too_many_arguments)]
 pub fn run_detector_mode<T>(

@@ -4,13 +4,11 @@ use std::{
     path::{Path, PathBuf},
 };
 
-use aderyn_core::context::workspace_context::WorkspaceContext;
+use aderyn_core::{context::workspace_context::WorkspaceContext, report::*};
 
 use super::{
     printer::ReportPrinter,
-    reporter::Report,
     util::{carve_shortest_path, files_details},
-    FilesDetails, FilesSummary, Issue, IssueBody,
 };
 
 pub struct MarkdownReportPrinter;

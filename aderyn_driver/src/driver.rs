@@ -2,13 +2,14 @@ use crate::{
     lsp_report::LspReport,
     preprocess::make_context,
     report::{
-        get_report, json_printer::JsonPrinter, markdown_printer::MarkdownReportPrinter,
+        json_printer::JsonPrinter, markdown_printer::MarkdownReportPrinter,
         sarif_printer::SarifPrinter,
     },
     runner::run_detector_mode,
 };
 use aderyn_core::{
     detect::detector::{get_all_issue_detectors, IssueDetector, IssueSeverity},
+    report::get_report,
     run_auditor_mode,
 };
 use field_access::FieldAccess;

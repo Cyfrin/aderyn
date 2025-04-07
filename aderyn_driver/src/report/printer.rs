@@ -3,9 +3,7 @@ use std::{
     path::PathBuf,
 };
 
-use aderyn_core::context::workspace_context::WorkspaceContext;
-
-use super::reporter::Report;
+use aderyn_core::{context::workspace_context::WorkspaceContext, report::Report};
 
 #[allow(clippy::borrowed_box)]
 pub trait ReportPrinter<T> {

@@ -3,13 +3,10 @@ use std::{
     path::PathBuf,
 };
 
-use aderyn_core::context::workspace_context::WorkspaceContext;
+use aderyn_core::{context::workspace_context::WorkspaceContext, report::*};
 use serde::Serialize;
 
-use super::{
-    printer::ReportPrinter, reporter::Report, util::files_details, FilesDetails, FilesSummary,
-    HighIssues, IssueCount, LowIssues,
-};
+use super::{printer::ReportPrinter, util::files_details};
 
 #[derive(Serialize)]
 pub struct JsonContent {
