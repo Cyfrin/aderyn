@@ -114,7 +114,7 @@ pub fn extract_issue_bodies(
     issues
         .iter()
         .map(|cr| {
-            let instances: Vec<_> = cr
+            let all_instances: Vec<_> = cr
                 .instances
                 .keys()
                 .map(|(contract_path, line_no, src_location)| {
@@ -166,9 +166,6 @@ pub fn extract_issue_bodies(
                     }
                 })
                 .collect();
-
-            let mut all_instances = vec![];
-            all_instances.extend(instances);
 
             IssueBody {
                 title: cr.title.clone(),
