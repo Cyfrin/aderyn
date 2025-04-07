@@ -1,16 +1,14 @@
 use std::{
-    collections::HashMap,
     io::{self, Result, Write},
     path::PathBuf,
 };
 
-use crate::report::CanFilesDetails;
 use aderyn_core::context::workspace_context::WorkspaceContext;
 use serde::Serialize;
 
 use super::{
-    printer::ReportPrinter, reporter::Report, FilesDetails, FilesSummary, HighIssues, IssueCount,
-    LowIssues,
+    printer::ReportPrinter, reporter::Report, util::files_details, FilesDetails, FilesSummary,
+    HighIssues, IssueCount, LowIssues,
 };
 
 #[derive(Serialize)]
@@ -36,11 +34,10 @@ impl ReportPrinter<()> for JsonPrinter {
         _: bool,
         stdout: bool,
         detectors_used: &[(String, String)],
-        file_contents: &HashMap<String, &String>,
     ) -> Result<()> {
         let mut all_files_details = FilesDetails::default();
         for context in contexts {
-            all_files_details = all_files_details + &context.files_details();
+            all_files_details = all_files_details + &files_details(context);
         }
 
         all_files_details.files_details.sort_by(|a, b| a.file_path.cmp(&b.file_path));
@@ -52,13 +49,14 @@ impl ReportPrinter<()> for JsonPrinter {
         }
 
         let detectors_used_names: Vec<_> = detectors_used.iter().map(|x| x.0.clone()).collect();
+        let (high_issues, low_issues) = report.detailed_issues(contexts);
 
         let content = JsonContent {
             files_summary: all_files_summary,
             files_details: all_files_details,
             issue_count: report.issue_count(),
-            high_issues: report.high_issues(file_contents),
-            low_issues: report.low_issues(file_contents),
+            high_issues,
+            low_issues,
             detectors_used: detectors_used_names,
         };
         let value = serde_json::to_value(content).unwrap();

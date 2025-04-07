@@ -1,5 +1,4 @@
 use std::{
-    collections::HashMap,
     io::{Result, Write},
     path::PathBuf,
 };
@@ -22,6 +21,5 @@ pub trait ReportPrinter<T> {
         no_snippets: bool,
         stdout: bool,
         detectors_used: &[(String, String)],
-        file_contents: &HashMap<String, &String>,
     ) -> Result<T>;
 }

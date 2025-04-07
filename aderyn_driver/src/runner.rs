@@ -1,6 +1,5 @@
 use aderyn_core::{context::workspace_context::WorkspaceContext, detect::detector::IssueDetector};
 use std::{
-    collections::HashMap,
     error::Error,
     fs::{remove_file, File},
     io,
@@ -32,17 +31,6 @@ where
     println!("Detectors run, processing found issues");
     println!("Found issues processed. Printing report");
 
-    let file_contents = contexts
-        .iter()
-        .flat_map(|context| context.source_units())
-        .map(|source_unit| {
-            (
-                source_unit.absolute_path.as_ref().unwrap().to_owned(),
-                source_unit.source.as_ref().unwrap(),
-            )
-        })
-        .collect::<HashMap<_, _>>();
-
     if !stdout {
         reporter.print_report(
             get_writer(&output_file_path)?,
@@ -53,7 +41,6 @@ where
             no_snippets,
             stdout,
             detectors_used,
-            &file_contents,
         )?;
         println!("Report printed to {}", output_file_path);
     } else {
@@ -66,7 +53,6 @@ where
             no_snippets,
             stdout,
             detectors_used,
-            &file_contents,
         )?;
     }
     Ok(())
