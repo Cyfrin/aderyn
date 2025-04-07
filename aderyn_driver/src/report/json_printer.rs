@@ -3,13 +3,12 @@ use std::{
     path::PathBuf,
 };
 
-use crate::report::CanFilesDetails;
 use aderyn_core::context::workspace_context::WorkspaceContext;
 use serde::Serialize;
 
 use super::{
-    printer::ReportPrinter, reporter::Report, FilesDetails, FilesSummary, HighIssues, IssueCount,
-    LowIssues,
+    printer::ReportPrinter, reporter::Report, util::files_details, FilesDetails, FilesSummary,
+    HighIssues, IssueCount, LowIssues,
 };
 
 #[derive(Serialize)]
@@ -38,7 +37,7 @@ impl ReportPrinter<()> for JsonPrinter {
     ) -> Result<()> {
         let mut all_files_details = FilesDetails::default();
         for context in contexts {
-            all_files_details = all_files_details + &context.files_details();
+            all_files_details = all_files_details + &files_details(context);
         }
 
         all_files_details.files_details.sort_by(|a, b| a.file_path.cmp(&b.file_path));

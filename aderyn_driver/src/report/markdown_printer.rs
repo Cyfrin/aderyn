@@ -7,10 +7,11 @@ use std::{
 use aderyn_core::context::workspace_context::WorkspaceContext;
 
 use super::{
-    printer::ReportPrinter, reporter::Report, util::carve_shortest_path, FilesDetails,
-    FilesSummary, Issue, IssueBody,
+    printer::ReportPrinter,
+    reporter::Report,
+    util::{carve_shortest_path, files_details},
+    FilesDetails, FilesSummary, Issue, IssueBody,
 };
-use crate::report::CanFilesDetails;
 
 pub struct MarkdownReportPrinter;
 
@@ -104,7 +105,7 @@ impl MarkdownReportPrinter {
     ) -> Result<()> {
         let mut all_files_details = FilesDetails::default();
         for context in contexts {
-            all_files_details = all_files_details + &context.files_details();
+            all_files_details = all_files_details + &files_details(&context)
         }
 
         let mut all_files_summary = FilesSummary::default();

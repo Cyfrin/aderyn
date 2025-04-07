@@ -1,12 +1,12 @@
 use std::{
-    collections::{btree_map::Entry, BTreeMap, HashMap, HashSet},
+    collections::{btree_map::Entry, BTreeMap, HashMap},
     error::Error,
     ops::Add,
     path::Path,
 };
 
 use aderyn_core::{
-    ast::{NodeID, SourceUnit},
+    ast::NodeID,
     context::workspace_context::WorkspaceContext,
     detect::detector::{IssueDetector, IssueSeverity},
     fscloc::cloc::When,
@@ -105,106 +105,6 @@ pub struct HighIssues {
 #[derive(Serialize)]
 pub struct LowIssues {
     pub issues: Vec<IssueBody>,
-}
-
-pub fn extract_issue_bodies(
-    issues: &[Issue],
-    file_contents: &HashMap<String, &String>,
-) -> Vec<IssueBody> {
-    issues
-        .iter()
-        .map(|cr| {
-            let all_instances: Vec<_> = cr
-                .instances
-                .keys()
-                .map(|(contract_path, line_no, src_location)| {
-                    // Calculate character based offset & length position here
-                    let (byte_offset_str, byte_len_str) = src_location.split_once(':').unwrap();
-                    let byte_offset: usize = byte_offset_str.parse().unwrap();
-                    let byte_length: usize = byte_len_str.parse().unwrap();
-                    let content = *file_contents.get(contract_path).unwrap();
-                    let mut current_line_no = 0;
-                    let mut pre_line_char_offset = 0;
-                    let mut char_offset = 0;
-                    let mut stop_counting_preline_offset = false;
-                    for (byte_offset_so_far, c) in content.char_indices() {
-                        if byte_offset_so_far == byte_offset {
-                            break;
-                        }
-                        if c == '\n' {
-                            current_line_no += 1;
-                            if current_line_no == line_no - 1 {
-                                stop_counting_preline_offset = true;
-                            }
-                        }
-                        if !stop_counting_preline_offset {
-                            pre_line_char_offset += 1;
-                        }
-                        char_offset += 1;
-                    }
-                    let mut char_len = 0;
-                    for (byte_offset_so_far, _) in content.as_str()[byte_offset..].char_indices() {
-                        if byte_offset_so_far == byte_length {
-                            break;
-                        }
-                        char_len += 1;
-                    }
-
-                    let hint = cr.hints.get(&(
-                        contract_path.to_string(),
-                        *line_no,
-                        src_location.to_string(),
-                    ));
-
-                    IssueInstance {
-                        contract_path: contract_path.clone(),
-                        line_no: *line_no,
-                        src: src_location.clone(),
-                        src_char: format!("{}:{}", char_offset, char_len),
-                        src_char2: format!("{}:{}", char_offset - pre_line_char_offset, char_len),
-                        hint: hint.cloned(),
-                    }
-                })
-                .collect();
-
-            IssueBody {
-                title: cr.title.clone(),
-                description: cr.description.clone(),
-                instances: all_instances,
-                detector_name: cr.detector_name.clone(),
-            }
-        })
-        .collect()
-}
-
-pub trait CanFilesDetails {
-    fn files_details(&self) -> FilesDetails;
-}
-
-impl CanFilesDetails for WorkspaceContext {
-    fn files_details(&self) -> FilesDetails {
-        let sloc_stats = &self.sloc_stats;
-
-        let mut source_units = self.source_units_context.clone();
-        source_units
-            .sort_by_key(|su: &SourceUnit| su.absolute_path.as_deref().unwrap_or("").to_string());
-
-        let mut seen_paths = HashSet::new();
-        let files_details = source_units
-            .iter()
-            .filter_map(|source_unit| {
-                let filepath = source_unit.absolute_path.as_ref()?;
-                if seen_paths.insert(filepath.clone()) {
-                    let report = sloc_stats.iter().find(|r| r.0.contains(filepath))?;
-                    Some(FilesDetail { file_path: filepath.to_owned(), n_sloc: *report.1 })
-                } else {
-                    None
-                }
-            })
-            .collect::<Vec<_>>();
-
-        FilesDetails { files_details }
-    }
 }
 
 pub fn get_report(
