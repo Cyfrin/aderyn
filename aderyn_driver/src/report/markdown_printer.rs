@@ -1,15 +1,16 @@
-use crate::context::workspace_context::WorkspaceContext;
-
 use std::{
     collections::{HashMap, HashSet},
     io::{Result, Write},
     path::{Path, PathBuf},
 };
 
+use aderyn_core::context::workspace_context::WorkspaceContext;
+
 use super::{
     printer::ReportPrinter, reporter::Report, util::carve_shortest_path, FilesDetails,
     FilesSummary, Issue, IssueBody,
 };
+use crate::report::CanFilesDetails;
 
 pub struct MarkdownReportPrinter;
 

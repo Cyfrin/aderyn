@@ -4,7 +4,8 @@ use std::{
     path::PathBuf,
 };
 
-use crate::context::workspace_context::WorkspaceContext;
+use crate::report::CanFilesDetails;
+use aderyn_core::context::workspace_context::WorkspaceContext;
 use serde::Serialize;
 
 use super::{

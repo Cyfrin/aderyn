@@ -4,7 +4,7 @@ use std::{
     path::PathBuf,
 };
 
-use crate::context::workspace_context::WorkspaceContext;
+use aderyn_core::context::workspace_context::WorkspaceContext;
 use serde::Serialize;
 use serde_json::Value;
 use serde_sarif::sarif::{

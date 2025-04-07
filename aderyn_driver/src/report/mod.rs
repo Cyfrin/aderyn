@@ -3,9 +3,11 @@ use std::{
     ops::Add,
 };
 
+use aderyn_core::{
+    ast::{NodeID, SourceUnit},
+    context::workspace_context::WorkspaceContext,
+};
 use serde::Serialize;
-
-use crate::{ast::NodeID, context::workspace_context::WorkspaceContext};
 
 pub mod json_printer;
 pub mod markdown_printer;
@@ -172,14 +174,17 @@ pub fn extract_issue_bodies(
         .collect()
 }
 
-impl WorkspaceContext {
-    pub fn files_details(&self) -> FilesDetails {
+pub trait CanFilesDetails {
+    fn files_details(&self) -> FilesDetails;
+}
+
+impl CanFilesDetails for WorkspaceContext {
+    fn files_details(&self) -> FilesDetails {
         let sloc_stats = &self.sloc_stats;
 
         let mut source_units = self.source_units_context.clone();
-        source_units.sort_by_key(|su: &crate::ast::SourceUnit| {
-            su.absolute_path.as_deref().unwrap_or("").to_string()
-        });
+        source_units
+            .sort_by_key(|su: &SourceUnit| su.absolute_path.as_deref().unwrap_or("").to_string());
 
         let mut seen_paths = HashSet::new();
         let files_details = source_units
