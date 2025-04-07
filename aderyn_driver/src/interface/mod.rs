@@ -1,5 +1,5 @@
-pub mod json_printer;
-pub mod markdown_printer;
+pub mod json;
+pub mod markdown;
 pub mod printer;
-pub mod sarif_printer;
+pub mod sarif;
 pub mod util;

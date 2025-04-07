@@ -1,8 +1,5 @@
 use crate::{
-    interface::{
-        json_printer::JsonPrinter, markdown_printer::MarkdownReportPrinter,
-        sarif_printer::SarifPrinter,
-    },
+    interface::{json::JsonPrinter, markdown::MarkdownReportPrinter, sarif::SarifPrinter},
     lsp_report::LspReport,
     preprocess::make_context,
     runner::run_detector_mode,
