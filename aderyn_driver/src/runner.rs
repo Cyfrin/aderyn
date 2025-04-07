@@ -84,3 +84,7 @@ pub fn run_lsp_mode(
     }
 }
 
+pub fn run_auditor_mode(contexts: &[WorkspaceContext]) -> Result<(), Box<dyn Error>> {
+    // TODO: Port logic from aderyn-core to here
+    return aderyn_core::run_auditor_mode(contexts);
+}
