@@ -1,5 +1,4 @@
 use std::{
-    collections::HashMap,
     io::{self, Result, Write},
     path::PathBuf,
 };
@@ -36,7 +35,6 @@ impl ReportPrinter<()> for JsonPrinter {
         _: bool,
         stdout: bool,
         detectors_used: &[(String, String)],
-        _file_contents: &HashMap<String, &String>,
     ) -> Result<()> {
         let mut all_files_details = FilesDetails::default();
         for context in contexts {
