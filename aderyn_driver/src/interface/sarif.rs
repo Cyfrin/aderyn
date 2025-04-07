@@ -3,7 +3,6 @@ use std::{
     path::PathBuf,
 };
 
-use aderyn_core::context::workspace_context::WorkspaceContext;
 use serde::Serialize;
 use serde_json::Value;
 use serde_sarif::sarif::{
@@ -11,7 +10,9 @@ use serde_sarif::sarif::{
     Tool, ToolComponent,
 };
 
-use super::{printer::ReportPrinter, reporter::Report, Issue};
+use aderyn_core::{context::workspace_context::WorkspaceContext, report::*};
+
+use super::ReportPrinter;
 
 #[derive(Serialize)]
 pub struct SarifContent {
