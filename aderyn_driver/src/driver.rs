@@ -2,12 +2,15 @@ use crate::{
     lsp_report::LspReport,
     preprocess::make_context,
     report::{
-        json_printer::JsonPrinter, markdown_printer::MarkdownReportPrinter,
+        get_report, json_printer::JsonPrinter, markdown_printer::MarkdownReportPrinter,
         sarif_printer::SarifPrinter,
     },
-    runner::{get_report, run},
+    runner::run_detector_mode,
 };
-use aderyn_core::detect::detector::{get_all_issue_detectors, IssueDetector, IssueSeverity};
+use aderyn_core::{
+    detect::detector::{get_all_issue_detectors, IssueDetector, IssueSeverity},
+    run_auditor_mode,
+};
 use field_access::FieldAccess;
 use std::{collections::HashMap, sync::Arc};
 use tokio::sync::Mutex;
@@ -34,48 +37,50 @@ pub fn drive(args: Args) {
     let detectors = detector_list(&args);
 
     let run_pipeline = || -> Result<(), Box<dyn std::error::Error>> {
-        let output = args.output.clone();
         let cx_wrapper = make_context(&args).unwrap_or_else(|e| {
             eprintln!("Error making context: {}", e);
             std::process::exit(1);
         });
-        let root_rel_path = cx_wrapper.root_path;
 
-        if args.output.ends_with(".json") {
-            // Load the workspace context into the run function, which runs the detectors
-            run(
-                &cx_wrapper.contexts,
-                output,
-                JsonPrinter,
-                root_rel_path,
-                args.no_snippets,
-                args.stdout,
-                args.auditor_mode,
-                detectors,
-            )?;
-        } else if args.output.ends_with(".sarif") {
-            run(
-                &cx_wrapper.contexts,
-                output,
-                SarifPrinter,
-                root_rel_path,
-                args.no_snippets,
-                args.stdout,
-                args.auditor_mode,
-                detectors,
-            )?;
+        if args.auditor_mode {
+            return run_auditor_mode(&cx_wrapper.contexts);
         } else {
-            // Load the workspace context into the run function, which runs the detectors
-            run(
-                &cx_wrapper.contexts,
-                output,
-                MarkdownReportPrinter,
-                root_rel_path,
-                args.no_snippets,
-                args.stdout,
-                args.auditor_mode,
-                detectors,
-            )?;
+            let root_rel_path = cx_wrapper.root_path;
+            let output = args.output.clone();
+
+            if args.output.ends_with(".json") {
+                // Load the workspace context into the run function, which runs the detectors
+                run_detector_mode(
+                    &cx_wrapper.contexts,
+                    output,
+                    JsonPrinter,
+                    root_rel_path,
+                    args.no_snippets,
+                    args.stdout,
+                    detectors,
+                )?;
+            } else if args.output.ends_with(".sarif") {
+                run_detector_mode(
+                    &cx_wrapper.contexts,
+                    output,
+                    SarifPrinter,
+                    root_rel_path,
+                    args.no_snippets,
+                    args.stdout,
+                    detectors,
+                )?;
+            } else {
+                // Load the workspace context into the run function, which runs the detectors
+                run_detector_mode(
+                    &cx_wrapper.contexts,
+                    output,
+                    MarkdownReportPrinter,
+                    root_rel_path,
+                    args.no_snippets,
+                    args.stdout,
+                    detectors,
+                )?;
+            }
         }
         Ok(())
     };

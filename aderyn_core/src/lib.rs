@@ -16,6 +16,8 @@ use std::{
 
 use crate::context::workspace_context::WorkspaceContext;
 
+// TODO: Move this function to aderyn_driver/report
+
 pub fn run_auditor_mode(contexts: &[WorkspaceContext]) -> Result<(), Box<dyn Error>> {
     let audit_detectors_with_output = get_auditor_detectors()
         .par_iter_mut()
