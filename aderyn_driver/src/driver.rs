@@ -12,7 +12,7 @@ use aderyn_core::{
     run_auditor_mode,
 };
 use field_access::FieldAccess;
-use std::{collections::HashMap, sync::Arc};
+use std::sync::Arc;
 use tokio::sync::Mutex;
 
 #[derive(Clone, FieldAccess)]
@@ -104,23 +104,24 @@ pub fn drive_and_get_results(args: Args) -> Arc<Mutex<Option<LspReport>>> {
         }
     };
 
-    let root_rel_path = ctx_wrapper.root_path;
-    let file_contents = ctx_wrapper
-        .contexts
-        .iter()
-        .flat_map(|context| context.source_units())
-        .map(|source_unit| {
-            (
-                source_unit.absolute_path.as_ref().unwrap().to_owned(),
-                source_unit.source.as_ref().unwrap(),
-            )
-        })
-        .collect::<HashMap<_, _>>();
+    let (root_rel_path, contexts) = (ctx_wrapper.root_path, ctx_wrapper.contexts);
 
-    let lsp_report = match get_report(&ctx_wrapper.contexts, &root_rel_path, detectors) {
+    let lsp_report = match get_report(&contexts, &root_rel_path, detectors) {
         Ok(report) => {
+            let file_contents = contexts
+                .iter()
+                .flat_map(|context| context.source_units())
+                .map(|source_unit| {
+                    (
+                        source_unit.absolute_path.as_ref().unwrap().to_owned(),
+                        source_unit.source.as_ref().unwrap(),
+                    )
+                })
+                .collect();
+
             let high_issues = report.high_issues(&file_contents);
             let low_issues = report.low_issues(&file_contents);
+
             Some(LspReport::from(low_issues, high_issues, &root_rel_path))
         }
         Err(_) => None,
