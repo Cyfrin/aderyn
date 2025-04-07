@@ -1,5 +1,5 @@
 mod display;
-mod report;
+mod interface;
 mod runner;
 
 pub mod compile;

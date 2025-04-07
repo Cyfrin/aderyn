@@ -1,10 +1,10 @@
 use crate::{
-    lsp_report::LspReport,
-    preprocess::make_context,
-    report::{
+    interface::{
         json_printer::JsonPrinter, markdown_printer::MarkdownReportPrinter,
         sarif_printer::SarifPrinter,
     },
+    lsp_report::LspReport,
+    preprocess::make_context,
     runner::run_detector_mode,
 };
 use aderyn_core::{
