@@ -105,7 +105,7 @@ impl MarkdownReportPrinter {
     ) -> Result<()> {
         let mut all_files_details = FilesDetails::default();
         for context in contexts {
-            all_files_details = all_files_details + &files_details(&context)
+            all_files_details = all_files_details + &files_details(context)
         }
 
         let mut all_files_summary = FilesSummary::default();
