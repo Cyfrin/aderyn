@@ -88,7 +88,7 @@ pub fn kick_off_report_creation(args: Args) {
 }
 
 /// Drives and returns results. Used by LSP
-pub fn fetch_lsp_report(args: Args) -> Arc<Mutex<Option<LspReport>>> {
+pub fn fetch_report_for_lsp(args: Args) -> Arc<Mutex<Option<LspReport>>> {
     // Choose the detectors
     let detectors = detector_list(&args);
 
