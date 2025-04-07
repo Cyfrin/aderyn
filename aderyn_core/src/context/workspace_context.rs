@@ -1,4 +1,4 @@
-use foundry_compilers_aletheia::EvmVersion;
+use solidity_ast::EvmVersion;
 
 use crate::{ast::*, fscloc::cloc::IgnoreLine};
 use std::{cmp::Ordering, collections::HashMap};

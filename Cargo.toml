@@ -44,13 +44,13 @@ petgraph = "0"
 
 # Uncomment in Production (just before merging to dev)
 # Cyfrin managed github repository
-foundry_compilers_aletheia = { git = "https://github.com/Cyfrin/foundry-compilers-aletheia", tag = "v0.0.1-alpha.beta.2", package = "foundry-compilers-aletheia" }
+solidity_ast = { git = "https://github.com/Cyfrin/solidity-ast-rs", tag = "v0.0.1-alpha.beta.3", package = "solidity-ast" }
 
 # Uncomment when debugging in branch (PR)
-# foundry_compilers_aletheia = { git = "https://github.com/Cyfrin/foundry-compilers-aletheia", branch = "main", package = "foundry-compilers-aletheia" }
+# solidity_ast = { git = "https://github.com/Cyfrin/solidity-ast-rs", branch = "main", package = "solidity-ast" }
 
 # Uncomment when debuggin locally
-# foundry_compilers_aletheia = { path = "../foundry-compilers-aletheia", package = "foundry-compilers-aletheia"}
+# solidity_ast = { path = "../solidity-ast-rs", package = "solidity-ast"}
 
 [profile.release]
 codegen-units = 1

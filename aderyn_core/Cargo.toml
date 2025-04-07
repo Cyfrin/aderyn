@@ -26,7 +26,7 @@ num-traits = { workspace = true }
 lazy-regex = { workspace = true }
 derive_more = { workspace = true }
 dunce = { workspace = true }
-foundry_compilers_aletheia = { workspace = true }
+solidity_ast = { workspace = true }
 
 [dev-dependencies]
 petgraph = { workspace = true }
