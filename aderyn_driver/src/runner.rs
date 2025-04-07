@@ -75,9 +75,9 @@ pub fn run_lsp_mode(
     root_rel_path: PathBuf,
     detectors: Vec<Box<dyn IssueDetector>>,
 ) -> Option<LspReport> {
-    match get_report(&contexts, &root_rel_path, detectors) {
+    match get_report(contexts, &root_rel_path, detectors) {
         Ok(report) => {
-            let (high_issues, low_issues) = report.detailed_issues(&contexts);
+            let (high_issues, low_issues) = report.detailed_issues(contexts);
             Some(LspReport::from(low_issues, high_issues, &root_rel_path))
         }
         Err(_) => None,
@@ -86,5 +86,5 @@ pub fn run_lsp_mode(
 
 pub fn run_auditor_mode(contexts: &[WorkspaceContext]) -> Result<(), Box<dyn Error>> {
     // TODO: Port logic from aderyn-core to here
-    return aderyn_core::run_auditor_mode(contexts);
+    aderyn_core::run_auditor_mode(contexts)
 }
