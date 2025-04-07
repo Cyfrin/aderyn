@@ -12,7 +12,7 @@ use aderyn_core::{
     run_auditor_mode,
 };
 use field_access::FieldAccess;
-use std::{collections::HashMap, sync::Arc};
+use std::sync::Arc;
 use tokio::sync::Mutex;
 
 #[derive(Clone, FieldAccess)]
