@@ -7,10 +7,11 @@ use std::{
 use aderyn_core::context::workspace_context::WorkspaceContext;
 
 use super::{
-    printer::ReportPrinter, reporter::Report, util::carve_shortest_path, FilesDetails,
-    FilesSummary, Issue, IssueBody,
+    printer::ReportPrinter,
+    reporter::Report,
+    util::{carve_shortest_path, files_details},
+    FilesDetails, FilesSummary, Issue, IssueBody,
 };
-use crate::report::CanFilesDetails;
 
 pub struct MarkdownReportPrinter;
 
@@ -25,18 +26,29 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
         no_snippets: bool,
         _: bool,
         _: &[(String, String)],
-        file_contents: &HashMap<String, &String>,
     ) -> Result<()> {
         self.print_title_and_disclaimer(&mut writer)?;
         self.print_table_of_contents(&mut writer, report)?;
         self.print_contract_summary(&mut writer, report, contexts)?;
 
         let output_rel_path = output_rel_path.unwrap();
+        let (high_issues, low_issues) = report.detailed_issues(contexts);
 
         let all_issues = vec![
-            (report.high_issues(file_contents).issues, "# High Issues\n", "H"),
-            (report.low_issues(file_contents).issues, "# Low Issues\n", "L"),
+            (high_issues.issues, "# High Issues\n", "H"),
+            (low_issues.issues, "# Low Issues\n", "L"),
         ];
+
+        let file_contents = contexts
+            .iter()
+            .flat_map(|context| context.source_units())
+            .map(|source_unit| {
+                (
+                    source_unit.absolute_path.as_ref().unwrap().to_owned(),
+                    source_unit.source.as_ref().unwrap(),
+                )
+            })
+            .collect::<HashMap<_, _>>();
 
         for (issues, heading, severity) in all_issues {
             let mut counter = 0;
@@ -55,7 +67,7 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
                             output_rel_path: output_rel_path.clone(),
                             no_snippets,
                         },
-                        file_contents,
+                        &file_contents,
                     )?;
                 }
             }
@@ -93,7 +105,7 @@ impl MarkdownReportPrinter {
     ) -> Result<()> {
         let mut all_files_details = FilesDetails::default();
         for context in contexts {
-            all_files_details = all_files_details + &context.files_details();
+            all_files_details = all_files_details + &files_details(context)
         }
 
         let mut all_files_summary = FilesSummary::default();
