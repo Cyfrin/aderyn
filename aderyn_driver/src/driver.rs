@@ -1,12 +1,12 @@
 use crate::{
-    interface::{json::JsonPrinter, markdown::MarkdownReportPrinter, sarif::SarifPrinter},
-    lsp_report::LspReport,
+    interface::{
+        json::JsonPrinter, lsp::LspReport, markdown::MarkdownReportPrinter, sarif::SarifPrinter,
+    },
     preprocess::make_context,
-    runner::run_detector_mode,
+    runner::{run_detector_mode, run_lsp_mode},
 };
 use aderyn_core::{
     detect::detector::{get_all_issue_detectors, IssueDetector, IssueSeverity},
-    report::get_report,
     run_auditor_mode,
 };
 use field_access::FieldAccess;
@@ -103,14 +103,7 @@ pub fn drive_and_get_results(args: Args) -> Arc<Mutex<Option<LspReport>>> {
     };
 
     let (root_rel_path, contexts) = (ctx_wrapper.root_path, ctx_wrapper.contexts);
-
-    let lsp_report = match get_report(&contexts, &root_rel_path, detectors) {
-        Ok(report) => {
-            let (high_issues, low_issues) = report.detailed_issues(&contexts);
-            Some(LspReport::from(low_issues, high_issues, &root_rel_path))
-        }
-        Err(_) => None,
-    };
+    let lsp_report = run_lsp_mode(&contexts, root_rel_path, detectors);
 
     Arc::new(tokio::sync::Mutex::new(lsp_report))
 }

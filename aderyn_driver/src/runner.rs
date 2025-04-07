@@ -6,7 +6,7 @@ use std::{
     path::{Path, PathBuf},
 };
 
-use crate::interface::ReportPrinter;
+use crate::interface::{lsp::LspReport, ReportPrinter};
 use aderyn_core::report::*;
 
 #[allow(clippy::too_many_arguments)]
@@ -31,6 +31,17 @@ where
 
     println!("Detectors run, processing found issues");
     println!("Found issues processed. Printing report");
+
+    let get_writer = |filename: &str| -> io::Result<File> {
+        let file_path = Path::new(filename);
+        if let Some(parent_dir) = file_path.parent() {
+            std::fs::create_dir_all(parent_dir)?;
+        }
+        if Path::new(filename).exists() {
+            remove_file(filename)?; // If file exists, delete it
+        }
+        File::create(filename)
+    };
 
     if !stdout {
         reporter.print_report(
@@ -59,13 +70,17 @@ where
     Ok(())
 }
 
-fn get_writer(filename: &str) -> io::Result<File> {
-    let file_path = Path::new(filename);
-    if let Some(parent_dir) = file_path.parent() {
-        std::fs::create_dir_all(parent_dir)?;
+pub fn run_lsp_mode(
+    contexts: &[WorkspaceContext],
+    root_rel_path: PathBuf,
+    detectors: Vec<Box<dyn IssueDetector>>,
+) -> Option<LspReport> {
+    match get_report(&contexts, &root_rel_path, detectors) {
+        Ok(report) => {
+            let (high_issues, low_issues) = report.detailed_issues(&contexts);
+            Some(LspReport::from(low_issues, high_issues, &root_rel_path))
+        }
+        Err(_) => None,
     }
-    if Path::new(filename).exists() {
-        remove_file(filename)?; // If file exists, delete it
-    }
-    File::create(filename)
 }
+
