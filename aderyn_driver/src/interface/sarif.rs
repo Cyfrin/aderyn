@@ -12,7 +12,7 @@ use serde_sarif::sarif::{
 
 use aderyn_core::{context::workspace_context::WorkspaceContext, report::*};
 
-use super::printer::ReportPrinter;
+use super::ReportPrinter;
 
 #[derive(Serialize)]
 pub struct SarifContent {

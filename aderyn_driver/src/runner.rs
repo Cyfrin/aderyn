@@ -6,7 +6,7 @@ use std::{
     path::{Path, PathBuf},
 };
 
-use crate::interface::printer::ReportPrinter;
+use crate::interface::ReportPrinter;
 use aderyn_core::report::*;
 
 #[allow(clippy::too_many_arguments)]

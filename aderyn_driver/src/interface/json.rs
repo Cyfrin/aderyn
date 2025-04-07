@@ -6,7 +6,7 @@ use std::{
 use aderyn_core::{context::workspace_context::WorkspaceContext, report::*};
 use serde::Serialize;
 
-use super::{printer::ReportPrinter, util::files_details};
+use super::{util::files_details, ReportPrinter};
 
 #[derive(Serialize)]
 pub struct JsonContent {

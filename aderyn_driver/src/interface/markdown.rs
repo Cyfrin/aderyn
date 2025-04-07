@@ -7,8 +7,8 @@ use std::{
 use aderyn_core::{context::workspace_context::WorkspaceContext, report::*};
 
 use super::{
-    printer::ReportPrinter,
     util::{carve_shortest_path, files_details},
+    ReportPrinter,
 };
 
 pub struct MarkdownReportPrinter;
