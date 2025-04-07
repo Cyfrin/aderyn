@@ -31,6 +31,5 @@ src/
 ├─ detect/          // Where Detector specifications and logic live
 ├─ framework/       // Foundry/Hardhat detection
 ├─ fscloc/          // Solidity file stats
-├─ report/          // Report printers
 ├─ visitor/         // AST visitors
 ```

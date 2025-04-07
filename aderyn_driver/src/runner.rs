@@ -32,7 +32,7 @@ where
     if auditor_mode {
         return run_auditor_mode(contexts);
     }
-    return run_detector_mode(
+    run_detector_mode(
         contexts,
         output_file_path,
         reporter,
@@ -40,7 +40,7 @@ where
         no_snippets,
         stdout,
         detectors,
-    );
+    )
 }
 
 pub fn get_report(
