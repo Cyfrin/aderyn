@@ -158,7 +158,7 @@ fn main() {
         args.skip_update_check = true;
         spin_up_language_server(args);
     } else {
-        driver::drive(args.clone());
+        driver::kick_off_report_creation(args.clone());
     }
 
     // Check for updates

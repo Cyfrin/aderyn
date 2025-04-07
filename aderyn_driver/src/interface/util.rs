@@ -12,9 +12,7 @@ use std::{
     path::{Component, PathBuf},
 };
 
-use aderyn_core::{ast::SourceUnit, context::workspace_context::WorkspaceContext};
-
-use super::{FilesDetail, FilesDetails};
+use aderyn_core::{ast::SourceUnit, context::workspace_context::WorkspaceContext, report::*};
 
 pub fn carve_shortest_path(from_file: PathBuf, to_file: PathBuf) -> PathBuf {
     assert!(from_file.exists());

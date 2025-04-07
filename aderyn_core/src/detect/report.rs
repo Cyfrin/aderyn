@@ -5,7 +5,7 @@ use std::{
     path::Path,
 };
 
-use aderyn_core::{
+use crate::{
     ast::NodeID,
     context::workspace_context::WorkspaceContext,
     detect::detector::{IssueDetector, IssueSeverity},

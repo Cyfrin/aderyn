@@ -5,6 +5,8 @@ pub mod detect;
 pub mod fscloc;
 pub mod visitor;
 
+pub use detect::report;
+
 use audit::auditor::{get_auditor_detectors, AuditorPrinter, BasicAuditorPrinter};
 use eyre::Result;
 use prettytable::Row;
