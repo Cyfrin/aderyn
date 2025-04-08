@@ -3,7 +3,7 @@ use std::path::PathBuf;
 use aderyn_driver::{
     detector::get_all_issue_detectors,
     driver::{kick_off_report_creation, Args},
-    preprocess::PreprocessedConfig,
+    process::PreprocessedConfig,
 };
 
 use criterion::{criterion_group, criterion_main, Criterion};
@@ -37,7 +37,6 @@ fn bench_aderyn_on_contract_playground(c: &mut Criterion) {
                 output: String::from("aderyn-report-for-bench.md"),
                 no_snippets: false,
                 skip_cloc: true,
-                skip_update_check: true,
                 path_excludes: None,
                 path_includes: None,
                 src: None,
