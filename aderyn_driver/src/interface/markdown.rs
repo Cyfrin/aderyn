@@ -14,9 +14,9 @@ use super::{
 pub struct MarkdownReportPrinter;
 
 impl ReportPrinter<()> for MarkdownReportPrinter {
-    fn print_report<W: Write>(
+    fn print_report(
         &self,
-        mut writer: W,
+        writer: &mut Box<dyn Write>,
         report: &Report,
         contexts: &[WorkspaceContext],
         root_path: PathBuf,
@@ -25,9 +25,9 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
         _: bool,
         _: &[(String, String)],
     ) -> Result<()> {
-        self.print_title_and_disclaimer(&mut writer)?;
-        self.print_table_of_contents(&mut writer, report)?;
-        self.print_contract_summary(&mut writer, report, contexts)?;
+        self.print_title_and_disclaimer(writer.as_mut())?;
+        self.print_table_of_contents(writer.as_mut(), report)?;
+        self.print_contract_summary(writer.as_mut(), report, contexts)?;
 
         let output_rel_path = output_rel_path.unwrap();
         let (high_issues, low_issues) = report.detailed_issues(contexts);
@@ -56,7 +56,7 @@ impl ReportPrinter<()> for MarkdownReportPrinter {
                 for issue_body in &issues {
                     counter += 1;
                     self.print_issue(
-                        &mut writer,
+                        writer,
                         PrintIssueParams {
                             issue_body,
                             severity,
@@ -213,9 +213,9 @@ impl MarkdownReportPrinter {
         Ok(())
     }
 
-    fn print_issue<W: Write>(
+    fn print_issue(
         &self,
-        mut writer: W,
+        writer: &mut Box<dyn Write>,
         params: PrintIssueParams,
         file_data: &HashMap<String, &String>,
     ) -> Result<()> {

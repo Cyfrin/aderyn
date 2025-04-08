@@ -25,9 +25,9 @@ pub struct SarifContent {
 pub struct SarifPrinter;
 
 impl ReportPrinter<()> for SarifPrinter {
-    fn print_report<W: Write>(
+    fn print_report(
         &self,
-        writer: W,
+        writer: &mut Box<dyn Write>,
         report: &Report,
         _: &[WorkspaceContext],
         _: PathBuf,

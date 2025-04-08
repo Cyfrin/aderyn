@@ -2,7 +2,7 @@ use aderyn_core::{context::workspace_context::WorkspaceContext, detect::detector
 use std::{
     error::Error,
     fs::{remove_file, File},
-    io,
+    io::{self, Write},
     path::{Path, PathBuf},
 };
 
@@ -43,29 +43,22 @@ where
         File::create(filename)
     };
 
+    let mut b: Box<dyn Write> =
+        if stdout { Box::new(io::stdout()) } else { Box::new(get_writer(&output_file_path)?) };
+
+    reporter.print_report(
+        &mut b,
+        &report,
+        contexts,
+        root_rel_path,
+        Some(output_file_path.clone()),
+        no_snippets,
+        stdout,
+        detectors_used,
+    )?;
+
     if !stdout {
-        reporter.print_report(
-            get_writer(&output_file_path)?,
-            &report,
-            contexts,
-            root_rel_path,
-            Some(output_file_path.clone()),
-            no_snippets,
-            stdout,
-            detectors_used,
-        )?;
         println!("Report printed to {}", output_file_path);
-    } else {
-        reporter.print_report(
-            io::stdout(),
-            &report,
-            contexts,
-            root_rel_path,
-            Some(output_file_path.clone()),
-            no_snippets,
-            stdout,
-            detectors_used,
-        )?;
     }
     Ok(())
 }
