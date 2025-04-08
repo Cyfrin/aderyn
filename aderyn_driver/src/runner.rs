@@ -6,22 +6,22 @@ use std::{
     path::{Path, PathBuf},
 };
 
-use crate::interface::{lsp::LspReport, ReportPrinter};
+use crate::interface::{
+    json::JsonPrinter, lsp::LspReport, markdown::MarkdownReportPrinter, sarif::SarifPrinter,
+    OutputInterface, ReportPrinter,
+};
 use aderyn_core::report::*;
 
 #[allow(clippy::too_many_arguments)]
-pub fn run_detector_mode<T>(
+pub fn run_detector_mode(
     contexts: &[WorkspaceContext],
     output_file_path: String,
-    reporter: T,
+    output_interface: OutputInterface,
     root_rel_path: PathBuf,
     no_snippets: bool,
     stdout: bool,
     detectors: Vec<Box<dyn IssueDetector>>,
-) -> Result<(), Box<dyn Error>>
-where
-    T: ReportPrinter<()>,
-{
+) -> Result<(), Box<dyn Error>> {
     println!("Running {} detectors", detectors.len());
 
     let detectors_used =
@@ -46,16 +46,47 @@ where
     let mut b: Box<dyn Write> =
         if stdout { Box::new(io::stdout()) } else { Box::new(get_writer(&output_file_path)?) };
 
-    reporter.print_report(
-        &mut b,
-        &report,
-        contexts,
-        root_rel_path,
-        Some(output_file_path.clone()),
-        no_snippets,
-        stdout,
-        detectors_used,
-    )?;
+    match output_interface {
+        OutputInterface::Json => {
+            let interface = JsonPrinter;
+            interface.print_report(
+                &mut b,
+                &report,
+                contexts,
+                root_rel_path,
+                Some(output_file_path.clone()),
+                no_snippets,
+                stdout,
+                detectors_used,
+            )?;
+        }
+        OutputInterface::Markdown => {
+            let interface = MarkdownReportPrinter;
+            interface.print_report(
+                &mut b,
+                &report,
+                contexts,
+                root_rel_path,
+                Some(output_file_path.clone()),
+                no_snippets,
+                stdout,
+                detectors_used,
+            )?;
+        }
+        OutputInterface::Sarif => {
+            let interface = SarifPrinter;
+            interface.print_report(
+                &mut b,
+                &report,
+                contexts,
+                root_rel_path,
+                Some(output_file_path.clone()),
+                no_snippets,
+                stdout,
+                detectors_used,
+            )?;
+        }
+    }
 
     if !stdout {
         println!("Report printed to {}", output_file_path);

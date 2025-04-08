@@ -11,6 +11,12 @@ use std::{
 
 use aderyn_core::{context::workspace_context::WorkspaceContext, report::Report};
 
+pub enum OutputInterface {
+    Json,
+    Markdown,
+    Sarif,
+}
+
 #[allow(clippy::borrowed_box)]
 pub trait ReportPrinter<T> {
     #[allow(clippy::too_many_arguments)]
