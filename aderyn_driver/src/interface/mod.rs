@@ -14,8 +14,10 @@ use aderyn_core::{context::workspace_context::WorkspaceContext, report::Report};
 
 use crate::driver::Args;
 
+#[derive(Default)]
 pub enum OutputInterface {
     Json,
+    #[default]
     Markdown,
     Sarif,
 }
