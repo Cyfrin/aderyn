@@ -14,9 +14,9 @@ use aderyn_core::{context::workspace_context::WorkspaceContext, report::Report};
 #[allow(clippy::borrowed_box)]
 pub trait ReportPrinter<T> {
     #[allow(clippy::too_many_arguments)]
-    fn print_report<W: Write>(
+    fn print_report(
         &self,
-        writer: W,
+        writer: &mut Box<dyn Write>,
         report: &Report,
         contexts: &[WorkspaceContext],
         root_rel_path: PathBuf,
