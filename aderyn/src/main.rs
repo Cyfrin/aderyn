@@ -4,7 +4,7 @@ use aderyn::{
     aderyn_is_currently_running_newest_version, create_aderyn_toml_file_at, initialize_niceties,
     lsp::spin_up_language_server, print_all_detectors_view, print_detail_view,
 };
-use aderyn_driver::driver::{self, Args, CliArgsOutputConfig};
+use aderyn_driver::driver::{self, kick_off_report_creation, Args, CliArgsOutputConfig};
 
 use clap::{ArgGroup, Parser, Subcommand};
 #[derive(Parser, Debug)]
@@ -138,7 +138,6 @@ fn main() {
     }
 
     let mut args = Args {
-        auditor_mode: cmd_args.auditor_mode,
         input_config: driver::CliArgsInputConfig {
             root: cmd_args.root,
             src: cmd_args.src,
@@ -157,13 +156,17 @@ fn main() {
         },
     };
 
-    // Run watcher is watch mode is engaged
-    if cmd_args.lsp {
-        // FORCE skip cloc
-        args.common_config.skip_cloc = true;
-        spin_up_language_server(args);
+    if cmd_args.auditor_mode {
+        driver::kick_off_audit_mode(args.clone());
     } else {
-        driver::kick_off_report_creation(args.clone());
+        // Run watcher is watch mode is engaged
+        if cmd_args.lsp {
+            // FORCE skip cloc
+            args.common_config.skip_cloc = true;
+            spin_up_language_server(args);
+        } else {
+            kick_off_report_creation(args.clone());
+        }
     }
 
     // Check for updates
