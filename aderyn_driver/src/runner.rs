@@ -1,17 +1,9 @@
 use aderyn_core::{context::workspace_context::WorkspaceContext, detect::detector::IssueDetector};
-use std::{
-    error::Error,
-    fs::{remove_file, File},
-    io::{self, Write},
-    path::{Path, PathBuf},
-};
+use std::{error::Error, path::PathBuf};
 
 use crate::{
     driver::Args,
-    interface::{
-        json::JsonPrinter, lsp::LspReport, markdown::MarkdownReportPrinter, sarif::SarifPrinter,
-        OutputInterface, ReportPrinter,
-    },
+    interface::{lsp::LspReport, output_interface_router, OutputInterface},
 };
 use aderyn_core::report::*;
 
@@ -33,20 +25,6 @@ pub fn run_detector_mode(
     println!("Detectors run, processing found issues");
     println!("Found issues processed. Printing report");
 
-    let get_writer = |filename: &str| -> io::Result<File> {
-        let file_path = Path::new(filename);
-        if let Some(parent_dir) = file_path.parent() {
-            std::fs::create_dir_all(parent_dir)?;
-        }
-        if Path::new(filename).exists() {
-            remove_file(filename)?; // If file exists, delete it
-        }
-        File::create(filename)
-    };
-
-    let mut b: Box<dyn Write> =
-        if args.stdout { Box::new(io::stdout()) } else { Box::new(get_writer(&output_file_path)?) };
-
     let output_interface = if args.output.ends_with(".json") {
         OutputInterface::Json
     } else if args.output.ends_with(".sarif") {
@@ -55,47 +33,15 @@ pub fn run_detector_mode(
         OutputInterface::Markdown
     };
 
-    match output_interface {
-        OutputInterface::Json => {
-            let interface = JsonPrinter;
-            interface.print_report(
-                &mut b,
-                &report,
-                contexts,
-                root_rel_path,
-                Some(output_file_path.clone()),
-                args.no_snippets,
-                args.stdout,
-                detectors_used,
-            )?;
-        }
-        OutputInterface::Markdown => {
-            let interface = MarkdownReportPrinter;
-            interface.print_report(
-                &mut b,
-                &report,
-                contexts,
-                root_rel_path,
-                Some(output_file_path.clone()),
-                args.no_snippets,
-                args.stdout,
-                detectors_used,
-            )?;
-        }
-        OutputInterface::Sarif => {
-            let interface = SarifPrinter;
-            interface.print_report(
-                &mut b,
-                &report,
-                contexts,
-                root_rel_path,
-                Some(output_file_path.clone()),
-                args.no_snippets,
-                args.stdout,
-                detectors_used,
-            )?;
-        }
-    }
+    output_interface_router(
+        output_interface,
+        &report,
+        contexts,
+        root_rel_path,
+        output_file_path.clone(),
+        detectors_used,
+        args,
+    )?;
 
     if !args.stdout {
         println!("Report printed to {}", output_file_path);

@@ -1,7 +1,4 @@
-use std::{
-    io::{self, Result, Write},
-    path::PathBuf,
-};
+use std::io::{self, Result, Write};
 
 use serde::Serialize;
 use serde_json::Value;
@@ -10,9 +7,7 @@ use serde_sarif::sarif::{
     Tool, ToolComponent,
 };
 
-use aderyn_core::{context::workspace_context::WorkspaceContext, report::*};
-
-use super::ReportPrinter;
+use aderyn_core::report::*;
 
 #[derive(Serialize)]
 pub struct SarifContent {
@@ -22,100 +17,86 @@ pub struct SarifContent {
     runs: Vec<Run>,
 }
 
-pub struct SarifPrinter;
-
-impl ReportPrinter<()> for SarifPrinter {
-    fn print_report(
-        &self,
-        writer: &mut Box<dyn Write>,
-        report: &Report,
-        _: &[WorkspaceContext],
-        _: PathBuf,
-        _: Option<String>,
-        _: bool,
-        stdout: bool,
-        _detectors_used: &[(String, String)],
-    ) -> Result<()> {
-        let runs = vec![Run {
-            tool: Tool {
-                driver: ToolComponent {
-                    name: "Aderyn".to_string(),
-                    organization: Some("Cyfrin".to_string()),
-                    associated_component: None,
-                    contents: None,
-                    dotted_quad_file_version: None,
-                    download_uri: None,
-                    full_description: None,
-                    full_name: Some("Cyfrin - Aderyn".to_string()),
-                    global_message_strings: None,
-                    guid: None,
-                    information_uri: Some("https://github.com/Cyfrin/aderyn".to_string()),
-                    is_comprehensive: None,
-                    language: None,
-                    localized_data_semantic_version: None,
-                    locations: None,
-                    minimum_required_localized_data_semantic_version: None,
-                    notifications: None,
-                    product: None,
-                    product_suite: None,
-                    properties: None,
-                    release_date_utc: None,
-                    rules: None,
-                    semantic_version: Some(env!("CARGO_PKG_VERSION").to_string()),
-                    short_description: None,
-                    supported_taxonomies: None,
-                    taxa: None,
-                    translation_metadata: None,
-                    version: Some(env!("CARGO_PKG_VERSION").to_string()),
-                },
-                extensions: None,
+pub fn print_report(writer: &mut Box<dyn Write>, report: &Report, stdout: bool) -> Result<()> {
+    let runs = vec![Run {
+        tool: Tool {
+            driver: ToolComponent {
+                name: "Aderyn".to_string(),
+                organization: Some("Cyfrin".to_string()),
+                associated_component: None,
+                contents: None,
+                dotted_quad_file_version: None,
+                download_uri: None,
+                full_description: None,
+                full_name: Some("Cyfrin - Aderyn".to_string()),
+                global_message_strings: None,
+                guid: None,
+                information_uri: Some("https://github.com/Cyfrin/aderyn".to_string()),
+                is_comprehensive: None,
+                language: None,
+                localized_data_semantic_version: None,
+                locations: None,
+                minimum_required_localized_data_semantic_version: None,
+                notifications: None,
+                product: None,
+                product_suite: None,
                 properties: None,
+                release_date_utc: None,
+                rules: None,
+                semantic_version: Some(env!("CARGO_PKG_VERSION").to_string()),
+                short_description: None,
+                supported_taxonomies: None,
+                taxa: None,
+                translation_metadata: None,
+                version: Some(env!("CARGO_PKG_VERSION").to_string()),
             },
-            results: Some(create_sarif_results(report)),
-            column_kind: None,
-            addresses: None,
-            artifacts: None,
-            automation_details: None,
-            baseline_guid: None,
-            conversion: None,
-            default_encoding: None,
-            default_source_language: None,
-            external_property_file_references: None,
-            graphs: None,
-            invocations: None,
-            language: None,
-            logical_locations: None,
-            newline_sequences: None,
-            original_uri_base_ids: None,
-            policies: None,
+            extensions: None,
             properties: None,
-            redaction_tokens: None,
-            run_aggregates: None,
-            special_locations: None,
-            taxonomies: None,
-            thread_flow_locations: None,
-            translations: None,
-            version_control_provenance: None,
-            web_requests: None,
-            web_responses: None,
-        }];
+        },
+        results: Some(create_sarif_results(report)),
+        column_kind: None,
+        addresses: None,
+        artifacts: None,
+        automation_details: None,
+        baseline_guid: None,
+        conversion: None,
+        default_encoding: None,
+        default_source_language: None,
+        external_property_file_references: None,
+        graphs: None,
+        invocations: None,
+        language: None,
+        logical_locations: None,
+        newline_sequences: None,
+        original_uri_base_ids: None,
+        policies: None,
+        properties: None,
+        redaction_tokens: None,
+        run_aggregates: None,
+        special_locations: None,
+        taxonomies: None,
+        thread_flow_locations: None,
+        translations: None,
+        version_control_provenance: None,
+        web_requests: None,
+        web_responses: None,
+    }];
 
-        let sarif_report = SarifContent {
-            schema: "http://json.schemastore.org/sarif-2.1.0-rtm.6".to_string(),
-            version: "2.1.0".to_string(),
-            runs,
-        };
+    let sarif_report = SarifContent {
+        schema: "http://json.schemastore.org/sarif-2.1.0-rtm.6".to_string(),
+        version: "2.1.0".to_string(),
+        runs,
+    };
 
-        let value = serde_json::to_value(sarif_report).unwrap();
-        if stdout {
-            println!("STDOUT START");
-            let _ = serde_json::to_writer_pretty(io::stdout(), &value);
-            println!("STDOUT END");
-            return Ok(());
-        }
-        _ = serde_json::to_writer_pretty(writer, &value);
-        Ok(())
+    let value = serde_json::to_value(sarif_report).unwrap();
+    if stdout {
+        println!("STDOUT START");
+        let _ = serde_json::to_writer_pretty(io::stdout(), &value);
+        println!("STDOUT END");
+        return Ok(());
     }
+    _ = serde_json::to_writer_pretty(writer, &value);
+    Ok(())
 }
 
 fn create_sarif_results(report: &Report) -> Vec<SarifResult> {
