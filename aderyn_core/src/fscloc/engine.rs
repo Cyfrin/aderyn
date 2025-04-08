@@ -1,7 +1,11 @@
 use crate::fscloc::cloc;
 use ignore::{DirEntry, WalkBuilder, WalkState::Continue};
 use rayon::prelude::*;
-use std::{collections::HashMap, path::Path, sync::Mutex};
+use std::{
+    collections::{HashMap, HashSet},
+    path::{Path, PathBuf},
+    sync::Mutex,
+};
 
 use super::cloc::Stats;
 
@@ -9,6 +13,7 @@ pub fn count_lines_of_code_and_collect_line_numbers_to_ignore(
     src: &Path,
     src_filepaths: &[String],
     skip_cloc: bool,
+    included: &HashSet<PathBuf>,
 ) -> Mutex<HashMap<String, Stats>> {
     let (tx, rx) = crossbeam_channel::unbounded();
 
@@ -29,7 +34,11 @@ pub fn count_lines_of_code_and_collect_line_numbers_to_ignore(
         }
     };
 
-    let src_filepaths_as_paths = src_filepaths.iter().map(form_path).collect::<Vec<_>>();
+    let src_filepaths_as_paths = src_filepaths
+        .iter()
+        .map(form_path)
+        .filter(|s| included.contains(s.strip_prefix(src).unwrap()))
+        .collect::<Vec<_>>();
 
     if !src_filepaths_as_paths.is_empty() {
         // Only add the paths to WalkBuilder that we want to do analysis on.
