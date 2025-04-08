@@ -10,7 +10,6 @@ use tokio::sync::Mutex;
 
 #[derive(Clone, FieldAccess)]
 pub struct Args {
-    pub auditor_mode: bool,
     pub input_config: CliArgsInputConfig,
     pub output_config: CliArgsOutputConfig,
     pub common_config: CliArgsCommonConfig,
@@ -38,10 +37,8 @@ pub struct CliArgsCommonConfig {
     pub highs_only: bool,
 }
 
-/// One way pipeline. Used by CLI
-pub fn kick_off_report_creation(args: Args) {
-    let detectors = detector_list(&args);
-
+/// One way pipeline to print details for auditors. (for CLI)
+pub fn kick_off_audit_mode(args: Args) {
     let run_pipeline = || -> Result<(), Box<dyn std::error::Error>> {
         let cx_wrapper =
             make_context(&args.input_config, &args.common_config).unwrap_or_else(|e| {
@@ -49,14 +46,7 @@ pub fn kick_off_report_creation(args: Args) {
                 std::process::exit(1);
             });
 
-        if args.auditor_mode {
-            run_auditor_mode(&cx_wrapper.contexts)?;
-        } else {
-            let root_rel_path = cx_wrapper.root_path;
-
-            // Load the workspace context into the run function, which runs the detectors
-            run_detector_mode(&cx_wrapper.contexts, root_rel_path, detectors, &args.output_config)?;
-        }
+        run_auditor_mode(&cx_wrapper.contexts)?;
         Ok(())
     };
 
@@ -67,7 +57,32 @@ pub fn kick_off_report_creation(args: Args) {
     });
 }
 
-/// Drives and returns results. Used by LSP
+/// One way pipeline to generate vulnerability reports. (for CLI)
+pub fn kick_off_report_creation(args: Args) {
+    let detectors = detector_list(&args);
+
+    let run_pipeline = || -> Result<(), Box<dyn std::error::Error>> {
+        let cx_wrapper =
+            make_context(&args.input_config, &args.common_config).unwrap_or_else(|e| {
+                eprintln!("Error making context: {}", e);
+                std::process::exit(1);
+            });
+
+        let root_rel_path = cx_wrapper.root_path;
+
+        // Load the workspace context into the run function, which runs the detectors
+        run_detector_mode(&cx_wrapper.contexts, root_rel_path, detectors, &args.output_config)?;
+        Ok(())
+    };
+
+    // Kick-off
+    run_pipeline().unwrap_or_else(|e| {
+        eprintln!("Error driving aderyn: {}", e);
+        std::process::exit(1);
+    });
+}
+
+/// Identify and return vulnerability reports. (for LSP)
 pub fn fetch_report_for_lsp(args: Args) -> Arc<Mutex<Option<LspReport>>> {
     let detectors = detector_list(&args);
 
