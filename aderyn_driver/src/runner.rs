@@ -7,7 +7,6 @@ use crate::{
 };
 use aderyn_core::report::*;
 
-#[allow(clippy::too_many_arguments)]
 pub fn run_detector_mode(
     contexts: &[WorkspaceContext],
     output_file_path: String,
@@ -43,9 +42,6 @@ pub fn run_detector_mode(
         args,
     )?;
 
-    if !args.stdout {
-        println!("Report printed to {}", output_file_path);
-    }
     Ok(())
 }
 
