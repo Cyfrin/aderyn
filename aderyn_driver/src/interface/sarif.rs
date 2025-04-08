@@ -1,4 +1,4 @@
-use std::io::{self, Result, Write};
+use std::io::{Result, Write};
 
 use serde::Serialize;
 use serde_json::Value;
@@ -89,13 +89,17 @@ pub fn print_report(writer: &mut Box<dyn Write>, report: &Report, stdout: bool) 
     };
 
     let value = serde_json::to_value(sarif_report).unwrap();
+
     if stdout {
         println!("STDOUT START");
-        let _ = serde_json::to_writer_pretty(io::stdout(), &value);
-        println!("STDOUT END");
-        return Ok(());
     }
-    _ = serde_json::to_writer_pretty(writer, &value);
+
+    serde_json::to_writer_pretty(writer, &value)?;
+
+    if stdout {
+        println!("STDOUT END");
+    }
+
     Ok(())
 }
 

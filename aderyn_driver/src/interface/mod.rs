@@ -40,6 +40,7 @@ pub fn output_interface_router(
         }
         File::create(filename)
     };
+
     let mut b: Box<dyn Write> =
         if args.stdout { Box::new(io::stdout()) } else { Box::new(get_writer(&output_file_path)?) };
 
@@ -53,7 +54,7 @@ pub fn output_interface_router(
                 &report,
                 contexts,
                 root_rel_path,
-                output_file_path,
+                output_file_path.clone(),
                 args.no_snippets,
             )?;
         }
@@ -61,5 +62,10 @@ pub fn output_interface_router(
             sarif::print_report(&mut b, &report, args.stdout)?;
         }
     }
+
+    if !args.stdout {
+        println!("Report printed to {}", output_file_path);
+    }
+
     Ok(())
 }
