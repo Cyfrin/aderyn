@@ -1,6 +1,6 @@
 use crate::{
     interface::lsp::LspReport,
-    preprocess::make_context,
+    process::make_context,
     runner::{run_auditor_mode, run_detector_mode, run_lsp_mode},
 };
 use aderyn_core::detect::detector::{get_all_issue_detectors, IssueDetector, IssueSeverity};
