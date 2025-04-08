@@ -46,12 +46,12 @@ pub fn output_interface_router(
 
     match output_interface {
         OutputInterface::Json => {
-            json::print_report(&mut b, &report, contexts, args.stdout, detectors_used)?;
+            json::print_report(&mut b, report, contexts, args.stdout, detectors_used)?;
         }
         OutputInterface::Markdown => {
             markdown::print_report(
                 &mut b,
-                &report,
+                report,
                 contexts,
                 root_rel_path,
                 output_file_path.clone(),
@@ -59,7 +59,7 @@ pub fn output_interface_router(
             )?;
         }
         OutputInterface::Sarif => {
-            sarif::print_report(&mut b, &report, args.stdout)?;
+            sarif::print_report(&mut b, report, args.stdout)?;
         }
     }
 
