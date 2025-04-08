@@ -12,7 +12,7 @@ use std::{
 
 use aderyn_core::{context::workspace_context::WorkspaceContext, report::Report};
 
-use crate::driver::Args;
+use crate::driver::CliArgsOutputConfig;
 
 #[derive(Default)]
 pub enum OutputInterface {
@@ -27,10 +27,8 @@ pub fn output_interface_router(
     report: &Report,
     contexts: &[WorkspaceContext],
     root_rel_path: PathBuf,
-    output_file_path: String, /* you writer 'W' may or may not be writing a file. Eg:
-                               * it can simply consume and forget :P */
     detectors_used: &[(String, String)],
-    args: &Args,
+    output_config: &CliArgsOutputConfig,
 ) -> Result<()> {
     let get_writer = |filename: &str| -> io::Result<File> {
         let file_path = Path::new(filename);
@@ -45,12 +43,15 @@ pub fn output_interface_router(
 
     println!("Detectors run, printing report.");
 
-    let mut b: Box<dyn Write> =
-        if args.stdout { Box::new(io::stdout()) } else { Box::new(get_writer(&output_file_path)?) };
+    let mut b: Box<dyn Write> = if output_config.stdout {
+        Box::new(io::stdout())
+    } else {
+        Box::new(get_writer(&output_config.output)?)
+    };
 
     match output_interface {
         OutputInterface::Json => {
-            json::print_report(&mut b, report, contexts, args.stdout, detectors_used)?;
+            json::print_report(&mut b, report, contexts, output_config.stdout, detectors_used)?;
         }
         OutputInterface::Markdown => {
             markdown::print_report(
@@ -58,17 +59,17 @@ pub fn output_interface_router(
                 report,
                 contexts,
                 root_rel_path,
-                output_file_path.clone(),
-                args.no_snippets,
+                output_config.output.clone(),
+                output_config.no_snippets,
             )?;
         }
         OutputInterface::Sarif => {
-            sarif::print_report(&mut b, report, args.stdout)?;
+            sarif::print_report(&mut b, report, output_config.stdout)?;
         }
     }
 
-    if !args.stdout {
-        println!("Report printed to {}", output_file_path);
+    if !output_config.stdout {
+        println!("Report printed to {}", output_config.output);
     }
 
     Ok(())
