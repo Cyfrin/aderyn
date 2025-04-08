@@ -1,5 +1,5 @@
 use crate::{
-    interface::{lsp::LspReport, OutputInterface},
+    interface::lsp::LspReport,
     preprocess::make_context,
     runner::{run_auditor_mode, run_detector_mode, run_lsp_mode},
 };
@@ -41,24 +41,8 @@ pub fn kick_off_report_creation(args: Args) {
             let root_rel_path = cx_wrapper.root_path;
             let output = args.output.clone();
 
-            let output_interface = if args.output.ends_with(".json") {
-                OutputInterface::Json
-            } else if args.output.ends_with(".sarif") {
-                OutputInterface::Sarif
-            } else {
-                OutputInterface::Markdown
-            };
-
             // Load the workspace context into the run function, which runs the detectors
-            run_detector_mode(
-                &cx_wrapper.contexts,
-                output,
-                output_interface,
-                root_rel_path,
-                args.no_snippets,
-                args.stdout,
-                detectors,
-            )?;
+            run_detector_mode(&cx_wrapper.contexts, output, root_rel_path, detectors, &args)?;
         }
         Ok(())
     };
