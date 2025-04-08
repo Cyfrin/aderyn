@@ -105,7 +105,10 @@ pub fn spin_up_language_server(args: Args) {
 
         // Watch for file changes
         file_system_watcher
-            .watch(PathBuf::from(args.root.clone()).as_path(), RecursiveMode::Recursive)
+            .watch(
+                PathBuf::from(args.input_config.root.clone()).as_path(),
+                RecursiveMode::Recursive,
+            )
             .expect("unable to watch for file changes");
 
         // Most editor's LSP clients communicate through stdout/stdin channels. Theefore use

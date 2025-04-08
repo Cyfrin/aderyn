@@ -2,17 +2,16 @@ use aderyn_core::{context::workspace_context::WorkspaceContext, detect::detector
 use std::{error::Error, path::PathBuf};
 
 use crate::{
-    driver::Args,
+    driver::CliArgsOutputConfig,
     interface::{lsp::LspReport, output_interface_router, OutputInterface},
 };
 use aderyn_core::report::*;
 
 pub fn run_detector_mode(
     contexts: &[WorkspaceContext],
-    output_file_path: String,
     root_rel_path: PathBuf,
     detectors: Vec<Box<dyn IssueDetector>>,
-    args: &Args,
+    output_config: &CliArgsOutputConfig,
 ) -> Result<(), Box<dyn Error>> {
     println!("Running {} detectors", detectors.len());
 
@@ -20,12 +19,13 @@ pub fn run_detector_mode(
         &detectors.iter().map(|d| (d.name(), d.severity().to_string())).collect::<Vec<_>>();
 
     let report = get_report(contexts, &root_rel_path, detectors)?;
+    let output_file_path = output_config.output.clone();
 
-    let output_interface = if args.output.ends_with(".json") {
+    let output_interface = if output_file_path.ends_with(".json") {
         OutputInterface::Json
-    } else if args.output.ends_with(".sarif") {
+    } else if output_file_path.ends_with(".sarif") {
         OutputInterface::Sarif
-    } else if args.output.ends_with(".md") {
+    } else if output_file_path.ends_with(".md") {
         OutputInterface::Markdown
     } else {
         println!("Warning: Output file extension is unrecognized. Reverting to markdown..");
@@ -37,9 +37,8 @@ pub fn run_detector_mode(
         &report,
         contexts,
         root_rel_path,
-        output_file_path.clone(),
         detectors_used,
-        args,
+        output_config,
     )?;
 
     Ok(())
