@@ -42,10 +42,10 @@ pub fn run_lsp_mode(
     detectors: Vec<Box<dyn IssueDetector>>,
 ) -> Option<LspReport> {
     let (root_rel_path, contexts) = (&ctx_wrapper.root_path, &ctx_wrapper.contexts);
-    match get_report(&contexts, &root_rel_path, detectors) {
+    match get_report(contexts, root_rel_path, detectors) {
         Ok(report) => {
-            let (high_issues, low_issues) = report.detailed_issues(&contexts);
-            Some(LspReport::from(low_issues, high_issues, &root_rel_path))
+            let (high_issues, low_issues) = report.detailed_issues(contexts);
+            Some(LspReport::from(low_issues, high_issues, root_rel_path))
         }
         Err(_) => None,
     }

@@ -54,7 +54,7 @@ pub fn print_report(
                         issue_body,
                         severity,
                         number: counter,
-                        root_path: &root_path,
+                        root_path,
                         output_rel_path: output_rel_path.clone(),
                         no_snippets,
                     },
