@@ -5,7 +5,7 @@ mod runner;
 pub mod compile;
 pub mod config;
 pub mod driver;
-pub mod preprocess;
+pub mod process;
 
 pub use aderyn_core::{ast as core_ast, detect as detection_modules, detect::detector};
 

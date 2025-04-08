@@ -10,7 +10,7 @@ use std::{path::PathBuf, str::FromStr};
 
 use crate::{
     display::{display_configuration_info, display_header, display_ingesting_message},
-    preprocess::PreprocessedConfig,
+    process::PreprocessedConfig,
     MapOrDefault,
 };
 

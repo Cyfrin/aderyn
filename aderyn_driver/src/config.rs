@@ -6,7 +6,7 @@ use std::{
 
 use serde::Deserialize;
 
-use crate::preprocess::PreprocessedConfig;
+use crate::process::PreprocessedConfig;
 
 /// `aderyn.toml` file structure
 #[derive(Deserialize, Clone)]
