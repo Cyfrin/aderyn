@@ -1,15 +1,15 @@
 use aderyn_core::{context::workspace_context::WorkspaceContext, detect::detector::IssueDetector};
-use std::{error::Error, path::PathBuf};
+use std::error::Error;
 
 use crate::{
     driver::CliArgsOutputConfig,
     interface::{lsp::LspReport, output_interface_router, OutputInterface},
+    process::WorkspaceContextWrapper,
 };
 use aderyn_core::report::*;
 
 pub fn run_detector_mode(
-    contexts: &[WorkspaceContext],
-    root_rel_path: PathBuf,
+    cx_wrapper: &WorkspaceContextWrapper,
     detectors: Vec<Box<dyn IssueDetector>>,
     output_config: &CliArgsOutputConfig,
 ) -> Result<(), Box<dyn Error>> {
@@ -18,7 +18,7 @@ pub fn run_detector_mode(
     let detectors_used =
         &detectors.iter().map(|d| (d.name(), d.severity().to_string())).collect::<Vec<_>>();
 
-    let report = get_report(contexts, &root_rel_path, detectors)?;
+    let report = get_report(&cx_wrapper.contexts, &cx_wrapper.root_path, detectors)?;
     let output_file_path = output_config.output.clone();
 
     let output_interface = if output_file_path.ends_with(".json") {
@@ -32,26 +32,19 @@ pub fn run_detector_mode(
         OutputInterface::default()
     };
 
-    output_interface_router(
-        output_interface,
-        &report,
-        contexts,
-        root_rel_path,
-        detectors_used,
-        output_config,
-    )?;
+    output_interface_router(output_interface, &report, cx_wrapper, detectors_used, output_config)?;
 
     Ok(())
 }
 
 pub fn run_lsp_mode(
-    contexts: &[WorkspaceContext],
-    root_rel_path: PathBuf,
+    ctx_wrapper: &WorkspaceContextWrapper,
     detectors: Vec<Box<dyn IssueDetector>>,
 ) -> Option<LspReport> {
-    match get_report(contexts, &root_rel_path, detectors) {
+    let (root_rel_path, contexts) = (&ctx_wrapper.root_path, &ctx_wrapper.contexts);
+    match get_report(&contexts, &root_rel_path, detectors) {
         Ok(report) => {
-            let (high_issues, low_issues) = report.detailed_issues(contexts);
+            let (high_issues, low_issues) = report.detailed_issues(&contexts);
             Some(LspReport::from(low_issues, high_issues, &root_rel_path))
         }
         Err(_) => None,

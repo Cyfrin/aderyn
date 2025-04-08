@@ -68,10 +68,8 @@ pub fn kick_off_report_creation(args: Args) {
                 std::process::exit(1);
             });
 
-        let root_rel_path = cx_wrapper.root_path;
-
         // Load the workspace context into the run function, which runs the detectors
-        run_detector_mode(&cx_wrapper.contexts, root_rel_path, detectors, &args.output_config)?;
+        run_detector_mode(&cx_wrapper, detectors, &args.output_config)?;
         Ok(())
     };
 
@@ -93,8 +91,7 @@ pub fn fetch_report_for_lsp(args: Args) -> Arc<Mutex<Option<LspReport>>> {
         }
     };
 
-    let (root_rel_path, contexts) = (ctx_wrapper.root_path, ctx_wrapper.contexts);
-    let lsp_report = run_lsp_mode(&contexts, root_rel_path, detectors);
+    let lsp_report = run_lsp_mode(&ctx_wrapper, detectors);
 
     Arc::new(tokio::sync::Mutex::new(lsp_report))
 }

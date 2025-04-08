@@ -6,16 +6,19 @@ use std::{
 
 use aderyn_core::{context::workspace_context::WorkspaceContext, report::*};
 
+use crate::process::WorkspaceContextWrapper;
+
 use super::util::{carve_shortest_path, files_details};
 
 pub fn print_report(
     writer: &mut Box<dyn Write>,
     report: &Report,
-    contexts: &[WorkspaceContext],
-    root_path: PathBuf,
+    cx_wrapper: &WorkspaceContextWrapper,
     output_rel_path: String,
     no_snippets: bool,
 ) -> Result<()> {
+    let (contexts, root_path) = (&cx_wrapper.contexts, &cx_wrapper.root_path);
+
     print_title_and_disclaimer(writer.as_mut())?;
     print_table_of_contents(writer.as_mut(), report)?;
     print_contract_summary(writer.as_mut(), report, contexts)?;
