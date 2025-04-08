@@ -26,10 +26,6 @@ pub struct PreprocessedConfig {
 pub fn make_context(
     args: &Args,
 ) -> Result<WorkspaceContextWrapper, Box<dyn std::error::Error + Send + Sync>> {
-    if !args.output.ends_with(".json") && !args.output.ends_with(".md") {
-        eprintln!("Warning: output file lacks the \".md\" or \".json\" extension in its filename.");
-    }
-
     // Preprocess config by supplementing CLI args with aderyn.toml if exists
     let preprocessed_config = obtain_config_values(args.clone())?;
 
