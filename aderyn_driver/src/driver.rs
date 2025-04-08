@@ -17,7 +17,6 @@ pub struct Args {
     pub path_includes: Option<Vec<String>>,
     pub no_snippets: bool,
     pub skip_cloc: bool,
-    pub skip_update_check: bool,
     pub stdout: bool,
     pub auditor_mode: bool,
     pub highs_only: bool,

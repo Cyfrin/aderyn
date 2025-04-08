@@ -145,7 +145,6 @@ fn main() {
         path_excludes: cmd_args.path_excludes,
         no_snippets: cmd_args.no_snippets,
         skip_cloc: cmd_args.skip_cloc,
-        skip_update_check: cmd_args.skip_update_check,
         stdout: cmd_args.stdout,
         auditor_mode: cmd_args.auditor_mode,
         highs_only: cmd_args.highs_only,
@@ -155,7 +154,6 @@ fn main() {
     // Run watcher is watch mode is engaged
     if cmd_args.lsp {
         args.skip_cloc = true;
-        args.skip_update_check = true;
         spin_up_language_server(args);
     } else {
         driver::kick_off_report_creation(args.clone());
