@@ -21,9 +21,6 @@ pub fn run_detector_mode(
 
     let report = get_report(contexts, &root_rel_path, detectors)?;
 
-    println!("Detectors run, processing found issues");
-    println!("Found issues processed. Printing report");
-
     let output_interface = if args.output.ends_with(".json") {
         OutputInterface::Json
     } else if args.output.ends_with(".sarif") {

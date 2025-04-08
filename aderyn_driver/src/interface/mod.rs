@@ -41,6 +41,8 @@ pub fn output_interface_router(
         File::create(filename)
     };
 
+    println!("Detectors run, printing report.");
+
     let mut b: Box<dyn Write> =
         if args.stdout { Box::new(io::stdout()) } else { Box::new(get_writer(&output_file_path)?) };
 
