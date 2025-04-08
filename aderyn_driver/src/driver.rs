@@ -1,7 +1,5 @@
 use crate::{
-    interface::{
-        json::JsonPrinter, lsp::LspReport, markdown::MarkdownReportPrinter, sarif::SarifPrinter,
-    },
+    interface::{lsp::LspReport, OutputInterface},
     preprocess::make_context,
     runner::{run_auditor_mode, run_detector_mode, run_lsp_mode},
 };
@@ -38,44 +36,29 @@ pub fn kick_off_report_creation(args: Args) {
         });
 
         if args.auditor_mode {
-            return run_auditor_mode(&cx_wrapper.contexts);
+            run_auditor_mode(&cx_wrapper.contexts)?;
         } else {
             let root_rel_path = cx_wrapper.root_path;
             let output = args.output.clone();
 
-            if args.output.ends_with(".json") {
-                // Load the workspace context into the run function, which runs the detectors
-                run_detector_mode(
-                    &cx_wrapper.contexts,
-                    output,
-                    JsonPrinter,
-                    root_rel_path,
-                    args.no_snippets,
-                    args.stdout,
-                    detectors,
-                )?;
+            let output_interface = if args.output.ends_with(".json") {
+                OutputInterface::Json
             } else if args.output.ends_with(".sarif") {
-                run_detector_mode(
-                    &cx_wrapper.contexts,
-                    output,
-                    SarifPrinter,
-                    root_rel_path,
-                    args.no_snippets,
-                    args.stdout,
-                    detectors,
-                )?;
+                OutputInterface::Sarif
             } else {
-                // Load the workspace context into the run function, which runs the detectors
-                run_detector_mode(
-                    &cx_wrapper.contexts,
-                    output,
-                    MarkdownReportPrinter,
-                    root_rel_path,
-                    args.no_snippets,
-                    args.stdout,
-                    detectors,
-                )?;
-            }
+                OutputInterface::Markdown
+            };
+
+            // Load the workspace context into the run function, which runs the detectors
+            run_detector_mode(
+                &cx_wrapper.contexts,
+                output,
+                output_interface,
+                root_rel_path,
+                args.no_snippets,
+                args.stdout,
+                detectors,
+            )?;
         }
         Ok(())
     };
