@@ -1,4 +1,8 @@
-use crate::{compile, config::supplement_values_from_aderyn_toml, driver::Args};
+use crate::{
+    compile,
+    config::supplement_values_from_aderyn_toml,
+    driver::{CliArgsCommonConfig, CliArgsInputConfig},
+};
 use aderyn_core::{
     context::{
         graph::{Transpose, WorkspaceCallGraph},
@@ -24,21 +28,22 @@ pub struct PreprocessedConfig {
 }
 
 pub fn make_context(
-    args: &Args,
+    args: &CliArgsInputConfig,
+    common: &CliArgsCommonConfig,
 ) -> Result<WorkspaceContextWrapper, Box<dyn std::error::Error + Send + Sync>> {
     // Preprocess config by supplementing CLI args with aderyn.toml if exists
     let preprocessed_config = obtain_config_values(args.clone())?;
 
-    let is_lsp_mode = args.lsp;
     let root_path = preprocessed_config.root_path.clone();
 
     // Compilation steps:
-    // 1. Processes the config by translating them to runtime values (Cyfrin/solidity-ast-rs)
+    // 1. Processes the above preprocessed config by translating them to runtime values Thanks to
+    //    Cyfrin/solidity-ast-rs
     // 2. Parse those files and prepare ASTs.
-    let mut contexts: Vec<WorkspaceContext> = compile::project(preprocessed_config, is_lsp_mode)?;
+    let mut contexts: Vec<WorkspaceContext> = compile::project(preprocessed_config, common.lsp)?;
 
     // Only make this an error when it's not in LSP mode
-    if !is_lsp_mode && contexts.iter().all(|c| c.src_filepaths.is_empty()) {
+    if !common.lsp && contexts.iter().all(|c| c.src_filepaths.is_empty()) {
         let error = "No solidity files found in given scope!";
         eprintln!("{}", error);
         return Err(error.into());
@@ -53,7 +58,7 @@ pub fn make_context(
         let stats = fscloc::engine::count_lines_of_code_and_collect_line_numbers_to_ignore(
             absolute_root_path.as_path(),
             &context.src_filepaths,
-            args.skip_cloc,
+            common.skip_cloc,
         );
         let sloc_stats: HashMap<String, usize> = stats
             .lock()
@@ -85,7 +90,7 @@ pub fn make_context(
 
 /// Supplement the CLI arguments with values from aderyn.toml
 fn obtain_config_values(
-    args: Args,
+    args: CliArgsInputConfig,
 ) -> Result<PreprocessedConfig, Box<dyn std::error::Error + Send + Sync>> {
     let root_path = PathBuf::from(&args.root);
     let aderyn_path = root_path.join("aderyn.toml");

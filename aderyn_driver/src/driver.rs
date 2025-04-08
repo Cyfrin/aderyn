@@ -10,38 +10,52 @@ use tokio::sync::Mutex;
 
 #[derive(Clone, FieldAccess)]
 pub struct Args {
+    pub auditor_mode: bool,
+    pub input_config: CliArgsInputConfig,
+    pub output_config: CliArgsOutputConfig,
+    pub common_config: CliArgsCommonConfig,
+}
+
+#[derive(Debug, Clone)]
+pub struct CliArgsInputConfig {
     pub root: String,
-    pub output: String,
     pub src: Option<String>,
     pub path_excludes: Option<Vec<String>>,
     pub path_includes: Option<Vec<String>>,
-    pub no_snippets: bool,
-    pub skip_cloc: bool,
+}
+
+#[derive(Debug, Clone)]
+pub struct CliArgsOutputConfig {
+    pub output: String,
     pub stdout: bool,
-    pub auditor_mode: bool,
-    pub highs_only: bool,
+    pub no_snippets: bool,
+}
+
+#[derive(Debug, Clone)]
+pub struct CliArgsCommonConfig {
     pub lsp: bool,
+    pub skip_cloc: bool,
+    pub highs_only: bool,
 }
 
 /// One way pipeline. Used by CLI
 pub fn kick_off_report_creation(args: Args) {
-    // Choose the detectors
     let detectors = detector_list(&args);
 
     let run_pipeline = || -> Result<(), Box<dyn std::error::Error>> {
-        let cx_wrapper = make_context(&args).unwrap_or_else(|e| {
-            eprintln!("Error making context: {}", e);
-            std::process::exit(1);
-        });
+        let cx_wrapper =
+            make_context(&args.input_config, &args.common_config).unwrap_or_else(|e| {
+                eprintln!("Error making context: {}", e);
+                std::process::exit(1);
+            });
 
         if args.auditor_mode {
             run_auditor_mode(&cx_wrapper.contexts)?;
         } else {
             let root_rel_path = cx_wrapper.root_path;
-            let output = args.output.clone();
 
             // Load the workspace context into the run function, which runs the detectors
-            run_detector_mode(&cx_wrapper.contexts, output, root_rel_path, detectors, &args)?;
+            run_detector_mode(&cx_wrapper.contexts, root_rel_path, detectors, &args.output_config)?;
         }
         Ok(())
     };
@@ -55,10 +69,9 @@ pub fn kick_off_report_creation(args: Args) {
 
 /// Drives and returns results. Used by LSP
 pub fn fetch_report_for_lsp(args: Args) -> Arc<Mutex<Option<LspReport>>> {
-    // Choose the detectors
     let detectors = detector_list(&args);
 
-    let ctx_wrapper = match make_context(&args) {
+    let ctx_wrapper = match make_context(&args.input_config, &args.common_config) {
         Ok(ctx_wrapper) => ctx_wrapper,
         Err(_) => {
             return Arc::new(tokio::sync::Mutex::new(None));
@@ -74,6 +87,6 @@ pub fn fetch_report_for_lsp(args: Args) -> Arc<Mutex<Option<LspReport>>> {
 fn detector_list(args: &Args) -> Vec<Box<dyn IssueDetector>> {
     get_all_issue_detectors()
         .into_iter()
-        .filter(|d| !args.highs_only || d.severity() == IssueSeverity::High)
+        .filter(|d| !args.common_config.highs_only || d.severity() == IssueSeverity::High)
         .collect()
 }
