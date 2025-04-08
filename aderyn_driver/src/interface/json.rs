@@ -21,9 +21,9 @@ pub struct JsonContent {
 pub struct JsonPrinter;
 
 impl ReportPrinter<()> for JsonPrinter {
-    fn print_report<W: Write>(
+    fn print_report(
         &self,
-        writer: W,
+        writer: &mut Box<dyn Write>,
         report: &Report,
         contexts: &[WorkspaceContext],
         _: PathBuf,
