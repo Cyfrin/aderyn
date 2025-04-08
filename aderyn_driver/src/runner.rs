@@ -6,9 +6,12 @@ use std::{
     path::{Path, PathBuf},
 };
 
-use crate::interface::{
-    json::JsonPrinter, lsp::LspReport, markdown::MarkdownReportPrinter, sarif::SarifPrinter,
-    OutputInterface, ReportPrinter,
+use crate::{
+    driver::Args,
+    interface::{
+        json::JsonPrinter, lsp::LspReport, markdown::MarkdownReportPrinter, sarif::SarifPrinter,
+        OutputInterface, ReportPrinter,
+    },
 };
 use aderyn_core::report::*;
 
@@ -16,11 +19,9 @@ use aderyn_core::report::*;
 pub fn run_detector_mode(
     contexts: &[WorkspaceContext],
     output_file_path: String,
-    output_interface: OutputInterface,
     root_rel_path: PathBuf,
-    no_snippets: bool,
-    stdout: bool,
     detectors: Vec<Box<dyn IssueDetector>>,
+    args: &Args,
 ) -> Result<(), Box<dyn Error>> {
     println!("Running {} detectors", detectors.len());
 
@@ -44,7 +45,15 @@ pub fn run_detector_mode(
     };
 
     let mut b: Box<dyn Write> =
-        if stdout { Box::new(io::stdout()) } else { Box::new(get_writer(&output_file_path)?) };
+        if args.stdout { Box::new(io::stdout()) } else { Box::new(get_writer(&output_file_path)?) };
+
+    let output_interface = if args.output.ends_with(".json") {
+        OutputInterface::Json
+    } else if args.output.ends_with(".sarif") {
+        OutputInterface::Sarif
+    } else {
+        OutputInterface::Markdown
+    };
 
     match output_interface {
         OutputInterface::Json => {
@@ -55,8 +64,8 @@ pub fn run_detector_mode(
                 contexts,
                 root_rel_path,
                 Some(output_file_path.clone()),
-                no_snippets,
-                stdout,
+                args.no_snippets,
+                args.stdout,
                 detectors_used,
             )?;
         }
@@ -68,8 +77,8 @@ pub fn run_detector_mode(
                 contexts,
                 root_rel_path,
                 Some(output_file_path.clone()),
-                no_snippets,
-                stdout,
+                args.no_snippets,
+                args.stdout,
                 detectors_used,
             )?;
         }
@@ -81,14 +90,14 @@ pub fn run_detector_mode(
                 contexts,
                 root_rel_path,
                 Some(output_file_path.clone()),
-                no_snippets,
-                stdout,
+                args.no_snippets,
+                args.stdout,
                 detectors_used,
             )?;
         }
     }
 
-    if !stdout {
+    if !args.stdout {
         println!("Report printed to {}", output_file_path);
     }
     Ok(())
