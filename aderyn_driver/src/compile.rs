@@ -65,14 +65,13 @@ pub fn project(
                 display_ingesting_message(&sources_ast, &included, &ast_info.version.to_string());
             }
             for (source_path, ast_source_file) in sources_ast {
-                if included.contains(&source_path) {
-                    let content = sources.get(&source_path).cloned().expect("content not found");
-                    absorb_ast_content_into_context(ast_source_file, &mut context, content);
-                    context.src_filepaths.push(source_path.display().to_string());
-                }
+                let content = sources.get(&source_path).expect("content not found");
+                absorb_ast_content_into_context(ast_source_file, &mut context, content.clone());
+                context.src_filepaths.push(source_path.display().to_string());
             }
 
             context.evm_version = derived_ast_evm_info.evm_version;
+            context.included = included;
 
             Some(context)
         })

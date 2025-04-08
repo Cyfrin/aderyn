@@ -1,7 +1,11 @@
 use solidity_ast::EvmVersion;
 
 use crate::{ast::*, fscloc::cloc::IgnoreLine};
-use std::{cmp::Ordering, collections::HashMap};
+use std::{
+    cmp::Ordering,
+    collections::{HashMap, HashSet},
+    path::PathBuf,
+};
 
 use super::{browser::GetImmediateParent, capturable::Capturable, graph::WorkspaceCallGraph};
 pub use crate::ast::ASTNode;
@@ -34,6 +38,9 @@ pub struct WorkspaceContext {
 
     // Source units
     pub source_units_context: Vec<SourceUnit>,
+
+    // In-scope files
+    pub included: HashSet<PathBuf>,
 
     // Hashmaps of all nodes => source_unit_id
     pub(crate) array_type_names_context: HashMap<ArrayTypeName, NodeContext>,

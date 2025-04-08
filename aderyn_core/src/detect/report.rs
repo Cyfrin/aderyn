@@ -2,7 +2,8 @@ use std::{
     collections::{btree_map::Entry, BTreeMap, HashMap},
     error::Error,
     ops::Add,
-    path::Path,
+    path::{Path, PathBuf},
+    str::FromStr,
 };
 
 use crate::{
@@ -139,10 +140,20 @@ pub fn get_report(
                         if found {
                             let instances = d.instances();
                             let hints = d.hints();
-                            return (instances, hints, context.src_filepaths.clone());
+                            return (
+                                instances,
+                                hints,
+                                context.src_filepaths.clone(),
+                                context.included.clone(),
+                            );
                         }
                     }
-                    (Default::default(), Default::default(), context.src_filepaths.clone())
+                    (
+                        Default::default(),
+                        Default::default(),
+                        context.src_filepaths.clone(),
+                        context.included.clone(),
+                    )
                 })
                 .collect::<Vec<_>>();
 
@@ -175,7 +186,7 @@ pub fn get_report(
                 Vec<BTreeMap<(String, usize, String), i64>>,
             > = Default::default();
 
-            for (instances, hints, src_filepaths) in collection_of_instances {
+            for (instances, hints, src_filepaths, included) in collection_of_instances {
                 let mut grouped_instances_context: BTreeMap<
                     String,
                     BTreeMap<(String, usize, String), i64>,
@@ -201,6 +212,9 @@ pub fn get_report(
                 }
 
                 for (key, value) in grouped_instances_context {
+                    if !included.contains(&PathBuf::from_str(&key).unwrap()) {
+                        continue;
+                    }
                     match grouped_instances.entry(key.clone()) {
                         Entry::Vacant(v) => {
                             v.insert(vec![value]);

@@ -1027,7 +1027,7 @@ In some versions of Solidity, contracts compile with multiple constructors. The 
 
 When compiling contracts with certain development frameworks (for example: Truffle), having contracts with the same name across different files can lead to one being overwritten.
 
-<details><summary>6 Found Instances</summary>
+<details><summary>12 Found Instances</summary>
 
 
 - Found in src/EmitAfterExternalCall.sol [Line: 4](../tests/contract-playground/src/EmitAfterExternalCall.sol#L4)
@@ -1040,6 +1040,42 @@ When compiling contracts with certain development frameworks (for example: Truff
 
 	```solidity
 	contract MaliciousActor {
+	```
+
+- Found in src/Trump.sol [Line: 18](../tests/contract-playground/src/Trump.sol#L18)
+
+	```solidity
+	abstract contract Context {
+	```
+
+- Found in src/Trump.sol [Line: 24](../tests/contract-playground/src/Trump.sol#L24)
+
+	```solidity
+	interface IERC20 {
+	```
+
+- Found in src/Trump.sol [Line: 73](../tests/contract-playground/src/Trump.sol#L73)
+
+	```solidity
+	contract Ownable is Context {
+	```
+
+- Found in src/Trump.sol [Line: 103](../tests/contract-playground/src/Trump.sol#L103)
+
+	```solidity
+	interface IUniswapV2Router02 {
+	```
+
+- Found in src/ZeroAddressCheck.sol [Line: 4](../tests/contract-playground/src/ZeroAddressCheck.sol#L4)
+
+	```solidity
+	interface IERC20 {
+	```
+
+- Found in src/eth2/DepositContract.sol [Line: 44](../tests/contract-playground/src/eth2/DepositContract.sol#L44)
+
+	```solidity
+	interface ERC165 {
 	```
 
 - Found in src/nested/1/Nested.sol [Line: 7](../tests/contract-playground/src/nested/1/Nested.sol#L7)
@@ -5527,8 +5563,14 @@ If `x` is a boolean, use `if(x)` and `if(!x)` instead of `if(x == true)` or `if(
 
 Rename the local variable that shadows another state variable.
 
-<details><summary>8 Found Instances</summary>
+<details><summary>10 Found Instances</summary>
 
+
+- Found in src/AdminContract.sol [Line: 10](../tests/contract-playground/src/AdminContract.sol#L10)
+
+	```solidity
+	    function setOwner(address _owner) external onlyOwner nonReentrant {
+	```
 
 - Found in src/FunctionInitializingState.sol [Line: 41](../tests/contract-playground/src/FunctionInitializingState.sol#L41)
 
@@ -5576,6 +5618,12 @@ Rename the local variable that shadows another state variable.
 
 	```solidity
 	        uint256 maxFeePerGas,
+	```
+
+- Found in src/parent_chain/ParentChainContract.sol [Line: 28](../tests/contract-playground/src/parent_chain/ParentChainContract.sol#L28)
+
+	```solidity
+	    function setOwner(address _owner) external onlyOwner nonReentrant {
 	```
 
 </details>
@@ -5863,7 +5911,7 @@ An argument to `assert()` modifies the state. Use `require` for invariants modif
 
 Invoking `SSTORE` operations in loops may waste gas. Use a local variable to hold the loop computation result.
 
-<details><summary>15 Found Instances</summary>
+<details><summary>23 Found Instances</summary>
 
 
 - Found in src/CacheArrayLength.sol [Line: 25](../tests/contract-playground/src/CacheArrayLength.sol#L25)
@@ -5882,6 +5930,54 @@ Invoking `SSTORE` operations in loops may waste gas. Use a local variable to hol
 
 	```solidity
 	        for (uint i = 0; i < loop_count; i++) {
+	```
+
+- Found in src/EnumerableSetIteration.sol [Line: 16](../tests/contract-playground/src/EnumerableSetIteration.sol#L16)
+
+	```solidity
+	        for (uint256 i = 0; i < bytes32s.length; i++) {
+	```
+
+- Found in src/EnumerableSetIteration.sol [Line: 19](../tests/contract-playground/src/EnumerableSetIteration.sol#L19)
+
+	```solidity
+	        for (uint256 i = 0; i < addresses.length; i++) {
+	```
+
+- Found in src/EnumerableSetIteration.sol [Line: 22](../tests/contract-playground/src/EnumerableSetIteration.sol#L22)
+
+	```solidity
+	        for (uint256 i = 0; i < uints.length; i++) {
+	```
+
+- Found in src/EnumerableSetIteration.sol [Line: 29](../tests/contract-playground/src/EnumerableSetIteration.sol#L29)
+
+	```solidity
+	        for (uint256 i = 0; i < bytes32Set.length(); i++) {
+	```
+
+- Found in src/EnumerableSetIteration.sol [Line: 38](../tests/contract-playground/src/EnumerableSetIteration.sol#L38)
+
+	```solidity
+	        while(i < bytes32Set.length()) {
+	```
+
+- Found in src/EnumerableSetIteration.sol [Line: 48](../tests/contract-playground/src/EnumerableSetIteration.sol#L48)
+
+	```solidity
+	        do {
+	```
+
+- Found in src/EnumerableSetIteration.sol [Line: 57](../tests/contract-playground/src/EnumerableSetIteration.sol#L57)
+
+	```solidity
+	        for (uint256 i = 0; i < addressSet.length(); i++) {
+	```
+
+- Found in src/EnumerableSetIteration.sol [Line: 65](../tests/contract-playground/src/EnumerableSetIteration.sol#L65)
+
+	```solidity
+	        for (uint256 i = 0; i < uintSet.length(); i++) {
 	```
 
 - Found in src/MsgValueInLoop.sol [Line: 12](../tests/contract-playground/src/MsgValueInLoop.sol#L12)
@@ -6375,13 +6471,19 @@ State variables that are not updated following deployment should be declared con
 
 There are state variable changes in this function but no event is emitted. Consider emitting an event to enable offchain indexers to track the changes.
 
-<details><summary>118 Found Instances</summary>
+<details><summary>123 Found Instances</summary>
 
 
 - Found in src/AbstractContract.sol [Line: 6](../tests/contract-playground/src/AbstractContract.sol#L6)
 
 	```solidity
 	    function transferAdmin(address newAdmin) public virtual {
+	```
+
+- Found in src/AdminContract.sol [Line: 14](../tests/contract-playground/src/AdminContract.sol#L14)
+
+	```solidity
+	    function someOtherImportantThing() external nonReentrant onlyOwner {
 	```
 
 - Found in src/AssertStateChange.sol [Line: 8](../tests/contract-playground/src/AssertStateChange.sol#L8)
@@ -6526,6 +6628,36 @@ There are state variable changes in this function but no event is emitted. Consi
 
 	```solidity
 		function badAssignment() external {
+	```
+
+- Found in src/EnumerableSetIteration.sol [Line: 28](../tests/contract-playground/src/EnumerableSetIteration.sol#L28)
+
+	```solidity
+	    function badBytes32IterationInForLoop() external {
+	```
+
+- Found in src/EnumerableSetIteration.sol [Line: 36](../tests/contract-playground/src/EnumerableSetIteration.sol#L36)
+
+	```solidity
+	    function badBytes32IterationInWhileLoop() external {
+	```
+
+- Found in src/EnumerableSetIteration.sol [Line: 46](../tests/contract-playground/src/EnumerableSetIteration.sol#L46)
+
+	```solidity
+	    function badBytes32IterationInDoWhileLoop() external {
+	```
+
+- Found in src/EnumerableSetIteration.sol [Line: 56](../tests/contract-playground/src/EnumerableSetIteration.sol#L56)
+
+	```solidity
+	    function badAddressIteration() external {
+	```
+
+- Found in src/EnumerableSetIteration.sol [Line: 64](../tests/contract-playground/src/EnumerableSetIteration.sol#L64)
+
+	```solidity
+	    function badUintIteration() external {
 	```
 
 - Found in src/ExternalCalls.sol [Line: 11](../tests/contract-playground/src/ExternalCalls.sol#L11)
@@ -6978,18 +7110,6 @@ There are state variable changes in this function but no event is emitted. Consi
 	    function initializeWithoutModifierOrRevert() external {
 	```
 
-- Found in src/UnprotectedInitialize.sol [Line: 58](../tests/contract-playground/src/UnprotectedInitialize.sol#L58)
-
-	```solidity
-	    function initialize() external initializer {
-	```
-
-- Found in src/UnprotectedInitialize.sol [Line: 64](../tests/contract-playground/src/UnprotectedInitialize.sol#L64)
-
-	```solidity
-	    function reinitialize() external reinitializer(2) {
-	```
-
 - Found in src/UnprotectedInitialize.sol [Line: 70](../tests/contract-playground/src/UnprotectedInitialize.sol#L70)
 
 	```solidity
@@ -7084,6 +7204,12 @@ There are state variable changes in this function but no event is emitted. Consi
 
 	```solidity
 	    function increment(uint256 newNumber) public {
+	```
+
+- Found in src/parent_chain/ParentChainContract.sol [Line: 32](../tests/contract-playground/src/parent_chain/ParentChainContract.sol#L32)
+
+	```solidity
+	    function someOtherImportantThing() external nonReentrant onlyOwner {
 	```
 
 </details>
@@ -7349,8 +7475,86 @@ If a modifier does not execute `_` or revert, the execution of the function will
 
 Function returns a value but it is ignored. Consider checking the return value.
 
-<details><summary>10 Found Instances</summary>
+<details><summary>34 Found Instances</summary>
 
+
+- Found in src/ArbitraryTransferFrom.sol [Line: 19](../tests/contract-playground/src/ArbitraryTransferFrom.sol#L19)
+
+	```solidity
+	        s_token.transferFrom(from, to, amount);
+	```
+
+- Found in src/ArbitraryTransferFrom.sol [Line: 34](../tests/contract-playground/src/ArbitraryTransferFrom.sol#L34)
+
+	```solidity
+	        s_token.transferFrom(from_msgsender, to, am);
+	```
+
+- Found in src/ArbitraryTransferFrom.sol [Line: 54](../tests/contract-playground/src/ArbitraryTransferFrom.sol#L54)
+
+	```solidity
+	        s_token.transferFrom(msg.sender, to, amount);
+	```
+
+- Found in src/DeprecatedOZFunctions.sol [Line: 32](../tests/contract-playground/src/DeprecatedOZFunctions.sol#L32)
+
+	```solidity
+	        token.approve(spender, value);
+	```
+
+- Found in src/DeprecatedOZFunctions.sol [Line: 47](../tests/contract-playground/src/DeprecatedOZFunctions.sol#L47)
+
+	```solidity
+	        token.transferFrom(from, to, value);
+	```
+
+- Found in src/EnumerableSetIteration.sol [Line: 17](../tests/contract-playground/src/EnumerableSetIteration.sol#L17)
+
+	```solidity
+	            bytes32Set.add(bytes32s[i]);
+	```
+
+- Found in src/EnumerableSetIteration.sol [Line: 20](../tests/contract-playground/src/EnumerableSetIteration.sol#L20)
+
+	```solidity
+	            addressSet.add(addresses[i]);
+	```
+
+- Found in src/EnumerableSetIteration.sol [Line: 23](../tests/contract-playground/src/EnumerableSetIteration.sol#L23)
+
+	```solidity
+	            uintSet.add(uints[i]);
+	```
+
+- Found in src/EnumerableSetIteration.sol [Line: 31](../tests/contract-playground/src/EnumerableSetIteration.sol#L31)
+
+	```solidity
+	            bytes32Set.remove(thisBytes32);
+	```
+
+- Found in src/EnumerableSetIteration.sol [Line: 40](../tests/contract-playground/src/EnumerableSetIteration.sol#L40)
+
+	```solidity
+	            bytes32Set.remove(thisBytes32);
+	```
+
+- Found in src/EnumerableSetIteration.sol [Line: 50](../tests/contract-playground/src/EnumerableSetIteration.sol#L50)
+
+	```solidity
+	            bytes32Set.remove(thisBytes32);
+	```
+
+- Found in src/EnumerableSetIteration.sol [Line: 59](../tests/contract-playground/src/EnumerableSetIteration.sol#L59)
+
+	```solidity
+	            addressSet.remove(thisAddress);
+	```
+
+- Found in src/EnumerableSetIteration.sol [Line: 67](../tests/contract-playground/src/EnumerableSetIteration.sol#L67)
+
+	```solidity
+	            uintSet.remove(thisUint);
+	```
 
 - Found in src/OutOfOrderRetryable.sol [Line: 65](../tests/contract-playground/src/OutOfOrderRetryable.sol#L65)
 
@@ -7410,6 +7614,72 @@ Function returns a value but it is ignored. Consider checking the return value.
 
 	```solidity
 	        UncheckedHelperExternal(address(0x12345)).two();
+	```
+
+- Found in src/uniswap/UniswapV2Swapper.sol [Line: 23](../tests/contract-playground/src/uniswap/UniswapV2Swapper.sol#L23)
+
+	```solidity
+	        router1.swapExactTokensForTokens(amountIn, amountOutMin, path, to, block.timestamp);
+	```
+
+- Found in src/uniswap/UniswapV2Swapper.sol [Line: 24](../tests/contract-playground/src/uniswap/UniswapV2Swapper.sol#L24)
+
+	```solidity
+	        router1.swapTokensForExactTokens(amountOut, amountInMax, path, to, block.timestamp);
+	```
+
+- Found in src/uniswap/UniswapV2Swapper.sol [Line: 25](../tests/contract-playground/src/uniswap/UniswapV2Swapper.sol#L25)
+
+	```solidity
+	        router1.swapExactETHForTokens(amountOutMin, path, to, block.timestamp);
+	```
+
+- Found in src/uniswap/UniswapV2Swapper.sol [Line: 26](../tests/contract-playground/src/uniswap/UniswapV2Swapper.sol#L26)
+
+	```solidity
+	        router1.swapTokensForExactETH(amountOut, amountInMax, path, to, block.timestamp);
+	```
+
+- Found in src/uniswap/UniswapV2Swapper.sol [Line: 27](../tests/contract-playground/src/uniswap/UniswapV2Swapper.sol#L27)
+
+	```solidity
+	        router1.swapExactTokensForETH(amountIn, amountOutMin, path, to, block.timestamp);
+	```
+
+- Found in src/uniswap/UniswapV2Swapper.sol [Line: 46](../tests/contract-playground/src/uniswap/UniswapV2Swapper.sol#L46)
+
+	```solidity
+	        router1.swapExactTokensForTokens(amountIn, amountOutMin, path, to, deadline);
+	```
+
+- Found in src/uniswap/UniswapV2Swapper.sol [Line: 47](../tests/contract-playground/src/uniswap/UniswapV2Swapper.sol#L47)
+
+	```solidity
+	        router1.swapTokensForExactTokens(amountOut, amountInMax, path, to, deadline);
+	```
+
+- Found in src/uniswap/UniswapV2Swapper.sol [Line: 48](../tests/contract-playground/src/uniswap/UniswapV2Swapper.sol#L48)
+
+	```solidity
+	        router1.swapExactETHForTokens(amountOutMin, path, to, deadline);
+	```
+
+- Found in src/uniswap/UniswapV2Swapper.sol [Line: 49](../tests/contract-playground/src/uniswap/UniswapV2Swapper.sol#L49)
+
+	```solidity
+	        router1.swapTokensForExactETH(amountOut, amountInMax, path, to, deadline);
+	```
+
+- Found in src/uniswap/UniswapV2Swapper.sol [Line: 50](../tests/contract-playground/src/uniswap/UniswapV2Swapper.sol#L50)
+
+	```solidity
+	        router1.swapExactTokensForETH(amountIn, amountOutMin, path, to, deadline);
+	```
+
+- Found in src/uniswap/UniswapV2Swapper.sol [Line: 51](../tests/contract-playground/src/uniswap/UniswapV2Swapper.sol#L51)
+
+	```solidity
+	        router1.swapETHForExactTokens(amountOut, path, to, deadline);
 	```
 
 </details>

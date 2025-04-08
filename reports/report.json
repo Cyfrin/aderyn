@@ -1252,6 +1252,42 @@
             "src_char": "66:14"
           },
           {
+            "contract_path": "src/Trump.sol",
+            "line_no": 18,
+            "src": "270:7",
+            "src_char": "270:7"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 24,
+            "src": "394:6",
+            "src_char": "394:6"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 73,
+            "src": "2166:7",
+            "src_char": "2166:7"
+          },
+          {
+            "contract_path": "src/Trump.sol",
+            "line_no": 103,
+            "src": "2952:18",
+            "src_char": "2952:18"
+          },
+          {
+            "contract_path": "src/ZeroAddressCheck.sol",
+            "line_no": 4,
+            "src": "67:6",
+            "src_char": "67:6"
+          },
+          {
+            "contract_path": "src/eth2/DepositContract.sol",
+            "line_no": 44,
+            "src": "3759:6",
+            "src_char": "2271:6"
+          },
+          {
             "contract_path": "src/nested/1/Nested.sol",
             "line_no": 7,
             "src": "214:6",
@@ -5530,6 +5566,12 @@
         "detector_name": "local-variable-shadowing",
         "instances": [
           {
+            "contract_path": "src/AdminContract.sol",
+            "line_no": 10,
+            "src": "359:6",
+            "src_char": "359:6"
+          },
+          {
             "contract_path": "src/FunctionInitializingState.sol",
             "line_no": 41,
             "src": "1246:6",
@@ -5576,6 +5618,12 @@
             "line_no": 148,
             "src": "4262:12",
             "src_char": "4262:12"
+          },
+          {
+            "contract_path": "src/parent_chain/ParentChainContract.sol",
+            "line_no": 28,
+            "src": "708:6",
+            "src_char": "708:6"
           }
         ]
       },
@@ -5853,6 +5901,54 @@
             "line_no": 10,
             "src": "214:79",
             "src_char": "214:79"
+          },
+          {
+            "contract_path": "src/EnumerableSetIteration.sol",
+            "line_no": 16,
+            "src": "602:98",
+            "src_char": "602:98"
+          },
+          {
+            "contract_path": "src/EnumerableSetIteration.sol",
+            "line_no": 19,
+            "src": "709:100",
+            "src_char": "709:100"
+          },
+          {
+            "contract_path": "src/EnumerableSetIteration.sol",
+            "line_no": 22,
+            "src": "818:89",
+            "src_char": "818:89"
+          },
+          {
+            "contract_path": "src/EnumerableSetIteration.sol",
+            "line_no": 29,
+            "src": "989:157",
+            "src_char": "989:157"
+          },
+          {
+            "contract_path": "src/EnumerableSetIteration.sol",
+            "line_no": 38,
+            "src": "1253:155",
+            "src_char": "1253:155"
+          },
+          {
+            "contract_path": "src/EnumerableSetIteration.sol",
+            "line_no": 48,
+            "src": "1517:159",
+            "src_char": "1517:159"
+          },
+          {
+            "contract_path": "src/EnumerableSetIteration.sol",
+            "line_no": 57,
+            "src": "1749:157",
+            "src_char": "1749:157"
+          },
+          {
+            "contract_path": "src/EnumerableSetIteration.sol",
+            "line_no": 65,
+            "src": "1976:142",
+            "src_char": "1976:142"
           },
           {
             "contract_path": "src/MsgValueInLoop.sol",
@@ -6327,6 +6423,12 @@
             "src_char": "146:13"
           },
           {
+            "contract_path": "src/AdminContract.sol",
+            "line_no": 14,
+            "src": "457:23",
+            "src_char": "457:23"
+          },
+          {
             "contract_path": "src/AssertStateChange.sol",
             "line_no": 8,
             "src": "131:3",
@@ -6469,6 +6571,36 @@
             "line_no": 11,
             "src": "242:345",
             "src_char": "242:345"
+          },
+          {
+            "contract_path": "src/EnumerableSetIteration.sol",
+            "line_no": 28,
+            "src": "939:28",
+            "src_char": "939:28"
+          },
+          {
+            "contract_path": "src/EnumerableSetIteration.sol",
+            "line_no": 36,
+            "src": "1178:30",
+            "src_char": "1178:30"
+          },
+          {
+            "contract_path": "src/EnumerableSetIteration.sol",
+            "line_no": 46,
+            "src": "1440:32",
+            "src_char": "1440:32"
+          },
+          {
+            "contract_path": "src/EnumerableSetIteration.sol",
+            "line_no": 56,
+            "src": "1708:19",
+            "src_char": "1708:19"
+          },
+          {
+            "contract_path": "src/EnumerableSetIteration.sol",
+            "line_no": 64,
+            "src": "1938:16",
+            "src_char": "1938:16"
           },
           {
             "contract_path": "src/ExternalCalls.sol",
@@ -6922,18 +7054,6 @@
           },
           {
             "contract_path": "src/UnprotectedInitialize.sol",
-            "line_no": 58,
-            "src": "1508:10",
-            "src_char": "1508:10"
-          },
-          {
-            "contract_path": "src/UnprotectedInitialize.sol",
-            "line_no": 64,
-            "src": "1638:12",
-            "src_char": "1638:12"
-          },
-          {
-            "contract_path": "src/UnprotectedInitialize.sol",
             "line_no": 70,
             "src": "1798:27",
             "src_char": "1798:27"
@@ -7027,6 +7147,12 @@
             "line_no": 15,
             "src": "422:9",
             "src_char": "422:9"
+          },
+          {
+            "contract_path": "src/parent_chain/ParentChainContract.sol",
+            "line_no": 32,
+            "src": "806:23",
+            "src_char": "806:23"
           }
         ]
       },
@@ -7279,6 +7405,84 @@
         "detector_name": "unchecked-return",
         "instances": [
           {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 19,
+            "src": "601:38",
+            "src_char": "601:38"
+          },
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 34,
+            "src": "1046:44",
+            "src_char": "1046:44"
+          },
+          {
+            "contract_path": "src/ArbitraryTransferFrom.sol",
+            "line_no": 54,
+            "src": "1699:44",
+            "src_char": "1699:44"
+          },
+          {
+            "contract_path": "src/DeprecatedOZFunctions.sol",
+            "line_no": 32,
+            "src": "1062:29",
+            "src_char": "1062:29"
+          },
+          {
+            "contract_path": "src/DeprecatedOZFunctions.sol",
+            "line_no": 47,
+            "src": "1598:35",
+            "src_char": "1598:35"
+          },
+          {
+            "contract_path": "src/EnumerableSetIteration.sol",
+            "line_no": 17,
+            "src": "662:27",
+            "src_char": "662:27"
+          },
+          {
+            "contract_path": "src/EnumerableSetIteration.sol",
+            "line_no": 20,
+            "src": "770:28",
+            "src_char": "770:28"
+          },
+          {
+            "contract_path": "src/EnumerableSetIteration.sol",
+            "line_no": 23,
+            "src": "875:21",
+            "src_char": "875:21"
+          },
+          {
+            "contract_path": "src/EnumerableSetIteration.sol",
+            "line_no": 31,
+            "src": "1105:30",
+            "src_char": "1105:30"
+          },
+          {
+            "contract_path": "src/EnumerableSetIteration.sol",
+            "line_no": 40,
+            "src": "1350:30",
+            "src_char": "1350:30"
+          },
+          {
+            "contract_path": "src/EnumerableSetIteration.sol",
+            "line_no": 50,
+            "src": "1586:30",
+            "src_char": "1586:30"
+          },
+          {
+            "contract_path": "src/EnumerableSetIteration.sol",
+            "line_no": 59,
+            "src": "1865:30",
+            "src_char": "1865:30"
+          },
+          {
+            "contract_path": "src/EnumerableSetIteration.sol",
+            "line_no": 67,
+            "src": "2083:24",
+            "src_char": "2083:24"
+          },
+          {
             "contract_path": "src/OutOfOrderRetryable.sol",
             "line_no": 65,
             "src": "1705:390",
@@ -7337,6 +7541,72 @@
             "line_no": 27,
             "src": "575:47",
             "src_char": "575:47"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 23,
+            "src": "670:83",
+            "src_char": "670:83"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 24,
+            "src": "763:83",
+            "src_char": "763:83"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 25,
+            "src": "856:70",
+            "src_char": "856:70"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 26,
+            "src": "936:80",
+            "src_char": "936:80"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 27,
+            "src": "1026:80",
+            "src_char": "1026:80"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 46,
+            "src": "1933:76",
+            "src_char": "1933:76"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 47,
+            "src": "2019:76",
+            "src_char": "2019:76"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 48,
+            "src": "2105:63",
+            "src_char": "2105:63"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 49,
+            "src": "2178:73",
+            "src_char": "2178:73"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 50,
+            "src": "2261:73",
+            "src_char": "2261:73"
+          },
+          {
+            "contract_path": "src/uniswap/UniswapV2Swapper.sol",
+            "line_no": 51,
+            "src": "2344:60",
+            "src_char": "2344:60"
           }
         ]
       }
