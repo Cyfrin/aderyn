@@ -7,12 +7,12 @@ pub mod util;
 use std::{
     fs::{remove_file, File},
     io::{self, Result, Write},
-    path::{Path, PathBuf},
+    path::Path,
 };
 
-use aderyn_core::{context::workspace_context::WorkspaceContext, report::Report};
+use aderyn_core::report::Report;
 
-use crate::driver::CliArgsOutputConfig;
+use crate::{driver::CliArgsOutputConfig, process::WorkspaceContextWrapper};
 
 #[derive(Default)]
 pub enum OutputInterface {
@@ -25,8 +25,7 @@ pub enum OutputInterface {
 pub fn output_interface_router(
     output_interface: OutputInterface,
     report: &Report,
-    contexts: &[WorkspaceContext],
-    root_rel_path: PathBuf,
+    cx_wrapper: &WorkspaceContextWrapper,
     detectors_used: &[(String, String)],
     output_config: &CliArgsOutputConfig,
 ) -> Result<()> {
@@ -51,14 +50,19 @@ pub fn output_interface_router(
 
     match output_interface {
         OutputInterface::Json => {
-            json::print_report(&mut b, report, contexts, output_config.stdout, detectors_used)?;
+            json::print_report(
+                &mut b,
+                report,
+                &cx_wrapper.contexts,
+                output_config.stdout,
+                detectors_used,
+            )?;
         }
         OutputInterface::Markdown => {
             markdown::print_report(
                 &mut b,
                 report,
-                contexts,
-                root_rel_path,
+                cx_wrapper,
                 output_config.output.clone(),
                 output_config.no_snippets,
             )?;
