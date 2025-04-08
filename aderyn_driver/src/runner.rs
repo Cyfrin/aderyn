@@ -25,8 +25,11 @@ pub fn run_detector_mode(
         OutputInterface::Json
     } else if args.output.ends_with(".sarif") {
         OutputInterface::Sarif
-    } else {
+    } else if args.output.ends_with(".md") {
         OutputInterface::Markdown
+    } else {
+        println!("Warning: Output file extension is unrecognized. Reverting to markdown..");
+        OutputInterface::default()
     };
 
     output_interface_router(
