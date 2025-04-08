@@ -3920,7 +3920,7 @@ dependencies = [
 [[package]]
 name = "solidity-ast"
 version = "0.0.1"
-source = "git+https://github.com/Cyfrin/solidity-ast-rs?tag=v0.0.1-alpha.beta.3#f3b05e48f4c24eaefb147de4bfde244325d301d9"
+source = "git+https://github.com/Cyfrin/solidity-ast-rs?tag=v0.0.1-alpha.beta.4#fe440f60a0479117b779a32b436c17d4df284345"
 dependencies = [
  "foundry-compilers",
  "foundry-config",

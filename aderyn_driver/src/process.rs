@@ -59,6 +59,7 @@ pub fn make_context(
             absolute_root_path.as_path(),
             &context.src_filepaths,
             common.skip_cloc,
+            &context.included,
         );
         let sloc_stats: HashMap<String, usize> = stats
             .lock()
