@@ -1,4 +1,4 @@
-use super::{group::*, token::TokenDescriptor};
+use super::token::*;
 
 pub fn count_code_lines(token_descriptors: &[TokenDescriptor]) -> usize {
     let mut code_lines = 0;

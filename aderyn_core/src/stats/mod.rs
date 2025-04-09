@@ -10,7 +10,6 @@ use std::{
 use token::tokenize;
 
 pub mod cloc;
-pub mod group;
 pub mod ignore;
 pub mod token;
 pub mod util;
