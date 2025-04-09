@@ -23,7 +23,7 @@ dependencies = [
 
 [[package]]
 name = "aderyn"
-version = "0.5.5"
+version = "0.5.6"
 dependencies = [
  "aderyn_driver",
  "clap",
@@ -41,7 +41,7 @@ dependencies = [
 
 [[package]]
 name = "aderyn_core"
-version = "0.5.5"
+version = "0.5.6"
 dependencies = [
  "crossbeam-channel",
  "derive_more 0.99.19",
@@ -68,7 +68,7 @@ dependencies = [
 
 [[package]]
 name = "aderyn_driver"
-version = "0.5.5"
+version = "0.5.6"
 dependencies = [
  "aderyn_core",
  "criterion",
