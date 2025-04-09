@@ -76,7 +76,7 @@ pub fn count_code_lines(token_descriptors: &[TokenDescriptor]) -> usize {
 
 #[cfg(test)]
 mod cloc_tests {
-    use crate::fscloc::token::tokenize;
+    use crate::stats::token::tokenize;
 
     use super::*;
 
