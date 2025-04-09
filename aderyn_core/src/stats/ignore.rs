@@ -1,5 +1,7 @@
-use super::{token::TokenDescriptor, IgnoreLine, When};
-use crate::fscloc::token::TokenType;
+use super::{
+    token::{TokenDescriptor, TokenType},
+    IgnoreLine, When,
+};
 use lazy_regex::*;
 
 pub fn get_lines_to_ignore(token_descriptors: &Vec<TokenDescriptor>) -> Vec<IgnoreLine> {

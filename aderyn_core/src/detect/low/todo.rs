@@ -8,7 +8,7 @@ use crate::{
         workspace_context::{ASTNode, WorkspaceContext},
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
-    fscloc,
+    stats,
 };
 use eyre::Result;
 
@@ -28,11 +28,11 @@ impl IssueDetector for TodoDetector {
                 if contract_code.is_empty() {
                     continue;
                 }
-                let tokens = fscloc::token::tokenize(&contract_code);
+                let tokens = stats::token::tokenize(&contract_code);
                 for token in tokens {
                     match token.token_type {
-                        fscloc::token::TokenType::MultilineComment
-                        | fscloc::token::TokenType::SinglelineComment => {
+                        stats::token::TokenType::MultilineComment
+                        | stats::token::TokenType::SinglelineComment => {
                             if token.content.to_lowercase().contains("todo") {
                                 capture!(self, context, contract);
                                 break;

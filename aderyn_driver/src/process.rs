@@ -8,7 +8,7 @@ use aderyn_core::{
         graph::{Transpose, WorkspaceCallGraph},
         workspace_context::WorkspaceContext,
     },
-    fscloc,
+    stats,
 };
 use std::{
     collections::HashMap,
@@ -55,11 +55,11 @@ pub fn make_context(
     // 3. Callgraph
     for context in contexts.iter_mut() {
         let absolute_root_path = &ensure_valid_root_path(&root_path);
-        let stats = fscloc::collect_stats(absolute_root_path.as_path(), common.skip_cloc, context);
+        let stats = stats::collect_stats(absolute_root_path.as_path(), common.skip_cloc, context);
         let sloc_stats: HashMap<String, usize> =
             stats.iter().map(|(key, value)| (key.to_owned(), value.code)).collect();
 
-        let ignore_line_stats: HashMap<String, Vec<fscloc::IgnoreLine>> =
+        let ignore_line_stats: HashMap<String, Vec<stats::IgnoreLine>> =
             stats.iter().map(|(key, value)| (key.to_owned(), value.ignore_lines.clone())).collect();
 
         context.set_sloc_stats(sloc_stats);

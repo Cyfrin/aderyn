@@ -1,4 +1,4 @@
-use crate::fscloc::util::CodeIterator;
+use crate::stats::util::CodeIterator;
 
 #[derive(Debug)]
 pub struct TokenDescriptor {

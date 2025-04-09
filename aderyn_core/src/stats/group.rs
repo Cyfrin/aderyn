@@ -1,4 +1,4 @@
-use crate::fscloc::token::{TokenDescriptor, TokenType};
+use super::token::*;
 
 #[derive(Debug, Clone)]
 pub struct CodeLines {
