@@ -1,6 +1,6 @@
 use solidity_ast::EvmVersion;
 
-use crate::{ast::*, fscloc::cloc::IgnoreLine};
+use crate::{ast::*, stats::IgnoreLine};
 use std::{
     cmp::Ordering,
     collections::{HashMap, HashSet},
