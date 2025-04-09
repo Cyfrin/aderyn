@@ -57,9 +57,8 @@ pub fn make_context(
         let absolute_root_path = &ensure_valid_root_path(&root_path);
         let stats = fscloc::engine::count_lines_of_code_and_collect_line_numbers_to_ignore(
             absolute_root_path.as_path(),
-            &context.src_filepaths,
             common.skip_cloc,
-            &context.included,
+            &context,
         );
         let sloc_stats: HashMap<String, usize> = stats
             .lock()

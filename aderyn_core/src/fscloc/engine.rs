@@ -1,19 +1,14 @@
-use crate::fscloc::cloc;
+use crate::{context::workspace_context::WorkspaceContext, fscloc::cloc};
 use ignore::{DirEntry, WalkBuilder, WalkState::Continue};
 use rayon::prelude::*;
-use std::{
-    collections::{HashMap, HashSet},
-    path::{Path, PathBuf},
-    sync::Mutex,
-};
+use std::{collections::HashMap, path::Path, sync::Mutex};
 
 use super::cloc::Stats;
 
 pub fn count_lines_of_code_and_collect_line_numbers_to_ignore(
     src: &Path,
-    src_filepaths: &[String],
     skip_cloc: bool,
-    included: &HashSet<PathBuf>,
+    context: &WorkspaceContext,
 ) -> Mutex<HashMap<String, Stats>> {
     let (tx, rx) = crossbeam_channel::unbounded();
 
@@ -34,10 +29,11 @@ pub fn count_lines_of_code_and_collect_line_numbers_to_ignore(
         }
     };
 
-    let src_filepaths_as_paths = src_filepaths
+    let src_filepaths_as_paths = context
+        .src_filepaths
         .iter()
         .map(form_path)
-        .filter(|s| included.contains(s.strip_prefix(src).unwrap()))
+        .filter(|s| context.included.contains(s.strip_prefix(src).unwrap()))
         .collect::<Vec<_>>();
 
     if !src_filepaths_as_paths.is_empty() {
@@ -69,10 +65,20 @@ pub fn count_lines_of_code_and_collect_line_numbers_to_ignore(
 
     let lines_of_code = Mutex::new(HashMap::new());
 
+    let sources = context
+        .source_units()
+        .iter()
+        .map(|s| (s.absolute_path.clone().unwrap(), s.source.clone().unwrap()))
+        .collect::<HashMap<_, _>>();
+
     let receive = |target_file: DirEntry| {
         // println!("Processing: {:?}", target_file.path());
-        let r_content = std::fs::read_to_string(target_file.path()).unwrap();
+        let lookup_by = target_file.path().to_path_buf();
+        let lookup_by = lookup_by.strip_prefix(src).unwrap();
+        let r_content = sources.get(&lookup_by.to_string_lossy().to_string()).unwrap(); // std::fs::read_to_string(target_file.path()).unwrap();
+
         let stats = cloc::get_stats(&r_content, skip_cloc);
+
         let key = String::from(target_file.path().to_string_lossy());
         let mut lock = lines_of_code.lock().unwrap();
         // println!("Inserting: {} - {}", key, stats.code);
