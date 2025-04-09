@@ -68,6 +68,14 @@ Run `aderyn --version` to check the installation.
 
 ---
 
+### Using curl
+
+```sh
+curl --proto '=https' --tlsv1.2 -LsSf https://github.com/cyfrin/aderyn/releases/latest/download/aderyn-installer.sh | bash
+```
+
+---
+
 ### Using Homebrew
 
 ```sh
