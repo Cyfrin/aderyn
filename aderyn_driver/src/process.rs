@@ -58,7 +58,7 @@ pub fn make_context(
         let stats = fscloc::engine::count_lines_of_code_and_collect_line_numbers_to_ignore(
             absolute_root_path.as_path(),
             common.skip_cloc,
-            &context,
+            context,
         );
         let sloc_stats: HashMap<String, usize> =
             stats.iter().map(|(key, value)| (key.to_owned(), value.code)).collect();
