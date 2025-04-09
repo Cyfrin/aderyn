@@ -10,7 +10,7 @@ use crate::{
     ast::NodeID,
     context::workspace_context::WorkspaceContext,
     detect::detector::{IssueDetector, IssueSeverity},
-    fscloc::cloc::When,
+    stats::When,
 };
 use rayon::iter::{IntoParallelIterator, IntoParallelRefIterator, ParallelIterator};
 use serde::Serialize;
