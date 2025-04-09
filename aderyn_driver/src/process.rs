@@ -57,23 +57,14 @@ pub fn make_context(
         let absolute_root_path = &ensure_valid_root_path(&root_path);
         let stats = fscloc::engine::count_lines_of_code_and_collect_line_numbers_to_ignore(
             absolute_root_path.as_path(),
-            &context.src_filepaths,
             common.skip_cloc,
-            &context.included,
+            context,
         );
-        let sloc_stats: HashMap<String, usize> = stats
-            .lock()
-            .expect("failed to lock")
-            .iter()
-            .map(|(key, value)| (key.to_owned(), value.code))
-            .collect();
+        let sloc_stats: HashMap<String, usize> =
+            stats.iter().map(|(key, value)| (key.to_owned(), value.code)).collect();
 
-        let ignore_line_stats: HashMap<String, Vec<fscloc::cloc::IgnoreLine>> = stats
-            .lock()
-            .expect("failed to lock")
-            .iter()
-            .map(|(key, value)| (key.to_owned(), value.ignore_lines.clone()))
-            .collect();
+        let ignore_line_stats: HashMap<String, Vec<fscloc::cloc::IgnoreLine>> =
+            stats.iter().map(|(key, value)| (key.to_owned(), value.ignore_lines.clone())).collect();
 
         context.set_sloc_stats(sloc_stats);
         context.set_ignore_lines_stats(ignore_line_stats);
