@@ -60,19 +60,11 @@ pub fn make_context(
             common.skip_cloc,
             &context,
         );
-        let sloc_stats: HashMap<String, usize> = stats
-            .lock()
-            .expect("failed to lock")
-            .iter()
-            .map(|(key, value)| (key.to_owned(), value.code))
-            .collect();
+        let sloc_stats: HashMap<String, usize> =
+            stats.iter().map(|(key, value)| (key.to_owned(), value.code)).collect();
 
-        let ignore_line_stats: HashMap<String, Vec<fscloc::cloc::IgnoreLine>> = stats
-            .lock()
-            .expect("failed to lock")
-            .iter()
-            .map(|(key, value)| (key.to_owned(), value.ignore_lines.clone()))
-            .collect();
+        let ignore_line_stats: HashMap<String, Vec<fscloc::cloc::IgnoreLine>> =
+            stats.iter().map(|(key, value)| (key.to_owned(), value.ignore_lines.clone())).collect();
 
         context.set_sloc_stats(sloc_stats);
         context.set_ignore_lines_stats(ignore_line_stats);
