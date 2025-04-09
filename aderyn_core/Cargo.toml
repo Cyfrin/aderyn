@@ -1,6 +1,6 @@
 [package]
 name = "aderyn_core"
-version = "0.5.5"
+version = "0.5.6"
 edition = "2021"
 authors = ["Cyfrin <aderyn@cyfrin.io>"]
 description = "Rust based Solidity AST analyzer backend"
@@ -21,13 +21,12 @@ serde_json = { workspace = true, features = ["preserve_order"] }
 serde-sarif = { workspace = true }
 serde_repr = { workspace = true }
 strum = { workspace = true, features = ["derive"] }
-toml = { workspace = true }
 num-bigint = { workspace = true }
 num-traits = { workspace = true }
 lazy-regex = { workspace = true }
 derive_more = { workspace = true }
 dunce = { workspace = true }
-foundry_compilers_aletheia = { workspace = true }
+solidity_ast = { workspace = true }
 
 [dev-dependencies]
 petgraph = { workspace = true }

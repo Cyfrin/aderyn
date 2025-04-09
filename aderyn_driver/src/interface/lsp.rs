@@ -1,4 +1,4 @@
-use aderyn_core::report::{HighIssues, IssueBody, IssueInstance, LowIssues};
+use aderyn_core::report::*;
 use std::{collections::BTreeMap, path::Path};
 use tower_lsp::lsp_types::{Diagnostic, DiagnosticSeverity, Position, Range, Url};
 
@@ -39,7 +39,7 @@ impl LspReport {
             }
 
             message.push_str(&format!(
-               "\nTo ignore this warning, add:\n\n// aderyn-ignore-next-line({})\n\nor append to existing list:\n\n// aderyn-ignore-next-line(existing-rule, {})\n\n",
+               "\nTo ignore this warning, add:\n\n// aderyn-ignore-next-line({})\n\nor mark as false positive:\n\n// aderyn-fp-next-line({})\n\n",
                 issue_body.detector_name,
                 issue_body.detector_name,
             ));

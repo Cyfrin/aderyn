@@ -1,5 +1,11 @@
+use solidity_ast::EvmVersion;
+
 use crate::{ast::*, fscloc::cloc::IgnoreLine};
-use std::{cmp::Ordering, collections::HashMap};
+use std::{
+    cmp::Ordering,
+    collections::{HashMap, HashSet},
+    path::PathBuf,
+};
 
 use super::{browser::GetImmediateParent, capturable::Capturable, graph::WorkspaceCallGraph};
 pub use crate::ast::ASTNode;
@@ -20,6 +26,7 @@ pub struct WorkspaceContext {
     pub last_modifier_definition_id: Option<NodeID>,
 
     pub parent_link: HashMap<NodeID, NodeID>,
+    pub evm_version: EvmVersion,
 
     // relative source filepaths
     pub src_filepaths: Vec<String>,
@@ -28,6 +35,12 @@ pub struct WorkspaceContext {
     pub inward_callgraph: Option<WorkspaceCallGraph>,
     pub outward_callgraph: Option<WorkspaceCallGraph>,
     pub nodes: HashMap<NodeID, ASTNode>,
+
+    // Source units
+    pub source_units_context: Vec<SourceUnit>,
+
+    // In-scope files
+    pub included: HashSet<PathBuf>,
 
     // Hashmaps of all nodes => source_unit_id
     pub(crate) array_type_names_context: HashMap<ArrayTypeName, NodeContext>,
@@ -69,7 +82,6 @@ pub struct WorkspaceContext {
     pub(crate) pragma_directives_context: HashMap<PragmaDirective, NodeContext>,
     pub(crate) returns_context: HashMap<Return, NodeContext>,
     pub(crate) revert_statements_context: HashMap<RevertStatement, NodeContext>,
-    pub(crate) source_units_context: Vec<SourceUnit>,
     pub(crate) struct_definitions_context: HashMap<StructDefinition, NodeContext>,
     pub(crate) structured_documentations_context: HashMap<StructuredDocumentation, NodeContext>,
     pub(crate) try_statements_context: HashMap<TryStatement, NodeContext>,

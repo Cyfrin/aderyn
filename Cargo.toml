@@ -9,8 +9,8 @@ members = [
 ]
 
 [workspace.dependencies]
-aderyn_core = { version = "0.5.5", path = "aderyn_core" }
-aderyn_driver = { version = "0.5.5", path = "aderyn_driver" }
+aderyn_core = { version = "0.5.6", path = "aderyn_core" }
+aderyn_driver = { version = "0.5.6", path = "aderyn_driver" }
 clap = "4.4.6"
 criterion = "0.5.1"
 crossbeam-channel = "0.5.9"
@@ -19,7 +19,6 @@ eyre = "0.6.12"
 field_access = "0.1.8"
 ignore = "0.4.21"
 lazy-regex = "3.2.0"
-lazy_static = "1.5.0"
 log = "0.4.22"
 notify-debouncer-full = "0.3.1"
 num-bigint = "0.4"
@@ -35,7 +34,6 @@ serde-sarif = "0.4.2"
 serde_json = "1.0.96"
 serde_repr = "0.1.12"
 serial_test = "3.0.0"
-simple-logging = "2.0.2"
 strum = "0.26"
 termcolor = "1.4.1"
 tokio = "1.40.0"
@@ -46,13 +44,13 @@ petgraph = "0"
 
 # Uncomment in Production (just before merging to dev)
 # Cyfrin managed github repository
-foundry_compilers_aletheia = { git = "https://github.com/Cyfrin/foundry-compilers-aletheia", tag = "v0.0.1-alpha.beta.1", package = "foundry-compilers-aletheia" }
+solidity_ast = { git = "https://github.com/Cyfrin/solidity-ast-rs", tag = "v0.0.1-alpha.beta.4", package = "solidity-ast" }
 
 # Uncomment when debugging in branch (PR)
-# foundry_compilers_aletheia = { git = "https://github.com/Cyfrin/foundry-compilers-aletheia", branch = "main", package = "foundry-compilers-aletheia" }
+# solidity_ast = { git = "https://github.com/Cyfrin/solidity-ast-rs", branch = "main", package = "solidity-ast" }
 
 # Uncomment when debuggin locally
-# foundry_compilers_aletheia = { path = "../foundry-compilers-aletheia", package = "foundry-compilers-aletheia"}
+# solidity_ast = { path = "../solidity-ast-rs", package = "solidity-ast"}
 
 [profile.release]
 codegen-units = 1
