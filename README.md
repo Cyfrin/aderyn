@@ -58,13 +58,13 @@ There is also an officially supported [VSCode extension](https://github.com/Cyfr
 
 ### Using Cyfrinup
 
-**Cyfrinup** simplifies the installation and management of Cyfrin tools.
+**Cyfrinup** is the cross platform installation manager for Cyfrin tools.
 
-Follow the instructions to install [here](https://github.com/Cyfrin/up).
+[One time setup](https://github.com/Cyfrin/up).
 
 Run `aderyn --version` to check the installation.
 
-##### Upgrade older versions by (re)running: `cyfrinup`
+Run `cyfrinup` to upgrade everything to the latest version.
 
 ---
 
