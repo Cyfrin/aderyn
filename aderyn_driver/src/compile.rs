@@ -1,16 +1,17 @@
 use aderyn_core::{
     ast::SourceUnit, context::workspace_context::WorkspaceContext, visitor::ast_visitor::Node,
 };
-use foundry_compilers_aletheia::{
+use rayon::iter::{IntoParallelIterator, ParallelIterator};
+use solidity_ast::{
     derive_ast_and_evm_info, AstSourceFile, ExcludeConfig, IncludeConfig,
     ProjectConfigInputBuilder, Source, SourcesConfig,
 };
-use rayon::iter::{IntoParallelIterator, ParallelIterator};
 use std::{path::PathBuf, str::FromStr};
 
 use crate::{
     display::{display_configuration_info, display_header, display_ingesting_message},
-    preprocess::PreprocessedConfig,
+    process::PreprocessedConfig,
+    MapOrDefault,
 };
 
 pub fn project(
@@ -20,20 +21,12 @@ pub fn project(
     // Decompose pre-processed config
     let PreprocessedConfig { root_path, src, include, exclude } = preprocessed_config;
 
-    // Process the pre-processed config using aletheia to transalate to runtime values
+    // Process the pre-processed config using Cyfrin/solidity-ast-rs to transalate to runtime values
+    let path_form_src = |src: &str| -> PathBuf { PathBuf::from_str(src).unwrap() };
     let processed_config = ProjectConfigInputBuilder::new(&root_path)
-        .with_sources(match src {
-            Some(src) => SourcesConfig::Specific(PathBuf::from_str(&src).unwrap()),
-            None => SourcesConfig::AutoDetect,
-        })
-        .with_exclude(match exclude {
-            Some(exclude_containing) => ExcludeConfig::Specific(exclude_containing.to_vec()),
-            None => ExcludeConfig::None,
-        })
-        .with_include(match include {
-            Some(include_containing) => IncludeConfig::Specific(include_containing.to_vec()),
-            None => IncludeConfig::All,
-        })
+        .with_sources(src.map_or_default(|src| SourcesConfig::Specific(path_form_src(&src))))
+        .with_exclude(exclude.map_or_default(|exclude| ExcludeConfig::Specific(exclude.to_vec())))
+        .with_include(include.map_or_default(|include| IncludeConfig::Specific(include.to_vec())))
         .build()?;
 
     if !lsp_mode {
@@ -72,12 +65,13 @@ pub fn project(
                 display_ingesting_message(&sources_ast, &included, &ast_info.version.to_string());
             }
             for (source_path, ast_source_file) in sources_ast {
-                if included.contains(&source_path) {
-                    let content = sources.get(&source_path).cloned().expect("content not found");
-                    absorb_ast_content_into_context(ast_source_file, &mut context, content);
-                    context.src_filepaths.push(source_path.display().to_string());
-                }
+                let content = sources.get(&source_path).expect("content not found");
+                absorb_ast_content_into_context(ast_source_file, &mut context, content.clone());
+                context.src_filepaths.push(source_path.display().to_string());
             }
+
+            context.evm_version = derived_ast_evm_info.evm_version;
+            context.included = included;
 
             Some(context)
         })

@@ -2,7 +2,7 @@
 mod project_compiler_grouping_tests {
     use std::{env::set_var, path::PathBuf, str::FromStr};
 
-    use aderyn_driver::{compile, preprocess::PreprocessedConfig};
+    use aderyn_driver::{compile, process::PreprocessedConfig};
 
     // Tester function
     fn test_grouping_files_to_compile(

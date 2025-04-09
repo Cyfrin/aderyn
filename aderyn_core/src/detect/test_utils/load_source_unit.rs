@@ -3,11 +3,11 @@ use crate::context::graph::{Transpose, WorkspaceCallGraph};
 use crate::{
     ast::SourceUnit, context::workspace_context::WorkspaceContext, visitor::ast_visitor::Node,
 };
-use foundry_compilers_aletheia::{
+use semver::Version;
+use solidity_ast::{
     derive_ast_and_evm_info, AstSourceFile, IncludeConfig, ProjectConfigInput,
     ProjectConfigInputBuilder, SolcVersionConfig, Source,
 };
-use semver::Version;
 use std::path::{Path, PathBuf};
 
 use super::ensure_valid_solidity_file;

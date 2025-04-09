@@ -6,7 +6,7 @@ use std::{
 
 use serde::Deserialize;
 
-use crate::preprocess::PreprocessedConfig;
+use crate::process::PreprocessedConfig;
 
 /// `aderyn.toml` file structure
 #[derive(Deserialize, Clone)]
@@ -118,7 +118,7 @@ fn clear_empty_vectors<T>(vec: &mut Option<Vec<T>>) {
 mod tests {
     use std::{collections::HashMap, env};
 
-    use crate::preprocess::PreprocessedConfig;
+    use crate::process::PreprocessedConfig;
 
     #[test]
     fn test_interpret_aderyn_config_correctly_appends_and_replaces() {

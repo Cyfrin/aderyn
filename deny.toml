@@ -1,0 +1,22 @@
+# Root options
+[graph]
+all-features = false
+no-default-features = false
+[output]
+feature-depth = 1
+
+# This section is considered when running `cargo deny check bans`.
+[bans]
+multiple-versions = "allow"
+wildcards = "allow"
+highlight = "all"
+workspace-default-features = "allow"
+external-default-features = "allow"
+deny = [ "openssl" ]
+
+# This section is considered when running `cargo deny check sources`.
+[sources]
+unknown-registry = "deny"
+allow-registry = ["https://github.com/rust-lang/crates.io-index"]
+unknown-git = "deny"
+allow-git = ["https://github.com/Cyfrin/solidity-ast-rs", "https://github.com/foundry-rs/foundry"]

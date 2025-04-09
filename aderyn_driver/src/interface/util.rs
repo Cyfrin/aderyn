@@ -7,7 +7,12 @@
  *  if you want to embed them as links in markdown.
  */
 
-use std::path::{Component, PathBuf};
+use std::{
+    collections::HashSet,
+    path::{Component, PathBuf},
+};
+
+use aderyn_core::{ast::SourceUnit, context::workspace_context::WorkspaceContext, report::*};
 
 pub fn carve_shortest_path(from_file: PathBuf, to_file: PathBuf) -> PathBuf {
     assert!(from_file.exists());
@@ -78,4 +83,28 @@ pub fn carve_shortest_path(from_file: PathBuf, to_file: PathBuf) -> PathBuf {
     let final_route = backward_comps.iter().map(|c| c.as_os_str()).collect::<PathBuf>();
 
     final_route
+}
+
+pub fn files_details(context: &WorkspaceContext) -> FilesDetails {
+    let sloc_stats = &context.sloc_stats;
+
+    let mut source_units = context.source_units_context.clone();
+    source_units
+        .sort_by_key(|su: &SourceUnit| su.absolute_path.as_deref().unwrap_or("").to_string());
+
+    let mut seen_paths = HashSet::new();
+    let files_details = source_units
+        .iter()
+        .filter_map(|source_unit| {
+            let filepath = source_unit.absolute_path.as_ref()?;
+            if seen_paths.insert(filepath.clone()) {
+                let report = sloc_stats.iter().find(|r| r.0.contains(filepath))?;
+                Some(FilesDetail { file_path: filepath.to_owned(), n_sloc: *report.1 })
+            } else {
+                None
+            }
+        })
+        .collect::<Vec<_>>();
+
+    FilesDetails { files_details }
 }

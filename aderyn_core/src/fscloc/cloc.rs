@@ -389,3 +389,26 @@ mod parse_comments_to_rightfully_ignore_lines {
         }
     }
 }
+
+#[cfg(test)]
+mod cloc_tests {
+    use super::*;
+
+    #[test]
+    fn test_print_cloc_heavily_commented_contract() {
+        let content = include_str!(
+            "../../../tests/contract-playground/src/cloc/HeavilyCommentedContract.sol"
+        );
+        let stats = get_stats(content, false);
+        assert_eq!(stats.code, 21);
+    }
+
+    #[test]
+    fn test_print_cloc_another_heavily_commented_contract() {
+        let content = include_str!(
+            "../../../tests/contract-playground/src/cloc/AnotherHeavilyCommentedContract.sol"
+        );
+        let stats = get_stats(content, false);
+        assert_eq!(stats.code, 32);
+    }
+}
