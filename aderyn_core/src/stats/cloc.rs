@@ -37,38 +37,38 @@ pub fn count_code_lines(token_descriptors: &[TokenDescriptor]) -> usize {
             };
             token_insight_groups.push(new_token_insight_group);
         }
+    }
 
-        let groups = token_insight_groups
-            .iter()
-            .filter(|g| g.token_type == HighLevelType::Code)
-            .collect::<Vec<_>>();
+    let groups = token_insight_groups
+        .iter()
+        .filter(|g| g.token_type == HighLevelType::Code)
+        .collect::<Vec<_>>();
 
-        if groups.is_empty() {
-            return 0;
+    if groups.is_empty() {
+        return 0;
+    }
+
+    let len = groups.len();
+    let mut prev = &groups[0];
+
+    code_lines += prev.total_contribution();
+
+    #[allow(clippy::needless_range_loop)]
+    for i in 1..len {
+        let curr = &groups[i];
+        let grp_contrib = curr.total_contribution();
+        code_lines += grp_contrib;
+
+        // what line does the first contributing token start ?
+        if curr.start_line == prev.end_line
+            && (curr.token_insights[0].code_lines.actual_first_line == 0)
+            && grp_contrib >= 1
+            && prev.last_token_insight_has_code_in_its_last_line()
+        {
+            // println!("deducting {} {}", curr.start_line, prev.end_line);
+            code_lines -= 1;
         }
-
-        let mut prev = &groups[0];
-        code_lines += prev.total_contribution();
-
-        let len = groups.len();
-
-        #[allow(clippy::needless_range_loop)]
-        for i in 1..len {
-            let curr = &groups[i];
-            let grp_contrib = curr.total_contribution();
-            code_lines += grp_contrib;
-
-            // what line does the first contributing token start ?
-            if curr.start_line == prev.end_line
-                && (curr.token_insights[0].code_lines.actual_first_line == 0)
-                && grp_contrib >= 1
-                && prev.last_token_insight_has_code_in_its_last_line()
-            {
-                // println!("deducting {} {}", curr.start_line, prev.end_line);
-                code_lines -= 1;
-            }
-            prev = curr;
-        }
+        prev = curr;
     }
 
     code_lines
