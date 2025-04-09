@@ -22,8 +22,8 @@ pub fn count_lines_of_code_and_collect_line_numbers_to_ignore(
             if !context.included.contains(&PathBuf::from_str(&path).unwrap()) {
                 return None;
             }
-            let content = source_unit.source.clone().expect("absolute path not inserted");
-            let stats = cloc::get_stats(&content, skip_cloc);
+            let content = source_unit.source.as_ref().expect("source not filled");
+            let stats = cloc::get_stats(content, skip_cloc);
             let full_path = root.join(&path).to_string_lossy().to_string();
             Some((full_path, stats))
         })
