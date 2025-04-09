@@ -55,15 +55,11 @@ pub fn make_context(
     // 3. Callgraph
     for context in contexts.iter_mut() {
         let absolute_root_path = &ensure_valid_root_path(&root_path);
-        let stats = fscloc::engine::count_lines_of_code_and_collect_line_numbers_to_ignore(
-            absolute_root_path.as_path(),
-            common.skip_cloc,
-            context,
-        );
+        let stats = fscloc::collect_stats(absolute_root_path.as_path(), common.skip_cloc, context);
         let sloc_stats: HashMap<String, usize> =
             stats.iter().map(|(key, value)| (key.to_owned(), value.code)).collect();
 
-        let ignore_line_stats: HashMap<String, Vec<fscloc::cloc::IgnoreLine>> =
+        let ignore_line_stats: HashMap<String, Vec<fscloc::IgnoreLine>> =
             stats.iter().map(|(key, value)| (key.to_owned(), value.ignore_lines.clone())).collect();
 
         context.set_sloc_stats(sloc_stats);
