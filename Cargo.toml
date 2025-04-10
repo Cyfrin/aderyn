@@ -13,7 +13,6 @@ aderyn_core = { version = "0.5.6", path = "aderyn_core" }
 aderyn_driver = { version = "0.5.6", path = "aderyn_driver" }
 clap = "4.4.6"
 criterion = "0.5.1"
-crossbeam-channel = "0.5.9"
 derive_more = "0.99.18"
 eyre = "0.6.12"
 field_access = "0.1.8"
