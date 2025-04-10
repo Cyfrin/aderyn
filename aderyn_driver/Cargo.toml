@@ -20,6 +20,7 @@ field_access = { workspace = true }
 tokio = { workspace = true, features = ["full"] }
 tower-lsp = { workspace = true }
 dunce = { workspace = true }
+prettytable = { workspace = true }
 solidity_ast = { workspace = true }
 
 [dev-dependencies]
