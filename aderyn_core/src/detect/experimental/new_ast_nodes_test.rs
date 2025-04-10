@@ -63,10 +63,8 @@ mod new_ast_nodes_demonstrator_tests {
         detector::IssueDetector, experimental::new_ast_nodes_test::NewASTNodesDemonstrator,
     };
 
-    use serial_test::serial;
-
     #[test]
-    #[serial]
+
     fn test_new_ast_nodes() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/adhoc-sol-files/DemoASTNodes.sol",

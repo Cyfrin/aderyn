@@ -78,10 +78,8 @@ mod closest_ancestor_demo_tests {
         detector::IssueDetector, experimental::closest_ancestor::ClosestAncestorDemonstrator,
     };
 
-    use serial_test::serial;
-
     #[test]
-    #[serial]
+
     fn test_closest_ancestor() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/parent_chain/ParentChainContract.sol",

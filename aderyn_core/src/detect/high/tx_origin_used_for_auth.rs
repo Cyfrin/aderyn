@@ -137,14 +137,13 @@ impl CallGraphVisitor for MsgSenderAndTxOriginTracker {
 
 #[cfg(test)]
 mod tx_origin_used_for_auth_detector {
-    use serial_test::serial;
 
     use crate::detect::{
         detector::IssueDetector, high::tx_origin_used_for_auth::TxOriginUsedForAuthDetector,
     };
 
     #[test]
-    #[serial]
+
     fn test_tx_origin_used_for_auth() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/TxOriginUsedForAuth.sol",
