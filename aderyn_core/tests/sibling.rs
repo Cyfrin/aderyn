@@ -1,6 +1,6 @@
 use std::{collections::BTreeMap, error::Error};
 
-use crate::{
+use aderyn_core::{
     ast::NodeID,
     capture,
     context::{
@@ -59,14 +59,13 @@ impl IssueDetector for SiblingDemonstrator {
 
 #[cfg(test)]
 mod sibling_demo_tests {
-
-    use crate::detect::{detector::IssueDetector, experimental::sibling::SiblingDemonstrator};
+    use super::*;
+    use aderyn_core::detect::test_utils::load_solidity_source_unit;
 
     #[test]
     fn test_siblings() {
-        let context = crate::detect::test_utils::load_solidity_source_unit(
-            "../tests/contract-playground/src/StorageConditionals.sol",
-        );
+        let context =
+            load_solidity_source_unit("../tests/contract-playground/src/StorageConditionals.sol");
 
         let mut detector = SiblingDemonstrator::default();
         let _ = detector.detect(&context).unwrap();

@@ -1,6 +1,6 @@
 use std::{collections::BTreeMap, error::Error};
 
-use crate::{
+use aderyn_core::{
     ast::NodeID,
     capture,
     context::workspace_context::WorkspaceContext,
@@ -59,16 +59,13 @@ impl IssueDetector for NewASTNodesDemonstrator {
 
 #[cfg(test)]
 mod new_ast_nodes_demonstrator_tests {
-    use crate::detect::{
-        detector::IssueDetector, experimental::new_ast_nodes_test::NewASTNodesDemonstrator,
-    };
+    use super::*;
+    use aderyn_core::detect::test_utils::load_solidity_source_unit;
 
     #[test]
 
     fn test_new_ast_nodes() {
-        let context = crate::detect::test_utils::load_solidity_source_unit(
-            "../tests/adhoc-sol-files/DemoASTNodes.sol",
-        );
+        let context = load_solidity_source_unit("../tests/adhoc-sol-files/DemoASTNodes.sol");
 
         let mut detector = NewASTNodesDemonstrator::default();
         let _ = detector.detect(&context).unwrap();

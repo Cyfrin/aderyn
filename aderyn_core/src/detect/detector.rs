@@ -113,7 +113,7 @@ pub fn get_all_detectors_names() -> Vec<String> {
 // Note to maintainers: DO NOT CHANGE THE ORDER OF THESE DERIVE ATTRIBUTES
 #[derive(Debug, PartialEq, EnumString, Display)]
 #[strum(serialize_all = "kebab-case")]
-pub(crate) enum IssueDetectorNamePool {
+pub enum IssueDetectorNamePool {
     IncorrectUseOfModifier,
     ReentrancyStateChange,
     StateVariableCouldBeImmutable,

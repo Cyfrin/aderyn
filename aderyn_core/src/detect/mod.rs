@@ -1,11 +1,9 @@
 pub mod detector;
-pub(crate) mod experimental;
 pub mod helpers;
 pub mod high;
 pub mod low;
 pub mod report;
 
-#[cfg(test)]
 pub mod test_utils;
 
 #[macro_export]

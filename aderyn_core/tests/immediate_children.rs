@@ -1,7 +1,7 @@
 #![allow(clippy::collapsible_match)]
 use std::{collections::BTreeMap, error::Error};
 
-use crate::{
+use aderyn_core::{
     ast::{NodeID, NodeType},
     capture,
     context::{browser::GetImmediateChildren, workspace_context::WorkspaceContext},
@@ -74,14 +74,13 @@ impl IssueDetector for ImmediateChildrenDemonstrator {
 
 #[cfg(test)]
 mod child_chain_demo_tests {
-    use crate::detect::{
-        detector::IssueDetector, experimental::immediate_children::ImmediateChildrenDemonstrator,
-    };
+    use super::*;
+    use aderyn_core::detect::test_utils::load_solidity_source_unit;
 
     #[test]
 
     fn test_immediate_child_demo() {
-        let context = crate::detect::test_utils::load_solidity_source_unit(
+        let context = load_solidity_source_unit(
             "../tests/contract-playground/src/parent_chain/ParentChainContract.sol",
         );
 
