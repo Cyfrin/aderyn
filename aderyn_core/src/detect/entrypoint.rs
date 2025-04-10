@@ -106,7 +106,7 @@ pub struct LowIssues {
     pub issues: Vec<IssueBody>,
 }
 
-pub fn get_report(
+pub fn detect_issues(
     contexts: &[WorkspaceContext],
     root_rel_path: &Path,
     detectors: Vec<Box<dyn IssueDetector>>,

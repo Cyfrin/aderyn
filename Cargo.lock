@@ -72,6 +72,7 @@ dependencies = [
  "criterion",
  "dunce",
  "field_access",
+ "prettytable",
  "rayon",
  "serde",
  "serde-sarif",
