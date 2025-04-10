@@ -74,6 +74,8 @@ Run `cyfrinup` to upgrade everything to the latest version.
 curl --proto '=https' --tlsv1.2 -LsSf https://github.com/cyfrin/aderyn/releases/latest/download/aderyn-installer.sh | bash
 ```
 
+##### Upgrade older versions by running: `aderyn-update`
+
 ---
 
 ### Using Homebrew
