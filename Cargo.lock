@@ -43,7 +43,6 @@ dependencies = [
 name = "aderyn_core"
 version = "0.5.6"
 dependencies = [
- "crossbeam-channel",
  "derive_more 0.99.19",
  "dunce",
  "eyre",
@@ -58,7 +57,6 @@ dependencies = [
  "rayon",
  "semver 1.0.26",
  "serde",
- "serde-sarif",
  "serde_json",
  "serde_repr",
  "serial_test",

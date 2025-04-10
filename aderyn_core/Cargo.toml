@@ -9,7 +9,6 @@ license = "MIT"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-crossbeam-channel = { workspace = true }
 eyre = { workspace = true }
 ignore = { workspace = true }
 phf = { workspace = true, features = ["macros"] }
@@ -18,7 +17,6 @@ rayon = { workspace = true }
 semver = { workspace = true }
 serde = { workspace = true, features = ["derive"] }
 serde_json = { workspace = true, features = ["preserve_order"] }
-serde-sarif = { workspace = true }
 serde_repr = { workspace = true }
 strum = { workspace = true, features = ["derive"] }
 num-bigint = { workspace = true }
