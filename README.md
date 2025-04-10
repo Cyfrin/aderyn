@@ -118,19 +118,8 @@ Download from [Visual Studio Marketplace](https://marketplace.visualstudio.com/i
 
 ## Contributing & License
 
-Help us build Aderyn 🦜 Please see our [contribution guidelines](./CONTRIBUTING.md) for PR approval process and in-depth developer environment setup.
+Help us build Aderyn 🦜 Please see our [contribution guidelines](./CONTRIBUTING.md) for in-depth developer environment setup and PR approval process.
 Aderyn is an open-source software licensed under the [GPL-3.0 License](./LICENSE).
-
-To build Aderyn locally:
-
-1. [Install Rust](https://www.rust-lang.org/tools/install),
-2. Clone this repo and `cd aderyn/`,
-3. `make`,
-4. Use [`cargo`](https://doc.rust-lang.org/cargo/getting-started/first-steps.html) commands to build, test and run locally.
-
-**Suggested VSCode extensions:**
-[rust-analyzer](https://marketplace.visualstudio.com/items?itemName=dustypomerleau.rust-syntax) - Rust language support for Visual Studio Code
-[Rust Syntax](https://marketplace.visualstudio.com/items?itemName=dustypomerleau.rust-syntax) - Improved Rust syntax highlighting
 
 ## Building a custom Aderyn detector
 
