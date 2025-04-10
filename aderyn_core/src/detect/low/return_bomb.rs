@@ -145,12 +145,12 @@ impl CallGraphVisitor for CallNoAddressChecksTracker<'_> {
 
 #[cfg(test)]
 mod return_bomb_detector_tests {
-    use serial_test::serial;
+    
 
     use crate::detect::{detector::IssueDetector, low::return_bomb::ReturnBombDetector};
 
     #[test]
-    #[serial]
+    
     fn test_return_bomb_detector() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/ReturnBomb.sol",

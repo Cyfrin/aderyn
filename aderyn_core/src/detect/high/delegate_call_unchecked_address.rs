@@ -87,7 +87,7 @@ impl CallGraphVisitor for DelegateCallNoAddressChecksTracker<'_> {
 
 #[cfg(test)]
 mod delegate_call_no_address_check_tests {
-    use serial_test::serial;
+    
 
     use crate::detect::{
         detector::IssueDetector,
@@ -95,7 +95,7 @@ mod delegate_call_no_address_check_tests {
     };
 
     #[test]
-    #[serial]
+    
     fn test_delegate_call_without_checks() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/DelegateCallWithoutAddressCheck.sol",

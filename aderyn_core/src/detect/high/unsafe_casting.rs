@@ -255,12 +255,12 @@ static BYTES32_CASTING_MAP: phf::Map<&'static str, usize> = phf_map! {
 
 #[cfg(test)]
 mod unsafe_casting_detector_tests {
-    use serial_test::serial;
+    
 
     use crate::detect::{detector::IssueDetector, high::UnsafeCastingDetector};
 
     #[test]
-    #[serial]
+    
     fn test_unsafe_casting_detector() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/Casting.sol",

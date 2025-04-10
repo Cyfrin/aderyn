@@ -96,12 +96,12 @@ impl CallGraphVisitor for StateVariableChangeTracker<'_> {
 
 #[cfg(test)]
 mod costly_operations_inside_loops_tests {
-    use serial_test::serial;
+    
 
     use crate::detect::{detector::IssueDetector, low::costly_loop::CostlyLoopDetector};
 
     #[test]
-    #[serial]
+    
     fn test_costly_operations_inside_loops() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/CostlyOperationsInsideLoops.sol",

@@ -53,13 +53,13 @@ impl IssueDetector for DivisionBeforeMultiplicationDetector {
 
 #[cfg(test)]
 mod division_before_multiplication_detector_tests {
-    use serial_test::serial;
+    
 
     use super::DivisionBeforeMultiplicationDetector;
     use crate::detect::detector::IssueDetector;
 
     #[test]
-    #[serial]
+    
     fn test_template_detector() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/DivisionBeforeMultiplication.sol",

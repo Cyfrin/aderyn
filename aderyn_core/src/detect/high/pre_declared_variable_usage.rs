@@ -99,7 +99,7 @@ impl IssueDetector for PreDeclaredLocalVariableUsageDetector {
 
 #[cfg(test)]
 mod pre_declared_variable_usage_tests {
-    use serial_test::serial;
+    
 
     use crate::detect::{
         detector::IssueDetector,
@@ -107,7 +107,7 @@ mod pre_declared_variable_usage_tests {
     };
 
     #[test]
-    #[serial]
+    
     fn test_pre_declared_variable_usage() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/PreDeclaredVarUsage.sol",

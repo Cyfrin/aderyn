@@ -60,14 +60,14 @@ impl IssueDetector for TautologyOrContraditionDetector {
 
 #[cfg(test)]
 mod tautology_or_contradiction_tests {
-    use serial_test::serial;
+    
 
     use crate::detect::{
         detector::IssueDetector, high::tautology_or_contradiction::TautologyOrContraditionDetector,
     };
 
     #[test]
-    #[serial]
+    
     fn test_tautology_or_contradiction_detector() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/TautologyOrContradiction.sol",

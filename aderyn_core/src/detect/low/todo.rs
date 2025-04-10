@@ -76,14 +76,14 @@ impl IssueDetector for TodoDetector {
 
 #[cfg(test)]
 mod contracts_with_todos_tests {
-    use serial_test::serial;
+    
 
     use crate::detect::detector::IssueDetector;
 
     use super::TodoDetector;
 
     #[test]
-    #[serial]
+    
     fn test_contracts_with_todos_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/ContractWithTodo.sol",

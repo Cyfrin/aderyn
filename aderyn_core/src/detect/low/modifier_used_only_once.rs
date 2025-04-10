@@ -71,10 +71,10 @@ mod useless_modifier_tests {
     use crate::detect::detector::IssueDetector;
 
     use super::ModifierUsedOnlyOnceDetector;
-    use serial_test::serial;
+    
 
     #[test]
-    #[serial]
+    
     fn test_useless_modifier_tests_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/OnceModifierExample.sol",

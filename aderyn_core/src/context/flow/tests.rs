@@ -10,7 +10,7 @@ mod control_flow_tests {
         },
         detect::test_utils::load_solidity_source_unit,
     };
-    use serial_test::serial;
+    
 
     // Sample use of CFG
     impl Cfg {
@@ -30,7 +30,7 @@ mod control_flow_tests {
 
     // Accept block (Pre callibration checks)
     #[test]
-    #[serial]
+    
     fn simple_program_function1() {
         /*
 
@@ -92,7 +92,7 @@ mod control_flow_tests {
     }
 
     #[test]
-    #[serial]
+    
     fn simple_program_function2() {
         let context = load_solidity_source_unit(
             "../tests/contract-playground/src/control_flow/SimpleProgram.sol",
@@ -108,7 +108,7 @@ mod control_flow_tests {
     }
 
     #[test]
-    #[serial]
+    
     fn simple_program_function3() {
         let context = load_solidity_source_unit(
             "../tests/contract-playground/src/control_flow/SimpleProgram.sol",
@@ -124,7 +124,7 @@ mod control_flow_tests {
     }
 
     #[test]
-    #[serial]
+    
     fn simple_program_function4() {
         let context = load_solidity_source_unit(
             "../tests/contract-playground/src/control_flow/SimpleProgram.sol",
@@ -140,7 +140,7 @@ mod control_flow_tests {
     }
 
     #[test]
-    #[serial]
+    
     fn simple_program_function5() {
         let context = load_solidity_source_unit(
             "../tests/contract-playground/src/control_flow/SimpleProgram.sol",
@@ -156,7 +156,7 @@ mod control_flow_tests {
     }
 
     #[test]
-    #[serial]
+    
     fn simple_program_function6() {
         let context = load_solidity_source_unit(
             "../tests/contract-playground/src/control_flow/SimpleProgram.sol",
@@ -172,7 +172,7 @@ mod control_flow_tests {
     }
 
     #[test]
-    #[serial]
+    
     fn simple_program_function7() {
         let context = load_solidity_source_unit(
             "../tests/contract-playground/src/control_flow/SimpleProgram.sol",
@@ -188,7 +188,7 @@ mod control_flow_tests {
     }
 
     #[test]
-    #[serial]
+    
     fn simple_program_function8() {
         let context = load_solidity_source_unit(
             "../tests/contract-playground/src/control_flow/SimpleProgram.sol",
@@ -204,7 +204,7 @@ mod control_flow_tests {
     }
 
     #[test]
-    #[serial]
+    
     fn simple_program_function9() {
         let context = load_solidity_source_unit(
             "../tests/contract-playground/src/control_flow/SimpleProgram.sol",
@@ -220,7 +220,7 @@ mod control_flow_tests {
     }
 
     #[test]
-    #[serial]
+    
     fn simple_program_function10() {
         let context = load_solidity_source_unit(
             "../tests/contract-playground/src/control_flow/SimpleProgram.sol",
@@ -238,7 +238,7 @@ mod control_flow_tests {
     // Accept-Function-Body (Post callibration checks)
 
     #[test]
-    #[serial]
+    
     fn simple_program_function11() {
         let context = load_solidity_source_unit(
             "../tests/contract-playground/src/control_flow/SimpleProgram.sol",
@@ -253,7 +253,7 @@ mod control_flow_tests {
     }
 
     #[test]
-    #[serial]
+    
     fn simple_program_function12() {
         let context = load_solidity_source_unit(
             "../tests/contract-playground/src/control_flow/SimpleProgram.sol",
@@ -268,7 +268,7 @@ mod control_flow_tests {
     }
 
     #[test]
-    #[serial]
+    
     fn simple_program_function13() {
         let context = load_solidity_source_unit(
             "../tests/contract-playground/src/control_flow/SimpleProgram.sol",
@@ -283,7 +283,7 @@ mod control_flow_tests {
     }
 
     #[test]
-    #[serial]
+    
     fn simple_program_function14() {
         let context = load_solidity_source_unit(
             "../tests/contract-playground/src/control_flow/SimpleProgram.sol",
@@ -298,7 +298,7 @@ mod control_flow_tests {
     }
 
     #[test]
-    #[serial]
+    
     fn simple_program_function15() {
         let context = load_solidity_source_unit(
             "../tests/contract-playground/src/control_flow/SimpleProgram.sol",
@@ -313,7 +313,7 @@ mod control_flow_tests {
     }
 
     #[test]
-    #[serial]
+    
     fn simple_program_function16() {
         let context = load_solidity_source_unit(
             "../tests/contract-playground/src/control_flow/SimpleProgram.sol",

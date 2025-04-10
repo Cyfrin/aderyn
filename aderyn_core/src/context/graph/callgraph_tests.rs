@@ -11,7 +11,7 @@ mod callgraph_test_functions {
     };
 
     use crate::context::graph::callgraph::CallGraphDirection::{BothWays, Inward, Outward};
-    use serial_test::serial;
+    
 
     fn get_function_by_name(context: &WorkspaceContext, name: &str) -> ASTNode {
         ASTNode::from(
@@ -26,7 +26,7 @@ mod callgraph_test_functions {
     }
 
     #[test]
-    #[serial]
+    
     fn test_callgraph_is_not_none() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/CallGraphTests.sol",
@@ -36,7 +36,7 @@ mod callgraph_test_functions {
     }
 
     #[test]
-    #[serial]
+    
     fn test_tower1_modifier_has_no_inward() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/CallGraphTests.sol",
@@ -54,7 +54,7 @@ mod callgraph_test_functions {
     }
 
     #[test]
-    #[serial]
+    
     fn test_tower1_modifier_has_outward() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/CallGraphTests.sol",
@@ -72,7 +72,7 @@ mod callgraph_test_functions {
     }
 
     #[test]
-    #[serial]
+    
     fn test_tower2_modifier_has_both_outward_and_inward() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/CallGraphTests.sol",
@@ -91,7 +91,7 @@ mod callgraph_test_functions {
     }
 
     #[test]
-    #[serial]
+    
     fn test_tower3_modifier_has_both_outward_and_inward() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/CallGraphTests.sol",
@@ -112,7 +112,7 @@ mod callgraph_test_functions {
     }
 
     #[test]
-    #[serial]
+    
     fn test_tower3_functions_has_outward() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/CallGraphTests.sol",
@@ -129,7 +129,7 @@ mod callgraph_test_functions {
     }
 
     #[test]
-    #[serial]
+    
     fn test_tower4_functions_has_outward_and_inward() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/CallGraphTests.sol",

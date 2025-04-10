@@ -174,14 +174,14 @@ mod loop_investigation_helper {
 
 #[cfg(test)]
 mod cache_array_length_tests {
-    use serial_test::serial;
+    
 
     use crate::detect::{
         detector::IssueDetector, low::storage_array_length_not_cached::CacheArrayLengthDetector,
     };
 
     #[test]
-    #[serial]
+    
     fn test_cache_array_length() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/CacheArrayLength.sol",

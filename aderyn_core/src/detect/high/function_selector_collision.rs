@@ -111,7 +111,7 @@ impl IssueDetector for FunctionSelectorCollisionDetector {
 
 #[cfg(test)]
 mod function_signature_collision {
-    use serial_test::serial;
+    
 
     use crate::detect::{
         detector::IssueDetector,
@@ -119,7 +119,7 @@ mod function_signature_collision {
     };
 
     #[test]
-    #[serial]
+    
     fn test_function_signature_collision() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/FunctionSignatureCollision.sol",

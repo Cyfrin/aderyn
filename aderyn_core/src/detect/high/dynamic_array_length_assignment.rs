@@ -69,7 +69,7 @@ impl IssueDetector for DynamicArrayLengthAssignmentDetector {
 
 #[cfg(test)]
 mod dynamic_array_length_assignment_tests {
-    use serial_test::serial;
+    
 
     use crate::detect::{
         detector::IssueDetector, high::DynamicArrayLengthAssignmentDetector,
@@ -77,7 +77,7 @@ mod dynamic_array_length_assignment_tests {
     };
 
     #[test]
-    #[serial]
+    
     fn test_dynamic_array_length_assignment() {
         let context = load_solidity_source_unit(
             "../tests/contract-playground/src/DynamicArrayLengthAssignment.sol",

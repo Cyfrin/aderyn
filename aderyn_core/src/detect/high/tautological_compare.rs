@@ -161,14 +161,14 @@ impl IssueDetector for TautologicalCompareDetector {
 
 #[cfg(test)]
 mod tautological_compare_tests {
-    use serial_test::serial;
+    
 
     use crate::detect::{
         detector::IssueDetector, high::tautological_compare::TautologicalCompareDetector,
     };
 
     #[test]
-    #[serial]
+    
     fn test_tatulogical_detector() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/TautologicalCompare.sol",

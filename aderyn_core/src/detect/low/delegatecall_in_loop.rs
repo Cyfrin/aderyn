@@ -95,13 +95,13 @@ impl CallGraphVisitor for DelegateCallTracker {
 
 #[cfg(test)]
 mod delegate_call_in_loop_detector_tests {
-    use serial_test::serial;
+    
 
     use super::DelegatecallInLoopDetector;
     use crate::detect::detector::IssueDetector;
 
     #[test]
-    #[serial]
+    
     fn test_delegate_call_in_loop_detector_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/inheritance/ExtendedInheritance.sol",

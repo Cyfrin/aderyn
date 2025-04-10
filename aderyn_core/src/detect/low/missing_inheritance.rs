@@ -161,14 +161,13 @@ impl IssueDetector for MissingInheritanceDetector {
 
 #[cfg(test)]
 mod missing_inheritance_tests {
-    use serial_test::serial;
+    
 
     use crate::detect::{
         detector::IssueDetector, low::missing_inheritance::MissingInheritanceDetector,
     };
 
     #[test]
-    #[serial]
     fn test_missing_inheritance() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/MissingInheritance.sol",

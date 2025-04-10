@@ -156,14 +156,14 @@ impl IssueDetector for InconsistentTypeNamesDetector {
 
 #[cfg(test)]
 mod inconsistent_type_names_tests {
-    use serial_test::serial;
+    
 
     use crate::detect::detector::IssueDetector;
 
     use super::InconsistentTypeNamesDetector;
 
     #[test]
-    #[serial]
+    
     fn test_inconsistent_type_names_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/InconsistentUints.sol",
@@ -181,7 +181,7 @@ mod inconsistent_type_names_tests {
     }
 
     #[test]
-    #[serial]
+    
     fn test_inconsistent_type_names_with_casting_sol() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/Casting.sol",

@@ -69,12 +69,12 @@ impl IssueDetector for UncheckedSendDetector {
 
 #[cfg(test)]
 mod unchecked_send_tests {
-    use serial_test::serial;
+    
 
     use crate::detect::{detector::IssueDetector, high::unchecked_send::UncheckedSendDetector};
 
     #[test]
-    #[serial]
+    
     fn test_unchecked_send() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/UncheckedSend.sol",

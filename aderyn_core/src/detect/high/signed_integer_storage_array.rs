@@ -138,7 +138,7 @@ fn is_tuple_being_assigned_to_storage_array(
 
 #[cfg(test)]
 mod storage_signed_array_detector {
-    use serial_test::serial;
+    
 
     use crate::detect::{
         detector::IssueDetector,
@@ -148,7 +148,7 @@ mod storage_signed_array_detector {
     };
 
     #[test]
-    #[serial]
+    
     fn test_storage_signed_array() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/CompilerBugStorageSignedIntegerArray.sol",

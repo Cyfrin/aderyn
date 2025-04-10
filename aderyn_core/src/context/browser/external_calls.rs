@@ -57,7 +57,7 @@ impl FunctionCallOptions {
 
 #[cfg(test)]
 mod external_calls_detector {
-    use serial_test::serial;
+    
 
     use crate::{
         context::browser::ExtractFunctionCalls, detect::test_utils::load_solidity_source_unit,
@@ -73,7 +73,7 @@ mod external_calls_detector {
     }
 
     #[test]
-    #[serial]
+    
     fn test_direct_call_on_address() {
         let context =
             load_solidity_source_unit("../tests/contract-playground/src/ExternalCalls.sol");

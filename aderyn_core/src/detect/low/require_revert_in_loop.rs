@@ -91,14 +91,14 @@ impl CallGraphVisitor for RevertAndRequireTracker {
 
 #[cfg(test)]
 mod reevrts_and_requires_in_loops {
-    use serial_test::serial;
+    
 
     use crate::detect::{
         detector::IssueDetector, low::require_revert_in_loop::RequireRevertInLoopDetector,
     };
 
     #[test]
-    #[serial]
+    
     fn test_reverts_and_requires_in_loops_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/RevertsAndRequriesInLoops.sol",

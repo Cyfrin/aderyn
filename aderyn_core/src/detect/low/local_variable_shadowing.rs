@@ -105,14 +105,14 @@ mod contract_hierarchy_variable_helpers {
 
 #[cfg(test)]
 mod local_variable_shadowing_tests {
-    use serial_test::serial;
+    
 
     use crate::detect::{
         detector::IssueDetector, low::local_variable_shadowing::LocalVariableShadowingDetector,
     };
 
     #[test]
-    #[serial]
+    
     fn test_local_variable_shadowing() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/LocalVariableShadow.sol",

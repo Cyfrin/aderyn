@@ -102,7 +102,7 @@ impl IssueDetector for UninitializedLocalVariableDetector {
 
 #[cfg(test)]
 mod uninitialized_local_variables_detector_tests {
-    use serial_test::serial;
+    
 
     use crate::detect::{
         detector::IssueDetector,
@@ -110,7 +110,7 @@ mod uninitialized_local_variables_detector_tests {
     };
 
     #[test]
-    #[serial]
+    
     fn test_uninitialized_local_variables() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/UninitializedLocalVariables.sol",
