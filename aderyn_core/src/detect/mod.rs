@@ -1,8 +1,8 @@
 pub mod detector;
+pub mod entrypoint;
 pub mod helpers;
 pub mod high;
 pub mod low;
-pub mod report;
 
 pub mod test_utils;
 
