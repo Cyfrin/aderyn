@@ -1,7 +1,10 @@
-#[cfg(test)]
-use crate::context::graph::{Transpose, WorkspaceCallGraph};
 use crate::{
-    ast::SourceUnit, context::workspace_context::WorkspaceContext, visitor::ast_visitor::Node,
+    ast::SourceUnit,
+    context::{
+        graph::{Transpose, WorkspaceCallGraph},
+        workspace_context::WorkspaceContext,
+    },
+    visitor::ast_visitor::Node,
 };
 use semver::Version;
 use solidity_ast::{

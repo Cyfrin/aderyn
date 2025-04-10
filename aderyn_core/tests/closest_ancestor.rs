@@ -1,7 +1,7 @@
 #![allow(clippy::collapsible_match)]
 use std::{collections::BTreeMap, error::Error};
 
-use crate::{
+use aderyn_core::{
     ast::{NodeID, NodeType},
     capture,
     context::{
@@ -74,14 +74,13 @@ impl IssueDetector for ClosestAncestorDemonstrator {
 
 #[cfg(test)]
 mod closest_ancestor_demo_tests {
-    use crate::detect::{
-        detector::IssueDetector, experimental::closest_ancestor::ClosestAncestorDemonstrator,
-    };
+    use super::*;
+    use aderyn_core::detect::{detector::IssueDetector, test_utils::load_solidity_source_unit};
 
     #[test]
 
     fn test_closest_ancestor() {
-        let context = crate::detect::test_utils::load_solidity_source_unit(
+        let context = load_solidity_source_unit(
             "../tests/contract-playground/src/parent_chain/ParentChainContract.sol",
         );
 
