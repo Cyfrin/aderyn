@@ -38,11 +38,17 @@ Contributions are made via Issues and Pull Requests (PRs). A few general guideli
 
 #### Developer environment setup
 
-1. Run `make` . Make sure to have tools listed at the top of the Makefile installed in your computer.
-2. Work on the issue, write unit tests. Use `cargo test <test-name>` to test. Feel free to add solidity files to `tests/contract-playground`.
-3. Run `cargo prep --cpg` to generate the report for the same.
-4. Once happy with the work, run `cargo blesspr` to "polish" your PR so CI can be happy.
-5. Create a pull request to `dev` branch here. The maintainers will be notified. Either @alexroan or @TilakMaddy will reach out to you.
+1. [Install Rust](https://www.rust-lang.org/tools/install),
+2. Clone this repo and `cd aderyn/`
+3. Run `make` . Make sure to have tools listed at the top of the Makefile installed in your computer.
+4. Work on the issue, write unit tests. Use `cargo test <test-name>` to test. Feel free to add solidity files to `tests/contract-playground`.
+5. Run `cargo prep --cpg` to generate the report for the same.
+6. Once happy with the work, run `cargo blesspr` to "polish" your PR so CI can be happy.
+7. Create a pull request to `dev` branch here. The maintainers will be notified. Either @alexroan or @TilakMaddy will reach out to you.
+
+Suggested VSCode extensions
+* [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=dustypomerleau.rust-syntax) - Rust language support for Visual Studio Code
+* [Rust Syntax](https://marketplace.visualstudio.com/items?itemName=dustypomerleau.rust-syntax) - Improved Rust syntax highlighting
 
 #### Advanced Setup
 1. Install [Bacon](https://dystroy.org/bacon/)
