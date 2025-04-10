@@ -72,14 +72,13 @@ impl IssueDetector for CentralizationRiskDetector {
 
 #[cfg(test)]
 mod centralization_risk_detector_tests {
-    use serial_test::serial;
 
     use crate::detect::detector::IssueDetector;
 
     use super::CentralizationRiskDetector;
 
     #[test]
-    #[serial]
+
     fn test_centralization_risk_detector_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/AdminContract.sol",

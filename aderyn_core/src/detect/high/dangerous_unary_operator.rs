@@ -53,14 +53,13 @@ impl IssueDetector for DangerousUnaryOperatorDetector {
 
 #[cfg(test)]
 mod dangerous_unary_expression_tests {
-    use serial_test::serial;
 
     use crate::detect::{
         detector::IssueDetector, high::dangerous_unary_operator::DangerousUnaryOperatorDetector,
     };
 
     #[test]
-    #[serial]
+
     fn test_dangerous_unary_operator() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/DangerousUnaryOperator.sol",

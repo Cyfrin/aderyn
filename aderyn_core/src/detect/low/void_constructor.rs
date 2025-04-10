@@ -77,12 +77,11 @@ impl IssueDetector for VoidConstructorDetector {
 
 #[cfg(test)]
 mod template_void_constructors {
-    use serial_test::serial;
 
     use crate::detect::{detector::IssueDetector, low::void_constructor::VoidConstructorDetector};
 
     #[test]
-    #[serial]
+
     fn test_template_detector() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/VoidConstructor.sol",

@@ -67,14 +67,13 @@ impl IssueDetector for UnusedErrorDetector {
 
 #[cfg(test)]
 mod unused_error_tests {
-    use serial_test::serial;
 
     use crate::detect::detector::IssueDetector;
 
     use super::UnusedErrorDetector;
 
     #[test]
-    #[serial]
+
     fn test_unused_error_detection() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/UnusedError.sol",

@@ -217,14 +217,13 @@ fn find_external_call_sites(
 
 #[cfg(test)]
 mod state_change_after_external_call_tests {
-    use serial_test::serial;
 
     use crate::detect::{
         detector::IssueDetector, high::reentrancy_state_change::ReentrancyStateChangeDetector,
     };
 
     #[test]
-    #[serial]
+
     fn test_state_change_after_external_call() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/StateChangeAfterExternalCall.sol",
