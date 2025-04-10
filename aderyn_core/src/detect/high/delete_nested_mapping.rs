@@ -96,14 +96,13 @@ impl IssueDetector for DeletionNestedMappingDetector {
 
 #[cfg(test)]
 mod deletion_nested_mapping_tests {
-    
 
     use crate::detect::{
         detector::IssueDetector, high::delete_nested_mapping::DeletionNestedMappingDetector,
     };
 
     #[test]
-    
+
     fn test_deletion_nested_mapping() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/DeletionNestedMappingStructureContract.sol",

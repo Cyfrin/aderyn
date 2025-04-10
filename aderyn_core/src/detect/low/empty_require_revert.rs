@@ -57,14 +57,13 @@ impl IssueDetector for EmptyRequireRevertDetector {
 
 #[cfg(test)]
 mod require_with_string_tests {
-    
 
     use crate::detect::detector::IssueDetector;
 
     use super::EmptyRequireRevertDetector;
 
     #[test]
-    
+
     fn test_require_with_string_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/DeprecatedOZFunctions.sol",
@@ -88,7 +87,7 @@ mod require_with_string_tests {
     }
 
     #[test]
-    
+
     fn test_require_with_custom_error_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/UnusedError.sol",

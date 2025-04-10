@@ -252,12 +252,11 @@ mod source_unit_graph_analysis {
 #[cfg(test)]
 mod unused_imports_tests {
     use semver::Version;
-    
 
     use crate::detect::{detector::IssueDetector, low::unused_import::UnusedImportDetector};
 
     #[test]
-    
+
     fn test_unused_imports() {
         let context =
             crate::detect::test_utils::load_multiple_solidity_source_units_into_single_context(

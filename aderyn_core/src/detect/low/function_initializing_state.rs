@@ -116,7 +116,6 @@ impl CallGraphVisitor for NonConstantStateVariableReferenceDeclarationTracker<'_
 
 #[cfg(test)]
 mod function_initializing_state_tests {
-    
 
     use crate::detect::{
         detector::IssueDetector,
@@ -124,7 +123,7 @@ mod function_initializing_state_tests {
     };
 
     #[test]
-    
+
     fn test_function_initializing_state() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/FunctionInitializingState.sol",

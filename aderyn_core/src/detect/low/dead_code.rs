@@ -83,12 +83,11 @@ impl IssueDetector for DeadCodeDetector {
 
 #[cfg(test)]
 mod dead_code_tests {
-    
 
     use crate::detect::{detector::IssueDetector, low::dead_code::DeadCodeDetector};
 
     #[test]
-    
+
     fn test_dead_code() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/DeadCode.sol",

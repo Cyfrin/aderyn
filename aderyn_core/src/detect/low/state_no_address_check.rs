@@ -185,10 +185,9 @@ mod zero_address_check_tests {
         context::{browser::GetClosestAncestorOfTypeX, workspace_context::ASTNode},
         detect::{detector::IssueDetector, low::StateNoAddressCheckDetector},
     };
-    
 
     #[test]
-    
+
     fn test_zero_address_check_using_mapping_with_address_in_it() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/TestERC20.sol",
@@ -200,7 +199,7 @@ mod zero_address_check_tests {
     }
 
     #[test]
-    
+
     fn test_zero_address_check_detector_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/ZeroAddressCheck.sol",

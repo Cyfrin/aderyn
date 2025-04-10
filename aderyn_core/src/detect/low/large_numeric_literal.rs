@@ -56,14 +56,13 @@ impl IssueDetector for LargeLiteralValueDetector {
 
 #[cfg(test)]
 mod large_literal_values {
-    
 
     use crate::detect::detector::IssueDetector;
 
     use super::LargeLiteralValueDetector;
 
     #[test]
-    
+
     fn test_large_literal_values_multiples_of_10000_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/HugeConstants.sol",

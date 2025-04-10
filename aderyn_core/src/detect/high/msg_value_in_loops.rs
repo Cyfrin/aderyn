@@ -102,14 +102,13 @@ impl CallGraphVisitor for MsgValueTracker {
 
 #[cfg(test)]
 mod msg_value_in_loop_detector {
-    
 
     use crate::detect::{
         detector::IssueDetector, high::msg_value_in_loops::MsgValueUsedInLoopDetector,
     };
 
     #[test]
-    
+
     fn test_msg_value_in_loop() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/MsgValueInLoop.sol",

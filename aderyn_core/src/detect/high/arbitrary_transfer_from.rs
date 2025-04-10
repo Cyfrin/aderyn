@@ -109,14 +109,13 @@ impl IssueDetector for ArbitraryTransferFromDetector {
 
 #[cfg(test)]
 mod arbitrary_transfer_from_tests {
-    
 
     use crate::detect::{
         detector::IssueDetector, high::arbitrary_transfer_from::ArbitraryTransferFromDetector,
     };
 
     #[test]
-    
+
     fn test_arbitrary_transfer_from_detector_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/ArbitraryTransferFrom.sol",

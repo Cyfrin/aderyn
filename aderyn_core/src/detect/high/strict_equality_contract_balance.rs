@@ -79,7 +79,6 @@ impl IssueDetector for DangerousStrictEqualityOnBalanceDetector {
 
 #[cfg(test)]
 mod strict_equality_contract_balance_tests {
-    
 
     use crate::detect::{
         detector::IssueDetector,
@@ -87,7 +86,7 @@ mod strict_equality_contract_balance_tests {
     };
 
     #[test]
-    
+
     fn test_strict_equality_contract_balance1() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/DangerousStrictEquality1.sol",

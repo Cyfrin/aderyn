@@ -28,12 +28,11 @@ issue_detector! {
 
 #[cfg(test)]
 mod boolean_equality_tests {
-    
 
     use crate::detect::{detector::IssueDetector, low::boolean_equality::BooleanEqualityDetector};
 
     #[test]
-    
+
     fn test_boolean_equality_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/BooleanEquality.sol",

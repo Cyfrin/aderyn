@@ -180,14 +180,13 @@ fn all_paths_have_revert_or_placeholder(
 
 #[cfg(test)]
 mod test_incorrect_modifier {
-    
 
     use crate::detect::{
         detector::IssueDetector, low::incorrect_modifier::IncorrectUseOfModifierDetector,
     };
 
     #[test]
-    
+
     fn test_incorrect_modifier_detector() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/IncorrectModifier.sol",

@@ -94,10 +94,8 @@ mod ancestral_line_demo_tests {
         detector::IssueDetector, experimental::ancestral_line::AncestralLineDemonstrator,
     };
 
-    
-
     #[test]
-    
+
     fn test_ancestral_line_demo() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/parent_chain/ParentChainContract.sol",

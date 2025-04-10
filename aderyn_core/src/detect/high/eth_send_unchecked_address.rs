@@ -94,14 +94,13 @@ impl CallGraphVisitor for AddressChecksAndCallWithValueTracker {
 
 #[cfg(test)]
 mod send_ether_no_checks_detector_tests {
-    
 
     use crate::detect::{
         detector::IssueDetector, high::eth_send_unchecked_address::SendEtherNoChecksDetector,
     };
 
     #[test]
-    
+
     fn test_send_ether_no_checks_lib_import() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/SendEtherNoChecksLibImport.sol",
@@ -118,7 +117,7 @@ mod send_ether_no_checks_detector_tests {
     }
 
     #[test]
-    
+
     fn test_send_ether_no_checks() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/SendEtherNoChecks.sol",

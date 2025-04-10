@@ -137,7 +137,6 @@ mod func_compilation_solc_pragma_helper {
 
 #[cfg(test)]
 mod constant_func_changing_state {
-    
 
     use crate::detect::{
         detector::IssueDetector,
@@ -145,7 +144,7 @@ mod constant_func_changing_state {
     };
 
     #[test]
-    
+
     fn test_constant_function_changing_state() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/ConstFuncChangeState.sol",

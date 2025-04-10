@@ -36,12 +36,11 @@ issue_detector! {
 
 #[cfg(test)]
 mod misused_boolean_tests {
-    
 
     use crate::detect::{detector::IssueDetector, high::misused_boolean::MisusedBooleanDetector};
 
     #[test]
-    
+
     fn test_misused_boolean_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/MisusedBoolean.sol",

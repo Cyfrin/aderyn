@@ -57,12 +57,11 @@ impl IssueDetector for RTLODetector {
 
 #[cfg(test)]
 mod rtlo_detector_tests {
-    
 
     use crate::detect::{detector::IssueDetector, high::rtlo::RTLODetector};
 
     #[test]
-    
+
     fn test_rtlo_detector() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/RTLO.sol",

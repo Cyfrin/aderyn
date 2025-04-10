@@ -138,7 +138,6 @@ impl CallGraphVisitor for AssemblyTracker {
 
 #[cfg(test)]
 mod constant_functions_assembly_detector {
-    
 
     use crate::detect::{
         detector::IssueDetector,
@@ -146,7 +145,7 @@ mod constant_functions_assembly_detector {
     };
 
     #[test]
-    
+
     fn test_constant_functions_assembly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/ConstantFuncsAssembly.sol",

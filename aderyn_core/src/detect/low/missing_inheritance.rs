@@ -161,7 +161,6 @@ impl IssueDetector for MissingInheritanceDetector {
 
 #[cfg(test)]
 mod missing_inheritance_tests {
-    
 
     use crate::detect::{
         detector::IssueDetector, low::missing_inheritance::MissingInheritanceDetector,

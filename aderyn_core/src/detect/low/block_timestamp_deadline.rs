@@ -119,12 +119,11 @@ impl IssueDetector for BlockTimestampDeadlineDetector {
 
 #[cfg(test)]
 mod block_timestamp_deadline_detector_tests {
-    
 
     use crate::detect::{detector::IssueDetector, low::BlockTimestampDeadlineDetector};
 
     #[test]
-    
+
     fn test_block_timestamp_deadline_uniswap_v2_detector_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/uniswap/UniswapV2Swapper.sol",
@@ -154,7 +153,7 @@ mod block_timestamp_deadline_detector_tests {
     }
 
     #[test]
-    
+
     fn test_block_timestamp_deadline_uniswap_v3_detector_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/uniswap/UniswapV3Swapper.sol",

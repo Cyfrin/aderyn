@@ -95,10 +95,8 @@ mod parent_chain_demo_tests {
         detector::IssueDetector, experimental::immediate_parent::ImmediateParentDemonstrator,
     };
 
-    
-
     #[test]
-    
+
     fn test_immediate_parent_demo() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/parent_chain/ParentChainContract.sol",

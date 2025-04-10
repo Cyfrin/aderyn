@@ -61,14 +61,13 @@ impl IssueDetector for MultiplePlaceholdersDetector {
 
 #[cfg(test)]
 mod multiple_placeholder_tests {
-    
 
     use crate::detect::{
         detector::IssueDetector, low::multiple_placeholders::MultiplePlaceholdersDetector,
     };
 
     #[test]
-    
+
     fn multiple_placeholders_test() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/MultiplePlaceholders.sol",

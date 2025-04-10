@@ -49,12 +49,11 @@ impl IssueDetector for SelfdestructDetector {
 
 #[cfg(test)]
 mod selfdestruct_identifier_tests {
-    
 
     use crate::detect::{detector::IssueDetector, high::SelfdestructDetector};
 
     #[test]
-    
+
     fn test_selfdestruct_identifier_tests() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/UsingSelfdestruct.sol",
