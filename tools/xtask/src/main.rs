@@ -11,6 +11,7 @@ mod blesspr;
 mod cut_release;
 mod flags;
 mod reportgen;
+mod tomlgen;
 
 fn main() -> anyhow::Result<()> {
     let flags = flags::Xtask::from_env_or_exit();
@@ -18,5 +19,6 @@ fn main() -> anyhow::Result<()> {
         flags::XtaskCmd::Reportgen(choice) => reportgen::reportgen(choice),
         flags::XtaskCmd::CutRelease(cut_release) => cut_release::cut_release(cut_release),
         flags::XtaskCmd::Blesspr(..) => blesspr::blesspr(),
+        flags::XtaskCmd::Tomlgen(..) => tomlgen::init_toml_files(),
     }
 }
