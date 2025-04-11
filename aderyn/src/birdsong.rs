@@ -1,6 +1,6 @@
 use indoc::indoc;
 
-pub const MESSAGES: [&'static str; 8] = [
+pub const MESSAGES: [&str; 8] = [
     indoc! {"
         Aderyn saved you hours of headaches.
         ☕ Buy us a virtual coffee with a GitHub star:
