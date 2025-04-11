@@ -4,6 +4,7 @@ use serde_json::Value;
 use std::{fs::File, io::Write, path::PathBuf, str::FromStr};
 use strum::IntoEnumIterator;
 
+pub mod birdsong;
 pub mod lsp;
 mod panic;
 
