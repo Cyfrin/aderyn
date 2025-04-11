@@ -29,6 +29,10 @@ pub fn blesspr() -> anyhow::Result<()> {
     let cmd = cmd!(sh, "cargo prep --all --parallel");
     cmd.run()?;
 
+    // Create aderyn.toml
+    let cmd = cmd!(sh, "cargo tomlgen");
+    cmd.run()?;
+
     // Push changes
     let cmd = cmd!(sh, "git add .");
     cmd.run()?;
