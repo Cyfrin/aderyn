@@ -12,6 +12,7 @@ homepage = "https://github.com/cyfrin/aderyn"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+indoc = { workspace = true }
 aderyn_driver = { workspace = true }
 clap = { workspace = true, features = ["derive"] }
 reqwest = { workspace = true, features = ["blocking", "json", "rustls-tls"] }
