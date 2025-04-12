@@ -21,6 +21,7 @@ serde = { workspace = true, features = ["derive"] }
 serde_json = { workspace = true, features = ["preserve_order"] }
 strum = { workspace = true, features = ["derive"] }
 notify-debouncer-full = { workspace = true }
+crossbeam-channel = { workspace = true}
 termcolor = { workspace = true }
 tokio = { workspace = true, features = ["full"] }
 tower-lsp = { workspace = true }
