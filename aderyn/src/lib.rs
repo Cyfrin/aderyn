@@ -22,8 +22,6 @@ pub fn create_aderyn_toml_file_at(directory: String) {
 
 pub fn find_solidity_dir(root: &str) -> String {
     let path = PathBuf::from_str(root).expect("invalid path root");
-    // In practice, for nested contracts if both foundry and hardhat are present chose hardhat.
-    // Reason is foundry is probably being used for utility scripts. Example - https://github.com/PufferFinance/puffer-contracts
     let indicators = ["hardhat.config.ts", "hardhat.config.js", "foundry.toml"];
 
     // Check for indicators in the same directory level
