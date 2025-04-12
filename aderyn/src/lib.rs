@@ -33,14 +33,14 @@ pub fn find_solidity_dir(root: &str) -> String {
     }
 
     // Check for indicators one level below
-    for node in std::fs::read_dir(path.clone()).expect("reading path failed") {
-        let Ok(node) = node else {
-            continue;
-        };
-        if !node.path().is_dir() {
-            continue;
-        }
-        for indicator in indicators {
+    for indicator in indicators {
+        for node in std::fs::read_dir(path.clone()).expect("reading path failed") {
+            let Ok(node) = node else {
+                continue;
+            };
+            if !node.path().is_dir() {
+                continue;
+            }
             let target = node.path().join(indicator);
             if target.is_file() {
                 let location = node.path();
