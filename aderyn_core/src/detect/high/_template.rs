@@ -1,13 +1,11 @@
-use std::collections::BTreeMap;
-use std::error::Error;
+use std::{collections::BTreeMap, error::Error};
 
 use crate::ast::NodeID;
 
-use crate::capture;
-use crate::detect::detector::IssueDetectorNamePool;
 use crate::{
+    capture,
     context::workspace_context::WorkspaceContext,
-    detect::detector::{IssueDetector, IssueSeverity},
+    detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
 
@@ -68,7 +66,7 @@ mod template_detector_tests {
     use crate::detect::{detector::IssueDetector, high::template_detector::TemplateDetector};
 
     #[test]
-    #[serial]
+
     fn test_template_detector() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/ArbitraryTransferFrom.sol",
@@ -81,16 +79,10 @@ mod template_detector_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
         // assert the severity is high
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::High
-        );
+        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
         // assert the title is correct
         assert_eq!(detector.title(), String::from("High Issue Title"));
         // assert the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from("Description of the high issue.")
-        );
+        assert_eq!(detector.description(), String::from("Description of the high issue."));
     }
 }

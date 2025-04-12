@@ -50,6 +50,7 @@ xflags::xflags! {
             /// Run in release mode
             optional --release
         }
+        cmd tomlgen{}
     }
 }
 
@@ -66,6 +67,7 @@ pub enum XtaskCmd {
     CutRelease(CutRelease),
     Blesspr(Blesspr),
     Reportgen(Reportgen),
+    Tomlgen(Tomlgen),
 }
 
 #[derive(Debug)]
@@ -93,6 +95,9 @@ pub struct Reportgen {
     pub prb_math: bool,
     pub release: bool,
 }
+
+#[derive(Debug)]
+pub struct Tomlgen;
 
 impl Xtask {
     #[allow(dead_code)]

@@ -1,18 +1,64 @@
 use aderyn_driver::detector::{get_all_detectors_names, get_issue_detector_by_name, IssueSeverity};
 use semver::Version;
 use serde_json::Value;
-use std::{fs::File, io::Write, path::PathBuf, str::FromStr};
+use std::{cmp::Ordering, fs::File, io::Write, path::PathBuf, str::FromStr};
 use strum::IntoEnumIterator;
 
+pub mod birdsong;
 pub mod lsp;
 mod panic;
 
 pub fn create_aderyn_toml_file_at(directory: String) {
+    let solidity_dir = find_solidity_dir(&directory);
     let aderyn_toml_path = PathBuf::from_str(&directory).unwrap().join("aderyn.toml");
     let mut file = File::create_new(aderyn_toml_path.clone()).expect("File already exists!");
-    file.write_all(include_bytes!("../templates/aderyn.toml"))
-        .expect("unable to write to aderyn.toml");
+    file.write_fmt(format_args!(
+        include_str!("../templates/aderyn.toml"),
+        format!("\"{}\"", &solidity_dir)
+    ))
+    .expect("unable to write to aderyn.toml");
     println!("Created aderyn.toml at {}", aderyn_toml_path.display());
+}
+
+pub fn find_solidity_dir(root: &str) -> String {
+    let path = PathBuf::from_str(root).expect("invalid path root");
+    let indicators = ["hardhat.config.ts", "hardhat.config.js", "foundry.toml", "soldeer.toml"];
+
+    // Check for indicators in the same directory level
+    for indicator in indicators {
+        let target = path.join(indicator);
+        if target.is_file() {
+            return path.to_string_lossy().to_string();
+        }
+    }
+
+    // Check for indicators one level below
+    for indicator in indicators {
+        let mut nodes = std::fs::read_dir(path.clone())
+            .expect("reading path failed")
+            .flatten()
+            .collect::<Vec<_>>();
+        nodes.sort_by(|a, _| {
+            if a.file_name().to_string_lossy().contains("contract") {
+                Ordering::Less
+            } else {
+                Ordering::Greater
+            }
+        });
+        for node in nodes {
+            if !node.path().is_dir() {
+                continue;
+            }
+            let target = node.path().join(indicator);
+            if target.is_file() {
+                let location = node.path();
+                let toml_entry = location.strip_prefix(path).expect("stripping failed");
+                return toml_entry.to_string_lossy().to_string();
+            }
+        }
+    }
+
+    root.to_string()
 }
 
 pub fn initialize_niceties() {

@@ -58,13 +58,23 @@ There is also an officially supported [VSCode extension](https://github.com/Cyfr
 
 ### Using Cyfrinup
 
-**Cyfrinup** simplifies the installation and management of Cyfrin tools.
+**Cyfrinup** is the cross platform installation manager for Cyfrin tools.
 
-Follow the instructions to install [here](https://github.com/Cyfrin/up).
+[One time setup](https://github.com/Cyfrin/up).
 
 Run `aderyn --version` to check the installation.
 
-##### Upgrade older versions by (re)running: `cyfrinup`
+Run `cyfrinup` to upgrade everything to the latest version.
+
+---
+
+### Using curl
+
+```sh
+curl --proto '=https' --tlsv1.2 -LsSf https://github.com/cyfrin/aderyn/releases/latest/download/aderyn-installer.sh | bash
+```
+
+##### Upgrade older versions by running: `aderyn-update`
 
 ---
 
@@ -88,7 +98,7 @@ npm install @cyfrin/aderyn -g
 
 ---
 
-If you are installing with Homebrew or npm, ensure that the correct version of Aderyn in your path comes from either the Homebrew or npm global packages directory. If an older version exists at `~/.cyfrin/bin/aderyn`, remove it using `rm -f ~/.cyfrin/bin/aderyn`, as this is no longer the default installation location.
+If you are installing with Curl or Homebrew or npm, ensure that the correct version of Aderyn in your path comes from either the Homebrew or npm global packages directory. If an older version exists at `~/.cyfrin/bin/aderyn`, remove it using `rm -f ~/.cyfrin/bin/aderyn`, as this is no longer the default installation location.
 
 ## Quick Start
 
@@ -108,19 +118,8 @@ Download from [Visual Studio Marketplace](https://marketplace.visualstudio.com/i
 
 ## Contributing & License
 
-Help us build Aderyn 🦜 Please see our [contribution guidelines](./CONTRIBUTING.md) for PR approval process and in-depth developer environment setup.
+Help us build Aderyn 🦜 Please see our [contribution guidelines](./CONTRIBUTING.md) for in-depth developer environment setup and PR approval process.
 Aderyn is an open-source software licensed under the [GPL-3.0 License](./LICENSE).
-
-To build Aderyn locally:
-
-1. [Install Rust](https://www.rust-lang.org/tools/install),
-2. Clone this repo and `cd aderyn/`,
-3. `make`,
-4. Use [`cargo`](https://doc.rust-lang.org/cargo/getting-started/first-steps.html) commands to build, test and run locally.
-
-**Suggested VSCode extensions:**
-[rust-analyzer](https://marketplace.visualstudio.com/items?itemName=dustypomerleau.rust-syntax) - Rust language support for Visual Studio Code
-[Rust Syntax](https://marketplace.visualstudio.com/items?itemName=dustypomerleau.rust-syntax) - Improved Rust syntax highlighting
 
 ## Building a custom Aderyn detector
 

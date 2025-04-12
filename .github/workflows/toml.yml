@@ -1,0 +1,76 @@
+on: [push, pull_request, workflow_dispatch]
+
+name: Aderyn toml creation
+
+concurrency:
+  group: ci-${{ github.ref }}-toml
+  cancel-in-progress: true
+
+jobs:
+  reports-setup:
+    name:  Check toml 
+    runs-on: ubuntu-latest
+    outputs:
+      rust-nightly: nightly-2025-01-01
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        task:
+          - nested_folder1
+          - nested_folder2
+
+    steps:
+      - name: Checkout Sources
+        uses: actions/checkout@v4
+
+      - name: Checkout repository with submodules
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Cache submodules
+        id: cache-submodules
+        uses: actions/cache@v3
+        with:
+          path: .git/modules
+          key: submodules-${{ runner.os }}-${{ hashFiles('.gitmodules') }}
+          restore-keys: |
+            submodules-${{ runner.os }}-${{ hashFiles('.gitmodules') }}
+
+      - name: Install Rust Nightly (2025-01-01)
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: nightly-2025-01-01
+          override: true
+
+      - name: Restore Rust Cache
+        uses: Swatinem/rust-cache@v2
+
+      - name: Prebuild (${{ matrix.task }})
+        run: |
+          cargo build
+
+      - name: Generate aderyn.toml (${{ matrix.task }})
+        run: |
+          case "${{ matrix.task }}" in
+            nested-folder1)
+              mv ./tests/toml/nested_project1/aderyn.toml expected1.toml
+
+              rm -rf ./tests/toml/nested_project1/aderyn.toml
+              cargo run -- init ./tests/toml/nested_project1
+
+              mv ./tests/toml/nested_project1/aderyn.toml actual1.toml
+              diff expected1.toml actual1.toml
+              ;;
+             nested-folder2)
+              mv ./tests/toml/nested_project2/aderyn.toml expected2.toml
+
+              rm -rf ./tests/toml/nested_project2/aderyn.toml
+              cargo run -- init ./tests/toml/nested_project2
+
+              mv ./tests/toml/nested_project2/aderyn.toml actual2.toml
+              diff expected2.toml actual2.toml
+              ;;
+          esac

@@ -1,6 +1,6 @@
 use std::error::Error;
 
-use prettytable::{format, Row, Table};
+use prettytable::Row;
 
 use crate::{
     audit::{
@@ -28,24 +28,3 @@ pub trait AuditorDetector: Send + Sync + 'static {
 
     fn table_rows(&self) -> Vec<Row>;
 }
-
-pub trait AuditorPrinter {
-    fn print(title: &str, table_titles: Row, instances: Vec<Row>) {
-        let mut table = Table::new();
-
-        println!();
-        println!("{}:", title);
-        table.set_titles(table_titles);
-
-        for instance in instances {
-            table.add_row(instance);
-        }
-
-        // Set the format of the table
-        table.set_format(*format::consts::FORMAT_NO_LINESEP_WITH_TITLE);
-        table.printstd();
-    }
-}
-
-pub struct BasicAuditorPrinter;
-impl AuditorPrinter for BasicAuditorPrinter {}

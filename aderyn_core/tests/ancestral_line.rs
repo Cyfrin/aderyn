@@ -1,7 +1,7 @@
 #![allow(clippy::collapsible_match)]
 use std::{collections::BTreeMap, error::Error};
 
-use crate::{
+use aderyn_core::{
     ast::NodeID,
     capture,
     context::{
@@ -90,16 +90,12 @@ impl IssueDetector for AncestralLineDemonstrator {
 
 #[cfg(test)]
 mod ancestral_line_demo_tests {
-    use crate::detect::{
-        detector::IssueDetector, experimental::ancestral_line::AncestralLineDemonstrator,
-    };
-
-    use serial_test::serial;
+    use super::*;
+    use aderyn_core::detect::{detector::IssueDetector, test_utils::load_solidity_source_unit};
 
     #[test]
-    #[serial]
     fn test_ancestral_line_demo() {
-        let context = crate::detect::test_utils::load_solidity_source_unit(
+        let context = load_solidity_source_unit(
             "../tests/contract-playground/src/parent_chain/ParentChainContract.sol",
         );
 

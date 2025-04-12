@@ -82,12 +82,11 @@ impl IssueDetector for UncheckedReturnDetector {
 
 #[cfg(test)]
 mod unchecked_return_tests {
-    use serial_test::serial;
 
     use crate::detect::{detector::IssueDetector, low::unchecked_return::UncheckedReturnDetector};
 
     #[test]
-    #[serial]
+
     fn test_unchecked_return_detector() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/UncheckedReturn.sol",

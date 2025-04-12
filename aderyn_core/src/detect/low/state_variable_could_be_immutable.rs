@@ -154,7 +154,6 @@ impl IssueDetector for StateVariableCouldBeImmutableDetector {
 
 #[cfg(test)]
 mod state_variable_could_be_immutable_tests {
-    use serial_test::serial;
 
     use crate::detect::{
         detector::IssueDetector,
@@ -162,7 +161,7 @@ mod state_variable_could_be_immutable_tests {
     };
 
     #[test]
-    #[serial]
+
     fn test_state_variable_could_be_declared_immutable() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/StateVariableCouldBeDeclaredImmutable.sol",
