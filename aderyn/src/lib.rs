@@ -22,7 +22,7 @@ pub fn create_aderyn_toml_file_at(directory: String) {
 
 pub fn find_solidity_dir(root: &str) -> String {
     let path = PathBuf::from_str(root).expect("invalid path root");
-    let indicators = ["hardhat.config.ts", "hardhat.config.js", "foundry.toml"];
+    let indicators = ["hardhat.config.ts", "hardhat.config.js", "foundry.toml", "soldeer.toml"];
 
     // Check for indicators in the same directory level
     for indicator in indicators {
