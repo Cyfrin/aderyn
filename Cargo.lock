@@ -23,7 +23,7 @@ dependencies = [
 
 [[package]]
 name = "aderyn"
-version = "0.5.6"
+version = "0.5.7"
 dependencies = [
  "aderyn_driver",
  "clap",
@@ -43,7 +43,7 @@ dependencies = [
 
 [[package]]
 name = "aderyn_core"
-version = "0.5.6"
+version = "0.5.7"
 dependencies = [
  "derive_more 0.99.19",
  "dunce",
@@ -68,7 +68,7 @@ dependencies = [
 
 [[package]]
 name = "aderyn_driver"
-version = "0.5.6"
+version = "0.5.7"
 dependencies = [
  "aderyn_core",
  "criterion",
