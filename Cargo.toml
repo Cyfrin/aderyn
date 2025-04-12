@@ -41,6 +41,7 @@ toml = "0.8.13"
 tower-lsp = "0.20.0"
 dunce = "=1.0.4"
 petgraph = "0"
+crossbeam-channel = "0.5.15"
 
 # Uncomment in Production (just before merging to dev)
 # Cyfrin managed github repository
