@@ -129,7 +129,6 @@ fn find_all_public_state_variables_names_for_contract(
 
 #[cfg(test)]
 mod public_variable_read_in_external_context_detector_tests {
-    use serial_test::serial;
 
     use crate::detect::{
         detector::IssueDetector,
@@ -137,7 +136,7 @@ mod public_variable_read_in_external_context_detector_tests {
     };
 
     #[test]
-    #[serial]
+
     fn test_public_variable_read_in_external_context() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/PublicVariableReadInExternalContext.sol",

@@ -85,12 +85,11 @@ impl IssueDetector for IncorrectUseOfCaretOperatorDetector {
 
 #[cfg(test)]
 mod incorrect_use_of_caret_operator_tests {
-    use serial_test::serial;
 
     use crate::detect::{detector::IssueDetector, high::IncorrectUseOfCaretOperatorDetector};
 
     #[test]
-    #[serial]
+
     fn test_incorrect_use_of_operator_detector() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/IncorrectCaretOperator.sol",

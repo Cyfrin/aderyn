@@ -89,14 +89,13 @@ impl CallGraphVisitor for OutOfOrderRetryableTracker {
 
 #[cfg(test)]
 mod out_of_order_retryable_tests {
-    use serial_test::serial;
 
     use crate::detect::{
         detector::IssueDetector, high::out_of_order_retryable::OutOfOrderRetryableDetector,
     };
 
     #[test]
-    #[serial]
+
     fn test_out_of_order_retryable() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/OutOfOrderRetryable.sol",

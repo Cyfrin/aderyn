@@ -1,8 +1,8 @@
 use std::path::PathBuf;
 
 use aderyn::{
-    aderyn_is_currently_running_newest_version, create_aderyn_toml_file_at, initialize_niceties,
-    lsp::spin_up_language_server, print_all_detectors_view, print_detail_view,
+    aderyn_is_currently_running_newest_version, birdsong, create_aderyn_toml_file_at,
+    initialize_niceties, lsp::spin_up_language_server, print_all_detectors_view, print_detail_view,
 };
 use aderyn_driver::driver::{self, kick_off_report_creation, Args, CliArgsOutputConfig};
 
@@ -169,8 +169,8 @@ fn main() {
         }
     }
 
-    // Check for updates
-    if !cmd_args.skip_update_check {
+    // Check for updates on non lsp mode
+    if !cmd_args.lsp && !cmd_args.skip_update_check {
         if let Some(yes) = aderyn_is_currently_running_newest_version() {
             if !yes {
                 println!();
@@ -178,5 +178,10 @@ fn main() {
                 println!("NOTE: You can skip this check by passing --skip-update-check flag");
             }
         }
+    }
+
+    // Ask open source community for stars
+    if !cmd_args.lsp {
+        birdsong::print_last_words();
     }
 }

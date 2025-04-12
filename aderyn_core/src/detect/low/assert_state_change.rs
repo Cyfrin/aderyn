@@ -102,14 +102,13 @@ mod assert_state_change_tracker {
 
 #[cfg(test)]
 mod asert_state_changes_tests {
-    use serial_test::serial;
 
     use crate::detect::{
         detector::IssueDetector, low::assert_state_change::AssertStateChangeDetector,
     };
 
     #[test]
-    #[serial]
+
     fn test_assert_state_change() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/AssertStateChange.sol",

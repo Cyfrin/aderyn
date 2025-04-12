@@ -2,6 +2,7 @@ pub mod json;
 pub mod lsp;
 pub mod markdown;
 pub mod sarif;
+pub mod tables;
 pub mod util;
 
 use std::{

@@ -1,6 +1,6 @@
 use std::{collections::BTreeMap, error::Error};
 
-use crate::{
+use aderyn_core::{
     ast::NodeID,
     capture,
     context::{browser::PeekOver, workspace_context::WorkspaceContext},
@@ -53,17 +53,14 @@ impl IssueDetector for PeekOverDemonstrator {
 
 #[cfg(test)]
 mod peek_over_demonstrator_tests {
-    use crate::detect::{detector::IssueDetector, experimental::peek_over::PeekOverDemonstrator};
+    use aderyn_core::detect::test_utils::load_solidity_source_unit;
 
-    use serial_test::serial;
+    use super::*;
 
     #[test]
-    #[serial]
     fn test_peek_over() {
-        let context = crate::detect::test_utils::load_solidity_source_unit(
-            "../tests/contract-playground/src/StorageConditionals.sol",
-        );
-
+        let context =
+            load_solidity_source_unit("../tests/contract-playground/src/StorageConditionals.sol");
         let mut detector = PeekOverDemonstrator::default();
         let _ = detector.detect(&context).unwrap();
 

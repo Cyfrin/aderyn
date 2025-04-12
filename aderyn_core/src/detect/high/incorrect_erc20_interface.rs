@@ -186,14 +186,13 @@ mod erc_matching_function_signature_helper {
 
 #[cfg(test)]
 mod incorrect_erc20_tests {
-    use serial_test::serial;
 
     use crate::detect::{
         detector::IssueDetector, high::incorrect_erc20_interface::IncorrectERC20InterfaceDetector,
     };
 
     #[test]
-    #[serial]
+
     fn test_incorrect_erc20_functions() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/IncorrectERC20.sol",

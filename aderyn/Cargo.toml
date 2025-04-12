@@ -1,6 +1,6 @@
 [package]
 name = "aderyn"
-version = "0.5.6"
+version = "0.5.7"
 edition = "2021"
 authors = ["Cyfrin <aderyn@cyfrin.io>"]
 description = "Rust based Solidity AST analyzer"
@@ -12,6 +12,7 @@ homepage = "https://github.com/cyfrin/aderyn"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+indoc = { workspace = true }
 aderyn_driver = { workspace = true }
 clap = { workspace = true, features = ["derive"] }
 reqwest = { workspace = true, features = ["blocking", "json", "rustls-tls"] }
@@ -20,6 +21,7 @@ serde = { workspace = true, features = ["derive"] }
 serde_json = { workspace = true, features = ["preserve_order"] }
 strum = { workspace = true, features = ["derive"] }
 notify-debouncer-full = { workspace = true }
+crossbeam-channel = { workspace = true}
 termcolor = { workspace = true }
 tokio = { workspace = true, features = ["full"] }
 tower-lsp = { workspace = true }

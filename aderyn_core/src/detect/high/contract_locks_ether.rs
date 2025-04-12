@@ -149,14 +149,13 @@ mod contract_eth_helper {
 
 #[cfg(test)]
 mod contract_locks_ether_detector_tests {
-    use serial_test::serial;
 
     use crate::detect::{
         detector::IssueDetector, high::contract_locks_ether::ContractLocksEtherDetector,
     };
 
     #[test]
-    #[serial]
+
     fn test_contract_locks_ether() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/ContractLocksEther.sol",

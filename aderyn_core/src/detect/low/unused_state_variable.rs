@@ -97,14 +97,13 @@ impl IssueDetector for UnusedStateVariablesDetector {
 
 #[cfg(test)]
 mod unused_detector_tests {
-    use serial_test::serial;
 
     use crate::detect::{
         detector::IssueDetector, low::unused_state_variable::UnusedStateVariablesDetector,
     };
 
     #[test]
-    #[serial]
+
     fn test_unused_state_variables() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/UnusedStateVariables.sol",

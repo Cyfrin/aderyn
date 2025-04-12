@@ -9,11 +9,11 @@ members = [
 ]
 
 [workspace.dependencies]
-aderyn_core = { version = "0.5.6", path = "aderyn_core" }
-aderyn_driver = { version = "0.5.6", path = "aderyn_driver" }
+aderyn_core = { version = "0.5.7", path = "aderyn_core" }
+aderyn_driver = { version = "0.5.7", path = "aderyn_driver" }
+indoc = "2"
 clap = "4.4.6"
 criterion = "0.5.1"
-crossbeam-channel = "0.5.9"
 derive_more = "0.99.18"
 eyre = "0.6.12"
 field_access = "0.1.8"
@@ -41,6 +41,7 @@ toml = "0.8.13"
 tower-lsp = "0.20.0"
 dunce = "=1.0.4"
 petgraph = "0"
+crossbeam-channel = "0.5.15"
 
 # Uncomment in Production (just before merging to dev)
 # Cyfrin managed github repository

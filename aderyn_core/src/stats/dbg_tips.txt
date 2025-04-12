@@ -1,0 +1,55 @@
+for group in &token_insight_groups {
+   if group.token_type == HighLevelType::Code {
+       println!(
+           "{}-{} Size:{} Contrib:{}",
+           group.start_line,
+           group.end_line,
+           group.token_insights.len(),
+           group.total_contribution(),
+       );
+       if group.total_contribution() == 37 {
+           for i in &group.token_insights {
+               println!(
+                   "{:?} - {:?} - {} - {} - {}",
+                   i.token_type,
+                   i.code_lines.info_lines,
+                   i.starts_with_newline,
+                   i.start_line,
+                   i.end_line
+               );
+           }
+       }
+   }
+}
+
+
+if value.token_type != TokenType::MultilineComment
+    && value.token_type != TokenType::SinglelineComment
+    && insight.start_line == 3
+    || insight.end_line == 3
+{
+    print!(
+        "{:?}, {}-{}\n",
+        value.token_type.clone(),
+        value.start_line,
+        value.end_line
+    );
+    println!("{}", value.content.clone());
+
+    println!(
+        "Lines {}/{}/{}\n----------------------",
+        insight.code_lines.info_lines,
+        insight.code_lines.actual_first_line,
+        insight.code_lines.last_line_has_code
+    );
+}
+
+starts in the same line, overcounted !
+println!(
+    "cutting for {} {} {} {} {}",
+    curr.start_line,
+    prev.end_line,
+    curr.code_lines.info_lines,
+    prev.code_lines.info_lines,
+    prev.code_lines.actual_first_line,
+);
