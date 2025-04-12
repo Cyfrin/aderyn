@@ -1,7 +1,7 @@
 use aderyn_driver::detector::{get_all_detectors_names, get_issue_detector_by_name, IssueSeverity};
 use semver::Version;
 use serde_json::Value;
-use std::{fs::File, io::Write, path::PathBuf, str::FromStr};
+use std::{cmp::Ordering, fs::File, io::Write, path::PathBuf, str::FromStr};
 use strum::IntoEnumIterator;
 
 pub mod birdsong;
@@ -34,10 +34,18 @@ pub fn find_solidity_dir(root: &str) -> String {
 
     // Check for indicators one level below
     for indicator in indicators {
-        for node in std::fs::read_dir(path.clone()).expect("reading path failed") {
-            let Ok(node) = node else {
-                continue;
-            };
+        let mut nodes = std::fs::read_dir(path.clone())
+            .expect("reading path failed")
+            .flatten()
+            .collect::<Vec<_>>();
+        nodes.sort_by(|a, _| {
+            if a.file_name().to_string_lossy().contains("contract") {
+                Ordering::Less
+            } else {
+                Ordering::Greater
+            }
+        });
+        for node in nodes {
             if !node.path().is_dir() {
                 continue;
             }
