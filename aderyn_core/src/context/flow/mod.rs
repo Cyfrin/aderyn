@@ -340,8 +340,7 @@ impl Cfg {
         for continue_statement in continue_statements {
             let mut visited = Default::default();
             let dest = find_jump_dest(self, continue_statement, &mut visited).unwrap_or_default();
-            proposed_calibrations
-                .push(Calibration::ContinueShouldFlowTo(continue_statement, dest));
+            proposed_calibrations.push(Calibration::ContinueShouldFlowTo(continue_statement, dest));
         }
 
         for break_statement in break_statements {

@@ -164,9 +164,7 @@ impl Cfg {
                 Calibration::ContinueShouldFlowTo(c, JumpDestination::DoWhile(do_while_node)) => {
                     (c, self.find_condition_node(do_while_node))
                 }
-                Calibration::ContinueShouldFlowTo(c, JumpDestination::DefaultSite) => {
-                    (c, end_node)
-                }
+                Calibration::ContinueShouldFlowTo(c, JumpDestination::DefaultSite) => (c, end_node),
                 Calibration::BreakShouldFlowTo(b, JumpDestination::For(for_node)) => {
                     (b, self.find_ending_counter_part(for_node))
                 }
