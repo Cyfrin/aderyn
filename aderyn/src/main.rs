@@ -142,7 +142,7 @@ fn main() {
                         let encoded_question = urlencoding::encode(&question);
                         format!(
                             "https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli/readme?q={}&ask=true",
-                            encoded_question.to_string()
+                            encoded_question
                         )
                     }
                     None => "https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli".to_string(),
