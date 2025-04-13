@@ -9,20 +9,20 @@ pub fn blesspr() -> anyhow::Result<()> {
     let cmd = cmd!(sh, "cargo build");
     cmd.run()?;
 
-    // Fix format
-    let cmd = cmd!(sh, "cargo fixfmt");
-    cmd.run()?;
-
-    // Check fixed format
-    let cmd = cmd!(sh, "cargo fmt --all --check");
-    cmd.run()?;
-
     // Fix clippy
     let cmd = cmd!(sh, "cargo fixclippy");
     cmd.run()?;
 
     // Check clippy
     let cmd = cmd!(sh, "cargo clippy").arg("--").arg("-D").arg("warnings");
+    cmd.run()?;
+
+    // Fix format
+    let cmd = cmd!(sh, "cargo fixfmt");
+    cmd.run()?;
+
+    // Check fixed format
+    let cmd = cmd!(sh, "cargo fmt --all --check");
     cmd.run()?;
 
     // Create reportgen
