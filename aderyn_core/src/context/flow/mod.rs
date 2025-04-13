@@ -10,7 +10,7 @@ pub mod voids;
 
 use crate::{
     ast::*,
-    context::flow::utils::{discover_jump_sources, Callibration},
+    context::flow::utils::{discover_jump_sources, Calibration},
 };
 
 pub use kind::CfgNodeKind;
@@ -85,7 +85,7 @@ pub struct CfgNode {
     /// Node ID
     pub id: CfgNodeId,
     /// Node descriptor
-    pub nd: CfgNodeDescriptor,
+    pub and: CfgNodeDescriptor,
 }
 
 /// Control fow graph
@@ -134,8 +134,8 @@ impl Cfg {
     pub fn total_edges(&self) -> usize {
         self.adj_list.values().map(|conn| conn.len()).sum()
     }
-    fn add_raw_node(&mut self, id: CfgNodeId, nd: CfgNodeDescriptor) {
-        let cfg_node = CfgNode { id, nd };
+    fn add_raw_node(&mut self, id: CfgNodeId, and: CfgNodeDescriptor) {
+        let cfg_node = CfgNode { id, and };
         self.nodes.insert(id, cfg_node);
     }
     fn add_raw_directed_edge(&mut self, from: CfgNodeId, to: CfgNodeId) {
@@ -186,7 +186,7 @@ impl Cfg {
 impl Cfg {
     /// Assigns a unique ID to the given node and adds it to the CFG
     #[must_use]
-    pub fn add_node(&mut self, nd: CfgNodeDescriptor) -> CfgNodeId {
+    pub fn add_node(&mut self, and: CfgNodeDescriptor) -> CfgNodeId {
         // Grab the currently available id
         let node_id = self.next_available_id;
 
@@ -197,15 +197,15 @@ impl Cfg {
         assert!(!self.nodes.contains_key(&node_id));
 
         // Queue the node to be reduced if it is reducible
-        if nd.kind() == CfgNodeKind::Reducible {
+        if and.kind() == CfgNodeKind::Reducible {
             self.reduction_queue.push_back(node_id);
         }
 
         // Add the node to the CFG
-        self.add_raw_node(node_id, nd);
+        self.add_raw_node(node_id, and);
 
         //Maintain map from ast to cfg
-        //if let Some(ast_id) = nd.reflect() {
+        //if let Some(ast_id) = and.reflect() {
         //    self.ast_to_cfg.insert(ast_id, node_id);
         //}
 
@@ -251,7 +251,7 @@ impl Cfg {
         }
 
         // Step 5: Get the (start s, end e) of the reduced cfg
-        let (start_id, end_id) = match cfg_node.nd {
+        let (start_id, end_id) = match cfg_node.and {
             // Voids and Primitives
             CfgNodeDescriptor::Start(_)
             | CfgNodeDescriptor::End(_)
@@ -291,7 +291,7 @@ impl Cfg {
             self.add_flow_edge(end_id, *succ);
         }
 
-        // Step 8: Remove existing connections with redution_candidate
+        // Step 8: Remove existing connections with reduction_candidate
         self.remove_raw_edges_involving(reduction_candidate);
     }
 
@@ -312,7 +312,7 @@ impl Cfg {
     ///
     /// * end_node - Return statements flow to here. It also serves as a fallback for break and
     ///   continue statements if parent loop is not found
-    pub fn callibrate_jump_statements_in_body(
+    pub fn calibrate_jump_statements_in_body(
         &mut self,
         start_node: CfgNodeId,
         end_node: CfgNodeId,
@@ -334,28 +334,27 @@ impl Cfg {
             &mut return_statements,
         );
 
-        // Proposed Callibrations
-        let mut proposed_callibrations = vec![];
+        // Proposed Calibrations
+        let mut proposed_calibrations = vec![];
 
         for continue_statement in continue_statements {
             let mut visited = Default::default();
             let dest = find_jump_dest(self, continue_statement, &mut visited).unwrap_or_default();
-            proposed_callibrations
-                .push(Callibration::ContinueShouldFlowTo(continue_statement, dest));
+            proposed_calibrations.push(Calibration::ContinueShouldFlowTo(continue_statement, dest));
         }
 
         for break_statement in break_statements {
             let mut visited = Default::default();
             let dest = find_jump_dest(self, break_statement, &mut visited).unwrap_or_default();
-            proposed_callibrations.push(Callibration::BreakShouldFlowTo(break_statement, dest));
+            proposed_calibrations.push(Calibration::BreakShouldFlowTo(break_statement, dest));
         }
 
         for return_statement in return_statements {
-            proposed_callibrations.push(Callibration::ReturnShouldFlowToEndNode(return_statement));
+            proposed_calibrations.push(Calibration::ReturnShouldFlowToEndNode(return_statement));
         }
 
         // End node now comes into play
-        self.callibrate(proposed_callibrations, end_node);
+        self.calibrate(proposed_calibrations, end_node);
     }
 
     pub fn find_ending_counter_part(&self, start_node_id: CfgNodeId) -> CfgNodeId {
@@ -398,7 +397,7 @@ impl Cfg {
         // Add the actual function body
         let block = cfg.add_block_node(function_body_block);
 
-        // Connect tht flow edges
+        // Connect the flow edges
         cfg.add_flow_edge(start, block);
         cfg.add_flow_edge(block, end);
 
@@ -407,8 +406,8 @@ impl Cfg {
             cfg.reduce(context, reduction_candidate);
         }
 
-        // Callibration step (Standard thing to do after you reduce your CFG)
-        cfg.callibrate_jump_statements_in_body(start, end);
+        // Calibration step (Standard thing to do after you reduce your CFG)
+        cfg.calibrate_jump_statements_in_body(start, end);
 
         // Return the CFG
         Some((cfg, start, end))
@@ -433,7 +432,7 @@ impl Cfg {
         // Add the actual function body
         let block = cfg.add_block_node(modifier_body_block);
 
-        // Connect tht flow edges
+        // Connect the flow edges
         cfg.add_flow_edge(start, block);
         cfg.add_flow_edge(block, end);
 
@@ -442,8 +441,8 @@ impl Cfg {
             cfg.reduce(context, reduction_candidate);
         }
 
-        // Callibration step (Standard thing to do after you reduce your CFG)
-        cfg.callibrate_jump_statements_in_body(start, end);
+        // Calibration step (Standard thing to do after you reduce your CFG)
+        cfg.calibrate_jump_statements_in_body(start, end);
 
         // Return the CFG
         Some((cfg, start, end))

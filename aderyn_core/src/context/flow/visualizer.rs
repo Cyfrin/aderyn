@@ -30,7 +30,7 @@ pub mod control_flow_tests {
         let mut node_indices = HashMap::new();
 
         for (node, value) in cfg.nodes.clone() {
-            let node_index = graph.add_node(value.nd.display(context).into());
+            let node_index = graph.add_node(value.and.display(context).into());
             node_indices.insert(node, node_index);
         }
 
