@@ -13,75 +13,75 @@ use clap::{ArgGroup, Parser, Subcommand};
 pub struct CommandLineArgs {
     /// Commands to initialize a config file for aderyn [BETA] and other utils
     #[clap(subcommand)]
-    subcommand: Option<Command>,
+    subcommand: Option<MainSubcommand>,
 
-    /// Foundry or Hardhat project root directory (or path to single solidity file)
+    /// Solidity project root directory
     #[arg(default_value = ".")]
     root: String,
 
-    /// Path to the source contracts.
-    /// Used to avoid analyzing libraries, tests or scripts and focus on the contracts.
+    /// Path to the contracts source directory (relative to the root).
     ///
-    /// In Foundry projects, it's auto-captured by foundry.toml and it's usually
-    /// not necessary to provide it.
-    ///
-    /// In a Hardhat project:
-    ///
-    ///    --src=contracts/
+    /// Auto detected in most cases.
     #[clap(short, long, use_value_delimiter = true)]
     src: Option<String>,
 
     /// List of path strings to include, delimited by comma (no spaces).
     ///
     /// It allows to include only one or more specific contracts in the analysis:
-    ///     aderyn -i src/MyContract.sol
-    ///     aderyn -i src/MyContract.sol,src/MyOtherContract.sol
+    ///     -i src/MyContract.sol
+    ///     -i src/MyContract.sol,src/MyOtherContract.sol
     #[clap(short = 'i', long, use_value_delimiter = true)]
     path_includes: Option<Vec<String>>,
 
     /// List of path strings to exclude, delimited by comma (no spaces).
     ///
     /// It allows to exclude one or more specific contracts from the analysis:
-    ///     aderyn -x src/MyContract.sol
-    ///     aderyn -x src/MyContract.sol,src/MyOtherContract.sol
+    ///     -x src/MyContract.sol
+    ///     -x src/MyContract.sol,src/MyOtherContract.sol
     #[clap(short = 'x', long, use_value_delimiter = true)]
     path_excludes: Option<Vec<String>>,
 
     /// Desired file path for the final report (will overwrite existing one)
+    ///
+    /// Output file extension can be .json/.md/.sarif
+    ///
+    /// JSON
+    /// Markdown
+    /// Sarif
     #[arg(short, long, default_value = "report.md")]
     output: String,
 
-    /// [BETA] Start Aderyn's LSP server on stdout
+    /// Start Aderyn's LSP server on stdout. (Must be accompanied with `--stdout`)
     #[arg(short, long, group = "stdout_dependent")]
     lsp: bool,
-
-    /// Do not include code snippets in the report (reduces report size in large repos)
-    #[arg(long)]
-    no_snippets: bool,
 
     /// Only use the high detectors
     #[arg(long)]
     highs_only: bool,
 
-    /// Print the output to stdout instead of a file
-    #[arg(long, name = "stdout")]
+    /// Serialize the reports to stdout, don't write to files.
+    #[arg(long, name = "stdout", hide = true)]
     stdout: bool,
 
-    /// Skip cloc analysis (line numbers, etc.)
-    #[arg(long)]
+    /// Skip couting number of lines of code.
+    #[arg(long, hide = true)]
     skip_cloc: bool,
 
-    /// Skip checking for new versions of Aderyn
+    /// After generating report, skip checking if a new version of Aderyn is available.
     #[arg(long)]
     skip_update_check: bool,
 
     /// Run in Auditor mode, which only outputs manual audit helpers
-    #[arg(long)]
+    #[arg(long, hide = true)]
     auditor_mode: bool,
+
+    /// Do not include code snippets in the report (reduces markdown report size in large repos)
+    #[arg(long, hide = true)]
+    no_snippets: bool,
 }
 
 #[derive(Debug, Subcommand)]
-enum Command {
+enum MainSubcommand {
     /// Browse detector registry
     Registry {
         /// all    - View all available detectors
@@ -95,6 +95,10 @@ enum Command {
         /// Optional path inside root where aderyn.toml will be created
         path: Option<String>,
     },
+    Docs {
+        /// Ask question
+        question: Option<String>,
+    },
 }
 
 fn main() {
@@ -103,14 +107,14 @@ fn main() {
 
     if let Some(subcommand) = cmd_args.subcommand {
         match subcommand {
-            Command::Registry { detector } => {
+            MainSubcommand::Registry { detector } => {
                 if detector == "all" {
                     print_all_detectors_view();
                 } else {
                     print_detail_view(&detector);
                 }
             }
-            Command::Init { path } => {
+            MainSubcommand::Init { path } => {
                 let creation_path = match path {
                     Some(optional_path) => {
                         let mut target_dir = PathBuf::from(&cmd_args.root);
@@ -131,6 +135,23 @@ fn main() {
 
                 // Create aderyn.toml at the target directory
                 create_aderyn_toml_file_at(creation_path);
+            }
+            MainSubcommand::Docs { question } => {
+                let url = match question {
+                    Some(question) => {
+                        let encoded_question = urlencoding::encode(&question);
+                        format!(
+                            "https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli/readme?q={}&ask=true",
+                            encoded_question.to_string()
+                        )
+                    }
+                    None => "https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli".to_string(),
+                };
+
+                // First try opening the URL in browser, if it fails just print to stdout
+                if webbrowser::open(&url).is_err() {
+                    println!("Visit {}", url);
+                };
             }
         }
 
