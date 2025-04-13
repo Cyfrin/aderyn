@@ -63,7 +63,7 @@ pub struct CommandLineArgs {
     #[arg(long, name = "stdout", hide = true)]
     stdout: bool,
 
-    /// Skip couting number of lines of code.
+    /// Skip counting number of lines of code.
     #[arg(long, hide = true)]
     skip_cloc: bool,
 
