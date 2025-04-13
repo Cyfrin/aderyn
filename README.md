@@ -137,6 +137,7 @@ This project exists thanks to all the people who [contribute](/CONTRIBUTING.md).
 - Foundry Compilers for backend AST generation [foundry-compilers](https://github.com/foundry-rs/compilers)
 - Original detectors based on [4naly3er](https://github.com/Picodes/4naly3er) detectors.
 - Shoutout to the original king of static analysis [slither](https://github.com/crytic/slither).
+- Solidity AST Generator [solidity-ast-rs](https://github.com/Cyfrin/solidity-ast-rs). 
 
 [contributors-shield]: https://img.shields.io/github/contributors/cyfrin/aderyn
 [contributors-url]: https://github.com/cyfrin/aderyn/graphs/contributors
