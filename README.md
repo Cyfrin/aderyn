@@ -103,6 +103,8 @@ cd path/to/solidity/project/root
 aderyn
 ```
 
+This generates a [report.md](https://github.com/Cyfrin/aderyn/blob/dev/reports/report.md)
+
 See examples using more CLI options [here](https://cyfrin.gitbook.io/cyfrin-docs/cli-options)
 
 ## VS Code extension
