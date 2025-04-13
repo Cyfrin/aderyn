@@ -95,6 +95,8 @@ enum MainSubcommand {
         /// Optional path inside root where aderyn.toml will be created
         path: Option<String>,
     },
+    /// Browse Aderyn documentation
+    /// Chat with AI for help - aderyn docs "how to exclude files from scan?"
     Docs {
         /// Ask question
         question: Option<String>,
