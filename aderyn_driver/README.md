@@ -25,12 +25,8 @@
 aderyn_driver drives the process of running aderyn over a codebase, utilizing [aderyn_core](../aderyn_core).
 
 Order of operation:
-1. Framework detection.
-   * Aderyn uses the compiled AST of smart contracts to analyze them.
-   * Foundry and Hardhat projects are supported, and the ASTs are loaded depending on which one is detected.
+1. Configuration
+   * Aderyn detects the source folder containing the contracts as well as the remappings to enable scan.
 2. Build the `WorkspaceContext`.
-   * Upon loading the AST, context is built up within the `WorkspaceContext` that detectors can access.
-3. Run Detectors on the `WorkspaceContext`.
-   * Each detector is run on the context and issues are stored in each detector.
-4. Report printed.
-   * Each detector is passed to the report printer, which prints each found issue in the report.
+   * Uses `solidity-ast-rs` to get the ASTs of the solidity files and then createss a Workspace Context out of the same.
+4. Calls `aderyn_core::detect_issues` and then serializes the report based on output file format
