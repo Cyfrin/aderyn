@@ -43,7 +43,7 @@ fn wait_for_release_completion(sh: &Shell) -> anyhow::Result<()> {
 
     if !actions_completed {
         println!(
-            "A relase or a release plan is in progress ... [next poll: {}s]",
+            "A release or a release plan is in progress ... [next poll: {}s]",
             poll_time.as_secs()
         );
         std::thread::sleep(Duration::from_secs(12));
@@ -116,12 +116,12 @@ fn perform_prechecks(sh: &Shell) -> anyhow::Result<()> {
     }
 
     // Error out if there are untracked files/staging changes
-    let uncommited_stuff = {
+    let uncommitted_stuff = {
         let cmd = cmd!(sh, "git status --porcelain");
         let output = cmd.output()?;
         String::from_utf8(output.stdout)?
     };
-    if !uncommited_stuff.is_empty() {
+    if !uncommitted_stuff.is_empty() {
         eprintln!("Please clear your staging area and retry!");
         std::process::exit(1);
     }
