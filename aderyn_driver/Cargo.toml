@@ -1,6 +1,6 @@
 [package]
 name = "aderyn_driver"
-version = "0.5.7"
+version = "0.5.8"
 edition = "2021"
 authors = ["Cyfrin <aderyn@cyfrin.io>"]
 description = "Rust based Solidity AST analyzer driver"
