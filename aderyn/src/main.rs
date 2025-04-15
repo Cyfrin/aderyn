@@ -27,8 +27,8 @@ pub struct CommandLineArgs {
     /// List of path fragments to include, delimited by comma (no spaces)
     /// By default, it is auto detected.
     ///
-    /// Examples:
     /// Use this to include only specified source files in the analysis:
+    /// Examples:
     ///     -i src/MyContract.sol
     ///     -i src/MyContract.sol,src/MyOtherContract.sol
     #[clap(short = 'i', long, use_value_delimiter = true, verbatim_doc_comment)]
