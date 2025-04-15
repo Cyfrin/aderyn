@@ -91,7 +91,7 @@ enum MainSubcommand {
         #[arg(default_value = "all", verbatim_doc_comment)]
         detector: String,
     },
-    /// Initialize aderyn.toml in the root directory or in an optional subdirectory
+    /// Initializes aderyn.toml. Required when solidity project root is not the workspace root
     Init {
         /// Optional path inside root where aderyn.toml will be created
         path: Option<String>,
