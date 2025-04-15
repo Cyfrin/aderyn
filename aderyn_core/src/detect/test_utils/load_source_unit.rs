@@ -129,7 +129,7 @@ fn absorb_ast_content_into_context(
     // Set the source
     source_unit.source = Some(content.content.to_string());
 
-    // Adjust the asbolute filepath to be relative
+    // Adjust the absolute filepath to be relative
     let filepath = source_unit.absolute_path.as_ref().unwrap();
     source_unit.absolute_path = Some(filepath.to_string());
 

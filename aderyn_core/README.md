@@ -27,9 +27,8 @@ aderyn_core is the backend infrastructure for Aderyn.
 ```
 src/
 ├─ ast/             // Solidity AST Structs
-├─ context/         // Solidity project context to be analyzed
+├─ context/         // Program analysis tools
 ├─ detect/          // Where Detector specifications and logic live
-├─ framework/       // Foundry/Hardhat detection
-├─ fscloc/          // Solidity file stats
+├─ stats/           // Solidity file stats
 ├─ visitor/         // AST visitors
 ```
