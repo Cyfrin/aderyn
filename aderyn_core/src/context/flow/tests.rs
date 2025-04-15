@@ -27,7 +27,7 @@ mod control_flow_tests {
         }
     }
 
-    // Accept block (Pre callibration checks)
+    // Accept block (Pre calibration checks)
     #[test]
 
     fn simple_program_function1() {
@@ -234,7 +234,7 @@ mod control_flow_tests {
         assert_eq!(cfg.nodes.len(), 9);
     }
 
-    // Accept-Function-Body (Post callibration checks)
+    // Accept-Function-Body (Post calibration checks)
 
     #[test]
 

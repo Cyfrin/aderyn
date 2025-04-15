@@ -174,7 +174,7 @@ fn all_paths_have_revert_or_placeholder(
 
     let final_answer = answers.entry(start).or_default();
 
-    // '0' becauase we start from having nothing
+    // '0' because we start from having nothing
     final_answer[0]
 }
 

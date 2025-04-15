@@ -1,7 +1,7 @@
 <p align="center">
     <br />
     <a href="https://cyfrin.io/">
-        <img src=".github/images/aderyn_logo.png" width="400" alt=""/></a>
+        <img src="https://github.com/Cyfrin/aderyn/blob/dev/.github/images/aderyn_logo.png" width="400" alt=""/></a>
     <br />
 </p>
 <p align="center"><strong>A powerful Solidity static analyzer that takes a bird's eye view over your smart contracts.
@@ -9,14 +9,13 @@
 <p align="center">
     <br />
     <a href="https://cyfrin.io/">
-        <img src=".github/images/poweredbycyfrinblue.png" width="145" alt=""/></a>
+        <img src="https://github.com/Cyfrin/aderyn/blob/dev/.github/images/poweredbycyfrinblue.png" width="145" alt=""/></a>
     <br />
 </p>
 
 <p align="center">
 <a href="https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli/readme">Docs</a>
-<a href="https://discord.gg/cyfrin">Get support</a>
-<a href="https://cyfrin.io">Website</a>
+<a href="https://discord.gg/cyfrin">Discord</a>
 <a href="https://twitter.com/cyfrinaudits">Twitter</a>
 <p>
 
@@ -35,10 +34,6 @@
 
 **Aderyn is an open-source public good developer tool.** It is a Rust-based solidity smart contract static analyzer designed to help protocol engineers and security researchers find vulnerabilities in Solidity code bases.
 
-Thanks to its collection of static vulnerability detectors, running Cyfrin Aderyn on your Solidity codebase will **highlight potential vulnerabilities**, drastically reducing the potential for unknown issues in your Solidity code and giving you the time to focus on more complex problems.
-
-Built using **Rust**, Aderyn integrates seamlessly into small and **enterprise-level development workflows**, offering lighting-fast command-line functionality and a framework to [build custom detectors](https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli/detectors-quickstart) to adapt to your codebase.
-
 You can read the [Cyfrin official documentation](https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli/readme) for an in-depth look at Aderyn's functionalities.
 
 There is also an officially supported [VSCode extension](https://github.com/Cyfrin/vscode-aderyn/) for Aderyn. Download from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=Cyfrin.aderyn&ssr=false#overview) and start identifying vulnerabilities in your Solidity code with ease.  
@@ -48,9 +43,7 @@ There is also an officially supported [VSCode extension](https://github.com/Cyfr
 - Off the shelf support for Foundry projects.
 - Off the shelf support for Hardhat projects. (Sometimes `remappings.txt` maybe required)
 - Configuration file (`adeyrn.toml`) needed to support custom frameworks.
-- Modular [detectors](./aderyn_core/src/detect/)
-- AST Traversal
-- Markdown reports
+- Markdown, JSON and Sarif reports
 
 ## Installation
 
@@ -109,6 +102,8 @@ cd path/to/solidity/project/root
 aderyn
 ```
 
+This generates a [report.md](https://github.com/Cyfrin/aderyn/blob/dev/reports/report.md)
+
 See examples using more CLI options [here](https://cyfrin.gitbook.io/cyfrin-docs/cli-options)
 
 ## VS Code extension
@@ -141,6 +136,7 @@ This project exists thanks to all the people who [contribute](/CONTRIBUTING.md).
 - Foundry Compilers for backend AST generation [foundry-compilers](https://github.com/foundry-rs/compilers)
 - Original detectors based on [4naly3er](https://github.com/Picodes/4naly3er) detectors.
 - Shoutout to the original king of static analysis [slither](https://github.com/crytic/slither).
+- Solidity AST Generator [solidity-ast-rs](https://github.com/Cyfrin/solidity-ast-rs). 
 
 [contributors-shield]: https://img.shields.io/github/contributors/cyfrin/aderyn
 [contributors-url]: https://github.com/cyfrin/aderyn/graphs/contributors

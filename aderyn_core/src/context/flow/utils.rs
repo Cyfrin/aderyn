@@ -141,45 +141,43 @@ impl Default for JumpDestination {
     }
 }
 
-pub enum Callibration {
+pub enum Calibration {
     ContinueShouldFlowTo(CfgNodeId, JumpDestination),
     BreakShouldFlowTo(CfgNodeId, JumpDestination),
     ReturnShouldFlowToEndNode(CfgNodeId),
 }
 
 impl Cfg {
-    pub(crate) fn callibrate(
+    pub(crate) fn calibrate(
         &mut self,
-        proposed_callibrations: Vec<Callibration>,
+        proposed_calibrations: Vec<Calibration>,
         end_node: CfgNodeId,
     ) {
-        for proposed_callibration in proposed_callibrations {
-            let (target, callibrated_dest) = match proposed_callibration {
-                Callibration::ContinueShouldFlowTo(c, JumpDestination::For(for_node)) => {
+        for proposed_calibration in proposed_calibrations {
+            let (target, calibrated_dest) = match proposed_calibration {
+                Calibration::ContinueShouldFlowTo(c, JumpDestination::For(for_node)) => {
                     (c, self.find_loop_expression_node(for_node))
                 }
-                Callibration::ContinueShouldFlowTo(c, JumpDestination::While(while_node)) => {
+                Calibration::ContinueShouldFlowTo(c, JumpDestination::While(while_node)) => {
                     (c, self.find_condition_node(while_node))
                 }
-                Callibration::ContinueShouldFlowTo(c, JumpDestination::DoWhile(do_while_node)) => {
+                Calibration::ContinueShouldFlowTo(c, JumpDestination::DoWhile(do_while_node)) => {
                     (c, self.find_condition_node(do_while_node))
                 }
-                Callibration::ContinueShouldFlowTo(c, JumpDestination::DefaultSite) => {
-                    (c, end_node)
-                }
-                Callibration::BreakShouldFlowTo(b, JumpDestination::For(for_node)) => {
+                Calibration::ContinueShouldFlowTo(c, JumpDestination::DefaultSite) => (c, end_node),
+                Calibration::BreakShouldFlowTo(b, JumpDestination::For(for_node)) => {
                     (b, self.find_ending_counter_part(for_node))
                 }
-                Callibration::BreakShouldFlowTo(b, JumpDestination::While(while_node)) => {
+                Calibration::BreakShouldFlowTo(b, JumpDestination::While(while_node)) => {
                     (b, self.find_ending_counter_part(while_node))
                 }
-                Callibration::BreakShouldFlowTo(b, JumpDestination::DoWhile(do_while_node)) => {
+                Calibration::BreakShouldFlowTo(b, JumpDestination::DoWhile(do_while_node)) => {
                     (b, self.find_ending_counter_part(do_while_node))
                 }
-                Callibration::BreakShouldFlowTo(b, JumpDestination::DefaultSite) => (b, end_node),
-                Callibration::ReturnShouldFlowToEndNode(r) => (r, end_node),
+                Calibration::BreakShouldFlowTo(b, JumpDestination::DefaultSite) => (b, end_node),
+                Calibration::ReturnShouldFlowToEndNode(r) => (r, end_node),
             };
-            self.reset_raw_successors(target, callibrated_dest);
+            self.reset_raw_successors(target, calibrated_dest);
         }
     }
 }
