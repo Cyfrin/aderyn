@@ -11,7 +11,7 @@ use clap::{ArgGroup, Parser, Subcommand};
 #[command(author, version, about, long_about = None)]
 #[command(group(ArgGroup::new("stdout_dependent").requires("stdout")))]
 pub struct CommandLineArgs {
-    /// Commands to initialize a config file for aderyn [BETA] and other utils
+    /// Commands to initialize a config file and docs help
     #[clap(subcommand)]
     subcommand: Option<MainSubcommand>,
 
@@ -19,36 +19,37 @@ pub struct CommandLineArgs {
     #[arg(default_value = ".")]
     root: String,
 
-    /// Path to the contracts source directory (relative to the root).
-    ///
-    /// Auto detected in most cases.
-    #[clap(short, long, use_value_delimiter = true)]
+    /// Path to the contracts source directory (relative to the root)
+    /// By default, it is auto detected in most projects.
+    #[clap(short, long, use_value_delimiter = true, verbatim_doc_comment)]
     src: Option<String>,
 
-    /// List of path strings to include, delimited by comma (no spaces).
+    /// List of path fragments to include, delimited by comma (no spaces)
+    /// By default, it is auto detected.
     ///
-    /// It allows to include only one or more specific contracts in the analysis:
+    /// Examples:
+    /// Use this to include only specified source files in the analysis:
     ///     -i src/MyContract.sol
     ///     -i src/MyContract.sol,src/MyOtherContract.sol
-    #[clap(short = 'i', long, use_value_delimiter = true)]
+    #[clap(short = 'i', long, use_value_delimiter = true, verbatim_doc_comment)]
     path_includes: Option<Vec<String>>,
 
-    /// List of path strings to exclude, delimited by comma (no spaces).
+    /// List of path fragments to exclude, delimited by comma (no spaces)
+    /// By default, it is auto detected.
     ///
-    /// It allows to exclude one or more specific contracts from the analysis:
+    /// Use this to exclude only specified source files in the analysis:
+    /// Examples:
     ///     -x src/MyContract.sol
     ///     -x src/MyContract.sol,src/MyOtherContract.sol
-    #[clap(short = 'x', long, use_value_delimiter = true)]
+    #[clap(short = 'x', long, use_value_delimiter = true, verbatim_doc_comment)]
     path_excludes: Option<Vec<String>>,
 
-    /// Desired file path for the final report (will overwrite existing one)
+    /// Desired file path for the final report
+    /// Output file extension (.json/.md/.sarif) decides the format.
     ///
-    /// Output file extension can be .json/.md/.sarif
-    ///
-    /// JSON
-    /// Markdown
-    /// Sarif
-    #[arg(short, long, default_value = "report.md")]
+    /// NOTE: Allowed formats: JSON, Markdown, Sarif
+    /// NOTE: Overwrites existing file if found in the same path.
+    #[arg(short, long, default_value = "report.md", verbatim_doc_comment)]
     output: String,
 
     /// Start Aderyn's LSP server on stdout. (Must be accompanied with `--stdout`)
@@ -87,7 +88,7 @@ enum MainSubcommand {
         /// all    - View all available detectors
         ///
         /// <name> - Detail view of a single detector
-        #[arg(default_value = "all")]
+        #[arg(default_value = "all", verbatim_doc_comment)]
         detector: String,
     },
     /// Initialize aderyn.toml in the root directory or in an optional subdirectory
