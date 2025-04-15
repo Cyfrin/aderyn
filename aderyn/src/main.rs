@@ -4,12 +4,30 @@ use aderyn::{
     aderyn_is_currently_running_newest_version, birdsong, create_aderyn_toml_file_at,
     initialize_niceties, lsp::spin_up_language_server, print_all_detectors_view, print_detail_view,
 };
-use aderyn_driver::driver::{self, kick_off_report_creation, Args, CliArgsOutputConfig};
-
+use aderyn_driver::driver::{self, kick_off_report_creation, Args};
 use clap::{ArgGroup, Parser, Subcommand};
+
 #[derive(Parser, Debug)]
-#[command(author, version, about, long_about = None)]
+#[command(author, version, verbatim_doc_comment)]
 #[command(group(ArgGroup::new("stdout_dependent").requires("stdout")))]
+/// Rust based Solidity Static analyzer.
+///
+/// Quickstart:
+/// cd my-solidity-project/
+/// aderyn
+///
+/// It outputs report.md if the solidity project is foundry/hardhat/soldeer.
+///
+/// In the case that it's not, it's important to create a config file via the
+/// command `aderyn init` in the workspace root.
+///
+/// For more examples, visit docs: https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli
+/// Also ask questions via command line: aderyn docs "how to configure scan options?"
+///
+/// Help Aderyn stay open source by giving us a star on Github.
+/// Repository: https://github.com/cyfrin/aderyn
+///
+/// Happy coding!
 pub struct CommandLineArgs {
     /// Commands to initialize a config file and docs help
     #[clap(subcommand)]
@@ -168,7 +186,7 @@ fn main() {
             path_excludes: cmd_args.path_excludes,
             path_includes: cmd_args.path_includes,
         },
-        output_config: CliArgsOutputConfig {
+        output_config: driver::CliArgsOutputConfig {
             output: cmd_args.output,
             stdout: cmd_args.stdout,
             no_snippets: cmd_args.no_snippets,
