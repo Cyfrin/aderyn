@@ -41,7 +41,7 @@ There is also an officially supported [VSCode extension](https://github.com/Cyfr
 ## Features
 
 - Off the shelf support for Foundry projects.
-- Off the shelf support for Hardhat projects. (Sometimes `remappings.txt` maybe required)
+- Off the shelf support for Hardhat projects. (Sometimes `remappings.txt` may be required)
 - Configuration file (`adeyrn.toml`) needed to support custom frameworks.
 - Markdown, JSON and Sarif reports
 
@@ -51,9 +51,9 @@ There is also an officially supported [VSCode extension](https://github.com/Cyfr
 
 ### Using Cyfrinup
 
-**Cyfrinup** is the cross platform installation manager for Cyfrin tools.
+**Cyfrinup** is the cross-platform installation manager for Cyfrin tools.
 
-[One time setup](https://github.com/Cyfrin/up).
+[One-time setup](https://github.com/Cyfrin/up).
 
 Run `aderyn --version` to check the installation.
 
@@ -113,7 +113,7 @@ Download from [Visual Studio Marketplace](https://marketplace.visualstudio.com/i
 
 ## Contributing & License
 
-Help us build Aderyn 🦜 Please see our [contribution guidelines](./CONTRIBUTING.md) for in-depth developer environment setup and PR approval process.
+Help us build Aderyn 🦜 Please see our [contribution guidelines](./CONTRIBUTING.md) for an in-depth developer environment setup and PR approval process.
 Aderyn is an open-source software licensed under the [GPL-3.0 License](./LICENSE).
 
 ## Building a custom Aderyn detector
