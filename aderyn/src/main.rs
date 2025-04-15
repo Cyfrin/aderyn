@@ -4,12 +4,13 @@ use aderyn::{
     aderyn_is_currently_running_newest_version, birdsong, create_aderyn_toml_file_at,
     initialize_niceties, lsp::spin_up_language_server, print_all_detectors_view, print_detail_view,
 };
-use aderyn_driver::driver::{self, kick_off_report_creation, Args, CliArgsOutputConfig};
-
+use aderyn_driver::driver::{self, kick_off_report_creation, Args};
 use clap::{ArgGroup, Parser, Subcommand};
+
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 #[command(group(ArgGroup::new("stdout_dependent").requires("stdout")))]
+/// Hello there!
 pub struct CommandLineArgs {
     /// Commands to initialize a config file and docs help
     #[clap(subcommand)]
@@ -168,7 +169,7 @@ fn main() {
             path_excludes: cmd_args.path_excludes,
             path_includes: cmd_args.path_includes,
         },
-        output_config: CliArgsOutputConfig {
+        output_config: driver::CliArgsOutputConfig {
             output: cmd_args.output,
             stdout: cmd_args.stdout,
             no_snippets: cmd_args.no_snippets,
