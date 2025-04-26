@@ -39,8 +39,6 @@ You can read the [Cyfrin official documentation](https://cyfrin.gitbook.io/cyfri
 There is also an officially supported [VSCode extension](https://github.com/Cyfrin/vscode-aderyn/) for Aderyn. Download from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=Cyfrin.aderyn&ssr=false#overview) and start identifying vulnerabilities in your Solidity 
 code with ease.  
 
-You can also read the [`DeepWiki - Aderyn`](https://deepwiki.com/Cyfrin/aderyn), to understand the architecture of this tool.
-
 ## Features
 
 - Off the shelf support for Foundry projects.
