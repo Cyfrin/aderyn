@@ -16,11 +16,6 @@ Read the [README](README.md) and consult the docs for an in-depth project overvi
 
 Cyfrin Aderyn aims to give engineers and smart contract security researchers reliable and open-source Solidity static analysis tools to find and suggest solutions to smart contract vulnerabilities while adapting quickly and efficiently to different codebases.
 
-### Project Architecture 
-
-You can also read the [`DeepWiki - Aderyn`](https://deepwiki.com/Cyfrin/aderyn), to understand the architecture of this tool. This documentation has been generated using AI models.
-
-
 ### Project Status
 
 The project is under active development.
@@ -38,6 +33,10 @@ Contributions are made via Issues and Pull Requests (PRs). A few general guideli
 - If you're running into an error, please give context. Explain what you're trying to do and how to reproduce the error.
 
 ## Getting started
+
+### Overview 
+
+Indexed in [DeepWiki](https://deepwiki.com/Cyfrin/aderyn)
 
 ### Pull Requests
 
