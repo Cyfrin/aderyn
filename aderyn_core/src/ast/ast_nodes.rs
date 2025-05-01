@@ -506,14 +506,15 @@ expr_node!(
 ast_node!(
     #[derive(Hash)]
     struct ModifierDefinition {
-        body: Block,
+        body: Option<Block>,
         base_modifiers: Option<Vec<usize>>,
         overrides: Option<OverrideSpecifier>,
         documentation: Option<Documentation>,
         name: String,
         name_location: Option<String>,
         parameters: ParameterList,
-        r#virtual: Option<bool>,
+        #[serde(default, rename = "virtual")]
+        is_virtual: bool,
         visibility: Visibility,
     }
 );
