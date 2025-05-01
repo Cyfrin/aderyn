@@ -10574,17 +10574,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/AdminContract.sol"
-                },
-                "region": {
-                  "byteLength": 23,
-                  "byteOffset": 457
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/AssertStateChange.sol"
                 },
                 "region": {

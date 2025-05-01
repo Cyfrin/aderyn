@@ -6433,12 +6433,6 @@
             "src_char": "457:23"
           },
           {
-            "contract_path": "src/AdminContract.sol",
-            "line_no": 14,
-            "src": "457:23",
-            "src_char": "457:23"
-          },
-          {
             "contract_path": "src/AssertStateChange.sol",
             "line_no": 8,
             "src": "131:3",
