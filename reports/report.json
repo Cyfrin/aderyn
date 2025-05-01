@@ -1,13 +1,13 @@
 {
   "files_summary": {
-    "total_source_units": 120,
-    "total_sloc": 4455
+    "total_source_units": 121,
+    "total_sloc": 4466
   },
   "files_details": {
     "files_details": [
       {
         "file_path": "src/AbstractContract.sol",
-        "n_sloc": 11
+        "n_sloc": 12
       },
       {
         "file_path": "src/AderynIgnoreCustomDetectors.sol",
@@ -320,6 +320,10 @@
       {
         "file_path": "src/TestERC20.sol",
         "n_sloc": 62
+      },
+      {
+        "file_path": "src/TransientKeyword.sol",
+        "n_sloc": 10
       },
       {
         "file_path": "src/Trump.sol",
@@ -6418,9 +6422,15 @@
         "instances": [
           {
             "contract_path": "src/AbstractContract.sol",
-            "line_no": 6,
-            "src": "146:13",
-            "src_char": "146:13"
+            "line_no": 9,
+            "src": "176:13",
+            "src_char": "176:13"
+          },
+          {
+            "contract_path": "src/AdminContract.sol",
+            "line_no": 14,
+            "src": "457:23",
+            "src_char": "457:23"
           },
           {
             "contract_path": "src/AdminContract.sol",

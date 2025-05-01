@@ -9,12 +9,12 @@ members = [
 ]
 
 [workspace.dependencies]
-aderyn_core = { version = "0.5.8", path = "aderyn_core" }
-aderyn_driver = { version = "0.5.8", path = "aderyn_driver" }
+aderyn_core = { version = "0.5.10", path = "aderyn_core" }
+aderyn_driver = { version = "0.5.10", path = "aderyn_driver" }
 indoc = "2"
 clap = "4.4.6"
 criterion = "0.5.1"
-derive_more = "0.99.18"
+derive_more = "2"
 eyre = "0.6.12"
 field_access = "0.1.8"
 ignore = "0.4.21"
@@ -39,7 +39,7 @@ termcolor = "1.4.1"
 tokio = "1.40.0"
 toml = "0.8.13"
 tower-lsp = "0.20.0"
-dunce = "=1.0.4"
+dunce = "=1.0.5"
 petgraph = "0"
 crossbeam-channel = "0.5.15"
 webbrowser = "1.0.4"
@@ -47,7 +47,7 @@ urlencoding = "2.1.3"
 
 # Uncomment in Production (just before merging to dev)
 # Cyfrin managed github repository
-solidity_ast = { git = "https://github.com/Cyfrin/solidity-ast-rs", tag = "v0.0.1-alpha.beta.4", package = "solidity-ast" }
+solidity_ast = { git = "https://github.com/Cyfrin/solidity-ast-rs", tag = "v0.0.1-alpha.beta.5", package = "solidity-ast" }
 
 # Uncomment when debugging in branch (PR)
 # solidity_ast = { git = "https://github.com/Cyfrin/solidity-ast-rs", branch = "main", package = "solidity-ast" }

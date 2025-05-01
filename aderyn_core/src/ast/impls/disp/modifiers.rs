@@ -15,7 +15,7 @@ impl Display for ModifierDefinition {
             f.write_fmt(format_args!("{} {}", self.parameters, self.visibility))?;
         }
 
-        if let Some(true) = self.r#virtual {
+        if self.is_virtual {
             f.write_fmt(format_args!(" virtual"))?;
         }
 
@@ -23,7 +23,11 @@ impl Display for ModifierDefinition {
             f.write_fmt(format_args!(" {overrides}"))?;
         }
 
-        f.write_fmt(format_args!(" {}", self.body))
+        if let Some(body) = self.body.as_ref() {
+            f.write_fmt(format_args!(" {}", body))?;
+        }
+
+        Ok(())
     }
 }
 

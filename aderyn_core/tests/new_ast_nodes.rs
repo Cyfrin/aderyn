@@ -63,7 +63,6 @@ mod new_ast_nodes_demonstrator_tests {
     use aderyn_core::detect::test_utils::load_solidity_source_unit;
 
     #[test]
-
     fn test_new_ast_nodes() {
         let context = load_solidity_source_unit("../tests/adhoc-sol-files/DemoASTNodes.sol");
 
@@ -74,5 +73,10 @@ mod new_ast_nodes_demonstrator_tests {
         println!("{:?}", instances);
 
         assert!(instances.len() == 4);
+    }
+
+    #[test]
+    fn test_new_ast_nodes_2() {
+        load_solidity_source_unit("../tests/contract-playground/src/TransientKeyword.sol");
     }
 }

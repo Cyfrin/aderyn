@@ -10556,7 +10556,18 @@
                 },
                 "region": {
                   "byteLength": 13,
-                  "byteOffset": 146
+                  "byteOffset": 176
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/AdminContract.sol"
+                },
+                "region": {
+                  "byteLength": 23,
+                  "byteOffset": 457
                 }
               }
             },
@@ -12732,8 +12743,8 @@
           "informationUri": "https://github.com/Cyfrin/aderyn",
           "name": "Aderyn",
           "organization": "Cyfrin",
-          "semanticVersion": "0.5.8",
-          "version": "0.5.8"
+          "semanticVersion": "0.5.10",
+          "version": "0.5.10"
         }
       }
     }
