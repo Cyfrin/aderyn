@@ -548,6 +548,9 @@ fn is_storage_variable_or_storage_pointer(
 ) -> Option<AssigneeType> {
     let node = context.nodes.get(&node_id)?;
     if let ASTNode::VariableDeclaration(variable) = node {
+        if variable.storage_location == StorageLocation::Transient {
+            return None;
+        }
         // Assumption
         // variable.state_variable is true when it's an actual state variable
         // variable.storage_location is StorageLocation::Storage when it's a storage reference
