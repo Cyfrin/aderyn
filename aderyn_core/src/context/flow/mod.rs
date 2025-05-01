@@ -419,7 +419,9 @@ impl Cfg {
         modifier_definition: &ModifierDefinition,
     ) -> Option<(Cfg, CfgNodeId, CfgNodeId)> {
         // Verify that the function has a body
-        let modifier_body_block = &modifier_definition.body;
+        let Some(modifier_body_block) = &modifier_definition.body else {
+            return None;
+        };
 
         // Create an empty Cfg
         let mut cfg = Self::new();

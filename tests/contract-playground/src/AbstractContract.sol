@@ -2,7 +2,10 @@
 pragma solidity 0.8.19;
 
 abstract contract AbstractContract {
+    modifier abc() virtual;
+
     address public admin;
+
     function transferAdmin(address newAdmin) public virtual {
         if (admin != msg.sender) {
             revert("CallerNotAdmin");
