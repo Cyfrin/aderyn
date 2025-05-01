@@ -513,7 +513,8 @@ ast_node!(
         name: String,
         name_location: Option<String>,
         parameters: ParameterList,
-        r#virtual: Option<bool>,
+        #[serde(default, rename = "virtual")]
+        is_virtual: bool,
         visibility: Visibility,
     }
 );
