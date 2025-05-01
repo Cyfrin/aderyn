@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 120,
-    "total_sloc": 4455
+    "total_source_units": 121,
+    "total_sloc": 4465
   },
   "files_details": {
     "files_details": [
@@ -320,6 +320,10 @@
       {
         "file_path": "src/TestERC20.sol",
         "n_sloc": 62
+      },
+      {
+        "file_path": "src/TransientKeyword.sol",
+        "n_sloc": 10
       },
       {
         "file_path": "src/Trump.sol",
