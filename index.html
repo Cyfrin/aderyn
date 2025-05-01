@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" id="oranda" class="dark">
+  <head>
+    <title>My Oranda Project</title>
+    
+    
+      <link rel="icon" href="/favicon.ico" />
+    
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="My Oranda Project" />
+    
+    
+    
+    <meta http-equiv="Permissions-Policy" content="interest-cohort=()" />
+    <link rel="stylesheet" href="/oranda-v0.6.1.css" />
+    
+    
+  </head>
+  <body>
+    <div class="container">
+      <div class="page-body">
+        
+
+        <main>
+          <header>
+            
+            <h1 class="title">My Oranda Project</h1>
+            
+          </header>
+
+          
+
+
+    <p>
+    <br>
+    <a href="https://cyfrin.io/" rel="noopener noreferrer">
+        <img src="https://github.com/Cyfrin/aderyn/blob/dev/.github/images/aderyn_logo.png" width="400" alt=""></a>
+    <br>
+</p>
+<p><strong>A powerful Solidity static analyzer that takes a bird's eye view over your smart contracts.
+</strong></p>
+<p>
+    <br>
+    <a href="https://cyfrin.io/" rel="noopener noreferrer">
+        <img src="https://github.com/Cyfrin/aderyn/blob/dev/.github/images/poweredbycyfrinblue.png" width="145" alt=""></a>
+    <br>
+</p>
+<p>
+<a href="https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli/readme" rel="noopener noreferrer">Docs</a>
+<a href="https://discord.gg/cyfrin" rel="noopener noreferrer">Discord</a>
+<a href="https://twitter.com/cyfrinaudits" rel="noopener noreferrer">Twitter</a>
+</p><p>
+</p><hr>
+<div>
+<p><a href="https://github.com/cyfrin/aderyn/stargazers" rel="noopener noreferrer"><img src="https://img.shields.io/github/stars/cyfrin/aderyn" alt="Stargazers"></a> <a href="https://github.com/cyfrin/aderyn/network/members" rel="noopener noreferrer"><img src="https://img.shields.io/github/forks/cyfrin/aderyn" alt="Forks"></a>
+<a href="https://github.com/cyfrin/aderyn/graphs/contributors" rel="noopener noreferrer"><img src="https://img.shields.io/github/contributors/cyfrin/aderyn" alt="Contributors"></a>
+<a href="https://github.com/cyfrin/aderyn/issues" rel="noopener noreferrer"><img src="https://img.shields.io/github/issues/cyfrin/aderyn" alt="Issues"></a>
+<a href="https://github.com/cyfrin/aderyn/blob/master/LICENSE" rel="noopener noreferrer"><img src="https://img.shields.io/github/license/cyfrin/aderyn?logoColor=%23fff&amp;color=blue" alt="GPL-3.0 License"></a></p>
+</div>
+<h2>What is Aderyn?</h2>
+<p><strong>Aderyn is an open-source public good developer tool.</strong> It is a Rust-based solidity smart contract static analyzer designed to help protocol engineers and security researchers find vulnerabilities in Solidity code bases.</p>
+<p>You can read the <a href="https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli/readme" rel="noopener noreferrer">Cyfrin official documentation</a> for an in-depth look at Aderyn's functionalities.</p>
+<p>There is also an officially supported <a href="https://github.com/Cyfrin/vscode-aderyn/" rel="noopener noreferrer">VSCode extension</a> for Aderyn. Download from the <a href="https://marketplace.visualstudio.com/items?itemName=Cyfrin.aderyn&amp;ssr=false#overview" rel="noopener noreferrer">Visual Studio Marketplace</a> and start identifying vulnerabilities in your Solidity
+code with ease.</p>
+<h2>Features</h2>
+<ul>
+<li>Off the shelf support for Foundry projects.</li>
+<li>Off the shelf support for Hardhat projects. (Sometimes <code>remappings.txt</code> maybe required)</li>
+<li>Configuration file (<code>adeyrn.toml</code>) needed to support custom frameworks.</li>
+<li>Markdown, JSON and Sarif reports</li>
+</ul>
+<h2>Installation</h2>
+<blockquote>
+<p><strong>NOTE</strong> Windows users must have WSL installed</p>
+</blockquote>
+<h3>Using Cyfrinup</h3>
+<p><strong>Cyfrinup</strong> is the cross platform installation manager for Cyfrin tools.</p>
+<p><a href="https://github.com/Cyfrin/up" rel="noopener noreferrer">One time setup</a>.</p>
+<p>Run <code>aderyn --version</code> to check the installation.</p>
+<p>Run <code>cyfrinup</code> to upgrade everything to the latest version.</p>
+<hr>
+<h3>Using curl</h3>
+<pre style="background-color:#263238;"><span style="color:#82aaff;">curl</span><span style="color:#89ddff;"> --</span><span style="color:#f78c6c;">proto </span><span style="color:#89ddff;">'</span><span style="color:#c3e88d;">=https</span><span style="color:#89ddff;">' --</span><span style="color:#f78c6c;">tlsv1</span><span style="color:#82aaff;">.2</span><span style="color:#89ddff;"> -</span><span style="color:#f78c6c;">LsSf</span><span style="color:#82aaff;"> https://github.com/cyfrin/aderyn/releases/latest/download/aderyn-installer.sh </span><span style="color:#89ddff;">| </span><span style="color:#82aaff;">bash
+</span></pre>
+
+<h5>Upgrade older versions by running: <code>aderyn-update</code></h5>
+<hr>
+<h3>Using Homebrew</h3>
+<pre style="background-color:#263238;"><span style="color:#82aaff;">brew install cyfrin/tap/aderyn
+</span></pre>
+
+<h5>Upgrade older versions by running: <code>brew upgrade cyfrin/tap/aderyn</code></h5>
+<hr>
+<h3>Using npm</h3>
+<pre style="background-color:#263238;"><span style="color:#82aaff;">npm install @cyfrin/aderyn</span><span style="color:#89ddff;"> -</span><span style="color:#f78c6c;">g
+</span></pre>
+
+<h5>Upgrade older versions by (re)running: <code>npm install @cyfrin/aderyn -g</code></h5>
+<hr>
+<p>If you are installing with Curl or Homebrew or npm, ensure that the correct version of Aderyn in your path comes from either the Homebrew or npm global packages directory. If an older version exists at <code>~/.cyfrin/bin/aderyn</code>, remove it using <code>rm -f ~/.cyfrin/bin/aderyn</code>, as this is no longer the default installation location.</p>
+<h2>Quick Start</h2>
+<p><a href="https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli/quickstart" rel="noopener noreferrer">Quick Start</a> example with video guide.</p>
+<pre style="background-color:#263238;"><span style="color:#eeffff;">cd path/to/solidity/project/root
+</span><span style="color:#eeffff;">aderyn
+</span></pre>
+
+<p>This generates a <a href="https://github.com/Cyfrin/aderyn/blob/dev/reports/report.md" rel="noopener noreferrer">report.md</a></p>
+<p>See examples using more CLI options <a href="https://cyfrin.gitbook.io/cyfrin-docs/cli-options" rel="noopener noreferrer">here</a></p>
+<h2>VS Code extension</h2>
+<p>Officially supported <a href="https://github.com/Cyfrin/vscode-aderyn/" rel="noopener noreferrer">VSCode extension</a> for Aderyn.
+Download from <a href="https://marketplace.visualstudio.com/items?itemName=Cyfrin.aderyn&amp;ssr=false#overview" rel="noopener noreferrer">Visual Studio Marketplace</a></p>
+<h2>Contributing &amp; License</h2>
+<p>Help us build Aderyn 🦜 Please see our <a href="./CONTRIBUTING.md" rel="noopener noreferrer">contribution guidelines</a> for in-depth developer environment setup and PR approval process.
+Aderyn is an open-source software licensed under the <a href="./LICENSE" rel="noopener noreferrer">GPL-3.0 License</a>.</p>
+<h2>Building a custom Aderyn detector</h2>
+<p>Aderyn makes it easy to build Static Analysis detectors that can adapt to any Solidity codebase and protocol. This guide will teach you how to build, test, and run your custom Aderyn detectors.
+To learn how to create your custom Aderyn detectors, <a href="https://cyfrin.gitbook.io/cyfrin-docs/aderyn-cli/detectors-quickstart" rel="noopener noreferrer">checkout the official docs</a></p>
+<h2>Credits</h2>
+<p>This project exists thanks to all the people who <a href="/CONTRIBUTING.md" rel="noopener noreferrer">contribute</a>.<br></p>
+<a href="https://github.com/cyfrin/Aderyn/graphs/contributors" rel="noopener noreferrer">
+  <img src="https://contrib.rocks/image?repo=cyfrin/Aderyn">
+</a>
+<h2>Attribution</h2>
+<ul>
+<li>AST Visitor code from <a href="https://github.com/hrkrshnn/solc-ast-rs" rel="noopener noreferrer">solc-ast-rs</a>.</li>
+<li>Foundry Compilers for backend AST generation <a href="https://github.com/foundry-rs/compilers" rel="noopener noreferrer">foundry-compilers</a></li>
+<li>Original detectors based on <a href="https://github.com/Picodes/4naly3er" rel="noopener noreferrer">4naly3er</a> detectors.</li>
+<li>Shoutout to the original king of static analysis <a href="https://github.com/crytic/slither" rel="noopener noreferrer">slither</a>.</li>
+<li>Solidity AST Generator <a href="https://github.com/Cyfrin/solidity-ast-rs" rel="noopener noreferrer">solidity-ast-rs</a>.</li>
+</ul>
+
+
+
+        </main>
+      </div>
+
+      <footer>
+        
+        <span>
+          My Oranda Project
+        </span>
+      </footer>
+    </div>
+
+    
+    
+
+    
+
+
+  </body>
+</html>
