@@ -14,7 +14,7 @@ aderyn_driver = { version = "0.5.8", path = "aderyn_driver" }
 indoc = "2"
 clap = "4.4.6"
 criterion = "0.5.1"
-derive_more = "0.99.18"
+derive_more = "2"
 eyre = "0.6.12"
 field_access = "0.1.8"
 ignore = "0.4.21"
