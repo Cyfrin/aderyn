@@ -34,6 +34,10 @@ Contributions are made via Issues and Pull Requests (PRs). A few general guideli
 
 ## Getting started
 
+### Overview 
+
+Indexed in [DeepWiki](https://deepwiki.com/Cyfrin/aderyn)
+
 ### Pull Requests
 
 #### Developer environment setup
