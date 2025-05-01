@@ -23,7 +23,11 @@ impl Display for ModifierDefinition {
             f.write_fmt(format_args!(" {overrides}"))?;
         }
 
-        f.write_fmt(format_args!(" {}", self.body))
+        if let Some(body) = self.body.as_ref() {
+            f.write_fmt(format_args!(" {}", body))?;
+        }
+
+        Ok(())
     }
 }
 

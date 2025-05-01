@@ -506,7 +506,7 @@ expr_node!(
 ast_node!(
     #[derive(Hash)]
     struct ModifierDefinition {
-        body: Block,
+        body: Option<Block>,
         base_modifiers: Option<Vec<usize>>,
         overrides: Option<OverrideSpecifier>,
         documentation: Option<Documentation>,
