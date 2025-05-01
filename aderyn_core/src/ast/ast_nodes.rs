@@ -9,36 +9,36 @@ use serde::{Deserialize, Serialize};
 node_group! {
     SourceUnitNode;
 
-    FunctionDefinition,
-    StructDefinition,
-    ErrorDefinition,
+    ContractDefinition,
     EnumDefinition,
-    VariableDeclaration,
+    ErrorDefinition,
+    EventDefinition,
+    FunctionDefinition,
     ImportDirective,
     PragmaDirective,
+    StructDefinition,
     UserDefinedValueTypeDefinition,
     UsingForDirective,
-    ContractDefinition,
-    EventDefinition,
+    VariableDeclaration,
 }
 
 node_group! {
     Expression;
 
-    Literal,
-    Identifier,
-    UnaryOperation,
+    Assignment,
     BinaryOperation,
     Conditional,
-    Assignment,
+    ElementaryTypeNameExpression,
     FunctionCall,
     FunctionCallOptions,
+    Identifier,
     IndexAccess,
     IndexRangeAccess,
+    Literal,
     MemberAccess,
-    ElementaryTypeNameExpression,
-    TupleExpression,
     NewExpression,
+    TupleExpression,
+    UnaryOperation,
 }
 
 node_group! {
@@ -48,45 +48,45 @@ node_group! {
     Break,
     Continue,
     DoWhileStatement,
-    PlaceholderStatement,
-    VariableDeclarationStatement,
-    IfStatement,
-    ForStatement,
-    WhileStatement,
     EmitStatement,
-    TryStatement,
-    UncheckedBlock,
+    ExpressionStatement,
+    ForStatement,
+    IfStatement,
+    InlineAssembly,
+    PlaceholderStatement,
     Return,
     RevertStatement,
-    ExpressionStatement,
-    InlineAssembly,
+    TryStatement,
+    UncheckedBlock,
+    VariableDeclarationStatement,
+    WhileStatement,
 }
 
 node_group! {
     ContractDefinitionNode;
 
-    UsingForDirective,
-    StructDefinition,
     EnumDefinition,
-    VariableDeclaration,
+    ErrorDefinition,
     EventDefinition,
     FunctionDefinition,
     ModifierDefinition,
-    ErrorDefinition,
+    StructDefinition,
     UserDefinedValueTypeDefinition,
+    UsingForDirective,
+    VariableDeclaration,
 }
 
 #[derive(Clone, Debug, Eq, Serialize, PartialEq, Hash)]
 pub enum TypeName {
-    FunctionTypeName(FunctionTypeName),
     ArrayTypeName(ArrayTypeName),
-    Mapping(Mapping),
-    UserDefinedTypeName(UserDefinedTypeName),
     ElementaryTypeName(ElementaryTypeName),
+    FunctionTypeName(FunctionTypeName),
+    Mapping(Mapping),
     /// A string representing the type name.
     ///
     /// This variant applies to older compiler versions.
     Raw(String),
+    UserDefinedTypeName(UserDefinedTypeName),
 }
 
 impl<'de> Deserialize<'de> for TypeName {
