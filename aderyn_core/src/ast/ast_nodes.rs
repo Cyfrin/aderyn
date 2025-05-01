@@ -823,6 +823,7 @@ pub enum StorageLocation {
     Memory,
     Calldata,
     Storage,
+    Transient,
 }
 
 ast_node!(
