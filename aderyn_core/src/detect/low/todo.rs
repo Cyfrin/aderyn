@@ -94,6 +94,5 @@ mod contracts_with_todos_tests {
         assert!(found);
         // assert that the detector finds the correct number of instances
         assert_eq!(detector.instances().len(), 1);
-        // assert that the detector returns the correct severity
     }
 }

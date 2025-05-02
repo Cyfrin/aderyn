@@ -91,8 +91,5 @@ mod empty_block_tests {
         assert!(found);
         // assert that the detector returns the correct number of instances
         assert_eq!(detector.instances().len(), 7);
-        // assert that the detector returns the correct severity
-        // assert that the detector returns the correct title
-        // assert that the detector returns the correct description
     }
 }

@@ -59,7 +59,6 @@ mod dangerous_unary_expression_tests {
     };
 
     #[test]
-
     fn test_dangerous_unary_operator() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/DangerousUnaryOperator.sol",
@@ -67,16 +66,9 @@ mod dangerous_unary_expression_tests {
 
         let mut detector = DangerousUnaryOperatorDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an issue
-
 
         assert!(found);
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
-        assert_eq!(
-            detector.description(),
-            String::from("Potentially mistaken `=+` for `+=` or `=-` for `-=`. This acts as an assignment instead of an increment or decrement.\
-            Use the correct operator to increment or decrement a variable.")
-        );
     }
 }

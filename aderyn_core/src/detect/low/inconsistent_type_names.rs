@@ -174,7 +174,6 @@ mod inconsistent_type_names_tests {
         assert!(found);
 
         assert_eq!(detector.instances().len(), 7);
-        // assert that the detector returns the correct severity
     }
 
     #[test]
@@ -190,6 +189,5 @@ mod inconsistent_type_names_tests {
         assert!(found);
 
         assert_eq!(detector.instances().len(), 2);
-        // assert that the detector returns the correct severity
     }
 }

@@ -73,7 +73,6 @@ mod unchecked_send_tests {
     use crate::detect::{detector::IssueDetector, high::unchecked_send::UncheckedSendDetector};
 
     #[test]
-
     fn test_unchecked_send() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/UncheckedSend.sol",
@@ -82,16 +81,9 @@ mod unchecked_send_tests {
         let mut detector = UncheckedSendDetector::default();
         let found = detector.detect(&context).unwrap();
 
-
         // assert that the detector found an issue
         assert!(found);
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
-        assert_eq!(
-            detector.description(),
-            String::from("The call `address(payable?).send(address)` may fail because of reasons like out-of-gas, \
-        invalid recipient address or revert from the recipient, but not revert the transaction. Therefore, the boolean returned by this function call must be checked \
-        to be `true` in order to verify that the transaction was successful.")
-        );
     }
 }

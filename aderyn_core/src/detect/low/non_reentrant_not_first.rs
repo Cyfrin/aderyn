@@ -74,9 +74,6 @@ mod non_reentrant_before_others_tests {
         // assert that the line number is 10
         let (_, line_number, _) = detector.instances().keys().next().unwrap().clone();
         assert_eq!(line_number, 10);
-        // assert that the detector returns the correct severity
-        // assert that the detector returns the correct title
-        // assert that the detector returns the correct description
         assert_eq!(
             detector.description(),
             "To protect against reentrancy in other modifiers, the `nonReentrant` modifier should be the first modifier in the list of modifiers."
