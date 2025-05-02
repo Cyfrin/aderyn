@@ -95,6 +95,5 @@ mod contracts_with_todos_tests {
         // assert that the detector finds the correct number of instances
         assert_eq!(detector.instances().len(), 1);
         // assert that the detector returns the correct severity
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

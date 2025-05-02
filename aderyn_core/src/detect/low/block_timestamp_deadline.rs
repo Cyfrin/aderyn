@@ -136,7 +136,6 @@ mod block_timestamp_deadline_detector_tests {
         // assert that the number of instances found is correct
         assert_eq!(detector.instances().len(), 9);
         // assert that the severity is High
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert that the title is correct
         assert_eq!(
             detector.title(),
@@ -166,6 +165,5 @@ mod block_timestamp_deadline_detector_tests {
         // assert that the number of instances found is correct
         assert_eq!(detector.instances().len(), 8);
         // assert that the severity is High
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

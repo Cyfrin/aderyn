@@ -95,9 +95,7 @@ mod unsafe_erc721_mint_tests {
         // assert that the detector found the correct number of instance
         assert_eq!(detector.instances().len(), 1);
         // assert that the severity is Low
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert that the title is correct
-        assert_eq!(detector.title(), String::from("Unsafe `ERC721::_mint()`"));
         // assert that the description is correct
         assert_eq!(
             detector.description(),

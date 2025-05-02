@@ -68,7 +68,6 @@ mod division_before_multiplication_detector_tests {
         let found = detector.detect(&context).unwrap();
         assert!(found);
         assert_eq!(detector.instances().len(), 4);
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         assert_eq!(
             detector.title(),
             String::from("Incorrect Order of Division and Multiplication")

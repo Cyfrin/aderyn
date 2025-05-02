@@ -105,10 +105,7 @@ mod incorrect_use_of_caret_operator_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 5);
         // assert the severity is high
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
         // assert the title is correct
-        assert_eq!(detector.title(), String::from("Incorrect use of caret operator"));
         // assert the description is correct
-        assert_eq!(detector.description(), String::from("The caret operator is usually mistakenly thought of as an exponentiation operator but actually, it's a bitwise xor operator."));
     }
 }

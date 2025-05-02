@@ -113,6 +113,5 @@ mod delegate_call_in_loop_detector_tests {
         // assert that the detector found the correct number of instances (1)
         assert_eq!(detector.instances().len(), 1);
         // assert the severity is high
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

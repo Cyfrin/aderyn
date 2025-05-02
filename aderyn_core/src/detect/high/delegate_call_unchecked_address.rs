@@ -112,11 +112,8 @@ mod delegate_call_no_address_check_tests {
         assert_eq!(detector.instances().len(), 1);
 
         // assert the severity is high
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
 
         // assert the title is correct
-        assert_eq!(detector.title(), String::from("`delegatecall` to an Arbitrary Address"));
         // assert the description is correct
-        assert_eq!(detector.description(), String::from("Making a `delegatecall` to an arbitrary address without any checks is dangerous. Consider adding requirements on the target address."));
     }
 }

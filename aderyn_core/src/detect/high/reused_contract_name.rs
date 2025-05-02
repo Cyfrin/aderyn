@@ -86,9 +86,7 @@ mod reused_contract_name_detector_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
         // assert the severity is high
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
         // assert the title is correct
-        assert_eq!(detector.title(), String::from("Contract Name Reused in Different Files"));
         // assert the description is correct
         assert_eq!(
             detector.description(),

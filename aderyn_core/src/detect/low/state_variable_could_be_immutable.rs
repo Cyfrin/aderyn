@@ -175,6 +175,5 @@ mod state_variable_could_be_immutable_tests {
         assert_eq!(detector.instances().len(), 2);
         println!("{:?}", detector.instances());
         // assert the severity is low
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

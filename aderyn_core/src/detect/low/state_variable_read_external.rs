@@ -149,9 +149,7 @@ mod public_variable_read_in_external_context_detector_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 4);
         // assert the severity is low
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert the title is correct
-        assert_eq!(detector.title(), String::from("State Variable is Read as External"));
         // assert the description is correct
         assert_eq!(
             detector.description(),

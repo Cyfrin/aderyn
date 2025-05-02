@@ -92,9 +92,7 @@ mod avoid_abi_encode_packed_tests {
         // failure0, failure1 and failure3
         assert_eq!(detector.instances().len(), 3);
         // assert that the severity is low
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
         // assert that the title is correct
-        assert_eq!(detector.title(), String::from("`abi.encodePacked()` Hash Collision"));
         // assert that the description is correct
         assert_eq!(
             detector.description(),

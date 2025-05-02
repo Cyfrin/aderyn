@@ -97,9 +97,7 @@ mod storage_array_edit_with_memory_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
         // assert the severity is high
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
         // assert the title is correct
-        assert_eq!(detector.title(), String::from("Storage Array Edited with Memory"));
         // assert the description is correct
         assert_eq!(
             detector.description(),

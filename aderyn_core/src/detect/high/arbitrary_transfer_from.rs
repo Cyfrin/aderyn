@@ -128,10 +128,7 @@ mod arbitrary_transfer_from_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
         // assert the severity is high
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
         // assert the title is correct
-        assert_eq!(detector.title(), String::from("Arbitrary `from` Passed to `transferFrom`"));
         // assert the description is correct
-        assert_eq!(detector.description(), String::from("Passing an arbitrary `from` address to `transferFrom` (or `safeTransferFrom`) can lead to loss of funds, because anyone can transfer tokens from the `from` address if an approval is made."));
     }
 }

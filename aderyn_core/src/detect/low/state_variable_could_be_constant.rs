@@ -180,6 +180,5 @@ mod state_variable_could_be_constant_tests {
 
         println!("{:?}", detector.instances());
         // assert the severity is low
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

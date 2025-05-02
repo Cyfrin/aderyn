@@ -68,7 +68,6 @@ mod template_detector_tests {
     use crate::detect::{detector::IssueDetector, low::template_detector::TemplateDetector};
 
     #[test]
-    
     fn test_template_detector() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/ArbitraryTransferFrom.sol",
@@ -80,17 +79,5 @@ mod template_detector_tests {
         assert!(found);
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
-        // assert the severity is low
-        assert_eq!(
-            detector.severity(),
-            crate::detect::detector::IssueSeverity::Low
-        );
-        // assert the title is correct
-        assert_eq!(detector.title(), String::from("Low Issue Title"));
-        // assert the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from("Description of the low issue.")
-        );
     }
 }

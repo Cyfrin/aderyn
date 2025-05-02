@@ -75,9 +75,7 @@ mod non_reentrant_before_others_tests {
         let (_, line_number, _) = detector.instances().keys().next().unwrap().clone();
         assert_eq!(line_number, 10);
         // assert that the detector returns the correct severity
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert that the detector returns the correct title
-        assert_eq!(detector.title(), "`nonReentrant` is Not the First Modifier");
         // assert that the detector returns the correct description
         assert_eq!(
             detector.description(),

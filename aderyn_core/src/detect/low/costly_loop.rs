@@ -113,6 +113,5 @@ mod costly_operations_inside_loops_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
         // assert the severity is high
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

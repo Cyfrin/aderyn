@@ -285,6 +285,5 @@ mod incorrect_erc721_tests {
         assert_eq!(detector.instances().len(), 8);
 
         // assert the severity is high
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
     }
 }

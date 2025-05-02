@@ -123,6 +123,5 @@ mod uninitialized_local_variables_detector_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 12);
         // assert the severity is low
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

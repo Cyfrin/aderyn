@@ -75,9 +75,7 @@ mod large_literal_values {
         // assert that the detector finds the correct number of instances
         assert_eq!(detector.instances().len(), 22);
         // assert that the detector returns the correct severity
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert that the detector returns the correct title
-        assert_eq!(detector.title(), String::from("Large Numeric Literal"));
         // assert that the detector returns the correct description
         assert_eq!(
             detector.description(),

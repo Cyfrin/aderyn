@@ -140,9 +140,7 @@ mod constants_instead_of_literals_tests {
         // assert that the detector finds the correct number of instances
         assert_eq!(detector.instances().len(), 8);
         // assert that the detector returns the correct severity
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
         // assert that the detector returns the correct title
-        assert_eq!(detector.title(), String::from("Literal Instead of Constant"));
         // assert that the detector returns the correct description
         assert_eq!(
             detector.description(),

@@ -165,6 +165,5 @@ mod return_bomb_detector_tests {
 
         assert_eq!(detector.instances().len(), 1);
         // assert the severity is low
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

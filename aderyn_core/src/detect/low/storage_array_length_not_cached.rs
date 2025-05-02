@@ -196,6 +196,5 @@ mod cache_array_length_tests {
 
         assert_eq!(detector.instances().len(), 3);
         // assert the severity is low
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

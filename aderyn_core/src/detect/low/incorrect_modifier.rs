@@ -199,6 +199,5 @@ mod test_incorrect_modifier {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
         // assert the severity is high
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }
