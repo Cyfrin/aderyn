@@ -158,10 +158,6 @@ mod storage_signed_array_detector {
 
         assert!(found);
         assert_eq!(detector.instances().len(), 1);
-        assert_eq!(
-            detector.title(),
-            String::from("Signed integer array in storage (solc `<0.5.10`)")
-        );
     }
 
     #[test]

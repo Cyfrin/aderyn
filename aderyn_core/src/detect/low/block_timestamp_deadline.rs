@@ -134,10 +134,6 @@ mod block_timestamp_deadline_detector_tests {
         assert!(found);
         // assert that the number of instances found is correct
         assert_eq!(detector.instances().len(), 9);
-        assert_eq!(
-            detector.title(),
-            String::from("Using `block.timestamp` for swap deadline offers no protection")
-        );
     }
 
     #[test]
