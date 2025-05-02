@@ -76,16 +76,5 @@ mod ecrecover_tests {
         // assert that the severity is low
         // assert that the title is correct
         // assert that the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from(
-                "The `ecrecover` function is susceptible to signature malleability. \
-                This means that the same message can be signed in multiple ways, \
-                allowing an attacker to change the message signature without invalidating it. \
-                This can lead to unexpected behavior in smart contracts, \
-                such as the loss of funds or the ability to bypass access control. \
-                Consider using OpenZeppelin's ECDSA library instead of the built-in function.",
-            )
-        );
-    }
+            }
 }

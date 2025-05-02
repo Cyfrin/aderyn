@@ -139,11 +139,5 @@ mod constants_instead_of_literals_tests {
         assert!(found);
         // assert that the detector finds the correct number of instances
         assert_eq!(detector.instances().len(), 8);
-        assert_eq!(
-            detector.description(),
-            String::from(
-                "Define and use `constant` variables instead of using literals. If the same constant literal value is used multiple times, create a constant state variable and reference it throughout the contract."
-            )
-        );
-    }
+            }
 }

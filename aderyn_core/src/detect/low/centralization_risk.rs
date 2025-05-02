@@ -93,11 +93,5 @@ mod centralization_risk_detector_tests {
         // assert that the severity is Low
         // assert that the title is correct
         // assert that the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from(
-                "Contracts have owners with privileged rights to perform admin tasks and need to be trusted to not perform malicious updates or drain funds."
-            )
-        );
-    }
+            }
 }

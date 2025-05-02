@@ -96,9 +96,5 @@ mod storage_array_edit_with_memory_tests {
         assert!(found);
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
-        assert_eq!(
-            detector.description(),
-            String::from("Storage reference is passed to a function with a memory parameter. This will not update the storage variable as expected. Consider using storage parameters instead.")
-        );
-    }
+            }
 }

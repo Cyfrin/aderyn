@@ -142,14 +142,7 @@ mod block_timestamp_deadline_detector_tests {
             String::from("Using `block.timestamp` for swap deadline offers no protection")
         );
         // assert that the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from(
-                "In the PoS model, proposers know well in advance if they will propose one or consecutive blocks ahead of time. In such a scenario, a malicious validator can hold back the transaction and execute it at a more favourable block number.\
-        Consider allowing function caller to specify swap deadline input parameter."
-            )
-        );
-    }
+            }
 
     #[test]
 

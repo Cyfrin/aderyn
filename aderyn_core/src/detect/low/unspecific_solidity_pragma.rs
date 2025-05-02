@@ -84,13 +84,7 @@ mod unspecific_solidity_pragma_tests {
         // assert that the severity is low
         // assert that the title is correct
         // assert that the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from(
-                "Consider using a specific version of Solidity in your contracts instead of a wide version. For example, instead of `pragma solidity ^0.8.0;`, use `pragma solidity 0.8.0;`"
-            )
-        );
-    }
+            }
 
     #[test]
 

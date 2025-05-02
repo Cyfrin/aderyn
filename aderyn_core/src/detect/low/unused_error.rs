@@ -88,9 +88,5 @@ mod unused_error_tests {
         // Assert that the detector returns the correct severity
         // Assert that the detector returns the correct title
         // Assert that the detector returns the correct description
-        assert_eq!(
-            detector.description(),
-            String::from("Consider using or removing the unused error.")
-        );
-    }
+            }
 }

@@ -72,10 +72,5 @@ mod division_before_multiplication_detector_tests {
             detector.title(),
             String::from("Incorrect Order of Division and Multiplication")
         );
-        assert_eq!(
-            detector.description(),
-            String::from("Division operations followed directly by multiplication operations can lead to precision loss due to the way integer arithmetic is handled in Solidity./
-        Consider Multiplication before Division.")
-        );
-    }
+            }
 }

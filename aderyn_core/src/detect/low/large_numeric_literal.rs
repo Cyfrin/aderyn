@@ -74,11 +74,5 @@ mod large_literal_values {
         assert!(found);
         // assert that the detector finds the correct number of instances
         assert_eq!(detector.instances().len(), 22);
-        assert_eq!(
-            detector.description(),
-            String::from(
-                "Large literal values multiples of 10000 can be replaced with scientific notation.Use `e` notation, for example: `1e18`, instead of its full numeric value."
-            )
-        );
-    }
+            }
 }

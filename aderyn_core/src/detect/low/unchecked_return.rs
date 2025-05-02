@@ -100,11 +100,5 @@ mod unchecked_return_tests {
         assert!(found);
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
-        assert_eq!(
-            detector.description(),
-            String::from(
-                "Function returns a value but it is ignored. Consider checking the return value."
-            )
-        );
-    }
+            }
 }

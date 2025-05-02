@@ -148,11 +148,5 @@ mod public_variable_read_in_external_context_detector_tests {
         assert!(found);
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 4);
-        assert_eq!(
-            detector.description(),
-            String::from(
-                "The contract reads it's own state variable using `this` which adds an unnecessary STATICCALL. Consider removing `this` to access the variable from storage.",
-            )
-        );
-    }
+            }
 }

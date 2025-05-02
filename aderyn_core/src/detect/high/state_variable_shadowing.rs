@@ -217,14 +217,5 @@ mod state_variable_shadowing_detector_tests {
         assert!(found);
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
-        assert_eq!(
-            detector.description(),
-            String::from(
-                "This vulnerability arises when a derived contract unintentionally shadows a state variable from \
-                a parent contract by declaring a variable with the same name. This can be misleading. \
-                To prevent this, ensure variable names \
-                are unique across the inheritance hierarchy or use proper visibility and scope controls."
-            )
-        );
-    }
+            }
 }

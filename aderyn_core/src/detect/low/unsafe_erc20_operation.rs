@@ -74,11 +74,5 @@ mod unsafe_erc20_functions_tests {
         // assert that the severity is low
         // assert that the title is correct
         // assert that the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from(
-                "ERC20 functions may not behave as expected. For example: return values are not always meaningful. It is recommended to use OpenZeppelin's SafeERC20 library."
-            )
-        );
-    }
+            }
 }

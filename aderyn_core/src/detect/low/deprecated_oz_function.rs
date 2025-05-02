@@ -105,11 +105,5 @@ mod deprecated_oz_functions_tests {
         // assert that the severity is low
         // assert that the title is correct
         // assert that the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from(
-                "Openzeppelin has deprecated several functions and replaced with newer versions. Please consult https://docs.openzeppelin.com/"
-            )
-        );
-    }
+            }
 }

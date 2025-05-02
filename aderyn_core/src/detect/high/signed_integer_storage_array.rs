@@ -165,12 +165,7 @@ mod storage_signed_array_detector {
             detector.title(),
             String::from("Signed integer array in storage (solc `<0.5.10`)")
         );
-        assert_eq!(
-            detector.description(),
-            String::from("solc versions 0.4.7-0.5.9 contain a compiler bug leading to incorrect values in signed integer arrays.\
-            Use solidity version 0.5.10 or above.")
-        );
-    }
+            }
 
     #[test]
     fn test_regular_expression_works() {

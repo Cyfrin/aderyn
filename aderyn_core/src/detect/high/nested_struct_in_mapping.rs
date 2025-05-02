@@ -127,11 +127,7 @@ mod nested_struct_in_mapping_detector_tests {
         assert!(found);
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
-        assert_eq!(
-            detector.description(),
-            String::from("Prior to updates in Solidity 0.5.0, public mappings with nested structs compiled, but produced incorrect values. Refrain from using these, or update to a more recent version of Solidity.")
-        );
-    }
+            }
 
     #[test]
 

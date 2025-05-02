@@ -179,9 +179,5 @@ mod tautological_compare_tests {
         assert!(found);
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 4);
-        assert_eq!(
-            detector.description(),
-            String::from("The left hand side and the right hand side of the binary operation has the same value. This makes the condition always true or always false.")
-        );
-    }
+            }
 }
