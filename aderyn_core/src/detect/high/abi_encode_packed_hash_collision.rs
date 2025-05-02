@@ -78,7 +78,6 @@ mod avoid_abi_encode_packed_tests {
     use super::AvoidAbiEncodePackedDetector;
 
     #[test]
-
     fn test_avoid_abi_encode_packed_detectorby_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/KeccakContract.sol",
@@ -87,7 +86,6 @@ mod avoid_abi_encode_packed_tests {
         let mut detector = AvoidAbiEncodePackedDetector::default();
         let found = detector.detect(&context).unwrap();
         assert!(found);
-        // failure0, failure1 and failure3
         assert_eq!(detector.instances().len(), 3);
     }
 }
