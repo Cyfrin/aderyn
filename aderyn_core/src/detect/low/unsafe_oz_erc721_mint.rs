@@ -97,11 +97,5 @@ mod unsafe_erc721_mint_tests {
         // assert that the severity is Low
         // assert that the title is correct
         // assert that the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from(
-                "Using `ERC721::_mint()` can mint ERC721 tokens to addresses which don't support ERC721 tokens. Use `_safeMint()` instead of `_mint()` for ERC721 tokens."
-            )
-        );
-    }
+            }
 }

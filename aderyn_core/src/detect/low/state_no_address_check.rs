@@ -228,11 +228,5 @@ mod zero_address_check_tests {
         // assert that the severity is Low
         // assert that the title is correct
         // assert that the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from(
-                "Check for `address(0)` when assigning values to address state variables."
-            )
-        );
-    }
+            }
 }

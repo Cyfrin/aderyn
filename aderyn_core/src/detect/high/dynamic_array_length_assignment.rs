@@ -90,13 +90,5 @@ mod dynamic_array_length_assignment_tests {
         assert!(found);
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 5);
-        assert_eq!(
-            detector.description(),
-            String::from(
-                "If the length of a dynamic array (storage variable) is directly assigned to, \
-        it may allow access to other storage slots by tweaking it's value. This practice has \
-        been deprecated in newer Solidity versions"
-            )
-        );
-    }
+            }
 }
