@@ -69,7 +69,7 @@ fn are_duplicate_names_in_inherited_contracts(
             }
             UserDefinedTypeNameOrIdentifierPath::IdentifierPath(identifier_path) => {
                 if let Some(ASTNode::ContractDefinition(contract)) =
-                    context.nodes.get(&(identifier_path.referenced_declaration as i64))
+                    context.nodes.get(&(identifier_path.referenced_declaration))
                 {
                     if are_duplicate_names_in_inherited_contracts(context, variable_name, contract)
                     {
@@ -152,9 +152,8 @@ impl IssueDetector for StateVariableShadowingDetector {
                             UserDefinedTypeNameOrIdentifierPath::IdentifierPath(
                                 identifier_path,
                             ) => {
-                                if let Some(ASTNode::ContractDefinition(contract)) = context
-                                    .nodes
-                                    .get(&(identifier_path.referenced_declaration as i64))
+                                if let Some(ASTNode::ContractDefinition(contract)) =
+                                    context.nodes.get(&(identifier_path.referenced_declaration))
                                 {
                                     if are_duplicate_names_in_inherited_contracts(
                                         context,

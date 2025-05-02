@@ -118,7 +118,7 @@ impl ASTConstVisitor for ExtractReferencedDeclarations {
         Ok(true)
     }
     fn visit_identifier_path(&mut self, node: &IdentifierPath) -> Result<bool> {
-        self.extracted.push(node.referenced_declaration as i64);
+        self.extracted.push(node.referenced_declaration);
         Ok(true)
     }
     fn visit_user_defined_type_name(&mut self, node: &UserDefinedTypeName) -> Result<bool> {
@@ -170,7 +170,7 @@ impl ASTConstVisitor for ExtractReferencedDeclarationsConditionally<'_> {
         if !self.condition.as_ref()(node.id, self.context) {
             return Ok(true);
         }
-        self.extracted.push(node.referenced_declaration as i64);
+        self.extracted.push(node.referenced_declaration);
         Ok(true)
     }
     fn visit_user_defined_type_name(&mut self, node: &UserDefinedTypeName) -> Result<bool> {
