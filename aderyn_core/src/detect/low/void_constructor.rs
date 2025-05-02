@@ -32,7 +32,7 @@ impl IssueDetector for VoidConstructorDetector {
                     identifier.referenced_declaration
                 }
                 crate::ast::IdentifierOrIdentifierPath::IdentifierPath(identifier_path) => {
-                    Some(identifier_path.referenced_declaration as i64)
+                    Some(identifier_path.referenced_declaration)
                 }
             } {
                 if let Some(ASTNode::ContractDefinition(contract)) =

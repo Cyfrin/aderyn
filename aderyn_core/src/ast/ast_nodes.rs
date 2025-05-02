@@ -457,7 +457,7 @@ ast_node_no_partial_eq!(
 ast_node_no_partial_eq!(
     struct IdentifierPath {
         name: String,
-        referenced_declaration: isize,
+        referenced_declaration: i64,
     }
 );
 

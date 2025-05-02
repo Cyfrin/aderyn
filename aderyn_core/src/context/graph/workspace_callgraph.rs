@@ -100,17 +100,8 @@ fn dfs_to_create_graph(
                 }
                 IdentifierOrIdentifierPath::IdentifierPath(identifier_path) => {
                     let referenced_modifier_id = identifier_path.referenced_declaration;
-                    create_connection_if_not_exists(
-                        id,
-                        referenced_modifier_id as i64,
-                        raw_callgraph,
-                    );
-                    dfs_to_create_graph(
-                        referenced_modifier_id as i64,
-                        raw_callgraph,
-                        visited,
-                        context,
-                    )?;
+                    create_connection_if_not_exists(id, referenced_modifier_id, raw_callgraph);
+                    dfs_to_create_graph(referenced_modifier_id, raw_callgraph, visited, context)?;
                 }
             }
         }
