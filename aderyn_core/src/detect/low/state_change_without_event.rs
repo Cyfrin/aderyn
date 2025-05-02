@@ -115,6 +115,5 @@ mod state_variable_changes_without_events_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 8);
 
-        // assert the severity is low
     }
 }

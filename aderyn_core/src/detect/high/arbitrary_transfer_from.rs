@@ -127,8 +127,5 @@ mod arbitrary_transfer_from_tests {
         assert!(found);
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
-        // assert the severity is high
-        // assert the title is correct
-        // assert the description is correct
     }
 }

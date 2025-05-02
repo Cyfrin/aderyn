@@ -73,9 +73,6 @@ mod rtlo_detector_tests {
         assert!(found);
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
-        // assert the severity is high
-        // assert the title is correct
-        // assert the description is correct
         assert_eq!(
             detector.description(),
             String::from("The right to left override character may be misleading and cause potential attacks by visually misordering method arguments.")

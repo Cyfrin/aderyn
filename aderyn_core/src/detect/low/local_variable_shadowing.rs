@@ -125,6 +125,5 @@ mod local_variable_shadowing_tests {
 
 
         assert_eq!(detector.instances().len(), 3);
-        // assert the severity is low
     }
 }

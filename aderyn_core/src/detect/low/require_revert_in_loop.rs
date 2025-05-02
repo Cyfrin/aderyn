@@ -111,9 +111,6 @@ mod reevrts_and_requires_in_loops {
         assert!(found);
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
-        // assert the severity is low
-        // assert the title is correct
-        // assert the description is correct
         assert_eq!(
             detector.description(),
             String::from("Avoid `require` / `revert` statements in a loop because a single bad item can cause the whole transaction to fail. It's better to forgive on fail and return failed elements post processing of the loop")

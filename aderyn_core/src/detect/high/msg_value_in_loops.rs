@@ -120,6 +120,5 @@ mod msg_value_in_loop_detector {
         assert!(found);
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 4);
-        // assert the severity is high
     }
 }

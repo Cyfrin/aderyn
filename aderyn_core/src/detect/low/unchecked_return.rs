@@ -100,9 +100,6 @@ mod unchecked_return_tests {
         assert!(found);
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
-        // assert the severity is high
-        // assert the title is correct
-        // assert the description is correct
         assert_eq!(
             detector.description(),
             String::from(

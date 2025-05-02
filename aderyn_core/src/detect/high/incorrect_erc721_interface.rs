@@ -283,6 +283,5 @@ mod incorrect_erc721_tests {
 
         assert_eq!(detector.instances().len(), 8);
 
-        // assert the severity is high
     }
 }

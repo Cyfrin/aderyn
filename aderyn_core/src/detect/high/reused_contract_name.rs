@@ -85,9 +85,6 @@ mod reused_contract_name_detector_tests {
         assert!(found);
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
-        // assert the severity is high
-        // assert the title is correct
-        // assert the description is correct
         assert_eq!(
             detector.description(),
             String::from("When compiling contracts with certain development frameworks (for example: Truffle), having contracts with the same name across different files can lead to one being overwritten.")

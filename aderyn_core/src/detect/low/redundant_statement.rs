@@ -86,8 +86,5 @@ mod redundant_statements_detector {
         assert!(found);
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 6);
-        // assert the severity is low
-        // assert the title is correct
-        // assert the description is correct
     }
 }

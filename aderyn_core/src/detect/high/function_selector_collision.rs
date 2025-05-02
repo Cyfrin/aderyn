@@ -130,6 +130,5 @@ mod function_signature_collision {
         assert!(found);
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
-        // assert the severity is high
     }
 }

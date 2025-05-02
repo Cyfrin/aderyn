@@ -68,9 +68,6 @@ mod yul_return_detector_tests {
 
 
         assert_eq!(detector.instances().len(), 1);
-        // assert the severity is high
-        // assert the title is correct
-        // assert the description is correct
         assert_eq!(
             detector.description(),
             String::from("This causes the transaction execution to halt, and nothing after that call will execute including code following the assembly block.")

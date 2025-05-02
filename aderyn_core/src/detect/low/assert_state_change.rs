@@ -122,6 +122,5 @@ mod asert_state_changes_tests {
         assert!(found);
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
-        // assert the severity is low
     }
 }

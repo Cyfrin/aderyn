@@ -169,6 +169,5 @@ mod contract_locks_ether_detector_tests {
         assert!(found);
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
-        // assert the severity is high
     }
 }

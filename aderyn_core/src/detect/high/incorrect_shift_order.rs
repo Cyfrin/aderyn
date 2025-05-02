@@ -73,9 +73,6 @@ mod incorrect_shift_order_detector_tests {
         assert!(found);
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
-        // assert the severity is high
-        // assert the title is correct
-        // assert the description is correct
         assert_eq!(
             detector.description(),
             String::from("Example: `shl(shifted, 4)` will shift the right constant `4` by `a` bits. The correct order is `shl(4, shifted)`.")

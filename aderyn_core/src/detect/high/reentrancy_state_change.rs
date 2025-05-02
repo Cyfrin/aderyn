@@ -235,6 +235,5 @@ mod state_change_after_external_call_tests {
         assert!(found);
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 4);
-        // assert the severity is high
     }
 }

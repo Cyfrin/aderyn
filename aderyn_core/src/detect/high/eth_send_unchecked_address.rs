@@ -112,7 +112,6 @@ mod send_ether_no_checks_detector_tests {
         assert!(!found);
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 0);
-        // assert the severity is high
     }
 
     #[test]
@@ -128,6 +127,5 @@ mod send_ether_no_checks_detector_tests {
         assert!(found);
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 3);
-        // assert the severity is high
     }
 }

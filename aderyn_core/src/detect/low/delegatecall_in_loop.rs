@@ -112,6 +112,5 @@ mod delegate_call_in_loop_detector_tests {
         assert!(found);
         // assert that the detector found the correct number of instances (1)
         assert_eq!(detector.instances().len(), 1);
-        // assert the severity is high
     }
 }

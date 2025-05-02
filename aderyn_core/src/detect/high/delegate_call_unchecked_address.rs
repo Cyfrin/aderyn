@@ -110,9 +110,6 @@ mod delegate_call_no_address_check_tests {
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
 
-        // assert the severity is high
 
-        // assert the title is correct
-        // assert the description is correct
     }
 }

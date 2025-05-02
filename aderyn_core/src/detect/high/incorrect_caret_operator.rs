@@ -103,8 +103,5 @@ mod incorrect_use_of_caret_operator_tests {
         assert!(found);
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 5);
-        // assert the severity is high
-        // assert the title is correct
-        // assert the description is correct
     }
 }

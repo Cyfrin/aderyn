@@ -204,6 +204,5 @@ mod incorrect_erc20_tests {
         assert!(found);
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 5);
-        // assert the severity is high
     }
 }
