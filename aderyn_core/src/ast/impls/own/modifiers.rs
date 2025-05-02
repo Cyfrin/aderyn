@@ -21,7 +21,7 @@ impl IdentifierOrIdentifierPath {
         match self {
             IdentifierOrIdentifierPath::Identifier(identifier) => identifier.referenced_declaration,
             IdentifierOrIdentifierPath::IdentifierPath(identifier_path) => {
-                Some(identifier_path.referenced_declaration as i64)
+                Some(identifier_path.referenced_declaration)
             }
         }
     }
