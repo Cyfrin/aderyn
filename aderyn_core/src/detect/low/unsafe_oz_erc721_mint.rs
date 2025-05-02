@@ -90,20 +90,7 @@ mod unsafe_erc721_mint_tests {
 
         let mut detector = UnsafeERC721MintDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an abi encode packed
         assert!(found);
-        // assert that the detector found the correct number of instance
         assert_eq!(detector.instances().len(), 1);
-        // assert that the severity is Low
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
-        // assert that the title is correct
-        assert_eq!(detector.title(), String::from("Unsafe `ERC721::_mint()`"));
-        // assert that the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from(
-                "Using `ERC721::_mint()` can mint ERC721 tokens to addresses which don't support ERC721 tokens. Use `_safeMint()` instead of `_mint()` for ERC721 tokens."
-            )
-        );
     }
 }

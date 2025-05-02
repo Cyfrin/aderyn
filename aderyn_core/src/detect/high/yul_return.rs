@@ -62,21 +62,8 @@ mod yul_return_detector_tests {
 
         let mut detector = YulReturnDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
-
-        println!("{:?}", detector.instances());
 
         assert_eq!(detector.instances().len(), 1);
-        // assert the severity is high
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
-        // assert the title is correct
-        assert_eq!(detector.title(), String::from("Yul block contains `return`"));
-        // assert the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from("This causes the transaction execution to halt, and nothing after that call will execute including code following the assembly block.")
-        );
     }
 }

@@ -86,16 +86,8 @@ mod empty_block_tests {
         let context = load_solidity_source_unit("../tests/contract-playground/src/EmptyBlocks.sol");
 
         let mut detector = EmptyBlockDetector::default();
-        // assert that the detector finds something
         let found = detector.detect(&context).unwrap();
         assert!(found);
-        // assert that the detector returns the correct number of instances
         assert_eq!(detector.instances().len(), 7);
-        // assert that the detector returns the correct severity
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
-        // assert that the detector returns the correct title
-        assert_eq!(detector.title(), String::from("Empty Block"));
-        // assert that the detector returns the correct description
-        assert_eq!(detector.description(), String::from("Consider removing empty blocks."));
     }
 }

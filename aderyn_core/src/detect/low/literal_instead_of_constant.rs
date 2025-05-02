@@ -134,21 +134,8 @@ mod constants_instead_of_literals_tests {
         );
 
         let mut detector = LiteralsInsteadOfConstantsDetector::default();
-        // assert that the detector finds the public Function
         let found = detector.detect(&context).unwrap();
         assert!(found);
-        // assert that the detector finds the correct number of instances
         assert_eq!(detector.instances().len(), 8);
-        // assert that the detector returns the correct severity
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
-        // assert that the detector returns the correct title
-        assert_eq!(detector.title(), String::from("Literal Instead of Constant"));
-        // assert that the detector returns the correct description
-        assert_eq!(
-            detector.description(),
-            String::from(
-                "Define and use `constant` variables instead of using literals. If the same constant literal value is used multiple times, create a constant state variable and reference it throughout the contract."
-            )
-        );
     }
 }

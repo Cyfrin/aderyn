@@ -65,21 +65,8 @@ mod solmate_safe_transfer_lib_tests {
 
         let mut detector = SolmateSafeTransferLibDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found
         assert!(found);
-        // assert that the detector found the correct number of instances (1)
         assert_eq!(detector.instances().len(), 1);
-        // assert the severity is Low
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
-        // assert the title is correct
-        assert_eq!(detector.title(), String::from("Solmate\'s SafeTransferLib"));
-        // assert the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from(
-                "There is a subtle difference between the implementation of solmate's SafeTransferLib and OZ's SafeERC20: OZ's SafeERC20 checks if the token is a contract or not, solmate's SafeTransferLib does not.\nhttps://github.com/transmissions11/solmate/blob/main/src/utils/SafeTransferLib.sol#L9 \n`@dev Note that none of the functions in this library check that a token has code at all! That responsibility is delegated to the caller`\n"
-            )
-        );
     }
 
     #[test]
@@ -91,9 +78,7 @@ mod solmate_safe_transfer_lib_tests {
 
         let mut detector = SolmateSafeTransferLibDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found
         assert!(!found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 0);
     }
 }

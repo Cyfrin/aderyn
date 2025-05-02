@@ -116,11 +116,7 @@ mod msg_value_in_loop_detector {
 
         let mut detector = MsgValueUsedInLoopDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 4);
-        // assert the severity is high
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
     }
 }

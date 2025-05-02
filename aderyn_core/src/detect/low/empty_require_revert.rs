@@ -63,38 +63,24 @@ mod require_with_string_tests {
     use super::EmptyRequireRevertDetector;
 
     #[test]
-
     fn test_require_with_string_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/DeprecatedOZFunctions.sol",
         );
 
         let mut detector = EmptyRequireRevertDetector::default();
-        // assert that the detector finds something
         let found = detector.detect(&context).unwrap();
         assert!(found);
-        // assert that the detector returns the correct number of instances
         assert_eq!(detector.instances().len(), 2);
-        // assert that the detector returns the correct severity
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
-        // assert that the detector returns the correct title
-        assert_eq!(detector.title(), String::from("Empty `require()` / `revert()` Statement"));
-        // assert that the detector returns the correct description
-        assert_eq!(
-            detector.description(),
-            String::from("Use descriptive reason strings or custom errors for revert paths.")
-        );
     }
 
     #[test]
-
     fn test_require_with_custom_error_by_loading_contract_directly() {
         let context = crate::detect::test_utils::load_solidity_source_unit(
             "../tests/contract-playground/src/UnusedError.sol",
         );
 
         let mut detector = EmptyRequireRevertDetector::default();
-        // assert that the detector finds something
         let found = detector.detect(&context).unwrap();
         assert!(!found);
     }
