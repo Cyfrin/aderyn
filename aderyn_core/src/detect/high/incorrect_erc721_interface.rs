@@ -282,6 +282,5 @@ mod incorrect_erc721_tests {
         // assert that the detector found the correct number of instances
 
         assert_eq!(detector.instances().len(), 8);
-
     }
 }

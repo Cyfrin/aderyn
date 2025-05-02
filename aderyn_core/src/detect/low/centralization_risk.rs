@@ -93,5 +93,5 @@ mod centralization_risk_detector_tests {
         // assert that the severity is Low
         // assert that the title is correct
         // assert that the description is correct
-            }
+    }
 }

@@ -73,6 +73,5 @@ mod uselss_internal_function {
         assert!(found);
         // assert that the detector returns the correct number of instances
         assert_eq!(detector.instances().len(), 1);
-
     }
 }

@@ -96,5 +96,5 @@ mod storage_array_edit_with_memory_tests {
         assert!(found);
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
-            }
+    }
 }

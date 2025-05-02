@@ -156,7 +156,6 @@ mod storage_signed_array_detector {
         let mut detector = StorageSignedIntegerArrayDetector::default();
         let found = detector.detect(&context).unwrap();
 
-
         // assert that the detector found an issue
         assert!(found);
         // assert that the detector found the correct number of instances
@@ -165,7 +164,7 @@ mod storage_signed_array_detector {
             detector.title(),
             String::from("Signed integer array in storage (solc `<0.5.10`)")
         );
-            }
+    }
 
     #[test]
     fn test_regular_expression_works() {

@@ -78,7 +78,7 @@ mod tautology_or_contradiction_tests {
         assert!(found);
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
-            }
+    }
 }
 
 pub trait OperationIsTautologyOrContradiction {

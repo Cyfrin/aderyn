@@ -72,5 +72,5 @@ mod division_before_multiplication_detector_tests {
             detector.title(),
             String::from("Incorrect Order of Division and Multiplication")
         );
-            }
+    }
 }

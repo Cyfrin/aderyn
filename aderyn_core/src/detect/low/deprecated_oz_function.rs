@@ -105,5 +105,5 @@ mod deprecated_oz_functions_tests {
         // assert that the severity is low
         // assert that the title is correct
         // assert that the description is correct
-            }
+    }
 }

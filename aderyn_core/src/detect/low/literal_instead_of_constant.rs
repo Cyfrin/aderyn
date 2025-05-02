@@ -139,5 +139,5 @@ mod constants_instead_of_literals_tests {
         assert!(found);
         // assert that the detector finds the correct number of instances
         assert_eq!(detector.instances().len(), 8);
-            }
+    }
 }

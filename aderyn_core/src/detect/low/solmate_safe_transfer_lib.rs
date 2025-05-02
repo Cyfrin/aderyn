@@ -69,7 +69,7 @@ mod solmate_safe_transfer_lib_tests {
         assert!(found);
         // assert that the detector found the correct number of instances (1)
         assert_eq!(detector.instances().len(), 1);
-            }
+    }
 
     #[test]
 

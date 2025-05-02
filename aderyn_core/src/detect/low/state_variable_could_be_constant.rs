@@ -177,6 +177,5 @@ mod state_variable_could_be_constant_tests {
         assert!(found);
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
-
     }
 }

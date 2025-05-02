@@ -73,5 +73,5 @@ mod incorrect_shift_order_detector_tests {
         assert!(found);
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
-            }
+    }
 }

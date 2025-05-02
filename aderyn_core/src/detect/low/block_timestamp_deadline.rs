@@ -142,7 +142,7 @@ mod block_timestamp_deadline_detector_tests {
             String::from("Using `block.timestamp` for swap deadline offers no protection")
         );
         // assert that the description is correct
-            }
+    }
 
     #[test]
 
