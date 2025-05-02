@@ -90,8 +90,5 @@ mod centralization_risk_detector_tests {
         assert!(found);
         // assert that the number of instances found is 3
         assert_eq!(detector.instances().len(), 3);
-        // assert that the severity is Low
-        // assert that the title is correct
-        // assert that the description is correct
     }
 }

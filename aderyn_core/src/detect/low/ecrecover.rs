@@ -73,8 +73,5 @@ mod ecrecover_tests {
         assert!(found);
         // assert that the detector found the correct ecrecover
         assert_eq!(detector.instances().len(), 1);
-        // assert that the severity is low
-        // assert that the title is correct
-        // assert that the description is correct
     }
 }

@@ -98,9 +98,6 @@ mod unspecific_solidity_pragma_tests {
         assert!(found);
         // assert that the number of instances is correct
         assert_eq!(detector.instances().len(), 1);
-        // assert that the severity is low
-        // assert that the title is correct
-        // assert that the description is correct
     }
 
     #[test]
@@ -116,7 +113,6 @@ mod unspecific_solidity_pragma_tests {
         assert!(found);
         // assert that the number of instances is correct
         assert_eq!(detector.instances().len(), 1);
-        // assert that the severity is low
     }
 
     #[test]

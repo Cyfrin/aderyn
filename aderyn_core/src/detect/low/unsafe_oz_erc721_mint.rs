@@ -94,8 +94,5 @@ mod unsafe_erc721_mint_tests {
         assert!(found);
         // assert that the detector found the correct number of instance
         assert_eq!(detector.instances().len(), 1);
-        // assert that the severity is Low
-        // assert that the title is correct
-        // assert that the description is correct
     }
 }

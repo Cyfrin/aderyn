@@ -225,8 +225,5 @@ mod zero_address_check_tests {
                 panic!()
             }
         }
-        // assert that the severity is Low
-        // assert that the title is correct
-        // assert that the description is correct
     }
 }
