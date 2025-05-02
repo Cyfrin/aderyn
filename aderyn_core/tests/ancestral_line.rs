@@ -48,18 +48,18 @@ impl IssueDetector for AncestralLineDemonstrator {
             }
 
             if let Some(mut parent_chain) = assignment.ancestral_line(context) {
-                let sorted_chain = parent_chain.sort_by_src_position(context).unwrap();
+                let _sorted_chain = parent_chain.sort_by_src_position(context).unwrap();
 
-                println!("Sorted Chain");
-                for i in &sorted_chain[..sorted_chain.len() - 2] {
-                    print!("{:?}, ", i.node_type());
-                }
+                //println!("Sorted Chain");
+                //for i in &sorted_chain[..sorted_chain.len() - 2] {
+                //    print!("{:?}, ", i.node_type());
+                //}
                 parent_chain.reverse();
 
-                println!("Reverse parent chain");
-                for i in &parent_chain[..parent_chain.len() - 2] {
-                    print!("{:?}, ", i.node_type());
-                }
+                //println!("Reverse parent chain");
+                //for i in &parent_chain[..parent_chain.len() - 2] {
+                //    print!("{:?}, ", i.node_type());
+                //}
                 // assert_eq!(sorted_chain, parent_chain);
             }
         }
@@ -103,7 +103,6 @@ mod ancestral_line_demo_tests {
         let found = detector.detect(&context).unwrap();
         assert!(found);
 
-        println!("{:?}", detector.instances());
         println!("Total number of instances: {:?}", detector.instances().len());
         assert!(detector.instances().len() == 4);
     }

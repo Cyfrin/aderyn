@@ -65,7 +65,7 @@ mod peek_over_demonstrator_tests {
         let _ = detector.detect(&context).unwrap();
 
         let instances = detector.instances();
-        println!("{:?}", instances);
+        //println!("{:?}", instances);
 
         assert!(instances.len() == 2);
     }
