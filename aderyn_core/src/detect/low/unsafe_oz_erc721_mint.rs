@@ -90,9 +90,7 @@ mod unsafe_erc721_mint_tests {
 
         let mut detector = UnsafeERC721MintDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an abi encode packed
         assert!(found);
-        // assert that the detector found the correct number of instance
         assert_eq!(detector.instances().len(), 1);
     }
 }

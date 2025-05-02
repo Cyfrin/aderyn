@@ -117,9 +117,7 @@ mod asert_state_changes_tests {
         let mut detector = AssertStateChangeDetector::default();
         let found = detector.detect(&context).unwrap();
 
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
     }
 }

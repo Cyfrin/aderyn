@@ -123,9 +123,7 @@ mod nested_struct_in_mapping_detector_tests {
 
         let mut detector = NestedStructInMappingDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
     }
 
@@ -138,9 +136,7 @@ mod nested_struct_in_mapping_detector_tests {
 
         let mut detector = NestedStructInMappingDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector did not find an issue
         assert!(!found);
-        // assert that the detector did not find any instances
         assert_eq!(detector.instances().len(), 0);
     }
 }

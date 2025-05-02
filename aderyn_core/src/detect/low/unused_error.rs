@@ -80,13 +80,8 @@ mod unused_error_tests {
         );
 
         let mut detector = UnusedErrorDetector::default();
-        // Assert that the detector finds the unused error
         let found = detector.detect(&context).unwrap();
         assert!(found);
-        // Assert that the detector returns the correct number of instances
         assert_eq!(detector.instances().len(), 2);
-        // Assert that the detector returns the correct severity
-        // Assert that the detector returns the correct title
-        // Assert that the detector returns the correct description
     }
 }

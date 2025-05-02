@@ -144,9 +144,7 @@ mod public_variable_read_in_external_context_detector_tests {
 
         let mut detector = StateVariableReadExternalDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 4);
     }
 }

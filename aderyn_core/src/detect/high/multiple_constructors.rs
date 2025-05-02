@@ -73,9 +73,7 @@ mod multiple_constructors_detector_tests {
 
         let mut detector = MultipleConstructorsDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
     }
 
@@ -88,9 +86,7 @@ mod multiple_constructors_detector_tests {
 
         let mut detector = MultipleConstructorsDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector did not find an issue
         assert!(!found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 0);
     }
 }

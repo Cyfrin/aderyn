@@ -68,7 +68,6 @@ mod dangerous_unary_expression_tests {
         let found = detector.detect(&context).unwrap();
 
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
     }
 }

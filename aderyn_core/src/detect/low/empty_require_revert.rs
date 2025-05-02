@@ -69,10 +69,8 @@ mod require_with_string_tests {
         );
 
         let mut detector = EmptyRequireRevertDetector::default();
-        // assert that the detector finds something
         let found = detector.detect(&context).unwrap();
         assert!(found);
-        // assert that the detector returns the correct number of instances
         assert_eq!(detector.instances().len(), 2);
     }
 
@@ -83,7 +81,6 @@ mod require_with_string_tests {
         );
 
         let mut detector = EmptyRequireRevertDetector::default();
-        // assert that the detector finds something
         let found = detector.detect(&context).unwrap();
         assert!(!found);
     }

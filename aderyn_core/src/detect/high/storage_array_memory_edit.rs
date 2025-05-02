@@ -92,9 +92,7 @@ mod storage_array_edit_with_memory_tests {
 
         let mut detector = StorageArrayMemoryEditDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 1);
     }
 }

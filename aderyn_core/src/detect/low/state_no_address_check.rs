@@ -207,9 +207,7 @@ mod zero_address_check_tests {
 
         let mut detector = StateNoAddressCheckDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found the issue
         assert!(found);
-        // assert that the detector found the correct number of issues
         assert_eq!(detector.instances().len(), 3);
         for node_id in detector.instances().values() {
             if let ASTNode::Assignment(assignment) = context.nodes.get(node_id).unwrap() {

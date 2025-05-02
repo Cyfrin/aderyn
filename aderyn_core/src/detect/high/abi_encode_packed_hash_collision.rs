@@ -86,9 +86,7 @@ mod avoid_abi_encode_packed_tests {
 
         let mut detector = AvoidAbiEncodePackedDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an abi encode packed
         assert!(found);
-        // assert that the detector found the correct abi encode packed
         // failure0, failure1 and failure3
         assert_eq!(detector.instances().len(), 3);
     }

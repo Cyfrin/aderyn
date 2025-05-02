@@ -76,9 +76,7 @@ mod unspecific_solidity_pragma_tests {
 
         let mut detector = UnspecificSolidityPragmaDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an abi encode packed
         assert!(found);
-        // assert that the detector found the correct abi encode packed
         // failure0, failure1 and failure3
         assert_eq!(detector.instances().len(), 1);
     }
@@ -92,7 +90,6 @@ mod unspecific_solidity_pragma_tests {
 
         let mut detector = UnspecificSolidityPragmaDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an abi encode packed
         assert!(!found);
     }
 }

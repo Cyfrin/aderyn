@@ -86,7 +86,6 @@ mod centralization_risk_detector_tests {
 
         let mut detector = CentralizationRiskDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found a centralization risk
         assert!(found);
         // assert that the number of instances found is 3
         assert_eq!(detector.instances().len(), 3);

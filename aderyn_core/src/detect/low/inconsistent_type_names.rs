@@ -169,7 +169,6 @@ mod inconsistent_type_names_tests {
         );
 
         let mut detector = InconsistentTypeNamesDetector::default();
-        // assert that the detector finds the public Function
         let found = detector.detect(&context).unwrap();
         assert!(found);
 
@@ -184,7 +183,6 @@ mod inconsistent_type_names_tests {
         );
 
         let mut detector = InconsistentTypeNamesDetector::default();
-        // assert that the detector finds the public Function
         let found = detector.detect(&context).unwrap();
         assert!(found);
 

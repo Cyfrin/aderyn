@@ -92,7 +92,6 @@ mod contracts_with_todos_tests {
         let found = detector.detect(&context).unwrap();
 
         assert!(found);
-        // assert that the detector finds the correct number of instances
         assert_eq!(detector.instances().len(), 1);
     }
 }

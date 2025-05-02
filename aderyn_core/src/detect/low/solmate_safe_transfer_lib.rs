@@ -65,9 +65,7 @@ mod solmate_safe_transfer_lib_tests {
 
         let mut detector = SolmateSafeTransferLibDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found
         assert!(found);
-        // assert that the detector found the correct number of instances (1)
         assert_eq!(detector.instances().len(), 1);
     }
 
@@ -80,9 +78,7 @@ mod solmate_safe_transfer_lib_tests {
 
         let mut detector = SolmateSafeTransferLibDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found
         assert!(!found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 0);
     }
 }

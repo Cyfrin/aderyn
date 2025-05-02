@@ -83,10 +83,8 @@ mod useless_public_function_tests {
         );
 
         let mut detector = UnusedPublicFunctionDetector::default();
-        // assert that the detector finds the public Function
         let found = detector.detect(&context).unwrap();
         assert!(found);
-        // assert that the detector returns the correct number of instances
         assert_eq!(detector.instances().len(), 1);
     }
 
@@ -98,10 +96,8 @@ mod useless_public_function_tests {
         );
 
         let mut detector = UnusedPublicFunctionDetector::default();
-        // assert that the detector finds the public Function
         let found = detector.detect(&context).unwrap();
         assert!(!found);
-        // assert that the detector returns the correct number of instances
         assert_eq!(detector.instances().len(), 0);
     }
 
@@ -113,10 +109,8 @@ mod useless_public_function_tests {
         );
 
         let mut detector = UnusedPublicFunctionDetector::default();
-        // assert that the detector finds the public Function
         let found = detector.detect(&context).unwrap();
         assert!(!found);
-        // assert that the detector returns the correct number of instances
         assert_eq!(detector.instances().len(), 0);
     }
 }

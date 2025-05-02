@@ -69,9 +69,7 @@ mod ecrecover_tests {
 
         let mut detector = EcrecoverDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an ecrecover
         assert!(found);
-        // assert that the detector found the correct ecrecover
         assert_eq!(detector.instances().len(), 1);
     }
 }

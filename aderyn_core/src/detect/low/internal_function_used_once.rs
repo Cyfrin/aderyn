@@ -68,10 +68,8 @@ mod uselss_internal_function {
         );
 
         let mut detector = InternalFunctionUsedOnceDetector::default();
-        // assert that the detector finds the public Function
         let found = detector.detect(&context).unwrap();
         assert!(found);
-        // assert that the detector returns the correct number of instances
         assert_eq!(detector.instances().len(), 1);
     }
 }

@@ -66,9 +66,7 @@ mod non_reentrant_before_others_tests {
 
         let mut detector = NonReentrantBeforeOthersDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found something
         assert!(found);
-        // assert that the detector found the correct number
         assert_eq!(detector.instances().len(), 1);
 
         // assert that the line number is 10

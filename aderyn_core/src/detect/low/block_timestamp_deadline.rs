@@ -131,7 +131,6 @@ mod block_timestamp_deadline_detector_tests {
 
         let mut detector = BlockTimestampDeadlineDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found
         assert!(found);
         // assert that the number of instances found is correct
         assert_eq!(detector.instances().len(), 9);
@@ -150,7 +149,6 @@ mod block_timestamp_deadline_detector_tests {
 
         let mut detector = BlockTimestampDeadlineDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found
         assert!(found);
         // assert that the number of instances found is correct
         assert_eq!(detector.instances().len(), 8);

@@ -66,9 +66,7 @@ mod unsafe_erc20_functions_tests {
 
         let mut detector = UnsafeERC20OperationDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an abi encode packed
         assert!(found);
-        // assert that the detector found the correct abi encode packed
         // failure0, failure1 and failure3
         assert_eq!(detector.instances().len(), 5);
     }

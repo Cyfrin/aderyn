@@ -134,10 +134,8 @@ mod constants_instead_of_literals_tests {
         );
 
         let mut detector = LiteralsInsteadOfConstantsDetector::default();
-        // assert that the detector finds the public Function
         let found = detector.detect(&context).unwrap();
         assert!(found);
-        // assert that the detector finds the correct number of instances
         assert_eq!(detector.instances().len(), 8);
     }
 }
