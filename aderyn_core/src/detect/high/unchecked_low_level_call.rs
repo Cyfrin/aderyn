@@ -100,7 +100,6 @@ mod unchecked_low_level_calls_tests {
         let mut detector = UncheckedLowLevelCallDetector::default();
         let found = detector.detect(&context).unwrap();
 
-        // println!("{:#?}", detector.instances());
 
         // assert that the detector found an issue
         assert!(found);

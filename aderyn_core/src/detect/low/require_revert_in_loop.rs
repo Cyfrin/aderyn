@@ -106,7 +106,6 @@ mod reevrts_and_requires_in_loops {
         let mut detector = RequireRevertInLoopDetector::default();
         let found = detector.detect(&context).unwrap();
 
-        // println!("{:?}", detector.instances());
 
         // assert that the detector found an issue
         assert!(found);

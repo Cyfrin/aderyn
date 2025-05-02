@@ -173,7 +173,6 @@ mod state_variable_could_be_immutable_tests {
         assert!(found);
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
-        println!("{:?}", detector.instances());
         // assert the severity is low
     }
 }

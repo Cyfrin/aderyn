@@ -82,7 +82,6 @@ mod unchecked_send_tests {
         let mut detector = UncheckedSendDetector::default();
         let found = detector.detect(&context).unwrap();
 
-        println!("Instances {:#?}", detector.instances());
 
         // assert that the detector found an issue
         assert!(found);

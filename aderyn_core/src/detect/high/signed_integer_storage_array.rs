@@ -156,7 +156,6 @@ mod storage_signed_array_detector {
         let mut detector = StorageSignedIntegerArrayDetector::default();
         let found = detector.detect(&context).unwrap();
 
-        println!("{:?}", detector.instances());
 
         // assert that the detector found an issue
         assert!(found);

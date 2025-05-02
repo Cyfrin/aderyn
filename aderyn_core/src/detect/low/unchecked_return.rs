@@ -96,7 +96,6 @@ mod unchecked_return_tests {
         let found = detector.detect(&context).unwrap();
         // assert that the detector found an issue
 
-        println!("{:?}", detector.instances());
 
         assert!(found);
         // assert that the detector found the correct number of instances

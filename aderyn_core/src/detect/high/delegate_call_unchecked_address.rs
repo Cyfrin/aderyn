@@ -103,7 +103,6 @@ mod delegate_call_no_address_check_tests {
         let mut detector = DelegateCallUncheckedAddressDetector::default();
         let found = detector.detect(&context).unwrap();
 
-        println!("{:#?}", detector.found_instances);
 
         // assert that the detector found an issue
         assert!(found);

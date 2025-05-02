@@ -66,7 +66,6 @@ mod yul_return_detector_tests {
         assert!(found);
         // assert that the detector found the correct number of instances
 
-        println!("{:?}", detector.instances());
 
         assert_eq!(detector.instances().len(), 1);
         // assert the severity is high

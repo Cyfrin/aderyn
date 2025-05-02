@@ -276,7 +276,6 @@ mod incorrect_erc721_tests {
 
         // We capture every faulty method in the IncorrectERC721 contract that has the wrong return
         // type
-        println!("{:#?}", detector.instances());
 
         // assert that the detector found an issue
         assert!(found);

@@ -164,7 +164,6 @@ mod contract_locks_ether_detector_tests {
         let mut detector = ContractLocksEtherDetector::default();
         let found = detector.detect(&context).unwrap();
 
-        println!("{:#?}", detector.instances());
 
         // assert that the detector found an issue
         assert!(found);

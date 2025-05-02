@@ -172,7 +172,6 @@ mod inconsistent_type_names_tests {
         // assert that the detector finds the public Function
         let found = detector.detect(&context).unwrap();
         assert!(found);
-        println!("{:#?}", detector.instances());
 
         assert_eq!(detector.instances().len(), 7);
         // assert that the detector returns the correct severity
@@ -189,7 +188,6 @@ mod inconsistent_type_names_tests {
         // assert that the detector finds the public Function
         let found = detector.detect(&context).unwrap();
         assert!(found);
-        println!("{:#?}", detector.instances());
 
         assert_eq!(detector.instances().len(), 2);
         // assert that the detector returns the correct severity

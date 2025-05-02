@@ -109,14 +109,12 @@ mod state_variable_changes_without_events_tests {
         let mut detector = StateVariableChangesWithoutEventDetector::default();
         let found = detector.detect(&context).unwrap();
 
-        println!("{:#?}", detector.instances());
 
         // assert that the detector found an issue
         assert!(found);
         // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 8);
 
-        println!("{:?}", detector.instances());
         // assert the severity is low
     }
 }

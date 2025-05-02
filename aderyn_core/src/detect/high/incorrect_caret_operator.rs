@@ -98,7 +98,6 @@ mod incorrect_use_of_caret_operator_tests {
         let mut detector = IncorrectUseOfCaretOperatorDetector::default();
         let found = detector.detect(&context).unwrap();
 
-        println!("{:#?}", detector.instances());
 
         // assert that the detector found an issue
         assert!(found);

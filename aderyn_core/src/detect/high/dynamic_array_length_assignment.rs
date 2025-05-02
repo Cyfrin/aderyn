@@ -85,7 +85,6 @@ mod dynamic_array_length_assignment_tests {
         let mut detector = DynamicArrayLengthAssignmentDetector::default();
         let found = detector.detect(&context).unwrap();
 
-        println!("{:#?}", detector.instances());
 
         // assert that the detector found an issue
         assert!(found);

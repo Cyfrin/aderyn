@@ -123,7 +123,6 @@ mod unprotected_initializer_tests {
         let mut detector = UnprotectedInitializerDetector::default();
         let found = detector.detect(&context).unwrap(); // assert that the detector found an abi encode packed
         assert!(found);
-        // println!("{:?}", detector.instances());
         assert_eq!(detector.instances().len(), 2); // Now there are two instances: one in
                                                    // InitializedContract and one in
                                                    // ReinitializerContract
