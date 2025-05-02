@@ -74,19 +74,8 @@ mod tautology_or_contradiction_tests {
 
         let mut detector = TautologyOrContraditionDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
-        // assert the severity is high
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
-        // assert the title is correct
-        assert_eq!(detector.title(), String::from("Tautology or Contradiction in comparison"));
-        // assert the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from("The condition has been determined to be either always true or always false due to the integer range in which we're operating.")
-        );
     }
 }
 

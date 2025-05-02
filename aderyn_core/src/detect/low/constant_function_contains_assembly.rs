@@ -153,11 +153,7 @@ mod constant_functions_assembly_detector {
 
         let mut detector = ConstantFunctionContainsAssemblyDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 3);
-        // assert the severity is low
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

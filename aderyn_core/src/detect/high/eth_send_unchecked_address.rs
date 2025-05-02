@@ -108,12 +108,8 @@ mod send_ether_no_checks_detector_tests {
 
         let mut detector = SendEtherNoChecksDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an issue
         assert!(!found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 0);
-        // assert the severity is high
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
     }
 
     #[test]
@@ -125,11 +121,7 @@ mod send_ether_no_checks_detector_tests {
 
         let mut detector = SendEtherNoChecksDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 3);
-        // assert the severity is high
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
     }
 }

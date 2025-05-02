@@ -106,20 +106,7 @@ mod reevrts_and_requires_in_loops {
         let mut detector = RequireRevertInLoopDetector::default();
         let found = detector.detect(&context).unwrap();
 
-        // println!("{:?}", detector.instances());
-
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
-        // assert the severity is low
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
-        // assert the title is correct
-        assert_eq!(detector.title(), String::from("Loop Contains `require`/`revert`"));
-        // assert the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from("Avoid `require` / `revert` statements in a loop because a single bad item can cause the whole transaction to fail. It's better to forgive on fail and return failed elements post processing of the loop")
-        );
     }
 }

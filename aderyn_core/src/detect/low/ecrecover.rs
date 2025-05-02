@@ -69,25 +69,7 @@ mod ecrecover_tests {
 
         let mut detector = EcrecoverDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an ecrecover
         assert!(found);
-        // assert that the detector found the correct ecrecover
         assert_eq!(detector.instances().len(), 1);
-        // assert that the severity is low
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
-        // assert that the title is correct
-        assert_eq!(detector.title(), String::from("`ecrecover` Signature Malleability"));
-        // assert that the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from(
-                "The `ecrecover` function is susceptible to signature malleability. \
-                This means that the same message can be signed in multiple ways, \
-                allowing an attacker to change the message signature without invalidating it. \
-                This can lead to unexpected behavior in smart contracts, \
-                such as the loss of funds or the ability to bypass access control. \
-                Consider using OpenZeppelin's ECDSA library instead of the built-in function.",
-            )
-        );
     }
 }

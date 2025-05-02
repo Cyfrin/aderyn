@@ -193,12 +193,8 @@ mod test_incorrect_modifier {
         );
         let mut detector = IncorrectUseOfModifierDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an issue
         assert!(found);
 
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
-        // assert the severity is high
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
     }
 }

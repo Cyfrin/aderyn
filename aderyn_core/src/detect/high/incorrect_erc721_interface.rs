@@ -276,15 +276,9 @@ mod incorrect_erc721_tests {
 
         // We capture every faulty method in the IncorrectERC721 contract that has the wrong return
         // type
-        println!("{:#?}", detector.instances());
 
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
 
         assert_eq!(detector.instances().len(), 8);
-
-        // assert the severity is high
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
     }
 }

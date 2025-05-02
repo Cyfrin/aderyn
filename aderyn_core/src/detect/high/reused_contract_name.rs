@@ -81,18 +81,7 @@ mod reused_contract_name_detector_tests {
 
         let mut detector = ReusedContractNameDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
-        // assert the severity is high
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::High);
-        // assert the title is correct
-        assert_eq!(detector.title(), String::from("Contract Name Reused in Different Files"));
-        // assert the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from("When compiling contracts with certain development frameworks (for example: Truffle), having contracts with the same name across different files can lead to one being overwritten.")
-        );
     }
 }

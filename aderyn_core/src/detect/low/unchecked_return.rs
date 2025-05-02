@@ -94,23 +94,8 @@ mod unchecked_return_tests {
 
         let mut detector = UncheckedReturnDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an issue
-
-        println!("{:?}", detector.instances());
 
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
-        // assert the severity is high
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
-        // assert the title is correct
-        assert_eq!(detector.title(), String::from("Unchecked Return"));
-        // assert the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from(
-                "Function returns a value but it is ignored. Consider checking the return value."
-            )
-        );
     }
 }

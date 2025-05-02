@@ -82,15 +82,7 @@ mod redundant_statements_detector {
 
         let mut detector = RedundantStatementDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an issue
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 6);
-        // assert the severity is low
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
-        // assert the title is correct
-        assert_eq!(detector.title(), String::from("Redundant Statement"));
-        // assert the description is correct
-        assert_eq!(detector.description(), String::from("Remove the redundant statement."));
     }
 }

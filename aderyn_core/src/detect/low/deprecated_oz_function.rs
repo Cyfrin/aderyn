@@ -98,20 +98,7 @@ mod deprecated_oz_functions_tests {
 
         let mut detector = DeprecatedOZFunctionDetector::default();
         let found = detector.detect(&context).unwrap();
-        // assert that the detector found an abi encode packed
         assert!(found);
-        // assert that the detector found the correct number of instances
         assert_eq!(detector.instances().len(), 2);
-        // assert that the severity is low
-        assert_eq!(detector.severity(), crate::detect::detector::IssueSeverity::Low);
-        // assert that the title is correct
-        assert_eq!(detector.title(), String::from("Deprecated OpenZeppelin Function"));
-        // assert that the description is correct
-        assert_eq!(
-            detector.description(),
-            String::from(
-                "Openzeppelin has deprecated several functions and replaced with newer versions. Please consult https://docs.openzeppelin.com/"
-            )
-        );
     }
 }

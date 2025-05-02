@@ -105,7 +105,7 @@ mod parent_chain_demo_tests {
         let found = detector.detect(&context).unwrap();
         assert!(found);
 
-        println!("{:?}", detector.instances());
+        //println!("{:?}", detector.instances());
         println!("Total number of instances: {:?}", detector.instances().len());
         assert!(detector.instances().len() == 3);
     }
