@@ -1,6 +1,5 @@
 use std::{
     collections::{BTreeMap, BTreeSet},
-    convert::identity,
     error::Error,
 };
 
@@ -58,9 +57,7 @@ impl IssueDetector for UnusedStateVariablesDetector {
                 {
                     // If this variable is defined inside a contract, make sure it's not an abstract
                     // contract before capturing it
-                    if !contract.is_abstract.is_some_and(identity)
-                        && contract.kind == ContractKind::Contract
-                    {
+                    if !contract.is_abstract && contract.kind == ContractKind::Contract {
                         capture!(self, context, node);
                     }
                 } else {
