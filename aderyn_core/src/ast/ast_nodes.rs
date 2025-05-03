@@ -194,7 +194,7 @@ ast_node!(
         nodes: Vec<ContractDefinitionNode>,
         scope: NodeID,
         fully_implemented: bool,
-        linearized_base_contracts: Option<Vec<NodeID>>,
+        linearized_base_contracts: Vec<NodeID>,
     }
 );
 
