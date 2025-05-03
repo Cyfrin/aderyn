@@ -1,4 +1,4 @@
-use std::{collections::BTreeMap, convert::identity, error::Error};
+use std::{collections::BTreeMap, error::Error};
 
 use crate::ast::{ContractKind, NodeID, NodeType};
 
@@ -24,7 +24,7 @@ impl IssueDetector for LocalVariableShadowingDetector {
         for contract in context
             .contract_definitions()
             .into_iter()
-            .filter(|&c| c.kind != ContractKind::Library && !c.is_abstract.is_some_and(identity))
+            .filter(|&c| c.kind != ContractKind::Library && !c.is_abstract)
         {
             let current_contract_variables = ExtractVariableDeclarations::from(contract).extracted;
             let local_contract_variables = current_contract_variables
