@@ -15,7 +15,7 @@ use crate::{
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
-use eyre::{eyre, Result};
+use eyre::Result;
 
 #[derive(Default)]
 pub struct StateVariableReadExternalDetector {
@@ -101,10 +101,8 @@ fn find_all_public_state_variables_names_for_contract(
     context: &WorkspaceContext,
     contract: &ContractDefinition,
 ) -> Result<HashSet<String>, Box<dyn Error>> {
-    let inheritance_ancestors =
-        contract.linearized_base_contracts.as_ref().ok_or(eyre!("base contracts not found!"))?;
-
-    Ok(inheritance_ancestors
+    Ok(contract
+        .linearized_base_contracts
         .iter()
         .flat_map(|ancestor_id| {
             if let Some(ancestor) = context.nodes.get(ancestor_id) {

@@ -29,39 +29,37 @@ impl IssueDetector for MissingInheritanceDetector {
         let mut inheritance_map: HashMap<NodeID, Vec<NodeID>> = Default::default();
 
         for contract in context.contract_definitions() {
-            if let Some(full_contract) = &contract.linearized_base_contracts {
-                inheritance_map
-                    .entry(contract.id)
-                    .or_insert(Vec::from_iter(full_contract.iter().copied()));
+            let full_contract = &contract.linearized_base_contracts;
+            inheritance_map
+                .entry(contract.id)
+                .or_insert(Vec::from_iter(full_contract.iter().copied()));
 
-                for contract_node_id in full_contract {
-                    if let Some(ASTNode::ContractDefinition(contract_node)) =
-                        context.nodes.get(contract_node_id)
-                    {
-                        let function_selectors: Vec<String> = contract_node
-                            .function_definitions()
-                            .iter()
-                            .flat_map(|f| f.function_selector.clone())
-                            .collect();
+            for contract_node_id in full_contract {
+                if let Some(ASTNode::ContractDefinition(contract_node)) =
+                    context.nodes.get(contract_node_id)
+                {
+                    let function_selectors: Vec<String> = contract_node
+                        .function_definitions()
+                        .iter()
+                        .flat_map(|f| f.function_selector.clone())
+                        .collect();
 
-                        let all_variables =
-                            ExtractVariableDeclarations::from(contract_node).extracted;
+                    let all_variables = ExtractVariableDeclarations::from(contract_node).extracted;
 
-                        let state_variable_function_selectors: Vec<String> = all_variables
-                            .into_iter()
-                            .flat_map(|v| v.function_selector.clone())
-                            .collect();
+                    let state_variable_function_selectors: Vec<String> = all_variables
+                        .into_iter()
+                        .flat_map(|v| v.function_selector.clone())
+                        .collect();
 
-                        let mut all_function_selectors = Vec::with_capacity(
-                            function_selectors.len() + state_variable_function_selectors.len(),
-                        );
-                        all_function_selectors.extend(function_selectors);
-                        all_function_selectors.extend(state_variable_function_selectors);
+                    let mut all_function_selectors = Vec::with_capacity(
+                        function_selectors.len() + state_variable_function_selectors.len(),
+                    );
+                    all_function_selectors.extend(function_selectors);
+                    all_function_selectors.extend(state_variable_function_selectors);
 
-                        contract_function_selectors
-                            .entry(contract.id)
-                            .or_insert(all_function_selectors);
-                    }
+                    contract_function_selectors
+                        .entry(contract.id)
+                        .or_insert(all_function_selectors);
                 }
             }
         }
@@ -114,7 +112,7 @@ impl IssueDetector for MissingInheritanceDetector {
             if let Some(ASTNode::ContractDefinition(c)) = context.nodes.get(&contract) {
                 // If the contract c already has some inheritance, don't report it because we want
                 // to respect the developer's choice.
-                if c.linearized_base_contracts.as_ref().is_some_and(|chain| chain.len() != 1) {
+                if c.linearized_base_contracts.len() != 1 {
                     continue;
                 }
                 let missing_inheritances_vector =
