@@ -60,7 +60,7 @@ impl Display for InheritanceSpecifier {
 
 impl Display for ContractDefinition {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        if let Some(true) = self.is_abstract {
+        if self.is_abstract {
             f.write_str("abstract ")?;
         }
 
