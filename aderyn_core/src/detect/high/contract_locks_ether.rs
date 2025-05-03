@@ -71,7 +71,7 @@ mod contract_eth_helper {
 
     impl ContractDefinition {
         pub fn can_accept_eth(&self, context: &WorkspaceContext) -> Option<bool> {
-            let contracts = self.linearized_base_contracts.as_ref()?;
+            let contracts = &self.linearized_base_contracts;
             for contract_id in contracts {
                 let funcs =
                     ExtractFunctionDefinitions::from(context.nodes.get(contract_id)?).extracted;
@@ -92,7 +92,7 @@ mod contract_eth_helper {
                 can be called which takes the execution flow in a path where there is possibility to send back eth away from
                 the contract using the low level `call{value: XXX}` or `transfer` or `send`.
             */
-            let contracts = self.linearized_base_contracts.as_ref()?;
+            let contracts = &self.linearized_base_contracts;
             for contract_id in contracts {
                 if let ASTNode::ContractDefinition(contract) = context.nodes.get(contract_id)? {
                     let funcs = contract

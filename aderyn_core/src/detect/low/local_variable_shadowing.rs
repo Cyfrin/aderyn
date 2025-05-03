@@ -89,9 +89,8 @@ mod contract_hierarchy_variable_helpers {
             &self,
             context: &WorkspaceContext,
         ) -> Option<Vec<VariableDeclaration>> {
-            let contracts = self.linearized_base_contracts.as_ref()?;
             let mut all_state_variable_ids = vec![];
-            for contract_id in contracts {
+            for contract_id in self.linearized_base_contracts.iter() {
                 if let ASTNode::ContractDefinition(c) = context.nodes.get(contract_id)? {
                     let variable_declarations = ExtractVariableDeclarations::from(c).extracted;
                     all_state_variable_ids
