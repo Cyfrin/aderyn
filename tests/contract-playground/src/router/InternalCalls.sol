@@ -1,0 +1,109 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+pragma solidity 0.8.29;
+
+// Positive examples
+
+// Straightforward internal calls
+contract Basic {
+    function help1() private {}
+
+    function main() public {
+        help1();
+        main();
+    }
+}
+
+// Basic Inheritance
+contract PBasic2 {
+    function help1() internal virtual {
+        help2();
+        PBasic2.help2();
+    }
+
+    function help2() internal virtual {}
+}
+
+contract Basic2 is PBasic2 {
+    function main() public {
+        help1();
+        help2();
+        PBasic2.help2();
+        Basic2.help2();
+    }
+
+    function help2() internal override {}
+}
+
+// Diamond inheritance (super calls)
+contract Basic3Top {
+    function help() public virtual {}
+}
+
+contract Basic3Left is Basic3Top {
+    function help() public virtual override {
+        super.help();
+    }
+}
+
+contract Basic3Right is Basic3Top {
+    function help() public virtual override {
+        super.help();
+    }
+}
+
+contract Basic3Down1 is Basic3Top, Basic3Left, Basic3Right {
+    function help()
+        public
+        virtual
+        override(Basic3Top, Basic3Right, Basic3Left)
+    {
+        super.help();
+    }
+}
+
+contract Basic3Down2 is Basic3Left, Basic3Right {
+    function help() public virtual override(Basic3Right, Basic3Left) {
+        super.help();
+    }
+}
+
+// Libraries
+
+library Basic4Lib {
+    function help1(uint256 a, mapping(uint256 => string) storage ref) internal {
+        ref[a] = "hello world!";
+    }
+}
+
+contract Basic4 {
+    using Basic4Lib for *;
+    mapping(uint256 => string) ref;
+
+    function main() public {
+        uint256 a = 10;
+        uint8 b = 5;
+
+        // Internal calls
+        a.help1(ref);
+        b.help1(ref);
+        Basic4Lib.help1(a, ref);
+        Basic4Lib.help1(b, ref);
+    }
+}
+
+// Getter function
+
+contract PBasic5 {
+    function d() external virtual returns (uint256, bool, uint256) {}
+}
+
+contract Basic5 is PBasic5 {
+    Data public override d;
+}
+
+struct Data {
+    uint256 a;
+    mapping(uint256 => bytes) b; // Will be skipped as return value in getter function
+    bool c;
+    uint256 d;
+}
