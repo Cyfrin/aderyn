@@ -27,6 +27,29 @@ impl FunctionDefinition {
             &StateMutability::NonPayable
         }
     }
+
+    /// HACK
+    /// Internal functions don't have function selectors, because it can have parameters like
+    /// storage pointers. In order to identify internal functions that override other internal
+    /// functions we must be able to pick a combination of type strings and func names to do the
+    /// same.
+    ///
+    /// TODO: Find a better way
+    pub fn selectorish(&self) -> String {
+        let func_name = self.name.to_string();
+        let mut t = String::new();
+        for param in self.parameters.parameters.iter() {
+            if let Some(ts) = param.type_descriptions.type_string.as_ref() {
+                t.push_str(ts);
+            }
+            t.push('!');
+            if let Some(ti) = param.type_descriptions.type_identifier.as_ref() {
+                t.push_str(ti);
+            }
+            t.push('@');
+        }
+        func_name + ":" + &t
+    }
 }
 
 impl VariableDeclaration {

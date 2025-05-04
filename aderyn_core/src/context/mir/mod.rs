@@ -1,4 +1,5 @@
 //! Mir - Middle Intermediate Representation
 
-mod router;
+pub mod router;
+
 pub struct Mir {}

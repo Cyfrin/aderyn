@@ -24,6 +24,10 @@ contract PBasic2 {
 }
 
 contract Basic2 is PBasic2 {
+    struct Orange {
+        uint256 age;
+    }
+
     function main() public {
         help1();
         help2();
@@ -32,6 +36,8 @@ contract Basic2 is PBasic2 {
     }
 
     function help2() internal override {}
+
+    function g(Orange memory f) public {}
 }
 
 // Diamond inheritance (super calls)
