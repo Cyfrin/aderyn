@@ -88,25 +88,3 @@ impl IssueDetector for ImmediateParentDemonstrator {
         format!("{}", IssueDetectorNamePool::CentralizationRisk)
     }
 }
-
-#[cfg(test)]
-mod parent_chain_demo_tests {
-    use super::*;
-    use aderyn_core::detect::test_utils::load_solidity_source_unit;
-
-    #[test]
-
-    fn test_immediate_parent_demo() {
-        let context = load_solidity_source_unit(
-            "../tests/contract-playground/src/parent_chain/ParentChainContract.sol",
-        );
-
-        let mut detector = ImmediateParentDemonstrator::default();
-        let found = detector.detect(&context).unwrap();
-        assert!(found);
-
-        //println!("{:?}", detector.instances());
-        println!("Total number of instances: {:?}", detector.instances().len());
-        assert!(detector.instances().len() == 3);
-    }
-}

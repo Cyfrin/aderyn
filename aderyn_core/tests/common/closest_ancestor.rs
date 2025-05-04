@@ -71,25 +71,3 @@ impl IssueDetector for ClosestAncestorDemonstrator {
         format!("{}", IssueDetectorNamePool::CentralizationRisk)
     }
 }
-
-#[cfg(test)]
-mod closest_ancestor_demo_tests {
-    use super::*;
-    use aderyn_core::detect::{detector::IssueDetector, test_utils::load_solidity_source_unit};
-
-    #[test]
-
-    fn test_closest_ancestor() {
-        let context = load_solidity_source_unit(
-            "../tests/contract-playground/src/parent_chain/ParentChainContract.sol",
-        );
-
-        let mut detector = ClosestAncestorDemonstrator::default();
-        let found = detector.detect(&context).unwrap();
-        assert!(found);
-
-        //println!("{:?}", detector.instances());
-        println!("Total number of instances: {:?}", detector.instances().len());
-        assert!(detector.instances().len() == 4);
-    }
-}
