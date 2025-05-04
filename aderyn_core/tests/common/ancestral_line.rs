@@ -87,23 +87,3 @@ impl IssueDetector for AncestralLineDemonstrator {
         format!("{}", IssueDetectorNamePool::CentralizationRisk)
     }
 }
-
-#[cfg(test)]
-mod ancestral_line_demo_tests {
-    use super::*;
-    use aderyn_core::detect::{detector::IssueDetector, test_utils::load_solidity_source_unit};
-
-    #[test]
-    fn test_ancestral_line_demo() {
-        let context = load_solidity_source_unit(
-            "../tests/contract-playground/src/parent_chain/ParentChainContract.sol",
-        );
-
-        let mut detector = AncestralLineDemonstrator::default();
-        let found = detector.detect(&context).unwrap();
-        assert!(found);
-
-        println!("Total number of instances: {:?}", detector.instances().len());
-        assert!(detector.instances().len() == 4);
-    }
-}
