@@ -13,8 +13,6 @@ use solidity_ast::{
 };
 use std::path::{Path, PathBuf};
 
-use super::ensure_valid_solidity_file;
-
 pub fn load_solidity_source_unit(filepath: &str) -> WorkspaceContext {
     let solidity_file = &ensure_valid_solidity_file(filepath);
 
@@ -142,4 +140,25 @@ fn absorb_ast_content_into_context(
         eprintln!("{:?}", err);
         std::process::exit(1);
     });
+}
+
+fn ensure_valid_solidity_file(filepath: &str) -> PathBuf {
+    let filepath = PathBuf::from(filepath);
+
+    if !filepath.exists() {
+        eprintln!("{} does not exist!", filepath.to_string_lossy());
+        std::process::exit(1);
+    }
+
+    let extension = filepath.extension().unwrap_or_else(|| {
+        eprintln!("{} is not a solidity file!", filepath.to_string_lossy());
+        std::process::exit(1);
+    });
+
+    if extension != "sol" {
+        eprintln!("Please make sure {} represents a solidity file!", filepath.to_string_lossy());
+        std::process::exit(1);
+    }
+
+    std::fs::canonicalize(filepath).unwrap()
 }
