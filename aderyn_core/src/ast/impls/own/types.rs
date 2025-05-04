@@ -1,45 +1,45 @@
 use crate::ast::*;
-use std::hash::{Hash, Hasher};
 
-impl PartialEq for ElementaryTypeName {
-    fn eq(&self, other: &Self) -> bool {
-        self.state_mutability.eq(&other.state_mutability)
-            && self.type_descriptions.eq(&other.type_descriptions)
-    }
-}
-
-impl Hash for ElementaryTypeName {
-    fn hash<H: Hasher>(&self, state: &mut H) {
-        self.state_mutability.hash(state);
-        self.name.hash(state);
-        self.type_descriptions.hash(state);
-    }
-}
-
-impl PartialEq for UserDefinedTypeName {
-    fn eq(&self, other: &Self) -> bool {
-        self.referenced_declaration.eq(&other.referenced_declaration)
-    }
-}
-
-impl Hash for UserDefinedTypeName {
-    fn hash<H: Hasher>(&self, state: &mut H) {
-        self.path_node.hash(state);
-        self.referenced_declaration.hash(state);
-        self.name.hash(state);
-        self.type_descriptions.hash(state);
-    }
-}
-
-impl TypeName {
-    pub fn get_node_id(&self) -> Option<NodeID> {
+impl Expression {
+    pub fn type_descriptions(&self) -> Option<&TypeDescriptions> {
         match self {
-            TypeName::FunctionTypeName(node) => Some(node.id),
-            TypeName::ArrayTypeName(node) => Some(node.id),
-            TypeName::Mapping(node) => Some(node.id),
-            TypeName::UserDefinedTypeName(node) => Some(node.id),
-            TypeName::ElementaryTypeName(node) => Some(node.id),
-            TypeName::Raw(_) => None,
+            Expression::Literal(Literal { type_descriptions, .. }) => Some(type_descriptions),
+            Expression::Identifier(Identifier { type_descriptions, .. }) => Some(type_descriptions),
+            Expression::UnaryOperation(UnaryOperation { type_descriptions, .. }) => {
+                Some(type_descriptions)
+            }
+            Expression::BinaryOperation(BinaryOperation { type_descriptions, .. }) => {
+                Some(type_descriptions)
+            }
+            Expression::Conditional(Conditional { type_descriptions, .. }) => {
+                Some(type_descriptions)
+            }
+            Expression::Assignment(Assignment { type_descriptions, .. }) => Some(type_descriptions),
+            Expression::FunctionCall(FunctionCall { type_descriptions, .. }) => {
+                Some(type_descriptions)
+            }
+            Expression::FunctionCallOptions(FunctionCallOptions { type_descriptions, .. }) => {
+                Some(type_descriptions)
+            }
+            Expression::IndexAccess(IndexAccess { type_descriptions, .. }) => {
+                Some(type_descriptions)
+            }
+            Expression::IndexRangeAccess(IndexRangeAccess { type_descriptions, .. }) => {
+                Some(type_descriptions)
+            }
+            Expression::MemberAccess(MemberAccess { type_descriptions, .. }) => {
+                Some(type_descriptions)
+            }
+            Expression::ElementaryTypeNameExpression(ElementaryTypeNameExpression {
+                type_descriptions,
+                ..
+            }) => Some(type_descriptions),
+            Expression::TupleExpression(TupleExpression { type_descriptions, .. }) => {
+                Some(type_descriptions)
+            }
+            Expression::NewExpression(NewExpression { type_descriptions, .. }) => {
+                Some(type_descriptions)
+            }
         }
     }
 }

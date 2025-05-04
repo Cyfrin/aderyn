@@ -1,28 +1,6 @@
-use crate::ast::{ImportDirective, NodeID, SourceUnit, SourceUnitNode};
+use crate::ast::{ImportDirective, SourceUnit, SourceUnitNode};
 use eyre::{eyre, Result};
 use std::io;
-
-impl SourceUnitNode {
-    pub fn get_node_id(&self) -> Option<NodeID> {
-        match self {
-            SourceUnitNode::PragmaDirective(pragma_directive) => Some(pragma_directive.id),
-            SourceUnitNode::ImportDirective(import_directive) => Some(import_directive.id),
-            SourceUnitNode::ContractDefinition(contract_definition) => Some(contract_definition.id),
-            SourceUnitNode::StructDefinition(struct_definition) => Some(struct_definition.id),
-            SourceUnitNode::EnumDefinition(enum_definition) => Some(enum_definition.id),
-            SourceUnitNode::ErrorDefinition(error_definition) => Some(error_definition.id),
-            SourceUnitNode::VariableDeclaration(variable_declaration) => {
-                Some(variable_declaration.id)
-            }
-            SourceUnitNode::UserDefinedValueTypeDefinition(user_defined_value_type_definition) => {
-                Some(user_defined_value_type_definition.id)
-            }
-            SourceUnitNode::FunctionDefinition(function_defn) => Some(function_defn.id),
-            SourceUnitNode::UsingForDirective(using_for_directive) => Some(using_for_directive.id),
-            SourceUnitNode::EventDefinition(event_definition) => Some(event_definition.id),
-        }
-    }
-}
 
 impl SourceUnit {
     pub fn source_line(&self, src: &str) -> Result<usize> {
