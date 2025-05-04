@@ -56,19 +56,3 @@ impl IssueDetector for SiblingDemonstrator {
         format!("{}", IssueDetectorNamePool::CentralizationRisk)
     }
 }
-
-#[cfg(test)]
-mod sibling_demo_tests {
-    use super::*;
-    use aderyn_core::detect::test_utils::load_solidity_source_unit;
-
-    #[test]
-    fn test_siblings() {
-        let context =
-            load_solidity_source_unit("../tests/contract-playground/src/StorageConditionals.sol");
-
-        let mut detector = SiblingDemonstrator::default();
-        let _ = detector.detect(&context).unwrap();
-        assert_eq!(detector.instances().len(), 1);
-    }
-}

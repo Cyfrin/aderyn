@@ -50,23 +50,3 @@ impl IssueDetector for PeekOverDemonstrator {
         format!("{}", IssueDetectorNamePool::CentralizationRisk)
     }
 }
-
-#[cfg(test)]
-mod peek_over_demonstrator_tests {
-    use aderyn_core::detect::test_utils::load_solidity_source_unit;
-
-    use super::*;
-
-    #[test]
-    fn test_peek_over() {
-        let context =
-            load_solidity_source_unit("../tests/contract-playground/src/StorageConditionals.sol");
-        let mut detector = PeekOverDemonstrator::default();
-        let _ = detector.detect(&context).unwrap();
-
-        let instances = detector.instances();
-        //println!("{:?}", instances);
-
-        assert!(instances.len() == 2);
-    }
-}

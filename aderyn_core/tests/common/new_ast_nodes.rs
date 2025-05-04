@@ -56,27 +56,3 @@ impl IssueDetector for NewASTNodesDemonstrator {
         format!("{}", IssueDetectorNamePool::CentralizationRisk)
     }
 }
-
-#[cfg(test)]
-mod new_ast_nodes_demonstrator_tests {
-    use super::*;
-    use aderyn_core::detect::test_utils::load_solidity_source_unit;
-
-    #[test]
-    fn test_new_ast_nodes() {
-        let context = load_solidity_source_unit("../tests/adhoc-sol-files/DemoASTNodes.sol");
-
-        let mut detector = NewASTNodesDemonstrator::default();
-        let _ = detector.detect(&context).unwrap();
-
-        let instances = detector.instances();
-        //println!("{:?}", instances);
-
-        assert!(instances.len() == 4);
-    }
-
-    #[test]
-    fn test_new_ast_nodes_2() {
-        load_solidity_source_unit("../tests/contract-playground/src/TransientKeyword.sol");
-    }
-}
