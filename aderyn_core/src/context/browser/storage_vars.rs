@@ -1022,36 +1022,3 @@ mod approximate_storage_change_finder_tests {
         assert!(finder.manipulated_storage_pointers.is_empty());
     }
 }
-
-#[cfg(test)]
-mod storage_vars_tests_helper {
-
-    // Using unwraps here are OK *only* because it's compiled with #[cfg(test)]
-
-    use crate::context::{
-        browser::ExtractVariableDeclarations, workspace_context::WorkspaceContext,
-    };
-
-    use super::{ContractDefinition, FunctionDefinition, NodeID};
-
-    impl WorkspaceContext {
-        pub fn find_contract_by_name(&self, name: &str) -> &ContractDefinition {
-            self.contract_definitions().into_iter().find(|c| c.name.as_str() == name).unwrap()
-        }
-    }
-
-    impl ContractDefinition {
-        pub fn find_function_by_name(&self, name: &str) -> &FunctionDefinition {
-            self.function_definitions().iter().find(|func| func.name == name).unwrap()
-        }
-
-        pub fn find_state_variable_node_id_by_name(&self, name: &str) -> NodeID {
-            let variable_declarations = ExtractVariableDeclarations::from(self).extracted;
-            let variable = variable_declarations
-                .into_iter()
-                .filter(|v| v.state_variable && v.name == name)
-                .collect::<Vec<_>>();
-            variable.first().unwrap().id
-        }
-    }
-}
