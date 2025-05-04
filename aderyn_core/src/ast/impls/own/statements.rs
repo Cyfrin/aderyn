@@ -25,46 +25,11 @@ impl Statement {
     }
 }
 
-impl Statement {
-    pub fn is_return_statement(&self) -> bool {
-        matches!(self, Statement::Return(_))
-    }
-}
-
 impl BlockOrStatement {
     pub fn get_node_id(&self) -> Option<NodeID> {
         match self {
             BlockOrStatement::Block(block) => Some(block.id),
             BlockOrStatement::Statement(statement) => statement.get_node_id(),
-        }
-    }
-}
-
-impl BlockOrStatement {
-    pub fn contains_returns(&self) -> bool {
-        match self {
-            BlockOrStatement::Block(block) => block
-                .statements
-                .last()
-                .map(|s| BlockOrStatement::Statement(Box::new(s.clone())).contains_returns())
-                .unwrap_or(false),
-
-            BlockOrStatement::Statement(statement) => match statement.as_ref() {
-                Statement::Return(Return { .. }) => true,
-
-                Statement::IfStatement(IfStatement { true_body, false_body, .. }) => {
-                    if !true_body.contains_returns() {
-                        return false;
-                    }
-
-                    match false_body {
-                        Some(false_body) => false_body.contains_returns(),
-                        None => true,
-                    }
-                }
-
-                _ => false,
-            },
         }
     }
 }

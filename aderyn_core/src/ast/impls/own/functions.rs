@@ -27,48 +27,4 @@ impl FunctionDefinition {
             &StateMutability::NonPayable
         }
     }
-
-    pub fn get_assigned_return_variables(&self, expression: &Expression) -> Vec<NodeID> {
-        let mut ids = vec![];
-
-        match expression {
-            Expression::Identifier(identifier) => {
-                if let Some(reference_id) = identifier.referenced_declaration {
-                    if self.return_parameters.parameters.iter().any(|p| p.id == reference_id) {
-                        ids.push(reference_id);
-                    }
-                }
-            }
-
-            Expression::Assignment(assignment) => {
-                ids.extend(self.get_assigned_return_variables(assignment.left_hand_side.as_ref()));
-            }
-
-            Expression::IndexAccess(index_access) => {
-                ids.extend(
-                    self.get_assigned_return_variables(index_access.base_expression.as_ref()),
-                );
-            }
-
-            Expression::IndexRangeAccess(index_range_access) => {
-                ids.extend(
-                    self.get_assigned_return_variables(index_range_access.base_expression.as_ref()),
-                );
-            }
-
-            Expression::MemberAccess(member_access) => {
-                ids.extend(self.get_assigned_return_variables(member_access.expression.as_ref()));
-            }
-
-            Expression::TupleExpression(tuple_expression) => {
-                for component in tuple_expression.components.iter().flatten() {
-                    ids.extend(self.get_assigned_return_variables(component));
-                }
-            }
-
-            _ => (),
-        }
-
-        ids
-    }
 }
