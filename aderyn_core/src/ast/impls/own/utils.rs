@@ -117,6 +117,9 @@ impl ContractDefinition {
         }
         result
     }
+    pub fn is_deployable_contract(&self) -> bool {
+        self.kind == ContractKind::Contract && !self.is_abstract
+    }
 }
 
 impl IdentifierOrIdentifierPath {

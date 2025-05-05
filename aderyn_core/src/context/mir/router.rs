@@ -80,7 +80,10 @@ impl Router {
             }
         }
 
-        // TODO: check if it's illegal base contract (deployable condition)
+        // check if it's illegal base contract type
+        if !base_contract.is_deployable_contract() {
+            return None;
+        }
 
         let func = func_call.suspected_target_function(context)?;
 
