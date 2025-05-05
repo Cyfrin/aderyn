@@ -70,7 +70,7 @@ impl Router {
             return None;
         }
 
-        // check if it's legal value - i.e function call that cannot be called from the base
+        // check if it's illegal value - i.e function call that cannot be called from the base
         // contract must be discarded
         if let Some(ASTNode::ContractDefinition(caller_contract)) =
             func_call.closest_ancestor_of_type(context, NodeType::ContractDefinition)
@@ -79,6 +79,9 @@ impl Router {
                 return None;
             }
         }
+
+        // TODO: check if it's illegal base contract (deployable condition)
+        // TODO: write test for internal function
 
         let func = func_call.suspected_target_function(context)?;
 
@@ -271,11 +274,15 @@ mod mir_router {
         let basic3_right_contract = context.find_contract_by_name("Basic3Right");
         let basic3_left_contract = context.find_contract_by_name("Basic3Left");
         let basic3_down2_contract = context.find_contract_by_name("Basic3Down2");
+        let basic2_contract = context.find_contract_by_name("Basic2");
+        let basic2_child_contract = context.find_contract_by_name("Basic2Child");
 
         let basic3_top_function = basic3_top_contract.find_function_by_name("help");
         let basic3_top_live = basic3_top_contract.find_function_by_name("live");
         let basic3_left_function = basic3_left_contract.find_function_by_name("help");
-
+        let basic2_child_gcall_function = basic2_child_contract.find_function_by_name("gcall");
+        let basic2_g_function = basic2_contract.find_function_by_name("g");
+        let basic2_child_g_function = basic2_child_contract.find_function_by_name("g");
         let basic3_right_function = basic3_right_contract.find_function_by_name("help");
         let basic3_down2_function = basic3_down2_contract.find_function_by_name("help");
         let basic3_down2_live = basic3_down2_contract.find_function_by_name("live");
@@ -286,6 +293,8 @@ mod mir_router {
         let basic3_left_function_calls = ExtractFunctionCalls::from(basic3_left_function).extracted;
         let basic3_down2_function_calls =
             ExtractFunctionCalls::from(basic3_down2_function).extracted;
+        let basic2_child_gcall_function_calls =
+            ExtractFunctionCalls::from(basic2_child_gcall_function).extracted;
 
         let a = router
             .resolve_internal_call(&context, basic3_down2_contract, &basic3_down2_function_calls[0])
@@ -321,6 +330,16 @@ mod mir_router {
             .resolve_internal_call(&context, basic3_right_contract, &basic3_right_function_calls[0])
             .unwrap();
         assert_eq!(g.id, basic3_top_function.id);
+
+        assert_eq!(basic2_child_g_function.selectorish(), basic2_g_function.selectorish());
+        let h = router
+            .resolve_internal_call(
+                &context,
+                basic2_child_contract,
+                &basic2_child_gcall_function_calls[1],
+            )
+            .unwrap();
+        assert_eq!(h.id, basic2_child_g_function.id);
     }
 
     #[test]

@@ -37,7 +37,16 @@ contract Basic2 is PBasic2 {
 
     function help2() internal override {}
 
-    function g(Orange memory f) public {}
+    function g(Orange memory f) public virtual {}
+}
+
+contract Basic2Child is Basic2 {
+    function g(Basic2.Orange memory f) public override {}
+
+    function gcall() public {
+        Orange memory o = Orange(20);
+        g(o);
+    }
 }
 
 // Diamond inheritance (super calls)
