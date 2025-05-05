@@ -316,6 +316,11 @@ mod mir_router {
             .resolve_internal_call(&context, basic3_down2_contract, &basic3_left_function_calls[0])
             .unwrap();
         assert_eq!(f.id, basic3_top_function.id);
+
+        let g = router
+            .resolve_internal_call(&context, basic3_right_contract, &basic3_right_function_calls[0])
+            .unwrap();
+        assert_eq!(g.id, basic3_top_function.id);
     }
 
     #[test]
