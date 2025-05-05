@@ -75,3 +75,20 @@ impl FunctionCall {
         }
     }
 }
+
+impl ModifierInvocation {
+    /// Returns the modifier definition referenced by the modifier invocation. In practice, it's not
+    /// always the case that the function call will resolve to the referenced declaration. However,
+    /// the the type identifier of the real modifier (possibly overidding modifier) would be
+    /// conserved i.e the same as the suspected target modifier
+    pub fn suspected_target_modifier<'a>(
+        &self,
+        context: &'a WorkspaceContext,
+    ) -> Option<&'a ModifierDefinition> {
+        let target_id = self.modifier_name.referenced_declaration()?;
+        if let Some(ASTNode::ModifierDefinition(modifier)) = context.nodes.get(&target_id) {
+            return Some(modifier);
+        }
+        None
+    }
+}

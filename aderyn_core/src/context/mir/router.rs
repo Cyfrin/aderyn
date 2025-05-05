@@ -7,7 +7,8 @@
 use crate::{
     ast::{
         ASTNode, ContractDefinition, ContractKind, Expression, FunctionCall, FunctionDefinition,
-        Identifier, NodeID, NodeType, Visibility,
+        Identifier, IdentifierOrIdentifierPath, ModifierDefinition, ModifierInvocation, NodeID,
+        NodeType, Visibility,
     },
     context::{browser::GetClosestAncestorOfTypeX, workspace_context::WorkspaceContext},
 };
@@ -19,18 +20,30 @@ pub struct Router {
     /// Does not contain private and external call routes
     /// KEY => Node ID of base contract
     pub internal_calls: HashMap<NodeID, ICRoutes>,
+
+    /// For instantiable contracts only (non abstract)
+    /// KEY => Node ID of base contract
+    pub modifier_calls: HashMap<NodeID, MCRoutes>,
 }
 
 #[derive(Debug)]
 pub struct ICRoutes {
-    pub routes: BaseRoute,
+    pub routes: BaseRoute<ICStartLookupRoute>,
+}
+
+#[derive(Debug)]
+pub struct MCRoutes {
+    pub routes: BaseRoute<MCStartLookupRoute>,
 }
 
 // Starting Point Contract Definition -> Lookup
-type BaseRoute = HashMap<NodeID, StartLookupRoute>;
+type BaseRoute<T> = HashMap<NodeID, T>;
 
 // Function selectorish -> Function Definition Node ID
-type StartLookupRoute = HashMap<String, NodeID>;
+type ICStartLookupRoute = HashMap<String, NodeID>;
+
+// Modifier selectorish -> Modifier Definition Node ID
+type MCStartLookupRoute = HashMap<String, NodeID>;
 
 // Router interface
 impl Router {
@@ -43,7 +56,15 @@ impl Router {
                 (contract.id, ICRoutes { routes: base_routes })
             })
             .collect();
-        Self { internal_calls }
+        let modifier_calls = context
+            .deployable_contracts()
+            .into_iter()
+            .map(|contract| {
+                let base_routes = build_mc_router_for_contract(context, contract);
+                (contract.id, MCRoutes { routes: base_routes })
+            })
+            .collect();
+        Self { internal_calls, modifier_calls }
     }
     /// Returns Function Definition by attempting to resolve internal function calls given the base
     /// contract from which the call takes place.
@@ -107,6 +128,34 @@ impl Router {
         );
     }
 
+    pub fn resolve_modifier_call<'a>(
+        &self,
+        context: &'a WorkspaceContext,
+        base_contract: &'a ContractDefinition,
+        modifier_call: &'a ModifierInvocation,
+    ) -> Option<&'a ModifierDefinition> {
+        // check if it's illegal value - i.e function call that cannot be called from the base
+        // contract must be discarded
+        if let Some(ASTNode::ContractDefinition(caller_contract)) =
+            modifier_call.closest_ancestor_of_type(context, NodeType::ContractDefinition)
+        {
+            if !caller_contract.is_in(&context, base_contract) {
+                return None;
+            }
+        }
+
+        // check if it's illegal base contract type
+        if !base_contract.is_deployable_contract() {
+            return None;
+        }
+
+        return self.perform_mc_lookup_through_inheritance_tree_and_fallback_to_suspect(
+            context,
+            base_contract,
+            modifier_call,
+        );
+    }
+
     /// Lookup the internal function that will be invoked based on the base contract by matching
     /// patterns agains function call sties. If lookup exhausts the overloaded methods, return the
     /// suspect.
@@ -155,7 +204,7 @@ impl Router {
             }
         };
 
-        // direct calls must be strat their lookup from the base_contract
+        // direct calls must be start their lookup from the base_contract
         if let Expression::Identifier(_) = func_call.expression.as_ref() {
             return resolve(base_contract);
         }
@@ -191,6 +240,42 @@ impl Router {
         }
         None
     }
+
+    fn perform_mc_lookup_through_inheritance_tree_and_fallback_to_suspect<'a>(
+        &self,
+        context: &'a WorkspaceContext,
+        base_contract: &'a ContractDefinition,
+        modifier_call: &'a ModifierInvocation,
+    ) -> Option<&'a ModifierDefinition> {
+        let aux_modifier = modifier_call.suspected_target_modifier(context)?;
+        let selectorish = aux_modifier.selectorish();
+        let base_index = self.modifier_calls.get(&base_contract.id)?;
+
+        let resolve = |starting_point: &ContractDefinition| -> Option<&ModifierDefinition> {
+            let starting_point = starting_point.id;
+            let lookup_index = base_index.routes.get(&starting_point)?;
+            match lookup_index.get(&selectorish) {
+                Some(modifier_id) => match context.nodes.get(modifier_id) {
+                    Some(ASTNode::ModifierDefinition(modifier_def)) => Some(modifier_def),
+                    _ => None,
+                },
+                // if not found in lookup fallback to aux function (suspect function)
+                None => Some(aux_modifier),
+            }
+        };
+
+        // direct calls must be start their lookup from the base_contract
+        if let IdentifierOrIdentifierPath::Identifier(_) = &modifier_call.modifier_name {
+            return resolve(base_contract);
+        }
+
+        // If path is specified, then the suspected target must be right.
+        if let IdentifierOrIdentifierPath::IdentifierPath(_) = &modifier_call.modifier_name {
+            return Some(aux_modifier);
+        }
+
+        None
+    }
 }
 
 // Router Utils
@@ -209,6 +294,26 @@ fn build_ic_router_for_contract(
                     if let Entry::Vacant(e) = routes.entry(func.selectorish()) {
                         e.insert(func.id);
                     }
+                }
+            }
+        }
+        base_routes.insert(starting_point.id, routes);
+    }
+    base_routes
+}
+
+fn build_mc_router_for_contract(
+    context: &WorkspaceContext,
+    base_contract: &ContractDefinition,
+) -> HashMap<NodeID, HashMap<String, NodeID>> {
+    let c3 = base_contract.c3(context).collect::<Vec<_>>();
+    let mut base_routes = HashMap::new();
+    for (idx, starting_point) in c3.iter().enumerate() {
+        let mut routes = HashMap::new();
+        for contract in c3.iter().skip(idx) {
+            for modifier in contract.modifier_definitions() {
+                if let Entry::Vacant(e) = routes.entry(modifier.selectorish()) {
+                    e.insert(modifier.id);
                 }
             }
         }
