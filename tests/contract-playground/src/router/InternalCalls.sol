@@ -76,6 +76,8 @@ contract Basic3Down2 is Basic3Left, Basic3Right {
 
     function help() public virtual override(Basic3Right, Basic3Left) {
         super.help();
+        super.live();
+        Basic3Left.help();
     }
 }
 

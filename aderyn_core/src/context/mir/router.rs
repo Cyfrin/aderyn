@@ -268,32 +268,54 @@ mod mir_router {
         let (router, context) = get_router_ctx();
 
         let basic3_top_contract = context.find_contract_by_name("Basic3Top");
-        let basic3_left_contract = context.find_contract_by_name("Basic3Left");
         let basic3_right_contract = context.find_contract_by_name("Basic3Right");
+        let basic3_left_contract = context.find_contract_by_name("Basic3Left");
         let basic3_down2_contract = context.find_contract_by_name("Basic3Down2");
 
         let basic3_top_function = basic3_top_contract.find_function_by_name("help");
+        let basic3_top_live = basic3_top_contract.find_function_by_name("live");
         let basic3_left_function = basic3_left_contract.find_function_by_name("help");
+
         let basic3_right_function = basic3_right_contract.find_function_by_name("help");
         let basic3_down2_function = basic3_down2_contract.find_function_by_name("help");
         let basic3_down2_live = basic3_down2_contract.find_function_by_name("live");
 
         let basic3_top_function_calls = ExtractFunctionCalls::from(basic3_top_function).extracted;
-        let basic3_left_function_calls = ExtractFunctionCalls::from(basic3_left_function).extracted;
         let basic3_right_function_calls =
             ExtractFunctionCalls::from(basic3_right_function).extracted;
+        let basic3_left_function_calls = ExtractFunctionCalls::from(basic3_left_function).extracted;
         let basic3_down2_function_calls =
             ExtractFunctionCalls::from(basic3_down2_function).extracted;
 
         let a = router
             .resolve_internal_call(&context, basic3_down2_contract, &basic3_down2_function_calls[0])
             .unwrap();
-        assert_eq!(a, basic3_right_function);
+        assert_eq!(a.id, basic3_right_function.id);
 
         let b = router
             .resolve_internal_call(&context, basic3_down2_contract, &basic3_top_function_calls[0])
             .unwrap();
-        assert_eq!(b, basic3_down2_live);
+        assert_eq!(b.id, basic3_down2_live.id);
+
+        let c = router
+            .resolve_internal_call(&context, basic3_down2_contract, &basic3_down2_function_calls[1])
+            .unwrap();
+        assert_eq!(c.id, basic3_top_live.id);
+
+        let d = router
+            .resolve_internal_call(&context, basic3_down2_contract, &basic3_down2_function_calls[2])
+            .unwrap();
+        assert_eq!(d.id, basic3_left_function.id);
+
+        let e = router
+            .resolve_internal_call(&context, basic3_down2_contract, &basic3_right_function_calls[0])
+            .unwrap();
+        assert_eq!(e.id, basic3_left_function.id);
+
+        let f = router
+            .resolve_internal_call(&context, basic3_down2_contract, &basic3_left_function_calls[0])
+            .unwrap();
+        assert_eq!(f.id, basic3_top_function.id);
     }
 
     #[test]
