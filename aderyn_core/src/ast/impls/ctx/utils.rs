@@ -15,4 +15,63 @@ impl ContractDefinition {
             },
         )
     }
+
+    pub fn next_in<'a>(
+        &'a self,
+        context: &'a WorkspaceContext,
+        base_contract: &'a ContractDefinition,
+    ) -> Option<&'a ContractDefinition> {
+        let mut base_c3 = base_contract.c3(context);
+        while let Some(c) = base_c3.next() {
+            if c.id == self.id {
+                return base_c3.next();
+            }
+        }
+        None
+    }
+
+    pub fn is_in<'a>(
+        &'a self,
+        context: &'a WorkspaceContext,
+        base_contract: &'a ContractDefinition,
+    ) -> bool {
+        let mut base_c3 = base_contract.c3(context);
+        while let Some(c) = base_c3.next() {
+            if c.id == self.id {
+                return true;
+            }
+        }
+        false
+    }
+}
+
+impl FunctionCall {
+    /// Returns the function definition referenced by the function call. In practice, it's not
+    /// always the case that the function call will resolve to the referenced declaration. However,
+    /// the the type identifier of the real function (possibly overidding function) would be
+    /// conserved i.e the same as the suspected target function
+    ///
+    /// Also see [`FunctionCall::is_internal_call`]
+    pub fn suspected_target_function<'a>(
+        &self,
+        context: &'a WorkspaceContext,
+    ) -> Option<&'a FunctionDefinition> {
+        // The most common forms of expressions when making a function call is
+        // 1) xyz()
+        // 2) A.xyz() where A is super or any parent class or library name or a something on which
+        //    library is being used for. (using lib for uint8) .... 6.xyz()
+        match self.expression.as_ref() {
+            Expression::Identifier(Identifier { referenced_declaration: Some(id), .. })
+            | Expression::MemberAccess(MemberAccess { referenced_declaration: Some(id), .. }) => {
+                if let Some(ASTNode::FunctionDefinition(func)) = context.nodes.get(id) {
+                    Some(func)
+                } else {
+                    None
+                }
+            }
+            // TODO: Improve this function heuristics by exhausting enum possibilities for
+            // expression
+            _ => None,
+        }
+    }
 }

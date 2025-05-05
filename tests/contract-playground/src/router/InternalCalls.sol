@@ -42,7 +42,11 @@ contract Basic2 is PBasic2 {
 
 // Diamond inheritance (super calls)
 contract Basic3Top {
-    function help() public virtual {}
+    function live() public virtual {}
+
+    function help() public virtual {
+        live();
+    }
 }
 
 contract Basic3Left is Basic3Top {
@@ -68,6 +72,8 @@ contract Basic3Down1 is Basic3Top, Basic3Left, Basic3Right {
 }
 
 contract Basic3Down2 is Basic3Left, Basic3Right {
+    function live() public virtual override {}
+
     function help() public virtual override(Basic3Right, Basic3Left) {
         super.help();
     }
@@ -79,6 +85,10 @@ library Basic4Lib {
     function help1(uint256 a, mapping(uint256 => string) storage ref) internal {
         ref[a] = "hello world!";
     }
+
+    function ext1(uint256 a) external {}
+
+    function ext2(uint256 a) public {}
 }
 
 contract Basic4 {
@@ -94,7 +104,14 @@ contract Basic4 {
         b.help1(ref);
         Basic4Lib.help1(a, ref);
         Basic4Lib.help1(b, ref);
+        priv();
+        // External calls
+        a.ext1();
+        a.ext2();
+        this.main();
     }
+
+    function priv() private {}
 }
 
 // Getter function

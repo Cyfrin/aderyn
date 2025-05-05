@@ -1,9 +1,9 @@
 //! This module helps us detect whether a given AST Node has any external calls inside of it
 
 use super::ExtractMemberAccesses;
-use crate::{ast::*, context::workspace_context::ASTNode};
+use crate::context::workspace_context::ASTNode;
 
-fn is_external_call(ast_node: ASTNode) -> bool {
+pub fn is_external_call(ast_node: ASTNode) -> bool {
     // This is so we can skip the FunctionCallOptions layer which solidity compiler inserts
     // when there are options passed to function calls
     for member_access in ExtractMemberAccesses::from(&ast_node).extracted {
@@ -44,25 +44,13 @@ fn is_external_call(ast_node: ASTNode) -> bool {
     false
 }
 
-impl FunctionCall {
-    pub fn is_external_call(&self) -> bool {
-        is_external_call(self.into())
-    }
-}
-impl FunctionCallOptions {
-    pub fn is_external_call(&self) -> bool {
-        is_external_call(self.into())
-    }
-}
-
 #[cfg(test)]
 mod external_calls_detector {
 
     use crate::{
-        context::browser::ExtractFunctionCalls, detect::test_utils::load_solidity_source_unit,
+        ast::*, context::browser::ExtractFunctionCalls,
+        detect::test_utils::load_solidity_source_unit,
     };
-
-    use super::FunctionDefinition;
 
     impl FunctionDefinition {
         pub fn makes_external_calls(&self) -> bool {

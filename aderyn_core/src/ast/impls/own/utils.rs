@@ -1,4 +1,4 @@
-use crate::ast::*;
+use crate::{ast::*, context::browser::is_external_call};
 
 impl FunctionDefinition {
     /// The kind of function this node defines.
@@ -49,6 +49,44 @@ impl FunctionDefinition {
             t.push('@');
         }
         func_name + ":" + &t
+    }
+}
+
+impl FunctionCall {
+    pub fn is_external_call(&self) -> bool {
+        is_external_call(self.into())
+    }
+
+    /// Internal call made to -
+    /// * Internal Library function
+    /// * Public/Private/Internal contract function
+    ///
+    ///  Also see [`FunctionCall::suspected_target_function`]
+    pub fn is_internal_call(&self) -> Option<bool> {
+        if self.kind != FunctionCallKind::FunctionCall {
+            return Some(false);
+        }
+        // The most common forms of expressions when making a function call is
+        // 1) xyz()
+        // 2) A.xyz() where A is super or any parent class or library name or a something on which
+        //    library is being used for. (using lib for uint8) .... 6.xyz()
+        match self.expression.as_ref() {
+            Expression::Identifier(Identifier {
+                type_descriptions: TypeDescriptions { type_identifier: Some(ty_ident), .. },
+                ..
+            })
+            | Expression::MemberAccess(MemberAccess {
+                type_descriptions: TypeDescriptions { type_identifier: Some(ty_ident), .. },
+                ..
+            }) => Some(ty_ident.starts_with("t_function_internal")),
+            _ => None, // TODO: Exhaust these enums
+        }
+    }
+}
+
+impl FunctionCallOptions {
+    pub fn is_external_call(&self) -> bool {
+        is_external_call(self.into())
     }
 }
 
