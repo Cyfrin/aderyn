@@ -262,14 +262,14 @@ impl Router {
             }
         };
 
-        // direct calls must be start their lookup from the base_contract
-        if let IdentifierOrIdentifierPath::Identifier(_) = &modifier_call.modifier_name {
+        // TODO: Investigate when other enumeration can be triggered.
+        if let IdentifierOrIdentifierPath::IdentifierPath(p) = &modifier_call.modifier_name {
+            // Ex: `B.modify` is a full path so then the suspected target must be right.
+            if p.name.contains('.') {
+                return Some(aux_modifier);
+            }
+            // Ex: `modify`
             return resolve(base_contract);
-        }
-
-        // If path is specified, then the suspected target must be right.
-        if let IdentifierOrIdentifierPath::IdentifierPath(_) = &modifier_call.modifier_name {
-            return Some(aux_modifier);
         }
 
         None
@@ -364,16 +364,23 @@ mod mir_router {
         }
     }
 
-    fn get_router_ctx() -> (Router, WorkspaceContext) {
+    fn get_ic_router_ctx() -> (Router, WorkspaceContext) {
         let context =
             load_solidity_source_unit("../tests/contract-playground/src/router/InternalCalls.sol");
 
         (Router::build(&context), context)
     }
 
+    fn get_mc_router_ctx() -> (Router, WorkspaceContext) {
+        let context =
+            load_solidity_source_unit("../tests/contract-playground/src/router/ModifierCalls.sol");
+
+        (Router::build(&context), context)
+    }
+
     #[test]
-    pub fn resolves_calls_3() {
-        let (router, context) = get_router_ctx();
+    pub fn resolves_internal_calls_3() {
+        let (router, context) = get_ic_router_ctx();
 
         let basic3_top_contract = context.find_contract_by_name("Basic3Top");
         let basic3_right_contract = context.find_contract_by_name("Basic3Right");
@@ -448,8 +455,8 @@ mod mir_router {
     }
 
     #[test]
-    pub fn resolves_calls_4() {
-        let (router, context) = get_router_ctx();
+    pub fn resolves_internal_calls_4() {
+        let (router, context) = get_ic_router_ctx();
 
         let contract = context.find_contract_by_name("Basic4");
         let main = contract.find_function_by_name("main");
@@ -489,8 +496,8 @@ mod mir_router {
     }
 
     #[test]
-    pub fn resolves_calls_5() {
-        let (router, context) = get_router_ctx();
+    pub fn resolves_internal_calls_5() {
+        let (router, context) = get_ic_router_ctx();
 
         let free_func = context.find_free_function_by_name("free");
         let basic6_contract = context.find_contract_by_name("Basic6");
@@ -529,5 +536,35 @@ mod mir_router {
             .resolve_internal_call(&context, basic9_contract, &basic9_function_calls[0])
             .unwrap();
         assert_eq!(d.id, basic8_free.id);
+    }
+
+    #[test]
+    pub fn resolve_modifier_calls_1() {
+        let (router, context) = get_mc_router_ctx();
+
+        let a_contract = context.find_contract_by_name("A");
+        let b_contract = context.find_contract_by_name("B");
+        let c_contract = context.find_contract_by_name("C");
+
+        let a_func = a_contract.find_function_by_name("geez");
+        let b_func = b_contract.find_function_by_name("tree");
+        let c_func = c_contract.find_function_by_name("main");
+
+        let a_modifier_call = &a_func.modifiers[0];
+        let b_modifier_call = &b_func.modifiers[0];
+        let c_modifier_call_1 = &c_func.modifiers[0];
+        let c_modifier_call_2 = &c_func.modifiers[1];
+
+        let a = router.resolve_modifier_call(&context, b_contract, a_modifier_call).unwrap();
+        assert_eq!(a.id, b_contract.find_modifier_by_name("modify").id);
+
+        let b = router.resolve_modifier_call(&context, c_contract, c_modifier_call_1).unwrap();
+        assert_eq!(b.id, b_contract.find_modifier_by_name("modify").id);
+
+        let c = router.resolve_modifier_call(&context, c_contract, c_modifier_call_2).unwrap();
+        assert_eq!(c.id, c_contract.find_modifier_by_name("modify").id);
+
+        let d = router.resolve_modifier_call(&context, b_contract, b_modifier_call).unwrap();
+        assert_eq!(d.id, b_contract.find_modifier_by_name("modify").id);
     }
 }

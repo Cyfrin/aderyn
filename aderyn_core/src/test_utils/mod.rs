@@ -1,7 +1,7 @@
 mod load_source_unit;
 
 use crate::{
-    ast::{ContractDefinition, FunctionDefinition, FunctionKind, NodeID},
+    ast::{ContractDefinition, FunctionDefinition, FunctionKind, ModifierDefinition, NodeID},
     context::{browser::ExtractVariableDeclarations, workspace_context::WorkspaceContext},
 };
 
@@ -26,6 +26,10 @@ impl WorkspaceContext {
 impl ContractDefinition {
     pub fn find_function_by_name(&self, name: &str) -> &FunctionDefinition {
         self.function_definitions().iter().find(|func| func.name == name).unwrap()
+    }
+
+    pub fn find_modifier_by_name(&self, name: &str) -> &ModifierDefinition {
+        self.modifier_definitions().iter().find(|modifier| modifier.name == name).unwrap()
     }
 
     pub fn find_state_variable_node_id_by_name(&self, name: &str) -> NodeID {
