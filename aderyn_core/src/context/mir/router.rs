@@ -72,7 +72,7 @@ impl Router {
     /// Pre-requisite: Check that the function is a legal internal call (doesn't leave the contract)
     ///
     /// 1. suspects (functions) that are `private` and `library` are returned directly as they
-    ///    cannot be overriden
+    ///    cannot be overridden
     /// 2. lookup through inheritance tree of base contract is performed to find relevant target -
     ///    if not found, suspect function is returned as a fallback mechanism
     ///
@@ -84,7 +84,7 @@ impl Router {
         base_contract: &'a ContractDefinition,
         func_call: &'a FunctionCall,
     ) -> Option<&'a FunctionDefinition> {
-        // do not resovle if it's not internal function call
+        // do not resolve if it's not internal function call
         if func_call.is_internal_call() != Some(true) {
             return None;
         }
@@ -155,11 +155,11 @@ impl Router {
     }
 
     /// Lookup the internal function that will be invoked based on the base contract by matching
-    /// patterns agains function call sties. If lookup exhausts the overloaded methods, return the
+    /// patterns against function call sties. If lookup exhausts the overloaded methods, return the
     /// suspect.
     ///
     /// Goal -
-    /// match the selectorish against the inheritance hirearchy if needed and resolve the function
+    /// match the selectorish against the inheritance hierarchy if needed and resolve the function
     ///
     /// <.. Pattern matching ...>
     ///
@@ -173,7 +173,7 @@ impl Router {
     /// Auxiliary function exists to
     ///  * provide selectorish
     ///  * act as fallback if lookup exhausts without a match (maybe it's a free function)
-    ///  * free functions can be overriden, therefore lookup
+    ///  * free functions can be overridden, therefore lookup
     ///
     /// Note - Library calls are already resolved before calling this function.
     ///
@@ -337,19 +337,19 @@ mod mir_router {
         println!("==============");
         for (base_contract_id, ic) in &router.internal_calls {
             let Some(ASTNode::ContractDefinition(c)) = context.nodes.get(base_contract_id) else {
-                eprintln!("Couldn't resovle contract with ID {}", base_contract_id);
+                eprintln!("Couldn't resolve contract with ID {}", base_contract_id);
                 return;
             };
             println!("Base contract - {}", c.name);
             for (start_lookup, lookup) in &ic.routes {
                 let Some(ASTNode::ContractDefinition(s)) = context.nodes.get(start_lookup) else {
-                    eprintln!("Couldn't resovle contract with ID {}", start_lookup);
+                    eprintln!("Couldn't resolve contract with ID {}", start_lookup);
                     return;
                 };
                 println!("Start lookup - {}", s.name);
                 for (func_selectorish, def_id) in lookup {
                     let Some(ASTNode::FunctionDefinition(f)) = context.nodes.get(def_id) else {
-                        eprintln!("Couldn't resovle contract with ID {}", def_id);
+                        eprintln!("Couldn't resolve contract with ID {}", def_id);
                         return;
                     };
                     println!(
