@@ -18,7 +18,7 @@ use super::traits::CallGraphVisitor;
 
 #[derive(PartialEq)]
 pub enum CallGraphDirection {
-    /// Depper into the callgraph
+    /// Deeper into the callgraph
     Inward,
 
     /// Opposite of Inward
