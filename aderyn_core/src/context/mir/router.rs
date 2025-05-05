@@ -70,8 +70,15 @@ impl Router {
             return None;
         }
 
-        // TODO: check if it's legal value - i.e function call that cannot be called from the base
+        // check if it's legal value - i.e function call that cannot be called from the base
         // contract must be discarded
+        if let Some(ASTNode::ContractDefinition(caller_contract)) =
+            func_call.closest_ancestor_of_type(context, NodeType::ContractDefinition)
+        {
+            if !caller_contract.is_in(&context, base_contract) {
+                return None;
+            }
+        }
 
         let func = func_call.suspected_target_function(context)?;
 
@@ -161,9 +168,7 @@ impl Router {
                     if let Some(ASTNode::ContractDefinition(calling_contract)) =
                         func_call.closest_ancestor_of_type(context, NodeType::ContractDefinition)
                     {
-                        println!("INSIDE {} {}", calling_contract.name, base_contract.name);
                         let next = calling_contract.next_in(context, base_contract)?;
-                        println!("{}", next.name);
                         return resolve(next);
                     }
                 }
