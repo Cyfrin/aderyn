@@ -50,7 +50,6 @@ impl Router {
     pub fn build(context: &WorkspaceContext) -> Self {
         let internal_calls = context
             .deployable_contracts()
-            .into_iter()
             .map(|contract| {
                 let base_routes = build_ic_router_for_contract(context, contract);
                 (contract.id, ICRoutes { routes: base_routes })
@@ -58,7 +57,6 @@ impl Router {
             .collect();
         let modifier_calls = context
             .deployable_contracts()
-            .into_iter()
             .map(|contract| {
                 let base_routes = build_mc_router_for_contract(context, contract);
                 (contract.id, MCRoutes { routes: base_routes })
@@ -96,7 +94,7 @@ impl Router {
         if let Some(ASTNode::ContractDefinition(caller_contract)) =
             func_call.closest_ancestor_of_type(context, NodeType::ContractDefinition)
         {
-            if !caller_contract.is_in(&context, base_contract) {
+            if !caller_contract.is_in(context, base_contract) {
                 return None;
             }
         }
@@ -121,11 +119,11 @@ impl Router {
             return Some(func);
         }
 
-        return self.perform_ic_lookup_through_inheritance_tree_and_fallback_to_suspect(
+        self.perform_ic_lookup_through_inheritance_tree_and_fallback_to_suspect(
             context,
             base_contract,
             func_call,
-        );
+        )
     }
 
     pub fn resolve_modifier_call<'a>(
@@ -139,7 +137,7 @@ impl Router {
         if let Some(ASTNode::ContractDefinition(caller_contract)) =
             modifier_call.closest_ancestor_of_type(context, NodeType::ContractDefinition)
         {
-            if !caller_contract.is_in(&context, base_contract) {
+            if !caller_contract.is_in(context, base_contract) {
                 return None;
             }
         }
@@ -149,11 +147,11 @@ impl Router {
             return None;
         }
 
-        return self.perform_mc_lookup_through_inheritance_tree_and_fallback_to_suspect(
+        self.perform_mc_lookup_through_inheritance_tree_and_fallback_to_suspect(
             context,
             base_contract,
             modifier_call,
-        );
+        )
     }
 
     /// Lookup the internal function that will be invoked based on the base contract by matching
@@ -338,7 +336,7 @@ mod mir_router {
         println!("Internal calls");
         println!("==============");
         for (base_contract_id, ic) in &router.internal_calls {
-            let Some(ASTNode::ContractDefinition(c)) = context.nodes.get(&base_contract_id) else {
+            let Some(ASTNode::ContractDefinition(c)) = context.nodes.get(base_contract_id) else {
                 eprintln!("Couldn't resovle contract with ID {}", base_contract_id);
                 return;
             };

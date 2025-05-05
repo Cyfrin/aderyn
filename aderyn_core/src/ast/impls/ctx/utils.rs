@@ -11,7 +11,7 @@ impl ContractDefinition {
                 if let ASTNode::ContractDefinition(c) = n {
                     return Some(c);
                 }
-                return None;
+                None
             },
         )
     }
@@ -35,8 +35,8 @@ impl ContractDefinition {
         context: &'a WorkspaceContext,
         base_contract: &'a ContractDefinition,
     ) -> bool {
-        let mut base_c3 = base_contract.c3(context);
-        while let Some(c) = base_c3.next() {
+        let base_c3 = base_contract.c3(context);
+        for c in base_c3 {
             if c.id == self.id {
                 return true;
             }
