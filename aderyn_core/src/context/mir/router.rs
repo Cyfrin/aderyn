@@ -81,7 +81,6 @@ impl Router {
         }
 
         // TODO: check if it's illegal base contract (deployable condition)
-        // TODO: write test for internal function
 
         let func = func_call.suspected_target_function(context)?;
 
@@ -344,13 +343,13 @@ mod mir_router {
 
     #[test]
     pub fn resolves_calls_4() {
-        let (router, ctx) = get_router_ctx();
+        let (router, context) = get_router_ctx();
 
-        let contract = ctx.find_contract_by_name("Basic4");
+        let contract = context.find_contract_by_name("Basic4");
         let main = contract.find_function_by_name("main");
         let priv_func = contract.find_function_by_name("priv");
 
-        let library = ctx.find_contract_by_name("Basic4Lib");
+        let library = context.find_contract_by_name("Basic4Lib");
         let lib_help1 = library.find_function_by_name("help1");
 
         let func_calls = ExtractFunctionCalls::from(main).extracted;
@@ -367,11 +366,11 @@ mod mir_router {
         assert_eq!(func_calls[6].is_internal_call(), Some(false));
         assert_eq!(func_calls[7].is_internal_call(), Some(false));
 
-        let f0 = router.resolve_internal_call(&ctx, contract, &func_calls[0]);
-        let f1 = router.resolve_internal_call(&ctx, contract, &func_calls[1]);
-        let f2 = router.resolve_internal_call(&ctx, contract, &func_calls[2]);
-        let f3 = router.resolve_internal_call(&ctx, contract, &func_calls[3]);
-        let f4 = router.resolve_internal_call(&ctx, contract, &func_calls[4]);
+        let f0 = router.resolve_internal_call(&context, contract, &func_calls[0]);
+        let f1 = router.resolve_internal_call(&context, contract, &func_calls[1]);
+        let f2 = router.resolve_internal_call(&context, contract, &func_calls[2]);
+        let f3 = router.resolve_internal_call(&context, contract, &func_calls[3]);
+        let f4 = router.resolve_internal_call(&context, contract, &func_calls[4]);
 
         // Lib calls
         assert_eq!(f0.unwrap().id, lib_help1.id);
@@ -381,5 +380,48 @@ mod mir_router {
 
         // Private funcs
         assert_eq!(f4.unwrap().id, priv_func.id);
+    }
+
+    #[test]
+    pub fn resolves_calls_5() {
+        let (router, context) = get_router_ctx();
+
+        let free_func = context.find_free_function_by_name("free");
+        let basic6_contract = context.find_contract_by_name("Basic6");
+        let basic6_function = basic6_contract.find_function_by_name("main");
+        let basic6_function_calls = ExtractFunctionCalls::from(basic6_function).extracted;
+
+        let a = router
+            .resolve_internal_call(&context, basic6_contract, &basic6_function_calls[0])
+            .unwrap();
+        assert_eq!(a.id, free_func.id);
+
+        let basic7_contract = context.find_contract_by_name("Basic7");
+        let basic7_function = basic7_contract.find_function_by_name("main");
+        let basic7_function_calls = ExtractFunctionCalls::from(basic7_function).extracted;
+
+        let b = router
+            .resolve_internal_call(&context, basic7_contract, &basic7_function_calls[0])
+            .unwrap();
+        assert_eq!(b.id, free_func.id);
+
+        let basic8_contract = context.find_contract_by_name("Basic8");
+        let basic8_function = basic8_contract.find_function_by_name("main");
+        let basic8_free = basic8_contract.find_function_by_name("free");
+        let basic8_function_calls = ExtractFunctionCalls::from(basic8_function).extracted;
+
+        let c = router
+            .resolve_internal_call(&context, basic8_contract, &basic8_function_calls[0])
+            .unwrap();
+        assert_eq!(c.id, basic8_free.id);
+
+        let basic9_contract = context.find_contract_by_name("Basic9");
+        let basic9_function = basic9_contract.find_function_by_name("help");
+        let basic9_function_calls = ExtractFunctionCalls::from(basic9_function).extracted;
+
+        let d = router
+            .resolve_internal_call(&context, basic9_contract, &basic9_function_calls[0])
+            .unwrap();
+        assert_eq!(d.id, basic8_free.id);
     }
 }

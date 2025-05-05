@@ -1,7 +1,7 @@
 mod load_source_unit;
 
 use crate::{
-    ast::{ContractDefinition, FunctionDefinition, NodeID},
+    ast::{ContractDefinition, FunctionDefinition, FunctionKind, NodeID},
     context::{browser::ExtractVariableDeclarations, workspace_context::WorkspaceContext},
 };
 
@@ -13,6 +13,13 @@ pub use load_source_unit::{
 impl WorkspaceContext {
     pub fn find_contract_by_name(&self, name: &str) -> &ContractDefinition {
         self.contract_definitions().into_iter().find(|c| c.name.as_str() == name).unwrap()
+    }
+    pub fn find_free_function_by_name(&self, name: &str) -> &FunctionDefinition {
+        self.function_definitions()
+            .iter()
+            .filter(|func| *func.kind() == FunctionKind::FreeFunction)
+            .find(|func| func.name == name)
+            .unwrap()
     }
 }
 

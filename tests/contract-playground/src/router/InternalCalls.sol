@@ -141,3 +141,35 @@ struct Data {
     bool c;
     uint256 d;
 }
+
+// Free functions
+
+function free(string memory x) {}
+
+contract Basic6 {
+    function main() public {
+        free("df");
+    }
+}
+
+contract Basic7 {
+    function free(uint256 x) external {}
+
+    function main() public {
+        free("sdfsf");
+    }
+}
+
+contract Basic8 {
+    function free(string memory x) public {}
+
+    function main() public {
+        free("sdfsf");
+    }
+}
+
+contract Basic9 is Basic8 {
+    function help() public {
+        free("sdfsf");
+    }
+}
