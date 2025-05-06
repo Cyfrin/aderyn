@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 123,
-    "total_sloc": 4616
+    "total_source_units": 124,
+    "total_sloc": 4647
   },
   "files_details": {
     "files_details": [
@@ -482,12 +482,16 @@
         "n_sloc": 7
       },
       {
+        "file_path": "src/router/ExternalCalls.sol",
+        "n_sloc": 13
+      },
+      {
         "file_path": "src/router/InternalCalls.sol",
-        "n_sloc": 127
+        "n_sloc": 135
       },
       {
         "file_path": "src/router/ModifierCalls.sol",
-        "n_sloc": 23
+        "n_sloc": 33
       },
       {
         "file_path": "src/uniswap/UniswapV2Swapper.sol",
@@ -1300,6 +1304,12 @@
             "src_char": "583:1"
           },
           {
+            "contract_path": "src/VoidConstructor.sol",
+            "line_no": 32,
+            "src": "663:1",
+            "src_char": "663:1"
+          },
+          {
             "contract_path": "src/ZeroAddressCheck.sol",
             "line_no": 4,
             "src": "67:6",
@@ -1336,6 +1346,36 @@
             "src_char": "70:10"
           },
           {
+            "contract_path": "src/router/ExternalCalls.sol",
+            "line_no": 4,
+            "src": "80:1",
+            "src_char": "80:1"
+          },
+          {
+            "contract_path": "src/router/ExternalCalls.sol",
+            "line_no": 8,
+            "src": "143:1",
+            "src_char": "143:1"
+          },
+          {
+            "contract_path": "src/router/ExternalCalls.sol",
+            "line_no": 12,
+            "src": "197:1",
+            "src_char": "197:1"
+          },
+          {
+            "contract_path": "src/router/ExternalCalls.sol",
+            "line_no": 16,
+            "src": "268:1",
+            "src_char": "268:1"
+          },
+          {
+            "contract_path": "src/router/ModifierCalls.sol",
+            "line_no": 4,
+            "src": "88:1",
+            "src_char": "88:1"
+          },
+          {
             "contract_path": "src/router/ModifierCalls.sol",
             "line_no": 12,
             "src": "179:1",
@@ -1346,6 +1386,12 @@
             "line_no": 28,
             "src": "347:1",
             "src_char": "347:1"
+          },
+          {
+            "contract_path": "src/router/ModifierCalls.sol",
+            "line_no": 41,
+            "src": "538:1",
+            "src_char": "538:1"
           }
         ]
       },
@@ -3368,39 +3414,39 @@
           },
           {
             "contract_path": "src/router/InternalCalls.sol",
-            "line_no": 102,
-            "src": "1940:4",
-            "src_char": "1940:4"
+            "line_no": 96,
+            "src": "1780:4",
+            "src_char": "1780:4"
           },
           {
             "contract_path": "src/router/InternalCalls.sol",
-            "line_no": 109,
-            "src": "2064:4",
-            "src_char": "2064:4"
+            "line_no": 120,
+            "src": "2306:4",
+            "src_char": "2306:4"
           },
           {
             "contract_path": "src/router/InternalCalls.sol",
-            "line_no": 150,
-            "src": "2805:4",
-            "src_char": "2805:4"
+            "line_no": 161,
+            "src": "3047:4",
+            "src_char": "3047:4"
           },
           {
             "contract_path": "src/router/InternalCalls.sol",
-            "line_no": 158,
-            "src": "2923:4",
-            "src_char": "2923:4"
+            "line_no": 169,
+            "src": "3165:4",
+            "src_char": "3165:4"
           },
           {
             "contract_path": "src/router/InternalCalls.sol",
-            "line_no": 166,
-            "src": "3048:4",
-            "src_char": "3048:4"
+            "line_no": 177,
+            "src": "3290:4",
+            "src_char": "3290:4"
           },
           {
             "contract_path": "src/router/InternalCalls.sol",
-            "line_no": 172,
-            "src": "3137:4",
-            "src_char": "3137:4"
+            "line_no": 183,
+            "src": "3379:4",
+            "src_char": "3379:4"
           },
           {
             "contract_path": "src/router/ModifierCalls.sol",
@@ -3410,9 +3456,9 @@
           },
           {
             "contract_path": "src/router/ModifierCalls.sol",
-            "line_no": 34,
-            "src": "422:4",
-            "src_char": "422:4"
+            "line_no": 35,
+            "src": "447:4",
+            "src_char": "447:4"
           }
         ]
       },
@@ -4569,9 +4615,15 @@
           },
           {
             "contract_path": "src/router/ModifierCalls.sol",
-            "line_no": 30,
-            "src": "370:6",
-            "src_char": "370:6"
+            "line_no": 31,
+            "src": "395:6",
+            "src_char": "395:6"
+          },
+          {
+            "contract_path": "src/router/ModifierCalls.sol",
+            "line_no": 42,
+            "src": "555:6",
+            "src_char": "555:6"
           }
         ]
       },
@@ -4834,39 +4886,51 @@
           },
           {
             "contract_path": "src/router/InternalCalls.sol",
-            "line_no": 100,
-            "src": "1898:4",
-            "src_char": "1898:4"
+            "line_no": 96,
+            "src": "1780:4",
+            "src_char": "1780:4"
           },
           {
             "contract_path": "src/router/InternalCalls.sol",
-            "line_no": 102,
-            "src": "1940:4",
-            "src_char": "1940:4"
+            "line_no": 98,
+            "src": "1820:4",
+            "src_char": "1820:4"
           },
           {
             "contract_path": "src/router/InternalCalls.sol",
-            "line_no": 125,
-            "src": "2381:4",
-            "src_char": "2381:4"
+            "line_no": 111,
+            "src": "2140:4",
+            "src_char": "2140:4"
           },
           {
             "contract_path": "src/router/InternalCalls.sol",
-            "line_no": 131,
-            "src": "2454:1",
-            "src_char": "2454:1"
+            "line_no": 113,
+            "src": "2182:4",
+            "src_char": "2182:4"
           },
           {
             "contract_path": "src/router/InternalCalls.sol",
-            "line_no": 156,
-            "src": "2881:4",
-            "src_char": "2881:4"
+            "line_no": 136,
+            "src": "2623:4",
+            "src_char": "2623:4"
           },
           {
             "contract_path": "src/router/InternalCalls.sol",
-            "line_no": 164,
-            "src": "3002:4",
-            "src_char": "3002:4"
+            "line_no": 142,
+            "src": "2696:1",
+            "src_char": "2696:1"
+          },
+          {
+            "contract_path": "src/router/InternalCalls.sol",
+            "line_no": 167,
+            "src": "3123:4",
+            "src_char": "3123:4"
+          },
+          {
+            "contract_path": "src/router/InternalCalls.sol",
+            "line_no": 175,
+            "src": "3244:4",
+            "src_char": "3244:4"
           },
           {
             "contract_path": "src/router/ModifierCalls.sol",
@@ -4882,9 +4946,9 @@
           },
           {
             "contract_path": "src/router/ModifierCalls.sol",
-            "line_no": 34,
-            "src": "422:4",
-            "src_char": "422:4"
+            "line_no": 46,
+            "src": "597:4",
+            "src_char": "597:4"
           }
         ]
       },
@@ -7378,9 +7442,9 @@
           },
           {
             "contract_path": "src/router/InternalCalls.sol",
-            "line_no": 109,
-            "src": "2064:4",
-            "src_char": "2064:4"
+            "line_no": 120,
+            "src": "2306:4",
+            "src_char": "2306:4"
           }
         ]
       },
