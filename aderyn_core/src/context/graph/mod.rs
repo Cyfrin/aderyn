@@ -1,17 +1,28 @@
 mod callgraph;
-mod callgraph_tests;
+mod create;
 mod traits;
-mod workspace_callgraph;
+
+use std::collections::HashMap;
 
 pub use callgraph::*;
 pub use traits::*;
-pub use workspace_callgraph::*;
 
 use derive_more::From;
 
 use crate::ast::{ASTNode, NodeID};
 
 pub type Result<T> = core::result::Result<T, Error>;
+
+#[derive(Debug)]
+pub struct WorkspaceCallGraph {
+    pub raw_callgraph: RawCallGraph,
+}
+
+/**
+ * Every NodeID in RawCallGraph should corresponds to [`crate::ast::FunctionDefinition`] or
+ * [`crate::ast::ModifierDefinition`]
+ */
+pub type RawCallGraph = HashMap<NodeID, Vec<NodeID>>;
 
 #[derive(Debug, From)]
 pub enum Error {

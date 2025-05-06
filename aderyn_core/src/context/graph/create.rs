@@ -8,18 +8,7 @@ use crate::{
     },
 };
 
-use super::traits::Transpose;
-
-#[derive(Debug)]
-pub struct WorkspaceCallGraph {
-    pub raw_callgraph: RawCallGraph,
-}
-
-/**
- * Every NodeID in RawCallGraph should corresponds to [`crate::ast::FunctionDefinition`] or
- * [`crate::ast::ModifierDefinition`]
- */
-pub type RawCallGraph = HashMap<NodeID, Vec<NodeID>>;
+use super::{traits::Transpose, RawCallGraph, WorkspaceCallGraph};
 
 impl WorkspaceCallGraph {
     /// Formula to create [`WorkspaceCallGraph`] for global preprocessing .
