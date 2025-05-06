@@ -23,7 +23,7 @@ impl Router {
     ///
     /// Note - Not all styles of internal calls are resolved successfully at the moment. Lot of
     /// unknowns.
-    pub fn resolve_internal_call<'a>(
+    pub(crate) fn _resolve_internal_call<'a>(
         &self,
         context: &'a WorkspaceContext,
         base_contract: &'a ContractDefinition,

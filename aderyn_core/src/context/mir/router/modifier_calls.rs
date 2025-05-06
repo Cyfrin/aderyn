@@ -9,7 +9,7 @@ use crate::{
 use std::collections::{hash_map::Entry, HashMap};
 
 impl Router {
-    pub fn resolve_modifier_call<'a>(
+    pub(crate) fn _resolve_modifier_call<'a>(
         &self,
         context: &'a WorkspaceContext,
         base_contract: &'a ContractDefinition,

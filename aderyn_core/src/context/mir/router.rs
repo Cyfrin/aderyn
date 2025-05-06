@@ -11,7 +11,7 @@ mod tests;
 use internal_calls::build_ic_router_for_contract;
 use modifier_calls::build_mc_router_for_contract;
 
-use crate::{ast::NodeID, context::workspace_context::WorkspaceContext};
+use crate::{ast::*, context::workspace_context::WorkspaceContext};
 use std::collections::HashMap;
 
 #[derive(Debug)]
@@ -63,5 +63,21 @@ impl Router {
             })
             .collect();
         Self { internal_calls, modifier_calls }
+    }
+    pub fn resolve_modifier_call<'a>(
+        &self,
+        context: &'a WorkspaceContext,
+        base_contract: &'a ContractDefinition,
+        modifier_call: &'a ModifierInvocation,
+    ) -> Option<&'a ModifierDefinition> {
+        self._resolve_modifier_call(context, base_contract, modifier_call)
+    }
+    pub fn resolve_internal_call<'a>(
+        &self,
+        context: &'a WorkspaceContext,
+        base_contract: &'a ContractDefinition,
+        func_call: &'a FunctionCall,
+    ) -> Option<&'a FunctionDefinition> {
+        self._resolve_internal_call(context, base_contract, func_call)
     }
 }
