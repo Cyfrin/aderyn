@@ -3,7 +3,7 @@
 use super::ExtractMemberAccesses;
 use crate::context::workspace::ASTNode;
 
-pub fn is_external_call(ast_node: ASTNode) -> bool {
+pub fn is_external_call_do_not_use(ast_node: ASTNode) -> bool {
     // This is so we can skip the FunctionCallOptions layer which solidity compiler inserts
     // when there are options passed to function calls
     for member_access in ExtractMemberAccesses::from(&ast_node).extracted {
@@ -55,7 +55,7 @@ mod external_calls_detector {
     impl FunctionDefinition {
         pub fn makes_external_calls(&self) -> bool {
             let func_calls = ExtractFunctionCalls::from(self).extracted;
-            func_calls.iter().any(|f| f.is_external_call())
+            func_calls.iter().any(|f| f.is_external_call_legacy_do_not_use())
         }
     }
 

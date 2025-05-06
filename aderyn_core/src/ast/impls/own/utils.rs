@@ -1,4 +1,4 @@
-use crate::{ast::*, context::browser::is_external_call};
+use crate::{ast::*, context::browser::is_external_call_do_not_use};
 
 impl FunctionDefinition {
     /// The kind of function this node defines.
@@ -83,8 +83,8 @@ impl FunctionCall {
     /// DO NOT USE
     /// It doesn't work as expected. This was more so crafted for one specific detector and code
     /// needs to be migrated.
-    pub fn is_external_call(&self) -> bool {
-        is_external_call(self.into())
+    pub fn is_external_call_legacy_do_not_use(&self) -> bool {
+        is_external_call_do_not_use(self.into())
     }
 
     /// Internal call made to -
@@ -117,7 +117,7 @@ impl FunctionCall {
 
 impl FunctionCallOptions {
     pub fn is_external_call(&self) -> bool {
-        is_external_call(self.into())
+        is_external_call_do_not_use(self.into())
     }
 }
 
