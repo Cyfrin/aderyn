@@ -2,6 +2,7 @@ use crate::{ast::*, context::workspace_context::WorkspaceContext};
 
 impl ContractDefinition {
     /// Returns sequence of all inherited contracts including itself in C3 linearized hierarchy
+    #[inline]
     pub fn c3<'a>(
         &'a self,
         context: &'a WorkspaceContext,
@@ -16,6 +17,7 @@ impl ContractDefinition {
         )
     }
 
+    #[inline]
     pub fn next_in<'a>(
         &'a self,
         context: &'a WorkspaceContext,
@@ -30,6 +32,7 @@ impl ContractDefinition {
         None
     }
 
+    #[inline]
     pub fn is_in<'a>(
         &'a self,
         context: &'a WorkspaceContext,
@@ -52,6 +55,7 @@ impl FunctionCall {
     /// conserved i.e the same as the suspected target function
     ///
     /// Also see [`FunctionCall::is_internal_call`]
+    #[inline]
     pub fn suspected_target_function<'a>(
         &self,
         context: &'a WorkspaceContext,
@@ -81,6 +85,7 @@ impl ModifierInvocation {
     /// always the case that the function call will resolve to the referenced declaration. However,
     /// the the type identifier of the real modifier (possibly overriding modifier) would be
     /// conserved i.e the same as the suspected target modifier
+    #[inline]
     pub fn suspected_target_modifier<'a>(
         &self,
         context: &'a WorkspaceContext,

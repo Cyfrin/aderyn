@@ -2,6 +2,7 @@ use crate::{ast::*, context::browser::is_external_call};
 
 impl FunctionDefinition {
     /// The kind of function this node defines.
+    #[inline]
     pub fn kind(&self) -> &FunctionKind {
         if let Some(kind) = &self.kind {
             kind
@@ -16,6 +17,7 @@ impl FunctionDefinition {
     ///
     /// Note: Before Solidity 0.5.x, this is an approximation, as there was no distinction between
     /// `view` and `pure`.
+    #[inline]
     pub fn state_mutability(&self) -> &StateMutability {
         if let Some(state_mutability) = &self.state_mutability {
             state_mutability
@@ -78,6 +80,9 @@ impl ModifierDefinition {
 }
 
 impl FunctionCall {
+    /// DO NOT USE
+    /// It doesn't work as expected. This was more so crafted for one specific detector and code
+    /// needs to be migrated.
     pub fn is_external_call(&self) -> bool {
         is_external_call(self.into())
     }
@@ -87,6 +92,7 @@ impl FunctionCall {
     /// * Public/Private/Internal contract function
     ///
     ///  Also see [`FunctionCall::suspected_target_function`]
+    #[inline]
     pub fn is_internal_call(&self) -> Option<bool> {
         if self.kind != FunctionCallKind::FunctionCall {
             return Some(false);
@@ -119,6 +125,7 @@ impl VariableDeclaration {
     /// Returns the mutability of the variable that was declared.
     ///
     /// This is a helper to check variable mutability across Solidity versions.
+    #[inline]
     pub fn mutability(&self) -> Option<&Mutability> {
         if let Some(mutability) = &self.mutability {
             Some(mutability)
@@ -133,30 +140,42 @@ impl VariableDeclaration {
 }
 
 impl ContractDefinition {
+    #[inline]
     pub fn function_definitions(&self) -> Vec<&FunctionDefinition> {
-        let mut result = vec![];
-        for node in self.nodes.iter() {
-            if let ContractDefinitionNode::FunctionDefinition(function_definition) = node {
-                result.push(function_definition);
-            }
-        }
-        result
+        self.nodes
+            .iter()
+            .filter_map(|node| {
+                if let ContractDefinitionNode::FunctionDefinition(function_definition) = node {
+                    Some(function_definition)
+                } else {
+                    None
+                }
+            })
+            .collect()
     }
+
+    #[inline]
     pub fn modifier_definitions(&self) -> Vec<&ModifierDefinition> {
-        let mut result = vec![];
-        for node in self.nodes.iter() {
-            if let ContractDefinitionNode::ModifierDefinition(modifier_definition) = node {
-                result.push(modifier_definition);
-            }
-        }
-        result
+        self.nodes
+            .iter()
+            .filter_map(|node| {
+                if let ContractDefinitionNode::ModifierDefinition(modifier_definition) = node {
+                    Some(modifier_definition)
+                } else {
+                    None
+                }
+            })
+            .collect()
     }
+
+    #[inline(always)]
     pub fn is_deployable_contract(&self) -> bool {
         self.kind == ContractKind::Contract && !self.is_abstract
     }
 }
 
 impl IdentifierOrIdentifierPath {
+    #[inline]
     pub fn name(&self) -> String {
         match self {
             IdentifierOrIdentifierPath::Identifier(identifier) => identifier.name.clone(),
@@ -166,6 +185,7 @@ impl IdentifierOrIdentifierPath {
         }
     }
 
+    #[inline]
     pub fn referenced_declaration(&self) -> Option<NodeID> {
         match self {
             IdentifierOrIdentifierPath::Identifier(identifier) => identifier.referenced_declaration,
@@ -177,6 +197,7 @@ impl IdentifierOrIdentifierPath {
 }
 
 impl UserDefinedTypeNameOrIdentifierPath {
+    #[inline]
     pub fn name(&self) -> Option<String> {
         match self {
             UserDefinedTypeNameOrIdentifierPath::UserDefinedTypeName(node) => node.name.clone(),
@@ -186,6 +207,7 @@ impl UserDefinedTypeNameOrIdentifierPath {
 }
 
 impl Expression {
+    #[inline]
     pub fn type_descriptions(&self) -> Option<&TypeDescriptions> {
         match self {
             Expression::Literal(Literal { type_descriptions, .. }) => Some(type_descriptions),
