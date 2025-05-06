@@ -92,9 +92,20 @@ contract Basic3Down2 is Basic3Left, Basic3Right {
 
 // Libraries
 
+library Basic4AuxLib {
+    function aux1(uint256 a) public {}
+
+    function aux2(uint256 a) internal {}
+}
+
 library Basic4Lib {
+    using Basic4AuxLib for *;
+
     function help1(uint256 a, mapping(uint256 => string) storage ref) internal {
         ref[a] = "hello world!";
+        ext2(a); // internal call
+        a.aux1(); // external call
+        a.aux2(); // internal call
     }
 
     function ext1(uint256 a) external {}

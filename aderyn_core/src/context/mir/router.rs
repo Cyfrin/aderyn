@@ -42,7 +42,8 @@ use std::collections::HashMap;
 /// * Helps resolve function calls to corresponding functions.
 ///
 /// TODO:
-/// Internal Library calls and library modifier
+/// Call to a modifier from a library
+/// external library calls
 ///
 /// NOTE: KEYS for the above are Node IDs of base contracts that are instantiable (non abstract)
 pub struct Router {

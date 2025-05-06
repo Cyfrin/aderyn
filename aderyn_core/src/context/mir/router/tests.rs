@@ -245,4 +245,31 @@ mod mir_router {
         let d = router.resolve_modifier_call(&context, b_contract, b_modifier_call).unwrap();
         assert_eq!(d.id, b_contract.find_modifier_by_name("modify").id);
     }
+
+    #[test]
+    pub fn resolves_internal_from_library_calls() {
+        let (router, context) = get_ic_router_ctx();
+
+        let basic4_contract = context.find_contract_by_name("Basic4");
+        let basic4_lib = context.find_contract_by_name("Basic4Lib");
+        let basic4_aux_lib = context.find_contract_by_name("Basic4AuxLib");
+        let help1_func = basic4_lib.find_function_by_name("help1");
+        let ext2_func = basic4_lib.find_function_by_name("ext2");
+        let aux2 = basic4_aux_lib.find_function_by_name("aux2");
+        let func_calls = ExtractFunctionCalls::from(help1_func).extracted;
+
+        assert!(func_calls[0].is_internal_call().unwrap());
+        assert!(!func_calls[1].is_internal_call().unwrap());
+        assert!(func_calls[2].is_internal_call().unwrap());
+
+        let a = router.resolve_internal_call(&context, basic4_contract, &func_calls[0]).unwrap();
+        assert_eq!(a.id, ext2_func.id);
+
+        let b = router.resolve_internal_call(&context, basic4_contract, &func_calls[2]).unwrap();
+        assert_eq!(b.id, aux2.id);
+
+        // external calls return none
+        let c = router.resolve_internal_call(&context, basic4_contract, &func_calls[1]);
+        assert!(c.is_none());
+    }
 }
