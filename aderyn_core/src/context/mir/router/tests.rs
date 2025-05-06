@@ -223,15 +223,18 @@ mod mir_router {
         let a_contract = context.find_contract_by_name("A");
         let b_contract = context.find_contract_by_name("B");
         let c_contract = context.find_contract_by_name("C");
+        let d_library = context.find_contract_by_name("D");
 
         let a_func = a_contract.find_function_by_name("geez");
         let b_func = b_contract.find_function_by_name("tree");
         let c_func = c_contract.find_function_by_name("main");
+        let show_func = d_library.find_function_by_name("show");
 
         let a_modifier_call = &a_func.modifiers[0];
         let b_modifier_call = &b_func.modifiers[0];
         let c_modifier_call_1 = &c_func.modifiers[0];
         let c_modifier_call_2 = &c_func.modifiers[1];
+        let show_modifier = &show_func.modifiers[0];
 
         let a = router.resolve_modifier_call(&context, b_contract, a_modifier_call).unwrap();
         assert_eq!(a.id, b_contract.find_modifier_by_name("modify").id);
@@ -244,6 +247,9 @@ mod mir_router {
 
         let d = router.resolve_modifier_call(&context, b_contract, b_modifier_call).unwrap();
         assert_eq!(d.id, b_contract.find_modifier_by_name("modify").id);
+
+        let e = router.resolve_modifier_call(&context, c_contract, show_modifier).unwrap();
+        assert_eq!(e.id, d_library.find_modifier_by_name("modify").id);
     }
 
     #[test]

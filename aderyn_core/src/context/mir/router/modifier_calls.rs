@@ -1,7 +1,7 @@
 use super::Router;
 use crate::{
     ast::{
-        ASTNode, ContractDefinition, IdentifierOrIdentifierPath, ModifierDefinition,
+        ASTNode, ContractDefinition, ContractKind, IdentifierOrIdentifierPath, ModifierDefinition,
         ModifierInvocation, NodeID, NodeType,
     },
     context::{browser::GetClosestAncestorOfTypeX, workspace::WorkspaceContext},
@@ -15,19 +15,29 @@ impl Router {
         base_contract: &'a ContractDefinition,
         modifier_call: &'a ModifierInvocation,
     ) -> Option<&'a ModifierDefinition> {
+        // check if it's illegal base contract type
+        if !base_contract.is_deployable_contract() {
+            return None;
+        }
+
         // check if it's illegal value - i.e function call that cannot be called from the base
         // contract must be discarded
         if let Some(ASTNode::ContractDefinition(caller_contract)) =
             modifier_call.closest_ancestor_of_type(context, NodeType::ContractDefinition)
         {
-            if !caller_contract.is_in(context, base_contract) {
+            if caller_contract.kind == ContractKind::Contract
+                && !caller_contract.is_in(context, base_contract)
+            {
                 return None;
+            } else if caller_contract.kind == ContractKind::Library {
+                // If an internal modifier call happens from a library, suspect cannot be overridden
+                // As of now, libraries do not have inheritance
+                //
+                // NOTE: for this case, we don't check that the modifier call from library can
+                // actually happen and is trigger(able) by the base contract.
+                let aux_modifier = modifier_call.suspected_target_modifier(context)?;
+                return Some(aux_modifier);
             }
-        }
-
-        // check if it's illegal base contract type
-        if !base_contract.is_deployable_contract() {
-            return None;
         }
 
         self.perform_mc_lookup_through_inheritance_tree_and_fallback_to_suspect(
