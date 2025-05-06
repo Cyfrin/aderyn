@@ -5490,7 +5490,7 @@ Define and use `constant` variables instead of using literals. If the same const
 
 Use descriptive reason strings or custom errors for revert paths.
 
-<details><summary>54 Found Instances</summary>
+<details><summary>55 Found Instances</summary>
 
 
 - Found in contracts/core/OpsManager.sol [Line: 50](../tests/2024-07-templegold/protocol/contracts/core/OpsManager.sol#L50)
@@ -5599,6 +5599,12 @@ Use descriptive reason strings or custom errors for revert paths.
 
 	```solidity
 	        require (absoluteResult <= 0x80000000000000000000000000000000);
+	```
+
+- Found in contracts/util/ABDKMath64x64.sol [Line: 262](../tests/2024-07-templegold/protocol/contracts/util/ABDKMath64x64.sol#L262)
+
+	```solidity
+	        require (absoluteResult <= 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF);
 	```
 
 - Found in contracts/util/ABDKMath64x64.sol [Line: 278](../tests/2024-07-templegold/protocol/contracts/util/ABDKMath64x64.sol#L278)
@@ -5781,10 +5787,10 @@ Use descriptive reason strings or custom errors for revert paths.
 	        require (result <= 0x80000000000000000000000000000000);
 	```
 
-- Found in contracts/util/ABDKMathQuad.sol [Line: 259](../tests/2024-07-templegold/protocol/contracts/util/ABDKMathQuad.sol#L259)
+- Found in contracts/util/ABDKMathQuad.sol [Line: 252](../tests/2024-07-templegold/protocol/contracts/util/ABDKMathQuad.sol#L252)
 
 	```solidity
-	   * Convert octuple precision number into quadruple precision number.
+	        require (result <= 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF);
 	```
 
 - Found in contracts/util/ABDKMathQuad.sol [Line: 440](../tests/2024-07-templegold/protocol/contracts/util/ABDKMathQuad.sol#L440)

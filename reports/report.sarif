@@ -6121,17 +6121,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/ExternalCalls.sol"
-                },
-                "region": {
-                  "byteLength": 6,
-                  "byteOffset": 1381
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "src/IncorrectModifier.sol"
                 },
                 "region": {
@@ -6268,6 +6257,17 @@
                 },
                 "region": {
                   "byteLength": 6,
+                  "byteOffset": 1381
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ZeroAddressCheck.sol"
+                },
+                "region": {
+                  "byteLength": 6,
                   "byteOffset": 329
                 }
               }
@@ -6280,17 +6280,6 @@
                 "region": {
                   "byteLength": 6,
                   "byteOffset": 608
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ZeroAddressCheck.sol"
-                },
-                "region": {
-                  "byteLength": 6,
-                  "byteOffset": 1074
                 }
               }
             },
