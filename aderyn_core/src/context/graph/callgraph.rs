@@ -10,7 +10,6 @@ use super::{traits::CallGraphVisitor, Error, Result};
 use crate::{
     ast::NodeID,
     context::workspace::{ASTNode, WorkspaceContext},
-    
 };
 
 #[derive(PartialEq)]

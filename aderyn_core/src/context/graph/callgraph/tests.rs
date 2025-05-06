@@ -1,6 +1,5 @@
 #![allow(clippy::collapsible_match)]
 
-
 #[cfg(test)]
 mod callgraph_test_functions {
     use crate::{
