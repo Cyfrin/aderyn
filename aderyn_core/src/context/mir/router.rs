@@ -86,8 +86,21 @@ type BaseRoute<T> = HashMap<NodeID, T>;
 // Function selectorish -> Function Definition Node ID
 type ICStartLookupRoute = HashMap<String, NodeID>;
 
-// Function selectorish -> Function Definition Node ID
-type ECStartLookupRoute = HashMap<String, NodeID>;
+// Function selector -> Function Definition Node ID
+type ECStartLookupRoute = HashMap<String, ECDest>;
+
+#[derive(Debug)]
+pub enum ECDest {
+    /// Node ID -> Variable Declaration ID
+    /// Default getter generated for public state variables
+    PseduoExtFn(NodeID),
+    /// Node ID -> Function Definition Node ID
+    /// External function
+    RealExtFn(NodeID),
+    /// Node ID -> Function Definition Node ID
+    /// Public function
+    PublicFn(NodeID),
+}
 
 // Modifier selectorish -> Modifier Definition Node ID
 type MCStartLookupRoute = HashMap<String, NodeID>;

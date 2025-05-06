@@ -23,7 +23,7 @@ impl Router {
     ///
     /// Note - Not all styles of internal calls are resolved successfully at the moment. Lot of
     /// unknowns.
-    pub(crate) fn _resolve_internal_call<'a>(
+    pub(super) fn _resolve_internal_call<'a>(
         &self,
         context: &'a WorkspaceContext,
         base_contract: &'a ContractDefinition,
@@ -172,7 +172,7 @@ impl Router {
     }
 }
 
-pub(crate) fn build_ic_router_for_contract(
+pub(super) fn build_ic_router_for_contract(
     context: &WorkspaceContext,
     base_contract: &ContractDefinition,
 ) -> HashMap<NodeID, HashMap<String, NodeID>> {

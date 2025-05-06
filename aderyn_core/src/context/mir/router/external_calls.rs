@@ -1,12 +1,12 @@
-use super::Router;
+use super::{ECDest, Router};
 use crate::{
-    ast::{ContractDefinition, FunctionCall, FunctionDefinition, NodeID},
+    ast::{ContractDefinition, FunctionCall, FunctionDefinition},
     context::workspace::WorkspaceContext,
 };
 use std::collections::HashMap;
 
 impl Router {
-    pub(crate) fn _resolve_external_call<'a>(
+    pub(super) fn _resolve_external_call<'a>(
         &self,
         context: &'a WorkspaceContext,
         base_contract: &'a ContractDefinition,
@@ -16,9 +16,9 @@ impl Router {
     }
 }
 
-pub(crate) fn build_ec_router_for_contract(
+pub(super) fn build_ec_router_for_contract(
     context: &WorkspaceContext,
     base_contract: &ContractDefinition,
-) -> HashMap<String, NodeID> {
+) -> HashMap<String, ECDest> {
     HashMap::new()
 }
