@@ -4,7 +4,7 @@ use crate::ast::{Expression, Identifier, NodeID};
 
 use crate::{
     capture,
-    context::workspace_context::WorkspaceContext,
+    context::workspace::WorkspaceContext,
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
@@ -60,7 +60,7 @@ mod assert_state_change_tracker {
         context::{
             browser::ApproximateStorageChangeFinder,
             graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
-            workspace_context::WorkspaceContext,
+            workspace::WorkspaceContext,
         },
     };
 

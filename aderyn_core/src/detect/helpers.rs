@@ -10,7 +10,7 @@ use crate::{
             ExtractBinaryOperations, ExtractFunctionCallOptions, ExtractFunctionCalls,
             ExtractMemberAccesses,
         },
-        workspace_context::WorkspaceContext,
+        workspace::WorkspaceContext,
     },
 };
 

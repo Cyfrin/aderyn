@@ -2,7 +2,7 @@ use crate::{
     ast::SourceUnit,
     context::{
         graph::{Transpose, WorkspaceCallGraph},
-        workspace_context::WorkspaceContext,
+        workspace::WorkspaceContext,
     },
     visitor::ast_visitor::Node,
 };

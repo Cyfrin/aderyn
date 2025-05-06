@@ -6,7 +6,7 @@ use crate::{
     capture,
     context::{
         browser::{ExtractVariableDeclarations, GetClosestAncestorOfTypeX},
-        workspace_context::WorkspaceContext,
+        workspace::WorkspaceContext,
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
@@ -81,7 +81,7 @@ impl IssueDetector for LocalVariableShadowingDetector {
 mod contract_hierarchy_variable_helpers {
     use crate::{
         ast::{ASTNode, ContractDefinition, VariableDeclaration},
-        context::{browser::ExtractVariableDeclarations, workspace_context::WorkspaceContext},
+        context::{browser::ExtractVariableDeclarations, workspace::WorkspaceContext},
     };
 
     impl ContractDefinition {

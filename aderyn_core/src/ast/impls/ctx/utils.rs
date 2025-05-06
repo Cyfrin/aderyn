@@ -1,4 +1,4 @@
-use crate::{ast::*, context::workspace_context::WorkspaceContext};
+use crate::{ast::*, context::workspace::WorkspaceContext};
 
 impl ContractDefinition {
     /// Returns sequence of all inherited contracts including itself in C3 linearized hierarchy

@@ -3,7 +3,7 @@ use std::{collections::BTreeMap, error::Error};
 use crate::{
     ast::{Expression, Identifier, NodeID},
     capture,
-    context::{browser::ExtractFunctionCalls, workspace_context::WorkspaceContext},
+    context::{browser::ExtractFunctionCalls, workspace::WorkspaceContext},
     detect::{
         detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
         helpers::{get_implemented_external_and_public_functions, has_msg_sender_binary_operation},

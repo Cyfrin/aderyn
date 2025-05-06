@@ -6,7 +6,7 @@ use crate::{capture, detect::detector::IssueDetectorNamePool};
 use phf::phf_set;
 
 use crate::{
-    context::workspace_context::WorkspaceContext,
+    context::workspace::WorkspaceContext,
     detect::detector::{IssueDetector, IssueSeverity},
 };
 use eyre::Result;

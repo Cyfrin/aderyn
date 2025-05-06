@@ -10,7 +10,7 @@ use crate::{
     context::{
         browser::{ApproximateStorageChangeFinder, ExtractFunctionCalls},
         flow::{Cfg, CfgNodeId},
-        workspace_context::WorkspaceContext,
+        workspace::WorkspaceContext,
     },
     detect::{
         detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},

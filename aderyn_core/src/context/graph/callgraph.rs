@@ -9,7 +9,7 @@ mod utils;
 use super::{traits::CallGraphVisitor, Error, Result};
 use crate::{
     ast::NodeID,
-    context::workspace_context::{ASTNode, WorkspaceContext},
+    context::workspace::{ASTNode, WorkspaceContext},
 };
 
 #[derive(PartialEq)]

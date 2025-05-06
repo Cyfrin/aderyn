@@ -8,7 +8,7 @@ use std::{
 
 use crate::{
     ast::NodeID,
-    context::workspace_context::WorkspaceContext,
+    context::workspace::WorkspaceContext,
     detect::detector::{IssueDetector, IssueSeverity},
     stats::When,
 };

@@ -4,7 +4,7 @@ use crate::ast::{NodeID, StorageLocation};
 
 use crate::{
     capture,
-    context::workspace_context::{ASTNode, WorkspaceContext},
+    context::workspace::{ASTNode, WorkspaceContext},
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;

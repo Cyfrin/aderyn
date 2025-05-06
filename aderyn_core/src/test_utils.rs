@@ -2,7 +2,7 @@ mod load_source_unit;
 
 use crate::{
     ast::{ContractDefinition, FunctionDefinition, FunctionKind, ModifierDefinition, NodeID},
-    context::{browser::ExtractVariableDeclarations, workspace_context::WorkspaceContext},
+    context::{browser::ExtractVariableDeclarations, workspace::WorkspaceContext},
 };
 
 // Using `solc` to read AST given a source unit (i.e Solidity file)

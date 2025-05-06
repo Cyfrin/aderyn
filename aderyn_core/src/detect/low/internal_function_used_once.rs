@@ -3,7 +3,7 @@ use std::{collections::BTreeMap, error::Error};
 use crate::{
     ast::{NodeID, Visibility},
     capture,
-    context::workspace_context::WorkspaceContext,
+    context::workspace::WorkspaceContext,
     detect::{
         detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
         helpers::count_identifiers_that_reference_an_id,

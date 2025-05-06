@@ -1,6 +1,6 @@
 use crate::{
     ast::NodeID,
-    context::{browser::GetPreviousSibling, workspace_context::WorkspaceContext},
+    context::{browser::GetPreviousSibling, workspace::WorkspaceContext},
     visitor::ast_visitor::{ASTConstVisitor, Node},
 };
 

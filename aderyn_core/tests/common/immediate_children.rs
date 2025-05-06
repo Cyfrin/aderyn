@@ -4,7 +4,7 @@ use std::{collections::BTreeMap, error::Error};
 use aderyn_core::{
     ast::{NodeID, NodeType},
     capture,
-    context::{browser::GetImmediateChildren, workspace_context::WorkspaceContext},
+    context::{browser::GetImmediateChildren, workspace::WorkspaceContext},
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;

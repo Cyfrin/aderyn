@@ -6,7 +6,7 @@ mod callgraph_test_functions {
         ast::{FunctionDefinition, ModifierDefinition},
         context::{
             graph::{callgraph::CallGraph, traits::CallGraphVisitor},
-            workspace_context::{ASTNode, WorkspaceContext},
+            workspace::{ASTNode, WorkspaceContext},
         },
     };
 

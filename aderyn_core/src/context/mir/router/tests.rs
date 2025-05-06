@@ -3,7 +3,7 @@ mod mir_router {
     use crate::{
         ast::ASTNode,
         context::{
-            browser::ExtractFunctionCalls, mir::router::Router, workspace_context::WorkspaceContext,
+            browser::ExtractFunctionCalls, mir::router::Router, workspace::WorkspaceContext,
         },
         test_utils::load_solidity_source_unit,
     };

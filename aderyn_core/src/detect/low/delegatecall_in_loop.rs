@@ -6,7 +6,7 @@ use crate::{
     context::{
         browser::ExtractMemberAccesses,
         graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
-        workspace_context::WorkspaceContext,
+        workspace::WorkspaceContext,
     },
     detect::{
         detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},

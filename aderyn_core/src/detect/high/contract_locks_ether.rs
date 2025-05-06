@@ -6,7 +6,7 @@ use crate::ast::NodeID;
 
 use crate::{
     capture,
-    context::workspace_context::WorkspaceContext,
+    context::workspace::WorkspaceContext,
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 
@@ -64,7 +64,7 @@ mod contract_eth_helper {
         context::{
             browser::ExtractFunctionDefinitions,
             graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
-            workspace_context::WorkspaceContext,
+            workspace::WorkspaceContext,
         },
         detect::helpers,
     };

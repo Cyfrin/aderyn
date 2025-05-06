@@ -5,7 +5,7 @@ use crate::{
     context::{
         browser::{ExtractReferencedDeclarations, GetClosestAncestorOfTypeX},
         graph::WorkspaceCallGraph,
-        workspace_context::{ASTNode, WorkspaceContext},
+        workspace::{ASTNode, WorkspaceContext},
     },
 };
 
