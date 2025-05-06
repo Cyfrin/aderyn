@@ -30,18 +30,9 @@ impl Router {
         func_call: &'a FunctionCall,
     ) -> Option<&'a FunctionDefinition> {
         // do not resolve if it's not internal function call
+        // very very very important check.
         if func_call.is_internal_call() != Some(true) {
             return None;
-        }
-
-        // check if it's illegal value - i.e function call that cannot be called from the base
-        // contract must be discarded
-        if let Some(ASTNode::ContractDefinition(caller_contract)) =
-            func_call.closest_ancestor_of_type(context, NodeType::ContractDefinition)
-        {
-            if !caller_contract.is_in(context, base_contract) {
-                return None;
-            }
         }
 
         // check if it's illegal base contract type
@@ -51,10 +42,34 @@ impl Router {
 
         let func = func_call.suspected_target_function(context)?;
 
+        // check if it's illegal value - i.e function call that cannot be called from the base
+        // contract must be discarded
+        //
+        // Sometimes it may be a free function so it's okay to not have a containing contract
+        // definition.
+        if let Some(ASTNode::ContractDefinition(caller_contract)) =
+            func_call.closest_ancestor_of_type(context, NodeType::ContractDefinition)
+        {
+            if caller_contract.kind == ContractKind::Contract
+                && !caller_contract.is_in(context, base_contract)
+            {
+                return None;
+            } else if caller_contract.kind == ContractKind::Library {
+                // If an internal function call happens from a library, suspect cannot be overridden
+                // As of now, libraries do not have inheritance
+                //
+                // NOTE: for this case, we don't check that the internal library call can actually
+                // happen and is trigger(able) by the base contract.
+                return Some(func);
+            }
+        }
+
         if func.visibility == Visibility::Private {
             return Some(func);
         }
 
+        // If an internal function call happens to a library, suspect cannot be overridden
+        // As of now, libraries do not have inheritance
         if func.closest_ancestor_of_type(context, NodeType::ContractDefinition).is_some_and(|c| {
             matches!(
                 c,

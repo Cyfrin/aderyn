@@ -26,12 +26,24 @@ contract B is A {
 
 
 contract C is B {
+    using D for uint256;
 
     modifier modify() override  {
         _;
     }
 
     function main() public B.modify modify {
+        uint256 a = 10;
+        a.show();
+    }
+}
+
+library D {
+    modifier modify() {
+        _;
+    }
+
+    function show(uint256 a) internal modify {
 
     }
 }

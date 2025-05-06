@@ -42,7 +42,9 @@ use std::collections::HashMap;
 /// * Helps resolve function calls to corresponding functions.
 ///
 /// TODO:
-/// Internal Library calls and library modifier
+/// Given a library resolve external calls made to public or external functions (delegate calls).
+/// It's actually straightforward - Just directly return target suspect. But right now there is no
+/// requirement for this. Therefore, I'lll pass on this one until I see a need.
 ///
 /// NOTE: KEYS for the above are Node IDs of base contracts that are instantiable (non abstract)
 pub struct Router {
