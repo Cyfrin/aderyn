@@ -2,7 +2,7 @@ use crate::ast::{ContractDefinition, *};
 
 use super::{
     macros::generate_capturable_methods,
-    workspace_context::{ASTNode, WorkspaceContext},
+    workspace::{ASTNode, WorkspaceContext},
 };
 
 generate_capturable_methods! {

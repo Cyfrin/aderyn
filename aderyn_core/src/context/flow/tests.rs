@@ -6,7 +6,7 @@ mod control_flow_tests {
                 visualizer::control_flow_tests::output_graph, Block, Cfg, CfgNode,
                 CfgNodeDescriptor, CfgNodeId,
             },
-            workspace_context::WorkspaceContext,
+            workspace::WorkspaceContext,
         },
         detect::test_utils::load_solidity_source_unit,
     };

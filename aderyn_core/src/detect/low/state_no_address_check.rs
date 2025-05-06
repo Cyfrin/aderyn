@@ -8,7 +8,7 @@ use crate::{
     capture,
     context::{
         browser::{ExtractAssignments, ExtractBinaryOperations, ExtractIdentifiers},
-        workspace_context::WorkspaceContext,
+        workspace::WorkspaceContext,
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
@@ -182,7 +182,7 @@ impl IssueDetector for StateNoAddressCheckDetector {
 mod zero_address_check_tests {
     use crate::{
         ast::NodeType,
-        context::{browser::GetClosestAncestorOfTypeX, workspace_context::ASTNode},
+        context::{browser::GetClosestAncestorOfTypeX, workspace::ASTNode},
         detect::{detector::IssueDetector, low::StateNoAddressCheckDetector},
     };
 

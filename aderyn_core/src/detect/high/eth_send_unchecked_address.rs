@@ -7,7 +7,7 @@ use crate::{
     context::{
         browser::ExtractModifierInvocations,
         graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
-        workspace_context::{ASTNode, WorkspaceContext},
+        workspace::{ASTNode, WorkspaceContext},
     },
     detect::{
         detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},

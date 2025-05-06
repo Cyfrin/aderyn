@@ -1,12 +1,13 @@
 #![allow(clippy::collapsible_match)]
 
+
 #[cfg(test)]
 mod callgraph_test_functions {
     use crate::{
         ast::{FunctionDefinition, ModifierDefinition},
         context::{
             graph::{callgraph::CallGraph, traits::CallGraphVisitor},
-            workspace_context::{ASTNode, WorkspaceContext},
+            workspace::{ASTNode, WorkspaceContext},
         },
     };
 

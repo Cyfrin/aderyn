@@ -11,7 +11,7 @@ use crate::{
             ExtractFunctionDefinitions, ExtractLiterals, ExtractModifierDefinitions,
             GetImmediateParent,
         },
-        workspace_context::{ASTNode, WorkspaceContext},
+        workspace::{ASTNode, WorkspaceContext},
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };

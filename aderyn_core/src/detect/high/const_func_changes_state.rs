@@ -7,7 +7,7 @@ use crate::{
     context::{
         browser::ApproximateStorageChangeFinder,
         graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
-        workspace_context::WorkspaceContext,
+        workspace::WorkspaceContext,
     },
     detect::{
         detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
@@ -97,7 +97,7 @@ mod func_compilation_solc_pragma_helper {
         ast::{FunctionDefinition, NodeType},
         context::{
             browser::{ExtractPragmaDirectives, GetClosestAncestorOfTypeX},
-            workspace_context::WorkspaceContext,
+            workspace::WorkspaceContext,
         },
         detect::helpers,
     };

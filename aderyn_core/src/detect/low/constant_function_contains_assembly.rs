@@ -12,7 +12,7 @@ use crate::{
 use crate::{
     context::{
         graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
-        workspace_context::WorkspaceContext,
+        workspace::WorkspaceContext,
     },
     detect::{
         detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},

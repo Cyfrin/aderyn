@@ -1,6 +1,6 @@
 use crate::{
     ast::*,
-    context::workspace_context::WorkspaceContext,
+    context::workspace::WorkspaceContext,
     visitor::ast_visitor::{ASTConstVisitor, Node},
 };
 use eyre::*;

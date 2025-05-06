@@ -4,4 +4,4 @@ pub mod flow;
 pub mod graph;
 pub mod macros;
 pub mod mir;
-pub mod workspace_context;
+pub mod workspace;

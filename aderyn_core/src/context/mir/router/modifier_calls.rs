@@ -4,7 +4,7 @@ use crate::{
         ASTNode, ContractDefinition, IdentifierOrIdentifierPath, ModifierDefinition,
         ModifierInvocation, NodeID, NodeType,
     },
-    context::{browser::GetClosestAncestorOfTypeX, workspace_context::WorkspaceContext},
+    context::{browser::GetClosestAncestorOfTypeX, workspace::WorkspaceContext},
 };
 use std::collections::{hash_map::Entry, HashMap};
 

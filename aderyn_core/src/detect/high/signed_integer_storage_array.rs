@@ -8,7 +8,7 @@ use crate::{
     capture,
     context::{
         browser::{ExtractPragmaDirectives, ExtractTupleExpressions, GetImmediateParent},
-        workspace_context::WorkspaceContext,
+        workspace::WorkspaceContext,
     },
     detect::{
         detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},

@@ -7,7 +7,7 @@ use crate::{
         attack_surface::AttackSurfaceDetector,
         public_functions_no_sender::PublicFunctionsNoSenderChecksDetector,
     },
-    context::workspace_context::WorkspaceContext,
+    context::workspace::WorkspaceContext,
 };
 
 pub fn get_auditor_detectors() -> Vec<Box<dyn AuditorDetector>> {

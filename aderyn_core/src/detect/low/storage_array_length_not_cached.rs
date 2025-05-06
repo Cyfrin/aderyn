@@ -4,7 +4,7 @@ use crate::ast::{ASTNode, NodeID};
 
 use crate::{
     capture,
-    context::workspace_context::WorkspaceContext,
+    context::workspace::WorkspaceContext,
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;
@@ -97,7 +97,7 @@ mod loop_investigation_helper {
         context::{
             browser::{ApproximateStorageChangeFinder, ExtractMemberAccesses},
             graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
-            workspace_context::WorkspaceContext,
+            workspace::WorkspaceContext,
         },
     };
 

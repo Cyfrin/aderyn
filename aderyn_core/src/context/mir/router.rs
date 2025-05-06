@@ -11,7 +11,7 @@ mod tests;
 use internal_calls::build_ic_router_for_contract;
 use modifier_calls::build_mc_router_for_contract;
 
-use crate::{ast::*, context::workspace_context::WorkspaceContext};
+use crate::{ast::*, context::workspace::WorkspaceContext};
 use std::collections::HashMap;
 
 #[derive(Debug)]

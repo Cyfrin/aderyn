@@ -11,7 +11,7 @@ use crate::{
         browser::{
             ExtractReferencedDeclarations, ExtractVariableDeclarations, GetClosestAncestorOfTypeX,
         },
-        workspace_context::WorkspaceContext,
+        workspace::WorkspaceContext,
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };

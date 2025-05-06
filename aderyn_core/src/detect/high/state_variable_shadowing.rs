@@ -14,7 +14,7 @@ use crate::{
         browser::{
             ExtractPragmaDirectives, ExtractVariableDeclarations, GetClosestAncestorOfTypeX,
         },
-        workspace_context::{ASTNode, WorkspaceContext},
+        workspace::{ASTNode, WorkspaceContext},
     },
     detect::{
         detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},

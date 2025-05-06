@@ -9,7 +9,7 @@ use crate::{
     capture,
     context::{
         browser::{ExtractIdentifiers, ExtractVariableDeclarations},
-        workspace_context::WorkspaceContext,
+        workspace::WorkspaceContext,
     },
     detect::{
         detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},

@@ -7,7 +7,7 @@ use crate::ast::{FunctionCallKind, Mutability, NodeID};
 
 use crate::{
     capture,
-    context::{browser::ExtractFunctionCalls, workspace_context::WorkspaceContext},
+    context::{browser::ExtractFunctionCalls, workspace::WorkspaceContext},
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 
@@ -116,7 +116,7 @@ mod function_state_changes_finder_helper {
         context::{
             browser::ApproximateStorageChangeFinder,
             graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
-            workspace_context::WorkspaceContext,
+            workspace::WorkspaceContext,
         },
     };
 

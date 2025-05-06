@@ -6,7 +6,7 @@ use crate::{
 use aderyn_core::{
     context::{
         graph::{Transpose, WorkspaceCallGraph},
-        workspace_context::WorkspaceContext,
+        workspace::WorkspaceContext,
     },
     stats,
 };

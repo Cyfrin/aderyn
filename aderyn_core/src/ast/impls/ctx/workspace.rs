@@ -1,4 +1,4 @@
-use crate::{ast::ContractDefinition, context::workspace_context::WorkspaceContext};
+use crate::{ast::ContractDefinition, context::workspace::WorkspaceContext};
 
 impl WorkspaceContext {
     #[inline]

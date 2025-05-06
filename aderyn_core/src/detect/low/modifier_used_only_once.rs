@@ -6,7 +6,7 @@ use std::{
 use crate::{
     ast::NodeID,
     capture,
-    context::workspace_context::WorkspaceContext,
+    context::workspace::WorkspaceContext,
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;

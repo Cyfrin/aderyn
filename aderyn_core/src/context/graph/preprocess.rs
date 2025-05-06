@@ -4,7 +4,7 @@ use crate::{
     ast::{Expression, IdentifierOrIdentifierPath, NodeID, NodeType},
     context::{
         browser::{ExtractFunctionCalls, ExtractModifierInvocations},
-        workspace_context::WorkspaceContext,
+        workspace::WorkspaceContext,
     },
 };
 

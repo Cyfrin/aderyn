@@ -3,7 +3,7 @@ use std::{collections::BTreeMap, error::Error};
 use aderyn_core::{
     ast::NodeID,
     capture,
-    context::{browser::PeekOver, workspace_context::WorkspaceContext},
+    context::{browser::PeekOver, workspace::WorkspaceContext},
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
 };
 use eyre::Result;

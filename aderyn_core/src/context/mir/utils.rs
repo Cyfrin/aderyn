@@ -1,4 +1,4 @@
-use crate::context::workspace_context::WorkspaceContext;
+use crate::context::workspace::WorkspaceContext;
 
 use super::Mir;
 

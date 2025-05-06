@@ -7,7 +7,7 @@ use crate::capture;
 use crate::{
     context::{
         graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
-        workspace_context::WorkspaceContext,
+        workspace::WorkspaceContext,
     },
     detect::{
         detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
@@ -72,7 +72,7 @@ struct DelegateCallNoAddressChecksTracker<'a> {
 }
 
 impl CallGraphVisitor for DelegateCallNoAddressChecksTracker<'_> {
-    fn visit_any(&mut self, node: &crate::context::workspace_context::ASTNode) -> eyre::Result<()> {
+    fn visit_any(&mut self, node: &crate::context::workspace::ASTNode) -> eyre::Result<()> {
         if !self.has_address_checks && helpers::has_binary_checks_on_some_address(node) {
             self.has_address_checks = true;
         }
