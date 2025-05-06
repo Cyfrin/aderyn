@@ -15,14 +15,41 @@ use crate::{ast::*, context::workspace::WorkspaceContext};
 use std::collections::HashMap;
 
 #[derive(Debug)]
+/// Router
+///
+/// ---------
+///
+/// Given an instantiable base contract, this helps resolve calls to definitions that are either
+/// in the base contract's inheritance hierarchy or an internal function of library.
+///
+/// When control flow stays within the contract:
+///
+/// [`Router::internal_calls`]:
+/// * Helps resolve function calls to corresponding functions.
+///
+/// [`Router::modifier_calls`]:
+/// * Helps resolve modifier calls to corresponding modifiers.
+///
+/// ----------
+///
+/// TODO:
+/// Given an instantiable base contract this helps resolve calls to public or external function
+/// definitions in the base contract's hierarchy.
+///
+/// When control flows leaves the contract:
+///
+/// [`Router::external_calls`]:
+/// * Helps resolve function calls to corresponding functions.
+///
+/// TODO:
+/// Internal Library calls and library modifier
+///
+/// NOTE: KEYS for the above are Node IDs of base contracts that are instantiable (non abstract)
 pub struct Router {
-    /// For instantiable contracts only (non abstract)
-    /// Does not contain private and external call routes
-    /// KEY => Node ID of base contract
+    /// resolves internal calls made to private, public and internal function
     pub internal_calls: HashMap<NodeID, ICRoutes>,
 
-    /// For instantiable contracts only (non abstract)
-    /// KEY => Node ID of base contract
+    /// resolves internal calls made to modifiers.
     pub modifier_calls: HashMap<NodeID, MCRoutes>,
 }
 
