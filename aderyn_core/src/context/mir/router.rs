@@ -163,9 +163,9 @@ impl Router {
     ) -> Option<&'a FunctionDefinition> {
         self._resolve_receive_function(context, base_contract)
     }
-    pub fn resolve_function_selector<'a>(
+    pub fn resolve_function_selector(
         &self,
-        base_contract: &'a ContractDefinition,
+        base_contract: &ContractDefinition,
         selector: impl AsRef<str>,
     ) -> Option<ECDest> {
         self._resolve_function_selector(base_contract, selector)

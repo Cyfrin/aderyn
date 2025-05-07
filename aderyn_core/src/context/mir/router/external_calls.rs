@@ -41,8 +41,8 @@ impl Router {
         }
         let lookup_index = self.external_calls.get(&base_contract.id)?;
         if let Some(ECDest::Fallback(func_id)) = lookup_index.routes.get("FALLBACK") {
-            if let Some(ASTNode::FunctionDefinition(fallback)) = context.nodes.get(&func_id) {
-                return Some(&fallback);
+            if let Some(ASTNode::FunctionDefinition(fallback)) = context.nodes.get(func_id) {
+                return Some(fallback);
             }
         }
         None
@@ -60,15 +60,15 @@ impl Router {
         let lookup_index = self.external_calls.get(&base_contract.id)?;
         if let Some(ECDest::Receive(func_id)) = lookup_index.routes.get("RECEIVE") {
             if let Some(ASTNode::FunctionDefinition(fallback)) = context.nodes.get(func_id) {
-                return Some(&fallback);
+                return Some(fallback);
             }
         }
         None
     }
 
-    pub(super) fn _resolve_function_selector<'a>(
+    pub(super) fn _resolve_function_selector(
         &self,
-        base_contract: &'a ContractDefinition,
+        base_contract: &ContractDefinition,
         selector: impl AsRef<str>,
     ) -> Option<ECDest> {
         // check if it's illegal base contract type
