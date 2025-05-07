@@ -55,7 +55,7 @@ impl CallGraphConsumer {
         nodes: &[&ASTNode],
         direction: CallGraphDirection,
     ) -> super::Result<CallGraphConsumer> {
-        Self::from_nodes(context, nodes, direction)
+        Self::from_nodes_legacy(context, nodes, direction)
     }
 
     /// Visit the entry points and all the plausible function definitions and modifier definitions

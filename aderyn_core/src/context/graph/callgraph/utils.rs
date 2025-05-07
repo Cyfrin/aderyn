@@ -10,7 +10,7 @@ use super::*;
 
 impl CallGraphConsumer {
     /// Creates a [`CallGraph`] by exploring paths from given nodes. This is the starting point.
-    pub fn from_nodes(
+    pub fn from_nodes_legacy(
         context: &WorkspaceContext,
         nodes: &[&ASTNode],
         direction: CallGraphDirection,
