@@ -6,7 +6,7 @@ use crate::{
         workspace::WorkspaceContext,
     },
 };
-use std::collections::hash_map::*;
+use std::collections::{hash_map::*, HashSet};
 
 impl WorkspaceCallGraphs {
     pub fn build(context: &WorkspaceContext) -> WorkspaceCallGraphs {
@@ -26,9 +26,14 @@ pub fn _create_raw_callgraph(
     contract: &ContractDefinition,
 ) -> Option<RawCallGraph> {
     let mut raw_callgraph = Default::default();
+    let mut visited: HashSet<NodeID> = Default::default();
     for entrypoint in context.entrypoint_functions(contract)? {
         let mut current = vec![entrypoint.id];
         while let Some(node_id) = current.pop() {
+            if visited.contains(&node_id) {
+                continue;
+            }
+            visited.insert(node_id);
             let Some(node) = context.nodes.get(&node_id) else {
                 continue;
             };
