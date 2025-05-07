@@ -91,15 +91,11 @@ type ECStartLookupRoute = HashMap<String, ECDest>;
 
 #[derive(Debug, Clone)]
 pub enum ECDest {
-    /// Node ID -> Variable Declaration ID
-    /// Default getter generated for public state variables
-    PseduoExtFn(NodeID),
-    /// Node ID -> Function Definition Node ID
-    /// External function
-    RealExtFn(NodeID),
-    /// Node ID -> Function Definition Node ID
-    /// Public function
-    PublicFn(NodeID),
+    PseduoExtFn(NodeID), // Public State Variable Declaration Id (getter method)
+    RealExtFn(NodeID),   // External function Id
+    PublicFn(NodeID),    // Public function Id
+    Fallback(NodeID),    // Fallback function Id
+    Receive(NodeID),     // Receive function Id
 }
 
 // Modifier selectorish -> Modifier Definition Node ID

@@ -26,7 +26,11 @@ impl Router {
         let selector = suspect.function_selector.as_ref()?;
         let lookup_index = self.external_calls.get(&base_contract.id)?;
 
-        lookup_index.routes.get(selector).cloned()
+        match lookup_index.routes.get(selector) {
+            Some(resolved) => Some(resolved.clone()),
+            None => lookup_index.routes.get("FALLBACK").cloned(), /* it cannot be RECEIVE because
+                                                                   * data is non empty */
+        }
     }
 }
 
@@ -52,27 +56,40 @@ pub(super) fn build_ec_router_for_contract(
         }
         // Loop through externally available functions
         for func in contract.function_definitions() {
-            if *func.kind() != FunctionKind::Function {
-                continue;
-            }
-            match func.visibility {
-                Visibility::Public => {
-                    let Some(func_selector) = func.function_selector.as_ref() else {
-                        return HashMap::new();
+            match *func.kind() {
+                FunctionKind::Function => {
+                    match func.visibility {
+                        Visibility::Public => {
+                            let Some(func_selector) = func.function_selector.as_ref() else {
+                                return HashMap::new();
+                            };
+                            if let Entry::Vacant(e) = routes.entry(func_selector.to_string()) {
+                                e.insert(ECDest::PublicFn(func.id));
+                            }
+                        }
+                        Visibility::External => {
+                            let Some(func_selector) = func.function_selector.as_ref() else {
+                                return HashMap::new();
+                            };
+                            if let Entry::Vacant(e) = routes.entry(func_selector.to_string()) {
+                                e.insert(ECDest::RealExtFn(func.id));
+                            }
+                        }
+                        _ => (),
                     };
-                    if let Entry::Vacant(e) = routes.entry(func_selector.to_string()) {
-                        e.insert(ECDest::PublicFn(func.id));
+                }
+                FunctionKind::Receive => {
+                    if let Entry::Vacant(e) = routes.entry("RECEIVE".to_string()) {
+                        e.insert(ECDest::Receive(func.id));
                     }
                 }
-                Visibility::External => {
-                    let Some(func_selector) = func.function_selector.as_ref() else {
-                        return HashMap::new();
-                    };
-                    if let Entry::Vacant(e) = routes.entry(func_selector.to_string()) {
-                        e.insert(ECDest::RealExtFn(func.id));
+                FunctionKind::Fallback => {
+                    if let Entry::Vacant(e) = routes.entry("FALLBACK".to_string()) {
+                        e.insert(ECDest::Fallback(func.id));
                     }
                 }
-                _ => (),
+                FunctionKind::FreeFunction => unreachable!(),
+                FunctionKind::Constructor => (),
             };
         }
     }
