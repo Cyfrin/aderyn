@@ -65,6 +65,14 @@ mod mir_router {
         (Router::build(&context), context)
     }
 
+    fn get_ec_router_ctx_2() -> (Router, WorkspaceContext) {
+        let context = load_solidity_source_unit(
+            "../tests/contract-playground/src/router/FallbackAndReceiveOverrides.sol",
+        );
+
+        (Router::build(&context), context)
+    }
+
     #[test]
     pub fn resolves_internal_calls_3() {
         let (router, context) = get_ic_router_ctx();
@@ -328,8 +336,35 @@ mod mir_router {
         assert_eq!(func_calls[0].is_internal_call(), Some(false));
 
         let d_contract = context.find_contract_by_name("D");
-        router.external_calls.iter().for_each(|f| println!("{:?}", f));
-        let out = router.resolve_external_call(&context, d_contract, &func_calls[0]).unwrap(); // none?
+        let out = router.resolve_external_call(&context, d_contract, &func_calls[0]).unwrap();
         assert!(matches!(out, ECDest::PseduoExtFn(_)));
+    }
+
+    #[test]
+    pub fn resolve_ext_calls_3() {
+        let (router, context) = get_ec_router_ctx_2();
+
+        let test_contract = context.find_contract_by_name("TestIt");
+        let test_func = test_contract.find_function_by_name("test");
+        let func_calls = ExtractFunctionCalls::from(test_func).extracted;
+
+        assert_eq!(func_calls[0].is_internal_call(), Some(false));
+
+        let a_contract = context.find_contract_by_name("A");
+        let b_contract = context.find_contract_by_name("B");
+        let c_contract = context.find_contract_by_name("C");
+
+        let a_fallback = a_contract.find_fallback_function();
+        let b_fallback = b_contract.find_fallback_function();
+
+        // resolve fallback functions
+        let out = router.resolve_external_call(&context, a_contract, &func_calls[0]).unwrap();
+        assert_eq!(out, ECDest::Fallback(a_fallback.id));
+
+        let out = router.resolve_external_call(&context, b_contract, &func_calls[0]).unwrap();
+        assert_eq!(out, ECDest::Fallback(b_fallback.id));
+
+        let out = router.resolve_external_call(&context, c_contract, &func_calls[0]).unwrap();
+        assert_eq!(out, ECDest::Fallback(a_fallback.id));
     }
 }

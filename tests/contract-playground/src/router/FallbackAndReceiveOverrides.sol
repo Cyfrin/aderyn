@@ -9,6 +9,17 @@ contract A {
 
 contract B is A {
     fallback() external payable override {}
+}
 
-    receive() external payable override {}
+contract C is A {}
+
+// Assume we're faking A and B. Note - neither of them have abc() function
+interface FakeIt {
+    function abc() external;
+}
+
+contract TestIt {
+    function test(FakeIt f) public {
+        f.abc();
+    }
 }

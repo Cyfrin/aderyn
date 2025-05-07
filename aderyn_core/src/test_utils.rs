@@ -28,6 +28,20 @@ impl ContractDefinition {
         self.function_definitions().iter().find(|func| func.name == name).unwrap()
     }
 
+    pub fn find_receive_function(&self) -> &FunctionDefinition {
+        self.function_definitions()
+            .iter()
+            .find(|func| *func.kind() == FunctionKind::Receive)
+            .unwrap()
+    }
+
+    pub fn find_fallback_function(&self) -> &FunctionDefinition {
+        self.function_definitions()
+            .iter()
+            .find(|func| *func.kind() == FunctionKind::Fallback)
+            .unwrap()
+    }
+
     pub fn find_modifier_by_name(&self, name: &str) -> &ModifierDefinition {
         self.modifier_definitions().iter().find(|modifier| modifier.name == name).unwrap()
     }
