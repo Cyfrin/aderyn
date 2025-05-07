@@ -81,7 +81,7 @@ impl FunctionCall {
     /// Returns the function definition or variable declarartion referenced by the function call.
     /// Also see [`FunctionCall::suspected_target_function`]
     #[inline]
-    pub fn suspected_function_selector<'a>(&self, context: &'a WorkspaceContext) -> Option<String> {
+    pub fn suspected_function_selector(&self, context: &WorkspaceContext) -> Option<String> {
         match self.expression.as_ref() {
             Expression::Identifier(Identifier { referenced_declaration: Some(id), .. }) => {
                 if let Some(ASTNode::FunctionDefinition(func)) = context.nodes.get(id) {
