@@ -148,7 +148,6 @@ impl WorkspaceContext {
         Some(
             base.routes
                 .values()
-                .into_iter()
                 .flat_map(|r| match r {
                     ECDest::PseduoExtFn(_) => None,
                     ECDest::RealExtFn(id)
