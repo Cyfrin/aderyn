@@ -5,7 +5,7 @@ use crate::{
     capture,
     context::{
         browser::ExtractMemberAccesses,
-        graph::{CallGraphConsumerV1, CallGraphDirection, CallGraphVisitor},
+        graph::{CallGraphConsumer, CallGraphDirection, CallGraphVisitor},
         workspace::WorkspaceContext,
     },
     detect::{
@@ -37,7 +37,7 @@ impl IssueDetector for DelegatecallInLoopDetector {
 
             // All the ASTNodes that are potentially run in a loop
             let callgraph =
-                CallGraphConsumerV1::new(context, &[explore_center], CallGraphDirection::Inward)?;
+                CallGraphConsumer::new(context, &[explore_center], CallGraphDirection::Inward)?;
 
             // Kick-off
             callgraph.accept(context, &mut delegate_call_tracker)?;

@@ -6,7 +6,7 @@ use crate::{capture, context::browser::ApproximateStorageChangeFinder};
 
 use crate::{
     context::{
-        graph::{CallGraphConsumerV1, CallGraphDirection, CallGraphVisitor},
+        graph::{CallGraphConsumer, CallGraphDirection, CallGraphVisitor},
         workspace::WorkspaceContext,
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
@@ -71,7 +71,7 @@ fn changes_state(context: &WorkspaceContext, ast_node: &ASTNode) -> Option<bool>
     // Now, investigate the function to see if there is scope for any state variable changes
     let mut tracker = StateVariableChangeTracker { state_var_has_changed: false, context };
     let callgraph =
-        CallGraphConsumerV1::new(context, &[ast_node], CallGraphDirection::Inward).ok()?;
+        CallGraphConsumer::new(context, &[ast_node], CallGraphDirection::Inward).ok()?;
     callgraph.accept(context, &mut tracker).ok()?;
     Some(tracker.state_var_has_changed)
 }

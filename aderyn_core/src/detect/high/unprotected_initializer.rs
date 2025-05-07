@@ -5,7 +5,7 @@ use crate::{
     capture,
     context::{
         browser::{ExtractIdentifiers, ExtractModifierInvocations, ExtractRevertStatements},
-        graph::{CallGraphConsumerV1, CallGraphDirection, CallGraphVisitor},
+        graph::{CallGraphConsumer, CallGraphDirection, CallGraphVisitor},
         workspace::WorkspaceContext,
     },
     detect::{
@@ -26,7 +26,7 @@ impl IssueDetector for UnprotectedInitializerDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for func in helpers::get_implemented_external_and_public_functions(context) {
             let callgraph =
-                CallGraphConsumerV1::new(context, &[&func.into()], CallGraphDirection::Inward)?;
+                CallGraphConsumer::new(context, &[&func.into()], CallGraphDirection::Inward)?;
             let mut tracker = UnprotectedInitializationTracker::default();
             callgraph.accept(context, &mut tracker)?;
 

@@ -7,7 +7,7 @@ use crate::{
     capture,
     context::{
         browser::GetClosestAncestorOfTypeX,
-        graph::{CallGraphConsumerV1, CallGraphDirection, CallGraphVisitor},
+        graph::{CallGraphConsumer, CallGraphDirection, CallGraphVisitor},
         workspace::WorkspaceContext,
     },
     detect::{
@@ -44,7 +44,7 @@ impl IssueDetector for ReturnBombDetector {
                 context,
             };
             let callgraph =
-                CallGraphConsumerV1::new(context, &[&(func.into())], CallGraphDirection::Inward)?;
+                CallGraphConsumer::new(context, &[&(func.into())], CallGraphDirection::Inward)?;
             callgraph.accept(context, &mut tracker)?;
 
             if !tracker.has_address_checks {

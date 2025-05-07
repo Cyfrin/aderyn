@@ -6,7 +6,7 @@ use crate::{
     capture,
     context::{
         browser::ExtractEmitStatements,
-        graph::{CallGraphConsumerV1, CallGraphDirection, CallGraphVisitor},
+        graph::{CallGraphConsumer, CallGraphDirection, CallGraphVisitor},
         workspace::WorkspaceContext,
     },
     detect::{
@@ -31,7 +31,7 @@ impl IssueDetector for StateVariableChangesWithoutEventDetector {
             }
             let mut event_tracker = EventEmissionTracker { does_emit_events: false };
             let investigator =
-                CallGraphConsumerV1::new(context, &[&(func.into())], CallGraphDirection::Inward)?;
+                CallGraphConsumer::new(context, &[&(func.into())], CallGraphDirection::Inward)?;
 
             investigator.accept(context, &mut event_tracker)?;
 

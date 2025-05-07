@@ -5,7 +5,7 @@ mod callgraph_test_functions {
     use crate::{
         ast::{FunctionDefinition, ModifierDefinition},
         context::{
-            graph::{callgraph::CallGraphConsumerV1, traits::CallGraphVisitor},
+            graph::{callgraph::CallGraphConsumer, traits::CallGraphVisitor},
             workspace::{ASTNode, WorkspaceContext},
         },
     };
@@ -43,8 +43,7 @@ mod callgraph_test_functions {
 
         let visit_eighth_floor1 = get_function_by_name(&context, "visitEighthFloor1");
 
-        let callgraph =
-            CallGraphConsumerV1::new(&context, &[&visit_eighth_floor1], Inward).unwrap();
+        let callgraph = CallGraphConsumer::new(&context, &[&visit_eighth_floor1], Inward).unwrap();
 
         let mut tracker = Tracker::new(&context);
         callgraph.accept(&context, &mut tracker).unwrap();
@@ -62,8 +61,7 @@ mod callgraph_test_functions {
 
         let visit_eighth_floor1 = get_function_by_name(&context, "visitEighthFloor1");
 
-        let callgraph =
-            CallGraphConsumerV1::new(&context, &[&visit_eighth_floor1], Outward).unwrap();
+        let callgraph = CallGraphConsumer::new(&context, &[&visit_eighth_floor1], Outward).unwrap();
 
         let mut tracker = Tracker::new(&context);
         callgraph.accept(&context, &mut tracker).unwrap();
@@ -83,7 +81,7 @@ mod callgraph_test_functions {
             get_modifier_definition_by_name(&context, "passThroughNinthFloor2");
 
         let callgraph =
-            CallGraphConsumerV1::new(&context, &[&pass_through_ninth_floor2], BothWays).unwrap();
+            CallGraphConsumer::new(&context, &[&pass_through_ninth_floor2], BothWays).unwrap();
 
         let mut tracker = Tracker::new(&context);
         callgraph.accept(&context, &mut tracker).unwrap();
@@ -103,7 +101,7 @@ mod callgraph_test_functions {
             get_modifier_definition_by_name(&context, "passThroughNinthFloor3");
 
         let callgraph =
-            CallGraphConsumerV1::new(&context, &[&pass_through_ninth_floor3], BothWays).unwrap();
+            CallGraphConsumer::new(&context, &[&pass_through_ninth_floor3], BothWays).unwrap();
 
         let mut tracker = Tracker::new(&context);
         callgraph.accept(&context, &mut tracker).unwrap();
@@ -123,8 +121,7 @@ mod callgraph_test_functions {
 
         let visit_eighth_floor3 = get_function_by_name(&context, "visitSeventhFloor3");
 
-        let callgraph =
-            CallGraphConsumerV1::new(&context, &[&visit_eighth_floor3], Outward).unwrap();
+        let callgraph = CallGraphConsumer::new(&context, &[&visit_eighth_floor3], Outward).unwrap();
 
         let mut tracker = Tracker::new(&context);
         callgraph.accept(&context, &mut tracker).unwrap();
@@ -141,7 +138,7 @@ mod callgraph_test_functions {
 
         let recurse = get_function_by_name(&context, "recurse");
 
-        let callgraph = CallGraphConsumerV1::new(&context, &[&recurse], BothWays).unwrap();
+        let callgraph = CallGraphConsumer::new(&context, &[&recurse], BothWays).unwrap();
 
         let mut tracker = Tracker::new(&context);
         callgraph.accept(&context, &mut tracker).unwrap();

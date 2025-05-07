@@ -24,7 +24,7 @@ pub enum CallGraphDirection {
     BothWays,
 }
 
-pub struct CallGraphConsumerV1 {
+pub struct CallGraphConsumer {
     /// Ad-hoc Nodes that we would like to explore inward from.
     pub entry_points: Vec<NodeID>,
 
@@ -48,12 +48,12 @@ enum CurrentDFSVector {
     OutwardSideEffect,
 }
 
-impl CallGraphConsumerV1 {
+impl CallGraphConsumer {
     pub fn new(
         context: &WorkspaceContext,
         nodes: &[&ASTNode],
         direction: CallGraphDirection,
-    ) -> super::Result<CallGraphConsumerV1> {
+    ) -> super::Result<CallGraphConsumer> {
         Self::from_nodes(context, nodes, direction)
     }
 

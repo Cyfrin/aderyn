@@ -63,7 +63,7 @@ mod contract_eth_helper {
         ast::{ASTNode, ContractDefinition, StateMutability, Visibility},
         context::{
             browser::ExtractFunctionDefinitions,
-            graph::{CallGraphConsumerV1, CallGraphDirection, CallGraphVisitor},
+            graph::{CallGraphConsumer, CallGraphDirection, CallGraphVisitor},
             workspace::WorkspaceContext,
         },
         detect::helpers,
@@ -108,7 +108,7 @@ mod contract_eth_helper {
 
                     let mut tracker = EthWithdrawalAllowerTracker::default();
 
-                    let callgraph = CallGraphConsumerV1::new(
+                    let callgraph = CallGraphConsumer::new(
                         context,
                         funcs.iter().collect::<Vec<_>>().as_slice(),
                         CallGraphDirection::Inward,

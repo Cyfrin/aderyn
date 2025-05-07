@@ -11,7 +11,7 @@ use crate::{
 
 use crate::{
     context::{
-        graph::{CallGraphConsumerV1, CallGraphDirection, CallGraphVisitor},
+        graph::{CallGraphConsumer, CallGraphDirection, CallGraphVisitor},
         workspace::WorkspaceContext,
     },
     detect::{
@@ -50,7 +50,7 @@ impl IssueDetector for ConstantFunctionContainsAssemblyDetector {
                                 || function.state_mutability() == &StateMutability::Pure
                             {
                                 let mut tracker = AssemblyTracker { has_assembly: false };
-                                let callgraph = CallGraphConsumerV1::new(
+                                let callgraph = CallGraphConsumer::new(
                                     context,
                                     &[&(function.into())],
                                     CallGraphDirection::Inward,

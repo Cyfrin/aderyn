@@ -6,7 +6,7 @@ use crate::capture;
 
 use crate::{
     context::{
-        graph::{CallGraphConsumerV1, CallGraphDirection, CallGraphVisitor},
+        graph::{CallGraphConsumer, CallGraphDirection, CallGraphVisitor},
         workspace::WorkspaceContext,
     },
     detect::{
@@ -32,7 +32,7 @@ impl IssueDetector for DelegateCallUncheckedAddressDetector {
                 context,
             };
             let callgraph =
-                CallGraphConsumerV1::new(context, &[&(func.into())], CallGraphDirection::Inward)?;
+                CallGraphConsumer::new(context, &[&(func.into())], CallGraphDirection::Inward)?;
             callgraph.accept(context, &mut tracker)?;
 
             if tracker.has_delegate_call_on_non_state_variable_address
