@@ -147,6 +147,7 @@ impl WorkspaceContext {
         let router = self.router.as_ref()?;
         router._resolve_modifier_call(self, base_contract, modifier_call)
     }
+
     pub fn resolve_internal_call<'a>(
         &'a self,
         base_contract: &'a ContractDefinition,
@@ -155,6 +156,7 @@ impl WorkspaceContext {
         let router = self.router.as_ref()?;
         router._resolve_internal_call(self, base_contract, func_call)
     }
+
     pub fn resolve_external_call<'a>(
         &'a self,
         base_contract: &'a ContractDefinition,
@@ -163,6 +165,7 @@ impl WorkspaceContext {
         let router = self.router.as_ref()?;
         router._resolve_external_call(self, base_contract, func_call)
     }
+
     pub fn resolve_fallback_function<'a>(
         &'a self,
         base_contract: &'a ContractDefinition,
