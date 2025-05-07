@@ -1,6 +1,6 @@
 use super::{
     browser::GetImmediateParent, capturable::Capturable, graph::WorkspaceCallGraph,
-    macros::generate_get_source_unit,
+    macros::generate_get_source_unit, mir::router::Router,
 };
 pub use crate::ast::ASTNode;
 use crate::{ast::*, stats::IgnoreLine};
@@ -42,6 +42,9 @@ pub struct WorkspaceContext {
 
     // In-scope files
     pub included: HashSet<PathBuf>,
+
+    // Function router
+    pub router: Option<Router>,
 
     // Hashmaps of all nodes => source_unit_id
     pub(crate) array_type_names_context: HashMap<ArrayTypeName, NodeContext>,

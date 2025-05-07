@@ -6,6 +6,7 @@ use crate::{
 use aderyn_core::{
     context::{
         graph::{Transpose, WorkspaceCallGraph},
+        mir::router::Router,
         workspace::WorkspaceContext,
     },
     stats,
@@ -52,7 +53,8 @@ pub fn make_context(
     // Supplement the context
     // 1. Inject nSLOC stats
     // 2. Collect lines marked by aderyn-ignore-line, aderyn-ignore-next-line
-    // 3. Callgraph
+    // 3. Inject Callgraph
+    // 4. Inject Router
     for context in contexts.iter_mut() {
         let absolute_root_path = &ensure_valid_root_path(&root_path);
         let stats = stats::collect_stats(absolute_root_path.as_path(), common.skip_cloc, context);
@@ -68,9 +70,11 @@ pub fn make_context(
         let inward_callgraph = WorkspaceCallGraph::from_context(context)?;
         let outward_callgraph =
             WorkspaceCallGraph { raw_callgraph: inward_callgraph.raw_callgraph.reverse() };
-
         context.inward_callgraph = Some(inward_callgraph);
         context.outward_callgraph = Some(outward_callgraph);
+
+        let router = Router::build(context);
+        context.router = Some(router);
     }
 
     Ok(WorkspaceContextWrapper { contexts, root_path })

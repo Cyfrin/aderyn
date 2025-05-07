@@ -2,6 +2,7 @@ use crate::{
     ast::SourceUnit,
     context::{
         graph::{Transpose, WorkspaceCallGraph},
+        mir::router::Router,
         workspace::WorkspaceContext,
     },
     visitor::ast_visitor::Node,
@@ -102,7 +103,13 @@ fn make_context(project_config: &ProjectConfigInput) -> WorkspaceContext {
         context.outward_callgraph = Some(outward_callgraph);
     }
 
+    fn load_router(context: &mut WorkspaceContext) {
+        let router = Router::build(context);
+        context.router = Some(router);
+    }
+
     load_callgraphs(&mut context);
+    load_router(&mut context);
 
     context
 }
