@@ -5,6 +5,7 @@
 
 mod tests;
 mod utils;
+mod visit;
 
 use super::{traits::CallGraphVisitor, Error, Result};
 use crate::{
