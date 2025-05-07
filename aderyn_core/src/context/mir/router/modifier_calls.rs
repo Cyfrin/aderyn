@@ -9,7 +9,7 @@ use crate::{
 use std::collections::{hash_map::Entry, HashMap};
 
 impl Router {
-    pub(crate) fn _resolve_modifier_call<'a>(
+    pub(super) fn _resolve_modifier_call<'a>(
         &self,
         context: &'a WorkspaceContext,
         base_contract: &'a ContractDefinition,
@@ -84,7 +84,7 @@ impl Router {
     }
 }
 
-pub(crate) fn build_mc_router_for_contract(
+pub(super) fn build_mc_router_for_contract(
     context: &WorkspaceContext,
     base_contract: &ContractDefinition,
 ) -> HashMap<NodeID, HashMap<String, NodeID>> {

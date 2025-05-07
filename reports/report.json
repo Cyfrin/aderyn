@@ -1,7 +1,7 @@
 {
   "files_summary": {
-    "total_source_units": 124,
-    "total_sloc": 4647
+    "total_source_units": 126,
+    "total_sloc": 4701
   },
   "files_details": {
     "files_details": [
@@ -483,7 +483,11 @@
       },
       {
         "file_path": "src/router/ExternalCalls.sol",
-        "n_sloc": 13
+        "n_sloc": 30
+      },
+      {
+        "file_path": "src/router/FallbackAndReceiveOverrides.sol",
+        "n_sloc": 17
       },
       {
         "file_path": "src/router/InternalCalls.sol",
@@ -492,6 +496,10 @@
       {
         "file_path": "src/router/ModifierCalls.sol",
         "n_sloc": 33
+      },
+      {
+        "file_path": "src/router/VarOverridesFunction.sol",
+        "n_sloc": 20
       },
       {
         "file_path": "src/uniswap/UniswapV2Swapper.sol",
@@ -1360,14 +1368,20 @@
           {
             "contract_path": "src/router/ExternalCalls.sol",
             "line_no": 12,
-            "src": "197:1",
-            "src_char": "197:1"
+            "src": "188:1",
+            "src_char": "188:1"
           },
           {
             "contract_path": "src/router/ExternalCalls.sol",
-            "line_no": 16,
-            "src": "268:1",
-            "src_char": "268:1"
+            "line_no": 31,
+            "src": "630:1",
+            "src_char": "630:1"
+          },
+          {
+            "contract_path": "src/router/ExternalCalls.sol",
+            "line_no": 35,
+            "src": "701:1",
+            "src_char": "701:1"
           },
           {
             "contract_path": "src/router/ModifierCalls.sol",
@@ -1392,6 +1406,36 @@
             "line_no": 41,
             "src": "538:1",
             "src_char": "538:1"
+          },
+          {
+            "contract_path": "src/router/VarOverridesFunction.sol",
+            "line_no": 4,
+            "src": "70:1",
+            "src_char": "70:1"
+          },
+          {
+            "contract_path": "src/router/VarOverridesFunction.sol",
+            "line_no": 9,
+            "src": "150:1",
+            "src_char": "150:1"
+          },
+          {
+            "contract_path": "src/router/VarOverridesFunction.sol",
+            "line_no": 13,
+            "src": "219:1",
+            "src_char": "219:1"
+          },
+          {
+            "contract_path": "src/router/VarOverridesFunction.sol",
+            "line_no": 17,
+            "src": "285:1",
+            "src_char": "285:1"
+          },
+          {
+            "contract_path": "src/router/VarOverridesFunction.sol",
+            "line_no": 21,
+            "src": "341:1",
+            "src_char": "341:1"
           }
         ]
       },
@@ -2110,6 +2154,24 @@
             "line_no": 58,
             "src": "4547:15",
             "src_char": "3059:15"
+          },
+          {
+            "contract_path": "src/router/FallbackAndReceiveOverrides.sol",
+            "line_no": 4,
+            "src": "70:1",
+            "src_char": "70:1"
+          },
+          {
+            "contract_path": "src/router/FallbackAndReceiveOverrides.sol",
+            "line_no": 10,
+            "src": "172:1",
+            "src_char": "172:1"
+          },
+          {
+            "contract_path": "src/router/FallbackAndReceiveOverrides.sol",
+            "line_no": 14,
+            "src": "237:1",
+            "src_char": "237:1"
           }
         ]
       },
@@ -3399,6 +3461,24 @@
             "line_no": 15,
             "src": "422:9",
             "src_char": "422:9"
+          },
+          {
+            "contract_path": "src/router/ExternalCalls.sol",
+            "line_no": 23,
+            "src": "384:4",
+            "src_char": "384:4"
+          },
+          {
+            "contract_path": "src/router/ExternalCalls.sol",
+            "line_no": 40,
+            "src": "776:4",
+            "src_char": "776:4"
+          },
+          {
+            "contract_path": "src/router/FallbackAndReceiveOverrides.sol",
+            "line_no": 22,
+            "src": "405:4",
+            "src_char": "405:4"
           },
           {
             "contract_path": "src/router/InternalCalls.sol",
@@ -4843,6 +4923,18 @@
             "src_char": "1011:23"
           },
           {
+            "contract_path": "src/router/ExternalCalls.sol",
+            "line_no": 13,
+            "src": "210:3",
+            "src_char": "210:3"
+          },
+          {
+            "contract_path": "src/router/ExternalCalls.sol",
+            "line_no": 17,
+            "src": "288:3",
+            "src_char": "288:3"
+          },
+          {
             "contract_path": "src/router/InternalCalls.sol",
             "line_no": 8,
             "src": "156:5",
@@ -4949,6 +5041,12 @@
             "line_no": 46,
             "src": "597:4",
             "src_char": "597:4"
+          },
+          {
+            "contract_path": "src/router/VarOverridesFunction.sol",
+            "line_no": 5,
+            "src": "87:5",
+            "src_char": "87:5"
           }
         ]
       },
@@ -7833,6 +7931,12 @@
             "line_no": 27,
             "src": "575:47",
             "src_char": "575:47"
+          },
+          {
+            "contract_path": "src/router/ExternalCalls.sol",
+            "line_no": 27,
+            "src": "594:7",
+            "src_char": "594:7"
           },
           {
             "contract_path": "src/uniswap/UniswapV2Swapper.sol",

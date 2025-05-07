@@ -78,6 +78,32 @@ impl FunctionCall {
             _ => None,
         }
     }
+    /// Returns the function definition or variable declarartion referenced by the function call.
+    /// Also see [`FunctionCall::suspected_target_function`]
+    #[inline]
+    pub fn suspected_function_selector(&self, context: &WorkspaceContext) -> Option<String> {
+        match self.expression.as_ref() {
+            Expression::Identifier(Identifier { referenced_declaration: Some(id), .. }) => {
+                if let Some(ASTNode::FunctionDefinition(func)) = context.nodes.get(id) {
+                    func.function_selector.clone()
+                } else {
+                    None
+                }
+            }
+            Expression::MemberAccess(MemberAccess { referenced_declaration: Some(id), .. }) => {
+                let suspect = context.nodes.get(id)?;
+                match suspect {
+                    ASTNode::FunctionDefinition(func) => func.function_selector.clone(),
+                    // could be referencing a public state variable (psuedo getter method)
+                    ASTNode::VariableDeclaration(var) => var.function_selector.clone(),
+                    _ => None,
+                }
+            }
+            // TODO: Improve this function heuristics by exhausting enum possibilities for
+            // expression.
+            _ => None,
+        }
+    }
 }
 
 impl ModifierInvocation {

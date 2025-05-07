@@ -2,7 +2,7 @@ use super::Router;
 use crate::{
     ast::{
         ASTNode, ContractDefinition, ContractKind, Expression, FunctionCall, FunctionDefinition,
-        Identifier, NodeID, NodeType, Visibility,
+        FunctionKind, Identifier, NodeID, NodeType, Visibility,
     },
     context::{browser::GetClosestAncestorOfTypeX, workspace::WorkspaceContext},
 };
@@ -23,7 +23,7 @@ impl Router {
     ///
     /// Note - Not all styles of internal calls are resolved successfully at the moment. Lot of
     /// unknowns.
-    pub(crate) fn _resolve_internal_call<'a>(
+    pub(super) fn _resolve_internal_call<'a>(
         &self,
         context: &'a WorkspaceContext,
         base_contract: &'a ContractDefinition,
@@ -172,7 +172,7 @@ impl Router {
     }
 }
 
-pub(crate) fn build_ic_router_for_contract(
+pub(super) fn build_ic_router_for_contract(
     context: &WorkspaceContext,
     base_contract: &ContractDefinition,
 ) -> HashMap<NodeID, HashMap<String, NodeID>> {
@@ -182,7 +182,9 @@ pub(crate) fn build_ic_router_for_contract(
         let mut routes = HashMap::new();
         for contract in c3.iter().skip(idx) {
             for func in contract.function_definitions() {
-                if matches!(func.visibility, Visibility::Internal | Visibility::Public) {
+                if matches!(*func.kind(), FunctionKind::Function)
+                    && matches!(func.visibility, Visibility::Internal | Visibility::Public)
+                {
                     if let Entry::Vacant(e) = routes.entry(func.selectorish()) {
                         e.insert(func.id);
                     }

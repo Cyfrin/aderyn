@@ -1525,7 +1525,7 @@
                 },
                 "region": {
                   "byteLength": 1,
-                  "byteOffset": 197
+                  "byteOffset": 188
                 }
               }
             },
@@ -1536,7 +1536,18 @@
                 },
                 "region": {
                   "byteLength": 1,
-                  "byteOffset": 268
+                  "byteOffset": 630
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/router/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 701
                 }
               }
             },
@@ -1581,6 +1592,61 @@
                 "region": {
                   "byteLength": 1,
                   "byteOffset": 538
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/router/VarOverridesFunction.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 70
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/router/VarOverridesFunction.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 150
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/router/VarOverridesFunction.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 219
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/router/VarOverridesFunction.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 285
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/router/VarOverridesFunction.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 341
                 }
               }
             }
@@ -2813,6 +2879,39 @@
                 "region": {
                   "byteLength": 15,
                   "byteOffset": 4547
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/router/FallbackAndReceiveOverrides.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 70
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/router/FallbackAndReceiveOverrides.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 172
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/router/FallbackAndReceiveOverrides.sol"
+                },
+                "region": {
+                  "byteLength": 1,
+                  "byteOffset": 237
                 }
               }
             }
@@ -5118,6 +5217,39 @@
                 "region": {
                   "byteLength": 9,
                   "byteOffset": 422
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/router/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 384
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/router/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 776
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/router/FallbackAndReceiveOverrides.sol"
+                },
+                "region": {
+                  "byteLength": 4,
+                  "byteOffset": 405
                 }
               }
             },
@@ -7737,6 +7869,28 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
+                  "uri": "src/router/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 210
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/router/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 3,
+                  "byteOffset": 288
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
                   "uri": "src/router/InternalCalls.sol"
                 },
                 "region": {
@@ -7929,6 +8083,17 @@
                 "region": {
                   "byteLength": 4,
                   "byteOffset": 597
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/router/VarOverridesFunction.sol"
+                },
+                "region": {
+                  "byteLength": 5,
+                  "byteOffset": 87
                 }
               }
             }
@@ -13101,6 +13266,17 @@
                 "region": {
                   "byteLength": 47,
                   "byteOffset": 575
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/router/ExternalCalls.sol"
+                },
+                "region": {
+                  "byteLength": 7,
+                  "byteOffset": 594
                 }
               }
             },
