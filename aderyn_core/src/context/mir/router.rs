@@ -85,7 +85,7 @@ type BaseRoute<T> = HashMap<NodeID, T>;
 // Function selectorish -> Function Definition Node ID
 type ICStartLookupRoute = HashMap<String, NodeID>;
 
-// Function selector -> Function Definition Node ID
+// Function selector -> ECDest
 type ECStartLookupRoute = HashMap<String, ECDest>;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
