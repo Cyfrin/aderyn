@@ -6,7 +6,7 @@ use crate::{
     capture,
     context::{
         browser::ExtractModifierInvocations,
-        graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
+        graph::{CallGraphConsumerV1, CallGraphDirection, CallGraphVisitor},
         workspace::{ASTNode, WorkspaceContext},
     },
     detect::{
@@ -27,7 +27,8 @@ impl IssueDetector for SendEtherNoChecksDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for func in helpers::get_implemented_external_and_public_functions(context) {
             let mut tracker = AddressChecksAndCallWithValueTracker::default();
-            let callgraph = CallGraph::new(context, &[&(func.into())], CallGraphDirection::Inward)?;
+            let callgraph =
+                CallGraphConsumerV1::new(context, &[&(func.into())], CallGraphDirection::Inward)?;
             callgraph.accept(context, &mut tracker)?;
 
             // Hacky way to check if the modifier is a know msg.sender checking modifier

@@ -6,7 +6,7 @@ use crate::{
     capture,
     context::{
         browser::ExtractFunctionCalls,
-        graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
+        graph::{CallGraphConsumerV1, CallGraphDirection, CallGraphVisitor},
         workspace::WorkspaceContext,
     },
     detect::{
@@ -27,7 +27,8 @@ impl IssueDetector for OutOfOrderRetryableDetector {
     fn detect(&mut self, context: &WorkspaceContext) -> Result<bool, Box<dyn Error>> {
         for func in helpers::get_implemented_external_and_public_functions(context) {
             let mut tracker = OutOfOrderRetryableTracker { number_of_retry_calls: 0 };
-            let callgraph = CallGraph::new(context, &[&(func.into())], CallGraphDirection::Inward)?;
+            let callgraph =
+                CallGraphConsumerV1::new(context, &[&(func.into())], CallGraphDirection::Inward)?;
             callgraph.accept(context, &mut tracker)?;
             if tracker.number_of_retry_calls >= 2 {
                 capture!(self, context, func);

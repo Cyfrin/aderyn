@@ -11,13 +11,13 @@ use crate::{
 
 use super::*;
 
-impl CallGraph {
+impl CallGraphConsumerV1 {
     /// Creates a [`CallGraph`] by exploring paths from given nodes. This is the starting point.
     pub fn from_nodes(
         context: &WorkspaceContext,
         nodes: &[&ASTNode],
         direction: CallGraphDirection,
-    ) -> super::Result<CallGraph> {
+    ) -> super::Result<CallGraphConsumerV1> {
         let mut entry_points = vec![];
         let mut inward_surface_points = vec![];
         let mut outward_surface_points = vec![];
@@ -67,7 +67,12 @@ impl CallGraph {
             }
         }
 
-        Ok(CallGraph { entry_points, inward_surface_points, outward_surface_points, direction })
+        Ok(CallGraphConsumerV1 {
+            entry_points,
+            inward_surface_points,
+            outward_surface_points,
+            direction,
+        })
     }
 
     /// Responsible for informing the trackers.

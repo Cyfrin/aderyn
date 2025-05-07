@@ -59,7 +59,7 @@ mod assert_state_change_tracker {
         ast::{ASTNode, FunctionCall},
         context::{
             browser::ApproximateStorageChangeFinder,
-            graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
+            graph::{CallGraphConsumerV1, CallGraphDirection, CallGraphVisitor},
             workspace::WorkspaceContext,
         },
     };
@@ -92,7 +92,8 @@ mod assert_state_change_tracker {
 
             let ast_nodes: &[&ASTNode] = &(arguments.iter().collect::<Vec<_>>());
 
-            let callgraph = CallGraph::new(context, ast_nodes, CallGraphDirection::Inward).ok()?;
+            let callgraph =
+                CallGraphConsumerV1::new(context, ast_nodes, CallGraphDirection::Inward).ok()?;
 
             callgraph.accept(context, &mut tracker).ok()?;
             Some(tracker.has_some_state_variable_changed)

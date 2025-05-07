@@ -96,7 +96,7 @@ mod loop_investigation_helper {
         ast::{ASTNode, Expression, ForStatement, Identifier, NodeID, TypeDescriptions},
         context::{
             browser::{ApproximateStorageChangeFinder, ExtractMemberAccesses},
-            graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
+            graph::{CallGraphConsumerV1, CallGraphDirection, CallGraphVisitor},
             workspace::WorkspaceContext,
         },
     };
@@ -145,7 +145,8 @@ mod loop_investigation_helper {
             let mut tracker = StateVariableChangeTracker { changes: None, context };
 
             let callgraph =
-                CallGraph::new(context, &[&(self.into())], CallGraphDirection::Inward).ok()?;
+                CallGraphConsumerV1::new(context, &[&(self.into())], CallGraphDirection::Inward)
+                    .ok()?;
 
             callgraph.accept(context, &mut tracker).ok()?;
 
