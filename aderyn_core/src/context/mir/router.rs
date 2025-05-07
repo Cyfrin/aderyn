@@ -139,6 +139,32 @@ impl Router {
 }
 
 impl WorkspaceContext {
+    pub fn entrypoint_functions<'a>(
+        &'a self,
+        contract: &'a ContractDefinition,
+    ) -> Option<Vec<&'a FunctionDefinition>> {
+        let router = self.router.as_ref()?;
+        let base = router.external_calls.get(&contract.id)?;
+        Some(
+            base.routes
+                .values()
+                .into_iter()
+                .flat_map(|r| match r {
+                    ECDest::PseduoExtFn(_) => None,
+                    ECDest::RealExtFn(id)
+                    | ECDest::PublicFn(id)
+                    | ECDest::Fallback(id)
+                    | ECDest::Receive(id) => {
+                        if let Some(ASTNode::FunctionDefinition(func)) = self.nodes.get(id) {
+                            return Some(func);
+                        }
+                        None
+                    }
+                })
+                .collect(),
+        )
+    }
+
     pub fn resolve_modifier_call<'a>(
         &'a self,
         base_contract: &'a ContractDefinition,

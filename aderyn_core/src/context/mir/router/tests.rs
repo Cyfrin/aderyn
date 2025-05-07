@@ -420,4 +420,44 @@ mod mir_router {
         let out = router._resolve_receive_function(&context, c_contract).unwrap();
         assert_eq!(out.id, a_receive.id);
     }
+
+    #[test]
+    pub fn resolve_ext_calls_5() {
+        let (_, context) = get_ec_router_ctx_2();
+
+        let a_contract = context.find_contract_by_name("A");
+        let b_contract = context.find_contract_by_name("B");
+        let c_contract = context.find_contract_by_name("C");
+
+        let a_funcs = context.entrypoint_functions(a_contract).unwrap();
+        let b_funcs = context.entrypoint_functions(b_contract).unwrap();
+        let c_funcs = context.entrypoint_functions(c_contract).unwrap();
+
+        assert_eq!(a_funcs.len(), 2);
+        assert_eq!(b_funcs.len(), 2);
+        assert_eq!(c_funcs.len(), 2);
+    }
+
+    #[test]
+    pub fn resolve_ext_calls_6() {
+        let (_, context) = get_ec_router_ctx();
+
+        let b_contract = context.find_contract_by_name("B");
+        let e_contract = context.find_contract_by_name("E");
+        let f_contract = context.find_contract_by_name("F");
+        let y_contract = context.find_contract_by_name("Y");
+        let d_contract = context.find_contract_by_name("D");
+
+        let b_funcs = context.entrypoint_functions(b_contract).unwrap();
+        let e_funcs = context.entrypoint_functions(e_contract).unwrap();
+        let f_funcs = context.entrypoint_functions(f_contract).unwrap();
+        let y_funcs = context.entrypoint_functions(y_contract).unwrap();
+        let d_funcs = context.entrypoint_functions(d_contract).unwrap();
+
+        assert_eq!(b_funcs.len(), 0);
+        assert_eq!(e_funcs.len(), 1);
+        assert_eq!(f_funcs.len(), 1);
+        assert_eq!(y_funcs.len(), 1);
+        assert_eq!(d_funcs.len(), 0);
+    }
 }
