@@ -367,4 +367,37 @@ mod mir_router {
         let out = router.resolve_external_call(&context, c_contract, &func_calls[0]).unwrap();
         assert_eq!(out, ECDest::Fallback(a_fallback.id));
     }
+
+    #[test]
+    pub fn resolve_ext_calls_4() {
+        let (router, context) = get_ec_router_ctx_2();
+
+        let a_contract = context.find_contract_by_name("A");
+        let b_contract = context.find_contract_by_name("B");
+        let c_contract = context.find_contract_by_name("C");
+
+        let a_fallback = a_contract.find_fallback_function();
+        let a_receive = a_contract.find_receive_function();
+        let b_fallback = b_contract.find_fallback_function();
+
+        // resolve fallback functions
+        let out = router.resolve_fallback_function(&context, a_contract).unwrap();
+        assert_eq!(out.id, a_fallback.id);
+
+        let out = router.resolve_fallback_function(&context, b_contract).unwrap();
+        assert_eq!(out.id, b_fallback.id);
+
+        let out = router.resolve_fallback_function(&context, c_contract).unwrap();
+        assert_eq!(out.id, a_fallback.id);
+
+        // resolve receive
+        let out = router.resolve_receive_function(&context, a_contract).unwrap();
+        assert_eq!(out.id, a_receive.id);
+
+        let out = router.resolve_receive_function(&context, b_contract).unwrap();
+        assert_eq!(out.id, a_receive.id);
+
+        let out = router.resolve_receive_function(&context, c_contract).unwrap();
+        assert_eq!(out.id, a_receive.id);
+    }
 }

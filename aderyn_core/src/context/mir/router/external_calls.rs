@@ -1,6 +1,8 @@
 use super::{ECDest, Router};
 use crate::{
-    ast::{ContractDefinition, FunctionCall, FunctionKind, Visibility},
+    ast::{
+        ASTNode, ContractDefinition, FunctionCall, FunctionDefinition, FunctionKind, Visibility,
+    },
     context::workspace::WorkspaceContext,
 };
 use std::collections::{hash_map::Entry, HashMap};
@@ -23,16 +25,60 @@ impl Router {
             return None;
         }
 
+        // works for both public variables and functions
+        let selector = func_call.suspected_function_selector(context)?;
+        self._resolve_function_selector(base_contract, selector)
+    }
+
+    pub(super) fn _resolve_fallback_function<'a>(
+        &self,
+        context: &'a WorkspaceContext,
+        base_contract: &'a ContractDefinition,
+    ) -> Option<&'a FunctionDefinition> {
+        // check if it's illegal base contract type
+        if !base_contract.is_deployable_contract() {
+            return None;
+        }
+        let lookup_index = self.external_calls.get(&base_contract.id)?;
+        if let Some(ECDest::Fallback(func_id)) = lookup_index.routes.get("FALLBACK") {
+            if let Some(ASTNode::FunctionDefinition(fallback)) = context.nodes.get(&func_id) {
+                return Some(&fallback);
+            }
+        }
+        None
+    }
+
+    pub(super) fn _resolve_receive_function<'a>(
+        &self,
+        context: &'a WorkspaceContext,
+        base_contract: &'a ContractDefinition,
+    ) -> Option<&'a FunctionDefinition> {
+        // check if it's illegal base contract type
+        if !base_contract.is_deployable_contract() {
+            return None;
+        }
+        let lookup_index = self.external_calls.get(&base_contract.id)?;
+        if let Some(ECDest::Receive(func_id)) = lookup_index.routes.get("RECEIVE") {
+            if let Some(ASTNode::FunctionDefinition(fallback)) = context.nodes.get(func_id) {
+                return Some(&fallback);
+            }
+        }
+        None
+    }
+
+    pub(super) fn _resolve_function_selector<'a>(
+        &self,
+        base_contract: &'a ContractDefinition,
+        selector: impl AsRef<str>,
+    ) -> Option<ECDest> {
         // check if it's illegal base contract type
         if !base_contract.is_deployable_contract() {
             return None;
         }
 
-        // works for both public variables and functions
-        let selector = func_call.suspected_function_selector(context)?;
         let lookup_index = self.external_calls.get(&base_contract.id)?;
 
-        match lookup_index.routes.get(&selector) {
+        match lookup_index.routes.get(selector.as_ref()) {
             Some(resolved) => Some(resolved.clone()),
             None => lookup_index.routes.get("FALLBACK").cloned(),
         }

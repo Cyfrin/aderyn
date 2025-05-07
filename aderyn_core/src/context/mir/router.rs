@@ -149,5 +149,25 @@ impl Router {
     ) -> Option<ECDest> {
         self._resolve_external_call(context, base_contract, func_call)
     }
-    // TODO: explicit resovle_receive_function_call
+    pub fn resolve_fallback_function<'a>(
+        &self,
+        context: &'a WorkspaceContext,
+        base_contract: &'a ContractDefinition,
+    ) -> Option<&'a FunctionDefinition> {
+        self._resolve_fallback_function(context, base_contract)
+    }
+    pub fn resolve_receive_function<'a>(
+        &self,
+        context: &'a WorkspaceContext,
+        base_contract: &'a ContractDefinition,
+    ) -> Option<&'a FunctionDefinition> {
+        self._resolve_receive_function(context, base_contract)
+    }
+    pub fn resolve_function_selector<'a>(
+        &self,
+        base_contract: &'a ContractDefinition,
+        selector: impl AsRef<str>,
+    ) -> Option<ECDest> {
+        self._resolve_function_selector(base_contract, selector)
+    }
 }
