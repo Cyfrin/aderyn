@@ -125,49 +125,55 @@ impl Router {
             .collect();
         Self { internal_calls, external_calls, modifier_calls }
     }
+}
+
+impl WorkspaceContext {
     pub fn resolve_modifier_call<'a>(
-        &self,
-        context: &'a WorkspaceContext,
+        &'a self,
         base_contract: &'a ContractDefinition,
         modifier_call: &'a ModifierInvocation,
     ) -> Option<&'a ModifierDefinition> {
-        self._resolve_modifier_call(context, base_contract, modifier_call)
+        let router = self.router.as_ref()?;
+        router._resolve_modifier_call(self, base_contract, modifier_call)
     }
     pub fn resolve_internal_call<'a>(
-        &self,
-        context: &'a WorkspaceContext,
+        &'a self,
         base_contract: &'a ContractDefinition,
         func_call: &'a FunctionCall,
     ) -> Option<&'a FunctionDefinition> {
-        self._resolve_internal_call(context, base_contract, func_call)
+        let router = self.router.as_ref()?;
+        router._resolve_internal_call(self, base_contract, func_call)
     }
     pub fn resolve_external_call<'a>(
-        &self,
-        context: &'a WorkspaceContext,
+        &'a self,
         base_contract: &'a ContractDefinition,
         func_call: &'a FunctionCall,
     ) -> Option<ECDest> {
-        self._resolve_external_call(context, base_contract, func_call)
+        let router = self.router.as_ref()?;
+        router._resolve_external_call(self, base_contract, func_call)
     }
     pub fn resolve_fallback_function<'a>(
-        &self,
-        context: &'a WorkspaceContext,
+        &'a self,
         base_contract: &'a ContractDefinition,
     ) -> Option<&'a FunctionDefinition> {
-        self._resolve_fallback_function(context, base_contract)
+        let router = self.router.as_ref()?;
+        router._resolve_fallback_function(self, base_contract)
     }
+
     pub fn resolve_receive_function<'a>(
-        &self,
-        context: &'a WorkspaceContext,
+        &'a self,
         base_contract: &'a ContractDefinition,
     ) -> Option<&'a FunctionDefinition> {
-        self._resolve_receive_function(context, base_contract)
+        let router = self.router.as_ref()?;
+        router._resolve_receive_function(self, base_contract)
     }
+
     pub fn resolve_function_selector(
         &self,
         base_contract: &ContractDefinition,
         selector: impl AsRef<str>,
     ) -> Option<ECDest> {
-        self._resolve_function_selector(base_contract, selector)
+        let router = self.router.as_ref()?;
+        router._resolve_function_selector(base_contract, selector)
     }
 }

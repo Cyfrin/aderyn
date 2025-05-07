@@ -104,43 +104,63 @@ mod mir_router {
             ExtractFunctionCalls::from(basic2_child_gcall_function).extracted;
 
         let a = router
-            .resolve_internal_call(&context, basic3_down2_contract, &basic3_down2_function_calls[0])
+            ._resolve_internal_call(
+                &context,
+                basic3_down2_contract,
+                &basic3_down2_function_calls[0],
+            )
             .unwrap();
         assert_eq!(a.id, basic3_right_function.id);
 
         let b = router
-            .resolve_internal_call(&context, basic3_down2_contract, &basic3_top_function_calls[0])
+            ._resolve_internal_call(&context, basic3_down2_contract, &basic3_top_function_calls[0])
             .unwrap();
         assert_eq!(b.id, basic3_down2_live.id);
 
         let c = router
-            .resolve_internal_call(&context, basic3_down2_contract, &basic3_down2_function_calls[1])
+            ._resolve_internal_call(
+                &context,
+                basic3_down2_contract,
+                &basic3_down2_function_calls[1],
+            )
             .unwrap();
         assert_eq!(c.id, basic3_top_live.id);
 
         let d = router
-            .resolve_internal_call(&context, basic3_down2_contract, &basic3_down2_function_calls[2])
+            ._resolve_internal_call(
+                &context,
+                basic3_down2_contract,
+                &basic3_down2_function_calls[2],
+            )
             .unwrap();
         assert_eq!(d.id, basic3_left_function.id);
 
         let e = router
-            .resolve_internal_call(&context, basic3_down2_contract, &basic3_right_function_calls[0])
+            ._resolve_internal_call(
+                &context,
+                basic3_down2_contract,
+                &basic3_right_function_calls[0],
+            )
             .unwrap();
         assert_eq!(e.id, basic3_left_function.id);
 
         let f = router
-            .resolve_internal_call(&context, basic3_down2_contract, &basic3_left_function_calls[0])
+            ._resolve_internal_call(&context, basic3_down2_contract, &basic3_left_function_calls[0])
             .unwrap();
         assert_eq!(f.id, basic3_top_function.id);
 
         let g = router
-            .resolve_internal_call(&context, basic3_right_contract, &basic3_right_function_calls[0])
+            ._resolve_internal_call(
+                &context,
+                basic3_right_contract,
+                &basic3_right_function_calls[0],
+            )
             .unwrap();
         assert_eq!(g.id, basic3_top_function.id);
 
         assert_eq!(basic2_child_g_function.selectorish(), basic2_g_function.selectorish());
         let h = router
-            .resolve_internal_call(
+            ._resolve_internal_call(
                 &context,
                 basic2_child_contract,
                 &basic2_child_gcall_function_calls[1],
@@ -174,11 +194,11 @@ mod mir_router {
         assert_eq!(func_calls[6].is_internal_call(), Some(false));
         assert_eq!(func_calls[7].is_internal_call(), Some(false));
 
-        let f0 = router.resolve_internal_call(&context, contract, &func_calls[0]);
-        let f1 = router.resolve_internal_call(&context, contract, &func_calls[1]);
-        let f2 = router.resolve_internal_call(&context, contract, &func_calls[2]);
-        let f3 = router.resolve_internal_call(&context, contract, &func_calls[3]);
-        let f4 = router.resolve_internal_call(&context, contract, &func_calls[4]);
+        let f0 = router._resolve_internal_call(&context, contract, &func_calls[0]);
+        let f1 = router._resolve_internal_call(&context, contract, &func_calls[1]);
+        let f2 = router._resolve_internal_call(&context, contract, &func_calls[2]);
+        let f3 = router._resolve_internal_call(&context, contract, &func_calls[3]);
+        let f4 = router._resolve_internal_call(&context, contract, &func_calls[4]);
 
         // Lib calls
         assert_eq!(f0.unwrap().id, lib_help1.id);
@@ -200,7 +220,7 @@ mod mir_router {
         let basic6_function_calls = ExtractFunctionCalls::from(basic6_function).extracted;
 
         let a = router
-            .resolve_internal_call(&context, basic6_contract, &basic6_function_calls[0])
+            ._resolve_internal_call(&context, basic6_contract, &basic6_function_calls[0])
             .unwrap();
         assert_eq!(a.id, free_func.id);
 
@@ -209,7 +229,7 @@ mod mir_router {
         let basic7_function_calls = ExtractFunctionCalls::from(basic7_function).extracted;
 
         let b = router
-            .resolve_internal_call(&context, basic7_contract, &basic7_function_calls[0])
+            ._resolve_internal_call(&context, basic7_contract, &basic7_function_calls[0])
             .unwrap();
         assert_eq!(b.id, free_func.id);
 
@@ -219,7 +239,7 @@ mod mir_router {
         let basic8_function_calls = ExtractFunctionCalls::from(basic8_function).extracted;
 
         let c = router
-            .resolve_internal_call(&context, basic8_contract, &basic8_function_calls[0])
+            ._resolve_internal_call(&context, basic8_contract, &basic8_function_calls[0])
             .unwrap();
         assert_eq!(c.id, basic8_free.id);
 
@@ -228,7 +248,7 @@ mod mir_router {
         let basic9_function_calls = ExtractFunctionCalls::from(basic9_function).extracted;
 
         let d = router
-            .resolve_internal_call(&context, basic9_contract, &basic9_function_calls[0])
+            ._resolve_internal_call(&context, basic9_contract, &basic9_function_calls[0])
             .unwrap();
         assert_eq!(d.id, basic8_free.id);
     }
@@ -253,19 +273,19 @@ mod mir_router {
         let c_modifier_call_2 = &c_func.modifiers[1];
         let show_modifier = &show_func.modifiers[0];
 
-        let a = router.resolve_modifier_call(&context, b_contract, a_modifier_call).unwrap();
+        let a = router._resolve_modifier_call(&context, b_contract, a_modifier_call).unwrap();
         assert_eq!(a.id, b_contract.find_modifier_by_name("modify").id);
 
-        let b = router.resolve_modifier_call(&context, c_contract, c_modifier_call_1).unwrap();
+        let b = router._resolve_modifier_call(&context, c_contract, c_modifier_call_1).unwrap();
         assert_eq!(b.id, b_contract.find_modifier_by_name("modify").id);
 
-        let c = router.resolve_modifier_call(&context, c_contract, c_modifier_call_2).unwrap();
+        let c = router._resolve_modifier_call(&context, c_contract, c_modifier_call_2).unwrap();
         assert_eq!(c.id, c_contract.find_modifier_by_name("modify").id);
 
-        let d = router.resolve_modifier_call(&context, b_contract, b_modifier_call).unwrap();
+        let d = router._resolve_modifier_call(&context, b_contract, b_modifier_call).unwrap();
         assert_eq!(d.id, b_contract.find_modifier_by_name("modify").id);
 
-        let e = router.resolve_modifier_call(&context, c_contract, show_modifier).unwrap();
+        let e = router._resolve_modifier_call(&context, c_contract, show_modifier).unwrap();
         assert_eq!(e.id, d_library.find_modifier_by_name("modify").id);
     }
 
@@ -285,14 +305,14 @@ mod mir_router {
         assert!(!func_calls[1].is_internal_call().unwrap());
         assert!(func_calls[2].is_internal_call().unwrap());
 
-        let a = router.resolve_internal_call(&context, basic4_contract, &func_calls[0]).unwrap();
+        let a = router._resolve_internal_call(&context, basic4_contract, &func_calls[0]).unwrap();
         assert_eq!(a.id, ext2_func.id);
 
-        let b = router.resolve_internal_call(&context, basic4_contract, &func_calls[2]).unwrap();
+        let b = router._resolve_internal_call(&context, basic4_contract, &func_calls[2]).unwrap();
         assert_eq!(b.id, aux2.id);
 
         // external calls return none
-        let c = router.resolve_internal_call(&context, basic4_contract, &func_calls[1]);
+        let c = router._resolve_internal_call(&context, basic4_contract, &func_calls[1]);
         assert!(c.is_none());
     }
 
@@ -307,21 +327,21 @@ mod mir_router {
         assert_eq!(func_calls[0].is_internal_call(), Some(false));
 
         let b_contract = context.find_contract_by_name("B");
-        let out = router.resolve_external_call(&context, b_contract, &func_calls[0]).unwrap();
+        let out = router._resolve_external_call(&context, b_contract, &func_calls[0]).unwrap();
         assert!(matches!(out, ECDest::PseduoExtFn(_)));
 
         let e_contract = context.find_contract_by_name("E");
         let e_func = e_contract.find_function_by_name("abc");
-        let out = router.resolve_external_call(&context, e_contract, &func_calls[0]).unwrap();
+        let out = router._resolve_external_call(&context, e_contract, &func_calls[0]).unwrap();
         assert_eq!(out, ECDest::RealExtFn(e_func.id));
 
         let f_contract = context.find_contract_by_name("F");
         let f_func = f_contract.find_function_by_name("abc");
-        let out = router.resolve_external_call(&context, f_contract, &func_calls[0]).unwrap();
+        let out = router._resolve_external_call(&context, f_contract, &func_calls[0]).unwrap();
         assert_eq!(out, ECDest::PublicFn(f_func.id));
 
         let y_contract = context.find_contract_by_name("Y");
-        let out = router.resolve_external_call(&context, y_contract, &func_calls[0]).unwrap();
+        let out = router._resolve_external_call(&context, y_contract, &func_calls[0]).unwrap();
         assert_eq!(out, ECDest::PublicFn(f_func.id));
     }
 
@@ -336,7 +356,7 @@ mod mir_router {
         assert_eq!(func_calls[0].is_internal_call(), Some(false));
 
         let d_contract = context.find_contract_by_name("D");
-        let out = router.resolve_external_call(&context, d_contract, &func_calls[0]).unwrap();
+        let out = router._resolve_external_call(&context, d_contract, &func_calls[0]).unwrap();
         assert!(matches!(out, ECDest::PseduoExtFn(_)));
     }
 
@@ -358,13 +378,13 @@ mod mir_router {
         let b_fallback = b_contract.find_fallback_function();
 
         // resolve fallback functions
-        let out = router.resolve_external_call(&context, a_contract, &func_calls[0]).unwrap();
+        let out = router._resolve_external_call(&context, a_contract, &func_calls[0]).unwrap();
         assert_eq!(out, ECDest::Fallback(a_fallback.id));
 
-        let out = router.resolve_external_call(&context, b_contract, &func_calls[0]).unwrap();
+        let out = router._resolve_external_call(&context, b_contract, &func_calls[0]).unwrap();
         assert_eq!(out, ECDest::Fallback(b_fallback.id));
 
-        let out = router.resolve_external_call(&context, c_contract, &func_calls[0]).unwrap();
+        let out = router._resolve_external_call(&context, c_contract, &func_calls[0]).unwrap();
         assert_eq!(out, ECDest::Fallback(a_fallback.id));
     }
 
@@ -381,23 +401,23 @@ mod mir_router {
         let b_fallback = b_contract.find_fallback_function();
 
         // resolve fallback functions
-        let out = router.resolve_fallback_function(&context, a_contract).unwrap();
+        let out = router._resolve_fallback_function(&context, a_contract).unwrap();
         assert_eq!(out.id, a_fallback.id);
 
-        let out = router.resolve_fallback_function(&context, b_contract).unwrap();
+        let out = router._resolve_fallback_function(&context, b_contract).unwrap();
         assert_eq!(out.id, b_fallback.id);
 
-        let out = router.resolve_fallback_function(&context, c_contract).unwrap();
+        let out = router._resolve_fallback_function(&context, c_contract).unwrap();
         assert_eq!(out.id, a_fallback.id);
 
         // resolve receive
-        let out = router.resolve_receive_function(&context, a_contract).unwrap();
+        let out = router._resolve_receive_function(&context, a_contract).unwrap();
         assert_eq!(out.id, a_receive.id);
 
-        let out = router.resolve_receive_function(&context, b_contract).unwrap();
+        let out = router._resolve_receive_function(&context, b_contract).unwrap();
         assert_eq!(out.id, a_receive.id);
 
-        let out = router.resolve_receive_function(&context, c_contract).unwrap();
+        let out = router._resolve_receive_function(&context, c_contract).unwrap();
         assert_eq!(out.id, a_receive.id);
     }
 }
