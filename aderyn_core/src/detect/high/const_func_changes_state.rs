@@ -6,7 +6,7 @@ use crate::{
     capture,
     context::{
         browser::ApproximateStorageChangeFinder,
-        graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
+        graph::{CallGraphConsumerV1, CallGraphDirection, CallGraphVisitor},
         workspace::WorkspaceContext,
     },
     detect::{
@@ -37,7 +37,8 @@ impl IssueDetector for ConstantFunctionChangesStateDetector {
             // Now, investigate the function to see if there is scope for any state variable changes
             let mut tracker = StateVariableChangeTracker { state_var_has_changed: false, context };
 
-            let callgraph = CallGraph::new(context, &[&(func.into())], CallGraphDirection::Inward)?;
+            let callgraph =
+                CallGraphConsumerV1::new(context, &[&(func.into())], CallGraphDirection::Inward)?;
             callgraph.accept(context, &mut tracker)?;
 
             if tracker.state_var_has_changed {

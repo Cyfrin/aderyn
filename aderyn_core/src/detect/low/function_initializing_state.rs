@@ -6,7 +6,7 @@ use crate::{
     capture,
     context::{
         browser::ExtractReferencedDeclarations,
-        graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
+        graph::{CallGraphConsumerV1, CallGraphDirection, CallGraphVisitor},
         workspace::WorkspaceContext,
     },
     detect::detector::{IssueDetector, IssueDetectorNamePool, IssueSeverity},
@@ -43,8 +43,11 @@ impl IssueDetector for FunctionInitializingStateDetector {
                         let mut tracker =
                             NonConstantStateVariableReferenceDeclarationTracker::new(context);
 
-                        let callgraph =
-                            CallGraph::new(context, &[&(func.into())], CallGraphDirection::Inward)?;
+                        let callgraph = CallGraphConsumerV1::new(
+                            context,
+                            &[&(func.into())],
+                            CallGraphDirection::Inward,
+                        )?;
 
                         callgraph.accept(context, &mut tracker)?;
 

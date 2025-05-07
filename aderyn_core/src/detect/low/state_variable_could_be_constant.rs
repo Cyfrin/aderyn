@@ -115,7 +115,7 @@ mod function_state_changes_finder_helper {
         ast::{ASTNode, FunctionDefinition},
         context::{
             browser::ApproximateStorageChangeFinder,
-            graph::{CallGraph, CallGraphDirection, CallGraphVisitor},
+            graph::{CallGraphConsumerV1, CallGraphDirection, CallGraphVisitor},
             workspace::WorkspaceContext,
         },
     };
@@ -130,7 +130,8 @@ mod function_state_changes_finder_helper {
             let mut tracker = StateVariableChangeTracker { changes: None, context };
 
             let investigator =
-                CallGraph::new(context, &[&(self.into())], CallGraphDirection::Inward).ok()?;
+                CallGraphConsumerV1::new(context, &[&(self.into())], CallGraphDirection::Inward)
+                    .ok()?;
             investigator.accept(context, &mut tracker).ok()?;
 
             tracker.changes.take()
