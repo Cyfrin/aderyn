@@ -197,7 +197,7 @@ fn find_external_call_sites(
         if let Some(curr_ast_node) = curr_cfg_node.reflect(context) {
             let function_calls = ExtractFunctionCalls::from(curr_ast_node).extracted;
 
-            if function_calls.iter().any(|f| f.is_external_call_legacy_do_not_use()) {
+            if function_calls.iter().any(|f| f.is_extcallish()) {
                 external_call_sites.insert(curr_node);
             }
         }

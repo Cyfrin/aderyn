@@ -89,7 +89,7 @@ type ICStartLookupRoute = HashMap<String, NodeID>;
 // Function selector -> Function Definition Node ID
 type ECStartLookupRoute = HashMap<String, ECDest>;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum ECDest {
     /// Node ID -> Variable Declaration ID
     /// Default getter generated for public state variables
@@ -152,7 +152,7 @@ impl Router {
         context: &'a WorkspaceContext,
         base_contract: &'a ContractDefinition,
         func_call: &'a FunctionCall,
-    ) -> Option<&'a FunctionDefinition> {
+    ) -> Option<ECDest> {
         self._resolve_external_call(context, base_contract, func_call)
     }
 }

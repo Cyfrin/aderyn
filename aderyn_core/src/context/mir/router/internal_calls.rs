@@ -2,7 +2,7 @@ use super::Router;
 use crate::{
     ast::{
         ASTNode, ContractDefinition, ContractKind, Expression, FunctionCall, FunctionDefinition,
-        Identifier, NodeID, NodeType, Visibility,
+        FunctionKind, Identifier, NodeID, NodeType, Visibility,
     },
     context::{browser::GetClosestAncestorOfTypeX, workspace::WorkspaceContext},
 };
@@ -182,9 +182,11 @@ pub(super) fn build_ic_router_for_contract(
         let mut routes = HashMap::new();
         for contract in c3.iter().skip(idx) {
             for func in contract.function_definitions() {
-                if matches!(func.visibility, Visibility::Internal | Visibility::Public) {
-                    if let Entry::Vacant(e) = routes.entry(func.selectorish()) {
-                        e.insert(func.id);
+                if matches!(*func.kind(), FunctionKind::Function) {
+                    if matches!(func.visibility, Visibility::Internal | Visibility::Public) {
+                        if let Entry::Vacant(e) = routes.entry(func.selectorish()) {
+                            e.insert(func.id);
+                        }
                     }
                 }
             }

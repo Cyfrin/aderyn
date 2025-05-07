@@ -1,4 +1,4 @@
-use crate::{ast::*, context::browser::is_external_call_do_not_use};
+use crate::{ast::*, context::browser::is_extcallish};
 
 impl FunctionDefinition {
     /// The kind of function this node defines.
@@ -83,8 +83,8 @@ impl FunctionCall {
     /// DO NOT USE
     /// It doesn't work as expected. This was more so crafted for one specific detector and code
     /// needs to be migrated.
-    pub fn is_external_call_legacy_do_not_use(&self) -> bool {
-        is_external_call_do_not_use(self.into())
+    pub fn is_extcallish(&self) -> bool {
+        is_extcallish(self.into())
     }
 
     /// Internal call made to -
@@ -116,8 +116,8 @@ impl FunctionCall {
 }
 
 impl FunctionCallOptions {
-    pub fn is_external_call(&self) -> bool {
-        is_external_call_do_not_use(self.into())
+    pub fn is_extcallish(&self) -> bool {
+        is_extcallish(self.into())
     }
 }
 
@@ -160,6 +160,19 @@ impl ContractDefinition {
             .iter()
             .filter_map(|node| {
                 if let ContractDefinitionNode::ModifierDefinition(modifier_definition) = node {
+                    Some(modifier_definition)
+                } else {
+                    None
+                }
+            })
+            .collect()
+    }
+
+    pub fn top_level_variables(&self) -> Vec<&VariableDeclaration> {
+        self.nodes
+            .iter()
+            .filter_map(|node| {
+                if let ContractDefinitionNode::VariableDeclaration(modifier_definition) = node {
                     Some(modifier_definition)
                 } else {
                     None
