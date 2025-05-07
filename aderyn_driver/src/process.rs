@@ -5,7 +5,7 @@ use crate::{
 };
 use aderyn_core::{
     context::{
-        graph::{LegacyWorkspaceCallGraph, Transpose},
+        graph::{LegacyWorkspaceCallGraph, Transpose, WorkspaceCallGraphs},
         mir::router::Router,
         workspace::WorkspaceContext,
     },
@@ -75,6 +75,9 @@ pub fn make_context(
 
         let router = Router::build(context);
         context.router = Some(router);
+
+        let callgraphs = WorkspaceCallGraphs::build(context);
+        context.callgraphs = Some(callgraphs);
     }
 
     Ok(WorkspaceContextWrapper { contexts, root_path })

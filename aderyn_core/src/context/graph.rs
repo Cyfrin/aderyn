@@ -18,6 +18,13 @@ pub struct LegacyWorkspaceCallGraph {
     pub raw_callgraph: RawCallGraph,
 }
 
+#[derive(Debug, Default)]
+pub struct WorkspaceCallGraphs {
+    // Key => Contract Definition NodeID
+    pub raw_callgraphs: HashMap<NodeID, RawCallGraph>,
+    pub reverse_callgraphs: HashMap<NodeID, RawCallGraph>,
+}
+
 /**
  * Every NodeID in RawCallGraph should corresponds to [`crate::ast::FunctionDefinition`] or
  * [`crate::ast::ModifierDefinition`]
