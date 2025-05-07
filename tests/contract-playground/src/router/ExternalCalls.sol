@@ -16,3 +16,11 @@ abstract contract C {
 contract D is C {
     uint256 public override abc;
 }
+
+contract E is A {
+    function abc() external virtual returns (uint256) {}
+}
+
+contract F is E {
+    function abc() public override returns (uint256) {}
+}

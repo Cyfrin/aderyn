@@ -6,6 +6,10 @@ use crate::{
 use std::collections::{hash_map::Entry, HashMap};
 
 impl Router {
+    /// Given a function call, resolve the function definition with it's selector.
+    ///
+    /// If no function is found with the said selector, it tries to retrieve a fallback function.
+    /// Since function selector is data that's being passed it cannot point to receive function.
     pub(super) fn _resolve_external_call<'a>(
         &self,
         context: &'a WorkspaceContext,
@@ -28,8 +32,7 @@ impl Router {
 
         match lookup_index.routes.get(selector) {
             Some(resolved) => Some(resolved.clone()),
-            None => lookup_index.routes.get("FALLBACK").cloned(), /* it cannot be RECEIVE because
-                                                                   * data is non empty */
+            None => lookup_index.routes.get("FALLBACK").cloned(),
         }
     }
 }
@@ -88,7 +91,7 @@ pub(super) fn build_ec_router_for_contract(
                         e.insert(ECDest::Fallback(func.id));
                     }
                 }
-                FunctionKind::FreeFunction => unreachable!(),
+                FunctionKind::FreeFunction => unreachable!(), // can't be inside a contract.
                 FunctionKind::Constructor => (),
             };
         }
