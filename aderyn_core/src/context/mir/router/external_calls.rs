@@ -10,6 +10,8 @@ impl Router {
     ///
     /// If no function is found with the said selector, it tries to retrieve a fallback function.
     /// Since function selector is data that's being passed it cannot point to receive function.
+    ///
+    /// Suspect here could be a variable as well
     pub(super) fn _resolve_external_call<'a>(
         &self,
         context: &'a WorkspaceContext,
@@ -26,11 +28,11 @@ impl Router {
             return None;
         }
 
-        let suspect = func_call.suspected_target_function(context)?;
-        let selector = suspect.function_selector.as_ref()?;
+        // works for both public variables and functions
+        let selector = func_call.suspected_function_selector(context)?;
         let lookup_index = self.external_calls.get(&base_contract.id)?;
 
-        match lookup_index.routes.get(selector) {
+        match lookup_index.routes.get(&selector) {
             Some(resolved) => Some(resolved.clone()),
             None => lookup_index.routes.get("FALLBACK").cloned(),
         }

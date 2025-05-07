@@ -1,8 +1,6 @@
 //! Router
 //!
 //! Function router.
-//!
-//! Currently it is only used for internal calls.
 
 mod external_calls;
 mod internal_calls;
@@ -89,7 +87,7 @@ type ICStartLookupRoute = HashMap<String, NodeID>;
 // Function selector -> Function Definition Node ID
 type ECStartLookupRoute = HashMap<String, ECDest>;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub enum ECDest {
     PseduoExtFn(NodeID), // Public State Variable Declaration Id (getter method)
     RealExtFn(NodeID),   // External function Id

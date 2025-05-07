@@ -3,7 +3,9 @@ mod mir_router {
     use crate::{
         ast::ASTNode,
         context::{
-            browser::ExtractFunctionCalls, mir::router::Router, workspace::WorkspaceContext,
+            browser::ExtractFunctionCalls,
+            mir::router::{ECDest, Router},
+            workspace::WorkspaceContext,
         },
         test_utils::load_solidity_source_unit,
     };
@@ -52,6 +54,13 @@ mod mir_router {
     fn get_mc_router_ctx() -> (Router, WorkspaceContext) {
         let context =
             load_solidity_source_unit("../tests/contract-playground/src/router/ModifierCalls.sol");
+
+        (Router::build(&context), context)
+    }
+
+    fn get_ec_router_ctx() -> (Router, WorkspaceContext) {
+        let context =
+            load_solidity_source_unit("../tests/contract-playground/src/router/ExternalCalls.sol");
 
         (Router::build(&context), context)
     }
@@ -277,5 +286,50 @@ mod mir_router {
         // external calls return none
         let c = router.resolve_internal_call(&context, basic4_contract, &func_calls[1]);
         assert!(c.is_none());
+    }
+
+    #[test]
+    pub fn resolve_ext_calls_1() {
+        let (router, context) = get_ec_router_ctx();
+
+        let test_contract = context.find_contract_by_name("TestA");
+        let test_func = test_contract.find_function_by_name("test");
+        let func_calls = ExtractFunctionCalls::from(test_func).extracted;
+
+        assert_eq!(func_calls[0].is_internal_call(), Some(false));
+
+        let b_contract = context.find_contract_by_name("B");
+        let out = router.resolve_external_call(&context, b_contract, &func_calls[0]).unwrap();
+        assert!(matches!(out, ECDest::PseduoExtFn(_)));
+
+        let e_contract = context.find_contract_by_name("E");
+        let e_func = e_contract.find_function_by_name("abc");
+        let out = router.resolve_external_call(&context, e_contract, &func_calls[0]).unwrap();
+        assert_eq!(out, ECDest::RealExtFn(e_func.id));
+
+        let f_contract = context.find_contract_by_name("F");
+        let f_func = f_contract.find_function_by_name("abc");
+        let out = router.resolve_external_call(&context, f_contract, &func_calls[0]).unwrap();
+        assert_eq!(out, ECDest::PublicFn(f_func.id));
+
+        let y_contract = context.find_contract_by_name("Y");
+        let out = router.resolve_external_call(&context, y_contract, &func_calls[0]).unwrap();
+        assert_eq!(out, ECDest::PublicFn(f_func.id));
+    }
+
+    #[test]
+    pub fn resolve_ext_calls_2() {
+        let (router, context) = get_ec_router_ctx();
+
+        let test_contract = context.find_contract_by_name("TestD");
+        let test_func = test_contract.find_function_by_name("test");
+        let func_calls = ExtractFunctionCalls::from(test_func).extracted;
+
+        assert_eq!(func_calls[0].is_internal_call(), Some(false));
+
+        let d_contract = context.find_contract_by_name("D");
+        router.external_calls.iter().for_each(|f| println!("{:?}", f));
+        let out = router.resolve_external_call(&context, d_contract, &func_calls[0]).unwrap(); // none?
+        assert!(matches!(out, ECDest::PseduoExtFn(_)));
     }
 }
