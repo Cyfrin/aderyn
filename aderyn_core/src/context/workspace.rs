@@ -1,5 +1,5 @@
 use super::{
-    browser::GetImmediateParent, capturable::Capturable, graph::WorkspaceCallGraph,
+    browser::GetImmediateParent, capturable::Capturable, graph::LegacyWorkspaceCallGraph,
     macros::generate_get_source_unit, mir::router::Router,
 };
 pub use crate::ast::ASTNode;
@@ -33,8 +33,8 @@ pub struct WorkspaceContext {
     pub src_filepaths: Vec<String>,
     pub sloc_stats: HashMap<String, usize>,
     pub ignore_lines_stats: HashMap<String, Vec<IgnoreLine>>,
-    pub inward_callgraph: Option<WorkspaceCallGraph>,
-    pub outward_callgraph: Option<WorkspaceCallGraph>,
+    pub inward_callgraph: Option<LegacyWorkspaceCallGraph>,
+    pub outward_callgraph: Option<LegacyWorkspaceCallGraph>,
     pub nodes: HashMap<NodeID, ASTNode>,
 
     // Source units

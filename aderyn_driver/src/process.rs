@@ -5,7 +5,7 @@ use crate::{
 };
 use aderyn_core::{
     context::{
-        graph::{Transpose, WorkspaceCallGraph},
+        graph::{LegacyWorkspaceCallGraph, Transpose},
         mir::router::Router,
         workspace::WorkspaceContext,
     },
@@ -67,9 +67,9 @@ pub fn make_context(
         context.set_sloc_stats(sloc_stats);
         context.set_ignore_lines_stats(ignore_line_stats);
 
-        let inward_callgraph = WorkspaceCallGraph::from_context(context)?;
+        let inward_callgraph = LegacyWorkspaceCallGraph::from_context(context)?;
         let outward_callgraph =
-            WorkspaceCallGraph { raw_callgraph: inward_callgraph.raw_callgraph.reverse() };
+            LegacyWorkspaceCallGraph { raw_callgraph: inward_callgraph.raw_callgraph.reverse() };
         context.inward_callgraph = Some(inward_callgraph);
         context.outward_callgraph = Some(outward_callgraph);
 

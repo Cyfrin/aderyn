@@ -14,7 +14,7 @@ use crate::ast::{ASTNode, NodeID};
 pub type Result<T> = core::result::Result<T, Error>;
 
 #[derive(Debug)]
-pub struct WorkspaceCallGraph {
+pub struct LegacyWorkspaceCallGraph {
     pub raw_callgraph: RawCallGraph,
 }
 

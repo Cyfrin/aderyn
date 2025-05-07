@@ -1,7 +1,7 @@
 use crate::{
     ast::SourceUnit,
     context::{
-        graph::{Transpose, WorkspaceCallGraph},
+        graph::{LegacyWorkspaceCallGraph, Transpose},
         mir::router::Router,
         workspace::WorkspaceContext,
     },
@@ -96,9 +96,9 @@ fn make_context(project_config: &ProjectConfigInput) -> WorkspaceContext {
     }
 
     fn load_callgraphs(context: &mut WorkspaceContext) {
-        let inward_callgraph = WorkspaceCallGraph::from_context(context).unwrap();
+        let inward_callgraph = LegacyWorkspaceCallGraph::from_context(context).unwrap();
         let outward_callgraph =
-            WorkspaceCallGraph { raw_callgraph: inward_callgraph.raw_callgraph.reverse() };
+            LegacyWorkspaceCallGraph { raw_callgraph: inward_callgraph.raw_callgraph.reverse() };
         context.inward_callgraph = Some(inward_callgraph);
         context.outward_callgraph = Some(outward_callgraph);
     }

@@ -4,7 +4,7 @@ use crate::{
     ast::{NodeID, NodeType},
     context::{
         browser::{ExtractReferencedDeclarations, GetClosestAncestorOfTypeX},
-        graph::WorkspaceCallGraph,
+        graph::LegacyWorkspaceCallGraph,
         workspace::{ASTNode, WorkspaceContext},
     },
 };
@@ -82,8 +82,8 @@ impl CallGraphConsumerV1 {
     pub(super) fn _accept<T>(
         &self,
         context: &WorkspaceContext,
-        inward_callgraph: &WorkspaceCallGraph,
-        outward_callgraph: &WorkspaceCallGraph,
+        inward_callgraph: &LegacyWorkspaceCallGraph,
+        outward_callgraph: &LegacyWorkspaceCallGraph,
         visitor: &mut T,
     ) -> super::Result<()>
     where
@@ -168,7 +168,7 @@ impl CallGraphConsumerV1 {
         node_id: NodeID,
         visited: &mut HashSet<NodeID>,
         context: &WorkspaceContext,
-        callgraph: &WorkspaceCallGraph,
+        callgraph: &LegacyWorkspaceCallGraph,
         visitor: &mut T,
         current_investigation_direction: CurrentDFSVector,
         blacklist: Option<&HashSet<NodeID>>,

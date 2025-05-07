@@ -8,11 +8,13 @@ use crate::{
     },
 };
 
-use crate::context::graph::{traits::Transpose, Error, RawCallGraph, Result, WorkspaceCallGraph};
+use crate::context::graph::{
+    traits::Transpose, Error, LegacyWorkspaceCallGraph, RawCallGraph, Result,
+};
 
-impl WorkspaceCallGraph {
+impl LegacyWorkspaceCallGraph {
     /// Formula to create [`WorkspaceCallGraph`] for global preprocessing .
-    pub fn from_context(context: &WorkspaceContext) -> Result<WorkspaceCallGraph> {
+    pub fn from_context(context: &WorkspaceContext) -> Result<LegacyWorkspaceCallGraph> {
         let mut raw_callgraph: RawCallGraph = HashMap::new();
         let mut visited: HashSet<NodeID> = HashSet::new();
 
@@ -34,7 +36,7 @@ impl WorkspaceCallGraph {
                 .map_err(|_| Error::WorkspaceCallGraphDFSError)?;
         }
 
-        Ok(WorkspaceCallGraph { raw_callgraph })
+        Ok(LegacyWorkspaceCallGraph { raw_callgraph })
     }
 }
 
