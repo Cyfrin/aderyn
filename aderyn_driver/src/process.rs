@@ -6,7 +6,7 @@ use crate::{
 use aderyn_core::{
     context::{
         graph::{LegacyWorkspaceCallGraph, Transpose, WorkspaceCallGraphs},
-        mir::router::Router,
+        router::Router,
         workspace::WorkspaceContext,
     },
     stats,

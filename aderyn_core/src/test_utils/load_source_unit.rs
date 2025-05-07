@@ -2,7 +2,7 @@ use crate::{
     ast::SourceUnit,
     context::{
         graph::{LegacyWorkspaceCallGraph, Transpose, WorkspaceCallGraphs},
-        mir::router::Router,
+        router::Router,
         workspace::WorkspaceContext,
     },
     visitor::ast_visitor::Node,

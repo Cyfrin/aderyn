@@ -4,7 +4,7 @@ mod mir_router {
         ast::ASTNode,
         context::{
             browser::ExtractFunctionCalls,
-            mir::router::{ECDest, Router},
+            router::{ECDest, Router},
             workspace::WorkspaceContext,
         },
         test_utils::load_solidity_source_unit,

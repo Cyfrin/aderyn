@@ -3,7 +3,7 @@ use super::{
     capturable::Capturable,
     graph::{LegacyWorkspaceCallGraph, WorkspaceCallGraphs},
     macros::generate_get_source_unit,
-    mir::router::Router,
+    router::Router,
 };
 pub use crate::ast::ASTNode;
 use crate::{ast::*, stats::IgnoreLine};
