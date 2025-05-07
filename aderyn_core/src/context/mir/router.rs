@@ -10,6 +10,7 @@ mod tests;
 use external_calls::build_ec_router_for_contract;
 use internal_calls::build_ic_router_for_contract;
 use modifier_calls::build_mc_router_for_contract;
+use rayon::iter::{IntoParallelIterator, ParallelIterator};
 
 use crate::{ast::*, context::workspace::WorkspaceContext};
 use std::collections::HashMap;
@@ -102,27 +103,37 @@ type MCStartLookupRoute = HashMap<String, NodeID>;
 // Router interface
 impl Router {
     pub fn build(context: &WorkspaceContext) -> Self {
-        let internal_calls = context
-            .deployable_contracts()
+        let route_groups = context
+            .par_deployable_contracts()
+            .into_par_iter()
             .map(|contract| {
-                let base_routes = build_ic_router_for_contract(context, contract);
-                (contract.id, ICRoutes { routes: base_routes })
+                let contract_id = contract.id;
+                let ic_routes = {
+                    let base_routes = build_ic_router_for_contract(context, contract);
+                    ICRoutes { routes: base_routes }
+                };
+                let ec_routes = {
+                    let base_routes = build_ec_router_for_contract(context, contract);
+                    ECRoutes { routes: base_routes }
+                };
+                let mc_routes = {
+                    let base_routes = build_mc_router_for_contract(context, contract);
+                    MCRoutes { routes: base_routes }
+                };
+                (contract_id, ic_routes, ec_routes, mc_routes)
             })
-            .collect();
-        let external_calls = context
-            .deployable_contracts()
-            .map(|contract| {
-                let base_routes = build_ec_router_for_contract(context, contract);
-                (contract.id, ECRoutes { routes: base_routes })
-            })
-            .collect();
-        let modifier_calls = context
-            .deployable_contracts()
-            .map(|contract| {
-                let base_routes = build_mc_router_for_contract(context, contract);
-                (contract.id, MCRoutes { routes: base_routes })
-            })
-            .collect();
+            .collect::<Vec<_>>();
+
+        let mut internal_calls = HashMap::new();
+        let mut external_calls = HashMap::new();
+        let mut modifier_calls = HashMap::new();
+
+        for routes in route_groups {
+            internal_calls.insert(routes.0, routes.1);
+            external_calls.insert(routes.0, routes.2);
+            modifier_calls.insert(routes.0, routes.3);
+        }
+
         Self { internal_calls, external_calls, modifier_calls }
     }
 }
